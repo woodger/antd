@@ -11577,7 +11577,7 @@
         },
         {
           "id": "extended-api",
-          "title": "Оставшиеся render/input и Form API",
+          "title": "Render/input API и оставшийся popup alignment",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11597,7 +11597,7 @@
             "tests/package/tree-select-data.ssr.test.ts",
             "readme.md"
           ],
-          "note": "FieldNames, treeDataSimpleMode, generic raw data, treeExpandAction, maxCount, tag text/count/placeholder/render API, renderer labels, popup/control slots, semantic config и общие switcherIcon/treeLine.showLeafIcon перенесены. Декларативные TreeNode и свойства узлов перенесены. Focus actions, autoFocus/tabIndex и input/root event hooks перенесены. Pointer toggle, tokenSeparators и inherited showScrollBar no-op перенесены. Components.root/input перенесены через Snippet/descriptor renderers и registration. Остаются inherited current no-op props onPopupVisibleChange/popupStyle/choiceTransitionName/direction; getInputElement/getRawInputElement исключены как private, первый также явно Omit в Ant wrapper; Form feedback перенесён отдельно, popup alignment/motion учитываются отдельно. Deprecated extra.triggerNode/allCheckedNodes и node.props React wrappers исключены. Собственное поле props данных сохраняется."
+          "note": "FieldNames, treeDataSimpleMode, generic raw data, treeExpandAction, maxCount, tag text/count/placeholder/render API, renderer labels, popup/control slots, semantic config и общие switcherIcon/treeLine.showLeafIcon перенесены. Декларативные TreeNode и свойства узлов перенесены. Focus actions, autoFocus/tabIndex и input/root event hooks перенесены. Pointer toggle, tokenSeparators и inherited showScrollBar no-op перенесены. Components.root/input перенесены через Snippet/descriptor renderers и registration. Inherited current no-op props onPopupVisibleChange/popupStyle/choiceTransitionName/direction перенесены с сохранением raw semantic props. Остаются функциональные inherited popupAlign/builtinPlacements; getInputElement/getRawInputElement исключены как private, первый также явно Omit в Ant wrapper; Form feedback перенесён отдельно, popup alignment/motion учитываются отдельно. Deprecated extra.triggerNode/allCheckedNodes и node.props React wrappers исключены. Собственное поле props данных сохраняется."
         },
         {
           "id": "virtual-motion",
@@ -12316,9 +12316,10 @@
             "tests/browser/tree-select-input-native.ts",
             "tests/browser/fixtures/ant-design-tree-select-root-reference.json",
             "tests/browser/fixtures/ant-design-tree-select-input-reference.json",
-            "readme.md"
+            "readme.md",
+            "tests/browser/tree-select-inert-api-hydration.spec.ts"
           ],
-          "note": "Pinned React6.6.8 SyntheticEvent.defaultPrevented становится true после preventDefault для noncancelable focus/blur/input, nativeEvent остаётся false. Native сохраняет реальные DOM flags; только эти3 observed event kinds в preventOwn expected отражены отдельно, keyboard/composition/paste остаются raw. При remove(SPAN) focused composite root Chromium доставляет blur/focusout ещё connected=true до unregister; React synthetic callbacks уже сняты, Svelte DOM callbacks публикуют generated/own blur. Native сохраняет этот existing DOM event contract, не перехватывает DOM remove и не откладывает обычный ref.blur. Raw Source не нормализуется; конкретный composite-unmount Native expected отделён и проверяет отсутствие callbacks после settled removal. Detached callbacks и deferred continuations не читают destroyed derived refs. Controlled custom hydration применяет query к прежнему editor, как independently observed Source; default Native draft contracts сохранены."
+          "note": "Pinned React6.6.8 SyntheticEvent.defaultPrevented становится true после preventDefault для noncancelable focus/blur/input, nativeEvent остаётся false. Native сохраняет реальные DOM flags; только эти3 observed event kinds в preventOwn expected отражены отдельно, keyboard/composition/paste остаются raw. При remove(SPAN) focused composite root Chromium доставляет blur/focusout ещё connected=true до unregister; React synthetic callbacks уже сняты, Svelte DOM callbacks публикуют generated/own blur. Native сохраняет этот existing DOM event contract, не перехватывает DOM remove и не откладывает обычный ref.blur. Raw Source не нормализуется; конкретный composite-unmount Native expected отделён и проверяет отсутствие callbacks после settled removal. Detached callbacks и deferred continuations не читают destroyed derived refs. Controlled custom hydration применяет query к прежнему editor, как independently observed Source; default Native draft contracts сохранены. Strict hydration inert props отдельно подтверждает trusted blur/focusout стандартного focused editor синхронно во время unmount при connected=true; один Native blur уже записан до await unmount. After-await и поздний ledger после1000ms/resize/scroll неизменны, observers/RAF0. Этот Native DOM event boundary сохраняется без подавления синхронного blur."
         },
         {
           "id": "native-component-aria",
@@ -12420,6 +12421,51 @@
             "tests/package/tree-select-suffix-layout.ssr.test.ts"
           ],
           "note": "Custom components.input в multiple responsive повторяет Source Overflow runtime layout через отдельный adapter; прежнее расхождение fragment suffix136px/Native173px, высоты control, overflow/hit areas и popup anchor устранено. Обычный Native responsive сохраняет shared flow алгоритм и full-fit-first. DOM-free Source SSR не создаёт Overflow tags, Native сохраняет существующие4 hidden measuring tags без DOM измерений/регистраций/таймеров; строгая гидратация сохраняет root/editor/parent/suffix и освобождает resources. Source custom-container popup имеет absolute/offsetParent host; Native сохраняет fixed portal CSS/offsetParent null при тех же parent, размерах и координатах, проверенных отдельно raw snapshot и общим projector. ShadowRoot сохраняет существующий Native frame fallback; Source cached containing-block parity подтверждена для body и positioned container в LTR/RTL."
+        },
+        {
+          "id": "inherited-inert-api",
+          "title": "Текущие inherited no-op props и исходные semantic observations",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TreeSelectControl.svelte",
+            "src/lib/tree-select.types.ts",
+            "src/lib/tree-select-semantic.engine.ts",
+            "tests/browser/fixtures/tree-select-inert-api-cases.ts",
+            "tests/browser/tree-select-inert-api-metrics.ts",
+            "tests/browser/fixtures/ant-design-tree-select-inert-api-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-inert-api-ssr-reference.json",
+            "tests/browser/fixtures/TreeSelectInertApiCase.svelte",
+            "tests/browser/fixtures/TreeSelectInertApiFixtures.svelte",
+            "tests/browser/fixtures/tree-select-inert-api.types.ts",
+            "tests/browser/tree-select-inert-api-native.ts",
+            "tests/browser/tree-select-inert-api.spec.ts",
+            "tests/package/tree-select-inert-api.ssr.test.ts",
+            "readme.md",
+            "tests/browser/tree-select-inert-api-hydration.spec.ts",
+            "tests/browser/fixtures/TreeSelectInertApiHydration.svelte",
+            "tests/browser/fixtures/tree-select-inert-api-hydration.html",
+            "tests/browser/fixtures/tree-select-inert-api-hydration.client.ts",
+            "tests/browser/fixtures/tree-select-inert-api-hydration.server.ts"
+          ],
+          "note": "Ant Design6.6.8 /984592267de88fbf9cdaecc96a56629e721c709d, rc-select1.10.1 и rc-tree-select1.16.1. Четыре current nondeprecated inherited props принимаются явно и исключаются из generated DOM/custom-slot attrs: onPopupVisibleChange всегда перекрывается Ant wrapper через onOpenChange; popupStyle заменяется semantic root/popup styles и resolved zIndex; choiceTransitionName исключается SelectInput до DOM и не используется текущим Content/Overflow; local direction не меняет provider RTL classes/placement. Native popupStyle следует существующему CSS-string API, включая empty string; семантический callback получает исходный primitive вместо React CSSProperties object. Оригинальный componentProps сохраняет key presence и исходные direction/choice/callback/style значения в classNames/styles callbacks.9 independently repeated actual UMD cases/37actions и9 DOM-free SSR: provided/undefined/empty/omitted/live, callback-only, provider/local direction conflicts, custom root/input own attrs, multiple choose/remove, positive onOpenChange/semantic style/300px popup width и original semantic references. Custom root вычисляет semantic callbacks и при SSR, как Source wrapper, без назначения generated styles/attrs собственному root. Строгая Native hydration проверяет controlled query, refs/method identities, observers/RAF и поздний callback ledger. Изменения сохраняют query/caret/focus, root/editor/popup/public refs и не добавляют inert callbacks или choice classes. Native HTML dir owner сравнивается отдельно; deprecated aliases и private getters не добавлены."
+        },
+        {
+          "id": "native-dir-owner",
+          "title": "Существующий Native HTML dir на root/editor",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TreeSelectControl.svelte",
+            "src/lib/tree-select.types.ts",
+            "tests/browser/tree-select-inert-api-native.ts",
+            "tests/browser/tree-select-inert-api.spec.ts",
+            "tests/browser/fixtures/ant-design-tree-select-inert-api-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-inert-api-ssr-reference.json",
+            "tests/package/tree-select-inert-api.ssr.test.ts",
+            "readme.md"
+          ],
+          "note": "Local direction остаётся inherited конфигурационным prop, не HTML dir. Source default/input-slot root не получает provider dir attribute (RTL задаёт class); raw runtime JS dir=rtl назначается root. Native сохраняет provider dir на default root и существующий public HTMLInputAttributes.dir на editor; local direction не подменяет ни один из них. Общий projector читает реальные attrs и computed direction. Отдельный Native expected helper меняет только ранее согласованного владельца dir; raw Source goldens не нормализуются. Custom root own dir/style и explicit top-level dir=undefined сохраняют исходный generated-over-own merge и сравниваются raw; custom input own dir остаётся отдельным attr. Source BaseSelect declaration не объявляет native dir, Native dir=auto/null сохраняет свой прежний тип."
         }
       ]
     },

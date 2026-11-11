@@ -70,6 +70,7 @@
   }: TreeSelectProps<ValueType, Data, RootElement, EditorElement> & { _nodes?: readonly Data[]; } = $props();
   let {
     prefixCls,
+    direction: _direction,
     children: _children,
     components,
     treeData = [],
@@ -86,6 +87,7 @@
     maxTagCount,
     maxTagPlaceholder,
     tagRender,
+    choiceTransitionName: _choiceTransitionName,
     showCheckedStrategy,
     onChange,
     onSelect,
@@ -96,6 +98,7 @@
     open,
     defaultOpen = false,
     onOpenChange,
+    onPopupVisibleChange: _onPopupVisibleChange,
     showAction,
     autoFocus,
     tabIndex,
@@ -136,6 +139,7 @@
     showScrollBar: _showScrollBar,
     virtual,
     popupMatchSelectWidth,
+    popupStyle: _popupStyle,
     placement,
     onPopupScroll,
     getPopupContainer,
@@ -643,6 +647,8 @@
     onKeyDown?.(event);
   }
   function componentRootContext(): TreeSelectRootContext<RootElement> {
+    // Ant wrapper вычисляет semantic callbacks и при полной замене selector.
+    void semantics;
     const own = typeof rootSlot === 'object' ? rootSlot.props : undefined;
     const attrs = Object.assign({}, own);
     const generated = {

@@ -149,6 +149,8 @@ export interface TreeSelectProps<
 >, Omit<DOMAttributes<EditorElement | HTMLInputElement>, 'children' | 'onchange' | 'oninput'> {
   /** Локальный namespace Select/TreeSelect; пустая строка наследует ConfigProvider. */
   prefixCls?: string;
+  /** Inherited prop: RTL и default placement задаёт ConfigProvider; native dir остаётся отдельным атрибутом. */
+  direction?: 'ltr' | 'rtl';
   treeData?: readonly Data[];
   /** Используется при отсутствии treeData. */
   children?: Snippet;
@@ -177,6 +179,8 @@ export interface TreeSelectProps<
   maxTagPlaceholder?: TreeSelectTagPlaceholder;
   /** Custom tag получает bound label snippet и Source close/summary metadata. */
   tagRender?: Snippet<[TreeSelectTagInfo]>;
+  /** Inherited prop не используется текущим Source Overflow; не включает tag motion. */
+  choiceTransitionName?: string;
   showCheckedStrategy?: TreeSelectStrategy;
   onChange?: (
     value: ValueType,
@@ -193,6 +197,8 @@ export interface TreeSelectProps<
   /** @defaultValue false */
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  /** Ant Design 6.6.8 перекрывает этот inherited callback через onOpenChange. */
+  onPopupVisibleChange?: (open: boolean) => void;
   /** Focus добавляет открытие по фокусу; click сохраняет обычное открытие указателем. */
   showAction?: ('focus' | 'click')[];
   autoFocus?: boolean;
@@ -255,6 +261,8 @@ export interface TreeSelectProps<
   virtual?: boolean;
   /** False оставляет ширину по содержимому и отключает виртуализацию. @defaultValue true */
   popupMatchSelectWidth?: boolean | number;
+  /** Ant Design 6.6.8 перекрывает inherited popupStyle; используйте styles.popup.root. */
+  popupStyle?: string;
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
   onPopupScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
   /** Локальный getter получает корень Select; undefined наследует ConfigProvider. */

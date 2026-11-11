@@ -6815,6 +6815,8 @@ Native input связывается с существующим Tree и его A
 noncancelable event, в отличие от React SyntheticEvent. Удаление opaque composite
 root может доставить blur до отсоединения DOM, тогда как React уже снял synthetic
 callbacks. Raw наблюдения сохранены отдельно; после unmount callbacks не приходят.
+Удаление сфокусированного редактора может синхронно доставить Native blur до
+отключения DOM; после завершения unmount новых callbacks нет.
 Native регистрация actual editor также сохраняет безопасное измерение composite
 input: Source multiple ref без `.style` выбрасывает TypeError.
 В multiple mode с `components.input` и `maxTagCount="responsive"` suffix следует
@@ -6836,8 +6838,24 @@ control сохраняет прежний flow алгоритм. SSR сохра�
 [input](./tests/browser/tree-select-input.spec.ts),
 [Form](./tests/browser/tree-select-components-form.spec.ts).
 
-Следующие этапы TreeSelect охватывают остальные inherited current props,
-alignment и переходы панели;
+Унаследованные `onPopupVisibleChange`, `popupStyle`, `choiceTransitionName` и
+`direction` принимаются с поведением Ant Design 6.6.8: wrapper перекрывает
+callback/style, текущий Overflow не использует choice transition, RTL и default placement
+задаёт ConfigProvider. Для открытий используется `onOpenChange`, для оформления —
+`styles.popup.root`. Исходные значения и наличие этих props остаются видимы
+в `classNames`/`styles` callbacks, включая live replacement, empty и undefined.
+При SSR custom root semantic callbacks также вычисляются; собственные attrs
+и стили root сохраняются.
+HTML `dir` сохраняет Native контракт: provider задаёт dir стандартному root,
+явный native dir передаётся редактору; собственный dir custom slots сохраняется.
+[Browser](./tests/browser/tree-select-inert-api.spec.ts) и
+[SSR](./tests/package/tree-select-inert-api.ssr.test.ts) сравнивают независимый
+React-эталон и явно учитывают прежнее различие владельца HTML dir.
+[Строгая гидратация](./tests/browser/tree-select-inert-api-hydration.spec.ts)
+сохраняет редактор, query/caret, popup и публичные refs при смене props.
+
+Следующие этапы TreeSelect охватывают `popupAlign`, `builtinPlacements`
+и переходы панели;
 private getInputElement/getRawInputElement не входят в публичный перенос.
 Deprecated React extras исключены.
 Класс popup задаётся через classNames.popup.root; popupClassName удалён.

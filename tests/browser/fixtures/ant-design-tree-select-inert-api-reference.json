@@ -1,0 +1,4177 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "select": "1.10.1",
+    "treeSelect": "1.16.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "document": {
+      "compatMode": "CSS1Compat",
+      "doctype": "html"
+    },
+    "viewport": {
+      "width": 1200,
+      "height": 1000
+    },
+    "source": "Unmodified official UMD and Source-only factory. Shared public prop schema and DOM projector; no Native implementation. popupStyle is React CSSProperties here and maps to Native CSS string. Native dir raw owner remains unchanged in this reference.",
+    "settle": "Six identical projections separated by three requestAnimationFrame callbacks",
+    "errors": [],
+    "warnings": []
+  },
+  "cases": [
+    {
+      "id": "inert-live-controls",
+      "initial": {
+        "mode": "provided",
+        "model": null,
+        "query": "",
+        "focused": false,
+        "caret": [
+          0,
+          0
+        ],
+        "root": {
+          "tag": "DIV",
+          "dir": null,
+          "direction": "ltr",
+          "rtlClass": false,
+          "ownStyleMarker": "",
+          "semanticStyleMarker": "semantic"
+        },
+        "editor": {
+          "dir": null,
+          "direction": "ltr",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false
+        },
+        "popup": null,
+        "leakedProps": {
+          "root": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "editor": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "popup": null
+        },
+        "choiceClasses": [],
+        "receivedAttrs": null,
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "rtl",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "events": []
+      },
+      "initialObserved": {
+        "sameRoot": true,
+        "sameEditor": true,
+        "samePopup": true,
+        "rootIsPublicRef": true,
+        "focusMethod": true,
+        "blurMethod": true
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "fill",
+            "text": "Draft"
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": "Draft",
+            "focused": true,
+            "caret": [
+              5,
+              5
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "Draft"
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "caret",
+            "start": 1,
+            "end": 4
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": "Draft",
+            "focused": true,
+            "caret": [
+              1,
+              4
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "Draft"
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "undefined"
+          },
+          "view": {
+            "mode": "undefined",
+            "model": null,
+            "query": "Draft",
+            "focused": true,
+            "caret": [
+              1,
+              4
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": null,
+              "choice": null,
+              "callback": {
+                "isFunction": false,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": null,
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "Draft"
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "empty"
+          },
+          "view": {
+            "mode": "empty",
+            "model": null,
+            "query": "Draft",
+            "focused": true,
+            "caret": [
+              1,
+              4
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": null,
+              "choice": "",
+              "callback": {
+                "isFunction": false,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": null,
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "Draft"
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "omitted"
+          },
+          "view": {
+            "mode": "omitted",
+            "model": null,
+            "query": "Draft",
+            "focused": true,
+            "caret": [
+              1,
+              4
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [],
+              "direction": null,
+              "choice": null,
+              "callback": {
+                "isFunction": false,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": null,
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "Draft"
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "live"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": "Draft",
+            "focused": true,
+            "caret": [
+              1,
+              4
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "Draft"
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": "",
+            "focused": false,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "Draft"
+              ],
+              [
+                "blur"
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "search",
+                ""
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "inert-callback-only",
+      "initial": {
+        "mode": "provided",
+        "model": null,
+        "query": "",
+        "focused": false,
+        "caret": [
+          0,
+          0
+        ],
+        "root": {
+          "tag": "DIV",
+          "dir": null,
+          "direction": "ltr",
+          "rtlClass": false,
+          "ownStyleMarker": "",
+          "semanticStyleMarker": "semantic"
+        },
+        "editor": {
+          "dir": null,
+          "direction": "ltr",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false
+        },
+        "popup": null,
+        "leakedProps": {
+          "root": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "editor": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "popup": null
+        },
+        "choiceClasses": [],
+        "receivedAttrs": null,
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "rtl",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "events": []
+      },
+      "initialObserved": {
+        "sameRoot": true,
+        "sameEditor": true,
+        "samePopup": true,
+        "rootIsPublicRef": true,
+        "focusMethod": true,
+        "blurMethod": true
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": "",
+            "focused": false,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "blur"
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "provider-rtl-local-ltr",
+      "initial": {
+        "mode": "provided",
+        "model": null,
+        "query": "",
+        "focused": false,
+        "caret": [
+          0,
+          0
+        ],
+        "root": {
+          "tag": "DIV",
+          "dir": null,
+          "direction": "rtl",
+          "rtlClass": true,
+          "ownStyleMarker": "",
+          "semanticStyleMarker": "semantic"
+        },
+        "editor": {
+          "dir": null,
+          "direction": "rtl",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false
+        },
+        "popup": null,
+        "leakedProps": {
+          "root": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "editor": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "popup": null
+        },
+        "choiceClasses": [],
+        "receivedAttrs": null,
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "ltr",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "events": []
+      },
+      "initialObserved": {
+        "sameRoot": true,
+        "sameEditor": true,
+        "samePopup": true,
+        "rootIsPublicRef": true,
+        "focusMethod": true,
+        "blurMethod": true
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "rtl",
+              "rtlClass": true,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "rtl",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "rtl",
+              "rtlClass": true,
+              "width": 300,
+              "x": -80,
+              "endDistance": 0,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "live"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "rtl",
+              "rtlClass": true,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "rtl",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "rtl",
+              "rtlClass": true,
+              "width": 300,
+              "x": -80,
+              "endDistance": 0,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": "",
+            "focused": false,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "rtl",
+              "rtlClass": true,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "rtl",
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "blur"
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "custom-root-own-dir",
+      "initial": {
+        "mode": "provided",
+        "model": null,
+        "query": null,
+        "focused": false,
+        "caret": null,
+        "root": {
+          "tag": "BUTTON",
+          "dir": "rtl",
+          "direction": "rtl",
+          "rtlClass": false,
+          "ownStyleMarker": "own",
+          "semanticStyleMarker": ""
+        },
+        "editor": null,
+        "popup": null,
+        "leakedProps": {
+          "root": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "editor": null,
+          "popup": null
+        },
+        "choiceClasses": [],
+        "receivedAttrs": {
+          "slot": "root",
+          "keys": [],
+          "dirKey": true,
+          "dir": "rtl",
+          "ownStyleKept": true
+        },
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "rtl",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "events": []
+      },
+      "initialObserved": {
+        "sameRoot": true,
+        "sameEditor": true,
+        "samePopup": true,
+        "rootIsPublicRef": true,
+        "focusMethod": true,
+        "blurMethod": true
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": null,
+            "focused": true,
+            "caret": null,
+            "root": {
+              "tag": "BUTTON",
+              "dir": "rtl",
+              "direction": "rtl",
+              "rtlClass": false,
+              "ownStyleMarker": "own",
+              "semanticStyleMarker": ""
+            },
+            "editor": null,
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": null,
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "root",
+              "keys": [],
+              "dirKey": true,
+              "dir": "rtl",
+              "ownStyleKept": true
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "live"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": null,
+            "focused": true,
+            "caret": null,
+            "root": {
+              "tag": "BUTTON",
+              "dir": "rtl",
+              "direction": "rtl",
+              "rtlClass": false,
+              "ownStyleMarker": "own",
+              "semanticStyleMarker": ""
+            },
+            "editor": null,
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": null,
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "root",
+              "keys": [],
+              "dirKey": true,
+              "dir": "rtl",
+              "ownStyleKept": true
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": null,
+            "focused": false,
+            "caret": null,
+            "root": {
+              "tag": "BUTTON",
+              "dir": "rtl",
+              "direction": "rtl",
+              "rtlClass": false,
+              "ownStyleMarker": "own",
+              "semanticStyleMarker": ""
+            },
+            "editor": null,
+            "popup": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": null,
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "root",
+              "keys": [],
+              "dirKey": true,
+              "dir": "rtl",
+              "ownStyleKept": true
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "blur"
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "custom-root-provider-rtl",
+      "initial": {
+        "mode": "provided",
+        "model": null,
+        "query": null,
+        "focused": false,
+        "caret": null,
+        "root": {
+          "tag": "BUTTON",
+          "dir": "ltr",
+          "direction": "ltr",
+          "rtlClass": false,
+          "ownStyleMarker": "own",
+          "semanticStyleMarker": ""
+        },
+        "editor": null,
+        "popup": null,
+        "leakedProps": {
+          "root": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "editor": null,
+          "popup": null
+        },
+        "choiceClasses": [],
+        "receivedAttrs": {
+          "slot": "root",
+          "keys": [],
+          "dirKey": true,
+          "dir": "ltr",
+          "ownStyleKept": true
+        },
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "ltr",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "events": []
+      },
+      "initialObserved": {
+        "sameRoot": true,
+        "sameEditor": true,
+        "samePopup": true,
+        "rootIsPublicRef": true,
+        "focusMethod": true,
+        "blurMethod": true
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": null,
+            "focused": true,
+            "caret": null,
+            "root": {
+              "tag": "BUTTON",
+              "dir": "ltr",
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "own",
+              "semanticStyleMarker": ""
+            },
+            "editor": null,
+            "popup": {
+              "direction": "rtl",
+              "rtlClass": true,
+              "width": 300,
+              "x": -80,
+              "endDistance": 0,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": null,
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "root",
+              "keys": [],
+              "dirKey": true,
+              "dir": "ltr",
+              "ownStyleKept": true
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "live"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": null,
+            "focused": true,
+            "caret": null,
+            "root": {
+              "tag": "BUTTON",
+              "dir": "ltr",
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "own",
+              "semanticStyleMarker": ""
+            },
+            "editor": null,
+            "popup": {
+              "direction": "rtl",
+              "rtlClass": true,
+              "width": 300,
+              "x": -80,
+              "endDistance": 0,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": null,
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "root",
+              "keys": [],
+              "dirKey": true,
+              "dir": "ltr",
+              "ownStyleKept": true
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": null,
+            "focused": false,
+            "caret": null,
+            "root": {
+              "tag": "BUTTON",
+              "dir": "ltr",
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "own",
+              "semanticStyleMarker": ""
+            },
+            "editor": null,
+            "popup": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": null,
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "root",
+              "keys": [],
+              "dirKey": true,
+              "dir": "ltr",
+              "ownStyleKept": true
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "blur"
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "custom-input-filter",
+      "initial": {
+        "mode": "provided",
+        "model": null,
+        "query": "",
+        "focused": false,
+        "caret": [
+          0,
+          0
+        ],
+        "root": {
+          "tag": "DIV",
+          "dir": null,
+          "direction": "rtl",
+          "rtlClass": true,
+          "ownStyleMarker": "",
+          "semanticStyleMarker": "semantic"
+        },
+        "editor": {
+          "dir": "rtl",
+          "direction": "rtl",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false
+        },
+        "popup": null,
+        "leakedProps": {
+          "root": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "editor": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "popup": null
+        },
+        "choiceClasses": [],
+        "receivedAttrs": {
+          "slot": "input",
+          "keys": [],
+          "dirKey": true,
+          "dir": "rtl",
+          "ownStyleKept": null
+        },
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "ltr",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "events": []
+      },
+      "initialObserved": {
+        "sameRoot": true,
+        "sameEditor": true,
+        "samePopup": true,
+        "rootIsPublicRef": true,
+        "focusMethod": true,
+        "blurMethod": true
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "rtl",
+              "rtlClass": true,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": "rtl",
+              "direction": "rtl",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "rtl",
+              "rtlClass": true,
+              "width": 300,
+              "x": -80,
+              "endDistance": 0,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "input",
+              "keys": [],
+              "dirKey": true,
+              "dir": "rtl",
+              "ownStyleKept": null
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "fill",
+            "text": "Draft"
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": "Draft",
+            "focused": true,
+            "caret": [
+              5,
+              5
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "rtl",
+              "rtlClass": true,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": "rtl",
+              "direction": "rtl",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "rtl",
+              "rtlClass": true,
+              "width": 300,
+              "x": -80,
+              "endDistance": 0,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "input",
+              "keys": [],
+              "dirKey": true,
+              "dir": "rtl",
+              "ownStyleKept": null
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "Draft"
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "caret",
+            "start": 1,
+            "end": 4
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": "Draft",
+            "focused": true,
+            "caret": [
+              1,
+              4
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "rtl",
+              "rtlClass": true,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": "rtl",
+              "direction": "rtl",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "rtl",
+              "rtlClass": true,
+              "width": 300,
+              "x": -80,
+              "endDistance": 0,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "input",
+              "keys": [],
+              "dirKey": true,
+              "dir": "rtl",
+              "ownStyleKept": null
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "Draft"
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "live"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": "Draft",
+            "focused": true,
+            "caret": [
+              1,
+              4
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "rtl",
+              "rtlClass": true,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": "rtl",
+              "direction": "rtl",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "rtl",
+              "rtlClass": true,
+              "width": 300,
+              "x": -80,
+              "endDistance": 0,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "input",
+              "keys": [],
+              "dirKey": true,
+              "dir": "rtl",
+              "ownStyleKept": null
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "Draft"
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": "",
+            "focused": false,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "rtl",
+              "rtlClass": true,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": "rtl",
+              "direction": "rtl",
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "input",
+              "keys": [],
+              "dirKey": true,
+              "dir": "rtl",
+              "ownStyleKept": null
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "Draft"
+              ],
+              [
+                "blur"
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "search",
+                ""
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "multiple-choice",
+      "initial": {
+        "mode": "provided",
+        "model": [
+          "a"
+        ],
+        "query": "",
+        "focused": false,
+        "caret": [
+          0,
+          0
+        ],
+        "root": {
+          "tag": "DIV",
+          "dir": null,
+          "direction": "ltr",
+          "rtlClass": false,
+          "ownStyleMarker": "",
+          "semanticStyleMarker": "semantic"
+        },
+        "editor": {
+          "dir": null,
+          "direction": "ltr",
+          "expanded": "false",
+          "readonly": true,
+          "disabled": false
+        },
+        "popup": null,
+        "leakedProps": {
+          "root": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "editor": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "popup": null
+        },
+        "choiceClasses": [],
+        "receivedAttrs": null,
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "rtl",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "events": []
+      },
+      "initialObserved": {
+        "sameRoot": true,
+        "sameEditor": true,
+        "samePopup": true,
+        "rootIsPublicRef": true,
+        "focusMethod": true,
+        "blurMethod": true
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "mode": "provided",
+            "model": [
+              "a"
+            ],
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": true,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "choose",
+            "value": "b"
+          },
+          "view": {
+            "mode": "provided",
+            "model": [
+              "a",
+              "b"
+            ],
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": true,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "remove",
+            "value": "a"
+          },
+          "view": {
+            "mode": "provided",
+            "model": [
+              "b"
+            ],
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": true,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "change",
+                [
+                  "b"
+                ]
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "empty"
+          },
+          "view": {
+            "mode": "empty",
+            "model": [
+              "b"
+            ],
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": true,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": null,
+              "choice": "",
+              "callback": {
+                "isFunction": false,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": null,
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "change",
+                [
+                  "b"
+                ]
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "undefined"
+          },
+          "view": {
+            "mode": "undefined",
+            "model": [
+              "b"
+            ],
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": true,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": null,
+              "choice": null,
+              "callback": {
+                "isFunction": false,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": null,
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "change",
+                [
+                  "b"
+                ]
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "live"
+          },
+          "view": {
+            "mode": "live",
+            "model": [
+              "b"
+            ],
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "true",
+              "readonly": true,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "change",
+                [
+                  "b"
+                ]
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "mode": "live",
+            "model": [
+              "b"
+            ],
+            "query": "",
+            "focused": false,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "ltr",
+              "expanded": "false",
+              "readonly": true,
+              "disabled": false
+            },
+            "popup": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "change",
+                [
+                  "b"
+                ]
+              ],
+              [
+                "blur"
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "native-dir-boundary",
+      "initial": {
+        "mode": "provided",
+        "model": null,
+        "query": "",
+        "focused": false,
+        "caret": [
+          0,
+          0
+        ],
+        "root": {
+          "tag": "DIV",
+          "dir": "rtl",
+          "direction": "rtl",
+          "rtlClass": false,
+          "ownStyleMarker": "",
+          "semanticStyleMarker": "semantic"
+        },
+        "editor": {
+          "dir": null,
+          "direction": "rtl",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false
+        },
+        "popup": null,
+        "leakedProps": {
+          "root": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "editor": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "popup": null
+        },
+        "choiceClasses": [],
+        "receivedAttrs": null,
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "rtl",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "events": []
+      },
+      "initialObserved": {
+        "sameRoot": true,
+        "sameEditor": true,
+        "samePopup": true,
+        "rootIsPublicRef": true,
+        "focusMethod": true,
+        "blurMethod": true
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": "rtl",
+              "direction": "rtl",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "rtl",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "live"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": "",
+            "focused": true,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": "rtl",
+              "direction": "rtl",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "rtl",
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": "",
+            "focused": false,
+            "caret": [
+              0,
+              0
+            ],
+            "root": {
+              "tag": "DIV",
+              "dir": "rtl",
+              "direction": "rtl",
+              "rtlClass": false,
+              "ownStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "editor": {
+              "dir": null,
+              "direction": "rtl",
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": null,
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "blur"
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "custom-root-explicit-undefined-dir",
+      "initial": {
+        "mode": "provided",
+        "model": null,
+        "query": null,
+        "focused": false,
+        "caret": null,
+        "root": {
+          "tag": "BUTTON",
+          "dir": null,
+          "direction": "ltr",
+          "rtlClass": false,
+          "ownStyleMarker": "own",
+          "semanticStyleMarker": ""
+        },
+        "editor": null,
+        "popup": null,
+        "leakedProps": {
+          "root": {
+            "attributes": [],
+            "ownProperties": []
+          },
+          "editor": null,
+          "popup": null
+        },
+        "choiceClasses": [],
+        "receivedAttrs": {
+          "slot": "root",
+          "keys": [],
+          "dirKey": true,
+          "dir": null,
+          "ownStyleKept": true
+        },
+        "semantic": {
+          "keys": [
+            "onPopupVisibleChange",
+            "popupStyle",
+            "choiceTransitionName",
+            "direction"
+          ],
+          "direction": "rtl",
+          "choice": "inert-choice",
+          "callback": {
+            "isFunction": true,
+            "sameReference": true
+          },
+          "popupStyle": {
+            "marker": "provided",
+            "sameReference": true
+          }
+        },
+        "events": []
+      },
+      "initialObserved": {
+        "sameRoot": true,
+        "sameEditor": true,
+        "samePopup": true,
+        "rootIsPublicRef": true,
+        "focusMethod": true,
+        "blurMethod": true
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "mode": "provided",
+            "model": null,
+            "query": null,
+            "focused": true,
+            "caret": null,
+            "root": {
+              "tag": "BUTTON",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "own",
+              "semanticStyleMarker": ""
+            },
+            "editor": null,
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": null,
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "root",
+              "keys": [],
+              "dirKey": true,
+              "dir": null,
+              "ownStyleKept": true
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "rtl",
+              "choice": "inert-choice",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "provided",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "props",
+            "mode": "live"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": null,
+            "focused": true,
+            "caret": null,
+            "root": {
+              "tag": "BUTTON",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "own",
+              "semanticStyleMarker": ""
+            },
+            "editor": null,
+            "popup": {
+              "direction": "ltr",
+              "rtlClass": false,
+              "width": 300,
+              "x": 0,
+              "endDistance": -80,
+              "gap": 4,
+              "block": "below",
+              "outlineWidth": "7px",
+              "ignoredStyleMarker": "",
+              "semanticStyleMarker": "semantic"
+            },
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": null,
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "root",
+              "keys": [],
+              "dirKey": true,
+              "dir": null,
+              "ownStyleKept": true
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        },
+        {
+          "action": {
+            "type": "outside"
+          },
+          "view": {
+            "mode": "live",
+            "model": null,
+            "query": null,
+            "focused": false,
+            "caret": null,
+            "root": {
+              "tag": "BUTTON",
+              "dir": null,
+              "direction": "ltr",
+              "rtlClass": false,
+              "ownStyleMarker": "own",
+              "semanticStyleMarker": ""
+            },
+            "editor": null,
+            "popup": null,
+            "leakedProps": {
+              "root": {
+                "attributes": [],
+                "ownProperties": []
+              },
+              "editor": null,
+              "popup": {
+                "attributes": [],
+                "ownProperties": []
+              }
+            },
+            "choiceClasses": [],
+            "receivedAttrs": {
+              "slot": "root",
+              "keys": [],
+              "dirKey": true,
+              "dir": null,
+              "ownStyleKept": true
+            },
+            "semantic": {
+              "keys": [
+                "onPopupVisibleChange",
+                "popupStyle",
+                "choiceTransitionName",
+                "direction"
+              ],
+              "direction": "ltr",
+              "choice": "inert-choice-live",
+              "callback": {
+                "isFunction": true,
+                "sameReference": true
+              },
+              "popupStyle": {
+                "marker": "live",
+                "sameReference": true
+              }
+            },
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "blur"
+              ],
+              [
+                "open",
+                false
+              ]
+            ]
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true
+          }
+        }
+      ]
+    }
+  ]
+}

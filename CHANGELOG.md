@@ -9,6 +9,13 @@
 
 ### Added
 
+- TreeSelect принимает inherited `onPopupVisibleChange`, `popupStyle`,
+  `choiceTransitionName` и `direction` с текущим Source no-op поведением.
+  Props потребляются до DOM/custom slots и сохраняют исходные значения в
+  semantic callbacks; `onOpenChange`, semantic styles и provider RTL сохраняют
+  приоритет. Semantic callbacks вычисляются и при SSR custom root без применения
+  generated styles к slot. Native HTML `dir` и собственные attrs slots остаются прежними.
+
 - TreeSelect с custom input и responsive tags повторяет Source Overflow layout:
   constrained absolute suffix, высоту и overflow, hit targets, RTL и cached popup
   anchor при resize/scroll/перемещении контейнера. Проверены независимые React

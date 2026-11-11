@@ -1,5 +1,10 @@
 [
   {
+    "id": "tree-select-inert-api",
+    "module": "./TreeSelectInertApiFixtures.svelte",
+    "root": "tree-select-inert-api-fixture"
+  },
+  {
     "id": "tree-select-components-form",
     "module": "./TreeSelectComponentsFormFixtures.svelte",
     "root": "tree-select-components-form-fixture"
