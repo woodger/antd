@@ -9,6 +9,11 @@
 
 ### Added
 
+- TreeSelect с custom input и responsive tags повторяет Source Overflow layout:
+  constrained absolute suffix, высоту и overflow, hit targets, RTL и cached popup
+  anchor при resize/scroll/перемещении контейнера. Проверены независимые React
+  layout/SSR-эталоны, строгая гидратация и освобождение measurement resources.
+
 - TreeSelect поддерживает `components.root` и `components.input` через Svelte
   snippets с регистрацией DOM/composite refs. Root полностью заменяет selector,
   input сохраняет tags/affixes и поиск; собственные attrs и callbacks соединяются

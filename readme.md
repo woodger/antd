@@ -6817,11 +6817,21 @@ root может доставить blur до отсоединения DOM, то�
 callbacks. Raw наблюдения сохранены отдельно; после unmount callbacks не приходят.
 Native регистрация actual editor также сохраняет безопасное измерение composite
 input: Source multiple ref без `.style` выбрасывает TypeError.
-Responsive tags сохраняют Native flow layout. У Source absolute suffix может
-сжиматься вокруг fragment: ширина его box отличается при том же числе тегов
-и размерах редактора. Это влияет на высоту control, overflow и popup anchor.
-Сверка custom responsive проверяет резервирование места и resize;
-позиционирование suffix остаётся отдельным этапом.
+В multiple mode с `components.input` и `maxTagCount="responsive"` suffix следует
+Source Overflow: может стать absolute и сжаться вокруг fragment, сохраняя
+исходные высоту control, overflow, hit targets и порядок тегов. Popup сохраняет
+исходный anchor до изменения размера, resize окна или scroll предка; перемещение
+его контейнера учитывается в той же системе координат, включая RTL.
+[15 сценариев layout](./tests/browser/tree-select-suffix-layout.spec.ts) и
+[4 сценария контейнера](./tests/browser/tree-select-suffix-container.spec.ts)
+сверены с независимым React-эталоном в standards mode. Ещё
+[5 регрессий](./tests/browser/tree-select-suffix-layout-edges.spec.ts) проверяют
+static renderers, историю summary и контейнер с `will-change: transform`.
+Обычный Native responsive
+control сохраняет прежний flow алгоритм. SSR сохраняет скрытые measuring tags
+вместо пустого Source Overflow; Native popup сохраняет свой fixed portal contract.
+[Строгая гидратация](./tests/browser/tree-select-suffix-layout-hydration.spec.ts)
+проверяет query, выделение, DOM identity и освобождение observers/RAF.
 [Root](./tests/browser/tree-select-root.spec.ts),
 [input](./tests/browser/tree-select-input.spec.ts),
 [Form](./tests/browser/tree-select-components-form.spec.ts).

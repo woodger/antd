@@ -1,0 +1,2463 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "document": {
+      "compatMode": "CSS1Compat",
+      "doctype": "html"
+    },
+    "viewport": {
+      "width": 1200,
+      "height": 1000
+    },
+    "source": "Unmodified official Antd 6.6.8 UMD; public consumer owner updates with metadata-independent tagRender/maxTagPlaceholder and static will-change getPopupContainer. No Native runtime or expected values.",
+    "projector": "Shared observed physical boxes relative to consumer host, actual cropped/rendered/visible tags and rest, query/focus/model/events; no predictions or expected adaptation.",
+    "errors": [],
+    "warnings": []
+  },
+  "cases": [
+    {
+      "id": "static-narrow-initial-one",
+      "initial": {
+        "direction": "ltr",
+        "host": {
+          "marginTop": "64px",
+          "marginLeft": "64px",
+          "position": "static",
+          "willChange": "auto"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 43,
+          "height": 32
+        },
+        "content": {
+          "x": 4,
+          "y": 2,
+          "width": 9,
+          "height": 28
+        },
+        "suffix": {
+          "x": 4,
+          "y": 2,
+          "width": 4,
+          "height": 28
+        },
+        "editor": {
+          "x": 4,
+          "y": 2,
+          "width": 4,
+          "height": 28
+        },
+        "containerWidth": 9,
+        "tags": [],
+        "renderedTags": 0,
+        "visibleTags": 0,
+        "rest": {
+          "visible": false,
+          "box": {
+            "x": 4,
+            "y": 16,
+            "width": 5,
+            "height": 0
+          },
+          "text": "Choice"
+        },
+        "popup": null,
+        "query": "",
+        "focused": false,
+        "selection": [
+          0,
+          0
+        ],
+        "variable": "4",
+        "model": [
+          "a"
+        ],
+        "events": []
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "count",
+            "count": 2
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 43,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 9,
+              "height": 28
+            },
+            "suffix": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 9,
+            "tags": [],
+            "renderedTags": 0,
+            "visibleTags": 0,
+            "rest": {
+              "visible": false,
+              "box": {
+                "x": 4,
+                "y": 16,
+                "width": 5,
+                "height": 0
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": {
+            "type": "count",
+            "count": 3
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 43,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 9,
+              "height": 28
+            },
+            "suffix": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 9,
+            "tags": [],
+            "renderedTags": 0,
+            "visibleTags": 0,
+            "rest": {
+              "visible": false,
+              "box": {
+                "x": 4,
+                "y": 16,
+                "width": 5,
+                "height": 0
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b",
+              "c"
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": {
+            "type": "count",
+            "count": 1
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 43,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 9,
+              "height": 28
+            },
+            "suffix": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 9,
+            "tags": [],
+            "renderedTags": 0,
+            "visibleTags": 0,
+            "rest": {
+              "visible": false,
+              "box": {
+                "x": 4,
+                "y": 16,
+                "width": 5,
+                "height": 0
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a"
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": {
+            "type": "count",
+            "count": 2
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 43,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 9,
+              "height": 28
+            },
+            "suffix": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 9,
+            "tags": [],
+            "renderedTags": 0,
+            "visibleTags": 0,
+            "rest": {
+              "visible": false,
+              "box": {
+                "x": 4,
+                "y": 16,
+                "width": 5,
+                "height": 0
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "static-narrow-history-two",
+      "initial": {
+        "direction": "ltr",
+        "host": {
+          "marginTop": "64px",
+          "marginLeft": "64px",
+          "position": "static",
+          "willChange": "auto"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 43,
+          "height": 32
+        },
+        "content": {
+          "x": 4,
+          "y": 2,
+          "width": 9,
+          "height": 28
+        },
+        "suffix": {
+          "x": 9,
+          "y": 2,
+          "width": 4,
+          "height": 28
+        },
+        "editor": {
+          "x": 9,
+          "y": 2,
+          "width": 4,
+          "height": 28
+        },
+        "containerWidth": 9,
+        "tags": [],
+        "renderedTags": 0,
+        "visibleTags": 0,
+        "rest": {
+          "visible": true,
+          "box": {
+            "x": 4,
+            "y": 5,
+            "width": 5,
+            "height": 22
+          },
+          "text": "Choice"
+        },
+        "popup": null,
+        "query": "",
+        "focused": false,
+        "selection": [
+          0,
+          0
+        ],
+        "variable": "4",
+        "model": [
+          "a",
+          "b"
+        ],
+        "events": []
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "count",
+            "count": 1
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 43,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 9,
+              "height": 28
+            },
+            "suffix": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 9,
+            "tags": [],
+            "renderedTags": 0,
+            "visibleTags": 0,
+            "rest": {
+              "visible": false,
+              "box": {
+                "x": 4,
+                "y": 16,
+                "width": 5,
+                "height": 0
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a"
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": {
+            "type": "count",
+            "count": 2
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 43,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 9,
+              "height": 28
+            },
+            "suffix": {
+              "x": 9,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 9,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 9,
+            "tags": [],
+            "renderedTags": 0,
+            "visibleTags": 0,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 4,
+                "y": 5,
+                "width": 5,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": {
+            "type": "count",
+            "count": 3
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 43,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 9,
+              "height": 28
+            },
+            "suffix": {
+              "x": 9,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 9,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 9,
+            "tags": [],
+            "renderedTags": 0,
+            "visibleTags": 0,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 4,
+                "y": 5,
+                "width": 5,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b",
+              "c"
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": {
+            "type": "count",
+            "count": 1
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 43,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 9,
+              "height": 28
+            },
+            "suffix": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 4,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 9,
+            "tags": [],
+            "renderedTags": 0,
+            "visibleTags": 0,
+            "rest": {
+              "visible": false,
+              "box": {
+                "x": 4,
+                "y": 16,
+                "width": 5,
+                "height": 0
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a"
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": {
+            "type": "count",
+            "count": 2
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 43,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 9,
+              "height": 28
+            },
+            "suffix": {
+              "x": 9,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 9,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 9,
+            "tags": [],
+            "renderedTags": 0,
+            "visibleTags": 0,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 4,
+                "y": 5,
+                "width": 5,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "static-fit-growth",
+      "initial": {
+        "direction": "ltr",
+        "host": {
+          "marginTop": "64px",
+          "marginLeft": "64px",
+          "position": "static",
+          "willChange": "auto"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 234,
+          "height": 32
+        },
+        "content": {
+          "x": 4,
+          "y": 2,
+          "width": 200,
+          "height": 28
+        },
+        "suffix": {
+          "x": 132,
+          "y": 2,
+          "width": 4,
+          "height": 28
+        },
+        "editor": {
+          "x": 132,
+          "y": 2,
+          "width": 4,
+          "height": 28
+        },
+        "containerWidth": 200,
+        "tags": [
+          {
+            "visible": true,
+            "box": {
+              "x": 4,
+              "y": 5,
+              "width": 64,
+              "height": 22
+            },
+            "text": "Choice"
+          },
+          {
+            "visible": true,
+            "box": {
+              "x": 68,
+              "y": 5,
+              "width": 64,
+              "height": 22
+            },
+            "text": "Choice"
+          }
+        ],
+        "renderedTags": 2,
+        "visibleTags": 2,
+        "rest": {
+          "visible": false,
+          "box": {
+            "x": 4,
+            "y": 16,
+            "width": 64,
+            "height": 0
+          },
+          "text": "Choice"
+        },
+        "popup": null,
+        "query": "",
+        "focused": false,
+        "selection": [
+          0,
+          0
+        ],
+        "variable": "4",
+        "model": [
+          "a",
+          "b"
+        ],
+        "events": []
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "count",
+            "count": 3
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 234,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 200,
+              "height": 28
+            },
+            "suffix": {
+              "x": 196,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 196,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": true,
+                "box": {
+                  "x": 4,
+                  "y": 5,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": true,
+                "box": {
+                  "x": 68,
+                  "y": 5,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": true,
+                "box": {
+                  "x": 132,
+                  "y": 5,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 3,
+            "visibleTags": 3,
+            "rest": {
+              "visible": false,
+              "box": {
+                "x": 4,
+                "y": 16,
+                "width": 64,
+                "height": 0
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b",
+              "c"
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": {
+            "type": "count",
+            "count": 4
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 234,
+              "height": 26
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 200,
+              "height": 22
+            },
+            "suffix": {
+              "x": 196,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 196,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": true,
+                "box": {
+                  "x": 4,
+                  "y": 2,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": true,
+                "box": {
+                  "x": 68,
+                  "y": 2,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 13,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 13,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 4,
+            "visibleTags": 2,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 132,
+                "y": 2,
+                "width": 64,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": {
+            "type": "count",
+            "count": 2
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 234,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 200,
+              "height": 28
+            },
+            "suffix": {
+              "x": 132,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 132,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": true,
+                "box": {
+                  "x": 4,
+                  "y": 5,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": true,
+                "box": {
+                  "x": 68,
+                  "y": 5,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 2,
+            "visibleTags": 2,
+            "rest": {
+              "visible": false,
+              "box": {
+                "x": 4,
+                "y": 16,
+                "width": 64,
+                "height": 0
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": []
+          }
+        },
+        {
+          "action": {
+            "type": "count",
+            "count": 3
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "auto"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 234,
+              "height": 32
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 200,
+              "height": 28
+            },
+            "suffix": {
+              "x": 196,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 196,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": true,
+                "box": {
+                  "x": 4,
+                  "y": 5,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": true,
+                "box": {
+                  "x": 68,
+                  "y": 5,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": true,
+                "box": {
+                  "x": 132,
+                  "y": 5,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 3,
+            "visibleTags": 3,
+            "rest": {
+              "visible": false,
+              "box": {
+                "x": 4,
+                "y": 16,
+                "width": 64,
+                "height": 0
+              },
+              "text": "Choice"
+            },
+            "popup": null,
+            "query": "",
+            "focused": false,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b",
+              "c"
+            ],
+            "events": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "containing-will-change-ltr",
+      "initial": {
+        "direction": "ltr",
+        "host": {
+          "marginTop": "64px",
+          "marginLeft": "64px",
+          "position": "static",
+          "willChange": "transform"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 234,
+          "height": 26
+        },
+        "content": {
+          "x": 4,
+          "y": 2,
+          "width": 200,
+          "height": 22
+        },
+        "suffix": {
+          "x": 196,
+          "y": 2,
+          "width": 4,
+          "height": 28
+        },
+        "editor": {
+          "x": 196,
+          "y": 2,
+          "width": 4,
+          "height": 28
+        },
+        "containerWidth": 200,
+        "tags": [
+          {
+            "visible": true,
+            "box": {
+              "x": 4,
+              "y": 2,
+              "width": 64,
+              "height": 22
+            },
+            "text": "Choice"
+          },
+          {
+            "visible": true,
+            "box": {
+              "x": 68,
+              "y": 2,
+              "width": 64,
+              "height": 22
+            },
+            "text": "Choice"
+          },
+          {
+            "visible": false,
+            "box": {
+              "x": 4,
+              "y": 13,
+              "width": 64,
+              "height": 0
+            },
+            "text": "Choice"
+          },
+          {
+            "visible": false,
+            "box": {
+              "x": 4,
+              "y": 13,
+              "width": 64,
+              "height": 0
+            },
+            "text": "Choice"
+          }
+        ],
+        "renderedTags": 4,
+        "visibleTags": 2,
+        "rest": {
+          "visible": true,
+          "box": {
+            "x": 132,
+            "y": 2,
+            "width": 64,
+            "height": 22
+          },
+          "text": "Choice"
+        },
+        "popup": null,
+        "query": "",
+        "focused": false,
+        "selection": [
+          0,
+          0
+        ],
+        "variable": "4",
+        "model": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click-editor"
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "transform"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 234,
+              "height": 26
+            },
+            "content": {
+              "x": 4,
+              "y": 2,
+              "width": 200,
+              "height": 22
+            },
+            "suffix": {
+              "x": 196,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 196,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": true,
+                "box": {
+                  "x": 4,
+                  "y": 2,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": true,
+                "box": {
+                  "x": 68,
+                  "y": 2,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 13,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 13,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 4,
+            "visibleTags": 2,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 132,
+                "y": 2,
+                "width": 64,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": {
+              "box": {
+                "x": 0,
+                "y": 30,
+                "width": 234,
+                "height": 128
+              },
+              "gap": 4
+            },
+            "query": "",
+            "focused": true,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        {
+          "action": {
+            "type": "fill",
+            "text": "BetaWWW12345"
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "transform"
+            },
+            "root": {
+              "x": 0,
+              "y": 3,
+              "width": 234,
+              "height": 26
+            },
+            "content": {
+              "x": 4,
+              "y": 5,
+              "width": 200,
+              "height": 22
+            },
+            "suffix": {
+              "x": 68,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "editor": {
+              "x": 68,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 4,
+            "visibleTags": 0,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 4,
+                "y": 5,
+                "width": 64,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": {
+              "box": {
+                "x": 0,
+                "y": 30,
+                "width": 234,
+                "height": 128
+              },
+              "gap": 1
+            },
+            "query": "BetaWWW12345",
+            "focused": true,
+            "selection": [
+              12,
+              12
+            ],
+            "variable": "109",
+            "model": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "BetaWWW12345"
+              ]
+            ]
+          }
+        },
+        {
+          "action": {
+            "type": "move-host",
+            "top": 20,
+            "left": 16
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "84px",
+              "marginLeft": "80px",
+              "position": "static",
+              "willChange": "transform"
+            },
+            "root": {
+              "x": 0,
+              "y": 3,
+              "width": 234,
+              "height": 26
+            },
+            "content": {
+              "x": 4,
+              "y": 5,
+              "width": 200,
+              "height": 22
+            },
+            "suffix": {
+              "x": 68,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "editor": {
+              "x": 68,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 4,
+            "visibleTags": 0,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 4,
+                "y": 5,
+                "width": 64,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": {
+              "box": {
+                "x": 0,
+                "y": 30,
+                "width": 234,
+                "height": 128
+              },
+              "gap": 1
+            },
+            "query": "BetaWWW12345",
+            "focused": true,
+            "selection": [
+              12,
+              12
+            ],
+            "variable": "109",
+            "model": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "BetaWWW12345"
+              ]
+            ]
+          }
+        },
+        {
+          "action": {
+            "type": "move-host",
+            "top": 35,
+            "left": 27
+          },
+          "view": {
+            "direction": "ltr",
+            "host": {
+              "marginTop": "99px",
+              "marginLeft": "91px",
+              "position": "static",
+              "willChange": "transform"
+            },
+            "root": {
+              "x": 0,
+              "y": 3,
+              "width": 234,
+              "height": 26
+            },
+            "content": {
+              "x": 4,
+              "y": 5,
+              "width": 200,
+              "height": 22
+            },
+            "suffix": {
+              "x": 68,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "editor": {
+              "x": 68,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 4,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 4,
+            "visibleTags": 0,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 4,
+                "y": 5,
+                "width": 64,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": {
+              "box": {
+                "x": 0,
+                "y": 30,
+                "width": 234,
+                "height": 128
+              },
+              "gap": 1
+            },
+            "query": "BetaWWW12345",
+            "focused": true,
+            "selection": [
+              12,
+              12
+            ],
+            "variable": "109",
+            "model": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "BetaWWW12345"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "containing-will-change-rtl",
+      "initial": {
+        "direction": "rtl",
+        "host": {
+          "marginTop": "64px",
+          "marginLeft": "64px",
+          "position": "static",
+          "willChange": "transform"
+        },
+        "root": {
+          "x": 0,
+          "y": 0,
+          "width": 234,
+          "height": 26
+        },
+        "content": {
+          "x": 30,
+          "y": 2,
+          "width": 200,
+          "height": 22
+        },
+        "suffix": {
+          "x": 34,
+          "y": 2,
+          "width": 4,
+          "height": 28
+        },
+        "editor": {
+          "x": 34,
+          "y": 2,
+          "width": 4,
+          "height": 28
+        },
+        "containerWidth": 200,
+        "tags": [
+          {
+            "visible": true,
+            "box": {
+              "x": 166,
+              "y": 2,
+              "width": 64,
+              "height": 22
+            },
+            "text": "Choice"
+          },
+          {
+            "visible": true,
+            "box": {
+              "x": 102,
+              "y": 2,
+              "width": 64,
+              "height": 22
+            },
+            "text": "Choice"
+          },
+          {
+            "visible": false,
+            "box": {
+              "x": 166,
+              "y": 13,
+              "width": 64,
+              "height": 0
+            },
+            "text": "Choice"
+          },
+          {
+            "visible": false,
+            "box": {
+              "x": 166,
+              "y": 13,
+              "width": 64,
+              "height": 0
+            },
+            "text": "Choice"
+          }
+        ],
+        "renderedTags": 4,
+        "visibleTags": 2,
+        "rest": {
+          "visible": true,
+          "box": {
+            "x": 38,
+            "y": 2,
+            "width": 64,
+            "height": 22
+          },
+          "text": "Choice"
+        },
+        "popup": null,
+        "query": "",
+        "focused": false,
+        "selection": [
+          0,
+          0
+        ],
+        "variable": "4",
+        "model": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click-editor"
+          },
+          "view": {
+            "direction": "rtl",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "transform"
+            },
+            "root": {
+              "x": 0,
+              "y": 0,
+              "width": 234,
+              "height": 26
+            },
+            "content": {
+              "x": 30,
+              "y": 2,
+              "width": 200,
+              "height": 22
+            },
+            "suffix": {
+              "x": 34,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "editor": {
+              "x": 34,
+              "y": 2,
+              "width": 4,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": true,
+                "box": {
+                  "x": 166,
+                  "y": 2,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": true,
+                "box": {
+                  "x": 102,
+                  "y": 2,
+                  "width": 64,
+                  "height": 22
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 13,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 13,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 4,
+            "visibleTags": 2,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 38,
+                "y": 2,
+                "width": 64,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": {
+              "box": {
+                "x": 0,
+                "y": 30,
+                "width": 234,
+                "height": 128
+              },
+              "gap": 4
+            },
+            "query": "",
+            "focused": true,
+            "selection": [
+              0,
+              0
+            ],
+            "variable": "4",
+            "model": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ]
+          }
+        },
+        {
+          "action": {
+            "type": "fill",
+            "text": "BetaWWW12345"
+          },
+          "view": {
+            "direction": "rtl",
+            "host": {
+              "marginTop": "64px",
+              "marginLeft": "64px",
+              "position": "static",
+              "willChange": "transform"
+            },
+            "root": {
+              "x": 0,
+              "y": 3,
+              "width": 234,
+              "height": 26
+            },
+            "content": {
+              "x": 30,
+              "y": 5,
+              "width": 200,
+              "height": 22
+            },
+            "suffix": {
+              "x": 57,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "editor": {
+              "x": 57,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 4,
+            "visibleTags": 0,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 166,
+                "y": 5,
+                "width": 64,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": {
+              "box": {
+                "x": 0,
+                "y": 30,
+                "width": 234,
+                "height": 128
+              },
+              "gap": 1
+            },
+            "query": "BetaWWW12345",
+            "focused": true,
+            "selection": [
+              12,
+              12
+            ],
+            "variable": "109",
+            "model": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "BetaWWW12345"
+              ]
+            ]
+          }
+        },
+        {
+          "action": {
+            "type": "move-host",
+            "top": 20,
+            "left": 16
+          },
+          "view": {
+            "direction": "rtl",
+            "host": {
+              "marginTop": "84px",
+              "marginLeft": "80px",
+              "position": "static",
+              "willChange": "transform"
+            },
+            "root": {
+              "x": 0,
+              "y": 3,
+              "width": 234,
+              "height": 26
+            },
+            "content": {
+              "x": 30,
+              "y": 5,
+              "width": 200,
+              "height": 22
+            },
+            "suffix": {
+              "x": 57,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "editor": {
+              "x": 57,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 4,
+            "visibleTags": 0,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 166,
+                "y": 5,
+                "width": 64,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": {
+              "box": {
+                "x": -16,
+                "y": 30,
+                "width": 234,
+                "height": 128
+              },
+              "gap": 1
+            },
+            "query": "BetaWWW12345",
+            "focused": true,
+            "selection": [
+              12,
+              12
+            ],
+            "variable": "109",
+            "model": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "BetaWWW12345"
+              ]
+            ]
+          }
+        },
+        {
+          "action": {
+            "type": "move-host",
+            "top": 35,
+            "left": 27
+          },
+          "view": {
+            "direction": "rtl",
+            "host": {
+              "marginTop": "99px",
+              "marginLeft": "91px",
+              "position": "static",
+              "willChange": "transform"
+            },
+            "root": {
+              "x": 0,
+              "y": 3,
+              "width": 234,
+              "height": 26
+            },
+            "content": {
+              "x": 30,
+              "y": 5,
+              "width": 200,
+              "height": 22
+            },
+            "suffix": {
+              "x": 57,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "editor": {
+              "x": 57,
+              "y": 5,
+              "width": 109,
+              "height": 28
+            },
+            "containerWidth": 200,
+            "tags": [
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              },
+              {
+                "visible": false,
+                "box": {
+                  "x": 166,
+                  "y": 16,
+                  "width": 64,
+                  "height": 0
+                },
+                "text": "Choice"
+              }
+            ],
+            "renderedTags": 4,
+            "visibleTags": 0,
+            "rest": {
+              "visible": true,
+              "box": {
+                "x": 166,
+                "y": 5,
+                "width": 64,
+                "height": 22
+              },
+              "text": "Choice"
+            },
+            "popup": {
+              "box": {
+                "x": -27,
+                "y": 30,
+                "width": 234,
+                "height": 128
+              },
+              "gap": 1
+            },
+            "query": "BetaWWW12345",
+            "focused": true,
+            "selection": [
+              12,
+              12
+            ],
+            "variable": "109",
+            "model": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "search",
+                "BetaWWW12345"
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -41,6 +41,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   allowZeroSize?: boolean | (() => boolean);
   allowOffscreenAnchor?: boolean;
   getPosition?: (anchor: DOMRect, popup: DOMRect, viewport: TooltipRect) => TooltipPosition;
+  getAnchorRect?: (current: DOMRect, popup: DOMRect) => DOMRect;
   applyPosition?: (position: TooltipPosition) => void;
   onVisibilityChange?: (visible: boolean) => void;
 }): PopupConnection {
@@ -126,8 +127,9 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     }
 
     const bounds = popup.getBoundingClientRect();
-    const position = options.getPosition?.(rect, bounds, viewport) ?? getTooltipPosition(
-      rect,
+    const positionRect = options.getAnchorRect?.(rect, bounds) ?? rect;
+    const position = options.getPosition?.(positionRect, bounds, viewport) ?? getTooltipPosition(
+      positionRect,
       bounds,
       viewport,
       options.placement,

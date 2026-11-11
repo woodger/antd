@@ -11908,7 +11908,7 @@
             "tests/browser/tree-select-tags-native.spec.ts",
             "readme.md"
           ],
-          "note": "Ant Design6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-select1.10.1, official unmodified UMD/React18.3.1. Raw responsive-long-rest: при width320px большой placeholder оставляет только summary, хотя четыре тега помещаются без него. Public responsive-fit-320 меняет только неиспользуемый placeholder, остальные data/props/width те же, и показывает четыре тега. Native сохраняет shared Select измерение: сначала проверяет полный набор, затем резервирует rest при фактическом overflow."
+          "note": "Ant Design6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-select1.10.1, official unmodified UMD/React18.3.1. Raw responsive-long-rest: при width320px большой placeholder оставляет только summary, хотя четыре тега помещаются без него. Public responsive-fit-320 меняет только неиспользуемый placeholder, остальные data/props/width те же, и показывает четыре тега. Обычный Native control сохраняет shared Select измерение: сначала проверяет полный набор, затем резервирует rest при фактическом overflow. Для custom components.input в multiple responsive действует отдельный Source Overflow adapter с исходным резервированием previous/current rest и capacity crop; этот путь проверяется component-responsive-layout."
         },
         {
           "id": "native-rich-tag-tooltip",
@@ -12275,9 +12275,13 @@
             "tests/browser/fixtures/ant-design-tree-select-input-responsive-reference.json",
             "tests/browser/tree-select-input-responsive-metrics.ts",
             "tests/browser/tree-select-input-responsive.spec.ts",
-            "tests/package/tree-select-input-responsive.ssr.test.ts"
+            "tests/package/tree-select-input-responsive.ssr.test.ts",
+            "src/lib/tree-select-component-overflow.dom.ts",
+            "src/lib/tree-select-component-anchor.dom.ts",
+            "tests/browser/tree-select-suffix-layout.spec.ts",
+            "tests/browser/tree-select-suffix-container.spec.ts"
           ],
-          "note": "Ant Design6.6.8 /984592267de88fbf9cdaecc96a56629e721c709d и rc-select1.10.1. React tag/component/element заменяются Svelte Snippet либо {render,props}. Root полностью заменяет selector и делает input slot inert, не получает generated id/class/style/tabIndex/disabled/combobox ARIA и использует click Trigger; typing root не меняет search/selection. Input сохраняет label/tags/affixes/clear, получает query и current attrs. Root generated→own callbacks, input own→generated, preventDefault не останавливает цепочку. Own props перекрывают input attrs и целиком заменяют style/class/value; explicit value=undefined остаётся uncontrolled. Direct textarea и composite ref различаются при closed arrows, input helper+root Enter requests сохраняют Source count. Multiple input/textarea измеряют реальный editor и получают --select-input-width; own style стирает generated variable. Responsive overflow измеряет и наблюдает весь custom suffix, включая wrapper и fragment siblings; стандартный editor сохраняет свой путь. Пустая/пробельная выбранная подпись не добавляет has-value class. Контексты регистрируют DOM/composite handle с identity-safe cleanup; popup anchoring, focus/blur/scrollTo и fallback на default nodes работают при live removal. Четыре generic параметра сохраняют default Div/Input bindings и ValueType/Data inference, custom bindings честно включают live fallback. 30 Root cases/112 actions/30 SSR и33 Input cases/144 actions/14 SSR сняты независимо с actual UMD и повторены побайтно. Width3cases/9actions/3SSR и actual Source hydration подтверждают sizing и controlled value reset. Strict Native hydration, live updates/refs/reset/pending disposal и типовые границы проверяются отдельно. Custom responsive:5 независимых Source cases/28actions/5SSR, direct input/textarea, wrapped DOM refs, composite refs, fragment и live prefix resize. Source absolute suffix geometry и Native SSR hidden measuring shell вынесены в отдельную partial границу."
+          "note": "Ant Design6.6.8 /984592267de88fbf9cdaecc96a56629e721c709d и rc-select1.10.1. React tag/component/element заменяются Svelte Snippet либо {render,props}. Root полностью заменяет selector и делает input slot inert, не получает generated id/class/style/tabIndex/disabled/combobox ARIA и использует click Trigger; typing root не меняет search/selection. Input сохраняет label/tags/affixes/clear, получает query и current attrs. Root generated→own callbacks, input own→generated, preventDefault не останавливает цепочку. Own props перекрывают input attrs и целиком заменяют style/class/value; explicit value=undefined остаётся uncontrolled. Direct textarea и composite ref различаются при closed arrows, input helper+root Enter requests сохраняют Source count. Multiple input/textarea измеряют реальный editor и получают --select-input-width; own style стирает generated variable. Responsive overflow измеряет и наблюдает весь custom suffix, включая wrapper и fragment siblings; стандартный editor сохраняет свой путь. Пустая/пробельная выбранная подпись не добавляет has-value class. Контексты регистрируют DOM/composite handle с identity-safe cleanup; popup anchoring, focus/blur/scrollTo и fallback на default nodes работают при live removal. Четыре generic параметра сохраняют default Div/Input bindings и ValueType/Data inference, custom bindings честно включают live fallback. 30 Root cases/112 actions/30 SSR и33 Input cases/144 actions/14 SSR сняты независимо с actual UMD и повторены побайтно. Width3cases/9actions/3SSR и actual Source hydration подтверждают sizing и controlled value reset. Strict Native hydration, live updates/refs/reset/pending disposal и типовые границы проверяются отдельно. Custom responsive:5 независимых Source cases/28actions/5SSR, direct input/textarea, wrapped DOM refs, composite refs, fragment и live prefix resize. Source absolute suffix geometry, height/overflow/hit areas и cached popup anchor перенесены отдельно в component-responsive-layout; Native SSR hidden measuring shell и portal CSS contract остаются отдельной partial границей."
         },
         {
           "id": "component-form-association",
@@ -12349,8 +12353,52 @@
           "note": "rc-select1.10.1 Input.useLayoutEffect при syncWidth пишет inputRef.current.style.width и читает scrollWidth. Actual UMD multiple composite/Antd.Input/Antd.TextArea imperative ref без style выбрасывает Cannot set properties of undefined (setting width), тогда как DOM-free SSR рендерит без ошибки. Native registration явно различает actual editor, wrapper и focus/blur handle и безопасно измеряет editor. Compatible Source composite с DOM style/scrollWidth снят отдельно; native adapter не воспроизводит этот подтверждённый runtime crash."
         },
         {
+          "id": "component-responsive-layout",
+          "title": "Source Overflow suffix geometry, hit targets и cached popup anchor",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TreeSelectControl.svelte",
+            "src/lib/popup.dom.ts",
+            "src/lib/tree-select-component-overflow.engine.ts",
+            "src/lib/tree-select-component-overflow.engine.test.ts",
+            "src/lib/tree-select-component-overflow.dom.ts",
+            "src/lib/tree-select-component-anchor.dom.ts",
+            "src/lib/vendor/LICENSE.rc-overflow",
+            "tests/browser/fixtures/tree-select-suffix-layout-cases.ts",
+            "tests/browser/fixtures/tree-select-suffix-container-cases.ts",
+            "tests/browser/fixtures/TreeSelectSuffixLayoutCase.svelte",
+            "tests/browser/fixtures/TreeSelectSuffixLayoutEditor.svelte",
+            "tests/browser/fixtures/TreeSelectSuffixLayoutFixtures.svelte",
+            "tests/browser/fixtures/TreeSelectSuffixContainerFixtures.svelte",
+            "tests/browser/fixtures/ant-design-tree-select-suffix-layout-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-suffix-container-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-suffix-layout-ssr-reference.json",
+            "tests/browser/tree-select-suffix-layout-metrics.ts",
+            "tests/browser/tree-select-suffix-container-metrics.ts",
+            "tests/browser/tree-select-suffix-layout-ssr-metrics.ts",
+            "tests/browser/tree-select-suffix-layout-settle.ts",
+            "tests/browser/tree-select-suffix-layout.spec.ts",
+            "tests/browser/tree-select-suffix-container.spec.ts",
+            "tests/browser/tree-select-suffix-layout-hydration.spec.ts",
+            "tests/browser/fixtures/TreeSelectSuffixLayoutHydration.svelte",
+            "tests/browser/fixtures/tree-select-suffix-layout-hydration.client.ts",
+            "tests/browser/fixtures/tree-select-suffix-layout-hydration.server.ts",
+            "tests/browser/fixtures/tree-select-suffix-layout-hydration.html",
+            "tests/package/tree-select-suffix-layout.ssr.test.ts",
+            "readme.md",
+            "tests/browser/fixtures/tree-select-suffix-layout-edge-cases.ts",
+            "tests/browser/tree-select-suffix-layout-edges-metrics.ts",
+            "tests/browser/fixtures/ant-design-tree-select-suffix-layout-edges-reference.json",
+            "tests/browser/fixtures/TreeSelectSuffixLayoutEdgeCase.svelte",
+            "tests/browser/fixtures/TreeSelectSuffixLayoutEdgesFixtures.svelte",
+            "tests/browser/tree-select-suffix-layout-edges.spec.ts"
+          ],
+          "note": "Ant Design6.6.8 /984592267de88fbf9cdaecc96a56629e721c709d, rc-select1.10.1 и embedded rc-overflow1.0.1. Отдельный путь только multiple+components.input+maxTagCount=responsive повторяет constrained absolute suffix, block tag/rest wrappers, previous/current rest reservation, floor(width/10) capacity crop, source fractional ResizeObserver cache, logical RTL offset, height/scroll overflow, caret и physical hit targets. Popup anchor сохраняется при position-only изменении root, обновляется по source floorBBox/offset size notifications, window resize и scroll предка; containing-block movement сохраняет CSS-space position и RTL right anchor.15 независимых actual UMD cases/223 actions и4 positioned-container cases/40 actions повторены побайтно в standards CSS1Compat/DOCTYPE html без нормализации Source geometry. Direct input, textarea, wrapped/composite refs, fragment, small/large, default/custom tags, widths9→8→10, oversized rest, empty/full values и live prefix resize сверены общим projector.Ещё5 independently repeated Source regressions/21actions подтверждают сохранение Source restReady history при прежних count/offset, рост cropped data при static renderers без DOM mutations и static will-change:transform containing block в LTR/RTL.15 DOM-free SSR snapshots и5 strict Native hydration cases проверяют controlled dirty draft reset, live query/caret, FormData, node identity и observer/RAF cleanup. Native default responsive, DOM event/Tree ARIA, hidden SSR shell и portal CSS contracts сохранены; последние различия перечислены отдельно."
+        },
+        {
           "id": "native-component-overflow-layout",
-          "title": "Native flow layout пользовательского responsive suffix",
+          "title": "Native SSR measuring shell и portal CSS для custom responsive",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -12364,9 +12412,14 @@
             "tests/browser/fixtures/TreeSelectInputResponsiveEditor.svelte",
             "tests/browser/fixtures/TreeSelectInputResponsiveFixtures.svelte",
             "tests/browser/fixtures/tree-select-input-responsive-cases.ts",
-            "tests/package/tree-select-input-responsive.ssr.test.ts"
+            "tests/package/tree-select-input-responsive.ssr.test.ts",
+            "tests/browser/fixtures/ant-design-tree-select-suffix-layout-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-suffix-container-reference.json",
+            "tests/browser/tree-select-suffix-layout-hydration.spec.ts",
+            "tests/browser/tree-select-suffix-container.spec.ts",
+            "tests/package/tree-select-suffix-layout.ssr.test.ts"
           ],
-          "note": "Custom responsive suffix измеряет и наблюдает весь slot, включая textarea, wrappers, composite и fragment siblings; Source-only tag/query/host/editor/prefix/variable/identity snapshots подтверждают reservation и live resize. Существующий Native flow алгоритм сохраняется. Source Overflow может позиционировать suffix absolute и сжимать fragment suffix box до136px при editor109px+prefix64px; Native normal-flow box173px при том же числе тегов. Raw Source suffix measurements сохранены отдельно; exact absolute suffix layout не объявлен перенесённым и остаётся отдельным этапом. DOM-free Source SSR не создаёт Overflow tags, Native сохраняет существующие4 hidden measuring tags без DOM измерений/регистраций/таймеров. Source fragment absolute layout отличается также высотой control, vertical overflow/hit area и popup anchor; это material behavioral gap, а не только pixel parity. Отдельный перенос ограничивается custom multiple responsive, без изменения согласованного default Native flow."
+          "note": "Custom components.input в multiple responsive повторяет Source Overflow runtime layout через отдельный adapter; прежнее расхождение fragment suffix136px/Native173px, высоты control, overflow/hit areas и popup anchor устранено. Обычный Native responsive сохраняет shared flow алгоритм и full-fit-first. DOM-free Source SSR не создаёт Overflow tags, Native сохраняет существующие4 hidden measuring tags без DOM измерений/регистраций/таймеров; строгая гидратация сохраняет root/editor/parent/suffix и освобождает resources. Source custom-container popup имеет absolute/offsetParent host; Native сохраняет fixed portal CSS/offsetParent null при тех же parent, размерах и координатах, проверенных отдельно raw snapshot и общим projector. ShadowRoot сохраняет существующий Native frame fallback; Source cached containing-block parity подтверждена для body и positioned container в LTR/RTL."
         }
       ]
     },

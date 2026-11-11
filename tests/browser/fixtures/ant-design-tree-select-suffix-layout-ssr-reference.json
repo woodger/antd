@@ -1,0 +1,692 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "select": "1.10.1",
+    "treeSelect": "1.16.1",
+    "overflow": "1.0.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "renderer": "Unmodified ReactDOMServer in an isolated DOM-free VM; official React/ReactDOM/Antd UMD and Source-only factory",
+    "domAvailableDuringRender": false,
+    "layout": "No computed geometry is projected; suffix remains in unmeasured flow until client observation.",
+    "messages": []
+  },
+  "cases": [
+    {
+      "id": "input-ltr",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 0,
+        "wrapperCount": 0,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "f89f769a3c34f3602e963def93056b13d1afc08dc538e5be38fafe2e67cd4d01"
+    },
+    {
+      "id": "input-rtl",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 0,
+        "wrapperCount": 0,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "f4fa2421add2de09d949e2bb342aa4d4017d0f28e066e2ead1f87feb4c5ba02e"
+    },
+    {
+      "id": "textarea-ltr",
+      "view": {
+        "editor": {
+          "tag": "TEXTAREA",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 0,
+        "wrapperCount": 0,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "1a82a9f6e6e4169a55221e4eb54bf24447c33a3e48f60845fce9bf55ee1a24a2"
+    },
+    {
+      "id": "textarea-rtl",
+      "view": {
+        "editor": {
+          "tag": "TEXTAREA",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 0,
+        "wrapperCount": 0,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "a1433d97bc3bab40e7ce0c0168271b7352add13bcfca807ce44076798f236cd5"
+    },
+    {
+      "id": "wrapped-dom-ref-ltr",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 1,
+        "wrapperCount": 1,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "1515fe37bce589bd751e454509290ceae8ed1bbce31d37d6958dd06c1f8b3804"
+    },
+    {
+      "id": "wrapped-dom-ref-rtl",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 1,
+        "wrapperCount": 1,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "da647ff95a87317a7786c767de36c062655b1f5cfd53dbb23343b14755113fd4"
+    },
+    {
+      "id": "composite-ref-ltr",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 1,
+        "wrapperCount": 1,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "9a414d34f62741e64395122be19ba45b131459e2ea88c0a22849528f9f4baee5"
+    },
+    {
+      "id": "composite-ref-rtl",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 1,
+        "wrapperCount": 1,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "6d739ed06d2e6bac455ca7f4e469eebbe3f6161893789a9813acc4def8bf899d"
+    },
+    {
+      "id": "fragment-ltr",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 1,
+        "wrapperCount": 0,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "c0a76d2ae2b61b4733651f6ea86fc31a1ddeaa5b9c8037e6166b64faeab55e1d"
+    },
+    {
+      "id": "fragment-rtl",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 1,
+        "wrapperCount": 0,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "3718f233497787d73679eefa9572f859f143d50fea99aaf6dfad7b3f3538965e"
+    },
+    {
+      "id": "fragment-small",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 1,
+        "wrapperCount": 0,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "89305b078e56c3e490c79e1a6327bc048327586625543b98be173e9f440a8003"
+    },
+    {
+      "id": "fragment-large",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 1,
+        "wrapperCount": 0,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "7a9a2ce0a4b25952928d33958164c2e41fffa367b0f4113e142204685688f9a9"
+    },
+    {
+      "id": "default-tags-ltr",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 0,
+        "wrapperCount": 0,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "31139c2a83e3249d67564d7efd0515e5c6500d415398837feda0bfa532a24932"
+    },
+    {
+      "id": "default-tags-rtl",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 1,
+        "wrapperCount": 1,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "572bad7c4ed59011d8658ed4ed53009b8fae5f76c406739bd19ddab39d031955"
+    },
+    {
+      "id": "fragment-boundary",
+      "view": {
+        "editor": {
+          "tag": "INPUT",
+          "id": "suffix-layout-control",
+          "role": "combobox",
+          "value": "",
+          "name": null,
+          "expanded": "false",
+          "disabled": false,
+          "readonly": false
+        },
+        "prefixCount": 1,
+        "wrapperCount": 0,
+        "visibleTags": [],
+        "rest": {
+          "present": true,
+          "visible": false,
+          "omitted": "b,c,d"
+        },
+        "suffix": {
+          "present": true,
+          "fixed": false
+        },
+        "values": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "events": []
+      },
+      "resources": {
+        "timers": 0,
+        "measurements": 0,
+        "frames": 0
+      },
+      "refs": {
+        "native": null,
+        "input": null
+      },
+      "callbacks": [],
+      "htmlSha256": "38a9bd73c9159c81374d6b41822b06c6812c417e1fe5e087804de3dc53a98dd6"
+    }
+  ]
+}

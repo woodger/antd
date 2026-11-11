@@ -36,6 +36,9 @@
   import { treeSelectTagText, treeSelectTagOverflow } from './tree-select-tags.engine';
   import { treeSelectSemantics } from './tree-select-semantic.engine';
   import { connectSelectTagOverflow, measureSelectInput } from './select-tag-overflow.dom';
+  import { connectTreeSelectComponentOverflow } from './tree-select-component-overflow.dom';
+  import { createTreeSelectComponentAnchor } from './tree-select-component-anchor.dom';
+  import type { TreeSelectComponentOverflowLayout } from './tree-select-component-overflow.engine';
   import { useConfig } from './config-context';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getSelectPrefixCss } from './select-prefix.engine';
@@ -217,17 +220,23 @@
     index, checks.checked, display.length
   ));
   let responsiveCount = $state(Number.POSITIVE_INFINITY);
+  let componentOverflow = $state.raw<TreeSelectComponentOverflowLayout>();
   let tagsReady = $state(false);
   onMount(() => { tagsReady = true; });
   let responsiveTags = $derived(isMultiple && maxTagCount === 'responsive');
-  let tagOverflow = $derived(treeSelectTagOverflow(display,
-    responsiveTags ? responsiveCount : typeof maxTagCount === 'number' ? maxTagCount : undefined));
+  let componentResponsive = $derived(Boolean(responsiveTags && components?.input && !components.root));
+  let tagOverflow = $derived(componentResponsive && componentOverflow
+    ? { visible: display.slice(0, componentOverflow.visibleCount), omitted: display.slice(componentOverflow.omittedStart) }
+    : treeSelectTagOverflow(display,
+      responsiveTags ? responsiveCount : typeof maxTagCount === 'number' ? maxTagCount : undefined));
   const labelCache = createTreeSelectLabelCache<Data>();
   // Summary связывает labels в текущем render, до вызова consumer snippet.
   let omittedTags = $derived(treeTitleRender && typeof maxTagPlaceholder === 'function'
     ? labelCache.forSummary(treeTitleRender, tagOverflow.omitted, index.values)
     : { records: tagOverflow.omitted, pending: [] });
-  let renderedTags = $derived(responsiveTags ? display : tagOverflow.visible);
+  let renderedTags = $derived(responsiveTags
+    ? componentResponsive && componentOverflow ? display.slice(0, componentOverflow.renderCount) : display
+    : tagOverflow.visible);
   let visibleTagKeys = $derived(new Set(tagOverflow.visible.map(item => item.value)));
   // Ant wrapper передаёт tagRender по multiple/treeCheckable, независимо от strict-only rc mode.
   let renderTag = $derived(multiple || treeCheckable ? tagRender : undefined);
@@ -314,6 +323,9 @@
   let rootContext = $derived.by(componentRootContext);
   let inputContext = $derived.by(componentInputContext);
   let componentInputValue = $derived(canSearch && !(isMultiple && !rawOpen && autoClear) ? search : '');
+  let placeholderQuery = $derived(componentResponsive ? componentInputValue : inputValue);
+  let hiddenRest = $derived(!tagOverflow.omitted.length || responsiveTags && !tagsReady
+    || componentResponsive && !componentOverflow?.restReady);
   let popup = $state<HTMLDivElement>();
   let menuElement = $state<HTMLDivElement>();
   let popupMouseDownTimer: ReturnType<typeof setTimeout> | undefined;
@@ -402,7 +414,19 @@
     componentInputWidth = measureSelectInput(input);
   });
   $effect(() => {
-    if (!tagContent || !responsiveTags) return;
+    if (!componentResponsive) componentOverflow = undefined;
+  });
+  $effect(() => {
+    if (!componentResponsive || !tagContent || !componentInputSuffix) return;
+    const host = tagContent, suffix = componentInputSuffix;
+    const overflow = untrack(() => connectTreeSelectComponentOverflow(host, suffix, () => display.length,
+      layout => { componentOverflow = layout; }));
+    // Static renderers могут не изменить DOM при росте выбранного списка.
+    $effect(() => { void display.length; overflow.schedule(); });
+    return overflow.destroy;
+  });
+  $effect(() => {
+    if (!tagContent || !responsiveTags || componentResponsive) return;
     void display;
     void maxTagTextLength;
     void maxTagPlaceholder;
@@ -510,9 +534,12 @@
   $effect(() => {
     if (!visible || !popup || !root) return;
     const position = placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft');
-    return connectPopup(popup, root, {
+    const sourceAnchor = componentResponsive
+      ? createTreeSelectComponentAnchor(root, popup, position.endsWith('Right')) : undefined;
+    const disconnect = connectPopup(popup, root, {
       placement: position.startsWith('top') ? 'top' : 'bottom',
       gap: 4,
+      getAnchorRect: sourceAnchor?.read,
       align: position.endsWith('Right') ? 'right' : 'left',
       autoAdjustOverflow: true,
       get maxWidth() { return untrack(() => semantics.popupHasMaxWidth ? false : '100vw'); },
@@ -529,6 +556,7 @@
         scheduleClose();
       }
     });
+    return () => { disconnect(); sourceAnchor?.destroy(); };
   });
   $effect(() => {
     if (!editor) return;
@@ -888,6 +916,9 @@
     return loadData?.(panelNode(node)) ?? Promise.resolve();
   }
   function preserveEditorFocus(event: PointerEvent) {
+    // Source OptionList отменяет mousedown только в Tree, не на padding popup.
+    if (componentResponsive && event.target instanceof Node
+      && !(treeElement ?? menuElement)?.contains(event.target)) return false;
     // Полоса прокрутки сама удерживает фокус при обработке mousedown.
     return !(event.target instanceof Element && event.target.closest('.ant-tree-list-scrollbar'));
   }
@@ -1034,6 +1065,11 @@
   [data-ant-tree-choice-input]::placeholder { color:transparent; }
   .placeholder { position:absolute;inset-inline-start:0;max-width:100%;pointer-events:none; }
   [data-ant-tree-choice-multiple] { height:auto;min-height:var(--ant-native-tree-choice-height); }
+  [data-ant-tree-choice-component-responsive] { display:inline-flex;min-height:0; }
+  [data-ant-tree-choice-component-responsive] [data-ant-tree-choice-input-suffix] { display:block;line-height:1;max-width:calc(100% - 4px); }
+  [data-ant-tree-choice-component-responsive] .measure-tag { height:0;overflow-y:hidden;opacity:0;visibility:visible;inset-block-start:auto;inset-inline-start:auto; }
+  [data-ant-tree-choice-component-responsive] [data-ant-tree-choice-selection-item] { max-width:none; }
+  [data-ant-tree-choice-component-responsive] .custom-tag { display:inline;max-width:none; }
   [data-ant-tree-choice-multiple] [data-ant-tree-choice-content] { gap:0; }
   [data-ant-tree-choice-multiple] [data-ant-tree-choice-input] { flex:1 1 60px;width:60px;min-width:40px;max-width:100%; }
   [data-ant-tree-choice-source-theme][data-ant-tree-choice-multiple] [data-ant-tree-choice-input] { line-height:calc(var(--ant-select-internal_fixed_item_margin) * 2 + var(--ant-native-tree-choice-multi-item-height)); }
@@ -1080,6 +1116,11 @@
 {#snippet panelLeafIcon(node: TreeEventNode)}
   <TreeTitle value={leafIcon} {node} />
 {/snippet}
+{#snippet controlPlaceholder()}
+  <div class={['placeholder', `${prefix}-placeholder`, classes.placeholder]}
+    style={serializeInlineStyleLayers([placeholderQuery ? 'visibility:hidden' : undefined, css.placeholder])}
+    aria-hidden={placeholderText !== undefined || undefined}><RenderContent value={placeholder} /></div>
+{/snippet}
 {#if selectPrefixCss}<ThemeScopeStyle css={selectPrefixCss} scope={`tree-select-control-prefix:${prefix}:${rootPrefix}`} />{/if}{#if treePrefixCss}<ThemeScopeStyle css={treePrefixCss} scope={`tree-select-prefix:${treePrefix}:${rootPrefix}`} />{/if}
 {#if renderRoot}
   {#if name ?? field?.name}{#each display as item(item.value)}<input type="hidden" name={name ?? field?.name} value={String(item.value)} disabled={blocked} />{/each}{/if}
@@ -1090,6 +1131,7 @@
   data-ant-tree-choice-source-theme={Boolean(selectTheme.className) || undefined}
   data-ant-tree-choice-multiple={isMultiple || undefined}
   data-ant-tree-choice-responsive={responsiveTags || undefined}
+  data-ant-tree-choice-component-responsive={componentResponsive || undefined}
   style:--ant-native-tree-choice-height={`var(--${privateNamespace}-select-height)`}
   style:--ant-native-tree-choice-multi-item-height={`var(--${privateNamespace}-select-multi-item-height)`}
   bind:this={defaultRoot} role="presentation" onmousedown={event => {
@@ -1130,23 +1172,25 @@
   {#if name??field?.name}{#each display as item(item.value)}<input type="hidden" name={name ?? field?.name} value={String(item.value)} disabled={blocked} />{/each}{/if}
   {#if leading}<div class={[`${prefix}-prefix`, classes.prefix]} style={css.prefix}><RenderContent value={leading} /></div>{/if}
   <div data-ant-tree-choice-content class={[`${prefix}-content`, inputSlot && !isMultiple && display[0]?.label != null && String(display[0].label).trim() && `${prefix}-content-has-value`, inputSlot && !isMultiple && canSearch && search && `${prefix}-content-has-search-value`, classes.content]} style={css.content} bind:this={tagContent}>
-    {#if !display.length && (!isMultiple || !inputValue)}
-      <div class={['placeholder', `${prefix}-placeholder`, classes.placeholder]}
-        style={serializeInlineStyleLayers([inputValue ? 'visibility:hidden' : undefined, css.placeholder])}
-        aria-hidden={placeholderText !== undefined || undefined}><RenderContent value={placeholder} /></div>
+    {#if !display.length && (!isMultiple || !placeholderQuery)}
+      {#if componentResponsive}<div data-tree-choice-overflow-prefix style:order={-1}
+        class={[`${prefix}-content-item`, `${prefix}-content-item-prefix`]}>{@render controlPlaceholder()}</div>
+      {:else}{@render controlPlaceholder()}{/if}
     {/if}
     {#if isMultiple}{#each renderedTags as item, index(item.value)}
       {@const hidden = responsiveTags && (!tagsReady || !visibleTagKeys.has(item.value))}
       {#snippet tagLabel()}{@render labelNode(item, true)}{/snippet}
+      {#snippet choiceItem()}
       <span data-ant-tree-choice-selection-item={!renderTag || undefined}
         data-ant-tree-choice-selection-item-disabled={!renderTag && (blocked || item.disabled) || undefined}
-        data-tree-choice-tag={responsiveTags || undefined}
+        data-tree-choice-tag={!componentResponsive && responsiveTags || undefined}
         data-tree-choice-custom-tag={renderTag ? '' : undefined}
-        class={[renderTag ? 'custom-tag' : `${prefix}-selection-item`, hidden && 'measure-tag',
+        class={[renderTag ? 'custom-tag' : `${prefix}-selection-item`, !componentResponsive && hidden && 'measure-tag',
           !renderTag && (blocked || item.disabled) && `${prefix}-selection-item-disabled`, !renderTag && classes.item]}
         style={renderTag ? undefined : css.item}
         title={renderTag ? undefined : tagText(item)} role="presentation"
-        onmousedown={renderTag ? customTagMouseDown : undefined} aria-hidden={hidden || undefined} inert={hidden}
+        onmousedown={renderTag ? customTagMouseDown : undefined}
+        aria-hidden={!componentResponsive && hidden || undefined} inert={!componentResponsive && hidden}
         {@attach node => connectTagElement(node, item.value)}>
         {#if renderTag}{@render renderTag({
           label: tagLabel, value: item.value, index, disabled: item.disabled,
@@ -1165,6 +1209,10 @@
             </button>{/if}
         {/if}
       </span>
+      {/snippet}
+      {#if componentResponsive}<div data-tree-choice-tag class={[`${prefix}-content-item`, hidden && 'measure-tag']}
+        style:order={index} aria-hidden={hidden || undefined} inert={hidden}>{@render choiceItem()}</div>
+      {:else}{@render choiceItem()}{/if}
     {/each}
     {#if tagOverflow.omitted.length || responsiveTags && display.length}
       {#snippet restLabel()}
@@ -1173,25 +1221,35 @@
         {:else if maxTagPlaceholder == null}+ {tagOverflow.omitted.length} ...
         {:else}<TreeTitle value={maxTagPlaceholder} node={{}} />{/if}
       {/snippet}
+      {#snippet restItem()}
       <span data-ant-tree-choice-selection-item={!renderTag || undefined}
-        data-tree-choice-rest={responsiveTags || undefined}
+        data-tree-choice-rest={!componentResponsive && responsiveTags || undefined}
         data-tree-choice-custom-tag={renderTag ? '' : undefined}
         class={[`${prefix}-selection-overflow-item-rest`,
           renderTag ? 'custom-tag' : `${prefix}-selection-item`, !renderTag && classes.item,
-          (!tagOverflow.omitted.length || responsiveTags && !tagsReady) && 'measure-tag']}
+          !componentResponsive && hiddenRest && 'measure-tag']}
         style={renderTag ? undefined : css.item}
         title={renderTag ? undefined : placeholderTitle} role="presentation"
         onmousedown={renderTag ? customTagMouseDown : undefined}
-        aria-hidden={!tagOverflow.omitted.length || responsiveTags && !tagsReady || undefined}
-        inert={!tagOverflow.omitted.length || responsiveTags && !tagsReady}>
+        aria-hidden={!componentResponsive && hiddenRest || undefined}
+        inert={!componentResponsive && hiddenRest}>
         {#if renderTag}{@render renderTag({
           label: restLabel, isMaxTag: true, disabled: false, closable: false
         })}{:else}<span class={[`${prefix}-selection-item-content`, classes.itemContent]} style={css.itemContent}>{@render restLabel()}</span>{/if}
       </span>
+      {/snippet}
+      {#if componentResponsive}<div data-tree-choice-rest
+        class={[`${prefix}-content-item`, `${prefix}-content-item-rest`, hiddenRest && 'measure-tag']}
+        style:order={hiddenRest ? Number.MAX_SAFE_INTEGER : (componentOverflow?.omittedStart ?? 1) - 1}
+        aria-hidden={hiddenRest || undefined} inert={hiddenRest}>{@render restItem()}</div>
+      {:else}{@render restItem()}{/if}
     {/if}
     {:else if renderInput && display[0]}<span style:visibility={canSearch && search ? 'hidden' : undefined}>{@render labelNode(display[0])}</span>
     {:else if (!visible || !canSearch) && (treeTitleRender || typeof display[0]?.label==='function' || Array.isArray(display[0]?.label)) && display[0]}<span class="single-snippet">{@render labelNode(display[0])}</span>{/if}
-    {#if renderInput}{#if isMultiple}<span data-ant-tree-choice-input-suffix bind:this={componentInputSuffix}><TreeSelectComponentScope>{@render renderInput(inputContext)}</TreeSelectComponentScope></span>
+    {#if renderInput}{#if isMultiple}<span data-ant-tree-choice-input-suffix
+      class={componentResponsive ? `${prefix}-content-item ${prefix}-content-item-suffix` : undefined}
+      style:order={componentResponsive ? (componentOverflow?.omittedStart ?? 1) - 1 : undefined}
+      bind:this={componentInputSuffix}><TreeSelectComponentScope>{@render renderInput(inputContext)}</TreeSelectComponentScope></span>
     {:else}<TreeSelectComponentScope>{@render renderInput(inputContext)}</TreeSelectComponentScope>{/if}{:else}
     <input {...attributes} bind:this={defaultEditor} id={controlId} data-ant-tree-choice-input class={[`${prefix}-input`, classes.input]} style={css.input} type="text" role="combobox" tabindex={attributes.tabindex ?? tabIndex}
       {...(attributes.autofocus !== undefined || autoFocus !== undefined

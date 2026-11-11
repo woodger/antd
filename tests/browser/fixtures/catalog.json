@@ -25,6 +25,21 @@
     "root": "tree-select-input-responsive-fixture"
   },
   {
+    "id": "tree-select-suffix-layout",
+    "module": "./TreeSelectSuffixLayoutFixtures.svelte",
+    "root": "tree-select-suffix-layout-fixture"
+  },
+  {
+    "id": "tree-select-suffix-container",
+    "module": "./TreeSelectSuffixContainerFixtures.svelte",
+    "root": "tree-select-suffix-container-fixture"
+  },
+  {
+    "id": "tree-select-suffix-layout-edges",
+    "module": "./TreeSelectSuffixLayoutEdgesFixtures.svelte",
+    "root": "tree-select-suffix-layout-edges-fixture"
+  },
+  {
     "id": "tree-select-token",
     "module": "./TreeSelectTokenFixtures.svelte",
     "root": "tree-select-token-fixture"
