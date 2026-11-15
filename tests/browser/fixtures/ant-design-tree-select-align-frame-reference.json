@@ -1,0 +1,454 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "select": "1.10.1",
+    "treeSelect": "1.16.1",
+    "trigger": "3.10.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "chromium": "156.0.8078.79",
+    "viewport": {
+      "width": 1200,
+      "height": 800
+    },
+    "source": "Unmodified official UMD; separate public controlled-open fixtures and shared DOM-only projector; no Native implementation or expected corrections.",
+    "settle": "Six identical projections separated by three requestAnimationFrame callbacks",
+    "document": {
+      "compatMode": "CSS1Compat",
+      "doctype": "html"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  "cases": [
+    {
+      "id": "host-rotate-invariant",
+      "initial": {
+        "view": {
+          "viewport": {
+            "width": 1200,
+            "height": 800
+          },
+          "host": {
+            "x": 300,
+            "y": 200,
+            "width": 420,
+            "height": 160
+          },
+          "root": {
+            "tag": "DIV",
+            "marker": null,
+            "box": {
+              "x": 300,
+              "y": 200,
+              "width": 220,
+              "height": 32
+            },
+            "focused": false,
+            "expanded": null,
+            "direction": "ltr"
+          },
+          "popup": {
+            "box": {
+              "x": 300,
+              "y": 236,
+              "width": 300,
+              "height": 72
+            },
+            "relativeRoot": {
+              "x": 0,
+              "y": 36,
+              "width": 300,
+              "height": 72
+            },
+            "placementClasses": [
+              "ant-select-dropdown-placement-bottomLeft"
+            ],
+            "visible": true,
+            "direction": "ltr"
+          },
+          "events": []
+        },
+        "raw": {
+          "hostTransform": "none",
+          "popupPosition": "absolute",
+          "axes": {
+            "left": "0px",
+            "top": "36px",
+            "right": "auto",
+            "bottom": "auto",
+            "transform": ""
+          },
+          "offsetParent": {
+            "tag": "DIV",
+            "caseHost": true,
+            "box": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            }
+          },
+          "container": "host"
+        },
+        "observed": {
+          "sameRoot": true,
+          "samePopup": true,
+          "rootIsPublicRef": true,
+          "focusMethod": true,
+          "blurMethod": true,
+          "scrollToMethod": true,
+          "sameFocus": true,
+          "sameBlur": true,
+          "sameScrollTo": true,
+          "oldRootConnected": true
+        }
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "transform",
+            "value": "rotate(180deg)"
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "marker": null,
+              "box": {
+                "x": 500,
+                "y": 328,
+                "width": 220,
+                "height": 32
+              },
+              "focused": false,
+              "expanded": null,
+              "direction": "ltr"
+            },
+            "popup": {
+              "box": {
+                "x": 420,
+                "y": 252,
+                "width": 300,
+                "height": 72
+              },
+              "relativeRoot": {
+                "x": -80,
+                "y": -76,
+                "width": 300,
+                "height": 72
+              },
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "visible": true,
+              "direction": "ltr"
+            },
+            "events": []
+          },
+          "raw": {
+            "hostTransform": "matrix(-1, 0, 0, -1, 0, 0)",
+            "popupPosition": "absolute",
+            "axes": {
+              "left": "0px",
+              "top": "36px",
+              "right": "auto",
+              "bottom": "auto",
+              "transform": ""
+            },
+            "offsetParent": {
+              "tag": "DIV",
+              "caseHost": true,
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 420,
+                "height": 160
+              }
+            },
+            "container": "host"
+          },
+          "observed": {
+            "sameRoot": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false,
+            "oldRootConnected": true
+          }
+        },
+        {
+          "action": {
+            "type": "transform",
+            "value": "none"
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "marker": null,
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "focused": false,
+              "expanded": null,
+              "direction": "ltr"
+            },
+            "popup": {
+              "box": {
+                "x": 300,
+                "y": 236,
+                "width": 300,
+                "height": 72
+              },
+              "relativeRoot": {
+                "x": 0,
+                "y": 36,
+                "width": 300,
+                "height": 72
+              },
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "visible": true,
+              "direction": "ltr"
+            },
+            "events": []
+          },
+          "raw": {
+            "hostTransform": "none",
+            "popupPosition": "absolute",
+            "axes": {
+              "left": "0px",
+              "top": "36px",
+              "right": "auto",
+              "bottom": "auto",
+              "transform": ""
+            },
+            "offsetParent": {
+              "tag": "DIV",
+              "caseHost": true,
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 420,
+                "height": 160
+              }
+            },
+            "container": "host"
+          },
+          "observed": {
+            "sameRoot": true,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false,
+            "oldRootConnected": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "root-replacement-flip",
+      "initial": {
+        "view": {
+          "viewport": {
+            "width": 1200,
+            "height": 800
+          },
+          "host": {
+            "x": 300,
+            "y": 740,
+            "width": 420,
+            "height": 160
+          },
+          "root": {
+            "tag": "BUTTON",
+            "marker": "A",
+            "box": {
+              "x": 300,
+              "y": 740,
+              "width": 220,
+              "height": 40
+            },
+            "focused": false,
+            "expanded": null,
+            "direction": "ltr"
+          },
+          "popup": {
+            "box": {
+              "x": 300,
+              "y": 664,
+              "width": 300,
+              "height": 72
+            },
+            "relativeRoot": {
+              "x": 0,
+              "y": -76,
+              "width": 300,
+              "height": 72
+            },
+            "placementClasses": [
+              "ant-select-dropdown-placement-topLeft"
+            ],
+            "visible": true,
+            "direction": "ltr"
+          },
+          "events": []
+        },
+        "raw": {
+          "hostTransform": "none",
+          "popupPosition": "absolute",
+          "axes": {
+            "left": "300px",
+            "top": "auto",
+            "right": "auto",
+            "bottom": "64px",
+            "transform": ""
+          },
+          "offsetParent": {
+            "tag": "BODY",
+            "caseHost": false,
+            "box": {
+              "x": 0,
+              "y": 0,
+              "width": 1200,
+              "height": 1600
+            }
+          },
+          "container": "body"
+        },
+        "observed": {
+          "sameRoot": true,
+          "samePopup": true,
+          "rootIsPublicRef": true,
+          "focusMethod": true,
+          "blurMethod": true,
+          "scrollToMethod": true,
+          "sameFocus": true,
+          "sameBlur": true,
+          "sameScrollTo": true,
+          "oldRootConnected": true
+        }
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "replace-root",
+            "kind": "B",
+            "top": 200
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "BUTTON",
+              "marker": "B",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 40
+              },
+              "focused": false,
+              "expanded": null,
+              "direction": "ltr"
+            },
+            "popup": {
+              "box": {
+                "x": 300,
+                "y": 124,
+                "width": 300,
+                "height": 72
+              },
+              "relativeRoot": {
+                "x": 0,
+                "y": -76,
+                "width": 300,
+                "height": 72
+              },
+              "placementClasses": [
+                "ant-select-dropdown-placement-topLeft"
+              ],
+              "visible": true,
+              "direction": "ltr"
+            },
+            "events": []
+          },
+          "raw": {
+            "hostTransform": "none",
+            "popupPosition": "absolute",
+            "axes": {
+              "left": "300px",
+              "top": "auto",
+              "right": "auto",
+              "bottom": "604px",
+              "transform": ""
+            },
+            "offsetParent": {
+              "tag": "BODY",
+              "caseHost": false,
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 1200,
+                "height": 1600
+              }
+            },
+            "container": "body"
+          },
+          "observed": {
+            "sameRoot": false,
+            "samePopup": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false,
+            "oldRootConnected": false
+          }
+        }
+      ]
+    }
+  ]
+}

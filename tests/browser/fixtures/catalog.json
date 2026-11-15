@@ -1,5 +1,15 @@
 [
   {
+    "id": "tree-select-align-frame",
+    "module": "./TreeSelectAlignFrameFixtures.svelte",
+    "root": "tree-select-align-frame-fixture"
+  },
+  {
+    "id": "tree-select-align",
+    "module": "./TreeSelectAlignFixtures.svelte",
+    "root": "tree-select-align-fixture"
+  },
+  {
     "id": "tree-select-inert-api",
     "module": "./TreeSelectInertApiFixtures.svelte",
     "root": "tree-select-inert-api-fixture"

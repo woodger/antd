@@ -38,6 +38,11 @@
   import { connectSelectTagOverflow, measureSelectInput } from './select-tag-overflow.dom';
   import { connectTreeSelectComponentOverflow } from './tree-select-component-overflow.dom';
   import { createTreeSelectComponentAnchor } from './tree-select-component-anchor.dom';
+  import { createTreeSelectAlign } from './tree-select-align.dom';
+  import { treeSelectBuiltinPlacements } from './tree-select-align.engine';
+  import {
+    getPopupPlacement, type PopupFlipCache, type PopupSourceAlign
+  } from './popup-position.engine';
   import type { TreeSelectComponentOverflowLayout } from './tree-select-component-overflow.engine';
   import { useConfig } from './config-context';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
@@ -141,6 +146,8 @@
     popupMatchSelectWidth,
     popupStyle: _popupStyle,
     placement,
+    popupAlign,
+    builtinPlacements,
     onPopupScroll,
     getPopupContainer,
     classNames,
@@ -331,6 +338,21 @@
   let hiddenRest = $derived(!tagOverflow.omitted.length || responsiveTags && !tagsReady
     || componentResponsive && !componentOverflow?.restReady);
   let popup = $state<HTMLDivElement>();
+  let sourceAlignmentUsed = $state(untrack(() => popupAlign !== undefined || builtinPlacements !== undefined));
+  let cachedPopupAlignment = $state.raw<PopupSourceAlign>();
+  let legacyPopupClass = $state<string>();
+  let popupFlipCache: PopupFlipCache | undefined;
+  const sourcePlacements = treeSelectBuiltinPlacements();
+  let alignedPopupClass = $derived(sourceAlignmentUsed
+    ? cachedPopupAlignment && getPopupPlacement(builtinPlacements || sourcePlacements, cachedPopupAlignment)
+    : legacyPopupClass);
+  $effect(() => {
+    if (popupAlign !== undefined || builtinPlacements !== undefined) sourceAlignmentUsed = true;
+  });
+  $effect(() => {
+    if (sourceAlignmentUsed && popup && !semantics.popupHasMaxWidth)
+      popup.style.removeProperty('max-width');
+  });
   let menuElement = $state<HTMLDivElement>();
   let popupMouseDownTimer: ReturnType<typeof setTimeout> | undefined;
   const anchorWidthVariable = '--ant-tree-select-anchor-width';
@@ -536,21 +558,65 @@
     return () => observer.disconnect();
   });
   $effect(() => {
-    if (!visible || !popup || !root) return;
-    const position = placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft');
-    const sourceAnchor = componentResponsive
-      ? createTreeSelectComponentAnchor(root, popup, position.endsWith('Right')) : undefined;
+    if (!visible) {
+      popupFlipCache = undefined;
+      return;
+    }
+    if (!popup || !root) return;
+    const anchor = root;
+    const surface = popup;
+    const sourceMode = () => untrack(() => sourceAlignmentUsed);
+    const requestedPlacement = () => untrack(() =>
+      placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft'));
+    // Track the Source cache from open, including before alignment props are first added live.
+    // Native keeps its existing default presentation until the inherited alignment API is used.
+    const source = untrack(() => createTreeSelectAlign(
+      anchor,
+      surface,
+      () => untrack(() => ({
+        placement: placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft'),
+        popupAlign,
+        builtinPlacements,
+        style: serializeInlineStyleLayers(popupLayers),
+        container: getPopupContainer || config.getPopupContainer
+          ? surface.parentNode as HTMLElement | ShadowRoot : surface.ownerDocument.body
+      })),
+      popupFlipCache
+    ));
+    let sourceAnchor: ReturnType<typeof createTreeSelectComponentAnchor> | undefined;
+    let sourceAnchorRight: boolean | undefined;
     const disconnect = connectPopup(popup, root, {
-      placement: position.startsWith('top') ? 'top' : 'bottom',
+      get placement() { return requestedPlacement().startsWith('top') ? 'top' : 'bottom'; },
       gap: 4,
-      getAnchorRect: sourceAnchor?.read,
-      align: position.endsWith('Right') ? 'right' : 'left',
+      getPosition: (rect, bounds, viewport) => {
+        const value = source.position(rect, bounds, viewport);
+        return sourceMode() ? value : undefined;
+      },
+      getAnchorRect: rect => {
+        if (sourceMode() || !untrack(() => componentResponsive)) return rect;
+        const right = requestedPlacement().endsWith('Right');
+        if (!sourceAnchor || sourceAnchorRight !== right) {
+          sourceAnchor?.destroy();
+          sourceAnchor = createTreeSelectComponentAnchor(anchor, surface, right);
+          sourceAnchorRight = right;
+        }
+        return sourceAnchor.read(rect);
+      },
+      get align() { return requestedPlacement().endsWith('Right') ? 'right' : 'left'; },
       autoAdjustOverflow: true,
-      get maxWidth() { return untrack(() => semantics.popupHasMaxWidth ? false : '100vw'); },
+      get maxWidth() { return sourceMode() ? false : untrack(() => semantics.popupHasMaxWidth ? false : '100vw'); },
+      getAnchorWidth: () => sourceMode() ? source.width : anchor.getBoundingClientRect().width,
+      get constrainWidth() { return sourceMode() ? false : undefined; },
+      get allowOffscreenAnchor() { return sourceMode(); },
       anchorWidthVariable,
       preserveFocus: customPopup ? false : preserveEditorFocus,
-      applyPosition: value => untrack(() => popupStyle.position(value)),
-      onPlacement: () => { },
+      applyPosition: value => untrack(() => popupStyle.position(value, sourceMode() ? source.style : undefined)),
+      onAlign: value => {
+        if (sourceMode()) cachedPopupAlignment = value.sourceAlign;
+      },
+      onPlacement: value => {
+        if (!sourceMode()) legacyPopupClass = `${value.startsWith('top') ? 'top' : 'bottom'}${requestedPlacement().endsWith('Right') ? 'Right' : 'Left'}`;
+      },
       onVisibilityChange: next => {
         shown = next;
       },
@@ -560,7 +626,14 @@
         scheduleClose();
       }
     });
-    return () => { disconnect(); sourceAnchor?.destroy(); };
+    source.connect(disconnect.forceAlign);
+    return () => {
+      // Source resets flip history only when closed, including across live root replacement.
+      popupFlipCache = source.flips;
+      disconnect();
+      source.destroy();
+      sourceAnchor?.destroy();
+    };
   });
   $effect(() => {
     if (!editor) return;
@@ -1326,6 +1399,7 @@
     selectTheme.className,
     selectTheme.className && 'ant-tree-select-source-popup',
     config.direction === 'rtl' && `${treePrefix}-dropdown-rtl`,
+    alignedPopupClass && `${prefix}-dropdown-placement-${alignedPopupClass}`,
     rootClassName, classes.root, classes.popup.root
   ]} style={initialPopupStyle}
   {@attach popupStyle.attach}

@@ -6,9 +6,10 @@ import type { TooltipPosition } from './tooltip.engine';
 export function createOverlayStyle(getLayers: () => readonly InlineStyleLayer[]) {
   let write: ReturnType<typeof connectInlineStyle> | undefined;
   let position: InlineStyleLayer;
+  let projection: InlineStyleLayer;
 
   function update() {
-    if (write) write([position, ...getLayers()]);
+    if (write) write([position, ...getLayers(), projection]);
   }
 
   return {
@@ -20,7 +21,8 @@ export function createOverlayStyle(getLayers: () => readonly InlineStyleLayer[])
         write = undefined;
       };
     },
-    position(value: TooltipPosition) {
+    position(value: TooltipPosition, projected?: InlineStyleLayer) {
+      projection = projected;
       position = [
         ['left', `${value.left}px`],
         ['top', `${value.top}px`],

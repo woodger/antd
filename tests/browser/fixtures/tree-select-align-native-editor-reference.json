@@ -1,0 +1,35 @@
+{
+  "reference": {
+    "kind": "Native default multiple editor geometry boundary, independently measured before this alignment migration",
+    "baseCommit": "805cc7e342f61ba8ea7639a48462ae55ca6a50fd",
+    "distControlSha256": "2de558a93a08d8efdffe8f77fbb315c5f08b49fb5f1df8cabe6dae2397c3ac2d",
+    "capture": ".upstream/artifacts/tree-select-align-native-805-baseline.mjs",
+    "rawCapture": ".upstream/artifacts/tree-select-align-native-805-baseline.json",
+    "scope": "Only editor.box for multiple-choice-live. Root/popup geometry is checked against an independent Source public-style counterpart, never calculated from these boxes.",
+    "publishedRootHeights": {
+      "[\"a\"]": 32,
+      "[\"a\",\"b\"]": 60,
+      "[\"b\"]": 32
+    }
+  },
+  "boxes": {
+    "[\"a\"]": {
+      "x": 73.688,
+      "y": 2,
+      "width": 116.313,
+      "height": 28
+    },
+    "[\"a\",\"b\"]": {
+      "x": 4,
+      "y": 30,
+      "width": 186,
+      "height": 28
+    },
+    "[\"b\"]": {
+      "x": 65.906,
+      "y": 2,
+      "width": 124.094,
+      "height": 28
+    }
+  }
+}

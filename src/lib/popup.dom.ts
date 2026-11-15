@@ -37,10 +37,12 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   align?: 'left' | 'right' | 'top' | 'bottom';
   matchAnchorWidth?: boolean;
   anchorWidthVariable?: string;
+  getAnchorWidth?: () => number;
+  constrainWidth?: boolean;
   gap?: number | (() => number | undefined);
   allowZeroSize?: boolean | (() => boolean);
   allowOffscreenAnchor?: boolean;
-  getPosition?: (anchor: DOMRect, popup: DOMRect, viewport: TooltipRect) => TooltipPosition;
+  getPosition?: (anchor: DOMRect, popup: DOMRect, viewport: TooltipRect) => TooltipPosition | undefined;
   getAnchorRect?: (current: DOMRect, popup: DOMRect) => DOMRect;
   applyPosition?: (position: TooltipPosition) => void;
   onVisibilityChange?: (visible: boolean) => void;
@@ -111,7 +113,9 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     }
     const { matchAnchorWidth, anchorWidthVariable } = options;
     if (matchAnchorWidth || anchorWidthVariable) {
-      const width = `${Math.min(rect.width, Math.max(0, viewport.width - 16))}px`;
+      const anchorWidth = options.getAnchorWidth?.() ?? rect.width;
+      const width = `${options.constrainWidth === false ? anchorWidth
+        : Math.min(anchorWidth, Math.max(0, viewport.width - 16))}px`;
       if (matchAnchorWidth) popup.style.minWidth = width;
       if (anchorWidthVariable && popup.style.getPropertyValue(anchorWidthVariable) !== width)
         popup.style.setProperty(anchorWidthVariable, width);

@@ -6,9 +6,12 @@ import type { TreeEventNode, TreeExpandAction, TreeKey, TreeRef, TreeTitleConten
 import type { SelectTagInfo } from './select.types';
 import type { TreeSelectTokenSeparators } from './tree-select-token.engine';
 import type { TreeSelectComponents, TreeSelectEditorElement } from './tree-select-components.types';
+import type { PopupSourceAlign } from './popup-position.engine';
 export type { TreeSelectTokenSeparators } from './tree-select-token.engine';
 /** Методы bind:this. DOM-элементы предоставляются через bindable props. */
 export type TreeSelectRef = TreeRef;
+/** Текущий AlignType без private experimental API; offsets сохраняют общий Native string contract. */
+export type TreeSelectPopupAlign = Omit<PopupSourceAlign, '_experimental'>;
 export type TreeSelectRawValue = string | number;
 export type TreeSelectLabel = string | number | boolean | null | undefined | Snippet
   | readonly TreeSelectLabel[];
@@ -264,6 +267,10 @@ export interface TreeSelectProps<
   /** Ant Design 6.6.8 перекрывает inherited popupStyle; используйте styles.popup.root. */
   popupStyle?: string;
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
+  /** Shallow override выбранного placement; offset/overflow заменяются целиком. */
+  popupAlign?: TreeSelectPopupAlign;
+  /** Полностью заменяет четыре исходных placement, включая явно пустую map. */
+  builtinPlacements?: Readonly<Record<string, TreeSelectPopupAlign>>;
   onPopupScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
   /** Локальный getter получает корень Select; undefined наследует ConfigProvider. */
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;

@@ -76,6 +76,7 @@ export {
 } from './tree-select.engine';
 export type {
   TreeSelectProps,
+  TreeSelectPopupAlign,
   TreeSelectRef,
   TreeSelectNode,
   TreeSelectNodeIcon,

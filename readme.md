@@ -6854,8 +6854,38 @@ React-эталон и явно учитывают прежнее различи�
 [Строгая гидратация](./tests/browser/tree-select-inert-api-hydration.spec.ts)
 сохраняет редактор, query/caret, popup и публичные refs при смене props.
 
-Следующие этапы TreeSelect охватывают `popupAlign`, `builtinPlacements`
-и переходы панели;
+`popupAlign` задаёт shallow override выбранного placement: `offset`, `targetOffset`
+и `overflow` заменяются целиком. `builtinPlacements` заменяет всю стандартную карту,
+включая явно пустой объект; отсутствующая запись использует исходное центрирование.
+Тип `TreeSelectPopupAlign` принимает points, числовые и процентные offsets,
+overflow flags, `dynamicInset` и `htmlRegion`. Процентный offset считается от popup,
+targetOffset — от control. Четыре текущих `useCssRight`/`useCssBottom`/
+`useCssTransform`/`ignoreShake` принимаются с исходным no-op поведением.
+
+Открытый popup сохраняет вычисленное выравнивание до изменения placement,
+размера control/popup, resize окна или scroll предка. Смена карты сама по себе
+не пересчитывает координаты; изменение `popupAlign` вызывает пересчёт сразу,
+только если выбранной записи в карте нет. Это относится и к первому добавлению
+props при открытой панели. Flip history сохраняется при замене custom root
+и сбрасывается при закрытии. Semantic callbacks получают исходные объекты props.
+
+При использовании alignment props Native popup сохраняет fixed top-layer и
+собственный DOM parent; Source absolute CSS frame проецируется в его физические
+координаты с учётом border, margin, scale, transforms и ShadowRoot. Смена CSS frame
+контейнера учитывается отдельно от пересчёта alignment. Обычный multiple control
+сохраняет прежний Native flow редактора и тегов; отдельный запуск настоящего Source
+с той же публично заданной высотой control проверяет связанное выравнивание popup.
+Публичные Native методы ref сохраняют identity при обновлении props, хотя Source
+пересоздаёт их; root и popup сравниваются по фактическим DOM refs.
+`htmlRegion` можно задать локально; глобальный `ConfigProvider.popupOverflow`
+остаётся отдельным расширением provider.
+[35 browser-сценариев](./tests/browser/tree-select-align.spec.ts),
+[два изменения CSS frame/root](./tests/browser/tree-select-align-frame.spec.ts),
+[DOM-free SSR](./tests/package/tree-select-align.ssr.test.ts) и
+[строгая гидратация](./tests/browser/tree-select-align-hydration.spec.ts)
+проверяют независимый React-эталон, geometry, query/caret, refs и cleanup.
+
+Следующие этапы TreeSelect охватывают переходы панели;
 private getInputElement/getRawInputElement не входят в публичный перенос.
 Deprecated React extras исключены.
 Класс popup задаётся через classNames.popup.root; popupClassName удалён.
