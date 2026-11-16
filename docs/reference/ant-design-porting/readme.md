@@ -292,6 +292,14 @@ custom controls; свой upstream style hook у него отсутствует
 Select control и TreeSelect dropdown имеют отдельные scopes и общий private
 namespace variables. Raw local tree style omission отделён от public counterpart
 без local override; сравнение tree/nodes не заявляет одинаковые классы.
+Рецепт tree-select-popup-motion выводит 110 правил и восемь keyframes исходных
+Select slide/move transitions в canonical styles export. Рецепт
+tree-select-popup-motion-prefix создаёт такой же CSS module для других namespaces.
+Runtime ограничивает их popup TreeSelect, независимо подставляя local dropdown
+и global motion prefixes. Исходные фазы,
+CSS clocks и alignment cache сохраняются в Native fixed top-layer;
+проецируемый geometry transition предоставляет реальный WAAPI Animation
+вместо Source CSSTransition, без искусственных DOM end events.
 Рецепт cascader-prefix выводит те же 108 правил, что cascader, как CSS data module.
 Select control и Cascader columns/Panel имеют независимые owner scopes; Row selector
 следует общему prefix. Native input width перекрывает unitless Source формулу после

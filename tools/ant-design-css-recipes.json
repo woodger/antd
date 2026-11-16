@@ -3310,5 +3310,66 @@
     "keyframes": [],
     "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Table prefix template: panels, cells, selection, expansion, filters и sizes.\n * Canonical tokens/marker, private nested border и общие namespaces независимы.\n * Component defaults имеют нулевую specificity для сохранения Native theme bridge.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
     "format": "module"
+  },
+  {
+    "id": "tree-select-popup-motion",
+    "output": "src/lib/vendor/tree-select-popup-motion.css",
+    "expectedRules": 110,
+    "include": [
+      "^\\.ant-(?:slide|move)-(?:up|down)(?![\\w])",
+      "^\\.ant-select-dropdown\\.ant-(?:slide|move)-"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "^\\.ant-(?:slide|move)-",
+        "replacement": ":where(.ant-select-dropdown)$&"
+      },
+      {
+        "pattern": "\\.ant-select-dropdown([-\\w]*)",
+        "replacement": ".ant-select-dropdown$1:where([data-ant-select-prefix=\"ant-select\"][data-ant-select-root-prefix=\"ant\"][data-ant-tree-select-motion])"
+      }
+    ],
+    "keyframes": [
+      "antSlideUpIn",
+      "antSlideUpOut",
+      "antSlideDownIn",
+      "antSlideDownOut",
+      "antMoveUpIn",
+      "antMoveUpOut",
+      "antMoveDownIn",
+      "antMoveDownOut"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Select/TreeSelect popup slide/move phases and placement overrides.\n * Common motion selectors are scoped to their Select dropdown owner.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
+  },
+  {
+    "id": "tree-select-popup-motion-prefix",
+    "output": "src/lib/vendor/tree-select-popup-motion.css.js",
+    "format": "module",
+    "expectedRules": 110,
+    "include": [
+      "^\\.ant-(?:slide|move)-(?:up|down)(?![\\w])",
+      "^\\.ant-select-dropdown\\.ant-(?:slide|move)-"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "^\\.ant-(?:slide|move)-",
+        "replacement": ":where(.ant-select-dropdown)$&"
+      }
+    ],
+    "keyframes": [
+      "antSlideUpIn",
+      "antSlideUpOut",
+      "antSlideDownIn",
+      "antSlideDownOut",
+      "antMoveUpIn",
+      "antMoveUpOut",
+      "antMoveDownIn",
+      "antMoveDownOut"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; см. LICENSE.ant-design.\n * Select/TreeSelect popup slide/move phases and placement overrides.\n * Common motion selectors are scoped to their Select dropdown owner.\n * https://registry.npmjs.org/antd/-/antd-6.6.8.tgz\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */"
   }
 ]

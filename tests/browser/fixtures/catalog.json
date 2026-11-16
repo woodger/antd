@@ -1,5 +1,10 @@
 [
   {
+    "id": "tree-select-motion",
+    "module": "./TreeSelectMotionFixtures.svelte",
+    "root": "tree-select-motion-fixture"
+  },
+  {
     "id": "tree-select-align-frame",
     "module": "./TreeSelectAlignFrameFixtures.svelte",
     "root": "tree-select-align-frame-fixture"

@@ -266,6 +266,10 @@ export interface TreeSelectProps<
   popupMatchSelectWidth?: boolean | number;
   /** Ant Design 6.6.8 перекрывает inherited popupStyle; используйте styles.popup.root. */
   popupStyle?: string;
+  /** Truthy animation использует `${selectPrefix}-dropdown-${animation}` вместо transitionName. */
+  animation?: string;
+  /** Undefined выбирает `${rootPrefix}-slide-up`; пустая строка отключает именованный motion. */
+  transitionName?: string;
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
   /** Shallow override выбранного placement; offset/overflow заменяются целиком. */
   popupAlign?: TreeSelectPopupAlign;

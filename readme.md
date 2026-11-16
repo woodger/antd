@@ -6885,8 +6885,56 @@ props при открытой панели. Flip history сохраняется 
 [строгая гидратация](./tests/browser/tree-select-align-hydration.spec.ts)
 проверяют независимый React-эталон, geometry, query/caret, refs и cleanup.
 
-Следующие этапы TreeSelect охватывают переходы панели;
-private getInputElement/getRawInputElement не входят в публичный перенос.
+`animation` и `transitionName` управляют исходными переходами панели.
+Непустой `animation` выбирает `${prefixCls}-dropdown-${animation}` и имеет
+приоритет над `transitionName`. При `transitionName=undefined` используется
+`${ConfigProvider.prefixCls}-slide-up`; пустая строка отключает именованный переход.
+Локальный namespace dropdown и общий namespace motion независимы.
+Для своего имени потребитель задаёт CSS. Рецепт `tree-select-popup-motion`
+переносит 110 правил и восемь keyframes slide/move из закреплённого архива.
+Они ограничены popup TreeSelect и не меняют соседние Select.
+Canonical CSS входит в `styles.css`, а `tree-select-popup-motion-prefix`
+создаёт template пользовательских namespaces без новых canonical SSR head scopes.
+
+Панель проходит appear/enter/leave с prepare, start и active, сохраняя DOM
+после ухода. Повторное открытие прерывает leave без потери draft и refs.
+События animationend/transitionend завершают только собственную активную фазу;
+имя эффекта не фильтруется, события дочерних элементов игнорируются.
+CSSMotion сохраняет отрисованный active frame до готовности следующего шага,
+даже если внутренний статус уже завершён. Alignment cache пересчитывается
+в prepare и после motion; scroll/resize во время перехода не запускают обычное
+выравнивание. Замена custom root сохраняет popup, CSS clock и прежние координаты
+до следующего исходного alignment trigger.
+
+Глобальный `theme.token.motion=false` при открытии оставляет только prepare.
+Живая смена имени или общего motion не завершает уже начатую фазу.
+Component token `motion=false` обнуляет CSS duration, сохраняя исходные шаги
+и обработку end. Отдельного JS deadline или завершения по reduced motion нет:
+имя без соответствующего CSS может оставаться active до собственного end event.
+
+Native сохраняет fixed top-layer. CSS animations используют реальные браузерные
+clocks; для проецируемых transform transitions доступен настоящий WAAPI Animation,
+а не Source CSSTransition. В этом случае завершение фазы передаётся контроллеру
+без искусственного DOM transitionend. Без использования alignment props сохраняются
+прежние Native ограничения ширины и положения панели по viewport; явные
+`popupAlign`/`builtinPlacements` включают исходные overflow rules.
+Закрытый скрытый popup освобождает position RAF без ожидания отменённого CSS end
+и остаётся закрытым при возвращении control в viewport.
+Существующие Svelte refs и opaque snippet
+остаются живыми: отключение общего motion не пересоздаёт редактор, а закрытая
+пользовательская панель получает реактивные изменения вместо React.memo cache.
+Эти границы проверяются отдельными запусками Source с публичными настройками;
+первичные raw snapshots сохраняются без исправлений.
+[Browser](./tests/browser/tree-select-motion.spec.ts),
+[замена root](./tests/browser/tree-select-motion-root-swap.spec.ts),
+[завершение leave до activated](./tests/browser/tree-select-motion-leave.spec.ts),
+[скрытие и повторное открытие](./tests/browser/tree-select-motion-visibility.spec.ts),
+[DOM-free SSR](./tests/package/tree-select-motion.ssr.test.ts) и
+[строгая гидратация](./tests/browser/tree-select-motion-hydration.spec.ts)
+проверяют независимый React-эталон, фазы, geometry, callbacks, identity и cleanup.
+Ant Design исключает `treeMotion` из публичного TreeSelect API и передаёт
+`null` во вложенное дерево. List/collapse motion панели отключён, как в Source.
+Private getInputElement/getRawInputElement не входят в публичный перенос.
 Deprecated React extras исключены.
 Класс popup задаётся через classNames.popup.root; popupClassName удалён.
 

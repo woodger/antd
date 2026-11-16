@@ -1,0 +1,3144 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "select": "1.10.1",
+    "treeSelect": "1.16.1",
+    "trigger": "3.10.1",
+    "motion": "1.3.3",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "chromium": "156.0.8078.79",
+    "viewport": {
+      "width": 1200,
+      "height": 800
+    },
+    "source": "Unmodified official Ant Design UMD with public top-level style.height32/60/32 and root-only style.transition=none. Actual browser geometry models the existing Native intrinsic auto-height jump without introducing a new root height interpolation; popup motion and all actions remain unchanged. No expected geometry corrections.",
+    "phaseControl": "Public requestAnimationFrame callbacks advance explicitly. Own-node Animations are paused on discovery and sampled with explicit currentTime followed by one public render frame. All snapshots preserve actual DOM/CSS, including before/start/active, no-CSS stalls and Source lifecycle quirks.",
+    "factory": ".upstream/artifacts/tree-select-motion-flow-source-app.mjs",
+    "factorySha256": "e9d5413971d452bed51530594379f8c168fcc9b9cee8417687ef1c18ea4b6110",
+    "configurationSha256": "15381ae9799270def5f87dbfd5a0f2ab82ada873c86173d990dcd611023ea4e5",
+    "metricsSha256": "4994a8ec245d078373d45c346b606a1fd7dcaa31831b6a656d356a991d26a35a",
+    "errors": [],
+    "warnings": [],
+    "counterpart": {
+      "kind": "intrinsic-multiple-flow",
+      "publicPropsByValue": {
+        "[\"a\"]": {
+          "style": {
+            "width": 220,
+            "height": 32,
+            "transition": "none"
+          }
+        },
+        "[\"a\",\"b\"]": {
+          "style": {
+            "width": 220,
+            "height": 60,
+            "transition": "none"
+          }
+        },
+        "[\"b\"]": {
+          "style": {
+            "width": 220,
+            "height": 32,
+            "transition": "none"
+          }
+        }
+      },
+      "addedRootProperty": {
+        "property": "style.transition",
+        "value": "none",
+        "target": "TreeSelect root only"
+      },
+      "reason": "Published public height32/60/32 expresses the established Native intrinsic auto-height flow. Source root transition:all .2s would otherwise interpolate an authored numeric height, adding an effect absent from intrinsic auto-height. Disable that root transition while preserving the unchanged popup animation and action sequence.",
+      "preserves": [
+        "publishedRootHeights32/60/32",
+        "popup motion CSS",
+        "animation",
+        "transitionName",
+        "all action data",
+        "events and semantic callbacks"
+      ],
+      "canonicalSourceFactory": ".upstream/artifacts/tree-select-motion-source-app.mjs",
+      "canonicalSourceFactorySha256": "06c0716c86fd7cfcbc3fc734327fbbe1d9e022f20e23574837c99c3141865ca5",
+      "nativeBaseline": {
+        "path": "tests/browser/fixtures/tree-select-align-native-editor-reference.json",
+        "sha256": "29285affd6b14aded58a2841ffcedf0f68b2bfaeb7c4a803982a2fd1c72d0206"
+      },
+      "previousHeightOnlyCounterpart": {
+        "path": "tests/browser/fixtures/ant-design-tree-select-motion-native-reference.json",
+        "sha256": "f8e45cda2ddf77b648b1eb5308789f8f4b94b472788e32ff7f77947a949081c1",
+        "unchanged": true
+      },
+      "primary": "tests/browser/fixtures/ant-design-tree-select-motion-reference.json",
+      "primarySha256": "2560d5c9a30977308ccd8f6f50c66755cf0d6e5565aafa4a6987cb47ba495d3c"
+    }
+  },
+  "cases": [
+    {
+      "id": "multiple-choice",
+      "initial": {
+        "view": {
+          "viewport": {
+            "width": 1200,
+            "height": 800
+          },
+          "host": {
+            "x": 300,
+            "y": 200,
+            "width": 420,
+            "height": 160
+          },
+          "root": {
+            "tag": "DIV",
+            "box": {
+              "x": 300,
+              "y": 200,
+              "width": 220,
+              "height": 32
+            },
+            "direction": "ltr",
+            "focused": false,
+            "containsFocus": false
+          },
+          "editor": {
+            "tag": "INPUT",
+            "value": "",
+            "selection": [
+              0,
+              0
+            ],
+            "focused": false,
+            "expanded": "false",
+            "readonly": false,
+            "disabled": false
+          },
+          "popup": null,
+          "model": [
+            "a"
+          ],
+          "events": [],
+          "semantic": {
+            "keys": [
+              "transitionName"
+            ],
+            "animation": null,
+            "animationType": "undefined",
+            "transitionName": "audit-custom",
+            "transitionType": "string",
+            "animationSame": true,
+            "transitionSame": true
+          },
+          "receivedAttrs": null,
+          "leaked": []
+        },
+        "raw": {
+          "root": {
+            "id": "",
+            "dir": null,
+            "role": null,
+            "expanded": null
+          },
+          "editorBox": {
+            "x": 373.688,
+            "y": 202,
+            "width": 4,
+            "height": 28
+          },
+          "popup": null,
+          "document": {
+            "compatMode": "CSS1Compat",
+            "doctype": "html"
+          }
+        },
+        "observed": {
+          "sameRoot": true,
+          "sameEditor": true,
+          "sameEditorParent": true,
+          "samePopup": true,
+          "sameDraft": true,
+          "rootIsPublicRef": true,
+          "focusMethod": true,
+          "blurMethod": true,
+          "scrollToMethod": true,
+          "getterUsesRoot": null,
+          "sameFocus": true,
+          "sameBlur": true,
+          "sameScrollTo": true
+        }
+      },
+      "steps": [
+        {
+          "action": {
+            "type": "click"
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 236,
+                "width": 300,
+                "height": 96
+              },
+              "motionClasses": [
+                "audit-custom-appear",
+                "audit-custom-appear-prepare",
+                "audit-custom"
+              ],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 373.688,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "auto",
+              "axes": {
+                "left": "300px",
+                "top": "236px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "none",
+              "transformOrigin": "0px 0px",
+              "animationName": "none",
+              "animationDuration": "1s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": []
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "frame",
+            "count": 1
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 236,
+                "width": 300,
+                "height": 96
+              },
+              "motionClasses": [
+                "audit-custom-appear",
+                "audit-custom-appear-prepare",
+                "audit-custom"
+              ],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 373.688,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "auto",
+              "axes": {
+                "left": "300px",
+                "top": "236px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "none",
+              "transformOrigin": "0px 0px",
+              "animationName": "none",
+              "animationDuration": "1s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": []
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "frame",
+            "count": 1
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 236,
+                "width": 300,
+                "height": 96
+              },
+              "motionClasses": [
+                "audit-custom-appear",
+                "audit-custom-appear-start",
+                "audit-custom"
+              ],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 373.688,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "auto",
+              "axes": {
+                "left": "300px",
+                "top": "236px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "none",
+              "transformOrigin": "0px 0px",
+              "animationName": "none",
+              "animationDuration": "1s",
+              "transitionProperty": "none",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": []
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "frame",
+            "count": 2
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 236,
+                "width": 300,
+                "height": 72
+              },
+              "motionClasses": [
+                "audit-custom-appear",
+                "audit-custom-appear-active",
+                "audit-custom"
+              ],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "0.4",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 373.688,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "auto",
+              "axes": {
+                "left": "300px",
+                "top": "236px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "matrix(1, 0, 0, 0.75, 0, 0)",
+              "transformOrigin": "0px 0px",
+              "animationName": "auditMotionIn",
+              "animationDuration": "1s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": [
+                {
+                  "kind": "CSSAnimation",
+                  "playState": "paused",
+                  "currentTime": 0,
+                  "timing": {
+                    "delay": 0,
+                    "direction": "normal",
+                    "duration": 1000,
+                    "easing": "linear",
+                    "endDelay": 0,
+                    "fill": "both",
+                    "iterationStart": 0,
+                    "iterations": 1
+                  },
+                  "keyframes": [
+                    {
+                      "offset": 0,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(0.75)",
+                      "opacity": "0.4",
+                      "computedOffset": 0
+                    },
+                    {
+                      "offset": 1,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(1)",
+                      "opacity": "1",
+                      "computedOffset": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "frame",
+            "count": 2
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 236,
+                "width": 300,
+                "height": 72
+              },
+              "motionClasses": [
+                "audit-custom-appear",
+                "audit-custom-appear-active",
+                "audit-custom"
+              ],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "0.4",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 373.688,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "auto",
+              "axes": {
+                "left": "300px",
+                "top": "236px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "matrix(1, 0, 0, 0.75, 0, 0)",
+              "transformOrigin": "0px 0px",
+              "animationName": "auditMotionIn",
+              "animationDuration": "1s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": [
+                {
+                  "kind": "CSSAnimation",
+                  "playState": "paused",
+                  "currentTime": 0,
+                  "timing": {
+                    "delay": 0,
+                    "direction": "normal",
+                    "duration": 1000,
+                    "easing": "linear",
+                    "endDelay": 0,
+                    "fill": "both",
+                    "iterationStart": 0,
+                    "iterations": 1
+                  },
+                  "keyframes": [
+                    {
+                      "offset": 0,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(0.75)",
+                      "opacity": "0.4",
+                      "computedOffset": 0
+                    },
+                    {
+                      "offset": 1,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(1)",
+                      "opacity": "1",
+                      "computedOffset": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "clock",
+            "time": 0
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 236,
+                "width": 300,
+                "height": 72
+              },
+              "motionClasses": [
+                "audit-custom-appear",
+                "audit-custom-appear-active",
+                "audit-custom"
+              ],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "0.4",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 373.688,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "auto",
+              "axes": {
+                "left": "300px",
+                "top": "236px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "matrix(1, 0, 0, 0.75, 0, 0)",
+              "transformOrigin": "0px 0px",
+              "animationName": "auditMotionIn",
+              "animationDuration": "1s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": [
+                {
+                  "kind": "CSSAnimation",
+                  "playState": "paused",
+                  "currentTime": 0,
+                  "timing": {
+                    "delay": 0,
+                    "direction": "normal",
+                    "duration": 1000,
+                    "easing": "linear",
+                    "endDelay": 0,
+                    "fill": "both",
+                    "iterationStart": 0,
+                    "iterations": 1
+                  },
+                  "keyframes": [
+                    {
+                      "offset": 0,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(0.75)",
+                      "opacity": "0.4",
+                      "computedOffset": 0
+                    },
+                    {
+                      "offset": 1,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(1)",
+                      "opacity": "1",
+                      "computedOffset": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "end",
+            "target": "popup",
+            "event": "animationend",
+            "name": "any-own-effect"
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 236,
+                "width": 300,
+                "height": 96
+              },
+              "motionClasses": [],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 373.688,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "auto",
+              "axes": {
+                "left": "300px",
+                "top": "236px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "none",
+              "transformOrigin": "150px 48px",
+              "animationName": "none",
+              "animationDuration": "0s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": []
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "frame",
+            "count": 4
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 32
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 236,
+                "width": 300,
+                "height": 96
+              },
+              "motionClasses": [],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 373.688,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "auto",
+              "axes": {
+                "left": "300px",
+                "top": "236px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "none",
+              "transformOrigin": "150px 48px",
+              "animationName": "none",
+              "animationDuration": "0s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": []
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "choose",
+            "value": "b"
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 60
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 264,
+                "width": 300,
+                "height": 96
+              },
+              "motionClasses": [],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "select",
+                "b"
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 435.594,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "auto",
+              "axes": {
+                "left": "300px",
+                "top": "264px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "none",
+              "transformOrigin": "150px 48px",
+              "animationName": "none",
+              "animationDuration": "0s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": []
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "frame",
+            "count": 4
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 60
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "true",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 264,
+                "width": 300,
+                "height": 96
+              },
+              "motionClasses": [],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "select",
+                "b"
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 435.594,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "auto",
+              "axes": {
+                "left": "300px",
+                "top": "264px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "none",
+              "transformOrigin": "150px 48px",
+              "animationName": "none",
+              "animationDuration": "0s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": []
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "open",
+            "value": false
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 60
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 264,
+                "width": 300,
+                "height": 96
+              },
+              "motionClasses": [
+                "audit-custom-leave",
+                "audit-custom-leave-start",
+                "audit-custom"
+              ],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "select",
+                "b"
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 435.594,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "none",
+              "axes": {
+                "left": "300px",
+                "top": "264px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "none",
+              "transformOrigin": "0px 0px",
+              "animationName": "none",
+              "animationDuration": "1s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": []
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "frame",
+            "count": 1
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 60
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 264,
+                "width": 300,
+                "height": 96
+              },
+              "motionClasses": [
+                "audit-custom-leave",
+                "audit-custom-leave-start",
+                "audit-custom"
+              ],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "select",
+                "b"
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 435.594,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "none",
+              "axes": {
+                "left": "300px",
+                "top": "264px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "none",
+              "transformOrigin": "0px 0px",
+              "animationName": "none",
+              "animationDuration": "1s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": []
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "frame",
+            "count": 3
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 60
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 264,
+                "width": 300,
+                "height": 96
+              },
+              "motionClasses": [
+                "audit-custom-leave",
+                "audit-custom-leave-active",
+                "audit-custom"
+              ],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "select",
+                "b"
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 435.594,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "none",
+              "axes": {
+                "left": "300px",
+                "top": "264px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "matrix(1, 0, 0, 1, 0, 0)",
+              "transformOrigin": "0px 0px",
+              "animationName": "auditMotionOut",
+              "animationDuration": "1s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": [
+                {
+                  "kind": "CSSAnimation",
+                  "playState": "paused",
+                  "currentTime": 0,
+                  "timing": {
+                    "delay": 0,
+                    "direction": "normal",
+                    "duration": 1000,
+                    "easing": "linear",
+                    "endDelay": 0,
+                    "fill": "both",
+                    "iterationStart": 0,
+                    "iterations": 1
+                  },
+                  "keyframes": [
+                    {
+                      "offset": 0,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(1)",
+                      "opacity": "1",
+                      "computedOffset": 0
+                    },
+                    {
+                      "offset": 1,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(0.75)",
+                      "opacity": "0.4",
+                      "computedOffset": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "clock",
+            "time": 250
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 60
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 264,
+                "width": 300,
+                "height": 90
+              },
+              "motionClasses": [
+                "audit-custom-leave",
+                "audit-custom-leave-active",
+                "audit-custom"
+              ],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "0.85",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "select",
+                "b"
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 435.594,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "none",
+              "axes": {
+                "left": "300px",
+                "top": "264px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "matrix(1, 0, 0, 0.9375, 0, 0)",
+              "transformOrigin": "0px 0px",
+              "animationName": "auditMotionOut",
+              "animationDuration": "1s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": [
+                {
+                  "kind": "CSSAnimation",
+                  "playState": "paused",
+                  "currentTime": 250,
+                  "timing": {
+                    "delay": 0,
+                    "direction": "normal",
+                    "duration": 1000,
+                    "easing": "linear",
+                    "endDelay": 0,
+                    "fill": "both",
+                    "iterationStart": 0,
+                    "iterations": 1
+                  },
+                  "keyframes": [
+                    {
+                      "offset": 0,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(1)",
+                      "opacity": "1",
+                      "computedOffset": 0
+                    },
+                    {
+                      "offset": 1,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(0.75)",
+                      "opacity": "0.4",
+                      "computedOffset": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "end",
+            "target": "child",
+            "event": "animationend",
+            "name": "any-own-effect"
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 60
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": false,
+              "box": {
+                "x": 300,
+                "y": 264,
+                "width": 300,
+                "height": 90
+              },
+              "motionClasses": [
+                "audit-custom-leave",
+                "audit-custom-leave-active",
+                "audit-custom"
+              ],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "0.85",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "select",
+                "b"
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 435.594,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "block",
+              "visibility": "visible",
+              "pointerEvents": "none",
+              "axes": {
+                "left": "300px",
+                "top": "264px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "matrix(1, 0, 0, 0.9375, 0, 0)",
+              "transformOrigin": "0px 0px",
+              "animationName": "auditMotionOut",
+              "animationDuration": "1s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": {
+                "tag": "BODY",
+                "host": false,
+                "box": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 1200,
+                  "height": 1600
+                }
+              },
+              "container": "body",
+              "animations": [
+                {
+                  "kind": "CSSAnimation",
+                  "playState": "paused",
+                  "currentTime": 250,
+                  "timing": {
+                    "delay": 0,
+                    "direction": "normal",
+                    "duration": 1000,
+                    "easing": "linear",
+                    "endDelay": 0,
+                    "fill": "both",
+                    "iterationStart": 0,
+                    "iterations": 1
+                  },
+                  "keyframes": [
+                    {
+                      "offset": 0,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(1)",
+                      "opacity": "1",
+                      "computedOffset": 0
+                    },
+                    {
+                      "offset": 1,
+                      "easing": "linear",
+                      "composite": "auto",
+                      "transform": "scaleY(0.75)",
+                      "opacity": "0.4",
+                      "computedOffset": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "end",
+            "target": "popup",
+            "event": "animationend",
+            "name": "any-own-effect"
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 60
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": true,
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "motionClasses": [],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "select",
+                "b"
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 435.594,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "none",
+              "visibility": "visible",
+              "pointerEvents": "none",
+              "axes": {
+                "left": "300px",
+                "top": "264px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "none",
+              "transformOrigin": "50% 50%",
+              "animationName": "none",
+              "animationDuration": "0s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": null,
+              "container": "body",
+              "animations": []
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        },
+        {
+          "action": {
+            "type": "frame",
+            "count": 4
+          },
+          "view": {
+            "viewport": {
+              "width": 1200,
+              "height": 800
+            },
+            "host": {
+              "x": 300,
+              "y": 200,
+              "width": 420,
+              "height": 160
+            },
+            "root": {
+              "tag": "DIV",
+              "box": {
+                "x": 300,
+                "y": 200,
+                "width": 220,
+                "height": 60
+              },
+              "direction": "ltr",
+              "focused": false,
+              "containsFocus": true
+            },
+            "editor": {
+              "tag": "INPUT",
+              "value": "",
+              "selection": [
+                0,
+                0
+              ],
+              "focused": true,
+              "expanded": "false",
+              "readonly": false,
+              "disabled": false
+            },
+            "popup": {
+              "hidden": true,
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "motionClasses": [],
+              "placementClasses": [
+                "ant-select-dropdown-placement-bottomLeft"
+              ],
+              "direction": "ltr",
+              "opacity": "1",
+              "label": "Panel label A",
+              "draft": {
+                "value": "Panel draft",
+                "selection": [
+                  11,
+                  11
+                ]
+              }
+            },
+            "model": [
+              "a",
+              "b"
+            ],
+            "events": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "change",
+                [
+                  "a",
+                  "b"
+                ]
+              ],
+              [
+                "select",
+                "b"
+              ]
+            ],
+            "semantic": {
+              "keys": [
+                "transitionName"
+              ],
+              "animation": null,
+              "animationType": "undefined",
+              "transitionName": "audit-custom",
+              "transitionType": "string",
+              "animationSame": true,
+              "transitionSame": true
+            },
+            "receivedAttrs": null,
+            "leaked": []
+          },
+          "raw": {
+            "root": {
+              "id": "",
+              "dir": null,
+              "role": null,
+              "expanded": null
+            },
+            "editorBox": {
+              "x": 435.594,
+              "y": 202,
+              "width": 4,
+              "height": 28
+            },
+            "popup": {
+              "position": "absolute",
+              "display": "none",
+              "visibility": "visible",
+              "pointerEvents": "none",
+              "axes": {
+                "left": "300px",
+                "top": "264px",
+                "right": "auto",
+                "bottom": "auto"
+              },
+              "transform": "none",
+              "transformOrigin": "50% 50%",
+              "animationName": "none",
+              "animationDuration": "0s",
+              "transitionProperty": "all",
+              "transitionDuration": "0s",
+              "offsetParent": null,
+              "container": "body",
+              "animations": []
+            },
+            "document": {
+              "compatMode": "CSS1Compat",
+              "doctype": "html"
+            }
+          },
+          "observed": {
+            "sameRoot": true,
+            "sameEditor": true,
+            "sameEditorParent": true,
+            "samePopup": true,
+            "sameDraft": true,
+            "rootIsPublicRef": true,
+            "focusMethod": true,
+            "blurMethod": true,
+            "scrollToMethod": true,
+            "getterUsesRoot": null,
+            "sameFocus": false,
+            "sameBlur": false,
+            "sameScrollTo": false
+          }
+        }
+      ],
+      "cleanup": {
+        "pendingFrames": 0,
+        "rootConnected": false,
+        "popupConnected": false,
+        "callbacks": [
+          [
+            "focus"
+          ],
+          [
+            "open",
+            true
+          ],
+          [
+            "change",
+            [
+              "a",
+              "b"
+            ]
+          ],
+          [
+            "select",
+            "b"
+          ]
+        ]
+      }
+    }
+  ]
+}

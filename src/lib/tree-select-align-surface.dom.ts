@@ -2,6 +2,11 @@
 import { treeSelectAlignProjection, type TreeSelectAlignPoint } from './tree-select-align.engine';
 import type { getPopupPosition, PopupArea } from './popup-position.engine';
 import type { InlineStyleLayer } from './inline-style.engine';
+import {
+  createTreeSelectMotionFrame,
+  type TreeSelectMotionFrameState,
+  type TreeSelectMotionTransitionEnd
+} from './tree-select-motion-frame.dom';
 
 export function treeSelectAlignScrollers(
   element: HTMLElement, from: HTMLElement | null = element.parentElement
@@ -55,11 +60,19 @@ export function treeSelectAlignVisibleArea(initial: PopupArea, scrollers: readon
 
 type Alignment = ReturnType<typeof getPopupPosition>;
 const projectedProperties = ['left', 'top', 'right', 'bottom', 'position', 'transform', 'transform-origin',
-  'translate', 'rotate', 'scale', 'margin', 'margin-left', 'margin-top', 'margin-right', 'margin-bottom'];
+  'translate', 'rotate', 'scale', 'margin', 'margin-left', 'margin-top', 'margin-right', 'margin-bottom',
+  'offset-path', 'offset-distance', 'offset-position', 'offset-anchor', 'offset-rotate',
+  'transition-property', 'transition-duration', 'transition-delay', 'transition-timing-function',
+  'transition-behavior'];
 
 /** A disposable CSS surface observes the Source frame without moving real popup contents or refs. */
 export function createTreeSelectAlignSurface(
-  popup: HTMLElement, getStyle: () => string | undefined, getParent: () => HTMLElement | ShadowRoot
+  popup: HTMLElement,
+  getStyle: () => string | undefined,
+  getParent: () => HTMLElement | ShadowRoot,
+  getMotion?: () => TreeSelectMotionFrameState | undefined,
+  onTransitionEnd?: (detail: TreeSelectMotionTransitionEnd) => void,
+  getConstrainX?: () => boolean
 ) {
   const document = popup.ownerDocument;
   const view = document.defaultView!;
@@ -70,7 +83,12 @@ export function createTreeSelectAlignSurface(
   proxy.setAttribute('aria-hidden', 'true');
   const points = Array.from({ length: 4 }, () => document.createElement('i'));
   proxy.append(...points);
+  const motion = createTreeSelectMotionFrame(popup, getMotion, onTransitionEnd);
   let previous: Alignment | undefined;
+  let transitionStyle: string | undefined;
+  const transitionNames = ['transition-property', 'transition-duration', 'transition-delay',
+    'transition-timing-function', 'transition-behavior'];
+  const transitionParser = document.createElement('span').style;
 
   function prepare() {
     proxy.className = popup.className;
@@ -84,12 +102,12 @@ export function createTreeSelectAlignSurface(
     proxy.style.cssText += `;${getStyle() ?? ''}`;
     // Existing Native sizing remains owned by its authored layers/stretch. Only the CSS frame is virtual.
     const style = view.getComputedStyle(popup);
-    proxy.style.width = style.width;
-    proxy.style.height = style.height;
-    proxy.style.minWidth = '0';
-    proxy.style.maxWidth = 'none';
-    proxy.style.minHeight = '0';
-    proxy.style.maxHeight = 'none';
+    proxy.style.setProperty('width', style.width, 'important');
+    proxy.style.setProperty('height', style.height, 'important');
+    proxy.style.setProperty('min-width', '0', 'important');
+    proxy.style.setProperty('max-width', 'none', 'important');
+    proxy.style.setProperty('min-height', '0', 'important');
+    proxy.style.setProperty('max-height', 'none', 'important');
     proxy.style.setProperty('visibility', 'hidden', 'important');
     proxy.style.setProperty('pointer-events', 'none', 'important');
     proxy.style.overflow = 'hidden';
@@ -111,6 +129,7 @@ export function createTreeSelectAlignSurface(
     return withSurface(() => {
       // Source keeps the previous popup's scroll extent while measuring its zero-origin frame.
       if (previous) applyAlignment(previous);
+      const frame = motion.sample(proxy, false);
       const placeholder = document.createElement('div');
       proxy.parentElement?.append(placeholder);
       placeholder.style.left = `${proxy.offsetLeft}px`;
@@ -152,6 +171,7 @@ export function createTreeSelectAlignSurface(
           visible, scroll, scaleX, scaleY
         };
       } finally {
+        frame.destroy();
         placeholder.remove();
       }
     });
@@ -174,13 +194,16 @@ export function createTreeSelectAlignSurface(
       const width = proxy.style.width;
       const height = proxy.style.height;
       proxy.style.cssText += `;${getStyle() ?? ''}`;
-      proxy.style.width = width;
-      proxy.style.height = height;
-      proxy.style.minWidth = '0';
-      proxy.style.maxWidth = 'none';
-      proxy.style.minHeight = '0';
-      proxy.style.maxHeight = 'none';
+      proxy.style.setProperty('width', width, 'important');
+      proxy.style.setProperty('height', height, 'important');
+      proxy.style.setProperty('min-width', '0', 'important');
+      proxy.style.setProperty('max-width', 'none', 'important');
+      proxy.style.setProperty('min-height', '0', 'important');
+      proxy.style.setProperty('max-height', 'none', 'important');
       proxy.style.setProperty('visibility', 'hidden', 'important');
+      const frame = motion.sample(proxy);
+      transitionStyle = frame.style;
+      try {
       const positions = [[0, 0], [100, 0], [100, 100], [0, 100]];
       const corners = points.map((node, index) => {
         node.style.cssText = 'all:initial!important;position:absolute!important;width:0!important;height:0!important;margin:0!important;padding:0!important;border:0!important;transform:none!important;visibility:hidden!important;pointer-events:none!important;';
@@ -191,16 +214,37 @@ export function createTreeSelectAlignSurface(
       }) as [TreeSelectAlignPoint, TreeSelectAlignPoint, TreeSelectAlignPoint, TreeSelectAlignPoint];
       const rect = proxy.getBoundingClientRect();
       const matrix = treeSelectAlignProjection(corners);
+      let left = rect.x;
+      if (getConstrainX?.()) {
+        const viewport = view.visualViewport;
+        const x = viewport?.offsetLeft ?? 0;
+        const width = viewport?.width ?? view.innerWidth;
+        left = Math.max(x + 8, Math.min(left, x + width - 8 - rect.width));
+        const shift = left - rect.x;
+        // A physical translation adds delta times the homogeneous denominator to X.
+        matrix[0] += shift * matrix[3];
+        matrix[4] += shift * matrix[7];
+        matrix[12] += shift;
+      }
       const declarations = [['position', 'fixed'], ['left', '0px'], ['top', '0px'],
         ['right', 'auto'], ['bottom', 'auto'], ['margin', '0px'], ['translate', 'none'], ['rotate', 'none'],
-        ['scale', 'none'], ['transform-origin', '0px 0px'], ['transform', `matrix3d(${matrix.join(',')})`]];
-      const style: InlineStyleLayer = declarations.map(([name, value]) => `${name}:${value} !important`).join(';');
-      return { left: rect.x, top: rect.y, style };
+        ['scale', 'none'], ['offset-path', 'none'], ['transform-origin', '0px 0px'],
+        ['transform', `matrix3d(${matrix.join(',')})`]];
+      const style: InlineStyleLayer = declarations.map(([name, value]) =>
+        `${name}:${value} !important`).join(';');
+      return { left, top: rect.y, style };
+      } finally {
+        frame.destroy();
+      }
     });
   }
 
   function signature() {
-    const values: unknown[] = [getStyle(), popup.parentNode, popup.className];
+    const constrainX = Boolean(getConstrainX?.());
+    const values: unknown[] = [getStyle(), popup.parentNode, popup.className,
+      motion.signature(), constrainX];
+    if (constrainX) values.push(view.visualViewport?.offsetLeft ?? 0,
+      view.visualViewport?.width ?? view.innerWidth);
     const container = getParent();
     let parent: Element | null = container instanceof view.ShadowRoot ? container.host : container;
     while (parent) {
@@ -216,9 +260,47 @@ export function createTreeSelectAlignSurface(
       parent = parent.parentElement ?? (root instanceof view.ShadowRoot ? root.host : null);
     }
     const css = view.getComputedStyle(popup);
-    values.push(css.width, css.height, css.padding, css.borderWidth);
+    values.push(css.width, css.height, css.padding, css.borderWidth,
+      css.transitionProperty, css.transitionDuration, css.transitionDelay,
+      css.transitionTimingFunction, css.transitionBehavior);
     for (const name of popup.style) if (name.startsWith('--')) values.push(name, popup.style.getPropertyValue(name));
     return values.map(value => String(value)).join(':');
   }
-  return { geometry, present, signature, destroy() { proxy.remove(); } };
+
+  function commit(write: () => void) {
+    if (!transitionStyle) {
+      write();
+      return;
+    }
+    const guard = transitionStyle;
+    const protect = () => {
+      transitionParser.cssText = guard;
+      for (const name of transitionNames)
+        popup.style.setProperty(name, transitionParser.getPropertyValue(name), 'important');
+    };
+    protect();
+    void popup.offsetWidth;
+    try {
+      write();
+      // Authored inline transition shorthands may have been written by the style reconciler.
+      protect();
+      void popup.offsetWidth;
+    } finally {
+      // Between frames the real node keeps the author's transition rules. Active-class changes
+      // can then create genuine opacity/width/etc. transitions with their own clocks and events.
+      transitionParser.cssText = getStyle() ?? '';
+      for (const name of transitionNames) {
+        const value = transitionParser.getPropertyValue(name);
+        if (value) popup.style.setProperty(name, value, transitionParser.getPropertyPriority(name));
+        else popup.style.removeProperty(name);
+      }
+    }
+  }
+  return {
+    geometry, present, signature, commit,
+    destroy() {
+      motion.destroy();
+      proxy.remove();
+    }
+  };
 }

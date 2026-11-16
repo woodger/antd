@@ -1,5 +1,5 @@
 <script lang="ts" generics="ValueType extends TreeSelectValue = TreeSelectValue, Data extends object = TreeSelectNode, RootElement extends HTMLElement = HTMLDivElement, EditorElement extends TreeSelectEditorElement = HTMLInputElement">
-  import { onMount, tick, untrack } from 'svelte';
+  import { flushSync, onMount, tick, untrack } from 'svelte';
   import type {
     TreeSelectProps,
     TreeSelectSearchConfig,
@@ -38,8 +38,13 @@
   import { connectSelectTagOverflow, measureSelectInput } from './select-tag-overflow.dom';
   import { connectTreeSelectComponentOverflow } from './tree-select-component-overflow.dom';
   import { createTreeSelectComponentAnchor } from './tree-select-component-anchor.dom';
-  import { createTreeSelectAlign } from './tree-select-align.dom';
+  import { createTreeSelectAlign, type TreeSelectAlignSnapshot } from './tree-select-align.dom';
   import { treeSelectBuiltinPlacements } from './tree-select-align.engine';
+  import { treeSelectMotionName } from './tree-select-motion.engine';
+  import { treeSelectMotionCss } from './tree-select-motion-css.engine';
+  import {
+    createTreeSelectPopupMotion, type TreeSelectPopupMotionState
+  } from './tree-select-motion.dom';
   import {
     getPopupPlacement, type PopupFlipCache, type PopupSourceAlign
   } from './popup-position.engine';
@@ -145,6 +150,8 @@
     virtual,
     popupMatchSelectWidth,
     popupStyle: _popupStyle,
+    animation,
+    transitionName,
     placement,
     popupAlign,
     builtinPlacements,
@@ -177,6 +184,8 @@
   let privateNamespace = $derived(rootPrefix.replaceAll('.', ''));
   let selectPrefixCss = $derived(getSelectPrefixCss(prefix, rootPrefix));
   let treePrefixCss = $derived(getTreeSelectPrefixCss(treePrefix, rootPrefix));
+  let popupMotionName = $derived(treeSelectMotionName(animation, transitionName, prefix, rootPrefix));
+  let popupMotionCss = $derived(treeSelectMotionCss(prefix, rootPrefix));
   const variantContext = useVariant('treeSelect', () => ({ variant }));
   let appearance = $derived(variantContext.variant);
   const form = useForm();
@@ -338,16 +347,25 @@
   let hiddenRest = $derived(!tagOverflow.omitted.length || responsiveTags && !tagsReady
     || componentResponsive && !componentOverflow?.restReady);
   let popup = $state<HTMLDivElement>();
+  let popupMotionState = $state.raw<TreeSelectPopupMotionState>({
+    revision: 0, running: false, present: false, renderReady: true
+  });
+  let popupPresent = $derived(visible || popupMotionState.present);
+  let popupMotion: ReturnType<typeof createTreeSelectPopupMotion> | undefined;
+  let popupAlignment: ReturnType<typeof createTreeSelectAlign> | undefined;
+  let popupAlignmentSnapshot: TreeSelectAlignSnapshot | undefined;
+  let sourceMotionUsed = $state(untrack(() => Boolean(popupMotionName) && tokens.token.motion));
   let sourceAlignmentUsed = $state(untrack(() => popupAlign !== undefined || builtinPlacements !== undefined));
   let cachedPopupAlignment = $state.raw<PopupSourceAlign>();
   let legacyPopupClass = $state<string>();
   let popupFlipCache: PopupFlipCache | undefined;
   const sourcePlacements = treeSelectBuiltinPlacements();
-  let alignedPopupClass = $derived(sourceAlignmentUsed
+  let alignedPopupClass = $derived(sourceAlignmentUsed || sourceMotionUsed
     ? cachedPopupAlignment && getPopupPlacement(builtinPlacements || sourcePlacements, cachedPopupAlignment)
     : legacyPopupClass);
   $effect(() => {
     if (popupAlign !== undefined || builtinPlacements !== undefined) sourceAlignmentUsed = true;
+    if (popupMotionName && tokens.token.motion) sourceMotionUsed = true;
   });
   $effect(() => {
     if (sourceAlignmentUsed && popup && !semantics.popupHasMaxWidth)
@@ -362,6 +380,8 @@
   let popupLayers = $derived([
     componentStyle,
     `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`,
+    !visible ? 'pointer-events:none' : undefined,
+    popupMotionState.style,
     semantics.popupRootStyle,
     typeof matchedWidth === 'number' ? `width:${matchedWidth}px` : undefined
   ]);
@@ -560,12 +580,16 @@
   $effect(() => {
     if (!visible) {
       popupFlipCache = undefined;
-      return;
+      popupAlignment?.resetFlips();
+      if (popupAlignmentSnapshot?.alignment) popupAlignmentSnapshot.alignment.flips = {};
     }
+  });
+  $effect(() => {
+    if (!popupPresent) return;
     if (!popup || !root) return;
     const anchor = root;
     const surface = popup;
-    const sourceMode = () => untrack(() => sourceAlignmentUsed);
+    const sourceMode = () => untrack(() => sourceAlignmentUsed || sourceMotionUsed);
     const requestedPlacement = () => untrack(() =>
       placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft'));
     // Track the Source cache from open, including before alignment props are first added live.
@@ -578,11 +602,19 @@
         popupAlign,
         builtinPlacements,
         style: serializeInlineStyleLayers(popupLayers),
+        open: visible,
+        inMotion: popupMotionState.running,
+        renderReady: popupMotionState.renderReady,
+        constrainX: !sourceAlignmentUsed,
+        motion: popupMotionState,
+        onMotionTransitionEnd: event => popupMotion?.complete(event.revision),
         container: getPopupContainer || config.getPopupContainer
           ? surface.parentNode as HTMLElement | ShadowRoot : surface.ownerDocument.body
       })),
-      popupFlipCache
+      popupFlipCache,
+      popupAlignmentSnapshot
     ));
+    popupAlignment = source;
     let sourceAnchor: ReturnType<typeof createTreeSelectComponentAnchor> | undefined;
     let sourceAnchorRight: boolean | undefined;
     const disconnect = connectPopup(popup, root, {
@@ -604,13 +636,17 @@
       },
       get align() { return requestedPlacement().endsWith('Right') ? 'right' : 'left'; },
       autoAdjustOverflow: true,
-      get maxWidth() { return sourceMode() ? false : untrack(() => semantics.popupHasMaxWidth ? false : '100vw'); },
+      get maxWidth() { return untrack(() => sourceAlignmentUsed || semantics.popupHasMaxWidth ? false : '100vw'); },
       getAnchorWidth: () => sourceMode() ? source.width : anchor.getBoundingClientRect().width,
-      get constrainWidth() { return sourceMode() ? false : undefined; },
-      get allowOffscreenAnchor() { return sourceMode(); },
+      get constrainWidth() { return untrack(() => sourceAlignmentUsed ? false : undefined); },
+      get allowOffscreenAnchor() { return untrack(() => sourceAlignmentUsed); },
+      get interactive() { return untrack(() => visible); },
       anchorWidthVariable,
       preserveFocus: customPopup ? false : preserveEditorFocus,
-      applyPosition: value => untrack(() => popupStyle.position(value, sourceMode() ? source.style : undefined)),
+      applyPosition: value => untrack(() => {
+        if (sourceMode()) source.commitFrame(() => popupStyle.position(value, source.style));
+        else popupStyle.position(value);
+      }),
       onAlign: value => {
         if (sourceMode()) cachedPopupAlignment = value.sourceAlign;
       },
@@ -630,10 +666,55 @@
     return () => {
       // Source resets flip history only when closed, including across live root replacement.
       popupFlipCache = source.flips;
-      disconnect();
+      popupAlignmentSnapshot = source.snapshot();
+      if (popupAlignment === source) popupAlignment = undefined;
+      const nextRoot = customRoot ? rootNode(customRoot.registration) : defaultRoot;
+      // A same-popup retarget must keep its native CSS animation and public WAAPI clock alive.
+      disconnect(Boolean(nextRoot !== anchor && (!nextRoot || nextRoot.isConnected)
+        && popup === surface && popupMotionState.present));
       source.destroy();
       sourceAnchor?.destroy();
     };
+  });
+  function attachPopupMotion(node: HTMLElement) {
+    const current = createTreeSelectPopupMotion(node, {
+      publish(state, commit) {
+        popupMotionState = state;
+        if (commit) flushSync();
+        // Phase classes can change the CSS plane inside this RAF; numeric alignment stays paused.
+        queueMicrotask(() => popupAlignment?.refreshFrame());
+      },
+      async prepare() {
+        await tick();
+        popupAlignment?.forceAlign();
+        await Promise.resolve();
+      },
+      visibleChanged(next) {
+        if (next) popupAlignment?.forceAlign();
+      }
+    });
+    popupMotion = current;
+    $effect(() => {
+      const next = visible;
+      const name = popupMotionName;
+      const enabled = tokens.token.motion;
+      untrack(() => current.sync(next, name, enabled));
+    });
+    return () => {
+      current.destroy();
+      if (popupMotion === current) popupMotion = undefined;
+    };
+  }
+  $effect(() => {
+    const state = popupMotionState;
+    if (sourceAlignmentUsed || visible || shown || !state.running) return;
+    const motion = popupMotion;
+    let active = true;
+    // Native hides offscreen triggers. Their cancelled CSS effects cannot finish a closed panel.
+    queueMicrotask(() => {
+      if (active) motion?.complete(state.revision);
+    });
+    return () => { active = false; };
   });
   $effect(() => {
     if (!editor) return;
@@ -1201,6 +1282,7 @@
     aria-hidden={placeholderText !== undefined || undefined}><RenderContent value={placeholder} /></div>
 {/snippet}
 {#if selectPrefixCss}<ThemeScopeStyle css={selectPrefixCss} scope={`tree-select-control-prefix:${prefix}:${rootPrefix}`} />{/if}{#if treePrefixCss}<ThemeScopeStyle css={treePrefixCss} scope={`tree-select-prefix:${treePrefix}:${rootPrefix}`} />{/if}
+{#if popupMotionCss}<ThemeScopeStyle css={popupMotionCss} scope={`tree-select-popup-motion:${prefix}:${rootPrefix}`} />{/if}
 {#if renderRoot}
   {#if name ?? field?.name}{#each display as item(item.value)}<input type="hidden" name={name ?? field?.name} value={String(item.value)} disabled={blocked} />{/each}{/if}
   <TreeSelectComponentScope>{@render renderRoot(rootContext)}</TreeSelectComponentScope>
@@ -1393,16 +1475,20 @@
 <NoCompactStyle>{#if mounted}
 {@const initialPopupStyle = untrack(() => serializeInlineStyleLayers(popupLayers))}
 <div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
+  data-ant-tree-select-motion
   data-ant-tree-select-prefix={treePrefix} data-ant-tree-select-root-prefix={rootPrefix}
-  bind:this={popup} role="presentation" popover="manual" hidden={!visible || !shown} dir={config.direction} class={[
+  bind:this={popup} role="presentation" popover="manual" hidden={!popupPresent || !shown} dir={config.direction} class={[
     `popup ${prefix}-dropdown ant-select-css-var ${treePrefix}-dropdown ant-tree-select-css-var`,
     selectTheme.className,
     selectTheme.className && 'ant-tree-select-source-popup',
     config.direction === 'rtl' && `${treePrefix}-dropdown-rtl`,
     alignedPopupClass && `${prefix}-dropdown-placement-${alignedPopupClass}`,
+    popupMotionState.className,
+    !visible && !popupMotionState.present && `${prefix}-dropdown-hidden`,
     rootClassName, classes.root, classes.popup.root
   ]} style={initialPopupStyle}
   {@attach popupStyle.attach}
+  {@attach attachPopupMotion}
   {@attach portal}
   onfocusout={blurWithin} onmousedown={customPopup ? popupMouseDown : undefined}>
   {#snippet menu()}

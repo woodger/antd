@@ -1,5 +1,6 @@
 import { getTabsMotionClassName } from './tabs-motion.engine';
 import type { TabsMotionEvent, TabsPaneMotion } from './tabs-motion.types';
+import { createCssMotionFrame } from './css-motion-frame.dom';
 
 type MotionStatus = 'appear' | 'enter' | 'leave';
 type MotionStep = 'prepare' | 'start' | 'active';
@@ -17,6 +18,7 @@ export function createTabsPaneMotion(
 ) {
   const view = node.ownerDocument.defaultView!;
   const reduced = view.matchMedia('(prefers-reduced-motion: reduce)');
+  const frames = createCssMotionFrame(view);
   let config: TabsPaneMotion | undefined;
   let enabled = true;
   let previous: boolean | undefined;
@@ -26,7 +28,6 @@ export function createTabsPaneMotion(
   let status: MotionStatus | undefined;
   let step: MotionStep | undefined;
   let style: string | undefined;
-  let frame: number | undefined;
   let deadline: number | undefined;
   let visibleTimer: number | undefined;
   let revision = 0;
@@ -47,10 +48,9 @@ export function createTabsPaneMotion(
 
   function cancel() {
     revision++;
-    if (frame !== undefined) view.cancelAnimationFrame(frame);
+    frames.cancel();
     if (deadline !== undefined) view.clearTimeout(deadline);
     if (visibleTimer !== undefined) view.clearTimeout(visibleTimer);
-    frame = undefined;
     deadline = undefined;
     visibleTimer = undefined;
   }
@@ -87,12 +87,8 @@ export function createTabsPaneMotion(
 
   function nextFrame(callback: () => void) {
     const current = revision;
-    frame = view.requestAnimationFrame(() => {
-      if (!active || current !== revision) return;
-      frame = view.requestAnimationFrame(() => {
-        frame = undefined;
-        if (active && current === revision) callback();
-      });
+    frames.next(() => {
+      if (active && current === revision) callback();
     });
   }
 

@@ -1,0 +1,2063 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "select": "1.10.1",
+    "treeSelect": "1.16.1",
+    "trigger": "3.10.1",
+    "motion": "1.3.3",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "renderer": "Unmodified official ReactDOMServer/Antd UMD in an isolated DOM-free VM; same Source-only factory and public matrix. Shared HTML-only SSR projector, no Native code or geometry.",
+    "factory": ".upstream/artifacts/tree-select-motion-source-app.mjs",
+    "factorySha256": "06c0716c86fd7cfcbc3fc734327fbbe1d9e022f20e23574837c99c3141865ca5",
+    "configurationSha256": "15381ae9799270def5f87dbfd5a0f2ab82ada873c86173d990dcd611023ea4e5",
+    "domAvailableDuringRender": false,
+    "messages": []
+  },
+  "cases": [
+    {
+      "id": "default-omitted",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": null,
+          "transitionType": "undefined",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "213db17ed45657f19e07ce23ee615a53391a1ad20f8a4908f4075533e5f36c0d"
+    },
+    {
+      "id": "transition-undefined",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": null,
+          "transitionType": "undefined",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "62ea7b4907a53150689d84903b303fc8d745af782b240e0bb01c1ad79bc62851"
+    },
+    {
+      "id": "transition-empty",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "61c7b55dd703f069b425dc164dae97e23c02c4a7571a153cbbe30bc5a34a5e8d"
+    },
+    {
+      "id": "animation-undefined",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "animation"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": null,
+          "transitionType": "undefined",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "b96f19fc05a5a80b9d273ece0183240744d4ff55ff2bd39d6ed8dfbc69ea452c"
+    },
+    {
+      "id": "animation-empty",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "animation"
+          ],
+          "animation": "",
+          "animationType": "string",
+          "transitionName": null,
+          "transitionType": "undefined",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "59d12f277b08693c3d3f52f6948b167b72318c614e0e860939d73b79317b2826"
+    },
+    {
+      "id": "animation-priority",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "animation",
+            "transitionName"
+          ],
+          "animation": "audit-spin",
+          "animationType": "string",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "05dc7ccceaea5b2f67408d8f0bd1e1fe080dfd0d5bebf4866dd4c58724977618"
+    },
+    {
+      "id": "animation-over-empty",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "animation",
+            "transitionName"
+          ],
+          "animation": "audit-spin",
+          "animationType": "string",
+          "transitionName": "",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "6e3270f9c74165d12b2a619e4d1d4adfd9afd82add123c2cceae85ca3d7d1af3"
+    },
+    {
+      "id": "animation-empty-fallback",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "animation",
+            "transitionName"
+          ],
+          "animation": "",
+          "animationType": "string",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "525a0a206c2dfe6cc85d88545035ec12a4e854ea9a8f766d65d25e2411058cfc"
+    },
+    {
+      "id": "custom-animation",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "dc669ae6cdacf6aa7afc6788f4dd32ad4b22c28fd60d6c234d2ff015c6caa4bf"
+    },
+    {
+      "id": "custom-transition",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-transition",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "e876613c2386207efbeb627c4ba9dcc21b22095b24166bb15b94ebb42d3248c7"
+    },
+    {
+      "id": "global-prefix-default",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": null,
+          "transitionType": "undefined",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "188528ebab3a423ebbf9480db3cb7520a6c1251cb6cbca6d013bfb102cbc31e9"
+    },
+    {
+      "id": "local-prefix-default",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": null,
+          "transitionType": "undefined",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "8c9f31deb8037d2d93e9173e15f0acfac4b1edf4c6d98e45e98bcee729b1661e"
+    },
+    {
+      "id": "global-local-animation",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "animation"
+          ],
+          "animation": "audit-spin",
+          "animationType": "string",
+          "transitionName": null,
+          "transitionType": "undefined",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "44236c7226541e36ad1be43be1b0ddcc59379ec141401a12842994a644c66b03"
+    },
+    {
+      "id": "context-false",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "60b58055bde2d1eb8087d2f00e47df82b8c1a1ae9263c71389c86cfe8d2c9381"
+    },
+    {
+      "id": "context-live",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "0ff952e7ff0ad113627ccb297319f200d205021a5f362b30a382e8bab84ea2cc"
+    },
+    {
+      "id": "context-prewrapped-live",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "c23146f0cfef4a65c70f1c93ebccf5a7ec0ae0f9cb6effde96f604a17c1f3c4f"
+    },
+    {
+      "id": "reduced-custom",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "d6d1963b6d139ab6eb52fedd56f9d6f51d3a75f3cd2475d4fbb89271b0d4195a"
+    },
+    {
+      "id": "live-animation-name",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "animation",
+            "transitionName"
+          ],
+          "animation": "audit-spin",
+          "animationType": "string",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "b0648e5cb702d907923064f2dda5007db7f91ee80056420df13eabf53bc6d154"
+    },
+    {
+      "id": "live-transition-name",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "0f838a355fb781c0f7bdd12c2dca07b19bbb82c9cb5547f48b2b5a05735230dc"
+    },
+    {
+      "id": "live-empty-name",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "95acf42fa6990d2d7ff64a4bc1c367805350fdc4eb25bd56f874efa201001942"
+    },
+    {
+      "id": "rapid-reopen-animation",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "757782931e3b453f0934fa2881fcda2a99ed012c0d5a5086b81d16b07a52fd3c"
+    },
+    {
+      "id": "rapid-reopen-transition",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-transition",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "a1f4ba56a6b67bbd787e9ba8587a20cb0266552ffd05aad34cc4bcf75ef682dc"
+    },
+    {
+      "id": "hidden-content-cache",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "aea16806869fa6c92b5948ed2b67cefa0d2af569221dfe4b740658fb59803461"
+    },
+    {
+      "id": "outside-escape-choice",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "7b173cf375398fddf7cdd4e38adb1441feeffc8c5ee431aad75b9bf2bd89d6b2"
+    },
+    {
+      "id": "default-open-appear",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "c2f395da8883b83296ddabecb8767e5acd6a9c47752f2be9e484e9ca826b12de"
+    },
+    {
+      "id": "controlled-initial-open",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "37b8efef57103d505a6bd6031149285eccc37b46142533494ecdd4b24ac756d0"
+    },
+    {
+      "id": "zero-css-name",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "no-css-name",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "b19fe337b1a111ed4f5d5c7cc0e65c13ecf37cee07e545431a12788a686c33f4"
+    },
+    {
+      "id": "select-component-motion-false",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": null,
+          "transitionType": "undefined",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "5d98cfe53b89ad5ed3f5d72ffa294c392a67fded7aa6624dbd1dc783c7cf003e"
+    },
+    {
+      "id": "tree-select-component-motion-false",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": null,
+          "transitionType": "undefined",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "5515a8e5c0e036fd1314454677494cec9fcc8627d3ebaa0365a5618eaf83b801"
+    },
+    {
+      "id": "custom-root-composite",
+      "view": {
+        "root": {
+          "tag": "SPAN",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": "40px",
+            "display": "inline-flex"
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": null
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": {
+          "keys": []
+        },
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "116e101757a69194e78b8464471bc1d84af55e82567bfa6ff6a38e886d71c753"
+    },
+    {
+      "id": "custom-input-transition",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-transition",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": {
+          "keys": []
+        },
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "11da040b852f5e4946e74b5c8ddf968959aa175e0164d310bd542e1eba7953c0"
+    },
+    {
+      "id": "shadow-animation",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "4991782092e05833d3dbf5dcee203806d9a146eaef5313cbf22cb04200a0a0bf"
+    },
+    {
+      "id": "custom-root-button",
+      "view": {
+        "root": {
+          "tag": "BUTTON",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": "40px",
+            "display": null
+          }
+        },
+        "editor": null,
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": {
+          "keys": []
+        },
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "6dd3941bba33b5e19e4d2a40a229b6705f2fec67dca45519ece7796087f67660"
+    },
+    {
+      "id": "multiple-choice",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "audit-custom",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": [
+          "a"
+        ],
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "601334e1d283475fb8684e5c9042f0f416de1378dc1aabab6ebfa222f4b183c0"
+    },
+    {
+      "id": "explicit-move-name",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [
+            "transitionName"
+          ],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": "ant-move-up",
+          "transitionType": "string",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "b21107f90a8249cf7c2638b4fd944b4002df3795c8343d6582d1ba924f9fad2a"
+    },
+    {
+      "id": "top-placement-default",
+      "view": {
+        "root": {
+          "tag": "DIV",
+          "id": null,
+          "dir": null,
+          "role": null,
+          "expanded": null,
+          "style": {
+            "width": "220px",
+            "height": null,
+            "display": null
+          }
+        },
+        "editor": {
+          "tag": "INPUT",
+          "id": "motion-field",
+          "dir": null,
+          "role": "combobox",
+          "expanded": "false",
+          "readonly": false,
+          "disabled": false,
+          "valueAttribute": ""
+        },
+        "popupPresent": false,
+        "semantic": {
+          "keys": [],
+          "animation": null,
+          "animationType": "undefined",
+          "transitionName": null,
+          "transitionType": "undefined",
+          "animationSame": true,
+          "transitionSame": true
+        },
+        "events": [],
+        "model": null,
+        "receivedAttrs": null,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0,
+        "getters": 0
+      },
+      "refs": {
+        "control": null,
+        "shadow": null
+      },
+      "query": "",
+      "callbacks": [],
+      "htmlSha256": "5e4e34978516d27344135706964e1d7231bf16c7794f49233d4b2c4da2d0f364"
+    }
+  ]
+}

@@ -11332,7 +11332,7 @@
       "name": "TreeSelect",
       "category": "data-entry",
       "scope": "target",
-      "scopeReason": "TreeSelect по Ant Design 6.6.8 и rc-tree-select 1.16.1. Перенесены значения, check/стратегии, поиск, loadData, fieldNames/simple mode, generic data, title expansion, maxCount, tag display, renderer labels, popupRender, control slots, semantic config, переключатели узлов, виртуализация, scrollTo и декларативные TreeNode со свойствами строк, focus actions, trigger events, pointer toggle и tokenSeparators; showScrollBar принят с исходным no-op; components.root/input перенесены через Svelte renderers с composite refs, attrs/event chaining и Form association. Inherited popupAlign/builtinPlacements сохраняют Source alignment cache и CSS-frame geometry в существующем Native top layer. Оставшийся motion переносится отдельно.",
+      "scopeReason": "TreeSelect по Ant Design 6.6.8 и rc-tree-select 1.16.1. Перенесены значения, check/стратегии, поиск, loadData, fieldNames/simple mode, generic data, title expansion, maxCount, tag display, renderer labels, popupRender, control slots, semantic config, переключатели узлов, виртуализация, scrollTo и декларативные TreeNode со свойствами строк, focus actions, trigger events, pointer toggle и tokenSeparators; showScrollBar принят с исходным no-op; components.root/input перенесены через Svelte renderers с composite refs, attrs/event chaining и Form association. Inherited popupAlign/builtinPlacements сохраняют Source alignment cache и CSS-frame geometry в существующем Native top layer. Inherited animation/transitionName и исходные popup motion phases перенесены с сохранением CSS clocks, alignment cache и Native DOM. Ant wrapper исключает treeMotion из public API и передаёт null, отключая list motion внутреннего дерева; Native сохраняет это поведение.",
       "upstreamPath": "components/tree-select",
       "reviewedRevision": "984592267de88fbf9cdaecc96a56629e721c709d",
       "exports": [
@@ -11381,6 +11381,11 @@
           "name": "@rc-component/trigger",
           "range": "^3.10.1",
           "referenceVersion": "3.10.1"
+        },
+        {
+          "name": "@rc-component/motion",
+          "range": "^1.3.3",
+          "referenceVersion": "1.3.3"
         }
       ],
       "priority": "p1",
@@ -11517,7 +11522,48 @@
         "tests/browser/fixtures/ant-design-tree-select-semantic-ssr-reference.json",
         "tests/browser/tree-select-semantic-metrics.ts",
         "tests/browser/tree-select-semantic.spec.ts",
-        "tests/package/tree-select-semantic.ssr.test.ts"
+        "tests/package/tree-select-semantic.ssr.test.ts",
+        "src/lib/tree-select-motion.engine.ts",
+        "src/lib/tree-select-motion.engine.test.ts",
+        "src/lib/tree-select-motion.dom.ts",
+        "src/lib/css-motion-frame.dom.ts",
+        "src/lib/tree-select-motion-css.engine.ts",
+        "src/lib/tree-select-motion-frame.dom.ts",
+        "src/lib/tree-select-align.dom.ts",
+        "src/lib/tree-select-align-surface.dom.ts",
+        "src/lib/vendor/tree-select-popup-motion.css.js",
+        "tools/ant-design-css-recipes.json",
+        "tests/browser/fixtures/tree-select-motion-cases.ts",
+        "tests/browser/fixtures/tree-select-motion-root-swap-cases.ts",
+        "tests/browser/fixtures/tree-select-motion.types.ts",
+        "tests/browser/fixtures/TreeSelectMotionCase.svelte",
+        "tests/browser/fixtures/TreeSelectMotionCompositeRoot.svelte",
+        "tests/browser/fixtures/TreeSelectMotionFixtures.svelte",
+        "tests/browser/fixtures/ant-design-tree-select-motion-reference.json",
+        "tests/browser/fixtures/ant-design-tree-select-motion-root-swap-reference.json",
+        "tests/browser/fixtures/ant-design-tree-select-motion-ssr-reference.json",
+        "tests/browser/tree-select-motion-metrics.ts",
+        "tests/browser/tree-select-motion-driver.ts",
+        "tests/browser/tree-select-motion-native.ts",
+        "tests/browser/tree-select-motion.spec.ts",
+        "tests/browser/tree-select-motion-root-swap.spec.ts",
+        "tests/browser/tree-select-motion-hydration.spec.ts",
+        "tests/browser/fixtures/TreeSelectMotionHydration.svelte",
+        "tests/browser/fixtures/tree-select-motion-hydration.client.ts",
+        "tests/browser/fixtures/tree-select-motion-hydration.server.ts",
+        "tests/browser/fixtures/tree-select-motion-hydration.html",
+        "tests/browser/fixtures/tree-select-motion-styles.client.ts",
+        "tests/browser/tree-select-motion-ssr-metrics.ts",
+        "tests/package/tree-select-motion.ssr.test.ts",
+        "tests/browser/fixtures/ant-design-tree-select-motion-native-reference.json",
+        "tests/browser/fixtures/ant-design-tree-select-motion-flow-reference.json",
+        "tests/browser/fixtures/ant-design-tree-select-motion-prefix-reference.json",
+        "src/lib/styles.css",
+        "src/lib/vendor/tree-select-popup-motion.css",
+        "tests/browser/fixtures/tree-select-motion-leave-cases.ts",
+        "tests/browser/fixtures/ant-design-tree-select-motion-leave-reference.json",
+        "tests/browser/tree-select-motion-leave.spec.ts",
+        "tests/browser/tree-select-motion-visibility.spec.ts"
       ],
       "features": [
         {
@@ -11602,11 +11648,11 @@
             "tests/package/tree-select-data.ssr.test.ts",
             "readme.md"
           ],
-          "note": "FieldNames, treeDataSimpleMode, generic raw data, treeExpandAction, maxCount, tag text/count/placeholder/render API, renderer labels, popup/control slots, semantic config и общие switcherIcon/treeLine.showLeafIcon перенесены. Декларативные TreeNode и свойства узлов перенесены. Focus actions, autoFocus/tabIndex и input/root event hooks перенесены. Pointer toggle, tokenSeparators и inherited showScrollBar no-op перенесены. Components.root/input перенесены через Snippet/descriptor renderers и registration. Inherited current no-op props onPopupVisibleChange/popupStyle/choiceTransitionName/direction перенесены с сохранением raw semantic props. Функциональные inherited popupAlign/builtinPlacements перенесены и описаны в отдельном popup-align feature; getInputElement/getRawInputElement исключены как private, первый также явно Omit в Ant wrapper; Form feedback перенесён отдельно, popup motion учитывается отдельно. Deprecated extra.triggerNode/allCheckedNodes и node.props React wrappers исключены. Собственное поле props данных сохраняется."
+          "note": "FieldNames, treeDataSimpleMode, generic raw data, treeExpandAction, maxCount, tag text/count/placeholder/render API, renderer labels, popup/control slots, semantic config и общие switcherIcon/treeLine.showLeafIcon перенесены. Декларативные TreeNode и свойства узлов перенесены. Focus actions, autoFocus/tabIndex и input/root event hooks перенесены. Pointer toggle, tokenSeparators и inherited showScrollBar no-op перенесены. Components.root/input перенесены через Snippet/descriptor renderers и registration. Inherited current no-op props onPopupVisibleChange/popupStyle/choiceTransitionName/direction перенесены с сохранением raw semantic props. Функциональные inherited popupAlign/builtinPlacements перенесены и описаны в отдельном popup-align feature; getInputElement/getRawInputElement исключены как private, первый также явно Omit в Ant wrapper; Form feedback перенесён отдельно; inherited animation/transitionName и popup motion описаны в отдельном popup-motion feature. Deprecated extra.triggerNode/allCheckedNodes и node.props React wrappers исключены. Собственное поле props данных сохраняется."
         },
         {
           "id": "virtual-motion",
-          "title": "Виртуализация, scrollTo и исходные popup/list motion",
+          "title": "Виртуализация и scrollTo с сохранёнными Native границами",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -11625,7 +11671,7 @@
             "tests/package/tree-select-virtual.ssr.test.ts",
             "readme.md"
           ],
-          "note": "TreeSelect использует измеряемый Tree viewport с listHeight, listItemHeight, listItemScrollOffset и onPopupScroll на holder. Local virtual и popupMatchSelectWidth имеют приоритет над provider, false ширины отключает virtual. Ref поддерживает позиции, key/index, offsets и autoExpand целевого key в неконтролируемом дереве. Сверены выбор и активный key при первом и повторном открытии, поиск, ширина, смена virtual/height, zero keys, фокус и custom popup. 20 сценариев и 57 действий официального UMD6.6.8, 6 DOM-free SSR случаев и 3 отдельных наблюдения. Native сохраняет SSR shell и валидный active descendant. В UMD6.6.8 при scrollTo в открытой пустой выдаче BaseSelect вызывает отсутствующий метод listRef.current.scrollTo и выбрасывает TypeError. Запрос скрытого дочернего key с autoExpand достигает лимита rc-virtual-list. Числовой scrollTo(560) при закрытом multiple popup оставляет фактический scrollTop=280, но сдвигает начало окна с Node 9 до Node 19. Явный virtual=undefined перекрывает provider false. Native безопасно завершает вызовы для отсутствующей строки и пустой выдачи, сохраняет согласованную позицию закрытой панели и наследует provider при явном undefined. Rc-trigger alignment перенесён в отдельном popup-align feature; popup motion остаётся отдельным этапом."
+          "note": "TreeSelect использует измеряемый Tree viewport с listHeight, listItemHeight, listItemScrollOffset и onPopupScroll на holder. Local virtual и popupMatchSelectWidth имеют приоритет над provider, false ширины отключает virtual. Ref поддерживает позиции, key/index, offsets и autoExpand целевого key в неконтролируемом дереве. Сверены выбор и активный key при первом и повторном открытии, поиск, ширина, смена virtual/height, zero keys, фокус и custom popup. 20 сценариев и 57 действий официального UMD6.6.8, 6 DOM-free SSR случаев и 3 отдельных наблюдения. Native сохраняет SSR shell и валидный active descendant. В UMD6.6.8 при scrollTo в открытой пустой выдаче BaseSelect вызывает отсутствующий метод listRef.current.scrollTo и выбрасывает TypeError. Запрос скрытого дочернего key с autoExpand достигает лимита rc-virtual-list. Числовой scrollTo(560) при закрытом multiple popup оставляет фактический scrollTop=280, но сдвигает начало окна с Node 9 до Node 19. Явный virtual=undefined перекрывает provider false. Native безопасно завершает вызовы для отсутствующей строки и пустой выдачи, сохраняет согласованную позицию закрытой панели и наследует provider при явном undefined. Rc-trigger alignment и popup motion перенесены в отдельные popup-align/popup-motion features; list/collapse motion внутреннего дерева отключён самим Ant wrapper через treeMotion=null; этот prop явно исключён из публичного TreeSelectProps. Native motion=false соответствует Source. Partial state сохраняет перечисленные расхождения virtual/scrollTo, а не отсутствующий list transition."
         },
         {
           "id": "source-tree-select-theme",
@@ -11733,7 +11779,10 @@
             "tests/browser/fixtures/ant-design-tree-select-prefix-reference.json",
             "tests/browser/tree-select-prefix.spec.ts",
             "tests/package/tree-select-prefix.ssr.test.ts",
-            "readme.md"
+            "readme.md",
+            "tests/browser/fixtures/ant-design-tree-select-motion-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-motion-prefix-reference.json",
+            "tests/browser/tree-select-motion.spec.ts"
           ],
           "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, unmodified official UMD/React18.3.1. components/tree-select передаёт local prefixCls буквально в tree style hook, а RcTreeSelect создаёт tree classes как owner-tree. При local choices tree получает choices-tree, стили адресуют choices; пять строк занимают110px вместо140px, фон прозрачный и оформление узлов/checkbox теряется. Raw cases/transitions записаны до counterparts. Native сохраняет прежний общий Tree adapter и согласованный CSS. Public counterpart оставляет тот же ConfigProvider/theme/data/props и убирает только local override; здоровые tree/nodes paint сравниваются отдельно от raw control/popup. Его classes отличаются, одинаковая DOM-разметка не заявлена. Наблюдение сохранено для отдельного разбора."
         },
@@ -12223,7 +12272,9 @@
             "tests/browser/fixtures/ant-design-tree-select-token-reference.json",
             "tests/browser/tree-select-token.spec.ts",
             "tests/browser/tree-select.spec.ts",
-            "readme.md"
+            "readme.md",
+            "tests/browser/tree-select-motion-native.ts",
+            "tests/browser/tree-select-motion.spec.ts"
           ],
           "note": "Ant Design6.6.8 /984592267de88fbf9cdaecc96a56629e721c709d initial-open-close-on-search: fixed searchValue=Alpha, initial open=true, onSearch(empty) синхронно закрывает popup. Raw Source сохраняет input.value=Alpha; Native сохраняет прежнее закрытое single поле с selected label/пустой строкой вместо отдельного React overlay. Owner query не меняется. Обе реализации вызывают search(empty) ровно1 раз и при reopening показывают Alpha с прежним input/ref. Native expectation задаёт только closed input presentation; raw Source search=Alpha и reopened view не нормализуются. SSR по-прежнему не вызывает search/splitter."
         },
@@ -12322,7 +12373,8 @@
             "tests/browser/fixtures/ant-design-tree-select-root-reference.json",
             "tests/browser/fixtures/ant-design-tree-select-input-reference.json",
             "readme.md",
-            "tests/browser/tree-select-inert-api-hydration.spec.ts"
+            "tests/browser/tree-select-inert-api-hydration.spec.ts",
+            "tests/browser/tree-select-motion-hydration.spec.ts"
           ],
           "note": "Pinned React6.6.8 SyntheticEvent.defaultPrevented становится true после preventDefault для noncancelable focus/blur/input, nativeEvent остаётся false. Native сохраняет реальные DOM flags; только эти3 observed event kinds в preventOwn expected отражены отдельно, keyboard/composition/paste остаются raw. При remove(SPAN) focused composite root Chromium доставляет blur/focusout ещё connected=true до unregister; React synthetic callbacks уже сняты, Svelte DOM callbacks публикуют generated/own blur. Native сохраняет этот existing DOM event contract, не перехватывает DOM remove и не откладывает обычный ref.blur. Raw Source не нормализуется; конкретный composite-unmount Native expected отделён и проверяет отсутствие callbacks после settled removal. Detached callbacks и deferred continuations не читают destroyed derived refs. Controlled custom hydration применяет query к прежнему editor, как independently observed Source; default Native draft contracts сохранены. Strict hydration inert props отдельно подтверждает trusted blur/focusout стандартного focused editor синхронно во время unmount при connected=true; один Native blur уже записан до await unmount. After-await и поздний ledger после1000ms/resize/scroll неизменны, observers/RAF0. Этот Native DOM event boundary сохраняется без подавления синхронного blur."
         },
@@ -12492,7 +12544,92 @@
             "tests/package/tree-select-align.ssr.test.ts",
             "readme.md"
           ],
-          "note": "Pinned Antd6.6.8/rc-select1.10.1/rc-tree-select1.16.1/rc-trigger3.10.1: inherited current nondeprecated popupAlign и builtinPlacements принимаются явно, сохраняют исходные semantic props/references и исключаются из DOM/custom-slot attrs. Export TreeSelectPopupAlign использует общий Native number|string offset contract без private experimental API. Truthy map, включая {}, полностью заменяет Ant Select defaults; local align shallow перекрывает выбранную запись. Перенесены points/percent offsets/targetOffset/numeric overflow/htmlRegion/dynamicInset и исходные no-op flags. Numeric alignment cache включает все четыре axes и flip history: map-only update не выравнивает, изменение popupAlign выравнивает только без selected entry, включая первое live добавление props. Source triggers: open/placement, actual target/popup size, window resize и union ancestor scroll; position-only movement не обновляет cache. CSS presentation отдельно учитывает container movement/size/border/padding/margin/transforms/scale, clipping и ShadowRoot. Rotation с неизменным bbox пересчитывает только CSS projection; same-open custom root replacement сохраняет flip history до close.37 independently repeated actual UMD cases/146actions и32 DOM-free SSR проверяют geometry, original refs, query/caret/focus, callbacks, CSS classes и отсутствие leaked props. Native сохраняет fixed top-layer/offsetParent null и прежний DOM parent вместо Source absolute/body; raw Source axes/parent сохраняются отдельно. Обычный Native multiple editor сохраняет прежний flow32/60/32; отдельный actual Source counterpart с public top-level style.height проверяет соответствующие popup coordinates/cache, editor boxes закреплены независимым805 baseline. SSR сохраняет прежние Native ARIA/dir и hidden measuring shell. Две strict hydration проверки подтверждают refs/method identities, cleanup observers/RAF и точный synchronous connected blur без поздних callbacks. Глобальный ConfigProvider.popupOverflow и popup motion этим feature не реализуются."
+          "note": "Pinned Antd6.6.8/rc-select1.10.1/rc-tree-select1.16.1/rc-trigger3.10.1: inherited current nondeprecated popupAlign и builtinPlacements принимаются явно, сохраняют исходные semantic props/references и исключаются из DOM/custom-slot attrs. Export TreeSelectPopupAlign использует общий Native number|string offset contract без private experimental API. Truthy map, включая {}, полностью заменяет Ant Select defaults; local align shallow перекрывает выбранную запись. Перенесены points/percent offsets/targetOffset/numeric overflow/htmlRegion/dynamicInset и исходные no-op flags. Numeric alignment cache включает все четыре axes и flip history: map-only update не выравнивает, изменение popupAlign выравнивает только без selected entry, включая первое live добавление props. Source triggers: open/placement, actual target/popup size, window resize и union ancestor scroll; position-only movement не обновляет cache. CSS presentation отдельно учитывает container movement/size/border/padding/margin/transforms/scale, clipping и ShadowRoot. Rotation с неизменным bbox пересчитывает только CSS projection; same-open custom root replacement сохраняет flip history до close.37 independently repeated actual UMD cases/146actions и32 DOM-free SSR проверяют geometry, original refs, query/caret/focus, callbacks, CSS classes и отсутствие leaked props. Native сохраняет fixed top-layer/offsetParent null и прежний DOM parent вместо Source absolute/body; raw Source axes/parent сохраняются отдельно. Обычный Native multiple editor сохраняет прежний flow32/60/32; отдельный actual Source counterpart с public top-level style.height проверяет соответствующие popup coordinates/cache, editor boxes закреплены независимым805 baseline. SSR сохраняет прежние Native ARIA/dir и hidden measuring shell. Две strict hydration проверки подтверждают refs/method identities, cleanup observers/RAF и точный synchronous connected blur без поздних callbacks. Глобальный ConfigProvider.popupOverflow остаётся отдельным расширением; popup motion реализован в отдельном popup-motion feature."
+        },
+        {
+          "id": "popup-motion",
+          "title": "Inherited animation/transitionName и исходный lifecycle popup",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TreeSelectControl.svelte",
+            "src/lib/tree-select.types.ts",
+            "src/lib/tree-select-motion.engine.ts",
+            "src/lib/tree-select-motion.engine.test.ts",
+            "src/lib/tree-select-motion.dom.ts",
+            "src/lib/css-motion-frame.dom.ts",
+            "src/lib/tree-select-motion-css.engine.ts",
+            "src/lib/tree-select-motion-frame.dom.ts",
+            "src/lib/tree-select-align.dom.ts",
+            "src/lib/tree-select-align-surface.dom.ts",
+            "src/lib/popup.dom.ts",
+            "src/lib/vendor/tree-select-popup-motion.css.js",
+            "tools/ant-design-css-recipes.json",
+            "tests/browser/fixtures/tree-select-motion-cases.ts",
+            "tests/browser/fixtures/tree-select-motion-root-swap-cases.ts",
+            "tests/browser/fixtures/tree-select-motion.types.ts",
+            "tests/browser/fixtures/TreeSelectMotionCase.svelte",
+            "tests/browser/fixtures/TreeSelectMotionCompositeRoot.svelte",
+            "tests/browser/fixtures/TreeSelectMotionFixtures.svelte",
+            "tests/browser/fixtures/ant-design-tree-select-motion-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-motion-root-swap-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-motion-ssr-reference.json",
+            "tests/browser/tree-select-motion-metrics.ts",
+            "tests/browser/tree-select-motion-driver.ts",
+            "tests/browser/tree-select-motion-native.ts",
+            "tests/browser/tree-select-motion.spec.ts",
+            "tests/browser/tree-select-motion-root-swap.spec.ts",
+            "tests/browser/tree-select-motion-hydration.spec.ts",
+            "tests/browser/fixtures/TreeSelectMotionHydration.svelte",
+            "tests/browser/fixtures/tree-select-motion-hydration.client.ts",
+            "tests/browser/fixtures/tree-select-motion-hydration.server.ts",
+            "tests/browser/fixtures/tree-select-motion-hydration.html",
+            "tests/browser/fixtures/tree-select-motion-styles.client.ts",
+            "tests/browser/tree-select-motion-ssr-metrics.ts",
+            "tests/package/tree-select-motion.ssr.test.ts",
+            "readme.md",
+            "src/lib/styles.css",
+            "src/lib/vendor/tree-select-popup-motion.css",
+            "tests/browser/fixtures/tree-select-motion-leave-cases.ts",
+            "tests/browser/fixtures/ant-design-tree-select-motion-leave-reference.json",
+            "tests/browser/tree-select-motion-leave.spec.ts",
+            "tests/browser/tree-select-motion-visibility.spec.ts"
+          ],
+          "note": "Antd6.6.8 /984592267de88fbf9cdaecc96a56629e721c709d, rc-tree-select1.16.1/select1.10.1/trigger3.10.1/motion1.3.3. Current nondeprecated string props принимаются явно, сохраняют original semantic observations и не попадают в DOM/custom-slot attrs. Truthy animation выбирает local-select-dropdown-animation перед transitionName; только undefined выбирает global-root-slide-up, empty name отключает именованные фазы. 110 исходных Select CSS rules и8 keyframes slide/move ограничены TreeSelect popup с независимыми local/global prefixes. Canonical CSS включён в styles export; динамический prefix template сохраняет прежний Native SSR без новых head scopes. Prepare/start/active/activated, own-node end без фильтра имени, retained leave DOM, pointer-events:none и rapid reversal повторяют Source; нет JS deadline/reduced-motion guard. Name/context live updates сохраняют начатую фазу; component motion=false меняет CSS duration, не глобальный supportMotion. CSSMotion styleReady memo удерживает active CSS/axes до готовности ACTIVATED после внутреннего завершения. Prepare/end выравнивают прямо, обычные scroll/resize triggers подавлены во время motion; numeric cache/scale и реальные popup clocks переживают замену custom root.36 независимых actual UMD cases/742actions,2 root replacement cases/16actions и2 leave-before-activated cases/22actions повторены побайтно;36 DOM-free SSR не создают getter/DOM/timer/RAF/callback resources. Строгая hydration/disposal проверяет refs, caret, настоящий synchronous connected blur и отсутствие поздних callbacks. Native fixed projection, stronger refs/opaque snippet cache и существующее SSR/closed-editor presentation описаны отдельными boundaries. Ant wrapper явно Omit treeMotion и передаёт null; list/collapse motion внутреннего Tree отключён, Native сохраняет motion=false. Standalone Tree motion остаётся независимым API."
+        },
+        {
+          "id": "native-popup-motion-frame",
+          "title": "Native fixed popup и публичные WAAPI clocks проецируемых transitions",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/tree-select-motion-frame.dom.ts",
+            "src/lib/tree-select-align-surface.dom.ts",
+            "tests/browser/tree-select-motion.spec.ts",
+            "tests/browser/tree-select-motion-root-swap.spec.ts",
+            "tests/browser/fixtures/ant-design-tree-select-motion-reference.json",
+            "readme.md",
+            "tests/browser/tree-select-theme.spec.ts",
+            "tests/browser/tree-select-motion-visibility.spec.ts"
+          ],
+          "note": "Существующий Native fixed top-layer/offsetParent null и DOM parent сохраняются вместо Source absolute frame. Реальные CSSAnimation эффекты проецируются с browser keyframes/timing/currentTime, без копирования интерактивного содержимого. Transform/axes CSSTransition, подавленный !important projection, воспроизводится реальным lower-priority WAAPI Animation на том же popup: seek/pause/play clocks доступны публично, browser CSS interpolation и reversal shortening сохраняются. Constructor Animation отличается от Source CSSTransition, DOM transitionend для подавленного geometry transition не фабрикуется; завершение передаётся контроллеру обычным callback. Не подавленные opacity/width transitions сохраняют собственные CSS clocks/events. Первичные Source raw axes/constructors/effect records сохраняются, helper не пересчитывает expected geometry. Без использования popupAlign/builtinPlacements сохраняются прежние Native viewport max-width,8px horizontal fit и скрытие при невидимом anchor; после использования alignment API действуют исходные overflow rules без этой адаптации. Закрытие уже скрытого Native popup завершает его фазу без ожидания отменённого CSS end, освобождает position RAF и не показывает панель при возвращении anchor; reopen сохраняет enter и прежние DOM/draft identities."
+        },
+        {
+          "id": "native-popup-motion-cache",
+          "title": "Существующие Svelte refs, реактивный opaque popup и context identity",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TreeSelectControl.svelte",
+            "tests/browser/tree-select-motion-native.ts",
+            "tests/browser/tree-select-motion.spec.ts",
+            "tests/browser/fixtures/ant-design-tree-select-motion-native-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-motion-flow-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-motion-prefix-reference.json",
+            "tests/browser/tree-select-motion-hydration.spec.ts",
+            "readme.md"
+          ],
+          "note": "Raw Source cold global motion=true→false вставляет MotionWrapper provider и пересоздаёт root/editor/popup с потерей draft. Native сохраняет прежние DOM/public-method identities; отдельный actual Source с заранее публично вложенным motion provider подтверждает те же updates без remount. React PopupContent.memo удерживает обычную label при закрытии, Native opaque Snippet остаётся реактивным; actual Source LabelContext consumer подтверждает live closed label без правки raw evidence. Multiple сохраняет прежний Native intrinsic flow32/60/32: actual Source public root height и root-only transition:none дают тот же popup/cache, не меняя popup CSS motion. Local-prefix tree сохраняет существующий canonical Native row stride28; отдельные actual Source public styles.popup.item.height=28 отделяют уже записанную source-local-tree-prefix-style границу. Source primary36 и отдельные public counterparts остаются неизменёнными; expected helpers ограничены прежними method identities, closed-single label/caret и SSR retained draft caret. Source SSR popup отсутствует, Native сохраняет прежний hidden initial-open shell/expanded/dir без browser resources."
         },
         {
           "id": "native-dir-owner",
@@ -12507,7 +12644,9 @@
             "tests/browser/fixtures/ant-design-tree-select-inert-api-reference.json",
             "tests/browser/fixtures/ant-design-tree-select-inert-api-ssr-reference.json",
             "tests/package/tree-select-inert-api.ssr.test.ts",
-            "readme.md"
+            "readme.md",
+            "tests/browser/tree-select-motion.spec.ts",
+            "tests/package/tree-select-motion.ssr.test.ts"
           ],
           "note": "Local direction остаётся inherited конфигурационным prop, не HTML dir. Source default/input-slot root не получает provider dir attribute (RTL задаёт class); raw runtime JS dir=rtl назначается root. Native сохраняет provider dir на default root и существующий public HTMLInputAttributes.dir на editor; local direction не подменяет ни один из них. Общий projector читает реальные attrs и computed direction. Отдельный Native expected helper меняет только ранее согласованного владельца dir; raw Source goldens не нормализуются. Custom root own dir/style и explicit top-level dir=undefined сохраняют исходный generated-over-own merge и сравниваются raw; custom input own dir остаётся отдельным attr. Source BaseSelect declaration не объявляет native dir, Native dir=auto/null сохраняет свой прежний тип."
         }

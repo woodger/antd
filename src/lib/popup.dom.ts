@@ -8,10 +8,11 @@ import type { PopupFlipCache, PopupSourceAlign } from './popup-position.engine';
 import type { AdjustOverflow, TooltipPlacement } from './tooltip.types';
 
 const openPopups = new WeakMap<Document, HTMLElement[]>();
+const popupConnections = new WeakMap<HTMLElement, object>();
 
 /** Cleanup остаётся вызываемой функцией; forceAlign использует тот же контроллер позиции. */
 export interface PopupConnection {
-  (): void;
+  (retainSurface?: boolean): void;
   forceAlign: () => void;
 }
 
@@ -42,6 +43,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   gap?: number | (() => number | undefined);
   allowZeroSize?: boolean | (() => boolean);
   allowOffscreenAnchor?: boolean;
+  interactive?: boolean;
   getPosition?: (anchor: DOMRect, popup: DOMRect, viewport: TooltipRect) => TooltipPosition | undefined;
   getAnchorRect?: (current: DOMRect, popup: DOMRect) => DOMRect;
   applyPosition?: (position: TooltipPosition) => void;
@@ -49,6 +51,8 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
 }): PopupConnection {
   const document = anchor.ownerDocument;
   const view = document.defaultView!;
+  const owner = {};
+  popupConnections.set(popup, owner);
   let frame = 0;
   let shown = false;
   let disposed = false;
@@ -124,11 +128,12 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
 
     if (!popup.matches(':popover-open')) {
       popup.showPopover();
-      const stack = openPopups.get(document) ?? [];
-
-      stack.push(popup);
-      openPopups.set(document, stack);
     }
+    const stack = openPopups.get(document) ?? [];
+    const index = stack.indexOf(popup);
+    if (options.interactive === false && index !== -1) stack.splice(index, 1);
+    else if (options.interactive !== false && index === -1) stack.push(popup);
+    openPopups.set(document, stack);
 
     const bounds = popup.getBoundingClientRect();
     const positionRect = options.getAnchorRect?.(rect, bounds) ?? rect;
@@ -205,11 +210,12 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     // Вложенный native dialog получает свои keys раньше содержащего его popup.
     if (dialog && popup.contains(dialog) && !dialog.contains(anchor)) return;
 
-    const current = shown && !anchor.closest('[inert]')
+    const current = shown && options.interactive !== false && !anchor.closest('[inert]')
       && openPopups.get(document)?.findLast(element => !element.inert) === popup;
     if (current && !event.defaultPrevented && event.key !== 'Escape')
       options.onKeydown?.(event);
     if (shown
+      && options.interactive !== false
       && !anchor.closest('[inert]')
       && openPopups.get(document)?.findLast(element => !element.inert) === popup
       && event.key === 'Escape'
@@ -227,6 +233,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     const triggerRoot = trigger.getRootNode();
 
     if (shown
+      && options.interactive !== false
       && !popup.inert
       && !anchor.closest('[inert]')
       && target instanceof Node
@@ -259,7 +266,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   if (options.preserveFocus !== false)
     popup.addEventListener('pointerdown', preserveFocus);
 
-  return Object.assign(() => {
+  return Object.assign((retainSurface = false) => {
     disposed = true;
     view.cancelAnimationFrame(frame);
     document.removeEventListener('keydown', handleKeydown);
@@ -267,6 +274,13 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     view.removeEventListener('mousedown', handleMousedown, true);
     view.removeEventListener('contextmenu', handleMousedown, true);
     popup.removeEventListener('pointerdown', preserveFocus);
-    hide();
+    const release = () => {
+      if (popupConnections.get(popup) !== owner) return;
+      popupConnections.delete(popup);
+      hide();
+    };
+    // Custom trigger registrations can be briefly empty during a same-flush retarget.
+    if (retainSurface) queueMicrotask(release);
+    else release();
   }, { forceAlign });
 }
