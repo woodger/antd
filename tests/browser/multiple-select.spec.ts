@@ -1,3 +1,4 @@
+import { physicalSelectOption, physicalSelectPopup } from './select-physical';
 import { test, expect } from './test';
 
 test.beforeEach(async ({ page }) => {
@@ -19,10 +20,11 @@ test(
 
     await expect(list).toHaveAttribute('aria-multiselectable', 'true');
 
-    await list.getByRole('option', { name: 'Two', exact: true }).click();
+    await physicalSelectOption(fixture, { name: 'Two', exact: true }).click();
 
-    await expect(list).toBeVisible();
+    await expect(physicalSelectPopup(fixture, 'Multiple numbers')).toBeVisible();
     await expect(input).toBeFocused();
+    await physicalSelectOption(fixture, { name: 'Zero', exact: true }).hover();
     await expect(list.getByRole('option', { name: 'Zero', exact: true })).toHaveAttribute(
       'aria-selected',
       'true'
@@ -31,7 +33,7 @@ test(
     await expect(fixture.getByRole('status', { name: 'Multiple owner', exact: true }))
       .toHaveText('[0,2]');
 
-    await list.getByRole('option', { name: 'Zero', exact: true }).click();
+    await physicalSelectOption(fixture, { name: 'Zero', exact: true }).click();
 
     await expect(fixture.getByRole('status', { name: 'Multiple owner', exact: true }))
       .toHaveText('[2]');
@@ -177,7 +179,7 @@ test('multiple callback arrays are independent of the bound value', async ({ pag
 
   await fixture.getByLabel('Mutate multiple callback array', { exact: true }).check();
   await page.getByRole('combobox', { name: 'Multiple numbers', exact: true }).click();
-  await fixture.getByRole('option', { name: 'Two', exact: true }).click();
+  await physicalSelectOption(fixture, { name: 'Two', exact: true }).click();
 
   await expect(fixture.getByRole('status', { name: 'Multiple owner', exact: true }))
     .toHaveText('[0,2]');
@@ -196,7 +198,7 @@ test(
       .toHaveText('{"choices":["0"],"defaults":["0","2"]}');
 
     await page.getByRole('combobox', { name: 'Multiple numbers', exact: true }).click();
-    await fixture.getByRole('option', { name: 'Two', exact: true }).click();
+    await physicalSelectOption(fixture, { name: 'Two', exact: true }).click();
     await page.getByRole('combobox', { name: 'Multiple numbers', exact: true }).press('Escape');
 
     const defaults = fixture.locator('.container').filter(
@@ -270,7 +272,7 @@ test(
     const input = fixture.getByRole('combobox', { name: 'Outside multiple', exact: true });
 
     await input.click();
-    await fixture.getByRole('option', { name: 'Two', exact: true }).click();
+    await physicalSelectOption(fixture, { name: 'Two', exact: true }).click();
     await fixture.getByRole('button', { name: 'Read external multiple FormData', exact: true })
       .click();
 
@@ -301,8 +303,8 @@ test(
     await expect(input).toHaveAccessibleDescription('Select two or three roles');
 
     await input.click();
-    await fixture.getByRole('option', { name: 'Two', exact: true }).click();
-    await fixture.getByRole('option', { name: 'Three', exact: true }).click();
+    await physicalSelectOption(fixture, { name: 'Two', exact: true }).click();
+    await physicalSelectOption(fixture, { name: 'Three', exact: true }).click();
     await input.press('Escape');
     await fixture.getByRole('button', { name: 'Submit array form', exact: true }).click();
 
@@ -329,7 +331,7 @@ test(
     const fixture = page.locator('#multiple-form-fixture');
 
     await fixture.getByLabel('Multiple roles', { exact: true }).click();
-    await fixture.getByRole('option', { name: 'Two', exact: true }).click();
+    await physicalSelectOption(fixture, { name: 'Two', exact: true }).click();
     await fixture.getByLabel('Hold array validation', { exact: true }).check();
     await fixture.getByRole('button', { name: 'Submit array form', exact: true }).click();
 
@@ -398,7 +400,7 @@ test(
     const input = dialog.getByRole('combobox', { name: 'Dialog choices', exact: true });
 
     await input.click();
-    await dialog.getByRole('option', { name: 'Zero', exact: true }).click();
+    await physicalSelectOption(dialog, { name: 'Zero', exact: true }).click();
     await input.press('Escape');
 
     await expect(dialog).toBeVisible();
@@ -418,8 +420,8 @@ test(
     const strings = page.getByRole('combobox', { name: 'Multiple strings', exact: true });
 
     await strings.click();
-    await fixture.getByRole('option', { name: 'String alpha', exact: true }).click();
-    await fixture.getByRole('option', { name: 'String beta', exact: true }).click();
+    await physicalSelectOption(fixture, { name: 'String alpha', exact: true }).click();
+    await physicalSelectOption(fixture, { name: 'String beta', exact: true }).click();
 
     await expect(fixture.getByRole('status', { name: 'Multiple string owner', exact: true }))
       .toHaveText('["alpha","beta"]');
@@ -455,7 +457,7 @@ test.describe('mobile multiple Select', () => {
 
       await input.click();
       await input.fill('Long choice');
-      await fixture.getByRole('option', { name: /^Long choice/ }).click();
+      await physicalSelectOption(fixture, { name: /^Long choice/ }).click();
 
       const container = fixture.locator('.container').filter({ has: input });
 

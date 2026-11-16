@@ -1,3 +1,4 @@
+import { physicalSelectOption, physicalSelectPopup } from './select-physical';
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-select-prefix-reference.json' with { type: 'json' };
 import { snapshotSelectPrefix } from './select-prefix-metrics';
@@ -28,8 +29,8 @@ test('Select prefix updates preserve open popup, search selection, IDs, form val
   await control.fill('draft');
   await control.evaluate((node: HTMLInputElement) => node.setSelectionRange(1, 4, 'backward'));
   const root = page.locator('[data-ant-select-control]');
-  const popup = page.getByRole('listbox', { name: 'Prefix choices', exact: true });
-  const option = page.getByRole('option', { name: 'Alpha', exact: true });
+  const popup = physicalSelectPopup(page, 'Prefix choices');
+  const option = physicalSelectOption(page, { name: 'Alpha', exact: true });
   const oldRoot = await root.elementHandle();
   const oldInput = await control.elementHandle();
   const oldPopup = await popup.elementHandle();
@@ -74,7 +75,7 @@ test('Select local/global prefixes preserve portalled multiple tags, focus and n
   await page.getByRole('checkbox', { name: 'Portal prefix Select', exact: true }).check();
   const control = page.getByRole('combobox', { name: 'Prefix choices', exact: true });
   await control.fill('held');
-  const popup = page.getByRole('listbox', { name: 'Prefix choices', exact: true });
+  const popup = physicalSelectPopup(page, 'Prefix choices');
   const oldPopup = await popup.elementHandle();
   const tag = page.getByRole('button', { name: 'Remove Beta', exact: true });
   const oldTag = await tag.elementHandle();

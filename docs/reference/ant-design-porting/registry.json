@@ -4604,11 +4604,11 @@
         },
         {
           "id": "extended-api",
-          "title": "Virtual, fieldNames, render hooks и остальные semantic/config API",
+          "title": "FieldNames, render hooks и остальные semantic/config API",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет virtualization/scrollTo, fieldNames, optionRender/popupRender, searchIcon customization, остальных semantic classNames/styles и ConfigProvider.select. Общие Select tokens подключены отдельно. Legacy dataSource/Option children/deprecated dropdown aliases исключены из переноса; React option.props wrappers отсутствуют. Поддерживается string value; React generic numeric/object значения за пределами первого этапа."
+          "note": "Нет fieldNames, optionRender/popupRender, searchIcon customization, остальных semantic classNames/styles и ConfigProvider.select. Общие Select tokens, измеряемая virtualization и public refs подключены отдельными features. Legacy dataSource/Option children/deprecated dropdown aliases исключены из переноса; React option.props wrappers отсутствуют. Поддерживается string value; React generic numeric/object значения за пределами первого этапа."
         },
         {
           "id": "source-select-theme",
@@ -4624,7 +4624,7 @@
             "tests/browser/fixtures/ant-design-auto-complete-metrics.json",
             "docs/reference/theme-context.md"
           ],
-          "note": "Как upstream, AutoComplete использует Select tokens без собственного style hook: selector/clear/popup, option/group fonts и logical group indentation. Custom Input сохраняет свои tokens и ref; customize wrapper не задаёт Select min-height. Computed metrics официального UMD для 17 настроек: размеры, variants, disabled, custom Input/textarea, группы и пустая выдача; component algorithms/aliases, нули/undefined, prefix/hash. SSR и обновления сохраняют native editor/option content, input selection/focus, FormData и callbacks. CSS variables и authored width/listHeight объединяются общим declaration writer с controller projection без потери приоритета. Native-only темы и существующий API сохранены; остальные rc-select props/config/virtualization остаются в работе."
+          "note": "Как upstream, AutoComplete использует Select tokens без собственного style hook: selector/clear/popup, option/group fonts и logical group indentation. Custom Input сохраняет свои tokens и ref; customize wrapper не задаёт Select min-height. Computed metrics официального UMD для 17 настроек: размеры, variants, disabled, custom Input/textarea, группы и пустая выдача; component algorithms/aliases, нули/undefined, prefix/hash. SSR и обновления сохраняют native editor/option content, input selection/focus, FormData и callbacks. CSS variables и authored width/listHeight объединяются общим declaration writer с controller projection без потери приоритета. Native-only темы и существующий API сохранены; остальные rc-select props/config остаются в работе; virtualization перенесена отдельной feature."
         },
         {
           "id": "popup-container",
@@ -4756,7 +4756,6 @@
             "tests/browser/popup-width-hydration.spec.ts",
             "tests/package/popup-width.ssr.test.ts",
             "readme.md",
-            "src/lib/select-popup-height.dom.ts",
             "tests/browser/fixtures/ant-design-popup-width-height-reference.json",
             "tests/browser/popup-width-height.spec.ts",
             "tests/browser/fixtures/ant-design-popup-width-near-right-reference.json",
@@ -4767,17 +4766,65 @@
         {
           "id": "popup-list-height",
           "title": "Высота viewport списка с фактическими padding и border",
-          "state": "partial",
+          "state": "supported",
           "requiredForV1": false,
           "evidence": [
             "src/lib/AutoComplete.svelte",
-            "src/lib/select-popup-height.dom.ts",
             "tests/browser/fixtures/ant-design-popup-width-height-reference.json",
             "tests/browser/popup-width-height.spec.ts",
             "tests/browser/auto-complete-theme.spec.ts",
-            "readme.md"
+            "readme.md",
+            "src/lib/SelectOptionList.svelte",
+            "src/lib/select-option-list.model.svelte.ts",
+            "tests/browser/select-virtual.spec.ts"
           ],
-          "note": "Source ограничивает внутренний list viewport256px (AutoComplete listHeight), а Native сохраняет scrollable outer listbox. Его max-height учитывает фактические physical padding/border при border-box, content-box сохраняет собственный content cap. Измерение выполняется существующим popup frame loop без новых observers/timers/listeners/DOM. Восемь independently repeated Source public-CSS cases/32actions проверяют обычный padding, logical aliases, border и content-box; общая геометрия, actual physical outer height/CSS и effective Native scroll viewport сравниваются с actual Source holder. Отсутствие Select/AC virtualization и различие DOM/scroll-event target остаются отдельной границей; Select listHeight API этим блоком не добавлен. Положительная/default высота проверена; listHeight=0 пока сохраняет прежний Native cap, тогда как Source truthy-height gate снимает ограничение. Этот отдельный gap listHeight/virtual API остаётся в работе."
+          "note": "ListHeight256 ограничивает внутренний holder; actual physical padding/border popup добавляются снаружи при border-box и content-box. ListHeight0 снимает cap по truthy gate Source. Восемь independently repeated public-CSS Source cases/32actions продолжают проверять геометрию и physical CSS, новая virtual-list feature проверяет измеряемые строки, live sizing и исходный scroll-event target. Прежний внешний height inset adapter заменён внутренним viewport."
+        },
+        {
+          "id": "virtualization",
+          "title": "Измеряемый список, размеры, scrollbar, public refs и onActive",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/AutoComplete.svelte",
+            "src/lib/auto-complete.types.ts",
+            "src/lib/SelectOptionList.svelte",
+            "src/lib/select-option-list.model.svelte.ts",
+            "src/lib/select-option-list.types.ts",
+            "src/lib/select-active.model.svelte.ts",
+            "src/lib/select.types.ts",
+            "tests/browser/fixtures/select-virtual-cases.ts",
+            "tests/browser/fixtures/select-virtual.types.ts",
+            "tests/browser/fixtures/ant-design-select-virtual-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-native-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-closed-diagnostic-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-empty-native-reference.json",
+            "tests/browser/fixtures/SelectVirtualCase.svelte",
+            "tests/browser/fixtures/SelectVirtualHydration.svelte",
+            "tests/browser/select-virtual-metrics.ts",
+            "tests/browser/select-virtual-reference.ts",
+            "tests/browser/select-virtual-native.ts",
+            "tests/browser/select-virtual.spec.ts",
+            "tests/browser/select-virtual-hydration.spec.ts",
+            "tests/package/select-virtual.ssr.test.ts",
+            "readme.md",
+            "src/lib/virtual-list-size-cache.engine.ts",
+            "src/lib/virtual-list-size-cache.engine.test.ts",
+            "tests/browser/fixtures/ant-design-select-virtual-initialization-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-hover-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-query-native-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-edge-reference.json",
+            "tests/browser/fixtures/select-virtual-blur-native-baseline.json",
+            "tests/browser/fixtures/select-virtual-query-native-baseline.json",
+            "tests/browser/fixtures/select-virtual-query-caret-native-baseline.json",
+            "tests/browser/select-virtual-initialization.spec.ts",
+            "tests/browser/select-virtual-edge.spec.ts",
+            "tests/browser/select-virtual-hover-driver.ts",
+            "tests/browser/fixtures/SelectVirtualEdgeCase.svelte",
+            "tests/browser/fixtures/select-virtual-edge-cases.ts"
+          ],
+          "note": "Antd6.6.8/rc-select1.10.1/virtual-list1.5.1: измеряемый inner holder/filler, inherited virtual=true с local own undefined override, false width gate (numeric0 не отключает), listHeight256/zero без cap, listItemHeight=controlHeight/zero без окна и showScrollBar true/false/optional. Исходные keys/index, variable height и группы AC измеряются; public scrollTo(number=index либо key/index/align/offset/getSize/top/left), focus(FocusOptions)/blur, отдельные bindable nativeElement/inputElement, nullable Promise-last onActive и active соседний srlist. Parent model сохраняет offsets/cache между conditional Select DOM и memo коллекцию закрытого popup; AC сохраняет прежний retained DOM. Первичные72 raw Source cases/422actions и72 closed SSR не изменяются. Закрытый positional Source bug (DOM572/window500 после closed top500) не повторяется: Native применяет очередь к видимому holder; отдельные2 actual public Source owner counterparts/50actions сохраняют согласованное окно. Прежний Native текст empty сохраняется с2 actual public notFoundContent counterparts/14actions. Native controlled search/selected editor/connected blur и valid ARIA links сохраняются отдельными узкими baseline guards; полная Source parity этих границ не заявлена. Остальные Select data/render/semantic/config/motion API остаются отдельным объёмом. Отдельный lazy getSize cache сохраняет уже запрошенный префикс текущего render, а новые ключи читает по текущим измерениям; opt-in ограничен Select adapter и не меняет прежние Tree/Listy callbacks. Четыре independently repeated Source edge cases/14actions фиксируют empty-string option/value и группы с estimate16/32, включая полный порядок2/3 вызовов getSize. Восемь Source initialization counterexamples отдельно проверяют same-target/no-op, genuine600→572 и untrusted UIEvent: Native публикует реальные события и не публикует один внутренний restore нового holder. Первый Source frame до align сохраняется raw, full layout сравнивается после стабильного align. Два selected-hover counterparts используют явно завершённый public scrollIntoView перед настоящим mouse hover; обычные Source72/422 и исходный driver сохранены. Один actual Source controlled-query owner/18actions отключает onSearch только пока owner закрыт; query и все callbacks сравниваются целиком, helper меняет лишь доказанные старой Native сборкой editor value/caret. После disconnect/unmount сохранённые DOM refs не вызывают новые scroll callbacks."
         }
       ]
     },
@@ -9489,11 +9536,48 @@
         },
         {
           "id": "virtualization",
-          "title": "Виртуализация options",
-          "state": "missing",
+          "title": "Измеряемый список, размеры, scrollbar, public refs и onActive",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "В первой версии отсутствует."
+          "evidence": [
+            "src/lib/SelectOptionList.svelte",
+            "src/lib/select-option-list.model.svelte.ts",
+            "src/lib/select-option-list.types.ts",
+            "src/lib/select-active.model.svelte.ts",
+            "src/lib/select.types.ts",
+            "tests/browser/fixtures/select-virtual-cases.ts",
+            "tests/browser/fixtures/select-virtual.types.ts",
+            "tests/browser/fixtures/ant-design-select-virtual-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-native-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-closed-diagnostic-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-empty-native-reference.json",
+            "tests/browser/fixtures/SelectVirtualCase.svelte",
+            "tests/browser/fixtures/SelectVirtualHydration.svelte",
+            "tests/browser/select-virtual-metrics.ts",
+            "tests/browser/select-virtual-reference.ts",
+            "tests/browser/select-virtual-native.ts",
+            "tests/browser/select-virtual.spec.ts",
+            "tests/browser/select-virtual-hydration.spec.ts",
+            "tests/package/select-virtual.ssr.test.ts",
+            "readme.md",
+            "src/lib/virtual-list-size-cache.engine.ts",
+            "src/lib/virtual-list-size-cache.engine.test.ts",
+            "tests/browser/fixtures/ant-design-select-virtual-initialization-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-hover-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-query-native-reference.json",
+            "tests/browser/fixtures/ant-design-select-virtual-edge-reference.json",
+            "tests/browser/fixtures/select-virtual-blur-native-baseline.json",
+            "tests/browser/fixtures/select-virtual-query-native-baseline.json",
+            "tests/browser/fixtures/select-virtual-query-caret-native-baseline.json",
+            "tests/browser/select-virtual-initialization.spec.ts",
+            "tests/browser/select-virtual-edge.spec.ts",
+            "tests/browser/select-virtual-hover-driver.ts",
+            "tests/browser/fixtures/SelectVirtualEdgeCase.svelte",
+            "tests/browser/fixtures/select-virtual-edge-cases.ts",
+            "tests/browser/select-virtual-shadow-styles.ts"
+          ],
+          "note": "Antd6.6.8/rc-select1.10.1/virtual-list1.5.1: измеряемый inner holder/filler, inherited virtual=true с local own undefined override, false width gate (numeric0 не отключает), listHeight256/zero без cap, listItemHeight=controlHeight/zero без окна и showScrollBar true/false/optional. Исходные keys/index, variable height и группы AC измеряются; public scrollTo(number=index либо key/index/align/offset/getSize/top/left), focus(FocusOptions)/blur, отдельные bindable nativeElement/inputElement, nullable Promise-last onActive и active соседний srlist. Parent model сохраняет offsets/cache между conditional Select DOM и memo коллекцию закрытого popup; AC сохраняет прежний retained DOM. Первичные72 raw Source cases/422actions и72 closed SSR не изменяются. Закрытый positional Source bug (DOM572/window500 после closed top500) не повторяется: Native применяет очередь к видимому holder; отдельные2 actual public Source owner counterparts/50actions сохраняют согласованное окно. Прежний Native текст empty сохраняется с2 actual public notFoundContent counterparts/14actions. Native controlled search/selected editor/connected blur и valid ARIA links сохраняются отдельными узкими baseline guards; полная Source parity этих границ не заявлена. Остальные Select data/render/semantic/config/motion API остаются отдельным объёмом. Отдельный lazy getSize cache сохраняет уже запрошенный префикс текущего render, а новые ключи читает по текущим измерениям; opt-in ограничен Select adapter и не меняет прежние Tree/Listy callbacks. Четыре independently repeated Source edge cases/14actions фиксируют empty-string option/value и группы с estimate16/32, включая полный порядок2/3 вызовов getSize. Восемь Source initialization counterexamples отдельно проверяют same-target/no-op, genuine600→572 и untrusted UIEvent: Native публикует реальные события и не публикует один внутренний restore нового holder. Первый Source frame до align сохраняется raw, full layout сравнивается после стабильного align. Два selected-hover counterparts используют явно завершённый public scrollIntoView перед настоящим mouse hover; обычные Source72/422 и исходный driver сохранены. Один actual Source controlled-query owner/18actions отключает onSearch только пока owner закрыт; query и все callbacks сравниваются целиком, helper меняет лишь доказанные старой Native сборкой editor value/caret. После disconnect/unmount сохранённые DOM refs не вызывают новые scroll callbacks. Index/key scrollTo выполняет до10 layout-проходов после render; DEV и production используют одну Source-последовательность измерений/getSize. Shadow fixture сохраняет исходные STYLE/LINK-копии между замерами; production-проверка требует сохранения node/href, загруженного CSS и реальных32px rows без временного удаления stylesheet."
         },
         {
           "id": "compact-context",
@@ -9539,7 +9623,7 @@
             "tests/browser/fixtures/ant-design-select-metrics.json",
             "docs/reference/theme-context.md"
           ],
-          "note": "Исходные defaults/final overrides, component algorithms, aliases, zero/undefined, unitless optionLineHeight/optionSelectedFontWeight/zIndexPopup и custom prefix. Подключены selector/dropdown scopes, multiple tag/input metrics, option flex layout, arrow/clear и active focus styles; SSR и смена темы сохраняют DOM, поиск/выделение/фокус, callbacks и FormData. Полные declarations и computed metrics для 16 настроек официального UMD; single/multiple трёх размеров, disabled, options и пустая выдача. Native-only оформление и прежний API сохранены. Это не полный rc-select API: остальные props/semantic config, virtualization и motion остаются в работе. AutoComplete, TreeSelect и Cascader получают общий Select token scope."
+          "note": "Исходные defaults/final overrides, component algorithms, aliases, zero/undefined, unitless optionLineHeight/optionSelectedFontWeight/zIndexPopup и custom prefix. Подключены selector/dropdown scopes, multiple tag/input metrics, option flex layout, arrow/clear и active focus styles; SSR и смена темы сохраняют DOM, поиск/выделение/фокус, callbacks и FormData. Полные declarations и computed metrics для 16 настроек официального UMD; single/multiple трёх размеров, disabled, options и пустая выдача. Native-only оформление и прежний API сохранены. Это не полный rc-select API: остальные props/semantic config и motion остаются в работе. AutoComplete, TreeSelect и Cascader получают общий Select token scope."
         },
         {
           "id": "popup-container",
@@ -9800,7 +9884,7 @@
             "src/lib/select.types.ts",
             "src/lib/Select.svelte"
           ],
-          "note": "Полный source API остаётся в работе: fieldNames/groups, labelInValue, searchIcon, остальные renderers, полный callback/ref/semantic/config/motion API и option attrs. OptionRender для плоских данных и open/defaultOpen перенесены. Native primitive options/value, binding/onValueChange и согласованные формы сохраняются. Deprecated top-level search и boolean tags/multiple/combobox не возвращаются."
+          "note": "Полный source API остаётся в работе: fieldNames/groups, labelInValue, searchIcon, остальные renderers, остальные callback/semantic/config/motion API и option attrs. OptionRender для плоских данных, open/defaultOpen и измеряемая virtualization/public refs/onActive перенесены отдельными features. Native primitive options/value, binding/onValueChange и согласованные формы сохраняются. Deprecated top-level search и boolean tags/multiple/combobox не возвращаются."
         },
         {
           "id": "native-whitespace-tag",
@@ -10019,9 +10103,13 @@
             "tests/browser/popup-overflow-native.ts",
             "tests/browser/popup-overflow.spec.ts",
             "tests/browser/popup-overflow-hydration.spec.ts",
-            "readme.md"
+            "readme.md",
+            "tests/browser/fixtures/ant-design-select-virtual-query-native-reference.json",
+            "tests/browser/select-virtual-native.ts",
+            "tests/browser/fixtures/select-virtual-query-caret-native-baseline.json",
+            "tests/browser/select-virtual.spec.ts"
           ],
-          "note": "Согласованный Native contract и actual baseline1fb7921: owner close очищает внутренний поиск без onSearch, controlled searchValue остаётся у владельца и появляется вновь при reopen. Raw UMD6.6.8 single close вызывает onSearch(''), после чего fixture owner очищает query. Source raw corpus сохранён целиком; отдельный Native helper меняет только два owner open actions, проверяет исходный полный ledger и не фильтрует события/не меняет геометрию. Focused open unmount сохраняет прежний connected blur и один дополнительный Native onOpenChange(false); Native disposal проверяется отдельно от Source ledger. Полная Source callback parity для этой границы не заявлена."
+          "note": "Согласованный Native contract и actual baseline1fb7921: owner close очищает внутренний поиск без onSearch, controlled searchValue остаётся у владельца и появляется вновь при reopen. Raw UMD6.6.8 single close вызывает onSearch(''), после чего fixture owner очищает query. Source raw corpus сохранён целиком; отдельный Native helper меняет только два owner open actions, проверяет исходный полный ledger и не фильтрует события/не меняет геометрию. Focused open unmount сохраняет прежний connected blur и один дополнительный Native onOpenChange(false); Native disposal проверяется отдельно от Source ledger. Полная Source callback parity для этой границы не заявлена. Для нового onActive отдельный actual public Source owner сохраняет controlled query: onSearch отсутствует только при закрытом owner, callback ledger не меняется в helper; повторное закрытие не создаёт искусственную активацию. Историческая Native75b93bf сборка отдельно доказывает closed editor empty/caret0 и reopened text/caret10; эти поля остаются согласованной адаптацией."
         },
         {
           "id": "popup-placement",
@@ -10059,7 +10147,6 @@
             "tests/browser/popup-width-hydration.spec.ts",
             "tests/package/popup-width.ssr.test.ts",
             "readme.md",
-            "src/lib/select-popup-height.dom.ts",
             "tests/browser/fixtures/ant-design-popup-width-height-reference.json",
             "tests/browser/popup-width-height.spec.ts",
             "tests/browser/fixtures/ant-design-popup-width-near-right-reference.json",
@@ -10074,13 +10161,15 @@
           "requiredForV1": false,
           "evidence": [
             "src/lib/Select.svelte",
-            "src/lib/select-popup-height.dom.ts",
             "tests/browser/fixtures/ant-design-popup-width-height-reference.json",
             "tests/browser/popup-width-height.spec.ts",
             "tests/browser/auto-complete-theme.spec.ts",
-            "readme.md"
+            "readme.md",
+            "src/lib/SelectOptionList.svelte",
+            "src/lib/select-option-list.model.svelte.ts",
+            "tests/browser/select-virtual.spec.ts"
           ],
-          "note": "Source ограничивает внутренний list viewport256px (AutoComplete listHeight), а Native сохраняет scrollable outer listbox. Его max-height учитывает фактические physical padding/border при border-box, content-box сохраняет собственный content cap. Измерение выполняется существующим popup frame loop без новых observers/timers/listeners/DOM. Восемь independently repeated Source public-CSS cases/32actions проверяют обычный padding, logical aliases, border и content-box; общая геометрия, actual physical outer height/CSS и effective Native scroll viewport сравниваются с actual Source holder. Отсутствие Select/AC virtualization и различие DOM/scroll-event target остаются отдельной границей; Select listHeight API этим блоком не добавлен."
+          "note": "ListHeight256 ограничивает внутренний holder; actual physical padding/border popup добавляются снаружи при border-box и content-box. ListHeight0 снимает cap по truthy gate Source. Восемь independently repeated public-CSS Source cases/32actions продолжают проверять геометрию и physical CSS, новая virtual-list feature проверяет измеряемые строки, live sizing и исходный scroll-event target. Прежний внешний height inset adapter заменён внутренним viewport."
         }
       ]
     },
@@ -23644,7 +23733,7 @@
             "tests/browser/fixtures/ant-design-select-metrics.json",
             "docs/reference/theme-context.md"
           ],
-          "note": "Исходные defaults/final overrides, component algorithms, aliases, zero/undefined, unitless optionLineHeight/optionSelectedFontWeight/zIndexPopup и custom prefix. Подключены selector/dropdown scopes, multiple tag/input metrics, option flex layout, arrow/clear и active focus styles; SSR и смена темы сохраняют DOM, поиск/выделение/фокус, callbacks и FormData. Полные declarations и computed metrics для 16 настроек официального UMD; single/multiple трёх размеров, disabled, options и пустая выдача. Native-only оформление и прежний API сохранены. Это не полный rc-select API: остальные props/semantic config, virtualization и portals/motion остаются в работе. AutoComplete, TreeSelect и Cascader получают общий Select token scope."
+          "note": "Исходные defaults/final overrides, component algorithms, aliases, zero/undefined, unitless optionLineHeight/optionSelectedFontWeight/zIndexPopup и custom prefix. Подключены selector/dropdown scopes, multiple tag/input metrics, option flex layout, arrow/clear и active focus styles; SSR и смена темы сохраняют DOM, поиск/выделение/фокус, callbacks и FormData. Полные declarations и computed metrics для 16 настроек официального UMD; single/multiple трёх размеров, disabled, options и пустая выдача. Native-only оформление и прежний API сохранены. Это не полный rc-select API: остальные props/semantic config и portals/motion остаются в работе. AutoComplete, TreeSelect и Cascader получают общий Select token scope."
         },
         {
           "id": "tree-select-theme-tokens",
@@ -24711,7 +24800,7 @@
         },
         {
           "id": "virtual-list-default",
-          "title": "ConfigProvider.virtual для Tree/DirectoryTree, TreeSelect и Listy",
+          "title": "ConfigProvider.virtual для Tree/DirectoryTree, TreeSelect, Listy, Select и AutoComplete",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
@@ -24725,9 +24814,13 @@
             "tests/package/tree-virtual.ssr.test.ts",
             "tests/browser/tree-select-virtual.spec.ts",
             "tests/browser/listy.spec.ts",
-            "readme.md"
+            "readme.md",
+            "src/lib/Select.svelte",
+            "src/lib/AutoComplete.svelte",
+            "tests/browser/select-virtual.spec.ts",
+            "tests/package/select-virtual.ssr.test.ts"
           ],
-          "note": "Общий virtual наследуется во вложенном provider, local prop компонента имеет приоритет. Tree и TreeSelect по умолчанию включают virtual при ненулевых высоте и оценке строки. Listy сохраняет default=false. Явное undefined наследует общий default. Остальные consumers, в том числе Select, AutoComplete и Table, требуют отдельного переноса."
+          "note": "Общий virtual наследуется во вложенном provider, local prop компонента имеет приоритет. Tree и TreeSelect по умолчанию включают virtual при ненулевых высоте и оценке строки; Listy сохраняет default=false. Их local undefined наследует общий default. Select/AutoComplete по умолчанию включают virtual; собственный local undefined перекрывает provider false и включает default, как Source spread. Их popupMatchSelectWidth=false отключает virtual; numeric0 его не отключает. Table требует отдельного переноса."
         },
         {
           "id": "popup-match-select-width-default",

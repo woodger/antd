@@ -1,11 +1,15 @@
 import type { Snippet } from 'svelte';
 import type { HTMLInputAttributes, HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize } from './types';
+import type { SelectRef } from './select.types';
+
+/** Общие методы Select; nativeElement/inputElement остаются отдельными bindable props. */
+export type AutoCompleteRef = SelectRef;
 
 export interface AutoCompleteOption {
   value: string;
   label?: string | number | Snippet;
-  key?: string | number;
+  key?: string | number | bigint;
   disabled?: boolean;
   title?: string;
   class?: string;
@@ -13,7 +17,7 @@ export interface AutoCompleteOption {
 }
 export interface AutoCompleteGroup {
   label?: string | number | Snippet;
-  key?: string | number;
+  key?: string | number | bigint;
   options: readonly AutoCompleteOption[];
 }
 export type AutoCompleteItem = AutoCompleteOption | AutoCompleteGroup;
@@ -105,6 +109,13 @@ export interface AutoCompleteProps extends Omit<
   popupMatchSelectWidth?: boolean | number;
   /** @defaultValue 256 */
   listHeight?: number;
+  /** Отсутствующий prop наследует ConfigProvider; собственный undefined включает Source default. */
+  virtual?: boolean;
+  /** Оценка высоты до измерения; по умолчанию token.controlHeight, 0 отключает windowing. */
+  listItemHeight?: number;
+  showScrollBar?: boolean | 'optional';
+  /** Последнее активное value за microtask; null означает отсутствие активной строки. */
+  onActive?: (value: string | null) => void;
   size?: ComponentSize;
   status?: 'error' | 'warning';
   /** @defaultValue 'outlined' */

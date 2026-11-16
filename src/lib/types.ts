@@ -208,7 +208,7 @@ export interface SelectOption<Value extends string | number = string> {
   label: string;
   disabled?: boolean;
   /** Необязательный ключ optionRender; без него используется value. */
-  key?: string | number | null;
+  key?: string | number | bigint | null;
 }
 
 export const ruRU = {

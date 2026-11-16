@@ -1,3 +1,4 @@
+import { physicalSelectOption, physicalSelectPopup } from './select-physical';
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-auto-complete-metrics.json' with { type: 'json' };
 
@@ -22,7 +23,7 @@ for (const sample of reference.cases) {
     selectors.group = '.completion-token-popup .ant-select-item-group';
     selectors.empty = '.completion-token-empty .ant-select-item-empty';
     for (const name of ['Alpha', 'Beta', 'Disabled', 'Gamma']) {
-      selectors[name] = `.completion-token-popup [role="option"]:has-text("${name}")`;
+      selectors[name] = `.completion-token-popup [data-ant-auto-complete-item-option]:has-text("${name}")`;
     }
     await page.getByRole('combobox', { name: 'Themed completion popup', exact: true }).click();
 
@@ -46,7 +47,7 @@ test('theme colors preserve popup position and editor state', async ({ page }) =
     (element as HTMLInputElement).setSelectionRange(2, 8, 'backward');
   });
   const original = await input.elementHandle();
-  const popup = page.getByRole('listbox', { name: 'Themed completion popup', exact: true });
+  const popup = physicalSelectPopup(page, 'Themed completion popup');
   await expect(popup).toBeVisible();
   const position = await popup.evaluate(element => [element.style.left, element.style.top]);
   expect(position.every(Boolean)).toBe(true);
@@ -84,7 +85,7 @@ test('theme colors preserve popup position and editor state', async ({ page }) =
 test('popup dimensions update without removing controller position styles', async ({ page }) => {
   const input = page.getByRole('combobox', { name: 'Themed completion popup', exact: true });
   await input.click();
-  const popup = page.getByRole('listbox', { name: 'Themed completion popup', exact: true });
+  const popup = physicalSelectPopup(page, 'Themed completion popup');
   const original = await popup.elementHandle();
 
   const dimensions = [['Completion popup width', '300'], ['Completion list height', '100']];
@@ -97,7 +98,8 @@ test('popup dimensions update without removing controller position styles', asyn
   }
 
   await expect(popup).toHaveCSS('width', '300px');
-  await expect(popup).toHaveCSS('max-height', '108px');
+  await expect(popup.locator('[class$="-list-holder"]')).toHaveCSS('max-height', '100px');
+  await expect.poll(async () => (await popup.boundingBox())?.height).toBe(108);
   expect(await popup.evaluate(element => Boolean(element.style.left && element.style.top)))
     .toBe(true);
   expect(await popup.evaluate((element, previous) => element === previous, original)).toBe(true);
@@ -109,8 +111,8 @@ test('popup dimensions update without removing controller position styles', asyn
 test('algorithm changes preserve option nodes and keyboard selection', async ({ page }) => {
   const input = page.getByRole('combobox', { name: 'Themed completion popup', exact: true });
   await input.click();
-  const popup = page.getByRole('listbox', { name: 'Themed completion popup', exact: true });
-  const alpha = popup.getByRole('option', { name: 'Alpha', exact: true });
+  const popup = physicalSelectPopup(page, 'Themed completion popup');
+  const alpha = physicalSelectOption(popup, { name: 'Alpha', exact: true });
   const original = await alpha.elementHandle();
 
   await page.getByLabel('Completion token preset', { exact: true }).evaluate(element => {
@@ -158,7 +160,7 @@ test('custom Input keeps its own tokens and native ref', async ({ page }) => {
   expect(await input.evaluate((element, previous) => element === previous, original)).toBe(true);
   expect(await input.evaluate(element => (element as HTMLInputElement).selectionStart)).toBe(1);
   await expect(input).toHaveValue('custom draft');
-  await expect(page.getByRole('listbox', { name: 'Themed completion custom', exact: true }))
+  await expect(physicalSelectPopup(page, 'Themed completion custom'))
     .toBeVisible();
 });
 
@@ -191,7 +193,7 @@ test('native styles return without replacing the open editor', async ({ page }) 
   const input = page.getByRole('combobox', { name: 'Themed completion popup', exact: true });
   await input.fill('draft');
   const original = await input.elementHandle();
-  const optionContent = page.getByRole('option', { name: 'Alpha', exact: true }).locator('span');
+  const optionContent = physicalSelectOption(page, { name: 'Alpha', exact: true }).locator('span');
   const originalContent = await optionContent.elementHandle();
 
   await page.getByLabel('Apply source completion tokens', { exact: true }).evaluate(element => {
@@ -221,7 +223,7 @@ test('custom prefixes and hash settings clean up on unmount', async ({ page }) =
   await expect(page.locator('.completion-token-popup')).toHaveClass(/completion-source-scope/);
   await expect(page.locator('.completion-token-popup'))
     .toHaveCSS('--select-2-select-option-height', '45px');
-  await expect(page.getByRole('option', { name: 'Alpha', exact: true }))
+  await expect(physicalSelectOption(page, { name: 'Alpha', exact: true }))
     .toHaveCSS('min-height', '45px');
   await page.getByLabel('Hash themed completion', { exact: true }).uncheck();
 
@@ -263,7 +265,7 @@ test('component scopes reset aliases inherited from surrounding content', async 
 
   await expect(input).toHaveCSS('font-size', '14px');
   await expect(input).toHaveCSS('color', 'rgba(0, 0, 0, 0.88)');
-  await expect(page.getByRole('option', { name: 'Alpha', exact: true }))
+  await expect(physicalSelectOption(page, { name: 'Alpha', exact: true }))
     .toHaveCSS('font-size', '14px');
   await expect(page.getByRole('combobox', { name: 'Themed completion custom', exact: true }))
     .toHaveCSS('font-size', '14px');
@@ -273,7 +275,7 @@ test('disabling source before first open leaves no inline tokens', async ({ page
   await page.getByLabel('Apply source completion tokens', { exact: true }).uncheck();
   const input = page.getByRole('combobox', { name: 'Themed completion popup', exact: true });
   await input.click();
-  const popup = page.getByRole('listbox', { name: 'Themed completion popup', exact: true });
+  const popup = physicalSelectPopup(page, 'Themed completion popup');
 
   await expect(popup).toBeVisible();
   await expect(popup).not.toHaveAttribute('style', /--ant-select-option-height/);
@@ -286,11 +288,11 @@ test('RTL keeps group indentation and popup inside a narrow viewport', async ({ 
   await page.setViewportSize({ width: 375, height: 1200 });
   const input = page.getByRole('combobox', { name: 'Themed completion popup', exact: true });
   await input.click();
-  const popup = page.getByRole('listbox', { name: 'Themed completion popup', exact: true });
+  const popup = physicalSelectPopup(page, 'Themed completion popup');
 
   await expect(page.locator('.completion-token-popup')).toHaveClass(/ant-select-rtl/);
   await expect(popup).toHaveClass(/ant-select-dropdown-rtl/);
-  await expect(popup.getByRole('option', { name: 'Alpha', exact: true }))
+  await expect(physicalSelectOption(popup, { name: 'Alpha', exact: true }))
     .toHaveCSS('padding-inline-start', '24px');
   const box = (await popup.boundingBox())!;
   expect(box.x).toBeGreaterThanOrEqual(0);

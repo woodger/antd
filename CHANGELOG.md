@@ -9,6 +9,12 @@
 
 ### Added
 
+- Select и AutoComplete получили измеряемую виртуализацию, `virtual`,
+  `listItemHeight`, `showScrollBar`, `scrollTo`, refs и nullable `onActive`.
+  `listHeight` ограничивает внутренний viewport; 0 снимает cap. Native
+  `onPopupScroll` получает событие этого viewport. Сохранены формы, controlled
+  search при закрытии, typeahead/ArrowUp и синхронный blur.
+
 - TreeSelect принимает inherited `onPopupVisibleChange`, `popupStyle`,
   `choiceTransitionName` и `direction` с текущим Source no-op поведением.
   Props потребляются до DOM/custom slots и сохраняют исходные значения в

@@ -1,3 +1,4 @@
+import { physicalSelectOption, physicalSelectPopup } from './select-physical';
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-auto-complete-prefix-reference.json' with { type: 'json' };
 import { snapshotAutoCompletePrefix } from './auto-complete-prefix-metrics';
@@ -33,8 +34,8 @@ for (const input of ['', 'input', 'textarea']) {
     await control.evaluate((node: HTMLInputElement | HTMLTextAreaElement) =>
       node.setSelectionRange(1, 4, 'backward'));
     const root = page.locator('.fixture-auto-complete-prefix');
-    const popup = page.getByRole('listbox', { name: 'Prefix choices', exact: true });
-    const option = page.getByRole('option', { name: 'Alpha', exact: true });
+    const popup = physicalSelectPopup(page, 'Prefix choices');
+    const option = physicalSelectOption(page, { name: 'Alpha', exact: true });
     const oldRoot = await root.elementHandle();
     const oldInput = await control.elementHandle();
     const oldPopup = await popup.elementHandle();

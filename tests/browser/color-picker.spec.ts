@@ -1,4 +1,5 @@
 import { test, expect } from './test';
+import { physicalSelectOption } from './select-physical';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=color-picker');
@@ -61,12 +62,12 @@ test('ColorPicker selects preset colors with native buttons and retains collapse
 test('ColorPicker switches formats and edits RGB and rounded HSB fields', async ({ page }) => {
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
   await page.getByRole('combobox', { name: 'Color format', exact: true }).click();
-  await page.getByRole('option', { name: 'RGB', exact: true }).click();
+  await physicalSelectOption(page, { name: 'RGB', exact: true }).click();
   await page.getByLabel('Color r', { exact: true }).fill('255');
   await page.getByLabel('Color r', { exact: true }).press('Enter');
   await expect(page.getByLabel('Color css', { exact: true })).toHaveText('rgb(255,119,255)');
   await page.getByRole('combobox', { name: 'Color format', exact: true }).click();
-  await page.getByRole('option', { name: 'HSB', exact: true }).click();
+  await physicalSelectOption(page, { name: 'HSB', exact: true }).click();
   await expect(page.getByLabel('Color s', { exact: true })).toHaveValue(/%$/);
   await page.getByLabel('Color h', { exact: true }).fill('120');
   await page.getByLabel('Color h', { exact: true }).press('Enter');
@@ -172,7 +173,7 @@ test('ColorPicker allows its format dropdown to extend beyond a panel without pr
   await page.getByLabel('Color presets', { exact: true }).uncheck();
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
   await page.getByRole('combobox', { name: 'Color format', exact: true }).click();
-  await page.getByRole('option', { name: 'RGB', exact: true }).click();
+  await physicalSelectOption(page, { name: 'RGB', exact: true }).click();
 
   await expect(page.getByLabel('Color r', { exact: true })).toHaveValue('22');
 });
@@ -181,7 +182,7 @@ test('ColorPicker restores a controlled zero-valued RGB field after an empty dra
   await page.getByRole('button', { name: 'Set gradient owner', exact: true }).click();
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
   await page.getByRole('combobox', { name: 'Color format', exact: true }).click();
-  await page.getByRole('option', { name: 'RGB', exact: true }).click();
+  await physicalSelectOption(page, { name: 'RGB', exact: true }).click();
   const input = page.getByLabel('Color g', { exact: true });
   await input.fill('');
   await input.press('Tab');
@@ -224,7 +225,7 @@ test('ColorPicker keeps format controlled and restores HEX after that prop is re
   await page.getByRole('combobox', { name: 'Fixed color format', exact: true }).selectOption('rgb');
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
   await page.getByRole('combobox', { name: 'Color format', exact: true }).click();
-  await page.getByRole('option', { name: 'HSB', exact: true }).click();
+  await physicalSelectOption(page, { name: 'HSB', exact: true }).click();
   await expect(page.getByLabel('Color r', { exact: true })).toBeVisible();
   await expect(page.getByRole('combobox', { name: 'Color format', exact: true })).toHaveValue('RGB');
   await page.keyboard.press('Escape');

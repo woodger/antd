@@ -1,3 +1,4 @@
+import { physicalSelectOption, physicalSelectPopup } from './select-physical';
 import type { Page } from '@playwright/test';
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-select-max-count-reference.json' with { type: 'json' };
@@ -10,7 +11,7 @@ async function readSelection(page: Page) {
       .map(node => node.textContent),
     query: document.querySelector<HTMLInputElement>('[data-select-tags] input[role="combobox"]')!.value,
     open: document.querySelector('[data-select-tags] .ant-select')!.classList.contains('ant-select-open'),
-    options: [...document.querySelectorAll('[data-select-tags] [role="option"]')].map(node => ({
+    options: [...document.querySelectorAll('[data-select-tags] [data-ant-select-item]')].map(node => ({
       label: node.querySelector('.ant-select-item-option-content')!.textContent,
       disabled: node.getAttribute('aria-disabled') === 'true'
     }))
@@ -71,7 +72,7 @@ test('Select maxCount updates eligibility while retaining input, search, focus a
     const input = page.getByRole('combobox', { name: 'Tags', exact: true });
     await input.click();
     const original = await input.elementHandle();
-    await expect(page.getByRole('option', { name: 'Zero', exact: true })).toBeDisabled();
+    await expect(physicalSelectOption(page, { name: 'Zero', exact: true })).toBeDisabled();
     await page.getByRole('checkbox', { name: 'Override selection limit', exact: true })
       .evaluate((node: HTMLInputElement) => {
         node.checked = true;
@@ -80,7 +81,7 @@ test('Select maxCount updates eligibility while retaining input, search, focus a
 
     expect(await input.evaluate((node, old) => node === old, original)).toBe(true);
     await expect(input).toBeFocused();
-    await expect(page.getByRole('option', { name: 'Zero', exact: true })).toBeEnabled();
+    await expect(physicalSelectOption(page, { name: 'Zero', exact: true })).toBeEnabled();
     await input.fill('draft');
     await page.getByRole('spinbutton', { name: 'Selection limit', exact: true })
       .evaluate((node: HTMLInputElement) => {
@@ -115,14 +116,14 @@ test('Select maxCount preserves native forms, reset and disabled state and ignor
     await expect(page.getByRole('status', { name: 'Tags values', exact: true })).toHaveText('[]');
     await page.getByRole('checkbox', { name: 'Right to left', exact: true }).check();
     await input.click();
-    await expect(page.getByRole('listbox', { name: 'Tags', exact: true }))
+    await expect(physicalSelectPopup(page, 'Tags'))
       .toHaveCSS('direction', 'rtl');
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).check();
     await expect(input).toBeDisabled();
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).uncheck();
     await page.getByRole('combobox', { name: 'Single ignores limit', exact: true }).click();
-    await expect(page.getByRole('option', { name: 'Alpha', exact: true })).toBeEnabled();
-    await page.getByRole('option', { name: 'Alpha', exact: true }).click();
+    await expect(physicalSelectOption(page, { name: 'Alpha', exact: true })).toBeEnabled();
+    await physicalSelectOption(page, { name: 'Alpha', exact: true }).click();
     await expect(page.getByRole('combobox', { name: 'Single ignores limit', exact: true }))
       .toHaveValue('Alpha');
   });

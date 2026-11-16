@@ -1,3 +1,4 @@
+import { physicalSelectOption } from './select-physical';
 import type { Locator } from '@playwright/test';
 import { test, expect } from './test';
 
@@ -100,7 +101,7 @@ test('Select opens when the arrow area is clicked', async ({ page }) => {
     'aria-expanded',
     'true'
   );
-  await expect(page.getByRole('option', { name: 'Alpha', exact: true })).toBeVisible();
+  await expect(physicalSelectOption(page, { name: 'Alpha', exact: true })).toBeVisible();
 });
 
 test('Select supports search, disabled matches and empty search results', async ({ page }) => {
@@ -109,7 +110,7 @@ test('Select supports search, disabled matches and empty search results', async 
   await select.click();
   await select.fill('bEtA');
 
-  await expect(page.getByRole('option', { name: 'Beta', exact: true })).toBeDisabled();
+  await expect(physicalSelectOption(page, { name: 'Beta', exact: true })).toBeDisabled();
 
   await select.press('Enter');
 
@@ -173,6 +174,17 @@ test('Select clears through the keyboard and accepts an external reset', async (
   await expect(select).toHaveValue('');
 });
 
+for (const key of ['g', 'ArrowUp']) {
+  test(`Select keeps the ${key} keyboard target when its first popup opens`, async ({ page }) => {
+    const select = page.getByLabel('Plain select', { exact: true });
+    await expect(select).toHaveValue('Alpha');
+    await select.press(key);
+    await select.press('Enter');
+    await expect(select).toHaveValue('Gamma');
+    await expect(page.getByRole('status', { name: 'Selected value' })).toHaveText('gamma');
+  });
+}
+
 test(
   'Select closes when disabled through a parent update and stays closed after enabling',
   async ({ page }) => {
@@ -211,7 +223,7 @@ test(
     await expect(page.getByRole('status', { name: 'Numeric value' })).toHaveText('undefined');
 
     await select.click();
-    await fixture.getByRole('listbox').getByRole('option', { name: 'Zero', exact: true }).click();
+    await physicalSelectOption(fixture, { name: 'Zero', exact: true }).click();
     await fixture.getByRole('button', { name: 'Read FormData' }).click();
 
     await expect(page.getByRole('status', { name: 'Numeric value' })).toHaveText('number:0');

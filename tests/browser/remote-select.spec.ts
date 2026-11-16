@@ -1,3 +1,4 @@
+import { physicalSelectOption, physicalSelectPopup } from './select-physical';
 import { test, expect } from './test';
 
 test.beforeEach(
@@ -12,12 +13,12 @@ test(
     await input.fill('unmatched');
 
     await expect(page.getByLabel('Remote query', { exact: true })).toHaveText('unmatched');
-    await expect(page.getByRole('option', { name: 'Cached zero', exact: true })).toBeVisible();
+    await expect(physicalSelectOption(page, { name: 'Cached zero', exact: true })).toBeVisible();
 
     await page.getByRole('button', { name: 'Replace remote page' }).click();
     await input.click();
 
-    await expect(page.getByRole('option', { name: 'Server result 20', exact: true })).toBeVisible();
+    await expect(physicalSelectOption(page, { name: 'Server result 20', exact: true })).toBeVisible();
 
     await input.press('Escape');
 
@@ -51,7 +52,7 @@ test(
     await input.fill('server query');
 
     await expect(input).toHaveValue('server query');
-    await expect(page.getByRole('option', { name: 'Cached zero', exact: true })).toBeVisible();
+    await expect(physicalSelectOption(page, { name: 'Cached zero', exact: true })).toBeVisible();
   }
 );
 
@@ -106,7 +107,7 @@ test(
     await page.getByRole('button', { name: 'Retry remote results' }).click();
 
     await expect(input).toBeFocused();
-    await expect(page.getByRole('option', { name: 'Server result 20', exact: true })).toBeVisible();
+    await expect(physicalSelectOption(page, { name: 'Server result 20', exact: true })).toBeVisible();
     await expect(input).not.toHaveAttribute('aria-invalid');
   }
 );
@@ -119,9 +120,9 @@ test(
     const input = page.getByRole('combobox', { name: 'Remote single', exact: true });
 
     await input.click();
-    await page.getByRole('listbox').evaluate(node => { node.scrollTop = node.scrollHeight; });
+    await physicalSelectPopup(page).locator('[class$="-list-holder"]').evaluate(node => { node.scrollTop = node.scrollHeight; });
 
-    await expect(page.getByRole('option', { name: 'Appended result', exact: true })).toBeVisible();
+    await expect(physicalSelectOption(page, { name: 'Appended result', exact: true })).toBeVisible();
 
     await expect.poll(
       async () =>

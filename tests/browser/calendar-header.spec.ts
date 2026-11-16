@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 import { test, expect } from './test';
+import { physicalSelectOption, physicalSelectPopup } from './select-physical';
 
 const calendar = (page: Page) => page.locator('.fixture-calendar');
 const header = (page: Page) => calendar(page).locator('.ant-picker-calendar-header');
@@ -101,7 +102,7 @@ for (const viewport of [1280, 390]) {
 
     await year.focus();
     await page.keyboard.press('ArrowDown');
-    await expect(calendar(page).getByRole('listbox')).toBeVisible();
+    await expect(physicalSelectPopup(calendar(page))).toBeVisible();
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('Enter');
 
@@ -109,7 +110,7 @@ for (const viewport of [1280, 390]) {
     await expect(year).toBeFocused();
     await expect(calendar(page).getByRole('listbox')).toHaveCount(0);
     await month.click();
-    await calendar(page).getByRole('option', { name: 'Oct', exact: true }).click();
+    await physicalSelectOption(calendar(page), { name: 'Oct', exact: true }).click();
 
     await expect(month).toHaveValue('Oct');
     await expect(calendar(page).getByRole('grid')).toHaveAttribute('aria-label', '2025-10');

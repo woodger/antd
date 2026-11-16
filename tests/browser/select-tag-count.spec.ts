@@ -1,3 +1,4 @@
+import { physicalSelectPopup } from './select-physical';
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-select-tag-count-reference.json' with { type: 'json' };
 
@@ -79,7 +80,7 @@ test('Select hidden tags stay in FormData, Backspace, clear, reset and disabled 
       .toHaveText('["a","locked",0,"z"]');
     await page.getByRole('checkbox', { name: 'Right to left', exact: true }).check();
     await input.click();
-    await expect(page.getByRole('listbox', { name: 'Counted values', exact: true }))
+    await expect(physicalSelectPopup(page, 'Counted values'))
       .toHaveCSS('direction', 'rtl');
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).check();
     await expect(input).toBeDisabled();

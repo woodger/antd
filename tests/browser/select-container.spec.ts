@@ -1,3 +1,4 @@
+import { physicalSelectOption, physicalSelectPopup } from './select-physical';
 import type { Page } from '@playwright/test';
 import { expect, test } from './test';
 import reference from './fixtures/ant-design-select-container-reference.json' with { type: 'json' };
@@ -16,7 +17,7 @@ async function open(page: Page, name: string) {
   await expect(page.getByLabel('Select container calls', { exact: true }))
     .toHaveText(JSON.stringify(source.beforeOpen));
   await page.getByRole('combobox', { name: 'Container select', exact: true }).click();
-  await expect(page.getByRole('listbox', { name: 'Container select', exact: true })).toBeVisible();
+  await expect(physicalSelectPopup(page, 'Container select')).toBeVisible();
 }
 
 async function snapshot(page: Page) {
@@ -64,7 +65,7 @@ for (const sample of reference.cases) {
       await input.evaluate(node => (node as HTMLInputElement).setSelectionRange(1, 2));
       const original = await input.elementHandle();
       const active = await input.getAttribute('aria-activedescendant');
-      const popup = await page.getByRole('listbox').elementHandle();
+      const popup = await physicalSelectPopup(page).elementHandle();
 
       await page.getByRole('button', { name: 'Refresh select function', exact: true })
         .evaluate(button => (button as HTMLElement).click());
@@ -81,7 +82,7 @@ for (const sample of reference.cases) {
         focused: await input.evaluate(node => document.activeElement === node),
         activeRetained: await input.getAttribute('aria-activedescendant') === active
       }).toEqual(sample.refresh);
-      expect(await page.getByRole('listbox').evaluate((node, old) => node === old, popup)).toBe(true);
+      expect(await physicalSelectPopup(page).evaluate((node, old) => node === old, popup)).toBe(true);
       await expect.poll(() => snapshot(page)).toEqual(sample.snapshot);
       await expect(page.getByLabel('Select container searches', { exact: true })).toHaveText('["alp"]');
     });
@@ -93,7 +94,7 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
     await open(page, `${component}-shadow`);
     const input = page.getByRole('combobox', { name: 'Container select', exact: true });
 
-    await page.getByRole('option', { name: 'Alpha', exact: true }).click();
+    await physicalSelectOption(page, { name: 'Alpha', exact: true }).click();
 
     expect(await page.locator('#select-container-form').evaluate(node =>
       new FormData(node as HTMLFormElement).getAll('selected'))).toEqual(['alpha']);
@@ -102,7 +103,7 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
     if (component === 'select-multiple') {
       await expect(page.getByRole('option', { name: 'Alpha', exact: true }))
         .toHaveAttribute('aria-selected', 'true');
-      await page.getByRole('option', { name: 'Beta', exact: true }).click();
+      await physicalSelectOption(page, { name: 'Beta', exact: true }).click();
       expect(await page.locator('#select-container-form').evaluate(node =>
         new FormData(node as HTMLFormElement).getAll('selected'))).toEqual(['alpha', 'beta']);
     } else await expect(input).toHaveValue(component === 'select' ? 'Alpha' : 'alpha');
@@ -132,15 +133,15 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
 
   test(`portal ${component} follows container and theme updates without replacing DOM`, async ({ page }) => {
     await open(page, `${component}-parent`);
-    const popup = page.getByRole('listbox');
+    const popup = physicalSelectPopup(page);
     const original = await popup.elementHandle();
     const input = page.getByRole('combobox', { name: 'Container select', exact: true });
     await input.fill('alp');
     await input.evaluate(node => (node as HTMLInputElement).setSelectionRange(1, 2));
 
     await check(page, 'Alternate select container', true);
-    await expect(page.locator('#select-child [role=listbox]')).toBeVisible();
-    await expect(page.locator('#select-parent [role=listbox]')).toHaveCount(0);
+    await expect(physicalSelectPopup(page.locator('#select-child'))).toBeVisible();
+    await expect(physicalSelectPopup(page.locator('#select-parent'))).toHaveCount(0);
     await check(page, 'Override select component theme', true);
     await expect(popup).toHaveCSS('--ant-select-option-height', '42px');
     await expect(popup).toHaveCSS('--ant-color-bg-elevated', '#234567');
@@ -157,13 +158,13 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
     expect(await input.evaluate(node => [
       (node as HTMLInputElement).selectionStart, (node as HTMLInputElement).selectionEnd
     ])).toEqual([1, 2]);
-    await popup.evaluate(node => node.dispatchEvent(new Event('scroll')));
+    await popup.locator('[class$="-list-holder"]').evaluate(node => node.dispatchEvent(new Event('scroll')));
     await expect(page.getByLabel('Select container scrolls', { exact: true })).toHaveText('1');
   });
 
   test(`removing the ${component} provider tree releases portals and callbacks`, async ({ page }) => {
     await open(page, `${component}-shadow`);
-    await expect(page.getByRole('listbox')).toBeVisible();
+    await expect(physicalSelectPopup(page)).toBeVisible();
     const calls = await page.getByLabel('Select owner calls', { exact: true }).textContent();
 
     await check(page, 'Mount select tree', false);
@@ -180,7 +181,7 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
 
   test(`portal ${component} tracks trigger width and RTL after layout changes`, async ({ page }) => {
     await open(page, `${component}-parent`);
-    const popup = page.getByRole('listbox');
+    const popup = physicalSelectPopup(page);
     await page.locator('#select-container-form').evaluate(node => {
       node.style.width = '380px';
       node.style.marginLeft = '30px';
@@ -206,7 +207,7 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
     const dialog = page.getByRole('dialog', { name: 'Select container dialog', exact: true });
     const input = dialog.getByRole('combobox', { name: 'Container select', exact: true });
     await input.click();
-    await page.getByRole('option', { name: 'Alpha', exact: true }).click();
+    await physicalSelectOption(page, { name: 'Alpha', exact: true }).click();
     await expect(input).toBeFocused();
     expect(await dialog.locator('form').evaluate(node =>
       new FormData(node as HTMLFormElement).getAll('selected'))).toEqual(['alpha']);
@@ -231,10 +232,10 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
 
         await expect(page.locator('.ant-select-dropdown'))
           .toHaveCount(component.startsWith('select') ? 0 : 1);
-        await expect(page.getByRole('listbox')).toHaveCount(0);
+        await expect(physicalSelectPopup(page)).toHaveCount(0);
         await expect(input).toBeFocused();
         await input.click();
-        await expect(page.getByRole('listbox')).toBeVisible();
+        await expect(physicalSelectPopup(page)).toBeVisible();
         await expect(page.locator('.ant-select-dropdown')).toHaveCount(1);
       }
     });
@@ -243,13 +244,13 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
 test('Select restores its DOM parent and keeps a fixed popup when the provider getter is removed',
   async ({ page }) => {
     await open(page, 'select-parent');
-    const popup = page.getByRole('listbox');
+    const popup = physicalSelectPopup(page);
     const original = await popup.elementHandle();
     const input = page.getByRole('combobox', { name: 'Container select', exact: true });
 
     await check(page, 'Inherit select container', false);
 
-    await expect(page.locator('.container > [role=listbox]')).toBeVisible();
+    await expect(page.locator('.container > [popover][data-ant-select-prefix]')).toBeVisible();
     await expect(popup).toHaveAttribute('popover', 'manual');
     await expect(popup).toHaveCSS('position', 'fixed');
     expect(await popup.evaluate(node => (node as HTMLElement).offsetParent)).toBeNull();

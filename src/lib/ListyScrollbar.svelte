@@ -10,6 +10,7 @@
     range,
     size,
     flash,
+    showScrollBar = 'optional',
     onScroll,
     onMoving
   }: {
@@ -20,18 +21,20 @@
     range: number;
     size: number;
     flash: number;
+    showScrollBar?: boolean | 'optional';
     onScroll: (top: number) => void;
     onMoving: (moving: boolean) => void;
   } = $props();
 
   let bar = $state<HTMLDivElement>();
   let thumb = $state<HTMLDivElement>();
-  let visible = $state(true);
+  let visible = $state(untrack(() => showScrollBar !== false));
   let moving = $state(false);
   let timer: ReturnType<typeof setTimeout> | undefined;
   let geometry = $derived(listyScrollbar(size, range, offset));
 
   function show() {
+    if (showScrollBar === true || showScrollBar === false) return;
     clearTimeout(timer);
     visible = true;
     timer = setTimeout(() => { visible = false; }, 3000);

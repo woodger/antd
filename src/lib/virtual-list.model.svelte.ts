@@ -1,5 +1,6 @@
 import { tick, untrack } from 'svelte';
 import { virtualListScrollStep, virtualListSizes, virtualListWindow } from './virtual-list.engine';
+import { createVirtualListSizeCache } from './virtual-list-size-cache.engine';
 import { measureVirtualListRow } from './virtual-list.dom';
 import type { VirtualScrollAlign } from './virtual-list.engine';
 import type { VirtualScrollConfig, VirtualScrollOffset } from './virtual-list.types';
@@ -12,6 +13,7 @@ export function createVirtualList<Row, Key>(options: {
   estimate: () => number;
   enabled: () => boolean;
   width: () => number | undefined;
+  renderSizeCache?: boolean;
 }) {
   let heights = $state.raw(new Map<Key, number>());
   let top = $state(0);
@@ -27,12 +29,46 @@ export function createVirtualList<Row, Key>(options: {
   let observer: ResizeObserver | undefined;
   let collection = 0;
   let request = 0;
+  type Alignment = {
+    generation: number;
+    times: number;
+    index: number;
+    key: Key | undefined;
+    originAlign: VirtualScrollAlign | undefined;
+    targetAlign?: VirtualScrollAlign;
+    offset: VirtualScrollOffset<Key>;
+    lastTop?: number | null;
+  };
+  let alignment = $state.raw<Alignment>();
   const nodes = new Map<Key, HTMLElement>();
   const range = $derived(virtualListWindow(
     options.rows(), options.getKey, heights, options.estimate(), options.height(), top,
     innerHeight, options.enabled(), options.width()
   ));
   const sizes = $derived(virtualListSizes(options.rows(), options.getKey, heights, options.estimate()));
+  let renderedGetSize = options.renderSizeCache ? untrack(() => createVirtualListSizeCache(
+    options.rows(), options.getKey, () => heights, options.estimate()
+  )) : undefined;
+
+  if (options.renderSizeCache) {
+    $effect(() => {
+      const rows = options.rows();
+      const estimate = options.estimate();
+      void heights;
+      // Source сбрасывает ленивый кеш после render, а не внутри синхронного measure.
+      renderedGetSize = createVirtualListSizeCache(rows, options.getKey, () => heights, estimate);
+    });
+
+    $effect(() => {
+      const pending = alignment;
+      if (pending && connected && pending.times < 10) untrack(() => alignRendered(pending));
+    });
+
+    $effect(() => () => {
+      request++;
+      alignment = undefined;
+    });
+  }
 
   function sync(next: number) {
     if (!holder) return;
@@ -124,11 +160,56 @@ export function createVirtualList<Row, Key>(options: {
       inner = undefined;
       collection++;
       request++;
+      if (options.renderSizeCache) alignment = undefined;
     };
   }
 
   function getSize(startKey: Key, endKey = startKey) {
     return { top: sizes.get(startKey)?.top ?? 0, bottom: sizes.get(endKey)?.bottom };
+  }
+
+  function alignRendered(pending: Alignment) {
+    if (pending.generation !== request || !holder) return;
+    const rows = options.rows();
+    const estimate = options.estimate();
+    const size = renderedGetSize ?? getSize;
+    // Как useScrollTo layoutEffect: render-кеш уже опубликован, измерение меняет лишь heights.
+    measure();
+    const index = pending.index >= 0 ? pending.index
+      : rows.findIndex(row => options.getKey(row) === pending.key);
+    const resolved = pending.targetAlign || pending.originAlign;
+    const value = typeof pending.offset === 'function'
+      ? pending.offset({ getSize: size, align: resolved }) : pending.offset;
+    if (pending.generation !== request || !holder) return;
+    const offset = Number.isFinite(value) ? value : 0;
+    let unknown = index < 0;
+    let target: number | null = null;
+    let targetAlign = pending.targetAlign;
+    if (holder.clientHeight && index >= 0) {
+      const step = virtualListScrollStep(
+        rows, options.getKey, heights, estimate, index, resolved, offset,
+        holder.scrollTop, holder.clientHeight
+      );
+      if (step.top !== undefined) sync(step.top);
+      target = step.top ?? null;
+      targetAlign = step.align;
+      unknown = step.unknown || target !== pending.lastTop;
+    }
+    if (unknown && pending.generation === request) alignment = {
+      ...pending, times: pending.times + 1, index, targetAlign, lastTop: target
+    };
+  }
+
+  function align(
+    index: number,
+    key: Key | undefined,
+    originAlign: VirtualScrollAlign | undefined,
+    offset: VirtualScrollOffset<Key>
+  ) {
+    if (options.renderSizeCache) alignment = {
+      generation: ++request, times: 0, index, key, originAlign, offset
+    };
+    else void alignTo(index, key, originAlign, offset);
   }
 
   async function alignTo(
@@ -180,17 +261,22 @@ export function createVirtualList<Row, Key>(options: {
     }
     if (typeof config === 'number') {
       request++;
+      if (options.renderSizeCache) alignment = undefined;
       sync(config);
       return;
     }
     if ('top' in config || 'left' in config) {
+      if (options.renderSizeCache) {
+        request++;
+        alignment = undefined;
+      }
       if (config.left !== undefined) syncLeft(config.left);
       scrollTo(config.top);
     } else if ('index' in config) {
-      void alignTo(config.index, undefined, config.align, config.offset ?? 0);
+      align(config.index, undefined, config.align, config.offset ?? 0);
     } else if ('key' in config) {
       const index = options.rows().findIndex(row => options.getKey(row) === config.key);
-      void alignTo(index, config.key, config.align, config.offset ?? 0);
+      align(index, config.key, config.align, config.offset ?? 0);
     }
   }
 
@@ -210,6 +296,24 @@ export function createVirtualList<Row, Key>(options: {
     sync,
     syncLeft,
     scrollTo,
+    reset() {
+      collection++;
+      request++;
+      if (options.renderSizeCache) alignment = undefined;
+      for (const node of nodes.values()) observer?.unobserve(node);
+      nodes.clear();
+      heights = new Map();
+      if (options.renderSizeCache) renderedGetSize = createVirtualListSizeCache(
+        options.rows(), options.getKey, () => heights, options.estimate()
+      );
+      top = 0;
+      left = 0;
+      innerHeight = 0;
+      holderHeight = options.height() ?? 0;
+      holderWidth = 0;
+      flash = 0;
+      moving = false;
+    },
     flashScrollbar() { flash++; },
     scrollBy(delta: number) { sync(top + delta); },
     scrollByX(delta: number) { syncLeft(left + delta); }

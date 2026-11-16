@@ -1,3 +1,4 @@
+import { physicalSelectOption, physicalSelectPopup } from './select-physical';
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-select-metrics.json' with { type: 'json' };
 
@@ -27,7 +28,7 @@ for (const sample of reference.cases) {
     selectors.clear = '.select-token-popup .ant-select-clear';
     selectors.empty = '.select-token-empty .ant-select-item-empty';
     for (const name of ['Alpha', 'Beta', 'Disabled']) {
-      selectors[name] = `.select-token-popup [role="option"]:has-text("${name}")`;
+      selectors[name] = `.select-token-popup [data-ant-select-item]:has-text("${name}")`;
     }
     await page.getByRole('combobox', { name: 'Themed popup', exact: true }).click();
 
@@ -65,7 +66,7 @@ test('token updates retain the native search editor, selection, focus and form v
     const input = element as HTMLInputElement;
     return [input.selectionStart, input.selectionEnd, input.selectionDirection];
   })).toEqual([2, 8, 'backward']);
-  await expect(page.getByRole('listbox', { name: 'Themed popup', exact: true })).toBeVisible();
+  await expect(physicalSelectPopup(page, 'Themed popup')).toBeVisible();
   await expect(page.getByLabel('Select value changes', { exact: true })).toHaveText('0');
   await expect(page.getByLabel('Select search changes', { exact: true })).toHaveText('1');
   await expect(page.getByLabel('Select focus events', { exact: true })).toHaveText('1');
@@ -79,7 +80,7 @@ test('token updates retain the native search editor, selection, focus and form v
 test('changing the algorithm keeps the open list and option nodes while updating dimensions', async ({ page }) => {
   const input = page.getByRole('combobox', { name: 'Themed popup', exact: true });
   await input.click();
-  const option = page.getByRole('option', { name: 'Alpha', exact: true });
+  const option = physicalSelectOption(page, { name: 'Alpha', exact: true });
   const original = await option.elementHandle();
 
   await page.getByLabel('Select token preset', { exact: true }).evaluate(element => {
@@ -164,8 +165,8 @@ test('custom prefixes and parent aliases retain the Select scope without hash cl
   await expect(page.locator('.select-token-popup .container')).toHaveClass(/select-source-scope/);
   await expect(page.locator('.select-token-popup .container')).not.toHaveClass(/css-dev-only/);
   await expect(page.locator('.select-token-popup .ant-select')).toHaveCSS('font-size', '14px');
-  await expect(page.getByRole('option', { name: 'Alpha', exact: true })).toHaveCSS('min-height', '45px');
-  await expect(page.getByRole('listbox', { name: 'Themed popup', exact: true }))
+  await expect(physicalSelectOption(page, { name: 'Alpha', exact: true })).toHaveCSS('min-height', '45px');
+  await expect(physicalSelectPopup(page, 'Themed popup'))
     .toHaveCSS('--select-2-select-option-height', '45px');
   await page.getByLabel('Mount themed Select', { exact: true }).uncheck();
 
@@ -194,7 +195,7 @@ test('source multiple tags use logical spacing and selection in RTL', async ({ p
   await expect(root).toHaveCSS('direction', 'rtl');
   await expect(root.locator('.ant-select-selection-item')).toHaveCSS('margin-left', '4px');
   await input.click();
-  await page.getByRole('option', { name: 'Alpha', exact: true }).click();
+  await physicalSelectOption(page, { name: 'Alpha', exact: true }).click();
 
   await expect(input).toBeFocused();
   await expect(root.locator('.ant-select-selection-item')).toHaveCount(2);
@@ -206,7 +207,7 @@ test('filtering switches between empty and option layout without losing focus or
   await page.getByLabel('Filter themed Select locally', { exact: true }).check();
   const input = page.getByRole('combobox', { name: 'Themed popup', exact: true });
   await input.fill('missing');
-  const list = page.getByRole('listbox', { name: 'Themed popup', exact: true });
+  const list = physicalSelectPopup(page, 'Themed popup');
   const original = await list.elementHandle();
 
   await expect(list).toHaveText('No results');
@@ -216,7 +217,7 @@ test('filtering switches between empty and option layout without losing focus or
     new FormData(element as HTMLFormElement).get('project'))).toBe('b');
   await input.fill('Gamma');
 
-  const option = list.getByRole('option', { name: 'Gamma', exact: true });
+  const option = physicalSelectOption(list, { name: 'Gamma', exact: true });
   await expect(option).toHaveCSS('min-height', 'auto');
   expect(await list.evaluate((element, previous) => element === previous, original)).toBe(true);
   await expect(input).toBeFocused();

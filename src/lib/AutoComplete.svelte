@@ -6,12 +6,18 @@
     AutoCompleteInput,
     AutoCompleteOption
   } from './auto-complete.types';
+  import type { SelectScrollConfig } from './select.types';
   import {
     filterAutoCompleteOptions,
     flattenAutoCompleteOptions,
     autoCompleteNext,
     autoCompleteOption
   } from './auto-complete.engine';
+  import type { AutoCompleteEntry } from './auto-complete.engine';
+  import SelectOptionList from './SelectOptionList.svelte';
+  import { createSelectOptionList } from './select-option-list.model.svelte';
+  import type { SelectOptionListItem, SelectOptionListRenderInfo } from './select-option-list.types';
+  import { createSelectActive } from './select-active.model.svelte';
   import { useConfig } from './config-context';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getSelectPrefixCss } from './select-prefix.engine';
@@ -25,10 +31,10 @@
   import { connectPopup } from './popup.dom';
   import { createTreeSelectAlign } from './tree-select-align.dom';
   import { createOverlayStyle } from './overlay-style.model.svelte';
-  import { selectPopupHeightInsetVariable, selectPopupMaxHeight, syncSelectPopupHeight } from './select-popup-height.dom';
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useComponentTheme } from './theme-component.svelte';
+  import { useToken } from './theme-context.svelte';
   import { connectComponentTheme } from './theme-component.dom';
   import Icon from './Icon.svelte';
 
@@ -55,6 +61,9 @@
     notFoundContent,
     popupMatchSelectWidth,
     listHeight = 256,
+    listItemHeight,
+    showScrollBar,
+    onActive,
     size,
     status,
     variant,
@@ -72,6 +81,9 @@
     ...attributes
   }: AutoCompleteProps = $props();
   const config = useConfig();
+  const tokens = useToken();
+  let { virtual, ...nativeAttributes } = $derived(attributes);
+  let effectiveVirtual = $derived(Object.hasOwn(attributes, 'virtual') ? virtual : config.virtual);
   let prefix = $derived(config.getPrefixCls('select', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let privateNamespace = $derived(rootPrefix.replaceAll('.', ''));
@@ -134,9 +146,11 @@
   let mounted = $state(false);
   const anchorWidthVariable = '--ant-native-auto-complete-anchor-width';
   let matchedWidth = $derived(popupMatchSelectWidth ?? config.popupMatchSelectWidth ?? true);
+  let realVirtual = $derived(effectiveVirtual !== false && matchedWidth !== false);
+  let itemHeight = $derived(listItemHeight ?? tokens.token.controlHeight);
+  let listLabel = $derived(attributes['aria-label'] ?? attributes.placeholder ?? config.locale.searchText);
   let popupLayers = $derived([
     componentTheme.style,
-    selectPopupMaxHeight(listHeight),
     `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`,
     typeof matchedWidth === 'number' ? [['width', `${matchedWidth}px`]] as const : undefined
   ]);
@@ -146,7 +160,7 @@
     reference: root,
     getPopupContainer: getPopupContainer || config.getPopupContainer,
     themeStyle: serializeInlineStyleLayers(popupLayers),
-    preserveVariables: [anchorWidthVariable, selectPopupHeightInsetVariable]
+    preserveVariables: [anchorWidthVariable]
   }));
   let enterLock = false;
   let pendingClearClose: MessageChannel | undefined;
@@ -179,25 +193,11 @@
     previous = next;
   });
   $effect(() => {
-    const currentText = text;
-    const length = count;
+    void text;
+    void count;
     const expanded = visible;
     untrack(() => {
       preview = undefined;
-      active = defaultActiveFirstOption ? autoCompleteNext(entries, -1, 1) : -1;
-      if (expanded && currentText) {
-        const closest = entries.findIndex(
-          entry => !entry.group
-            && 'value' in entry.option
-            && entry.option.value.startsWith(
-              currentText
-            )
-        );
-        if (closest >= 0)
-          active = closest;
-      }
-      if (active >= length)
-        active = -1;
       if (expanded)
         mounted = true;
     });
@@ -220,11 +220,13 @@
       maxWidth: false,
       constrainWidth: false,
       allowOffscreenAnchor: true,
+      preserveFocus: event => !event.composedPath().some(node =>
+        node instanceof Element && node.classList.contains(`${prefix}-dropdown-list-scrollbar`)),
       anchorWidthVariable,
       getAnchorWidth: () => source.width,
-      getPosition: (anchor, popup, viewport) => {
-        syncSelectPopupHeight(node);
-        return source.position(anchor, popup, viewport);
+      getPosition: (anchorRect, popupRect, viewport) => {
+        optionList.prepare();
+        return source.position(anchorRect, popupRect, viewport);
       },
       applyPosition: position => source.commitFrame(() => popupStyle.position(position, source.style)),
       onAlign: position => { popupPlacement = position.alignedPlacement; },
@@ -241,13 +243,54 @@
       source.destroy();
     };
   });
+  let listItems = $derived<SelectOptionListItem<AutoCompleteEntry>[]>(entries.map((entry, index) => ({
+    key: entry.option.key ?? ('value' in entry.option ? entry.option.value : `rc-index-key-${index}`),
+    originalIndex: index,
+    item: entry,
+    group: entry.group,
+    ariaLabel: !entry.group && typeof entry.option.label === 'string' ? entry.option.label : undefined,
+    ariaValue: 'value' in entry.option ? entry.option.value : undefined,
+    get ariaSelected() {
+      return String('value' in entry.option ? entry.option.value : undefined).toLowerCase() === text.toLowerCase();
+    },
+    ariaDisabled: 'disabled' in entry.option ? entry.option.disabled : undefined,
+    disabled: 'disabled' in entry.option ? entry.option.disabled : undefined
+  })));
+  const notifyActive = createSelectActive<string>(() => onActive);
+  let listVisited = false;
+  let lastListLength = -1;
+  let lastListSearch: string | undefined;
   $effect(() => {
-    const index = active;
-    if (visible && index >= 0)
-      popup?.querySelector(`#${CSS.escape(`${controlId}-option-${index}`)}`)?.scrollIntoView(
-        { block: 'nearest' }
-      );
+    const expanded = visible;
+    const rows = optionList.items;
+    const query = text;
+    if (!listVisited && !expanded) return;
+    if (!listVisited || rows.length !== lastListLength || query !== lastListSearch) {
+      listVisited = true;
+      lastListLength = rows.length;
+      lastListSearch = query;
+      untrack(() => activate(defaultActiveFirstOption ? autoCompleteNext(rows.map(row => row.item), -1, 1) : -1));
+    }
   });
+  const optionList = createSelectOptionList<AutoCompleteEntry>({
+    items: () => listItems,
+    height: () => listHeight,
+    estimate: () => itemHeight,
+    realVirtual: () => realVirtual,
+    open: () => visible,
+    searchValue: () => text,
+    selectedIndex: (): number => !actualValue ? -1 : optionList.items.findIndex(row =>
+      !row.group && 'value' in row.item.option && (text
+        ? row.item.option.value.startsWith(text) : row.item.option.value === actualValue)),
+    onSelectedActive: index => activate(index)
+  });
+
+  function activate(index: number, keyboard = false) {
+    active = index;
+    const entry = optionList.items[index]?.item;
+    notifyActive(entry && 'value' in entry.option ? entry.option.value : null);
+    if (keyboard) optionList.scrollActive(index);
+  }
 
   function register(element: HTMLInputElement | HTMLTextAreaElement) {
     editor = element;
@@ -339,11 +382,12 @@
         return;
       }
       event.preventDefault();
-      active = autoCompleteNext(
-        entries,
-        active < 0 && event.key === 'ArrowUp' ? entries.length : active,
+      const rows = optionList.items.map(row => row.item);
+      activate(autoCompleteNext(
+        rows,
+        active < 0 && event.key === 'ArrowUp' ? rows.length : active,
         event.key === 'ArrowDown' ? 1 : -1
-      );
+      ), true);
       if (backfill)
         preview = autoCompleteOption(entries, active)?.value;
     } else if ((event.key === 'Enter' || event.key === 'Tab') && visible && !enterLock) {
@@ -361,6 +405,11 @@
       preview = undefined;
       requestOpen(false);
     } else if ((event.key === 'Enter' || event.key === ' ') && !visible)
+      requestOpen(true);
+    else if (!event.ctrlKey && !event.altKey && !event.metaKey && event.keyCode
+      && event.code !== 'Semicolon' && event.code !== 'Equal' && !/^F(?:[1-9]|1[0-2])$/.test(event.key)
+      && !['Escape', 'Shift', 'Backspace', 'Tab', 'Meta', 'OS', 'Alt', 'Control', 'CapsLock',
+        'ContextMenu', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key))
       requestOpen(true);
   }
   function handleBlur(event: FocusEvent) {
@@ -396,8 +445,8 @@
       role: 'combobox',
       'aria-label': attributes['aria-label'] ?? field?.label,
       'aria-expanded': visible,
-      'aria-controls': `${controlId}-list`,
-      'aria-activedescendant': visible && active >= 0 ? `${controlId}-option-${active}` : undefined,
+      'aria-controls': visible ? `${controlId}_list` : undefined,
+      'aria-activedescendant': visible && active >= 0 ? `${controlId}_list_${active}` : undefined,
       'aria-autocomplete': 'list',
       'aria-invalid': field?.invalid || resolvedStatus === 'error' || attributes['aria-invalid'] || undefined,
       'aria-describedby': [attributes['aria-describedby'], field?.describedBy].filter(Boolean).join(
@@ -425,6 +474,9 @@
   export function blur() {
     editor?.blur();
   }
+  export function scrollTo(config?: SelectScrollConfig | null) {
+    optionList.scrollTo(config);
+  }
 </script>
 
 <style>
@@ -444,7 +496,7 @@
   [data-ant-auto-complete-source-theme] .clear { display: inline-block; color: var(--ant-color-text-quaternary); }
   [data-ant-auto-complete-source-theme] .clear:hover { color: var(--ant-color-icon); }
   [data-ant-auto-complete-source-theme] .clear:focus-visible { opacity: 1; }
-  .popup { position: fixed; margin: 0; border: 0; overflow-y: auto; }
+  .popup { position: fixed; margin: 0; border: 0; overflow: visible; }
   [data-ant-auto-complete-item] { display: block; width: 100%; border: 0; background: transparent; color: inherit; font: inherit; text-align: start; }
   /* Options повторяют flex column rc-select, пустая выдача остаётся обычным блоком. */
   .popup[data-ant-auto-complete-source-popup]:not([hidden]) { display: flex; flex-direction: column; }
@@ -482,7 +534,7 @@
       rootClassName
     ]}>
   <div data-ant-auto-complete-content class={`${prefix}-content`}>
-    {#if children}{@render children(input)}{:else}<input {...attributes} {...input.attributes} use:register data-ant-auto-complete-input class={`${prefix}-input`} type="text" />{/if}
+    {#if children}{@render children(input)}{:else}<input {...nativeAttributes} {...input.attributes} use:register data-ant-auto-complete-input class={`${prefix}-input`} type="text" />{/if}
   </div>
   {#if feedback.hasFeedback}<div class={[`${prefix}-suffix`, 'feedback-suffix']}>{#if feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</div>{/if}
   {#if showClear}<button type="button" class={['clear', componentTheme.className && `${prefix}-clear`]} aria-label={config.locale.clearText} onpointerdown={clearPointerDown} onclick={clear}>
@@ -492,7 +544,7 @@
     {@const initialPopupStyle = untrack(() => popupStyle.initialStyle())}
     <div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
       data-ant-auto-complete-source-popup={Boolean(componentTheme.className) && entries.length > 0 || undefined}
-      bind:this={popup} popover="manual" hidden={!visible || !shown} id={`${controlId}-list`} role="listbox"
+      bind:this={popup} popover="manual" hidden={!visible || !shown}
       class={[`popup ${prefix}-dropdown ant-select-css-var`, componentTheme.className,
           componentTheme.className && entries.length > 0 && `${prefix}-source-popup`,
           componentTheme.className && config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
@@ -501,17 +553,18 @@
       {@attach popupStyle.attach}
       {@attach node => connectComponentTheme(node, componentTheme.style)}
       {@attach portal}
-      onscroll={onPopupScroll}
       aria-label={attributes['aria-label']
           ?? attributes.placeholder
           ?? config.locale.searchText}>
-      {#each entries as entry, index (entry.key)}
-        {#if entry.group}<div data-ant-auto-complete-item data-ant-auto-complete-item-group class={`${prefix}-item ${prefix}-item-group`}>{#if typeof entry.option.label === 'function'}{@render entry.option.label()}{:else}{entry.option.label ?? ''}{/if}</div>
+      {#snippet optionRow(entry: AutoCompleteEntry, info: SelectOptionListRenderInfo)}
+        {@const index = info.index}
+        {#if entry.group}<div data-ant-auto-complete-item data-ant-auto-complete-item-group class={`${prefix}-item ${prefix}-item-group`} {@attach info.attach}>{#if typeof entry.option.label === 'function'}{@render entry.option.label()}{:else}{entry.option.label ?? ''}{/if}</div>
         {:else if 'value' in entry.option}
           <button data-ant-auto-complete-item data-ant-auto-complete-item-option
             data-ant-auto-complete-item-option-disabled={entry.option.disabled || undefined}
-            type="button" role="option" tabindex="-1" id={`${controlId}-option-${index}`} disabled={entry.option.disabled}
-            aria-selected={entry.option.value.toLowerCase() === text.toLowerCase()} aria-disabled={entry.option.disabled || undefined}
+            type="button" tabindex="-1" disabled={entry.option.disabled}
+            {...info.attributes}
+            {@attach info.attach}
             class={[
                 `${prefix}-item ${prefix}-item-option`,
                 componentTheme.className && entry.grouped && `${prefix}-item-option-grouped`,
@@ -524,8 +577,8 @@
                   ? entry.option.label
                   : entry.option.value)}
             onpointermove={() => {
-                if ('value' in entry.option && !entry.option.disabled) {
-                  active = index;
+                if ('value' in entry.option && !entry.option.disabled && index !== active) {
+                  activate(index);
                 }
               }}
             onclick={() => {
@@ -538,7 +591,13 @@
             </span>
           </button>
         {/if}
-      {:else}<div class={`${prefix}-item-empty`}>{#if typeof notFoundContent === 'function'}{@render notFoundContent()}{:else}{notFoundContent ?? ''}{/if}</div>{/each}
+      {/snippet}
+      {#if optionList.items.length}
+        <SelectOptionList model={optionList} renderItem={optionRow} id={`${controlId}_list`}
+          prefixCls={prefix}
+          direction={config.direction} {showScrollBar} activeIndex={active} ariaLabel={listLabel}
+          onScroll={onPopupScroll} />
+      {:else}<div class={`${prefix}-item-empty`} role="listbox" id={`${controlId}_list`} aria-label={listLabel}>{#if typeof notFoundContent === 'function'}{@render notFoundContent()}{:else}{notFoundContent ?? ''}{/if}</div>{/if}
     </div>
   {/if}
 </div>

@@ -1,3 +1,4 @@
+import { physicalSelectPopup } from './select-physical';
 import { test, expect } from './test';
 
 test('Select accepts omitted options in single, multiple and tags with native forms and reset',
@@ -31,7 +32,7 @@ test('Select retains cached labels and native values when remote options become 
       .toHaveText('Loaded seed');
     await page.getByRole('checkbox', { name: 'Right to left', exact: true }).check();
     await page.getByRole('combobox', { name: 'Tags without options', exact: true }).click();
-    await expect(page.getByRole('listbox', { name: 'Tags without options', exact: true }))
+    await expect(physicalSelectPopup(page, 'Tags without options'))
       .toHaveCSS('direction', 'rtl');
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).check();
     await expect(page.getByRole('combobox', { name: 'Tags without options', exact: true }))

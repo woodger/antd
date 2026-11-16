@@ -1,4 +1,5 @@
 import { test, expect } from './test';
+import { physicalSelectOption, physicalSelectPopup } from './select-physical';
 import reference from './fixtures/ant-design-calendar-theme-reference.json' with { type: 'json' };
 import { snapshotCalendarTheme } from './calendar-theme-metrics';
 
@@ -66,8 +67,8 @@ test('Calendar keeps the intrinsic year editor and open options while token widt
     const year = full.locator('.ant-picker-calendar-year-select');
     const input = year.getByRole('combobox');
     await input.click();
-    const popup = full.locator('.ant-picker-calendar-header').getByRole('listbox');
-    const option = popup.getByRole('option', { name: '2024', exact: true });
+    const popup = physicalSelectPopup(full.locator('.ant-picker-calendar-header'));
+    const option = physicalSelectOption(popup, { name: '2024', exact: true });
     const originalInput = await input.elementHandle();
     const originalOption = await option.elementHandle();
 
@@ -80,10 +81,11 @@ test('Calendar keeps the intrinsic year editor and open options while token widt
     expect(await option.evaluate((node, old) => node === old, originalOption)).toBe(true);
     await expect(input).toBeFocused();
     await expect(input).toHaveValue('2024');
-    await expect(option).toHaveAttribute('aria-selected', 'true');
+    await expect(popup.getByRole('option', { name: '2024', exact: true }))
+      .toHaveAttribute('aria-selected', 'true');
     await expect(host.getByLabel('Calendar theme events normal', { exact: true })).toHaveText('[]');
 
-    await popup.getByRole('option', { name: '2025', exact: true }).click();
+    await physicalSelectOption(popup, { name: '2025', exact: true }).click();
 
     await expect(input).toHaveValue('2025');
     await expect(host.getByLabel('Calendar theme events normal', { exact: true }))

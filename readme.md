@@ -9918,10 +9918,11 @@ mount, как rc-select useOpen. OnOpenChange получает запрос на
 PopupMatchSelectWidth — boolean/число; отсутствующий prop и `undefined` наследуют
 `ConfigProvider.popupMatchSelectWidth`. ListHeight ограничивает viewport списка
 и по умолчанию равен 256; padding и border popup добавляются снаружи.
-OnPopupScroll передаёт native scroll event существующего внешнего listbox. Поверхность — native
-popover с сохранением фокуса input, outside/Escape и cleanup.
-Для `listHeight={0}` пока сохраняется прежнее Native ограничение; снятие cap,
-виртуализация и перенос scroll event на внутренний holder остаются в работе.
+OnPopupScroll передаёт native scroll event внутреннего holder; currentTarget и this
+указывают на этот div. Поверхность — native popover с сохранением фокуса input,
+outside/Escape и cleanup. Virtual, listItemHeight, showScrollBar, scrollTo и
+onActive работают так же, как [в Select](#select). DefaultActiveFirstOption у
+AutoComplete по умолчанию false.
 
 GetPopupContainer получает корневой элемент Select, включая custom input/textarea.
 Локальная функция перекрывает ConfigProvider.getPopupContainer; undefined наследует
@@ -10050,8 +10051,37 @@ AutoComplete сохраняет смонтированный popup до unmount.
 Невалидная числовая CSS-ширина сохраняет последнее принятое значение, как React,
 включая смену props закрытой посещённой панели и повторное открытие. До первого
 открытия скрытый измерительный DOM AutoComplete/TreeSelect не создаёт такую историю.
-Select ограничивает viewport списка 256 px; фактические padding и border добавляются
-снаружи. Select и AutoComplete пока сохраняют полный DOM options без виртуализации.
+ListHeight ограничивает внутренний viewport списка и по умолчанию равен 256 px;
+фактические padding и border добавляются снаружи. ListHeight=0 снимает ограничение.
+Virtual по умолчанию включён и наследует ConfigProvider.virtual. Собственный prop
+перекрывает provider: явно переданный undefined, как в исходном Select, включает
+default, даже если provider задаёт false. PopupMatchSelectWidth=false отключает
+виртуализацию, числовой 0 её не отключает. ListItemHeight задаёт оценку ещё не
+измеренных строк; default — token.controlHeight (обычно 32 px). Реальная высота
+каждой отрисованной строки, включая группы AutoComplete, измеряется отдельно.
+Нулевая оценка выключает окно, сохраняя исходный доступный listbox.
+
+ShowScrollBar принимает true, false или 'optional'. Optional показывает полосу
+при прокрутке и обращении к scrollTo и скрывает через 3 секунды. OnPopupScroll
+получает native scroll event внутреннего holder; currentTarget и this — этот div.
+При virtual=true доступный listbox содержит соседей активного пункта, а видимое
+окно содержит измеренные строки. Virtual=false помещает все options в listbox.
+
+Bind:this предоставляет SelectRef/AutoCompleteRef с focus(FocusOptions), blur()
+и scrollTo(config). NativeElement и inputElement привязываются отдельно:
+bind:nativeElement указывает на div.ant-select, bind:inputElement — на редактор.
+ScrollTo(number) означает индекс; объект принимает index либо key, align
+('top'/'bottom'/'auto') и offset — число или функцию от измеренных getSize.
+Объект {top,left} задаёт позицию. Null/undefined показывают scrollbar без
+изменения позиции. До первого открытия прокрутка не выполняется; закрытые
+index/key-запросы игнорируются. Закрытая позиция {top,left} применяется после
+открытия к реальному viewport. Это сохраняет согласованность DOM и окна вместо
+воспроизведения ошибки rc-select 1.10.1 с разными offsets после reopen.
+
+OnActive(value|null) сообщает активный пункт; defaultActiveFirstOption=true
+в Select и false в AutoComplete. Несколько активаций за одну microtask оставляют
+последний callback; после unmount callback не вызывается. Существующие native
+значения, формы, controlled search при закрытии и синхронный blur сохраняются.
 
 Поиск по умолчанию выключен в одиночном режиме и включён в multiple;
 `showSearch` переопределяет это. Нажатие варианта во множественном режиме

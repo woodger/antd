@@ -20,7 +20,7 @@ describe('Select search sorting public package', () => {
         value: number;
         label: string;
         disabled?: boolean;
-        key?: string | number | null;
+        key?: string | number | bigint | null;
       }>();
     expectTypeOf<Parameters<NonNullable<SelectSearchConfig<number>['filterSort']>>[2]>()
       .toEqualTypeOf<{ searchValue: string }>();

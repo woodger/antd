@@ -1,3 +1,4 @@
+import { physicalSelectPopup } from './select-physical';
 import { test, expect } from './test';
 import interactions from './fixtures/ant-design-select-tags-interaction-reference.json'
   with { type: 'json' };
@@ -72,7 +73,7 @@ test('Tags retain selected labels through remote result removal and inherit disa
       .toHaveText('Alpha');
     await page.getByRole('checkbox', { name: 'Right to left', exact: true }).check();
     await input.click();
-    await expect(page.getByRole('listbox', { name: 'Tags', exact: true }))
+    await expect(physicalSelectPopup(page, 'Tags'))
       .toHaveCSS('direction', 'rtl');
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).check();
     await expect(input).toBeDisabled();
@@ -94,7 +95,7 @@ for (const entry of optionsReference.cases) {
         label: option.label, disabled: option.disabled
       }));
 
-      await expect.poll(() => page.locator('[data-select-tags] [role="option"]').evaluateAll(nodes =>
+      await expect.poll(() => page.locator('[data-select-tags] [data-ant-select-item]').evaluateAll(nodes =>
         nodes.map(node => ({
           label: node.querySelector('.ant-select-item-option-content')!.textContent,
           disabled: node.getAttribute('aria-disabled') === 'true'

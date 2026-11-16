@@ -1,0 +1,5356 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "umdSha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4",
+    "umdArchiveByteEqual": true,
+    "renderer": "Actual unmodified official UMD in a fresh DOM-free VM. Identical72 public sample owners, all initially closed. No window/document, layout reads, getters, refs, callbacks, render hooks, timers, frames, microtasks or observers.",
+    "domAvailableDuringRender": false,
+    "factory": ".upstream/artifacts/select-virtual-source-app.mjs",
+    "factorySha256": "c1c9e5a70530fdcc06d1029a4c86b005f6c2bd9b0b276690457517c0b6cd8028",
+    "configurationSha256": "a6ad9a64ba7db375be3b91610d2641262848a5a34930ddbcad1224fc39980c3f",
+    "metricsSha256": "f134081d080fb900695049c64c3e09049107f1d77c62502ee36db23932ca945a",
+    "sharedFactorySha256": "2c38dea6ca34c5a6f0c2471c2596e5929dcd1f21c01e496a9bf22cad63653169",
+    "diagnostics": [
+      "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag."
+    ]
+  },
+  "cases": [
+    {
+      "id": "select-default",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "1d8d85c68c0ca6668897dad5cc5660637d36d53397dfe1e01e2da3558b29eed7"
+    },
+    {
+      "id": "select-local-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "27bf4916c9fa0f9bd57c09a9a500b7777fa1dff8b71d3b611babfad4558258c4"
+    },
+    {
+      "id": "select-local-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": true,
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "74a0b14b22b4ca390079f4992df9a9ef7ff943247331be47773c5b245426a4c7"
+    },
+    {
+      "id": "select-local-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": false,
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "dad8c6b02223bda8ef3ed760dbb8d48efccae2a6afcb7c5da38d322900a5067a"
+    },
+    {
+      "id": "select-provider-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "03d1f6a6c69dfa4ff1a475972b667e1481cce3e86c254570682cb0bb23c8b928"
+    },
+    {
+      "id": "select-provider-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": true,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "bf1edecc0a93080f6287af495ac68b1caead685814c935bd5f042afd7347e2d0"
+    },
+    {
+      "id": "select-provider-false-local-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "cb284a67b8927b5394f4203a3ee11595226c2be0ebe09b611a829d0b706767c3"
+    },
+    {
+      "id": "select-provider-false-local-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": true,
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "d386b062fd55d91ee3c753165a6f4faad30f23fce2d3a36950a0f1f36536c613"
+    },
+    {
+      "id": "select-provider-true-local-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": true,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": false,
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "a46a6ccbfa3b1800c90a6656481c068369fc6e7357259b24743ed5ac8df13850"
+    },
+    {
+      "id": "select-nested-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "c62528663a0d6c2d815d36fa8a82b36acbefe8623382aed51122e771a2ad61cf"
+    },
+    {
+      "id": "select-nested-reset-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": true,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "09d7fbbaa7b458c891333c05bb087e7d180209303696e39b4eaba268ba5749d0"
+    },
+    {
+      "id": "select-nested-reset-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": true,
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "2aced3767760155ae9478926b57322d5cdf23797ecdaceba0463d6db8ea5f4fb"
+    },
+    {
+      "id": "select-width-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": false,
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "9cf6185d06089903aa74cf2aa91d9fa466e4dc198218e9d4173ebac542cf4a39"
+    },
+    {
+      "id": "select-width-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 0,
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "916c00851331a28cc841abd2d02eefc7dc2407c4fd1b81060d06449b8cfbe444"
+    },
+    {
+      "id": "select-height-100",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "1e285927df38cab011bf62aaafe8f05e63ce0cd747f65178a53e40d68e7545f3"
+    },
+    {
+      "id": "select-height-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 0,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "3a405e0dde20f97085f9dc80e8d94efdd9a0312ed2f88c9f30b179c0f3c135c9"
+    },
+    {
+      "id": "select-height-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "67829abba72f61d3b115b8b87bfcaf3f0938c26a5d333cc77439299e8d4af261"
+    },
+    {
+      "id": "select-item-height-16",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 16,
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "f59cd81f0ceeab5d47a13afe0f3e6e04cefa2d941aae603606cbb16691f5b3f2"
+    },
+    {
+      "id": "select-item-height-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 0,
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "6e9c241d5bff9f8d346402f5321ad41445480642df26488831f63d4a2925bf0a"
+    },
+    {
+      "id": "select-item-height-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": true,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "0628c0707bf4d13c8acc490140457bb2008af9efa016a97a98335a00bd56a4cc"
+    },
+    {
+      "id": "select-scrollbar-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": true,
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "07ef90eea0bc75bf4083257ec8a0bbced00e7d5f693446bfd0ac0cbdebe8270d"
+    },
+    {
+      "id": "select-scrollbar-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": false,
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "799dccf9d2eda98450075324ec662fc32c314705e67b7536bf13c7ab4c7952d2"
+    },
+    {
+      "id": "select-scrollbar-optional",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": true,
+              "type": "string",
+              "value": "optional",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "f1257325ee18b73750b41e2bd227f53d8da58545aac454f589d6faddebfda575"
+    },
+    {
+      "id": "select-live-props",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "fcb4d77b19ddfbd7ac90f9c1967d6a2eee2c0010e4451a37659a84a9ada62b48"
+    },
+    {
+      "id": "select-ref-targets",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "c68b06131215e36c019e17ab623bdcc3f4b2d1315a62ea9e2e2fca18001abf74"
+    },
+    {
+      "id": "select-ref-closed",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "f3a19bbc4a638b51e4800886cb5165888f4ea8e314501a27936b1d61055591e7"
+    },
+    {
+      "id": "select-selected-open",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "v-060",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "7fcb85e99fd68df8c2ab8da5414a3f54ae6e13834b28b91e0ed6a2f5a91549bb"
+    },
+    {
+      "id": "select-search-shrink",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "e91f4a504c78906a2f2b6ab974ae9186cdddd354546f6320a94d36d838f58a15"
+    },
+    {
+      "id": "select-empty",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "7edf63812786520ad2edb9304c4a41adc4d9c9ba4c2d9089eaae4e70a3c69566"
+    },
+    {
+      "id": "select-small-fit",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "19ed0751c7a6fc70b7787778d106c0ba702b6b6d6777bc2713113fb2c79a3bf0"
+    },
+    {
+      "id": "select-focus-ref",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "ef7b73e335d03568c9cb6719058f25ab73da772b77b2a665ac79d4dede24fff5"
+    },
+    {
+      "id": "auto-complete-default",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "fbfc9ea5f2fe60d4897958d8f3941c4fdd514a6a236023385fe938a65c88e077"
+    },
+    {
+      "id": "auto-complete-local-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "2390b0378b17437dc75510f0e11c6b37155c9df024e08154cbe27621021d232d"
+    },
+    {
+      "id": "auto-complete-local-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": true,
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "3ddc0cdb2c6c561b279ef6207e86b7d7cf17a009436390a42f2b572420d2f7dd"
+    },
+    {
+      "id": "auto-complete-local-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": false,
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "ef01e992d6340ebe99b8be5aea5ef362f1c2df5e552c3991bd495723c514f63e"
+    },
+    {
+      "id": "auto-complete-provider-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "816d9ee7211f2daa84fb83bdaf111ed304ea11cc271b1023cdf562ebb4c78186"
+    },
+    {
+      "id": "auto-complete-provider-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": true,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b357daea14589151271f07be542d075ad97910182071161338835ecd14978883"
+    },
+    {
+      "id": "auto-complete-provider-false-local-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "6d19789a04d63f7b56ad1e742f0a0e9f8e0d1ceab9745804fc9dc77985b110f2"
+    },
+    {
+      "id": "auto-complete-provider-false-local-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": true,
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "a20db85bb8e5dd348c553e7d68b359e773a31b60fa8e640fd9ae9d39693ae086"
+    },
+    {
+      "id": "auto-complete-provider-true-local-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": true,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": false,
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "35bb27ad8457f266f1d2c28914b68128c64af73a16e986b94e39b55053b8d421"
+    },
+    {
+      "id": "auto-complete-nested-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "764fba2d0f397d1af2c00c72aa7161e13f5639d7827d7f6d6d6a802092ab5dac"
+    },
+    {
+      "id": "auto-complete-nested-reset-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": true,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "5123cb8b3666ddc0da567b51784482cdf1e76ee478d9d53e4cdc58c3b82143b1"
+    },
+    {
+      "id": "auto-complete-nested-reset-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": true,
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "boolean",
+            "value": false,
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b1cb71b25b722e80a41cc1097d28b78844da22d79287cfd5cd0f0224929dcf55"
+    },
+    {
+      "id": "auto-complete-width-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": false,
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "4642659b7729822a89d5a59aad4f99a3385d46a613386bf5c1d64f51982995a2"
+    },
+    {
+      "id": "auto-complete-width-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 0,
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "3abe2fa1a6087cdfb2ccb79abbbecb30e4482299f7376fab4590fac688122cfc"
+    },
+    {
+      "id": "auto-complete-height-100",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "e58eeabc907bd7dc55f2ce52b42fe129b6dea7815c0caa499a8a3472aefa10b2"
+    },
+    {
+      "id": "auto-complete-height-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 0,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "18ae10d603f3cf266d2176964b1ef6a76f2b6a0f80ad0295489e593d0a20bae2"
+    },
+    {
+      "id": "auto-complete-height-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "0b5788cb2d1846d4fb63a4b5c1b28cce13c7a644afc66c302156041f5f929052"
+    },
+    {
+      "id": "auto-complete-item-height-16",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 16,
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "7c9a8a29fbf9dce603e8f7f32567d8f294faca626b1cec66045e8708a78a3c38"
+    },
+    {
+      "id": "auto-complete-item-height-zero",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 0,
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "d83071b6372cec8bac7d3f6f76df44dc1d46de0cb064be17a66a61c25432ae97"
+    },
+    {
+      "id": "auto-complete-item-height-undefined",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": true,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "34241cc8d39e88bd632cfdf9e95e8b7f81c6967f03b313c18fc47c45e240dc27"
+    },
+    {
+      "id": "auto-complete-scrollbar-true",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": true,
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "f1e0b0350bec6f4b496fe08f84cab17f5a5912be628b493ef43013c3cd120d6a"
+    },
+    {
+      "id": "auto-complete-scrollbar-false",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": false,
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b7ea614ac89d8ac052ca552432fd8a5a0e27b534897a2bef970d3ae4fcf85a8a"
+    },
+    {
+      "id": "auto-complete-scrollbar-optional",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": true,
+              "type": "string",
+              "value": "optional",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "76028c402db9c487d598cad08c2b23fdfbb758d80e6b9d2f898cd362829d6f2f"
+    },
+    {
+      "id": "auto-complete-live-props",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "60ea73de29ec7daec120594a664f0cd89ebdb5f6b93e994d0fe3906b49e5cffd"
+    },
+    {
+      "id": "auto-complete-ref-targets",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "0da34c2a5da6154beb9de086ec9b4a5585961993c3d87c97061128796f7d4db8"
+    },
+    {
+      "id": "auto-complete-ref-closed",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b8a7f9fe384cc81a2aff17fb6fdea9580ba24adb1d72e93fdbc914f0098121b0"
+    },
+    {
+      "id": "auto-complete-selected-open",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "v-060",
+        "query": "v-060",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "70e010d89833b9bd7caca0593d7c16e47cecfc4f3809018e9f111861e00a6970"
+    },
+    {
+      "id": "auto-complete-search-shrink",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "ce08c03f2624befa2874ee76cbb4685c9560f891fa3088358f3fd041f97a89be"
+    },
+    {
+      "id": "auto-complete-empty",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "14405e687b0e5ccb88abe88defe0159cf03fe28bc4161897a19d04c89d04df45"
+    },
+    {
+      "id": "auto-complete-small-fit",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "8409c8a0516ee7b8f2e515ccf04c3aab050bb88ca1e24fb5d53407779f8304ec"
+    },
+    {
+      "id": "auto-complete-focus-ref",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "8a3692c6c192b93e9d4e1181252ff4a4d2efef69bf480a2bea95aff38f627d72"
+    },
+    {
+      "id": "select-variable-option",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "104680726ccc2f7fccc41568e2b09d5a1c125ec848ac463dfdf0a1b6ccfd7f28"
+    },
+    {
+      "id": "select-variable-option-nonvirtual",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": true,
+              "type": "boolean",
+              "value": false,
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "fc8f65ae78494cf5e5bf555b92327b8e6aea1268d6fbfa73c690c6dd0112e67d"
+    },
+    {
+      "id": "select-multiple",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": [
+          "v-060"
+        ],
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "cafffe1658e20dc8f084aa3ef791e71a2a8d30eff65d87e0920fea88ef0de0c2"
+    },
+    {
+      "id": "select-tags",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": [
+          "custom-tag"
+        ],
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [
+        "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag."
+      ],
+      "htmlSha256": "8e7f7b20cb6b8aef6a555e02a035f0fb736e241bbf05d1ec038a70982b1b6bf4"
+    },
+    {
+      "id": "auto-complete-groups",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "bd78b300cc9c8cb67ae9237365231abf1c0671d7329ed7cd4d9b0fdab2e9ddeb"
+    },
+    {
+      "id": "auto-complete-groups-variable",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "2c83e2846445d7407c3f764a5b27d97912ba19821ef5d453a58b9196b4a62ac9"
+    },
+    {
+      "id": "select-rtl",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "90e84b1da8d505addae15e52080d076009e57bfff0fa8b88975eb01f38ec4db2"
+    },
+    {
+      "id": "select-scaled-shadow",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "df72ea36ac23caa9c088bd0f09beca1e726e0a17d91cb702b05b22b148f4faea"
+    },
+    {
+      "id": "auto-complete-rtl",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "ad1cbbaded04a06b0592928ef7b5b8046740f745d4111ad27c1c3919fa86a2d9"
+    },
+    {
+      "id": "auto-complete-scaled-shadow",
+      "view": {
+        "receipts": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": "undefined",
+            "sameOriginal": true
+          },
+          "local": {
+            "virtual": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "popupMatchSelectWidth": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "listHeight": {
+              "keyPresent": true,
+              "type": "number",
+              "value": 100,
+              "sameOriginal": true
+            },
+            "listItemHeight": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            },
+            "showScrollBar": {
+              "keyPresent": false,
+              "type": "undefined",
+              "value": "undefined",
+              "sameOriginal": true
+            }
+          }
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "offsets": [],
+        "renders": [],
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "offsets": [],
+      "renders": [],
+      "refs": {
+        "host": null,
+        "control": null,
+        "shadow": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "18ec44850203482a27bc89d34ca82c78d639358a45f78b9612762a6925123c50"
+    }
+  ]
+}

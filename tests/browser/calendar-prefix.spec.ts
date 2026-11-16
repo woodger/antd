@@ -1,4 +1,5 @@
 import { test, expect } from './test';
+import { physicalSelectOption } from './select-physical';
 import reference from './fixtures/ant-design-calendar-prefix-reference.json' with { type: 'json' };
 import { snapshotCalendarPrefix } from './calendar-prefix-metrics';
 
@@ -118,7 +119,7 @@ test('Calendar prefix changes preserve default styling, selected date and open m
     const root = page.locator('.fixture-calendar-prefix');
     const month = root.locator('.calendar-month-select').getByRole('combobox');
     await month.click();
-    const option = root.getByRole('option', { name: 'Oct', exact: true });
+    const option = physicalSelectOption(root, { name: 'Oct', exact: true });
     const oldOption = await option.elementHandle();
     await page.mouse.move(10, 890);
     await page.evaluate(() => Promise.all(document.getAnimations()

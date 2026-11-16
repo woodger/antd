@@ -14,6 +14,7 @@ function readHeight() {
   if (!popup) return null;
   const css = getComputedStyle(popup);
   const box = popup.getBoundingClientRect();
+  const holder = popup.querySelector<HTMLElement>('[class$="-list-holder"]');
   return {
     box: { x: box.x, y: box.y, width: box.width, height: box.height },
     clientHeight: popup.clientHeight, scrollHeight: popup.scrollHeight,
@@ -22,6 +23,7 @@ function readHeight() {
       'borderTopWidth', 'borderBottomWidth', 'borderLeftWidth', 'borderRightWidth', 'boxSizing'
     ].map(key => [key, css[key as keyof CSSStyleDeclaration]])),
     contentViewportHeight: popup.clientHeight - parseFloat(css.paddingTop) - parseFloat(css.paddingBottom),
+    holderHeight: holder?.clientHeight ?? null,
     inlineStyle: popup.getAttribute('style')
   };
 }
@@ -80,8 +82,7 @@ for (const entry of reference.cases) {
           expect(actual.height!.css, 'actual public physical padding/border and box sizing')
             .toEqual(Object.fromEntries(Object.keys(actual.height!.css)
               .map(key => [key, step.height.popup!.css[key as keyof typeof step.height.popup.css]])));
-          // Native retains its existing scrollable outer listbox; Source has a separate inner holder.
-          expect(actual.height!.contentViewportHeight, 'actual scroll viewport matches Source inner holder')
+          expect(actual.height!.holderHeight, 'actual scroll viewport matches Source inner holder')
             .toBe(step.height.holders[0].clientHeight);
         } else expect(actual.height).toBeNull();
         expect(actual.projection.view.leaks).toEqual([]);
@@ -90,7 +91,7 @@ for (const entry of reference.cases) {
       expect(warnings).toEqual([]);
     } finally {
       await testInfo.attach(`${entry.id}-actual`, {
-        body: JSON.stringify({ scope: 'Actual outer height, physical public CSS and effective scroll viewport. Existing Native outer-listbox DOM and Source inner-holder DOM remain independent raw evidence.',
+        body: JSON.stringify({ scope: 'Actual outer height, physical public CSS and inner scroll viewport. Native and Source DOM remain independent raw evidence.',
           captures, errors, warnings }, null, 2), contentType: 'application/json'
       });
     }

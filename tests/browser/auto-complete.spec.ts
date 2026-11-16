@@ -1,8 +1,9 @@
+import { physicalSelectOption, physicalSelectPopup } from './select-physical';
 import { test, expect } from './test';
 import type { Page } from '@playwright/test';
 
 const input = (page: Page) => page.getByRole('combobox', { name: 'Completion', exact: true });
-const popup = (page: Page) => page.getByRole('listbox', { name: 'Completion', exact: true });
+const popup = (page: Page) => physicalSelectPopup(page, 'Completion');
 test.beforeEach(
   async ({ page }) => { await page.goto('/?fixture=auto-complete'); }
 );
@@ -42,7 +43,7 @@ test(
 
     await expect(page.getByLabel('Completion value', { exact: true })).toHaveText('"unmatched"');
 
-    await popup(page).getByRole('option', { name: 'Alpha label', exact: true }).click();
+    await physicalSelectOption(popup(page), { name: 'Alpha label', exact: true }).click();
 
     await expect(input(page)).toHaveValue('alpha');
     await expect(page.getByLabel('Completion searches', { exact: true }))
@@ -59,7 +60,7 @@ test(
     await page.getByLabel('Filter completions', { exact: true }).check();
     await input(page).fill('alp');
 
-    await expect(popup(page).getByRole('option')).toHaveCount(2);
+    await expect(physicalSelectOption(popup(page))).toHaveCount(2);
 
     await input(page).fill('beta');
 
@@ -138,10 +139,7 @@ test(
     await expect(custom).toHaveAttribute('aria-expanded', 'false');
 
     await custom.fill('beta');
-    await page.getByRole('listbox', { name: 'Custom completion', exact: true }).getByRole(
-      'option',
-      { name: 'Beta rich', exact: true }
-    )
+    await physicalSelectOption(physicalSelectPopup(page, 'Custom completion'), { name: 'Beta rich', exact: true })
       .click();
 
     await expect(custom).toHaveValue('beta');

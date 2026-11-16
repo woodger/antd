@@ -6,11 +6,15 @@
   import { useVariant } from './variant.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
   import { useComponentTheme } from './theme-component.svelte';
+  import { useToken } from './theme-context.svelte';
   import { connectComponentTheme } from './theme-component.dom';
+  import SelectOptionList from './SelectOptionList.svelte';
+  import { createSelectOptionList } from './select-option-list.model.svelte';
+  import type { SelectOptionListItem, SelectOptionListRenderInfo } from './select-option-list.types';
+  import { createSelectActive } from './select-active.model.svelte';
   import { connectPopup } from './popup.dom';
   import { createTreeSelectAlign } from './tree-select-align.dom';
   import { createOverlayStyle } from './overlay-style.model.svelte';
-  import { selectPopupHeightInsetVariable, selectPopupMaxHeight, syncSelectPopupHeight } from './select-popup-height.dom';
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useCompact } from './space-compact-context';
@@ -31,6 +35,7 @@
   import { ruRU, type SelectOption } from './types';
   import type {
     SelectProps,
+    SelectScrollConfig,
     SelectFlattenOption,
     SelectSearchConfig,
     SelectTagPlaceholder,
@@ -56,6 +61,11 @@
     defaultOpen,
     placement,
     popupMatchSelectWidth,
+    listHeight = 256,
+    listItemHeight,
+    showScrollBar,
+    defaultActiveFirstOption = true,
+    onActive,
     tokenSeparators,
     maxCount,
     maxTagTextLength,
@@ -89,10 +99,15 @@
     onclick,
     style,
     class: className = '',
+    nativeElement = $bindable(),
+    inputElement = $bindable(),
     ...attributes
   }: SelectProps<Value, Mode> = $props();
 
   const config = useConfig();
+  const tokens = useToken();
+  let { virtual, ...nativeAttributes } = $derived(attributes);
+  let effectiveVirtual = $derived(Object.hasOwn(attributes, 'virtual') ? virtual : config.virtual);
   let prefix = $derived(config.getPrefixCls('select', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let privateNamespace = $derived(rootPrefix.replaceAll('.', ''));
@@ -104,8 +119,8 @@
     get nativeElement() {
       return container;
     },
-    focus: () => control?.focus(),
-    blur: () => control?.blur()
+    focus,
+    blur
   };
   const field = useFormField(() => controlRef);
   const itemStatus = useFormItemStatusContext();
@@ -131,7 +146,7 @@
   let filter = $derived(searchConfig.filterOption ?? true);
   let autoClearSearch = $derived(searchConfig.autoClearSearchValue ?? true);
   let cachedOptions = $state.raw<ReadonlyMap<RawValue, SelectOption<RawValue>>>(new Map());
-  let activeValue = $state<RawValue>();
+  let activeIndex = $state(-1);
   let container: HTMLDivElement;
   let reference = $state<HTMLDivElement>();
   let control = $state<HTMLInputElement>();
@@ -253,13 +268,6 @@
       disconnect?.();
     };
   });
-  let activeIndex = $derived.by(() => {
-    const index = filtered.findIndex(
-      (option) => option.value === activeValue && !option.disabled
-    );
-
-    return index < 0 ? getEnabledIndex(filtered, -1, 'first') : index;
-  });
   let resolvedDisabled = $derived(disabled ?? field?.disabled ?? config.componentDisabled);
   let resolvedStatus = $derived(status ?? ('status' in itemStatus ? itemStatus.status : field?.status));
   let resolvedSize = $derived(size ?? compact?.size ?? config.componentSize);
@@ -269,13 +277,7 @@
     && (notFoundContent === null || notFoundContent === false || notFoundContent === ''));
   let expanded = $derived(hydrated && isOpen && !resolvedDisabled && !hiddenEmpty);
 
-  function initialActiveValue() {
-    return !multiple && selected && !selected.disabled
-      ? selected.value : filtered[getEnabledIndex(filtered, -1, 'first')]?.value;
-  }
-
   onMount(() => {
-    if (isOpen) activeValue = initialActiveValue();
     hydrated = true;
     if (providedOpen === undefined) open = internalOpen;
   });
@@ -284,7 +286,6 @@
     const next = providedOpen;
     if (!Object.is(next, previousOwnerOpen)) {
       previousOwnerOpen = next;
-      if (next) activeValue = initialActiveValue();
       internalOpen = next ?? false;
       if (!next && !multiple) internalSearch = '';
     }
@@ -296,9 +297,11 @@
   let popupContainerGetter = $derived(getPopupContainer || config.getPopupContainer);
   const anchorWidthVariable = '--ant-native-select-anchor-width';
   let matchedWidth = $derived(popupMatchSelectWidth ?? config.popupMatchSelectWidth ?? true);
+  let realVirtual = $derived(effectiveVirtual !== false && matchedWidth !== false);
+  let itemHeight = $derived(listItemHeight ?? tokens.token.controlHeight);
+  let listLabel = $derived(attributes['aria-label'] ?? placeholder ?? config.locale.searchText);
   let popupLayers = $derived([
     componentTheme.style,
-    selectPopupMaxHeight(256),
     `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`,
     typeof matchedWidth === 'number' ? [['width', `${matchedWidth}px`]] as const : undefined
   ]);
@@ -309,7 +312,7 @@
     reference,
     getPopupContainer: popupContainerGetter,
     themeStyle: serializeInlineStyleLayers(popupLayers),
-    preserveVariables: [anchorWidthVariable, selectPopupHeightInsetVariable]
+    preserveVariables: [anchorWidthVariable]
   }));
 
   $effect(() => {
@@ -332,11 +335,13 @@
       maxWidth: false,
       constrainWidth: false,
       allowOffscreenAnchor: true,
+      preserveFocus: event => !event.composedPath().some(node =>
+        node instanceof Element && node.classList.contains(`${prefix}-dropdown-list-scrollbar`)),
       anchorWidthVariable,
       getAnchorWidth: () => source.width,
-      getPosition: (rect, bounds, viewport) => {
-        syncSelectPopupHeight(popup);
-        return source.position(rect, bounds, viewport);
+      getPosition: (anchorRect, popupRect, viewport) => {
+        optionList.prepare();
+        return source.position(anchorRect, popupRect, viewport);
       },
       applyPosition: position => source.commitFrame(() => popupStyle.position(position, source.style)),
       onAlign: position => { popupPlacement = position.alignedPlacement; },
@@ -367,11 +372,67 @@
   });
 
   $effect(() => {
-    if (expanded && activeIndex >= 0) {
-      list?.querySelector(`#${CSS.escape(`${controlId}-option-${activeIndex}`)}`)
-        ?.scrollIntoView({ block: 'nearest' });
+    nativeElement = reference;
+    return () => { nativeElement = undefined; };
+  });
+  $effect(() => {
+    inputElement = control;
+    return () => { inputElement = undefined; };
+  });
+
+  let listItems = $derived<SelectOptionListItem<SelectOption<RawValue>>[]>(filtered.map((option, index) => {
+    const data = orderedOptions[index] ?? option;
+    return {
+      key: data.key ?? data.value,
+      originalIndex: index,
+      item: data,
+      ariaLabel: data.label,
+      ariaValue: data.value,
+      get ariaSelected() { return multiple ? selectedKeys.has(data.value) : data.value === selectedValue; },
+      ariaDisabled: data.disabled,
+      get disabled() { return Boolean(data.disabled || countReached && !selectedKeys.has(data.value)); }
+    };
+  }));
+  const notifyActive = createSelectActive<RawValue>(
+    () => onActive as ((value: RawValue | null) => void) | undefined
+  );
+  let listVisited = false;
+  let lastListLength = -1;
+  let lastListSearch: string | undefined;
+  let openingKeyboardActivation: { index: number } | undefined;
+
+  // Source сохраняет OptionList после первого открытия; условный Native DOM не сбрасывает activation.
+  $effect(() => {
+    const visible = expanded;
+    const rows = optionList.items;
+    const query = search;
+    if (!listVisited && !visible) return;
+    if (!listVisited || rows.length !== lastListLength || query !== lastListSearch) {
+      listVisited = true;
+      lastListLength = rows.length;
+      lastListSearch = query;
+      untrack(() => activate(openingKeyboardActivation?.index ?? (defaultActiveFirstOption
+        ? getEnabledIndex(rows.map(row => ({ ...row.item, disabled: row.disabled })), -1, 'first') : -1)));
     }
   });
+  const optionList = createSelectOptionList<SelectOption<RawValue>>({
+    items: () => listItems,
+    height: () => listHeight,
+    estimate: () => itemHeight,
+    realVirtual: () => realVirtual,
+    open: () => expanded,
+    searchValue: () => search,
+    selectedIndex: (): number => openingKeyboardActivation?.index ?? (multiple || selectedValue === undefined
+      ? -1 : optionList.items.findIndex(row =>
+        search ? String(row.item.value).startsWith(search) : row.item.value === selectedValue)),
+    onSelectedActive: index => activate(index)
+  });
+
+  function activate(index: number, keyboard = false) {
+    activeIndex = index;
+    notifyActive(optionList.items[index]?.item.value ?? null);
+    if (keyboard) optionList.scrollActive(index);
+  }
 
   function setOpen(next: boolean) {
     if (next && resolvedDisabled) {
@@ -390,14 +451,30 @@
     }
   }
 
+  export function focus(options?: FocusOptions) {
+    control?.focus(options);
+  }
+  export function blur() {
+    control?.blur();
+  }
+  export function scrollTo(config?: SelectScrollConfig | null) {
+    optionList.scrollTo(config);
+  }
+
+  function keepOpeningKeyboardActivation(index: number) {
+    const request = { index };
+    openingKeyboardActivation = request;
+    // Native typeahead/ArrowUp задают цель до первого OptionList effect.
+    void tick().then(() => {
+      if (openingKeyboardActivation === request) openingKeyboardActivation = undefined;
+    });
+  }
+
   function openList(direction: 'first' | 'last' = 'first') {
     if (!isOpen) {
       if (!tagMode && (!multiple || autoClearSearch)) internalSearch = '';
-      activeValue = !multiple && selected && !selected.disabled
-        ? selected.value
-        : tagMode || searchConfig.filterSort || countReached
-          ? filtered[getEnabledIndex(filtered, -1, direction)]?.value
-          : options[getEnabledIndex(options, -1, direction)]?.value;
+      if (!listVisited) activeIndex = getEnabledIndex(filtered, -1, direction);
+      if (direction === 'last') keepOpeningKeyboardActivation(getEnabledIndex(filtered, -1, 'last'));
     }
 
     setOpen(true);
@@ -517,17 +594,17 @@
       if (!expanded) {
         openList(event.key === 'ArrowUp' ? 'last' : 'first');
       } else {
-        activeValue = filtered[getEnabledIndex(
+        activate(getEnabledIndex(
           filtered,
           activeIndex,
           event.key === 'ArrowUp' ? 'previous' : 'next'
-        )]?.value;
+        ), true);
       }
     } else if ((event.key === 'Home' || event.key === 'End') && expanded) {
       event.preventDefault();
-      activeValue = filtered[getEnabledIndex(filtered, -1, event.key === 'Home'
+      activate(getEnabledIndex(filtered, -1, event.key === 'Home'
         ? 'first'
-        : 'last')]?.value;
+        : 'last'), true);
     } else if (event.key === 'Enter' || (event.key === ' ' && !canSearch)) {
       event.preventDefault();
 
@@ -571,8 +648,12 @@
       lastTyped = event.timeStamp;
       const matches = filterOptions(options, typeahead);
 
+      const opening = !expanded;
       openList();
-      activeValue = matches[getEnabledIndex(matches, -1, 'first')]?.value;
+      const match = matches[getEnabledIndex(matches, -1, 'first')];
+      const index = match ? filtered.findIndex(option => option.value === match.value) : -1;
+      if (opening) keepOpeningKeyboardActivation(index);
+      activate(index, true);
     }
   }
 
@@ -620,7 +701,7 @@
         cachedOptions = nextOptions;
         if (nextValues.size !== selectedValues.length) changeMultiple([...nextValues]);
         internalSearch = '';
-        activeValue = undefined;
+        activeIndex = -1;
         setOpen(false);
         if (previousSearch !== '') onSearch?.('');
         input.value = controlledSearch ?? '';
@@ -632,11 +713,7 @@
 
     internalSearch = next;
     searchCallback?.(next);
-    const matches = searchConfig.filterSort ? filtered : tagMode
-      ? getSelectTagOptions(options, selectionOptions, next, filter, searchConfig.optionFilterProp)
-      : filterOptions<RawValue>(options, next, filter, searchConfig.optionFilterProp);
     restoreControlledSearch(input);
-    activeValue = matches[getEnabledIndex(matches, -1, 'first')]?.value;
     setOpen(true);
   }
 
@@ -777,7 +854,7 @@
   .suffix { display: flex; flex: none; color: var(--ant-color-text-quaternary); pointer-events: none; }
   .clear { display: flex; padding: 0; margin-inline-end: 4px; border: 0; background: none; color: var(--ant-color-text-tertiary); cursor: pointer; }
   .clear:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
-  .popup[data-ant-select-dropdown] { top: calc(100% + 4px); inset-inline: 0; max-height: 256px; overflow-y: auto; }
+  .popup[data-ant-select-dropdown] { top: calc(100% + 4px); inset-inline: 0; max-height: none; overflow: visible; }
   /* Исходный virtual-list размещает options в flex column без сжатия строк. */
   .popup[data-ant-select-source-popup] { display: flex; flex-direction: column; }
   .popup[data-ant-select-dropdown][popover] { position: fixed; inset: auto; margin: 0; border: 0; }
@@ -907,7 +984,7 @@
         {/if}
       {/if}
       <input
-        {...attributes}
+        {...nativeAttributes}
         bind:this={control}
         id={controlId}
         data-ant-select-input class={`${prefix}-input`}
@@ -915,9 +992,9 @@
         role="combobox"
         aria-expanded={expanded}
         aria-busy={loading || undefined}
-        aria-controls={`${controlId}-list`}
+        aria-controls={expanded ? `${controlId}_list` : undefined}
         aria-activedescendant={expanded && activeIndex >= 0
-            ? `${controlId}-option-${activeIndex}`
+            ? `${controlId}_list_${activeIndex}`
             : undefined}
         aria-autocomplete={canSearch ? 'list' : 'none'}
         aria-invalid={field?.invalid || resolvedStatus === 'error'
@@ -987,53 +1064,53 @@
       {@attach popupStyle.attach}
       {@attach node => connectComponentTheme(node, componentTheme.style)}
       {@attach portal}
-      id={`${controlId}-list`}
-      role="listbox"
       aria-busy={loading || undefined}
-      onscroll={onPopupScroll}
       onfocusout={handleListFocusOut}
-      aria-multiselectable={multiple || undefined}
       aria-label={attributes['aria-label']
           ?? placeholder
           ?? config.locale.searchText}
     >
-      {#each filtered as option, index (option.value)}
+      {#snippet optionRow(option: SelectOption<RawValue>, info: SelectOptionListRenderInfo)}
+        {@const index = info.index}
+        {@const rowDisabled = info.attributes['aria-disabled'] === true}
         <button
           type="button"
           data-ant-select-item
-          role="option"
           tabindex="-1"
-          id={`${controlId}-option-${index}`}
-          aria-selected={multiple
-              ? selectedKeys.has(option.value)
-              : option.value === selectedValue}
-          aria-disabled={option.disabled || undefined}
-          disabled={option.disabled}
+          disabled={rowDisabled}
+          {...info.attributes}
+          {@attach info.attach}
           class={[
               `${prefix}-item ${prefix}-item-option`,
               (multiple
                 ? selectedKeys.has(option.value)
                 : option.value === selectedValue)
               && `${prefix}-item-option-selected`,
-              index === activeIndex && `${prefix}-item-option-active`,
-              option.disabled && `${prefix}-item-option-disabled`
+              index === activeIndex && !rowDisabled && `${prefix}-item-option-active`,
+              rowDisabled && `${prefix}-item-option-disabled`
             ]}
           onpointerdown={(event) => event.preventDefault()}
           onpointermove={() => {
-              if (!option.disabled)
-                activeValue = option.value;
+              if (!rowDisabled && index !== activeIndex) activate(index);
             }}
           onclick={() => choose(option)}
         >
-          <span class={`${prefix}-item-option-content`}>{#if renderOption}{@render renderOption(getRenderOption(index), { index })}{:else}{option.label}{/if}</span>
-          {#if multiple ? selectedKeys.has(option.value) : option.value === selectedValue}<span class={`${prefix}-item-option-state`}><Icon name="check" /></span>{/if}
+          <span class={`${prefix}-item-option-content`}>{#if renderOption}{@render renderOption(getRenderOption(index), { index })}{:else}{option.label}{/if}</span>{#if multiple ? selectedKeys.has(option.value) : option.value === selectedValue}<span class={`${prefix}-item-option-state`}><Icon name="check" /></span>{/if}
         </button>
+      {/snippet}
+      {#if optionList.items.length}
+        <SelectOptionList model={optionList} renderItem={optionRow}
+          id={`${controlId}_list`}
+          prefixCls={prefix} direction={config.direction} {showScrollBar} {activeIndex}
+          ariaLabel={listLabel} {multiple} busy={loading}
+          onScroll={onPopupScroll} />
       {:else}
-        <div class={`${prefix}-item-empty`}>{#snippet nativeEmpty()}{loading
+        <div class={`${prefix}-item-empty`} id={`${controlId}_list`} role="listbox"
+          aria-label={listLabel} aria-multiselectable={multiple || undefined} aria-busy={loading || undefined}>{#snippet nativeEmpty()}{loading
               ? (config.locale.spin ?? ruRU.spin!).loadingText
               : config.locale.emptyText}{/snippet}<RenderEmpty componentName="Select"
               local={notFoundContent} fallback={nativeEmpty} /></div>
-      {/each}
+      {/if}
     </div>
   {/if}
 </div>

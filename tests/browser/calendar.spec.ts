@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 import { test, expect } from './test';
+import { physicalSelectOption } from './select-physical';
 
 const root = (page: Page) => page.locator('.fixture-calendar');
 const cell = (page: Page, date: string) => root(page)
@@ -17,7 +18,7 @@ const button = (page: Page, name: string) => page.getByRole('button', { name, ex
 
 async function chooseMonth(page: Page, name: string) {
   await monthSelect(page).click();
-  await root(page).getByRole('option', { name, exact: true }).click();
+  await physicalSelectOption(root(page), { name, exact: true }).click();
 }
 
 test.beforeEach(async ({ page }) => {
@@ -159,8 +160,34 @@ test('Calendar header month and year preserve the day and source timestamps', as
   await button(page, 'Clear Calendar events').click();
   await yearSelect(page).click();
 
-  await expect(root(page).getByRole('option')).toHaveCount(20);
-  await root(page).getByRole('option', { name: '2025', exact: true }).click();
+  const activeYear = () => yearSelect(page).evaluate(input => {
+    const id = input.getAttribute('aria-activedescendant');
+    const option = id ? input.ownerDocument.getElementById(id) : null;
+    return option?.getAttribute('role') === 'option' ? option.getAttribute('aria-label') : null;
+  });
+  const reachableYears = [];
+  await yearSelect(page).press('Home');
+
+  for (let index = 0; index < 20; index++) {
+    if (index) await yearSelect(page).press('ArrowDown');
+    const year = String(2014 + index);
+    await expect.poll(activeYear).toBe(year);
+    const option = physicalSelectOption(root(page), { name: year, exact: true });
+    await expect(option).toBeVisible();
+    await expect.poll(() => option.evaluate(node => {
+      const holder = node.closest('[class$="-list-holder"]')!;
+      const row = node.getBoundingClientRect();
+      const viewport = holder.getBoundingClientRect();
+      return row.top >= viewport.top && row.bottom <= viewport.bottom;
+    })).toBe(true);
+    reachableYears.push(await activeYear());
+  }
+
+  expect(new Set(reachableYears).size).toBe(20);
+  await expect(events(page)).toHaveText('');
+  for (let index = 0; index < 8; index++) await yearSelect(page).press('ArrowUp');
+  await expect.poll(activeYear).toBe('2025');
+  await physicalSelectOption(root(page), { name: '2025', exact: true }).click();
 
   await expect(events(page)).toHaveText(
     'panel:2025-10-15T12:34:56.789Z:month|change:2025-10-15T12:34:56.789Z|select:2025-10-15T12:34:56.789Z:year'
@@ -209,7 +236,7 @@ test('Calendar year header clamps boundary months but does not normalize an out-
   await yearSelect(page).click();
 
   await expect(root(page).getByRole('option')).toHaveCount(2);
-  await root(page).getByRole('option', { name: '2019', exact: true }).click();
+  await physicalSelectOption(root(page), { name: '2019', exact: true }).click();
 
   await expect(events(page)).toHaveText(
     'panel:2019-03-31T12:34:56.789Z:month|change:2019-03-31T12:34:56.789Z|select:2019-03-31T12:34:56.789Z:year'

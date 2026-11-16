@@ -1,3 +1,4 @@
+import { physicalSelectPopup } from './select-physical';
 import type { Locator, Page } from '@playwright/test';
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-select-token-separators-reference.json'
@@ -91,7 +92,7 @@ test('Token separators update after mount and preserve native validation, reset,
     await expect(page.getByRole('status', { name: 'Tags values', exact: true })).toHaveText('[]');
     await page.getByRole('checkbox', { name: 'Right to left', exact: true }).check();
     await input.fill('a');
-    await expect(page.getByRole('listbox', { name: 'Tags', exact: true }))
+    await expect(physicalSelectPopup(page, 'Tags'))
       .toHaveCSS('direction', 'rtl');
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).check();
     await expect(input).toBeDisabled();

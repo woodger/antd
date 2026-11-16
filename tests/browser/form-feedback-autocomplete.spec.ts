@@ -69,7 +69,8 @@ for (const source of clearReference.cases) {
     await apply(page, 'focus', 0);
     await apply(page, 'open', 1);
     if (source.mode.startsWith('pointer')) await apply(page, 'clear', 2);
-    else await page.locator('[data-feedback-autocomplete-control]').getByRole('button').dispatchEvent('click');
+    else await page.locator('[data-feedback-autocomplete-control]')
+      .getByRole('button', { name: 'Очистить', exact: true }).dispatchEvent('click');
     await expect(page.locator('[data-feedback-completion-events]')).toHaveText(JSON.stringify(source.events));
     const input = page.getByRole('combobox', { name: 'Feedback completion', exact: true });
     await expect(input).toHaveAttribute('aria-expanded', source.open);

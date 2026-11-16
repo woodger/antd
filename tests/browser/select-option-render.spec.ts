@@ -1,3 +1,4 @@
+import { physicalSelectOption } from './select-physical';
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-select-option-render-reference.json' with { type: 'json' };
 
@@ -14,11 +15,11 @@ for (const entry of reference.cases) {
       await input.click();
       const metadata = () => page.locator('[data-option-metadata]').evaluateAll(nodes =>
         nodes.map(node => JSON.parse(node.getAttribute('data-option-metadata')!)));
-      const rendered = () => page.getByRole('listbox').getByRole('option')
+      const rendered = () => physicalSelectOption(page)
         .evaluateAll(nodes => nodes.map(node => ({
         content: node.querySelector('.ant-select-item-option-content')!.textContent,
         disabled: node.getAttribute('aria-disabled') === 'true',
-        selected: node.getAttribute('aria-selected') === 'true'
+        selected: node.classList.contains('ant-select-item-option-selected')
       })));
 
       await expect.poll(metadata).toEqual(entry.metadata);
@@ -41,7 +42,7 @@ test('Select optionRender keeps selected labels, native FormData, keyboard and r
       .selectOption('multiple');
     const input = page.getByRole('combobox', { name: 'Rendered choice', exact: true });
     await input.click();
-    await page.getByRole('option', { name: 'Alpha / first', exact: true }).click();
+    await physicalSelectOption(page, { name: 'Alpha / first', exact: true }).click();
     await expect(page.locator('.ant-select-selection-item-content')).toHaveText(['Alpha']);
     await expect(input).toBeFocused();
     await input.press('Home');
@@ -84,9 +85,9 @@ test('Select optionRender keeps raw disabled metadata separate from maxCount and
       .selectOption('multiple-cap');
     const input = page.getByRole('combobox', { name: 'Rendered choice', exact: true });
     await input.click();
-    await expect(page.getByRole('option', { name: 'Gamma / last', exact: true })).toBeDisabled();
-    await page.getByRole('option', { name: 'Alpha / first', exact: true }).click();
-    await expect(page.getByRole('option', { name: 'Gamma / last', exact: true })).toBeEnabled();
+    await expect(physicalSelectOption(page, { name: 'Gamma / last', exact: true })).toBeDisabled();
+    await physicalSelectOption(page, { name: 'Alpha / first', exact: true }).click();
+    await expect(physicalSelectOption(page, { name: 'Gamma / last', exact: true })).toBeEnabled();
     await page.keyboard.press('Control+Alt+h');
 
     await expect(page.getByRole('listbox')).toHaveCount(0);

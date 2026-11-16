@@ -116,7 +116,7 @@ for (const entry of entries) {
         }
       }
       if (sample.family === 'select') {
-        expect(initial.raw.methods).toEqual({ focus: false, blur: false, scrollTo: false });
+        expect(initial.raw.methods).toEqual({ focus: true, blur: true, scrollTo: true });
         expect(initial.raw.publicRoot).toBeNull();
         expect(initial.raw.publicEditor).toBeNull();
       } else {

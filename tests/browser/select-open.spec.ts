@@ -1,3 +1,4 @@
+import { physicalSelectOption } from './select-physical';
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-select-open-reference.json' with { type: 'json' };
 
@@ -12,10 +13,11 @@ for (const entry of reference.cases) {
     const input = page.getByRole('combobox', { name: 'Open choice', exact: true });
     const snapshot = () => input.evaluate(node => {
       const active = node.getAttribute('aria-activedescendant');
+      const activeOption = active ? document.getElementById(active) : null;
       return {
         expanded: node.getAttribute('aria-expanded'),
         popup: Boolean(document.querySelector('.ant-select-dropdown')),
-        activeLabel: active ? document.getElementById(active)?.textContent?.trim() ?? null : null,
+        activeLabel: activeOption?.getAttribute('aria-label') ?? activeOption?.textContent?.trim() ?? null,
         focused: node === document.activeElement,
         events: JSON.parse(document.getElementById('select-open-events')!.textContent!)
       };
@@ -112,7 +114,7 @@ test('Select native reset closes bound multiple open without callbacks and clear
       .selectOption('bound-multiple');
     const input = page.getByRole('combobox', { name: 'Open choice', exact: true });
     await input.click();
-    await page.getByRole('option', { name: 'Alpha', exact: true }).click();
+    await physicalSelectOption(page, { name: 'Alpha', exact: true }).click();
     await expect(page.locator('#select-open-events')).toHaveText('[true]');
     await page.locator('form').evaluate((node: HTMLFormElement) => node.reset());
 

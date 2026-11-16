@@ -47,6 +47,7 @@ export type {
 export { default as AutoComplete } from './AutoComplete.svelte';
 export type {
   AutoCompleteProps,
+  AutoCompleteRef,
   AutoCompleteItem,
   AutoCompleteOption,
   AutoCompleteGroup,
@@ -851,6 +852,12 @@ export type {
 } from './table.types';
 export type {
   SelectProps,
+  SelectRef,
+  SelectScrollKey,
+  SelectScrollAlign,
+  SelectScrollOffsetInfo,
+  SelectScrollOffset,
+  SelectScrollConfig,
   SelectSearchConfig,
   SelectFlattenOption,
   SelectTokenSeparators,

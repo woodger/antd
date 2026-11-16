@@ -1,6 +1,24 @@
 import type { Snippet } from 'svelte';
 import type { HTMLInputAttributes, HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize, RenderEmptyContent, SelectOption } from './types';
+import type { VirtualScrollAlign } from './virtual-list.engine';
+import type { VirtualScrollConfig, VirtualScrollOffset, VirtualScrollOffsetInfo } from './virtual-list.types';
+
+/** Исходный key строки; отличается от value и включает React.Key bigint. */
+export type SelectScrollKey = string | number | bigint;
+export type SelectScrollAlign = VirtualScrollAlign;
+/** Размеры берутся из измерений и оценки ещё не отрисованных строк. */
+export type SelectScrollOffsetInfo = VirtualScrollOffsetInfo<SelectScrollKey>;
+export type SelectScrollOffset = VirtualScrollOffset<SelectScrollKey>;
+/** Число означает индекс строки; объект задаёт key/index либо позицию top/left. */
+export type SelectScrollConfig = VirtualScrollConfig<SelectScrollKey>;
+/** Методы bind:this; nativeElement/inputElement предоставляются отдельными bindable props. */
+export interface SelectRef {
+  focus: (options?: FocusOptions) => void;
+  blur: () => void;
+  /** Null/undefined показывают scrollbar, не меняя позицию. */
+  scrollTo: (config?: SelectScrollConfig | null) => void;
+}
 
 /** Разделители multiple/tags либо пользовательский разбор всей строки. */
 export type SelectTokenSeparators = readonly string[]
@@ -8,7 +26,7 @@ export type SelectTokenSeparators = readonly string[]
 
 /** Metadata плоского пункта; data сохраняет ссылку на исходный option владельца. */
 export interface SelectFlattenOption<Value extends string | number = string> {
-  key: string | number;
+  key: string | number | bigint;
   value: Value;
   label: string;
   data: SelectOption<Value> & Readonly<Record<string, unknown>>;
@@ -97,6 +115,18 @@ export interface SelectProps<
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
   /** Local ?? ConfigProvider ?? true; false и число сохраняют ширину поля как минимум. */
   popupMatchSelectWidth?: boolean | number;
+  /** Отсутствующий prop наследует ConfigProvider; собственный undefined включает Source default. */
+  virtual?: boolean;
+  /** Высота внутреннего viewport; 0 снимает ограничение. @defaultValue 256 */
+  listHeight?: number;
+  /** Оценка до измерения строки; по умолчанию token.controlHeight. */
+  listItemHeight?: number;
+  /** True/false задаются при создании scrollbar; optional скрывает его через 3 секунды. */
+  showScrollBar?: boolean | 'optional';
+  /** Последнее активное value за microtask; null означает отсутствие доступной строки. */
+  onActive?: (value: (Mode extends 'tags' ? Value | string : Value) | null) => void;
+  /** Начальная активная строка; выбранное single value может задать её при открытии. */
+  defaultActiveFirstOption?: boolean;
   /** Разбор строк в multiple/tags; function получает текущий ввод, включая восстановленный paste. */
   tokenSeparators?: SelectTokenSeparators;
   /** Максимум выбранных значений в multiple/tags; existing/default values не обрезаются. */
@@ -136,4 +166,8 @@ export interface SelectProps<
     : Mode extends 'multiple' ? Value[] : Value | undefined) => void;
   onOpenChange?: (open: boolean) => void;
   class?: string;
+  /** Корень Select после mount; ref очищается при unmount. */
+  nativeElement?: HTMLDivElement;
+  /** Нативный editor после mount; ref очищается при unmount. */
+  inputElement?: HTMLInputElement;
 }

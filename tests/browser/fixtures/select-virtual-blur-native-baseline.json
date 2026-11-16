@@ -1,0 +1,583 @@
+{
+  "reference": {
+    "baseCommit": "75b93bf1d473e73433c4ca920ddbd8b009af4e0f",
+    "kind": "Actual historical Native DOM blur behavior; new public blur method delegates directly to this operation",
+    "sourceBlobs": [
+      {
+        "id": "/workspace/dist/Select.svelte",
+        "blob": "75b93bf1d473e73433c4ca920ddbd8b009af4e0f:src/lib/Select.svelte",
+        "sha256": "8ce7449e134038576859a8f1fee4498349255176ac8b25eac715d4764a534288"
+      },
+      {
+        "id": "/workspace/dist/AutoComplete.svelte",
+        "blob": "75b93bf1d473e73433c4ca920ddbd8b009af4e0f:src/lib/AutoComplete.svelte",
+        "sha256": "f7163a29490a6a0a62f0df1fdb4a9a4deafdba4e48ffa999d0902c85545e0b61"
+      }
+    ],
+    "modules": [
+      {
+        "id": "/workspace/dist/styles.css",
+        "diskSha256": "664503fc2f26c55357e24be1c4559e6d2aa9ce30bfc9f5c1616cb4efc997ba9b",
+        "deliveredSha256": "664503fc2f26c55357e24be1c4559e6d2aa9ce30bfc9f5c1616cb4efc997ba9b"
+      },
+      {
+        "id": "/workspace/dist/color-picker.locale.js",
+        "diskSha256": "8fd0efa5cc93b252cacef3b6090e41c5e15fa3a94dfed7149afeaf7bbc2cea10",
+        "deliveredSha256": "8fd0efa5cc93b252cacef3b6090e41c5e15fa3a94dfed7149afeaf7bbc2cea10"
+      },
+      {
+        "id": "/workspace/dist/typography.locale.js",
+        "diskSha256": "307c380beb4cb6096620b2df18acb5cbacbf5230d3d0dd50eaa66115e72cb6cc",
+        "deliveredSha256": "307c380beb4cb6096620b2df18acb5cbacbf5230d3d0dd50eaa66115e72cb6cc"
+      },
+      {
+        "id": "/workspace/dist/tour.locale.js",
+        "diskSha256": "d148293a81acea4fce0662abd23cdce28c40ed54fbfb73b683f01d3453709379",
+        "deliveredSha256": "d148293a81acea4fce0662abd23cdce28c40ed54fbfb73b683f01d3453709379"
+      },
+      {
+        "id": "/workspace/dist/date-picker.locale.js",
+        "diskSha256": "c470a172a55602843f4631cca701dc1128d8d0f1d1f5d4d30da3b14297aa5488",
+        "deliveredSha256": "c470a172a55602843f4631cca701dc1128d8d0f1d1f5d4d30da3b14297aa5488"
+      },
+      {
+        "id": "/workspace/dist/transfer.locale.js",
+        "diskSha256": "e04fa9312a57da5f90c172264b58f32e2144fee008f9a110a8e9d27c5cc95360",
+        "deliveredSha256": "e04fa9312a57da5f90c172264b58f32e2144fee008f9a110a8e9d27c5cc95360"
+      },
+      {
+        "id": "/workspace/dist/qrcode.locale.js",
+        "diskSha256": "9c2096db6b8b6f0a11395cb7bdc025865b9f40f44cb89a48f85e604508f45eff",
+        "deliveredSha256": "9c2096db6b8b6f0a11395cb7bdc025865b9f40f44cb89a48f85e604508f45eff"
+      },
+      {
+        "id": "/workspace/dist/types.js",
+        "diskSha256": "3ee09a21b0e7ea75ac7fe25e09c75342291edf8de86775c6023d2acc8280b431",
+        "deliveredSha256": "3ee09a21b0e7ea75ac7fe25e09c75342291edf8de86775c6023d2acc8280b431"
+      },
+      {
+        "id": "/workspace/dist/config-context.js",
+        "diskSha256": "8ad31fb207bcf185fbdce297b6fbc5fa5ba61db9af2ded3b4c8871e515651758",
+        "deliveredSha256": "8ad31fb207bcf185fbdce297b6fbc5fa5ba61db9af2ded3b4c8871e515651758"
+      },
+      {
+        "id": "/workspace/dist/ThemeScopeStyle.svelte",
+        "diskSha256": "e5910cb38d7e762cf929db9daa3e6d92e1bb2c953bc12428f9d7dd130379d16f",
+        "deliveredSha256": "e5910cb38d7e762cf929db9daa3e6d92e1bb2c953bc12428f9d7dd130379d16f"
+      },
+      {
+        "id": "/workspace/dist/theme-seed.js",
+        "diskSha256": "6f9aa926005924c1169d9e9352197d45c2ad12b52b75816bef1dbd5cf3939d1a",
+        "deliveredSha256": "6f9aa926005924c1169d9e9352197d45c2ad12b52b75816bef1dbd5cf3939d1a"
+      },
+      {
+        "id": "/workspace/dist/theme-palettes.js",
+        "diskSha256": "e175c7d45ff869c66ec7f5fe562c7be1e6757dad843d4d96bc4dd35cdb4338a6",
+        "deliveredSha256": "e175c7d45ff869c66ec7f5fe562c7be1e6757dad843d4d96bc4dd35cdb4338a6"
+      },
+      {
+        "id": "/workspace/dist/color-names.js",
+        "diskSha256": "8c8503739ec4518699fa187eb6b0dc833539a5d2312b97d097b9990e4c0e2474",
+        "deliveredSha256": "8c8503739ec4518699fa187eb6b0dc833539a5d2312b97d097b9990e4c0e2474"
+      },
+      {
+        "id": "/workspace/dist/fast-color.engine.js",
+        "diskSha256": "bbbfaa1575bdd92cd9116ab3b05d5c8d980fed034d20bc8e135dfba0310c28e7",
+        "deliveredSha256": "bbbfaa1575bdd92cd9116ab3b05d5c8d980fed034d20bc8e135dfba0310c28e7"
+      },
+      {
+        "id": "/workspace/dist/theme-palette.engine.js",
+        "diskSha256": "da07a0a7824529752d46cf36c04b13cdb95aa72cdeb140b6aa53098ceba90953",
+        "deliveredSha256": "da07a0a7824529752d46cf36c04b13cdb95aa72cdeb140b6aa53098ceba90953"
+      },
+      {
+        "id": "/workspace/dist/theme-token.types.js",
+        "diskSha256": "9b0fa4ae86ef1996074ce20b21a73ac59c5e9d521d90f44132b77ca431bfe61a",
+        "deliveredSha256": "9b0fa4ae86ef1996074ce20b21a73ac59c5e9d521d90f44132b77ca431bfe61a"
+      },
+      {
+        "id": "/workspace/dist/theme-color.engine.js",
+        "diskSha256": "64f05b925edf06609f5b3dca071e6db6b642805209c0cc6e471b5f8a4e48ebf7",
+        "deliveredSha256": "64f05b925edf06609f5b3dca071e6db6b642805209c0cc6e471b5f8a4e48ebf7"
+      },
+      {
+        "id": "/workspace/dist/theme-metrics.engine.js",
+        "diskSha256": "84e335c25c6e2af0ae98996a914dedcecc17606e06d537b2f67027ad3b1721c4",
+        "deliveredSha256": "84e335c25c6e2af0ae98996a914dedcecc17606e06d537b2f67027ad3b1721c4"
+      },
+      {
+        "id": "/workspace/dist/theme-algorithms.engine.js",
+        "diskSha256": "33fcee56259b3592391b056a79f54f6d6080065b8dd940785576bd35d05dac1f",
+        "deliveredSha256": "33fcee56259b3592391b056a79f54f6d6080065b8dd940785576bd35d05dac1f"
+      },
+      {
+        "id": "/workspace/dist/theme-derivative.js",
+        "diskSha256": "c73ec097f1b8934911deca076b781828adf11502f65cbaf6b8fd30c7eac7e7eb",
+        "deliveredSha256": "c73ec097f1b8934911deca076b781828adf11502f65cbaf6b8fd30c7eac7e7eb"
+      },
+      {
+        "id": "/workspace/dist/theme-cache.js",
+        "diskSha256": "ae27381aa4e8dde7ec94d01f5232c1c2e285173d79dec1a1b60c0886f07ddd5f",
+        "deliveredSha256": "ae27381aa4e8dde7ec94d01f5232c1c2e285173d79dec1a1b60c0886f07ddd5f"
+      },
+      {
+        "id": "/workspace/dist/theme-alias.engine.js",
+        "diskSha256": "a9c17759367bf3e99fad1cad1fd3f39fd02177f7e12988ee4b442af9574a9982",
+        "deliveredSha256": "a9c17759367bf3e99fad1cad1fd3f39fd02177f7e12988ee4b442af9574a9982"
+      },
+      {
+        "id": "/workspace/dist/theme-hash.engine.js",
+        "diskSha256": "7954dac9c13e56998aba24cb493212b3017d0507f1155225669f06848320b3c6",
+        "deliveredSha256": "7954dac9c13e56998aba24cb493212b3017d0507f1155225669f06848320b3c6"
+      },
+      {
+        "id": "/workspace/dist/theme-css-variables.engine.js",
+        "diskSha256": "a06f0c53d87939d61bc3eafe492bf2b7d954374657d13ee4d5c1cb783832125e",
+        "deliveredSha256": "a06f0c53d87939d61bc3eafe492bf2b7d954374657d13ee4d5c1cb783832125e"
+      },
+      {
+        "id": "/workspace/dist/theme-config.engine.js",
+        "diskSha256": "3fab42f15d53724462aa25211fd9a1ef45c5f6408b55ff798f2bda844b668816",
+        "deliveredSha256": "3fab42f15d53724462aa25211fd9a1ef45c5f6408b55ff798f2bda844b668816"
+      },
+      {
+        "id": "/workspace/dist/theme-context.svelte.js",
+        "diskSha256": "ad1681e477c7847e4994dd62a593719e50a9b010fd44e13245f11ec514466fdb",
+        "deliveredSha256": "ad1681e477c7847e4994dd62a593719e50a9b010fd44e13245f11ec514466fdb"
+      },
+      {
+        "id": "/workspace/dist/color-core.engine.js",
+        "diskSha256": "ba8d3959a850223e671cbb3c44848cab9148d327584f1ca9ddbf81b3ff1bcea7",
+        "deliveredSha256": "ba8d3959a850223e671cbb3c44848cab9148d327584f1ca9ddbf81b3ff1bcea7"
+      },
+      {
+        "id": "/workspace/dist/color.js",
+        "diskSha256": "af72e36c17a40d122443704df621c362d4fd8f49bea8791aef65aa8b911d690b",
+        "deliveredSha256": "af72e36c17a40d122443704df621c362d4fd8f49bea8791aef65aa8b911d690b"
+      },
+      {
+        "id": "/workspace/dist/color-picker.engine.js",
+        "diskSha256": "bd40d064a04a5745ffe824672e777ab67876c7994354ee77cf72d8df264190c5",
+        "deliveredSha256": "bd40d064a04a5745ffe824672e777ab67876c7994354ee77cf72d8df264190c5"
+      },
+      {
+        "id": "/workspace/dist/theme-control-tokens.engine.js",
+        "diskSha256": "168c0a146b2e548da022e2bacc8dddd69b906e1a870fcce613178e09eaf6972d",
+        "deliveredSha256": "168c0a146b2e548da022e2bacc8dddd69b906e1a870fcce613178e09eaf6972d"
+      },
+      {
+        "id": "/workspace/dist/theme-display-tokens.engine.js",
+        "diskSha256": "58145476c8fa871ac7291829426d93e04bebfafc3f362b2b8074da9f0d0645dc",
+        "deliveredSha256": "58145476c8fa871ac7291829426d93e04bebfafc3f362b2b8074da9f0d0645dc"
+      },
+      {
+        "id": "/workspace/dist/theme-select-tokens.engine.js",
+        "diskSha256": "e73c236cb9d3271cb0ec3080f726d7a3f68e9ca317b955fbcd8a0229cfa65394",
+        "deliveredSha256": "e73c236cb9d3271cb0ec3080f726d7a3f68e9ca317b955fbcd8a0229cfa65394"
+      },
+      {
+        "id": "/workspace/dist/theme-tree-tokens.engine.js",
+        "diskSha256": "a9b7ca2b6f40fd0c5cdfd9949eddfc47966f066505acf7c50897eabb1406dd32",
+        "deliveredSha256": "a9b7ca2b6f40fd0c5cdfd9949eddfc47966f066505acf7c50897eabb1406dd32"
+      },
+      {
+        "id": "/workspace/dist/theme-picker-panel-tokens.engine.js",
+        "diskSha256": "3deeb6150a9a2329250c278338c3fa1fa2f9719549b7bacf88a8c14e51967016",
+        "deliveredSha256": "3deeb6150a9a2329250c278338c3fa1fa2f9719549b7bacf88a8c14e51967016"
+      },
+      {
+        "id": "/workspace/dist/theme-cascader-tokens.engine.js",
+        "diskSha256": "84383a2cb1a33ec85b74e3162ff938f8534849385a780ea99dc080044cdb6f3a",
+        "deliveredSha256": "84383a2cb1a33ec85b74e3162ff938f8534849385a780ea99dc080044cdb6f3a"
+      },
+      {
+        "id": "/workspace/dist/theme-menu-tokens.engine.js",
+        "diskSha256": "30dfec1efd611b08a7f67e6b77a470083cedf25c45b95eadfd3c30a31cd8ad86",
+        "deliveredSha256": "30dfec1efd611b08a7f67e6b77a470083cedf25c45b95eadfd3c30a31cd8ad86"
+      },
+      {
+        "id": "/workspace/dist/theme-tabs-tokens.engine.js",
+        "diskSha256": "e9d6163df769df61d85b9f9fc22b7a727d95beaf60eadb75f449cb3d87920d4b",
+        "deliveredSha256": "e9d6163df769df61d85b9f9fc22b7a727d95beaf60eadb75f449cb3d87920d4b"
+      },
+      {
+        "id": "/workspace/dist/theme-slider-tokens.engine.js",
+        "diskSha256": "f90434f5ea6e93fbe117e472154733913650a83da689de58977a79fa4fe1f837",
+        "deliveredSha256": "f90434f5ea6e93fbe117e472154733913650a83da689de58977a79fa4fe1f837"
+      },
+      {
+        "id": "/workspace/dist/theme-table-tokens.engine.js",
+        "diskSha256": "b6c1ae02c6c53dde79fbd610b588b5db543084c2d6bacf076a090408a67260e2",
+        "deliveredSha256": "b6c1ae02c6c53dde79fbd610b588b5db543084c2d6bacf076a090408a67260e2"
+      },
+      {
+        "id": "/workspace/dist/theme-overlay-tokens.engine.js",
+        "diskSha256": "2ac7971eb1c53b9242ae703666c40bee10b0ceb7f0392a365e084e996ff7aa28",
+        "deliveredSha256": "2ac7971eb1c53b9242ae703666c40bee10b0ceb7f0392a365e084e996ff7aa28"
+      },
+      {
+        "id": "/workspace/dist/theme-component-style.engine.js",
+        "diskSha256": "a86a034bac6448400a69fefc7032aa8123c4c3f4004af897ecea5b578f3eb7b9",
+        "deliveredSha256": "a86a034bac6448400a69fefc7032aa8123c4c3f4004af897ecea5b578f3eb7b9"
+      },
+      {
+        "id": "/workspace/dist/theme-component.svelte.js",
+        "diskSha256": "63b6b89800e82e341fb0d44f5968ad6f3aac6dac87fea6a10c0ba7bb74776737",
+        "deliveredSha256": "63b6b89800e82e341fb0d44f5968ad6f3aac6dac87fea6a10c0ba7bb74776737"
+      },
+      {
+        "id": "/workspace/dist/space-compact-context.js",
+        "diskSha256": "7e9b6ceda675d568f5e2d29dc41527c62ac0511f5b97957aa5a1217e8174dbf5",
+        "deliveredSha256": "7e9b6ceda675d568f5e2d29dc41527c62ac0511f5b97957aa5a1217e8174dbf5"
+      },
+      {
+        "id": "/workspace/dist/status-icons.js",
+        "diskSha256": "9292c76172185ced6eb018a8e34fae810e4a8ab0b97bd2be835ccb88ee858c5e",
+        "deliveredSha256": "9292c76172185ced6eb018a8e34fae810e4a8ab0b97bd2be835ccb88ee858c5e"
+      },
+      {
+        "id": "/workspace/dist/Icon.svelte",
+        "diskSha256": "7496859f1323d184d1457670673a38382a2d988d396895772c06d12c1691f7c0",
+        "deliveredSha256": "7496859f1323d184d1457670673a38382a2d988d396895772c06d12c1691f7c0"
+      },
+      {
+        "id": "/workspace/dist/notice.dom.js",
+        "diskSha256": "d9595df5aafb1e207dca6983a6a28f6fba67988f54e37593b1de32aaaf53a6c8",
+        "deliveredSha256": "d9595df5aafb1e207dca6983a6a28f6fba67988f54e37593b1de32aaaf53a6c8"
+      },
+      {
+        "id": "/workspace/dist/inline-style.engine.js",
+        "diskSha256": "0edb2c0195148697ffb692cacc20ab6984f8272d53f1c629477bc31f24f343bc",
+        "deliveredSha256": "0edb2c0195148697ffb692cacc20ab6984f8272d53f1c629477bc31f24f343bc"
+      },
+      {
+        "id": "/workspace/dist/inline-style.dom.js",
+        "diskSha256": "96c24bfdb9393110720b867d50722c8eff01ee77df04e6dc370dec7a6a974f97",
+        "deliveredSha256": "96c24bfdb9393110720b867d50722c8eff01ee77df04e6dc370dec7a6a974f97"
+      },
+      {
+        "id": "/workspace/dist/popup-position.engine.js",
+        "diskSha256": "cff0fbc659afa5a722cf9fa65bc1c6e3b72f5a2620d0dd78e52f4eb74f80696b",
+        "deliveredSha256": "cff0fbc659afa5a722cf9fa65bc1c6e3b72f5a2620d0dd78e52f4eb74f80696b"
+      },
+      {
+        "id": "/workspace/dist/tooltip.engine.js",
+        "diskSha256": "f99fc7fb7535c5c29c0ff79be0a422b920ad2fe5c296cd5973eccabed14b3769",
+        "deliveredSha256": "f99fc7fb7535c5c29c0ff79be0a422b920ad2fe5c296cd5973eccabed14b3769"
+      },
+      {
+        "id": "/workspace/dist/popup.dom.js",
+        "diskSha256": "ce4dc2d37af76afa6035b7811d49421ac13700d92dc83de7b27d139b02214085",
+        "deliveredSha256": "ce4dc2d37af76afa6035b7811d49421ac13700d92dc83de7b27d139b02214085"
+      },
+      {
+        "id": "/workspace/dist/popup-portal.dom.js",
+        "diskSha256": "446264d229bb830a3c8b09dbc759b83926ae0ce3468581fea71219353b8aaede",
+        "deliveredSha256": "446264d229bb830a3c8b09dbc759b83926ae0ce3468581fea71219353b8aaede"
+      },
+      {
+        "id": "/workspace/dist/space-compact.engine.js",
+        "diskSha256": "0196c479c6726a71ef583a2f27a88e325ce252c3cafa04e6fe8fd88b6dccecef",
+        "deliveredSha256": "0196c479c6726a71ef583a2f27a88e325ce252c3cafa04e6fe8fd88b6dccecef"
+      },
+      {
+        "id": "/workspace/dist/form-context.js",
+        "diskSha256": "a867a3a289df9fad5aa5e9ac3af542394ac0d760456741127d96fe0a86c2c042",
+        "deliveredSha256": "a867a3a289df9fad5aa5e9ac3af542394ac0d760456741127d96fe0a86c2c042"
+      },
+      {
+        "id": "/workspace/dist/feedback.dom.js",
+        "diskSha256": "4e093cddc6b7b6b2ca014b6c9b0b791a88fd3ecf21fc4dcb6649c478d260c952",
+        "deliveredSha256": "4e093cddc6b7b6b2ca014b6c9b0b791a88fd3ecf21fc4dcb6649c478d260c952"
+      },
+      {
+        "id": "/workspace/dist/vendor/empty-prefix.css.js",
+        "diskSha256": "bd93f504913df7ec7f5cb997918045e55002299cdffb005b399c0f7f049169da",
+        "deliveredSha256": "bd93f504913df7ec7f5cb997918045e55002299cdffb005b399c0f7f049169da"
+      },
+      {
+        "id": "/workspace/dist/empty-prefix.engine.js",
+        "diskSha256": "98cf108d5fc17c2ccba4a88e36d21d379262ebcc8b5ab4212a398cebd1d8e6d1",
+        "deliveredSha256": "98cf108d5fc17c2ccba4a88e36d21d379262ebcc8b5ab4212a398cebd1d8e6d1"
+      },
+      {
+        "id": "/workspace/dist/empty-image.engine.js",
+        "diskSha256": "f25ee1186e2d0fe30609b65e191f7fc0213935fc3f55a41af973a4d613c9484c",
+        "deliveredSha256": "f25ee1186e2d0fe30609b65e191f7fc0213935fc3f55a41af973a4d613c9484c"
+      },
+      {
+        "id": "/workspace/dist/EmptyImage.svelte",
+        "diskSha256": "98b207a491e82e0dbc8b192107b7ac280500f24786e8b32e03955f86dd8615d8",
+        "deliveredSha256": "98b207a491e82e0dbc8b192107b7ac280500f24786e8b32e03955f86dd8615d8"
+      },
+      {
+        "id": "/workspace/dist/Empty.svelte",
+        "diskSha256": "fac2d0c0b95157a7f97eae1c94e3bdf3d98aa32adda2bfad152046b674f787de",
+        "deliveredSha256": "fac2d0c0b95157a7f97eae1c94e3bdf3d98aa32adda2bfad152046b674f787de"
+      },
+      {
+        "id": "/workspace/dist/DefaultRenderEmpty.svelte",
+        "diskSha256": "6fcb86b74aa9746f249f456f486ed8f4365e41616f3c4a2e20ff215cd5c25203",
+        "deliveredSha256": "6fcb86b74aa9746f249f456f486ed8f4365e41616f3c4a2e20ff215cd5c25203"
+      },
+      {
+        "id": "/workspace/dist/RenderContent.svelte",
+        "diskSha256": "97d8f83aa3d7308b5097fe20b23c57b9a29a7ab5cd07f162f16b4fd28fccda6d",
+        "deliveredSha256": "97d8f83aa3d7308b5097fe20b23c57b9a29a7ab5cd07f162f16b4fd28fccda6d"
+      },
+      {
+        "id": "/workspace/dist/RenderEmpty.svelte",
+        "diskSha256": "32d22a7c870c624f4721004d65d0e8ef7ff5154158e5a3d3568729d8c865a92c",
+        "deliveredSha256": "32d22a7c870c624f4721004d65d0e8ef7ff5154158e5a3d3568729d8c865a92c"
+      },
+      {
+        "id": "/workspace/dist/variant.engine.js",
+        "diskSha256": "0c806c25477d53ca54e7fb004b0d8c3c21c5490262e80f3f121dd33498544c07",
+        "deliveredSha256": "0c806c25477d53ca54e7fb004b0d8c3c21c5490262e80f3f121dd33498544c07"
+      },
+      {
+        "id": "/workspace/dist/variant.svelte.js",
+        "diskSha256": "f38d76a4b909bedb732010fef17889e53c89c91830728e64e9ac477dd2c6eec7",
+        "deliveredSha256": "f38d76a4b909bedb732010fef17889e53c89c91830728e64e9ac477dd2c6eec7"
+      },
+      {
+        "id": "/workspace/dist/theme-component.dom.js",
+        "diskSha256": "929be117f00dff874fa2c52a94758efa430f50aae6f45c17afae202b1cae62cd",
+        "deliveredSha256": "929be117f00dff874fa2c52a94758efa430f50aae6f45c17afae202b1cae62cd"
+      },
+      {
+        "id": "/workspace/dist/form-item-status.js",
+        "diskSha256": "b98e09077b8ba752b2c6bd2650b5f67fc7cd9ea17d395085ed5a394c2b1dc9c3",
+        "deliveredSha256": "b98e09077b8ba752b2c6bd2650b5f67fc7cd9ea17d395085ed5a394c2b1dc9c3"
+      },
+      {
+        "id": "/workspace/dist/form-feedback-context.js",
+        "diskSha256": "764fe73241abc0d2d1086515e0c1894987f83dc347aeb52a08208909b7baec77",
+        "deliveredSha256": "764fe73241abc0d2d1086515e0c1894987f83dc347aeb52a08208909b7baec77"
+      },
+      {
+        "id": "/workspace/dist/form-feedback-icons.js",
+        "diskSha256": "b592e4688d892b491bf034938fe08a932e52c095504f0c13a3a120fe7f3d4359",
+        "deliveredSha256": "b592e4688d892b491bf034938fe08a932e52c095504f0c13a3a120fe7f3d4359"
+      },
+      {
+        "id": "/workspace/dist/FormFeedbackIcon.svelte",
+        "diskSha256": "6f647d73d40d6e0ffb21eee97a617b209128a3c001cf3ab11a293b6c4a3a4cd3",
+        "deliveredSha256": "6f647d73d40d6e0ffb21eee97a617b209128a3c001cf3ab11a293b6c4a3a4cd3"
+      },
+      {
+        "id": "/workspace/dist/popup-container.model.svelte.js",
+        "diskSha256": "dea9f45205ddb96fe4a2523ee9f67ec0fa069c979a4d54dce9958e88655de080",
+        "deliveredSha256": "dea9f45205ddb96fe4a2523ee9f67ec0fa069c979a4d54dce9958e88655de080"
+      },
+      {
+        "id": "/workspace/dist/auto-complete.engine.js",
+        "diskSha256": "28559d32c71770407f35885f827c1e75739e5eb7474b9ed8f3a4b827a58b1743",
+        "deliveredSha256": "28559d32c71770407f35885f827c1e75739e5eb7474b9ed8f3a4b827a58b1743"
+      },
+      {
+        "id": "/workspace/dist/vendor/select-prefix.css.js",
+        "diskSha256": "7e0921cef81dd85c6710b66cc20d96c9161c47432350332a1fb3d33f35874c8d",
+        "deliveredSha256": "7e0921cef81dd85c6710b66cc20d96c9161c47432350332a1fb3d33f35874c8d"
+      },
+      {
+        "id": "/workspace/dist/select-prefix.engine.js",
+        "diskSha256": "abed1024339c7e4b14facefe26071dfcdbb9f7d40c484a73a73df6e1cb0ba4e4",
+        "deliveredSha256": "abed1024339c7e4b14facefe26071dfcdbb9f7d40c484a73a73df6e1cb0ba4e4"
+      },
+      {
+        "id": "/workspace/dist/tree-select-align.engine.js",
+        "diskSha256": "475451daa021d79a0b42e7d68e70a3c47d1daa49dc3496a1a7471e836ed4f37c",
+        "deliveredSha256": "475451daa021d79a0b42e7d68e70a3c47d1daa49dc3496a1a7471e836ed4f37c"
+      },
+      {
+        "id": "/workspace/dist/tree-select-motion-frame.dom.js",
+        "diskSha256": "0ef223e04fda3b844c80bfd85d88a17e307c97bd25631684afbc91bf5a3f2475",
+        "deliveredSha256": "0ef223e04fda3b844c80bfd85d88a17e307c97bd25631684afbc91bf5a3f2475"
+      },
+      {
+        "id": "/workspace/dist/tree-select-align-surface.dom.js",
+        "diskSha256": "4df4c6c61bca99a9ad8d07d9f1e5d840dc9f3419df9aa86f55d84409fe646206",
+        "deliveredSha256": "4df4c6c61bca99a9ad8d07d9f1e5d840dc9f3419df9aa86f55d84409fe646206"
+      },
+      {
+        "id": "/workspace/dist/tree-select-align.dom.js",
+        "diskSha256": "3f4a2abfe1d8d5bbedaaa57d197fee4be72b0c0c599c4b38e374ef28c6558d68",
+        "deliveredSha256": "3f4a2abfe1d8d5bbedaaa57d197fee4be72b0c0c599c4b38e374ef28c6558d68"
+      },
+      {
+        "id": "/workspace/dist/overlay-style.model.svelte.js",
+        "diskSha256": "d448eead9c6574bae65d753dd89e5a53da8c0b790fb03ed8b8573ecbc56fdf9e",
+        "deliveredSha256": "d448eead9c6574bae65d753dd89e5a53da8c0b790fb03ed8b8573ecbc56fdf9e"
+      },
+      {
+        "id": "/workspace/dist/select-popup-height.dom.js",
+        "diskSha256": "4974c573498a2ffb9fecf7881666100d0cfe7156d7d88a4dcbd891962303c086",
+        "deliveredSha256": "4974c573498a2ffb9fecf7881666100d0cfe7156d7d88a4dcbd891962303c086"
+      },
+      {
+        "id": "/workspace/dist/AutoComplete.svelte",
+        "diskSha256": "7c262f29d832144160ded3b33cc8b675f5f5c2d376dc364ac01f6b730440bc38",
+        "deliveredSha256": "f7163a29490a6a0a62f0df1fdb4a9a4deafdba4e48ffa999d0902c85545e0b61"
+      },
+      {
+        "id": "/workspace/dist/select-token.engine.js",
+        "diskSha256": "4e30a5977effc5f558e87a476b9d5b4b8d9365d717b6a04bd722e49dc1cd77ec",
+        "deliveredSha256": "4e30a5977effc5f558e87a476b9d5b4b8d9365d717b6a04bd722e49dc1cd77ec"
+      },
+      {
+        "id": "/workspace/dist/select-tag-text.engine.js",
+        "diskSha256": "97286c9da71d05aadabf370ecb58bd0ff40f45e3c8634896d05f7709926a7feb",
+        "deliveredSha256": "97286c9da71d05aadabf370ecb58bd0ff40f45e3c8634896d05f7709926a7feb"
+      },
+      {
+        "id": "/workspace/dist/select-tag-overflow.engine.js",
+        "diskSha256": "7ecb93e6c0ffc94cbcdfb2c57aad2d7f8be2776843d22e37544a762e40fa94ef",
+        "deliveredSha256": "7ecb93e6c0ffc94cbcdfb2c57aad2d7f8be2776843d22e37544a762e40fa94ef"
+      },
+      {
+        "id": "/workspace/dist/select-tag-overflow.dom.js",
+        "diskSha256": "1a9181ecfad81f46872efe6740784047e9bc5e87819409c67c46fc90cf161ede",
+        "deliveredSha256": "1a9181ecfad81f46872efe6740784047e9bc5e87819409c67c46fc90cf161ede"
+      },
+      {
+        "id": "/workspace/dist/vendor/grid-responsive.css.js",
+        "diskSha256": "34e8be0f93b8aa0faf69ca6a2196eebaa252bf3710033a1daf745c22abd026f1",
+        "deliveredSha256": "34e8be0f93b8aa0faf69ca6a2196eebaa252bf3710033a1daf745c22abd026f1"
+      },
+      {
+        "id": "/workspace/dist/grid-style.engine.js",
+        "diskSha256": "d1148393eec88592d96c8332564ac9bb7778649366ce6add09cb534dd9cb6948",
+        "deliveredSha256": "d1148393eec88592d96c8332564ac9bb7778649366ce6add09cb534dd9cb6948"
+      },
+      {
+        "id": "/workspace/dist/ConfigProvider.svelte",
+        "diskSha256": "132dbf11ad259758a424b1a12142ca318c30b242b1e5c8a2a4b34b84b230486c",
+        "deliveredSha256": "132dbf11ad259758a424b1a12142ca318c30b242b1e5c8a2a4b34b84b230486c"
+      },
+      {
+        "id": "/workspace/dist/select.engine.js",
+        "diskSha256": "6eaf82fbd45d1b1c7c6c261eb3ae8d45618a304ce7d9ab6a49e2e0f1a505339c",
+        "deliveredSha256": "6eaf82fbd45d1b1c7c6c261eb3ae8d45618a304ce7d9ab6a49e2e0f1a505339c"
+      },
+      {
+        "id": "/workspace/dist/select-tags.engine.js",
+        "diskSha256": "bf633a5d16a55bf595e617c119a10b3f26db67931225e2a9877dad1e1113e429",
+        "deliveredSha256": "bf633a5d16a55bf595e617c119a10b3f26db67931225e2a9877dad1e1113e429"
+      },
+      {
+        "id": "/workspace/dist/Select.svelte",
+        "diskSha256": "dcbce1ffcb9ebd3a7dca6205b057c67da3c7c6f0356669705db6f591181f02a5",
+        "deliveredSha256": "8ce7449e134038576859a8f1fee4498349255176ac8b25eac715d4764a534288"
+      }
+    ],
+    "errors": [],
+    "warnings": []
+  },
+  "cases": [
+    {
+      "id": "select-focus-ref",
+      "before": [
+        [
+          "focus"
+        ],
+        [
+          "open",
+          true
+        ]
+      ],
+      "synchronous": {
+        "during": [
+          {
+            "connected": true,
+            "focused": false,
+            "ledger": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "blur"
+              ]
+            ]
+          }
+        ],
+        "after": [
+          [
+            "focus"
+          ],
+          [
+            "open",
+            true
+          ],
+          [
+            "open",
+            false
+          ],
+          [
+            "blur"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "auto-complete-focus-ref",
+      "before": [
+        [
+          "focus"
+        ],
+        [
+          "open",
+          true
+        ]
+      ],
+      "synchronous": {
+        "during": [
+          {
+            "connected": true,
+            "focused": false,
+            "ledger": [
+              [
+                "focus"
+              ],
+              [
+                "open",
+                true
+              ],
+              [
+                "open",
+                false
+              ],
+              [
+                "blur"
+              ]
+            ]
+          }
+        ],
+        "after": [
+          [
+            "focus"
+          ],
+          [
+            "open",
+            true
+          ],
+          [
+            "open",
+            false
+          ],
+          [
+            "blur"
+          ]
+        ]
+      }
+    }
+  ]
+}

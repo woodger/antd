@@ -2194,5 +2194,10 @@
     "id": "popup-width-nested",
     "module": "./PopupWidthNestedFixtures.svelte",
     "root": "popup-width-nested-fixture"
+  },
+  {
+    "id": "select-virtual",
+    "module": "./SelectVirtualFixtures.svelte",
+    "root": "select-virtual-fixture"
   }
 ]
