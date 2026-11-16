@@ -1,13 +1,13 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { AutoComplete, ConfigProvider, enUS, type AutoCompleteRef } from 'antd-svelte';
+  import { AutoComplete, ConfigProvider, enUS, type AutoCompleteRef, type AutoCompleteItem } from 'antd-svelte';
   import {
     selectVirtualGeometry, selectVirtualProps, selectVirtualProviderProps, selectVirtualReceipts
   } from './select-virtual-cases';
   import { selectVirtualEdgeOptions, type SelectVirtualEdgeSample, type SelectVirtualEdgeAction } from './select-virtual-edge-cases';
 
   let { sample }: { sample: SelectVirtualEdgeSample } = $props();
-  const options = untrack(() => selectVirtualEdgeOptions(sample));
+  const options: readonly AutoCompleteItem[] = untrack(() => selectVirtualEdgeOptions(sample));
   const localProps = untrack(() => selectVirtualProps(sample));
   const outerProps = untrack(() => selectVirtualProviderProps(sample.outer));
   const innerProps = untrack(() => selectVirtualProviderProps(sample.inner));

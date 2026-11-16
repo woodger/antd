@@ -1,5 +1,5 @@
-import type { SelectOption } from './types';
 import type { SelectTokenSeparators } from './select.types';
+import type { SelectDataFields, SelectDataMaps, SelectDataValue } from './select-data.types';
 
 /** @rc-component/select 1.10.1; MIT, см. vendor/LICENSE.rc-select. */
 export function splitSelectTokens(
@@ -27,29 +27,18 @@ export function splitSelectTokens(
 }
 
 /** Multiple разрешает label/явные search fields, tags создаёт строки; disabled не добавляются. */
-export function resolveSelectTokenOptions<Value extends string | number>(
-  options: readonly SelectOption<Value>[],
+export function resolveSelectTokenOptions<Value extends SelectDataValue, Data extends object>(
+  maps: SelectDataMaps<Value, Data>,
   words: readonly string[],
   tags: boolean,
-  optionFilterProp?: string | readonly string[]
-): SelectOption<Value | string>[] {
-  const values = new Map<Value | string, SelectOption<Value | string>>(
-    options.map(option => [option.value, option])
-  );
-  const labels = new Map<unknown, SelectOption<Value>>();
-  const fields = typeof optionFilterProp === 'string' ? [optionFilterProp] : optionFilterProp ?? [];
-  if (!tags) {
-    for (const option of options) {
-      for (const field of ['label', ...fields]) {
-        if (field && Object.hasOwn(option, field)) labels.set(Reflect.get(option, field), option);
-      }
-    }
-  }
-
+  fields: SelectDataFields
+): { value: Value | string; data: Data | undefined }[] {
   return words.flatMap(word => {
-    const option = tags ? values.get(word) : labels.get(word);
-    if (option?.disabled) return [];
-    if (option) return [option];
-    return tags && word.trim() ? [{ value: word, label: word }] : [];
+    const option = tags ? maps.valueOptions.get(word as Value) : maps.nativeLabelOptions.get(word);
+    if (option && Reflect.get(option, 'disabled')) return [];
+    const value: unknown = tags ? option || word.trim() ? word : undefined
+      : option && Reflect.get(option, fields.value);
+    if (typeof value !== 'string' && typeof value !== 'number') return [];
+    return [{ value: value as Value | string, data: maps.valueOptions.get(value as Value) }];
   });
 }

@@ -1,4 +1,5 @@
 import { test, expect } from './test';
+import { physicalSelectOption } from './select-physical';
 import reference from './fixtures/ant-design-config-variants-reference.json' with { type: 'json' };
 import { snapshotConfigVariants } from './config-variants-metrics';
 
@@ -29,7 +30,7 @@ for (const preset of ['global-filled', 'form-over-input-fallback']) {
       await expect(page.locator('.ant-color-picker-format-select .ant-select'))
         .toHaveClass(/ant-select-borderless/);
       await page.getByRole('combobox', { name: 'Color format', exact: true }).click();
-      await page.getByRole('option', { name: 'RGB', exact: true }).click();
+      await physicalSelectOption(page, { name: 'RGB', exact: true }).click();
 
       await expect(page.getByLabel('Color r', { exact: true })).toHaveValue('22');
       await expect(page.getByLabel('Variant changes', { exact: true })).toHaveText('0');

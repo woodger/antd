@@ -1,4 +1,4 @@
-<script lang="ts" generics="Value extends string | number = string, Mode extends 'multiple' | 'tags' | undefined = undefined">
+<script lang="ts" generics="Value extends string | number = string, Mode extends 'multiple' | 'tags' | undefined = undefined, OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>">
   import { onMount, tick, untrack, type Snippet } from 'svelte';
   import { useConfig } from './config-context';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
@@ -24,14 +24,28 @@
   import { useFormFeedback } from './form-feedback-context';
   import FormFeedbackIcon from './FormFeedbackIcon.svelte';
   import {
-    filterOptions,
     getEnabledIndex,
-    getSelectLimitOptions,
     getSelectValues,
+    getSelectDisplayLabel,
     isSelectCountReached,
-    resolveSelectedOptions,
-    sortSelectOptions
+    isSelectOptionDisabled,
+    matchesSelectDataLabel
   } from './select.engine';
+  import {
+    selectFields,
+    collectSelectData,
+    flattenSelectData,
+    filterSelectData,
+    sortSelectData,
+    emptySelectDataCache,
+    resolveSelectDataCache,
+    copySelectData,
+    selectDataAttributes,
+    selectDataContent,
+    selectDataTitle
+  } from './select-data.engine';
+  import type { SelectDataRow } from './select-data.types';
+  import { serializeSelectDataStyle } from './select-data-style.engine';
   import { ruRU, type SelectOption } from './types';
   import type {
     SelectProps,
@@ -41,19 +55,21 @@
     SelectTagPlaceholder,
     SelectTagInfo
   } from './select.types';
-  import { getSelectTagOptions } from './select-tags.engine';
   import { getSelectTagText } from './select-tag-text.engine';
+  import { getSelectTagOptions } from './select-tags.engine';
   import { getSelectTagOverflow } from './select-tag-overflow.engine';
   import { connectSelectTagOverflow, measureSelectInput } from './select-tag-overflow.dom';
   import { resolveSelectTokenOptions, splitSelectTokens } from './select-token.engine';
   import Icon from './Icon.svelte';
 
   type RawValue = Value | string;
+  type Row = SelectDataRow<RawValue, OptionType>;
 
   let {
     _autoWidth = false,
     prefixCls,
     options = [],
+    fieldNames,
     optionRender,
     mode,
     open = $bindable<boolean | undefined>(),
@@ -73,7 +89,7 @@
     maxTagPlaceholder,
     tagRender,
     defaultValue,
-    value = $bindable<SelectProps<Value, Mode>['value']>(),
+    value = $bindable<SelectProps<Value, Mode, OptionType>['value']>(),
     size,
     variant,
     showSearch,
@@ -88,6 +104,10 @@
     name,
     placeholder,
     onValueChange,
+    onChange,
+    onSelect,
+    onDeselect,
+    onClear,
     onOpenChange,
     onkeydown,
     onbeforeinput,
@@ -102,7 +122,7 @@
     nativeElement = $bindable(),
     inputElement = $bindable(),
     ...attributes
-  }: SelectProps<Value, Mode> = $props();
+  }: SelectProps<Value, Mode, OptionType> = $props();
 
   const config = useConfig();
   const tokens = useToken();
@@ -137,15 +157,15 @@
   let hydrated = $state(false);
   let focused = $state(false);
   let internalSearch = $state('');
-  let searchConfig = $derived<SelectSearchConfig<RawValue>>(
-    { ...(typeof showSearch === 'object' ? showSearch : {}) } as SelectSearchConfig<RawValue>
+  let searchConfig = $derived<SelectSearchConfig<RawValue, OptionType>>(
+    { ...(typeof showSearch === 'object' ? showSearch : {}) }
   );
   let controlledSearch = $derived(searchConfig.searchValue);
   let search = $derived(controlledSearch ?? internalSearch);
   let searchCallback = $derived(searchConfig.onSearch);
   let filter = $derived(searchConfig.filterOption ?? true);
   let autoClearSearch = $derived(searchConfig.autoClearSearchValue ?? true);
-  let cachedOptions = $state.raw<ReadonlyMap<RawValue, SelectOption<RawValue>>>(new Map());
+  let cachedData = $state.raw(emptySelectDataCache<RawValue, OptionType>());
   let activeIndex = $state(-1);
   let container: HTMLDivElement;
   let reference = $state<HTMLDivElement>();
@@ -171,20 +191,28 @@
   let selectedValues = $derived(multiple ? getSelectValues<RawValue>(selectedValue) : []);
   let selectedKeys = $derived(new Set(selectedValues));
   let countReached = $derived(multiple && isSelectCountReached(selectedValues.length, maxCount));
-  let optionMap = $derived<Map<RawValue, SelectOption<RawValue>>>(
-    new Map(options.map((option) => [option.value, option]))
-  );
-  let selectionOptions = $derived(
-    resolveSelectedOptions(
+  let fields = $derived(selectFields(fieldNames));
+  let dataMaps = $derived(collectSelectData<RawValue, OptionType>(
+    options, fields, searchConfig.optionFilterProp
+  ));
+  let selectionData = $derived(
+    resolveSelectDataCache(
       multiple
         ? selectedValues
         : typeof selectedValue === 'string' || typeof selectedValue === 'number'
           ? [selectedValue as RawValue]
           : [],
-      optionMap,
-      cachedOptions
+      dataMaps,
+      fields,
+      cachedData
     )
   );
+  let selectionOptions = $derived(new Map(selectionData.display.map(option => [option.value, {
+    value: option.value,
+    label: getSelectDisplayLabel(option.label, option.value),
+    disabled: option.disabled,
+    title: nativeTitle(option.title)
+  }])));
   let selected = $derived(
     typeof selectedValue === 'string' || typeof selectedValue === 'number'
       ? selectionOptions.get(selectedValue as RawValue)
@@ -202,29 +230,30 @@
     ? `+ ${tagOverflow.omitted.length} ...`
     : typeof tagPlaceholder === 'string' || typeof tagPlaceholder === 'number'
       ? String(tagPlaceholder) : undefined);
+  let filterConfig = $derived({
+    filterOption: filter,
+    optionFilterProp: searchConfig.optionFilterProp === '' ? [''] : searchConfig.optionFilterProp
+  });
   let filteredOptions = $derived(tagMode
-    ? getSelectTagOptions(options, selectionOptions, search, filter, searchConfig.optionFilterProp)
-    : filterOptions<RawValue>(options, search, filter, searchConfig.optionFilterProp));
-  let orderedOptions = $derived(sortSelectOptions(filteredOptions, search, searchConfig.filterSort));
-  let filtered = $derived(getSelectLimitOptions(
-    orderedOptions, selectedKeys, multiple ? maxCount : undefined
+    ? getSelectTagOptions(options, selectionData.display, dataMaps, fields, search, filterConfig)
+    : filterSelectData(options, search, fields, { ...filterConfig, defaultMatch: matchesSelectDataLabel }));
+  let orderedOptions = $derived(sortSelectData(
+    filteredOptions, search, searchConfig.filterSort
   ));
+  let filtered = $derived(flattenSelectData<RawValue, OptionType>(orderedOptions, fields));
   let renderOption = $derived(optionRender as Snippet<[
-    SelectFlattenOption<RawValue>, { index: number }
+    SelectFlattenOption<RawValue, OptionType>, { index: number }
   ]> | undefined);
 
-  function getRenderOption(index: number): SelectFlattenOption<RawValue> {
-    const data = orderedOptions[index];
-    return {
-      key: data.key ?? data.value,
-      value: data.value,
-      label: data.label,
-      data: data as SelectFlattenOption<RawValue>['data'],
-      groupOption: false
-    };
+  function nativeTitle(title: unknown) {
+    return typeof title === 'string' || typeof title === 'number' ? String(title) : undefined;
+  }
+
+  function getRenderOption(option: Row): SelectFlattenOption<RawValue, OptionType> {
+    return option as SelectFlattenOption<RawValue, OptionType>;
   }
   $effect(() => {
-    cachedOptions = selectionOptions;
+    cachedData = selectionData;
   });
   $effect.pre(() => {
     const visible = new Set(tagOverflow.visible.map(tag => tag.value));
@@ -242,7 +271,7 @@
     });
   });
   $effect(() => {
-    if (!control || !responsiveTags) return;
+    if (!control || !multiple || !responsiveTags && !componentTheme.className) return;
     void search;
     const input = control;
     const previous = input.style.width;
@@ -380,17 +409,21 @@
     return () => { inputElement = undefined; };
   });
 
-  let listItems = $derived<SelectOptionListItem<SelectOption<RawValue>>[]>(filtered.map((option, index) => {
-    const data = orderedOptions[index] ?? option;
+  let listItems = $derived<SelectOptionListItem<Row>[]>(filtered.map((option, index) => {
+    const data = option.data;
+    const selected = !option.group && option.value !== undefined
+      && (multiple ? selectedKeys.has(option.value) : option.value === selectedValue);
     return {
-      key: data.key ?? data.value,
+      key: option.key,
       originalIndex: index,
-      item: data,
-      ariaLabel: data.label,
-      ariaValue: data.value,
-      get ariaSelected() { return multiple ? selectedKeys.has(data.value) : data.value === selectedValue; },
-      ariaDisabled: data.disabled,
-      get disabled() { return Boolean(data.disabled || countReached && !selectedKeys.has(data.value)); }
+      item: option,
+      group: option.group,
+      ariaLabel: !option.group && typeof option.label === 'string' ? option.label : undefined,
+      ariaValue: typeof data.value === 'string' || typeof data.value === 'number' ? data.value : undefined,
+      ariaAttributes: selectDataAttributes(option, fields).aria as SelectOptionListItem<Row>['ariaAttributes'],
+      ariaSelected: selected,
+      ariaDisabled: data.disabled as boolean | undefined,
+      disabled: isSelectOptionDisabled(data.disabled, selected, countReached)
     };
   }));
   const notifyActive = createSelectActive<RawValue>(
@@ -412,10 +445,10 @@
       lastListLength = rows.length;
       lastListSearch = query;
       untrack(() => activate(openingKeyboardActivation?.index ?? (defaultActiveFirstOption
-        ? getEnabledIndex(rows.map(row => ({ ...row.item, disabled: row.disabled })), -1, 'first') : -1)));
+        ? getEnabledIndex(rows, -1, 'first') : -1)));
     }
   });
-  const optionList = createSelectOptionList<SelectOption<RawValue>>({
+  const optionList = createSelectOptionList<Row>({
     items: () => listItems,
     height: () => listHeight,
     estimate: () => itemHeight,
@@ -424,7 +457,8 @@
     searchValue: () => search,
     selectedIndex: (): number => openingKeyboardActivation?.index ?? (multiple || selectedValue === undefined
       ? -1 : optionList.items.findIndex(row =>
-        search ? String(row.item.value).startsWith(search) : row.item.value === selectedValue)),
+        search ? String(row.item.data.value).startsWith(search)
+          : row.item.data.value === selectedValue)),
     onSelectedActive: index => activate(index)
   });
 
@@ -432,6 +466,10 @@
     activeIndex = index;
     notifyActive(optionList.items[index]?.item.value ?? null);
     if (keyboard) optionList.scrollActive(index);
+  }
+
+  function enabledIndex(current: number, direction: 'next' | 'previous' | 'first' | 'last') {
+    return getEnabledIndex(listItems, current, direction);
   }
 
   function setOpen(next: boolean) {
@@ -473,8 +511,8 @@
   function openList(direction: 'first' | 'last' = 'first') {
     if (!isOpen) {
       if (!tagMode && (!multiple || autoClearSearch)) internalSearch = '';
-      if (!listVisited) activeIndex = getEnabledIndex(filtered, -1, direction);
-      if (direction === 'last') keepOpeningKeyboardActivation(getEnabledIndex(filtered, -1, 'last'));
+      if (!listVisited) activeIndex = enabledIndex(-1, direction);
+      if (direction === 'last') keepOpeningKeyboardActivation(enabledIndex(-1, 'last'));
     }
 
     setOpen(true);
@@ -483,57 +521,86 @@
   function changeMultiple(next: RawValue[]) {
     if (!multiple) return;
 
+    const changed = next.length !== selectedValues.length
+      || next.some((item, index) => item !== selectedValues[index]);
+    const callback = onChange as ((values: RawValue[], options: OptionType[]) => void) | undefined;
+    const rawOptions = callback && changed ? next.map(callbackOption) : undefined;
     useDefault = false;
     // TypeScript не сужает generic Mode при проверке его значения.
     value = [...next] as typeof value;
     (onValueChange as ((values: RawValue[]) => void) | undefined)?.(next);
+    if (rawOptions) callback?.(next, rawOptions);
+  }
+
+  function optionData(value: RawValue) {
+    return dataMaps.valueOptions.get(value) ?? selectionData.options.get(value);
+  }
+
+  function callbackOption(value: RawValue): OptionType {
+    return copySelectData(optionData(value)) as OptionType;
+  }
+
+  function notifySelect(value: RawValue, data: OptionType | undefined, selected: boolean) {
+    const callback = (selected ? onSelect : onDeselect) as
+      ((value: RawValue, option: OptionType) => void) | undefined;
+    callback?.(value, copySelectData(data) as OptionType);
   }
 
   function submitTag(text: string) {
     if (!tagMode || resolvedDisabled) return;
     const next = text.trim();
     if (!next) return;
-    if (!countReached && !optionMap.get(next)?.disabled && !selectedKeys.has(next)) {
-      cachedOptions = new Map(cachedOptions).set(next,
-        optionMap.get(next) ?? { value: next, label: next });
-      changeMultiple([...selectedValues, next]);
+    const data = optionData(next);
+    if (!countReached && !Reflect.get(data ?? {}, 'disabled')) {
+      if (!selectedKeys.has(next)) changeMultiple([...selectedValues, next]);
+      notifySelect(next, data, true);
     }
     internalSearch = '';
   }
 
-  function choose(option: SelectOption<RawValue> | undefined) {
-    if (resolvedDisabled || option?.disabled
-      || option && countReached && !selectedKeys.has(option.value)) {
+  function choose(option: Row | undefined) {
+    if (resolvedDisabled || option && (option.group || option.value === undefined
+      || isSelectOptionDisabled(option.data.disabled, selectedKeys.has(option.value), countReached))) {
       return;
     }
 
-    if (option)
-      cachedOptions = new Map(cachedOptions).set(option.value, option);
+    const chosenValue = option?.value;
+    const data = chosenValue === undefined ? undefined : optionData(chosenValue);
 
     if (multiple) {
       const next = new Set(selectedValues);
       const clearQuery = tagMode && !option && Boolean(search);
       const onClearSearch = clearQuery ? searchCallback : undefined;
+      const removing = chosenValue !== undefined && next.has(chosenValue);
 
-      if (option) {
-        if (next.has(option.value))
-          next.delete(option.value);
-        else next.add(option.value);
+      if (chosenValue !== undefined) {
+        if (removing)
+          next.delete(chosenValue);
+        else next.add(chosenValue);
       } else {
         if (!next.size && !clearQuery) return;
+        onClear?.();
         next.clear();
       }
 
       if (option || selectedValues.length) changeMultiple([...next]);
+      if (chosenValue !== undefined) notifySelect(chosenValue, data, !removing);
       if (!option || autoClearSearch) internalSearch = '';
       onClearSearch?.('');
       control?.focus();
       return;
     }
 
+    const changed = chosenValue !== selectedValue;
+    const callback = onChange as
+      ((value: RawValue | undefined, option: OptionType | undefined) => void) | undefined;
+    const rawOption = chosenValue === undefined ? undefined : copySelectData(data) as OptionType;
+    if (!option && selected) onClear?.();
     useDefault = false;
-    value = option?.value as typeof value;
-    (onValueChange as ((value: RawValue | undefined) => void) | undefined)?.(option?.value);
+    value = chosenValue as typeof value;
+    (onValueChange as ((value: RawValue | undefined) => void) | undefined)?.(chosenValue);
+    if (changed) callback?.(chosenValue, rawOption);
+    if (chosenValue !== undefined) notifySelect(chosenValue, data, true);
     setOpen(false);
     control?.focus();
   }
@@ -542,9 +609,12 @@
     if (resolvedDisabled || selectionOptions.get(item)?.disabled) return;
 
     const next = new Set(selectedValues);
+    const data = optionData(item);
 
-    if (next.delete(item))
+    if (next.delete(item)) {
       changeMultiple([...next]);
+      notifySelect(item, data, false);
+    }
     if (focus) control?.focus();
   }
 
@@ -594,15 +664,11 @@
       if (!expanded) {
         openList(event.key === 'ArrowUp' ? 'last' : 'first');
       } else {
-        activate(getEnabledIndex(
-          filtered,
-          activeIndex,
-          event.key === 'ArrowUp' ? 'previous' : 'next'
-        ), true);
+        activate(enabledIndex(activeIndex, event.key === 'ArrowUp' ? 'previous' : 'next'), true);
       }
     } else if ((event.key === 'Home' || event.key === 'End') && expanded) {
       event.preventDefault();
-      activate(getEnabledIndex(filtered, -1, event.key === 'Home'
+      activate(enabledIndex(-1, event.key === 'Home'
         ? 'first'
         : 'last'), true);
     } else if (event.key === 'Enter' || (event.key === ' ' && !canSearch)) {
@@ -646,11 +712,13 @@
       && !event.altKey) {
       typeahead = (event.timeStamp - lastTyped > 700 ? '' : typeahead) + event.key;
       lastTyped = event.timeStamp;
-      const matches = filterOptions(options, typeahead);
+      const matches = flattenSelectData<RawValue, OptionType>(options, fields)
+        .filter(row => !row.group && !row.data.disabled
+          && matchesSelectDataLabel(typeahead, row.data, fields));
 
       const opening = !expanded;
       openList();
-      const match = matches[getEnabledIndex(matches, -1, 'first')];
+      const match = matches[0];
       const index = match ? filtered.findIndex(option => option.value === match.value) : -1;
       if (opening) keepOpeningKeyboardActivation(index);
       activate(index, true);
@@ -689,17 +757,12 @@
       if (words !== null) {
         const previousSearch = search;
         const onSearch = searchCallback;
-        const additions = resolveSelectTokenOptions<RawValue>(
-          options, words, tagMode, searchConfig.optionFilterProp
-        );
         const nextValues = new Set(selectedValues);
-        const nextOptions = new Map(cachedOptions);
-        for (const option of additions) {
+        for (const option of resolveSelectTokenOptions(dataMaps, words, tagMode, fields))
           nextValues.add(option.value);
-          nextOptions.set(option.value, option);
-        }
-        cachedOptions = nextOptions;
+        const rawOptions = new Map([...nextValues].map(value => [value, optionData(value)]));
         if (nextValues.size !== selectedValues.length) changeMultiple([...nextValues]);
+        for (const value of nextValues) notifySelect(value, rawOptions.get(value), true);
         internalSearch = '';
         activeIndex = -1;
         setOpen(false);
@@ -868,6 +931,7 @@
   [data-ant-select-control][data-ant-select-multiple] { height: auto; min-height: var(--ant-native-select-height); }
   [data-ant-select-control][data-ant-select-multiple] [data-ant-select-content] { gap: 0; }
   [data-ant-select-control][data-ant-select-multiple] [data-ant-select-input] { flex: 1 1 60px; width: 60px; min-width: 40px; max-width: 100%; }
+  [data-ant-select-control][data-ant-select-source-theme][data-ant-select-multiple] [data-ant-select-input] { flex: none; width: 4px; min-width: 4px; }
   [data-ant-select-control][data-ant-select-responsive-tags] [data-ant-select-input] { flex: none; width: 4px; min-width: 4px; }
   .measure-tag { position: absolute; inset-block-start: 0; inset-inline-start: 0; visibility: hidden; pointer-events: none; }
   .custom-tag { display: inline-flex; flex: none; min-width: 0; max-width: 100%; }
@@ -941,7 +1005,7 @@
               renderTag ? 'custom-tag' : `${prefix}-selection-item`,
               hidden && 'measure-tag',
               !renderTag && (resolvedDisabled || tag.disabled) && `${prefix}-selection-item-disabled`
-            ]} title={renderTag ? undefined : tag.label} data-select-tag={responsiveTags || undefined}
+            ]} title={renderTag ? undefined : selectionOptions.get(tag.value)?.title ?? tag.label} data-select-tag={responsiveTags || undefined}
             data-select-custom-tag={renderTag ? '' : undefined}
             role="presentation" onmousedown={renderTag ? handleCustomTagMouseDown : undefined}
             aria-hidden={hidden || undefined} inert={hidden}
@@ -1070,33 +1134,66 @@
           ?? placeholder
           ?? config.locale.searchText}
     >
-      {#snippet optionRow(option: SelectOption<RawValue>, info: SelectOptionListRenderInfo)}
+      {#snippet optionRow(option: Row, info: SelectOptionListRenderInfo)}
         {@const index = info.index}
+        {@const data = option.data}
         {@const rowDisabled = info.attributes['aria-disabled'] === true}
+        {@const rowSelected = option.value !== undefined
+          && (multiple ? selectedKeys.has(option.value) : option.value === selectedValue)}
+        {@const content = selectDataContent(option)}
+        {@const presentation = selectDataAttributes(option, fields)}
+        {#if option.group}
+          <div data-ant-select-item-group class={[`${prefix}-item ${prefix}-item-group`,
+            typeof data.className === 'string' && data.className]}
+            title={nativeTitle(selectDataTitle(option))} {@attach info.attach}>
+            {#if typeof content !== 'boolean'}{content ?? ''}{/if}
+          </div>
+        {:else}
         <button
+          {...presentation.physical}
           type="button"
           data-ant-select-item
-          tabindex="-1"
+          tabindex={(presentation.physical.tabindex ?? -1) as number}
           disabled={rowDisabled}
-          {...info.attributes}
+          {...info.virtual ? {
+            'aria-selected': undefined,
+            'aria-disabled': info.attributes['aria-disabled']
+          } : info.attributes}
           {@attach info.attach}
           class={[
               `${prefix}-item ${prefix}-item-option`,
-              (multiple
-                ? selectedKeys.has(option.value)
-                : option.value === selectedValue)
-              && `${prefix}-item-option-selected`,
+              typeof data.className === 'string' && data.className,
+              typeof data.class === 'string' && data.class,
+              option.groupOption && `${prefix}-item-option-grouped`,
+              rowSelected && `${prefix}-item-option-selected`,
               index === activeIndex && !rowDisabled && `${prefix}-item-option-active`,
               rowDisabled && `${prefix}-item-option-disabled`
             ]}
-          onpointerdown={(event) => event.preventDefault()}
-          onpointermove={() => {
+          title={nativeTitle(selectDataTitle(option))}
+          style={serializeSelectDataStyle(data.style)}
+          onpointerdown={event => {
+              const handler = presentation.physical.onpointerdown;
+              if (typeof handler === 'function') handler(event);
+              if (typeof presentation.physical.onmousedown !== 'function') event.preventDefault();
+            }}
+          onmousedown={event => {
+              const handler = presentation.physical.onmousedown;
+              if (typeof handler === 'function') handler(event);
+              event.preventDefault();
+            }}
+          onmousemove={() => {
+              if (!rowDisabled && index !== activeIndex) activate(index);
+            }}
+          onpointermove={event => {
+              const handler = presentation.physical.onpointermove;
+              if (typeof handler === 'function') handler(event);
               if (!rowDisabled && index !== activeIndex) activate(index);
             }}
           onclick={() => choose(option)}
         >
-          <span class={`${prefix}-item-option-content`}>{#if renderOption}{@render renderOption(getRenderOption(index), { index })}{:else}{option.label}{/if}</span>{#if multiple ? selectedKeys.has(option.value) : option.value === selectedValue}<span class={`${prefix}-item-option-state`}><Icon name="check" /></span>{/if}
+          <span class={`${prefix}-item-option-content`}>{#if renderOption}{@render renderOption(getRenderOption(option), { index })}{:else}{content ?? ''}{/if}</span>{#if rowSelected}<span class={`${prefix}-item-option-state`}><Icon name="check" /></span>{/if}
         </button>
+        {/if}
       {/snippet}
       {#if optionList.items.length}
         <SelectOptionList model={optionList} renderItem={optionRow}

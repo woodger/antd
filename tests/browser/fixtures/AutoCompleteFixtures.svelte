@@ -58,7 +58,10 @@
       events = [...events, `change:${String(next)}`];
       if (accept) value = next;
     }}
-    onSelect={(next, option) => { events = [...events, `select:${next}:${option.value}`]; }}
+    onSelect={(next, option) => {
+      if (!('value' in option)) throw new Error('Group header must not be selected');
+      events = [...events, `select:${next}:${option.value}`];
+    }}
     onOpenChange={next => { openings = [...openings, next]; }}
     onClear={() => { events = [...events, 'clear']; }}
   />{/if}

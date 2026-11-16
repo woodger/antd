@@ -1,19 +1,29 @@
-<script lang="ts">
+<script lang="ts" generics="OptionType extends object = AutoCompleteItem">
+  import { autoCompleteMatchesData, autoCompleteNext } from './auto-complete.engine';
   import { onMount, tick, untrack } from 'svelte';
   import type {
     AutoCompleteProps,
     AutoCompleteSearchConfig,
     AutoCompleteInput,
-    AutoCompleteOption
+    AutoCompleteItem
   } from './auto-complete.types';
   import type { SelectScrollConfig } from './select.types';
+  import type { RenderEmptyContent } from './types';
   import {
-    filterAutoCompleteOptions,
-    flattenAutoCompleteOptions,
-    autoCompleteNext,
-    autoCompleteOption
-  } from './auto-complete.engine';
-  import type { AutoCompleteEntry } from './auto-complete.engine';
+    collectSelectData,
+    copySelectData,
+    emptySelectDataCache,
+    filterSelectData,
+    flattenSelectData,
+    resolveSelectDataCache,
+    selectDataAttributes,
+    selectDataContent,
+    selectDataTitle,
+    selectFields
+  } from './select-data.engine';
+  import type { SelectDataRow } from './select-data.types';
+  import { serializeSelectDataStyle } from './select-data-style.engine';
+  import RenderContent from './RenderContent.svelte';
   import SelectOptionList from './SelectOptionList.svelte';
   import { createSelectOptionList } from './select-option-list.model.svelte';
   import type { SelectOptionListItem, SelectOptionListRenderInfo } from './select-option-list.types';
@@ -41,6 +51,7 @@
   let {
     prefixCls,
     options = [],
+    fieldNames,
     value,
     defaultValue,
     open,
@@ -79,7 +90,8 @@
     nativeElement = $bindable(),
     inputElement = $bindable(),
     ...attributes
-  }: AutoCompleteProps = $props();
+  }: AutoCompleteProps<OptionType> = $props();
+  type Entry = SelectDataRow<string, OptionType>;
   const config = useConfig();
   const tokens = useToken();
   let { virtual, ...nativeAttributes } = $derived(attributes);
@@ -114,15 +126,21 @@
   let resolvedStatus = $derived(status ?? ('status' in itemStatus ? itemStatus.status : field?.status));
   let showClear = $derived(Boolean(allowClear && text && !blocked && !readonly));
   let controlId = $derived(id ?? field?.id ?? `ant-auto-complete-${generated}`);
-  let searchConfig = $derived<AutoCompleteSearchConfig>(
+  let searchConfig = $derived<AutoCompleteSearchConfig<OptionType>>(
     { ...(typeof showSearch === 'object' ? showSearch : {}) }
   );
-  let entries = $derived(
-    flattenAutoCompleteOptions(
-      filterAutoCompleteOptions(options, text, searchConfig.filterOption ?? false)
-    )
-  );
-  let allEntries = $derived(flattenAutoCompleteOptions(options));
+  let fields = $derived(selectFields(fieldNames));
+  let maps = $derived(collectSelectData<string, OptionType>(options, fields));
+  let entries = $derived(flattenSelectData<string, OptionType>(
+    filterSelectData(options, text, fields, { filterOption: searchConfig.filterOption ?? false,
+      defaultMatch: autoCompleteMatchesData }),
+    fields
+  ));
+  let previousCache = $state.raw(emptySelectDataCache<string, OptionType>());
+  let cache = $derived(resolveSelectDataCache(
+    actualValue === undefined ? [] : [actualValue], maps, fields, previousCache
+  ));
+  $effect(() => { previousCache = cache; });
   let count = $derived(entries.length);
   let hydrated = $state(false);
   let visible = $derived(
@@ -243,18 +261,20 @@
       source.destroy();
     };
   });
-  let listItems = $derived<SelectOptionListItem<AutoCompleteEntry>[]>(entries.map((entry, index) => ({
-    key: entry.option.key ?? ('value' in entry.option ? entry.option.value : `rc-index-key-${index}`),
+  let listItems = $derived<SelectOptionListItem<Entry>[]>(entries.map((entry, index) => ({
+    key: entry.key,
     originalIndex: index,
     item: entry,
     group: entry.group,
-    ariaLabel: !entry.group && typeof entry.option.label === 'string' ? entry.option.label : undefined,
-    ariaValue: 'value' in entry.option ? entry.option.value : undefined,
+    ariaLabel: !entry.group && typeof entry.label === 'string' ? entry.label : undefined,
+    // Source srlist text reads literal data.value; selection remains logically mapped.
+    ariaValue: entry.data.value as string | number | undefined,
     get ariaSelected() {
-      return String('value' in entry.option ? entry.option.value : undefined).toLowerCase() === text.toLowerCase();
+      return !entry.group && String(entry.value).toLowerCase() === text.toLowerCase();
     },
-    ariaDisabled: 'disabled' in entry.option ? entry.option.disabled : undefined,
-    disabled: 'disabled' in entry.option ? entry.option.disabled : undefined
+    ariaDisabled: entry.data.disabled as boolean | undefined,
+    disabled: Boolean(entry.data.disabled),
+    ariaAttributes: selectDataAttributes(entry, fields).aria as SelectOptionListItem<Entry>['ariaAttributes']
   })));
   const notifyActive = createSelectActive<string>(() => onActive);
   let listVisited = false;
@@ -272,23 +292,23 @@
       untrack(() => activate(defaultActiveFirstOption ? autoCompleteNext(rows.map(row => row.item), -1, 1) : -1));
     }
   });
-  const optionList = createSelectOptionList<AutoCompleteEntry>({
+  const optionList = createSelectOptionList<Entry>({
     items: () => listItems,
     height: () => listHeight,
     estimate: () => itemHeight,
     realVirtual: () => realVirtual,
     open: () => visible,
     searchValue: () => text,
-    selectedIndex: (): number => !actualValue ? -1 : optionList.items.findIndex(row =>
-      !row.group && 'value' in row.item.option && (text
-        ? row.item.option.value.startsWith(text) : row.item.option.value === actualValue)),
+    // Source selected-prefix lookup deliberately reads literal data.value.
+    selectedIndex: (): number => !actualValue ? -1 : optionList.items.findIndex(row => text
+      ? String(row.item.data.value).startsWith(text) : row.item.data.value === actualValue),
     onSelectedActive: index => activate(index)
   });
 
   function activate(index: number, keyboard = false) {
     active = index;
     const entry = optionList.items[index]?.item;
-    notifyActive(entry && 'value' in entry.option ? entry.option.value : null);
+    notifyActive(entry?.value ?? null);
     if (keyboard) optionList.scrollActive(index);
   }
 
@@ -311,8 +331,11 @@
   function clearPointerDown(event: PointerEvent) {
     event.preventDefault();
     if (!visible) return;
+    scheduleClose();
+  }
+  function scheduleClose() {
     cancelClearClose();
-    // rc-select closes after the pointer click's clear/change/search callbacks.
+    // Source закрывает следующим task: query/activation завершаются перед onOpenChange(false).
     const channel = new MessageChannel();
     pendingClearClose = channel;
     channel.port1.onmessage = () => {
@@ -328,10 +351,8 @@
   function change(next: string | undefined, before = actualValue) {
     innerValue = next;
     if (next !== before) {
-      const option = allEntries.find(
-        entry => !entry.group && 'value' in entry.option && entry.option.value === next
-      )?.option;
-      onChange?.(next, next === undefined ? undefined : option ? { ...option } : {});
+      const option = maps.valueOptions.get(next) ?? (next === undefined ? undefined : cache.options.get(next));
+      onChange?.(next, next === undefined ? undefined : copySelectData(option));
     }
   }
   function handleInput(event: Event) {
@@ -350,12 +371,13 @@
         control.value = text;
     });
   }
-  function choose(option: AutoCompleteOption) {
-    if (blocked || readonly || option.disabled) return;
-    change(option.value);
-    onSelect?.(option.value, { ...option });
+  function choose(entry: Entry) {
+    if (blocked || readonly || entry.group || entry.data.disabled || entry.value === undefined) return;
+    change(entry.value);
+    const option = maps.valueOptions.get(entry.value) ?? cache.options.get(entry.value);
+    onSelect?.(entry.value, copySelectData(option) as OptionType);
     preview = undefined;
-    requestOpen(false);
+    scheduleClose();
     editor?.focus({ preventScroll: true });
   }
   function clear() {
@@ -389,12 +411,12 @@
         event.key === 'ArrowDown' ? 1 : -1
       ), true);
       if (backfill)
-        preview = autoCompleteOption(entries, active)?.value;
+        preview = optionList.items[active]?.item.value;
     } else if ((event.key === 'Enter' || event.key === 'Tab') && visible && !enterLock) {
-      const option = autoCompleteOption(entries, active);
+      const option = optionList.items[active]?.item;
       if (event.key === 'Enter')
         enterLock = true;
-      if (option && !option.disabled) {
+      if (option && !option.group && !option.data.disabled) {
         event.preventDefault();
         choose(option);
       }
@@ -556,38 +578,49 @@
       aria-label={attributes['aria-label']
           ?? attributes.placeholder
           ?? config.locale.searchText}>
-      {#snippet optionRow(entry: AutoCompleteEntry, info: SelectOptionListRenderInfo)}
+      {#snippet optionRow(entry: Entry, info: SelectOptionListRenderInfo)}
         {@const index = info.index}
-        {#if entry.group}<div data-ant-auto-complete-item data-ant-auto-complete-item-group class={`${prefix}-item ${prefix}-item-group`} {@attach info.attach}>{#if typeof entry.option.label === 'function'}{@render entry.option.label()}{:else}{entry.option.label ?? ''}{/if}</div>
-        {:else if 'value' in entry.option}
+        {@const content = selectDataContent(entry) as RenderEmptyContent}
+        {@const title = selectDataTitle(entry) as string | undefined}
+        {@const physical = selectDataAttributes(entry, fields).physical}
+        {@const aria = info.virtual
+          ? { 'aria-selected': undefined, 'aria-disabled': info.attributes['aria-disabled'] }
+          : info.attributes}
+        {#if entry.group}<div data-ant-auto-complete-item data-ant-auto-complete-item-group
+          class={[`${prefix}-item ${prefix}-item-group`, entry.data.className as string | undefined]}
+          {title} {@attach info.attach}><RenderContent value={content} /></div>
+        {:else}
           <button data-ant-auto-complete-item data-ant-auto-complete-item-option
-            data-ant-auto-complete-item-option-disabled={entry.option.disabled || undefined}
-            type="button" tabindex="-1" disabled={entry.option.disabled}
-            {...info.attributes}
+            {...physical}
+            data-ant-auto-complete-item-option-disabled={entry.data.disabled || undefined}
+            type="button" tabindex={Object.hasOwn(physical, 'tabindex') ? physical.tabindex as number | undefined : -1}
+            disabled={Boolean(entry.data.disabled)}
+            {...aria}
             {@attach info.attach}
             class={[
                 `${prefix}-item ${prefix}-item-option`,
-                componentTheme.className && entry.grouped && `${prefix}-item-option-grouped`,
+                componentTheme.className && entry.groupOption && `${prefix}-item-option-grouped`,
                 index === active && `${prefix}-item-option-active`,
-                entry.option.disabled && `${prefix}-item-option-disabled`,
-                entry.option.class
+                entry.data.disabled && `${prefix}-item-option-disabled`,
+                entry.data.className as string | undefined,
+                entry.data.class as string | undefined
               ]}
-            style={entry.option.style} title={entry.option.title
-                ?? (typeof entry.option.label === 'string'
-                  ? entry.option.label
-                  : entry.option.value)}
-            onpointermove={() => {
-                if ('value' in entry.option && !entry.option.disabled && index !== active) {
+            style={serializeSelectDataStyle(entry.data.style)} {title}
+            onpointermove={event => {
+                const callback = physical.onpointermove;
+                if (typeof callback === 'function') callback(event);
+                if (!entry.data.disabled && index !== active) {
                   activate(index);
                 }
               }}
-            onclick={() => {
-                const option = autoCompleteOption(entries, index);
-                if (option)
-                  choose(option);
-              }}>
+            onmousemove={() => {
+                if (!entry.data.disabled && index !== active) {
+                  activate(index);
+                }
+              }}
+            onclick={() => choose(entry)}>
             <span class={componentTheme.className ? `${prefix}-item-option-content` : undefined}>
-              {#if typeof entry.option.label === 'function'}{@render entry.option.label()}{:else}{entry.option.label ?? entry.option.value}{/if}
+              <RenderContent value={content} />
             </span>
           </button>
         {/if}

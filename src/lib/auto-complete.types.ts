@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLInputAttributes, HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize } from './types';
-import type { SelectRef } from './select.types';
+import type { SelectFieldNames, SelectRef } from './select.types';
 
 /** Общие методы Select; nativeElement/inputElement остаются отдельными bindable props. */
 export type AutoCompleteRef = SelectRef;
@@ -22,8 +22,9 @@ export interface AutoCompleteGroup {
 }
 export type AutoCompleteItem = AutoCompleteOption | AutoCompleteGroup;
 /** Управление поисковой строкой и фильтрацией подсказок AutoComplete. */
-export interface AutoCompleteSearchConfig {
-  filterOption?: boolean | ((text: string, option: AutoCompleteItem) => boolean);
+export interface AutoCompleteSearchConfig<OptionType extends object = AutoCompleteItem> {
+  /** Predicate получает поверхностную копию исходного option/group. */
+  filterOption?: boolean | ((text: string, option: OptionType) => boolean);
   onSearch?: (text: string) => void;
 }
 export interface AutoCompleteInput {
@@ -57,7 +58,7 @@ export interface AutoCompleteInput {
   register: (element: HTMLInputElement | HTMLTextAreaElement) => { destroy: () => void; };
 }
 /** Свободный текст с options, выбором подсказки и собственным input snippet. */
-export interface AutoCompleteProps extends Omit<
+export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem> extends Omit<
   HTMLInputAttributes,
   'value'
   | 'defaultValue'
@@ -74,7 +75,9 @@ export interface AutoCompleteProps extends Omit<
 > {
   /** Локальный namespace Select; пустая строка наследует ConfigProvider. */
   prefixCls?: string;
-  options?: readonly AutoCompleteItem[];
+  options?: readonly OptionType[];
+  /** Имена полей исходных options и одного уровня групп. */
+  fieldNames?: SelectFieldNames;
   /** Произвольная строка; соответствие options не требуется. */
   value?: string;
   /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
@@ -83,10 +86,11 @@ export interface AutoCompleteProps extends Omit<
   /** @defaultValue false */
   defaultOpen?: boolean;
   /** @defaultValue true */
-  showSearch?: boolean | AutoCompleteSearchConfig;
+  showSearch?: boolean | AutoCompleteSearchConfig<OptionType>;
   /** Свободный ввод и выбор; очистка может передать undefined, затем пустую строку. */
-  onChange?: (value: string | undefined, option: Partial<AutoCompleteOption> | undefined) => void;
-  onSelect?: (value: string, option: AutoCompleteOption) => void;
+  onChange?: (value: string | undefined, option: Partial<OptionType> | undefined) => void;
+  /** Повторный выбор также уведомляет владельца; option сохраняет raw поля. */
+  onSelect?: (value: string, option: OptionType) => void;
   onOpenChange?: (open: boolean) => void;
   onClear?: () => void;
   onInputKeyDown?: (event: KeyboardEvent) => void;

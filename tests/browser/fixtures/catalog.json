@@ -2199,5 +2199,10 @@
     "id": "select-virtual",
     "module": "./SelectVirtualFixtures.svelte",
     "root": "select-virtual-fixture"
+  },
+  {
+    "id": "select-data",
+    "module": "./SelectDataFixtures.svelte",
+    "root": "select-data-fixture"
   }
 ]

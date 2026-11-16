@@ -1,10 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import {
-  filterAutoCompleteOptions,
-  flattenAutoCompleteOptions,
-  autoCompleteNext
-} from './auto-complete.engine';
+import { autoCompleteMatchesData, autoCompleteNext } from './auto-complete.engine';
+import { filterSelectData, flattenSelectData, selectFields } from './select-data.engine';
 import type { AutoCompleteItem } from './auto-complete.types';
+import type { SelectDataFilter } from './select-data.types';
+const fields = selectFields();
+function filterOptions(search: string, filterOption: SelectDataFilter<AutoCompleteItem>['filterOption'] = false) {
+  return filterSelectData(options, search, fields, { filterOption, defaultMatch: autoCompleteMatchesData });
+}
 const options: AutoCompleteItem[] = [
   {
     label: 'Team',
@@ -16,22 +18,22 @@ describe('AutoComplete source options', () => {
   it(
     'keeps unfiltered suggestions by default and filters values without trimming or accent folding',
     () => {
-      expect(filterAutoCompleteOptions(options, 'missing')).toBe(options);
+      expect(filterOptions('missing')).toBe(options);
       expect(
-        flattenAutoCompleteOptions(filterAutoCompleteOptions(options, 'ALP', true)).map(
+        flattenSelectData(filterOptions('ALP', true), fields).map(
           entry => entry.key
         )
       ).toEqual(
-        ['group-0', 'alpha']
+        ['rc-index-key-0', 'alpha']
       );
-      expect(filterAutoCompleteOptions(options, ' alp', true)).toEqual([]);
+      expect(filterOptions(' alp', true)).toEqual([]);
     }
   );
   it(
-    'keeps a matching group whole and calls custom filters with original group and option data',
+    'keeps a matching group whole and filters by original raw fields',
     () => {
-      expect(filterAutoCompleteOptions(options, 'team', true)).toEqual([options[0]]);
-      expect(filterAutoCompleteOptions(options, 'Other', (text, item) => item
+      expect(filterOptions('team', true)).toEqual([options[0]]);
+      expect(filterOptions('Other', (text, item) => item
         .label === text))
         .toEqual(
           [{ label: 'Team', options: [{ value: 'alpha', label: 'Other' }] }]
@@ -39,7 +41,7 @@ describe('AutoComplete source options', () => {
     }
   );
   it('skips group headers and disabled options and wraps in either direction', () => {
-    const entries = flattenAutoCompleteOptions(options);
+    const entries = flattenSelectData(options, fields);
 
     expect(autoCompleteNext(entries, -1, 1)).toBe(1);
     expect(autoCompleteNext(entries, 1, 1)).toBe(3);

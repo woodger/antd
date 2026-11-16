@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import reference from '../../tests/browser/fixtures/ant-design-select-max-count-reference.json';
-import { getSelectLimitOptions, isSelectCountReached } from './select.engine';
+import { isSelectOptionDisabled, isSelectCountReached } from './select.engine';
+import { collectSelectData, flattenSelectData, selectFields } from './select-data.engine';
 import { resolveSelectTokenOptions, splitSelectTokens } from './select-token.engine';
 import type { SelectOption } from './types';
 
 describe('Select maximum count source boundaries', () => {
+  const fields = selectFields();
   const options: readonly SelectOption<string | number>[] = [
     { value: 'a', label: 'Alpha' },
     { value: 'locked', label: 'Locked', disabled: true },
@@ -25,8 +27,9 @@ describe('Select maximum count source boundaries', () => {
         }
       }
 
-      expect(getSelectLimitOptions(filled, selected, limit).map(option => ({
-        ...option, disabled: Boolean(option.disabled)
+      expect(filled.map(option => ({
+        ...option, disabled: isSelectOptionDisabled(option.disabled,
+          selected.has(option.value), isSelectCountReached(selected.size, limit))
       }))).toEqual(entry.result.options);
     });
   }
@@ -40,26 +43,28 @@ describe('Select maximum count source boundaries', () => {
         : (text: string) => text.split(',');
       const words = splitSelectTokens('text' in sample ? sample.text ?? '' : '',
         separators, limit - values.size);
-      const additions = resolveSelectTokenOptions(options, words ?? [],
-        !('mode' in sample && sample.mode === 'multiple'));
+      const additions = resolveSelectTokenOptions(collectSelectData(options, fields), words ?? [],
+        !('mode' in sample && sample.mode === 'multiple'), fields);
       for (const option of additions) values.add(option.value);
 
       expect([...values]).toEqual(entry.result.values);
     });
   }
 
-  it('blocks only new enabled options and preserves original selected/disabled references', () => {
+  it('blocks only new enabled options while retaining raw metadata and owner references', () => {
     const owned = Object.freeze(options.map(option => Object.freeze(option)));
     const selected = new Set<string | number>(['a']);
-    const limited = getSelectLimitOptions(owned, selected, 1);
+    const rows = flattenSelectData(owned, fields);
+    const limited = rows.map(row => isSelectOptionDisabled(row.data.disabled,
+      selected.has(row.value!), isSelectCountReached(selected.size, 1)));
 
-    expect(limited[0]).toBe(owned[0]);
-    expect(limited[1]).toBe(owned[1]);
-    expect(limited[2]).toEqual({ value: 0, label: 'Zero', disabled: true });
+    expect(limited).toEqual([false, true, true]);
+    expect(rows.every((row, index) => row.data === owned[index])).toBe(true);
+    expect(rows[2].data.disabled).toBeUndefined();
     expect(owned[2].disabled).toBeUndefined();
-    expect(getSelectLimitOptions(owned, selected, 2)).toBe(owned);
-    expect(getSelectLimitOptions(owned, selected)).toBe(owned);
-    expect(getSelectLimitOptions(owned, selected, Number.NaN)).toBe(owned);
+    expect(isSelectOptionDisabled(false, false, isSelectCountReached(1, 2))).toBe(false);
+    expect(isSelectOptionDisabled(false, false, isSelectCountReached(1))).toBe(false);
+    expect(isSelectOptionDisabled(false, false, isSelectCountReached(1, Number.NaN))).toBe(false);
   });
 
   it('preserves source zero/negative/infinite and fractional numeric boundaries', () => {

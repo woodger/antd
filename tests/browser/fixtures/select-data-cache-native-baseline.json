@@ -1,0 +1,33 @@
+{
+  "kind": "Historical Native removed-disabled option baseline, captured before the data-stage package build",
+  "baseCommit": "a231218acefa2d71452faeae427a21c4fde57db8",
+  "command": "npm exec -- playwright test tests/browser/remote-select.spec.ts --grep retains-selected --config .upstream/artifacts/select-data-baseline-browser.config.ts",
+  "actualGrep": "retains selected single/multiple labels",
+  "log": ".upstream/artifacts/select-data-cache-native-baseline.log",
+  "result": {
+    "status": "passed",
+    "tests": 1
+  },
+  "evidence": [
+    "Selected label survives removal from options",
+    "Removed disabled selected option has no remove control",
+    "FormData preserves typed numeric values",
+    "Current data can rename cached labels"
+  ],
+  "sources": {
+    "src/lib/Select.svelte": "28d4452e3cbe72fed3bf3020c12b688c8073523043232f5b4e70c423236d9b86",
+    "src/lib/select.engine.ts": "c9ffa23a1a244b11622277c19854556368b8af2c3babe46c255a91004aebb108",
+    "tests/browser/fixtures/RemoteSelectFixtures.svelte": "7a7cba3ef4c13e2cf6cdaa8736c98be90219d25c891d7c8c7083079d1a37293b",
+    "tests/browser/remote-select.spec.ts": "7b487915df0fd3d7ff05d74222c4c232cb558547204424b05395b35fb70a72b5"
+  },
+  "dist": {
+    "dist/Select.svelte": "28d4452e3cbe72fed3bf3020c12b688c8073523043232f5b4e70c423236d9b86",
+    "dist/select.engine.js": "6eaf82fbd45d1b1c7c6c261eb3ae8d45618a304ce7d9ab6a49e2e0f1a505339c",
+    "dist/select.types.d.ts": "210673a2ba948b3c65fc0a3b91f0da9f351b1d7e1c8d97d9280d753c544a1c36"
+  },
+  "newDataEnginePresentInBaselineDist": false,
+  "limitations": [
+    "This is a historical baseline; it does not validate changed data-stage source",
+    "No claim of prior selected display title retention"
+  ]
+}

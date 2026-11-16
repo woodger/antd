@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { AutoComplete, type AutoCompleteProps } from 'antd-svelte';
+  import { AutoComplete, type AutoCompleteProps, type AutoCompleteItem } from 'antd-svelte';
   import AutoCompletePrefixInput from './AutoCompletePrefixInput.svelte';
 
   export interface AutoCompletePrefixSample {
@@ -27,6 +27,9 @@
     { value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' },
     { value: 'c', label: 'Gamma' }, { value: 'd', label: 'Disabled', disabled: true }
   ];
+  let items = $derived<readonly AutoCompleteItem[]>(
+    sample.empty ? [] : sample.groups ? [{ label: 'Group', options }] : options
+  );
   let value = $state<string | undefined>(untrack(() => sample.empty ? undefined : 'b'));
   let events = $state<string[]>([]);
   let root = $state<HTMLDivElement>();
@@ -40,7 +43,7 @@
 {/snippet}
 <form id="prefix-completion-form">
   <AutoComplete prefixCls={local ? sample.local : undefined}
-    options={sample.empty ? [] : sample.groups ? [{ label: 'Group', options }] : options}
+    options={items}
     {value} name="query" class="fixture-auto-complete-prefix" style="width:280px"
     size={sample.size} variant={sample.variant} status={sample.status}
     disabled={sample.disabled} allowClear notFoundContent="No results"

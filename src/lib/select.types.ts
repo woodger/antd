@@ -24,14 +24,27 @@ export interface SelectRef {
 export type SelectTokenSeparators = readonly string[]
   | ((input: string) => readonly string[]);
 
-/** Metadata плоского пункта; data сохраняет ссылку на исходный option владельца. */
-export interface SelectFlattenOption<Value extends string | number = string> {
+/** Metadata пункта текущей выдачи; обычный raw option сохраняет identity владельца. */
+export interface SelectFlattenOption<
+  Value extends string | number = string,
+  OptionType extends object = SelectOption<Value>
+> {
   key: string | number | bigint;
   value: Value;
-  label: string;
-  data: SelectOption<Value> & Readonly<Record<string, unknown>>;
+  /** Исходное значение mapped label; fieldNames может указывать на любое поле. */
+  label: unknown;
+  data: OptionType & Readonly<Record<string, unknown>>;
   groupOption?: boolean;
   group?: boolean;
+}
+
+/** Имена полей исходных options; пустые строки используют стандартные имена. */
+export interface SelectFieldNames {
+  value?: string;
+  label?: string;
+  options?: string;
+  /** По умолчанию совпадает с итоговым label field. */
+  groupLabel?: string;
 }
 
 /** Скрытый tag в maxTagPlaceholder; label не усечён, key совпадает с typed value. */
@@ -66,21 +79,24 @@ export interface SelectConfig {
 }
 
 /** Настройки controlled search и локальной фильтрации Select без сетевого транспорта. */
-export interface SelectSearchConfig<Value extends string | number = string> {
+export interface SelectSearchConfig<
+  Value extends string | number = string,
+  OptionType extends object = SelectOption<Value>
+> {
   /** Управляемая строка поиска; undefined оставляет локальное состояние. */
   searchValue?: string;
   /**
    * Уведомляет о пользовательском поиске; запросы и защиту от старых ответов делает потребитель.
    */
   onSearch?: (value: string) => void;
-  /** false отключает локальную фильтрацию; predicate получает исходный option. */
-  filterOption?: boolean | ((search: string, option: SelectOption<Value>) => boolean);
+  /** false отключает фильтрацию; predicate получает поверхностную копию исходного option/group. */
+  filterOption?: boolean | ((search: string, option: OptionType) => boolean);
   /** Явные поля Source search; несколько полей объединяются через OR. */
   optionFilterProp?: string | readonly string[];
   /** Сортирует отфильтрованные options и synthetic tags; получает текущий searchValue. */
   filterSort?: (
-    optionA: SelectOption<Value>,
-    optionB: SelectOption<Value>,
+    optionA: OptionType,
+    optionB: OptionType,
     info: { searchValue: string }
   ) => number;
   /** Очищает локальный search при выборе multiple/tags; controlled query меняет владелец. */
@@ -90,7 +106,8 @@ export interface SelectSearchConfig<Value extends string | number = string> {
 /** Single/multiple/tags с нативным FormData; свободные tags добавляют строковые значения. */
 export interface SelectProps<
   Value extends string | number = string,
-  Mode extends 'multiple' | 'tags' | undefined = undefined
+  Mode extends 'multiple' | 'tags' | undefined = undefined,
+  OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>
 > extends Omit<
   HTMLInputAttributes,
   'value' | 'size' | 'class' | 'onchange' | 'oninput' | 'type' | 'children'
@@ -100,10 +117,12 @@ export interface SelectProps<
   /** @internal Intrinsic ширина readonly single для составного владельца, без смены public default. */
   _autoWidth?: boolean;
   /** Пустой список по умолчанию; tags может создавать значения без options. */
-  options?: readonly SelectOption<Value>[];
+  options?: readonly OptionType[];
+  /** Отображает исходные поля value/label/options/groupLabel; группы имеют один уровень. */
+  fieldNames?: SelectFieldNames;
   /** Пассивное содержимое пункта; выбранный label и native option button сохраняются. */
   optionRender?: Snippet<[
-    SelectFlattenOption<Mode extends 'tags' ? Value | string : Value>,
+    SelectFlattenOption<Mode extends 'tags' ? Value | string : Value, OptionType>,
     { index: number }
   ]>;
   mode?: Mode;
@@ -149,7 +168,9 @@ export interface SelectProps<
   /** Приоритет: variant, Form, Select config, global variant, outlined. */
   variant?: 'outlined' | 'filled' | 'borderless' | 'underlined';
   /** Объект задаёт настройки поиска; boolean включает или отключает его. */
-  showSearch?: boolean | SelectSearchConfig<Mode extends 'tags' ? Value | string : Value>;
+  showSearch?: boolean | SelectSearchConfig<
+    Mode extends 'tags' ? Value | string : Value, OptionType
+  >;
   /** @defaultValue false */
   loading?: boolean;
   notFoundContent?: RenderEmptyContent;
@@ -164,6 +185,18 @@ export interface SelectProps<
   status?: 'error' | 'warning';
   onValueChange?: (value: Mode extends 'tags' ? (Value | string)[]
     : Mode extends 'multiple' ? Value[] : Value | undefined) => void;
+  /** Изменение последовательности values; второй аргумент сохраняет исходные поля options. */
+  onChange?: (
+    value: Mode extends 'tags' ? (Value | string)[]
+      : Mode extends 'multiple' ? Value[] : Value | undefined,
+    option: Mode extends 'multiple' | 'tags' ? OptionType[] : OptionType | undefined
+  ) => void;
+  /** Выбор пункта, включая повторный single выбор; option — поверхностная копия raw record. */
+  onSelect?: (value: Mode extends 'tags' ? Value | string : Value, option: OptionType) => void;
+  /** Снятие выбора в multiple/tags; очистка всех значений не вызывает callback. */
+  onDeselect?: (value: Mode extends 'tags' ? Value | string : Value, option: OptionType) => void;
+  /** Пользовательская очистка; вызывается до onChange. */
+  onClear?: () => void;
   onOpenChange?: (open: boolean) => void;
   class?: string;
   /** Корень Select после mount; ref очищается при unmount. */

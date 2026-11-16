@@ -1,70 +1,22 @@
-import type {
-  AutoCompleteItem,
-  AutoCompleteOption,
-  AutoCompleteSearchConfig
-} from './auto-complete.types';
+import type { SelectDataFields, SelectDataRow, SelectDataValue } from './select-data.types';
 
-export interface AutoCompleteEntry {
-  key: string;
-  group: boolean;
-  grouped?: boolean;
-  option: AutoCompleteItem;
+/** Native Snippet group label не участвует в поиске; остальные поля следуют Source matching. */
+export function autoCompleteMatchesData(
+  search: string, option: object, fields: SelectDataFields, group: boolean
+) {
+  const field = group ? fields.label === 'children' ? 'label' : fields.label : fields.value;
+  const value: unknown = Reflect.get(option, field);
+  const text = group && typeof value === 'function' ? ''
+    : Array.isArray(value) ? value.join('') : String(value ?? '');
+  return text.toUpperCase().includes(search.toUpperCase());
 }
 
-export function filterAutoCompleteOptions(
-  options: readonly AutoCompleteItem[],
-  search: string,
-  filter: AutoCompleteSearchConfig['filterOption'] = false
-): readonly AutoCompleteItem[] {
-  if (!search || filter === false) return options;
-
-  const match = typeof filter === 'function' ? filter : (_: string, option: AutoCompleteItem) =>
-    String(
-      'options' in option
-        ? typeof option.label === 'function' ? '' : option.label ?? ''
-        : option.value
-    ).toUpperCase().includes(
-      search.toUpperCase()
-    );
-  return options.flatMap(item => {
-    if (match(search, item)) return [item];
-    if ('options' in item) {
-      const children = item.options.filter(option => match(search, option));
-      return children.length ? [{ ...item, options: children }] : [];
-    }
-    return [];
-  });
-}
-
-export function flattenAutoCompleteOptions(
-  options: readonly AutoCompleteItem[]
-): AutoCompleteEntry[] {
-  return options.flatMap<AutoCompleteEntry>((option, index) => 'options' in option
-    ? [
-      { key: String(option.key ?? `group-${index}`), group: true, option },
-      ...option.options.map(
-        item => ({ key: String(item.key ?? item.value), group: false, grouped: true, option: item })
-      )
-    ]
-    : [{ key: String(option.key ?? option.value), group: false, option }]);
-}
-
-export function autoCompleteNext(
-  entries: readonly AutoCompleteEntry[],
-  current: number,
-  offset: number
+export function autoCompleteNext<Value extends SelectDataValue, Data extends object>(
+  entries: readonly SelectDataRow<Value, Data>[], current: number, offset: number
 ): number {
   for (let step = 1; step <= entries.length; step++) {
     const index = ((current + offset * step) % entries.length + entries.length) % entries.length;
-    const entry = entries[index];
-    if (!entry.group && !('disabled' in entry.option && entry.option.disabled)) return index;
+    if (!entries[index].group && !entries[index].data.disabled) return index;
   }
   return -1;
-}
-
-export function autoCompleteOption(entries: readonly AutoCompleteEntry[], index: number):
-  AutoCompleteOption
-  | undefined {
-  const entry = entries[index];
-  return entry && !entry.group && 'value' in entry.option ? entry.option : undefined;
 }

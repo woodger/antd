@@ -424,6 +424,7 @@
               class={[`${prefixCls}-options-size-changer`,
                   `${prefixCls}-options-size-changer-select`, selectConfig.class].filter(Boolean)
                 .join(' ')}
+              onChange={undefined}
               bind:value={() => pagination.pageSize, () => {}}
               onValueChange={value => {
                 if (value !== undefined) chooseSelectSize(value);

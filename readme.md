@@ -9905,7 +9905,7 @@ OnChange(value,option) вызывается при изменении ввода
 
 FilterOption по умолчанию false, как runtime combobox rc-select. True фильтрует
 value без учёта регистра, без trim/Unicode folding. Совпавшая группа сохраняет
-всех детей; иначе проверяются дети. Predicate получает исходный option/group.
+всех детей; иначе проверяются дети. Predicate получает поверхностную копию raw option/group.
 ShowSearch object настраивает filterOption/onSearch; прежние top-level props удалены.
 Класс popup задаётся через classNames.popup.root; popupClassName удалён.
 Остальные semantic slots пока не перенесены.
@@ -9973,8 +9973,11 @@ popup/options, generated IDs, refs, query, text selection, focus, FormData и ca
 [browser](tests/browser/auto-complete-prefix.spec.ts) и
 [SSR](tests/package/auto-complete-prefix.ssr.test.ts) проверяют эти границы.
 
-Virtual/scrollTo, fieldNames, optionRender/popupRender, searchIcon,
-остальной semantic/config API пока отсутствует. Deprecated dataSource/Option
+FieldNames и generic `AutoCompleteProps<OptionType>` используют
+[общий слой данных](#данные-options-и-fieldnames). Значение свободного ввода остаётся string;
+raw OptionType не требует literal value/label и не получает добавленных canonical полей.
+OptionRender/popupRender, searchIcon и остальной semantic/config API пока отсутствуют.
+Deprecated dataSource/Option
 и dropdown aliases исключены из переноса. Generic numeric/object values не входят в первый этап.
 
 ## Select
@@ -9987,6 +9990,76 @@ Virtual/scrollTo, fieldNames, optionRender/popupRender, searchIcon,
 типы значений и callback выводятся из options и mode. `SelectProps<Value, 'tags'>`
 принимает массив Value | string: свободный ввод создаёт строки, исходные числовые
 ключи сохраняются.
+
+### Данные options и fieldNames
+
+`SelectProps<Value, Mode, OptionType>` добавляет тип исходных записей третьим параметром;
+порядок Value/Mode сохранён. `AutoCompleteProps<OptionType>` параметризует raw данные,
+сохраняя строковое значение control. Для условных массивов flat/groups задавайте общий
+тип записей явно. Если TypeScript не выводит mixed Value из binding, укажите его в
+`Select<string | number>`.
+
+FieldNames задаёт value, label, options и groupLabel. Пустые имена выбирают стандартные
+поля, groupLabel по умолчанию совпадает с итоговым label. Поддерживается один уровень
+групп: вложенная группа внутри children рассматривается как terminal option, как в Source.
+
+```svelte
+<script lang="ts">
+  import { Select } from 'antd-svelte';
+  interface Entry {
+    key?: string;
+    uid?: string;
+    text?: string;
+    heading?: string;
+    nodes?: readonly Entry[];
+  }
+  const MappedSelect = Select<string, undefined, Entry>;
+  const options: readonly Entry[] = [{ key: 'teams', heading: 'Teams', nodes: [
+    { uid: 'development', text: 'Development' }
+  ] }];
+  let value = $state<string>();
+</script>
+
+<MappedSelect {options} bind:value
+  fieldNames={{ value: 'uid', label: 'text', options: 'nodes', groupLabel: 'heading' }} />
+```
+
+Значение и подпись читаются из mapped полей. Key строки независимо берётся из literal
+key, затем literal value, затем `rc-index-key-${index}`; bigint, 0 и пустой key сохраняются.
+Абсолютный index включает headers и отражает текущие filter/sort. Group metadata
+отделена от raw records. Title/className/CSS-object style и разрешённые DOM/data-/aria-*
+атрибуты options передаются в native button; mapped поля не попадают в DOM. Физический header
+использует только className/title и содержимое. Native CSS-строки и class alias сохранены.
+
+OnChange вызывается при изменении последовательности values; onSelect — при каждом
+выборе, включая повторный single выбор; onDeselect — при удалении в multiple/tags.
+OnClear предшествует onChange и не создаёт onDeselect. Второй аргумент сохраняет raw поля:
+это shallow copy выбранного record, а для multiple — массив копий. При одинаковом value
+выбирается последний record из текущей карты данных. Вложенные объекты не клонируются;
+для свободного tag без исходного record callback получает пустой объект. Bind:value и
+onValueChange сохраняются. Удалённый selected option остаётся в cache до снятия выбора.
+Selected value по-прежнему string/number или их массив; labelInValue, полный codec rich
+выбранных labels, optionLabelProp и labelRender остаются следующим зависимым этапом.
+
+Исходные [40 сценариев](tests/browser/fixtures/ant-design-select-data-reference.json),
+[40 SSR](tests/browser/fixtures/ant-design-select-data-ssr-reference.json),
+[атрибуты](tests/browser/fixtures/ant-design-select-data-attributes-reference.json) и
+[диагностика](tests/browser/fixtures/ant-design-select-data-diagnostic-reference.json)
+сохранены независимо от реализации. Native label/NFKD search и disabled cache проверяются
+с отдельными public Source owners
+([search](tests/browser/fixtures/ant-design-select-data-label-native-reference.json),
+[cache](tests/browser/fixtures/ant-design-select-data-cache-native-reference.json));
+исходные ledgers не фильтруются. Virtual Source ошибочно
+теряет mapped aria-selected: [парное наблюдение](tests/browser/fixtures/ant-design-select-data-aria-reference.json)
+сохраняет этот результат, Native использует корректное mapped состояние. Multiple token
+lookup использует mapped value; Source при том же вводе читает literal value и теряет выбор.
+Полные [браузерные проверки](tests/browser/select-data.spec.ts),
+[атрибуты](tests/browser/select-data-attributes.spec.ts),
+[диагностические границы](tests/browser/select-data-diagnostics.spec.ts),
+[SSR](tests/package/select-data.ssr.test.ts) и
+[строгая hydration](tests/browser/select-data-hydration.spec.ts) проверяют эти контракты.
+
+### Оформление и состояние
 
 Variant поддерживает outlined/filled/borderless/underlined в single/multiple/tags;
 по умолчанию outlined. Явный variant имеет приоритет над настройками Form и provider. Смена оформления сохраняет DOM,
@@ -10170,9 +10243,9 @@ SSR всегда выводит aria-expanded=false без popup и без вы�
 ### Содержимое пунктов Select
 
 OptionRender задаёт пассивный Snippet внутри существующего native option button.
-Он получает `(option, { index })`: key/value/label, data с исходным объектом
-владельца и groupOption=false для плоского списка. Group отсутствует. Key берётся
-из option.key либо value; 0 и пустая строка сохраняются. Дополнительные data-поля
+Он получает `(option, { index })`: key/value/raw label, data с record текущей выдачи
+и groupOption=true у детей группы, false у плоских пунктов. Для header renderer не вызывается.
+Key следует правилам общего слоя данных. Дополнительные data-поля и mapped label
 имеют тип unknown, поэтому сложные значения требуют обычного TypeScript narrowing.
 
 ```svelte
@@ -10187,8 +10260,9 @@ OptionRender задаёт пассивный Snippet внутри существ
 <Select {options} {optionRender} />
 ```
 
-Index относится к текущему порядку после фильтрации и сортировки. Data сохраняет
-ссылку на исходный option, включая key и дополнительные поля; maxCount меняет
+Index относится к текущему порядку после фильтрации и сортировки. Обычный data сохраняет
+ссылку на исходный option; filter/sort могут создавать Source shallow copies групп.
+Key и дополнительные поля сохраняются; maxCount меняет
 доступность кнопки, но не raw disabled внутри data. Для synthetic tags и выбранных
 значений вне options передаётся соответствующий временный объект. Selected label,
 token matching, callbacks и FormData используют прежние данные, независимо от
@@ -10197,8 +10271,8 @@ Snippet. Пустой renderer оставляет выбираемый пунк�
 
 Renderer и его отключение обновляются в открытом списке без потери input,
 query, selection и focus. В закрытом SSR popup renderer не вызывается.
-Этот этап сохраняет существующие Native value keys и оформление пунктов;
-groups/fieldNames и полные option attrs/semantic slots остаются отдельными gaps.
+Native value keys и оформление пунктов сохранены. Groups/fieldNames и raw option attrs
+подключены общим data pipeline; остальные semantic slots остаются отдельным gap.
 Основа — [16 исходных случаев](./tests/browser/fixtures/ant-design-select-option-render-reference.json),
 [браузерные проверки](./tests/browser/select-option-render.spec.ts) и
 [SSR/типизация](./tests/package/select-option-render.ssr.test.ts).
@@ -10231,7 +10305,8 @@ options и synthetic tags. Comparator `(optionA, optionB, { searchValue }) => nu
 options и query отражается в открытом списке без пересоздания input или изменения
 выбранных значений. При controlled search comparator получает принятую владельцем
 строку. [Эталон порядка](tests/browser/fixtures/ant-design-select-sort-reference.json)
-получен из официального UMD 6.6.8; groups остаются отдельным пробелом API.
+получен из официального UMD 6.6.8. Group sort повторяет Source: рекурсия обходит
+literal options, переименованное поле children этой рекурсией не используется.
 
 Enter выбирает активный вариант, включая новый; закрытый список открывается и
 выбирает первый вариант тем же Enter. Повторный выбор активного выбранного

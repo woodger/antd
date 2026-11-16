@@ -1,10 +1,26 @@
 import { describe, expect, it } from 'vitest';
 import {
-  filterOptions,
+  getSelectDisplayLabel,
   getEnabledIndex,
   getSelectValues,
-  resolveSelectedOptions
+  matchesSelectDataLabel
 } from './select.engine';
+import { collectSelectData, emptySelectDataCache, filterSelectData,
+  resolveSelectDataCache, selectFields } from './select-data.engine';
+import type { SelectDataFilter } from './select-data.types';
+import type { SelectOption } from './types';
+
+const fields = selectFields();
+function filterOptions<Data extends object>(
+  options: readonly Data[], search: string,
+  filterOption: SelectDataFilter<Data>['filterOption'] = true,
+  optionFilterProp?: string | readonly string[]
+) {
+  return filterSelectData(options, search, fields, {
+    filterOption, optionFilterProp: optionFilterProp === '' ? [''] : optionFilterProp,
+    defaultMatch: matchesSelectDataLabel
+  });
+}
 
 const options = [
   { value: 0, label: 'Svelte 5' },
@@ -33,7 +49,7 @@ describe('getSelectValues', () => {
   });
 });
 
-describe('filterOptions', () => {
+describe('Native Select raw filtering', () => {
   it('matches labels without changing numeric values or the source list', () => {
     const result = filterOptions(options, '  SVELTE  ');
 
@@ -64,6 +80,20 @@ describe('filterOptions', () => {
 });
 
 describe('getEnabledIndex', () => {
+  it('skips enabled group headers while navigating grouped rows in either direction', () => {
+    const rows = [
+      { group: true },
+      { disabled: true },
+      { disabled: false },
+      { group: true, disabled: false }
+    ];
+
+    expect(getEnabledIndex(rows, -1, 'first')).toBe(2);
+    expect(getEnabledIndex(rows, -1, 'last')).toBe(2);
+    expect(getEnabledIndex(rows, 2, 'next')).toBe(2);
+    expect(getEnabledIndex(rows, 2, 'previous')).toBe(2);
+  });
+
   it('skips disabled options and wraps in both directions', () => {
     expect(getEnabledIndex(options, 0, 'next')).toBe(2);
     expect(getEnabledIndex(options, 2, 'next')).toBe(0);
@@ -109,19 +139,23 @@ describe('remote Select options', () => {
           ['0', { value: '0', label: 'String zero' }]
         ]
       );
-      const cached = resolveSelectedOptions([0, '0'], map, new Map());
+      const maps = collectSelectData([...map.values()], fields);
+      const cached = resolveSelectDataCache([0, '0'], maps, fields, emptySelectDataCache());
 
-      expect(resolveSelectedOptions([0, '0'], new Map(), cached)).toBe(cached);
-      const replaced = resolveSelectedOptions(
-        [0],
-        new Map([[0, { value: 0, label: 'Renamed' }]]),
-        cached
+      expect(resolveSelectDataCache([0, '0'], collectSelectData([], fields), fields, cached))
+        .toBe(cached);
+      const replaced = resolveSelectDataCache(
+        [0], collectSelectData<string | number, SelectOption<string | number>>(
+          [{ value: 0, label: 'Renamed' }], fields
+        ), fields, cached
       );
 
-      expect(replaced.size).toBe(1);
-      expect(replaced.get(0)?.label).toBe('Renamed');
-      expect(replaced.has('0')).toBe(false);
-      expect(resolveSelectedOptions([99], new Map(), replaced).get(99)?.label).toBe('99');
+      expect(replaced.options.size).toBe(1);
+      expect(replaced.labels.get(0)).toBe('Renamed');
+      expect(replaced.options.has('0')).toBe(false);
+      const missing = resolveSelectDataCache([99], collectSelectData([], fields), fields, replaced);
+      expect(missing.display[0].label).toBeUndefined();
+      expect(getSelectDisplayLabel(missing.display[0].label, missing.display[0].value)).toBe('99');
     }
   );
 });

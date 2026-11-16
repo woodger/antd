@@ -860,6 +860,7 @@ export type {
   SelectScrollConfig,
   SelectSearchConfig,
   SelectFlattenOption,
+  SelectFieldNames,
   SelectTokenSeparators,
   SelectOmittedTag,
   SelectTagPlaceholder,

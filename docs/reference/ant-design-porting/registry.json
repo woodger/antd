@@ -4604,11 +4604,11 @@
         },
         {
           "id": "extended-api",
-          "title": "FieldNames, render hooks и остальные semantic/config API",
-          "state": "missing",
+          "title": "Оставшиеся render hooks и semantic/config API",
+          "state": "partial",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет fieldNames, optionRender/popupRender, searchIcon customization, остальных semantic classNames/styles и ConfigProvider.select. Общие Select tokens, измеряемая virtualization и public refs подключены отдельными features. Legacy dataSource/Option children/deprecated dropdown aliases исключены из переноса; React option.props wrappers отсутствуют. Поддерживается string value; React generic numeric/object значения за пределами первого этапа."
+          "note": "FieldNames и generic raw OptionType подключены отдельным raw-option-data этапом. OptionRender/popupRender, searchIcon и остальные semantic/config API отсутствуют. String value сохраняется; расширение selected-value domain требует отдельного original runtime audit. Исходный AutoComplete исключает labelInValue и optionLabelProp. Deprecated dataSource/Option children/dropdown aliases и option.props getter не переносятся."
         },
         {
           "id": "source-select-theme",
@@ -4825,6 +4825,49 @@
             "tests/browser/fixtures/select-virtual-edge-cases.ts"
           ],
           "note": "Antd6.6.8/rc-select1.10.1/virtual-list1.5.1: измеряемый inner holder/filler, inherited virtual=true с local own undefined override, false width gate (numeric0 не отключает), listHeight256/zero без cap, listItemHeight=controlHeight/zero без окна и showScrollBar true/false/optional. Исходные keys/index, variable height и группы AC измеряются; public scrollTo(number=index либо key/index/align/offset/getSize/top/left), focus(FocusOptions)/blur, отдельные bindable nativeElement/inputElement, nullable Promise-last onActive и active соседний srlist. Parent model сохраняет offsets/cache между conditional Select DOM и memo коллекцию закрытого popup; AC сохраняет прежний retained DOM. Первичные72 raw Source cases/422actions и72 closed SSR не изменяются. Закрытый positional Source bug (DOM572/window500 после closed top500) не повторяется: Native применяет очередь к видимому holder; отдельные2 actual public Source owner counterparts/50actions сохраняют согласованное окно. Прежний Native текст empty сохраняется с2 actual public notFoundContent counterparts/14actions. Native controlled search/selected editor/connected blur и valid ARIA links сохраняются отдельными узкими baseline guards; полная Source parity этих границ не заявлена. Остальные Select data/render/semantic/config/motion API остаются отдельным объёмом. Отдельный lazy getSize cache сохраняет уже запрошенный префикс текущего render, а новые ключи читает по текущим измерениям; opt-in ограничен Select adapter и не меняет прежние Tree/Listy callbacks. Четыре independently repeated Source edge cases/14actions фиксируют empty-string option/value и группы с estimate16/32, включая полный порядок2/3 вызовов getSize. Восемь Source initialization counterexamples отдельно проверяют same-target/no-op, genuine600→572 и untrusted UIEvent: Native публикует реальные события и не публикует один внутренний restore нового holder. Первый Source frame до align сохраняется raw, full layout сравнивается после стабильного align. Два selected-hover counterparts используют явно завершённый public scrollIntoView перед настоящим mouse hover; обычные Source72/422 и исходный driver сохранены. Один actual Source controlled-query owner/18actions отключает onSearch только пока owner закрыт; query и все callbacks сравниваются целиком, helper меняет лишь доказанные старой Native сборкой editor value/caret. После disconnect/unmount сохранённые DOM refs не вызывают новые scroll callbacks."
+        },
+        {
+          "id": "raw-option-data",
+          "title": "FieldNames, один уровень групп, raw callbacks и option attrs",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/select-data.engine.ts",
+            "src/lib/select-data.types.ts",
+            "src/lib/select-data.engine.test.ts",
+            "src/lib/select-data-style.engine.ts",
+            "src/lib/select-data-style.engine.test.ts",
+            "tests/browser/fixtures/select-data-cases.ts",
+            "tests/browser/fixtures/select-data.types.ts",
+            "tests/browser/fixtures/SelectDataCase.svelte",
+            "tests/browser/fixtures/SelectDataFixtures.svelte",
+            "tests/browser/select-data-reference.ts",
+            "tests/browser/select-data-native.ts",
+            "tests/browser/select-data-metrics.ts",
+            "tests/browser/select-data-driver.ts",
+            "tests/browser/select-data.spec.ts",
+            "tests/browser/fixtures/ant-design-select-data-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-diagnostic-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-attributes-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-aria-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-cache-native-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-label-native-reference.json",
+            "tests/browser/fixtures/select-data-cache-native-baseline.json",
+            "readme.md",
+            "tests/package/select-data.ssr.test.ts",
+            "tests/browser/select-data-assertions.ts",
+            "tests/browser/select-data-attributes.spec.ts",
+            "tests/browser/select-data-diagnostics.spec.ts",
+            "tests/browser/select-data-hydration.spec.ts",
+            "tests/browser/fixtures/SelectDataHydration.svelte",
+            "tests/browser/fixtures/select-data-additive-cases.ts",
+            "tests/browser/fixtures/select-data-hydration.client.ts",
+            "tests/browser/fixtures/select-data-hydration.server.ts",
+            "tests/browser/fixtures/select-data-hydration.html",
+            "tests/browser/fixtures/select-data-styles.client.ts"
+          ],
+          "note": "Ant Design6.6.8/rc-select1.10.1: общий pipeline сохраняет исходные records, literal key/value/index fallback, отдельные mapped value/label, one-level groups, last-value callback winner и shallow-copy arguments без deprecated props getter. Generic raw OptionType не требует canonical полей. Title/className/CSS object и whitelist DOM/data/aria attrs листьев, className/title headers, группы в measured viewport. Все primary40/169, SSR40, diagnostic4/16, attrs10/38 и paired mappedARIA2/10 actual UMD traces независимо повторены побайтно. Native logical aria-selected исправляет доказанное virtual против nonvirtual Source противоречие; mapped token lookup исправляет потерю выбора при literal value чтении. Native label/NFKD filter и удалённый disabled selected cache используют отдельные whole public Source owners1/3 и1/6 без ledger filtering; historical a231 browser baseline сохранён. Старые unit корпуса tags/sort/tokens/count перенаправлены на живые raw engines; splitSelectTokens сохраняется также для TreeSelect. Проверены57 новых browser cases:40 полных raw traces,10 attrs,2 one-level diagnostics и mapped token correction,4 strict hydration. SSR40 сохраняет реальные pure sort calls4 без DOM/interactive effects. Hydra сохраняет DOM/method/ref identity и FormData; оба AC unmount сразу после повторного выбора отменяют queued MessageChannel close, все ресурсы и поздние callbacks отсутствуют. Отдельный production consumer40/169 использует только публичный пакет и stylesheet, без React/server/source/tests modules; DOM/refs/полный owner state стабильны после unmount и0/1000ms. Existing browser regression1604 подтверждён across runs; два устаревших ColorPicker locators исправлены и весь изменённый29-case spec проверен повторно. Primitive selected-value binding сохранён; labelInValue/rich selected-label codec/optionLabelProp/labelRender и прочий extended API остаются отдельным зависимым этапом."
         }
       ]
     },
@@ -9519,7 +9562,7 @@
             "tests/browser/fixtures/ant-design-select-tags-interaction-reference.json",
             "tests/package/select-tags.ssr.test.ts"
           ],
-          "note": "Mode=\"tags\" расширяет native multiple UI свободными строками; public value/defaultValue/onValueChange допускают Value|string только для tags, остальные mode-specific types сохраняются. Source value filtering, selected missing options, synthetic query option, disabled exact-value guard, uppercase OR optionFilterProp fields и autoClearSearchValue в showSearch; legacy single/multiple label/NFKD defaults сохранены. Созданные/selected labels и disabled сохраняют native cache при remote выдаче, numeric 0 и string 0 различаются. Двадцать восемь UMD option cases и двадцать четыре Playwright interaction cases фиксируют Enter/open/closed, raw selection versus trimmed blur, duplicates, disabled, Escape, controlled query, clear callbacks и multiple autoClearSearchValue=false. Native required/clear/reset/FormData, readonly defaults, disabled/RTL, cache и SSR защищены отдельно. Options остаётся primitive массивом и по умолчанию пуст, без новых dependencies/CSS/script/config changes. Token separators описаны отдельной supported feature; остальные rc-select API остаются gaps."
+          "note": "Mode=\"tags\" расширяет native multiple UI свободными строками; public value/defaultValue/onValueChange допускают Value|string только для tags, остальные mode-specific types сохраняются. Source value filtering, selected missing options, synthetic query option, disabled exact-value guard, uppercase OR optionFilterProp fields и autoClearSearchValue в showSearch; legacy single/multiple label/NFKD defaults сохранены. Созданные/selected labels и disabled сохраняют native cache при remote выдаче, numeric 0 и string 0 различаются. Двадцать восемь UMD option cases и двадцать четыре Playwright interaction cases фиксируют Enter/open/closed, raw selection versus trimmed blur, duplicates, disabled, Escape, controlled query, clear callbacks и multiple autoClearSearchValue=false. Native required/clear/reset/FormData, readonly defaults, disabled/RTL, cache и SSR защищены отдельно. Values остаются primitive; raw options/fieldNames расширены отдельным raw-option-data этапом, пустой массив остаётся default. Token separators описаны отдельной supported feature; остальные rc-select API остаются gaps."
         },
         {
           "id": "remote-search",
@@ -9693,7 +9736,7 @@
             "tests/browser/fixtures/ant-design-select-sort-reference.json",
             "tests/package/select-sort.ssr.test.ts"
           ],
-          "note": "Ant Design 6.6.8 / rc-select 1.10.1: современный nested filterSort применяется после фильтрации и synthetic/selected missing tag options, получает raw option objects и текущий searchValue. Стабильные ties, owner array и native selection order сохраняются. Raw UMD corpus фиксирует single/multiple/tags, search-aware comparator, disabled, numeric keys, equality и отсутствующие selected options. Native keyboard first active, reactive callback/options/query, controlled rejection, input DOM/focus и FormData защищены отдельно. Groups/fieldNames и deprecated top-level filterSort не добавлены."
+          "note": "Ant Design 6.6.8 / rc-select 1.10.1: современный nested filterSort применяется после фильтрации и synthetic/selected missing tag options, получает raw option objects и текущий searchValue. Стабильные ties, owner array и native selection order сохраняются. Raw UMD corpus фиксирует single/multiple/tags, search-aware comparator, disabled, numeric keys, equality и отсутствующие selected options. Native keyboard first active, reactive callback/options/query, controlled rejection, input DOM/focus и FormData защищены отдельно. Groups/fieldNames подключены raw-option-data; Source group sort рекурсивно использует literal options даже при mapped children. Deprecated top-level filterSort исключён."
         },
         {
           "id": "token-separators",
@@ -9841,7 +9884,7 @@
             "tests/browser/select-option-render.spec.ts",
             "tests/package/select-option-render.ssr.test.ts"
           ],
-          "note": "Пассивный Snippet получает FlattenOption metadata и info.index после filter/sort: key/value/label, data той же identity и groupOption=false. Source key=option.key??value сохраняет 0/empty string; extras доступны как unknown. Limit-disabled UI не подменяет raw data/disabled; synthetic и missing selected tags получают собственные временные records. Default/empty/alternate renderers, single/multiple/tags, selected labels, native buttons, FormData/reset/keyboard/focus и live renderer replacement сохранены. Closed SSR не вызывает Snippet. Raw 16 UMD cases pinned to rc-select study 1.10.1. Native DOM остаётся keyed by value; option.key добавлен как metadata. Группы/fieldNames, full option attrs и semantic/render API остаются отдельными gaps."
+          "note": "Пассивный Snippet получает FlattenOption metadata и info.index после filter/sort: key/value/label, data текущей выдачи с owner identity обычных leaves и groupOption=false для плоских пунктов. Source key использует literal key/value, затем flattened index; 0/empty string/bigint сохраняются; extras доступны как unknown. Limit-disabled UI не подменяет raw data/disabled; synthetic и missing selected tags получают собственные временные records. Default/empty/alternate renderers, single/multiple/tags, selected labels, native buttons, FormData/reset/keyboard/focus и live renderer replacement сохранены. Closed SSR не вызывает Snippet. Raw 16 UMD cases pinned to rc-select study 1.10.1. Native DOM использует raw row key, отдельно от mapped selected value. Группы/fieldNames и option attrs подключены raw-option-data; остальные semantic/render API остаются gaps."
         },
         {
           "id": "popup-visibility",
@@ -9877,14 +9920,14 @@
         },
         {
           "id": "extended-api",
-          "title": "LabelInValue, fieldNames/groups, render/semantic/config и остальные Source API",
-          "state": "missing",
+          "title": "LabelInValue, оставшиеся render/semantic/config и motion API",
+          "state": "partial",
           "requiredForV1": false,
           "evidence": [
             "src/lib/select.types.ts",
             "src/lib/Select.svelte"
           ],
-          "note": "Полный source API остаётся в работе: fieldNames/groups, labelInValue, searchIcon, остальные renderers, остальные callback/semantic/config/motion API и option attrs. OptionRender для плоских данных, open/defaultOpen и измеряемая virtualization/public refs/onActive перенесены отдельными features. Native primitive options/value, binding/onValueChange и согласованные формы сохраняются. Deprecated top-level search и boolean tags/multiple/combobox не возвращаются."
+          "note": "FieldNames, один уровень groups, raw OptionType/callbacks и option attrs реализованы отдельным raw-option-data этапом. LabelInValue/selected-value codec, optionLabelProp/labelRender, остальные renderers/callback/semantic/config/motion API остаются в работе. Native primitive binding/onValueChange, формы и согласованные адаптации сохраняются; deprecated props не возвращаются."
         },
         {
           "id": "native-whitespace-tag",
@@ -10170,6 +10213,49 @@
             "tests/browser/select-virtual.spec.ts"
           ],
           "note": "ListHeight256 ограничивает внутренний holder; actual physical padding/border popup добавляются снаружи при border-box и content-box. ListHeight0 снимает cap по truthy gate Source. Восемь independently repeated public-CSS Source cases/32actions продолжают проверять геометрию и physical CSS, новая virtual-list feature проверяет измеряемые строки, live sizing и исходный scroll-event target. Прежний внешний height inset adapter заменён внутренним viewport."
+        },
+        {
+          "id": "raw-option-data",
+          "title": "FieldNames, один уровень групп, raw callbacks и option attrs",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/select-data.engine.ts",
+            "src/lib/select-data.types.ts",
+            "src/lib/select-data.engine.test.ts",
+            "src/lib/select-data-style.engine.ts",
+            "src/lib/select-data-style.engine.test.ts",
+            "tests/browser/fixtures/select-data-cases.ts",
+            "tests/browser/fixtures/select-data.types.ts",
+            "tests/browser/fixtures/SelectDataCase.svelte",
+            "tests/browser/fixtures/SelectDataFixtures.svelte",
+            "tests/browser/select-data-reference.ts",
+            "tests/browser/select-data-native.ts",
+            "tests/browser/select-data-metrics.ts",
+            "tests/browser/select-data-driver.ts",
+            "tests/browser/select-data.spec.ts",
+            "tests/browser/fixtures/ant-design-select-data-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-diagnostic-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-attributes-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-aria-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-cache-native-reference.json",
+            "tests/browser/fixtures/ant-design-select-data-label-native-reference.json",
+            "tests/browser/fixtures/select-data-cache-native-baseline.json",
+            "readme.md",
+            "tests/package/select-data.ssr.test.ts",
+            "tests/browser/select-data-assertions.ts",
+            "tests/browser/select-data-attributes.spec.ts",
+            "tests/browser/select-data-diagnostics.spec.ts",
+            "tests/browser/select-data-hydration.spec.ts",
+            "tests/browser/fixtures/SelectDataHydration.svelte",
+            "tests/browser/fixtures/select-data-additive-cases.ts",
+            "tests/browser/fixtures/select-data-hydration.client.ts",
+            "tests/browser/fixtures/select-data-hydration.server.ts",
+            "tests/browser/fixtures/select-data-hydration.html",
+            "tests/browser/fixtures/select-data-styles.client.ts"
+          ],
+          "note": "Ant Design6.6.8/rc-select1.10.1: общий pipeline сохраняет исходные records, literal key/value/index fallback, отдельные mapped value/label, one-level groups, last-value callback winner и shallow-copy arguments без deprecated props getter. Generic raw OptionType не требует canonical полей. Title/className/CSS object и whitelist DOM/data/aria attrs листьев, className/title headers, группы в measured viewport. Все primary40/169, SSR40, diagnostic4/16, attrs10/38 и paired mappedARIA2/10 actual UMD traces независимо повторены побайтно. Native logical aria-selected исправляет доказанное virtual против nonvirtual Source противоречие; mapped token lookup исправляет потерю выбора при literal value чтении. Native label/NFKD filter и удалённый disabled selected cache используют отдельные whole public Source owners1/3 и1/6 без ledger filtering; historical a231 browser baseline сохранён. Старые unit корпуса tags/sort/tokens/count перенаправлены на живые raw engines; splitSelectTokens сохраняется также для TreeSelect. Проверены57 новых browser cases:40 полных raw traces,10 attrs,2 one-level diagnostics и mapped token correction,4 strict hydration. SSR40 сохраняет реальные pure sort calls4 без DOM/interactive effects. Hydra сохраняет DOM/method/ref identity и FormData; оба AC unmount сразу после повторного выбора отменяют queued MessageChannel close, все ресурсы и поздние callbacks отсутствуют. Отдельный production consumer40/169 использует только публичный пакет и stylesheet, без React/server/source/tests modules; DOM/refs/полный owner state стабильны после unmount и0/1000ms. Existing browser regression1604 подтверждён across runs; два устаревших ColorPicker locators исправлены и весь изменённый29-case spec проверен повторно. Primitive selected-value binding сохранён; labelInValue/rich selected-label codec/optionLabelProp/labelRender и прочий extended API остаются отдельным зависимым этапом."
         }
       ]
     },

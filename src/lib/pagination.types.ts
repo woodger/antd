@@ -24,7 +24,7 @@ export interface PaginationSizeChangerInfo {
 }
 
 /** Поддержанные Select props; onChange сохраняет callback Ant Design. */
-export interface PaginationSizeChangerProps extends Partial<SelectProps<number>> {
+export interface PaginationSizeChangerProps extends Omit<Partial<SelectProps<number>>, 'onChange'> {
   onChange?: (value: number, option: SelectOption<number> | undefined) => void;
 }
 

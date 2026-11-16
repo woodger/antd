@@ -1,6 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { Select, type SelectFlattenOption, type SelectOption } from 'antd-svelte';
+  const MixedSelect = Select<string | number>;
 
   export interface SelectOptionRenderSample {
     id: string;
@@ -54,7 +55,7 @@
 <form id="option-render-form" onsubmit={event => event.preventDefault()}>
   {#if enabled}
     {#if sample.mode === 'single'}
-      <Select aria-label="Rendered choice" name="choice" options={sample.options}
+      <MixedSelect aria-label="Rendered choice" name="choice" options={sample.options}
         bind:value={single} optionRender={renderer === 'default' ? undefined : optionContent}
         showSearch={{ searchValue: sample.search, filterOption: sample.filter,
           optionFilterProp: sample.field,
