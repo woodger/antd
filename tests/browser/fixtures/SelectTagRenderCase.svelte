@@ -3,6 +3,7 @@
   import { untrack } from 'svelte';
   import type { SelectTagRenderSample } from './select-tag-render-cases';
 
+  const MixedSelect = Select<string | number>;
   let { sample }: { sample: SelectTagRenderSample } = $props();
   let values = $state<(string | number)[]>(untrack(() => [...sample.values]));
   let single = $state<string | number | undefined>(untrack(() => sample.values[0]));
@@ -63,7 +64,7 @@
 <ConfigProvider theme={{ token: { motion: false } }}>
   <div data-tag-render style={`width:${width}px`}>
     {#if sample.mode === 'single'}
-      <Select {...componentProps} value={single} onValueChange={next => { single = next; }} />
+      <MixedSelect {...componentProps} value={single} onValueChange={next => { single = next; }} />
     {:else}
       <Select {...componentProps} mode={sample.mode === 'tags' ? 'tags' : 'multiple'}
         bind:value={values} onValueChange={next => {

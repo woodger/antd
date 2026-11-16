@@ -416,6 +416,7 @@
             {#if sizeRenderer}{@render sizeRenderer(sizeInfo)}
             {:else}<Select
               showSearch
+              title={showTitle ? undefined : null}
               popupMatchSelectWidth={false}
               getPopupContainer={trigger => trigger.parentElement ?? trigger.ownerDocument.body}
               {...selectConfig} options={selectConfig.options ?? sizeOptions}

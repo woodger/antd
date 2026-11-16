@@ -9982,7 +9982,7 @@ Deprecated dataSource/Option
 
 ## Select
 
-Без mode компонент сохраняет одиночный выбор и скалярный value. В
+Без mode компонент сохраняет одиночный выбор; по умолчанию value скалярный. В
 `mode="multiple"` value и callback используют массивы; варианты выбираются
 из options, а выбранные элементы показываются с кнопками удаления.
 `SelectProps<Value>` описывает прежний одиночный API,
@@ -10038,8 +10038,7 @@ OnClear предшествует onChange и не создаёт onDeselect. В�
 выбирается последний record из текущей карты данных. Вложенные объекты не клонируются;
 для свободного tag без исходного record callback получает пустой объект. Bind:value и
 onValueChange сохраняются. Удалённый selected option остаётся в cache до снятия выбора.
-Selected value по-прежнему string/number или их массив; labelInValue, полный codec rich
-выбранных labels, optionLabelProp и labelRender остаются следующим зависимым этапом.
+Без labelInValue selected value остаётся string/number или их массив.
 
 Исходные [40 сценариев](tests/browser/fixtures/ant-design-select-data-reference.json.gz),
 [40 SSR](tests/browser/fixtures/ant-design-select-data-ssr-reference.json),
@@ -10060,6 +10059,61 @@ lookup использует mapped value; Source при том же вводе �
 [диагностические границы](tests/browser/select-data-diagnostics.spec.ts),
 [SSR](tests/package/select-data.ssr.test.ts) и
 [строгая hydration](tests/browser/select-data-hydration.spec.ts) проверяют эти контракты.
+
+### Выбранные labels и labelInValue
+
+`labelInValue={true}` меняет value/defaultValue и первый аргумент callbacks на
+`{ value, label }`; multiple/tags используют массив таких объектов. Верхний `null`
+очищает выбор и не подставляет defaultValue. Входной label может быть строкой, числом,
+boolean, массивом содержимого или Svelte Snippet. Явный label имеет приоритет;
+отсутствующий/undefined читается из `optionLabelProp` либо mapped label options.
+
+`SelectProps<Value, Mode, OptionType, LabelInValue>` сохраняет первые три параметра.
+Четвёртый по умолчанию false; boolean даёт объединение primitive/labeled значений.
+При явном `Select<number>` остальные параметры получают defaults: для labeled
+специализации задавайте все четыре, например `Select<number, undefined, Entry, true>`.
+Без явной специализации компонент выводит labeled domain из props.
+
+`labelRender(info)` — обычный callback. Он получает label/value/key/disabled/title
+и возвращает содержимое, включая Snippet; key равен raw value. Результат null/undefined
+заменяется raw value, а false/пустая строка сохраняют пустой видимый label. Callback
+вызывается и при SSR, поэтому должен быть чистым.
+
+```svelte
+<script lang="ts">
+  import { Select, type SelectLabelValue } from 'antd-svelte';
+  const options = [{ value: 0, label: 'Zero', alternate: 'Number zero' }];
+  let value = $state<SelectLabelValue<number> | undefined>();
+</script>
+
+{#snippet selectedLabel()}<strong>Number zero</strong>{/snippet}
+<Select {options} labelInValue bind:value optionLabelProp="alternate"
+  labelRender={() => selectedLabel} name="number" />
+```
+
+OnChange получает labels текущего преобразования, а onSelect/onDeselect — mapped
+label исходного option независимо от optionLabelProp и labelRender. Удаление тега
+кнопкой или Backspace передаёт оставшиеся уже отрисованные labels через onChange,
+как в оригинале. Uncontrolled выбор сохраняет label после взаимодействия; controlled
+owner с raw value заново читает options. Single className/style/title берутся из
+первого совпадения текущей filtered/sorted выдачи, callback option — из последнего
+совпадения value. Rich labels сохраняются в tagRender и maxTagPlaceholder;
+maxTagTextLength усекает только строку/число. FormData по-прежнему содержит raw values.
+
+[48 исходных сценариев / 278 действий](tests/browser/fixtures/ant-design-select-value-reference.json.gz),
+[атомарные смены режима](tests/browser/fixtures/ant-design-select-value-live-reference.json),
+[SSR](tests/browser/fixtures/ant-design-select-value-ssr-reference.json) и
+[public owner disabled cache](tests/browser/fixtures/ant-design-select-value-cache-native-reference.json)
+сохраняют независимые наблюдения оригинала. Проверки:
+[browser](tests/browser/select-value.spec.ts), [hydration](tests/browser/select-value-hydration.spec.ts),
+[SSR/type contracts](tests/package/select-value.ssr.test.ts) и
+[фактическая прозрачность label](tests/browser/select-value-opacity.spec.ts).
+Native сохраняет скалярный текст закрытого input и его caret, текущий query владельца,
+различие 0/"0" и disabled cache удалённого option. Searchable required проверяет наличие raw выбора, независимо от rich/пустой
+отрисованной подписи. Rich содержимое остаётся DOM/Snippet;
+оно не превращается в текст input. У оригинала после повторного открытия string "0"
+физический selected marker ошибочно остаётся у numeric 0; это наблюдение сохранено,
+Native следует raw value. AutoComplete не получает labelInValue/optionLabelProp.
 
 ### Оформление и состояние
 
@@ -10514,8 +10568,8 @@ OnPopupScroll получает native scroll event с currentTarget=listbox; р�
 уже во время debounce, стабильным объединением страниц по value и повтором
 последнего неудачного cursor. Dispose отменяет таймер/запрос. Источник демонстрационный,
 сетевые API, таймеры и server-specific ошибки не входят в библиотечный Select.
-Пока не перенесены остальные поля showSearch config, labelInValue,
-fieldNames/groups, render hooks, virtualization, произвольный popupRender
+Пока не перенесены остальные поля showSearch config, оставшиеся render hooks,
+произвольный popupRender, semantic/config/motion API
 и общий полный rc-select API.
 
 ## Checkbox

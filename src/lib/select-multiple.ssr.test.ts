@@ -48,6 +48,7 @@ describe('Multiple Select server rendering', () => {
         >();
       expectTypeOf<SelectProps<number, 'multiple'>['value']>().toEqualTypeOf<
         number[]
+        | null
         | undefined
       >();
     }

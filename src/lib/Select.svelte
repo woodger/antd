@@ -1,10 +1,11 @@
-<script lang="ts" generics="Value extends string | number = string, Mode extends 'multiple' | 'tags' | undefined = undefined, OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>">
+<script lang="ts" generics="Value extends string | number = string, Mode extends 'multiple' | 'tags' | undefined = undefined, OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>, LabelInValue extends boolean = false">
   import { onMount, tick, untrack, type Snippet } from 'svelte';
   import { useConfig } from './config-context';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getSelectPrefixCss } from './select-prefix.engine';
   import { useVariant } from './variant.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
+  import RenderContent from './RenderContent.svelte';
   import { useComponentTheme } from './theme-component.svelte';
   import { useToken } from './theme-context.svelte';
   import { connectComponentTheme } from './theme-component.dom';
@@ -25,8 +26,6 @@
   import FormFeedbackIcon from './FormFeedbackIcon.svelte';
   import {
     getEnabledIndex,
-    getSelectValues,
-    getSelectDisplayLabel,
     isSelectCountReached,
     isSelectOptionDisabled,
     matchesSelectDataLabel
@@ -37,23 +36,28 @@
     flattenSelectData,
     filterSelectData,
     sortSelectData,
-    emptySelectDataCache,
-    resolveSelectDataCache,
     copySelectData,
     selectDataAttributes,
     selectDataContent,
     selectDataTitle
   } from './select-data.engine';
   import type { SelectDataRow } from './select-data.types';
+  import {
+    emptySelectValueCache, resolveSelectValueCache, convertSelectValues, selectValueDrafts,
+    selectValueRaw, selectValueEvent, selectValueOutput, selectValueText, selectValueTitle, keepSelectSuppliedValue,
+    hasSelectLabelFeatures,
+    type SelectValueItem
+  } from './select-value.engine';
   import { serializeSelectDataStyle } from './select-data-style.engine';
-  import { ruRU, type SelectOption } from './types';
+  import { ruRU, type SelectOption, type RenderEmptyContent } from './types';
   import type {
     SelectProps,
     SelectScrollConfig,
     SelectFlattenOption,
     SelectSearchConfig,
     SelectTagPlaceholder,
-    SelectTagInfo
+    SelectTagInfo,
+    SelectLabelRenderInfo
   } from './select.types';
   import { getSelectTagText } from './select-tag-text.engine';
   import { getSelectTagOptions } from './select-tags.engine';
@@ -70,6 +74,9 @@
     prefixCls,
     options = [],
     fieldNames,
+    optionLabelProp,
+    labelInValue,
+    labelRender,
     optionRender,
     mode,
     open = $bindable<boolean | undefined>(),
@@ -89,7 +96,8 @@
     maxTagPlaceholder,
     tagRender,
     defaultValue,
-    value = $bindable<SelectProps<Value, Mode, OptionType>['value']>(),
+    value = $bindable<SelectProps<Value, Mode, OptionType, LabelInValue>['value']>(),
+    value: providedValue,
     size,
     variant,
     showSearch,
@@ -122,7 +130,7 @@
     nativeElement = $bindable(),
     inputElement = $bindable(),
     ...attributes
-  }: SelectProps<Value, Mode, OptionType> = $props();
+  }: SelectProps<Value, Mode, OptionType, LabelInValue> = $props();
 
   const config = useConfig();
   const tokens = useToken();
@@ -165,7 +173,13 @@
   let searchCallback = $derived(searchConfig.onSearch);
   let filter = $derived(searchConfig.filterOption ?? true);
   let autoClearSearch = $derived(searchConfig.autoClearSearchValue ?? true);
-  let cachedData = $state.raw(emptySelectDataCache<RawValue, OptionType>());
+  let cachedData = $state.raw(emptySelectValueCache<RawValue, OptionType>());
+  let internalLabels = $state.raw<readonly SelectValueItem<RawValue>[]>();
+  let uncontrolledLabels = $state.raw<readonly SelectValueItem<RawValue>[]>();
+  let labelFeaturesUsed = $state(untrack(() => hasSelectLabelFeatures(
+    labelInValue, optionLabelProp, labelRender,
+    selectValueDrafts(value !== undefined ? value : initialDefault, mode === 'multiple' || mode === 'tags')
+  )));
   let activeIndex = $state(-1);
   let container: HTMLDivElement;
   let reference = $state<HTMLDivElement>();
@@ -181,43 +195,46 @@
   let composing = false;
   let pastedText: string | undefined;
   let controlId = $derived(id ?? field?.id ?? `ant-select-${generatedId}`);
-  let selectedValue = $derived(value ?? (useDefault ? initialDefault : undefined));
+  let selectedValue = $derived(value !== undefined ? value : useDefault ? initialDefault : undefined);
   let tagMode = $derived(mode === 'tags');
   let multiple = $derived(mode === 'multiple' || tagMode);
   let canSearch = $derived(typeof showSearch === 'object' ? true : showSearch ?? multiple);
   // Readonly исключает input из нативной проверки; required multiple блокирует ввод через beforeinput.
   let isReadOnly = $derived(!canSearch && (!multiple || !attributes.required));
   let intrinsicWidth = $derived(_autoWidth && !multiple && isReadOnly);
-  let selectedValues = $derived(multiple ? getSelectValues<RawValue>(selectedValue) : []);
+  let localDrafts = $derived(selectValueDrafts(selectedValue, multiple));
+  let labelFeatures = $derived(hasSelectLabelFeatures(labelInValue, optionLabelProp, labelRender, localDrafts, internalLabels));
+  let valueDrafts = $derived(value === undefined && providedValue === undefined && uncontrolledLabels
+    && (labelFeatures || labelFeaturesUsed) ? uncontrolledLabels : localDrafts);
+  let selectedRaw = $derived(multiple ? undefined : selectValueRaw<RawValue>(valueDrafts[0]));
+  let selectedValues = $derived(multiple ? valueDrafts.map(item => selectValueRaw<RawValue>(item)!) : []);
+  let labeledDrafts = $derived(providedValue === undefined && internalLabels && (labelFeatures || labelFeaturesUsed)
+    ? valueDrafts.map(draft => {
+        const raw = selectValueRaw<RawValue>(draft);
+        return draft && typeof draft === 'object' && Reflect.get(draft, 'label') !== undefined
+          ? draft : internalLabels?.find(item => item.value === raw) ?? draft;
+      }) : valueDrafts);
+  $effect(() => {
+    if (labelFeatures) labelFeaturesUsed = true;
+  });
+  $effect.pre(() => {
+    if (providedValue !== undefined) uncontrolledLabels = undefined;
+  });
   let selectedKeys = $derived(new Set(selectedValues));
   let countReached = $derived(multiple && isSelectCountReached(selectedValues.length, maxCount));
   let fields = $derived(selectFields(fieldNames));
   let dataMaps = $derived(collectSelectData<RawValue, OptionType>(
-    options, fields, searchConfig.optionFilterProp
+    options, fields, searchConfig.optionFilterProp, optionLabelProp
   ));
-  let selectionData = $derived(
-    resolveSelectDataCache(
-      multiple
-        ? selectedValues
-        : typeof selectedValue === 'string' || typeof selectedValue === 'number'
-          ? [selectedValue as RawValue]
-          : [],
-      dataMaps,
-      fields,
-      cachedData
-    )
-  );
-  let selectionOptions = $derived(new Map(selectionData.display.map(option => [option.value, {
-    value: option.value,
-    label: getSelectDisplayLabel(option.label, option.value),
-    disabled: option.disabled,
-    title: nativeTitle(option.title)
-  }])));
-  let selected = $derived(
-    typeof selectedValue === 'string' || typeof selectedValue === 'number'
-      ? selectionOptions.get(selectedValue as RawValue)
-      : undefined
-  );
+  let selectionData = $derived(resolveSelectValueCache(
+    labeledDrafts, dataMaps, fields, cachedData, optionLabelProp
+  ));
+  let displayValues = $derived(selectionData.values.map(item => ({ ...item,
+    label: (labelRender ? labelRender(item as SelectLabelRenderInfo<Mode extends 'tags' ? Value | string : Value>) : item.label) ?? item.value,
+    disabled: selectionData.display.find(display => display.value === item.value)?.disabled
+  })));
+  let selectionOptions = $derived(new Map(displayValues.map(item => [item.value, item])));
+  let selected = $derived(selectedRaw === undefined ? undefined : selectionOptions.get(selectedRaw));
   let tags = $derived(selectedValues.map(item => selectionOptions.get(item)!));
   let responsiveTags = $derived(multiple && maxTagCount === 'responsive');
   let tagOverflow = $derived(getSelectTagOverflow(tags,
@@ -241,6 +258,20 @@
     filteredOptions, search, searchConfig.filterSort
   ));
   let filtered = $derived(flattenSelectData<RawValue, OptionType>(orderedOptions, fields));
+  let selectedOption = $derived(!multiple && selectedRaw !== undefined
+    ? filtered.find(row => !row.group && row.value === selectedRaw)?.data : undefined);
+  let selectedClass = $derived(typeof selectedOption?.className === 'string' ? selectedOption.className : undefined);
+  let selectedStyle = $derived(selectedOption?.style);
+  let hasSelectedStyle = $derived(Boolean(selectedClass || selectedStyle));
+  let selectedTitle = $derived(attributes.title !== undefined ? attributes.title
+    : selectValueTitle(selectedOption ? { label: selectedOption.label, title: selectedOption.title } : undefined)
+      || selectValueTitle(selected));
+  let selectedLayer = $derived(!multiple && Boolean(selected));
+  let selectedHasValue = $derived(selected?.label != null && String(selected.label).trim() !== '');
+  let selectedText = $derived(typeof selected?.label === 'string' || typeof selected?.label === 'number'
+    ? String(selected.label) : '');
+  let selectedLabelScope = $derived(labelFeatures || labelFeaturesUsed
+    || typeof selected?.label === 'function' || Array.isArray(selected?.label));
   let renderOption = $derived(optionRender as Snippet<[
     SelectFlattenOption<RawValue, OptionType>, { index: number }
   ]> | undefined);
@@ -412,7 +443,7 @@
   let listItems = $derived<SelectOptionListItem<Row>[]>(filtered.map((option, index) => {
     const data = option.data;
     const selected = !option.group && option.value !== undefined
-      && (multiple ? selectedKeys.has(option.value) : option.value === selectedValue);
+      && (multiple ? selectedKeys.has(option.value) : option.value === selectedRaw);
     return {
       key: option.key,
       originalIndex: index,
@@ -455,10 +486,10 @@
     realVirtual: () => realVirtual,
     open: () => expanded,
     searchValue: () => search,
-    selectedIndex: (): number => openingKeyboardActivation?.index ?? (multiple || selectedValue === undefined
+    selectedIndex: (): number => openingKeyboardActivation?.index ?? (multiple || selectedRaw === undefined
       ? -1 : optionList.items.findIndex(row =>
         search ? String(row.item.data.value).startsWith(search)
-          : row.item.data.value === selectedValue)),
+          : row.item.data.value === selectedRaw)),
     onSelectedActive: index => activate(index)
   });
 
@@ -518,18 +549,28 @@
     setOpen(true);
   }
 
-  function changeMultiple(next: RawValue[]) {
-    if (!multiple) return;
+  function rememberLabels(items: readonly SelectValueItem<RawValue>[]) {
+    // Snapshot нужен и при позднем включении label API после обычного выбора.
+    internalLabels = items;
+    uncontrolledLabels = providedValue === undefined ? items : undefined;
+  }
 
+  function changeMultiple(next: RawValue[], origin: 'select' | 'display' | 'raw' = 'select') {
+    if (!multiple) return;
     const changed = next.length !== selectedValues.length
       || next.some((item, index) => item !== selectedValues[index]);
-    const callback = onChange as ((values: RawValue[], options: OptionType[]) => void) | undefined;
+    const previous = origin === 'display' ? displayValues : selectionData.values;
+    const drafts = next.map(raw => origin === 'raw' ? raw : previous.find(item => item.value === raw) ?? raw);
+    const labeled = convertSelectValues(drafts, dataMaps, fields, optionLabelProp);
+    const output = selectValueOutput(labeled, true, Boolean(labelInValue));
+    const callback = onChange as ((value: unknown, options: OptionType[]) => void) | undefined;
     const rawOptions = callback && changed ? next.map(callbackOption) : undefined;
     useDefault = false;
-    // TypeScript не сужает generic Mode при проверке его значения.
-    value = [...next] as typeof value;
-    (onValueChange as ((values: RawValue[]) => void) | undefined)?.(next);
-    if (rawOptions) callback?.(next, rawOptions);
+    rememberLabels(labeled);
+    // TypeScript не сужает generic Mode/LabelInValue при runtime проверке.
+    value = output as typeof value;
+    (onValueChange as ((value: unknown) => void) | undefined)?.(output);
+    if (rawOptions) callback?.(output, rawOptions);
   }
 
   function optionData(value: RawValue) {
@@ -542,8 +583,8 @@
 
   function notifySelect(value: RawValue, data: OptionType | undefined, selected: boolean) {
     const callback = (selected ? onSelect : onDeselect) as
-      ((value: RawValue, option: OptionType) => void) | undefined;
-    callback?.(value, copySelectData(data) as OptionType);
+      ((value: unknown, option: OptionType) => void) | undefined;
+    callback?.(selectValueEvent(value, data, fields, Boolean(labelInValue)), copySelectData(data) as OptionType);
   }
 
   function submitTag(text: string) {
@@ -552,7 +593,7 @@
     if (!next) return;
     const data = optionData(next);
     if (!countReached && !Reflect.get(data ?? {}, 'disabled')) {
-      if (!selectedKeys.has(next)) changeMultiple([...selectedValues, next]);
+      if (!selectedKeys.has(next)) changeMultiple([...selectedValues, next], 'raw');
       notifySelect(next, data, true);
     }
     internalSearch = '';
@@ -591,15 +632,21 @@
       return;
     }
 
-    const changed = chosenValue !== selectedValue;
+    const changed = chosenValue !== selectedRaw;
     const callback = onChange as
-      ((value: RawValue | undefined, option: OptionType | undefined) => void) | undefined;
+      ((value: unknown, option: OptionType | undefined) => void) | undefined;
     const rawOption = chosenValue === undefined ? undefined : copySelectData(data) as OptionType;
     if (!option && selected) onClear?.();
     useDefault = false;
-    value = chosenValue as typeof value;
-    (onValueChange as ((value: RawValue | undefined) => void) | undefined)?.(chosenValue);
-    if (changed) callback?.(chosenValue, rawOption);
+    const labeled = convertSelectValues(chosenValue === undefined ? [] : [chosenValue], dataMaps, fields, optionLabelProp);
+    const output = selectValueOutput(labeled, false, Boolean(labelInValue));
+    const keepSupplied = !changed && keepSelectSuppliedValue(value, providedValue, chosenValue);
+    if (!keepSupplied) {
+      rememberLabels(labeled);
+      value = output as typeof value;
+    }
+    (onValueChange as ((value: unknown) => void) | undefined)?.(keepSupplied ? value : output);
+    if (changed) callback?.(output, rawOption);
     if (chosenValue !== undefined) notifySelect(chosenValue, data, true);
     setOpen(false);
     control?.focus();
@@ -612,7 +659,7 @@
     const data = optionData(item);
 
     if (next.delete(item)) {
-      changeMultiple([...next]);
+      changeMultiple([...next], 'display');
       notifySelect(item, data, false);
     }
     if (focus) control?.focus();
@@ -640,7 +687,9 @@
       if (event.defaultPrevented || !input.isConnected || input !== control || !multiple) return;
 
       useDefault = false;
-      value = getSelectValues(initialDefault) as typeof value;
+      value = (Array.isArray(initialDefault) ? [...initialDefault] : []) as typeof value;
+      internalLabels = undefined;
+      uncontrolledLabels = undefined;
       internalSearch = '';
       internalOpen = false;
       open = false;
@@ -761,7 +810,7 @@
         for (const option of resolveSelectTokenOptions(dataMaps, words, tagMode, fields))
           nextValues.add(option.value);
         const rawOptions = new Map([...nextValues].map(value => [value, optionData(value)]));
-        if (nextValues.size !== selectedValues.length) changeMultiple([...nextValues]);
+        if (nextValues.size !== selectedValues.length) changeMultiple([...nextValues], 'raw');
         for (const value of nextValues) notifySelect(value, rawOptions.get(value), true);
         internalSearch = '';
         activeIndex = -1;
@@ -891,7 +940,8 @@
 
 <style>
   .container { position: relative; min-width: 0; width: 100%; }
-  [data-ant-select-control] { display: flex; align-items: center; width: 100%; }
+  .container[data-ant-select-value-layer] { display: inline-flex; }
+  [data-ant-select-control] { display: flex; align-items: center; min-width: 0; width: 100%; }
   [data-ant-select-control]:focus-within { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
   [data-ant-select-control][data-ant-select-source-theme] { align-items: flex-start; }
   [data-ant-select-control][data-ant-select-source-theme]:focus-within { outline: 0; outline-offset: 0; }
@@ -910,6 +960,14 @@
     cursor: inherit;
   }
   [data-ant-select-input]::placeholder { color: var(--ant-color-text-placeholder); }
+  [data-ant-select-content]:has(> [data-ant-select-placeholder]) [data-ant-select-input]::placeholder { color: transparent; }
+  [data-ant-select-placeholder] { position: absolute; inset-inline-start: 0; }
+  [data-ant-select-control][data-ant-select-single] [data-ant-select-content][data-select-value-layer] [data-ant-select-input] { position: absolute; inset: 0; }
+  [data-ant-select-content][data-select-value-layer]:not([data-select-value-search]) [data-ant-select-input] { -webkit-text-fill-color: transparent; }
+  [data-ant-select-content][data-select-value-search] [data-ant-select-input] { color: var(--ant-native-select-color, var(--ant-color-text)); -webkit-text-fill-color: var(--ant-native-select-color, var(--ant-color-text)); }
+  [data-ant-select-content][data-select-value-layer] { display: block; }
+  [data-ant-select-content][data-select-value-layer][data-select-value-has-content]::before { display: none; }
+  [data-ant-select-content][data-select-value-search] > [data-ant-select-value] { opacity: 0; }
   .intrinsic-width { width: auto; }
   .intrinsic-width [data-ant-select-content] { position: relative; }
   .intrinsic-width [data-ant-select-control][data-ant-select-single] [data-ant-select-input] { position: absolute; inset: 0; }
@@ -937,6 +995,7 @@
   .custom-tag { display: inline-flex; flex: none; min-width: 0; max-width: 100%; }
   [data-ant-select-control][data-ant-select-source-theme][data-ant-select-multiple] [data-ant-select-input] { line-height: calc(var(--ant-select-internal_fixed_item_margin) * 2 + var(--ant-native-select-multi-item-height)); }
   [data-ant-select-control][data-ant-select-multiple] [data-ant-select-selection-item] { flex: none; box-sizing: border-box; max-width: calc(100% - var(--ant-select-internal_fixed_item_margin) * 2); min-width: 0; }
+  [data-ant-select-control][data-ant-select-source-theme][data-ant-select-multiple] [data-ant-select-selection-item] { max-width: calc(100% - 4px - var(--ant-select-internal_fixed_item_margin) * 2); }
   [data-ant-select-selection-item-remove] { flex: none; padding: 0; border: 0; background: transparent; }
   [data-ant-select-selection-item-remove]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 1px; }
   [data-ant-select-selection-item-disabled] { color: var(--ant-select-multiple-item-color-disabled); }
@@ -950,6 +1009,7 @@
 <svelte:document onreset={handleReset} />
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`select-prefix:${prefix}:${rootPrefix}`} />{/if}<div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
+  data-ant-select-value-layer={selectedLayer || undefined}
   data-ant-select-compact-item={Boolean(compact) || undefined} class={[
     'container ant-select-css-var',
     intrinsicWidth && 'intrinsic-width',
@@ -969,6 +1029,7 @@
     data-ant-select-responsive-tags={responsiveTags || undefined}
     style:--ant-native-select-height={`var(--${privateNamespace}-select-height)`}
     style:--ant-native-select-multi-item-height={`var(--${privateNamespace}-select-multi-item-height)`}
+    style:--ant-native-select-color={`var(--${privateNamespace}-select-color)`}
     role="presentation"
     onpointerdown={handlePointerDown}
     class={[
@@ -993,19 +1054,32 @@
       ]}
     style={componentTheme.style}
   >
-    <div data-ant-select-content class={`${prefix}-content`} bind:this={contentElement}>
-      {#if intrinsicWidth}<span class="intrinsic-label" aria-hidden="true">{selected?.label ?? placeholder ?? ''}</span>{/if}
-      {#if multiple}
+    <div data-ant-select-content
+      data-select-value-layer={selectedLayer || undefined}
+      data-select-value-has-content={selectedHasValue || undefined}
+      data-select-value-search={selectedLayer && expanded && canSearch && Boolean(search) || undefined}
+      class={[`${prefix}-content`, selectedLayer && selectedHasValue && `${prefix}-content-has-value`,
+        selectedLayer && hasSelectedStyle && `${prefix}-content-has-option-style`,
+        selectedLayer && expanded && canSearch && Boolean(search) && `${prefix}-content-has-search-value`]}
+      title={hasSelectedStyle ? undefined : selectedTitle}
+      bind:this={contentElement}>{#if intrinsicWidth && !selectedLayer}<span class="intrinsic-label" aria-hidden="true">{#if selected}<RenderContent value={selected.label as RenderEmptyContent} />{:else}{placeholder ?? ''}{/if}</span>{/if}{#if !selected && !selectedValues.length && !search && placeholder}<div data-ant-select-placeholder class={`${prefix}-placeholder`} aria-hidden="true">{placeholder}</div>{/if}{#if selectedLayer && selected}
+        <div data-ant-select-value class={[hasSelectedStyle && `${prefix}-content-value`, selectedClass]}
+          style={serializeInlineStyleLayers([
+            hasSelectedStyle && expanded && canSearch && search ? 'visibility:hidden' : undefined,
+            serializeSelectDataStyle(selectedStyle)
+          ])} title={hasSelectedStyle ? selectedTitle : undefined}>
+          <RenderContent value={selected.label as RenderEmptyContent} />
+        </div>{/if}{#if multiple}
         {#each renderedTags as tag, index (tag.value)}
           {@const hidden = responsiveTags && !visibleTagKeys.has(tag.value)}
-          {#snippet tagLabel()}{getSelectTagText(tag.label, maxTagTextLength)}{/snippet}
+          {#snippet tagLabel()}<RenderContent value={getSelectTagText(tag.label, maxTagTextLength) as RenderEmptyContent} />{/snippet}
           <span data-ant-select-selection-item={!renderTag || undefined}
             data-ant-select-selection-item-disabled={!renderTag && (resolvedDisabled || tag.disabled) || undefined}
             class={[
               renderTag ? 'custom-tag' : `${prefix}-selection-item`,
               hidden && 'measure-tag',
               !renderTag && (resolvedDisabled || tag.disabled) && `${prefix}-selection-item-disabled`
-            ]} title={renderTag ? undefined : selectionOptions.get(tag.value)?.title ?? tag.label} data-select-tag={responsiveTags || undefined}
+            ]} title={renderTag ? undefined : selectValueTitle(tag)} data-select-tag={responsiveTags || undefined}
             data-select-custom-tag={renderTag ? '' : undefined}
             role="presentation" onmousedown={renderTag ? handleCustomTagMouseDown : undefined}
             aria-hidden={hidden || undefined} inert={hidden}
@@ -1020,13 +1094,10 @@
                 }
               })}
             {:else}
-              <span class={`${prefix}-selection-item-content`}>{@render tagLabel()}</span>
-              {#if !resolvedDisabled && !tag.disabled}<button type="button" data-ant-select-selection-item-remove class={`${prefix}-selection-item-remove`} aria-label={`${config.locale.removeText
-                ?? ruRU.removeText} ${tag.label}`} onpointerdown={(event) => event.preventDefault()} onclick={() => remove(tag.value)}><Icon name="close" /></button>{/if}
+              <span class={`${prefix}-selection-item-content`}>{@render tagLabel()}</span>{#if !resolvedDisabled && !tag.disabled}<button type="button" data-ant-select-selection-item-remove class={`${prefix}-selection-item-remove`} aria-label={`${config.locale.removeText
+                ?? ruRU.removeText} ${selectValueText(tag.label) || tag.value}`} onpointerdown={(event) => event.preventDefault()} onclick={() => remove(tag.value)}><Icon name="close" /></button>{/if}
             {/if}
-          </span>
-        {/each}
-        {#if tagOverflow.omitted.length || responsiveTags && tags.length}
+          </span>{/each}{#if tagOverflow.omitted.length || responsiveTags && tags.length}
           {#snippet restLabel()}
             {#if typeof tagPlaceholder === 'function'}{@render tagPlaceholder(tagOverflow.omitted)}
             {:else if tagPlaceholder == null}+ {tagOverflow.omitted.length} ...
@@ -1044,10 +1115,7 @@
             {#if renderTag}{@render renderTag({
               label: restLabel, isMaxTag: true, disabled: false, closable: false
             })}{:else}<span class={`${prefix}-selection-item-content`}>{@render restLabel()}</span>{/if}
-          </span>
-        {/if}
-      {/if}
-      <input
+          </span>{/if}{/if}<input
         {...nativeAttributes}
         bind:this={control}
         id={controlId}
@@ -1077,14 +1145,15 @@
             ?? (multiple && !canSearch
               ? 'none'
               : undefined)}
-        required={multiple ? false : attributes.required}
+        required={multiple || selectedRaw !== undefined && selectedLabelScope && selectedText === ''
+          ? false : attributes.required}
         disabled={resolvedDisabled}
         value={multiple
             ? search
-            : expanded && canSearch ? search : selected?.label ?? ''}
+            : expanded && canSearch ? search : selectedText}
         placeholder={multiple
             ? selectedValues.length ? undefined : placeholder
-            : expanded && canSearch ? selected?.label ?? placeholder : placeholder}
+            : selectedLayer && selected ? undefined : expanded && canSearch ? selectedText || placeholder : placeholder}
         onkeydown={handleKeydown}
         onbeforeinput={handleBeforeInput}
         oninput={handleInput}
@@ -1105,10 +1174,7 @@
     {#if multiple}
       {#each selectedValues as item (item)}<input type="hidden" name={name ?? field?.name} value={item} disabled={resolvedDisabled} form={attributes.form} />{/each}
     {:else}
-      <input type="hidden" name={name ?? field?.name} value={typeof selectedValue === 'string'
-          || typeof selectedValue === 'number'
-          ? selectedValue
-          : ''} disabled={resolvedDisabled} form={attributes.form} />
+      <input type="hidden" name={name ?? field?.name} value={selectedRaw ?? ''} disabled={resolvedDisabled} form={attributes.form} />
     {/if}
   {/if}
   {#if expanded}
@@ -1139,7 +1205,7 @@
         {@const data = option.data}
         {@const rowDisabled = info.attributes['aria-disabled'] === true}
         {@const rowSelected = option.value !== undefined
-          && (multiple ? selectedKeys.has(option.value) : option.value === selectedValue)}
+          && (multiple ? selectedKeys.has(option.value) : option.value === selectedRaw)}
         {@const content = selectDataContent(option)}
         {@const presentation = selectDataAttributes(option, fields)}
         {#if option.group}
@@ -1191,7 +1257,7 @@
             }}
           onclick={() => choose(option)}
         >
-          <span class={`${prefix}-item-option-content`}>{#if renderOption}{@render renderOption(getRenderOption(option), { index })}{:else}{content ?? ''}{/if}</span>{#if rowSelected}<span class={`${prefix}-item-option-state`}><Icon name="check" /></span>{/if}
+          <span class={`${prefix}-item-option-content`}>{#if renderOption}{@render renderOption(getRenderOption(option), { index })}{:else}<RenderContent value={content as RenderEmptyContent} />{/if}</span>{#if rowSelected}<span class={`${prefix}-item-option-state`}><Icon name="check" /></span>{/if}
         </button>
         {/if}
       {/snippet}

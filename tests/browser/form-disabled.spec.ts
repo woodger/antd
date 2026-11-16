@@ -15,7 +15,8 @@ test('Form disabled updates preserve native controls, selection and free Select 
   await page.goto('/?fixture=form-disabled');
   const select = page.getByRole('combobox', { name: 'Free select', exact: true });
   await select.click();
-  await page.getByRole('option', { name: 'Beta', exact: true }).click();
+  await page.locator('.ant-select-dropdown:visible .ant-select-item-option')
+    .filter({ hasText: /^Beta$/ }).click();
   const input = page.getByRole('textbox', { name: 'Input', exact: true });
   await input.fill('Draft edited');
   await input.evaluate((node: HTMLInputElement) => {

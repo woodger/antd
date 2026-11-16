@@ -22,9 +22,9 @@ type Assert<Value extends true> = Value;
 
 export type SelectDataContracts = [
   Assert<Equal<SelectProps<number>['options'], readonly SelectOption<number>[] | undefined>>,
-  Assert<Equal<SelectProps<number>['value'], number | undefined>>,
-  Assert<Equal<SelectProps<number, 'multiple'>['value'], number[] | undefined>>,
-  Assert<Equal<SelectProps<number, 'tags'>['value'], (number | string)[] | undefined>>,
+  Assert<Equal<SelectProps<number>['value'], number | null | undefined>>,
+  Assert<Equal<SelectProps<number, 'multiple'>['value'], number[] | null | undefined>>,
+  Assert<Equal<SelectProps<number, 'tags'>['value'], (number | string)[] | null | undefined>>,
   Assert<Equal<SelectFlattenOption<string, MappedOption>['data']['audit'], { source: string }>>,
   Assert<Equal<SelectFlattenOption<string, MappedOption>['label'], unknown>>,
   Assert<Equal<Parameters<NonNullable<

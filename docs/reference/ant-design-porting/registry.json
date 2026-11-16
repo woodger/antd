@@ -9506,7 +9506,39 @@
         "tests/browser/fixtures/SelectPrefixSSRFixtures.svelte",
         "tests/browser/select-prefix-metrics.ts",
         "tests/browser/select-prefix.spec.ts",
-        "tests/package/select-prefix.ssr.test.ts"
+        "tests/package/select-prefix.ssr.test.ts",
+        "src/lib/select-value.engine.ts",
+        "src/lib/select-value.engine.test.ts",
+        "tests/browser/fixtures/select-value-cases.ts",
+        "tests/browser/fixtures/select-value-live-cases.ts",
+        "tests/browser/fixtures/SelectValueCase.svelte",
+        "tests/browser/fixtures/SelectValueFixtures.svelte",
+        "tests/browser/fixtures/SelectValueTypes.svelte",
+        "tests/browser/fixtures/select-value.types.ts",
+        "tests/browser/fixtures/ant-design-select-value-reference.json.gz",
+        "tests/browser/fixtures/ant-design-select-value-ssr-reference.json",
+        "tests/browser/fixtures/ant-design-select-value-live-reference.json",
+        "tests/browser/fixtures/ant-design-select-value-cache-native-reference.json",
+        "tests/browser/select-value-metrics.ts",
+        "tests/browser/select-value-ssr-metrics.ts",
+        "tests/browser/select-value-driver.ts",
+        "tests/browser/select-value-live-driver.ts",
+        "tests/browser/select-value-reference.ts",
+        "tests/browser/select-value-receipts.ts",
+        "tests/browser/select-value-native.ts",
+        "tests/browser/select-value-assertions.ts",
+        "tests/browser/select-value.spec.ts",
+        "tests/browser/select-value-hydration.spec.ts",
+        "tests/browser/fixtures/select-value-hydration.server.ts",
+        "tests/browser/fixtures/select-value-hydration.client.ts",
+        "tests/browser/fixtures/select-value-hydration.html",
+        "tests/browser/fixtures/select-value-hydration.styles.client.ts",
+        "tests/browser/select-value-native.spec.ts",
+        "tests/package/select-value.ssr.test.ts",
+        "tests/browser/fixtures/ant-design-select-value-opacity-reference.json",
+        "tests/browser/select-value-opacity-metrics.mjs",
+        "tests/browser/select-value-opacity-metrics.d.mts",
+        "tests/browser/select-value-opacity.spec.ts"
       ],
       "features": [
         {
@@ -9920,14 +9952,14 @@
         },
         {
           "id": "extended-api",
-          "title": "LabelInValue, оставшиеся render/semantic/config и motion API",
+          "title": "Оставшиеся render/semantic/config и motion API",
           "state": "partial",
           "requiredForV1": false,
           "evidence": [
             "src/lib/select.types.ts",
             "src/lib/Select.svelte"
           ],
-          "note": "FieldNames, один уровень groups, raw OptionType/callbacks и option attrs реализованы отдельным raw-option-data этапом. LabelInValue/selected-value codec, optionLabelProp/labelRender, остальные renderers/callback/semantic/config/motion API остаются в работе. Native primitive binding/onValueChange, формы и согласованные адаптации сохраняются; deprecated props не возвращаются."
+          "note": "FieldNames/groups/raw OptionType и selected-value codec с labelInValue/optionLabelProp/labelRender реализованы отдельными этапами. Остальные renderers/callback/semantic/config/motion API остаются в работе. Native binding/onValueChange, формы и согласованные адаптации сохраняются; deprecated props не возвращаются."
         },
         {
           "id": "native-whitespace-tag",
@@ -10255,7 +10287,68 @@
             "tests/browser/fixtures/select-data-hydration.html",
             "tests/browser/fixtures/select-data-styles.client.ts"
           ],
-          "note": "Ant Design6.6.8/rc-select1.10.1: общий pipeline сохраняет исходные records, literal key/value/index fallback, отдельные mapped value/label, one-level groups, last-value callback winner и shallow-copy arguments без deprecated props getter. Generic raw OptionType не требует canonical полей. Title/className/CSS object и whitelist DOM/data/aria attrs листьев, className/title headers, группы в measured viewport. Все primary40/169, SSR40, diagnostic4/16, attrs10/38 и paired mappedARIA2/10 actual UMD traces независимо повторены побайтно. Native logical aria-selected исправляет доказанное virtual против nonvirtual Source противоречие; mapped token lookup исправляет потерю выбора при literal value чтении. Native label/NFKD filter и удалённый disabled selected cache используют отдельные whole public Source owners1/3 и1/6 без ledger filtering; historical a231 browser baseline сохранён. Старые unit корпуса tags/sort/tokens/count перенаправлены на живые raw engines; splitSelectTokens сохраняется также для TreeSelect. Проверены57 новых browser cases:40 полных raw traces,10 attrs,2 one-level diagnostics и mapped token correction,4 strict hydration. SSR40 сохраняет реальные pure sort calls4 без DOM/interactive effects. Hydra сохраняет DOM/method/ref identity и FormData; оба AC unmount сразу после повторного выбора отменяют queued MessageChannel close, все ресурсы и поздние callbacks отсутствуют. Отдельный production consumer40/169 использует только публичный пакет и stylesheet, без React/server/source/tests modules; DOM/refs/полный owner state стабильны после unmount и0/1000ms. Existing browser regression1604 подтверждён across runs; два устаревших ColorPicker locators исправлены и весь изменённый29-case spec проверен повторно. Primitive selected-value binding сохранён; labelInValue/rich selected-label codec/optionLabelProp/labelRender и прочий extended API остаются отдельным зависимым этапом."
+          "note": "Ant Design6.6.8/rc-select1.10.1: общий pipeline сохраняет исходные records, literal key/value/index fallback, отдельные mapped value/label, one-level groups, last-value callback winner и shallow-copy arguments без deprecated props getter. Generic raw OptionType не требует canonical полей. Title/className/CSS object и whitelist DOM/data/aria attrs листьев, className/title headers, группы в measured viewport. Все primary40/169, SSR40, diagnostic4/16, attrs10/38 и paired mappedARIA2/10 actual UMD traces независимо повторены побайтно. Native logical aria-selected исправляет доказанное virtual против nonvirtual Source противоречие; mapped token lookup исправляет потерю выбора при literal value чтении. Native label/NFKD filter и удалённый disabled selected cache используют отдельные whole public Source owners1/3 и1/6 без ledger filtering; historical a231 browser baseline сохранён. Старые unit корпуса tags/sort/tokens/count перенаправлены на живые raw engines; splitSelectTokens сохраняется также для TreeSelect. Проверены57 новых browser cases:40 полных raw traces,10 attrs,2 one-level diagnostics и mapped token correction,4 strict hydration. SSR40 сохраняет реальные pure sort calls4 без DOM/interactive effects. Hydra сохраняет DOM/method/ref identity и FormData; оба AC unmount сразу после повторного выбора отменяют queued MessageChannel close, все ресурсы и поздние callbacks отсутствуют. Отдельный production consumer40/169 использует только публичный пакет и stylesheet, без React/server/source/tests modules; DOM/refs/полный owner state стабильны после unmount и0/1000ms. Existing browser regression1604 подтверждён across runs; два устаревших ColorPicker locators исправлены и весь изменённый29-case spec проверен повторно. Primitive selected-value binding сохранён; selected-label codec перенесён отдельным этапом selected-value-labels. Прочий extended API остаётся отдельным объёмом."
+        },
+        {
+          "id": "selected-value-labels",
+          "title": "LabelInValue, optionLabelProp, labelRender и rich selected labels",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Select.svelte",
+            "src/lib/select.types.ts",
+            "src/lib/select-value.engine.ts",
+            "src/lib/select-value.engine.test.ts",
+            "src/lib/select-tag-overflow.engine.ts",
+            "src/lib/select-tag-text.engine.ts",
+            "tests/browser/fixtures/select-value-cases.ts",
+            "tests/browser/fixtures/select-value-live-cases.ts",
+            "tests/browser/fixtures/SelectValueCase.svelte",
+            "tests/browser/fixtures/SelectValueFixtures.svelte",
+            "tests/browser/fixtures/SelectValueTypes.svelte",
+            "tests/browser/fixtures/select-value.types.ts",
+            "tests/browser/fixtures/ant-design-select-value-reference.json.gz",
+            "tests/browser/fixtures/ant-design-select-value-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-select-value-live-reference.json",
+            "tests/browser/fixtures/ant-design-select-value-cache-native-reference.json",
+            "tests/browser/select-value-metrics.ts",
+            "tests/browser/select-value-ssr-metrics.ts",
+            "tests/browser/select-value-driver.ts",
+            "tests/browser/select-value-live-driver.ts",
+            "tests/browser/select-value-reference.ts",
+            "tests/browser/select-value-receipts.ts",
+            "tests/browser/select-value-native.ts",
+            "tests/browser/select-value-assertions.ts",
+            "tests/browser/select-value.spec.ts",
+            "tests/browser/select-value-hydration.spec.ts",
+            "tests/browser/fixtures/select-value-hydration.server.ts",
+            "tests/browser/fixtures/select-value-hydration.client.ts",
+            "tests/browser/fixtures/select-value-hydration.html",
+            "tests/browser/fixtures/select-value-hydration.styles.client.ts",
+            "tests/browser/select-value-native.spec.ts",
+            "tests/package/select-value.ssr.test.ts",
+            "readme.md",
+            "tests/browser/fixtures/ant-design-select-value-opacity-reference.json",
+            "tests/browser/select-value-opacity-metrics.mjs",
+            "tests/browser/select-value-opacity-metrics.d.mts",
+            "tests/browser/select-value-opacity.spec.ts"
+          ],
+          "note": "Antd6.6.8/rc-select1.10.1: четвёртый boolean generic сохраняет прежние Value/Mode/OptionType, primitive defaults и dynamic union; top-level null очищает выбор. Отдельные supplied/optionLabelProp/mapped/onChange и raw onSelect/onDeselect labels, Source key=value/current disabled/title, label-only cache и gesture-specific rendered-label feedback. LabelRender — чистый callback с nullish raw-value fallback и rich Snippet/array result, включая реальный SSR. Selected single class/style/title берутся из первого совпадения текущей filtered/sorted выдачи, label/raw callback winner — из последней value map. Default/uncontrolled label snapshot переживает live props, новый scope сохраняется после удаления label API; legacy primitive label refresh остаётся прежним. Rich labels не stringified в input и не усекаются maxTagTextLength; tagRender/omitted tags сохраняют Node. Primary48/278, live2/17, SSR48/20 actual pure calls и cached-disabled public Source owner1/6 независимо повторены побайтно; исходные18diagnostics сохранены. Strict hydration6 проверяет SSR node/ref/method identity, raw FormData, connected trusted blur, pending resource cancellation и полные owner/renderer ledgers после0/1000ms. Native required4 проверяет валидность searchable selected rich/false/empty labels и numeric0, с valueMissing после clear. AutoComplete не получает исключённые им labelInValue/optionLabelProp; остальные Select API остаются в extended-api. Отдельный Source opacity trace1/5 фиксирует действительную paint opacity текста, parent/child CSS и полные ancestor chains: открытый selected label затемняется один раз до0.25. Renderer слой не добавляет второе затемнение; prefix query color использует текущий private namespace. Pagination showTitle=false по-прежнему подавляет generated title, сохраняя overrides вложенного Select."
+        },
+        {
+          "id": "native-selected-value-contracts",
+          "title": "Native selected input/caret, reactive labels и distinct string/number values",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "tests/browser/select-value-native.ts",
+            "tests/browser/fixtures/select-value-native-mixed-baseline.json",
+            "tests/browser/fixtures/select-virtual-query-native-baseline.json",
+            "tests/browser/select-value-native.spec.ts",
+            "tests/browser/select-value-hydration.spec.ts",
+            "readme.md"
+          ],
+          "note": "Согласованные Native границы сохранены: one-way local shadow и bind:value, текущие primitive labels из options без новых label API, scalar closed input/caret и closed controlled query. Parsed SSR input начинает с caret0, CSR setter — с конца scalar label; Snippet/array остаются DOM. Removed-disabled cache меняет только UI guard; настоящий labelRender получает текущие Source metadata. Его whole public Source owner сохраняет все callbacks и реальные tag/key calls. Source при string0 model после reopen показывает physical selected у numeric0; независимо запущенный старый HEAD656f8b7 с1295 pinned files подтверждает прежний корректный Native distinct-value contract. Сравнение меняет только два guarded physical selected flags, полный Source model/events/query/raw остаётся неизменным. Framework scope class и authored rich React/Svelte representation проверяются отдельно с raw receipts; deprecated props getter исключается только после descriptor guard."
         }
       ]
     },

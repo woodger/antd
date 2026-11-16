@@ -3,6 +3,7 @@
   import { untrack } from 'svelte';
   import { getSelectComparator, type SelectSortSample } from './select-sort-cases';
 
+  const MixedSelect = Select<string | number>;
   let { sample }: { sample: SelectSortSample } = $props();
   let values = $state<(string | number)[]>(untrack(() => [...sample.values]));
   let singleValue = $state<string | number>();
@@ -54,7 +55,7 @@
   <form aria-label="Sorted native form" onsubmit={event => event.preventDefault()}>
     <div data-select-sort>
       {#if sample.mode === 'single'}
-        <Select {...componentProps} bind:value={singleValue} />
+        <MixedSelect {...componentProps} bind:value={singleValue} />
       {:else}
         <Select {...componentProps} mode={sample.mode === 'tags' ? 'tags' : 'multiple'}
           bind:value={values} />

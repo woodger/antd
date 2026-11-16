@@ -15,12 +15,12 @@ describe('Select tags public package', () => {
 
   it('renders primitive tags and one native field per selected value before hydration', () => {
     expectTypeOf<SelectProps<number, 'tags'>['value']>()
-      .toEqualTypeOf<(number | string)[] | undefined>();
+      .toEqualTypeOf<(number | string)[] | null | undefined>();
     expectTypeOf<NonNullable<SelectProps<number, 'tags'>['onValueChange']>>()
       .parameter(0).toEqualTypeOf<(number | string)[]>();
     expectTypeOf<SelectProps<number, 'multiple'>['value']>()
-      .toEqualTypeOf<number[] | undefined>();
-    expectTypeOf<SelectProps<number>['value']>().toEqualTypeOf<number | undefined>();
+      .toEqualTypeOf<number[] | null | undefined>();
+    expectTypeOf<SelectProps<number>['value']>().toEqualTypeOf<number | null | undefined>();
 
     const defaults = Object.freeze([0, '0', 'free', 'free']);
     const body = render(Select<number, 'tags'>, { props: {

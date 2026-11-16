@@ -47,8 +47,35 @@ export interface SelectFieldNames {
   groupLabel?: string;
 }
 
-/** Скрытый tag в maxTagPlaceholder; label не усечён, key совпадает с typed value. */
-export interface SelectOmittedTag<Value extends string | number = string> extends SelectOption<Value> {
+/** Labeled payload сохраняет raw label, включая supplied/mapped пользовательские поля. */
+export interface SelectLabelValue<Value extends string | number = string> {
+  value: Value;
+  label?: unknown;
+  /** Входной key не заменяет внутренний key=value. */
+  key?: SelectScrollKey;
+}
+
+/** Label renderer получает metadata до nullish fallback; raw option сюда не добавляется. */
+export interface SelectLabelRenderInfo<Value extends string | number = string> {
+  label: unknown;
+  value: Value;
+  key: Value;
+  disabled: boolean | undefined;
+  title: unknown;
+}
+
+export type SelectValueElement<Value extends string | number, LabelInValue extends boolean> =
+  LabelInValue extends true ? SelectLabelValue<Value> : Value;
+export type SelectValueModel<Value extends string | number, Mode extends 'multiple' | 'tags' | undefined,
+  LabelInValue extends boolean> = Mode extends 'tags' ? SelectValueElement<Value | string, LabelInValue>[]
+    : Mode extends 'multiple' ? SelectValueElement<Value, LabelInValue>[] : SelectValueElement<Value, LabelInValue>;
+
+/** Скрытый tag после labelRender; label не усечён, key совпадает с typed value. */
+export interface SelectOmittedTag<Value extends string | number = string, Label = unknown> {
+  value: Value;
+  label: Label;
+  disabled?: boolean;
+  title?: unknown;
   key: Value;
 }
 
@@ -107,7 +134,8 @@ export interface SelectSearchConfig<
 export interface SelectProps<
   Value extends string | number = string,
   Mode extends 'multiple' | 'tags' | undefined = undefined,
-  OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>
+  OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>,
+  LabelInValue extends boolean = false
 > extends Omit<
   HTMLInputAttributes,
   'value' | 'size' | 'class' | 'onchange' | 'oninput' | 'type' | 'children'
@@ -120,6 +148,12 @@ export interface SelectProps<
   options?: readonly OptionType[];
   /** Отображает исходные поля value/label/options/groupLabel; группы имеют один уровень. */
   fieldNames?: SelectFieldNames;
+  /** Выбранная подпись из raw option; пустая строка использует итоговый fieldNames.label. */
+  optionLabelProp?: string;
+  /** Меняет value/defaultValue и исходящие selection callbacks на { label, value }. */
+  labelInValue?: LabelInValue;
+  /** Чистый display renderer; возвращаемый Snippet рендерится как Svelte content. */
+  labelRender?: (info: SelectLabelRenderInfo<Mode extends 'tags' ? Value | string : Value>) => RenderEmptyContent;
   /** Пассивное содержимое пункта; выбранный label и native option button сохраняются. */
   optionRender?: Snippet<[
     SelectFlattenOption<Mode extends 'tags' ? Value | string : Value, OptionType>,
@@ -159,11 +193,11 @@ export interface SelectProps<
   /** Рендер обычных и сводного tags в multiple/tags; single игнорирует Snippet. */
   tagRender?: Snippet<[SelectTagInfo<Mode extends 'tags' ? Value | string : Value>]>;
   /** Bind:value; multiple сохраняет Value[], tags допускает также новые string values. */
-  value?: (Mode extends 'tags' ? (Value | string)[] : Mode extends 'multiple' ? Value[] : Value)
-    | undefined;
+  value?: SelectValueModel<Value, Mode, LabelInValue> | null;
   /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
-  defaultValue?: Mode extends 'tags' ? readonly (Value | string)[]
-    : Mode extends 'multiple' ? readonly Value[] : Value;
+  defaultValue?: (Mode extends 'tags' ? readonly SelectValueElement<Value | string, LabelInValue>[]
+    : Mode extends 'multiple' ? readonly SelectValueElement<Value, LabelInValue>[]
+      : SelectValueElement<Value, LabelInValue>) | null;
   size?: ComponentSize;
   /** Приоритет: variant, Form, Select config, global variant, outlined. */
   variant?: 'outlined' | 'filled' | 'borderless' | 'underlined';
@@ -183,18 +217,17 @@ export interface SelectProps<
   /** @defaultValue false */
   allowClear?: boolean;
   status?: 'error' | 'warning';
-  onValueChange?: (value: Mode extends 'tags' ? (Value | string)[]
-    : Mode extends 'multiple' ? Value[] : Value | undefined) => void;
+  onValueChange?: (value: SelectValueModel<Value, Mode, LabelInValue>
+    | (Mode extends 'multiple' | 'tags' ? never : undefined)) => void;
   /** Изменение последовательности values; второй аргумент сохраняет исходные поля options. */
   onChange?: (
-    value: Mode extends 'tags' ? (Value | string)[]
-      : Mode extends 'multiple' ? Value[] : Value | undefined,
+    value: SelectValueModel<Value, Mode, LabelInValue> | (Mode extends 'multiple' | 'tags' ? never : undefined),
     option: Mode extends 'multiple' | 'tags' ? OptionType[] : OptionType | undefined
   ) => void;
   /** Выбор пункта, включая повторный single выбор; option — поверхностная копия raw record. */
-  onSelect?: (value: Mode extends 'tags' ? Value | string : Value, option: OptionType) => void;
+  onSelect?: (value: SelectValueElement<Mode extends 'tags' ? Value | string : Value, LabelInValue>, option: OptionType) => void;
   /** Снятие выбора в multiple/tags; очистка всех значений не вызывает callback. */
-  onDeselect?: (value: Mode extends 'tags' ? Value | string : Value, option: OptionType) => void;
+  onDeselect?: (value: SelectValueElement<Mode extends 'tags' ? Value | string : Value, LabelInValue>, option: OptionType) => void;
   /** Пользовательская очистка; вызывается до onChange. */
   onClear?: () => void;
   onOpenChange?: (open: boolean) => void;

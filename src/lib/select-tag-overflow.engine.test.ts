@@ -48,4 +48,14 @@ describe('Select numeric tag count source boundaries', () => {
     expect(getResponsiveTagCount([50], 49, 20)).toBe(0);
     expect(getResponsiveTagCount([], 0, 20)).toBe(0);
   });
+
+  it('retains rich labels and current title metadata in omitted values without cloning content', () => {
+    const label = Object.freeze(['Alpha', 0]);
+    const option = Object.freeze({ value: 'a', label, disabled: false, title: 'Current title' });
+    const result = getSelectTagOverflow([option], 0);
+
+    expect(result.omitted).toEqual([{ label, value: 'a', key: 'a', disabled: false, title: 'Current title' }]);
+    expect(result.omitted[0].label).toBe(label);
+    expect(Object.keys(result.omitted[0])).toEqual(['label', 'value', 'key', 'disabled', 'title']);
+  });
 });

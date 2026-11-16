@@ -26,7 +26,9 @@ describe('Calendar theme public package SSR', () => {
           expect(body).toContain('role="combobox"');
           expect(body).toContain('title="2024-09-15"');
           expect(body).toContain('aria-selected="true"');
-          expect(body).toContain('intrinsic-label');
+          const selectedLabels = [...body.matchAll(/<div\b[^>]*\bdata-ant-select-value(?=[\s=>])[^>]*>([\s\S]*?)<\/div>/g)]
+            .map(match => match[1].replace(/<!--[\s\S]*?-->/g, ''));
+          expect(selectedLabels).toContain('2024');
           expect(body).not.toContain('_autoWidth');
           expect(body).not.toContain('[object Object]');
           expect(vi.getTimerCount()).toBe(0);

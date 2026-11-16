@@ -26,4 +26,14 @@ describe('Select and Cascader tag text source boundaries', () => {
     expect(getSelectTagText('e\u0301clair', 1)).toBe('e...');
     expect(getSelectTagText('original')).toBe('original');
   });
+
+  it('truncates numeric labels and leaves rich labels opaque', () => {
+    const content = ['Alpha', 0];
+    const snippet = () => { throw Error('Tag truncation must not execute a snippet'); };
+    expect(getSelectTagText(1234, 2)).toBe('12...');
+    expect(getSelectTagText(0)).toBe(0);
+    expect(getSelectTagText(content, 1)).toBe(content);
+    expect(getSelectTagText(snippet, 1)).toBe(snippet);
+    expect(getSelectTagText(false, 0)).toBe(false);
+  });
 });

@@ -2204,5 +2204,10 @@
     "id": "select-data",
     "module": "./SelectDataFixtures.svelte",
     "root": "select-data-fixture"
+  },
+  {
+    "id": "select-value",
+    "module": "./SelectValueFixtures.svelte",
+    "root": "select-value-fixture"
   }
 ]
