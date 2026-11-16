@@ -83,6 +83,7 @@ export type {
   TreeSelectTreeNodeProps,
   TreeSelectRawValue,
   TreeSelectLabel,
+  TreeSelectCheckableContent,
   TreeSelectSuffixInfo,
   TreeSelectSuffix,
   TreeSelectAllowClear,

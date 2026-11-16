@@ -6450,6 +6450,19 @@ Enter игнорирует активный узел, удалённый из tr
 значения по-прежнему можно удалить через теги.
 Multiple включает массивы. TreeCheckable включает checkbox и multiple;
 treeCheckStrictly также включает checkbox/multiple и принудительно labelInValue.
+`treeCheckable` принимает `TreeSelectCheckableContent`: прежние boolean, текст,
+числа, bigint, Snippet, вложенные массивы/iterable и Promise. Используется только
+JavaScript truthiness: пустые массивы и iterable, любой Snippet и Promise включают
+стандартные checkbox; false/null/undefined, пустая строка, ±0, NaN и 0n не включают.
+Содержимое не выводится, snippet не вызывается, iterable не обходится и Promise
+не ожидается. `classNames`/`styles` получают исходное значение и его reference,
+включая отсутствие prop и явно переданное undefined. Типы отображаемых подписей
+не расширяются. Явное `multiple=false` не выключает truthy `treeCheckable`;
+исходное development-предупреждение Ant Design не воспроизводится.
+При смене режима Native сохраняет прежние root/editor и публичные методы,
+а также фокус; React Source при такой смене может пересоздать editor.
+При `treeCheckStrictly` с falsy `treeCheckable` Native сохраняет прежний
+внутренний элемент checkbox; в Source его нет.
 Параметр типа TreeSelectProps<ValueType, Data> сохраняет конкретный тип callback value;
 режим и переданный тип должны соответствовать друг другу, как в upstream.
 

@@ -211,10 +211,10 @@
   let data = $derived(componentProps.treeData == null && _nodes
     ? _nodes : treeSelectData(treeData, treeDataSimpleMode));
   let index = $derived(treeSelectIndex(data, fieldNames));
-  let checkable = $derived(treeCheckable || treeCheckStrictly);
-  let isMultiple = $derived(checkable || multiple);
+  let checkable = $derived(Boolean(treeCheckable || treeCheckStrictly));
+  let isMultiple = $derived(Boolean(checkable || multiple));
   let labeled = $derived(treeCheckStrictly || labelInValue);
-  let conduction = $derived(treeCheckable && !treeCheckStrictly);
+  let conduction = $derived(Boolean(treeCheckable && !treeCheckStrictly));
   let strategy = $derived(!treeCheckable ? 'SHOW_ALL' : showCheckedStrategy ?? 'SHOW_CHILD');
   let checks = $derived(treeSelectChecks(items, conduction, index));
   let display = $derived(

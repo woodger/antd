@@ -11332,7 +11332,7 @@
       "name": "TreeSelect",
       "category": "data-entry",
       "scope": "target",
-      "scopeReason": "TreeSelect по Ant Design 6.6.8 и rc-tree-select 1.16.1. Перенесены значения, check/стратегии, поиск, loadData, fieldNames/simple mode, generic data, title expansion, maxCount, tag display, renderer labels, popupRender, control slots, semantic config, переключатели узлов, виртуализация, scrollTo и декларативные TreeNode со свойствами строк, focus actions, trigger events, pointer toggle и tokenSeparators; showScrollBar принят с исходным no-op; components.root/input перенесены через Svelte renderers с composite refs, attrs/event chaining и Form association. Inherited popupAlign/builtinPlacements сохраняют Source alignment cache и CSS-frame geometry в существующем Native top layer. Inherited animation/transitionName и исходные popup motion phases перенесены с сохранением CSS clocks, alignment cache и Native DOM. Ant wrapper исключает treeMotion из public API и передаёт null, отключая list motion внутреннего дерева; Native сохраняет это поведение.",
+      "scopeReason": "TreeSelect по Ant Design 6.6.8 и rc-tree-select 1.16.1. Перенесены значения, check/стратегии, поиск, loadData, fieldNames/simple mode, generic data, title expansion, maxCount, tag display, renderer labels, popupRender, control slots, semantic config, переключатели узлов, виртуализация, scrollTo и декларативные TreeNode со свойствами строк, focus actions, trigger events, pointer toggle и tokenSeparators; showScrollBar принят с исходным no-op; components.root/input перенесены через Svelte renderers с composite refs, attrs/event chaining и Form association. Inherited popupAlign/builtinPlacements сохраняют Source alignment cache и CSS-frame geometry в существующем Native top layer. Inherited animation/transitionName и исходные popup motion phases перенесены с сохранением CSS clocks, alignment cache и Native DOM. Ant wrapper исключает treeMotion из public API и передаёт null, отключая list motion внутреннего дерева; Native сохраняет это поведение. TreeCheckable принимает исходный content union через отдельный Svelte-тип, использует только truthiness и сохраняет original semantic props.",
       "upstreamPath": "components/tree-select",
       "reviewedRevision": "984592267de88fbf9cdaecc96a56629e721c709d",
       "exports": [
@@ -11563,7 +11563,28 @@
         "tests/browser/fixtures/tree-select-motion-leave-cases.ts",
         "tests/browser/fixtures/ant-design-tree-select-motion-leave-reference.json",
         "tests/browser/tree-select-motion-leave.spec.ts",
-        "tests/browser/tree-select-motion-visibility.spec.ts"
+        "tests/browser/tree-select-motion-visibility.spec.ts",
+        "src/lib/index.ts",
+        "tests/browser/fixtures/tree-select-checkable-cases.ts",
+        "tests/browser/fixtures/tree-select-checkable.types.ts",
+        "tests/browser/fixtures/TreeSelectCheckableCase.svelte",
+        "tests/browser/fixtures/TreeSelectCheckableFixtures.svelte",
+        "tests/browser/fixtures/ant-design-tree-select-checkable-reference.json",
+        "tests/browser/fixtures/ant-design-tree-select-checkable-diagnostic-reference.json",
+        "tests/browser/fixtures/ant-design-tree-select-checkable-ssr-reference.json",
+        "tests/browser/fixtures/ant-design-tree-select-checkable-native-reference.json",
+        "tests/browser/tree-select-checkable-metrics.ts",
+        "tests/browser/tree-select-checkable-driver.ts",
+        "tests/browser/tree-select-checkable-native.ts",
+        "tests/browser/tree-select-checkable.spec.ts",
+        "tests/browser/tree-select-checkable-ssr-metrics.ts",
+        "tests/package/tree-select-checkable.ssr.test.ts",
+        "tests/browser/fixtures/TreeSelectCheckableHydration.svelte",
+        "tests/browser/fixtures/tree-select-checkable-hydration.client.ts",
+        "tests/browser/fixtures/tree-select-checkable-hydration.server.ts",
+        "tests/browser/fixtures/tree-select-checkable-hydration.html",
+        "tests/browser/tree-select-checkable-hydration.spec.ts",
+        "tests/browser/fixtures/tree-select-checkable-styles.client.ts"
       ],
       "features": [
         {
@@ -11590,6 +11611,70 @@
             "tests/browser/tree-select.spec.ts"
           ],
           "note": "SHOW_ALL/PARENT/CHILD как TREE_SELECT_SHOW_*; display отдельно от полных checked keys. Search сохраняет предков и всех потомков совпавшего родителя, default filter prop=value, predicate/bypass и autoClearSearchValue в showSearch object. Проверка фильтрованного родителя использует полное исходное дерево."
+        },
+        {
+          "id": "checkable-content",
+          "title": "Содержимое treeCheckable, исходная truthiness и semantic identity",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/tree-select.types.ts",
+            "src/lib/TreeSelectControl.svelte",
+            "src/lib/index.ts",
+            "tests/browser/fixtures/tree-select-checkable-cases.ts",
+            "tests/browser/fixtures/tree-select-checkable.types.ts",
+            "tests/browser/fixtures/TreeSelectCheckableCase.svelte",
+            "tests/browser/fixtures/TreeSelectCheckableFixtures.svelte",
+            "tests/browser/fixtures/ant-design-tree-select-checkable-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-checkable-diagnostic-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-checkable-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-checkable-native-reference.json",
+            "tests/browser/tree-select-checkable-metrics.ts",
+            "tests/browser/tree-select-checkable-driver.ts",
+            "tests/browser/tree-select-checkable-native.ts",
+            "tests/browser/tree-select-checkable.spec.ts",
+            "tests/browser/tree-select-checkable-ssr-metrics.ts",
+            "tests/package/tree-select-checkable.ssr.test.ts",
+            "tests/browser/fixtures/TreeSelectCheckableHydration.svelte",
+            "tests/browser/fixtures/tree-select-checkable-hydration.client.ts",
+            "tests/browser/fixtures/tree-select-checkable-hydration.server.ts",
+            "tests/browser/fixtures/tree-select-checkable-hydration.html",
+            "tests/browser/tree-select-checkable-hydration.spec.ts",
+            "readme.md",
+            "tests/browser/fixtures/tree-select-checkable-styles.client.ts"
+          ],
+          "note": "Pinned Antd6.6.8/rc-tree-select1.16.1 и @types/react 19.2.18 declarations: отдельный TreeSelectCheckableContent принимает boolean, text/number/bigint, Snippet, рекурсивные arrays/Iterable и Promise с исходной awaited-value границей. React elements/portals адаптированы к существующему Snippet API; отображаемые TreeSelectLabel и node.checkable не расширены. Любое truthy содержимое включает стандартные checkbox/multiple, включая пустые arrays/iterable и Promise; false/null/undefined/empty string/±0/NaN/0n не включают. Содержимое не выводится, Snippet не вызывается, iterator/then не читаются. ClassNames/styles получают исходное значение, own-key presence и reference, включая повторное использование после смены режима. Raw checkable продолжает задавать strategy/tagRender gates; strict-only и maxCount сохраняют исходные отдельные правила.37 actual UMD cases и отдельный explicit multiple=false diagnostic,38 DOM-free SSR, live identity/query/caret, custom root/input и FormData покрывают этот контракт. Реальные Source development warnings о форме controlled value и конфликте multiple=false сохранены в эталонах; Native не добавляет React diagnostics."
+        },
+        {
+          "id": "native-checkable-mode-identity",
+          "title": "Существующие Native refs и focus при смене checkable режима",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TreeSelectControl.svelte",
+            "tests/browser/tree-select-checkable-native.ts",
+            "tests/browser/tree-select-checkable.spec.ts",
+            "tests/browser/tree-select-checkable-hydration.spec.ts",
+            "tests/browser/fixtures/ant-design-tree-select-checkable-reference.json",
+            "tests/browser/fixtures/ant-design-tree-select-checkable-native-reference.json",
+            "readme.md"
+          ],
+          "note": "Raw React Source пересоздаёт editor/его parent при single↔multiple и теряет focus; последующий пользовательский click добавляет focus callback. Native сохраняет прежние root/editor/parent/control и identity публичных методов, как independently observed на c293713 с boolean true↔false до расширения типа. Primary Source37 не изменён; два actual Source public-owner counterparts восстанавливают focus через public ref.focus только после замены focused editor и не публикуют callback собственного восстановления. Все остальные focus/blur и selection events сохраняются. Native observer helper меняет только доказанные identity fields; общие view/events берутся из actual counterparts без event filters. Существующие Native closed-single label/caret и synchronous connected blur при unmount остаются отдельными boundaries, поздние callbacks запрещены."
+        },
+        {
+          "id": "native-strict-only-checkbox",
+          "title": "Существующий Native checkbox inner в strict-only режиме",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TreeSelectControl.svelte",
+            "src/lib/Tree.svelte",
+            "tests/browser/tree-select-checkable-native.ts",
+            "tests/browser/tree-select-checkable.spec.ts",
+            "tests/browser/fixtures/ant-design-tree-select-checkable-reference.json",
+            "readme.md"
+          ],
+          "note": "Ant wrapper вставляет standard checkbox inner только при truthy raw treeCheckable. В strict-only режиме raw falsy flag и treeCheckStrictly=true дают rc-tree boolean checkable=true: checkbox outer/state/events сохраняются, inner отсутствует. Native сохраняет прежний внутренний элемент каждого checkbox, независимо подтверждённый actual c293713 Control с boolean false/strict=true до этого изменения. Expected helper корректирует только standardCheckboxCount по числу actual Source checkbox outer для strict-only-falsy; nodes, checks, model, semantic original и callbacks сравниваются без изменений. Raw Source эталон сохранён. Перенос content-valued treeCheckable не меняет markup standalone Tree или его boolean checkable API."
         },
         {
           "id": "async-keyboard",

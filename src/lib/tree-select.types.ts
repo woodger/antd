@@ -15,6 +15,9 @@ export type TreeSelectPopupAlign = Omit<PopupSourceAlign, '_experimental'>;
 export type TreeSelectRawValue = string | number;
 export type TreeSelectLabel = string | number | boolean | null | undefined | Snippet
   | readonly TreeSelectLabel[];
+type TreeSelectCheckableValue = TreeSelectLabel | bigint | Iterable<TreeSelectCheckableContent>;
+/** Исходное содержимое checkbox используется только как флаг, без render/iteration/await. */
+export type TreeSelectCheckableContent = TreeSelectCheckableValue | Promise<TreeSelectCheckableValue>;
 export interface TreeSelectSuffixInfo {
   searchValue: string;
   open: boolean;
@@ -167,8 +170,10 @@ export interface TreeSelectProps<
   defaultValue?: ValueType;
   /** @defaultValue false */
   multiple?: boolean;
-  /** @defaultValue false */
-  treeCheckable?: boolean;
+  /** Truthy содержимое включает стандартные checkbox; содержимое и snippet не выводятся.
+   * @defaultValue false
+   */
+  treeCheckable?: TreeSelectCheckableContent;
   /** Независимые checkbox; также включает labelInValue. */
   treeCheckStrictly?: boolean;
   /** @defaultValue false */

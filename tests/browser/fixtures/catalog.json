@@ -2169,5 +2169,10 @@
     "id": "form-feedback-autocomplete",
     "module": "./FormFeedbackAutoCompleteFixtures.svelte",
     "root": "form-feedback-autocomplete-fixture"
+  },
+  {
+    "id": "tree-select-checkable",
+    "module": "./TreeSelectCheckableFixtures.svelte",
+    "root": "tree-select-checkable-fixture"
   }
 ]
