@@ -25,6 +25,7 @@
   import { connectPopup } from './popup.dom';
   import { createTreeSelectAlign } from './tree-select-align.dom';
   import { createOverlayStyle } from './overlay-style.model.svelte';
+  import { selectPopupHeightInsetVariable, selectPopupMaxHeight, syncSelectPopupHeight } from './select-popup-height.dom';
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useComponentTheme } from './theme-component.svelte';
@@ -52,7 +53,7 @@
     defaultActiveFirstOption = false,
     allowClear = false,
     notFoundContent,
-    popupMatchSelectWidth = true,
+    popupMatchSelectWidth,
     listHeight = 256,
     size,
     status,
@@ -132,19 +133,20 @@
   let popupPlacement = $state<string>();
   let mounted = $state(false);
   const anchorWidthVariable = '--ant-native-auto-complete-anchor-width';
+  let matchedWidth = $derived(popupMatchSelectWidth ?? config.popupMatchSelectWidth ?? true);
   let popupLayers = $derived([
     componentTheme.style,
-    `max-height:${listHeight}px`,
-    `${popupMatchSelectWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`,
-    typeof popupMatchSelectWidth === 'number' ? `width:${popupMatchSelectWidth}px` : undefined
+    selectPopupMaxHeight(listHeight),
+    `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`,
+    typeof matchedWidth === 'number' ? [['width', `${matchedWidth}px`]] as const : undefined
   ]);
-  const popupStyle = createOverlayStyle(() => popupLayers);
+  const popupStyle = createOverlayStyle(() => popupLayers, anchorWidthVariable, () => visible);
   const portal = createPopupContainer(() => ({
     open: visible,
     reference: root,
     getPopupContainer: getPopupContainer || config.getPopupContainer,
     themeStyle: serializeInlineStyleLayers(popupLayers),
-    preserveVariables: [anchorWidthVariable]
+    preserveVariables: [anchorWidthVariable, selectPopupHeightInsetVariable]
   }));
   let enterLock = false;
   let pendingClearClose: MessageChannel | undefined;
@@ -220,7 +222,10 @@
       allowOffscreenAnchor: true,
       anchorWidthVariable,
       getAnchorWidth: () => source.width,
-      getPosition: source.position,
+      getPosition: (anchor, popup, viewport) => {
+        syncSelectPopupHeight(node);
+        return source.position(anchor, popup, viewport);
+      },
       applyPosition: position => source.commitFrame(() => popupStyle.position(position, source.style)),
       onAlign: position => { popupPlacement = position.alignedPlacement; },
       onPlacement: () => { },
@@ -484,6 +489,7 @@
     {#if typeof allowClear === 'object' && allowClear.clearIcon}{@render allowClear.clearIcon()}{:else}<Icon name="close" />{/if}
   </button>{/if}
   {#if mounted}
+    {@const initialPopupStyle = untrack(() => popupStyle.initialStyle())}
     <div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
       data-ant-auto-complete-source-popup={Boolean(componentTheme.className) && entries.length > 0 || undefined}
       bind:this={popup} popover="manual" hidden={!visible || !shown} id={`${controlId}-list`} role="listbox"
@@ -491,7 +497,7 @@
           componentTheme.className && entries.length > 0 && `${prefix}-source-popup`,
           componentTheme.className && config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
           popupPlacement && `${prefix}-dropdown-placement-${popupPlacement}`,
-          classNames?.popup?.root]} dir={config.direction}
+          classNames?.popup?.root]} dir={config.direction} style={initialPopupStyle}
       {@attach popupStyle.attach}
       {@attach node => connectComponentTheme(node, componentTheme.style)}
       {@attach portal}

@@ -46,6 +46,9 @@
   @supports (field-sizing: content) {
     .color-fields :global(.color-picker-format [data-ant-select-input]) { field-sizing: content; width: auto; }
   }
+  /* Source color-picker/style/input.ts: compact options through the preserved Select wrapper. */
+  .color-fields :global(.color-picker-format > [data-ant-select-control][data-ant-select-single] [data-ant-select-dropdown] [data-ant-select-item]) { min-height: auto; }
+  .color-fields :global(.color-picker-format > [data-ant-select-control][data-ant-select-single] [data-ant-select-dropdown] [data-ant-select-item] > span:first-child) { font-size: var(--ant-font-size-sm); line-height: var(--ant-line-height-sm); }
   .color-fields :global([data-ant-input-number-size="small"]) { height: calc(var(--ant-font-size) + 10px); }
   .color-fields :global([data-color-picker-channels] input[role="spinbutton"]) { height: calc(var(--ant-font-size-sm) + 8px); }
 </style>
@@ -54,6 +57,7 @@
   {#if !disabledFormat}
     <Select bind:value={() => colorFormat, () => {}} variant="borderless"
       size="small" aria-label="Color format" placement="bottomRight"
+      popupMatchSelectWidth={68} getPopupContainer={current => current}
       class={`${prefixCls}-format-select color-picker-format`}
       style="min-width:0;width:max-content;flex:none;margin-inline-end:var(--ant-margin-xs)"
       options={['hex', 'hsb', 'rgb'].map(value => ({ value, label: value.toUpperCase() }))}

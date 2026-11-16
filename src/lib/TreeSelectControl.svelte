@@ -385,9 +385,9 @@
     !visible ? 'pointer-events:none' : undefined,
     popupMotionState.style,
     semantics.popupRootStyle,
-    typeof matchedWidth === 'number' ? `width:${matchedWidth}px` : undefined
+    typeof matchedWidth === 'number' ? [['width', `${matchedWidth}px`]] as const : undefined
   ]);
-  const popupStyle = createOverlayStyle(() => popupLayers);
+  const popupStyle = createOverlayStyle(() => popupLayers, anchorWidthVariable, () => visible);
   const portal = createPopupContainer(() => ({
     open: visible,
     reference: root,

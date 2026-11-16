@@ -2184,5 +2184,15 @@
     "id": "popup-overflow-smoke",
     "module": "./PopupOverflowSmokeFixtures.svelte",
     "root": "popup-overflow-smoke-fixture"
+  },
+  {
+    "id": "popup-width",
+    "module": "./PopupWidthFixtures.svelte",
+    "root": "popup-width-fixture"
+  },
+  {
+    "id": "popup-width-nested",
+    "module": "./PopupWidthNestedFixtures.svelte",
+    "root": "popup-width-nested-fixture"
   }
 ]

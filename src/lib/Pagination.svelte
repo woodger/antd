@@ -416,6 +416,8 @@
             {#if sizeRenderer}{@render sizeRenderer(sizeInfo)}
             {:else}<Select
               showSearch
+              popupMatchSelectWidth={false}
+              getPopupContainer={trigger => trigger.parentElement ?? trigger.ownerDocument.body}
               {...selectConfig} options={selectConfig.options ?? sizeOptions}
               size={resolvedSize}
               disabled={sizeDisabled} aria-label={selectConfig['aria-label'] ?? strings.pageSize}

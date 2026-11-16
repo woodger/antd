@@ -66,7 +66,8 @@ test('Calendar keeps the intrinsic year editor and open options while token widt
     const year = full.locator('.ant-picker-calendar-year-select');
     const input = year.getByRole('combobox');
     await input.click();
-    const option = year.getByRole('option', { name: '2024', exact: true });
+    const popup = full.locator('.ant-picker-calendar-header').getByRole('listbox');
+    const option = popup.getByRole('option', { name: '2024', exact: true });
     const originalInput = await input.elementHandle();
     const originalOption = await option.elementHandle();
 
@@ -74,7 +75,7 @@ test('Calendar keeps the intrinsic year editor and open options while token widt
       .dispatchEvent('click');
 
     await expect(year).toHaveCSS('width', '135px');
-    await expect(year.getByRole('listbox')).toHaveCSS('width', '135px');
+    await expect(popup).toHaveCSS('width', '135px');
     expect(await input.evaluate((node, old) => node === old, originalInput)).toBe(true);
     expect(await option.evaluate((node, old) => node === old, originalOption)).toBe(true);
     await expect(input).toBeFocused();
@@ -82,7 +83,7 @@ test('Calendar keeps the intrinsic year editor and open options while token widt
     await expect(option).toHaveAttribute('aria-selected', 'true');
     await expect(host.getByLabel('Calendar theme events normal', { exact: true })).toHaveText('[]');
 
-    await year.getByRole('option', { name: '2025', exact: true }).click();
+    await popup.getByRole('option', { name: '2025', exact: true }).click();
 
     await expect(input).toHaveValue('2025');
     await expect(host.getByLabel('Calendar theme events normal', { exact: true }))

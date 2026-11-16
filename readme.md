@@ -9915,9 +9915,13 @@ Open/defaultOpen задают controlled/uncontrolled popup. Без options и �
 notFoundContent popup скрыт даже при open=true. SSR оставляет его закрытым до
 mount, как rc-select useOpen. OnOpenChange получает запрос на смену открытого
 состояния, включая отклонённый controlled open=false запрос.
-PopupMatchSelectWidth — boolean/число, listHeight
-по умолчанию 256; onPopupScroll передаёт native scroll event. Поверхность — native
+PopupMatchSelectWidth — boolean/число; отсутствующий prop и `undefined` наследуют
+`ConfigProvider.popupMatchSelectWidth`. ListHeight ограничивает viewport списка
+и по умолчанию равен 256; padding и border popup добавляются снаружи.
+OnPopupScroll передаёт native scroll event существующего внешнего listbox. Поверхность — native
 popover с сохранением фокуса input, outside/Escape и cleanup.
+Для `listHeight={0}` пока сохраняется прежнее Native ограничение; снятие cap,
+виртуализация и перенос scroll event на внутренний holder остаются в работе.
 
 GetPopupContainer получает корневой элемент Select, включая custom input/textarea.
 Локальная функция перекрывает ConfigProvider.getPopupContainer; undefined наследует
@@ -10028,7 +10032,7 @@ FormData. Native-only темы сохраняют прежнее оформле�
 
 GetPopupContainer получает внутренний корень `.ant-select`. Локальная функция
 перекрывает ConfigProvider.getPopupContainer; undefined наследует provider.
-Список использует fixed native popover с шириной поля, обновлением положения,
+Список использует fixed native popover по умолчанию с шириной поля, обновлением положения,
 outside/Escape и сохранением фокуса. Без getter сохраняется прежний DOM parent.
 `placement` принимает bottomLeft/bottomRight/topLeft/topRight; по умолчанию
 bottomLeft либо bottomRight в RTL. Getter не вызывается при SSR и до первого открытия.
@@ -10037,6 +10041,17 @@ ShadowRoot требует собственных стилей; смена фун
 AutoComplete сохраняет смонтированный popup до unmount. Проверки обоих компонентов —
 [select-container](./tests/browser/select-container.spec.ts), `?fixture=select-container`;
 32 сценария сверены с официальным UMD Ant Design 6.6.8.
+
+`popupMatchSelectWidth` выбирает ширину списка: `true` берёт ширину поля,
+`false` подстраивает список под содержимое с шириной поля в качестве минимума,
+число задаёт ширину в px с тем же минимумом. Отсутствующий prop и `undefined`
+наследуют `ConfigProvider.popupMatchSelectWidth`; без настройки используется `true`.
+Смена ширины сохраняет поле, выделение, фокус и выбранные значения формы.
+Невалидная числовая CSS-ширина сохраняет последнее принятое значение, как React,
+включая смену props закрытой посещённой панели и повторное открытие. До первого
+открытия скрытый измерительный DOM AutoComplete/TreeSelect не создаёт такую историю.
+Select ограничивает viewport списка 256 px; фактические padding и border добавляются
+снаружи. Select и AutoComplete пока сохраняют полный DOM options без виртуализации.
 
 Поиск по умолчанию выключен в одиночном режиме и включён в multiple;
 `showSearch` переопределяет это. Нажатие варианта во множественном режиме
@@ -11591,6 +11606,19 @@ fixed top layer без обязательного `getPopupContainer`.
 проверяют наследование и отсутствие влияния на другие popup; полное числовое
 совпадение layout этих семейств они не подтверждают. Прежний Native контракт
 Select сохраняется: закрытие не вызывает `onSearch`, controlled query очищает владелец.
+
+`ConfigProvider.popupMatchSelectWidth` задаёт общий default для Select,
+AutoComplete и TreeSelect. Вложенный provider наследует отсутствующее значение
+и `undefined`; собственные `true`, `false` и число заменяют ближайшую настройку.
+Cascader использует свой локальный prop. Pagination по умолчанию передаёт
+локальный `false`, затем применяет props владельца `showSizeChanger`; Calendar
+наследует общую ширину. ColorPicker задаёт внутреннему Select локальную ширину 68
+и собственный контейнер. Calendar также сохраняет свои меню в header.
+[Эталонные сценарии](./tests/browser/popup-width.spec.ts),
+[вложенные controls](./tests/browser/popup-width-nested.spec.ts),
+[пользовательские padding/border](./tests/browser/popup-width-height.spec.ts),
+[strict hydration](./tests/browser/popup-width-hydration.spec.ts) и
+[SSR](./tests/package/popup-width.ssr.test.ts) проверяют эти правила.
 
 Статические defaultSeed, default/dark/compact algorithms и getDesignToken
 работают без context и DOM. Их source-округления, overrides и ограничения описаны

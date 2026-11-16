@@ -59,6 +59,7 @@
     }
   } : undefined);
 
+  let header = $state<HTMLDivElement>();
   let monthInput = $state<HTMLInputElement>();
   let yearInput = $state<HTMLInputElement>();
   let years = $derived(calendarYearOptions(value, validRange, locale, generateConfig));
@@ -86,12 +87,13 @@
   }
 </style>
 
-<div class={[`${prefixCls}-header`, 'calendar-header', designToken.enabled && 'source-header', className]} {style}>
+<div bind:this={header} class={[`${prefixCls}-header`, 'calendar-header', designToken.enabled && 'source-header', className]} {style}>
   <Select
     _autoWidth={designToken.enabled}
     class={`${prefixCls}-year-select calendar-year-select`}
     aria-label={locale.yearSelect ?? locale.year}
     size={fullscreen ? undefined : 'small'}
+    getPopupContainer={() => header!}
     options={years}
     bind:value={() => generateConfig.getYear(value), () => {}}
     onValueChange={year => {
@@ -104,6 +106,7 @@
       class={`${prefixCls}-month-select calendar-month-select`}
       aria-label={locale.monthSelect ?? locale.month}
       size={fullscreen ? undefined : 'small'}
+      getPopupContainer={() => header!}
       options={months}
       bind:value={() => generateConfig.getMonth(value), () => {}}
       onValueChange={month => {

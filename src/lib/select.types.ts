@@ -95,6 +95,8 @@ export interface SelectProps<
   defaultOpen?: boolean;
   /** Физический угол popup; по умолчанию bottomLeft, в RTL — bottomRight. */
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
+  /** Local ?? ConfigProvider ?? true; false и число сохраняют ширину поля как минимум. */
+  popupMatchSelectWidth?: boolean | number;
   /** Разбор строк в multiple/tags; function получает текущий ввод, включая восстановленный paste. */
   tokenSeparators?: SelectTokenSeparators;
   /** Максимум выбранных значений в multiple/tags; existing/default values не обрезаются. */

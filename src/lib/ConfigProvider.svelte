@@ -152,7 +152,7 @@
     wave?: WaveConfig;
     /** Наследуемый virtual для Tree, Listy и TreeSelect. */
     virtual?: boolean;
-    /** Наследуемая ширина панели TreeSelect. */
+    /** Наследуемая ширина панели Select, AutoComplete и TreeSelect. */
     popupMatchSelectWidth?: boolean | number;
     /** Наследуемая область переполнения Select, TreeSelect, Cascader и AutoComplete.
      * @defaultValue 'viewport'

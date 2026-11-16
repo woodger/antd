@@ -97,7 +97,7 @@ test('popup dimensions update without removing controller position styles', asyn
   }
 
   await expect(popup).toHaveCSS('width', '300px');
-  await expect(popup).toHaveCSS('max-height', '100px');
+  await expect(popup).toHaveCSS('max-height', '108px');
   expect(await popup.evaluate(element => Boolean(element.style.left && element.style.top)))
     .toBe(true);
   expect(await popup.evaluate((element, previous) => element === previous, original)).toBe(true);

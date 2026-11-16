@@ -10,6 +10,7 @@
   import { connectPopup } from './popup.dom';
   import { createTreeSelectAlign } from './tree-select-align.dom';
   import { createOverlayStyle } from './overlay-style.model.svelte';
+  import { selectPopupHeightInsetVariable, selectPopupMaxHeight, syncSelectPopupHeight } from './select-popup-height.dom';
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useCompact } from './space-compact-context';
@@ -54,6 +55,7 @@
     open: providedOpen,
     defaultOpen,
     placement,
+    popupMatchSelectWidth,
     tokenSeparators,
     maxCount,
     maxTagTextLength,
@@ -293,18 +295,21 @@
   });
   let popupContainerGetter = $derived(getPopupContainer || config.getPopupContainer);
   const anchorWidthVariable = '--ant-native-select-anchor-width';
+  let matchedWidth = $derived(popupMatchSelectWidth ?? config.popupMatchSelectWidth ?? true);
   let popupLayers = $derived([
     componentTheme.style,
-    `width:var(${anchorWidthVariable})`
+    selectPopupMaxHeight(256),
+    `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`,
+    typeof matchedWidth === 'number' ? [['width', `${matchedWidth}px`]] as const : undefined
   ]);
-  const popupStyle = createOverlayStyle(() => popupLayers);
+  const popupStyle = createOverlayStyle(() => popupLayers, anchorWidthVariable, () => expanded);
   const portal = createPopupContainer(() => ({
     open: expanded,
     rendered: expanded,
     reference,
     getPopupContainer: popupContainerGetter,
     themeStyle: serializeInlineStyleLayers(popupLayers),
-    preserveVariables: [anchorWidthVariable]
+    preserveVariables: [anchorWidthVariable, selectPopupHeightInsetVariable]
   }));
 
   $effect(() => {
@@ -329,7 +334,10 @@
       allowOffscreenAnchor: true,
       anchorWidthVariable,
       getAnchorWidth: () => source.width,
-      getPosition: source.position,
+      getPosition: (rect, bounds, viewport) => {
+        syncSelectPopupHeight(popup);
+        return source.position(rect, bounds, viewport);
+      },
       applyPosition: position => source.commitFrame(() => popupStyle.position(position, source.style)),
       onAlign: position => { popupPlacement = position.alignedPlacement; },
       onPlacement: () => {},
@@ -963,6 +971,7 @@
     {/if}
   {/if}
   {#if expanded}
+    {@const initialPopupStyle = untrack(() => popupStyle.initialStyle())}
     <div
       bind:this={list}
       data-ant-select-dropdown data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
@@ -974,7 +983,7 @@
         componentTheme.className && filtered.length > 0 && `${prefix}-source-popup`,
         componentTheme.className && config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
         popupPlacement && `${prefix}-dropdown-placement-${popupPlacement}`,
-        componentTheme.className]}
+        componentTheme.className]} style={initialPopupStyle}
       {@attach popupStyle.attach}
       {@attach node => connectComponentTheme(node, componentTheme.style)}
       {@attach portal}

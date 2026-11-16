@@ -3513,9 +3513,16 @@
             "src/lib/pagination.ssr.test.ts",
             "tests/package/pagination.ssr.test.ts",
             "tests/browser/pagination-features.spec.ts",
-            "tests/browser/checkbox-pagination.spec.ts"
+            "tests/browser/checkbox-pagination.spec.ts",
+            "src/lib/Pagination.svelte",
+            "tests/browser/fixtures/PopupWidthNestedCase.svelte",
+            "tests/browser/fixtures/ant-design-popup-width-nested-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-nested-ssr-reference.json",
+            "tests/browser/popup-width-nested.spec.ts",
+            "tests/package/popup-width.ssr.test.ts",
+            "readme.md"
           ],
-          "note": "Auto threshold50, context/local override, numeric/string options и current size; прежние sorting/dedup/invalid filtering сохранены. onShowSizeChange перед onChange, затем Select callback; размер Pagination перекрывает Select size. Components.sizeChanger получает snippet с value/disabled/class/options/onChange; параметры showSizeChanger принадлежат встроенному Select. Deprecated selectComponentClass удалён."
+          "note": "Auto threshold50, context/local override, numeric/string options и current size; прежние sorting/dedup/invalid filtering сохранены. onShowSizeChange перед onChange, затем Select callback; размер Pagination перекрывает Select size. Components.sizeChanger получает snippet с value/disabled/class/options/onChange; параметры showSizeChanger принадлежат встроенному Select. Deprecated selectComponentClass удалён. Встроенный Select получает popupMatchSelectWidth=false и parent-container перед spread showSizeChanger: user props перекрывают defaults, own undefined наследует provider. Проверены шесть public nested cases, actual width/stretch и local/user/global container priority; существующий Native intrinsic nav layout сохранён."
         },
         {
           "id": "render-semantic",
@@ -4617,7 +4624,7 @@
             "tests/browser/fixtures/ant-design-auto-complete-metrics.json",
             "docs/reference/theme-context.md"
           ],
-          "note": "Как upstream, AutoComplete использует Select tokens без собственного style hook: selector/clear/popup, option/group fonts и logical group indentation. Custom Input сохраняет свои tokens и ref; customize wrapper не задаёт Select min-height. Computed metrics официального UMD для 17 настроек: размеры, variants, disabled, custom Input/textarea, группы и пустая выдача; component algorithms/aliases, нули/undefined, prefix/hash. SSR и обновления сохраняют native editor/option content, input selection/focus, FormData и callbacks. CSS variables панели обновляются отдельно от controller left/top; width/listHeight используют отдельные style directives. Native-only темы и существующий API сохранены; остальные rc-select props/config/virtualization остаются в работе."
+          "note": "Как upstream, AutoComplete использует Select tokens без собственного style hook: selector/clear/popup, option/group fonts и logical group indentation. Custom Input сохраняет свои tokens и ref; customize wrapper не задаёт Select min-height. Computed metrics официального UMD для 17 настроек: размеры, variants, disabled, custom Input/textarea, группы и пустая выдача; component algorithms/aliases, нули/undefined, prefix/hash. SSR и обновления сохраняют native editor/option content, input selection/focus, FormData и callbacks. CSS variables и authored width/listHeight объединяются общим declaration writer с controller projection без потери приоритета. Native-only темы и существующий API сохранены; остальные rc-select props/config/virtualization остаются в работе."
         },
         {
           "id": "popup-container",
@@ -4731,6 +4738,46 @@
             "readme.md"
           ],
           "note": "Pinned Antd6.6.8/rc-trigger3.10.1: Наследует стандартную Source карту Select, включая default viewport без getPopupContainer. Сохранены настоящий native/custom editor, публичные refs, retained popup, search/backfill/IME/FormData, popupMatchSelectWidth и listHeight. Focused open unmount сохраняет прежний синхронный connected blur и дополнительный Native onOpenChange(false); actual baseline1fb7921 проверен отдельно от Source cleanup ledger. Общие61 independently repeated raw UMD cases/212actions и61 DOM-free SSR фиксируют omitted/own undefined, inheritance/reset, viewport/document/clipping/ShadowRoot, RTL, local map precedence, live cache, query/caret/events и no leaked props. Четыре strict hydration сценария проверяют существующие identities, FormData, connected blur и cleanup/late silence. Числа размеров/координат не нормализуются под Source. Fractional border-box берётся из существующего ResizeObserver с freshness guard; generated projection передаёт точные values без CSSOM text round-trip."
+        },
+        {
+          "id": "popup-match-select-width",
+          "title": "Локальная и наследуемая ширина popup с исходной CSS history",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/AutoComplete.svelte",
+            "src/lib/overlay-style.model.svelte.ts",
+            "tests/browser/fixtures/popup-width-cases.ts",
+            "tests/browser/fixtures/popup-width.types.ts",
+            "tests/browser/fixtures/ant-design-popup-width-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-development-reference.json",
+            "tests/browser/popup-width.spec.ts",
+            "tests/browser/popup-width-hydration.spec.ts",
+            "tests/package/popup-width.ssr.test.ts",
+            "readme.md",
+            "src/lib/select-popup-height.dom.ts",
+            "tests/browser/fixtures/ant-design-popup-width-height-reference.json",
+            "tests/browser/popup-width-height.spec.ts",
+            "tests/browser/fixtures/ant-design-popup-width-near-right-reference.json",
+            "tests/browser/popup-width-near-right.spec.ts"
+          ],
+          "note": "Ant Design6.6.8/rc-select1.10.1: local ?? ConfigProvider ?? true; omitted/own undefined наследуют, false и numeric0/-0 сохраняются. True растягивает ширину поля; false и число сохраняют её как min-width, число задаёт последнюю width declaration после authored styles с сохранением min/max. Невалидный numeric CSS setter сохраняет последнее принятое значение, включая изменение props закрытого посещённого popup и reopen; скрытый Native measuring shell до первого открытия не создаёт Source history. Generated stretch сохраняет точные px без CSSOM округления и перестаёт следовать resize при последующем invalid значении. 78 independently repeated actual UMD cases/369actions и78 DOM-free SSR проверяют inheritance, local priority, numeric/nonfinite, authored CSS, RTL/scaled ShadowRoot, live query/caret/events, resize и first-visit/closed history. Отдельные9 actual React DEV cases/27actions сохраняют все9 предупреждений и исходные stacks; production case data совпадают. Шесть strict hydration проверяют DOM/method/ref identity, FormData, connected Native blur и ресурсы после disposal. Select сохраняет conditional popup и controlled query без onSearch при закрытии; AC/TreeSelect сохраняют retained popup. Select/AC virtualization этим блоком не заявлена. Три дополнительных independent public-CSS Source cases/18actions у правого края защищают первую numeric width до align и accepted-width history при invalid close/reopen; естественная промежуточная ширина не должна создавать ложный flip cache."
+        },
+        {
+          "id": "popup-list-height",
+          "title": "Высота viewport списка с фактическими padding и border",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/AutoComplete.svelte",
+            "src/lib/select-popup-height.dom.ts",
+            "tests/browser/fixtures/ant-design-popup-width-height-reference.json",
+            "tests/browser/popup-width-height.spec.ts",
+            "tests/browser/auto-complete-theme.spec.ts",
+            "readme.md"
+          ],
+          "note": "Source ограничивает внутренний list viewport256px (AutoComplete listHeight), а Native сохраняет scrollable outer listbox. Его max-height учитывает фактические physical padding/border при border-box, content-box сохраняет собственный content cap. Измерение выполняется существующим popup frame loop без новых observers/timers/listeners/DOM. Восемь independently repeated Source public-CSS cases/32actions проверяют обычный padding, logical aliases, border и content-box; общая геометрия, actual physical outer height/CSS и effective Native scroll viewport сравниваются с actual Source holder. Отсутствие Select/AC virtualization и различие DOM/scroll-event target остаются отдельной границей; Select listHeight API этим блоком не добавлен. Положительная/default высота проверена; listHeight=0 пока сохраняет прежний Native cap, тогда как Source truthy-height gate снимает ограничение. Этот отдельный gap listHeight/virtual API остаётся в работе."
         }
       ]
     },
@@ -5622,7 +5669,7 @@
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Полный rc-trigger DOM boundary для nested clipping/scaled containers, motion и React diagnostics/PurePanel не перенесены. ColorPicker не имеет собственных public component tokens; alias overrides/algorithms и независимые темы дочерних controls перенесены отдельно. Числовой viewport flip/shift, все 12 placements, arrow/pointAtCenter и custom container используют общий source engine с Tour. V1-ready не означает полный React API. Внутренний format Select пока сохраняет Native ширину поля и высоту строк; Source ColorInput задаёт popupMatchSelectWidth=68 и отдельное оформление popup. Raw popupOverflow smoke фиксирует68×98 у Source и38.609375×104 у Native при том же anchor. Это конкретный gap local width/format-popup styles, не отсутствие global popupOverflow."
+          "note": "Полный rc-trigger DOM boundary для nested clipping/scaled containers, motion и React diagnostics/PurePanel не перенесены. ColorPicker не имеет собственных public component tokens; alias overrides/algorithms и независимые темы дочерних controls перенесены отдельно. Числовой viewport flip/shift, все 12 placements, arrow/pointAtCenter и custom container используют общий source engine с Tour. V1-ready не означает полный React API."
         },
         {
           "id": "popup-container",
@@ -5678,9 +5725,15 @@
             "tests/browser/fixtures/ConfigVariantControls.svelte",
             "docs/reference/control-variants.md",
             "tests/browser/fixtures/ant-design-popup-overflow-smoke-reference.json",
-            "tests/browser/popup-overflow-smoke.spec.ts"
+            "tests/browser/popup-overflow-smoke.spec.ts",
+            "tests/browser/fixtures/PopupWidthNestedCase.svelte",
+            "tests/browser/fixtures/ant-design-popup-width-nested-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-nested-ssr-reference.json",
+            "tests/browser/popup-width-nested.spec.ts",
+            "tests/package/popup-width.ssr.test.ts",
+            "readme.md"
           ],
-          "note": "ColorInput 6.6.8 явно передаёт variant=borderless в Select. Native format selector сохраняет это локальное оформление внутри global filled и Form underlined, не наследуя их вместо исходного local prop; выбор RGB и соседние значения сохраняются. Input/InputNumber внутри picker продолжают читать свои обычные контексты. Format Select также получает Source placement=bottomRight; ConfigProvider.popupOverflow изменяет только внутренний Select, а containing overlay остаётся inert."
+          "note": "ColorInput 6.6.8 явно передаёт variant=borderless в Select. Native format selector сохраняет это локальное оформление внутри global filled и Form underlined, не наследуя их вместо исходного local prop; выбор RGB и соседние значения сохраняются. Input/InputNumber внутри picker продолжают читать свои обычные контексты. Format Select также получает Source placement=bottomRight; ConfigProvider.popupOverflow изменяет только внутренний Select, а containing overlay остаётся inert. Внутренний Select также получает Source popupMatchSelectWidth=68 и getPopupContainer(current)=>current; compact popup использует fontSizeSM/lineHeightSM и min-height:auto. Два actual nested Source cases сохраняют68×98,30px строки и12px/20px content при global true/false без remount; исходный raw popupOverflow reference оставлен неизменным."
         },
         {
           "id": "local-shared-prefix",
@@ -9987,6 +10040,47 @@
             "readme.md"
           ],
           "note": "Current placement bottomLeft/bottomRight/topLeft/topRight consumed before DOM spread; omitted/undefined choose bottomLeft or bottomRight in RTL. Явный prop передаётся в Source cache/controller; ColorPicker format Select получает исходный bottomRight. Три дополнительных independently repeated UMD cases/9actions используют высокий viewport до открытия, чтобы topLeft не совпадал с автоматическим flip default; три DOM-free SSR сохраняют закрытую панель и отсутствие leaked props. Numeric nested popup sizes и прочий Select popup API этим переносом не заявлены."
+        },
+        {
+          "id": "popup-match-select-width",
+          "title": "Локальная и наследуемая ширина popup с исходной CSS history",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Select.svelte",
+            "src/lib/select.types.ts",
+            "src/lib/overlay-style.model.svelte.ts",
+            "tests/browser/fixtures/popup-width-cases.ts",
+            "tests/browser/fixtures/popup-width.types.ts",
+            "tests/browser/fixtures/ant-design-popup-width-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-development-reference.json",
+            "tests/browser/popup-width.spec.ts",
+            "tests/browser/popup-width-hydration.spec.ts",
+            "tests/package/popup-width.ssr.test.ts",
+            "readme.md",
+            "src/lib/select-popup-height.dom.ts",
+            "tests/browser/fixtures/ant-design-popup-width-height-reference.json",
+            "tests/browser/popup-width-height.spec.ts",
+            "tests/browser/fixtures/ant-design-popup-width-near-right-reference.json",
+            "tests/browser/popup-width-near-right.spec.ts"
+          ],
+          "note": "Ant Design6.6.8/rc-select1.10.1: local ?? ConfigProvider ?? true; omitted/own undefined наследуют, false и numeric0/-0 сохраняются. True растягивает ширину поля; false и число сохраняют её как min-width, число задаёт последнюю width declaration после authored styles с сохранением min/max. Невалидный numeric CSS setter сохраняет последнее принятое значение, включая изменение props закрытого посещённого popup и reopen; скрытый Native measuring shell до первого открытия не создаёт Source history. Generated stretch сохраняет точные px без CSSOM округления и перестаёт следовать resize при последующем invalid значении. 78 independently repeated actual UMD cases/369actions и78 DOM-free SSR проверяют inheritance, local priority, numeric/nonfinite, authored CSS, RTL/scaled ShadowRoot, live query/caret/events, resize и first-visit/closed history. Отдельные9 actual React DEV cases/27actions сохраняют все9 предупреждений и исходные stacks; production case data совпадают. Шесть strict hydration проверяют DOM/method/ref identity, FormData, connected Native blur и ресурсы после disposal. Select сохраняет conditional popup и controlled query без onSearch при закрытии; AC/TreeSelect сохраняют retained popup. Select/AC virtualization этим блоком не заявлена. Три дополнительных independent public-CSS Source cases/18actions у правого края защищают первую numeric width до align и accepted-width history при invalid close/reopen; естественная промежуточная ширина не должна создавать ложный flip cache."
+        },
+        {
+          "id": "popup-list-height",
+          "title": "Стандартная высота viewport списка с фактическими padding и border",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Select.svelte",
+            "src/lib/select-popup-height.dom.ts",
+            "tests/browser/fixtures/ant-design-popup-width-height-reference.json",
+            "tests/browser/popup-width-height.spec.ts",
+            "tests/browser/auto-complete-theme.spec.ts",
+            "readme.md"
+          ],
+          "note": "Source ограничивает внутренний list viewport256px (AutoComplete listHeight), а Native сохраняет scrollable outer listbox. Его max-height учитывает фактические physical padding/border при border-box, content-box сохраняет собственный content cap. Измерение выполняется существующим popup frame loop без новых observers/timers/listeners/DOM. Восемь independently repeated Source public-CSS cases/32actions проверяют обычный padding, logical aliases, border и content-box; общая геометрия, actual physical outer height/CSS и effective Native scroll viewport сравниваются с actual Source holder. Отсутствие Select/AC virtualization и различие DOM/scroll-event target остаются отдельной границей; Select listHeight API этим блоком не добавлен."
         }
       ]
     },
@@ -12868,6 +12962,28 @@
             "readme.md"
           ],
           "note": "Pinned Antd6.6.8/rc-trigger3.10.1: ConfigProvider.popupOverflow выбирает htmlRegion стандартной карты; truthy builtinPlacements, включая {}, полностью заменяет defaults, локальный popupAlign shallow перекрывает запись. Context/map-only update не сбрасывает numeric cache/flip history. Прежние Native8px fit, width cap и offscreen-anchor hiding сохраняются до использования global режима либо local alignment API; затем действуют Source overflow rules. Default DOM/ref/motion/FormData/connected blur contracts сохранены. Общие61 independently repeated raw UMD cases/212actions и61 DOM-free SSR фиксируют omitted/own undefined, inheritance/reset, viewport/document/clipping/ShadowRoot, RTL, local map precedence, live cache, query/caret/events и no leaked props. Четыре strict hydration сценария проверяют существующие identities, FormData, connected blur и cleanup/late silence. Числа размеров/координат не нормализуются под Source. Fractional border-box берётся из существующего ResizeObserver с freshness guard; generated projection передаёт точные values без CSSOM text round-trip."
+        },
+        {
+          "id": "popup-match-select-width",
+          "title": "Локальная и наследуемая ширина popup с исходной CSS history",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TreeSelectControl.svelte",
+            "src/lib/overlay-style.model.svelte.ts",
+            "tests/browser/fixtures/popup-width-cases.ts",
+            "tests/browser/fixtures/popup-width.types.ts",
+            "tests/browser/fixtures/ant-design-popup-width-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-development-reference.json",
+            "tests/browser/popup-width.spec.ts",
+            "tests/browser/popup-width-hydration.spec.ts",
+            "tests/package/popup-width.ssr.test.ts",
+            "readme.md",
+            "tests/browser/fixtures/ant-design-popup-width-near-right-reference.json",
+            "tests/browser/popup-width-near-right.spec.ts"
+          ],
+          "note": "Ant Design6.6.8/rc-select1.10.1: local ?? ConfigProvider ?? true; omitted/own undefined наследуют, false и numeric0/-0 сохраняются. True растягивает ширину поля; false и число сохраняют её как min-width, число задаёт последнюю width declaration после authored styles с сохранением min/max. Невалидный numeric CSS setter сохраняет последнее принятое значение, включая изменение props закрытого посещённого popup и reopen; скрытый Native measuring shell до первого открытия не создаёт Source history. Generated stretch сохраняет точные px без CSSOM округления и перестаёт следовать resize при последующем invalid значении. 78 independently repeated actual UMD cases/369actions и78 DOM-free SSR проверяют inheritance, local priority, numeric/nonfinite, authored CSS, RTL/scaled ShadowRoot, live query/caret/events, resize и first-visit/closed history. Отдельные9 actual React DEV cases/27actions сохраняют все9 предупреждений и исходные stacks; production case data совпадают. Шесть strict hydration проверяют DOM/method/ref identity, FormData, connected Native blur и ресурсы после disposal. Select сохраняет conditional popup и controlled query без onSearch при закрытии; AC/TreeSelect сохраняют retained popup. Select/AC virtualization этим блоком не заявлена. Три дополнительных independent public-CSS Source cases/18actions у правого края защищают первую numeric width до align и accepted-width history при invalid close/reopen; естественная промежуточная ширина не должна создавать ложный flip cache."
         }
       ]
     },
@@ -14742,9 +14858,16 @@
           "evidence": [
             "src/lib/calendar.engine.test.ts",
             "tests/browser/calendar.spec.ts",
-            "tests/browser/calendar-header.spec.ts"
+            "tests/browser/calendar-header.spec.ts",
+            "src/lib/CalendarHeader.svelte",
+            "tests/browser/fixtures/PopupWidthNestedCase.svelte",
+            "tests/browser/fixtures/ant-design-popup-width-nested-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-nested-ssr-reference.json",
+            "tests/browser/popup-width-nested.spec.ts",
+            "tests/package/popup-width.ssr.test.ts",
+            "readme.md"
           ],
-          "note": "Полные inclusive timestamps и predicate short-circuit; month disabled по двум endpoints, без сканирования. Header предлагает 20 лет или range, ограничивает месяцы, сохраняет день и время; не применяет disabledDate. Сохранены существующие Svelte Select/RadioGroup и их disabled/bind/native contracts."
+          "note": "Полные inclusive timestamps и predicate short-circuit; month disabled по двум endpoints, без сканирования. Header предлагает 20 лет или range, ограничивает месяцы, сохраняет день и время; не применяет disabledDate. Сохранены существующие Svelte Select/RadioGroup и их disabled/bind/native contracts. Оба Select наследуют ConfigProvider.popupMatchSelectWidth, а их локальный getPopupContainer возвращает существующий header. Проверены year/month при live смене global false/number и отсутствие вызова global getter; Native natural header layout и readonly editor display сохранены."
         },
         {
           "id": "renderers-week",
@@ -24608,8 +24731,8 @@
         },
         {
           "id": "popup-match-select-width-default",
-          "title": "ConfigProvider.popupMatchSelectWidth для TreeSelect",
-          "state": "partial",
+          "title": "ConfigProvider.popupMatchSelectWidth для Select, AutoComplete и TreeSelect",
+          "state": "supported",
           "requiredForV1": false,
           "evidence": [
             "src/lib/ConfigProvider.svelte",
@@ -24617,9 +24740,24 @@
             "src/lib/TreeSelect.svelte",
             "tests/browser/tree-select-virtual.spec.ts",
             "tests/browser/fixtures/ant-design-tree-select-virtual-reference.json",
-            "readme.md"
+            "readme.md",
+            "src/lib/Select.svelte",
+            "src/lib/AutoComplete.svelte",
+            "src/lib/overlay-style.model.svelte.ts",
+            "tests/browser/fixtures/popup-width-cases.ts",
+            "tests/browser/fixtures/popup-width.types.ts",
+            "tests/browser/fixtures/ant-design-popup-width-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-development-reference.json",
+            "tests/browser/popup-width.spec.ts",
+            "tests/browser/popup-width-hydration.spec.ts",
+            "tests/package/popup-width.ssr.test.ts",
+            "tests/browser/fixtures/PopupWidthNestedCase.svelte",
+            "tests/browser/fixtures/ant-design-popup-width-nested-reference.json",
+            "tests/browser/fixtures/ant-design-popup-width-nested-ssr-reference.json",
+            "tests/browser/popup-width-nested.spec.ts"
           ],
-          "note": "ConfigProvider передаёт TreeSelect boolean и number, как задокументировано и подтверждено runtime Ant Design 6.6.8. Локальный prop имеет приоритет, undefined наследует ближайшее заданное значение. При false TreeSelect отключает virtual и подстраивает ширину под содержимое. Остальные consumers требуют отдельного переноса."
+          "note": "Общий default читают Select, AutoComplete и TreeSelect; local ?? provider ?? true, omitted/own undefined наследуют ближайшую настройку, false и numeric0 сохраняются. Cascader читает только свой local prop. Boolean|number сохранён по pinned docs/runtime6.6.8: глобальная Source declaration указывает только boolean. Pagination передаёт localfalse и parent-container до user showSizeChanger props, own undefined сбрасывает эти defaults и наследует provider; Calendar наследует ширину и выбирает header-container; ColorPicker format Select задаёт68px и собственный контейнер. 78 independently repeated raw UMD cases/369actions,14 nested cases/48actions,92 DOM-free SSR и9 React DEV diagnostic cases. Исходные6 CSR и1 deduplicated SSR readonly Pagination warnings сохранены. Полная числовая layout parity вложенных Pagination/Calendar не заявлена; проверяются реальные anchor/stretch relations, container priority и неизменная модель."
         },
         {
           "id": "popup-overflow",
