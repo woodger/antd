@@ -1,0 +1,2876 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "umdSha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4",
+    "umdArchiveByteEqual": true,
+    "renderer": "Actual unmodified official UMD in a fresh DOM-free VM. Same public owner fixture and closed provider scenarios. HTML-only parser; no window/document, geometry, container getters, callbacks, timers, frames, microtasks or observers.",
+    "domAvailableDuringRender": false,
+    "factory": ".upstream/artifacts/popup-overflow-source-app.mjs",
+    "factorySha256": "eaf9034622ef4a33afdb9906523591c3444889fc2fd67c9eecad3e9e6e3e1173",
+    "configurationSha256": "2267d7bc770520b1d618c28648f5585fc53a0d47462d3061caaf8878015d3799",
+    "metricsSha256": "0fe754d22679a54ce168ffb0260f327a4bf7e9f6d090c527b001b74cd885177c",
+    "messages": []
+  },
+  "cases": [
+    {
+      "id": "tree-select-omitted",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "00e2b01d169a25e5da6ed412978d11628fd68c25d81e6bfd4e46490bc50b49f0"
+    },
+    {
+      "id": "tree-select-own-undefined",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "89d21b854f182ff990f048cf583a071a807828cf0c1c1922b9734e58ee761973"
+    },
+    {
+      "id": "tree-select-viewport",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "2b743a472be1a2d8e0d3ffb9da12e5cb314ae013172d3592e8f84fe807646e9f"
+    },
+    {
+      "id": "tree-select-scroll",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "e99bbefca7c4a5ea4a937676ec8bfc37c48895c67a0971cac7486935de66aa51"
+    },
+    {
+      "id": "tree-select-nested-undefined-inherits",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "f3e8b752c6e4ffc5da4b0487a239b7586b2d083604fd3571bb628aeaa54c7bb3"
+    },
+    {
+      "id": "tree-select-nested-viewport-resets",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "875a2c2e6f458d6109655616994239f9a1de4f930051ebee200b0e0886fcc0e7"
+    },
+    {
+      "id": "tree-select-global-body",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "body"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "21c0d35140bea778d7b12278633811cf11e7cda0b5fefd2eb9638016622f7114"
+    },
+    {
+      "id": "tree-select-global-shadow",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "shadow"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "3c13168b39b300d5f539fbafddf981be25f7d5fb1c07c0df290d911d951a8c1e"
+    },
+    {
+      "id": "tree-select-clip-viewport",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "clip"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "1cfa4a64b81dabd8fd169b6ba0f848a0b6dfe968aa6a7cff4109a6465f270652"
+    },
+    {
+      "id": "tree-select-clip-scroll",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "clip"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "cdac05cfcfbffdcdc05a6fe4bd1b858e2f3e735c2c43421c57741b7cb6fbe37d"
+    },
+    {
+      "id": "tree-select-live-cache",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "8eeb94b050c97d18c508be9fa4fc66538eb51cf1f608fa8cf747c691e0a0141f"
+    },
+    {
+      "id": "select-omitted",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b5ac9e26ab0254df7b4bbcc597ce4ff51a163b0e47ad2ffafcd1ab959e80dbca"
+    },
+    {
+      "id": "select-own-undefined",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "22d8c027f6880e76ce58036baafe0a4c05f5e6c565eb6bcf3c8a81639b9e4d6e"
+    },
+    {
+      "id": "select-viewport",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "8b8fa40245b5cea55a4b0141d501140190f88f212adac17224bc0dbb0a86840e"
+    },
+    {
+      "id": "select-scroll",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "5fe93cbc3a3e7798db759beb8295a059072d6a02db412b3a35ed0ef05c11bc27"
+    },
+    {
+      "id": "select-nested-undefined-inherits",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "5746a648a739c5a32c1fba9f4d39164b3895d46040c86298523e8e6114e3bb47"
+    },
+    {
+      "id": "select-nested-viewport-resets",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "1533d0215cdd1798e505c20de51476dabbb5189bab72f03f351a6de25c4e9cf7"
+    },
+    {
+      "id": "select-global-body",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "body"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "a798c21b42aaa28be4a0a3d5c21b2540052f8719c9a4c651e463036f44aa204d"
+    },
+    {
+      "id": "select-global-shadow",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "shadow"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b399414bf18fd5671b9073c75960c78c98114568b103a93ea8349f7fa8181646"
+    },
+    {
+      "id": "select-clip-viewport",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "clip"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "11b6da203531a5f7d32992466dc268db0e624e0cebc0750f4599a9eebf00f852"
+    },
+    {
+      "id": "select-clip-scroll",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "clip"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "8727489a3d47b285f9d0c682f77434ea56533b9fff345241975403cc1b0aa544"
+    },
+    {
+      "id": "select-live-cache",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "750e71c885fdaadf38e9cc27b6261258af56bc9221713e3993ed134935334e71"
+    },
+    {
+      "id": "auto-complete-omitted",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b0997e7ee42fa9f2430edd74372c946fa2b8c0b823b1817abd31c00d73f724ec"
+    },
+    {
+      "id": "auto-complete-own-undefined",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "3fd8c7e9d3f49577e693b1c9790150600aa834d9273369520f7c4c44a23cc00b"
+    },
+    {
+      "id": "auto-complete-viewport",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "33ea912f3dd833dc49c3eaf3a7d9bd7a8b4c7478742fa90ced87d5fde43fd1c3"
+    },
+    {
+      "id": "auto-complete-scroll",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "d493abce1f4774db57d87d29cbd502501b5fd4e4c28cb766e8907ed2d01bde01"
+    },
+    {
+      "id": "auto-complete-nested-undefined-inherits",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "a60eed715e68dc903c81422038b67512c2131f9b5a89d7d43b8875ebcefaa825"
+    },
+    {
+      "id": "auto-complete-nested-viewport-resets",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "237975737461938e1d94e981f6c01c770d9c4a97e346fd874cb531efdd798173"
+    },
+    {
+      "id": "auto-complete-global-body",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "body"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "2f43acd0fb191e5f6960b39f572fe3b8406e9d31dba250be40b5595b58521294"
+    },
+    {
+      "id": "auto-complete-global-shadow",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "shadow"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "9da55dd55b096b8610ebbb9038e66ca3eedccb9e7dd72a12dcf792014ac1e490"
+    },
+    {
+      "id": "auto-complete-clip-viewport",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "clip"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "887ea62d7c3c8649baac27216972806ebe6853ea7161d3e6fd8ae0eee352a2e7"
+    },
+    {
+      "id": "auto-complete-clip-scroll",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "clip"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b8b866554a8cba318847f4cd3fce5bef71e362d592e2acd45f5f579aa30ded92"
+    },
+    {
+      "id": "auto-complete-live-cache",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "0015361aa1b33470e50f8a296b0f4060d2a9649aaeddabc27cc492ed1d2095b5"
+    },
+    {
+      "id": "cascader-omitted",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "64633451f49d596cadc70cafe47a263495b0894c2f78521dd8e01a96d572fd82"
+    },
+    {
+      "id": "cascader-own-undefined",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "a9f472773313d97b0752e659cf7daa19414e684ad5fed0607b576ec5918f5991"
+    },
+    {
+      "id": "cascader-viewport",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "46c827839aa327e50ca4c422a55ff0b0e2bb346334491b780fa534f479d42a73"
+    },
+    {
+      "id": "cascader-scroll",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b5e772214d2f6597818d0e2a6e3c559e5e5ca52423dae3bbf5d8b528e4f96da6"
+    },
+    {
+      "id": "cascader-nested-undefined-inherits",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "undefined",
+            "value": null
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "8a3ab124215cbd6bdc732c399448acb981d4658d236a159cc38a47f817f1705f"
+    },
+    {
+      "id": "cascader-nested-viewport-resets",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "b66795f5f4152fd12d35f62732d036ebd6385e209d6d70770799e0b73e741ec3"
+    },
+    {
+      "id": "cascader-global-body",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "body"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "fe81ce92e8ddba22a1f83b88e9f27e6ee3f6704aac5db070f7a04e59c5591b3f"
+    },
+    {
+      "id": "cascader-global-shadow",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "shadow"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "07cb3701e3efab6acb6a759efaabf8a11e2ad05a375b50f25a33f4215bb7780f"
+    },
+    {
+      "id": "cascader-clip-viewport",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "clip"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "18f63572391b68b4c268f3e57f0d9188986b5bb78c30617f7450b6e4fc03f131"
+    },
+    {
+      "id": "cascader-clip-scroll",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "clip"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "301965dc61c22149f59aba422437e0514f66355c0f2bea43aedf7090d7d44382"
+    },
+    {
+      "id": "cascader-live-cache",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "d80790e71eb7472d10db4c00a4070bc8b6aee2feb9191c10f9d4427611349b55"
+    },
+    {
+      "id": "select-document-viewport",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "0a3c09e2f531c40debbfdd256148d9f015dc88a4fff9327031505bdbba69a7b9"
+    },
+    {
+      "id": "select-document-scroll",
+      "view": {
+        "family": "select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "85f9b165a34a0ff62c7e344d61eb4364556681d6502be200719532c14e410412"
+    },
+    {
+      "id": "tree-select-right-rtl-viewport",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "3112492e6be9c870f9755d2d6c0a90d13bd4f519523b93217076d67f292bd3b0"
+    },
+    {
+      "id": "tree-select-right-rtl-scroll",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "24a441e0f77cb65f3af02b18cbb0ebad75019ba234f8f3372d87ea5829b81587"
+    },
+    {
+      "id": "cascader-right-rtl-viewport",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "99f20776009855a6bbaca287e211156a252a75f8f7e86d07513a401c0f4b7a77"
+    },
+    {
+      "id": "cascader-right-rtl-scroll",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "8ba5c20abb5127acf1e3bba1c065c51664de142c32faacb2decc275b0c227d00"
+    },
+    {
+      "id": "tree-select-explicit-visible-map",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "f3e7c8c68a4c73634e1c0a5000b5b70d3bb682593277066a52c5133dbcae8e14"
+    },
+    {
+      "id": "tree-select-empty-map",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "5a5160fba185404035d05f2deea51e2204e4d33988b1318d810981b396636216"
+    },
+    {
+      "id": "tree-select-align-scroll-over-viewport",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "e4c47ff47ea3dc74e7276d528d4779a6df8bf436f43caa1a2b03fada4890db2e"
+    },
+    {
+      "id": "tree-select-align-visible-over-scroll",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "f7a16515b5d04657b83d26a1b2ee9e421de08f69c161947c8ece1d4b6410c4a6"
+    },
+    {
+      "id": "tree-select-align-replaces-overflow",
+      "view": {
+        "family": "tree-select",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": null,
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "0d51d9ba4b3cd5157ecebc2abf4a956c385a5a4858bbf842aee9f85d814d9aaf"
+    },
+    {
+      "id": "cascader-custom-trigger-viewport",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": null,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "5ebe03d2656e3d670f6fab4c4a732c55ed4b40bca0eab9ded26850eb06dea4fa"
+    },
+    {
+      "id": "cascader-custom-trigger-scroll",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": null,
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "1c34d494a9bc9102dbb28590c2d7e91da8cbc5019028197aeeeecb1aaf4002b4"
+    },
+    {
+      "id": "auto-complete-numeric-wide-viewport",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "9eb5fa2fd411ab6bf6135c24853e198c263cd676dd8d9c6af1566960c6bb651c"
+    },
+    {
+      "id": "auto-complete-numeric-wide-scroll",
+      "view": {
+        "family": "auto-complete",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": "",
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "ae4bbe96fe72f3e017423cd361b3843a5dbe97142b2dd0e29c717abc73473c24"
+    },
+    {
+      "id": "cascader-numeric-wide-viewport",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "viewport"
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "5e211ae02334c185a9315d4aa4e70759ad123ab87dd812d3764308e0988023f8"
+    },
+    {
+      "id": "cascader-numeric-wide-scroll",
+      "view": {
+        "family": "cascader",
+        "context": {
+          "outer": {
+            "keyPresent": false,
+            "type": "undefined",
+            "value": null
+          },
+          "inner": {
+            "keyPresent": true,
+            "type": "string",
+            "value": "scroll"
+          },
+          "globalContainer": "default"
+        },
+        "model": [],
+        "query": "",
+        "events": [],
+        "getters": [],
+        "editor": {
+          "tag": "INPUT",
+          "readonly": false,
+          "disabled": false,
+          "value": ""
+        },
+        "popupPresent": false,
+        "leakedAttributes": []
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "callbacks": [],
+      "getterCalls": [],
+      "refs": {
+        "host": null,
+        "clip": null,
+        "shadow": null,
+        "control": null
+      },
+      "diagnostics": [],
+      "htmlSha256": "f6b9ff5585538cf12475c83d33f9dc6deec8e2b260898eef0c897995c29e437f"
+    }
+  ]
+}

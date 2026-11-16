@@ -59,7 +59,7 @@
   import type { CheckboxConfig } from './checkbox.types';
   import type { SwitchConfig } from './switch.types';
   import type { WaveConfig } from './wave.types';
-  import type { GetPopupContainer, GetTargetContainer, RenderEmptyHandler } from './types';
+  import type { GetPopupContainer, GetTargetContainer, PopupOverflow, RenderEmptyHandler } from './types';
   import type { RangePickerConfig } from './range-picker.types';
   import type { InputConfig } from './input.types';
   import type { InputPasswordConfig } from './input-password.types';
@@ -154,6 +154,10 @@
     virtual?: boolean;
     /** Наследуемая ширина панели TreeSelect. */
     popupMatchSelectWidth?: boolean | number;
+    /** Наследуемая область переполнения Select, TreeSelect, Cascader и AutoComplete.
+     * @defaultValue 'viewport'
+     */
+    popupOverflow?: PopupOverflow;
     /** Producer callback пустых состояний контролов и Table. Наследуется от родителя. */
     renderEmpty?: RenderEmptyHandler;
     /**
@@ -251,6 +255,7 @@
     wave,
     virtual,
     popupMatchSelectWidth,
+    popupOverflow,
     renderEmpty,
     getPopupContainer,
     getTargetContainer,
@@ -476,6 +481,9 @@
     },
     get popupMatchSelectWidth() {
       return popupMatchSelectWidth ?? parent.popupMatchSelectWidth;
+    },
+    get popupOverflow() {
+      return popupOverflow !== undefined ? popupOverflow : parent.popupOverflow;
     },
     get renderEmpty() {
       return renderEmpty ?? parent.renderEmpty;

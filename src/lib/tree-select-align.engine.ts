@@ -1,10 +1,13 @@
 import type { PopupSourceAlign } from './popup-position.engine';
+import type { PopupOverflow } from './types';
 
-/** Ant Design 6.6.8 Select/TreeSelect defaults; MIT, vendor/LICENSE.ant-design. */
-export function treeSelectBuiltinPlacements(): Readonly<Record<string, PopupSourceAlign>> {
+/** Ant Design 6.6.8 Select/TreeSelect/Cascader defaults; MIT, vendor/LICENSE.ant-design. */
+export function treeSelectBuiltinPlacements(
+  popupOverflow?: PopupOverflow
+): Readonly<Record<string, PopupSourceAlign>> {
   const shared = {
     overflow: { adjustX: true, adjustY: true, shiftY: true },
-    htmlRegion: 'visible' as const,
+    htmlRegion: popupOverflow === 'scroll' ? 'scroll' as const : 'visible' as const,
     dynamicInset: true
   };
   return {

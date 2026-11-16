@@ -9,7 +9,7 @@ import {
 } from './tree-select-motion-frame.dom';
 
 export function treeSelectAlignScrollers(
-  element: HTMLElement, from: HTMLElement | null = element.parentElement
+  element: Element, from: HTMLElement | null = element.parentElement
 ) {
   const view = element.ownerDocument.defaultView!;
   const nodes: HTMLElement[] = [];
@@ -59,6 +59,13 @@ export function treeSelectAlignVisibleArea(initial: PopupArea, scrollers: readon
 }
 
 type Alignment = ReturnType<typeof getPopupPosition>;
+export interface TreeSelectAlignBorderBox {
+  readonly size: ResizeObserverSize;
+  readonly width: string;
+  readonly height: string;
+  readonly boxSizing: string;
+  readonly writingMode: string;
+}
 const projectedProperties = ['left', 'top', 'right', 'bottom', 'position', 'transform', 'transform-origin',
   'translate', 'rotate', 'scale', 'margin', 'margin-left', 'margin-top', 'margin-right', 'margin-bottom',
   'offset-path', 'offset-distance', 'offset-position', 'offset-anchor', 'offset-rotate',
@@ -72,7 +79,8 @@ export function createTreeSelectAlignSurface(
   getParent: () => HTMLElement | ShadowRoot,
   getMotion?: () => TreeSelectMotionFrameState | undefined,
   onTransitionEnd?: (detail: TreeSelectMotionTransitionEnd) => void,
-  getConstrainX?: () => boolean
+  getConstrainX?: () => boolean,
+  getBorderBox?: () => TreeSelectAlignBorderBox | undefined
 ) {
   const document = popup.ownerDocument;
   const view = document.defaultView!;
@@ -102,8 +110,18 @@ export function createTreeSelectAlignSurface(
     proxy.style.cssText += `;${getStyle() ?? ''}`;
     // Existing Native sizing remains owned by its authored layers/stretch. Only the CSS frame is virtual.
     const style = view.getComputedStyle(popup);
-    proxy.style.setProperty('width', style.width, 'important');
-    proxy.style.setProperty('height', style.height, 'important');
+    const measured = getBorderBox?.();
+    const vertical = style.writingMode.startsWith('vertical') || style.writingMode.startsWith('sideways');
+    // Computed CSS text loses fractional layout precision (317.0625 becomes 317.062).
+    // Reusing that text as a width rounds the proxy down by one browser layout unit.
+    const exact = style.boxSizing === 'border-box' && measured
+      && measured.width === style.width && measured.height === style.height
+      && measured.boxSizing === style.boxSizing && measured.writingMode === style.writingMode
+      && measured.size.inlineSize > 0 && measured.size.blockSize > 0 ? measured.size : undefined;
+    const width = exact ? `${vertical ? exact.blockSize : exact.inlineSize}px` : style.width;
+    const height = exact ? `${vertical ? exact.inlineSize : exact.blockSize}px` : style.height;
+    proxy.style.setProperty('width', width, 'important');
+    proxy.style.setProperty('height', height, 'important');
     proxy.style.setProperty('min-width', '0', 'important');
     proxy.style.setProperty('max-width', 'none', 'important');
     proxy.style.setProperty('min-height', '0', 'important');
@@ -114,18 +132,19 @@ export function createTreeSelectAlignSurface(
     const parent = getParent();
     if (popup.parentNode === parent) parent.insertBefore(proxy, popup);
     else parent.append(proxy);
+    return { width, height };
   }
 
-  function withSurface<T>(read: () => T): T {
-    prepare();
+  function withSurface<T>(read: (size: { width: string; height: string }) => T): T {
+    const size = prepare();
     try {
-      return read();
+      return read(size);
     } finally {
       proxy.remove();
     }
   }
 
-  function geometry(anchor: HTMLElement, scrollers: readonly HTMLElement[]) {
+  function geometry(anchor: Element, scrollers: readonly HTMLElement[]) {
     return withSurface(() => {
       // Source keeps the previous popup's scroll extent while measuring its zero-origin frame.
       if (previous) applyAlignment(previous);
@@ -188,11 +207,9 @@ export function createTreeSelectAlignSurface(
 
   function present(alignment: Alignment) {
     previous = alignment;
-    return withSurface(() => {
+    return withSurface(({ width, height }) => {
       applyAlignment(alignment);
       // Source author styles follow useOffsetStyle, including authored axes/margins/transforms.
-      const width = proxy.style.width;
-      const height = proxy.style.height;
       proxy.style.cssText += `;${getStyle() ?? ''}`;
       proxy.style.setProperty('width', width, 'important');
       proxy.style.setProperty('height', height, 'important');
@@ -230,8 +247,9 @@ export function createTreeSelectAlignSurface(
         ['right', 'auto'], ['bottom', 'auto'], ['margin', '0px'], ['translate', 'none'], ['rotate', 'none'],
         ['scale', 'none'], ['offset-path', 'none'], ['transform-origin', '0px 0px'],
         ['transform', `matrix3d(${matrix.join(',')})`]];
+      // Keep generated matrix values out of CSSOM text serialization, which rounds them.
       const style: InlineStyleLayer = declarations.map(([name, value]) =>
-        `${name}:${value} !important`).join(';');
+        [name, value, 'important'] as const);
       return { left, top: rect.y, style };
       } finally {
         frame.destroy();
@@ -243,6 +261,9 @@ export function createTreeSelectAlignSurface(
     const constrainX = Boolean(getConstrainX?.());
     const values: unknown[] = [getStyle(), popup.parentNode, popup.className,
       motion.signature(), constrainX];
+    const measured = getBorderBox?.();
+    if (measured) values.push(measured.size.inlineSize, measured.size.blockSize,
+      measured.width, measured.height, measured.boxSizing, measured.writingMode);
     if (constrainX) values.push(view.visualViewport?.offsetLeft ?? 0,
       view.visualViewport?.width ?? view.innerWidth);
     const container = getParent();

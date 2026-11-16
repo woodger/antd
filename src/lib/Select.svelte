@@ -8,6 +8,9 @@
   import { useComponentTheme } from './theme-component.svelte';
   import { connectComponentTheme } from './theme-component.dom';
   import { connectPopup } from './popup.dom';
+  import { createTreeSelectAlign } from './tree-select-align.dom';
+  import { createOverlayStyle } from './overlay-style.model.svelte';
+  import { serializeInlineStyleLayers } from './inline-style.engine';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useCompact } from './space-compact-context';
   import { compactClasses } from './space-compact.engine';
@@ -50,6 +53,7 @@
     open = $bindable<boolean | undefined>(),
     open: providedOpen,
     defaultOpen,
+    placement,
     tokenSeparators,
     maxCount,
     maxTagTextLength,
@@ -134,6 +138,7 @@
   let responsiveCount = $state(Number.POSITIVE_INFINITY);
   const tagElements = new Map<RawValue, HTMLElement>();
   let shown = $state(false);
+  let popupPlacement = $state<string>();
   let typeahead = '';
   let lastTyped = 0;
   let composing = false;
@@ -287,40 +292,56 @@
     }
   });
   let popupContainerGetter = $derived(getPopupContainer || config.getPopupContainer);
+  const anchorWidthVariable = '--ant-native-select-anchor-width';
+  let popupLayers = $derived([
+    componentTheme.style,
+    `width:var(${anchorWidthVariable})`
+  ]);
+  const popupStyle = createOverlayStyle(() => popupLayers);
   const portal = createPopupContainer(() => ({
     open: expanded,
     rendered: expanded,
     reference,
     getPopupContainer: popupContainerGetter,
-    themeStyle: componentTheme.style
+    themeStyle: serializeInlineStyleLayers(popupLayers),
+    preserveVariables: [anchorWidthVariable]
   }));
 
   $effect(() => {
-    if (!expanded || !list || !reference || !popupContainerGetter) return;
+    if (!expanded || !list || !reference) return;
 
     const popup = list;
     const anchor = reference;
-    const disconnect = connectPopup(popup, anchor, {
+    const source = untrack(() => createTreeSelectAlign(anchor, popup, () => untrack(() => ({
+      placement: placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft'),
+      popupOverflow: config.popupOverflow,
+      open: expanded,
+      style: serializeInlineStyleLayers(popupLayers),
+      container: popupContainerGetter
+        ? popup.parentNode as HTMLElement | ShadowRoot : popup.ownerDocument.body
+    }))));
+    const disconnect = untrack(() => connectPopup(popup, anchor, {
       placement: 'bottom',
-      gap: 4,
-      align: config.direction === 'rtl' ? 'right' : 'left',
+      get trigger() { return untrack(() => popupContainerGetter ? anchor : container); },
       autoAdjustOverflow: true,
-      maxWidth: '100vw',
-      applyPosition: position => {
-        popup.style.width = `${anchor.getBoundingClientRect().width}px`;
-        popup.style.left = `${position.left}px`;
-        popup.style.top = `${position.top}px`;
-      },
+      maxWidth: false,
+      constrainWidth: false,
+      allowOffscreenAnchor: true,
+      anchorWidthVariable,
+      getAnchorWidth: () => source.width,
+      getPosition: source.position,
+      applyPosition: position => source.commitFrame(() => popupStyle.position(position, source.style)),
+      onAlign: position => { popupPlacement = position.alignedPlacement; },
       onPlacement: () => {},
       onVisibilityChange: next => { shown = next; },
       onDismiss: () => setOpen(false)
-    });
+    }));
+    source.connect(disconnect.forceAlign);
+    source.forceAlign();
 
     return () => {
       disconnect();
-      popup.removeAttribute('hidden');
-      for (const property of ['width', 'left', 'top', 'max-width'])
-        popup.style.removeProperty(property);
+      source.destroy();
     };
   });
 
@@ -718,16 +739,6 @@
       control?.click();
     }
   }
-
-  function handleOutside(event: PointerEvent) {
-    if (popupContainerGetter) return;
-
-    const target = event.composedPath()[0] ?? event.target;
-
-    if (target instanceof Node && !container.contains(target)) {
-      setOpen(false);
-    }
-  }
 </script>
 
 <style>
@@ -761,7 +772,7 @@
   .popup[data-ant-select-dropdown] { top: calc(100% + 4px); inset-inline: 0; max-height: 256px; overflow-y: auto; }
   /* Исходный virtual-list размещает options в flex column без сжатия строк. */
   .popup[data-ant-select-source-popup] { display: flex; flex-direction: column; }
-  .popup[data-ant-select-dropdown][popover] { position: fixed; inset: auto; margin: 0; }
+  .popup[data-ant-select-dropdown][popover] { position: fixed; inset: auto; margin: 0; border: 0; }
   .popup[data-ant-select-dropdown][hidden] { display: none; }
   [data-ant-select-source-popup] > [data-ant-select-item] { flex: none; }
   [data-ant-select-source-theme] .clear { display: inline-block; margin-inline-end: 0; color: var(--ant-color-text-quaternary); }
@@ -787,7 +798,7 @@
   }
 </style>
 
-<svelte:document onpointerdown={handleOutside} onreset={handleReset} />
+<svelte:document onreset={handleReset} />
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`select-prefix:${prefix}:${rootPrefix}`} />{/if}<div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
   data-ant-select-compact-item={Boolean(compact) || undefined} class={[
@@ -956,13 +967,15 @@
       bind:this={list}
       data-ant-select-dropdown data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
       data-ant-select-source-popup={Boolean(componentTheme.className) && filtered.length > 0 || undefined}
-      popover={popupContainerGetter ? 'manual' : undefined}
-      hidden={Boolean(popupContainerGetter) && !shown}
+      popover="manual"
+      hidden={!shown}
       dir={config.direction}
       class={[`popup ${prefix}-dropdown`, componentTheme.className && 'ant-select-css-var',
         componentTheme.className && filtered.length > 0 && `${prefix}-source-popup`,
         componentTheme.className && config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
+        popupPlacement && `${prefix}-dropdown-placement-${popupPlacement}`,
         componentTheme.className]}
+      {@attach popupStyle.attach}
       {@attach node => connectComponentTheme(node, componentTheme.style)}
       {@attach portal}
       id={`${controlId}-list`}

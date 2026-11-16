@@ -240,7 +240,7 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
     });
 }
 
-test('Select returns an open portal to its inline layout when the provider getter is removed',
+test('Select restores its DOM parent and keeps a fixed popup when the provider getter is removed',
   async ({ page }) => {
     await open(page, 'select-parent');
     const popup = page.getByRole('listbox');
@@ -250,7 +250,9 @@ test('Select returns an open portal to its inline layout when the provider gette
     await check(page, 'Inherit select container', false);
 
     await expect(page.locator('.container > [role=listbox]')).toBeVisible();
-    await expect(popup).not.toHaveAttribute('popover');
+    await expect(popup).toHaveAttribute('popover', 'manual');
+    await expect(popup).toHaveCSS('position', 'fixed');
+    expect(await popup.evaluate(node => (node as HTMLElement).offsetParent)).toBeNull();
     expect(await popup.evaluate((node, old) => node === old, original)).toBe(true);
     await expect.poll(() => snapshot(page)).toMatchObject({ target: 'default', matchedWidth: true });
     await expect(input).toHaveAttribute('aria-expanded', 'true');

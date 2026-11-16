@@ -2174,5 +2174,15 @@
     "id": "tree-select-checkable",
     "module": "./TreeSelectCheckableFixtures.svelte",
     "root": "tree-select-checkable-fixture"
+  },
+  {
+    "id": "popup-overflow",
+    "module": "./PopupOverflowFixtures.svelte",
+    "root": "popup-overflow-fixture"
+  },
+  {
+    "id": "popup-overflow-smoke",
+    "module": "./PopupOverflowSmokeFixtures.svelte",
+    "root": "popup-overflow-smoke-fixture"
   }
 ]

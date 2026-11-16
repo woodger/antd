@@ -6890,8 +6890,9 @@ props при открытой панели. Flip history сохраняется 
 с той же публично заданной высотой control проверяет связанное выравнивание popup.
 Публичные Native методы ref сохраняют identity при обновлении props, хотя Source
 пересоздаёт их; root и popup сравниваются по фактическим DOM refs.
-`htmlRegion` можно задать локально; глобальный `ConfigProvider.popupOverflow`
-остаётся отдельным расширением provider.
+`htmlRegion` можно задать локально. `ConfigProvider.popupOverflow` выбирает область
+стандартной карты; собственная `builtinPlacements`, включая `{}`, её заменяет,
+а локальный `popupAlign.htmlRegion` имеет приоритет.
 [35 browser-сценариев](./tests/browser/tree-select-align.spec.ts),
 [два изменения CSS frame/root](./tests/browser/tree-select-align-frame.spec.ts),
 [DOM-free SSR](./tests/package/tree-select-align.ssr.test.ts) и
@@ -6928,9 +6929,10 @@ Component token `motion=false` обнуляет CSS duration, сохраняя �
 Native сохраняет fixed top-layer. CSS animations используют реальные браузерные
 clocks; для проецируемых transform transitions доступен настоящий WAAPI Animation,
 а не Source CSSTransition. В этом случае завершение фазы передаётся контроллеру
-без искусственного DOM transitionend. Без использования alignment props сохраняются
+без искусственного DOM transitionend. Без использования alignment props и
+`ConfigProvider.popupOverflow` сохраняются
 прежние Native ограничения ширины и положения панели по viewport; явные
-`popupAlign`/`builtinPlacements` включают исходные overflow rules.
+`popupAlign`/`builtinPlacements` или `popupOverflow` включают исходные overflow rules.
 Закрытый скрытый popup освобождает position RAF без ожидания отменённого CSS end
 и остаётся закрытым при возвращении control в viewport.
 Существующие Svelte refs и opaque snippet
@@ -10025,10 +10027,11 @@ FormData. Native-only темы сохраняют прежнее оформле�
 обёртке. Подробности — в [описании темы](./docs/reference/theme-context.md#токены-select).
 
 GetPopupContainer получает внутренний корень `.ant-select`. Локальная функция
-перекрывает ConfigProvider.getPopupContainer; undefined наследует provider. Без
-getter список сохраняет прежнее inline-размещение. При выбранном контейнере
-используется native popover с шириной поля, обновлением положения, outside/Escape
-и сохранением фокуса. Getter не вызывается при SSR и до первого открытия.
+перекрывает ConfigProvider.getPopupContainer; undefined наследует provider.
+Список использует fixed native popover с шириной поля, обновлением положения,
+outside/Escape и сохранением фокуса. Без getter сохраняется прежний DOM parent.
+`placement` принимает bottomLeft/bottomRight/topLeft/topRight; по умолчанию
+bottomLeft либо bottomRight в RTL. Getter не вызывается при SSR и до первого открытия.
 ShadowRoot требует собственных стилей; смена функции с тем же контейнером
 сохраняет DOM списка, поиск и выделение. Закрытие Select удаляет его список;
 AutoComplete сохраняет смонтированный popup до unmount. Проверки обоих компонентов —
@@ -11570,6 +11573,24 @@ Select/AutoComplete добавляют 32 эталона в
 [select-container](./tests/browser/select-container.spec.ts), `?fixture=select-container`.
 TreeSelect/Cascader добавляют 40 эталонов в
 [choice-container](./tests/browser/choice-container.spec.ts), `?fixture=choice-container`.
+
+`ConfigProvider.popupOverflow` принимает `PopupOverflow = 'viewport' | 'scroll'`
+для Select, TreeSelect, Cascader и AutoComplete, включая вложенные Select.
+По умолчанию используется viewport; отсутствующий prop и `undefined` наследуют
+родительское значение, явный viewport сбрасывает scroll. Режим scroll выбирает
+область документа для расчёта переполнения; вертикальный shift по-прежнему учитывает
+видимую область. Настройка не меняет собственные popup Tooltip, DatePicker,
+Mentions или CascaderPanel. Смена режима обновляет карту для следующего исходного
+выравнивания (открытие, resize или scroll), сохраняя текущие координаты до такого
+события. Native сохраняет DOM parent, state и фокус; Select также использует
+fixed top layer без обязательного `getPopupContainer`.
+[Прямые сценарии](./tests/browser/popup-overflow.spec.ts),
+[strict hydration](./tests/browser/popup-overflow-hydration.spec.ts) и
+[SSR](./tests/package/popup-overflow.ssr.test.ts) проверяют эту настройку.
+[Пары вложенных компонентов](./tests/browser/popup-overflow-smoke.spec.ts)
+проверяют наследование и отсутствие влияния на другие popup; полное числовое
+совпадение layout этих семейств они не подтверждают. Прежний Native контракт
+Select сохраняется: закрытие не вызывает `onSearch`, controlled query очищает владелец.
 
 Статические defaultSeed, default/dark/compact algorithms и getDesignToken
 работают без context и DOM. Их source-округления, overrides и ограничения описаны

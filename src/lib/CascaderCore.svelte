@@ -30,7 +30,7 @@
     toggleCascader,
     type CascaderRow
   } from './cascader.engine';
-  import { connectCascaderTags, connectCascaderWidth, measureCascaderInput } from './cascader.dom';
+  import { connectCascaderTags, measureCascaderInput } from './cascader.dom';
   import { useConfig } from './config-context';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getSelectPrefixCss } from './select-prefix.engine';
@@ -47,7 +47,9 @@
   import { connectPopup, getPopupActiveElement } from './popup.dom';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useComponentTheme } from './theme-component.svelte';
-  import { connectComponentTheme } from './theme-component.dom';
+  import { createTreeSelectAlign, type TreeSelectAlignSnapshot } from './tree-select-align.dom';
+  import { createOverlayStyle } from './overlay-style.model.svelte';
+  import { serializeInlineStyleLayers } from './inline-style.engine';
   import CascaderColumns from './CascaderColumns.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
   import Empty from './Empty.svelte';
@@ -219,6 +221,12 @@
   let editor = $state<HTMLInputElement>();
   let anchor = $state<Element>();
   let popup = $state<HTMLDivElement>();
+  let alignedPopupPlacement = $state<string>();
+  const alignment: {
+    open: boolean;
+    current?: ReturnType<typeof createTreeSelectAlign>;
+    snapshot?: TreeSelectAlignSnapshot;
+  } = { open: false };
   let contentElement = $state<HTMLDivElement>();
   let responsiveCount = $state(Number.POSITIVE_INFINITY);
   let tagCount = $derived(maxTagCount === 'responsive' ? responsiveCount
@@ -229,15 +237,17 @@
   let popupStyle = $derived([
     popupMatchSelectWidth === true ? 'width:var(--cascader-anchor-width)' : undefined,
     !columns.length || search && searchConfig.matchInputWidth !== false
-      ? 'min-width:min(var(--cascader-anchor-width),calc(100vw - 16px))' : 'min-width:auto',
+      ? 'min-width:var(--cascader-anchor-width)' : 'min-width:auto',
     css.popup.root,
     typeof popupMatchSelectWidth === 'number' ? `width:${popupMatchSelectWidth}px` : undefined
   ].filter(Boolean).join(';'));
+  let popupLayers = $derived([componentStyle, popupStyle]);
+  const popupOverlay = createOverlayStyle(() => popupLayers);
   const portal = createPopupContainer(() => ({
     open: !panel && visible,
     reference: anchor,
     getPopupContainer: panel ? undefined : getPopupContainer || config.getPopupContainer,
-    themeStyle: [componentStyle, popupStyle].filter(Boolean).join(';'),
+    themeStyle: serializeInlineStyleLayers(popupLayers),
     preserveVariables: ['--cascader-anchor-width']
   }));
   let controlId = $derived(id ?? (!panel ? field?.id : undefined) ?? `ant-cascader-${generated}`);
@@ -334,28 +344,57 @@
       else input.style.removeProperty('--select-input-width');
     };
   });
+  $effect.pre(() => {
+    // Pre-update visibility also distinguishes a close from a same-open trigger replacement.
+    alignment.open = !panel && visible;
+    if (!alignment.open) {
+      alignment.snapshot = undefined;
+      alignment.current?.resetFlips();
+    }
+  });
   $effect(() => {
     if (panel || !visible || !popup || !anchor) return;
-    void popupStyle;
-    const position = placement ?? (rtl ? 'bottomRight' : 'bottomLeft');
-    const disconnectWidth = connectCascaderWidth(popup, anchor);
-    const disconnectPopup = connectPopup(popup, anchor, {
-      placement: position.startsWith('top') ? 'top' : 'bottom',
+    const trigger = anchor;
+    const surface = popup;
+    const requestedPlacement = () => untrack(() => placement ?? (rtl ? 'bottomRight' : 'bottomLeft'));
+    const source = untrack(() => createTreeSelectAlign(trigger, surface, () => untrack(() => ({
+      placement: placement ?? (rtl ? 'bottomRight' : 'bottomLeft'),
+      popupOverflow: config.popupOverflow,
+      style: serializeInlineStyleLayers(popupLayers),
+      open: visible,
+      container: getPopupContainer || config.getPopupContainer
+        ? surface.parentNode as HTMLElement | ShadowRoot : surface.ownerDocument.body
+    })), undefined, alignment.snapshot));
+    alignment.current = source;
+    const disconnectPopup = untrack(() => connectPopup(surface, trigger, {
+      get placement() { return requestedPlacement().startsWith('top') ? 'top' : 'bottom'; },
+      getPosition: (rect, bounds, viewport) => source.position(rect, bounds, viewport),
       gap: 4,
-      align: position.endsWith('Right') ? 'right' : 'left',
+      get align() { return requestedPlacement().endsWith('Right') ? 'right' : 'left'; },
       autoAdjustOverflow: true,
-      maxWidth: '100vw',
+      maxWidth: false,
+      constrainWidth: false,
+      allowOffscreenAnchor: true,
+      anchorWidthVariable: '--cascader-anchor-width',
+      getAnchorWidth: () => source.width,
       preserveFocus: !children,
+      applyPosition: value => untrack(() => source.commitFrame(() => popupOverlay.position(value, source.style))),
+      onAlign: value => { alignedPopupPlacement = value.alignedPlacement; },
       onPlacement: () => { },
       onVisibilityChange: next => { shown = next; },
       onDismiss: reason => {
         requestOpen(false);
         if (reason === 'escape') focus();
       }
-    });
+    }));
+    source.connect(disconnectPopup.forceAlign);
+    source.forceAlign();
     return () => {
-      disconnectWidth();
-      disconnectPopup();
+      if (alignment.open) alignment.snapshot = source.snapshot();
+      if (alignment.current === source) alignment.current = undefined;
+      source.destroy();
+      const retarget = alignment.open && surface.isConnected && root?.isConnected && anchor !== trigger;
+      disconnectPopup(Boolean(retarget));
     };
   });
   $effect(() => {
@@ -802,7 +841,7 @@
   </div>
   <NoCompactStyle>
     {#if mounted}
-      <!-- SSR получает переменные сразу; attachment обновляет их, сохраняя left/top контроллера. -->
+      {@const initialPopupStyle = untrack(() => serializeInlineStyleLayers(popupLayers))}
       <div data-ant-cascader-prefix={cascaderPrefix} data-ant-cascader-select-prefix={selectPrefix} data-ant-cascader-root-prefix={rootPrefix} data-ant-select-prefix={selectPrefix} data-ant-select-root-prefix={rootPrefix}
         data-ant-path-choice-source-theme={Boolean(cascaderTheme.className) || undefined}
         bind:this={popup} popover="manual" hidden={!visible || !shown}
@@ -811,11 +850,11 @@
           cascaderTheme.className,
           cascaderTheme.className && `${cascaderPrefix}-source-theme`,
           rtl && `${cascaderPrefix}-dropdown-rtl`,
+          alignedPopupPlacement && `${selectPrefix}-dropdown-placement-${alignedPopupPlacement}`,
           rootClassName, classes.popup.root
         ]} dir={resolvedDirection}
-        style={[untrack(() => componentStyle), popupStyle].filter(Boolean).join(';')}
-        {@attach node => connectComponentTheme(node,
-          [componentStyle, popupStyle].filter(Boolean).join(';'))}
+        style={initialPopupStyle}
+        {@attach popupOverlay.attach}
         {@attach portal}
         onfocusout={blurWithin}>
         {#if popupRender}<CascaderPopupContent {popupRender} menu={menus} />

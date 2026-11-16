@@ -93,6 +93,8 @@ export interface SelectProps<
   open?: boolean;
   /** Начальная uncontrolled видимость; SSR остаётся закрытым. @defaultValue false */
   defaultOpen?: boolean;
+  /** Физический угол popup; по умолчанию bottomLeft, в RTL — bottomRight. */
+  placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
   /** Разбор строк в multiple/tags; function получает текущий ввод, включая восстановленный paste. */
   tokenSeparators?: SelectTokenSeparators;
   /** Максимум выбранных значений в multiple/tags; existing/default values не обрезаются. */
@@ -121,7 +123,8 @@ export interface SelectProps<
   notFoundContent?: RenderEmptyContent;
   onPopupScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
   /**
-   * Getter получает корень Select; undefined наследует ConfigProvider, без getter список inline.
+   * Getter получает корень Select; undefined наследует ConfigProvider.
+   * Без getter сохраняется DOM parent, popup отображается как fixed manual popover.
    */
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
   /** @defaultValue false */

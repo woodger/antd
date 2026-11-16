@@ -355,16 +355,18 @@
   let popupAlignment: ReturnType<typeof createTreeSelectAlign> | undefined;
   let popupAlignmentSnapshot: TreeSelectAlignSnapshot | undefined;
   let sourceMotionUsed = $state(untrack(() => Boolean(popupMotionName) && tokens.token.motion));
-  let sourceAlignmentUsed = $state(untrack(() => popupAlign !== undefined || builtinPlacements !== undefined));
+  let sourceAlignmentUsed = $state(untrack(() => popupAlign !== undefined
+    || builtinPlacements !== undefined || config.popupOverflow !== undefined));
   let cachedPopupAlignment = $state.raw<PopupSourceAlign>();
   let legacyPopupClass = $state<string>();
   let popupFlipCache: PopupFlipCache | undefined;
-  const sourcePlacements = treeSelectBuiltinPlacements();
+  let sourcePlacements = $derived(treeSelectBuiltinPlacements(config.popupOverflow));
   let alignedPopupClass = $derived(sourceAlignmentUsed || sourceMotionUsed
     ? cachedPopupAlignment && getPopupPlacement(builtinPlacements || sourcePlacements, cachedPopupAlignment)
     : legacyPopupClass);
   $effect(() => {
-    if (popupAlign !== undefined || builtinPlacements !== undefined) sourceAlignmentUsed = true;
+    if (popupAlign !== undefined || builtinPlacements !== undefined
+      || config.popupOverflow !== undefined) sourceAlignmentUsed = true;
     if (popupMotionName && tokens.token.motion) sourceMotionUsed = true;
   });
   $effect(() => {
@@ -601,6 +603,7 @@
         placement: placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft'),
         popupAlign,
         builtinPlacements,
+        popupOverflow: config.popupOverflow,
         style: serializeInlineStyleLayers(popupLayers),
         open: visible,
         inMotion: popupMotionState.running,

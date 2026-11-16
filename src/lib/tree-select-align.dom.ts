@@ -3,10 +3,13 @@ import {
   getPopupPlacement, getPopupPosition, type PopupFlipCache, type PopupSourceAlign
 } from './popup-position.engine';
 import { treeSelectBuiltinPlacements } from './tree-select-align.engine';
-import { createTreeSelectAlignSurface, treeSelectAlignScrollers } from './tree-select-align-surface.dom';
+import {
+  createTreeSelectAlignSurface, treeSelectAlignScrollers, type TreeSelectAlignBorderBox
+} from './tree-select-align-surface.dom';
 import type { InlineStyleLayer } from './inline-style.engine';
 import type { TooltipPlacement } from './tooltip.types';
 import type { TooltipPosition, TooltipRect } from './tooltip.engine';
+import type { PopupOverflow } from './types';
 import type {
   TreeSelectMotionFrameState, TreeSelectMotionTransitionEnd
 } from './tree-select-motion-frame.dom';
@@ -15,6 +18,7 @@ export interface TreeSelectAlignOptions {
   placement: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
   popupAlign?: PopupSourceAlign;
   builtinPlacements?: Readonly<Record<string, PopupSourceAlign>>;
+  popupOverflow?: PopupOverflow;
   style?: string;
   container: HTMLElement | ShadowRoot;
   open?: boolean;
@@ -35,19 +39,22 @@ const clipping = new WeakMap<HTMLElement, { parent: ParentNode | null; nodes: HT
 
 /** Pending props affect numeric alignment only after a Source trigger. */
 export function createTreeSelectAlign(
-  anchor: HTMLElement, popup: HTMLElement, getOptions: () => TreeSelectAlignOptions,
+  anchor: Element, popup: HTMLElement, getOptions: () => TreeSelectAlignOptions,
   initialFlips?: PopupFlipCache, initial?: TreeSelectAlignSnapshot
 ) {
   const document = popup.ownerDocument;
   const view = document.defaultView!;
-  const defaults = treeSelectBuiltinPlacements();
+  let defaultOverflow = getOptions().popupOverflow;
+  let defaults = treeSelectBuiltinPlacements(defaultOverflow);
+  let borderBox: TreeSelectAlignBorderBox | undefined;
   const surface = createTreeSelectAlignSurface(
     popup,
     () => getOptions().style,
     () => getOptions().container,
     () => getOptions().motion,
     event => getOptions().onMotionTransitionEnd?.(event),
-    () => getOptions().constrainX ?? false
+    () => getOptions().constrainX ?? false,
+    () => borderBox
   );
   let active = true;
   let dirty = !initial?.alignment;
@@ -96,6 +103,12 @@ export function createTreeSelectAlign(
     let changed = false;
     for (const entry of entries) {
       const node = entry.target as HTMLElement;
+      if (node === popup) {
+        const size = entry.borderBoxSize?.[0];
+        const style = view.getComputedStyle(popup);
+        borderBox = size ? { size, width: style.width, height: style.height,
+          boxSizing: style.boxSizing, writingMode: style.writingMode } : undefined;
+      }
       const rect = node.getBoundingClientRect();
       const signature = [Math.floor(rect.width), Math.floor(rect.height),
         node.offsetWidth, node.offsetHeight].join(':');
@@ -113,6 +126,10 @@ export function createTreeSelectAlign(
   function position(_rect: DOMRect, _bounds: DOMRect, _viewport: TooltipRect): TooltipPosition {
     const options = getOptions();
     if (options.open === false && cache) cache.flips = {};
+    if (options.popupOverflow !== defaultOverflow) {
+      defaultOverflow = options.popupOverflow;
+      defaults = treeSelectBuiltinPlacements(defaultOverflow);
+    }
     const placements = options.builtinPlacements || defaults;
     const align = JSON.stringify(options.popupAlign);
     if (options.placement !== latestPlacement

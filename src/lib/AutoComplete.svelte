@@ -23,6 +23,9 @@
   import { useFormFeedback } from './form-feedback-context';
   import FormFeedbackIcon from './FormFeedbackIcon.svelte';
   import { connectPopup } from './popup.dom';
+  import { createTreeSelectAlign } from './tree-select-align.dom';
+  import { createOverlayStyle } from './overlay-style.model.svelte';
+  import { serializeInlineStyleLayers } from './inline-style.engine';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useComponentTheme } from './theme-component.svelte';
   import { connectComponentTheme } from './theme-component.dom';
@@ -126,12 +129,22 @@
   let editor = $state<HTMLInputElement | HTMLTextAreaElement>();
   let popup = $state<HTMLDivElement>();
   let shown = $state(false);
+  let popupPlacement = $state<string>();
   let mounted = $state(false);
+  const anchorWidthVariable = '--ant-native-auto-complete-anchor-width';
+  let popupLayers = $derived([
+    componentTheme.style,
+    `max-height:${listHeight}px`,
+    `${popupMatchSelectWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`,
+    typeof popupMatchSelectWidth === 'number' ? `width:${popupMatchSelectWidth}px` : undefined
+  ]);
+  const popupStyle = createOverlayStyle(() => popupLayers);
   const portal = createPopupContainer(() => ({
     open: visible,
     reference: root,
     getPopupContainer: getPopupContainer || config.getPopupContainer,
-    themeStyle: componentTheme.style
+    themeStyle: serializeInlineStyleLayers(popupLayers),
+    preserveVariables: [anchorWidthVariable]
   }));
   let enterLock = false;
   let pendingClearClose: MessageChannel | undefined;
@@ -189,19 +202,39 @@
   });
   $effect(() => {
     if (!visible || !popup || !root) return;
-    return connectPopup(popup, root, {
+    const node = popup;
+    const anchor = root;
+    const source = untrack(() => createTreeSelectAlign(anchor, node, () => untrack(() => ({
+      placement: config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft',
+      popupOverflow: config.popupOverflow,
+      open: visible,
+      style: serializeInlineStyleLayers(popupLayers),
+      container: getPopupContainer || config.getPopupContainer
+        ? node.parentNode as HTMLElement | ShadowRoot : node.ownerDocument.body
+    }))));
+    const disconnect = untrack(() => connectPopup(node, anchor, {
       placement: 'bottom',
-      gap: 4,
-      align: config.direction === 'rtl' ? 'right' : 'left',
       autoAdjustOverflow: true,
-      maxWidth: '100vw',
-      matchAnchorWidth: popupMatchSelectWidth !== false,
+      maxWidth: false,
+      constrainWidth: false,
+      allowOffscreenAnchor: true,
+      anchorWidthVariable,
+      getAnchorWidth: () => source.width,
+      getPosition: source.position,
+      applyPosition: position => source.commitFrame(() => popupStyle.position(position, source.style)),
+      onAlign: position => { popupPlacement = position.alignedPlacement; },
       onPlacement: () => { },
       onVisibilityChange: next => {
         shown = next;
       },
       onDismiss: () => requestOpen(false)
-    });
+    }));
+    source.connect(disconnect.forceAlign);
+    source.forceAlign();
+    return () => {
+      disconnect();
+      source.destroy();
+    };
   });
   $effect(() => {
     const index = active;
@@ -457,11 +490,11 @@
       class={[`popup ${prefix}-dropdown ant-select-css-var`, componentTheme.className,
           componentTheme.className && entries.length > 0 && `${prefix}-source-popup`,
           componentTheme.className && config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
+          popupPlacement && `${prefix}-dropdown-placement-${popupPlacement}`,
           classNames?.popup?.root]} dir={config.direction}
+      {@attach popupStyle.attach}
       {@attach node => connectComponentTheme(node, componentTheme.style)}
       {@attach portal}
-      style:max-height={`${listHeight}px`}
-      style:width={typeof popupMatchSelectWidth === 'number' ? `${popupMatchSelectWidth}px` : undefined}
       onscroll={onPopupScroll}
       aria-label={attributes['aria-label']
           ?? attributes.placeholder

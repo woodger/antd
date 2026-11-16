@@ -23,6 +23,9 @@ export type Variant = 'outlined' | 'borderless' | 'filled' | 'underlined';
 /** Контейнер popup из ConfigProvider; trigger отсутствует у некоторых потребителей upstream. */
 export type GetPopupContainer = (triggerNode?: HTMLElement) => HTMLElement | ShadowRoot;
 
+/** Область переполнения Select, TreeSelect, Cascader и AutoComplete. */
+export type PopupOverflow = 'viewport' | 'scroll';
+
 /** Scroll target Affix/Anchor; getter вызывается только в браузере. */
 export type GetTargetContainer = () => HTMLElement | Window;
 

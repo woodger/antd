@@ -906,6 +906,7 @@ export {
   type RenderEmptyContent,
   type RenderEmptyHandler,
   type GetPopupContainer,
+  type PopupOverflow,
   type GetTargetContainer,
   type GetContainer,
   type TableLocale,

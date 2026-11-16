@@ -1,9 +1,10 @@
-export type InlineStyleLayer = string | undefined | readonly (readonly [string, string])[];
+export type InlineStyleLayer = string | undefined
+  | readonly (readonly [string, string, ('' | 'important')?])[];
 
 export function serializeInlineStyleLayers(layers: readonly InlineStyleLayer[]) {
   return layers.map(layer => typeof layer === 'string' ? layer
     : layer?.filter(([, value]) => value !== '')
-      .map(([property, value]) => `${property}:${value}`).join(';'))
+      .map(([property, value, priority]) => `${property}:${value}${priority ? ` !${priority}` : ''}`).join(';'))
     .filter(Boolean).join(';') || undefined;
 }
 
@@ -11,7 +12,8 @@ export function serializeInlineStyleLayers(layers: readonly InlineStyleLayer[]) 
 export function* getInlineStyleDeclarations(layers: readonly InlineStyleLayer[]) {
   for (const layer of layers) {
     if (typeof layer !== 'string') {
-      for (const [property, value] of layer ?? []) yield { property, value, priority: '' };
+      for (const [property, value, priority] of layer ?? [])
+        yield { property, value, priority: priority ?? '' };
       continue;
     }
     let declaration = '';

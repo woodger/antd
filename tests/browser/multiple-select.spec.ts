@@ -453,6 +453,7 @@ test.describe('mobile multiple Select', () => {
       const fixture = page.locator('#multiple-select-fixture');
       const input = page.getByRole('combobox', { name: 'Multiple strings', exact: true });
 
+      await input.click();
       await input.fill('Long choice');
       await fixture.getByRole('option', { name: /^Long choice/ }).click();
 
