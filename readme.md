@@ -10041,11 +10041,13 @@ onValueChange сохраняются. Удалённый selected option ост�
 Selected value по-прежнему string/number или их массив; labelInValue, полный codec rich
 выбранных labels, optionLabelProp и labelRender остаются следующим зависимым этапом.
 
-Исходные [40 сценариев](tests/browser/fixtures/ant-design-select-data-reference.json),
+Исходные [40 сценариев](tests/browser/fixtures/ant-design-select-data-reference.json.gz),
 [40 SSR](tests/browser/fixtures/ant-design-select-data-ssr-reference.json),
 [атрибуты](tests/browser/fixtures/ant-design-select-data-attributes-reference.json) и
 [диагностика](tests/browser/fixtures/ant-design-select-data-diagnostic-reference.json)
-сохранены независимо от реализации. Native label/NFKD search и disabled cache проверяются
+сохранены независимо от реализации. Большой основной эталон хранится в gzip; загрузчик
+распаковывает его стандартным Node.js zlib и проверяет прежний SHA-256 исходных байтов.
+Native label/NFKD search и disabled cache проверяются
 с отдельными public Source owners
 ([search](tests/browser/fixtures/ant-design-select-data-label-native-reference.json),
 [cache](tests/browser/fixtures/ant-design-select-data-cache-native-reference.json));

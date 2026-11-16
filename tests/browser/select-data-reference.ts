@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
+import { gunzipSync } from 'node:zlib';
 import { selectDataSamples, selectDataActions, type SelectDataAction } from './fixtures/select-data-cases';
 import type { readSelectData } from './select-data-metrics';
 
@@ -32,7 +33,8 @@ function guard(condition: unknown, message: string): asserts condition {
   if (!condition) throw Error(`Invalid frozen Select data reference: ${message}`);
 }
 function load(filename: string, sha256: string, ids: string[], diagnostics: unknown[]) {
-  const bytes = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));
+  const stored = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));
+  const bytes = filename.endsWith('.gz') ? gunzipSync(stored) : stored;
   guard(createHash('sha256').update(bytes).digest('hex') === sha256, `${filename} SHA256`);
   // Полный raw57MB читается без вывода TypeScript-типа огромного JSON literal.
   const reference = JSON.parse(bytes.toString('utf8')) as SourceReference;
@@ -56,7 +58,7 @@ function load(filename: string, sha256: string, ids: string[], diagnostics: unkn
   }
   return reference;
 }
-export const selectDataReference = load('ant-design-select-data-reference.json',
+export const selectDataReference = load('ant-design-select-data-reference.json.gz',
   '16297e548d98b8b239332f9de061b8938833a39e6f9c6fdf29b83f8dec2661cb',
   selectDataSamples.map(sample => sample.id), [selectDataSourceDiagnostic]);
 export const selectDataAriaReference = load('ant-design-select-data-aria-reference.json',
