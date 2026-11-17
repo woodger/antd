@@ -1,7 +1,8 @@
 import { test, expect } from './test';
+import { readSelectComponentsBrowserReference } from './select-components-browser-reference';
 import { prepareSelectSurface, drainSelectSurface } from './select-surface-driver';
 import { selectIconsGeometry } from './select-components-modes-cases.mjs';
-import { selectComponentsModesSamples as selectComponentsSamples, readSelectComponentsModesCase } from './select-components-modes-reference';
+import { selectComponentsModesSamples as selectComponentsSamples } from './select-components-modes-reference';
 import { settleNativeSelectComponentsModes as settleNativeSelectComponents, verifySelectComponentsModesPoint as verifySelectComponentsPoint } from './select-components-modes-assertions';
 import type { ComponentProps } from 'svelte';
 import { selectComponentsModesPopupSource } from './select-components-modes-key-collision';
@@ -9,7 +10,9 @@ import type SelectComponentsModesCase from './fixtures/SelectComponentsModesCase
 type Capture = Required<NonNullable<ComponentProps<typeof SelectComponentsModesCase>['capture']>> & { dispose: () => void };
 test.use({ viewport: selectIconsGeometry.viewport });
 for (const sample of selectComponentsSamples) test(`Select component modes complete Original ${sample.id}`, async ({ page }, testInfo) => {
-  const source = readSelectComponentsModesCase(sample.id);
+  const browser = page.context().browser();
+  if (!browser) throw Error('An actual Chromium browser version is required for Source conformance');
+  const { source, referenceVariant } = readSelectComponentsBrowserReference('modes', sample.id, browser.version());
   const trace: unknown[] = [], failures: string[] = [];
   await page.goto('/?fixture=select-components-modes');
   await page.getByRole('combobox', { name: 'Select component modes sample', exact: true }).selectOption(sample.id);
@@ -75,7 +78,7 @@ for (const sample of selectComponentsSamples) test(`Select component modes compl
     await page.waitForTimeout(1000); expect(await cleanup()).toEqual(disposed);
     expect(failures).toEqual([]);
   } finally {
-    await testInfo.attach('actual-select-components-modes-complete-raw', { body: JSON.stringify({ sample, trace, failures }, null, 2), contentType: 'application/json' });
+    await testInfo.attach('actual-select-components-modes-complete-raw', { body: JSON.stringify({ sample, referenceVariant, trace, failures }, null, 2), contentType: 'application/json' });
     await capture.dispose();
   }
 });
