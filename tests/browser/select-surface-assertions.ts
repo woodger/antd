@@ -284,7 +284,7 @@ export function verifySelectSurfaceNode(actual: SurfaceNode, source: SurfaceNode
     assert.equal(actual.css.display, 'flex', `${label} retained Native popup layout`);
   } else if (slot === 'suffix' && !hasAuthoredDisplay) {
     assert.equal(source.css.display, 'block', `${label} original suffix default`);
-    assert.equal(actual.css.display, 'flex', `${label} retained Native suffix default`);
+    assert.equal(actual.css.display, source.css.display, `${label} Source suffix content flow`);
   } else if (oldFlexInput && sample.control === 'select' && sample.mode && !hasAuthoredDisplay
     && source.css.display === 'inline-block' && actual.css.display === 'block') {
     // Old Native multiple/tags inputs are direct flex items; Source wraps them.

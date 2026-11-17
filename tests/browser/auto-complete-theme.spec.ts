@@ -193,7 +193,7 @@ test('native styles return without replacing the open editor', async ({ page }) 
   const input = page.getByRole('combobox', { name: 'Themed completion popup', exact: true });
   await input.fill('draft');
   const original = await input.elementHandle();
-  const optionContent = physicalSelectOption(page, { name: 'Alpha', exact: true }).locator('span');
+  const optionContent = physicalSelectOption(page, { name: 'Alpha', exact: true }).locator(':scope > span:not([aria-hidden])');
   const originalContent = await optionContent.elementHandle();
 
   await page.getByLabel('Apply source completion tokens', { exact: true }).evaluate(element => {

@@ -67,7 +67,9 @@
   import { getSelectTagOverflow } from './select-tag-overflow.engine';
   import { connectSelectTagOverflow, measureSelectInput, measureSelectSourceInput } from './select-tag-overflow.dom';
   import { resolveSelectTokenOptions, splitSelectTokens } from './select-token.engine';
-  import Icon from './Icon.svelte';
+  import SelectIcon from './SelectIcon.svelte';
+  import { resolveSelectSuffix, resolveSelectMenuIcon, resolveSelectRemoveIcon, resolveSelectClear } from './select-icons.engine';
+  import { selectIconAttribute } from './select-icon-attribute.engine';
 
   type RawValue = Value | string;
   type Row = SelectDataRow<RawValue, OptionType>;
@@ -85,6 +87,11 @@
     _autoWidth = false,
     prefixCls,
     prefix: leading,
+    suffix,
+    suffixIcon,
+    loadingIcon,
+    menuItemSelectedIcon,
+    removeIcon,
     rootClassName,
     classNames,
     styles,
@@ -114,7 +121,7 @@
     size,
     variant,
     showSearch,
-    loading = false,
+    loading,
     notFoundContent,
     onPopupScroll,
     getPopupContainer,
@@ -130,6 +137,8 @@
     onDeselect,
     onClear,
     onOpenChange,
+    onInputKeyDown,
+    onmousedown,
     onkeydown,
     onbeforeinput,
     onpaste,
@@ -145,7 +154,7 @@
 
   const config = useConfig();
   const tokens = useToken();
-  let { virtual, ...nativeAttributes } = $derived(attributes);
+  let { virtual, title: rootTitle, ...nativeAttributes } = $derived(attributes);
   let effectiveVirtual = $derived(Object.hasOwn(attributes, 'virtual') ? virtual : config.virtual);
   let prefix = $derived(config.getPrefixCls('select', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
@@ -214,6 +223,7 @@
   let typeahead = '';
   let lastTyped = 0;
   let composing = false;
+  let mouseActivated = false;
   let pastedText: string | undefined;
   let controlId = $derived(id ?? field?.id ?? `ant-select-${generatedId}`);
   let tagMode = $derived(mode === 'tags');
@@ -224,7 +234,7 @@
     : providedValue === undefined && uncontrolledLabels
       ? multiple ? uncontrolledLabels.map(item => item.value) : uncontrolledLabels[0]?.value
       : undefined);
-  let canSearch = $derived(typeof mergedShowSearch === 'object' ? true : mergedShowSearch ?? multiple);
+  let canSearch = $derived(tagMode || (typeof mergedShowSearch === 'object' ? true : mergedShowSearch ?? multiple));
   // Readonly исключает input из нативной проверки; required multiple блокирует ввод через beforeinput.
   let isReadOnly = $derived(!canSearch && (!multiple || !attributes.required));
   let intrinsicWidth = $derived(_autoWidth && !multiple && isReadOnly);
@@ -420,9 +430,30 @@
   let hiddenEmpty = $derived(filtered.length === 0
     && (notFoundContent === null || notFoundContent === false || notFoundContent === ''));
   let expanded = $derived(hydrated && isOpen && !resolvedDisabled && !hiddenEmpty);
-  let showClear = $derived(Boolean(mergedAllowClear && !resolvedDisabled
-    && (multiple ? selectedValues.length || search
-      : selected || expanded && canSearch && search)));
+  let resolvedSuffix = $derived(resolveSelectSuffix({
+    suffix, suffixIcon, loadingIcon, showSearch, context: config.select,
+    info: { searchValue: search, open: expanded, focused, showSearch: Boolean(canSearch), loading },
+    hasFeedback: feedback.hasFeedback
+  }, { down: downIcon, search: searchIcon, loading: spinnerIcon }));
+  let clearIcon = $derived(resolveSelectClear({ allowClear, contextAllowClear: config.select?.allowClear,
+    disabled: resolvedDisabled, displayCount: displayValues.length, searchValue: search }, clearGlyph,
+    typeof mergedAllowClear === 'object' ? 'Clear' : config.locale.clearText));
+  // A closed Native single editor hides its retained controlled query.
+  let showClear = $derived(clearIcon.visible
+    && (multiple || controlledSearch === undefined || expanded || Boolean(selected)));
+  function readBlurState() {
+    return {
+      tagMode, multiple, search, expanded, disabled: resolvedDisabled,
+      clearInternalSearch: !tagMode && (!multiple || autoClearSearch),
+      clearSearch: !multiple && Boolean(search)
+        && (controlledSearch === undefined || showSearch == null && typeof config.select?.showSearch === 'object')
+        ? searchCallback : undefined
+    };
+  }
+  // Removing a focused branch fires connected blur after Svelte pauses its
+  // deriveds. Use the state belonging to that committed DOM, as for callbacks.
+  let committedBlurState = untrack(readBlurState);
+  $effect(() => { committedBlurState = readBlurState(); });
   let popupVisited = $state(false);
   $effect(() => { if (expanded && popupRender && list) popupVisited = true; });
   let customPopup = $derived(Boolean(popupRender) || popupVisited);
@@ -448,6 +479,8 @@
     }
     if (resolvedDisabled) {
       internalOpen = false;
+      // Source renders the disabled, still-focused suffix before clearing focus.
+      void resolvedSuffix;
       focused = false;
     }
   });
@@ -498,7 +531,7 @@
       maxWidth: false,
       constrainWidth: false,
       allowOffscreenAnchor: true,
-      preserveFocus: event => (!customPopup || event.composedPath().some(node =>
+      preserveFocus: event => !isMenuIconEvent(event) && (!customPopup || event.composedPath().some(node =>
         node instanceof Element && (node.classList.contains(`${prefix}-dropdown-list`)
           || node.classList.contains(`${prefix}-item-empty`)))) && !event.composedPath().some(node =>
         node instanceof Element && node.classList.contains(`${prefix}-dropdown-list-scrollbar`)),
@@ -620,13 +653,23 @@
   }
 
   function setOpen(next: boolean, fromBlur = false) {
+    if (fromBlur) {
+      const state = committedBlurState;
+      if (next && state.disabled) return;
+      internalOpen = next;
+      open = next;
+      if (state.expanded !== next) committedOpenChange?.(next);
+      if (!next && state.clearInternalSearch) internalSearch = '';
+      if (!next && state.expanded !== next) state.clearSearch?.('');
+      return;
+    }
     if (next && resolvedDisabled) {
       return;
     }
 
     const notify = expanded !== next;
     const clearContextSearch = notify && !next && !multiple && Boolean(search)
-      && showSearch == null && typeof config.select?.showSearch === 'object'
+      && (controlledSearch === undefined || showSearch == null && typeof config.select?.showSearch === 'object')
       ? searchCallback : undefined;
     const clearInternalSearch = !next && !tagMode && (!multiple || autoClearSearch);
     internalOpen = next;
@@ -711,9 +754,8 @@
   }
 
   function submitTag(text: string) {
-    if (!tagMode || resolvedDisabled) return;
     const next = text.trim();
-    if (!next) return;
+    if (!next || !tagMode || resolvedDisabled) return;
     const data = optionData(next);
     if (!countReached && !Reflect.get(data ?? {}, 'disabled')) {
       if (!selectedKeys.has(next)) changeMultiple([...selectedValues, next], 'raw');
@@ -724,18 +766,53 @@
 
   function clearSelection() {
     if (resolvedDisabled) return;
-    const queryOnly = search && (multiple ? !selectedValues.length && !tagMode : !selected);
-    if (queryOnly) {
-      const callback = searchCallback;
-      onClear?.();
-      internalSearch = '';
-      callback?.('');
-      if (!multiple) setOpen(false);
-      control?.focus();
-      return;
+    const previousSearch = search;
+    const blockedSearch = countReached;
+    const preserveSearch = !multiple && controlledSearch !== undefined && Boolean(selected);
+    onClear?.();
+    control?.focus({ preventScroll: true });
+    if (multiple) {
+      if (selectedValues.length) changeMultiple([], 'display');
+    } else {
+      const changed = selectedRaw !== undefined;
+      useDefault = false;
+      rememberLabels([]);
+      value = undefined;
+      if (changed) {
+        (onValueChange as ((value: undefined) => void) | undefined)?.(undefined);
+        (onChange as ((value: undefined, option: undefined) => void) | undefined)?.(undefined, undefined);
+      }
     }
-    choose(undefined);
+    if (!blockedSearch && !preserveSearch) {
+      internalSearch = '';
+      if (previousSearch) searchCallback?.('');
+    }
+    if (!multiple) setOpen(false);
   }
+
+  function clearMouseDown(event: MouseEvent) {
+    event.preventDefault();
+  }
+
+  function clearKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') event.stopPropagation();
+  }
+
+  function suffixMouseDown(event: MouseEvent) {
+    if (resolvedDisabled) return;
+    event.preventDefault();
+    control?.focus({ preventScroll: true });
+    if (!(expanded && !multiple && canSearch)) setOpen(!expanded);
+  }
+
+  function isMenuIconEvent(event: Event) {
+    return event.composedPath().some(node => node instanceof Element
+      && node.classList.contains(`${prefix}-item-option-state`));
+  }
+  function menuMouseDown(event: MouseEvent) {
+    event.preventDefault();
+  }
+
 
   function choose(option: Row | undefined) {
     if (resolvedDisabled || option && (option.group || option.value === undefined
@@ -786,6 +863,9 @@
     (onValueChange as ((value: unknown) => void) | undefined)?.(keepSupplied ? value : output);
     if (changed) callback?.(output, rawOption);
     if (chosenValue !== undefined) notifySelect(chosenValue, data, true);
+    internalSearch = '';
+    // Keep the public producer's search-clear pass before the popup closes.
+    void resolvedSuffix;
     setOpen(false);
     control?.focus();
   }
@@ -840,10 +920,30 @@
     event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }
   ) {
     onkeydown?.(event);
+    const alreadyPrevented = event.defaultPrevented;
+    const closedTagSubmit = !alreadyPrevented && !event.isComposing && !composing
+      && !resolvedDisabled && tagMode && providedOpen !== undefined && !expanded
+      && event.key === 'Enter' && search !== '';
+    // Preserve Native uncontrolled closed-Enter selection; controlled open uses
+    // Original's input submit before the public key hook.
+    if (closedTagSubmit) submitTag(search);
+    const preventArrow = expanded && (event.key === 'ArrowDown' || event.key === 'ArrowUp');
+    if (preventArrow) event.preventDefault();
+    onInputKeyDown?.(event);
 
-    if (event.defaultPrevented || resolvedDisabled || event.isComposing || composing) {
+    if (alreadyPrevented || resolvedDisabled || event.isComposing || composing) {
       return;
     }
+    if (closedTagSubmit) {
+      event.preventDefault();
+      // Original submits at the input before its public hook; both input and
+      // root then request opening when the controlled owner keeps it closed.
+      openList();
+      if (!event.cancelBubble) openList();
+      return;
+    }
+
+    if (expanded && event.cancelBubble) return;
 
     if (expanded && customPopup && !menuElement && (['ArrowDown', 'ArrowUp', 'Home', 'End',
       'Enter', 'Escape', 'Tab'].includes(event.key) || event.key === ' ' && !canSearch)) {
@@ -1022,9 +1122,11 @@
   }
 
   function handleClick(event: MouseEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
+    const activated = mouseActivated && event.detail !== 0;
+    mouseActivated = false;
     onclick?.(event);
 
-    if (!event.defaultPrevented) {
+    if (!event.defaultPrevented && !activated) {
       if (expanded && !canSearch) {
         setOpen(false);
       } else {
@@ -1033,15 +1135,26 @@
     }
   }
 
+  function handleMouseDown(event: MouseEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
+    mouseActivated = false;
+    onmousedown?.call(event.currentTarget, event);
+    if (event.defaultPrevented || resolvedDisabled) return;
+    mouseActivated = true;
+    control?.focus();
+    if (!expanded) openList();
+    else if (!multiple && !canSearch) setOpen(false);
+  }
+
   function handleBlur(event: FocusEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
     focused = false;
     composing = false;
     pastedText = undefined;
     const next = event.relatedTarget;
+    const state = committedBlurState;
 
     if (!(next instanceof Node && list?.contains(next))) {
-      if (tagMode) submitTag(search);
-      else if (multiple) internalSearch = '';
+      if (state.tagMode) submitTag(state.search);
+      else if (state.multiple) internalSearch = '';
       setOpen(false, true);
     }
     field?.onBlur();
@@ -1054,8 +1167,9 @@
     if (next instanceof Node && (container.contains(next) || list?.contains(next))) return;
 
     focused = false;
-    if (tagMode) submitTag(search);
-    else if (multiple) internalSearch = '';
+    const state = committedBlurState;
+    if (state.tagMode) submitTag(state.search);
+    else if (state.multiple) internalSearch = '';
     setOpen(false, true);
   }
 
@@ -1070,6 +1184,8 @@
   ) {
     const target = event.target;
     if (renderTag && target instanceof Element && target.closest('[data-select-custom-tag]')) return;
+    if (event.composedPath().some(node => node instanceof Element
+      && node.classList.contains(`${prefix}-suffix`) && node.parentElement === event.currentTarget)) return;
 
     if (multiple
       && target instanceof Element
@@ -1123,7 +1239,7 @@
   .intrinsic-width [data-ant-select-content] { position: relative; }
   .intrinsic-width [data-ant-select-control][data-ant-select-single] [data-ant-select-input] { position: absolute; inset: 0; }
   .intrinsic-label { visibility: hidden; white-space: pre; }
-  .suffix { display: flex; flex: none; color: var(--ant-color-text-quaternary); pointer-events: none; }
+  .suffix { display: block; flex: none; color: var(--ant-color-text-quaternary); }
   .clear { display: flex; padding: 0; margin-inline-end: 4px; border: 0; background: none; color: var(--ant-color-text-tertiary); cursor: pointer; }
   .clear:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
   .popup[data-ant-select-dropdown] { top: calc(100% + 4px); inset-inline: 0; max-height: none; overflow: visible; }
@@ -1152,7 +1268,7 @@
   [data-ant-select-control][data-ant-select-source-theme][data-ant-select-multiple] [data-ant-select-input] { line-height: calc(var(--ant-select-internal_fixed_item_margin) * 2 + var(--ant-native-select-multi-item-height)); }
   [data-ant-select-control][data-ant-select-multiple] [data-ant-select-selection-item] { flex: none; box-sizing: border-box; max-width: calc(100% - var(--ant-select-internal_fixed_item_margin) * 2); min-width: 0; }
   [data-ant-select-control][data-ant-select-source-theme][data-ant-select-multiple] [data-ant-select-selection-item] { max-width: calc(100% - 4px - var(--ant-select-internal_fixed_item_margin) * 2); }
-  [data-ant-select-selection-item-remove] { flex: none; padding: 0; border: 0; background: transparent; }
+  [data-ant-select-selection-item-remove] { padding: 0; border: 0; background: transparent; font-family: inherit; }
   [data-ant-select-selection-item-remove]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 1px; }
   [data-ant-select-selection-item-disabled] { color: var(--ant-select-multiple-item-color-disabled); }
   [data-ant-select-source-theme] [data-ant-select-selection-item-disabled] { color: inherit; }
@@ -1179,6 +1295,10 @@
           </div>
         {:else}
         {@const initialRowStyle = untrack(() => serializeSelectStyle(mergeSelectStyle(semantics.styles.popup.listItem, data.style)))}
+        {@const menuIcon = resolveSelectMenuIcon(menuItemSelectedIcon, config.select?.menuItemSelectedIcon,
+          multiple ? checkIcon : null,
+          { value: option.value as (Mode extends 'tags' ? Value | string : Value) | undefined,
+            disabled: rowDisabled, isSelected: rowSelected })}
         <button
           {...presentation.physical}
           type="button"
@@ -1196,9 +1316,9 @@
               typeof data.class === 'string' && data.class,
               semantics.classes.popup.listItem,
               option.groupOption && `${prefix}-item-option-grouped`,
-              rowSelected && `${prefix}-item-option-selected`,
               index === activeIndex && !rowDisabled && `${prefix}-item-option-active`,
-              rowDisabled && `${prefix}-item-option-disabled`
+              rowDisabled && `${prefix}-item-option-disabled`,
+              rowSelected && `${prefix}-item-option-selected`
             ]}
           title={nativeTitle(selectDataTitle(option))}
           style={initialRowStyle}
@@ -1206,7 +1326,7 @@
           onpointerdown={event => {
               const handler = presentation.physical.onpointerdown;
               if (typeof handler === 'function') handler(event);
-              if (typeof presentation.physical.onmousedown !== 'function') event.preventDefault();
+              if (typeof presentation.physical.onmousedown !== 'function' && !isMenuIconEvent(event)) event.preventDefault();
             }}
           onmousedown={event => {
               const handler = presentation.physical.onmousedown;
@@ -1223,7 +1343,7 @@
             }}
           onclick={() => choose(option)}
         >
-          <span class={`${prefix}-item-option-content`}>{#if renderOption}{@render renderOption(getRenderOption(option), { index })}{:else}<RenderContent value={content as RenderEmptyContent} />{/if}</span>{#if rowSelected}<span class={`${prefix}-item-option-state`}><Icon name="check" /></span>{/if}
+          <span class={`${prefix}-item-option-content`}>{#if renderOption}{@render renderOption(getRenderOption(option), { index })}{:else}<RenderContent value={content as RenderEmptyContent} />{/if}</span>{#if menuIcon.visible}<span {...{ class: `${prefix}-item-option-state`, unselectable: 'on', 'aria-hidden': 'true', style: 'user-select: none;', onmousedown: menuMouseDown }}>{#if menuIcon.fallback}<span class={`${prefix}-item-option-state-icon`}><RenderContent value={menuIcon.content} /></span>{:else}<RenderContent value={menuIcon.content} />{/if}</span>{/if}
         </button>
         {/if}
       {/snippet}
@@ -1246,6 +1366,13 @@
 
 <svelte:document onreset={handleReset} />
 
+{#snippet downIcon()}<SelectIcon name="down" />{/snippet}
+{#snippet searchIcon()}<SelectIcon name="search" />{/snippet}
+{#snippet spinnerIcon()}<SelectIcon name="loading" />{/snippet}
+{#snippet checkIcon()}<SelectIcon name="check" />{/snippet}
+{#snippet removeGlyph()}<SelectIcon name="close" />{/snippet}
+{#snippet clearGlyph()}<SelectIcon name="close-circle" />{/snippet}
+
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`select-prefix:${prefix}:${rootPrefix}`} />{/if}<div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
   data-ant-select-value-layer={selectedLayer || undefined}
   data-ant-select-compact-item={Boolean(compact) || undefined} class={[
@@ -1265,12 +1392,14 @@
     data-ant-select-source-theme={Boolean(componentTheme.className) || undefined}
     data-ant-select-single={!multiple || undefined} data-ant-select-multiple={multiple || undefined}
     data-ant-select-responsive-tags={responsiveTags || undefined}
+    {...{ loadingIcon: selectIconAttribute(loadingIcon) }}
+    title={rootTitle}
     role="presentation"
     onpointerdown={handlePointerDown}
     class={[
         `${prefix} ant-select-css-var`,
         `${prefix}-${appearance}`,
-        `${prefix}-show-arrow`,
+        resolvedSuffix.hasSuffix && `${prefix}-show-arrow`,
         feedback.hasFeedback && `${prefix}-has-feedback`,
         feedback.isFormItemInput && `${prefix}-in-form-item`,
         componentTheme.className && `${prefix}-source-theme`,
@@ -1339,8 +1468,8 @@
               })}
             {:else}
               {@const initialItemContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}
-              <span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]} style={initialItemContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)} {@attach selectStyle(() => semantics.styles.itemContent)}>{@render tagLabel()}</span>{#if !resolvedDisabled && !tag.disabled}{@const initialRemoveStyle = untrack(() => serializeSelectStyle(semantics.styles.itemRemove))}<button type="button" data-ant-select-selection-item-remove class={[`${prefix}-selection-item-remove`, semantics.classes.itemRemove]} style={initialRemoveStyle} {...selectStyleAttributes(semantics.styles.itemRemove)} {@attach selectStyle(() => semantics.styles.itemRemove)} aria-label={`${config.locale.removeText
-                ?? ruRU.removeText} ${selectValueText(tag.label) || tag.value}`} onpointerdown={(event) => event.preventDefault()} onclick={() => remove(tag.value)}><Icon name="close" /></button>{/if}
+              <span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]} style={initialItemContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)} {@attach selectStyle(() => semantics.styles.itemContent)}>{@render tagLabel()}</span>{#if !resolvedDisabled && !tag.disabled}{@const initialRemoveStyle = untrack(() => serializeSelectStyle(semantics.styles.itemRemove))}{@const tagIcon = resolveSelectRemoveIcon(removeIcon, config.select?.removeIcon, removeGlyph)}<button type="button" data-ant-select-selection-item-remove class={[`${prefix}-selection-item-remove`, semantics.classes.itemRemove]} style={initialRemoveStyle} {...selectStyleAttributes(semantics.styles.itemRemove)} {@attach selectStyle(() => semantics.styles.itemRemove)} aria-label={`${config.locale.removeText
+                ?? ruRU.removeText} ${selectValueText(tag.label) || tag.value}`} onmousedown={(event) => event.preventDefault()} onclick={() => remove(tag.value)}>{#if tagIcon.fallback}<span class={[`${prefix}-selection-item-remove`, semantics.classes.itemRemove].filter(Boolean).join(' ').split(/\s+/).map(name => name + '-icon').join(' ')}><RenderContent value={tagIcon.content} /></span>{:else}<RenderContent value={tagIcon.content} />{/if}</button>{/if}
             {/if}
           </span>{/each}{#if tagOverflow.omitted.length || responsiveTags && tags.length}
           {@const initialRestStyle = untrack(() => !renderTag ? serializeSelectStyle(semantics.styles.item) : undefined)}
@@ -1411,11 +1540,12 @@
         onpaste={handlePaste}
         oncompositionstart={handleCompositionStart}
         oncompositionend={handleCompositionEnd}
+        onmousedown={handleMouseDown}
         onclick={handleClick}
         onblur={handleBlur}
         onfocus={handleFocus}
       />
-    </div>{#if showClear}{@const initialClearStyle = untrack(() => serializeSelectStyle(semantics.styles.clear))}<button type="button" class={['clear', componentTheme.className && `${prefix}-clear`, semantics.classes.clear]} style={initialClearStyle} {...selectStyleAttributes(semantics.styles.clear)} {@attach selectStyle(() => semantics.styles.clear)} aria-label={config.locale.clearText} onpointerdown={(event) => event.preventDefault()} onclick={clearSelection}><Icon name="close" /></button>{/if}<span class={['suffix', componentTheme.className && `${prefix}-suffix`, semantics.classes.suffix]} style={initialSuffixStyle} {...selectStyleAttributes(semantics.styles.suffix)} {@attach selectStyle(() => semantics.styles.suffix)}><Icon name={loading ? 'loading' : 'down'} />{#if feedback.hasFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</span>
+    </div>{#if resolvedSuffix.visible}<span class={['suffix', `${prefix}-suffix`, loading && `${prefix}-suffix-loading`, semantics.classes.suffix]} style={initialSuffixStyle} {...selectStyleAttributes(semantics.styles.suffix)} {@attach selectStyle(() => semantics.styles.suffix)} {...{ onmousedown: suffixMouseDown }}><RenderContent value={resolvedSuffix.content} />{#if resolvedSuffix.appendFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</span>{/if}{#if showClear}{@const initialClearStyle = untrack(() => serializeSelectStyle(semantics.styles.clear))}<button type="button" class={['clear', componentTheme.className && `${prefix}-clear`, semantics.classes.clear]} style={initialClearStyle} {...selectStyleAttributes(semantics.styles.clear)} {@attach selectStyle(() => semantics.styles.clear)} aria-label={clearIcon.label} onmousedown={clearMouseDown} onkeydown={clearKeyDown} onclick={clearSelection}><RenderContent value={clearIcon.content} /></button>{/if}
   </div>
   {#if name ?? field?.name}
     {#if multiple}

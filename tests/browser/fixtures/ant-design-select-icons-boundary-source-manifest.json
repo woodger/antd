@@ -1,0 +1,133 @@
+{
+  "kind": "supplemental actual Original public counterparts for preserved Native contracts",
+  "canonicalCorpusUnchanged": true,
+  "authorHasNativeContext": true,
+  "runtime": "unmodified Ant Design6.6.8 / React18.3.1 public API",
+  "empty": {
+    "sourceProtocol": ".upstream/artifacts/select-icons-empty-source-v3/protocol.json",
+    "sourceProtocolSHA256": "5adb04a628dc37105e4998bb73a9e7b930cc8e2b62f8f600d0092357eacb8035",
+    "first": ".upstream/artifacts/select-icons-empty-source-v3/first.json",
+    "repeat": ".upstream/artifacts/select-icons-empty-source-v3/repeat.json",
+    "byteEqual": true,
+    "decodedBytes": 9327113,
+    "decodedSha256": "b199f0101c47c6232ec51903e3d6521c81227dfcc105cd0d715c9ccbc3fb605c",
+    "storageBytes": 376417,
+    "storageSha256": "9ddc1197dd9bc64661c3c5b8b6fc99ad79a1278cc835a13c155cc2f6c9e5dc81",
+    "publicDifference": {
+      "notFoundContent": "Ничего не найдено"
+    },
+    "owners": 2,
+    "actions": 47,
+    "provenance": "Root-authored public input counterpart for preserved locale.emptyText; unmodified Original runtime; complete raw first/repeat retained"
+  },
+  "close": {
+    "kind": "complete ordinary Original public controlled outside-pointer close counterpart",
+    "sourceProtocol": ".upstream/artifacts/select-icons-close-source-v2/protocol.json",
+    "sourceProtocolSHA256": "f57effd00ae8c5b6916aba0d94f267258f8a1afc5775d1969689cbfbc15828ab",
+    "first": ".upstream/artifacts/select-icons-close-source-v2/first.json",
+    "repeat": ".upstream/artifacts/select-icons-close-source-v2/repeat.json",
+    "byteEqual": true,
+    "decodedBytes": 34186954,
+    "decodedSha256": "7ea8ec67858e3d5010e228a24efe2037d9834d83cff0b49111a71807f5b54c8a",
+    "storageBytes": 895459,
+    "storageSha256": "01d9a6ad6df1284483385366d6a313207f203a1cb3489b5c384fd6c81c8bd5be",
+    "owners": 5,
+    "actions": 65,
+    "provenance": "Root-authored explicit public owner for already documented Native immediate outsideclose; Antd runtime and canonical observations unchanged; both full raw repetitions preserved"
+  },
+  "earlierEmptyCounterpart": {
+    "kind": "complete lossless public notFoundContent Original counterpart",
+    "sourceProtocol": ".upstream/artifacts/select-icons-empty-source-v2/protocol.json",
+    "sourceProtocolSHA256": "2d55c7db64d23da851000fe0f8f98753f7838a596d9d44f8269dcdfc1552f490",
+    "first": ".upstream/artifacts/select-icons-empty-source-v2/first.json",
+    "repeat": ".upstream/artifacts/select-icons-empty-source-v2/repeat.json",
+    "byteEqual": true,
+    "decodedBytes": 9324552,
+    "decodedSha256": "9cc76eba34a477b0fab762c8241297c4edb7836f76701f1f652fa71679389448",
+    "storageBytes": 375843,
+    "storageSha256": "7c2b3795ce6cb17bdb4197d66994567ae9830c8da72756c52a7f77cd4493436f",
+    "provenance": "Root-authored explicit public input for documented Native plainempty; canonical Original corpus untouched; full first+repeat raw retained, no normalization",
+    "archivedStorage": ".upstream/artifacts/select-icons-empty-source-v2/unused-reference.json.gz",
+    "status": "valid public input, different caption, unused in comparison"
+  },
+  "closedTagsEnter": {
+    "provenance": "Root-authored actual public Original replay with Native context; no runtime patch or supplied expected. Four owners: existing uncontrolled Escape/Enter, same with suffix metadata, controlled search, and controlled accepting open.",
+    "timing": "Separate frozen protocols: stable observation after every key versus no observation between fill/Escape/Enter. Settled pair byte-identical. Immediate pair identical for 3 owners; suffix-metadata owner races between raw and trimmed value, both complete raw copies retained. Earlier references unchanged.",
+    "nativeBoundary": "Uncontrolled Native closed Enter preserves first-active-option selection alongside immediate close. Controlled open follows Original input submit before onInputKeyDown. Source delayed close can make rapid Escape/Enter preserve whitespace while settled closed Enter trims.",
+    "copies": [
+      {
+        "path": "tests/browser/fixtures/ant-design-select-icons-tags-enter-reference.json",
+        "bytes": 9834,
+        "sha256": "cb2d34fd31291486340080fe03ddfb932364846ec40e151c479b2b22364228da",
+        "protocol": ".upstream/artifacts/select-icons-tags-submit-source/protocol.json",
+        "protocolSHA256": "54d4793a539c9dc00dbda1ac2d7b21ab7f51ad424379add0ceb1fa647f15b2e6",
+        "owners": 4,
+        "errors": 0,
+        "diagnostics": 8
+      },
+      {
+        "path": "tests/browser/fixtures/ant-design-select-icons-tags-enter-immediate-reference.json",
+        "bytes": 6560,
+        "sha256": "8495c6c5f8b685d90ba862b670af2cc323f338ac6d34da065b7dd88e25530f70",
+        "protocol": ".upstream/artifacts/select-icons-tags-submit-immediate-source/protocol.json",
+        "protocolSHA256": "d8add73b25558e23882218f2b5b2325a883872f152a53ab49cb40263781237eb",
+        "owners": 4,
+        "errors": 0,
+        "diagnostics": 8
+      },
+      {
+        "path": "tests/browser/fixtures/ant-design-select-icons-tags-enter-immediate-repeat-reference.json",
+        "bytes": 6811,
+        "sha256": "d60cd90b8c40c69e8c649fc18aa06849d8e7ee6a81df12b6bf17670346e827b5",
+        "protocol": ".upstream/artifacts/select-icons-tags-submit-immediate-source/protocol.json",
+        "protocolSHA256": "d8add73b25558e23882218f2b5b2325a883872f152a53ab49cb40263781237eb",
+        "owners": 4,
+        "errors": 0,
+        "diagnostics": 8
+      }
+    ]
+  },
+  "keyboardAndMenu": {
+    "provenance": "Root authored with Native context; actual unmodified Original, separate fresh processes for each pair. Complete metadata/event/input/owner ledgers retained. No expected supplied to capture.",
+    "nativeBefore": {
+      "report": ".upstream/artifacts/select-surface-browser-select_icons_stop_menu_before.json",
+      "result": "1PASS4FAIL; stopped open-row navigation and missing authored mousedown reproduced. Native option click focuses its input; Original initially open unfocused click does not. Prior Native choose focus call unchanged by this stage."
+    },
+    "menuFocusedCounterpart": "Explicit public input.focus then physical menu click preserves the established Native selection focus; earlier unfocused Original pair remains unchanged. Authored mouse callbacks are ordinary declarative Svelte event bindings.",
+    "copies": [
+      {
+        "path": "tests/browser/fixtures/ant-design-select-icons-stop-reference.json",
+        "bytes": 8390,
+        "sha256": "38f52a92e16ad3bcda670e305e910a901e161f5f272c6a20e98e3b2bba772806",
+        "protocol": ".upstream/artifacts/select-icons-stop-source/protocol.json",
+        "protocolSHA256": "d7a8a51eb78860ceca41010877b339212adef5d756f40984bc2b2065a38f042f",
+        "repeatSHA256": "38f52a92e16ad3bcda670e305e910a901e161f5f272c6a20e98e3b2bba772806",
+        "owners": 3,
+        "errors": 0,
+        "diagnostics": 0
+      },
+      {
+        "path": "tests/browser/fixtures/ant-design-select-icons-menu-reference.json",
+        "bytes": 7245,
+        "sha256": "6160ac68d7b4630962d3e2fa9f33d48857a3b95e5be2751add81a8292f715d44",
+        "protocol": ".upstream/artifacts/select-icons-menu-source/protocol.json",
+        "protocolSHA256": "e3e779677d636c6fd3559bbe0295e618edadf08581bb4edd6460ef2470962fae",
+        "repeatSHA256": "6160ac68d7b4630962d3e2fa9f33d48857a3b95e5be2751add81a8292f715d44",
+        "owners": 2,
+        "errors": 0,
+        "diagnostics": 0
+      },
+      {
+        "path": "tests/browser/fixtures/ant-design-select-icons-menu-focused-reference.json",
+        "bytes": 8119,
+        "sha256": "0a55a0399ab8faec321b0a7d9ac6e6f5a29d028ac5960c81314e852a383e171f",
+        "protocol": ".upstream/artifacts/select-icons-menu-focused-source/protocol.json",
+        "protocolSHA256": "72b5054ce13b787bbab0ae6e02dd7792199028e00cc1eb87de7a8dee32700c32",
+        "repeatSHA256": "0a55a0399ab8faec321b0a7d9ac6e6f5a29d028ac5960c81314e852a383e171f",
+        "owners": 2,
+        "errors": 0,
+        "diagnostics": 0
+      }
+    ]
+  }
+}

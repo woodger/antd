@@ -54,7 +54,9 @@
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useComponentTheme } from './theme-component.svelte';
   import { useToken } from './theme-context.svelte';
-  import Icon from './Icon.svelte';
+  import SelectIcon from './SelectIcon.svelte';
+  import { resolveSelectSuffix, resolveSelectMenuIcon, resolveSelectClear } from './select-icons.engine';
+  import { selectIconAttribute } from './select-icon-attribute.engine';
 
   let {
     nativeElement = $bindable(),
@@ -64,6 +66,12 @@
   let {
     prefixCls,
     prefix: prefixContent,
+    suffix,
+    suffixIcon,
+    loadingIcon,
+    loading,
+    menuItemSelectedIcon,
+    removeIcon: _removeIcon,
     options = [],
     fieldNames,
     optionRender,
@@ -144,7 +152,6 @@
   let semanticSize = $derived(size ?? compact?.size ?? config.explicitComponentSize);
   let resolvedSize = $derived(semanticSize ?? config.componentSize);
   let resolvedStatus = $derived(status ?? ('status' in itemStatus ? itemStatus.status : field?.status));
-  let showClear = $derived(Boolean(allowClear && text && !blocked && !readonly));
   let effectiveShowSearch = $derived(showSearch ?? config.select?.showSearch);
   let controlId = $derived(id ?? field?.id ?? `ant-auto-complete-${generated}`);
   let searchConfig = $derived<AutoCompleteSearchConfig<OptionType>>(
@@ -251,6 +258,17 @@
   let preview = $state<string>();
   let searchText = $derived(visible && preview !== undefined ? preview : text);
   let focused = $state(false);
+  let resolvedSuffix = $derived(resolveSelectSuffix({ suffix,
+    suffixIcon: Object.hasOwn(componentProps, 'suffixIcon') ? suffixIcon : null,
+    loadingIcon, showSearch, context: config.select,
+    info: { searchValue: text, open: visible, focused, showSearch: true, loading },
+    hasFeedback: feedback.hasFeedback
+  }, { down: downIcon, search: searchIcon, loading: spinnerIcon }));
+  let clearIcon = $derived(resolveSelectClear({ allowClear, combobox: true,
+    disabled: Boolean(blocked || readonly), displayCount: displayValue ? 1 : 0, searchValue: text }, clearGlyph,
+    typeof allowClear !== 'object' || typeof allowClear.clearIcon === 'function'
+      && !Object.hasOwn(allowClear, 'label') ? config.locale.clearText : 'Clear'));
+  let showClear = $derived(clearIcon.visible);
   let root = $state<HTMLDivElement>();
   let editor = $state<HTMLInputElement | HTMLTextAreaElement>();
   let popup = $state<HTMLDivElement>();
@@ -305,6 +323,7 @@
     preserveVariables: [anchorWidthVariable]
   }));
   let enterLock = false;
+  let mouseActivated = false;
   let pendingClearClose = $state.raw<MessageChannel>();
   let pendingPointerUpdate: MessageChannel | undefined;
   let searchBeforeClose = false;
@@ -374,6 +393,7 @@
       get dismissOnEscape() { return !customPopup || Boolean(menuElement); },
       preserveFocus: event => {
         const path = event.composedPath();
+        if (isMenuIconEvent(event)) return false;
         if (path.some(node => node instanceof Element
           && node.classList.contains(`${prefix}-dropdown-list-scrollbar`))) return false;
         return !customPopup || path.some(node => node instanceof Element
@@ -485,11 +505,28 @@
       onOpenChange?.(next);
     innerOpen = next;
   }
-  function clearPointerDown(event: PointerEvent) {
+  function clearMouseDown(event: MouseEvent) {
     event.preventDefault();
     if (!visible) return;
     scheduleClose();
   }
+  function clearKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') event.stopPropagation();
+  }
+  function suffixMouseDown(event: MouseEvent) {
+    if (blocked || readonly) return;
+    event.preventDefault();
+    editor?.focus({ preventScroll: true });
+    requestOpen(true);
+  }
+  function isMenuIconEvent(event: Event) {
+    return event.composedPath().some(node => node instanceof Element
+      && node.classList.contains(`${prefix}-item-option-state`));
+  }
+  function menuMouseDown(event: MouseEvent) {
+    event.preventDefault();
+  }
+
   function scheduleClose(synchronizeSearch = false) {
     cancelClearClose();
     searchBeforeClose = synchronizeSearch;
@@ -554,8 +591,11 @@
     preview = undefined;
   }
   function handleKeydown(event: KeyboardEvent) {
+    const alreadyPrevented = event.defaultPrevented;
+    if (visible && !(editor instanceof HTMLTextAreaElement)
+      && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) event.preventDefault();
     onInputKeyDown?.(event);
-    if (event.defaultPrevented || event.isComposing || blocked || readonly) return;
+    if (alreadyPrevented || event.isComposing || blocked || readonly || visible && event.cancelBubble) return;
     if (visible && customPopup && !menuElement) {
       if (event.key === 'ArrowDown' || event.key === 'ArrowUp') event.preventDefault();
       return;
@@ -618,8 +658,13 @@
   function handleRootMouseDown(event: MouseEvent) {
     const target = event.target;
     if (blocked || readonly || !(target instanceof Node) || popup?.contains(target)
-      || target === editor || editor?.contains(target)
       || target instanceof Element && target.closest('button')) return;
+    if (target === editor || editor?.contains(target)) {
+      mouseActivated = true;
+      editor?.focus({ preventScroll: true });
+      requestOpen(true);
+      return;
+    }
     event.preventDefault();
     editor?.focus({ preventScroll: true });
     requestOpen(true);
@@ -667,7 +712,11 @@
         if (event.key === 'Enter')
           enterLock = false;
       },
-      onclick: () => requestOpen(true),
+      onclick: event => {
+        const activated = mouseActivated && event.detail !== 0;
+        mouseActivated = false;
+        if (!activated) requestOpen(true);
+      },
       onfocus: event => {
         focused = true;
         onFocus?.(event);
@@ -703,13 +752,14 @@
   .auto-complete[data-ant-auto-complete-source-theme][data-ant-auto-complete-customize] { min-height: 0; }
   .clear { display: flex; flex: none; padding: 0; border: 0; background: none; color: var(--ant-color-text-tertiary); cursor: pointer; }
   .clear:focus-visible { outline: 2px solid var(--ant-color-primary); }
-  .feedback-suffix { display: flex; flex: none; pointer-events: none; }
+  .feedback-suffix { display: block; flex: none; }
   /* The retained native popup is a child; Source's portal does not affect :last-child. */
   .auto-complete[data-ant-select-prefix]:not(:has(> .clear)) > .feedback-suffix { opacity: 1; }
-  [data-ant-auto-complete-source-theme] .clear { display: inline-block; color: var(--ant-color-text-quaternary); }
+  [data-ant-auto-complete-source-theme] .clear { display: inline-block; flex: 0 1 auto; color: var(--ant-color-text-quaternary); }
   [data-ant-auto-complete-source-theme] .clear:hover { color: var(--ant-color-icon); }
   [data-ant-auto-complete-source-theme] .clear:focus-visible { opacity: 1; }
   .popup { position: fixed; margin: 0; border: 0; overflow: visible; }
+  .popup[hidden] { pointer-events: none; }
   [data-ant-auto-complete-item] { display: block; width: 100%; border: 0; background: transparent; color: inherit; font: inherit; text-align: start; }
   /* Options повторяют flex column rc-select, пустая выдача остаётся обычным блоком. */
   .popup[data-ant-auto-complete-source-popup]:not([hidden]) { display: flex; flex-direction: column; }
@@ -736,6 +786,8 @@
   {:else}
     {@const rowStyle = createSelectStyle(() => mergeSelectStyle(semantics.styles.popup.listItem, entry.data.style))}
     {@const initialRowStyle = untrack(rowStyle.initialStyle)}
+    {@const menuIcon = resolveSelectMenuIcon(menuItemSelectedIcon, config.select?.menuItemSelectedIcon, null,
+      { value: entry.value, disabled: Boolean(entry.data.disabled), isSelected: false })}
     <button data-ant-auto-complete-item data-ant-auto-complete-item-option
       {...physical}
       data-ant-auto-complete-item-option-disabled={entry.data.disabled || undefined}
@@ -772,7 +824,7 @@
       <span class={componentTheme.className ? `${prefix}-item-option-content` : undefined}>
         {#if optionRender}{@render optionRender(entry as SelectFlattenOption<string, OptionType>, { index })}
         {:else}<RenderContent value={content} />{/if}
-      </span>
+      </span>{#if menuIcon.visible}<span {...{ class: `${prefix}-item-option-state`, unselectable: 'on', 'aria-hidden': 'true', style: 'user-select: none;', onmousedown: menuMouseDown }}>{#if menuIcon.fallback}<span class={`${prefix}-item-option-state-icon`}><RenderContent value={menuIcon.content} /></span>{:else}<RenderContent value={menuIcon.content} />{/if}</span>{/if}
     </button>
   {/if}
 {/snippet}
@@ -785,10 +837,16 @@
 {:else}<div bind:this={menuElement} class={`${prefix}-item-empty`} role="listbox" id={`${controlId}_list`} aria-label={listLabel}>{#if typeof notFoundContent === 'function'}{@render notFoundContent()}{:else}{notFoundContent ?? ''}{/if}</div>{/if}
 {/snippet}
 
+{#snippet downIcon()}<SelectIcon name="down" />{/snippet}
+{#snippet searchIcon()}<SelectIcon name="search" />{/snippet}
+{#snippet spinnerIcon()}<SelectIcon name="loading" />{/snippet}
+{#snippet clearGlyph()}<SelectIcon name="close-circle" />{/snippet}
+
 {#snippet body(view: { mounted: boolean; content: PopupContent })}
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`auto-complete-prefix:${prefix}:${rootPrefix}`} />{/if}<!-- svelte-ignore a11y_no_static_element_interactions (Корень перенаправляет mouse focus нативному input; клавиатурой управляет input.) --><div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
   data-ant-auto-complete-source-theme={Boolean(componentTheme.className) || undefined}
   title={attributes.title}
+  {...{ loadingIcon: selectIconAttribute(loadingIcon) }}
   data-ant-auto-complete-customize={Boolean(children) || undefined}
   data-ant-auto-complete-legacy-color={legacyColor || undefined}
   bind:this={root} dir={config.direction}
@@ -807,7 +865,9 @@
       visible && `${prefix}-open`,
       blocked && `${prefix}-disabled`,
       resolvedStatus && `${prefix}-status-${resolvedStatus}`,
-      feedback.hasFeedback && `${prefix}-has-feedback ${prefix}-show-arrow`,
+      feedback.hasFeedback && `${prefix}-has-feedback`,
+      resolvedSuffix.hasSuffix && `${prefix}-show-arrow`,
+      loading && `${prefix}-loading`,
       feedback.isFormItemInput && `${prefix}-in-form-item`,
       children && `${prefix}-customize`,
       compactClasses(prefix, config.direction, compact),
@@ -833,8 +893,8 @@
       {/if}<input {...nativeAttributes} {...input.attributes} use:register data-ant-auto-complete-input
         class={[`${prefix}-input`, semantics.classes.input]} type="text" />
     {/if}
-  </div>{#if feedback.hasFeedback}{@const suffixStyle = createSelectStyle(() => semantics.styles.suffix)}{@const initialSuffixStyle = untrack(suffixStyle.initialStyle)}<div class={[`${prefix}-suffix`, 'feedback-suffix', semantics.classes.suffix]} {...selectStyleAttributes(semantics.styles.suffix)} style={initialSuffixStyle} {@attach suffixStyle.attach}>{#if feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</div>{/if}{#if showClear}{@const clearStyle = createSelectStyle(() => semantics.styles.clear)}{@const initialClearStyle = untrack(clearStyle.initialStyle)}<button type="button" class={['clear', componentTheme.className && `${prefix}-clear`, semantics.classes.clear]} {...selectStyleAttributes(semantics.styles.clear)} style={initialClearStyle} {@attach clearStyle.attach} aria-label={config.locale.clearText} onpointerdown={clearPointerDown} onclick={clear}>
-    {#if typeof allowClear === 'object' && allowClear.clearIcon}{@render allowClear.clearIcon()}{:else}<Icon name="close" />{/if}
+  </div>{#if resolvedSuffix.visible}{@const suffixStyle = createSelectStyle(() => semantics.styles.suffix)}{@const initialSuffixStyle = untrack(suffixStyle.initialStyle)}<div class={[`${prefix}-suffix`, 'feedback-suffix', loading && `${prefix}-suffix-loading`, semantics.classes.suffix]} {...selectStyleAttributes(semantics.styles.suffix)} style={initialSuffixStyle} {@attach suffixStyle.attach} {...{ onmousedown: suffixMouseDown }}><RenderContent value={resolvedSuffix.content} />{#if resolvedSuffix.appendFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</div>{/if}{#if showClear}{@const clearStyle = createSelectStyle(() => semantics.styles.clear)}{@const initialClearStyle = untrack(clearStyle.initialStyle)}<button type="button" class={['clear', componentTheme.className && `${prefix}-clear`, semantics.classes.clear]} {...selectStyleAttributes(semantics.styles.clear)} style={initialClearStyle} {@attach clearStyle.attach} aria-label={clearIcon.label} onmousedown={clearMouseDown} onkeydown={clearKeyDown} onclick={clear}>
+    <RenderContent value={clearIcon.content} />
   </button>{/if}{#if view.mounted}
     {@const initialPopupStyle = untrack(() => popupStyle.initialStyle())}
     <div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}

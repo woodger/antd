@@ -4,6 +4,9 @@ import type { ComponentSize, RenderEmptyContent, SelectOption } from './types';
 import type { VirtualScrollAlign } from './virtual-list.engine';
 import type { VirtualScrollConfig, VirtualScrollOffset, VirtualScrollOffsetInfo } from './virtual-list.types';
 import type { FormValidateStatus } from './form-error-list.types';
+import type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select-icons.types';
+
+export type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select-icons.types';
 
 type SelectCSSValue = string | number | null | undefined;
 type SelectDOMStringStyleKey = {
@@ -156,7 +159,11 @@ export interface SelectConfig {
   classNames?: SelectSemanticValue<SelectClassNames, SelectConfigSemanticInfo['props']>;
   styles?: SelectSemanticValue<SelectStyles, SelectConfigSemanticInfo['props']>;
   showSearch?: boolean | SelectSearchConfig<string | number, object>;
-  allowClear?: boolean;
+  allowClear?: boolean | SelectAllowClear;
+  suffixIcon?: RenderEmptyContent;
+  loadingIcon?: RenderEmptyContent;
+  menuItemSelectedIcon?: SelectRenderNode<SelectMenuItemIconInfo<string | number>>;
+  removeIcon?: SelectRenderNode<undefined>;
 }
 
 /** Настройки controlled search и локальной фильтрации Select без сетевого транспорта. */
@@ -164,6 +171,7 @@ export interface SelectSearchConfig<
   Value extends string | number = string,
   OptionType extends object = SelectOption<Value>
 > {
+  searchIcon?: RenderEmptyContent;
   /** Управляемая строка поиска; undefined оставляет локальное состояние. */
   searchValue?: string;
   /**
@@ -198,6 +206,12 @@ export interface SelectProps<
   prefixCls?: string;
   /** Содержимое affix; Source не создаёт его для falsy scalar, включая 0. */
   prefix?: RenderEmptyContent;
+  /** Статический template передаётся массивом; функция получает состояние Select. */
+  suffix?: SelectRenderNode<SelectSuffixInfo>;
+  suffixIcon?: RenderEmptyContent;
+  loadingIcon?: RenderEmptyContent;
+  menuItemSelectedIcon?: SelectRenderNode<SelectMenuItemIconInfo<Mode extends 'tags' ? Value | string : Value>>;
+  removeIcon?: SelectRenderNode<undefined>;
   /** Семантический root и popup; прежний class остаётся на Native outer container. */
   rootClassName?: string;
   classNames?: SelectSemanticValue<SelectClassNames, SelectSemanticInfo<Value, Mode, OptionType, LabelInValue>['props']>;
@@ -278,7 +292,7 @@ export interface SelectProps<
    */
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
   /** @defaultValue false */
-  allowClear?: boolean;
+  allowClear?: boolean | SelectAllowClear;
   status?: 'error' | 'warning';
   onValueChange?: (value: SelectValueModel<Value, Mode, LabelInValue>
     | (Mode extends 'multiple' | 'tags' ? never : undefined)) => void;
@@ -293,6 +307,7 @@ export interface SelectProps<
   onDeselect?: (value: SelectValueElement<Mode extends 'tags' ? Value | string : Value, LabelInValue>, option: OptionType) => void;
   /** Пользовательская очистка; вызывается до onChange. */
   onClear?: () => void;
+  onInputKeyDown?: (event: KeyboardEvent) => void;
   onOpenChange?: (open: boolean) => void;
   class?: string;
   /** Корень Select после mount; ref очищается при unmount. */

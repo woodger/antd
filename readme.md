@@ -9936,7 +9936,7 @@ Select tokens, поиск, фокус и FormData. ShadowRoot требует с�
 не выбирает. Backfill меняет только видимый текст до подтверждения. По runtime
 rc-select defaultActiveFirstOption=false, хотя таблица Ant Design указывает true;
 для непустого текста отдельно активируется первое prefix match. Home/End остаются
-у нативного input. AllowClear поддерживает boolean/{clearIcon}. Для непустого
+у нативного input. AllowClear поддерживает boolean/{clearIcon,label}. Для непустого
 текста rc-select выполняет два пути: onClear, change(undefined), change(''),
 search(''); этот порядок сохранён. Обработчик controlled value обычно нормализует
 undefined в пустую строку. OnInputKeyDown, onFocus/onBlur и focus/blur доступны.
@@ -9991,7 +9991,9 @@ Title сначала берётся из literal title/label текущего ra
 item; внешний title имеет приоритет. Переданный `tagRender` остаётся в semantic
 metadata, но combobox его не вызывает.
 
-SearchIcon и остальные icon/component overrides пока отсутствуют.
+Suffix, suffixIcon, loadingIcon, showSearch.searchIcon, menuItemSelectedIcon и
+allowClear описаны в [общем разделе иконок](#иконки-и-очистка-select). Components
+root/input и исходный motion пока отсутствуют.
 Deprecated dataSource/Option
 и dropdown aliases исключены из переноса. Generic numeric/object values не входят в первый этап.
 
@@ -10228,7 +10230,8 @@ OnActive(value|null) сообщает активный пункт; defaultActive
 значения, формы, controlled search при закрытии и синхронный blur сохраняются.
 
 Поиск по умолчанию выключен в одиночном режиме и включён в multiple;
-`showSearch` переопределяет это. Нажатие варианта во множественном режиме
+`showSearch` переопределяет это в single/multiple; tags всегда разрешает поиск,
+включая `showSearch={false}`. Нажатие варианта во множественном режиме
 добавляет или удаляет его, очищает поисковый текст и сохраняет открытый список
 и фокус в поле. Дубликаты выбранных значений убираются при отображении,
 порядок первого появления и типы сохраняются: числовой `0` и строковый `"0"`
@@ -10409,9 +10412,80 @@ RootClassName применяется к control и popup.
 этого свойства. SSR выводит заданную width без измерения.
 
 `ConfigProvider.select` задаёт общие class/style, classNames/styles, variant,
-showSearch и boolean allowClear. Локальные значения перекрывают общие; вложенный
+showSearch, иконки и boolean/object allowClear. Локальные значения перекрывают общие; вложенный
 явно заданный select record заменяет родительский. AutoComplete использует этот
 же config, сохраняя собственный allowClear=false по умолчанию.
+
+### Иконки и очистка Select
+
+Select и AutoComplete поддерживают `suffix`, `suffixIcon`, `loadingIcon`,
+`showSearch.searchIcon`, `menuItemSelectedIcon` и `allowClear={boolean | { clearIcon, label }}`.
+В multiple/tags Select также принимает `removeIcon`. Иконки, кроме `suffix`,
+наследуются из `ConfigProvider.select`; локальный prop имеет приоритет.
+Вложенный select record заменяет родительский целиком.
+
+`SuffixIcon` меняет стандартный значок. При отсутствии локального значения
+загрузка выбирает loadingIcon, открытый поиск — searchIcon, иначе используется
+provider suffixIcon или стрелка. Локальный `suffixIcon={null}` скрывает значок;
+при Form feedback обёртка остаётся для feedback. `Suffix` задаёт содержимое целиком,
+включая замену feedback. Его null/undefined возвращают стандартный выбор.
+
+`Suffix`, `menuItemSelectedIcon` и `removeIcon` принимают scalar/array либо чистую
+функцию, возвращающую scalar/array/Snippet. Статический Snippet в этих трёх props
+передавайте внутри массива или возвращайте из producer; функция считается producer.
+В остальных icon props Snippet передаётся напрямую.
+
+```svelte
+<script lang="ts">
+  import { Select, type SelectSuffixInfo } from 'antd-svelte';
+  let value = $state('a');
+  const options = [{ value: 'a', label: 'Alpha' }];
+</script>
+{#snippet arrow()}<span aria-hidden="true">⌄</span>{/snippet}
+<Select {options} bind:value suffix={(info: SelectSuffixInfo) => info.loading ? '…' : arrow}
+  allowClear={{ clearIcon: '×', label: 'Очистить выбор' }} aria-label="Значение" />
+```
+
+Suffix producer получает один новый объект с собственными полями
+`{ searchValue, open, focused, showSearch, loading }`; отсутствующая loading остаётся
+undefined. Функция вызывается также при закрытом control и SSR, поэтому не должна
+изменять состояние. В AutoComplete searchValue — основное value, без временного
+backfill. Omitted suffixIcon у AutoComplete скрывает стандартную иконку, включая
+provider defaults; собственный `suffixIcon={undefined}` включает стандартный выбор.
+Собственный suffix и Form feedback работают при этом независимо.
+
+MenuItemSelectedIcon producer получает `{ value, disabled, isSelected }` для
+каждого leaf option; value учитывает fieldNames, disabled — состояние строки и
+maxCount. AutoComplete передаёт isSelected=false. Статическая truthy иконка видна
+только у выбранного пункта; возвращённый producer undefined использует исходный
+fallback. RemoveIcon producer вызывается с одним аргументом undefined только
+для кнопки удаления обычного closable tag; custom tagRender и сводный tag его не вызывают.
+Стандартные SVG, wrapper classes и обработка мыши следуют Ant Design 6.6.8.
+
+AllowClear object заменяет содержимое и доступное имя кнопки. Falsy clearIcon
+использует «×»; label='' сохраняет пустую строку, null/undefined используют 'Clear'.
+Boolean true сохраняет локализованное имя Native; прежний AutoComplete Snippet
+clearIcon без label также сохраняет его. При очистке multiple/tags, уже достигшего
+maxCount, очищается выбор, а старый поиск не сбрасывается и onSearch не вызывается.
+Controlled search меняет владелец. Прежний single Select с локальным управляемым
+поиском сохраняет query при очистке выбранного значения без дополнительного onSearch('');
+после закрытия этот скрытый query не оставляет видимой кнопку очистки.
+OnInputKeyDown получает input event после исходного prevention стрелок;
+его preventDefault не отменяет навигацию, а stopPropagation прекращает её
+в открытом списке. Нативный Select onkeydown по-прежнему может отменить обработку.
+Пользовательские иконки сохраняют mousedown/click и фокус editor при выборе;
+это также проверяется с обычными декларативными обработчиками Svelte.
+
+[Браузерная сверка](tests/browser/select-icons.spec.ts) охватывает 15 React owners
+и 195 действий, [SSR](tests/package/select-icons.ssr.test.ts) — 142 состояния.
+[Дополнительные проверки](tests/browser/select-icons-edges.spec.ts) фиксируют
+closed tags submit, maxCount и keyboard hooks. Полные Original записи сохранены
+без потерь в gzip; [manifest](tests/browser/fixtures/ant-design-select-icons-source-manifest.json)
+содержит хеши и независимые повторы, включая реальный дополнительный pure-menu pass.
+Согласованные Native editor/ref/buttons, локализованные имена и немедленное закрытие
+сохранены. [Отдельный manifest](tests/browser/fixtures/ant-design-select-icons-boundary-source-manifest.json)
+описывает public React counterparts для простого empty и закрытия родителем;
+они не заменяют исходный корпус.
 
 ### Tags
 
@@ -10444,14 +10518,22 @@ options и query отражается в открытом списке без п
 получен из официального UMD 6.6.8. Group sort повторяет Source: рекурсия обходит
 literal options, переименованное поле children этой рекурсией не используется.
 
-Enter выбирает активный вариант, включая новый; закрытый список открывается и
-выбирает первый вариант тем же Enter. Повторный выбор активного выбранного
-варианта снимает его. Blur добавляет trimmed строку без дубликата; Escape закрывает
+Enter выбирает активный вариант, включая новый. В неуправляемом закрытом списке
+сохраняется прежнее Native открытие и выбор первого варианта тем же Enter.
+При управляемом open закрытый Enter сначала отправляет непустой trimmed ввод,
+затем вызывает onInputKeyDown и запрашивает открытие, как исходный input submit.
+Повторный выбор активного выбранного варианта снимает его.
+Blur добавляет trimmed строку без дубликата; Escape закрывает
 список и сохраняет ввод. Source сохраняет пробелы в выбранном варианте списка,
 но обрезает их на blur; это различие сохранено. Новый whitespace-only вариант
 не создаётся: исходная ошибка записана в raw reference, явный option с таким value
 остаётся допустимым. Clear очищает также pending search и сообщает onSearch(''),
-не создавая tag; controlled search по-прежнему меняет владелец.
+кроме очистки уже достигнутого maxCount, не создавая tag; controlled search
+по-прежнему меняет владелец. React откладывает закрытие через MessageChannel:
+быстрый Escape/Enter может выбрать исходный вариант с пробелами, а Enter после
+завершения закрытия обрезает ввод. Native сохраняет немедленное закрытие и
+прежний выбор первого варианта в неуправляемом режиме; оба React наблюдения
+сохранены в manifest и проверках tags без замены старого raw reference.
 
 ShowSearch.autoClearSearchValue=false сохраняет поиск при выборе и Escape в
 multiple/tags. Blur multiple очищает локальный поиск без callback, blur tags

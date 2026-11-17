@@ -2259,5 +2259,15 @@
     "id": "autocomplete-close",
     "module": "./AutoCompleteCloseFixtures.svelte",
     "root": "autocomplete-close-fixture"
+  },
+  {
+    "id": "select-icons",
+    "module": "./SelectIconsFixtures.svelte",
+    "root": "select-icons-fixture"
+  },
+  {
+    "id": "select-icons-edge",
+    "module": "./SelectIconsEdgeFixtures.svelte",
+    "root": "select-icons-edge-fixture"
   }
 ]

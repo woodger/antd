@@ -1,0 +1,372 @@
+{
+  "reference": {
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "protocolSHA256": "d7a8a51eb78860ceca41010877b339212adef5d756f40984bc2b2065a38f042f",
+    "errors": [],
+    "diagnostics": []
+  },
+  "cases": [
+    {
+      "sample": {
+        "id": "select-open-hook-stop",
+        "control": "select",
+        "initialOpen": true,
+        "key": "ArrowDown",
+        "stop": true
+      },
+      "initial": {
+        "model": "a",
+        "open": true,
+        "events": [],
+        "infos": [
+          {
+            "searchValue": "",
+            "open": false,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          }
+        ],
+        "input": {
+          "value": "",
+          "readOnly": false,
+          "expanded": "true",
+          "active": "icon-edge-value_list_0"
+        }
+      },
+      "after": {
+        "model": "a",
+        "open": true,
+        "events": [
+          [
+            "keydown",
+            "ArrowDown",
+            true
+          ]
+        ],
+        "infos": [
+          {
+            "searchValue": "",
+            "open": false,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": true,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          }
+        ],
+        "input": {
+          "value": "",
+          "readOnly": false,
+          "expanded": "true",
+          "active": "icon-edge-value_list_0"
+        }
+      }
+    },
+    {
+      "sample": {
+        "id": "autocomplete-open-hook-stop",
+        "control": "autocomplete",
+        "initialOpen": true,
+        "key": "ArrowDown",
+        "stop": true
+      },
+      "initial": {
+        "model": "",
+        "open": true,
+        "events": [],
+        "infos": [
+          {
+            "searchValue": "",
+            "open": false,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          }
+        ],
+        "input": {
+          "value": "",
+          "readOnly": false,
+          "expanded": "true",
+          "active": "icon-edge-value_list_-1"
+        }
+      },
+      "after": {
+        "model": "",
+        "open": true,
+        "events": [
+          [
+            "keydown",
+            "ArrowDown",
+            true
+          ]
+        ],
+        "infos": [
+          {
+            "searchValue": "",
+            "open": false,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "",
+            "open": true,
+            "focused": true,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          }
+        ],
+        "input": {
+          "value": "",
+          "readOnly": false,
+          "expanded": "true",
+          "active": "icon-edge-value_list_-1"
+        }
+      }
+    },
+    {
+      "sample": {
+        "id": "tags-closed-hook-stop",
+        "control": "select",
+        "mode": "tags",
+        "query": "Draft",
+        "rejectOpen": true,
+        "key": "Enter",
+        "stop": true
+      },
+      "initial": {
+        "model": [],
+        "open": false,
+        "events": [],
+        "infos": [
+          {
+            "searchValue": "Draft",
+            "open": false,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          }
+        ],
+        "input": {
+          "value": "Draft",
+          "readOnly": false,
+          "expanded": "false",
+          "active": null
+        }
+      },
+      "after": {
+        "model": [
+          "Draft"
+        ],
+        "open": false,
+        "events": [
+          [
+            "change",
+            [
+              "Draft"
+            ]
+          ],
+          [
+            "select",
+            "Draft"
+          ],
+          [
+            "keydown",
+            "Enter",
+            false
+          ],
+          [
+            "open",
+            true
+          ]
+        ],
+        "infos": [
+          {
+            "searchValue": "Draft",
+            "open": false,
+            "focused": false,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          },
+          {
+            "searchValue": "Draft",
+            "open": false,
+            "focused": true,
+            "showSearch": true,
+            "loading": {
+              "$": "undefined"
+            },
+            "keys": [
+              "searchValue",
+              "open",
+              "focused",
+              "showSearch",
+              "loading"
+            ],
+            "argumentCount": 1
+          }
+        ],
+        "input": {
+          "value": "Draft",
+          "readOnly": false,
+          "expanded": "false",
+          "active": null
+        }
+      }
+    }
+  ]
+}

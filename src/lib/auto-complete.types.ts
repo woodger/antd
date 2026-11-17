@@ -1,6 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLInputAttributes, HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize, RenderEmptyContent } from './types';
+import type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select-icons.types';
 import type {
   SelectClassNames, SelectFieldNames, SelectFlattenOption, SelectLabelRenderInfo, SelectPopupRender, SelectRef,
   SelectSemanticValue, SelectStyle, SelectStyles, SelectTagInfo
@@ -39,6 +40,7 @@ export interface AutoCompleteGroup {
 export type AutoCompleteItem = AutoCompleteOption | AutoCompleteGroup;
 /** Управление поисковой строкой и фильтрацией подсказок AutoComplete. */
 export interface AutoCompleteSearchConfig<OptionType extends object = AutoCompleteItem> {
+  searchIcon?: RenderEmptyContent;
   /** Predicate получает поверхностную копию исходного option/group. */
   filterOption?: boolean | ((text: string, option: OptionType) => boolean);
   onSearch?: (text: string) => void;
@@ -97,6 +99,12 @@ export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem>
   prefixCls?: string;
   /** Содержимое affix; falsy scalar, включая 0, не создаёт узел. */
   prefix?: RenderEmptyContent;
+  suffix?: SelectRenderNode<SelectSuffixInfo>;
+  suffixIcon?: RenderEmptyContent;
+  loadingIcon?: RenderEmptyContent;
+  menuItemSelectedIcon?: SelectRenderNode<SelectMenuItemIconInfo<string>>;
+  removeIcon?: SelectRenderNode<undefined>;
+  loading?: boolean;
   options?: readonly OptionType[];
   /** Имена полей исходных options и одного уровня групп. */
   fieldNames?: SelectFieldNames;
@@ -136,7 +144,7 @@ export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem>
   /** @defaultValue false */
   defaultActiveFirstOption?: boolean;
   /** @defaultValue false */
-  allowClear?: boolean | { clearIcon?: Snippet; };
+  allowClear?: boolean | SelectAllowClear;
   notFoundContent?: string | number | Snippet | null;
   /** @defaultValue true */
   popupMatchSelectWidth?: boolean | number;

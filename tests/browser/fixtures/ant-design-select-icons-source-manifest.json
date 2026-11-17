@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "sourceOnly": true,
+  "allRawSourcesUnchanged": true,
+  "copies": [
+    {
+      "source": ".upstream/artifacts/select-icons-v2-source-first.json",
+      "path": ".upstream/artifacts/select-icons-portable/ant-design-select-icons-reference.json.gz",
+      "decodedBytes": 66059978,
+      "decodedSha256": "347c2dd39b93e7f2f481f9380e07c314cf9b5e01232a716ed0b10fea392d6b1b",
+      "storageBytes": 2060389,
+      "storageSha256": "dce7960198102e5446218d588811cfc609040e2ae5a761d8a137759a544664f8",
+      "compression": "gzip level9 mtime0 lossless"
+    },
+    {
+      "source": ".upstream/artifacts/select-icons-v2-source-repeat.json",
+      "path": ".upstream/artifacts/select-icons-portable/ant-design-select-icons-repeat-reference.json.gz",
+      "decodedBytes": 66243296,
+      "decodedSha256": "c80289b97e45736f98c9bead71fc8547e6b5854f9c59c0b3c784b27216042d60",
+      "storageBytes": 2062355,
+      "storageSha256": "85566bdc1e921b575fb77e56267cf4cbd4155bc172409f4944ef4986f465b894",
+      "compression": "gzip level9 mtime0 lossless"
+    },
+    {
+      "source": ".upstream/artifacts/select-icons-v2-ssr-source-first.json",
+      "path": ".upstream/artifacts/select-icons-portable/ant-design-select-icons-ssr-reference.json.gz",
+      "decodedBytes": 12616441,
+      "decodedSha256": "d82ed97eb534fa7ff7fa4a0120453934e5ccc60bdb3e6ec5566738c7a62e77c9",
+      "storageBytes": 493335,
+      "storageSha256": "55622220bed081c183df3821e5d98220fceda5acb9d5a92b75a0a5f10379a75f",
+      "compression": "gzip level9 mtime0 lossless"
+    },
+    {
+      "source": ".upstream/artifacts/select-icons-v2-components-source-first.json",
+      "path": ".upstream/artifacts/select-icons-portable/ant-design-select-components-reference.json.gz",
+      "decodedBytes": 14304114,
+      "decodedSha256": "1502dfc983f7545b8fdb5405e494f920541e295057d74ecb7f892835a854dcbd",
+      "storageBytes": 485314,
+      "storageSha256": "6dc7115a58ea1d69b08607b1a735c1e0c039e60ac18e02f1c00668d3c36cbe56",
+      "compression": "gzip level9 mtime0 lossless"
+    },
+    {
+      "source": ".upstream/artifacts/select-icons-v2-components-ssr-source-first.json",
+      "path": ".upstream/artifacts/select-icons-portable/ant-design-select-components-ssr-reference.json.gz",
+      "decodedBytes": 1769109,
+      "decodedSha256": "0bcb22152cb6cf0526a1faee09b31759d4b4363bd854572108305a6252e1ac45",
+      "storageBytes": 76839,
+      "storageSha256": "0c479d32a14b5692c093bb5cbfccbe7e1616a6b3ca5aeb7884552714e7626e9f",
+      "compression": "gzip level9 mtime0 lossless"
+    },
+    {
+      "source": ".upstream/artifacts/select-icons-flow-source-first.json",
+      "path": ".upstream/artifacts/select-icons-portable/ant-design-select-components-flow-reference.json.gz",
+      "decodedBytes": 54197851,
+      "decodedSha256": "4b65383ef167e56eb11ea88fd42accf02b4016e00980689de1a535ed6838496b",
+      "storageBytes": 1730770,
+      "storageSha256": "1b76936cfdcbd00deece5fefbec1a24b0522fd0c22136891007c34146abfea10",
+      "compression": "gzip level9 mtime0 lossless"
+    },
+    {
+      "source": ".upstream/artifacts/select-icons-flow-ssr-source-first.json",
+      "path": ".upstream/artifacts/select-icons-portable/ant-design-select-components-flow-ssr-reference.json.gz",
+      "decodedBytes": 6678643,
+      "decodedSha256": "12055f0255fa54690a6b46a866306de46df08cc6a61fee312a93da8483a9cb62",
+      "storageBytes": 225398,
+      "storageSha256": "713b590f2f3bc848c117824a465ab47c001b05ed2a933802ed35e938af0e22ae",
+      "compression": "gzip level9 mtime0 lossless"
+    },
+    {
+      "source": ".upstream/artifacts/select-icons-sync-source-first.json",
+      "path": ".upstream/artifacts/select-icons-portable/ant-design-select-icons-sync-reference.json.gz",
+      "decodedBytes": 66243312,
+      "decodedSha256": "d821db68d018df11596b4716db60c429144a211ed78e3c54e8b4dfb84089a3b0",
+      "storageBytes": 2062357,
+      "storageSha256": "1a0874a4975c4a806e95804e13bb5fd77fc865e01ee810275481a7c62668c464",
+      "compression": "gzip level9 mtime0 lossless"
+    },
+    {
+      "source": ".upstream/artifacts/select-icons-sync-source-repeat.json",
+      "path": ".upstream/artifacts/select-icons-portable/ant-design-select-icons-sync-repeat-reference.json.gz",
+      "decodedBytes": 66059994,
+      "decodedSha256": "d3202fba11b19d54977c84293733c22d8b2ea425afecb6b74ac5e5b88c212ef9",
+      "storageBytes": 2060393,
+      "storageSha256": "3699ebe18b54110bb08c0aa8fc6f86a84696a17f8f1625ea7e196109edc00c91",
+      "compression": "gzip level9 mtime0 lossless"
+    }
+  ]
+}

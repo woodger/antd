@@ -4,6 +4,12 @@ import interactions from './fixtures/ant-design-select-tags-interaction-referenc
   with { type: 'json' };
 import optionsReference from './fixtures/ant-design-select-tags-options-reference.json'
   with { type: 'json' };
+import settledTagEnter from './fixtures/ant-design-select-icons-tags-enter-reference.json'
+  with { type: 'json' };
+import immediateTagEnter from './fixtures/ant-design-select-icons-tags-enter-immediate-reference.json'
+  with { type: 'json' };
+import immediateTagEnterRepeat from './fixtures/ant-design-select-icons-tags-enter-immediate-repeat-reference.json'
+  with { type: 'json' };
 
 for (const entry of interactions.cases) {
   test(`Select tags matches source interaction ${entry.sample.id}`, async ({ page }) => {
@@ -20,6 +26,16 @@ for (const entry of interactions.cases) {
     }
     if ('blur' in entry.sample && entry.sample.blur) await page.locator('#tags-outside').click();
     const expected = structuredClone(entry.result);
+    if (entry.sample.id === 'escape-enter') {
+      // Original useOpen defers closing via MessageChannel. The retained Native
+      // immediate-close contract keeps its established first-option selection.
+      for (const source of [immediateTagEnter, immediateTagEnterRepeat]) {
+        const owner = source.cases.find(c => c.sample.id === 'existing-escape-enter')!;
+        expect(owner.steps.at(-1)!.point.value).toEqual(entry.result.values);
+      }
+      const settled = settledTagEnter.cases.find(c => c.sample.id === 'existing-escape-enter')!;
+      expect(settled.steps.at(-1)!.point.value).toEqual([entry.sample.text.trim()]);
+    }
     if (entry.sample.id === 'blank-enter') {
       // Source создаёт whitespace-only value через список, хотя submit отвергает пустой ввод.
       expected.values = [];
