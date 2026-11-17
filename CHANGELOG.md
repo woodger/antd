@@ -9,6 +9,11 @@
 
 ### Added
 
+- Select и AutoComplete поддерживают чистый `popupRender`, `prefix`, semantic
+  `classNames`/`styles` и общий `ConfigProvider.select`. CSS objects сохраняют
+  порядок обновления shorthand/longhand; пользовательский popup сохраняет своё
+  состояние после закрытия и изолирует FormItem/Compact context.
+
 - Select и AutoComplete получили измеряемую виртуализацию, `virtual`,
   `listItemHeight`, `showScrollBar`, `scrollTo`, refs и nullable `onActive`.
   `listHeight` ограничивает внутренний viewport; 0 снимает cap. Native
@@ -1646,6 +1651,10 @@
   тип результата `createMessage` подготовлен к генерации деклараций.
 
 ### Fixed
+
+- Select и AutoComplete сохраняют настоящие template Snippet labels без
+  преобразования в строку. Select сохраняет callback закрытия при удалении
+  сфокусированного поля без чтения уничтоженного props owner.
 
 - TreeSelect сбрасывает активный клавиатурный узел при движении мыши над строкой.
   Tree использует исходный класс `icon__customize` для пользовательских значков.

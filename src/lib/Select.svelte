@@ -6,9 +6,11 @@
   import { useVariant } from './variant.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
   import RenderContent from './RenderContent.svelte';
+  import SelectPopupContent from './SelectPopupContent.svelte';
+  import { hasSelectControlSemantics, hasSelectDisplayContent, mergeSelectSemanticMaps, mergeSelectStyle, resolveSelectSemanticValue, serializeSelectStyle } from './select-semantic.engine';
+  import { createSelectStyle, selectStyle, selectStyleAttributes } from './select-style.model.svelte';
   import { useComponentTheme } from './theme-component.svelte';
   import { useToken } from './theme-context.svelte';
-  import { connectComponentTheme } from './theme-component.dom';
   import SelectOptionList from './SelectOptionList.svelte';
   import { createSelectOptionList } from './select-option-list.model.svelte';
   import type { SelectOptionListItem, SelectOptionListRenderInfo } from './select-option-list.types';
@@ -48,7 +50,6 @@
     hasSelectLabelFeatures,
     type SelectValueItem
   } from './select-value.engine';
-  import { serializeSelectDataStyle } from './select-data-style.engine';
   import { ruRU, type SelectOption, type RenderEmptyContent } from './types';
   import type {
     SelectProps,
@@ -57,12 +58,14 @@
     SelectSearchConfig,
     SelectTagPlaceholder,
     SelectTagInfo,
-    SelectLabelRenderInfo
+    SelectLabelRenderInfo,
+    SelectSemanticInfo,
+    SelectConfigSemanticInfo
   } from './select.types';
   import { getSelectTagText } from './select-tag-text.engine';
   import { getSelectTagOptions } from './select-tags.engine';
   import { getSelectTagOverflow } from './select-tag-overflow.engine';
-  import { connectSelectTagOverflow, measureSelectInput } from './select-tag-overflow.dom';
+  import { connectSelectTagOverflow, measureSelectInput, measureSelectSourceInput } from './select-tag-overflow.dom';
   import { resolveSelectTokenOptions, splitSelectTokens } from './select-token.engine';
   import Icon from './Icon.svelte';
 
@@ -70,8 +73,22 @@
   type Row = SelectDataRow<RawValue, OptionType>;
 
   let {
+    open = $bindable<boolean | undefined>(),
+    open: providedOpen,
+    value = $bindable<SelectProps<Value, Mode, OptionType, LabelInValue>['value']>(),
+    value: providedValue,
+    nativeElement = $bindable(),
+    inputElement = $bindable(),
+    ...componentProps
+  }: SelectProps<Value, Mode, OptionType, LabelInValue> = $props();
+  let {
     _autoWidth = false,
     prefixCls,
+    prefix: leading,
+    rootClassName,
+    classNames,
+    styles,
+    popupRender,
     options = [],
     fieldNames,
     optionLabelProp,
@@ -79,8 +96,6 @@
     labelRender,
     optionRender,
     mode,
-    open = $bindable<boolean | undefined>(),
-    open: providedOpen,
     defaultOpen,
     placement,
     popupMatchSelectWidth,
@@ -96,8 +111,6 @@
     maxTagPlaceholder,
     tagRender,
     defaultValue,
-    value = $bindable<SelectProps<Value, Mode, OptionType, LabelInValue>['value']>(),
-    value: providedValue,
     size,
     variant,
     showSearch,
@@ -105,7 +118,7 @@
     notFoundContent,
     onPopupScroll,
     getPopupContainer,
-    allowClear = false,
+    allowClear,
     status,
     disabled,
     id,
@@ -127,10 +140,8 @@
     onclick,
     style,
     class: className = '',
-    nativeElement = $bindable(),
-    inputElement = $bindable(),
     ...attributes
-  }: SelectProps<Value, Mode, OptionType, LabelInValue> = $props();
+  } = $derived(componentProps);
 
   const config = useConfig();
   const tokens = useToken();
@@ -154,6 +165,9 @@
   const itemStatus = useFormItemStatusContext();
   const feedback = useFormFeedback();
   let appearance = $derived(variantContext.variant);
+  let mergedShowSearch = $derived(showSearch ?? config.select?.showSearch);
+  let mergedAllowClear = $derived(allowClear ?? config.select?.allowClear ?? false);
+  let semanticSize = $derived(size ?? compact?.size ?? config.explicitComponentSize);
   const generatedId = $props.id();
   const initialDefault = untrack(
     () => Array.isArray(defaultValue) ? [...defaultValue] : defaultValue
@@ -164,9 +178,15 @@
   let previousOwnerOpen = untrack(() => providedOpen);
   let hydrated = $state(false);
   let focused = $state(false);
+  let committedOpenChange = untrack(() => onOpenChange);
+  let committedBlur = untrack(() => onblur);
+  $effect(() => {
+    committedOpenChange = onOpenChange;
+    committedBlur = onblur;
+  });
   let internalSearch = $state('');
   let searchConfig = $derived<SelectSearchConfig<RawValue, OptionType>>(
-    { ...(typeof showSearch === 'object' ? showSearch : {}) }
+    { ...(typeof mergedShowSearch === 'object' ? mergedShowSearch : {}) }
   );
   let controlledSearch = $derived(searchConfig.searchValue);
   let search = $derived(controlledSearch ?? internalSearch);
@@ -185,6 +205,7 @@
   let reference = $state<HTMLDivElement>();
   let control = $state<HTMLInputElement>();
   let list = $state<HTMLDivElement>();
+  let menuElement = $state<HTMLDivElement>();
   let contentElement = $state<HTMLDivElement>();
   let responsiveCount = $state(Number.POSITIVE_INFINITY);
   const tagElements = new Map<RawValue, HTMLElement>();
@@ -195,10 +216,15 @@
   let composing = false;
   let pastedText: string | undefined;
   let controlId = $derived(id ?? field?.id ?? `ant-select-${generatedId}`);
-  let selectedValue = $derived(value !== undefined ? value : useDefault ? initialDefault : undefined);
   let tagMode = $derived(mode === 'tags');
   let multiple = $derived(mode === 'multiple' || tagMode);
-  let canSearch = $derived(typeof showSearch === 'object' ? true : showSearch ?? multiple);
+  // Повторный parent spread может сбросить локальный bindable shadow без нового
+  // owner value. Сохраняем лишь выбранные raw keys; обычные labels остаются live.
+  let selectedValue = $derived(value !== undefined ? value : useDefault ? initialDefault
+    : providedValue === undefined && uncontrolledLabels
+      ? multiple ? uncontrolledLabels.map(item => item.value) : uncontrolledLabels[0]?.value
+      : undefined);
+  let canSearch = $derived(typeof mergedShowSearch === 'object' ? true : mergedShowSearch ?? multiple);
   // Readonly исключает input из нативной проверки; required multiple блокирует ввод через beforeinput.
   let isReadOnly = $derived(!canSearch && (!multiple || !attributes.required));
   let intrinsicWidth = $derived(_autoWidth && !multiple && isReadOnly);
@@ -267,7 +293,7 @@
     : selectValueTitle(selectedOption ? { label: selectedOption.label, title: selectedOption.title } : undefined)
       || selectValueTitle(selected));
   let selectedLayer = $derived(!multiple && Boolean(selected));
-  let selectedHasValue = $derived(selected?.label != null && String(selected.label).trim() !== '');
+  let selectedHasValue = $derived(hasSelectDisplayContent(selected?.label));
   let selectedText = $derived(typeof selected?.label === 'string' || typeof selected?.label === 'number'
     ? String(selected.label) : '');
   let selectedLabelScope = $derived(labelFeatures || labelFeaturesUsed
@@ -301,16 +327,11 @@
         || doc.activeElement === doc.documentElement) input.focus();
     });
   });
-  $effect(() => {
-    if (!control || !multiple || !responsiveTags && !componentTheme.className) return;
-    void search;
-    const input = control;
-    const previous = input.style.width;
-    input.style.width = `${measureSelectInput(input)}px`;
-    return () => { input.style.width = previous; };
-  });
+  let measuredInputWidth = $state<number>();
   $effect(() => {
     if (!contentElement || !responsiveTags) return;
+    const sourceWidth = sourceInputWidth;
+    const input = sourceWidth ? control : undefined;
     void tags;
     void maxTagTextLength;
     void tagPlaceholder;
@@ -320,8 +341,16 @@
     let disposed = false;
     let disconnect: (() => void) | undefined;
     void tick().then(() => {
-      if (!disposed) disconnect = connectSelectTagOverflow(host,
-        count => { responsiveCount = count; });
+      if (!disposed) {
+        const update = (count: number) => { responsiveCount = count; };
+        if (sourceWidth) {
+          // rc-overflow1.0.1 Item64–68/Overflow137–147 учитывает offsetWidth
+          // suffix, а не новый scrollWidth после сохранённой Source width history.
+          disconnect = connectSelectTagOverflow(host, update, {
+            tag: ':scope > [data-select-tag]', rest: ':scope > [data-select-rest]', input
+          });
+        } else disconnect = connectSelectTagOverflow(host, update);
+      }
     });
     return () => {
       disposed = true;
@@ -331,11 +360,79 @@
   let resolvedDisabled = $derived(disabled ?? field?.disabled ?? config.componentDisabled);
   let resolvedStatus = $derived(status ?? ('status' in itemStatus ? itemStatus.status : field?.status));
   let resolvedSize = $derived(size ?? compact?.size ?? config.componentSize);
+  let semanticInfo = $derived<SelectSemanticInfo<Value, Mode, OptionType, LabelInValue>>({ props: {
+    ...componentProps,
+    ...(providedValue !== undefined ? { value: providedValue } : {}),
+    ...(providedOpen !== undefined ? { open: providedOpen } : {}),
+    variant: appearance, status: resolvedStatus, disabled: resolvedDisabled, size: semanticSize
+  } });
+  let semantics = $derived.by(() => {
+    const contextInfo: SelectConfigSemanticInfo = semanticInfo;
+    const contextClasses = resolveSelectSemanticValue(config.select?.classNames, contextInfo);
+    const localClasses = resolveSelectSemanticValue(classNames, semanticInfo);
+    const contextStyles = resolveSelectSemanticValue(config.select?.styles, contextInfo);
+    const localStyles = resolveSelectSemanticValue(styles, semanticInfo);
+    const merged = mergeSelectSemanticMaps({ classes: contextClasses, styles: contextStyles },
+      { classes: localClasses, styles: localStyles }, config.select?.style,
+      typeof style === 'object' ? style : undefined);
+    const sourceControlColors = style != null && typeof style === 'object'
+      || config.select?.style != null && typeof config.select.style === 'object'
+      || Boolean(config.select?.class)
+      || hasSelectControlSemantics({ classes: contextClasses, styles: contextStyles },
+        { classes: localClasses, styles: localStyles });
+    return { ...merged, sourceControlColors };
+  });
+  let sourceInputWidth = $derived(semantics.sourceControlColors);
+  const rootStyle = createSelectStyle(() => semantics.styles.root, () => [componentTheme.style, [
+    ['--ant-native-select-height', `var(--${privateNamespace}-select-height)`],
+    ['--ant-native-select-multi-item-height', `var(--${privateNamespace}-select-multi-item-height)`],
+    ['--ant-native-select-color', `var(--${privateNamespace}-select-color)`],
+    ...(semantics.sourceControlColors ? [['--ant-native-select-empty-input-gap',
+      `var(--${privateNamespace}-select-multi-item-padding-horizontal)`]] as const : [])
+  ]]);
+  const inputStyle = createSelectStyle(() => semantics.styles.input, () =>
+    sourceInputWidth || measuredInputWidth === undefined ? [] : [[['width', `${measuredInputWidth}px`]]], () =>
+    sourceInputWidth ? [[['--select-input-width', measuredInputWidth === undefined ? '' : String(measuredInputWidth)]]] : []);
+  function attachInputStyle(input: HTMLInputElement) {
+    // При одном font/query update сначала применяем owner style, затем измеряем value.
+    inputStyle.attach(input);
+    $effect(() => {
+      if (!multiple) {
+        measuredInputWidth = undefined;
+        return;
+      }
+      const sourceWidth = sourceInputWidth;
+      // Legacy сохраняет прежний hash dependency и responsive short-circuit.
+      if (!sourceWidth && !responsiveTags && !componentTheme.className) {
+        measuredInputWidth = undefined;
+        return;
+      }
+      void search;
+      measuredInputWidth = sourceWidth ? measureSelectSourceInput(input) : measureSelectInput(input);
+    });
+  }
+  const initialRootStyle = untrack(rootStyle.initialStyle);
+  const initialInputStyle = untrack(inputStyle.initialStyle);
+  const initialContentStyle = untrack(() => serializeSelectStyle(semantics.styles.content));
+  const initialSuffixStyle = untrack(() => serializeSelectStyle(semantics.styles.suffix));
   let compactItemClasses = $derived(compactClasses(prefix, config.direction, compact));
   // Число 0 остаётся содержимым; null/empty string скрывают пустой список.
   let hiddenEmpty = $derived(filtered.length === 0
     && (notFoundContent === null || notFoundContent === false || notFoundContent === ''));
   let expanded = $derived(hydrated && isOpen && !resolvedDisabled && !hiddenEmpty);
+  let showClear = $derived(Boolean(mergedAllowClear && !resolvedDisabled
+    && (multiple ? selectedValues.length || search
+      : selected || expanded && canSearch && search)));
+  let popupVisited = $state(false);
+  $effect(() => { if (expanded && popupRender && list) popupVisited = true; });
+  let customPopup = $derived(Boolean(popupRender) || popupVisited);
+  let popupPresent = $derived(expanded || popupVisited);
+  // Чтение present вычисляет весь объект: producer работает и для закрытого
+  // control/SSR; только DOM ниже остаётся условным.
+  let popupView = $derived.by(() => {
+    void semantics;
+    return { present: popupPresent, content: popupRender ? popupRender(originMenu) : originMenu };
+  });
 
   onMount(() => {
     hydrated = true;
@@ -360,15 +457,20 @@
   let realVirtual = $derived(effectiveVirtual !== false && matchedWidth !== false);
   let itemHeight = $derived(listItemHeight ?? tokens.token.controlHeight);
   let listLabel = $derived(attributes['aria-label'] ?? placeholder ?? config.locale.searchText);
-  let popupLayers = $derived([
+  let popupBaseLayers = $derived([
     componentTheme.style,
-    `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`,
+    `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`
+  ]);
+  let popupAfterLayers = $derived([
     typeof matchedWidth === 'number' ? [['width', `${matchedWidth}px`]] as const : undefined
   ]);
-  const popupStyle = createOverlayStyle(() => popupLayers, anchorWidthVariable, () => expanded);
+  let popupLayers = $derived([...popupBaseLayers, serializeSelectStyle(semantics.styles.popup.root), ...popupAfterLayers]);
+  const popupStyle = createOverlayStyle(() => popupBaseLayers, anchorWidthVariable, () => expanded, {
+    style: () => semantics.styles.popup.root, after: () => popupAfterLayers
+  });
   const portal = createPopupContainer(() => ({
     open: expanded,
-    rendered: expanded,
+    rendered: popupPresent,
     reference,
     getPopupContainer: popupContainerGetter,
     themeStyle: serializeInlineStyleLayers(popupLayers),
@@ -391,11 +493,14 @@
     const disconnect = untrack(() => connectPopup(popup, anchor, {
       placement: 'bottom',
       get trigger() { return untrack(() => popupContainerGetter ? anchor : container); },
+      get dismissOnEscape() { return untrack(() => !customPopup || Boolean(menuElement)); },
       autoAdjustOverflow: true,
       maxWidth: false,
       constrainWidth: false,
       allowOffscreenAnchor: true,
-      preserveFocus: event => !event.composedPath().some(node =>
+      preserveFocus: event => (!customPopup || event.composedPath().some(node =>
+        node instanceof Element && (node.classList.contains(`${prefix}-dropdown-list`)
+          || node.classList.contains(`${prefix}-item-empty`)))) && !event.composedPath().some(node =>
         node instanceof Element && node.classList.contains(`${prefix}-dropdown-list-scrollbar`)),
       anchorWidthVariable,
       getAnchorWidth: () => source.width,
@@ -442,7 +547,7 @@
 
   let listItems = $derived<SelectOptionListItem<Row>[]>(filtered.map((option, index) => {
     const data = option.data;
-    const selected = !option.group && option.value !== undefined
+    const selected = () => !option.group && option.value !== undefined
       && (multiple ? selectedKeys.has(option.value) : option.value === selectedRaw);
     return {
       key: option.key,
@@ -452,13 +557,19 @@
       ariaLabel: !option.group && typeof option.label === 'string' ? option.label : undefined,
       ariaValue: typeof data.value === 'string' || typeof data.value === 'number' ? data.value : undefined,
       ariaAttributes: selectDataAttributes(option, fields).aria as SelectOptionListItem<Row>['ariaAttributes'],
-      ariaSelected: selected,
+      // Коллекция Source кешируется закрытой; rawValues продолжает менять ARIA.
+      get ariaSelected() { return selected(); },
       ariaDisabled: data.disabled as boolean | undefined,
-      disabled: isSelectOptionDisabled(data.disabled, selected, countReached)
+      get disabled() { return isSelectOptionDisabled(data.disabled, selected(), countReached); }
     };
   }));
   const notifyActive = createSelectActive<RawValue>(
-    () => onActive as ((value: RawValue | null) => void) | undefined
+    () => {
+      const callback = onActive as ((value: RawValue | null) => void) | undefined;
+      return callback ? value => {
+        if (!customPopup || menuElement?.isConnected) callback(value);
+      } : undefined;
+    }
   );
   let listVisited = false;
   let lastListLength = -1;
@@ -468,6 +579,10 @@
   // Source сохраняет OptionList после первого открытия; условный Native DOM не сбрасывает activation.
   $effect(() => {
     const visible = expanded;
+    if (customPopup && !menuElement) {
+      listVisited = false;
+      return;
+    }
     const rows = optionList.items;
     const query = search;
     if (!listVisited && !visible) return;
@@ -484,7 +599,7 @@
     height: () => listHeight,
     estimate: () => itemHeight,
     realVirtual: () => realVirtual,
-    open: () => expanded,
+    open: () => expanded && (!customPopup || Boolean(menuElement)),
     searchValue: () => search,
     selectedIndex: (): number => openingKeyboardActivation?.index ?? (multiple || selectedRaw === undefined
       ? -1 : optionList.items.findIndex(row =>
@@ -494,6 +609,7 @@
   });
 
   function activate(index: number, keyboard = false) {
+    if (customPopup && !menuElement) return;
     activeIndex = index;
     notifyActive(optionList.items[index]?.item.value ?? null);
     if (keyboard) optionList.scrollActive(index);
@@ -503,21 +619,27 @@
     return getEnabledIndex(listItems, current, direction);
   }
 
-  function setOpen(next: boolean) {
+  function setOpen(next: boolean, fromBlur = false) {
     if (next && resolvedDisabled) {
       return;
     }
 
     const notify = expanded !== next;
+    const clearContextSearch = notify && !next && !multiple && Boolean(search)
+      && showSearch == null && typeof config.select?.showSearch === 'object'
+      ? searchCallback : undefined;
+    const clearInternalSearch = !next && !tagMode && (!multiple || autoClearSearch);
     internalOpen = next;
     open = next;
-    if (notify) onOpenChange?.(next);
+    // DOM blur при удалении приходит до cleanup, когда owner props уже уничтожены.
+    if (notify) (fromBlur ? committedOpenChange : onOpenChange)?.(next);
     // Принятый bind/callback сохраняет active, выбранный текущим keyboard event.
-    if (providedOpen === next) previousOwnerOpen = next;
+    if (!fromBlur && providedOpen === next) previousOwnerOpen = next;
 
-    if (!next && !tagMode && (!multiple || autoClearSearch)) {
+    if (clearInternalSearch) {
       internalSearch = '';
     }
+    clearContextSearch?.('');
   }
 
   export function focus(options?: FocusOptions) {
@@ -527,6 +649,7 @@
     control?.blur();
   }
   export function scrollTo(config?: SelectScrollConfig | null) {
+    if (customPopup && !menuElement) return;
     optionList.scrollTo(config);
   }
 
@@ -597,6 +720,21 @@
       notifySelect(next, data, true);
     }
     internalSearch = '';
+  }
+
+  function clearSelection() {
+    if (resolvedDisabled) return;
+    const queryOnly = search && (multiple ? !selectedValues.length && !tagMode : !selected);
+    if (queryOnly) {
+      const callback = searchCallback;
+      onClear?.();
+      internalSearch = '';
+      callback?.('');
+      if (!multiple) setOpen(false);
+      control?.focus();
+      return;
+    }
+    choose(undefined);
   }
 
   function choose(option: Row | undefined) {
@@ -707,6 +845,16 @@
       return;
     }
 
+    if (expanded && customPopup && !menuElement && (['ArrowDown', 'ArrowUp', 'Home', 'End',
+      'Enter', 'Escape', 'Tab'].includes(event.key) || event.key === ' ' && !canSearch)) {
+      // BaseSelect сохраняет input-level prevention; отсутствующий OptionList
+      // не выбирает value и не закрывает Escape. Tab завершает обычный blur.
+      if (['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key) || event.key === ' ' && !canSearch) {
+        event.preventDefault();
+      }
+      return;
+    }
+
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();
 
@@ -748,7 +896,7 @@
       if (last)
         remove(last.value);
     } else if (!multiple
-      && allowClear
+      && mergedAllowClear
       && !canSearch
       && (event.key === 'Backspace'
         || event.key === 'Delete')) {
@@ -894,10 +1042,10 @@
     if (!(next instanceof Node && list?.contains(next))) {
       if (tagMode) submitTag(search);
       else if (multiple) internalSearch = '';
-      setOpen(false);
+      setOpen(false, true);
     }
     field?.onBlur();
-    onblur?.(event);
+    committedBlur?.(event);
   }
 
   function handleListFocusOut(event: FocusEvent) {
@@ -908,7 +1056,7 @@
     focused = false;
     if (tagMode) submitTag(search);
     else if (multiple) internalSearch = '';
-    setOpen(false);
+    setOpen(false, true);
   }
 
   function handleFocus(event: FocusEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
@@ -930,7 +1078,9 @@
       event.preventDefault();
       control?.focus();
       openList();
-    } else if (target === event.currentTarget && !resolvedDisabled) {
+    } else if ((target === event.currentTarget || leading && event.composedPath().some(node =>
+      node instanceof Element && node.classList.contains(`${prefix}-prefix`)
+        && node.parentElement === event.currentTarget)) && !resolvedDisabled) {
       event.preventDefault();
       control?.focus();
       control?.click();
@@ -960,11 +1110,12 @@
     cursor: inherit;
   }
   [data-ant-select-input]::placeholder { color: var(--ant-color-text-placeholder); }
+  [data-ant-select-control] [data-ant-select-input][data-ant-select-semantic-color] { color: var(--ant-native-select-color, var(--ant-color-text)); }
   [data-ant-select-content]:has(> [data-ant-select-placeholder]) [data-ant-select-input]::placeholder { color: transparent; }
   [data-ant-select-placeholder] { position: absolute; inset-inline-start: 0; }
   [data-ant-select-control][data-ant-select-single] [data-ant-select-content][data-select-value-layer] [data-ant-select-input] { position: absolute; inset: 0; }
   [data-ant-select-content][data-select-value-layer]:not([data-select-value-search]) [data-ant-select-input] { -webkit-text-fill-color: transparent; }
-  [data-ant-select-content][data-select-value-search] [data-ant-select-input] { color: var(--ant-native-select-color, var(--ant-color-text)); -webkit-text-fill-color: var(--ant-native-select-color, var(--ant-color-text)); }
+  [data-ant-select-content][data-select-value-search] [data-ant-select-input] { color: var(--ant-native-select-color, var(--ant-color-text)); -webkit-text-fill-color: currentColor; }
   [data-ant-select-content][data-select-value-layer] { display: block; }
   [data-ant-select-content][data-select-value-layer][data-select-value-has-content]::before { display: none; }
   [data-ant-select-content][data-select-value-search] > [data-ant-select-value] { opacity: 0; }
@@ -978,6 +1129,7 @@
   .popup[data-ant-select-dropdown] { top: calc(100% + 4px); inset-inline: 0; max-height: none; overflow: visible; }
   /* Исходный virtual-list размещает options в flex column без сжатия строк. */
   .popup[data-ant-select-source-popup] { display: flex; flex-direction: column; }
+  .popup[data-ant-select-custom-popup]:not([hidden]) { display: block; }
   .popup[data-ant-select-dropdown][popover] { position: fixed; inset: auto; margin: 0; border: 0; }
   .popup[data-ant-select-dropdown][hidden] { display: none; }
   [data-ant-select-source-popup] > [data-ant-select-item] { flex: none; }
@@ -988,9 +1140,13 @@
   [data-ant-select-item] { width: 100%; border: 0; background: none; font-family: inherit; text-align: start; }
   [data-ant-select-control][data-ant-select-multiple] { height: auto; min-height: var(--ant-native-select-height); }
   [data-ant-select-control][data-ant-select-multiple] [data-ant-select-content] { gap: 0; }
+  /* Source suffix wrapper имеет собственный отступ до пустого input. */
+  [data-ant-select-content][data-select-source-empty-input]::before { flex: none; width: var(--ant-native-select-empty-input-gap); }
+  [data-ant-select-content][data-select-source-empty-input] > [data-ant-select-placeholder] { inset-inline-start: var(--ant-native-select-empty-input-gap); }
   [data-ant-select-control][data-ant-select-multiple] [data-ant-select-input] { flex: 1 1 60px; width: 60px; min-width: 40px; max-width: 100%; }
   [data-ant-select-control][data-ant-select-source-theme][data-ant-select-multiple] [data-ant-select-input] { flex: none; width: 4px; min-width: 4px; }
   [data-ant-select-control][data-ant-select-responsive-tags] [data-ant-select-input] { flex: none; width: 4px; min-width: 4px; }
+  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-input][data-ant-select-semantic-color] { flex: none; width: calc(var(--select-input-width, 0) * 1px); min-width: 4px; }
   .measure-tag { position: absolute; inset-block-start: 0; inset-inline-start: 0; visibility: hidden; pointer-events: none; }
   .custom-tag { display: inline-flex; flex: none; min-width: 0; max-width: 100%; }
   [data-ant-select-control][data-ant-select-source-theme][data-ant-select-multiple] [data-ant-select-input] { line-height: calc(var(--ant-select-internal_fixed_item_margin) * 2 + var(--ant-native-select-multi-item-height)); }
@@ -1006,6 +1162,88 @@
   }
 </style>
 
+  {#snippet originMenu()}
+      {#snippet optionRow(option: Row, info: SelectOptionListRenderInfo)}
+        {@const index = info.index}
+        {@const data = option.data}
+        {@const rowDisabled = info.attributes['aria-disabled'] === true}
+        {@const rowSelected = option.value !== undefined
+          && (multiple ? selectedKeys.has(option.value) : option.value === selectedRaw)}
+        {@const content = selectDataContent(option)}
+        {@const presentation = selectDataAttributes(option, fields)}
+        {#if option.group}
+          <div data-ant-select-item-group class={[`${prefix}-item ${prefix}-item-group`,
+            typeof data.className === 'string' && data.className]}
+            title={nativeTitle(selectDataTitle(option))} {@attach info.attach}>
+            {#if typeof content !== 'boolean'}{content ?? ''}{/if}
+          </div>
+        {:else}
+        {@const initialRowStyle = untrack(() => serializeSelectStyle(mergeSelectStyle(semantics.styles.popup.listItem, data.style)))}
+        <button
+          {...presentation.physical}
+          type="button"
+          data-ant-select-item
+          tabindex={(presentation.physical.tabindex ?? -1) as number}
+          disabled={rowDisabled}
+          {...info.virtual ? {
+            'aria-selected': undefined,
+            'aria-disabled': info.attributes['aria-disabled']
+          } : info.attributes}
+          {@attach info.attach}
+          class={[
+              `${prefix}-item ${prefix}-item-option`,
+              typeof data.className === 'string' && data.className,
+              typeof data.class === 'string' && data.class,
+              semantics.classes.popup.listItem,
+              option.groupOption && `${prefix}-item-option-grouped`,
+              rowSelected && `${prefix}-item-option-selected`,
+              index === activeIndex && !rowDisabled && `${prefix}-item-option-active`,
+              rowDisabled && `${prefix}-item-option-disabled`
+            ]}
+          title={nativeTitle(selectDataTitle(option))}
+          style={initialRowStyle}
+          {...selectStyleAttributes(mergeSelectStyle(semantics.styles.popup.listItem, data.style))} {@attach selectStyle(() => mergeSelectStyle(semantics.styles.popup.listItem, data.style))}
+          onpointerdown={event => {
+              const handler = presentation.physical.onpointerdown;
+              if (typeof handler === 'function') handler(event);
+              if (typeof presentation.physical.onmousedown !== 'function') event.preventDefault();
+            }}
+          onmousedown={event => {
+              const handler = presentation.physical.onmousedown;
+              if (typeof handler === 'function') handler(event);
+              event.preventDefault();
+            }}
+          onmousemove={() => {
+              if (!rowDisabled && index !== activeIndex) activate(index);
+            }}
+          onpointermove={event => {
+              const handler = presentation.physical.onpointermove;
+              if (typeof handler === 'function') handler(event);
+              if (!rowDisabled && index !== activeIndex) activate(index);
+            }}
+          onclick={() => choose(option)}
+        >
+          <span class={`${prefix}-item-option-content`}>{#if renderOption}{@render renderOption(getRenderOption(option), { index })}{:else}<RenderContent value={content as RenderEmptyContent} />{/if}</span>{#if rowSelected}<span class={`${prefix}-item-option-state`}><Icon name="check" /></span>{/if}
+        </button>
+        {/if}
+      {/snippet}
+      {#if optionList.items.length}
+        <SelectOptionList model={optionList} renderItem={optionRow}
+          bind:listElement={menuElement}
+          class={semantics.classes.popup.list} style={semantics.styles.popup.list}
+          id={`${controlId}_list`}
+          prefixCls={prefix} direction={config.direction} {showScrollBar} {activeIndex}
+          ariaLabel={listLabel} {multiple} busy={loading}
+          onScroll={onPopupScroll} />
+      {:else}
+        <div bind:this={menuElement} class={`${prefix}-item-empty`} id={`${controlId}_list`} role="listbox"
+          aria-label={listLabel} aria-multiselectable={multiple || undefined} aria-busy={loading || undefined}>{#snippet nativeEmpty()}{loading
+              ? (config.locale.spin ?? ruRU.spin!).loadingText
+              : config.locale.emptyText}{/snippet}<RenderEmpty componentName="Select"
+              local={notFoundContent} fallback={nativeEmpty} /></div>
+      {/if}
+  {/snippet}
+
 <svelte:document onreset={handleReset} />
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`select-prefix:${prefix}:${rootPrefix}`} />{/if}<div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
@@ -1020,16 +1258,13 @@
     compact && expanded && `${prefix}-focused`,
     compact && resolvedDisabled && `${prefix}-disabled`,
     className
-  ]} bind:this={container} style={[componentTheme.style, style].filter(Boolean).join(';') || undefined}>
+  ]} bind:this={container} style={[componentTheme.style, typeof style === 'string' ? style : undefined].filter(Boolean).join(';') || undefined}>
   <div
     bind:this={reference}
     data-ant-select-control data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
     data-ant-select-source-theme={Boolean(componentTheme.className) || undefined}
     data-ant-select-single={!multiple || undefined} data-ant-select-multiple={multiple || undefined}
     data-ant-select-responsive-tags={responsiveTags || undefined}
-    style:--ant-native-select-height={`var(--${privateNamespace}-select-height)`}
-    style:--ant-native-select-multi-item-height={`var(--${privateNamespace}-select-multi-item-height)`}
-    style:--ant-native-select-color={`var(--${privateNamespace}-select-color)`}
     role="presentation"
     onpointerdown={handlePointerDown}
     class={[
@@ -1040,46 +1275,55 @@
         feedback.isFormItemInput && `${prefix}-in-form-item`,
         componentTheme.className && `${prefix}-source-theme`,
         componentTheme.className && canSearch && `${prefix}-show-search`,
-        componentTheme.className && allowClear && `${prefix}-allow-clear`,
+        componentTheme.className && showClear && `${prefix}-allow-clear`,
         componentTheme.className && config.direction === 'rtl' && `${prefix}-rtl`,
         loading && `${prefix}-loading`,
         multiple ? `${prefix}-multiple` : `${prefix}-single`,
         responsiveTags && `${prefix}-responsive-tags`,
         expanded && `${prefix}-open`,
-        (expanded || componentTheme.className && focused) && `${prefix}-focused`,
+        (customPopup || semantics.sourceControlColors ? focused : expanded || componentTheme.className && focused) && `${prefix}-focused`,
         resolvedDisabled && `${prefix}-disabled`,
         resolvedSize === 'large' && `${prefix}-lg`,
         resolvedSize === 'small' && `${prefix}-sm`,
-        resolvedStatus && `${prefix}-status-${resolvedStatus}`
+        resolvedStatus && `${prefix}-status-${resolvedStatus}`,
+        config.select?.class, semantics.classes.root, rootClassName
       ]}
-    style={componentTheme.style}
+    style={initialRootStyle} {...selectStyleAttributes(semantics.styles.root)} {@attach rootStyle.attach}
   >
-    <div data-ant-select-content
+    {#if leading}{@const initialPrefixStyle = untrack(() => serializeSelectStyle(semantics.styles.prefix))}<div class={[`${prefix}-prefix`, semantics.classes.prefix]} style={initialPrefixStyle} {...selectStyleAttributes(semantics.styles.prefix)} {@attach selectStyle(() => semantics.styles.prefix)}><RenderContent value={leading} /></div>{/if}<div data-ant-select-content
+      data-select-source-empty-input={multiple && !selectedValues.length && !leading && semantics.sourceControlColors || undefined}
       data-select-value-layer={selectedLayer || undefined}
       data-select-value-has-content={selectedHasValue || undefined}
-      data-select-value-search={selectedLayer && expanded && canSearch && Boolean(search) || undefined}
+      data-select-value-search={!multiple && expanded && canSearch && Boolean(search) || undefined}
       class={[`${prefix}-content`, selectedLayer && selectedHasValue && `${prefix}-content-has-value`,
         selectedLayer && hasSelectedStyle && `${prefix}-content-has-option-style`,
-        selectedLayer && expanded && canSearch && Boolean(search) && `${prefix}-content-has-search-value`]}
+        !multiple && expanded && canSearch && Boolean(search) && `${prefix}-content-has-search-value`, semantics.classes.content]}
+      style={initialContentStyle} {...selectStyleAttributes(semantics.styles.content)} {@attach selectStyle(() => semantics.styles.content)}
       title={hasSelectedStyle ? undefined : selectedTitle}
-      bind:this={contentElement}>{#if intrinsicWidth && !selectedLayer}<span class="intrinsic-label" aria-hidden="true">{#if selected}<RenderContent value={selected.label as RenderEmptyContent} />{:else}{placeholder ?? ''}{/if}</span>{/if}{#if !selected && !selectedValues.length && !search && placeholder}<div data-ant-select-placeholder class={`${prefix}-placeholder`} aria-hidden="true">{placeholder}</div>{/if}{#if selectedLayer && selected}
+      bind:this={contentElement}>{#if intrinsicWidth && !selectedLayer}<span class="intrinsic-label" aria-hidden="true">{#if selected}<RenderContent value={selected.label as RenderEmptyContent} />{:else}{placeholder ?? ''}{/if}</span>{/if}{#if !selected && !selectedValues.length && (!multiple || !search)}{@const initialPlaceholderStyle = untrack(() => serializeSelectStyle(mergeSelectStyle(search ? { visibility: 'hidden' } : undefined, semantics.styles.placeholder)))}<div data-ant-select-placeholder class={[`${prefix}-placeholder`, semantics.classes.placeholder]} style={initialPlaceholderStyle} {...selectStyleAttributes(mergeSelectStyle(search ? { visibility: 'hidden' } : undefined, semantics.styles.placeholder))} {@attach selectStyle(() => mergeSelectStyle(search ? { visibility: 'hidden' } : undefined, semantics.styles.placeholder))} aria-hidden="true">{placeholder ?? ''}</div>{/if}{#if selectedLayer && selected}
+        {@const initialSelectedStyle = untrack(() => serializeSelectStyle(mergeSelectStyle(
+          hasSelectedStyle && expanded && canSearch && search ? { visibility: 'hidden' } : undefined, selectedStyle)))}
         <div data-ant-select-value class={[hasSelectedStyle && `${prefix}-content-value`, selectedClass]}
-          style={serializeInlineStyleLayers([
-            hasSelectedStyle && expanded && canSearch && search ? 'visibility:hidden' : undefined,
-            serializeSelectDataStyle(selectedStyle)
-          ])} title={hasSelectedStyle ? selectedTitle : undefined}>
+          style={initialSelectedStyle}
+          {...selectStyleAttributes(mergeSelectStyle(
+            hasSelectedStyle && expanded && canSearch && search ? { visibility: 'hidden' } : undefined, selectedStyle))} {@attach selectStyle(() => mergeSelectStyle(
+            hasSelectedStyle && expanded && canSearch && search ? { visibility: 'hidden' } : undefined, selectedStyle))} title={hasSelectedStyle ? selectedTitle : undefined}>
           <RenderContent value={selected.label as RenderEmptyContent} />
         </div>{/if}{#if multiple}
         {#each renderedTags as tag, index (tag.value)}
           {@const hidden = responsiveTags && !visibleTagKeys.has(tag.value)}
+          {@const initialTagStyle = untrack(() => !renderTag ? serializeSelectStyle(semantics.styles.item) : undefined)}
           {#snippet tagLabel()}<RenderContent value={getSelectTagText(tag.label, maxTagTextLength) as RenderEmptyContent} />{/snippet}
           <span data-ant-select-selection-item={!renderTag || undefined}
             data-ant-select-selection-item-disabled={!renderTag && (resolvedDisabled || tag.disabled) || undefined}
             class={[
               renderTag ? 'custom-tag' : `${prefix}-selection-item`,
               hidden && 'measure-tag',
+              !renderTag && semantics.classes.item,
               !renderTag && (resolvedDisabled || tag.disabled) && `${prefix}-selection-item-disabled`
-            ]} title={renderTag ? undefined : selectValueTitle(tag)} data-select-tag={responsiveTags || undefined}
+            ]} style={initialTagStyle}
+            {...selectStyleAttributes(!renderTag ? semantics.styles.item : undefined)} {@attach selectStyle(() => !renderTag ? semantics.styles.item : undefined)}
+            title={renderTag ? undefined : selectValueTitle(tag)} data-select-tag={responsiveTags || undefined}
             data-select-custom-tag={renderTag ? '' : undefined}
             role="presentation" onmousedown={renderTag ? handleCustomTagMouseDown : undefined}
             aria-hidden={hidden || undefined} inert={hidden}
@@ -1094,10 +1338,12 @@
                 }
               })}
             {:else}
-              <span class={`${prefix}-selection-item-content`}>{@render tagLabel()}</span>{#if !resolvedDisabled && !tag.disabled}<button type="button" data-ant-select-selection-item-remove class={`${prefix}-selection-item-remove`} aria-label={`${config.locale.removeText
+              {@const initialItemContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}
+              <span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]} style={initialItemContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)} {@attach selectStyle(() => semantics.styles.itemContent)}>{@render tagLabel()}</span>{#if !resolvedDisabled && !tag.disabled}{@const initialRemoveStyle = untrack(() => serializeSelectStyle(semantics.styles.itemRemove))}<button type="button" data-ant-select-selection-item-remove class={[`${prefix}-selection-item-remove`, semantics.classes.itemRemove]} style={initialRemoveStyle} {...selectStyleAttributes(semantics.styles.itemRemove)} {@attach selectStyle(() => semantics.styles.itemRemove)} aria-label={`${config.locale.removeText
                 ?? ruRU.removeText} ${selectValueText(tag.label) || tag.value}`} onpointerdown={(event) => event.preventDefault()} onclick={() => remove(tag.value)}><Icon name="close" /></button>{/if}
             {/if}
           </span>{/each}{#if tagOverflow.omitted.length || responsiveTags && tags.length}
+          {@const initialRestStyle = untrack(() => !renderTag ? serializeSelectStyle(semantics.styles.item) : undefined)}
           {#snippet restLabel()}
             {#if typeof tagPlaceholder === 'function'}{@render tagPlaceholder(tagOverflow.omitted)}
             {:else if tagPlaceholder == null}+ {tagOverflow.omitted.length} ...
@@ -1106,7 +1352,10 @@
           <span data-ant-select-selection-item={!renderTag || undefined}
             class={[`${prefix}-selection-overflow-item-rest`,
               renderTag ? 'custom-tag' : `${prefix}-selection-item`,
+              !renderTag && semantics.classes.item,
               !tagOverflow.omitted.length && 'measure-tag']}
+            style={initialRestStyle}
+            {...selectStyleAttributes(!renderTag ? semantics.styles.item : undefined)} {@attach selectStyle(() => !renderTag ? semantics.styles.item : undefined)}
             title={renderTag ? undefined : tagPlaceholderTitle}
             data-select-rest={responsiveTags || undefined}
             data-select-custom-tag={renderTag ? '' : undefined}
@@ -1114,18 +1363,20 @@
             aria-hidden={!tagOverflow.omitted.length || undefined} inert={!tagOverflow.omitted.length}>
             {#if renderTag}{@render renderTag({
               label: restLabel, isMaxTag: true, disabled: false, closable: false
-            })}{:else}<span class={`${prefix}-selection-item-content`}>{@render restLabel()}</span>{/if}
+            })}{:else}{@const initialRestContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}<span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]} style={initialRestContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)} {@attach selectStyle(() => semantics.styles.itemContent)}>{@render restLabel()}</span>{/if}
           </span>{/if}{/if}<input
         {...nativeAttributes}
         bind:this={control}
         id={controlId}
-        data-ant-select-input class={`${prefix}-input`}
+        data-ant-select-input class={[`${prefix}-input`, semantics.classes.input]}
+        data-ant-select-semantic-color={semantics.sourceControlColors || undefined}
+        style={initialInputStyle} {...selectStyleAttributes(semantics.styles.input)} {@attach attachInputStyle}
         type="text"
         role="combobox"
         aria-expanded={expanded}
         aria-busy={loading || undefined}
-        aria-controls={expanded ? `${controlId}_list` : undefined}
-        aria-activedescendant={expanded && activeIndex >= 0
+        aria-controls={expanded && (!customPopup || menuElement) ? `${controlId}_list` : undefined}
+        aria-activedescendant={expanded && (!customPopup || menuElement) && activeIndex >= 0
             ? `${controlId}_list_${activeIndex}`
             : undefined}
         aria-autocomplete={canSearch ? 'list' : 'none'}
@@ -1164,11 +1415,7 @@
         onblur={handleBlur}
         onfocus={handleFocus}
       />
-    </div>
-    {#if allowClear && (multiple ? selectedValues.length || tagMode && search : selected) && !resolvedDisabled}
-      <button type="button" class={['clear', componentTheme.className && `${prefix}-clear`]} aria-label={config.locale.clearText} onpointerdown={(event) => event.preventDefault()} onclick={() => choose(undefined)}><Icon name="close" /></button>
-    {/if}
-    <span class={['suffix', componentTheme.className && `${prefix}-suffix`]}><Icon name={loading ? 'loading' : 'down'} />{#if feedback.hasFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</span>
+    </div>{#if showClear}{@const initialClearStyle = untrack(() => serializeSelectStyle(semantics.styles.clear))}<button type="button" class={['clear', componentTheme.className && `${prefix}-clear`, semantics.classes.clear]} style={initialClearStyle} {...selectStyleAttributes(semantics.styles.clear)} {@attach selectStyle(() => semantics.styles.clear)} aria-label={config.locale.clearText} onpointerdown={(event) => event.preventDefault()} onclick={clearSelection}><Icon name="close" /></button>{/if}<span class={['suffix', componentTheme.className && `${prefix}-suffix`, semantics.classes.suffix]} style={initialSuffixStyle} {...selectStyleAttributes(semantics.styles.suffix)} {@attach selectStyle(() => semantics.styles.suffix)}><Icon name={loading ? 'loading' : 'down'} />{#if feedback.hasFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</span>
   </div>
   {#if name ?? field?.name}
     {#if multiple}
@@ -1177,103 +1424,28 @@
       <input type="hidden" name={name ?? field?.name} value={selectedRaw ?? ''} disabled={resolvedDisabled} form={attributes.form} />
     {/if}
   {/if}
-  {#if expanded}
+  {#if popupView.present}
     {@const initialPopupStyle = untrack(() => popupStyle.initialStyle())}
     <div
       bind:this={list}
       data-ant-select-dropdown data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
       data-ant-select-source-popup={Boolean(componentTheme.className) && filtered.length > 0 || undefined}
+      data-ant-select-custom-popup={customPopup || undefined}
       popover="manual"
-      hidden={!shown}
+      hidden={!expanded || !shown}
       dir={config.direction}
       class={[`popup ${prefix}-dropdown`, componentTheme.className && 'ant-select-css-var',
         componentTheme.className && filtered.length > 0 && `${prefix}-source-popup`,
         componentTheme.className && config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
         popupPlacement && `${prefix}-dropdown-placement-${popupPlacement}`,
-        componentTheme.className]} style={initialPopupStyle}
-      {@attach popupStyle.attach}
-      {@attach node => connectComponentTheme(node, componentTheme.style)}
+        componentTheme.className, semantics.classes.popup.root, rootClassName]} style={initialPopupStyle}
+      {...selectStyleAttributes(semantics.styles.popup.root)} {@attach popupStyle.attach}
       {@attach portal}
       aria-busy={loading || undefined}
       onfocusout={handleListFocusOut}
-      aria-label={attributes['aria-label']
-          ?? placeholder
-          ?? config.locale.searchText}
+      aria-label={attributes['aria-label'] ?? placeholder ?? config.locale.searchText}
     >
-      {#snippet optionRow(option: Row, info: SelectOptionListRenderInfo)}
-        {@const index = info.index}
-        {@const data = option.data}
-        {@const rowDisabled = info.attributes['aria-disabled'] === true}
-        {@const rowSelected = option.value !== undefined
-          && (multiple ? selectedKeys.has(option.value) : option.value === selectedRaw)}
-        {@const content = selectDataContent(option)}
-        {@const presentation = selectDataAttributes(option, fields)}
-        {#if option.group}
-          <div data-ant-select-item-group class={[`${prefix}-item ${prefix}-item-group`,
-            typeof data.className === 'string' && data.className]}
-            title={nativeTitle(selectDataTitle(option))} {@attach info.attach}>
-            {#if typeof content !== 'boolean'}{content ?? ''}{/if}
-          </div>
-        {:else}
-        <button
-          {...presentation.physical}
-          type="button"
-          data-ant-select-item
-          tabindex={(presentation.physical.tabindex ?? -1) as number}
-          disabled={rowDisabled}
-          {...info.virtual ? {
-            'aria-selected': undefined,
-            'aria-disabled': info.attributes['aria-disabled']
-          } : info.attributes}
-          {@attach info.attach}
-          class={[
-              `${prefix}-item ${prefix}-item-option`,
-              typeof data.className === 'string' && data.className,
-              typeof data.class === 'string' && data.class,
-              option.groupOption && `${prefix}-item-option-grouped`,
-              rowSelected && `${prefix}-item-option-selected`,
-              index === activeIndex && !rowDisabled && `${prefix}-item-option-active`,
-              rowDisabled && `${prefix}-item-option-disabled`
-            ]}
-          title={nativeTitle(selectDataTitle(option))}
-          style={serializeSelectDataStyle(data.style)}
-          onpointerdown={event => {
-              const handler = presentation.physical.onpointerdown;
-              if (typeof handler === 'function') handler(event);
-              if (typeof presentation.physical.onmousedown !== 'function') event.preventDefault();
-            }}
-          onmousedown={event => {
-              const handler = presentation.physical.onmousedown;
-              if (typeof handler === 'function') handler(event);
-              event.preventDefault();
-            }}
-          onmousemove={() => {
-              if (!rowDisabled && index !== activeIndex) activate(index);
-            }}
-          onpointermove={event => {
-              const handler = presentation.physical.onpointermove;
-              if (typeof handler === 'function') handler(event);
-              if (!rowDisabled && index !== activeIndex) activate(index);
-            }}
-          onclick={() => choose(option)}
-        >
-          <span class={`${prefix}-item-option-content`}>{#if renderOption}{@render renderOption(getRenderOption(option), { index })}{:else}<RenderContent value={content as RenderEmptyContent} />{/if}</span>{#if rowSelected}<span class={`${prefix}-item-option-state`}><Icon name="check" /></span>{/if}
-        </button>
-        {/if}
-      {/snippet}
-      {#if optionList.items.length}
-        <SelectOptionList model={optionList} renderItem={optionRow}
-          id={`${controlId}_list`}
-          prefixCls={prefix} direction={config.direction} {showScrollBar} {activeIndex}
-          ariaLabel={listLabel} {multiple} busy={loading}
-          onScroll={onPopupScroll} />
-      {:else}
-        <div class={`${prefix}-item-empty`} id={`${controlId}_list`} role="listbox"
-          aria-label={listLabel} aria-multiselectable={multiple || undefined} aria-busy={loading || undefined}>{#snippet nativeEmpty()}{loading
-              ? (config.locale.spin ?? ruRU.spin!).loadingText
-              : config.locale.emptyText}{/snippet}<RenderEmpty componentName="Select"
-              local={notFoundContent} fallback={nativeEmpty} /></div>
-      {/if}
+      <SelectPopupContent value={popupView.content} origin={originMenu} active={expanded} isolate={Boolean(popupRender)} />
     </div>
   {/if}
 </div>

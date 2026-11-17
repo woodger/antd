@@ -3,6 +3,54 @@ import type { HTMLInputAttributes, HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize, RenderEmptyContent, SelectOption } from './types';
 import type { VirtualScrollAlign } from './virtual-list.engine';
 import type { VirtualScrollConfig, VirtualScrollOffset, VirtualScrollOffsetInfo } from './virtual-list.types';
+import type { FormValidateStatus } from './form-error-list.types';
+
+type SelectCSSValue = string | number | null | undefined;
+type SelectDOMStringStyleKey = {
+  [Key in keyof CSSStyleDeclaration]-?: CSSStyleDeclaration[Key] extends string ? Key : never
+}[keyof CSSStyleDeclaration];
+type SelectDOMStyleKey = Exclude<Extract<SelectDOMStringStyleKey, string>, 'cssText' | 'cssFloat'> | 'float';
+type SelectWebkitStyleKey = Extract<SelectDOMStyleKey, `webkit${string}`> extends `webkit${infer Tail}`
+  ? `Webkit${Tail}` : never;
+type SelectKnownCSSProperties = Readonly<Partial<Record<SelectDOMStyleKey | SelectWebkitStyleKey, SelectCSSValue>>>;
+type SelectCustomStyleKey = `--${string}` | `Webkit${string}` | `Moz${string}` | `ms${string}` | `O${string}`;
+/** Обычный interface с CSS-полями не требует index signature; custom-only interface требует свой pattern index. */
+export type SelectCSSProperties = SelectKnownCSSProperties
+  | (SelectKnownCSSProperties & Readonly<Partial<Record<SelectCustomStyleKey, SelectCSSValue>>>);
+export type SelectStyle = string | SelectCSSProperties | null;
+export type SelectPopupContent = string | number | boolean | null | undefined
+  | Snippet<[origin: Snippet]> | readonly SelectPopupContent[];
+/** Pure producer вызывается и при закрытом popup; nullish result не заменяется меню. */
+export type SelectPopupRender = (originMenu: Snippet) => SelectPopupContent;
+type SelectControlSlots<Content> = Partial<Record<
+  'root' | 'prefix' | 'suffix' | 'input' | 'placeholder' | 'content'
+  | 'item' | 'itemContent' | 'itemRemove' | 'clear', Content
+>>;
+export type SelectPopupClassNames = Partial<Record<'root' | 'list' | 'listItem', string>>;
+export type SelectPopupStyles = Partial<Record<'root' | 'list' | 'listItem', SelectStyle>>;
+export type SelectClassNames = SelectControlSlots<string> & { popup?: string | SelectPopupClassNames };
+export type SelectStyles = SelectControlSlots<SelectStyle> & { popup?: SelectPopupStyles };
+export type SelectSemanticValue<Slots, Props> = Slots | ((info: { props: Props }) => Slots | undefined);
+export interface SelectSemanticState {
+  variant: NonNullable<SelectProps['variant']>;
+  status: FormValidateStatus | undefined;
+  disabled: boolean;
+  size: ComponentSize | undefined;
+}
+export interface SelectSemanticInfo<
+  Value extends string | number = string,
+  Mode extends 'multiple' | 'tags' | undefined = undefined,
+  OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>,
+  LabelInValue extends boolean = false
+> {
+  props: Omit<SelectProps<Value, Mode, OptionType, LabelInValue>,
+    keyof SelectSemanticState | 'nativeElement' | 'inputElement'> & SelectSemanticState
+    & Readonly<Record<string, unknown>>;
+}
+/** Общий provider работает и с AutoComplete wrapper; его raw props остаются opaque. */
+export interface SelectConfigSemanticInfo {
+  props: Readonly<Record<string, unknown>> & SelectSemanticState;
+}
 
 /** Исходный key строки; отличается от value и включает React.Key bigint. */
 export type SelectScrollKey = string | number | bigint;
@@ -100,9 +148,15 @@ export type SelectTagInfo<Value extends string | number = string> = { label: Sni
   onClose?: undefined;
 });
 
-/** Настройки ConfigProvider.select; пока перенесён только variant. */
+/** Общий record Select и AutoComplete; собственный record заменяет родительский. */
 export interface SelectConfig {
+  class?: string;
+  style?: SelectStyle;
   variant?: SelectProps['variant'];
+  classNames?: SelectSemanticValue<SelectClassNames, SelectConfigSemanticInfo['props']>;
+  styles?: SelectSemanticValue<SelectStyles, SelectConfigSemanticInfo['props']>;
+  showSearch?: boolean | SelectSearchConfig<string | number, object>;
+  allowClear?: boolean;
 }
 
 /** Настройки controlled search и локальной фильтрации Select без сетевого транспорта. */
@@ -138,10 +192,19 @@ export interface SelectProps<
   LabelInValue extends boolean = false
 > extends Omit<
   HTMLInputAttributes,
-  'value' | 'size' | 'class' | 'onchange' | 'oninput' | 'type' | 'children'
+  'value' | 'size' | 'class' | 'style' | 'prefix' | 'onchange' | 'oninput' | 'type' | 'children'
 > {
   /** Локальный namespace Select; пустая строка наследует ConfigProvider. */
   prefixCls?: string;
+  /** Содержимое affix; Source не создаёт его для falsy scalar, включая 0. */
+  prefix?: RenderEmptyContent;
+  /** Семантический root и popup; прежний class остаётся на Native outer container. */
+  rootClassName?: string;
+  classNames?: SelectSemanticValue<SelectClassNames, SelectSemanticInfo<Value, Mode, OptionType, LabelInValue>['props']>;
+  styles?: SelectSemanticValue<SelectStyles, SelectSemanticInfo<Value, Mode, OptionType, LabelInValue>['props']>;
+  /** CSS object красит public control; прежняя CSS-строка остаётся на outer container. */
+  style?: SelectStyle;
+  popupRender?: SelectPopupRender;
   /** @internal Intrinsic ширина readonly single для составного владельца, без смены public default. */
   _autoWidth?: boolean;
   /** Пустой список по умолчанию; tags может создавать значения без options. */

@@ -1,12 +1,14 @@
 import { connectInlineStyle } from './inline-style.dom';
 import { getInlineStyleDeclarations, serializeInlineStyleLayers, type InlineStyleLayer } from './inline-style.engine';
 import type { TooltipPosition } from './tooltip.engine';
+import { createSelectOverlayStyle, type SelectOverlayStyleOptions } from './select-style.model.svelte';
 
 /** Root styles следуют после координат rc-trigger, не сбрасывая variables темы и portal. */
 export function createOverlayStyle(
   getLayers: () => readonly InlineStyleLayer[], sourceWidthVariable?: string,
-  getSourceOpen?: () => boolean
+  getSourceOpen?: () => boolean, objectStyle?: SelectOverlayStyleOptions
 ) {
+  if (objectStyle) return createSelectOverlayStyle(getLayers, sourceWidthVariable, getSourceOpen, objectStyle);
   let write: ReturnType<typeof connectInlineStyle> | undefined;
   let position: InlineStyleLayer;
   let projection: InlineStyleLayer;

@@ -52,7 +52,10 @@ export type {
   AutoCompleteOption,
   AutoCompleteGroup,
   AutoCompleteSearchConfig,
-  AutoCompleteInput
+  AutoCompleteInput,
+  AutoCompleteClassNames,
+  AutoCompleteStyles,
+  AutoCompleteSemanticInfo
 } from './auto-complete.types';
 export { default as Menu } from './Menu.svelte';
 export type {
@@ -868,7 +871,19 @@ export type {
   SelectTokenSeparators,
   SelectOmittedTag,
   SelectTagPlaceholder,
-  SelectTagInfo
+  SelectTagInfo,
+  SelectCSSProperties,
+  SelectStyle,
+  SelectPopupContent,
+  SelectPopupRender,
+  SelectPopupClassNames,
+  SelectPopupStyles,
+  SelectClassNames,
+  SelectStyles,
+  SelectSemanticValue,
+  SelectSemanticState,
+  SelectSemanticInfo,
+  SelectConfigSemanticInfo
 } from './select.types';
 export type {
   FormProps, FormConfig, FormScrollOptions, FormRequiredMark, FormRequiredMarkInfo, FormLocale,

@@ -2,6 +2,7 @@ import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 import type { VirtualScrollConfig } from './virtual-list.types';
 import type { createSelectOptionList } from './select-option-list.model.svelte';
+import type { SelectStyle } from './select.types';
 
 export type SelectOptionListKey = string | number | bigint;
 export type SelectOptionListScrollConfig = VirtualScrollConfig<SelectOptionListKey>;
@@ -39,6 +40,8 @@ export interface SelectOptionListProps<Item> {
   id: string;
   getItemId?: (index: number) => string;
   prefixCls: string;
+  class?: string;
+  style?: SelectStyle;
   direction?: 'ltr' | 'rtl';
   showScrollBar?: boolean | 'optional';
   activeIndex?: number;
@@ -47,4 +50,5 @@ export interface SelectOptionListProps<Item> {
   busy?: boolean;
   onScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
   holderElement?: HTMLDivElement;
+  listElement?: HTMLDivElement;
 }

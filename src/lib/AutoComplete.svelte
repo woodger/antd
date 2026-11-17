@@ -5,9 +5,13 @@
     AutoCompleteProps,
     AutoCompleteSearchConfig,
     AutoCompleteInput,
-    AutoCompleteItem
+    AutoCompleteItem,
+    AutoCompleteSemanticInfo
   } from './auto-complete.types';
-  import type { SelectScrollConfig } from './select.types';
+  import type {
+    SelectScrollConfig, SelectPopupContent as PopupContent, SelectConfigSemanticInfo,
+    SelectClassNames, SelectStyles
+  } from './select.types';
   import type { RenderEmptyContent } from './types';
   import {
     collectSelectData,
@@ -22,8 +26,13 @@
     selectFields
   } from './select-data.engine';
   import type { SelectDataRow } from './select-data.types';
-  import { serializeSelectDataStyle } from './select-data-style.engine';
+  import { selectValueTitle } from './select-value.engine';
+  import {
+    hasSelectDisplayContent, mergeSelectSemanticMaps, mergeSelectStyle, resolveSelectSemanticValue, serializeSelectStyle
+  } from './select-semantic.engine';
+  import { createSelectStyle, selectStyleAttributes } from './select-style.model.svelte';
   import RenderContent from './RenderContent.svelte';
+  import SelectPopupContent from './SelectPopupContent.svelte';
   import SelectOptionList from './SelectOptionList.svelte';
   import { createSelectOptionList } from './select-option-list.model.svelte';
   import type { SelectOptionListItem, SelectOptionListRenderInfo } from './select-option-list.types';
@@ -45,20 +54,26 @@
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useComponentTheme } from './theme-component.svelte';
   import { useToken } from './theme-context.svelte';
-  import { connectComponentTheme } from './theme-component.dom';
   import Icon from './Icon.svelte';
 
   let {
+    nativeElement = $bindable(),
+    inputElement = $bindable(),
+    ...componentProps
+  }: AutoCompleteProps<OptionType> = $props();
+  let {
     prefixCls,
+    prefix: prefixContent,
     options = [],
     fieldNames,
     value,
     defaultValue,
     open,
     defaultOpen = false,
-    showSearch = true,
+    showSearch,
     onChange,
     onSelect,
+    onDeselect: _onDeselect,
     onOpenChange,
     onClear,
     onInputKeyDown,
@@ -82,15 +97,15 @@
     class: className = '',
     rootClassName = '',
     classNames,
+    styles,
+    popupRender,
     style,
     id,
     name,
     disabled,
     readonly,
-    nativeElement = $bindable(),
-    inputElement = $bindable(),
     ...attributes
-  }: AutoCompleteProps<OptionType> = $props();
+  } = $derived(componentProps);
   type Entry = SelectDataRow<string, OptionType>;
   const config = useConfig();
   const tokens = useToken();
@@ -122,12 +137,14 @@
   let blocked = $derived(
     disabled ?? field?.disabled ?? form?.disabled ?? config.componentDisabled
   );
-  let resolvedSize = $derived(size ?? compact?.size ?? config.componentSize);
+  let semanticSize = $derived(size ?? compact?.size ?? config.explicitComponentSize);
+  let resolvedSize = $derived(semanticSize ?? config.componentSize);
   let resolvedStatus = $derived(status ?? ('status' in itemStatus ? itemStatus.status : field?.status));
   let showClear = $derived(Boolean(allowClear && text && !blocked && !readonly));
+  let effectiveShowSearch = $derived(showSearch ?? config.select?.showSearch);
   let controlId = $derived(id ?? field?.id ?? `ant-auto-complete-${generated}`);
   let searchConfig = $derived<AutoCompleteSearchConfig<OptionType>>(
-    { ...(typeof showSearch === 'object' ? showSearch : {}) }
+    { ...(typeof effectiveShowSearch === 'object' ? effectiveShowSearch : {}) }
   );
   let fields = $derived(selectFields(fieldNames));
   let maps = $derived(collectSelectData<string, OptionType>(options, fields));
@@ -141,6 +158,72 @@
     actualValue === undefined ? [] : [actualValue], maps, fields, previousCache
   ));
   $effect(() => { previousCache = cache; });
+  let displayValue = $derived(text ? cache.display[0] : undefined);
+  let displayLabel = $derived((displayValue?.label ?? actualValue) as RenderEmptyContent);
+  let selectedRow = $derived(displayValue
+    ? entries.find(entry => !entry.group && entry.value === displayValue.value) : undefined);
+  let selectedClass = $derived(typeof selectedRow?.data.className === 'string'
+    ? selectedRow.data.className : undefined);
+  let selectedStyle = $derived(selectedRow?.data.style);
+  let hasSelectedStyle = $derived(Boolean(selectedClass || selectedStyle));
+  let selectedTitle = $derived(attributes.title !== undefined ? attributes.title
+    : selectValueTitle(selectedRow ? { label: selectedRow.data.label, title: selectedRow.data.title } : undefined)
+      || selectValueTitle(displayValue ? { label: displayLabel, title: displayValue.title } : undefined));
+  let hasDisplayValue = $derived(Boolean(displayValue && hasSelectDisplayContent(displayLabel)));
+  let semantics = $derived.by(() => {
+    const ownInfo: AutoCompleteSemanticInfo<OptionType> = {
+      props: { ...componentProps, popupRender, onOpenChange, popupMatchSelectWidth }
+    };
+    const ownClasses = resolveSelectSemanticValue(classNames, ownInfo);
+    const ownStyles = resolveSelectSemanticValue(styles, ownInfo);
+    const own = mergeSelectSemanticMaps({}, { classes: ownClasses, styles: ownStyles });
+    const finalClasses: SelectClassNames = {
+      root: [`${prefix}-auto-complete`, className, rootClassName, own.classes.root,
+        children && `${prefix}-customize`].filter(Boolean).join(' '),
+      prefix: own.classes.prefix,
+      input: own.classes.input,
+      placeholder: own.classes.placeholder,
+      content: own.classes.content,
+      clear: own.classes.clear,
+      popup: { root: own.classes.popup.root ?? '', list: own.classes.popup.list,
+        listItem: own.classes.popup.listItem }
+    };
+    const finalStyles: SelectStyles = {
+      root: mergeSelectStyle(own.styles.root, style) ?? {},
+      input: own.styles.input,
+      prefix: own.styles.prefix,
+      placeholder: own.styles.placeholder,
+      content: own.styles.content,
+      clear: own.styles.clear,
+      popup: { root: own.styles.popup.root ?? {}, list: own.styles.popup.list,
+        listItem: own.styles.popup.listItem }
+    };
+    const { onOpenChange: _onOpenChange, allowClear: _allowClear, ...forwarded } = componentProps;
+    const info: SelectConfigSemanticInfo = {
+      props: { suffixIcon: null, ...forwarded, prefixCls: prefix, classNames: finalClasses,
+        styles: finalStyles, mode: 'SECRET_COMBOBOX_MODE_DO_NOT_USE', popupRender, onOpenChange,
+        popupMatchSelectWidth, allowClear, getInputElement: children ? () => children : undefined,
+        children: [], variant: appearance, status: resolvedStatus, disabled: blocked, size: semanticSize }
+    };
+    const contextClasses = resolveSelectSemanticValue(config.select?.classNames, info);
+    const contextStyles = resolveSelectSemanticValue(config.select?.styles, info);
+    const merged = mergeSelectSemanticMaps({ classes: contextClasses, styles: contextStyles },
+      { classes: finalClasses, styles: finalStyles }, config.select?.style, style ?? undefined);
+    const controlSlots = ['root', 'prefix', 'input', 'placeholder', 'content', 'clear'] as const;
+    const sourceControlColors = style != null && typeof style === 'object'
+      || Boolean(config.select?.class) || config.select?.style != null
+      || controlSlots.some(slot => Boolean(ownClasses?.[slot]) || ownStyles?.[slot] != null)
+      || [...controlSlots, 'suffix' as const].some(slot =>
+        Boolean(contextClasses?.[slot]) || contextStyles?.[slot] != null);
+    return { ...merged, rootClass: [contextClasses?.root, rootClassName, own.classes.root]
+      .filter(Boolean).join(' '), sourceControlColors };
+  });
+  let legacyColor = $derived(!children && !semantics.sourceControlColors
+    && (typeof style === 'string' || Boolean(className)));
+  let popupView = $derived.by(() => {
+    void semantics;
+    return { mounted, content: popupRender ? popupRender(menu) : menu };
+  });
   let count = $derived(entries.length);
   let hydrated = $state(false);
   let visible = $derived(
@@ -155,24 +238,49 @@
   );
   let active = $state(-1);
   let preview = $state<string>();
+  let searchText = $derived(visible && preview !== undefined ? preview : text);
   let focused = $state(false);
   let root = $state<HTMLDivElement>();
   let editor = $state<HTMLInputElement | HTMLTextAreaElement>();
   let popup = $state<HTMLDivElement>();
+  let menuElement = $state<HTMLDivElement>();
   let shown = $state(false);
   let popupPlacement = $state<string>();
   let mounted = $state(false);
+  let customPopupVisited = $state(false);
+  let customPopup = $derived(Boolean(popupRender) || customPopupVisited);
+  $effect(() => { if (visible && popupRender && popup) customPopupVisited = true; });
+  const rootStyle = createSelectStyle(() => semantics.styles.root, () => [
+    componentTheme.style,
+    [['--ant-native-select-height', `var(--${privateNamespace}-select-height)`],
+      ['--ant-native-select-color', `var(--${privateNamespace}-select-color)`]] as const
+  ]);
+  const initialRootStyle = untrack(rootStyle.initialStyle);
+  const contentStyle = createSelectStyle(() => semantics.styles.content);
+  const initialContentStyle = untrack(contentStyle.initialStyle);
+  const inputStyle = createSelectStyle(() => semantics.styles.input);
+  let initialInputStyle = $state(untrack(inputStyle.initialStyle));
+  $effect(() => {
+    const control = editor;
+    if (control) return untrack(() => inputStyle.attach(control));
+  });
   const anchorWidthVariable = '--ant-native-auto-complete-anchor-width';
   let matchedWidth = $derived(popupMatchSelectWidth ?? config.popupMatchSelectWidth ?? true);
   let realVirtual = $derived(effectiveVirtual !== false && matchedWidth !== false);
   let itemHeight = $derived(listItemHeight ?? tokens.token.controlHeight);
   let listLabel = $derived(attributes['aria-label'] ?? attributes.placeholder ?? config.locale.searchText);
-  let popupLayers = $derived([
+  let popupBefore = $derived([
     componentTheme.style,
-    `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`,
+    `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`
+  ]);
+  let popupAfter = $derived([
     typeof matchedWidth === 'number' ? [['width', `${matchedWidth}px`]] as const : undefined
   ]);
-  const popupStyle = createOverlayStyle(() => popupLayers, anchorWidthVariable, () => visible);
+  let popupLayers = $derived([
+    ...popupBefore, serializeSelectStyle(semantics.styles.popup.root), ...popupAfter
+  ]);
+  const popupStyle = createOverlayStyle(() => popupBefore, anchorWidthVariable, () => visible,
+    { style: () => semantics.styles.popup.root, after: () => popupAfter });
   const portal = createPopupContainer(() => ({
     open: visible,
     reference: root,
@@ -238,8 +346,15 @@
       maxWidth: false,
       constrainWidth: false,
       allowOffscreenAnchor: true,
-      preserveFocus: event => !event.composedPath().some(node =>
-        node instanceof Element && node.classList.contains(`${prefix}-dropdown-list-scrollbar`)),
+      get dismissOnEscape() { return !customPopup || Boolean(menuElement); },
+      preserveFocus: event => {
+        const path = event.composedPath();
+        if (path.some(node => node instanceof Element
+          && node.classList.contains(`${prefix}-dropdown-list-scrollbar`))) return false;
+        return !customPopup || path.some(node => node instanceof Element
+          && (node.classList.contains(`${prefix}-dropdown-list`)
+            || node.classList.contains(`${prefix}-item-empty`)));
+      },
       anchorWidthVariable,
       getAnchorWidth: () => source.width,
       getPosition: (anchorRect, popupRect, viewport) => {
@@ -313,10 +428,11 @@
   }
 
   function register(element: HTMLInputElement | HTMLTextAreaElement) {
+    if (untrack(() => editor) !== element) initialInputStyle = untrack(inputStyle.initialStyle);
     editor = element;
     return {
       destroy() {
-        if (editor === element)
+        if (untrack(() => editor) === element)
           editor = undefined;
       }
     };
@@ -397,6 +513,10 @@
   function handleKeydown(event: KeyboardEvent) {
     onInputKeyDown?.(event);
     if (event.defaultPrevented || event.isComposing || blocked || readonly) return;
+    if (visible && customPopup && !menuElement) {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') event.preventDefault();
+      return;
+    }
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       if (!visible) {
         if (!(editor instanceof HTMLTextAreaElement))
@@ -438,9 +558,28 @@
     focused = false;
     enterLock = false;
     preview = undefined;
-    requestOpen(false);
+    if (!customPopup || !(event.relatedTarget instanceof Node && popup?.contains(event.relatedTarget)))
+      requestOpen(false);
     field?.onBlur();
     onBlur?.(event);
+  }
+  function handlePopupFocusOut(event: FocusEvent & { currentTarget: HTMLDivElement }) {
+    if (!customPopup || !event.currentTarget.isConnected) return;
+    const next = event.relatedTarget;
+    if (next instanceof Node && (root?.contains(next) || popup?.contains(next))) return;
+    focused = false;
+    enterLock = false;
+    preview = undefined;
+    requestOpen(false);
+  }
+  function handleRootMouseDown(event: MouseEvent) {
+    const target = event.target;
+    if (blocked || readonly || !(target instanceof Node) || popup?.contains(target)
+      || target === editor || editor?.contains(target)
+      || target instanceof Element && target.closest('button')) return;
+    event.preventDefault();
+    editor?.focus({ preventScroll: true });
+    requestOpen(true);
   }
   function handleReset(event: Event) {
     if (event.target !== editor?.form) return;
@@ -455,8 +594,9 @@
   }
   let input = $derived<AutoCompleteInput>({
     attributes: {
+      ...selectStyleAttributes(semantics.styles.input),
       id: controlId,
-      value: visible && preview !== undefined ? preview : text,
+      value: searchText,
       name: name ?? field?.name,
       placeholder: attributes.placeholder,
       disabled: blocked,
@@ -467,14 +607,17 @@
       role: 'combobox',
       'aria-label': attributes['aria-label'] ?? field?.label,
       'aria-expanded': visible,
-      'aria-controls': visible ? `${controlId}_list` : undefined,
-      'aria-activedescendant': visible && active >= 0 ? `${controlId}_list_${active}` : undefined,
+      'aria-controls': visible && (!customPopup || menuElement) ? `${controlId}_list` : undefined,
+      'aria-activedescendant': visible && active >= 0 && (!customPopup || menuElement)
+        ? `${controlId}_list_${active}` : undefined,
       'aria-autocomplete': 'list',
       'aria-invalid': field?.invalid || resolvedStatus === 'error' || attributes['aria-invalid'] || undefined,
       'aria-describedby': [attributes['aria-describedby'], field?.describedBy].filter(Boolean).join(
         ' '
       )
         || undefined,
+      class: semantics.classes.input,
+      style: initialInputStyle,
       oninput: handleInput,
       onkeydown: handleKeydown,
       onkeyup: event => {
@@ -505,8 +648,13 @@
   .auto-complete { display: inline-flex; width: 100%; min-width: 0; }
   .auto-complete[data-ant-auto-complete-customize] { height: auto; min-height: var(--ant-native-select-height); padding: 0; }
   [data-ant-auto-complete-content] { flex: 1; min-width: 0; }
-  .auto-complete [data-ant-auto-complete-input] { position: relative; inset: auto; width: 100%; min-width: 0; padding: 0; border: 0; outline: 0; background: transparent; color: inherit; font: inherit; line-height: inherit; opacity: 1; }
+  .auto-complete [data-ant-auto-complete-input] { position: absolute; inset: 0; width: 100%; min-width: 0; padding: 0; border: 0; outline: 0; background: transparent; color: var(--ant-native-select-color, var(--ant-color-text)); font: inherit; line-height: inherit; opacity: 1; }
+  .auto-complete:where([data-ant-auto-complete-legacy-color]) > [data-ant-auto-complete-content] { -webkit-text-fill-color: transparent; }
+  .auto-complete:where([data-ant-auto-complete-legacy-color]) > :where([data-ant-auto-complete-content]) > [data-ant-auto-complete-input] { color: inherit; -webkit-text-fill-color: currentColor; }
+  .auto-complete:where([data-ant-auto-complete-legacy-color]) > :where([data-ant-auto-complete-content]) > [data-ant-auto-complete-placeholder] { -webkit-text-fill-color: currentColor; }
+  .auto-complete:where([data-ant-auto-complete-legacy-color]) > :where([data-ant-auto-complete-content]) > :not([data-ant-auto-complete-input]):not([data-ant-auto-complete-placeholder]) { opacity: 0; -webkit-text-fill-color: currentColor; }
   [data-ant-auto-complete-input]::placeholder { color: var(--ant-color-text-placeholder); }
+  [data-ant-auto-complete-content]:has(> [data-ant-auto-complete-placeholder]) > [data-ant-auto-complete-input]::placeholder { color: transparent; }
   .auto-complete:focus-within { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
   .auto-complete[data-ant-auto-complete-source-theme]:focus-within { outline: 0; outline-offset: 0; }
   .auto-complete[data-ant-auto-complete-source-theme][data-ant-auto-complete-customize] { min-height: 0; }
@@ -522,6 +670,7 @@
   [data-ant-auto-complete-item] { display: block; width: 100%; border: 0; background: transparent; color: inherit; font: inherit; text-align: start; }
   /* Options повторяют flex column rc-select, пустая выдача остаётся обычным блоком. */
   .popup[data-ant-auto-complete-source-popup]:not([hidden]) { display: flex; flex-direction: column; }
+  .popup[data-ant-auto-complete-custom-popup]:not([hidden]) { display: block; }
   [data-ant-auto-complete-source-popup] [data-ant-auto-complete-item] { flex: none; font-size: var(--ant-select-option-font-size); line-height: var(--ant-select-option-line-height); font-weight: 400; color: var(--ant-color-text); }
   [data-ant-auto-complete-source-popup] [data-ant-auto-complete-item-option] { display: flex; }
   [data-ant-auto-complete-source-popup] [data-ant-auto-complete-item-group] { font-size: var(--ant-font-size-sm); color: var(--ant-color-text-description); }
@@ -529,12 +678,75 @@
 </style>
 
 <svelte:document onreset={handleReset} />
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`auto-complete-prefix:${prefix}:${rootPrefix}`} />{/if}<div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
+{#snippet menu()}
+{#snippet optionRow(entry: Entry, info: SelectOptionListRenderInfo)}
+  {@const index = info.index}
+  {@const content = selectDataContent(entry) as RenderEmptyContent}
+  {@const title = selectDataTitle(entry) as string | undefined}
+  {@const physical = selectDataAttributes(entry, fields).physical}
+  {@const aria = info.virtual
+    ? { 'aria-selected': undefined, 'aria-disabled': info.attributes['aria-disabled'] }
+    : info.attributes}
+  {#if entry.group}<div data-ant-auto-complete-item data-ant-auto-complete-item-group
+    class={[`${prefix}-item ${prefix}-item-group`, entry.data.className as string | undefined]}
+    {title} {@attach info.attach}><RenderContent value={content} /></div>
+  {:else}
+    {@const rowStyle = createSelectStyle(() => mergeSelectStyle(semantics.styles.popup.listItem, entry.data.style))}
+    {@const initialRowStyle = untrack(rowStyle.initialStyle)}
+    <button data-ant-auto-complete-item data-ant-auto-complete-item-option
+      {...physical}
+      data-ant-auto-complete-item-option-disabled={entry.data.disabled || undefined}
+      type="button" tabindex={Object.hasOwn(physical, 'tabindex') ? physical.tabindex as number | undefined : -1}
+      disabled={Boolean(entry.data.disabled)}
+      {...aria}
+      {@attach info.attach}
+      class={[
+          `${prefix}-item ${prefix}-item-option`,
+          componentTheme.className && entry.groupOption && `${prefix}-item-option-grouped`,
+          index === active && `${prefix}-item-option-active`,
+          entry.data.disabled && `${prefix}-item-option-disabled`,
+          entry.data.className as string | undefined,
+          entry.data.class as string | undefined,
+          semantics.classes.popup.listItem
+        ]}
+      {...selectStyleAttributes(mergeSelectStyle(semantics.styles.popup.listItem, entry.data.style))} style={initialRowStyle} {title}
+      {@attach rowStyle.attach}
+      onpointermove={event => {
+          const callback = physical.onpointermove;
+          if (typeof callback === 'function') callback(event);
+          if (!entry.data.disabled && index !== active) {
+            activate(index);
+          }
+        }}
+      onmousemove={() => {
+          if (!entry.data.disabled && index !== active) {
+            activate(index);
+          }
+        }}
+      onclick={() => choose(entry)}>
+      <span class={componentTheme.className ? `${prefix}-item-option-content` : undefined}>
+        <RenderContent value={content} />
+      </span>
+    </button>
+  {/if}
+{/snippet}
+{#if optionList.items.length}
+  <SelectOptionList model={optionList} renderItem={optionRow} id={`${controlId}_list`}
+    prefixCls={prefix} class={semantics.classes.popup.list} style={semantics.styles.popup.list}
+    bind:listElement={menuElement}
+    direction={config.direction} {showScrollBar} activeIndex={active} ariaLabel={listLabel}
+    onScroll={onPopupScroll} />
+{:else}<div bind:this={menuElement} class={`${prefix}-item-empty`} role="listbox" id={`${controlId}_list`} aria-label={listLabel}>{#if typeof notFoundContent === 'function'}{@render notFoundContent()}{:else}{notFoundContent ?? ''}{/if}</div>{/if}
+{/snippet}
+
+{#snippet body(view: { mounted: boolean; content: PopupContent })}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`auto-complete-prefix:${prefix}:${rootPrefix}`} />{/if}<!-- svelte-ignore a11y_no_static_element_interactions (Корень перенаправляет mouse focus нативному input; клавиатурой управляет input.) --><div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
   data-ant-auto-complete-source-theme={Boolean(componentTheme.className) || undefined}
   data-ant-auto-complete-customize={Boolean(children) || undefined}
-  style:--ant-native-select-height={`var(--${privateNamespace}-select-height)`}
+  data-ant-auto-complete-legacy-color={legacyColor || undefined}
   bind:this={root} dir={config.direction}
-  style={[componentTheme.style, style].filter(Boolean).join(';') || undefined}
+  {...selectStyleAttributes(semantics.styles.root)} style={initialRootStyle} {@attach rootStyle.attach}
+  onmousedown={handleRootMouseDown}
   class={[
       `auto-complete ${prefix} ant-select-css-var ${prefix}-single ${prefix}-auto-complete ${prefix}-show-search`,
       componentTheme.className,
@@ -552,85 +764,53 @@
       feedback.isFormItemInput && `${prefix}-in-form-item`,
       children && `${prefix}-customize`,
       compactClasses(prefix, config.direction, compact),
+      config.select?.class,
       className,
-      rootClassName
+      semantics.rootClass
     ]}>
-  <div data-ant-auto-complete-content class={`${prefix}-content`}>
-    {#if children}{@render children(input)}{:else}<input {...nativeAttributes} {...input.attributes} use:register data-ant-auto-complete-input class={`${prefix}-input`} type="text" />{/if}
-  </div>
-  {#if feedback.hasFeedback}<div class={[`${prefix}-suffix`, 'feedback-suffix']}>{#if feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</div>{/if}
-  {#if showClear}<button type="button" class={['clear', componentTheme.className && `${prefix}-clear`]} aria-label={config.locale.clearText} onpointerdown={clearPointerDown} onclick={clear}>
+  {#if prefixContent}{@const prefixStyle = createSelectStyle(() => semantics.styles.prefix)}{@const initialPrefixStyle = untrack(prefixStyle.initialStyle)}<div class={[`${prefix}-prefix`, semantics.classes.prefix]}
+    {...selectStyleAttributes(semantics.styles.prefix)} style={initialPrefixStyle} {@attach prefixStyle.attach}><RenderContent value={prefixContent} /></div>{/if}<div data-ant-auto-complete-content class={[`${prefix}-content`,
+      !legacyColor && hasDisplayValue && `${prefix}-content-has-value`,
+      !legacyColor && searchText && `${prefix}-content-has-search-value`,
+      !legacyColor && hasSelectedStyle && `${prefix}-content-has-option-style`, semantics.classes.content]}
+    {...selectStyleAttributes(semantics.styles.content)} style={initialContentStyle} {@attach contentStyle.attach}
+    title={hasSelectedStyle ? undefined : selectedTitle}>
+    {#if children}{@render children(input)}{:else}
+      {#if displayValue}
+        {#if hasSelectedStyle}{@const valueStyle = createSelectStyle(() => mergeSelectStyle(searchText ? { visibility: 'hidden' } : undefined, selectedStyle))}{@const initialValueStyle = untrack(valueStyle.initialStyle)}<div class={[`${prefix}-content-value`, selectedClass]}
+          {...selectStyleAttributes(mergeSelectStyle(searchText ? { visibility: 'hidden' } : undefined, selectedStyle))} style={initialValueStyle} {@attach valueStyle.attach}
+          title={selectedTitle}><RenderContent value={displayLabel} /></div>
+        {:else}<RenderContent value={displayLabel} />{/if}
+      {:else}{@const placeholderStyle = createSelectStyle(() => mergeSelectStyle(searchText ? { visibility: 'hidden' } : undefined, semantics.styles.placeholder))}{@const initialPlaceholderStyle = untrack(placeholderStyle.initialStyle)}<div data-ant-auto-complete-placeholder class={[`${prefix}-placeholder`, semantics.classes.placeholder]}
+          {...selectStyleAttributes(mergeSelectStyle(searchText ? { visibility: 'hidden' } : undefined, semantics.styles.placeholder))} style={initialPlaceholderStyle} {@attach placeholderStyle.attach}>{attributes.placeholder}</div>
+      {/if}<input {...nativeAttributes} {...input.attributes} use:register data-ant-auto-complete-input
+        class={[`${prefix}-input`, semantics.classes.input]} type="text" />
+    {/if}
+  </div>{#if feedback.hasFeedback}{@const suffixStyle = createSelectStyle(() => semantics.styles.suffix)}{@const initialSuffixStyle = untrack(suffixStyle.initialStyle)}<div class={[`${prefix}-suffix`, 'feedback-suffix', semantics.classes.suffix]} {...selectStyleAttributes(semantics.styles.suffix)} style={initialSuffixStyle} {@attach suffixStyle.attach}>{#if feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</div>{/if}{#if showClear}{@const clearStyle = createSelectStyle(() => semantics.styles.clear)}{@const initialClearStyle = untrack(clearStyle.initialStyle)}<button type="button" class={['clear', componentTheme.className && `${prefix}-clear`, semantics.classes.clear]} {...selectStyleAttributes(semantics.styles.clear)} style={initialClearStyle} {@attach clearStyle.attach} aria-label={config.locale.clearText} onpointerdown={clearPointerDown} onclick={clear}>
     {#if typeof allowClear === 'object' && allowClear.clearIcon}{@render allowClear.clearIcon()}{:else}<Icon name="close" />{/if}
-  </button>{/if}
-  {#if mounted}
+  </button>{/if}{#if view.mounted}
     {@const initialPopupStyle = untrack(() => popupStyle.initialStyle())}
     <div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
       data-ant-auto-complete-source-popup={Boolean(componentTheme.className) && entries.length > 0 || undefined}
+      data-ant-auto-complete-custom-popup={customPopup || undefined}
       bind:this={popup} popover="manual" hidden={!visible || !shown}
       class={[`popup ${prefix}-dropdown ant-select-css-var`, componentTheme.className,
           componentTheme.className && entries.length > 0 && `${prefix}-source-popup`,
           componentTheme.className && config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
           popupPlacement && `${prefix}-dropdown-placement-${popupPlacement}`,
-          classNames?.popup?.root]} dir={config.direction} style={initialPopupStyle}
+          rootClassName, semantics.classes.popup.root]} dir={config.direction}
+      {...selectStyleAttributes(semantics.styles.popup.root)} style={initialPopupStyle}
+      onfocusout={handlePopupFocusOut}
       {@attach popupStyle.attach}
-      {@attach node => connectComponentTheme(node, componentTheme.style)}
       {@attach portal}
       aria-label={attributes['aria-label']
           ?? attributes.placeholder
           ?? config.locale.searchText}>
-      {#snippet optionRow(entry: Entry, info: SelectOptionListRenderInfo)}
-        {@const index = info.index}
-        {@const content = selectDataContent(entry) as RenderEmptyContent}
-        {@const title = selectDataTitle(entry) as string | undefined}
-        {@const physical = selectDataAttributes(entry, fields).physical}
-        {@const aria = info.virtual
-          ? { 'aria-selected': undefined, 'aria-disabled': info.attributes['aria-disabled'] }
-          : info.attributes}
-        {#if entry.group}<div data-ant-auto-complete-item data-ant-auto-complete-item-group
-          class={[`${prefix}-item ${prefix}-item-group`, entry.data.className as string | undefined]}
-          {title} {@attach info.attach}><RenderContent value={content} /></div>
-        {:else}
-          <button data-ant-auto-complete-item data-ant-auto-complete-item-option
-            {...physical}
-            data-ant-auto-complete-item-option-disabled={entry.data.disabled || undefined}
-            type="button" tabindex={Object.hasOwn(physical, 'tabindex') ? physical.tabindex as number | undefined : -1}
-            disabled={Boolean(entry.data.disabled)}
-            {...aria}
-            {@attach info.attach}
-            class={[
-                `${prefix}-item ${prefix}-item-option`,
-                componentTheme.className && entry.groupOption && `${prefix}-item-option-grouped`,
-                index === active && `${prefix}-item-option-active`,
-                entry.data.disabled && `${prefix}-item-option-disabled`,
-                entry.data.className as string | undefined,
-                entry.data.class as string | undefined
-              ]}
-            style={serializeSelectDataStyle(entry.data.style)} {title}
-            onpointermove={event => {
-                const callback = physical.onpointermove;
-                if (typeof callback === 'function') callback(event);
-                if (!entry.data.disabled && index !== active) {
-                  activate(index);
-                }
-              }}
-            onmousemove={() => {
-                if (!entry.data.disabled && index !== active) {
-                  activate(index);
-                }
-              }}
-            onclick={() => choose(entry)}>
-            <span class={componentTheme.className ? `${prefix}-item-option-content` : undefined}>
-              <RenderContent value={content} />
-            </span>
-          </button>
-        {/if}
-      {/snippet}
-      {#if optionList.items.length}
-        <SelectOptionList model={optionList} renderItem={optionRow} id={`${controlId}_list`}
-          prefixCls={prefix}
-          direction={config.direction} {showScrollBar} activeIndex={active} ariaLabel={listLabel}
-          onScroll={onPopupScroll} />
-      {:else}<div class={`${prefix}-item-empty`} role="listbox" id={`${controlId}_list`} aria-label={listLabel}>{#if typeof notFoundContent === 'function'}{@render notFoundContent()}{:else}{notFoundContent ?? ''}{/if}</div>{/if}
+      <SelectPopupContent value={view.content} origin={menu} active={visible} isolate={Boolean(popupRender)} />
     </div>
   {/if}
 </div>
+
+{/snippet}
+
+{@render body(popupView)}

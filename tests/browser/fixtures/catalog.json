@@ -2209,5 +2209,35 @@
     "id": "select-value",
     "module": "./SelectValueFixtures.svelte",
     "root": "select-value-fixture"
+  },
+  {
+    "id": "select-surface",
+    "module": "./SelectSurfaceFixtures.svelte",
+    "root": "select-surface-fixture"
+  },
+  {
+    "id": "select-surface-context",
+    "module": "./SelectSurfaceContextFixtures.svelte",
+    "root": "select-surface-context-fixture"
+  },
+  {
+    "id": "select-surface-edge-native",
+    "module": "./SelectSurfaceEdgeNativeFixtures.svelte",
+    "root": "select-surface-edge-native-fixture"
+  },
+  {
+    "id": "select-surface-style-history-native",
+    "module": "./SelectSurfaceStyleHistoryFixtures.svelte",
+    "root": "select-surface-style-history-fixture"
+  },
+  {
+    "id": "select-surface-omission",
+    "module": "./SelectSurfaceOmissionFixtures.svelte",
+    "root": "select-surface-omission-fixture"
+  },
+  {
+    "id": "select-value-ownership",
+    "module": "./SelectValueOwnershipFixtures.svelte",
+    "root": "select-value-ownership-fixture"
   }
 ]

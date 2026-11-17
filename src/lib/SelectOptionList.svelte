@@ -3,6 +3,7 @@
   import { connectListyGestures } from './listy-gestures.dom';
   import ListyScrollbar from './ListyScrollbar.svelte';
   import type { SelectOptionListItem, SelectOptionListProps } from './select-option-list.types';
+  import { createSelectStyle, selectStyleAttributes } from './select-style.model.svelte';
 
   let {
     model,
@@ -10,6 +11,8 @@
     id,
     getItemId,
     prefixCls,
+    class: className,
+    style,
     direction = 'ltr',
     showScrollBar = 'optional',
     activeIndex = -1,
@@ -17,11 +20,14 @@
     multiple,
     busy,
     onScroll,
-    holderElement = $bindable()
+    holderElement = $bindable(),
+    listElement = $bindable()
   }: SelectOptionListProps<Item> = $props();
 
   let inner = $state<HTMLDivElement>();
   let connectedHolder: HTMLDivElement | undefined;
+  const listStyle = createSelectStyle(() => style, () => ['position:relative']);
+  const initialListStyle = untrack(listStyle.initialStyle);
   let listPrefix = $derived(`${prefixCls}-dropdown-list`);
   let viewport = $derived(model.viewport);
   let items = $derived(model.items);
@@ -90,10 +96,8 @@
         role={row.group ? 'presentation' : 'option'} id={itemId(row.originalIndex)}
         aria-selected={row.ariaSelected} aria-disabled={row.ariaDisabled}>{row.ariaValue ?? ''}</div>
     {/each}
-  </div>
-{/if}
-<div class={[listPrefix, direction === 'rtl' && `${listPrefix}-rtl`]}
-  dir={direction === 'rtl' ? 'rtl' : undefined} style="position:relative">
+  </div>{/if}<div bind:this={listElement} class={[listPrefix, direction === 'rtl' && `${listPrefix}-rtl`, className]}
+  dir={direction === 'rtl' ? 'rtl' : undefined} style={initialListStyle} {...selectStyleAttributes(style)} {@attach listStyle.attach}>
   <!-- svelte-ignore a11y_no_static_element_interactions (Source holder лишь показывает scrollbar; listbox принадлежит srlist либо inner.) -->
   <div bind:this={holderElement} class={`${listPrefix}-holder`} onscroll={handleScroll}
     onmouseenter={handleMouseEnter}
@@ -113,8 +117,7 @@
         {/each}
       </div>
     </div>
-  </div>
-  {#if range.virtual && (range.scrollHeight ?? 0) > (model.height ?? 0)}
+  </div>{#if range.virtual && (range.scrollHeight ?? 0) > (model.height ?? 0)}
     <ListyScrollbar prefixCls={listPrefix} rtl={direction === 'rtl'} {showScrollBar}
       offset={viewport.top} range={range.scrollHeight ?? 0} size={viewport.holderHeight}
       flash={viewport.flash} onScroll={viewport.sync}

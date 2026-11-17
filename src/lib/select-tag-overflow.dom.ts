@@ -11,6 +11,14 @@ export function measureSelectInput(input: HTMLInputElement | HTMLTextAreaElement
   return Math.max(4, width);
 }
 
+/** Source Input сохраняет logical width prop, но после измерения снимает его DOM setter. */
+export function measureSelectSourceInput(input: HTMLInputElement | HTMLTextAreaElement): number {
+  input.style.width = '0px';
+  const width = input.scrollWidth;
+  input.style.width = '';
+  return width;
+}
+
 /** Hidden tags измеряются вне flow; observer/RAF принадлежат экземпляру компонента. */
 export function connectSelectTagOverflow(
   host: HTMLElement,

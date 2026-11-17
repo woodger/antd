@@ -1,10 +1,26 @@
 import type { Snippet } from 'svelte';
 import type { HTMLInputAttributes, HTMLAttributes } from 'svelte/elements';
-import type { ComponentSize } from './types';
-import type { SelectFieldNames, SelectRef } from './select.types';
+import type { ComponentSize, RenderEmptyContent } from './types';
+import type {
+  SelectClassNames, SelectFieldNames, SelectPopupRender, SelectRef,
+  SelectSemanticValue, SelectStyle, SelectStyles
+} from './select.types';
 
 /** Общие методы Select; nativeElement/inputElement остаются отдельными bindable props. */
 export type AutoCompleteRef = SelectRef;
+
+export type AutoCompleteClassNames = Pick<SelectClassNames,
+  'root' | 'prefix' | 'input' | 'placeholder' | 'content' | 'clear' | 'popup'>;
+export type AutoCompleteStyles = Pick<SelectStyles,
+  'root' | 'prefix' | 'input' | 'placeholder' | 'content' | 'clear' | 'popup'>;
+/** Собственные raw props и три нормализованных поля wrapper; defaults/context не подставляются. */
+export interface AutoCompleteSemanticInfo<OptionType extends object = AutoCompleteItem> {
+  props: Omit<AutoCompleteProps<OptionType>, 'nativeElement' | 'inputElement'> & {
+    popupRender: SelectPopupRender | undefined;
+    onOpenChange: AutoCompleteProps<OptionType>['onOpenChange'];
+    popupMatchSelectWidth: AutoCompleteProps<OptionType>['popupMatchSelectWidth'];
+  };
+}
 
 export interface AutoCompleteOption {
   value: string;
@@ -48,6 +64,8 @@ export interface AutoCompleteInput {
     | 'aria-describedby'
     | 'aria-label'
   > & {
+    class?: string;
+    style?: string;
     oninput: (event: Event) => void;
     onkeydown: (event: KeyboardEvent) => void;
     onkeyup: (event: KeyboardEvent) => void;
@@ -72,9 +90,13 @@ export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem>
   | 'onkeydown'
   | 'onkeyup'
   | 'onclick'
+  | 'prefix'
+  | 'style'
 > {
   /** Локальный namespace Select; пустая строка наследует ConfigProvider. */
   prefixCls?: string;
+  /** Содержимое affix; falsy scalar, включая 0, не создаёт узел. */
+  prefix?: RenderEmptyContent;
   options?: readonly OptionType[];
   /** Имена полей исходных options и одного уровня групп. */
   fieldNames?: SelectFieldNames;
@@ -85,12 +107,13 @@ export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem>
   open?: boolean;
   /** @defaultValue false */
   defaultOpen?: boolean;
-  /** @defaultValue true */
+  /** Наследует ConfigProvider.select; combobox остаётся редактируемым при false. */
   showSearch?: boolean | AutoCompleteSearchConfig<OptionType>;
   /** Свободный ввод и выбор; очистка может передать undefined, затем пустую строку. */
   onChange?: (value: string | undefined, option: Partial<OptionType> | undefined) => void;
   /** Повторный выбор также уведомляет владельца; option сохраняет raw поля. */
   onSelect?: (value: string, option: OptionType) => void;
+  onDeselect?: (value: string, option: OptionType) => void;
   onOpenChange?: (open: boolean) => void;
   onClear?: () => void;
   onInputKeyDown?: (event: KeyboardEvent) => void;
@@ -128,9 +151,17 @@ export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem>
   /** Собственный control: примените attributes и register из контекста snippet. */
   children?: Snippet<[AutoCompleteInput]>;
   class?: string;
+  /** Root и popup получают общий класс. */
   rootClassName?: string;
-  /** Класс popup; остальные semantic slots пока не перенесены. */
-  classNames?: { popup?: { root?: string; }; };
+  classNames?: SelectSemanticValue<AutoCompleteClassNames, AutoCompleteSemanticInfo<OptionType>['props']>;
+  styles?: SelectSemanticValue<AutoCompleteStyles, AutoCompleteSemanticInfo<OptionType>['props']>;
+  /**
+   * CSS object и прежняя CSS-строка оформляют единственный public root.
+   * Class/CSS-строка сохраняют наследуемый цвет input; control semantics задают независимые цвета.
+   */
+  style?: SelectStyle | null;
+  /** Чистый producer вызывается также закрытым и при SSR; nullish result оставляет popup пустым. */
+  popupRender?: SelectPopupRender;
   /** Нативный ref доступен после mount и очищается при unmount. */
   nativeElement?: HTMLDivElement;
   /** Нативный ref доступен после mount и очищается при unmount. */

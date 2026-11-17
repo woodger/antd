@@ -9908,7 +9908,9 @@ value без учёта регистра, без trim/Unicode folding. Совп�
 всех детей; иначе проверяются дети. Predicate получает поверхностную копию raw option/group.
 ShowSearch object настраивает filterOption/onSearch; прежние top-level props удалены.
 Класс popup задаётся через classNames.popup.root; popupClassName удалён.
-Остальные semantic slots пока не перенесены.
+PopupRender, prefix, semantic classNames/styles и общий ConfigProvider.select
+описаны в [разделе Select](#popup-и-семантическое-оформление). У AutoComplete нет
+slots suffix/item/itemContent/itemRemove.
 Загрузку данных, debounce и защиту от старых ответов выполняет потребитель.
 
 Open/defaultOpen задают controlled/uncontrolled popup. Без options и непустого
@@ -9976,7 +9978,7 @@ popup/options, generated IDs, refs, query, text selection, focus, FormData и ca
 FieldNames и generic `AutoCompleteProps<OptionType>` используют
 [общий слой данных](#данные-options-и-fieldnames). Значение свободного ввода остаётся string;
 raw OptionType не требует literal value/label и не получает добавленных canonical полей.
-OptionRender/popupRender, searchIcon и остальной semantic/config API пока отсутствуют.
+OptionRender, searchIcon и остальные render/component overrides пока отсутствуют.
 Deprecated dataSource/Option
 и dropdown aliases исключены из переноса. Generic numeric/object values не входят в первый этап.
 
@@ -10326,12 +10328,77 @@ Snippet. Пустой renderer оставляет выбираемый пунк�
 интерактивные controls не допускаются семантикой native option button.
 
 Renderer и его отключение обновляются в открытом списке без потери input,
-query, selection и focus. В закрытом SSR popup renderer не вызывается.
+query, selection и focus. В закрытом SSR optionRender не вызывается.
 Native value keys и оформление пунктов сохранены. Groups/fieldNames и raw option attrs
-подключены общим data pipeline; остальные semantic slots остаются отдельным gap.
+подключены общим data pipeline; semantic slots описаны ниже.
 Основа — [16 исходных случаев](./tests/browser/fixtures/ant-design-select-option-render-reference.json),
 [браузерные проверки](./tests/browser/select-option-render.spec.ts) и
 [SSR/типизация](./tests/package/select-option-render.ssr.test.ts).
+
+### Popup и семантическое оформление
+
+`popupRender` — обычная чистая функция, получающая origin-menu Snippet. Она
+может вернуть его, scalar/array или Snippet с origin-menu аргументом:
+
+```svelte
+<script lang="ts">
+  import type { Snippet } from 'svelte';
+  import { Select } from 'antd-svelte';
+  const options = [{ value: 'reader', label: 'Reader' }];
+</script>
+
+{#snippet popup(originMenu: Snippet)}
+  <section>
+    <header>Роли</header>
+    {@render originMenu()}
+    <footer>Дополнительная информация</footer>
+  </section>
+{/snippet}
+
+<Select {options} prefix="Роль" popupRender={() => popup}
+  classNames={({ props }) => ({ root: props.disabled ? 'blocked' : 'available' })}
+  styles={{ input: { color: 'navy' }, popup: { root: { maxHeight: 320 } } }} />
+```
+
+Функция вызывается и при закрытой панели, включая SSR; возвращённый Snippet
+создаёт DOM после первого открытия и сохраняет своё состояние при закрытии.
+Смена или удаление renderer у закрытой посещённой панели применяется к её
+содержимому при следующем открытии. Snippet сохраняет обычную Svelte-реактивность.
+Null/undefined/false/пустая строка оставляют пустую пользовательскую панель,
+а не возвращают стандартное меню. Без origin-menu стрелки и Enter не выбирают
+пункты, Escape не закрывает эту панель; blur/outside сохраняют обычное поведение.
+Пользовательский popup сбрасывает FormItem status/feedback и Compact, сохраняя Form disabled/variant
+и содержимое errors/warnings.
+Стандартная панель Select сохраняет прежнее размонтирование при закрытии до
+первого использования пользовательского popup; затем сохраняется и при возврате
+к стандартному меню. AutoComplete сохраняет посещённую стандартную панель.
+
+`classNames` и `styles` принимают объект либо чистую функцию `({ props }) => map`.
+Metadata сохраняет заданные props с разрешёнными variant/status/disabled/size;
+функции работают и при SSR. Metadata Select не различает отсутствие `value`/`open`
+и явный `undefined`.
+Slots Select: root/prefix/suffix/input/placeholder/
+content/item/itemContent/itemRemove/clear и popup.root/list/listItem.
+`classNames.popup` также принимает строку. `prefix` — scalar/array/Snippet;
+falsy scalar, включая 0, не создаёт affix.
+
+CSS objects принимают camelCase свойства, числа и custom properties; собственный
+undefined удаляет ранее заданное свойство. Обновляются изменённые свойства,
+поэтому порядок shorthand/longhand и предыдущие записи сохраняют поведение
+React. В Select object style и semantic root оформляют сам control, прежние
+string style и class — внешний Native container; у AutoComplete это один root.
+RootClassName применяется к control и popup.
+
+В multiple/tags с семантическим оформлением ширина input пересчитывается при
+изменении поискового текста; смена одного fontSize не запускает измерение.
+Как в Ant Design, измерение очищает inline `styles.input.width`. Повторное
+задание того же width не восстанавливает его до следующего изменения значения
+этого свойства. SSR выводит заданную width без измерения.
+
+`ConfigProvider.select` задаёт общие class/style, classNames/styles, variant,
+showSearch и boolean allowClear. Локальные значения перекрывают общие; вложенный
+явно заданный select record заменяет родительский. AutoComplete использует этот
+же config, сохраняя собственный allowClear=false по умолчанию.
 
 ### Tags
 
@@ -10568,9 +10635,8 @@ OnPopupScroll получает native scroll event с currentTarget=listbox; р�
 уже во время debounce, стабильным объединением страниц по value и повтором
 последнего неудачного cursor. Dispose отменяет таймер/запрос. Источник демонстрационный,
 сетевые API, таймеры и server-specific ошибки не входят в библиотечный Select.
-Пока не перенесены остальные поля showSearch config, оставшиеся render hooks,
-произвольный popupRender, semantic/config/motion API
-и общий полный rc-select API.
+Пока не перенесены остальные поля showSearch config, оставшиеся render/component
+overrides, icons, motion и общий полный rc-select API.
 
 ## Checkbox
 

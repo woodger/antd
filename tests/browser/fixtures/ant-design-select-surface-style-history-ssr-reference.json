@@ -1,0 +1,2892 @@
+{
+  "reference": {
+    "mode": "ssr",
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "source": "Independent actual original public CSS-object style history owners. Only ordinary component state changes borderColor; shorthand border literal/order remains unchanged. Actual CSSOM/attributes/computed sides/boxes and full public props/maps/descriptors/callbacks retained. No DOM/style/setter patches, Native reads/builds or expected output correction.",
+    "archives": [
+      {
+        "archive": ".upstream/artifacts/antd-6.6.8.tgz",
+        "member": "package/dist/antd.js",
+        "path": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+        "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4",
+        "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+        "byteEqual": true
+      },
+      {
+        "archive": ".upstream/artifacts/react-18.3.1.tgz",
+        "member": "package/umd/react.production.min.js",
+        "path": ".upstream/artifacts/react-18.3.1/umd/react.production.min.js",
+        "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd",
+        "archiveSha256": "8d9bed01a672e7eaf387942d781ad47c6a43089a30a0306060f9fd5ac7870347",
+        "byteEqual": true
+      },
+      {
+        "archive": ".upstream/artifacts/react-dom-18.3.1.tgz",
+        "member": "package/umd/react-dom.production.min.js",
+        "path": ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js",
+        "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d",
+        "archiveSha256": "031d4427a99f2f3f6cac18bbbf308594a67e4f47d10f4896fdec446505b040e0",
+        "byteEqual": true
+      },
+      {
+        "archive": ".upstream/artifacts/react-dom-18.3.1.tgz",
+        "member": "package/umd/react-dom-server-legacy.browser.production.min.js",
+        "path": ".upstream/artifacts/react-dom-18.3.1/umd/react-dom-server-legacy.browser.production.min.js",
+        "sha256": "829b2f17da148d9bc5b635c329b67068e67e4bf7d6a5bb64e49e9e92483deee5",
+        "archiveSha256": "031d4427a99f2f3f6cac18bbbf308594a67e4f47d10f4896fdec446505b040e0",
+        "byteEqual": true
+      }
+    ],
+    "protocol": ".upstream/artifacts/select-surface-style-history-protocol-freeze.json",
+    "protocolSha256": "1e4cde30d8a1d8743933e79d35dddf24afae2bac2f3dd760f7fb927f4f171008",
+    "inputPins": {
+      "tests/browser/fixtures/select-surface-style-history-cases.ts": "6458283a0195b52529f9731a4cf185c16a43b8601fa72ae289e87b4c927f26e5",
+      "tests/browser/select-surface-style-history-metrics.mjs": "c87fb7c6a5f654ceeeccc7eaad26139108a60bda399e8af21e0abfcd1ba6f935",
+      ".upstream/artifacts/select-surface-style-history-source-app.mjs": "aea746bbf5b4ae6fe7ea201e2952bd2a3964d83c133ece440e42ec09a6e5bf7d",
+      ".upstream/artifacts/select-surface-style-history-capture.mjs": "4bc2fe2bca588cc7bfb9a0a31e259c848e7923c472da5440aa5c247cab3e6018"
+    },
+    "preservedReferences": 468,
+    "errors": [],
+    "diagnostics": []
+  },
+  "cases": [
+    {
+      "id": "select-surface-style-history-select",
+      "state": {
+        "phase": "red",
+        "open": false,
+        "model": "a",
+        "rawModel": {
+          "root": "a",
+          "objects": []
+        },
+        "events": [],
+        "rawEvents": [],
+        "calls": [],
+        "maps": {
+          "$": "object",
+          "properties": [
+            {
+              "key": "style",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "borderColor",
+                    "value": "rgb(231, 41, 51)"
+                  },
+                  {
+                    "key": "border",
+                    "value": "1px solid rgb(21,31,41)"
+                  },
+                  {
+                    "key": "width",
+                    "value": "100%"
+                  }
+                ]
+              }
+            },
+            {
+              "key": "styles",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "root",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "borderColor",
+                          "value": "rgb(231, 41, 51)"
+                        },
+                        {
+                          "key": "border",
+                          "value": "1px solid rgb(21,31,41)"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "input",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "borderColor",
+                          "value": "rgb(231, 41, 51)"
+                        },
+                        {
+                          "key": "border",
+                          "value": "1px solid rgb(21,31,41)"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "popup",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "root",
+                          "value": {
+                            "$": "object",
+                            "properties": [
+                              {
+                                "key": "borderColor",
+                                "value": "rgb(231, 41, 51)"
+                              },
+                              {
+                                "key": "border",
+                                "value": "1px solid rgb(21,31,41)"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "rawMaps": {
+          "root": {
+            "ref": 1
+          },
+          "objects": [
+            {
+              "id": 1,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "style",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "styles",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "style",
+                  "value": {
+                    "ref": 2
+                  }
+                },
+                {
+                  "key": "styles",
+                  "value": {
+                    "ref": 3
+                  }
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "width",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                },
+                {
+                  "key": "width",
+                  "value": "100%"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "root",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "input",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "popup",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "root",
+                  "value": {
+                    "ref": 4
+                  }
+                },
+                {
+                  "key": "input",
+                  "value": {
+                    "ref": 5
+                  }
+                },
+                {
+                  "key": "popup",
+                  "value": {
+                    "ref": 6
+                  }
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            },
+            {
+              "id": 5,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "root",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "root",
+                  "value": {
+                    "ref": 7
+                  }
+                }
+              ]
+            },
+            {
+              "id": 7,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            }
+          ]
+        },
+        "authoredProps": {
+          "$": "object",
+          "properties": [
+            {
+              "key": "ref",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "current",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "key": "id",
+              "value": "surface-style-history-field"
+            },
+            {
+              "key": "className",
+              "value": "surface-control"
+            },
+            {
+              "key": "style",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "borderColor",
+                    "value": "rgb(231, 41, 51)"
+                  },
+                  {
+                    "key": "border",
+                    "value": "1px solid rgb(21,31,41)"
+                  },
+                  {
+                    "key": "width",
+                    "value": "100%"
+                  }
+                ]
+              }
+            },
+            {
+              "key": "styles",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "root",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "borderColor",
+                          "value": "rgb(231, 41, 51)"
+                        },
+                        {
+                          "key": "border",
+                          "value": "1px solid rgb(21,31,41)"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "input",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "borderColor",
+                          "value": "rgb(231, 41, 51)"
+                        },
+                        {
+                          "key": "border",
+                          "value": "1px solid rgb(21,31,41)"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "popup",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "root",
+                          "value": {
+                            "$": "object",
+                            "properties": [
+                              {
+                                "key": "borderColor",
+                                "value": "rgb(231, 41, 51)"
+                              },
+                              {
+                                "key": "border",
+                                "value": "1px solid rgb(21,31,41)"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "key": "value",
+              "value": "a"
+            },
+            {
+              "key": "open",
+              "value": false
+            },
+            {
+              "key": "options",
+              "value": {
+                "$": "array",
+                "properties": [
+                  {
+                    "key": "0",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "value",
+                          "value": "a"
+                        },
+                        {
+                          "key": "label",
+                          "value": "Alpha"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "value",
+                          "value": "b"
+                        },
+                        {
+                          "key": "label",
+                          "value": "Beta"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            {
+              "key": "placeholder",
+              "value": "History value"
+            },
+            {
+              "key": "aria-label",
+              "value": "Style history value"
+            },
+            {
+              "key": "showSearch",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "filterOption",
+                    "value": false
+                  },
+                  {
+                    "key": "onSearch",
+                    "value": {
+                      "$": "authored",
+                      "role": {
+                        "callback": "style-history-search"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "key": "onOpenChange",
+              "value": {
+                "$": "authored",
+                "role": {
+                  "callback": "style-history-open"
+                }
+              }
+            },
+            {
+              "key": "onChange",
+              "value": {
+                "$": "authored",
+                "role": {
+                  "callback": "style-history-change"
+                }
+              }
+            },
+            {
+              "key": "onSelect",
+              "value": {
+                "$": "authored",
+                "role": {
+                  "callback": "style-history-select"
+                }
+              }
+            },
+            {
+              "key": "onDeselect",
+              "value": {
+                "$": "authored",
+                "role": {
+                  "callback": "style-history-deselect"
+                }
+              }
+            },
+            {
+              "key": "listHeight",
+              "value": 140
+            }
+          ]
+        },
+        "rawAuthoredProps": {
+          "root": {
+            "ref": 8
+          },
+          "objects": [
+            {
+              "id": 8,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "ref",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "id",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "className",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "style",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "styles",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "value",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "open",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "boolean"
+                },
+                {
+                  "key": "options",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "placeholder",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "aria-label",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "showSearch",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "onOpenChange",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                },
+                {
+                  "key": "onChange",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                },
+                {
+                  "key": "onSelect",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                },
+                {
+                  "key": "onDeselect",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                },
+                {
+                  "key": "listHeight",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "number"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "ref",
+                  "value": {
+                    "ref": 9
+                  }
+                },
+                {
+                  "key": "id",
+                  "value": "surface-style-history-field"
+                },
+                {
+                  "key": "className",
+                  "value": "surface-control"
+                },
+                {
+                  "key": "style",
+                  "value": {
+                    "ref": 2
+                  }
+                },
+                {
+                  "key": "styles",
+                  "value": {
+                    "ref": 3
+                  }
+                },
+                {
+                  "key": "value",
+                  "value": "a"
+                },
+                {
+                  "key": "open",
+                  "value": false
+                },
+                {
+                  "key": "options",
+                  "value": {
+                    "ref": 10
+                  }
+                },
+                {
+                  "key": "placeholder",
+                  "value": "History value"
+                },
+                {
+                  "key": "aria-label",
+                  "value": "Style history value"
+                },
+                {
+                  "key": "showSearch",
+                  "value": {
+                    "ref": 13
+                  }
+                },
+                {
+                  "key": "onOpenChange",
+                  "value": {
+                    "ref": 15
+                  }
+                },
+                {
+                  "key": "onChange",
+                  "value": {
+                    "ref": 16
+                  }
+                },
+                {
+                  "key": "onSelect",
+                  "value": {
+                    "ref": 17
+                  }
+                },
+                {
+                  "key": "onDeselect",
+                  "value": {
+                    "ref": 18
+                  }
+                },
+                {
+                  "key": "listHeight",
+                  "value": 140
+                }
+              ]
+            },
+            {
+              "id": 9,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "current",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "current",
+                  "value": null
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "width",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                },
+                {
+                  "key": "width",
+                  "value": "100%"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "root",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "input",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "popup",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "root",
+                  "value": {
+                    "ref": 4
+                  }
+                },
+                {
+                  "key": "input",
+                  "value": {
+                    "ref": 5
+                  }
+                },
+                {
+                  "key": "popup",
+                  "value": {
+                    "ref": 6
+                  }
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            },
+            {
+              "id": 5,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "root",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "root",
+                  "value": {
+                    "ref": 7
+                  }
+                }
+              ]
+            },
+            {
+              "id": 7,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            },
+            {
+              "id": 10,
+              "type": "object",
+              "array": true,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "0",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "1",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": false,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "number"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "0",
+                  "value": {
+                    "ref": 11
+                  }
+                },
+                {
+                  "key": "1",
+                  "value": {
+                    "ref": 12
+                  }
+                },
+                {
+                  "key": "length",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 11,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "value",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "label",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "value",
+                  "value": "a"
+                },
+                {
+                  "key": "label",
+                  "value": "Alpha"
+                }
+              ]
+            },
+            {
+              "id": 12,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "value",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "label",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "value",
+                  "value": "b"
+                },
+                {
+                  "key": "label",
+                  "value": "Beta"
+                }
+              ]
+            },
+            {
+              "id": 13,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "filterOption",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "boolean"
+                },
+                {
+                  "key": "onSearch",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "filterOption",
+                  "value": false
+                },
+                {
+                  "key": "onSearch",
+                  "value": {
+                    "ref": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": 14,
+              "type": "function",
+              "array": false,
+              "authoredRole": {
+                "callback": "style-history-search"
+              },
+              "ownProperties": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 1
+                },
+                {
+                  "key": "name",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "id": 15,
+              "type": "function",
+              "array": false,
+              "authoredRole": {
+                "callback": "style-history-open"
+              },
+              "ownProperties": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 1
+                },
+                {
+                  "key": "name",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "id": 16,
+              "type": "function",
+              "array": false,
+              "authoredRole": {
+                "callback": "style-history-change"
+              },
+              "ownProperties": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 2
+                },
+                {
+                  "key": "name",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "id": 17,
+              "type": "function",
+              "array": false,
+              "authoredRole": {
+                "callback": "style-history-select"
+              },
+              "ownProperties": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 2
+                },
+                {
+                  "key": "name",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "id": 18,
+              "type": "function",
+              "array": false,
+              "authoredRole": {
+                "callback": "style-history-deselect"
+              },
+              "ownProperties": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 2
+                },
+                {
+                  "key": "name",
+                  "value": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "rawHtml": "<section data-surface-case=\"select-surface-style-history-select\" style=\"font-family:initial;font-size:16px;line-height:normal\"><div style=\"position:absolute;left:300px;top:200px;width:280px\"><div class=\"ant-select ant-select-outlined surface-control select-surface-style-history ant-select-css-var css-dev-only-do-not-override-1y106cm ant-select-single ant-select-show-arrow ant-select-show-search\" style=\"border-color:rgb(231, 41, 51);border:1px solid rgb(21,31,41);width:100%\"><div class=\"ant-select-content ant-select-content-has-value\" title=\"Alpha\">Alpha<input id=\"surface-style-history-field\" type=\"text\" aria-label=\"Style history value\" style=\"border-color:rgb(231, 41, 51);border:1px solid rgb(21,31,41)\" autoComplete=\"new-password\" class=\"ant-select-input\" role=\"combobox\" aria-expanded=\"false\" aria-haspopup=\"listbox\" aria-autocomplete=\"list\" value=\"\"/></div><div class=\"ant-select-suffix\"><span role=\"img\" aria-label=\"down\" class=\"anticon anticon-down\"><svg viewBox=\"64 64 896 896\" focusable=\"false\" data-icon=\"down\" width=\"1em\" height=\"1em\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z\"></path></svg></span></div></div></div><button type=\"button\" data-surface-outside=\"\" style=\"position:fixed;left:16px;top:80px\">Outside history</button><div hidden=\"\" data-surface-command=\"\"></div></section>",
+      "htmlSha256": "b120e45c6460c72d43564ed832d1efd625c30022d0c651a7bb1e65d6eb8dafc5"
+    },
+    {
+      "id": "select-surface-style-history-autocomplete",
+      "state": {
+        "phase": "red",
+        "open": false,
+        "model": "a",
+        "rawModel": {
+          "root": "a",
+          "objects": []
+        },
+        "events": [],
+        "rawEvents": [],
+        "calls": [],
+        "maps": {
+          "$": "object",
+          "properties": [
+            {
+              "key": "style",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "borderColor",
+                    "value": "rgb(231, 41, 51)"
+                  },
+                  {
+                    "key": "border",
+                    "value": "1px solid rgb(21,31,41)"
+                  },
+                  {
+                    "key": "width",
+                    "value": "100%"
+                  }
+                ]
+              }
+            },
+            {
+              "key": "styles",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "root",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "borderColor",
+                          "value": "rgb(231, 41, 51)"
+                        },
+                        {
+                          "key": "border",
+                          "value": "1px solid rgb(21,31,41)"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "input",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "borderColor",
+                          "value": "rgb(231, 41, 51)"
+                        },
+                        {
+                          "key": "border",
+                          "value": "1px solid rgb(21,31,41)"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "popup",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "root",
+                          "value": {
+                            "$": "object",
+                            "properties": [
+                              {
+                                "key": "borderColor",
+                                "value": "rgb(231, 41, 51)"
+                              },
+                              {
+                                "key": "border",
+                                "value": "1px solid rgb(21,31,41)"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "rawMaps": {
+          "root": {
+            "ref": 1
+          },
+          "objects": [
+            {
+              "id": 1,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "style",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "styles",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "style",
+                  "value": {
+                    "ref": 2
+                  }
+                },
+                {
+                  "key": "styles",
+                  "value": {
+                    "ref": 3
+                  }
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "width",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                },
+                {
+                  "key": "width",
+                  "value": "100%"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "root",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "input",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "popup",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "root",
+                  "value": {
+                    "ref": 4
+                  }
+                },
+                {
+                  "key": "input",
+                  "value": {
+                    "ref": 5
+                  }
+                },
+                {
+                  "key": "popup",
+                  "value": {
+                    "ref": 6
+                  }
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            },
+            {
+              "id": 5,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "root",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "root",
+                  "value": {
+                    "ref": 7
+                  }
+                }
+              ]
+            },
+            {
+              "id": 7,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            }
+          ]
+        },
+        "authoredProps": {
+          "$": "object",
+          "properties": [
+            {
+              "key": "ref",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "current",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "key": "id",
+              "value": "surface-style-history-field"
+            },
+            {
+              "key": "className",
+              "value": "surface-control"
+            },
+            {
+              "key": "style",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "borderColor",
+                    "value": "rgb(231, 41, 51)"
+                  },
+                  {
+                    "key": "border",
+                    "value": "1px solid rgb(21,31,41)"
+                  },
+                  {
+                    "key": "width",
+                    "value": "100%"
+                  }
+                ]
+              }
+            },
+            {
+              "key": "styles",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "root",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "borderColor",
+                          "value": "rgb(231, 41, 51)"
+                        },
+                        {
+                          "key": "border",
+                          "value": "1px solid rgb(21,31,41)"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "input",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "borderColor",
+                          "value": "rgb(231, 41, 51)"
+                        },
+                        {
+                          "key": "border",
+                          "value": "1px solid rgb(21,31,41)"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "popup",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "root",
+                          "value": {
+                            "$": "object",
+                            "properties": [
+                              {
+                                "key": "borderColor",
+                                "value": "rgb(231, 41, 51)"
+                              },
+                              {
+                                "key": "border",
+                                "value": "1px solid rgb(21,31,41)"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "key": "value",
+              "value": "a"
+            },
+            {
+              "key": "open",
+              "value": false
+            },
+            {
+              "key": "options",
+              "value": {
+                "$": "array",
+                "properties": [
+                  {
+                    "key": "0",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "value",
+                          "value": "a"
+                        },
+                        {
+                          "key": "label",
+                          "value": "Alpha"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "1",
+                    "value": {
+                      "$": "object",
+                      "properties": [
+                        {
+                          "key": "value",
+                          "value": "b"
+                        },
+                        {
+                          "key": "label",
+                          "value": "Beta"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "value": 2
+                  }
+                ]
+              }
+            },
+            {
+              "key": "placeholder",
+              "value": "History value"
+            },
+            {
+              "key": "aria-label",
+              "value": "Style history value"
+            },
+            {
+              "key": "showSearch",
+              "value": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "filterOption",
+                    "value": false
+                  },
+                  {
+                    "key": "onSearch",
+                    "value": {
+                      "$": "authored",
+                      "role": {
+                        "callback": "style-history-search"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "key": "onOpenChange",
+              "value": {
+                "$": "authored",
+                "role": {
+                  "callback": "style-history-open"
+                }
+              }
+            },
+            {
+              "key": "onChange",
+              "value": {
+                "$": "authored",
+                "role": {
+                  "callback": "style-history-change"
+                }
+              }
+            },
+            {
+              "key": "onSelect",
+              "value": {
+                "$": "authored",
+                "role": {
+                  "callback": "style-history-select"
+                }
+              }
+            },
+            {
+              "key": "onDeselect",
+              "value": {
+                "$": "authored",
+                "role": {
+                  "callback": "style-history-deselect"
+                }
+              }
+            },
+            {
+              "key": "listHeight",
+              "value": 140
+            }
+          ]
+        },
+        "rawAuthoredProps": {
+          "root": {
+            "ref": 8
+          },
+          "objects": [
+            {
+              "id": 8,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "ref",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "id",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "className",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "style",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "styles",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "value",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "open",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "boolean"
+                },
+                {
+                  "key": "options",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "placeholder",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "aria-label",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "showSearch",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "onOpenChange",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                },
+                {
+                  "key": "onChange",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                },
+                {
+                  "key": "onSelect",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                },
+                {
+                  "key": "onDeselect",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                },
+                {
+                  "key": "listHeight",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "number"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "ref",
+                  "value": {
+                    "ref": 9
+                  }
+                },
+                {
+                  "key": "id",
+                  "value": "surface-style-history-field"
+                },
+                {
+                  "key": "className",
+                  "value": "surface-control"
+                },
+                {
+                  "key": "style",
+                  "value": {
+                    "ref": 2
+                  }
+                },
+                {
+                  "key": "styles",
+                  "value": {
+                    "ref": 3
+                  }
+                },
+                {
+                  "key": "value",
+                  "value": "a"
+                },
+                {
+                  "key": "open",
+                  "value": false
+                },
+                {
+                  "key": "options",
+                  "value": {
+                    "ref": 10
+                  }
+                },
+                {
+                  "key": "placeholder",
+                  "value": "History value"
+                },
+                {
+                  "key": "aria-label",
+                  "value": "Style history value"
+                },
+                {
+                  "key": "showSearch",
+                  "value": {
+                    "ref": 13
+                  }
+                },
+                {
+                  "key": "onOpenChange",
+                  "value": {
+                    "ref": 15
+                  }
+                },
+                {
+                  "key": "onChange",
+                  "value": {
+                    "ref": 16
+                  }
+                },
+                {
+                  "key": "onSelect",
+                  "value": {
+                    "ref": 17
+                  }
+                },
+                {
+                  "key": "onDeselect",
+                  "value": {
+                    "ref": 18
+                  }
+                },
+                {
+                  "key": "listHeight",
+                  "value": 140
+                }
+              ]
+            },
+            {
+              "id": 9,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "current",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "current",
+                  "value": null
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "width",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                },
+                {
+                  "key": "width",
+                  "value": "100%"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "root",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "input",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "popup",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "root",
+                  "value": {
+                    "ref": 4
+                  }
+                },
+                {
+                  "key": "input",
+                  "value": {
+                    "ref": 5
+                  }
+                },
+                {
+                  "key": "popup",
+                  "value": {
+                    "ref": 6
+                  }
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            },
+            {
+              "id": 5,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "root",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "root",
+                  "value": {
+                    "ref": 7
+                  }
+                }
+              ]
+            },
+            {
+              "id": 7,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "borderColor",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "border",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "borderColor",
+                  "value": "rgb(231, 41, 51)"
+                },
+                {
+                  "key": "border",
+                  "value": "1px solid rgb(21,31,41)"
+                }
+              ]
+            },
+            {
+              "id": 10,
+              "type": "object",
+              "array": true,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "0",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "1",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "object"
+                },
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": false,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "number"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "0",
+                  "value": {
+                    "ref": 11
+                  }
+                },
+                {
+                  "key": "1",
+                  "value": {
+                    "ref": 12
+                  }
+                },
+                {
+                  "key": "length",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": 11,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "value",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "label",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "value",
+                  "value": "a"
+                },
+                {
+                  "key": "label",
+                  "value": "Alpha"
+                }
+              ]
+            },
+            {
+              "id": 12,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "value",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "label",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "value",
+                  "value": "b"
+                },
+                {
+                  "key": "label",
+                  "value": "Beta"
+                }
+              ]
+            },
+            {
+              "id": 13,
+              "type": "object",
+              "array": false,
+              "authoredRole": null,
+              "ownProperties": [
+                {
+                  "key": "filterOption",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "boolean"
+                },
+                {
+                  "key": "onSearch",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "filterOption",
+                  "value": false
+                },
+                {
+                  "key": "onSearch",
+                  "value": {
+                    "ref": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": 14,
+              "type": "function",
+              "array": false,
+              "authoredRole": {
+                "callback": "style-history-search"
+              },
+              "ownProperties": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 1
+                },
+                {
+                  "key": "name",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "id": 15,
+              "type": "function",
+              "array": false,
+              "authoredRole": {
+                "callback": "style-history-open"
+              },
+              "ownProperties": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 1
+                },
+                {
+                  "key": "name",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "id": 16,
+              "type": "function",
+              "array": false,
+              "authoredRole": {
+                "callback": "style-history-change"
+              },
+              "ownProperties": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 2
+                },
+                {
+                  "key": "name",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "id": 17,
+              "type": "function",
+              "array": false,
+              "authoredRole": {
+                "callback": "style-history-select"
+              },
+              "ownProperties": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 2
+                },
+                {
+                  "key": "name",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "id": 18,
+              "type": "function",
+              "array": false,
+              "authoredRole": {
+                "callback": "style-history-deselect"
+              },
+              "ownProperties": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "properties": [
+                {
+                  "key": "length",
+                  "value": 2
+                },
+                {
+                  "key": "name",
+                  "value": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "resources": {
+        "timers": 0,
+        "frames": 0,
+        "measurements": 0,
+        "microtasks": 0
+      },
+      "rawHtml": "<section data-surface-case=\"select-surface-style-history-autocomplete\" style=\"font-family:initial;font-size:16px;line-height:normal\"><div style=\"position:absolute;left:300px;top:200px;width:280px\"><div class=\"ant-select ant-select-outlined surface-control ant-select-auto-complete surface-control select-surface-style-history ant-select-css-var css-dev-only-do-not-override-1y106cm ant-select-single ant-select-show-search\" style=\"border-color:rgb(231, 41, 51);border:1px solid rgb(21,31,41);width:100%\"><div class=\"ant-select-content ant-select-content-has-value ant-select-content-has-search-value\" title=\"Alpha\">Alpha<input id=\"surface-style-history-field\" type=\"text\" aria-label=\"Style history value\" style=\"border-color:rgb(231, 41, 51);border:1px solid rgb(21,31,41)\" autoComplete=\"new-password\" class=\"ant-select-input\" role=\"combobox\" aria-expanded=\"false\" aria-haspopup=\"listbox\" aria-autocomplete=\"list\" value=\"a\"/></div></div></div><button type=\"button\" data-surface-outside=\"\" style=\"position:fixed;left:16px;top:80px\">Outside history</button><div hidden=\"\" data-surface-command=\"\"></div></section>",
+      "htmlSha256": "d36e877664351606c0611caf3b85d7c12b7f96ae8a4222257bfc17a9d5f86554"
+    }
+  ]
+}
