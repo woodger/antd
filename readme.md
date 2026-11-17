@@ -10528,6 +10528,9 @@ Generated attrs root перекрывают собственные `props`, вн
 перед собственными. Root не получает generated id/class/style/value/disabled/placeholder;
 нужные свойства полного replacement задаёт его renderer. У input собственные `props`
 перекрывают generated attrs, включая value/class/style, и собственные callbacks идут первыми.
+`SelectInputOwnProps` допускает `style: SelectStyle`: CSS object, строку или null.
+Передаваемый `context.attributes.style` остаётся CSS-строкой; own style root
+сохраняет прежний DOM-тип.
 Для AutoComplete существующий `children(control)` имеет приоритет над input slot;
 его прежний register action сохраняется.
 
@@ -10543,7 +10546,26 @@ textarea/composite refs, DOM identity при hydrate и replacement, событ�
 connected Native blur до DOM removal/onDestroy; Source не вызывает blur.
 Исходный поздний onOpenChange(false) после удаления сохранён raw; Native отменяет
 pending close и не вызывает поздние callbacks.
-Custom input в multiple/tags требует дальнейшей сверки.
+[Отдельный Original-корпус multiple/tags](tests/browser/fixtures/ant-design-select-components-modes-source-manifest.json)
+содержит 6 owners, 72 действия и 29 SSR-состояний с input/textarea и function/element slots.
+Native сохраняет раздельные значения и keys для `1` и `'1'`. Канонический Source tags
+после React key collision оставляет в popup дополнительную устаревшую строку `Number one`.
+[Парный Original с явными option.key](tests/browser/fixtures/ant-design-select-components-modes-keyed-source-manifest.json)
+снят отдельно: 6 owners/72 действия/29 SSR, first/repeat побайтно совпадают.
+Он используется только для popup DOM после точного collision gate; root/editor/layout,
+model, events и producer ledgers сверяются с исходным Source. Обе полные raw версии
+сохраняются. Все 6 Source CSR diagnostics относятся к disabled и numeric tags.
+Измерение ширины зависит от входного value/syncWidth; обновление только own width
+применяет CSS без нового измерения. CSSOM сохраняет историю logical props отдельно
+от ширины, очищенной измерением. [Composite probe](tests/browser/fixtures/ant-design-select-components-modes-composite-reference.json.gz)
+сохраняет отдельный Source CSR TypeError при чтении handle.style и одно успешное SSR-состояние.
+[Два Native safety-случая](tests/browser/select-components-modes-composite-safe.spec.ts)
+измеряют физический typed textarea за composite handle без style/scrollWidth shim.
+[Original-корпус own style AutoComplete](tests/browser/fixtures/ant-design-select-components-ac-style-source-manifest.json)
+содержит 2 owners, 20 действий и 16 SSR-состояний: при syncWidth=false own width
+сохраняется после ввода, disabled и clear. Без input slot сохраняется прежний
+Native путь стандартного редактора и тегов. Custom responsive fitting и сложные
+сочетания style/hydration требуют дальнейшей сверки.
 [Browser](tests/browser/select-components.spec.ts) и
 [SSR](tests/package/select-components.ssr.test.ts) проверяют replacement DOM, события,
 полные attrs/producer ledgers, refs и cleanup. Полный перенос Select/AutoComplete

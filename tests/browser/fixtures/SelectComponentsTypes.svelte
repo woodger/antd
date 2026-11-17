@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     Select, AutoComplete, type SelectInputContext, type SelectLabelValue,
-    type SelectRef, type SelectRootContext, type AutoCompleteInput
+    type SelectRef, type SelectRootContext, type AutoCompleteInput, type SelectInputOwnProps
   } from 'antd-svelte';
 
   interface Entry { value: number; label: string; audit: { owner: string }; }
@@ -11,6 +11,8 @@
   const LabeledMultipleSelect = Select<number, 'multiple', Entry, true, HTMLButtonElement, HTMLTextAreaElement>;
   const TextareaSelect = Select<number, undefined, Entry, false, HTMLDivElement, HTMLTextAreaElement>;
   const CustomCompletion = AutoComplete<CompletionEntry, HTMLButtonElement, HTMLTextAreaElement>;
+  const editorProps: SelectInputOwnProps<HTMLTextAreaElement> = { rows: 2, type: 'text',
+    style: { width: 83, fontSize: 17, paddingInline: 7 } };
   let selected = $state<SelectLabelValue<number>[]>([{ value: 1 }]);
   let selectedRoot = $state<HTMLButtonElement | HTMLDivElement>();
   let selectedEditor = $state<HTMLTextAreaElement | HTMLInputElement>();
@@ -47,7 +49,7 @@
   }} />
 <CustomCompletion options={completions} value={completionValue} onChange={value => { completionValue = value ?? ''; }}
   components={{ root: { render: buttonRoot, props: { type: 'button' } },
-    input: { render: textareaInput, props: { rows: 2, type: 'text' } } }}
+    input: { render: textareaInput, props: editorProps } }}
   bind:nativeElement={completionRoot} bind:inputElement={completionEditor}
   onSelect={(value, record) => {
     const text: string = value;
@@ -56,7 +58,7 @@
   }} />
 <Select {options} components={{ root: inputRootSnippet }} bind:nativeElement={inputRoot} />
 <AutoComplete options={completions} components={{ input: textareaInput }} bind:inputElement={completionEditor} />
-<TextareaSelect {options} components={{ input: { element: 'textarea', props: { rows: 2, type: 'text' },
+<TextareaSelect {options} components={{ input: { element: 'textarea', props: editorProps,
   ref: node => { const textarea: HTMLTextAreaElement | null = node; void textarea; } } }} />
 <AutoComplete options={completions} components={{ root: 'button', input: 'textarea' }} />
 <Select {options} bind:nativeElement={defaultRoot} bind:inputElement={defaultInput} />

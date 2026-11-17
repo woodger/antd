@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "sourceOnly": true,
+  "allRawSourcesUnchanged": true,
+  "protocolPath": ".upstream/artifacts/select-components-ac-style-protocol-freeze.json",
+  "protocolSha256": "2d85873c9fec23c14b568b43bebd9736b33267579cadaa1a12934ea855e73663",
+  "owners": 2,
+  "actions": 20,
+  "SSRStates": 16,
+  "copies": [
+    {
+      "source": ".upstream/artifacts/select-components-ac-style-source-first.json",
+      "repeatSource": ".upstream/artifacts/select-components-ac-style-source-repeat.json",
+      "path": "tests/browser/fixtures/ant-design-select-components-ac-style-reference.json.gz",
+      "storageBytes": 470092,
+      "storageSha256": "ff1f3fce5ed820ce8a3dd7bfc2431c21352ef6bc97332e37e0ff02c15c07ac21",
+      "decodedBytes": 13379063,
+      "decodedSha256": "ca92e08f7ae3f0095761f65588d23c4fc87cb3c2a277fc0d61b5166d2a5660fd",
+      "repeatBytes": 13379063,
+      "repeatSha256": "ca92e08f7ae3f0095761f65588d23c4fc87cb3c2a277fc0d61b5166d2a5660fd",
+      "wholePairByteEqual": true
+    },
+    {
+      "source": ".upstream/artifacts/select-components-ac-style-ssr-source-first.json",
+      "repeatSource": ".upstream/artifacts/select-components-ac-style-ssr-source-repeat.json",
+      "path": "tests/browser/fixtures/ant-design-select-components-ac-style-ssr-reference.json.gz",
+      "storageBytes": 137095,
+      "storageSha256": "fb28412c8bbb1ad899a353883803975e03dc68fd7258263d35a09e2da475632f",
+      "decodedBytes": 3872567,
+      "decodedSha256": "e34a90804070a6fd9822af4e656cd19936af2cea164cfa43cbac823fa2900b3f",
+      "repeatBytes": 3872567,
+      "repeatSha256": "e34a90804070a6fd9822af4e656cd19936af2cea164cfa43cbac823fa2900b3f",
+      "wholePairByteEqual": true
+    }
+  ]
+}

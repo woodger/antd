@@ -2279,5 +2279,20 @@
     "id": "select-components-regression",
     "module": "./SelectComponentsRegressionFixtures.svelte",
     "root": "select-components-regression-fixture"
+  },
+  {
+    "id": "select-components-modes",
+    "module": "./SelectComponentsModesFixtures.svelte",
+    "root": "select-components-modes-fixture"
+  },
+  {
+    "id": "select-components-modes-composite-safe",
+    "module": "./SelectComponentsModesCompositeSafeFixtures.svelte",
+    "root": "select-components-modes-composite-safe-fixture"
+  },
+  {
+    "id": "select-components-ac-style",
+    "module": "./SelectComponentsACStyleFixtures.svelte",
+    "root": "select-components-ac-style-fixture"
   }
 ]

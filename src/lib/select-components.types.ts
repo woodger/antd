@@ -1,4 +1,5 @@
 import type { Snippet } from 'svelte';
+import type { SelectStyle } from './select.types';
 import type {
   HTMLAttributes, HTMLButtonAttributes, HTMLInputAttributes, HTMLTextareaAttributes
 } from 'svelte/elements';
@@ -31,6 +32,27 @@ export type SelectInputAttributes<Element extends HTMLElement = HTMLInputElement
     : Element extends HTMLTextAreaElement ? SelectTextareaElementAttributes
     : Element extends HTMLButtonElement ? SelectButtonElementAttributes
     : SelectOtherElementAttributes<Element>;
+
+// Direct named leaves avoid Omit<conditional generic attributes>, which causes
+// TS2590 when Select semantic props recursively include components.
+interface SelectInputElementOwnProps extends Omit<SelectInputElementAttributes, 'style'> {
+  style?: SelectStyle;
+}
+interface SelectTextareaElementOwnProps extends Omit<SelectTextareaElementAttributes, 'style'> {
+  style?: SelectStyle;
+}
+interface SelectButtonElementOwnProps extends Omit<SelectButtonElementAttributes, 'style'> {
+  style?: SelectStyle;
+}
+interface SelectOtherElementOwnProps<Element extends HTMLElement> extends Omit<SelectOtherElementAttributes<Element>, 'style'> {
+  style?: SelectStyle;
+}
+/** Source element own props accept CSS objects; forwarded context style stays a DOM string. */
+export type SelectInputOwnProps<Element extends HTMLElement = HTMLInputElement> =
+  Element extends HTMLInputElement ? SelectInputElementOwnProps
+    : Element extends HTMLTextAreaElement ? SelectTextareaElementOwnProps
+    : Element extends HTMLButtonElement ? SelectButtonElementOwnProps
+    : SelectOtherElementOwnProps<Element>;
 
 interface SelectComponentHandle<Native extends HTMLElement, Editor extends HTMLElement> {
   nativeElement: Native;
@@ -65,11 +87,11 @@ export type SelectRootComponent<Element extends HTMLElement = HTMLDivElement> = 
   };
 
 export type SelectInputComponent<Element extends HTMLElement = HTMLInputElement> = string
-  | { element: string; props?: SelectInputAttributes<Element>; ref?: (node: Element | null) => void }
+  | { element: string; props?: SelectInputOwnProps<Element>; ref?: (node: Element | null) => void }
   | Snippet<[SelectInputContext<Element>]> | {
     render: Snippet<[SelectInputContext<Element>]>;
     /** Own props перекрывают generated attrs; собственные callbacks идут первыми. */
-    props?: SelectInputAttributes<Element>;
+    props?: SelectInputOwnProps<Element>;
   };
 
 export interface SelectComponents<Root extends HTMLElement = HTMLDivElement, Editor extends HTMLElement = HTMLInputElement> {

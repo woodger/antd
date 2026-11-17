@@ -212,7 +212,7 @@ function verifyFeedbackSVGAttributes(actual: string[][], source: string[][], lab
   label + ' pinned Source feedback SVG attributes');
 }
 /** Exact authored nodes, all CSSOM, boxes and SVG/path markup; live animation geometry follows the frozen observer boundary. */
-function verifyIconNode(actualNode: SelectIconNode, sourceNode: SelectIconNode, label: string, boundary?: IconBoundary) {
+export function verifyIconNode(actualNode: SelectIconNode, sourceNode: SelectIconNode, label: string, boundary?: IconBoundary) {
   let actual = actualNode, source = sourceNode;
   let currentAttrs = attrs(actual), originalAttrs = attrs(source);
   let wrapper = false;

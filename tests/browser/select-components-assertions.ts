@@ -52,12 +52,25 @@ function attrs(node: SelectIconNode) {
     return classes.length ? [[key, classes.join(' ')]] : [];
   });
 }
+/** Svelte sets INPUT type before the spread's remaining attributes when value is present. */
+export function verifySelectComponentsDOMAttributes(actual: SelectIconNode, source: SelectIconNode,
+  current: string[][], original: string[][], label: string) {
+  const sourceType = original.find(([key]) => key === 'type');
+  const typeHoisted = actual.tag === 'INPUT' && source.tag === 'INPUT' && sourceType
+    && original.some(([key]) => key === 'value') && current[0]?.[0] === 'type'
+    && current[0]?.[1] === sourceType[1];
+  // node_modules/svelte/src/internal/client/dom/elements/attributes.js:320-327.
+  // All raw arrays remain recorded; only this proven DOM setter order differs.
+  if (typeHoisted) {
+    assert.deepEqual(current, [sourceType, ...original.filter(([key]) => key !== 'type')], label + ' exact Svelte INPUT type-first setter order');
+  } else assert.deepEqual(current, original, label + ' complete intrinsic attribute order');
+}
 /** New custom editor/root DOM has no historical Native presentation boundary. */
 export function verifySelectComponentsNode(actual: SelectIconNode | null, source: SelectIconNode | null, label: string) {
   assert.equal(Boolean(actual), Boolean(source), label + ' physical presence');
   if (!actual || !source) return;
   assert.equal(actual.tag, source.tag, label + ' tag');
-  assert.deepEqual(attrs(actual), attrs(source), label + ' complete intrinsic attributes');
+  verifySelectComponentsDOMAttributes(actual, source, attrs(actual), attrs(source), label);
   for (const key of ['connected', 'text', 'css', 'box', 'geometryBoundary', 'value', 'caret', 'focused',
     'styleAttribute', 'cssText', 'inlineProperties'] as const) assert.deepEqual(actual[key], source[key], label + '/' + key);
 }

@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "sourceOnly": true,
+  "allOldSourcesUnchanged": true,
+  "protocolSha256": "d8eea1e2c35befcaed18d700e9f2f2291f2ea476589d3425984e563981e6ed24",
+  "owners": 6,
+  "actions": 72,
+  "SSRStates": 29,
+  "publicCallerDelta": [
+    {
+      "value": 1,
+      "key": "option-number-one"
+    },
+    {
+      "value": "1",
+      "key": "option-string-one"
+    }
+  ],
+  "copies": [
+    {
+      "source": ".upstream/artifacts/select-components-modes-keys-v2-source-first.json",
+      "repeatSource": ".upstream/artifacts/select-components-modes-keys-v2-source-repeat.json",
+      "path": "tests/browser/fixtures/ant-design-select-components-modes-keyed-reference.json.gz",
+      "storageBytes": 2055092,
+      "storageSha256": "07bd199697c71be2bb4b567a94dfa941ed4991f36a7efd2f36ed84686676217b",
+      "decodedBytes": 58161347,
+      "decodedSha256": "fffe04379e32d98133e9b159bb6dcc1182da5ac1b1c9c18b6ead77d9d1174584",
+      "repeatBytes": 58161347,
+      "repeatSha256": "fffe04379e32d98133e9b159bb6dcc1182da5ac1b1c9c18b6ead77d9d1174584",
+      "wholePairByteEqual": true
+    },
+    {
+      "source": ".upstream/artifacts/select-components-modes-keys-v2-ssr-source-first.json",
+      "repeatSource": ".upstream/artifacts/select-components-modes-keys-v2-ssr-source-repeat.json",
+      "path": "tests/browser/fixtures/ant-design-select-components-modes-keyed-ssr-reference.json.gz",
+      "storageBytes": 278521,
+      "storageSha256": "080a164863154e42baccb0196e48ff674c63f0968479201cffc97c3d2f9f10da",
+      "decodedBytes": 7432953,
+      "decodedSha256": "6495b6f2b5169c818eff0ffd70c7a2168f721e45cd7a73e7a8226b8fc4308d96",
+      "repeatBytes": 7432953,
+      "repeatSha256": "6495b6f2b5169c818eff0ffd70c7a2168f721e45cd7a73e7a8226b8fc4308d96",
+      "wholePairByteEqual": true
+    }
+  ]
+}

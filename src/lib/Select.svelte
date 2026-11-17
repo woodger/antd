@@ -9,6 +9,8 @@
   import SelectPopupContent from './SelectPopupContent.svelte';
   import { hasSelectControlSemantics, hasSelectDisplayContent, mergeSelectSemanticMaps, mergeSelectStyle, resolveSelectSemanticValue, serializeSelectStyle } from './select-semantic.engine';
   import { createSelectStyle, selectStyle, selectStyleAttributes } from './select-style.model.svelte';
+  import { resolveSelectStyleFrame } from './select-style.engine';
+  import { createSelectComponentInputStyle, type SelectComponentInputLifetime } from './select-component-input-style.dom';
   import { useComponentTheme } from './theme-component.svelte';
   import { useToken } from './theme-context.svelte';
   import SelectOptionList from './SelectOptionList.svelte';
@@ -60,7 +62,8 @@
     SelectTagInfo,
     SelectLabelRenderInfo,
     SelectSemanticInfo,
-    SelectConfigSemanticInfo
+    SelectConfigSemanticInfo,
+    SelectStyle
   } from './select.types';
   import { getSelectTagText } from './select-tag-text.engine';
   import { getSelectTagOptions } from './select-tags.engine';
@@ -231,6 +234,13 @@
     : inputSlot ? selectComponentInputElement(customInput?.registration) : defaultControl) as HTMLInputElement | undefined);
   let rootContext = $derived(rootSlot ? componentRootContext() : undefined);
   let inputContext = $derived(inputSlot ? componentInputContext() : undefined);
+  const componentInputStyle = createSelectComponentInputStyle();
+  let componentInputWidth = $state<number>();
+  let componentInputValue = $derived.by(() => !canSearch
+    || multiple && !(hydrated && isOpen) && autoClearSearch && !tagMode ? '' : search);
+  function componentInputLifetime(): SelectComponentInputLifetime {
+    return rootSlot ? undefined : multiple ? 'multiple' : 'single';
+  }
   let committedInputAttributes: Record<string, unknown> = {};
   $effect(() => {
     const context = inputContext;
@@ -240,8 +250,18 @@
     if (inputSlot && input && value != null) {
       const text = String(value);
       if (input.value !== text) input.value = text;
-      if (input instanceof HTMLTextAreaElement && input.defaultValue !== text) input.defaultValue = text;
+      // React DOM mirrors controlled value to defaultValue before layout measurement.
+      // A focused number input retains its existing default until blur.
+      if ((input instanceof HTMLTextAreaElement || input instanceof HTMLInputElement
+        && (committedInputAttributes.type !== 'number' || input.ownerDocument.activeElement !== input))
+        && (input.defaultValue !== text || input instanceof HTMLInputElement && !input.hasAttribute('value'))) input.defaultValue = text;
     }
+    // This effect already runs after attrs/value forwarding for ordinary snippets.
+    // Read raw object styles as well as the serialized public context: width 20
+    // -> '20px' must apply even when attrs.style itself has not changed.
+    componentInputWidth = componentInputStyle.commit(inputSlot ? input : undefined,
+      componentInputStyleFrame(), { lifetime: componentInputLifetime(), syncWidth: multiple,
+        value: componentInputValue });
   });
   let list = $state<HTMLDivElement>();
   let menuElement = $state<HTMLDivElement>();
@@ -427,7 +447,7 @@
     ['--ant-native-select-height', `var(--${privateNamespace}-select-height)`],
     ['--ant-native-select-multi-item-height', `var(--${privateNamespace}-select-multi-item-height)`],
     ['--ant-native-select-color', `var(--${privateNamespace}-select-color)`],
-    ...(semantics.sourceControlColors ? [['--ant-native-select-empty-input-gap',
+    ...(semantics.sourceControlColors || inputSlot && multiple ? [['--ant-native-select-empty-input-gap',
       `var(--${privateNamespace}-select-multi-item-padding-horizontal)`]] as const : [])
   ]]);
   const inputStyle = createSelectStyle(() => semantics.styles.input, () =>
@@ -484,6 +504,12 @@
   // deriveds. Use the state belonging to that committed DOM, as for callbacks.
   let committedBlurState = untrack(readBlurState);
   $effect(() => { committedBlurState = readBlurState(); });
+  // Setting disabled can synchronously blur before post-commit snapshots update.
+  // Keep this new-input phase current before DOM writes, without reading paused deriveds.
+  let componentInputBlurDisabled = untrack(() => resolvedDisabled);
+  $effect.pre(() => {
+    if (inputSlot) componentInputBlurDisabled = resolvedDisabled;
+  });
   let popupVisited = $state(false);
   $effect(() => { if (expanded && popupRender && list) popupVisited = true; });
   let componentPopupVisited = $state(false);
@@ -720,12 +746,13 @@
     if (componentDestroyed) return;
     focused = false; composing = false; pastedText = undefined;
     const state = committedBlurState;
+    const disabled = state.componentInput ? componentInputBlurDisabled : state.disabled;
     if (state.tagMode) submitTag(state.search);
     else if (state.multiple) internalSearch = '';
-    if (state.expanded && !(event.relatedTarget instanceof Node && list?.contains(event.relatedTarget)))
+    if (state.expanded && !disabled && !(event.relatedTarget instanceof Node && list?.contains(event.relatedTarget)))
       scheduleComponentClose(true);
-    field?.onBlur();
-    if (!state.disabled) committedPublicBlur?.(event);
+    if (!state.componentInput || !disabled) field?.onBlur();
+    if (!disabled) committedPublicBlur?.(event);
   }
   function componentPublicBlur(event: FocusEvent) {
     if (!componentDestroyed && !committedBlurState.disabled) committedPublicBlur?.(event);
@@ -815,15 +842,34 @@
       if (value != null && input.value !== String(value)) input.value = String(value);
     });
   }
+  function componentInputRawStyle() {
+    void componentInputWidth;
+    const own = ownComponentProps(inputSlot);
+    const rawStyle = own && Object.hasOwn(own, 'style')
+      ? Reflect.get(own, 'style') as SelectStyle | undefined
+      : mergeSelectStyle(semantics.styles.input,
+        { '--select-input-width': componentInputStyle.width(componentInputLifetime()) });
+    return rawStyle;
+  }
+  function componentInputStyleFrame() {
+    return resolveSelectStyleFrame(componentInputRawStyle());
+  }
+  function componentInputStyleText() {
+    const raw = componentInputRawStyle();
+    return raw === null || typeof raw === 'string' ? raw : resolveSelectStyleFrame(raw).text;
+  }
   function componentInputContext() {
     void internalSearch; void focused; void expanded; void semantics; void resolvedSuffix;
     const aria = Object.fromEntries(Object.entries(attributes).filter(([key]) => key.startsWith('aria-')));
-    const generated = { id: controlId, type: 'text', ...aria, readonly: !canSearch,
-      tabindex: attributes.tabindex, maxlength: undefined,
-      style: serializeSelectStyle(semantics.styles.input), autofocus: attributes.autofocus,
+    const styleText = componentInputStyleText();
+    const generated = { id: controlId, type: 'text',
+      ...(multiple ? { disabled: resolvedDisabled, readonly: !canSearch } : {}),
+      ...aria, ...(!multiple ? { readonly: !canSearch } : {}),
+      tabindex: attributes.tabindex, ...(!multiple ? { maxlength: undefined } : {}),
+      style: styleText, autofocus: attributes.autofocus,
       autocomplete: attributes.autocomplete || 'new-password',
       class: [`${prefix}-input`, semantics.classes.input].filter(Boolean).join(' '), disabled: resolvedDisabled,
-      value: !canSearch || multiple && !expanded && autoClearSearch && !tagMode ? '' : search,
+      value: componentInputValue,
       oninput: (event: Event) => { handleInput(event as Event & { currentTarget: HTMLInputElement }); restoreComponentInput(event.currentTarget as HTMLInputElement); },
       onkeydown: (event: KeyboardEvent) => handleKeydown(event as KeyboardEvent & { currentTarget: HTMLInputElement }),
       onblur: () => { composing = false; pastedText = undefined; },
@@ -836,8 +882,11 @@
       'aria-activedescendant': expanded ? `${controlId}_list_${componentAccessibilityIndex}` : undefined
     };
     const own = ownComponentProps(inputSlot);
-    return { attributes: mergeSelectComponentAttributes<Record<string, unknown>>({},
-      typeof inputSlot === 'object' ? { placeholder, ...generated } : generated, own, 'input'), register: registerInput };
+    const merged = mergeSelectComponentAttributes<Record<string, unknown>>({},
+      typeof inputSlot === 'object' ? { placeholder, ...generated } : generated, own, 'input');
+    // Keep merge/cloneElement key positions, but never pass a CSS object to a DOM spread.
+    merged.style = styleText;
+    return { attributes: merged, register: registerInput };
   }
 
   function setOpen(next: boolean, fromBlur = false, previousOpen?: boolean) {
@@ -1085,6 +1134,18 @@
       notifySelect(item, data, false);
     }
     if (focusEditor) { if (rootSlot || inputSlot) focus(); else control?.focus(); }
+  }
+
+  // rc-overflow1.0.1 Item.js:39-60; wrapper owns visibility/order, not its tag.
+  function componentOverflowStyle(hidden: boolean, order: number) {
+    return serializeSelectStyle({
+      opacity: hidden ? 0 : 1,
+      height: hidden ? 0 : undefined,
+      overflowY: hidden ? 'hidden' : undefined,
+      order: responsiveTags ? order : undefined,
+      pointerEvents: hidden ? 'none' : undefined,
+      position: hidden ? 'absolute' : undefined
+    });
   }
 
   function handleCustomTagMouseDown(event: MouseEvent) {
@@ -1423,6 +1484,10 @@
 
 <style>
   .container { position: relative; min-width: 0; width: 100%; }
+  /* Inline-flex Source root использует text strut родителя, а не token font wrapper. */
+  .container:has(> [data-ant-select-multiple] > [data-ant-select-content] > div[class*="-content-item-suffix"]) {
+    font-family: inherit; font-size: inherit;
+  }
   .container[data-ant-select-value-layer] { display: inline-flex; }
   [data-ant-select-control] { display: flex; align-items: center; min-width: 0; width: 100%; }
   [data-ant-select-control]:focus-within { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
@@ -1489,6 +1554,16 @@
   [data-ant-select-selection-item-remove]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: 1px; }
   [data-ant-select-selection-item-disabled] { color: var(--ant-select-multiple-item-color-disabled); }
   [data-ant-select-source-theme] [data-ant-select-selection-item-disabled] { color: inherit; }
+  [data-ant-select-component-popup][hidden] { pointer-events: none; }
+  [data-ant-select-component-popup][hidden] [data-ant-select-item] { width: auto; }
+
+  [data-ant-select-control][data-ant-select-multiple]:has(> [data-ant-select-content] > div[class*="-content-item-suffix"]) { display: inline-flex; min-height: initial; }
+  /* Only the new Overflow wrapper structure opts out of legacy flat tag CSS.
+     Source: select/style/index.ts and select-input-multiple.ts:53-90. */
+  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-content]:has(> div[class*="-content-item-suffix"]) { gap: normal; }
+  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-content] > div[class*="-content-item"] > [data-ant-select-selection-item] { flex: 1; max-width: none; }
+  [data-ant-select-control][data-ant-select-multiple] [data-ant-select-content] > div[class*="-content-item-prefix"] > [data-ant-select-placeholder] { inset-inline-start: var(--ant-native-select-empty-input-gap); }
+  [data-ant-select-control][data-ant-select-multiple] [class*="-prefix"] + [data-ant-select-content] > div[class*="-content-item-prefix"] > [data-ant-select-placeholder] { inset-inline-start: 0; }
   .container[data-ant-select-compact-item] > [data-ant-select-control] { border-radius: inherit; }
   @media (hover: none) {
     [data-ant-select-source-theme]:has(.clear) .suffix { opacity: 0; }
@@ -1655,7 +1730,45 @@
           {:else}<RenderContent value={selected.label as RenderEmptyContent} />{/if}
         {:else}<div class={`${prefix}-placeholder`} style={search ? 'visibility:hidden' : undefined}>{placeholder ?? ''}</div>{/if}<SelectComponent component={inputSlot} context={inputContext} />
       </div>
-    {:else}<div data-ant-select-content
+    {:else if inputSlot && inputContext && multiple}{@const multipleInputValue = componentInputValue}<div data-ant-select-content class={[`${prefix}-content`, semantics.classes.content]}
+        style={initialContentStyle} {...selectStyleAttributes(semantics.styles.content)}
+        {@attach selectStyle(() => semantics.styles.content)} bind:this={contentElement}>{#if !selectedValues.length && !multipleInputValue}{@const initialPlaceholderStyle = untrack(() => serializeSelectStyle(semantics.styles.placeholder))}<div class={[`${prefix}-content-item`, `${prefix}-content-item-prefix`]}
+            style={componentOverflowStyle(false, -1)}><div data-ant-select-placeholder class={[`${prefix}-placeholder`, semantics.classes.placeholder]}
+              style={initialPlaceholderStyle} {...selectStyleAttributes(semantics.styles.placeholder)}
+              {@attach selectStyle(() => semantics.styles.placeholder)} aria-hidden="true">{placeholder ?? ''}</div></div>{/if}{#each renderedTags as tag, index (tag.value)}{@const hidden = responsiveTags && !visibleTagKeys.has(tag.value)}{@const initialTagStyle = untrack(() => !renderTag ? serializeSelectStyle(semantics.styles.item) : undefined)}<div class={`${prefix}-content-item`} style={componentOverflowStyle(hidden, index)}
+            data-select-tag={responsiveTags || undefined} aria-hidden={hidden || undefined} inert={hidden}>{#snippet componentTagLabel()}<RenderContent value={getSelectTagText(tag.label, maxTagTextLength) as RenderEmptyContent} />{/snippet}<span data-ant-select-selection-item={!renderTag || undefined}
+              data-ant-select-selection-item-disabled={!renderTag && (resolvedDisabled || tag.disabled) || undefined}
+              class={!renderTag ? [`${prefix}-selection-item`, semantics.classes.item,
+                (resolvedDisabled || tag.disabled) && `${prefix}-selection-item-disabled`] : undefined}
+              style={initialTagStyle} {...selectStyleAttributes(!renderTag ? semantics.styles.item : undefined)}
+              {@attach selectStyle(() => !renderTag ? semantics.styles.item : undefined)}
+              title={renderTag ? undefined : selectValueTitle(tag)}
+              data-select-custom-tag={renderTag ? '' : undefined}
+              role="presentation" onmousedown={renderTag ? handleCustomTagMouseDown : undefined}
+              {@attach node => connectTagElement(node, tag.value)}>{#if renderTag}{@render renderTag({
+                  label: componentTagLabel, value: tag.value, index, disabled: tag.disabled,
+                  closable: !resolvedDisabled && !tag.disabled, isMaxTag: false,
+                  onClose: event => { event?.stopPropagation(); remove(tag.value, false); }
+                })}{:else}{@const initialItemContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}<span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]}
+                  style={initialItemContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)}
+                  {@attach selectStyle(() => semantics.styles.itemContent)}>{@render componentTagLabel()}</span>{#if !resolvedDisabled && !tag.disabled}{@const initialRemoveStyle = untrack(() => serializeSelectStyle(semantics.styles.itemRemove))}{@const tagIcon = resolveSelectRemoveIcon(removeIcon, config.select?.removeIcon, removeGlyph)}<button type="button" data-ant-select-selection-item-remove
+                    class={[`${prefix}-selection-item-remove`, semantics.classes.itemRemove]}
+                    style={initialRemoveStyle} {...selectStyleAttributes(semantics.styles.itemRemove)}
+                    {@attach selectStyle(() => semantics.styles.itemRemove)}
+                    aria-label={`${config.locale.removeText ?? ruRU.removeText} ${selectValueText(tag.label) || tag.value}`}
+                    onmousedown={event => { event.preventDefault(); event.stopPropagation(); }}
+                    onclick={event => { event.stopPropagation(); remove(tag.value, false); }}>{#if tagIcon.fallback}<span class={[`${prefix}-selection-item-remove`, semantics.classes.itemRemove].filter(Boolean).join(' ').split(/\s+/).map(name => name + '-icon').join(' ')}><RenderContent value={tagIcon.content} /></span>{:else}<RenderContent value={tagIcon.content} />{/if}</button>{/if}{/if}</span></div>{/each}{#if tagOverflow.omitted.length || responsiveTags && tags.length}{@const hidden = responsiveTags && !tagOverflow.omitted.length}{@const initialRestStyle = untrack(() => !renderTag ? serializeSelectStyle(semantics.styles.item) : undefined)}<div class={[`${prefix}-content-item`, `${prefix}-content-item-rest`]}
+            style={componentOverflowStyle(hidden, hidden ? Number.MAX_SAFE_INTEGER : tagOverflow.visible.length - 1)}
+            data-select-rest={responsiveTags || undefined} aria-hidden={hidden || undefined} inert={hidden}>{#snippet componentRestLabel()}{#if typeof tagPlaceholder === 'function'}{@render tagPlaceholder(tagOverflow.omitted)}{:else if tagPlaceholder == null}+ {tagOverflow.omitted.length} ...
+              {:else if typeof tagPlaceholder !== 'boolean'}{tagPlaceholder}{/if}{/snippet}<span data-ant-select-selection-item={!renderTag || undefined}
+              class={!renderTag ? [`${prefix}-selection-item`, semantics.classes.item] : undefined}
+              style={initialRestStyle} {...selectStyleAttributes(!renderTag ? semantics.styles.item : undefined)}
+              {@attach selectStyle(() => !renderTag ? semantics.styles.item : undefined)}
+              title={renderTag ? undefined : tagPlaceholderTitle} data-select-custom-tag={renderTag ? '' : undefined}
+              role="presentation" onmousedown={renderTag ? handleCustomTagMouseDown : undefined}>{#if renderTag}{@render renderTag({ label: componentRestLabel, isMaxTag: true, disabled: false, closable: false })}{:else}{@const initialRestContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}<span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]}
+                  style={initialRestContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)}
+                  {@attach selectStyle(() => semantics.styles.itemContent)}>{@render componentRestLabel()}</span>{/if}</span></div>{/if}<div class={[`${prefix}-content-item`, `${prefix}-content-item-suffix`]}
+          style={componentOverflowStyle(false, tagOverflow.visible.length - 1)}><SelectComponent component={inputSlot} context={inputContext} /></div></div>{:else}<div data-ant-select-content
       data-select-source-empty-input={multiple && !selectedValues.length && !leading && semantics.sourceControlColors || undefined}
       data-select-value-layer={selectedLayer || undefined}
       data-select-value-has-content={selectedHasValue || undefined}
@@ -1799,6 +1912,7 @@
     <div
       bind:this={list}
       data-ant-select-dropdown data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
+      data-ant-select-component-popup={rootSlot || inputSlot ? '' : undefined}
       data-ant-select-source-popup={Boolean(componentTheme.className) && filtered.length > 0 || undefined}
       data-ant-select-custom-popup={customPopup || undefined}
       popover="manual"

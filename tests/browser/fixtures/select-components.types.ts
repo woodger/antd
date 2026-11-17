@@ -2,9 +2,9 @@ import type { Snippet } from 'svelte';
 import type { Attachment } from 'svelte/attachments';
 import type {
   AutoCompleteInput, AutoCompleteProps, AutoCompleteSemanticInfo, SelectComponents,
-  SelectInputAttributes, SelectInputComponent, SelectInputContext, SelectInputRegistration,
+  SelectInputAttributes, SelectInputComponent, SelectInputContext, SelectInputOwnProps, SelectInputRegistration,
   SelectLabelValue, SelectOption, SelectProps, SelectRootAttributes, SelectRootComponent,
-  SelectRootContext, SelectRootRegistration, SelectSemanticInfo
+  SelectRootContext, SelectRootRegistration, SelectSemanticInfo, SelectStyle
 } from 'antd-svelte';
 
 type Equal<Left, Right> = (<Value>() => Value extends Left ? 1 : 2) extends
@@ -38,7 +38,10 @@ export type SelectComponentTypeAssertions = [
   Assert<Equal<CustomSelectInfo['props']['components'], SelectComponents<HTMLButtonElement, HTMLTextAreaElement> | undefined>>,
   Assert<Equal<CustomCompletionInfo['props']['components'], SelectComponents<HTMLButtonElement, HTMLTextAreaElement> | undefined>>,
   Assert<Equal<ReturnType<SelectRootContext['register']>, () => void>>,
-  Assert<Equal<ReturnType<SelectInputContext['register']>, () => void>>
+  Assert<Equal<ReturnType<SelectInputContext['register']>, () => void>>,
+  Assert<Equal<SelectInputOwnProps<HTMLInputElement>['style'], SelectStyle | undefined>>,
+  Assert<Equal<SelectInputContext<HTMLTextAreaElement>['attributes']['style'], string | null | undefined>>,
+  Assert<Equal<SelectRootAttributes<HTMLButtonElement>['style'], string | null | undefined>>
 ];
 
 export function selectComponentProps(
@@ -53,7 +56,8 @@ export function selectComponentProps(
       root: { render: root, props: { type: 'button', onkeydown(event) {
         const target: HTMLButtonElement = event.currentTarget; void target;
       } } },
-      input: { render: input, props: { rows: 3, wrap: 'soft', type: 'text', oninput(event) {
+      input: { render: input, props: { rows: 3, wrap: 'soft', type: 'text',
+        style: { width: 83, fontSize: 17, paddingInline: 7 }, oninput(event) {
         const target: HTMLTextAreaElement = event.currentTarget; void target;
       } } }
     },
@@ -76,7 +80,8 @@ export function selectComponentProps(
   } satisfies CustomSelect;
   const completion = {
     value: 'a', options: [{ code: 'a', caption: 'Alpha', audit: { owner: 'source' } }],
-    fieldNames: { value: 'code', label: 'caption' }, components: { root, input },
+    fieldNames: { value: 'code', label: 'caption' }, components: { root,
+      input: { render: input, props: { style: { width: 83, fontSize: 17, paddingInline: 7 } } } },
     onChange(value, option) {
       const text: string | undefined = value;
       const owner: string | undefined = option?.audit?.owner;
@@ -165,6 +170,10 @@ export function selectComponentNegativeTypes(
   const invalidRoot: SelectRootAttributes<HTMLButtonElement> = { rows: 2 };
   // @ts-expect-error The source input value is a string even for a textarea editor.
   const invalidValue: SelectInputAttributes<HTMLTextAreaElement> = { value: 1 };
+  // @ts-expect-error Forwarded context style remains a DOM string.
+  input.attributes.style = { width: 83 };
+  // @ts-expect-error Input own style widening does not apply to root own props.
+  const invalidRootStyle: SelectRootComponent<HTMLButtonElement> = { element: 'button', props: { style: { width: 83 } } };
   // @ts-expect-error A textarea context cannot register a native input.
   input.register(document.createElement('input'));
   // @ts-expect-error The composite editor must retain the declared textarea type.
@@ -181,5 +190,5 @@ export function selectComponentNegativeTypes(
   const invalidLabels: CustomSelect = { value: [1] };
   // @ts-expect-error AutoComplete keeps its existing free text value contract.
   const invalidCompletion: CustomCompletion = { value: 1 };
-  return { invalidInput, invalidRoot, invalidValue, invalidSnippet, invalidRef, invalidModel, invalidLabels, invalidCompletion };
+  return { invalidInput, invalidRoot, invalidValue, invalidRootStyle, invalidSnippet, invalidRef, invalidModel, invalidLabels, invalidCompletion };
 }

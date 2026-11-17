@@ -39,7 +39,8 @@
     };
     // React сохраняет последний defaultValue на прежнем uncontrolled DOM input.
     const initialValue = defaultValue ?? defaultvalue ?? retainedInputDefaultValue;
-    return { ...attributes, ...(value != null ? { value }
+    return { ...attributes, ...(value != null ? { value,
+      ...(!root && typeof document !== 'undefined' ? { defaultValue: value } : {}) }
       : initialValue != null ? { defaultValue: initialValue } : {}) };
   });
   let textarea = $derived.by(() => {

@@ -10,7 +10,7 @@
   } from './auto-complete.types';
   import type {
     SelectScrollConfig, SelectPopupContent as PopupContent, SelectConfigSemanticInfo,
-    SelectClassNames, SelectStyles, SelectFlattenOption
+    SelectClassNames, SelectStyles, SelectFlattenOption, SelectStyle
   } from './select.types';
   import type { RenderEmptyContent } from './types';
   import {
@@ -31,6 +31,8 @@
     hasSelectDisplayContent, mergeSelectSemanticMaps, mergeSelectStyle, resolveSelectSemanticValue, serializeSelectStyle
   } from './select-semantic.engine';
   import { createSelectStyle, selectStyleAttributes } from './select-style.model.svelte';
+  import { resolveSelectStyleFrame } from './select-style.engine';
+  import { createSelectComponentInputStyle } from './select-component-input-style.dom';
   import RenderContent from './RenderContent.svelte';
   import SelectPopupContent from './SelectPopupContent.svelte';
   import SelectOptionList from './SelectOptionList.svelte';
@@ -285,8 +287,13 @@
   let customInput = $state.raw<{ registration: SelectInputRegistration<EditorElement> }>();
   let rootSlot = $derived(components?.root);
   let inputSlot = $derived(!rootSlot && !children ? components?.input : undefined);
+  const componentInputStyle = createSelectComponentInputStyle();
   let replacingDefaultComponentRoot = false;
-  $effect.pre(() => { replacingDefaultComponentRoot = Boolean(rootSlot); });
+  let componentInputBlurBlocked = untrack(() => blocked);
+  $effect.pre(() => {
+    replacingDefaultComponentRoot = Boolean(rootSlot);
+    if (inputSlot) componentInputBlurBlocked = blocked;
+  });
   let root = $derived(rootSlot ? customRoot && selectComponentNativeElement(customRoot.registration) : defaultRoot);
   let editor = $derived((rootSlot ? customRoot && selectComponentInputElement(customRoot.registration)
     : inputSlot ? customInput && selectComponentInputElement(customInput.registration) : defaultEditor) as HTMLInputElement | HTMLTextAreaElement | undefined);
@@ -825,7 +832,12 @@
     if (!state.blocked) { field?.onBlur(); state.onBlur?.(event); }
   }
   function componentDefaultRootBlur(event: FocusEvent) {
-    if (!replacingDefaultComponentRoot) componentRootBlur(event);
+    if (replacingDefaultComponentRoot) return;
+    if (componentInputBlurBlocked) {
+      focused = false; enterLock = false; preview = undefined;
+      return;
+    }
+    componentRootBlur(event);
   }
   function componentRootClick(event: MouseEvent) {
     const state = committedComponentState;
@@ -936,9 +948,11 @@
   }
   function componentInputContext() {
     const aria = Object.fromEntries(Object.entries(nativeAttributes).filter(([key]) => key.startsWith('aria-')));
+    const rawStyle = componentInputRawStyle();
+    const styleText = rawStyle === null || typeof rawStyle === 'string' ? rawStyle : resolveSelectStyleFrame(rawStyle).text;
     const generated = { id: controlId, type: 'text', ...aria,
       readonly: Boolean(readonly), tabindex: attributes.tabindex, maxlength: attributes.maxlength,
-      style: serializeSelectStyle(semantics.styles.input), autofocus: attributes.autofocus,
+      style: styleText, autofocus: attributes.autofocus,
       autocomplete: attributes.autocomplete || 'new-password',
       class: [`${prefix}-input`, semantics.classes.input].filter(Boolean).join(' '),
       disabled: blocked, value: searchText,
@@ -954,7 +968,12 @@
     const own = ownComponentProps(inputSlot);
     const fallback = typeof inputSlot === 'object' ? { placeholder: attributes.placeholder } : {};
     const attrs = mergeSelectComponentAttributes<Record<string, unknown>>({}, { ...fallback, ...generated }, own, 'input');
+    attrs.style = styleText;
     return { attributes: attrs, register: registerComponentInput };
+  }
+  function componentInputRawStyle() {
+    const own = ownComponentProps(inputSlot);
+    return own && Object.hasOwn(own, 'style') ? Reflect.get(own, 'style') as SelectStyle | undefined : semantics.styles.input;
   }
   function componentDefaultRootAttributes() {
     const { placeholder: _placeholder, tabindex: _tabindex, maxlength: _maxlength, autofocus: _autofocus,
@@ -982,11 +1001,18 @@
   $effect(() => { committedComponentState = readComponentState(); });
   $effect(() => { committedComponentInputAttributes = readComponentInputAttributes(); });
   $effect(() => {
-    if (!inputSlot) return;
-    const accepted = componentEditorContext.attributes.value;
+    const attrs = inputSlot ? componentEditorContext.attributes : undefined;
+    const accepted = attrs?.value;
     const control = editor;
-    if (control instanceof HTMLTextAreaElement && accepted !== undefined && accepted !== null
-      && control.defaultValue !== String(accepted)) control.defaultValue = String(accepted);
+    if (inputSlot && control && accepted !== undefined && accepted !== null) {
+      const text = String(accepted);
+      if ((control instanceof HTMLTextAreaElement || control instanceof HTMLInputElement
+        && (attrs?.type !== 'number' || control.ownerDocument.activeElement !== control))
+        && control.defaultValue !== text) control.defaultValue = text;
+    }
+    componentInputStyle.commit(inputSlot ? control : undefined, resolveSelectStyleFrame(componentInputRawStyle()), {
+      lifetime: rootSlot ? undefined : 'single', syncWidth: false, value: searchText
+    });
   });
   $effect(() => {
     const disabled = blocked, expanded = visible, overridden = Boolean(rootSlot) || Boolean(inputSlot);
@@ -1032,6 +1058,7 @@
   .auto-complete[data-ant-auto-complete-source-theme]:focus-within { outline: 0; outline-offset: 0; }
   .auto-complete[data-ant-auto-complete-source-theme][data-ant-auto-complete-customize] { min-height: 0; }
   .auto-complete[data-ant-auto-complete-component-input] { height: auto; min-height: 0; align-items: flex-start; }
+  .auto-complete[data-ant-auto-complete-component-input] > [data-ant-auto-complete-content] { flex: 1 1 auto; }
   .clear { display: flex; flex: none; padding: 0; border: 0; background: none; color: var(--ant-color-text-tertiary); cursor: pointer; }
   .clear:focus-visible { outline: 2px solid var(--ant-color-primary); }
   .feedback-suffix { display: block; flex: none; }
