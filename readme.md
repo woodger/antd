@@ -10533,8 +10533,17 @@ Generated attrs root перекрывают собственные `props`, вн
 
 [Эталон и manifest](tests/browser/fixtures/ant-design-select-components-source-manifest.json)
 содержат 13 независимо повторённых owners, 138 действий и 51 SSR-состояние
-для single Select и combobox. Отдельная сверка custom input в multiple/tags и
-hydration replacement ещё не завершена.
+для single Select и combobox. [Отдельная SSR→hydration сверка](tests/browser/select-components-hydration.spec.ts)
+добавляет 6 owners и 34 действия: pre-hydration draft/caret, defaultValue,
+textarea/composite refs, DOM identity при hydrate и replacement, события и cleanup.
+[Original manifest](tests/browser/fixtures/ant-design-select-components-hydration-source-manifest.json)
+сохраняет обе SSR-сериализации и независимый whole-byte-equal повтор.
+При замене input на root blur исчезающего default root не вызывается.
+При полном удалении сфокусированного AutoComplete сохранён прежний синхронный
+connected Native blur до DOM removal/onDestroy; Source не вызывает blur.
+Исходный поздний onOpenChange(false) после удаления сохранён raw; Native отменяет
+pending close и не вызывает поздние callbacks.
+Custom input в multiple/tags требует дальнейшей сверки.
 [Browser](tests/browser/select-components.spec.ts) и
 [SSR](tests/package/select-components.ssr.test.ts) проверяют replacement DOM, события,
 полные attrs/producer ledgers, refs и cleanup. Полный перенос Select/AutoComplete

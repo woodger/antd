@@ -68,6 +68,7 @@
   import { connectSelectTagOverflow, measureSelectInput, measureSelectSourceInput } from './select-tag-overflow.dom';
   import { resolveSelectTokenOptions, splitSelectTokens } from './select-token.engine';
   import SelectComponent from './SelectComponent.svelte';
+  import { clearSelectComponentHydration, selectComponentHydrationAttributes, takeSelectComponentHydration } from './select-components-hydration.dom';
   import type { SelectRootRegistration, SelectInputRegistration } from './select-components.types';
   import { mergeSelectComponentAttributes, focusSelectComponent, blurSelectComponent, selectComponentNativeElement, selectComponentInputElement } from './select-components.engine';
   import { treeSelectNativeKeyCancelled } from './tree-select-components.engine';
@@ -485,8 +486,10 @@
   $effect(() => { committedBlurState = readBlurState(); });
   let popupVisited = $state(false);
   $effect(() => { if (expanded && popupRender && list) popupVisited = true; });
+  let componentPopupVisited = $state(false);
+  $effect(() => { if (expanded && (rootSlot || inputSlot)) componentPopupVisited = true; });
   let customPopup = $derived(Boolean(popupRender) || popupVisited);
-  let popupPresent = $derived(expanded || popupVisited);
+  let popupPresent = $derived(expanded || popupVisited || Boolean(rootSlot || inputSlot) && componentPopupVisited);
   // Чтение present вычисляет весь объект: producer работает и для закрытого
   // control/SSR; только DOM ниже остаётся условным.
   let popupView = $derived.by(() => {
@@ -495,6 +498,7 @@
   });
 
   onMount(() => {
+    clearSelectComponentHydration(defaultReference);
     hydrated = true;
     if (providedOpen === undefined) open = internalOpen;
   });
@@ -691,9 +695,10 @@
   const initializedComponentEditors = new WeakSet<HTMLElement>();
   function registerInput(registration: SelectInputRegistration<EditorElement>) {
     const editor = selectComponentInputElement(registration);
+    const hydrating = editor && takeSelectComponentHydration(editor);
     if (editor && !initializedComponentEditors.has(editor)) {
       initializedComponentEditors.add(editor);
-      if (editor instanceof HTMLTextAreaElement) editor.setSelectionRange(0, 0);
+      if (!hydrating && editor instanceof HTMLTextAreaElement) editor.setSelectionRange(0, 0);
     }
     const current = { registration }; customInput = current;
     return () => { if (customInput === current) customInput = undefined; };
@@ -1587,7 +1592,7 @@
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`select-prefix:${prefix}:${rootPrefix}`} />{/if}
 {#if rootSlot && rootContext}
-  <SelectComponent component={rootSlot} context={rootContext} />
+  <SelectComponent component={rootSlot} context={rootContext} root />
   {@render componentPopup()}
 {:else}<div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
   data-ant-select-value-layer={selectedLayer || undefined}
@@ -1604,6 +1609,7 @@
   ]} bind:this={container} style={[componentTheme.style, typeof style === 'string' ? style : undefined].filter(Boolean).join(';') || undefined}>
   <div
     {...(inputSlot ? componentDOMAttributes(false) : {})}
+    {...selectComponentHydrationAttributes(Boolean(inputSlot))}
     onfocusin={inputSlot || onFocus ? componentFocus : undefined}
     onfocusout={inputSlot ? componentBlur : onBlur ? componentPublicBlur : undefined}
     onkeydown={inputSlot ? componentInputRootKeyboard : onKeyDown ? event => onKeyDown?.(event) : undefined}

@@ -5065,6 +5065,7 @@
             "src/lib/select-components.types.ts",
             "src/lib/select-components.engine.ts",
             "src/lib/select-components.engine.test.ts",
+            "src/lib/select-components-hydration.dom.ts",
             "src/lib/index.ts",
             "tests/browser/fixtures/SelectComponentsCase.svelte",
             "tests/browser/fixtures/SelectComponentsFixtures.svelte",
@@ -5085,10 +5086,24 @@
             "tests/browser/select-components-regression.spec.ts",
             "tests/browser/fixtures/SelectComponentsRegressionCase.svelte",
             "tests/browser/fixtures/SelectComponentsRegressionFixtures.svelte",
+            "tests/browser/fixtures/SelectComponentsHydrationCase.svelte",
+            "tests/browser/fixtures/ant-design-select-components-hydration-source-manifest.json",
+            "tests/browser/fixtures/ant-design-select-components-hydration-reference.json.gz",
+            "tests/browser/fixtures/select-components-hydration-cases.mjs",
+            "tests/browser/fixtures/select-components-hydration-cases.d.mts",
+            "tests/browser/fixtures/select-components-hydration.server.ts",
+            "tests/browser/fixtures/select-components-hydration.client.ts",
+            "tests/browser/fixtures/select-components-hydration.styles.client.ts",
+            "tests/browser/fixtures/select-components-hydration.html",
+            "tests/browser/select-components-hydration-reference.ts",
+            "tests/browser/select-components-hydration-metrics.mjs",
+            "tests/browser/select-components-hydration-metrics.d.mts",
+            "tests/browser/select-components-hydration-assertions.ts",
+            "tests/browser/select-components-hydration.spec.ts",
             "tests/package/select-components.ssr.test.ts",
             "readme.md"
           ],
-          "note": "Ant Design6.6.8 /984592267de88fbf9cdaecc96a56629e721c709d, rc-select1.10.1 и unmodified official UMD/React18.3.1. Components.root/input принимают native tag, Svelte Snippet с attributes/register, {render,props} или {element,props,ref}. Root полностью заменяет control body и подавляет input slot; prefix/editor/content/suffix/clear DOM не создаются, но suffix и semantic classNames/styles pure producers вычисляются eagerly, включая SSR. Generated root attrs перекрывают own props, callbacks идут internal→own; input own props перекрывают generated attrs и callbacks идут own→internal. Полные input attrs/order, textarea value/content, CSSOM/boxes, DOM identity и callbacks сохраняются в raw. DOM/composite registration возвращает cleanup; публичные nativeElement/inputElement bindables и методы остаются Native API. Composite без focus/blur не получает DOM fallback. Callback refs при подключении и очистке сохраняются; transient React composeRef detach/attach на прежнем DOM отделён от Svelte registration. Root focus hooks используют native focusin/focusout. Source forwardRef/ReactElement и Native Snippet/element descriptor имеют отдельные полные raw graphs и узкую named definition boundary. Проверенный корпус использует single Select и combobox; custom input в multiple/tags и отдельная hydration replacement цепочка требуют дальнейшей сверки. Canonical8owners/67actions+26SSR и отдельный flow5owners/71actions+25SSR независимо повторены whole-byte-equal и сохранены без потерь в4 gzip; реальные diagnostics сохранены. Полный перенос family не завершён; motion и оставшиеся callback/search возможности остаются в extended-api. AutoComplete children(control) имеет приоритет над components.input; components.root подавляет оба editor renderers."
+          "note": "Ant Design6.6.8 /984592267de88fbf9cdaecc96a56629e721c709d, rc-select1.10.1 и unmodified official UMD/React18.3.1. Components.root/input принимают native tag, Svelte Snippet с attributes/register, {render,props} или {element,props,ref}. Root полностью заменяет control body и подавляет input slot; prefix/editor/content/suffix/clear DOM не создаются, но suffix и semantic classNames/styles pure producers вычисляются eagerly, включая SSR. Generated root attrs перекрывают own props, callbacks идут internal→own; input own props перекрывают generated attrs и callbacks идут own→internal. Полные input attrs/order, textarea value/content, CSSOM/boxes, DOM identity и callbacks сохраняются в raw. DOM/composite registration возвращает cleanup; публичные nativeElement/inputElement bindables и методы остаются Native API. Composite без focus/blur не получает DOM fallback. Callback refs при подключении и очистке сохраняются; transient React composeRef detach/attach на прежнем DOM отделён от Svelte registration. Root focus hooks используют native focusin/focusout. Source forwardRef/ReactElement и Native Snippet/element descriptor имеют отдельные полные raw graphs и узкую named definition boundary. Проверенный корпус использует single Select и combobox; custom input в multiple/tags требует дальнейшей сверки. Canonical8owners/67actions+26SSR и отдельный flow5owners/71actions+25SSR независимо повторены whole-byte-equal и сохранены без потерь в4 gzip; реальные diagnostics сохранены. Отдельный actual DOM-free Original SSR→hydrateRoot корпус6owners/34actions с обеими SSR-сериализациями независимо повторён whole-byte-equal и сохранён в отдельном lossless gzip. Проверяются pre-hydration draft/caret, defaultValue, textarea/composite refs, DOM identity при hydrate и replacement, события и cleanup; исходные value-reset commit phases отделены от settled состояния. Приватный data-ant-native-select-component-ssr появляется только при SSR на intrinsic root input либо стандартном DIV с активным inputSlot, снимается до внешних refs и не входит в context.attributes. Package SSR проверяет прежние51 состояния и6 hydration owners без DOM/resources/refs. При input→root replacement blur исчезающего default root подавляется. При полном удалении сфокусированного AutoComplete сохранён прежний синхронный connected Native blur до DOM removal/onDestroy; Source его не вызывает. Исходный поздний onOpenChange(false) после удаления остаётся raw; Native отменяет pending close и сохраняет late silence. Focusin/out, composeRef/attachment и commit-timing boundaries сохраняются. Полный перенос family не завершён; motion и оставшиеся callback/search возможности остаются в extended-api. AutoComplete children(control) имеет приоритет над components.input; components.root подавляет оба editor renderers."
         }
       ]
     },
@@ -10743,6 +10758,7 @@
             "src/lib/select-components.types.ts",
             "src/lib/select-components.engine.ts",
             "src/lib/select-components.engine.test.ts",
+            "src/lib/select-components-hydration.dom.ts",
             "src/lib/index.ts",
             "tests/browser/fixtures/SelectComponentsCase.svelte",
             "tests/browser/fixtures/SelectComponentsFixtures.svelte",
@@ -10763,10 +10779,24 @@
             "tests/browser/select-components-regression.spec.ts",
             "tests/browser/fixtures/SelectComponentsRegressionCase.svelte",
             "tests/browser/fixtures/SelectComponentsRegressionFixtures.svelte",
+            "tests/browser/fixtures/SelectComponentsHydrationCase.svelte",
+            "tests/browser/fixtures/ant-design-select-components-hydration-source-manifest.json",
+            "tests/browser/fixtures/ant-design-select-components-hydration-reference.json.gz",
+            "tests/browser/fixtures/select-components-hydration-cases.mjs",
+            "tests/browser/fixtures/select-components-hydration-cases.d.mts",
+            "tests/browser/fixtures/select-components-hydration.server.ts",
+            "tests/browser/fixtures/select-components-hydration.client.ts",
+            "tests/browser/fixtures/select-components-hydration.styles.client.ts",
+            "tests/browser/fixtures/select-components-hydration.html",
+            "tests/browser/select-components-hydration-reference.ts",
+            "tests/browser/select-components-hydration-metrics.mjs",
+            "tests/browser/select-components-hydration-metrics.d.mts",
+            "tests/browser/select-components-hydration-assertions.ts",
+            "tests/browser/select-components-hydration.spec.ts",
             "tests/package/select-components.ssr.test.ts",
             "readme.md"
           ],
-          "note": "Ant Design6.6.8 /984592267de88fbf9cdaecc96a56629e721c709d, rc-select1.10.1 и unmodified official UMD/React18.3.1. Components.root/input принимают native tag, Svelte Snippet с attributes/register, {render,props} или {element,props,ref}. Root полностью заменяет control body и подавляет input slot; prefix/editor/content/suffix/clear DOM не создаются, но suffix и semantic classNames/styles pure producers вычисляются eagerly, включая SSR. Generated root attrs перекрывают own props, callbacks идут internal→own; input own props перекрывают generated attrs и callbacks идут own→internal. Полные input attrs/order, textarea value/content, CSSOM/boxes, DOM identity и callbacks сохраняются в raw. DOM/composite registration возвращает cleanup; публичные nativeElement/inputElement bindables и методы остаются Native API. Composite без focus/blur не получает DOM fallback. Callback refs при подключении и очистке сохраняются; transient React composeRef detach/attach на прежнем DOM отделён от Svelte registration. Root focus hooks используют native focusin/focusout. Source forwardRef/ReactElement и Native Snippet/element descriptor имеют отдельные полные raw graphs и узкую named definition boundary. Проверенный корпус использует single Select и combobox; custom input в multiple/tags и отдельная hydration replacement цепочка требуют дальнейшей сверки. Canonical8owners/67actions+26SSR и отдельный flow5owners/71actions+25SSR независимо повторены whole-byte-equal и сохранены без потерь в4 gzip; реальные diagnostics сохранены. Полный перенос family не завершён; motion и оставшиеся callback/search возможности остаются в extended-api."
+          "note": "Ant Design6.6.8 /984592267de88fbf9cdaecc96a56629e721c709d, rc-select1.10.1 и unmodified official UMD/React18.3.1. Components.root/input принимают native tag, Svelte Snippet с attributes/register, {render,props} или {element,props,ref}. Root полностью заменяет control body и подавляет input slot; prefix/editor/content/suffix/clear DOM не создаются, но suffix и semantic classNames/styles pure producers вычисляются eagerly, включая SSR. Generated root attrs перекрывают own props, callbacks идут internal→own; input own props перекрывают generated attrs и callbacks идут own→internal. Полные input attrs/order, textarea value/content, CSSOM/boxes, DOM identity и callbacks сохраняются в raw. DOM/composite registration возвращает cleanup; публичные nativeElement/inputElement bindables и методы остаются Native API. Composite без focus/blur не получает DOM fallback. Callback refs при подключении и очистке сохраняются; transient React composeRef detach/attach на прежнем DOM отделён от Svelte registration. Root focus hooks используют native focusin/focusout. Source forwardRef/ReactElement и Native Snippet/element descriptor имеют отдельные полные raw graphs и узкую named definition boundary. Проверенный корпус использует single Select и combobox; custom input в multiple/tags требует дальнейшей сверки. Canonical8owners/67actions+26SSR и отдельный flow5owners/71actions+25SSR независимо повторены whole-byte-equal и сохранены без потерь в4 gzip; реальные diagnostics сохранены. Отдельный actual DOM-free Original SSR→hydrateRoot корпус6owners/34actions с обеими SSR-сериализациями независимо повторён whole-byte-equal и сохранён в отдельном lossless gzip. Проверяются pre-hydration draft/caret, defaultValue, textarea/composite refs, DOM identity при hydrate и replacement, события и cleanup; исходные value-reset commit phases отделены от settled состояния. Приватный data-ant-native-select-component-ssr появляется только при SSR на intrinsic root input либо стандартном DIV с активным inputSlot, снимается до внешних refs и не входит в context.attributes. Package SSR проверяет прежние51 состояния и6 hydration owners без DOM/resources/refs. При input→root replacement blur исчезающего default root подавляется. При полном удалении сфокусированного AutoComplete сохранён прежний синхронный connected Native blur до DOM removal/onDestroy; Source его не вызывает. Исходный поздний onOpenChange(false) после удаления остаётся raw; Native отменяет pending close и сохраняет late silence. Focusin/out, composeRef/attachment и commit-timing boundaries сохраняются. Полный перенос family не завершён; motion и оставшиеся callback/search возможности остаются в extended-api."
         }
       ]
     },

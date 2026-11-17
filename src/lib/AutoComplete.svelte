@@ -58,6 +58,7 @@
   import { resolveSelectSuffix, resolveSelectMenuIcon, resolveSelectClear } from './select-icons.engine';
   import { selectIconAttribute } from './select-icon-attribute.engine';
   import SelectComponent from './SelectComponent.svelte';
+  import { clearSelectComponentHydration, selectComponentHydrationAttributes, takeSelectComponentHydration } from './select-components-hydration.dom';
   import type { SelectRootContext, SelectRootRegistration, SelectInputRegistration } from './select-components.types';
   import { mergeSelectComponentAttributes, focusSelectComponent, blurSelectComponent, selectComponentNativeElement, selectComponentInputElement } from './select-components.engine';
   import { treeSelectNativeKeyCancelled } from './tree-select-components.engine';
@@ -284,6 +285,8 @@
   let customInput = $state.raw<{ registration: SelectInputRegistration<EditorElement> }>();
   let rootSlot = $derived(components?.root);
   let inputSlot = $derived(!rootSlot && !children ? components?.input : undefined);
+  let replacingDefaultComponentRoot = false;
+  $effect.pre(() => { replacingDefaultComponentRoot = Boolean(rootSlot); });
   let root = $derived(rootSlot ? customRoot && selectComponentNativeElement(customRoot.registration) : defaultRoot);
   let editor = $derived((rootSlot ? customRoot && selectComponentInputElement(customRoot.registration)
     : inputSlot ? customInput && selectComponentInputElement(customInput.registration) : defaultEditor) as HTMLInputElement | HTMLTextAreaElement | undefined);
@@ -342,11 +345,13 @@
   let mouseActivated = false;
   let pendingClearClose = $state.raw<MessageChannel>();
   let pendingPointerUpdate: MessageChannel | undefined;
+  let componentDestroyed = false;
   let searchBeforeClose = false;
   let previous = untrack(() => ({ value, open }));
   onMount(() => {
+    clearSelectComponentHydration(defaultRoot);
     hydrated = true;
-    return () => { cancelClearClose(); cancelPointerUpdate(); };
+    return () => { componentDestroyed = true; cancelClearClose(); cancelPointerUpdate(); };
   });
 
   $effect.pre(() => {
@@ -553,13 +558,18 @@
   }
 
   function scheduleClose(synchronizeSearch = false) {
+    if (componentDestroyed) return;
     cancelClearClose();
     searchBeforeClose = synchronizeSearch;
     // Source закрывает следующим task; query имеет отдельную очередь обновления.
     const channel = new MessageChannel();
     pendingClearClose = channel;
     channel.port1.onmessage = () => {
-      if (pendingClearClose === channel) requestOpen(false);
+      // Blur при DOM removal может создать task уже во время cleanup.
+      // Даже устаревшее сообщение освобождает собственные порты.
+      channel.port1.close();
+      channel.port2.close();
+      if (!componentDestroyed && pendingClearClose === channel) requestOpen(false);
     };
     channel.port2.postMessage(null);
   }
@@ -778,9 +788,10 @@
   function registerComponentInput(registration: SelectInputRegistration<EditorElement>) {
     const current = { registration };
     const control = selectComponentInputElement(registration);
+    const hydrating = control && takeSelectComponentHydration(control);
     if (control instanceof HTMLTextAreaElement && !initializedComponentTextareas.has(control)) {
       initializedComponentTextareas.add(control);
-      control.setSelectionRange(0, 0);
+      if (!hydrating) control.setSelectionRange(0, 0);
     }
     componentComposing = false;
     customInput = current;
@@ -804,12 +815,17 @@
     if (!state.blocked) state.onFocus?.(event);
   }
   function componentRootBlur(event: FocusEvent) {
+    // Default root получает тот же teardown guard, что merged custom callbacks.
+    if ((event.currentTarget as Element | null)?.isConnected === false) return;
     const state = committedComponentState;
     focused = false;
     enterLock = false;
     preview = undefined;
     if (state.visible && !(event.relatedTarget instanceof Node && state.popup?.contains(event.relatedTarget))) scheduleClose();
     if (!state.blocked) { field?.onBlur(); state.onBlur?.(event); }
+  }
+  function componentDefaultRootBlur(event: FocusEvent) {
+    if (!replacingDefaultComponentRoot) componentRootBlur(event);
   }
   function componentRootClick(event: MouseEvent) {
     const state = committedComponentState;
@@ -947,7 +963,7 @@
     return { ...Object.fromEntries(Object.entries(remaining).filter(([key]) => !key.startsWith('aria-'))),
       ...(Object.hasOwn(componentProps, 'name') ? { name } : {}),
       ...(Object.hasOwn(componentProps, 'readonly') ? { readonly } : {}),
-      onfocusin: componentRootFocus, onfocusout: componentRootBlur,
+      onfocusin: componentRootFocus, onfocusout: componentDefaultRootBlur,
       onkeydown: componentRootKeydown, onkeyup: componentRootKeyup, onclick: onClick };
   }
   let componentRootAttributes = $derived.by(componentDefaultRootAttributes);
@@ -1135,7 +1151,7 @@
 
 {#snippet body(view: { mounted: boolean; content: PopupContent })}
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`auto-complete-prefix:${prefix}:${rootPrefix}`} />{/if}
-{#if rootSlot}<SelectComponent component={rootSlot} context={rootContext} />{@render componentPopup(view)}{:else}
+{#if rootSlot}<SelectComponent component={rootSlot} context={rootContext} root />{@render componentPopup(view)}{:else}
 <!-- svelte-ignore a11y_no_static_element_interactions (Корень перенаправляет mouse focus нативному input; клавиатурой управляет input.) --><div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
   data-ant-auto-complete-source-theme={Boolean(componentTheme.className) || undefined}
   title={attributes.title}
@@ -1144,6 +1160,7 @@
   data-ant-auto-complete-legacy-color={legacyColor || undefined}
   bind:this={defaultRoot} dir={config.direction}
   data-ant-auto-complete-component-input={Boolean(inputSlot) || undefined}
+  {...selectComponentHydrationAttributes(Boolean(inputSlot))}
   {...inputSlot ? componentRootAttributes : {}}
   {...selectStyleAttributes(semantics.styles.root)} style={initialRootStyle} {@attach rootStyle.attach}
   onmousedown={handleRootMouseDown}
