@@ -9978,7 +9978,20 @@ popup/options, generated IDs, refs, query, text selection, focus, FormData и ca
 FieldNames и generic `AutoCompleteProps<OptionType>` используют
 [общий слой данных](#данные-options-и-fieldnames). Значение свободного ввода остаётся string;
 raw OptionType не требует literal value/label и не получает добавленных canonical полей.
-OptionRender, searchIcon и остальные render/component overrides пока отсутствуют.
+`optionRender` — Snippet с flattened option и `{ index }`, как у Select. Index
+абсолютный, включая заголовки групп и строки вне текущего virtual window.
+Renderer меняет содержимое пункта, сохраняя raw option, выбранный label, title и
+фильтрацию. После посещения закрытый список применяет новый renderer к сохранённым
+options; следующее открытие принимает актуальные данные. SSR не вызывает optionRender.
+
+`labelRender` — чистая функция с metadata Select; null/undefined возвращают raw value.
+Она работает и при SSR. Стандартный editor сохраняет строковое value и прозрачный
+display DOM; custom input подавляет этот DOM, сохраняя вызовы producer.
+Title сначала берётся из literal title/label текущего raw option, затем из display
+item; внешний title имеет приоритет. Переданный `tagRender` остаётся в semantic
+metadata, но combobox его не вызывает.
+
+SearchIcon и остальные icon/component overrides пока отсутствуют.
 Deprecated dataSource/Option
 и dropdown aliases исключены из переноса. Generic numeric/object values не входят в первый этап.
 

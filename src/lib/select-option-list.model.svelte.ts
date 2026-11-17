@@ -11,6 +11,8 @@ export function createSelectOptionList<Item>(options: {
   estimate: () => number;
   realVirtual: () => boolean;
   open: () => boolean;
+  /** Отложенное закрытие сохраняет последнюю открытую коллекцию. */
+  lockOptions?: () => boolean;
   searchValue: () => string;
   selectedIndex: () => number;
   onSelectedActive?: (index: number) => void;
@@ -43,7 +45,7 @@ export function createSelectOptionList<Item>(options: {
   // Source кеширует закрытую коллекцию, сохраняя реактивные размеры списка.
   $effect.pre(() => {
     const next = options.items();
-    if (!options.open()) return;
+    if (!options.open() || options.lockOptions?.()) return;
     untrack(() => {
       items = next;
       if (hadItems && !next.length) {

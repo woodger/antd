@@ -4648,7 +4648,7 @@
           "state": "partial",
           "requiredForV1": false,
           "evidence": [],
-          "note": "FieldNames/generic raw OptionType и semantic-popup-surface подключены. OptionRender, searchIcon и остальные icon/component overrides требуют отдельного переноса. String value сохраняется; исходный AutoComplete исключает labelInValue и optionLabelProp. Deprecated dataSource/Option children/dropdown aliases и option.props getter не переносятся."
+          "note": "FieldNames/generic raw OptionType и semantic-popup-surface подключены. OptionRender/labelRender/tagRender описаны в option-label-render; searchIcon и остальные icon/component overrides требуют отдельного переноса. String value сохраняется; исходный AutoComplete исключает labelInValue и optionLabelProp. Deprecated dataSource/Option children/dropdown aliases и option.props getter не переносятся."
         },
         {
           "id": "source-select-theme",
@@ -4907,7 +4907,7 @@
             "tests/browser/fixtures/select-data-hydration.html",
             "tests/browser/fixtures/select-data-styles.client.ts"
           ],
-          "note": "Ant Design6.6.8/rc-select1.10.1: общий pipeline сохраняет исходные records, literal key/value/index fallback, отдельные mapped value/label, one-level groups, last-value callback winner и shallow-copy arguments без deprecated props getter. Generic raw OptionType не требует canonical полей. Title/className/CSS object и whitelist DOM/data/aria attrs листьев, className/title headers, группы в measured viewport. Все primary40/169, SSR40, diagnostic4/16, attrs10/38 и paired mappedARIA2/10 actual UMD traces независимо повторены побайтно. Native logical aria-selected исправляет доказанное virtual против nonvirtual Source противоречие; mapped token lookup исправляет потерю выбора при literal value чтении. Native label/NFKD filter и удалённый disabled selected cache используют отдельные whole public Source owners1/3 и1/6 без ledger filtering; historical a231 browser baseline сохранён. Старые unit корпуса tags/sort/tokens/count перенаправлены на живые raw engines; splitSelectTokens сохраняется также для TreeSelect. Проверены57 новых browser cases:40 полных raw traces,10 attrs,2 one-level diagnostics и mapped token correction,4 strict hydration. SSR40 сохраняет реальные pure sort calls4 без DOM/interactive effects. Hydra сохраняет DOM/method/ref identity и FormData; оба AC unmount сразу после повторного выбора отменяют queued MessageChannel close, все ресурсы и поздние callbacks отсутствуют. Отдельный production consumer40/169 использует только публичный пакет и stylesheet, без React/server/source/tests modules; DOM/refs/полный owner state стабильны после unmount и0/1000ms. Existing browser regression1604 подтверждён across runs; два устаревших ColorPicker locators исправлены и весь изменённый29-case spec проверен повторно. Primitive selected-value binding сохранён; labelInValue/rich selected-label codec/optionLabelProp/labelRender и прочий extended API остаются отдельным зависимым этапом."
+          "note": "Ant Design6.6.8/rc-select1.10.1: общий pipeline сохраняет исходные records, literal key/value/index fallback, отдельные mapped value/label, one-level groups, last-value callback winner и shallow-copy arguments без deprecated props getter. Generic raw OptionType не требует canonical полей. Title/className/CSS object и whitelist DOM/data/aria attrs листьев, className/title headers, группы в measured viewport. Все primary40/169, SSR40, diagnostic4/16, attrs10/38 и paired mappedARIA2/10 actual UMD traces независимо повторены побайтно. Native logical aria-selected исправляет доказанное virtual против nonvirtual Source противоречие; mapped token lookup исправляет потерю выбора при literal value чтении. Native label/NFKD filter и удалённый disabled selected cache используют отдельные whole public Source owners1/3 и1/6 без ledger filtering; historical a231 browser baseline сохранён. Старые unit корпуса tags/sort/tokens/count перенаправлены на живые raw engines; splitSelectTokens сохраняется также для TreeSelect. Проверены57 новых browser cases:40 полных raw traces,10 attrs,2 one-level diagnostics и mapped token correction,4 strict hydration. SSR40 сохраняет реальные pure sort calls4 без DOM/interactive effects. Hydra сохраняет DOM/method/ref identity и FormData; оба AC unmount сразу после повторного выбора отменяют queued MessageChannel close, все ресурсы и поздние callbacks отсутствуют. Отдельный production consumer40/169 использует только публичный пакет и stylesheet, без React/server/source/tests modules; DOM/refs/полный owner state стабильны после unmount и0/1000ms. Existing browser regression1604 подтверждён across runs; два устаревших ColorPicker locators исправлены и весь изменённый29-case spec проверен повторно. Primitive selected-value binding сохранён; labelInValue/optionLabelProp исключены самим AutoComplete; labelRender/optionRender перенесены в option-label-render, прочий extended API остаётся отдельным этапом."
         },
         {
           "id": "semantic-popup-surface",
@@ -4980,6 +4980,38 @@
             "tests/package/select-surface-omission.ssr.test.ts"
           ],
           "note": "Согласованные Native границы: прежние Select class/string style остаются на outer container, новые object/semantic root — на public control; AutoComplete сохраняет свой root и наследуемый legacy input colour. Default manual popup сохраняет flex, DOM-container/FormData и закрытый lifetime Select; новый custom renderer использует Source block flow. Native option/remove buttons, доступные имена listbox/remove и presentation tags сохраняются, вся геометрия/authored CSS/paint проверяется. Bindable Select value/open не различают absent и own undefined в public props-rest; raw provided aliases не подменяются interaction shadow. AutoComplete сохраняет собственные raw props без этой потери. React element и Svelte Snippet представлены полными отдельными raw graphs с authored roles. Pure CSR passes могут повторяться; Source промежуточный controlled change→select→close pass пропускается только при точном full final props/result receipt, остальных равных полях и полном callback ledger. SSR порядок/metadata/results строгие; исходные наблюдения не фильтруются. Эти framework/Native границы не объявляются незавершённой реализацией обычного API. До первого custom visit сохраняется conditional default Select: исходный default shell уже удалён до first closed renderer assignment; новый custom shell затем сохраняет identity. AutoComplete кеширует и исходный default subtree. Сохранён прежний Native controlled multiple query при SSR (Source сериализует пустой editor) и один connected onOpenChange(false) при focused open disposal. Последние DOM callbacks используются для blur удаления без чтения уничтоженного props owner. Direct Native input сохраняется; отступ Source suffix wrapper воспроизводится отдельным flex spacer без изменения authored input margins. Собственная реактивность Svelte Snippet остаётся доступной при закрытии."
+        },
+        {
+          "id": "option-label-render",
+          "title": "OptionRender, labelRender и не вызываемый combobox tagRender",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/AutoComplete.svelte",
+            "src/lib/auto-complete.types.ts",
+            "src/lib/select-option-list.model.svelte.ts",
+            "tests/browser/fixtures/AutoCompleteRenderCase.svelte",
+            "tests/browser/fixtures/AutoCompleteRenderFixtures.svelte",
+            "tests/browser/fixtures/AutoCompleteRenderLabelTitleCase.svelte",
+            "tests/browser/fixtures/AutoCompleteRenderLabelTitleFixtures.svelte",
+            "tests/browser/fixtures/ant-design-autocomplete-render-reference.json.gz",
+            "tests/browser/fixtures/ant-design-autocomplete-render-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-autocomplete-render-label-title-reference.json",
+            "tests/browser/fixtures/ant-design-autocomplete-render-label-title-ssr-reference.json",
+            "tests/browser/autocomplete-render-reference.ts",
+            "tests/browser/autocomplete-render-assertions.ts",
+            "tests/browser/autocomplete-render.spec.ts",
+            "tests/browser/autocomplete-render-label-title.spec.ts",
+            "tests/package/autocomplete-render.ssr.test.ts",
+            "tests/package/autocomplete-render-label-title.ssr.test.ts",
+            "tests/browser/fixtures/AutoCompleteTextareaResetFixtures.svelte",
+            "tests/browser/auto-complete-textarea-reset.spec.ts",
+            "tests/browser/fixtures/AutoCompleteCloseFixtures.svelte",
+            "tests/browser/fixtures/ant-design-autocomplete-close-reference.json.gz",
+            "tests/browser/autocomplete-close-reference.ts",
+            "tests/browser/auto-complete-close.spec.ts"
+          ],
+          "note": "Antd6.6.8/rc-select1.10.1: optionRender — Svelte Snippet с полным flattened entry/data identity и абсолютным info.index; группы, filtering и virtual window сохраняются. LabelRender — обычный чистый producer с ordered label/value/key/disabled/title и nullish raw-value fallback; empty combobox value не вызывает его. Текст editor остаётся raw value, стандартный прозрачный display DOM сохраняется, custom input подавляет только этот DOM. Title выбирается из literal raw option title/label, затем display item, внешний title перекрывает оба. TagRender остаётся в raw semantic props и не вызывается. Закрытый посещённый popup исполняет новый renderer со старой коллекцией; Source lock удерживает только items; отдельная синхронизация combobox query сохраняет проверенный порядок active/open после прямого клика, клика после наведения и Enter. Reopen принимает текущие данные. Callback/data/result graphs и реальные diagnostics не урезаются; ReactElement/Svelte Snippet и transient React callback-ref notifications хранятся раздельно с полными authored public node specifications, DOM identity и точной Native mount/disposal boundary. Source7 owners/60actions+14SSR и дополнительные2/10+16SSR независимо повторены побайтно; все прежние478 эталонов сохранены. Все9 browser owner trajectories проверяют полный CSSOM/геометрию/paint, aliases/props/producers/events/refs и 1000ms disposal silence; SSR30 не создаёт DOM/browser resources. Custom input получает исходный input class, textarea отражает controlled value в defaultValue/text, внешний title остаётся также на корне. Существующие Native names/ARIA/caret/HTML-input attributes и default-value reset сохраняются. Три отдельные Native browser проверки подтверждают uncontrolled/controlled/cancelled textarea reset, FormData, defaultValue/text, неизменные editor/method refs и отсутствие лишних callbacks после reset/unmount. Дополнительный Original control из6 owners различает direct pointer, settled hover и Enter при virtual false/true без DOM чтения внутри callbacks/effects: прямой клик сохраняет active Beta, остальные жесты снимают active после close; полные38MB first/repeat byte-identical,482 предшествующих эталона сохранены. Порядок public onActive/open проверяется отдельно от CSS и скрытых SR neighbors."
         }
       ]
     },

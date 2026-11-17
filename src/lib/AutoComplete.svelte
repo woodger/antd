@@ -10,7 +10,7 @@
   } from './auto-complete.types';
   import type {
     SelectScrollConfig, SelectPopupContent as PopupContent, SelectConfigSemanticInfo,
-    SelectClassNames, SelectStyles
+    SelectClassNames, SelectStyles, SelectFlattenOption
   } from './select.types';
   import type { RenderEmptyContent } from './types';
   import {
@@ -66,6 +66,9 @@
     prefix: prefixContent,
     options = [],
     fieldNames,
+    optionRender,
+    labelRender,
+    tagRender: _tagRender,
     value,
     defaultValue,
     open,
@@ -134,6 +137,7 @@
   let innerOpen = $state(untrack(() => open ?? defaultOpen));
   let actualValue = $derived(value ?? innerValue);
   let text = $derived(actualValue ?? '');
+  let listSearch = $state(untrack(() => text));
   let blocked = $derived(
     disabled ?? field?.disabled ?? form?.disabled ?? config.componentDisabled
   );
@@ -149,7 +153,7 @@
   let fields = $derived(selectFields(fieldNames));
   let maps = $derived(collectSelectData<string, OptionType>(options, fields));
   let entries = $derived(flattenSelectData<string, OptionType>(
-    filterSelectData(options, text, fields, { filterOption: searchConfig.filterOption ?? false,
+    filterSelectData(options, listSearch, fields, { filterOption: searchConfig.filterOption ?? false,
       defaultMatch: autoCompleteMatchesData }),
     fields
   ));
@@ -159,7 +163,14 @@
   ));
   $effect(() => { previousCache = cache; });
   let displayValue = $derived(text ? cache.display[0] : undefined);
-  let displayLabel = $derived((displayValue?.label ?? actualValue) as RenderEmptyContent);
+  let displayLabel = $derived.by(() => {
+    const item = displayValue;
+    if (typeof labelRender !== 'function' || !item)
+      return (item?.label ?? actualValue) as RenderEmptyContent;
+    return labelRender({ label: item.label, value: item.value, key: item.value,
+      disabled: maps.valueOptions.has(item.value) ? item.disabled : undefined,
+      title: item.title }) ?? item.value;
+  });
   let selectedRow = $derived(displayValue
     ? entries.find(entry => !entry.group && entry.value === displayValue.value) : undefined);
   let selectedClass = $derived(typeof selectedRow?.data.className === 'string'
@@ -264,6 +275,11 @@
     const control = editor;
     if (control) return untrack(() => inputStyle.attach(control));
   });
+  $effect(() => {
+    const control = editor;
+    void searchText;
+    if (control instanceof HTMLTextAreaElement) control.defaultValue = control.value;
+  });
   const anchorWidthVariable = '--ant-native-auto-complete-anchor-width';
   let matchedWidth = $derived(popupMatchSelectWidth ?? config.popupMatchSelectWidth ?? true);
   let realVirtual = $derived(effectiveVirtual !== false && matchedWidth !== false);
@@ -289,11 +305,20 @@
     preserveVariables: [anchorWidthVariable]
   }));
   let enterLock = false;
-  let pendingClearClose: MessageChannel | undefined;
+  let pendingClearClose = $state.raw<MessageChannel>();
+  let pendingPointerUpdate: MessageChannel | undefined;
+  let searchBeforeClose = false;
   let previous = untrack(() => ({ value, open }));
   onMount(() => {
     hydrated = true;
-    return cancelClearClose;
+    return () => { cancelClearClose(); cancelPointerUpdate(); };
+  });
+
+  $effect.pre(() => {
+    const query = text;
+    // React синхронизирует combobox search отдельным effect. Уже ожидающий
+    // continuous pointer task выполняет его до close; иначе close приходит первым.
+    if (!pendingClearClose || searchBeforeClose) listSearch = query;
   });
 
   // Без bind: обновление spread props может сбросить локальное значение ref prop.
@@ -398,7 +423,7 @@
   $effect(() => {
     const expanded = visible;
     const rows = optionList.items;
-    const query = text;
+    const query = listSearch;
     if (!listVisited && !expanded) return;
     if (!listVisited || rows.length !== lastListLength || query !== lastListSearch) {
       listVisited = true;
@@ -413,10 +438,11 @@
     estimate: () => itemHeight,
     realVirtual: () => realVirtual,
     open: () => visible,
-    searchValue: () => text,
+    lockOptions: () => Boolean(pendingClearClose),
+    searchValue: () => listSearch,
     // Source selected-prefix lookup deliberately reads literal data.value.
-    selectedIndex: (): number => !actualValue ? -1 : optionList.items.findIndex(row => text
-      ? String(row.item.data.value).startsWith(text) : row.item.data.value === actualValue),
+    selectedIndex: (): number => !actualValue ? -1 : optionList.items.findIndex(row => listSearch
+      ? String(row.item.data.value).startsWith(listSearch) : row.item.data.value === actualValue),
     onSelectedActive: index => activate(index)
   });
 
@@ -425,6 +451,21 @@
     const entry = optionList.items[index]?.item;
     notifyActive(entry?.value ?? null);
     if (keyboard) optionList.scrollActive(index);
+  }
+
+  function reservePointerUpdate() {
+    if (pendingPointerUpdate) return;
+    const channel = new MessageChannel();
+    pendingPointerUpdate = channel;
+    channel.port1.onmessage = () => {
+      if (pendingPointerUpdate === channel) cancelPointerUpdate();
+    };
+    channel.port2.postMessage(null);
+  }
+  function cancelPointerUpdate() {
+    pendingPointerUpdate?.port1.close();
+    pendingPointerUpdate?.port2.close();
+    pendingPointerUpdate = undefined;
   }
 
   function register(element: HTMLInputElement | HTMLTextAreaElement) {
@@ -449,9 +490,10 @@
     if (!visible) return;
     scheduleClose();
   }
-  function scheduleClose() {
+  function scheduleClose(synchronizeSearch = false) {
     cancelClearClose();
-    // Source закрывает следующим task: query/activation завершаются перед onOpenChange(false).
+    searchBeforeClose = synchronizeSearch;
+    // Source закрывает следующим task; query имеет отдельную очередь обновления.
     const channel = new MessageChannel();
     pendingClearClose = channel;
     channel.port1.onmessage = () => {
@@ -463,6 +505,7 @@
     pendingClearClose?.port1.close();
     pendingClearClose?.port2.close();
     pendingClearClose = undefined;
+    searchBeforeClose = false;
   }
   function change(next: string | undefined, before = actualValue) {
     innerValue = next;
@@ -493,7 +536,7 @@
     const option = maps.valueOptions.get(entry.value) ?? cache.options.get(entry.value);
     onSelect?.(entry.value, copySelectData(option) as OptionType);
     preview = undefined;
-    scheduleClose();
+    scheduleClose(Boolean(pendingPointerUpdate));
     editor?.focus({ preventScroll: true });
   }
   function clear() {
@@ -616,7 +659,7 @@
         ' '
       )
         || undefined,
-      class: semantics.classes.input,
+      class: [`${prefix}-input`, semantics.classes.input].filter(Boolean).join(' '),
       style: initialInputStyle,
       oninput: handleInput,
       onkeydown: handleKeydown,
@@ -715,17 +758,20 @@
           const callback = physical.onpointermove;
           if (typeof callback === 'function') callback(event);
           if (!entry.data.disabled && index !== active) {
+            reservePointerUpdate();
             activate(index);
           }
         }}
       onmousemove={() => {
           if (!entry.data.disabled && index !== active) {
+            reservePointerUpdate();
             activate(index);
           }
         }}
       onclick={() => choose(entry)}>
       <span class={componentTheme.className ? `${prefix}-item-option-content` : undefined}>
-        <RenderContent value={content} />
+        {#if optionRender}{@render optionRender(entry as SelectFlattenOption<string, OptionType>, { index })}
+        {:else}<RenderContent value={content} />{/if}
       </span>
     </button>
   {/if}
@@ -742,6 +788,7 @@
 {#snippet body(view: { mounted: boolean; content: PopupContent })}
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`auto-complete-prefix:${prefix}:${rootPrefix}`} />{/if}<!-- svelte-ignore a11y_no_static_element_interactions (Корень перенаправляет mouse focus нативному input; клавиатурой управляет input.) --><div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
   data-ant-auto-complete-source-theme={Boolean(componentTheme.className) || undefined}
+  title={attributes.title}
   data-ant-auto-complete-customize={Boolean(children) || undefined}
   data-ant-auto-complete-legacy-color={legacyColor || undefined}
   bind:this={root} dir={config.direction}
@@ -801,6 +848,7 @@
           rootClassName, semantics.classes.popup.root]} dir={config.direction}
       {...selectStyleAttributes(semantics.styles.popup.root)} style={initialPopupStyle}
       onfocusout={handlePopupFocusOut}
+      onmouseenter={reservePointerUpdate}
       {@attach popupStyle.attach}
       {@attach portal}
       aria-label={attributes['aria-label']

@@ -2,8 +2,8 @@ import type { Snippet } from 'svelte';
 import type { HTMLInputAttributes, HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize, RenderEmptyContent } from './types';
 import type {
-  SelectClassNames, SelectFieldNames, SelectPopupRender, SelectRef,
-  SelectSemanticValue, SelectStyle, SelectStyles
+  SelectClassNames, SelectFieldNames, SelectFlattenOption, SelectLabelRenderInfo, SelectPopupRender, SelectRef,
+  SelectSemanticValue, SelectStyle, SelectStyles, SelectTagInfo
 } from './select.types';
 
 /** Общие методы Select; nativeElement/inputElement остаются отдельными bindable props. */
@@ -100,6 +100,12 @@ export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem>
   options?: readonly OptionType[];
   /** Имена полей исходных options и одного уровня групп. */
   fieldNames?: SelectFieldNames;
+  /** Пассивное содержимое leaf; metadata и абсолютный index соответствуют текущему flattened списку. */
+  optionRender?: Snippet<[SelectFlattenOption<string, OptionType>, { index: number }]>;
+  /** Чистый display producer; editor сохраняет исходное строковое value. */
+  labelRender?: (info: SelectLabelRenderInfo<string>) => RenderEmptyContent;
+  /** Передаётся в semantic metadata; combobox не вызывает renderer тегов. */
+  tagRender?: Snippet<[SelectTagInfo<string>]>;
   /** Произвольная строка; соответствие options не требуется. */
   value?: string;
   /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */

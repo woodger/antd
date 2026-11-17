@@ -9,6 +9,10 @@
 
 ### Added
 
+- AutoComplete поддерживает `optionRender`, `labelRender` и исходный no-op
+  `tagRender` для combobox. Сохранены raw editor value, закрытый кеш options,
+  абсолютные virtual indexes и поведение пользовательского input.
+
 - Select и AutoComplete поддерживают чистый `popupRender`, `prefix`, semantic
   `classNames`/`styles` и общий `ConfigProvider.select`. CSS objects сохраняют
   порядок обновления shorthand/longhand; пользовательский popup сохраняет своё
@@ -1651,6 +1655,11 @@
   тип результата `createMessage` подготовлен к генерации деклараций.
 
 ### Fixed
+
+- AutoComplete сохраняет options при отложенном закрытии и исходный порядок
+  query/active после прямого клика, клика после наведения и Enter. Внешний `title`
+  остаётся на корне, custom input получает стандартный класс, controlled textarea
+  синхронизирует defaultValue с отображаемой строкой.
 
 - Select и AutoComplete сохраняют настоящие template Snippet labels без
   преобразования в строку. Select сохраняет callback закрытия при удалении

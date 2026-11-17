@@ -2239,5 +2239,25 @@
     "id": "select-value-ownership",
     "module": "./SelectValueOwnershipFixtures.svelte",
     "root": "select-value-ownership-fixture"
+  },
+  {
+    "id": "autocomplete-render",
+    "module": "./AutoCompleteRenderFixtures.svelte",
+    "root": "autocomplete-render-fixture"
+  },
+  {
+    "id": "autocomplete-render-label-title",
+    "module": "./AutoCompleteRenderLabelTitleFixtures.svelte",
+    "root": "autocomplete-render-label-title-fixture"
+  },
+  {
+    "id": "autocomplete-textarea-reset",
+    "module": "./AutoCompleteTextareaResetFixtures.svelte",
+    "root": "autocomplete-textarea-reset-fixture"
+  },
+  {
+    "id": "autocomplete-close",
+    "module": "./AutoCompleteCloseFixtures.svelte",
+    "root": "autocomplete-close-fixture"
   }
 ]
