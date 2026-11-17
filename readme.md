@@ -9992,8 +9992,10 @@ item; внешний title имеет приоритет. Переданный `
 metadata, но combobox его не вызывает.
 
 Suffix, suffixIcon, loadingIcon, showSearch.searchIcon, menuItemSelectedIcon и
-allowClear описаны в [общем разделе иконок](#иконки-и-очистка-select). Components
-root/input и исходный motion пока отсутствуют.
+allowClear описаны в [общем разделе иконок](#иконки-и-очистка-select).
+`components.root/input` используют [общий API замены поля](#замена-root-и-input-select).
+`children(control)` сохраняет приоритет над `components.input`; `components.root`
+полностью заменяет поле и не вызывает оба editor renderers. Исходный motion пока отсутствует.
 Deprecated dataSource/Option
 и dropdown aliases исключены из переноса. Generic numeric/object values не входят в первый этап.
 
@@ -10486,6 +10488,57 @@ closed tags submit, maxCount и keyboard hooks. Полные Original запис
 сохранены. [Отдельный manifest](tests/browser/fixtures/ant-design-select-icons-boundary-source-manifest.json)
 описывает public React counterparts для простого empty и закрытия родителем;
 они не заменяют исходный корпус.
+
+### Замена root и input Select
+
+Select и AutoComplete принимают `components={{ root, input }}`. `input` заменяет
+редактор внутри стандартного поля. `root` заменяет поле целиком: стандартные
+input, content, prefix, suffix и clear не создаются, `components.input` не вызывается.
+Чистые `suffix`, semantic `classNames` и `styles` продолжают вычисляться, включая SSR.
+Ввод текста в custom root сам по себе не меняет поиск или выбранное значение.
+
+Slot принимает строку тега, Snippet с `{ attributes, register }`, `{ render, props }`
+либо `{ element, props, ref }` для нативного элемента. Attributes используют имена
+Svelte DOM: `class`, `oninput`, `onkeydown`, `onfocusin`/`onfocusout` и строковый CSS style.
+Типы [SelectComponents, SelectRootContext и SelectInputContext](src/lib/select-components.types.ts)
+экспортируются из пакета; DOM generics добавлены после прежних параметров типов.
+
+```svelte
+<script lang="ts">
+  import { Select, type SelectInputContext } from 'antd-svelte';
+  const options = [{ value: 'a', label: 'Alpha' }];
+</script>
+{#snippet editor({ attributes, register }: SelectInputContext<HTMLTextAreaElement>)}
+  {@const { value, ...rest } = attributes}
+  <textarea {...rest} {value} rows="3" {@attach register}></textarea>
+{/snippet}
+<Select {options} components={{ input: editor }} aria-label="Значение" />
+```
+
+Применяйте переданные attributes и регистрируйте реальный DOM через attachment.
+`register` возвращает cleanup; при SSR attachments не выполняются.
+Composite registration принимает `{ nativeElement, inputElement?, focus?, blur? }`.
+`nativeElement`/`inputElement` остаются публичными bindable props; методы доступны
+через `bind:this`. У composite без `focus`/`blur` соответствующий метод ничего не делает:
+автоматического вызова DOM-метода на `nativeElement` нет. Callback `ref` у element
+descriptor получает DOM при подключении и null при очистке; повторный React composeRef detach/attach
+при сохранённом DOM не воспроизводится.
+
+Generated attrs root перекрывают собственные `props`, внутренние callbacks идут
+перед собственными. Root не получает generated id/class/style/value/disabled/placeholder;
+нужные свойства полного replacement задаёт его renderer. У input собственные `props`
+перекрывают generated attrs, включая value/class/style, и собственные callbacks идут первыми.
+Для AutoComplete существующий `children(control)` имеет приоритет над input slot;
+его прежний register action сохраняется.
+
+[Эталон и manifest](tests/browser/fixtures/ant-design-select-components-source-manifest.json)
+содержат 13 независимо повторённых owners, 138 действий и 51 SSR-состояние
+для single Select и combobox. Отдельная сверка custom input в multiple/tags и
+hydration replacement ещё не завершена.
+[Browser](tests/browser/select-components.spec.ts) и
+[SSR](tests/package/select-components.ssr.test.ts) проверяют replacement DOM, события,
+полные attrs/producer ledgers, refs и cleanup. Полный перенос Select/AutoComplete
+ещё не завершён: оставшиеся callback/search и motion возможности отмечены в реестре.
 
 ### Tags
 

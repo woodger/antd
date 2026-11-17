@@ -2269,5 +2269,15 @@
     "id": "select-icons-edge",
     "module": "./SelectIconsEdgeFixtures.svelte",
     "root": "select-icons-edge-fixture"
+  },
+  {
+    "id": "select-components",
+    "module": "./SelectComponentsFixtures.svelte",
+    "root": "select-components-fixture"
+  },
+  {
+    "id": "select-components-regression",
+    "module": "./SelectComponentsRegressionFixtures.svelte",
+    "root": "select-components-regression-fixture"
   }
 ]

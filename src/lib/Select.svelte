@@ -1,5 +1,5 @@
-<script lang="ts" generics="Value extends string | number = string, Mode extends 'multiple' | 'tags' | undefined = undefined, OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>, LabelInValue extends boolean = false">
-  import { onMount, tick, untrack, type Snippet } from 'svelte';
+<script lang="ts" generics="Value extends string | number = string, Mode extends 'multiple' | 'tags' | undefined = undefined, OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>, LabelInValue extends boolean = false, RootElement extends HTMLElement = HTMLDivElement, EditorElement extends HTMLElement = HTMLInputElement">
+  import { onMount, onDestroy, tick, untrack, type Snippet } from 'svelte';
   import { useConfig } from './config-context';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getSelectPrefixCss } from './select-prefix.engine';
@@ -67,6 +67,10 @@
   import { getSelectTagOverflow } from './select-tag-overflow.engine';
   import { connectSelectTagOverflow, measureSelectInput, measureSelectSourceInput } from './select-tag-overflow.dom';
   import { resolveSelectTokenOptions, splitSelectTokens } from './select-token.engine';
+  import SelectComponent from './SelectComponent.svelte';
+  import type { SelectRootRegistration, SelectInputRegistration } from './select-components.types';
+  import { mergeSelectComponentAttributes, focusSelectComponent, blurSelectComponent, selectComponentNativeElement, selectComponentInputElement } from './select-components.engine';
+  import { treeSelectNativeKeyCancelled } from './tree-select-components.engine';
   import SelectIcon from './SelectIcon.svelte';
   import { resolveSelectSuffix, resolveSelectMenuIcon, resolveSelectRemoveIcon, resolveSelectClear } from './select-icons.engine';
   import { selectIconAttribute } from './select-icon-attribute.engine';
@@ -77,15 +81,16 @@
   let {
     open = $bindable<boolean | undefined>(),
     open: providedOpen,
-    value = $bindable<SelectProps<Value, Mode, OptionType, LabelInValue>['value']>(),
+    value = $bindable<SelectProps<Value, Mode, OptionType, LabelInValue, RootElement, EditorElement>['value']>(),
     value: providedValue,
     nativeElement = $bindable(),
     inputElement = $bindable(),
     ...componentProps
-  }: SelectProps<Value, Mode, OptionType, LabelInValue> = $props();
+  }: SelectProps<Value, Mode, OptionType, LabelInValue, RootElement, EditorElement> = $props();
   let {
     _autoWidth = false,
     prefixCls,
+    components,
     prefix: leading,
     suffix,
     suffixIcon,
@@ -137,7 +142,7 @@
     onDeselect,
     onClear,
     onOpenChange,
-    onInputKeyDown,
+    onInputKeyDown, onKeyDown, onKeyUp, onFocus, onBlur, onClick, onMouseDown,
     onmousedown,
     onkeydown,
     onbeforeinput,
@@ -165,7 +170,7 @@
   const compact = useCompact();
   const controlRef = {
     get nativeElement() {
-      return container;
+      return rootSlot ? reference : container;
     },
     focus,
     blur
@@ -189,9 +194,11 @@
   let focused = $state(false);
   let committedOpenChange = untrack(() => onOpenChange);
   let committedBlur = untrack(() => onblur);
+  let committedPublicBlur = untrack(() => onBlur);
   $effect(() => {
     committedOpenChange = onOpenChange;
     committedBlur = onblur;
+    committedPublicBlur = onBlur;
   });
   let internalSearch = $state('');
   let searchConfig = $derived<SelectSearchConfig<RawValue, OptionType>>(
@@ -210,9 +217,31 @@
     selectValueDrafts(value !== undefined ? value : initialDefault, mode === 'multiple' || mode === 'tags')
   )));
   let activeIndex = $state(-1);
-  let container: HTMLDivElement;
-  let reference = $state<HTMLDivElement>();
-  let control = $state<HTMLInputElement>();
+  let componentAccessibilityIndex = $state(0);
+  let container = $state<HTMLDivElement>();
+  let defaultReference = $state<HTMLDivElement>();
+  let defaultControl = $state<HTMLInputElement>();
+  let customRoot = $state.raw<{ registration: SelectRootRegistration<RootElement> }>();
+  let customInput = $state.raw<{ registration: SelectInputRegistration<EditorElement> }>();
+  let rootSlot = $derived(components?.root);
+  let inputSlot = $derived(!rootSlot && components?.input);
+  let reference = $derived(rootSlot ? selectComponentNativeElement(customRoot?.registration) : defaultReference);
+  let control = $derived((rootSlot ? selectComponentInputElement(customRoot?.registration)
+    : inputSlot ? selectComponentInputElement(customInput?.registration) : defaultControl) as HTMLInputElement | undefined);
+  let rootContext = $derived(rootSlot ? componentRootContext() : undefined);
+  let inputContext = $derived(inputSlot ? componentInputContext() : undefined);
+  let committedInputAttributes: Record<string, unknown> = {};
+  $effect(() => {
+    const context = inputContext;
+    committedInputAttributes = context?.attributes as Record<string, unknown> ?? {};
+    const input = control;
+    const value = committedInputAttributes.value;
+    if (inputSlot && input && value != null) {
+      const text = String(value);
+      if (input.value !== text) input.value = text;
+      if (input instanceof HTMLTextAreaElement && input.defaultValue !== text) input.defaultValue = text;
+    }
+  });
   let list = $state<HTMLDivElement>();
   let menuElement = $state<HTMLDivElement>();
   let contentElement = $state<HTMLDivElement>();
@@ -370,7 +399,7 @@
   let resolvedDisabled = $derived(disabled ?? field?.disabled ?? config.componentDisabled);
   let resolvedStatus = $derived(status ?? ('status' in itemStatus ? itemStatus.status : field?.status));
   let resolvedSize = $derived(size ?? compact?.size ?? config.componentSize);
-  let semanticInfo = $derived<SelectSemanticInfo<Value, Mode, OptionType, LabelInValue>>({ props: {
+  let semanticInfo = $derived<SelectSemanticInfo<Value, Mode, OptionType, LabelInValue, RootElement, EditorElement>>({ props: {
     ...componentProps,
     ...(providedValue !== undefined ? { value: providedValue } : {}),
     ...(providedOpen !== undefined ? { open: providedOpen } : {}),
@@ -443,7 +472,7 @@
     && (multiple || controlledSearch === undefined || expanded || Boolean(selected)));
   function readBlurState() {
     return {
-      tagMode, multiple, search, expanded, disabled: resolvedDisabled,
+      tagMode, multiple, search, expanded, disabled: resolvedDisabled, componentInput: Boolean(inputSlot),
       clearInternalSearch: !tagMode && (!multiple || autoClearSearch),
       clearSearch: !multiple && Boolean(search)
         && (controlledSearch === undefined || showSearch == null && typeof config.select?.showSearch === 'object')
@@ -475,12 +504,14 @@
     if (!Object.is(next, previousOwnerOpen)) {
       previousOwnerOpen = next;
       internalOpen = next ?? false;
-      if (!next && !multiple) internalSearch = '';
+      if (!next && !multiple) {
+        if (inputSlot) clearComponentSearchAfterClose(); else internalSearch = '';
+      }
     }
     if (resolvedDisabled) {
       internalOpen = false;
       // Source renders the disabled, still-focused suffix before clearing focus.
-      void resolvedSuffix;
+      untrack(() => resolvedSuffix);
       focused = false;
     }
   });
@@ -545,7 +576,7 @@
       onAlign: position => { popupPlacement = position.alignedPlacement; },
       onPlacement: () => {},
       onVisibilityChange: next => { shown = next; },
-      onDismiss: () => setOpen(false)
+      onDismiss: () => rootSlot || inputSlot ? scheduleComponentClose() : setOpen(false)
     }));
     source.connect(disconnect.forceAlign);
     source.forceAlign();
@@ -570,11 +601,11 @@
   });
 
   $effect(() => {
-    nativeElement = reference;
+    nativeElement = reference as typeof nativeElement;
     return () => { nativeElement = undefined; };
   });
   $effect(() => {
-    inputElement = control;
+    inputElement = control as typeof inputElement;
     return () => { inputElement = undefined; };
   });
 
@@ -644,6 +675,7 @@
   function activate(index: number, keyboard = false) {
     if (customPopup && !menuElement) return;
     activeIndex = index;
+    componentAccessibilityIndex = index;
     notifyActive(optionList.items[index]?.item.value ?? null);
     if (keyboard) optionList.scrollActive(index);
   }
@@ -652,14 +684,169 @@
     return getEnabledIndex(listItems, current, direction);
   }
 
-  function setOpen(next: boolean, fromBlur = false) {
+  function registerRoot(registration: SelectRootRegistration<RootElement>) {
+    const current = { registration }; customRoot = current;
+    return () => { if (customRoot === current) customRoot = undefined; };
+  }
+  const initializedComponentEditors = new WeakSet<HTMLElement>();
+  function registerInput(registration: SelectInputRegistration<EditorElement>) {
+    const editor = selectComponentInputElement(registration);
+    if (editor && !initializedComponentEditors.has(editor)) {
+      initializedComponentEditors.add(editor);
+      if (editor instanceof HTMLTextAreaElement) editor.setSelectionRange(0, 0);
+    }
+    const current = { registration }; customInput = current;
+    return () => { if (customInput === current) customInput = undefined; };
+  }
+  function componentDOMAttributes(aria = true) {
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(nativeAttributes)) {
+      if (['tabindex', 'maxlength', 'autofocus'].includes(key) || !aria && key.startsWith('aria-')) continue;
+      result[key] = value;
+    }
+    if (Object.hasOwn(componentProps, 'name')) result.name = name;
+    return result;
+  }
+  function componentFocus(event: FocusEvent) {
+    focused = true;
+    if (!resolvedDisabled) onFocus?.(event);
+  }
+  function componentBlur(event: FocusEvent) {
+    if (componentDestroyed) return;
+    focused = false; composing = false; pastedText = undefined;
+    const state = committedBlurState;
+    if (state.tagMode) submitTag(state.search);
+    else if (state.multiple) internalSearch = '';
+    if (state.expanded && !(event.relatedTarget instanceof Node && list?.contains(event.relatedTarget)))
+      scheduleComponentClose(true);
+    field?.onBlur();
+    if (!state.disabled) committedPublicBlur?.(event);
+  }
+  function componentPublicBlur(event: FocusEvent) {
+    if (!componentDestroyed && !committedBlurState.disabled) committedPublicBlur?.(event);
+  }
+  let componentCloseTimer: ReturnType<typeof setTimeout> | undefined;
+  let componentDestroyed = false;
+  let componentSearchTask = 0;
+  function clearComponentSearchAfterClose() {
+    const task = ++componentSearchTask;
+    const registration = customInput;
+    void tick().then(() => {
+      if (componentDestroyed || task !== componentSearchTask || isOpen || customInput !== registration) return;
+      internalSearch = '';
+    });
+  }
+  function cancelComponentClose() {
+    if (componentCloseTimer !== undefined) clearTimeout(componentCloseTimer);
+    componentCloseTimer = undefined;
+  }
+  onDestroy(() => { componentDestroyed = true; cancelComponentClose(); });
+  function scheduleComponentClose(fromBlur = false) {
+    if (componentDestroyed) return;
+    cancelComponentClose();
+    componentCloseTimer = setTimeout(() => {
+      componentCloseTimer = undefined;
+      if (!reference?.isConnected) return;
+      const active = reference.ownerDocument.activeElement;
+      if (fromBlur && active && (reference.contains(active) || list?.contains(active))) return;
+      setOpen(false, fromBlur);
+    }, 0);
+  }
+  const componentSpaceOpening = new WeakMap<KeyboardEvent, boolean>();
+  function componentInputRootKeyboard(event: KeyboardEvent) {
+    if (componentSpaceOpening.has(event)) {
+      setOpen(true, false, componentSpaceOpening.get(event));
+      componentSpaceOpening.delete(event);
+    }
+    onKeyDown?.(event);
+  }
+  function componentRootKeyboard(event: KeyboardEvent) {
+    const wasOpen = expanded;
+    if (event.key === 'Enter' || event.key === ' ') {
+      if (event.key === 'Enter' || !canSearch) event.preventDefault();
+      if (!wasOpen) setOpen(true);
+    }
+    if (wasOpen && event.key !== ' ') handleKeyboardNavigation(event);
+    else if (event.key === 'Backspace' && multiple && !search) {
+      const last = [...tags].reverse().find(tag => !tag.disabled); if (last) remove(last.value, false);
+    }
+    onKeyDown?.(event);
+  }
+  function componentSelectorMouseDown(event: MouseEvent) {
+    if (resolvedDisabled) { onMouseDown?.(event); return; }
+    if (componentClearMouseDown.has(event)) {
+      if (expanded && !multiple) scheduleComponentClose();
+      onMouseDown?.(event);
+      return;
+    }
+    const target = event.target;
+    const onEditor = target === control || target instanceof Node && control?.contains(target);
+    if (!onEditor) event.preventDefault();
+    focusSelectComponent(customInput?.registration);
+    if (!(expanded && (!multiple && canSearch || multiple && onEditor))) setOpen(!expanded);
+    onMouseDown?.(event);
+  }
+  function ownComponentProps(slot: unknown): object | undefined {
+    return slot && typeof slot === 'object' && 'props' in slot ? slot.props as object | undefined : undefined;
+  }
+  function componentRootContext() {
+    void value; void providedOpen; void internalSearch; void focused; void expanded;
+    void resolvedDisabled; void semantics; void resolvedSuffix;
+    const own = ownComponentProps(rootSlot);
+    const attrs: Record<string, unknown> = {};
+    const generated = { ...componentDOMAttributes(),
+      ...(rootTitle !== undefined ? { title: rootTitle } : {}),
+      onfocusin: componentFocus, onfocusout: componentBlur, onkeydown: componentRootKeyboard,
+      onkeyup: (event: KeyboardEvent) => onKeyUp?.(event),
+      onclick: (event: MouseEvent) => { setOpen(!expanded); onClick?.(event); }
+    };
+    return { attributes: mergeSelectComponentAttributes(attrs, generated, own, 'root'), register: registerRoot };
+  }
+  function restoreComponentInput(input: HTMLInputElement) {
+    const registration = customInput;
+    void tick().then(() => {
+      if (!input.isConnected || customInput !== registration) return;
+      const value = committedInputAttributes.value;
+      if (value != null && input.value !== String(value)) input.value = String(value);
+    });
+  }
+  function componentInputContext() {
+    void internalSearch; void focused; void expanded; void semantics; void resolvedSuffix;
+    const aria = Object.fromEntries(Object.entries(attributes).filter(([key]) => key.startsWith('aria-')));
+    const generated = { id: controlId, type: 'text', ...aria, readonly: !canSearch,
+      tabindex: attributes.tabindex, maxlength: undefined,
+      style: serializeSelectStyle(semantics.styles.input), autofocus: attributes.autofocus,
+      autocomplete: attributes.autocomplete || 'new-password',
+      class: [`${prefix}-input`, semantics.classes.input].filter(Boolean).join(' '), disabled: resolvedDisabled,
+      value: !canSearch || multiple && !expanded && autoClearSearch && !tagMode ? '' : search,
+      oninput: (event: Event) => { handleInput(event as Event & { currentTarget: HTMLInputElement }); restoreComponentInput(event.currentTarget as HTMLInputElement); },
+      onkeydown: (event: KeyboardEvent) => handleKeydown(event as KeyboardEvent & { currentTarget: HTMLInputElement }),
+      onblur: () => { composing = false; pastedText = undefined; },
+      onpaste: (event: ClipboardEvent) => handlePaste(event as ClipboardEvent & { currentTarget: HTMLInputElement }),
+      oncompositionstart: (event: CompositionEvent) => handleCompositionStart(event as CompositionEvent & { currentTarget: HTMLInputElement }),
+      oncompositionend: (event: CompositionEvent) => handleCompositionEnd(event as CompositionEvent & { currentTarget: HTMLInputElement }),
+      role: 'combobox', 'aria-expanded': expanded, 'aria-haspopup': 'listbox',
+      'aria-owns': expanded ? `${controlId}_list` : undefined, 'aria-autocomplete': 'list',
+      'aria-controls': expanded ? `${controlId}_list` : undefined,
+      'aria-activedescendant': expanded ? `${controlId}_list_${componentAccessibilityIndex}` : undefined
+    };
+    const own = ownComponentProps(inputSlot);
+    return { attributes: mergeSelectComponentAttributes<Record<string, unknown>>({},
+      typeof inputSlot === 'object' ? { placeholder, ...generated } : generated, own, 'input'), register: registerInput };
+  }
+
+  function setOpen(next: boolean, fromBlur = false, previousOpen?: boolean) {
+    cancelComponentClose();
+    if (next) componentSearchTask++;
     if (fromBlur) {
       const state = committedBlurState;
       if (next && state.disabled) return;
       internalOpen = next;
       open = next;
       if (state.expanded !== next) committedOpenChange?.(next);
-      if (!next && state.clearInternalSearch) internalSearch = '';
+      if (!next && state.clearInternalSearch) {
+        if (state.componentInput) clearComponentSearchAfterClose(); else internalSearch = '';
+      }
       if (!next && state.expanded !== next) state.clearSearch?.('');
       return;
     }
@@ -667,7 +854,7 @@
       return;
     }
 
-    const notify = expanded !== next;
+    const notify = (previousOpen ?? expanded) !== next;
     const clearContextSearch = notify && !next && !multiple && Boolean(search)
       && (controlledSearch === undefined || showSearch == null && typeof config.select?.showSearch === 'object')
       ? searchCallback : undefined;
@@ -680,16 +867,23 @@
     if (!fromBlur && providedOpen === next) previousOwnerOpen = next;
 
     if (clearInternalSearch) {
-      internalSearch = '';
+      if (inputSlot) clearComponentSearchAfterClose(); else internalSearch = '';
     }
     clearContextSearch?.('');
   }
 
   export function focus(options?: FocusOptions) {
-    control?.focus(options);
+    if (customRoot) {
+      if (arguments.length) focusSelectComponent(customRoot.registration, options);
+      else focusSelectComponent(customRoot.registration);
+    }
+    else if (customInput) focusSelectComponent(customInput.registration, options);
+    else defaultControl?.focus(options);
   }
   export function blur() {
-    control?.blur();
+    if (customRoot) blurSelectComponent(customRoot.registration);
+    else if (customInput) blurSelectComponent(customInput.registration);
+    else defaultControl?.blur();
   }
   export function scrollTo(config?: SelectScrollConfig | null) {
     if (customPopup && !menuElement) return;
@@ -770,7 +964,7 @@
     const blockedSearch = countReached;
     const preserveSearch = !multiple && controlledSearch !== undefined && Boolean(selected);
     onClear?.();
-    control?.focus({ preventScroll: true });
+    if (rootSlot || inputSlot) focus(); else control?.focus({ preventScroll: true });
     if (multiple) {
       if (selectedValues.length) changeMultiple([], 'display');
     } else {
@@ -790,8 +984,10 @@
     if (!multiple) setOpen(false);
   }
 
+  const componentClearMouseDown = new WeakSet<MouseEvent>();
   function clearMouseDown(event: MouseEvent) {
     event.preventDefault();
+    if (inputSlot) componentClearMouseDown.add(event);
   }
 
   function clearKeyDown(event: KeyboardEvent) {
@@ -801,6 +997,7 @@
   function suffixMouseDown(event: MouseEvent) {
     if (resolvedDisabled) return;
     event.preventDefault();
+    if (inputSlot) return;
     control?.focus({ preventScroll: true });
     if (!(expanded && !multiple && canSearch)) setOpen(!expanded);
   }
@@ -819,6 +1016,7 @@
       || isSelectOptionDisabled(option.data.disabled, selectedKeys.has(option.value), countReached))) {
       return;
     }
+    const componentPath = Boolean(rootSlot || inputSlot);
 
     const chosenValue = option?.value;
     const data = chosenValue === undefined ? undefined : optionData(chosenValue);
@@ -843,7 +1041,7 @@
       if (chosenValue !== undefined) notifySelect(chosenValue, data, !removing);
       if (!option || autoClearSearch) internalSearch = '';
       onClearSearch?.('');
-      control?.focus();
+      if (!componentPath) control?.focus();
       return;
     }
 
@@ -865,12 +1063,13 @@
     if (chosenValue !== undefined) notifySelect(chosenValue, data, true);
     internalSearch = '';
     // Keep the public producer's search-clear pass before the popup closes.
+    if (componentPath) void semantics;
     void resolvedSuffix;
-    setOpen(false);
-    control?.focus();
+    if (componentPath) scheduleComponentClose(); else setOpen(false);
+    if (!componentPath) control?.focus();
   }
 
-  function remove(item: RawValue, focus = true) {
+  function remove(item: RawValue, focusEditor = true) {
     if (resolvedDisabled || selectionOptions.get(item)?.disabled) return;
 
     const next = new Set(selectedValues);
@@ -880,7 +1079,7 @@
       changeMultiple([...next], 'display');
       notifySelect(item, data, false);
     }
-    if (focus) control?.focus();
+    if (focusEditor) { if (rootSlot || inputSlot) focus(); else control?.focus(); }
   }
 
   function handleCustomTagMouseDown(event: MouseEvent) {
@@ -919,15 +1118,16 @@
   function handleKeydown(
     event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }
   ) {
-    onkeydown?.(event);
-    const alreadyPrevented = event.defaultPrevented;
+    const alreadyPrevented = inputSlot ? treeSelectNativeKeyCancelled(event, onkeydown)
+      : (onkeydown?.(event), event.defaultPrevented);
     const closedTagSubmit = !alreadyPrevented && !event.isComposing && !composing
       && !resolvedDisabled && tagMode && providedOpen !== undefined && !expanded
       && event.key === 'Enter' && search !== '';
     // Preserve Native uncontrolled closed-Enter selection; controlled open uses
     // Original's input submit before the public key hook.
     if (closedTagSubmit) submitTag(search);
-    const preventArrow = expanded && (event.key === 'ArrowDown' || event.key === 'ArrowUp');
+    const rawTextarea = inputSlot && customInput?.registration instanceof HTMLTextAreaElement;
+    const preventArrow = !rawTextarea && expanded && (event.key === 'ArrowDown' || event.key === 'ArrowUp');
     if (preventArrow) event.preventDefault();
     onInputKeyDown?.(event);
 
@@ -943,8 +1143,21 @@
       return;
     }
 
-    if (expanded && event.cancelBubble) return;
+    if (inputSlot && !expanded && canSearch && event.key === ' '
+      && !event.ctrlKey && !event.altKey && !event.metaKey) {
+      // Input and bubbling BaseSelect independently request opening from the
+      // same closed event snapshot, before the browser inserts the space.
+      componentSpaceOpening.set(event, false);
+      setOpen(true, false, false);
+      return;
+    }
 
+    if (inputSlot && rawTextarea && !expanded && ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    if (expanded && event.cancelBubble) return;
+    handleKeyboardNavigation(event);
+  }
+
+  function handleKeyboardNavigation(event: KeyboardEvent) {
     if (expanded && customPopup && !menuElement && (['ArrowDown', 'ArrowUp', 'Home', 'End',
       'Enter', 'Escape', 'Tab'].includes(event.key) || event.key === ' ' && !canSearch)) {
       // BaseSelect сохраняет input-level prevention; отсутствующий OptionList
@@ -956,7 +1169,7 @@
     }
 
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-      event.preventDefault();
+      if (!(event.target instanceof HTMLTextAreaElement)) event.preventDefault();
 
       if (!expanded) {
         openList(event.key === 'ArrowUp' ? 'last' : 'first');
@@ -989,12 +1202,10 @@
       && !event.ctrlKey
       && !event.metaKey
       && !event.altKey) {
-      event.preventDefault();
-
       const last = [...tags].reverse().find((tag) => !tag.disabled);
 
-      if (last)
-        remove(last.value);
+      if (!rootSlot && !inputSlot) event.preventDefault();
+      if (last) remove(last.value, !rootSlot && !inputSlot);
     } else if (!multiple
       && mergedAllowClear
       && !canSearch
@@ -1032,6 +1243,7 @@
   }
 
   function restoreControlledSearch(input: HTMLInputElement) {
+    if (inputSlot) { restoreComponentInput(input); return; }
     if (controlledSearch === undefined) return;
 
     void tick().then(() => {
@@ -1140,7 +1352,7 @@
     onmousedown?.call(event.currentTarget, event);
     if (event.defaultPrevented || resolvedDisabled) return;
     mouseActivated = true;
-    control?.focus();
+    if (rootSlot || inputSlot) focus(); else control?.focus();
     if (!expanded) openList();
     else if (!multiple && !canSearch) setOpen(false);
   }
@@ -1164,7 +1376,7 @@
   function handleListFocusOut(event: FocusEvent) {
     const next = event.relatedTarget;
 
-    if (next instanceof Node && (container.contains(next) || list?.contains(next))) return;
+    if (next instanceof Node && ((rootSlot ? reference : container)?.contains(next) || list?.contains(next))) return;
 
     focused = false;
     const state = committedBlurState;
@@ -1192,13 +1404,13 @@
       && !target.closest('button, input')
       && !resolvedDisabled) {
       event.preventDefault();
-      control?.focus();
+      if (rootSlot || inputSlot) focus(); else control?.focus();
       openList();
     } else if ((target === event.currentTarget || leading && event.composedPath().some(node =>
       node instanceof Element && node.classList.contains(`${prefix}-prefix`)
         && node.parentElement === event.currentTarget)) && !resolvedDisabled) {
       event.preventDefault();
-      control?.focus();
+      if (rootSlot || inputSlot) focus(); else control?.focus();
       control?.click();
     }
   }
@@ -1373,7 +1585,11 @@
 {#snippet removeGlyph()}<SelectIcon name="close" />{/snippet}
 {#snippet clearGlyph()}<SelectIcon name="close-circle" />{/snippet}
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`select-prefix:${prefix}:${rootPrefix}`} />{/if}<div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`select-prefix:${prefix}:${rootPrefix}`} />{/if}
+{#if rootSlot && rootContext}
+  <SelectComponent component={rootSlot} context={rootContext} />
+  {@render componentPopup()}
+{:else}<div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
   data-ant-select-value-layer={selectedLayer || undefined}
   data-ant-select-compact-item={Boolean(compact) || undefined} class={[
     'container ant-select-css-var',
@@ -1387,7 +1603,12 @@
     className
   ]} bind:this={container} style={[componentTheme.style, typeof style === 'string' ? style : undefined].filter(Boolean).join(';') || undefined}>
   <div
-    bind:this={reference}
+    {...(inputSlot ? componentDOMAttributes(false) : {})}
+    onfocusin={inputSlot || onFocus ? componentFocus : undefined}
+    onfocusout={inputSlot ? componentBlur : onBlur ? componentPublicBlur : undefined}
+    onkeydown={inputSlot ? componentInputRootKeyboard : onKeyDown ? event => onKeyDown?.(event) : undefined}
+    onkeyup={onKeyUp ? event => onKeyUp?.(event) : undefined}
+    bind:this={defaultReference}
     data-ant-select-control data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
     data-ant-select-source-theme={Boolean(componentTheme.className) || undefined}
     data-ant-select-single={!multiple || undefined} data-ant-select-multiple={multiple || undefined}
@@ -1395,7 +1616,9 @@
     {...{ loadingIcon: selectIconAttribute(loadingIcon) }}
     title={rootTitle}
     role="presentation"
-    onpointerdown={handlePointerDown}
+    onpointerdown={inputSlot ? undefined : handlePointerDown}
+    onmousedown={inputSlot ? componentSelectorMouseDown : undefined}
+    onclick={onClick ? event => onClick?.(event) : undefined}
     class={[
         `${prefix} ant-select-css-var`,
         `${prefix}-${appearance}`,
@@ -1419,7 +1642,14 @@
       ]}
     style={initialRootStyle} {...selectStyleAttributes(semantics.styles.root)} {@attach rootStyle.attach}
   >
-    {#if leading}{@const initialPrefixStyle = untrack(() => serializeSelectStyle(semantics.styles.prefix))}<div class={[`${prefix}-prefix`, semantics.classes.prefix]} style={initialPrefixStyle} {...selectStyleAttributes(semantics.styles.prefix)} {@attach selectStyle(() => semantics.styles.prefix)}><RenderContent value={leading} /></div>{/if}<div data-ant-select-content
+    {#if leading}{@const initialPrefixStyle = untrack(() => serializeSelectStyle(semantics.styles.prefix))}<div class={[`${prefix}-prefix`, semantics.classes.prefix]} style={initialPrefixStyle} {...selectStyleAttributes(semantics.styles.prefix)} {@attach selectStyle(() => semantics.styles.prefix)}><RenderContent value={leading} /></div>{/if}{#if inputSlot && inputContext && !multiple}
+      <div class={[`${prefix}-content`, selected && selectedHasValue && `${prefix}-content-has-value`, canSearch && search && `${prefix}-content-has-search-value`, hasSelectedStyle && `${prefix}-content-has-option-style`, semantics.classes.content]}
+        style={initialContentStyle} {...selectStyleAttributes(semantics.styles.content)} {@attach selectStyle(() => semantics.styles.content)} title={hasSelectedStyle ? undefined : selectedTitle}>
+        {#if selected}{#if hasSelectedStyle}<div class={[`${prefix}-content-value`, selectedClass]} style={serializeSelectStyle(mergeSelectStyle(search ? { visibility: 'hidden' } : undefined, selectedStyle))} title={selectedTitle}><RenderContent value={selected.label as RenderEmptyContent} /></div>
+          {:else}<RenderContent value={selected.label as RenderEmptyContent} />{/if}
+        {:else}<div class={`${prefix}-placeholder`} style={search ? 'visibility:hidden' : undefined}>{placeholder ?? ''}</div>{/if}<SelectComponent component={inputSlot} context={inputContext} />
+      </div>
+    {:else}<div data-ant-select-content
       data-select-source-empty-input={multiple && !selectedValues.length && !leading && semantics.sourceControlColors || undefined}
       data-select-value-layer={selectedLayer || undefined}
       data-select-value-has-content={selectedHasValue || undefined}
@@ -1493,9 +1723,9 @@
             {#if renderTag}{@render renderTag({
               label: restLabel, isMaxTag: true, disabled: false, closable: false
             })}{:else}{@const initialRestContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}<span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]} style={initialRestContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)} {@attach selectStyle(() => semantics.styles.itemContent)}>{@render restLabel()}</span>{/if}
-          </span>{/if}{/if}<input
+          </span>{/if}{/if}{#if inputSlot && inputContext}<SelectComponent component={inputSlot} context={inputContext} />{:else}<input
         {...nativeAttributes}
-        bind:this={control}
+        bind:this={defaultControl}
         id={controlId}
         data-ant-select-input class={[`${prefix}-input`, semantics.classes.input]}
         data-ant-select-semantic-color={semantics.sourceControlColors || undefined}
@@ -1544,16 +1774,20 @@
         onclick={handleClick}
         onblur={handleBlur}
         onfocus={handleFocus}
-      />
-    </div>{#if resolvedSuffix.visible}<span class={['suffix', `${prefix}-suffix`, loading && `${prefix}-suffix-loading`, semantics.classes.suffix]} style={initialSuffixStyle} {...selectStyleAttributes(semantics.styles.suffix)} {@attach selectStyle(() => semantics.styles.suffix)} {...{ onmousedown: suffixMouseDown }}><RenderContent value={resolvedSuffix.content} />{#if resolvedSuffix.appendFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</span>{/if}{#if showClear}{@const initialClearStyle = untrack(() => serializeSelectStyle(semantics.styles.clear))}<button type="button" class={['clear', componentTheme.className && `${prefix}-clear`, semantics.classes.clear]} style={initialClearStyle} {...selectStyleAttributes(semantics.styles.clear)} {@attach selectStyle(() => semantics.styles.clear)} aria-label={clearIcon.label} onmousedown={clearMouseDown} onkeydown={clearKeyDown} onclick={clearSelection}><RenderContent value={clearIcon.content} /></button>{/if}
+      />{/if}
+    </div>{/if}{#if resolvedSuffix.visible}<span class={['suffix', `${prefix}-suffix`, loading && `${prefix}-suffix-loading`, semantics.classes.suffix]} style={initialSuffixStyle} {...selectStyleAttributes(semantics.styles.suffix)} {@attach selectStyle(() => semantics.styles.suffix)} {...{ onmousedown: suffixMouseDown }}><RenderContent value={resolvedSuffix.content} />{#if resolvedSuffix.appendFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</span>{/if}{#if showClear}{@const initialClearStyle = untrack(() => serializeSelectStyle(semantics.styles.clear))}<button type="button" class={['clear', componentTheme.className && `${prefix}-clear`, semantics.classes.clear]} style={initialClearStyle} {...selectStyleAttributes(semantics.styles.clear)} {@attach selectStyle(() => semantics.styles.clear)} aria-label={clearIcon.label} onmousedown={clearMouseDown} onkeydown={clearKeyDown} onclick={clearSelection}><RenderContent value={clearIcon.content} /></button>{/if}
   </div>
-  {#if name ?? field?.name}
+  {#if !inputSlot && (name ?? field?.name)}
     {#if multiple}
       {#each selectedValues as item (item)}<input type="hidden" name={name ?? field?.name} value={item} disabled={resolvedDisabled} form={attributes.form} />{/each}
     {:else}
       <input type="hidden" name={name ?? field?.name} value={selectedRaw ?? ''} disabled={resolvedDisabled} form={attributes.form} />
     {/if}
   {/if}
+  {@render componentPopup()}
+</div>{/if}
+
+{#snippet componentPopup()}
   {#if popupView.present}
     {@const initialPopupStyle = untrack(() => popupStyle.initialStyle())}
     <div
@@ -1578,4 +1812,4 @@
       <SelectPopupContent value={popupView.content} origin={originMenu} active={expanded} isolate={Boolean(popupRender)} />
     </div>
   {/if}
-</div>
+{/snippet}

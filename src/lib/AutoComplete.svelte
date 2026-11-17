@@ -1,4 +1,4 @@
-<script lang="ts" generics="OptionType extends object = AutoCompleteItem">
+<script lang="ts" generics="OptionType extends object = AutoCompleteItem, RootElement extends HTMLElement = HTMLDivElement, EditorElement extends HTMLElement = HTMLInputElement | HTMLTextAreaElement">
   import { autoCompleteMatchesData, autoCompleteNext } from './auto-complete.engine';
   import { onMount, tick, untrack } from 'svelte';
   import type {
@@ -57,14 +57,19 @@
   import SelectIcon from './SelectIcon.svelte';
   import { resolveSelectSuffix, resolveSelectMenuIcon, resolveSelectClear } from './select-icons.engine';
   import { selectIconAttribute } from './select-icon-attribute.engine';
+  import SelectComponent from './SelectComponent.svelte';
+  import type { SelectRootContext, SelectRootRegistration, SelectInputRegistration } from './select-components.types';
+  import { mergeSelectComponentAttributes, focusSelectComponent, blurSelectComponent, selectComponentNativeElement, selectComponentInputElement } from './select-components.engine';
+  import { treeSelectNativeKeyCancelled } from './tree-select-components.engine';
 
   let {
     nativeElement = $bindable(),
     inputElement = $bindable(),
     ...componentProps
-  }: AutoCompleteProps<OptionType> = $props();
+  }: AutoCompleteProps<OptionType, RootElement, EditorElement> = $props();
   let {
     prefixCls,
+    components,
     prefix: prefixContent,
     suffix,
     suffixIcon,
@@ -88,6 +93,10 @@
     onOpenChange,
     onClear,
     onInputKeyDown,
+    onKeyDown,
+    onKeyUp,
+    onClick,
+    onMouseDown,
     onFocus,
     onBlur,
     onPopupScroll,
@@ -144,7 +153,7 @@
   let innerValue = $state<string | undefined>(untrack(() => value ?? defaultValue));
   let innerOpen = $state(untrack(() => open ?? defaultOpen));
   let actualValue = $derived(value ?? innerValue);
-  let text = $derived(actualValue ?? '');
+  let text = $derived(components ? String(actualValue ?? '') : actualValue ?? '');
   let listSearch = $state(untrack(() => text));
   let blocked = $derived(
     disabled ?? field?.disabled ?? form?.disabled ?? config.componentDisabled
@@ -189,7 +198,7 @@
       || selectValueTitle(displayValue ? { label: displayLabel, title: displayValue.title } : undefined));
   let hasDisplayValue = $derived(Boolean(displayValue && hasSelectDisplayContent(displayLabel)));
   let semantics = $derived.by(() => {
-    const ownInfo: AutoCompleteSemanticInfo<OptionType> = {
+    const ownInfo: AutoCompleteSemanticInfo<OptionType, RootElement, EditorElement> = {
       props: { ...componentProps, popupRender, onOpenChange, popupMatchSelectWidth }
     };
     const ownClasses = resolveSelectSemanticValue(classNames, ownInfo);
@@ -236,7 +245,7 @@
     return { ...merged, rootClass: [contextClasses?.root, rootClassName, own.classes.root]
       .filter(Boolean).join(' '), sourceControlColors };
   });
-  let legacyColor = $derived(!children && !semantics.sourceControlColors
+  let legacyColor = $derived(!children && !components?.root && !components?.input && !semantics.sourceControlColors
     && (typeof style === 'string' || Boolean(className)));
   let popupView = $derived.by(() => {
     void semantics;
@@ -269,8 +278,15 @@
     typeof allowClear !== 'object' || typeof allowClear.clearIcon === 'function'
       && !Object.hasOwn(allowClear, 'label') ? config.locale.clearText : 'Clear'));
   let showClear = $derived(clearIcon.visible);
-  let root = $state<HTMLDivElement>();
-  let editor = $state<HTMLInputElement | HTMLTextAreaElement>();
+  let defaultRoot = $state<HTMLDivElement>();
+  let defaultEditor = $state<HTMLInputElement | HTMLTextAreaElement>();
+  let customRoot = $state.raw<{ registration: SelectRootRegistration<RootElement> }>();
+  let customInput = $state.raw<{ registration: SelectInputRegistration<EditorElement> }>();
+  let rootSlot = $derived(components?.root);
+  let inputSlot = $derived(!rootSlot && !children ? components?.input : undefined);
+  let root = $derived(rootSlot ? customRoot && selectComponentNativeElement(customRoot.registration) : defaultRoot);
+  let editor = $derived((rootSlot ? customRoot && selectComponentInputElement(customRoot.registration)
+    : inputSlot ? customInput && selectComponentInputElement(customInput.registration) : defaultEditor) as HTMLInputElement | HTMLTextAreaElement | undefined);
   let popup = $state<HTMLDivElement>();
   let menuElement = $state<HTMLDivElement>();
   let shown = $state(false);
@@ -291,12 +307,12 @@
   let initialInputStyle = $state(untrack(inputStyle.initialStyle));
   $effect(() => {
     const control = editor;
-    if (control) return untrack(() => inputStyle.attach(control));
+    if (control && !rootSlot && !inputSlot) return untrack(() => inputStyle.attach(control));
   });
   $effect(() => {
     const control = editor;
     void searchText;
-    if (control instanceof HTMLTextAreaElement) control.defaultValue = control.value;
+    if (!rootSlot && !inputSlot && control instanceof HTMLTextAreaElement) control.defaultValue = control.value;
   });
   const anchorWidthVariable = '--ant-native-auto-complete-anchor-width';
   let matchedWidth = $derived(popupMatchSelectWidth ?? config.popupMatchSelectWidth ?? true);
@@ -342,11 +358,11 @@
 
   // Без bind: обновление spread props может сбросить локальное значение ref prop.
   $effect(() => {
-    nativeElement = root;
+    nativeElement = root as RootElement | HTMLDivElement | undefined;
     return () => { nativeElement = undefined; };
   });
   $effect(() => {
-    inputElement = editor;
+    inputElement = editor as EditorElement | HTMLInputElement | HTMLTextAreaElement | undefined;
     return () => { inputElement = undefined; };
   });
 
@@ -412,7 +428,10 @@
       onVisibilityChange: next => {
         shown = next;
       },
-      onDismiss: () => requestOpen(false)
+      onDismiss: () => {
+        if (Boolean(rootSlot) || Boolean(inputSlot)) scheduleClose();
+        else requestOpen(false);
+      }
     }));
     source.connect(disconnect.forceAlign);
     source.forceAlign();
@@ -489,12 +508,12 @@
   }
 
   function register(element: HTMLInputElement | HTMLTextAreaElement) {
-    if (untrack(() => editor) !== element) initialInputStyle = untrack(inputStyle.initialStyle);
-    editor = element;
+    if (untrack(() => defaultEditor) !== element) initialInputStyle = untrack(inputStyle.initialStyle);
+    defaultEditor = element;
     return {
       destroy() {
-        if (untrack(() => editor) === element)
-          editor = undefined;
+        if (untrack(() => defaultEditor) === element)
+          defaultEditor = undefined;
       }
     };
   }
@@ -505,8 +524,13 @@
       onOpenChange?.(next);
     innerOpen = next;
   }
+  const componentClearMouseDowns = new WeakSet<MouseEvent>();
   function clearMouseDown(event: MouseEvent) {
     event.preventDefault();
+    if (inputSlot) {
+      componentClearMouseDowns.add(event);
+      return;
+    }
     if (!visible) return;
     scheduleClose();
   }
@@ -516,6 +540,7 @@
   function suffixMouseDown(event: MouseEvent) {
     if (blocked || readonly) return;
     event.preventDefault();
+    if (inputSlot) return;
     editor?.focus({ preventScroll: true });
     requestOpen(true);
   }
@@ -569,19 +594,22 @@
   }
   function choose(entry: Entry) {
     if (blocked || readonly || entry.group || entry.data.disabled || entry.value === undefined) return;
+    const overridden = Boolean(rootSlot) || Boolean(inputSlot);
     change(entry.value);
     const option = maps.valueOptions.get(entry.value) ?? cache.options.get(entry.value);
     onSelect?.(entry.value, copySelectData(option) as OptionType);
     preview = undefined;
     scheduleClose(Boolean(pendingPointerUpdate));
-    editor?.focus({ preventScroll: true });
+    if (!overridden) editor?.focus({ preventScroll: true });
   }
   function clear() {
     if (blocked || readonly) return;
+    const overridden = Boolean(rootSlot) || Boolean(inputSlot);
     const before = actualValue;
     const beforeText = text;
     onClear?.();
-    editor?.focus({ preventScroll: true });
+    if (overridden) focus();
+    else editor?.focus({ preventScroll: true });
     change(undefined, before);
     // Rc-select вызывает отдельный search-путь после очистки display values.
     if (beforeText) {
@@ -656,6 +684,21 @@
     requestOpen(false);
   }
   function handleRootMouseDown(event: MouseEvent) {
+    if (inputSlot) {
+      const state = committedComponentState;
+      const target = event.target;
+      if (!state.blocked && !state.readonly && target instanceof Node && !state.popup?.contains(target)) {
+        if (target !== editor && !editor?.contains(target)) event.preventDefault();
+        if (componentClearMouseDowns.has(event)) {
+          if (state.visible) scheduleClose();
+        } else {
+          customInput?.registration.focus?.();
+          if (!state.visible) requestComponentOpen(true, state.visible);
+        }
+      }
+      state.onMouseDown?.(event);
+      return;
+    }
     const target = event.target;
     if (blocked || readonly || !(target instanceof Node) || popup?.contains(target)
       || target instanceof Element && target.closest('button')) return;
@@ -670,7 +713,7 @@
     requestOpen(true);
   }
   function handleReset(event: Event) {
-    if (event.target !== editor?.form) return;
+    if (Boolean(rootSlot) || Boolean(inputSlot) || event.target !== editor?.form) return;
     queueMicrotask(() => {
       if (!event.defaultPrevented && editor?.isConnected) {
         innerValue = defaultValue;
@@ -725,11 +768,233 @@
     },
     register
   });
+  function registerComponentRoot(registration: SelectRootRegistration<RootElement>) {
+    const current = { registration };
+    customRoot = current;
+    return () => { if (customRoot === current) customRoot = undefined; };
+  }
+  let componentInputRegistrationToken: object | undefined;
+  const initializedComponentTextareas = new WeakSet<HTMLTextAreaElement>();
+  function registerComponentInput(registration: SelectInputRegistration<EditorElement>) {
+    const current = { registration };
+    const control = selectComponentInputElement(registration);
+    if (control instanceof HTMLTextAreaElement && !initializedComponentTextareas.has(control)) {
+      initializedComponentTextareas.add(control);
+      control.setSelectionRange(0, 0);
+    }
+    componentComposing = false;
+    customInput = current;
+    componentInputRegistrationToken = current;
+    return () => {
+      if (componentInputRegistrationToken === current) componentInputRegistrationToken = undefined;
+      if (customInput === current) {
+        customInput = undefined;
+        componentComposing = false;
+      }
+    };
+  }
+  function requestComponentOpen(next: boolean, wasVisible = committedComponentState.visible) {
+    cancelClearClose();
+    if (next !== wasVisible) committedComponentState.onOpenChange?.(next);
+    innerOpen = next;
+  }
+  function componentRootFocus(event: FocusEvent) {
+    const state = committedComponentState;
+    focused = true;
+    if (!state.blocked) state.onFocus?.(event);
+  }
+  function componentRootBlur(event: FocusEvent) {
+    const state = committedComponentState;
+    focused = false;
+    enterLock = false;
+    preview = undefined;
+    if (state.visible && !(event.relatedTarget instanceof Node && state.popup?.contains(event.relatedTarget))) scheduleClose();
+    if (!state.blocked) { field?.onBlur(); state.onBlur?.(event); }
+  }
+  function componentRootClick(event: MouseEvent) {
+    const state = committedComponentState;
+    requestComponentOpen(!state.visible, state.visible);
+    state.onClick?.(event);
+  }
+  function componentRootKeydown(event: KeyboardEvent) {
+    const state = committedComponentState;
+    if (cancelledComponentInputKeys.has(event)) {
+      state.onKeyDown?.(event);
+      return;
+    }
+    const enter = event.key === 'Enter', space = event.key === ' ';
+    if ((enter || space) && !state.visible) requestComponentOpen(true, state.visible);
+    if (state.visible && (!enter || !enterLock) && !space) {
+      if (enter) enterLock = true;
+      const rows = state.rows;
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        activate(autoCompleteNext(rows.map(row => row.item),
+          state.active < 0 && event.key === 'ArrowUp' ? rows.length : state.active,
+          event.key === 'ArrowDown' ? 1 : -1), true);
+        if (backfill) preview = optionList.items[active]?.item.value;
+      } else if (enter || event.key === 'Tab') {
+        const option = rows[state.active]?.item;
+        if (option && !option.group && !option.data.disabled) {
+          event.preventDefault();
+          choose(option);
+        } else requestComponentOpen(false, state.visible);
+      } else if (event.key === 'Escape') {
+        event.stopPropagation();
+        preview = undefined;
+        scheduleClose();
+      }
+    }
+    state.onKeyDown?.(event);
+  }
+  function componentRootKeyup(event: KeyboardEvent) {
+    if (event.key === 'Enter') enterLock = false;
+    committedComponentState.onKeyUp?.(event);
+  }
+  let componentComposing = false;
+  const cancelledComponentInputKeys = new WeakSet<KeyboardEvent>();
+  function componentInputKeydown(event: KeyboardEvent) {
+    const state = committedComponentState;
+    const nativeEvent = event as KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement };
+    const cancelled = treeSelectNativeKeyCancelled(nativeEvent, onkeydown);
+    const rawTextarea = customInput?.registration instanceof HTMLTextAreaElement;
+    if (!rawTextarea && state.visible && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) event.preventDefault();
+    onInputKeyDown?.(event);
+    if (cancelled || event.isComposing || componentComposing || state.blocked || state.readonly) {
+      cancelledComponentInputKeys.add(event);
+      return;
+    }
+    if (rawTextarea && !state.visible && ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    if (!event.ctrlKey && !event.altKey && !event.metaKey && event.keyCode
+      && event.code !== 'Semicolon' && event.code !== 'Equal' && !/^F(?:[1-9]|1[0-2])$/.test(event.key)
+      && !['Escape', 'Shift', 'Backspace', 'Tab', 'Meta', 'OS', 'Alt', 'Control', 'CapsLock',
+        'ContextMenu', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key))
+      requestComponentOpen(true, state.visible);
+  }
+  function componentInputPaste(event: ClipboardEvent) {
+    attributes.onpaste?.call(event.currentTarget as HTMLInputElement,
+      event as ClipboardEvent & { currentTarget: EventTarget & HTMLInputElement });
+  }
+  function componentInputCompositionStart(event: CompositionEvent) {
+    componentComposing = true;
+    attributes.oncompositionstart?.call(event.currentTarget as HTMLInputElement,
+      event as CompositionEvent & { currentTarget: EventTarget & HTMLInputElement });
+  }
+  function componentInputCompositionEnd(event: CompositionEvent) {
+    componentComposing = false;
+    attributes.oncompositionend?.call(event.currentTarget as HTMLInputElement,
+      event as CompositionEvent & { currentTarget: EventTarget & HTMLInputElement });
+  }
+  let componentInputChangeToken = 0;
+  function componentInputChange(event: Event) {
+    const node = event.currentTarget as HTMLInputElement | HTMLTextAreaElement;
+    const next = node.value;
+    const state = committedComponentState, previousText = text, searchCallback = searchConfig.onSearch;
+    preview = undefined;
+    if (next !== previousText) {
+      change(next);
+      searchCallback?.(next);
+    }
+    if (next) requestComponentOpen(true, state.visible);
+    const token = ++componentInputChangeToken, registration = componentInputRegistrationToken;
+    void tick().then(() => {
+      if (!node.isConnected || token !== componentInputChangeToken || registration !== componentInputRegistrationToken) return;
+      const accepted = committedComponentInputAttributes.value;
+      if (accepted !== undefined && accepted !== null && node.value !== String(accepted)) node.value = String(accepted);
+    });
+  }
+  function ownComponentProps(slot: unknown): object | undefined {
+    return slot && typeof slot === 'object' ? Reflect.get(slot, 'props') as object | undefined : undefined;
+  }
+  function componentRootContext(): SelectRootContext<RootElement> {
+    void actualValue; void visible; void focused; void blocked; void semantics; void resolvedSuffix; void displayLabel;
+    const { placeholder: _placeholder, tabindex: _tabindex, maxlength: _maxlength, autofocus: _autofocus,
+      ...remaining } = nativeAttributes;
+    const generated = { ...remaining,
+      ...(Object.hasOwn(componentProps, 'name') ? { name } : {}),
+      ...(Object.hasOwn(componentProps, 'readonly') ? { readonly } : {}),
+      onfocusin: componentRootFocus, onfocusout: componentRootBlur,
+      onkeydown: componentRootKeydown, onkeyup: componentRootKeyup, onclick: componentRootClick };
+    const own = ownComponentProps(rootSlot);
+    const attrs = {} as SelectRootContext<RootElement>['attributes'];
+    return { attributes: mergeSelectComponentAttributes(attrs, generated, own, 'root'), register: registerComponentRoot };
+  }
+  function componentInputContext() {
+    const aria = Object.fromEntries(Object.entries(nativeAttributes).filter(([key]) => key.startsWith('aria-')));
+    const generated = { id: controlId, type: 'text', ...aria,
+      readonly: Boolean(readonly), tabindex: attributes.tabindex, maxlength: attributes.maxlength,
+      style: serializeSelectStyle(semantics.styles.input), autofocus: attributes.autofocus,
+      autocomplete: attributes.autocomplete || 'new-password',
+      class: [`${prefix}-input`, semantics.classes.input].filter(Boolean).join(' '),
+      disabled: blocked, value: searchText,
+      oninput: componentInputChange, onkeydown: componentInputKeydown,
+      onblur: () => { enterLock = false; },
+      onpaste: componentInputPaste,
+      oncompositionstart: componentInputCompositionStart,
+      oncompositionend: componentInputCompositionEnd,
+      role: 'combobox', 'aria-expanded': visible, 'aria-haspopup': 'listbox',
+      'aria-owns': visible ? `${controlId}_list` : undefined, 'aria-autocomplete': 'list',
+      'aria-controls': visible ? `${controlId}_list` : undefined,
+      'aria-activedescendant': visible ? `${controlId}_list_${active}` : undefined };
+    const own = ownComponentProps(inputSlot);
+    const fallback = typeof inputSlot === 'object' ? { placeholder: attributes.placeholder } : {};
+    const attrs = mergeSelectComponentAttributes<Record<string, unknown>>({}, { ...fallback, ...generated }, own, 'input');
+    return { attributes: attrs, register: registerComponentInput };
+  }
+  function componentDefaultRootAttributes() {
+    const { placeholder: _placeholder, tabindex: _tabindex, maxlength: _maxlength, autofocus: _autofocus,
+      onpaste: _onpaste, oncompositionstart: _oncompositionstart, oncompositionend: _oncompositionend,
+      ...remaining } = nativeAttributes;
+    return { ...Object.fromEntries(Object.entries(remaining).filter(([key]) => !key.startsWith('aria-'))),
+      ...(Object.hasOwn(componentProps, 'name') ? { name } : {}),
+      ...(Object.hasOwn(componentProps, 'readonly') ? { readonly } : {}),
+      onfocusin: componentRootFocus, onfocusout: componentRootBlur,
+      onkeydown: componentRootKeydown, onkeyup: componentRootKeyup, onclick: onClick };
+  }
+  let componentRootAttributes = $derived.by(componentDefaultRootAttributes);
+  let rootContext = $derived.by(componentRootContext);
+  let componentEditorContext = $derived.by(componentInputContext);
+  function readComponentState() {
+    return { visible, blocked, readonly, active, rows: optionList.items, popup,
+      onFocus, onBlur, onKeyDown, onKeyUp, onClick, onMouseDown, onOpenChange };
+  }
+  let committedComponentState = untrack(readComponentState);
+  function readComponentInputAttributes(): Record<string, unknown> {
+    if (!inputSlot) return {};
+    return componentEditorContext.attributes;
+  }
+  let committedComponentInputAttributes = untrack(readComponentInputAttributes);
+  $effect(() => { committedComponentState = readComponentState(); });
+  $effect(() => { committedComponentInputAttributes = readComponentInputAttributes(); });
+  $effect(() => {
+    if (!inputSlot) return;
+    const accepted = componentEditorContext.attributes.value;
+    const control = editor;
+    if (control instanceof HTMLTextAreaElement && accepted !== undefined && accepted !== null
+      && control.defaultValue !== String(accepted)) control.defaultValue = String(accepted);
+  });
+  $effect(() => {
+    const disabled = blocked, expanded = visible, overridden = Boolean(rootSlot) || Boolean(inputSlot);
+    if (!overridden) return;
+    untrack(() => {
+      if (disabled) {
+        void resolvedSuffix;
+        focused = false;
+        requestComponentOpen(false, expanded);
+      }
+    });
+  });
   export function focus(options?: FocusOptions) {
-    editor?.focus(options);
+    if (customRoot) {
+      if (arguments.length) return focusSelectComponent(customRoot.registration, options);
+      return focusSelectComponent(customRoot.registration);
+    }
+    if (customInput) return focusSelectComponent(customInput.registration, options);
+    defaultEditor?.focus(options);
   }
   export function blur() {
-    editor?.blur();
+    if (customRoot) return blurSelectComponent(customRoot.registration);
+    if (customInput) return blurSelectComponent(customInput.registration);
+    defaultEditor?.blur();
   }
   export function scrollTo(config?: SelectScrollConfig | null) {
     optionList.scrollTo(config);
@@ -750,6 +1015,7 @@
   .auto-complete:focus-within { outline: 2px solid var(--ant-color-primary); outline-offset: 2px; }
   .auto-complete[data-ant-auto-complete-source-theme]:focus-within { outline: 0; outline-offset: 0; }
   .auto-complete[data-ant-auto-complete-source-theme][data-ant-auto-complete-customize] { min-height: 0; }
+  .auto-complete[data-ant-auto-complete-component-input] { height: auto; min-height: 0; align-items: flex-start; }
   .clear { display: flex; flex: none; padding: 0; border: 0; background: none; color: var(--ant-color-text-tertiary); cursor: pointer; }
   .clear:focus-visible { outline: 2px solid var(--ant-color-primary); }
   .feedback-suffix { display: block; flex: none; }
@@ -842,14 +1108,43 @@
 {#snippet spinnerIcon()}<SelectIcon name="loading" />{/snippet}
 {#snippet clearGlyph()}<SelectIcon name="close-circle" />{/snippet}
 
+{#snippet componentPopup(view: { mounted: boolean; content: PopupContent })}
+{#if view.mounted}
+    {@const initialPopupStyle = untrack(() => popupStyle.initialStyle())}
+    <div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
+      data-ant-auto-complete-source-popup={Boolean(componentTheme.className) && entries.length > 0 || undefined}
+      data-ant-auto-complete-custom-popup={customPopup || undefined}
+      bind:this={popup} popover="manual" hidden={!visible || !shown}
+      class={[`popup ${prefix}-dropdown ant-select-css-var`, componentTheme.className,
+          componentTheme.className && entries.length > 0 && `${prefix}-source-popup`,
+          componentTheme.className && config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
+          popupPlacement && `${prefix}-dropdown-placement-${popupPlacement}`,
+          rootClassName, semantics.classes.popup.root]} dir={config.direction}
+      {...selectStyleAttributes(semantics.styles.popup.root)} style={initialPopupStyle}
+      onfocusout={handlePopupFocusOut}
+      onmouseenter={reservePointerUpdate}
+      {@attach popupStyle.attach}
+      {@attach portal}
+      aria-label={attributes['aria-label']
+          ?? attributes.placeholder
+          ?? config.locale.searchText}>
+      <SelectPopupContent value={view.content} origin={menu} active={visible} isolate={Boolean(popupRender)} />
+    </div>
+  {/if}
+{/snippet}
+
 {#snippet body(view: { mounted: boolean; content: PopupContent })}
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`auto-complete-prefix:${prefix}:${rootPrefix}`} />{/if}<!-- svelte-ignore a11y_no_static_element_interactions (Корень перенаправляет mouse focus нативному input; клавиатурой управляет input.) --><div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`auto-complete-prefix:${prefix}:${rootPrefix}`} />{/if}
+{#if rootSlot}<SelectComponent component={rootSlot} context={rootContext} />{@render componentPopup(view)}{:else}
+<!-- svelte-ignore a11y_no_static_element_interactions (Корень перенаправляет mouse focus нативному input; клавиатурой управляет input.) --><div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
   data-ant-auto-complete-source-theme={Boolean(componentTheme.className) || undefined}
   title={attributes.title}
   {...{ loadingIcon: selectIconAttribute(loadingIcon) }}
   data-ant-auto-complete-customize={Boolean(children) || undefined}
   data-ant-auto-complete-legacy-color={legacyColor || undefined}
-  bind:this={root} dir={config.direction}
+  bind:this={defaultRoot} dir={config.direction}
+  data-ant-auto-complete-component-input={Boolean(inputSlot) || undefined}
+  {...inputSlot ? componentRootAttributes : {}}
   {...selectStyleAttributes(semantics.styles.root)} style={initialRootStyle} {@attach rootStyle.attach}
   onmousedown={handleRootMouseDown}
   class={[
@@ -882,7 +1177,7 @@
       !legacyColor && hasSelectedStyle && `${prefix}-content-has-option-style`, semantics.classes.content]}
     {...selectStyleAttributes(semantics.styles.content)} style={initialContentStyle} {@attach contentStyle.attach}
     title={hasSelectedStyle ? undefined : selectedTitle}>
-    {#if children}{@render children(input)}{:else}
+    {#if children}{@render children(input)}{:else if inputSlot}<SelectComponent component={inputSlot} context={componentEditorContext} />{:else}
       {#if displayValue}
         {#if hasSelectedStyle}{@const valueStyle = createSelectStyle(() => mergeSelectStyle(searchText ? { visibility: 'hidden' } : undefined, selectedStyle))}{@const initialValueStyle = untrack(valueStyle.initialStyle)}<div class={[`${prefix}-content-value`, selectedClass]}
           {...selectStyleAttributes(mergeSelectStyle(searchText ? { visibility: 'hidden' } : undefined, selectedStyle))} style={initialValueStyle} {@attach valueStyle.attach}
@@ -895,29 +1190,8 @@
     {/if}
   </div>{#if resolvedSuffix.visible}{@const suffixStyle = createSelectStyle(() => semantics.styles.suffix)}{@const initialSuffixStyle = untrack(suffixStyle.initialStyle)}<div class={[`${prefix}-suffix`, 'feedback-suffix', loading && `${prefix}-suffix-loading`, semantics.classes.suffix]} {...selectStyleAttributes(semantics.styles.suffix)} style={initialSuffixStyle} {@attach suffixStyle.attach} {...{ onmousedown: suffixMouseDown }}><RenderContent value={resolvedSuffix.content} />{#if resolvedSuffix.appendFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}</div>{/if}{#if showClear}{@const clearStyle = createSelectStyle(() => semantics.styles.clear)}{@const initialClearStyle = untrack(clearStyle.initialStyle)}<button type="button" class={['clear', componentTheme.className && `${prefix}-clear`, semantics.classes.clear]} {...selectStyleAttributes(semantics.styles.clear)} style={initialClearStyle} {@attach clearStyle.attach} aria-label={clearIcon.label} onmousedown={clearMouseDown} onkeydown={clearKeyDown} onclick={clear}>
     <RenderContent value={clearIcon.content} />
-  </button>{/if}{#if view.mounted}
-    {@const initialPopupStyle = untrack(() => popupStyle.initialStyle())}
-    <div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}
-      data-ant-auto-complete-source-popup={Boolean(componentTheme.className) && entries.length > 0 || undefined}
-      data-ant-auto-complete-custom-popup={customPopup || undefined}
-      bind:this={popup} popover="manual" hidden={!visible || !shown}
-      class={[`popup ${prefix}-dropdown ant-select-css-var`, componentTheme.className,
-          componentTheme.className && entries.length > 0 && `${prefix}-source-popup`,
-          componentTheme.className && config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
-          popupPlacement && `${prefix}-dropdown-placement-${popupPlacement}`,
-          rootClassName, semantics.classes.popup.root]} dir={config.direction}
-      {...selectStyleAttributes(semantics.styles.popup.root)} style={initialPopupStyle}
-      onfocusout={handlePopupFocusOut}
-      onmouseenter={reservePointerUpdate}
-      {@attach popupStyle.attach}
-      {@attach portal}
-      aria-label={attributes['aria-label']
-          ?? attributes.placeholder
-          ?? config.locale.searchText}>
-      <SelectPopupContent value={view.content} origin={menu} active={visible} isolate={Boolean(popupRender)} />
-    </div>
-  {/if}
-</div>
+  </button>{/if}{@render componentPopup(view)}
+</div>{/if}
 
 {/snippet}
 

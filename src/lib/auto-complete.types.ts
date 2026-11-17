@@ -2,6 +2,7 @@ import type { Snippet } from 'svelte';
 import type { HTMLInputAttributes, HTMLAttributes } from 'svelte/elements';
 import type { ComponentSize, RenderEmptyContent } from './types';
 import type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select-icons.types';
+import type { SelectComponents } from './select-components.types';
 import type {
   SelectClassNames, SelectFieldNames, SelectFlattenOption, SelectLabelRenderInfo, SelectPopupRender, SelectRef,
   SelectSemanticValue, SelectStyle, SelectStyles, SelectTagInfo
@@ -15,11 +16,14 @@ export type AutoCompleteClassNames = Pick<SelectClassNames,
 export type AutoCompleteStyles = Pick<SelectStyles,
   'root' | 'prefix' | 'input' | 'placeholder' | 'content' | 'clear' | 'popup'>;
 /** Собственные raw props и три нормализованных поля wrapper; defaults/context не подставляются. */
-export interface AutoCompleteSemanticInfo<OptionType extends object = AutoCompleteItem> {
-  props: Omit<AutoCompleteProps<OptionType>, 'nativeElement' | 'inputElement'> & {
+export interface AutoCompleteSemanticInfo<
+  OptionType extends object = AutoCompleteItem, RootElement extends HTMLElement = HTMLDivElement,
+  EditorElement extends HTMLElement = HTMLInputElement | HTMLTextAreaElement
+> {
+  props: Omit<AutoCompleteProps<OptionType, RootElement, EditorElement>, 'nativeElement' | 'inputElement'> & {
     popupRender: SelectPopupRender | undefined;
-    onOpenChange: AutoCompleteProps<OptionType>['onOpenChange'];
-    popupMatchSelectWidth: AutoCompleteProps<OptionType>['popupMatchSelectWidth'];
+    onOpenChange: AutoCompleteProps<OptionType, RootElement, EditorElement>['onOpenChange'];
+    popupMatchSelectWidth: AutoCompleteProps<OptionType, RootElement, EditorElement>['popupMatchSelectWidth'];
   };
 }
 
@@ -78,7 +82,10 @@ export interface AutoCompleteInput {
   register: (element: HTMLInputElement | HTMLTextAreaElement) => { destroy: () => void; };
 }
 /** Свободный текст с options, выбором подсказки и собственным input snippet. */
-export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem> extends Omit<
+export interface AutoCompleteProps<
+  OptionType extends object = AutoCompleteItem, RootElement extends HTMLElement = HTMLDivElement,
+  EditorElement extends HTMLElement = HTMLInputElement | HTMLTextAreaElement
+> extends Omit<
   HTMLInputAttributes,
   'value'
   | 'defaultValue'
@@ -97,6 +104,8 @@ export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem>
 > {
   /** Локальный namespace Select; пустая строка наследует ConfigProvider. */
   prefixCls?: string;
+  /** Полная замена поля либо только редактора; children имеет приоритет над components.input. */
+  components?: SelectComponents<RootElement, EditorElement>;
   /** Содержимое affix; falsy scalar, включая 0, не создаёт узел. */
   prefix?: RenderEmptyContent;
   suffix?: SelectRenderNode<SelectSuffixInfo>;
@@ -131,6 +140,10 @@ export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem>
   onOpenChange?: (open: boolean) => void;
   onClear?: () => void;
   onInputKeyDown?: (event: KeyboardEvent) => void;
+  onKeyDown?: (event: KeyboardEvent) => void;
+  onKeyUp?: (event: KeyboardEvent) => void;
+  onClick?: (event: MouseEvent) => void;
+  onMouseDown?: (event: MouseEvent) => void;
   onFocus?: (event: FocusEvent) => void;
   onBlur?: (event: FocusEvent) => void;
   onPopupScroll?: HTMLAttributes<HTMLDivElement>['onscroll'];
@@ -167,8 +180,8 @@ export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem>
   class?: string;
   /** Root и popup получают общий класс. */
   rootClassName?: string;
-  classNames?: SelectSemanticValue<AutoCompleteClassNames, AutoCompleteSemanticInfo<OptionType>['props']>;
-  styles?: SelectSemanticValue<AutoCompleteStyles, AutoCompleteSemanticInfo<OptionType>['props']>;
+  classNames?: SelectSemanticValue<AutoCompleteClassNames, AutoCompleteSemanticInfo<OptionType, RootElement, EditorElement>['props']>;
+  styles?: SelectSemanticValue<AutoCompleteStyles, AutoCompleteSemanticInfo<OptionType, RootElement, EditorElement>['props']>;
   /**
    * CSS object и прежняя CSS-строка оформляют единственный public root.
    * Class/CSS-строка сохраняют наследуемый цвет input; control semantics задают независимые цвета.
@@ -177,7 +190,7 @@ export interface AutoCompleteProps<OptionType extends object = AutoCompleteItem>
   /** Чистый producer вызывается также закрытым и при SSR; nullish result оставляет popup пустым. */
   popupRender?: SelectPopupRender;
   /** Нативный ref доступен после mount и очищается при unmount. */
-  nativeElement?: HTMLDivElement;
+  nativeElement?: NoInfer<RootElement> | HTMLDivElement;
   /** Нативный ref доступен после mount и очищается при unmount. */
-  inputElement?: HTMLInputElement | HTMLTextAreaElement;
+  inputElement?: NoInfer<EditorElement> | HTMLInputElement | HTMLTextAreaElement;
 }

@@ -1,9 +1,10 @@
 import type { Snippet } from 'svelte';
-import type { HTMLInputAttributes, HTMLAttributes } from 'svelte/elements';
+import type { HTMLInputAttributes, HTMLAttributes, DOMAttributes } from 'svelte/elements';
 import type { ComponentSize, RenderEmptyContent, SelectOption } from './types';
 import type { VirtualScrollAlign } from './virtual-list.engine';
 import type { VirtualScrollConfig, VirtualScrollOffset, VirtualScrollOffsetInfo } from './virtual-list.types';
 import type { FormValidateStatus } from './form-error-list.types';
+import type { SelectComponents } from './select-components.types';
 import type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select-icons.types';
 
 export type { SelectAllowClear, SelectMenuItemIconInfo, SelectRenderNode, SelectSuffixInfo } from './select-icons.types';
@@ -44,9 +45,11 @@ export interface SelectSemanticInfo<
   Value extends string | number = string,
   Mode extends 'multiple' | 'tags' | undefined = undefined,
   OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>,
-  LabelInValue extends boolean = false
+  LabelInValue extends boolean = false,
+  RootElement extends HTMLElement = HTMLDivElement,
+  EditorElement extends HTMLElement = HTMLInputElement
 > {
-  props: Omit<SelectProps<Value, Mode, OptionType, LabelInValue>,
+  props: Omit<SelectProps<Value, Mode, OptionType, LabelInValue, RootElement, EditorElement>,
     keyof SelectSemanticState | 'nativeElement' | 'inputElement'> & SelectSemanticState
     & Readonly<Record<string, unknown>>;
 }
@@ -197,11 +200,15 @@ export interface SelectProps<
   Value extends string | number = string,
   Mode extends 'multiple' | 'tags' | undefined = undefined,
   OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>,
-  LabelInValue extends boolean = false
+  LabelInValue extends boolean = false,
+  RootElement extends HTMLElement = HTMLDivElement,
+  EditorElement extends HTMLElement = HTMLInputElement
 > extends Omit<
   HTMLInputAttributes,
-  'value' | 'size' | 'class' | 'style' | 'prefix' | 'onchange' | 'oninput' | 'type' | 'children'
-> {
+  'value' | 'size' | 'class' | 'style' | 'prefix' | 'onchange' | 'oninput' | 'type' | keyof DOMAttributes<HTMLInputElement>
+>, Omit<DOMAttributes<EditorElement | HTMLInputElement>, 'children' | 'onchange' | 'oninput'> {
+  /** Root заменяет всё поле, input — редактор внутри стандартного поля. */
+  components?: SelectComponents<RootElement, EditorElement>;
   /** Локальный namespace Select; пустая строка наследует ConfigProvider. */
   prefixCls?: string;
   /** Содержимое affix; Source не создаёт его для falsy scalar, включая 0. */
@@ -214,8 +221,8 @@ export interface SelectProps<
   removeIcon?: SelectRenderNode<undefined>;
   /** Семантический root и popup; прежний class остаётся на Native outer container. */
   rootClassName?: string;
-  classNames?: SelectSemanticValue<SelectClassNames, SelectSemanticInfo<Value, Mode, OptionType, LabelInValue>['props']>;
-  styles?: SelectSemanticValue<SelectStyles, SelectSemanticInfo<Value, Mode, OptionType, LabelInValue>['props']>;
+  classNames?: SelectSemanticValue<SelectClassNames, SelectSemanticInfo<Value, Mode, OptionType, LabelInValue, RootElement, EditorElement>['props']>;
+  styles?: SelectSemanticValue<SelectStyles, SelectSemanticInfo<Value, Mode, OptionType, LabelInValue, RootElement, EditorElement>['props']>;
   /** CSS object красит public control; прежняя CSS-строка остаётся на outer container. */
   style?: SelectStyle;
   popupRender?: SelectPopupRender;
@@ -308,10 +315,16 @@ export interface SelectProps<
   /** Пользовательская очистка; вызывается до onChange. */
   onClear?: () => void;
   onInputKeyDown?: (event: KeyboardEvent) => void;
+  onKeyDown?: (event: KeyboardEvent) => void;
+  onKeyUp?: (event: KeyboardEvent) => void;
+  onFocus?: (event: FocusEvent) => void;
+  onBlur?: (event: FocusEvent) => void;
+  onClick?: (event: MouseEvent) => void;
+  onMouseDown?: (event: MouseEvent) => void;
   onOpenChange?: (open: boolean) => void;
   class?: string;
   /** Корень Select после mount; ref очищается при unmount. */
-  nativeElement?: HTMLDivElement;
+  nativeElement?: NoInfer<RootElement> | HTMLDivElement;
   /** Нативный editor после mount; ref очищается при unmount. */
-  inputElement?: HTMLInputElement;
+  inputElement?: NoInfer<EditorElement> | HTMLInputElement;
 }
