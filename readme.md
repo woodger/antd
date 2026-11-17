@@ -10564,8 +10564,23 @@ model, events и producer ledgers сверяются с исходным Source.
 [Original-корпус own style AutoComplete](tests/browser/fixtures/ant-design-select-components-ac-style-source-manifest.json)
 содержит 2 owners, 20 действий и 16 SSR-состояний: при syncWidth=false own width
 сохраняется после ввода, disabled и clear. Без input slot сохраняется прежний
-Native путь стандартного редактора и тегов. Custom responsive fitting и сложные
-сочетания style/hydration требуют дальнейшей сверки.
+Native путь стандартного редактора и тегов.
+[Отдельный responsive Original-корпус](tests/browser/fixtures/ant-design-select-components-responsive-source-manifest.json)
+содержит 2 owners, 12 действий и 2 initial SSR-состояния; first/repeat побайтно совпадают.
+Он охватывает direct input и Fragment с live adornment: fitting измеряет весь suffix,
+сохраняет Source rest-width cache, offset и render cap. При SSR data tag wrappers
+не создаются, rest «+ 4 ...» скрыт, suffix имеет order 0. При initial open сначала
+публикуется измеренная ширина ещё закрытого input, затем открывается список.
+Сохраняются Native remove accessibility/inert и cleanup. В CSR позиция одного style-атрибута
+generated INPUT выделена как Blink lazy CSSOM boundary; в SSR отдельно учитывается
+Svelte style-attribute hoist у responsive wrappers. Две точные пустые Text anchors
+этих CSR snippets проверяются по compiler topology; authored text и SSR/hydration не затрагиваются.
+Остальные attrs, порядок/значения CSS declarations, CSSOM, boxes и полные raw остаются строгими.
+Браузерные сверки выбирают измеренный Original для точной версии Chromium 156 или 157:
+у двух INPUT-случаев изменились clientWidth/scrollWidth, поэтому для них сохранены
+отдельные полные записи Ant Design; прежние эталоны не заменены.
+tagRender, leading prefix, общая responsive-матрица
+и сложные сочетания style/hydration требуют дальнейшей сверки.
 [Browser](tests/browser/select-components.spec.ts) и
 [SSR](tests/package/select-components.ssr.test.ts) проверяют replacement DOM, события,
 полные attrs/producer ledgers, refs и cleanup. Полный перенос Select/AutoComplete

@@ -4,7 +4,11 @@ import { treeSelectComponentOverflow, type TreeSelectComponentOverflowLayout } f
 /** Source Overflow: измерение suffix после absolute/shrink-to-fit участвует в следующем проходе. */
 export function connectTreeSelectComponentOverflow(
   host: HTMLElement, suffix: HTMLElement, getCount: () => number,
-  update: (layout: TreeSelectComponentOverflowLayout) => void
+  update: (layout: TreeSelectComponentOverflowLayout) => void,
+  selectors: { tag: string; rest: string; prefix: string } = {
+    tag: ':scope > [data-tree-choice-tag]', rest: ':scope > [data-tree-choice-rest]',
+    prefix: ':scope > [data-tree-choice-overflow-prefix]'
+  }
 ) {
   const view = host.ownerDocument.defaultView!;
   const initialStyle = { position: suffix.style.position, top: suffix.style.top,
@@ -41,9 +45,9 @@ export function connectTreeSelectComponentOverflow(
   function measure() {
     frame = 0;
     if (disposed || !host.isConnected) return;
-    const tags = [...host.querySelectorAll<HTMLElement>(':scope > [data-tree-choice-tag]')];
-    const rest = host.querySelector<HTMLElement>(':scope > [data-tree-choice-rest]');
-    const prefix = host.querySelector<HTMLElement>(':scope > [data-tree-choice-overflow-prefix]');
+    const tags = [...host.querySelectorAll<HTMLElement>(selectors.tag)];
+    const rest = host.querySelector<HTMLElement>(selectors.rest);
+    const prefix = host.querySelector<HTMLElement>(selectors.prefix);
     const nodes = new Set([host, suffix, ...tags, ...(rest ? [rest] : []), ...(prefix ? [prefix] : [])]);
     for (const node of observed) if (!nodes.has(node)) {
       resize.unobserve(node); observed.delete(node); sizes.delete(node);

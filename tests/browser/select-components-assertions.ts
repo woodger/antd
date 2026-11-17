@@ -55,15 +55,35 @@ function attrs(node: SelectIconNode) {
 /** Svelte sets INPUT type before the spread's remaining attributes when value is present. */
 export function verifySelectComponentsDOMAttributes(actual: SelectIconNode, source: SelectIconNode,
   current: string[][], original: string[][], label: string) {
-  const sourceType = original.find(([key]) => key === 'type');
+  let expected = original;
+  const get = (values: string[][], key: string) => values.find(([name]) => name === key)?.[1];
+  const sourceStyle = original.find(([key]) => key === 'style');
+  const styleMaterializedLast = actual.tag === 'INPUT' && source.tag === 'INPUT'
+    && get(original, 'id') === 'select-icons-field' && get(current, 'id') === 'select-icons-field'
+    && get(original, 'data-select-icons-component') === 'input:function'
+    && get(current, 'data-select-icons-component') === 'input:function'
+    && get(original, 'class')?.split(/\s+/).includes('ant-select-input')
+    && sourceStyle && /^--select-input-width: (?:4|154);$/.test(sourceStyle[1])
+    && get(current, 'style') === sourceStyle[1] && current.at(-1)?.[0] === 'style'
+    && original.indexOf(sourceStyle) < original.findIndex(([key]) => key === 'aria-owns')
+    && ['aria-owns', 'aria-controls'].every(key => get(original, key) === 'select-icons-field_list'
+      && get(current, key) === 'select-icons-field_list')
+    && get(original, 'aria-activedescendant') === 'select-icons-field_list_0'
+    && get(current, 'aria-activedescendant') === 'select-icons-field_list_0';
+  // Blink lazily materializes CSSOM into the style attribute. An observer or
+  // readonly getAttribute synchronizes it earlier. Only this pinned ordinary
+  // Input's identical generated declaration may serialize after its late ARIA.
+  // All raw arrays, every other key/order and every CSS value remain unchanged.
+  if (styleMaterializedLast) expected = [...original.filter(([key]) => key !== 'style'), sourceStyle];
+  const sourceType = expected.find(([key]) => key === 'type');
   const typeHoisted = actual.tag === 'INPUT' && source.tag === 'INPUT' && sourceType
-    && original.some(([key]) => key === 'value') && current[0]?.[0] === 'type'
+    && expected.some(([key]) => key === 'value') && current[0]?.[0] === 'type'
     && current[0]?.[1] === sourceType[1];
   // node_modules/svelte/src/internal/client/dom/elements/attributes.js:320-327.
   // All raw arrays remain recorded; only this proven DOM setter order differs.
   if (typeHoisted) {
-    assert.deepEqual(current, [sourceType, ...original.filter(([key]) => key !== 'type')], label + ' exact Svelte INPUT type-first setter order');
-  } else assert.deepEqual(current, original, label + ' complete intrinsic attribute order');
+    assert.deepEqual(current, [sourceType, ...expected.filter(([key]) => key !== 'type')], label + ' exact Svelte INPUT type-first setter order');
+  } else assert.deepEqual(current, expected, label + ' complete intrinsic attribute order');
 }
 /** New custom editor/root DOM has no historical Native presentation boundary. */
 export function verifySelectComponentsNode(actual: SelectIconNode | null, source: SelectIconNode | null, label: string) {

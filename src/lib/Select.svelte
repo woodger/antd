@@ -69,6 +69,8 @@
   import { getSelectTagOptions } from './select-tags.engine';
   import { getSelectTagOverflow } from './select-tag-overflow.engine';
   import { connectSelectTagOverflow, measureSelectInput, measureSelectSourceInput } from './select-tag-overflow.dom';
+  import { connectTreeSelectComponentOverflow } from './tree-select-component-overflow.dom';
+  import type { TreeSelectComponentOverflowLayout } from './tree-select-component-overflow.engine';
   import { resolveSelectTokenOptions, splitSelectTokens } from './select-token.engine';
   import SelectComponent from './SelectComponent.svelte';
   import { clearSelectComponentHydration, selectComponentHydrationAttributes, takeSelectComponentHydration } from './select-components-hydration.dom';
@@ -267,6 +269,8 @@
   let menuElement = $state<HTMLDivElement>();
   let contentElement = $state<HTMLDivElement>();
   let responsiveCount = $state(Number.POSITIVE_INFINITY);
+  let componentOverflow = $state.raw<TreeSelectComponentOverflowLayout>();
+  let componentInputSuffix = $state<HTMLDivElement>();
   const tagElements = new Map<RawValue, HTMLElement>();
   let shown = $state(false);
   let popupPlacement = $state<string>();
@@ -323,9 +327,14 @@
   let selected = $derived(selectedRaw === undefined ? undefined : selectionOptions.get(selectedRaw));
   let tags = $derived(selectedValues.map(item => selectionOptions.get(item)!));
   let responsiveTags = $derived(multiple && maxTagCount === 'responsive');
-  let tagOverflow = $derived(getSelectTagOverflow(tags,
-    responsiveTags ? responsiveCount : typeof maxTagCount === 'number' ? maxTagCount : undefined));
-  let renderedTags = $derived(responsiveTags ? tags : tagOverflow.visible);
+  let componentResponsive = $derived(Boolean(inputSlot) && multiple && responsiveTags);
+  let tagOverflow = $derived(componentResponsive
+    ? { visible: tags.slice(0, componentOverflow?.visibleCount ?? 0),
+        omitted: tags.slice(componentOverflow?.omittedStart ?? 1) }
+    : getSelectTagOverflow(tags,
+      responsiveTags ? responsiveCount : typeof maxTagCount === 'number' ? maxTagCount : undefined));
+  let renderedTags = $derived(componentResponsive
+    ? tags.slice(0, componentOverflow?.renderCount ?? 0) : responsiveTags ? tags : tagOverflow.visible);
   let visibleTagKeys = $derived(new Set(tagOverflow.visible.map(tag => tag.value)));
   let tagPlaceholder = $derived(maxTagPlaceholder as SelectTagPlaceholder<RawValue> | undefined);
   let renderTag = $derived(tagRender as Snippet<[SelectTagInfo<RawValue>]> | undefined);
@@ -389,7 +398,22 @@
   });
   let measuredInputWidth = $state<number>();
   $effect(() => {
-    if (!contentElement || !responsiveTags) return;
+    if (!componentResponsive) componentOverflow = undefined;
+  });
+  $effect(() => {
+    if (!componentResponsive || !contentElement || !componentInputSuffix) return;
+    const host = contentElement, suffix = componentInputSuffix;
+    const overflow = untrack(() => connectTreeSelectComponentOverflow(host, suffix, () => tags.length,
+      layout => { componentOverflow = layout; }, {
+        tag: ':scope > [data-select-tag]', rest: ':scope > [data-select-rest]',
+        prefix: ':scope > [class*="-content-item-prefix"]'
+      }));
+    // Query/style/width не сбрасывают историю размеров rest и suffix.
+    $effect(() => { void tags.length; overflow.schedule(); });
+    return overflow.destroy;
+  });
+  $effect(() => {
+    if (!contentElement || !responsiveTags || componentResponsive) return;
     const sourceWidth = sourceInputWidth;
     const input = sourceWidth ? control : undefined;
     void tags;
@@ -525,7 +549,9 @@
 
   onMount(() => {
     clearSelectComponentHydration(defaultReference);
-    hydrated = true;
+    // Source сначала публикует измеренный закрытый Input, затем открывает список.
+    if (componentResponsive) void tick().then(() => { if (!componentDestroyed) hydrated = true; });
+    else hydrated = true;
     if (providedOpen === undefined) open = internalOpen;
   });
 
@@ -1136,18 +1162,6 @@
     if (focusEditor) { if (rootSlot || inputSlot) focus(); else control?.focus(); }
   }
 
-  // rc-overflow1.0.1 Item.js:39-60; wrapper owns visibility/order, not its tag.
-  function componentOverflowStyle(hidden: boolean, order: number) {
-    return serializeSelectStyle({
-      opacity: hidden ? 0 : 1,
-      height: hidden ? 0 : undefined,
-      overflowY: hidden ? 'hidden' : undefined,
-      order: responsiveTags ? order : undefined,
-      pointerEvents: hidden ? 'none' : undefined,
-      position: hidden ? 'absolute' : undefined
-    });
-  }
-
   function handleCustomTagMouseDown(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
@@ -1733,9 +1747,12 @@
     {:else if inputSlot && inputContext && multiple}{@const multipleInputValue = componentInputValue}<div data-ant-select-content class={[`${prefix}-content`, semantics.classes.content]}
         style={initialContentStyle} {...selectStyleAttributes(semantics.styles.content)}
         {@attach selectStyle(() => semantics.styles.content)} bind:this={contentElement}>{#if !selectedValues.length && !multipleInputValue}{@const initialPlaceholderStyle = untrack(() => serializeSelectStyle(semantics.styles.placeholder))}<div class={[`${prefix}-content-item`, `${prefix}-content-item-prefix`]}
-            style={componentOverflowStyle(false, -1)}><div data-ant-select-placeholder class={[`${prefix}-placeholder`, semantics.classes.placeholder]}
+            style:opacity={1} style:order={responsiveTags ? -1 : undefined}><div data-ant-select-placeholder class={[`${prefix}-placeholder`, semantics.classes.placeholder]}
               style={initialPlaceholderStyle} {...selectStyleAttributes(semantics.styles.placeholder)}
-              {@attach selectStyle(() => semantics.styles.placeholder)} aria-hidden="true">{placeholder ?? ''}</div></div>{/if}{#each renderedTags as tag, index (tag.value)}{@const hidden = responsiveTags && !visibleTagKeys.has(tag.value)}{@const initialTagStyle = untrack(() => !renderTag ? serializeSelectStyle(semantics.styles.item) : undefined)}<div class={`${prefix}-content-item`} style={componentOverflowStyle(hidden, index)}
+              {@attach selectStyle(() => semantics.styles.placeholder)} aria-hidden="true">{placeholder ?? ''}</div></div>{/if}{#each renderedTags as tag, index (tag.value)}{@const hidden = responsiveTags && !visibleTagKeys.has(tag.value)}{@const initialTagStyle = untrack(() => !renderTag ? serializeSelectStyle(semantics.styles.item) : undefined)}<div class={`${prefix}-content-item`}
+            style:opacity={hidden ? 0 : 1} style:height={hidden ? 0 : undefined}
+            style:overflow-y={hidden ? 'hidden' : undefined} style:order={responsiveTags ? index : undefined}
+            style:pointer-events={hidden ? 'none' : undefined} style:position={hidden ? 'absolute' : undefined}
             data-select-tag={responsiveTags || undefined} aria-hidden={hidden || undefined} inert={hidden}>{#snippet componentTagLabel()}<RenderContent value={getSelectTagText(tag.label, maxTagTextLength) as RenderEmptyContent} />{/snippet}<span data-ant-select-selection-item={!renderTag || undefined}
               data-ant-select-selection-item-disabled={!renderTag && (resolvedDisabled || tag.disabled) || undefined}
               class={!renderTag ? [`${prefix}-selection-item`, semantics.classes.item,
@@ -1757,18 +1774,24 @@
                     {@attach selectStyle(() => semantics.styles.itemRemove)}
                     aria-label={`${config.locale.removeText ?? ruRU.removeText} ${selectValueText(tag.label) || tag.value}`}
                     onmousedown={event => { event.preventDefault(); event.stopPropagation(); }}
-                    onclick={event => { event.stopPropagation(); remove(tag.value, false); }}>{#if tagIcon.fallback}<span class={[`${prefix}-selection-item-remove`, semantics.classes.itemRemove].filter(Boolean).join(' ').split(/\s+/).map(name => name + '-icon').join(' ')}><RenderContent value={tagIcon.content} /></span>{:else}<RenderContent value={tagIcon.content} />{/if}</button>{/if}{/if}</span></div>{/each}{#if tagOverflow.omitted.length || responsiveTags && tags.length}{@const hidden = responsiveTags && !tagOverflow.omitted.length}{@const initialRestStyle = untrack(() => !renderTag ? serializeSelectStyle(semantics.styles.item) : undefined)}<div class={[`${prefix}-content-item`, `${prefix}-content-item-rest`]}
-            style={componentOverflowStyle(hidden, hidden ? Number.MAX_SAFE_INTEGER : tagOverflow.visible.length - 1)}
-            data-select-rest={responsiveTags || undefined} aria-hidden={hidden || undefined} inert={hidden}>{#snippet componentRestLabel()}{#if typeof tagPlaceholder === 'function'}{@render tagPlaceholder(tagOverflow.omitted)}{:else if tagPlaceholder == null}+ {tagOverflow.omitted.length} ...
-              {:else if typeof tagPlaceholder !== 'boolean'}{tagPlaceholder}{/if}{/snippet}<span data-ant-select-selection-item={!renderTag || undefined}
+                    onclick={event => { event.stopPropagation(); remove(tag.value, false); }}>{#if tagIcon.fallback}<span class={[`${prefix}-selection-item-remove`, semantics.classes.itemRemove].filter(Boolean).join(' ').split(/\s+/).map(name => name + '-icon').join(' ')}><RenderContent value={tagIcon.content} /></span>{:else}<RenderContent value={tagIcon.content} />{/if}</button>{/if}{/if}</span></div>{/each}{#if tagOverflow.omitted.length || responsiveTags && tags.length}{@const hidden = componentResponsive
+            ? !componentOverflow?.restReady || !tagOverflow.omitted.length : responsiveTags && !tagOverflow.omitted.length}{@const initialRestStyle = untrack(() => !renderTag ? serializeSelectStyle(semantics.styles.item) : undefined)}<div class={[`${prefix}-content-item`, `${prefix}-content-item-rest`]}
+            style:opacity={hidden ? 0 : 1} style:height={hidden ? 0 : undefined}
+            style:overflow-y={hidden ? 'hidden' : undefined}
+            style:order={responsiveTags ? hidden ? Number.MAX_SAFE_INTEGER
+              : (componentOverflow?.omittedStart ?? tagOverflow.visible.length) - 1 : undefined}
+            style:pointer-events={hidden ? 'none' : undefined} style:position={hidden ? 'absolute' : undefined}
+            data-select-rest={responsiveTags || undefined} aria-hidden={hidden || undefined} inert={hidden}>{#snippet componentRestLabel()}{#if typeof tagPlaceholder === 'function'}{@render tagPlaceholder(tagOverflow.omitted)}{:else if tagPlaceholder == null}+ {tagOverflow.omitted.length} ...{:else if typeof tagPlaceholder !== 'boolean'}{tagPlaceholder}{/if}{/snippet}<span data-ant-select-selection-item={!renderTag || undefined}
+              title={renderTag ? undefined : tagPlaceholderTitle}
               class={!renderTag ? [`${prefix}-selection-item`, semantics.classes.item] : undefined}
               style={initialRestStyle} {...selectStyleAttributes(!renderTag ? semantics.styles.item : undefined)}
               {@attach selectStyle(() => !renderTag ? semantics.styles.item : undefined)}
-              title={renderTag ? undefined : tagPlaceholderTitle} data-select-custom-tag={renderTag ? '' : undefined}
+              data-select-custom-tag={renderTag ? '' : undefined}
               role="presentation" onmousedown={renderTag ? handleCustomTagMouseDown : undefined}>{#if renderTag}{@render renderTag({ label: componentRestLabel, isMaxTag: true, disabled: false, closable: false })}{:else}{@const initialRestContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}<span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]}
                   style={initialRestContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)}
                   {@attach selectStyle(() => semantics.styles.itemContent)}>{@render componentRestLabel()}</span>{/if}</span></div>{/if}<div class={[`${prefix}-content-item`, `${prefix}-content-item-suffix`]}
-          style={componentOverflowStyle(false, tagOverflow.visible.length - 1)}><SelectComponent component={inputSlot} context={inputContext} /></div></div>{:else}<div data-ant-select-content
+          bind:this={componentInputSuffix} style:opacity={1}
+          style:order={responsiveTags ? (componentOverflow?.omittedStart ?? 1) - 1 : undefined}><SelectComponent component={inputSlot} context={inputContext} /></div></div>{:else}<div data-ant-select-content
       data-select-source-empty-input={multiple && !selectedValues.length && !leading && semantics.sourceControlColors || undefined}
       data-select-value-layer={selectedLayer || undefined}
       data-select-value-has-content={selectedHasValue || undefined}

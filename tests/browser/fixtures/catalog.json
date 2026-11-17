@@ -2291,6 +2291,11 @@
     "root": "select-components-modes-composite-safe-fixture"
   },
   {
+    "id": "select-components-responsive",
+    "module": "./SelectComponentsResponsiveFixtures.svelte",
+    "root": "select-components-responsive-fixture"
+  },
+  {
     "id": "select-components-ac-style",
     "module": "./SelectComponentsACStyleFixtures.svelte",
     "root": "select-components-ac-style-fixture"

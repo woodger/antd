@@ -102,7 +102,8 @@ function verifyNode(actual: SelectComponentsModesNode, source: SelectComponentsM
   if (source.tag.toLowerCase() === 'svg') assert.equal(actual.html.replace(/<!--[\s\S]*?-->/g, ''), source.html, label + ' full SVG paths');
 }
 export function verifySelectComponentsModesPoint(actual: NativeModesPoint, source: ModesPoint, owner: ModesCase,
-  sample: SelectComponentsModesSample, label: string): string[] {
+  sample: SelectComponentsModesSample, label: string,
+  verifyExtraNode?: (actual: SelectComponentsModesNode, source: SelectComponentsModesNode, label: string) => boolean): string[] {
   // Existing shared helper owns complete caller/provider/model/event graphs,
   // public focus spelling and component definition/context representation.
   const failures = verifySelectComponentsPoint(actual, source, owner as unknown as ComponentsCase, sample as never, label);
@@ -118,7 +119,8 @@ export function verifySelectComponentsModesPoint(actual: NativeModesPoint, sourc
       const tag = has(node, 'ant-select-selection-item-remove') ? original.slice(0, original.indexOf(node)).reverse()
         .find(n => has(n, 'ant-select-selection-item')) : undefined;
       const title = tag?.attributes.find(([key]) => key === 'title')?.[1];
-      verifyNode(match, node, label + '/' + name + '/' + key + '/' + ordinal, disabled, title ? 'Удалить ' + title : undefined);
+      const nodeLabel = label + '/' + name + '/' + key + '/' + ordinal;
+      if (!verifyExtraNode?.(match, node, nodeLabel)) verifyNode(match, node, nodeLabel, disabled, title ? 'Удалить ' + title : undefined);
     }
     for (const node of current) if (!used.has(node)) {
       // An inherited wrapper around the default remove glyph has no Source
