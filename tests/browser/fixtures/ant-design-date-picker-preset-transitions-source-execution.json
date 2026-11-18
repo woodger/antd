@@ -1,0 +1,8 @@
+{
+  "path": ".upstream/artifacts/date-picker-preset-transitions-source-v1/protocol-freeze.json",
+  "bytes": 125703,
+  "sha256": "20a41ba69c7e91228cf6215009a1b1000376688fa46eaef911ae607fa949f0d2",
+  "SourceCapture": "not-run",
+  "Native": "not-run",
+  "SSR": "not-run"
+}

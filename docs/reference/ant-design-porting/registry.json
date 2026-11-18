@@ -6296,7 +6296,20 @@
         "tests/browser/fixtures/PrefixDefaultStylingFixtures.svelte",
         "tests/package/prefix-text-boundaries.ssr.test.ts",
         "tests/browser/prefix-text-boundaries.spec.ts",
-        "tests/browser/fixtures/PrefixTextBoundariesFixtures.svelte"
+        "tests/browser/fixtures/PrefixTextBoundariesFixtures.svelte",
+        "tests/browser/date-picker-preset-transitions-assertions.ts",
+        "tests/browser/date-picker-preset-transitions-driver.ts",
+        "tests/browser/date-picker-preset-transitions-native-types.ts",
+        "tests/browser/date-picker-preset-transitions.spec.ts",
+        "tests/browser/fixtures/DatePickerPresetTransitionsCase.svelte",
+        "tests/browser/fixtures/date-picker-preset-transitions.client.ts",
+        "tests/browser/fixtures/date-picker-preset-transitions.html",
+        "tests/browser/fixtures/ant-design-date-picker-preset-transitions-source-manifest.json",
+        "tests/browser/fixtures/ant-design-date-picker-preset-transitions-source-protocol.json",
+        "tests/browser/fixtures/date-picker-preset-transitions-native-boundaries.json",
+        "tests/package/date-picker-preset-transitions-source.test.ts",
+        "tests/package/date-picker-preset-transitions-boundaries.test.ts",
+        "tests/package/date-picker-preset-transitions.ssr.test.ts"
       ],
       "features": [
         {
@@ -6310,6 +6323,56 @@
             "tests/browser/date-picker.spec.ts"
           ],
           "note": "Dayjs|null, строгий формат/массив форматов, defaultValue, open, pickerValue, onChange(value,dateString), date/month/year/decade навигация панели, min/max/disabledDate, native name. Picker выбора только date; дополнительные picker modes отдельно."
+        },
+        {
+          "id": "presets-preview",
+          "title": "Single presets и hover preview",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/SinglePicker.svelte",
+            "src/lib/DatePickerCalendar.svelte",
+            "src/lib/date-picker.types.ts",
+            "src/lib/range-picker.types.ts",
+            "tests/browser/fixtures/DatePickerPresetsCase.svelte",
+            "tests/browser/fixtures/DatePickerPresetsLabel.svelte",
+            "tests/browser/date-picker-presets-reference.ts",
+            "tests/browser/fixtures/ant-design-date-picker-presets-source-manifest.json",
+            "tests/browser/fixtures/ant-design-date-picker-presets-source-protocol.json",
+            "tests/package/date-picker-presets-source.test.ts",
+            "tests/package/date-picker-presets.ssr.test.ts",
+            "tests/browser/date-picker-presets-closed-escape.spec.ts",
+            "readme.md",
+            "tests/browser/date-picker-presets.spec.ts",
+            "tests/browser/date-picker-presets-assertions.ts",
+            "tests/browser/date-picker-presets-driver.ts",
+            "tests/browser/fixtures/date-picker-presets-native-boundaries.json",
+            "tests/package/date-picker-presets-boundaries.test.ts",
+            "tests/browser/date-picker-preset-transitions-assertions.ts",
+            "tests/browser/date-picker-preset-transitions-driver.ts",
+            "tests/browser/date-picker-preset-transitions-native-types.ts",
+            "tests/browser/date-picker-preset-transitions.spec.ts",
+            "tests/browser/fixtures/DatePickerPresetTransitionsCase.svelte",
+            "tests/browser/fixtures/date-picker-preset-transitions.client.ts",
+            "tests/browser/fixtures/date-picker-preset-transitions.html",
+            "tests/browser/fixtures/ant-design-date-picker-preset-transitions-source-manifest.json",
+            "tests/browser/fixtures/ant-design-date-picker-preset-transitions-source-protocol.json",
+            "tests/browser/fixtures/date-picker-preset-transitions-native-boundaries.json",
+            "tests/package/date-picker-preset-transitions-source.test.ts",
+            "tests/package/date-picker-preset-transitions-boundaries.test.ts",
+            "tests/package/date-picker-preset-transitions.ssr.test.ts",
+            "src/lib/DatePickerTimePanel.svelte",
+            "tests/browser/date-picker-time-scroll.spec.ts",
+            "tests/browser/date-picker-time-scroll-driver.ts",
+            "tests/browser/date-picker-time-scroll-assertions.mjs",
+            "tests/browser/fixtures/DatePickerTimeScrollCase.svelte",
+            "tests/browser/fixtures/ant-design-date-picker-time-scroll-source-manifest.json",
+            "tests/package/date-picker-time-scroll-source.test.ts",
+            "tests/browser/date-picker-offgrid-scroll.spec.ts",
+            "tests/browser/fixtures/DatePickerOffGridScrollFixtures.svelte",
+            "tests/browser/fixtures/ant-design-date-picker-offgrid-scroll-source-reference.json"
+          ],
+          "note": "Single date/showTime: static и lazy Dayjs, string/Snippet labels, previewValue hover/false. Независимые Original CSR first/repeat:6 owners/58 actions/64 settled points/14 close transitions;6 initial closed SSR states×2serializers в обоих captures. Все raw parts сохранены побайтно и читаются по одной. Lazy вызывается unbound без аргументов отдельно при hover/click даже при preview=false; выключение активного preview сохраняет текст до закрытия. Preset сначала меняет calendar/onCalendarChange, затем вызывает user disabledDate и min/max/time validation. Invalid сохраняет новый draft, прежний model и открытый popup; valid сохраняет полный timestamp/alias, обходит needConfirm/onOk и закрывает popup. Rejected controlled preset сохраняет submitted calendar/text при прежнем model; panel Escape сохраняет draft, input Escape сбрасывает с calendar callback, включая закрытый input после public focus(). Native HTMLInput focus hooks и calendar info {source}, conditional popup/Snippet lifecycle остаются явно отделёнными от React composite callbacks/retained popup; никакие Source calls не имитируются. Native input attrs/defaultValue/caret не заявляются побайтно равными React selector; полные наблюдения сохранены. Общая extended API/global parity остаётся отдельной задачей. Дополнительные 13 Source-профилей охватывают 123 действия, 136 состояний и 28 закрытий: format, reset/default/controlled pickerValue, min/max, hover колонок и смену preview. Вместе с основными шестью это 19 профилей/181 действие/200 состояний/42 закрытия. Native сохраняет primitive scroll между условными popup; selected/optional(defaultOpenValue) и value/label/disabled строк определяют повторное выравнивание, actual portal target сбрасывает память. Начальный закрытый caret без событий сохраняет измеренную границу none/forward; после действий caret строго совпадает. Native disabledTime вызывается с одним аргументом, Source validation может передать три; журналы не подменяются и равное число pure calls не заявляется. Дополнительные Source first/repeat проверяют отдельно2 профиля шаблона/контейнера(17 действий/19 состояний) и1 профиль значения вне шага(5 действий/6 состояний). При отсутствующем target выбранного времени сохраняется прежний offset той же колонки даже после смены disabled flags; browser ограничивает offset реальным scroll range. Hidden Source retained DOM остаётся отдельным от отсутствующего Native popup. Полные Source clock probes и промежуточная afterCall-анимация сохранены; с Native сравниваются проверяемые видимые состояния, без подмены времени или pure-call counts."
         },
         {
           "id": "datetime",
@@ -6350,11 +6413,11 @@
         },
         {
           "id": "extended-api",
-          "title": "Другие picker modes, multiple, single presets/render hooks, mask и semantic API",
+          "title": "Другие picker modes, multiple, render hooks, mask и semantic API",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет публичных week/month/quarter/year picker, multiple, generatePicker factory, single presets/previewValue, cellRender/panelRender, mask format и полного набора semantic slots/events. RangePicker presets/previewValue перенесены."
+          "note": "Нет публичных week/month/quarter/year picker, multiple, generatePicker factory, cellRender/panelRender, mask format и полного набора semantic slots/events. RangePicker presets/previewValue перенесены."
         },
         {
           "id": "global-parity",

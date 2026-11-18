@@ -45,6 +45,7 @@ export interface RangePickerProps extends Omit<
   | 'defaultPickerValue'
   | 'onPickerValueChange'
   | 'onPanelChange'
+  | 'presets'
 > {
   /** Управляемая пара Dayjs; формат и точность следуют календарю и showTime. */
   value?: RangePickerInputValue | null;

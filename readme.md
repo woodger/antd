@@ -135,7 +135,7 @@ Day.js должен удовлетворять peer-диапазону ^1.11.11;
 | InputPassword | Видимость пароля, click/hover/keyboard, controlled toggle, focus/selection и возможности Input |
 | InputSearch | Поиск по кнопке/Enter/очистке, loading/IME, custom button snippet и композиция Compact |
 | InputOTP | UTF-16 ячейки, formatter/paste, mask/separator, keyboard/focus и callbacks полного кода |
-| DatePicker | Single Dayjs date/datetime, input/calendar/time, confirmation, clear, ограничения, locale и native формы |
+| DatePicker | Single Dayjs date/datetime, input/calendar/time, presets и preview, confirmation, clear, ограничения, locale и native формы |
 | RangePicker | Пара Dayjs, связанные календари, время и подтверждение границ, allowEmpty/disabled, presets и hover |
 | Calendar | Full/mini date/month panels, controlled value/mode, header, week numbers, snippets и custom date adapter |
 | Upload / UploadDragger | Выбор/drop, controlled list, beforeUpload, XHR/customRequest, статусы и удаление |
@@ -5071,6 +5071,42 @@ units, шаги, use12Hours, hideDisabledOptions и defaultOpenValue. Огран
 onOk. Escape/внешний клик отменяют неподтверждённый draft. Now использует исходный
 путь preset submit и сразу применяет допустимое текущее время.
 
+`presets` принимает готовые Dayjs или функции без аргументов; подпись — строка либо
+Snippet. Функция вызывается отдельно при наведении и выборе, без привязки `this`.
+`previewValue='hover'` временно показывает дату под указателем, не меняя выбранное
+value. Значение false отключает предпросмотр, но не вычисление ленивого preset.
+При выключении уже активного preview его текст сохраняется до закрытия popup.
+
+Выбор допустимого preset сразу применяет полный Dayjs и закрывает popup, включая
+showTime/needConfirm; onOk не вызывается, время не округляется по шагам панели.
+Недопустимый preset меняет calendar draft и вызывает onCalendarChange перед
+проверкой ограничений, сохраняя прежнее value и открытый popup. Фокус переходит
+в panel-container. Escape из панели сохраняет этот draft; Escape из input
+восстанавливает committed value. Если controlled owner отклонил допустимый preset,
+его value остаётся прежним, а календарь и текст сохраняют отправленную дату до сброса.
+
+[Source captures presets](./tests/browser/fixtures/ant-design-date-picker-presets-source-manifest.json)
+и [переходов](./tests/browser/fixtures/ant-design-date-picker-preset-transitions-source-manifest.json)
+содержат 19 профилей, 181 действие, 200 состояний, 42 закрытия и обе закрытые SSR-сериализации каждого профиля;
+полные raw-части сохранены без преобразований. Native сохраняет HTMLInput onfocus/onblur
+и третий аргумент onCalendarChange `{source}`; React composite focus callbacks имеют
+другой контракт. Удаляемый Native popup и lifecycle Snippet остаются адаптацией
+сохраняемого React popup. Браузерные проверки отдельно фиксируют эти границы.
+В 13 переходных профилях исходный нефокусированный caret в конце строки имеет
+направление none в Native и forward в React; после действий направление сравнивается строго.
+Прокрутка колонок datetime сохраняется между открытиями при прежних значениях,
+шаблоне времени и строках. Смена реального контейнера popup создаёт новые колонки;
+новая функция, вернувшая прежний контейнер, сохраняет их. При reset datetime
+`onPickerValueChange` учитывает время и миллисекунды; date-only сравнивает календарную дату.
+Если выбранное время отсутствует среди строк шага, смена ограничений в закрытой
+панели сохраняет ручную прокрутку колонки. Отдельные проверки
+[шаблона времени и контейнера](./tests/browser/date-picker-time-scroll.spec.ts)
+и [значения вне шага](./tests/browser/date-picker-offgrid-scroll.spec.ts) используют
+независимые React first/repeat captures; полные оригиналы сохранены в фикстурах.
+[Browser](./tests/browser/date-picker-presets.spec.ts) сравнивает состояния, аргументы,
+CSS и геометрию; [SSR](./tests/package/date-picker-presets.ssr.test.ts) проверяет
+закрытые input и отсутствие browser API.
+
 Кнопки подтверждения DatePicker, RangePicker, TimePicker и TimeRangePicker используют
 общий Button с size=small и type=primary, как исходный PickerButton. Они наследуют
 ConfigProvider.button, components.Button и Wave; переданная строка локали сохраняет
@@ -5179,8 +5215,8 @@ Defaults в prefix stylesheet имеют нулевую specificity: canonical N
 Служебные snippets/head/popup boundaries не добавляют текст рядом с controls;
 SSR проверяет также defaultOpen, browser — обновление общего префикса.
 
-Остальные picker/multiple modes, generatePicker factory, single presets,
-cellRender/panelRender, mask format, hover preview, полный semantic/component config
+Остальные picker/multiple modes, generatePicker factory,
+cellRender/panelRender, mask format, полный semantic/component config
 и полный rc-trigger/motion API ещё не перенесены. Реестр перечисляет эти пробелы
 отдельно; данный этап не заявляет полноту семейства DatePicker.
 

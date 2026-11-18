@@ -10,6 +10,11 @@ export type DatePickerLocale = {
 };
 export type DatePickerMode = 'date' | 'month' | 'year' | 'decade';
 export type DatePickerFormat = string | ((value: Dayjs) => string);
+/** Быстрый выбор одной даты: готовое или лениво вычисляемое значение. */
+export interface DatePickerPreset {
+  label: string | Snippet;
+  value: Dayjs | (() => Dayjs);
+}
 export interface DatePickerDisabledTime {
   disabledHours?: () => number[];
   disabledMinutes?: (hour: number) => number[];
@@ -88,9 +93,16 @@ export interface DatePickerProps extends Omit<
   ) => void;
   onOk?: (value: Dayjs) => void;
   onClear?: () => void;
-  onPickerValueChange?: (value: Dayjs) => void;
+  onPickerValueChange?: (
+    value: Dayjs,
+    info: { source: 'reset' | 'panel'; mode: DatePickerMode; }
+  ) => void;
   onOpenChange?: (open: boolean) => void;
   onPanelChange?: (value: Dayjs, mode: DatePickerMode) => void;
+  /** Быстрый выбор даты со строковой или Snippet подписью. */
+  presets?: readonly DatePickerPreset[];
+  /** Временное отображение даты при наведении; не меняет выбранное value. @defaultValue 'hover' */
+  previewValue?: false | 'hover';
   renderExtraFooter?: Snippet;
   /** По умолчанию bottomLeft в LTR и bottomRight в RTL, как rc-picker. */
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';

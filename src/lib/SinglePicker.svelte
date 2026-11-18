@@ -1,7 +1,7 @@
 <script lang="ts">
   import { tick, untrack } from 'svelte';
   import type { Dayjs } from 'dayjs';
-  import type { DatePickerProps, DatePickerMode } from './date-picker.types';
+  import type { DatePickerProps, DatePickerMode, DatePickerPreset } from './date-picker.types';
   import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
   import {
     pickerFormats,
@@ -29,7 +29,8 @@
   import NoCompactStyle from './NoCompactStyle.svelte';
   import Button from './Button.svelte';
   import DatePickerCalendar from './DatePickerCalendar.svelte';
-  import DatePickerTimePanel from './DatePickerTimePanel.svelte';
+  import DatePickerTimePanel, { type DatePickerTimeScrollMemory }
+    from './DatePickerTimePanel.svelte';
   import Icon from './Icon.svelte';
   import PickerCalendarIcon from './PickerCalendarIcon.svelte';
   import PickerClockIcon from './PickerClockIcon.svelte';
@@ -65,6 +66,8 @@
     inputReadOnly,
     preserveInvalidOnBlur = false,
     showNow = true,
+    presets,
+    previewValue = 'hover',
     size,
     status,
     suffixIcon,
@@ -160,6 +163,8 @@
   let input = $state<HTMLInputElement>();
   let rootElement = $state<HTMLDivElement>();
   let popup = $state<HTMLDivElement>();
+  let datePanelContainer = $state<HTMLDivElement>();
+  let retainedDatePreset = $state(false);
   let shown = $state(false);
   let actualPlacement = $derived(
     placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft')
@@ -184,7 +189,11 @@
     : formatPicker(mergedValue, actualLocale.locale, formats));
   let previousDateText = untrack(() => formattedDateValue);
   let wasVisible = untrack(() => visible);
+  let datePanelWasOpen = false;
+  let previousDateCalendar = untrack(() => draft);
   let panelWasOpen = false;
+  const dateTimeScroll: DatePickerTimeScrollMemory = new Map();
+  let dateTimePanel = $state<{ captureScroll: () => void }>();
   let actualVariant = $derived(time ? timeVariant.variant : dateVariant.variant);
   let semantic = $derived(time ? timePickerSemantic(time, config.timePicker, {
     variant: actualVariant,
@@ -207,7 +216,7 @@
       ?? config.locale.datePicker?.timePickerLocale?.placeholder
       ?? datePickerEnUS.timePickerLocale.placeholder
     : attributes.placeholder ?? actualLocale.placeholder);
-  let displayText = $derived(time && hoverValue
+  let displayText = $derived(hoverValue
     ? formatPicker(hoverValue, actualLocale.locale, formats) : text);
   let formattedTimeDraft = $derived(time
     ? formatPicker(draft, actualLocale.locale, formats) : undefined);
@@ -235,6 +244,33 @@
     resetValue: resetTimeValue
   });
 
+  const datePresetInteraction = createRangeInteraction<Dayjs[]>({
+    fieldCount: () => 1,
+    needConfirm: () => confirm,
+    allowEmpty: () => [false],
+    getCalendarValue: () => [draft ? [draft] : null],
+    triggerCalendarChange: (_index, next) => {
+      const candidate = next?.[0] ?? null;
+      if (!timePickerSameValue(candidate, draft)) {
+        setDraft(candidate, 'date');
+        text = formatPicker(draft, actualLocale.locale, formats);
+      }
+    },
+    flushSubmit: (_index, all) => {
+      if (all) {
+        if (draft) submitDatePresetValue(draft);
+        requestOpen(false);
+      }
+    },
+    resetValue: () => {
+      if (retainedDatePreset && !timePickerSameValue(mergedValue, draft)) {
+        setDraft(mergedValue, 'date');
+        if (visible) syncDatePanel(false);
+      }
+      resetText();
+    }
+  });
+
   const popupThemeStyle = $derived(
     [componentTheme.style, semantic?.styles.popup.root].filter(Boolean).join(';') || undefined
   );
@@ -244,6 +280,15 @@
     getPopupContainer: getPopupContainer || config.getPopupContainer,
     themeStyle: popupThemeStyle
   }));
+  let dateTimeTarget = untrack(() => container.target);
+  $effect.pre(() => {
+    const target = container.target;
+    if (target !== dateTimeTarget) {
+      dateTimeTarget = target;
+      dateTimeScroll.clear();
+    } else if (visible && (!showTime || mode !== 'date')) dateTimeScroll.clear();
+    else if (!visible) untrack(() => dateTimePanel?.captureScroll());
+  });
   $effect(() => {
     nativeElement = rootElement;
     return () => { nativeElement = undefined; };
@@ -257,9 +302,16 @@
     // Context repaint не сбрасывает draft, пока value и его отображение прежние.
     if (mergedValue === previousMergedValue && (time || formatted === previousDateText)) return;
 
+    if (!time && mergedValue === previousMergedValue && retainedDatePreset) {
+      text = formatPicker(draft, actualLocale.locale, formats);
+      previousDateText = formatted;
+      return;
+    }
+
     text = formatted ?? formatPicker(mergedValue, actualLocale.locale, formats);
     draft = mergedValue;
     dirty = false;
+    retainedDatePreset = false;
     previousMergedValue = mergedValue;
     previousDateText = formatted;
   });
@@ -270,10 +322,31 @@
     }
   });
   $effect(() => {
+    if (time) return;
+    const opened = visible, calendar = draft;
+    const opening = opened && !datePanelWasOpen;
+    const changed = calendar !== previousDateCalendar;
+    datePanelWasOpen = opened;
+    previousDateCalendar = calendar;
+    if (!opened || !opening && !changed) return;
+    untrack(() => syncDatePanel(opening));
+  });
+  $effect.pre(() => {
+    if (!time && !visible && datePanelContainer
+      && getPopupActiveElement(datePanelContainer) === datePanelContainer) {
+      datePanelContainer.blur();
+      focused = false;
+    }
+  });
+  $effect(() => {
     const next = visible;
-    if (time && wasVisible && !next) {
+    if (wasVisible && !next) {
       hoverValue = null;
-      untrack(() => timeInteraction.trigger(0, 'popupClose'));
+      if (time) untrack(() => timeInteraction.trigger(0, 'popupClose'));
+      else untrack(() => {
+        if (retainedDatePreset) datePresetInteraction.trigger(0, 'popupClose');
+        else datePresetInteraction.reset();
+      });
     }
     wasVisible = next;
   });
@@ -309,11 +382,13 @@
         popupPlacement = next === 'top' ? 'top' : 'bottom';
       },
       onDismiss: reason => {
+        const keepPreset = !time && retainedDatePreset;
         if (time) {
           if (reason === 'escape') timeInteraction.trigger(0, 'esc');
           requestOpen(false);
-        } else finish(false);
-        if (reason === 'escape')
+        } else if (keepPreset) closeDatePreset();
+        else finish(false);
+        if (reason === 'escape' && !keepPreset)
           input?.focus();
       }
     });
@@ -341,8 +416,7 @@
     if (blocked || visible === next) return;
     if (next) {
       now = adapter.getNow();
-      if (!time) draft = mergedValue;
-      if (!time) internalPanel = defaultPickerValue ?? mergedValue ?? now;
+      if (!time && !retainedDatePreset) draft = mergedValue;
       mode = 'date';
       if (time) timeInteraction.trigger(0, 'field-switch');
     }
@@ -351,6 +425,7 @@
     onOpenChange?.(next);
   }
   function resetText() {
+    retainedDatePreset = false;
     text = formatPicker(mergedValue, actualLocale.locale, formats);
     dirty = false;
     draft = mergedValue;
@@ -363,6 +438,7 @@
       onCalendarChange?.(next, formatPicker(next, actualLocale.locale, formats), { source });
   }
   function commit(next: Dayjs | null) {
+    if (!time) datePresetInteraction.reset();
     if (!time && blocked || next && !valid(next)) return false;
     const changed = time ? !timePickerSameValue(next, mergedValue)
       : next?.valueOf() !== mergedValue?.valueOf();
@@ -385,6 +461,12 @@
       } else requestOpen(false);
       return;
     }
+    if (confirmed && retainedDatePreset) {
+      if (!valid(draft)) return;
+      if (draft) onOk?.(draft);
+      datePresetInteraction.trigger(0, 'confirm');
+      return;
+    }
     if (confirmed) {
       if (!valid(draft) || !commit(draft)) return;
       if (draft)
@@ -404,13 +486,29 @@
       resetText();
     requestOpen(false);
   }
+  function syncDatePanel(opening: boolean) {
+    if (defaultPickerValue && !opening) return;
+    let next = defaultPickerValue ?? draft ?? now;
+    if (!defaultPickerValue) {
+      if (minDate && minDate.isAfter(next)) next = minDate;
+      if (maxDate && next.isAfter(maxDate)) next = maxDate;
+    }
+    const previous = panel;
+    if (pickerValue === undefined) internalPanel = next;
+    if (previous.year() !== next.year() || previous.month() !== next.month()
+      || previous.date() !== next.date()
+      || showTime && (previous.hour() !== next.hour() || previous.minute() !== next.minute()
+        || previous.second() !== next.second() || previous.millisecond() !== next.millisecond())) {
+      onPickerValueChange?.(next, { source: 'reset', mode });
+    }
+  }
   function navigate(next: Dayjs) {
     const target = minDate && next.endOf('month').isBefore(minDate)
       ? minDate
       : maxDate && next.startOf('month').isAfter(maxDate) ? maxDate : next;
     if (pickerValue === undefined)
       internalPanel = target;
-    onPickerValueChange?.(target);
+    onPickerValueChange?.(target, { source: 'panel', mode });
     onPanelChange?.(target, mode);
   }
   function changeMode(next: DatePickerMode) {
@@ -418,9 +516,11 @@
     onPanelChange?.(panel, mode);
   }
   function selectDate(next: Dayjs) {
+    retainedDatePreset = false;
+    datePresetInteraction.trigger(0, 'panel-intermediate');
     if (mode !== 'date') {
       internalPanel = next;
-      onPickerValueChange?.(next);
+      onPickerValueChange?.(next, { source: 'panel', mode });
       changeMode(mode === 'decade' ? 'year' : mode === 'year' ? 'month' : 'date');
       return;
     }
@@ -451,6 +551,8 @@
       syncTimePickerValue(value, 'panel');
       return;
     }
+    retainedDatePreset = false;
+    datePresetInteraction.trigger(0, 'panel-intermediate');
     const next = validPickerTime(value, clock, disabledTime);
     draftSource = 'panel';
     setDraft(next, 'time');
@@ -489,17 +591,28 @@
       }
       return;
     }
-    if (event.key === 'Escape' && visible) {
+    if (event.key === 'Escape') {
+      if (visible || retainedDatePreset) {
+        event.preventDefault();
+        event.stopPropagation();
+        datePresetInteraction.trigger(0, 'esc');
+        requestOpen(false);
+      } else datePresetInteraction.reset();
+    } else if (event.key === 'Tab') {
+      if (retainedDatePreset) datePresetInteraction.trigger(0, 'keyboard-submit-weak');
+      else if (draft) datePresetInteraction.reset();
+    } else if (event.key === 'Enter' && retainedDatePreset) {
       event.preventDefault();
-      event.stopPropagation();
-      resetText();
-      requestOpen(false);
-    }
-    else if (event.key === 'Enter') {
+      const closed = !visible;
+      const parsed = parsePicker(event.currentTarget.value, actualLocale.locale, formats);
+      if (parsed) datePresetInteraction.trigger(0, 'keyboard-submit');
+      if (closed) requestOpen(true);
+    } else if (event.key === 'Enter') {
       event.preventDefault();
-      if (!visible)
+      if (!visible) {
+        if (parsePicker(text, actualLocale.locale, formats)) datePresetInteraction.reset();
         requestOpen(true);
-      else {
+      } else {
         const next = text
           ? readOnly || draftSource === 'panel'
             ? draft
@@ -541,8 +654,10 @@
           ))) return;
       focused = false;
       field?.onBlur();
-      if (visible || dirty)
-        finish(false);
+      if (visible || dirty) {
+        if (!time && retainedDatePreset) closeDatePreset();
+        else finish(false);
+      }
       if (time && !preserveInvalidOnBlur) {
         text = formatPicker(draft, actualLocale.locale, formats);
         invalidTimeInput = false;
@@ -566,6 +681,53 @@
     if (!time || time.previewValue === false) return;
     hoverValue = next;
     if (!next) text = formatPicker(draft, actualLocale.locale, formats);
+  }
+  function datePresetValue(preset: DatePickerPreset) {
+    const candidate = preset.value;
+    return typeof candidate === 'function' ? candidate() : candidate;
+  }
+  function handleDateHover(next: Dayjs | null) {
+    if (previewValue !== 'hover') return;
+    hoverValue = next;
+  }
+  function handleDateCellHover(next: Dayjs | null) {
+    if (next && showTime) {
+      const base = draft ?? clock.defaultOpenValue ?? panel;
+      next = base.year(next.year()).month(next.month()).date(next.date());
+    } else if (next) {
+      next = next.hour(0).minute(0).second(0).millisecond(0);
+    }
+    handleDateHover(next);
+  }
+  function closeDatePreset() {
+    requestOpen(false);
+    if (!visible && datePanelContainer
+      && getPopupActiveElement(datePanelContainer) === datePanelContainer) {
+      datePanelContainer.blur();
+      focused = false;
+    }
+  }
+  function selectDatePreset(preset: DatePickerPreset) {
+    if (blocked) return;
+    datePanelContainer?.focus();
+    focused = true;
+    const next = datePresetValue(preset);
+    retainedDatePreset = true;
+    dirty = false;
+    draftSource = 'panel';
+    text = formatPicker(next, actualLocale.locale, formats);
+    if (submitDatePresetValue(next)) closeDatePreset();
+  }
+  function submitDatePresetValue(next: Dayjs) {
+    // Preset меняет calendar до validation; popupClose управляет сессией отдельно.
+    if (!timePickerSameValue(next, draft)) setDraft(next, 'date');
+    if (!next.isValid() || disabledDate?.(next, { type: 'date' })
+      || pickerDateDisabled(next, { minDate, maxDate })
+      || pickerTimeDisabled(next, { showTime, disabledTime })) return false;
+    const changed = !timePickerSameValue(next, mergedValue);
+    if (value === undefined) internalValue = next;
+    if (changed) onChange?.(next, formatPicker(next, actualLocale.locale, formats));
+    return true;
   }
   function handleRootClick(event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement; }) {
     if (!time || blocked) return;
@@ -675,13 +837,22 @@
   </div>
 {/snippet}{#snippet clearButton()}
   {#if (time ? timeAllowClear : allowClear)
-      && (time ? hoverValue || draft : mergedValue) && !blocked}
+      && (time ? hoverValue || draft : hoverValue || (retainedDatePreset ? draft : mergedValue)) && !blocked}
     <button
       type="button"
       data-picker-clear class={`${prefix}-clear`}
       aria-label={actualLocale.clear}
       onpointerdown={event => event.preventDefault()}
       onclick={event => {
+        if (!time && hoverValue) {
+          hoverValue = null;
+          retainedDatePreset = false;
+          commit(null);
+          requestOpen(false);
+          input?.focus();
+          onClear?.();
+          return;
+        }
         if (time) {
           event.stopPropagation();
           timeInteraction.reset();
@@ -728,7 +899,7 @@
       style={semantic?.styles.prefix}
     >{#if typeof time.prefix === 'function'}{@render time.prefix()}{:else}{time.prefix}{/if}</div>
   {/if}
-  <div class={[`${prefix}-input`, time && hoverValue && `${prefix}-input-placeholder`]}>
+  <div class={[`${prefix}-input`, hoverValue && `${prefix}-input-placeholder`]}>
     <input
       {...attributes}
       bind:this={input}
@@ -761,6 +932,10 @@
       value={displayText}
       oninput={event => {
           if (!time) requestOpen(true);
+          if (!time) {
+            retainedDatePreset = false;
+            datePresetInteraction.trigger(0, 'input');
+          }
           text = event.currentTarget.value;
           dirty = true;
           draftSource = 'input';
@@ -776,6 +951,7 @@
       onclick={() => { if (!time) requestOpen(true); }} onkeydown={keyboard} onfocus={event => {
           focused = true;
           if (time) timeInteraction.trigger(0, 'field-switch');
+          else datePresetInteraction.trigger(0, 'field-switch');
           onfocus?.(event);
         }} onblur={event => {
             onblur?.(event);
@@ -813,12 +989,18 @@
           {:else}{@render timePanelLayout()}{/if}
         </div>
       {:else}
-      <div class={`${prefix}-panel-container`}><div class={`${prefix}-panel-layout`}><div><div class={`${prefix}-panel`} tabindex="-1">
+      <div bind:this={datePanelContainer} class={`${prefix}-panel-container`} tabindex="-1"><div class={`${prefix}-panel-layout`}>
+        {#if presets?.length}<div data-picker-presets class={`${prefix}-presets`}><ul>
+          {#each presets as preset, index (index)}<li onmouseenter={() => handleDateHover(datePresetValue(preset))} onmouseleave={() => handleDateHover(null)}>
+            <button type="button" onclick={() => selectDatePreset(preset)}>{#if typeof preset.label === 'function'}{@render preset.label()}{:else}{preset.label}{/if}</button>
+          </li>{/each}
+        </ul></div>{/if}
+        <div><div class={`${prefix}-panel`} tabindex="-1">
         <div class={showTime && mode === 'date'
             ? `${prefix}-datetime-panel`
             : undefined}>
-          <DatePickerCalendar prefixCls={prefix} {panel} selected={draft} direction={config.direction} {mode} locale={actualLocale} {restrictions} {now} onSelect={selectDate} onNavigate={navigate} onModeChange={changeMode} />
-          {#if showTime && mode === 'date'}<DatePickerTimePanel prefixCls={prefix} value={draft ?? clock.defaultOpenValue ?? panel} selectedValue={draft} config={clock} format={timeFormat} locale={actualLocale.locale} {disabledTime} onSelect={selectTime} />{/if}
+          <DatePickerCalendar prefixCls={prefix} {panel} selected={draft} hovered={hoverValue ?? draft} onHover={handleDateCellHover} preserveDisabledHover direction={config.direction} {mode} locale={actualLocale} {restrictions} {now} onSelect={selectDate} onNavigate={navigate} onModeChange={changeMode} />
+          {#if showTime && mode === 'date'}<DatePickerTimePanel bind:this={dateTimePanel} scrollMemory={dateTimeScroll} prefixCls={prefix} value={draft ?? clock.defaultOpenValue ?? panel} selectedValue={draft} config={clock} format={timeFormat} locale={actualLocale.locale} {disabledTime} onSelect={selectTime} onHover={handleDateHover} />{/if}
         </div>
         {#if renderExtraFooter}<div class={`${prefix}-footer-extra`}>{@render renderExtraFooter()}</div>{/if}
         {#if mode === 'date' && (confirm || showNow)}<div class={`${prefix}-footer`}>

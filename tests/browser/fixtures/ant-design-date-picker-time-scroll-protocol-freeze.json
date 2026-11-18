@@ -1,0 +1,347 @@
+{
+  "status": "Root-reviewed-frozen-before-any-scroll-Source-browser",
+  "subject": "additive-public-DatePicker-selected-time-scroll-template-and-portal-counter",
+  "source": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "rcPicker": "1.12.2",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "node": "v24.18.0",
+    "chromium": "157.0.8103.78",
+    "browserExecutable": "/usr/lib64/chromium-browser/chromium-browser",
+    "browserLocale": "en-US",
+    "browserTimezone": "UTC",
+    "clock": "Unmodified real clock, Date and event timestamps."
+  },
+  "counts": {
+    "owners": 2,
+    "actions": 17,
+    "logicalPoints": 19,
+    "authoredCloseActions": 2,
+    "trustedWheelActions": 5
+  },
+  "samples": [
+    {
+      "id": "selected-time-template-and-picker-control",
+      "value": "2024-06-13T16:30:00.000",
+      "pickerValue": "2024-06-13T16:30:00.000",
+      "nextPickerValue": "2024-06-13T17:30:00.000",
+      "defaultOpenValue": "2024-06-13T16:30:00.000",
+      "nextDefaultOpenValue": "2024-06-13T17:30:00.000",
+      "format": "YYYY-MM-DD hh:mm:ss A",
+      "showTime": {
+        "format": "hh:mm:ss A",
+        "use12Hours": true,
+        "hourStep": 1,
+        "minuteStep": 15,
+        "secondStep": 10,
+        "showNow": false,
+        "changeOnScroll": false
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "portal": false,
+      "actions": [
+        {
+          "type": "input-open"
+        },
+        {
+          "type": "wheel-to-top",
+          "column": "hour",
+          "deltaY": -1000
+        },
+        {
+          "type": "wheel-to-top",
+          "column": "meridiem",
+          "deltaY": -1000
+        },
+        {
+          "type": "owner-template",
+          "value": "nextDefaultOpenValue"
+        },
+        {
+          "type": "owner-template",
+          "value": "defaultOpenValue"
+        },
+        {
+          "type": "wheel-to-top",
+          "column": "hour",
+          "deltaY": -1000
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-picker",
+          "value": "nextPickerValue"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-template",
+          "value": "nextDefaultOpenValue"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "selected-time-portal-target-and-callback-control",
+      "value": "2024-06-13T16:30:00.000",
+      "pickerValue": "2024-06-13T16:30:00.000",
+      "nextPickerValue": "2024-06-13T17:30:00.000",
+      "defaultOpenValue": "2024-06-13T16:30:00.000",
+      "nextDefaultOpenValue": "2024-06-13T17:30:00.000",
+      "format": "YYYY-MM-DD hh:mm:ss A",
+      "showTime": {
+        "format": "hh:mm:ss A",
+        "use12Hours": true,
+        "hourStep": 1,
+        "minuteStep": 15,
+        "secondStep": 10,
+        "showNow": false,
+        "changeOnScroll": false
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "portal": true,
+      "actions": [
+        {
+          "type": "input-open"
+        },
+        {
+          "type": "wheel-to-top",
+          "column": "hour",
+          "deltaY": -1000
+        },
+        {
+          "type": "wheel-to-top",
+          "column": "meridiem",
+          "deltaY": -1000
+        },
+        {
+          "type": "owner-getter",
+          "value": "same-target-new-callback"
+        },
+        {
+          "type": "owner-getter",
+          "value": "different-target-new-callback"
+        }
+      ]
+    }
+  ],
+  "caller": {
+    "API": "Actual public React Antd.DatePicker, fresh owner/page for each profile. Stable controlled model16:30, raw controlled picker16:30, authored next picker17:30; model never changes through these owner controls. Public callbacks are recorded as actually called, with all args/receivers/date aliases; onPickerValueChange raw payload is never replaced by transformed optional units.",
+    "template": "Explicit public showTime.defaultOpenValue starts16:30 and changes17:30 both whileopen and whileclosed/reopen. The visible17→16 update is an observed reset so the closed discriminating transition also starts16. Raw pickerValue16→17 whileclosed is a separate negative-control input; no resulting scroll behavior is asserted before capture.",
+    "meridiem": "use12Hours=true and actual manual meridiem scroll0 accompany template changes. Source passes no optionalValue into meridiem; the real behavior is recorded, not manufactured as an expected call/state.",
+    "scroll": "Five actual page.mouse.wheel actions use deltaY−1000 over a visible actual Source UL, with a once/passive event observer proving the dispatched trusted event and raw deltas/timestamp/DOM target IDs. Pointer leaves to1100,750 after each wheel to remove hover. The action precondition requires observed scrollTop0; no scrollTop assignment or fake scroll/source callback is used.",
+    "containers": "Two pre-existing React-authored HTMLElement targetsA/B. Three actual one-formal-argument getPopupContainer functions: initialA, distinct callback returning sameA, distinct callback returningB. Actual args/result DOM IDs and callback identities retained. No DOM replacement or private Source portal call is authored by the harness.",
+    "ownerControls": "Real authored DOM button.click within ReactDOM.flushSync updates only open/template/pickerValue/getter. Physical focus before/after is recorded. Initial opening uses an actual input click. No internal panel method or Source callback is called by the coordinator.",
+    "theme": "ConfigProvider public token.motion=false, matching existing DatePicker Source baseline; no custom geometry, cell renderer, disabled closure, native-shaped props or Native module."
+  },
+  "staticDependencyFacts": {
+    "dependencies": "[value, optionalValue, flattenUnits(units)]",
+    "flattenedFields": [
+      "value",
+      "label",
+      "disabled"
+    ],
+    "focusFlag": "Not part of flattenUnits or the TimeColumn effect dependency list.",
+    "scrollTarget": "selected value ?? optionalValue; optionalValue remains an effect dependency when selected exists.",
+    "DatePickerOptionalTime": "Non-time currentPickerValue=fillTime(rawPickerValue,showTime.defaultOpenValue); raw picker hour alone is not the transformed numeric optional hour. Meridiem has no optional value.",
+    "hidden": "Dependency code alone does not prove hidden/reopen behavior. React popup cache, display:none offsets, visibility retries and fresh portal content can affect execution; no expected alignment is encoded."
+  },
+  "observationScope": {
+    "preservedFull": [
+      "Actual public props descriptor/alias graph",
+      "Public owner model/picker/template full Dayjs own graphs, temporal fields and exact authored aliases",
+      "Every actual library callback/getter argument graph, actual arity/receiver and return target ID",
+      "Owner control/lifecycle timeline",
+      "Whole actual authored owner and popup outerHTML",
+      "Whole popup ancestor chain attributes and enumerated CSS/geometry",
+      "Every actual time column and row attributes, HTML/text/ordered child identities, scroll/offset/client metrics, selected/disabled class facts",
+      "Actual root/input/control refs, physical focus, input value/selection, target/node retention and connected flags",
+      "Requests/responses/failures, console/page errors, actual ResourceTiming"
+    ],
+    "CSS": [
+      "display",
+      "visibility",
+      "opacity",
+      "position",
+      "box-sizing",
+      "width",
+      "height",
+      "min-height",
+      "max-height",
+      "overflow",
+      "overflow-y",
+      "font-size",
+      "line-height",
+      "padding-top",
+      "padding-bottom",
+      "border-top-width",
+      "border-bottom-width",
+      "scroll-behavior",
+      "overscroll-behavior-y"
+    ],
+    "hiddenLayout": "Hidden observations retain actual0/stale offsets and scroll metrics and explicit popup visibility. They are not converted to intended alignment or treated as evidence that the effect did/didnot execute.",
+    "timing": "Every authored action stores immediate afterCall and exact compact settled snapshot. Both owner closes also store actual+1000ms. Real unmount, cleanup and+1000ms retain disconnected observed nodes and cleared refs.",
+    "exclusions": "No full-page computed CSS/pseudos, AX tree, SSR, browser-resource instrumentation, private Source hooks/state, Source method probes or Native output. Scope is scroll fidelity only; no wider visual/API parity is inferred.",
+    "recorder": "Existing Source observer bytes reused: DOM/ambient Window are leaves and private React _owner has the existing recorder boundary. This changes no Source/event object or getter.",
+    "storage": "Full explicitly scoped points stored without normalization/truncation/ID renumbering as raw JSON plus lossless gzip and both hashes. First/repeat are separate fresh processes; failed attempts remain immutable."
+  },
+  "preservation": "All writes are constrained to this fresh additive directory. Old19Source owner captures, maintained fixtures and13past production trees are neither imported as expected inputs nor modified. Compact pre/post guard rehashes prior Source metadata only; old gigabyte raw corpora are not redundantly rehashed here and are not claimed newly audited.",
+  "preservedPriorSourceMetadata": {
+    ".upstream/artifacts/date-picker-presets-source-v2/protocol-freeze.json": {
+      "bytes": 138854,
+      "sha256": "04be9b4879445757027d99f383a3d3188c4190882cab0c449c1d6133b6873de6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/execution-freeze.json": {
+      "bytes": 239,
+      "sha256": "5f476d1c72cf03ee6c2fb2e791541867a867fe83080441a1faea7ac5ef9bbb3e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/source-witnesses.json": {
+      "bytes": 5912,
+      "sha256": "086a36ffea0cf22b0041e72f330d1b653dd6f68a9905c49c10b8110656e214d4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json": {
+      "bytes": 69461,
+      "sha256": "4135dda68953555b6a8e7da12cd3d672921ea7d08de53d2f68975d675aef1c89"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json": {
+      "bytes": 69654,
+      "sha256": "bf1eb81599beaa68a421005bdbf34cbb79d974d1f652ae1ce499279085df109c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json": {
+      "bytes": 16079,
+      "sha256": "66c8427d4556b07949b5a027f0b13419eabafe5e7deeac71abdefcce98da5557"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json": {
+      "bytes": 16091,
+      "sha256": "b6922edb70ad81adf536010da5c9020cf6beadffc2dfa7d5807d72194613f08f"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/protocol-freeze.json": {
+      "bytes": 125703,
+      "sha256": "20a41ba69c7e91228cf6215009a1b1000376688fa46eaef911ae607fa949f0d2"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/execution-freeze.json": {
+      "bytes": 270,
+      "sha256": "be5e3951d8f9f198e7cc8b43c35a57dd02094554c53164788115abeffb869c88"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/source-witnesses.json": {
+      "bytes": 13667,
+      "sha256": "55390e5a2df308acc7ad3efeafd8d18557ba781801e32e56c7f098080a409e9a"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/csr-source-first.json": {
+      "bytes": 149089,
+      "sha256": "3fd73444ea0898fb045c4b0faf25393216af3746f03596db9412286c15b89696"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/csr-source-repeat.json": {
+      "bytes": 149495,
+      "sha256": "e8237d5080befb71f1ae0b6058634a8426d05cb4e4cfdcb072e04fc7a4d065fa"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/ssr-source-first.json": {
+      "bytes": 29641,
+      "sha256": "b7a4888cb3edab49dd32bc504d218ac2ae6b3ca026b17d66709ecb4d09c23c5e"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/ssr-source-repeat.json": {
+      "bytes": 29667,
+      "sha256": "741542e8e8a5dbafd08d215823830f1116e80b8c7e59bc1ad45e531ca9fd1df7"
+    }
+  },
+  "inputPins": {
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/cases.mjs": {
+      "bytes": 2201,
+      "sha256": "8a92e83c9eed4f1963ff67b2ce3d9e0ba766c559fc786e52520fbdcd0b469dd6"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/source-app.mjs": {
+      "bytes": 8794,
+      "sha256": "8ad21c4fb71dd2d567419e554b2a186c67161e01e48fec7b0e25df99fd59e54c"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/reader.mjs": {
+      "bytes": 5627,
+      "sha256": "c3ea261f8ca7b7d22d4b9b7719d17f46df4743bf27eac7a3f4f3276bc050a935"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/capture.mjs": {
+      "bytes": 11100,
+      "sha256": "4a80ed13e03ed4a3b0d67c023cbe2f26d0c2b42da2045596c99f30f64995f1b0"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/protocol.mjs": {
+      "bytes": 13905,
+      "sha256": "1c1bdb934cacefdcfae0da4c2a1f735ce51b75eb998b41a87d1ddc60bd71b12e"
+    },
+    ".upstream/artifacts/react-18.3.1/umd/react.production.min.js": {
+      "bytes": 10751,
+      "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js": {
+      "bytes": 131835,
+      "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+    },
+    "node_modules/dayjs/dayjs.min.js": {
+      "bytes": 7161,
+      "sha256": "0198dd0b1f760cded169c7e7ff7eaf56bc36c4c22c7c9b7c683e59437ed8700e"
+    },
+    ".upstream/artifacts/antd-6.6.8/dist/antd.js": {
+      "bytes": 4217353,
+      "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4"
+    },
+    ".upstream/artifacts/homepage-five-source-review-v1/shared.mjs": {
+      "bytes": 994,
+      "sha256": "27d35cd7ac9834dad22ddaa6bf91ea82b59e14bf7edc96519a64f3fde41b661e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/json-stream.mjs": {
+      "bytes": 2314,
+      "sha256": "b7e849ba0ff70e3673bcdc28b1a08747d79836ff061c5269f9b07fa26891ef93"
+    },
+    "tests/browser/select-surface-producers.mjs": {
+      "bytes": 4134,
+      "sha256": "40f7a24ab72043ea36871794a0bee004430c4201d795e592c9cece90a0cf3a9d"
+    },
+    ".upstream/ant-design/components/date-picker/index.en-US.md": {
+      "bytes": 21771,
+      "sha256": "d7193bd2f1ebc35029b2553286217a4125381ae0b846635af5e6f7fe3bf9f9f3"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/generateSinglePicker.tsx": {
+      "bytes": 10552,
+      "sha256": "f5d941ecf84732d7df3b36bc566e6021c69b155cd9eded2898961d43870736a3"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/source-witnesses.json": {
+      "bytes": 12115,
+      "sha256": "94a0d94b00e8c1c61d9928310d175eb4598b82aeaa220d8a149f937cea7b5cc7"
+    }
+  },
+  "validation": {
+    "status": "PASS-static-parse-matrix-only",
+    "scripts": 5,
+    "counts": {
+      "owners": 2,
+      "actions": 17,
+      "logicalPoints": 19,
+      "authoredCloseActions": 2,
+      "trustedWheelActions": 5
+    },
+    "browserRuns": 0,
+    "SSRRuns": 0,
+    "NativeImports": 0
+  },
+  "plannedCommands": [
+    "node .upstream/artifacts/date-picker-time-scroll-source-v1/protocol.mjs freeze <EXACT_REVIEWED_PROPOSAL_SHA256>",
+    "node --max-old-space-size=8192 .upstream/artifacts/date-picker-time-scroll-source-v1/capture.mjs .upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json",
+    "node --max-old-space-size=8192 .upstream/artifacts/date-picker-time-scroll-source-v1/capture.mjs .upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json"
+  ],
+  "reviewedProposalSHA256": "0f256aba405624d261dc470a842f03dd1ae3834eb0955e6dc8d9d6c68c4c299c"
+}

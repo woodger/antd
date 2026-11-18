@@ -741,6 +741,11 @@
     "root": "date-picker-fixture"
   },
   {
+    "id": "date-picker-offgrid-scroll",
+    "module": "./DatePickerOffGridScrollFixtures.svelte",
+    "root": "date-picker-offgrid-scroll-fixture"
+  },
+  {
     "id": "range-picker",
     "module": "./RangePickerFixtures.svelte",
     "root": "range-picker-fixture"

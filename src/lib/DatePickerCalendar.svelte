@@ -8,6 +8,7 @@
     prefixCls,
     panel,
     selected,
+    hovered,
     mode,
     locale,
     restrictions,
@@ -15,6 +16,7 @@
     direction,
     range,
     onHover,
+    preserveDisabledHover = false,
     showPrevious = true,
     showNext = true,
     onSelect,
@@ -24,10 +26,12 @@
     prefixCls: string;
     panel: Dayjs;
     selected: Dayjs | null;
+    hovered?: Dayjs | null;
     mode: DatePickerMode;
     direction: 'ltr' | 'rtl';
     range?: readonly [Dayjs | null, Dayjs | null];
     onHover?: (value: Dayjs | null) => void;
+    preserveDisabledHover?: boolean;
     showPrevious?: boolean;
     showNext?: boolean;
     locale: {
@@ -137,8 +141,7 @@
     <button type="button" tabindex="-1" class={`${prefixCls}-header-super-prev-btn`} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousYear} onclick={() => move(-1, true)}><span class={`${prefixCls}-super-prev-icon`}></span></button>
     {#if mode === 'date'}<button type="button" tabindex="-1" class={`${prefixCls}-header-prev-btn`} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousMonth} onclick={() => move(-1)}><span class={`${prefixCls}-prev-icon`}></span></button>{/if}
     <div class={`${prefixCls}-header-view`}>
-      {#if mode === 'date'}<button type="button" tabindex="-1" class={`${prefixCls}-month-btn`} aria-label={locale.monthSelect} onclick={() => onModeChange('month')}>{months[panel.month()]}</button>{/if}
-      <button type="button" tabindex="-1" class={`${prefixCls}-year-btn`} aria-label={mode === 'year' || mode === 'decade'
+      {#if mode === 'date'}<button type="button" tabindex="-1" class={`${prefixCls}-month-btn`} aria-label={locale.monthSelect} onclick={() => onModeChange('month')}>{months[panel.month()]}</button>{/if}<button type="button" tabindex="-1" class={`${prefixCls}-year-btn`} aria-label={mode === 'year' || mode === 'decade'
           ? locale.decadeSelect
           : locale.yearSelect} onclick={() => onModeChange(
               mode === 'date' || mode === 'month' ? 'year' : 'decade'
@@ -166,10 +169,13 @@
             <td onpointerenter={event => {
                 if (!unavailable && event.pointerType !== 'touch')
                   onHover?.(date);
-              }} onpointerleave={() => onHover?.(null)} aria-selected={selectedCell(date)} aria-disabled={unavailable || undefined} title={label(date)} class={[
+              }} onpointerleave={() => {
+                if (!preserveDisabledHover || !unavailable) onHover?.(null);
+              }} aria-selected={selectedCell(date)} aria-disabled={unavailable || undefined} title={label(date)} class={[
                   `${prefixCls}-cell`,
                   inView && `${prefixCls}-cell-in-view`,
                   unavailable && `${prefixCls}-cell-disabled`,
+                  hovered?.isSame(date, unit) && `${prefixCls}-cell-hover`,
                   !range && selectedCell(date) && `${prefixCls}-cell-selected`,
                   range?.[0]?.isSame(date, unit) && `${prefixCls}-cell-range-start`,
                   range?.[1]?.isSame(date, unit) && `${prefixCls}-cell-range-end`,

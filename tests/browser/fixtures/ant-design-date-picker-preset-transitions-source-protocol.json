@@ -1,0 +1,2580 @@
+{
+  "status": "root-reviewed-frozen-before-Source-capture",
+  "axis": "single-DatePicker-preset-transitions",
+  "source": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "rcPicker": "1.12.2",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "node": "v24.18.0",
+    "chromium": "157.0.8103.78",
+    "browserExecutable": "/usr/lib64/chromium-browser/chromium-browser",
+    "browserLocale": "en-US",
+    "browserTimezone": "UTC",
+    "wallClock": "Unmodified real wall clock and event timestamps. No byte-equality prediction."
+  },
+  "samples": [
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "rejectChange": true,
+      "pickerOwner": "omitted",
+      "prefixCls": null,
+      "id": "format-rejected-calendar",
+      "defaultPickerValue": "2024-06-01T00:00:00.000",
+      "preset": {
+        "label": "Rejected June 12",
+        "value": "2024-06-12T00:00:00.000"
+      },
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "candidate"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "format",
+          "value": "DD/MM/YYYY"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "format",
+          "value": "YYYY-MM-DD"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "input-focus"
+        },
+        {
+          "type": "input-escape"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "rejectChange": false,
+      "pickerOwner": "omitted",
+      "prefixCls": null,
+      "id": "format-disabled-calendar",
+      "disabledDay": "2024-06-15",
+      "preset": {
+        "label": "Disabled June 15",
+        "value": "2024-06-15T00:00:00.000"
+      },
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "candidate"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "format",
+          "value": "DD/MM/YYYY"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "format",
+          "value": "YYYY-MM-DD"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "input-focus"
+        },
+        {
+          "type": "input-escape"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "rejectChange": false,
+      "pickerOwner": "omitted",
+      "prefixCls": null,
+      "id": "navigation-omitted-default",
+      "disabledDay": "2024-07-15",
+      "preset": {
+        "label": "Disabled July 15",
+        "value": "2024-07-15T00:00:00.000"
+      },
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "candidate"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "input-focus"
+        },
+        {
+          "type": "input-escape"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "rejectChange": false,
+      "pickerOwner": "omitted",
+      "prefixCls": null,
+      "id": "navigation-explicit-default",
+      "defaultPickerValue": "2024-06-01T00:00:00.000",
+      "disabledDay": "2024-07-15",
+      "preset": {
+        "label": "Disabled July 15",
+        "value": "2024-07-15T00:00:00.000"
+      },
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "candidate"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "input-focus"
+        },
+        {
+          "type": "input-escape"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "rejectChange": false,
+      "pickerOwner": "reject",
+      "prefixCls": null,
+      "id": "navigation-controlled-picker-reject",
+      "initialPickerValue": "2024-06-01T00:00:00.000",
+      "disabledDay": "2024-07-15",
+      "preset": {
+        "label": "Disabled July 15",
+        "value": "2024-07-15T00:00:00.000"
+      },
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "candidate"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "input-focus"
+        },
+        {
+          "type": "input-escape"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "rejectChange": false,
+      "pickerOwner": "accept",
+      "prefixCls": null,
+      "id": "navigation-controlled-picker-accept",
+      "initialPickerValue": "2024-06-01T00:00:00.000",
+      "disabledDay": "2024-07-15",
+      "preset": {
+        "label": "Disabled July 15",
+        "value": "2024-07-15T00:00:00.000"
+      },
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "candidate"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "input-focus"
+        },
+        {
+          "type": "input-escape"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "rejectChange": false,
+      "pickerOwner": "omitted",
+      "prefixCls": null,
+      "id": "navigation-minimum-clamp",
+      "minDate": "2024-05-05T00:00:00.000",
+      "preset": {
+        "label": "Before minimum April 15",
+        "value": "2024-04-15T00:00:00.000"
+      },
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "candidate"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "input-focus"
+        },
+        {
+          "type": "input-escape"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "rejectChange": false,
+      "pickerOwner": "omitted",
+      "prefixCls": null,
+      "id": "navigation-maximum-clamp",
+      "maxDate": "2024-07-05T00:00:00.000",
+      "preset": {
+        "label": "After maximum August 15",
+        "value": "2024-08-15T00:00:00.000"
+      },
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "candidate"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "input-focus"
+        },
+        {
+          "type": "input-escape"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T08:00:00.000",
+      "format": "YYYY-MM-DD HH:mm:ss.SSS",
+      "preview": "omitted",
+      "rejectChange": false,
+      "pickerOwner": "omitted",
+      "prefixCls": null,
+      "defaultPickerValue": "2024-06-01T00:00:00.000",
+      "needConfirm": true,
+      "showTime": {
+        "format": "HH:mm:ss.SSS",
+        "hourStep": 2,
+        "minuteStep": 15,
+        "secondStep": 10,
+        "millisecondStep": 100,
+        "showMillisecond": true
+      },
+      "preset": {
+        "label": "Exact off-grid timestamp",
+        "value": "2024-06-13T16:37:59.456"
+      },
+      "id": "datetime-time-units",
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "candidate"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "time-hover",
+          "unit": "hour",
+          "value": 18
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "time-hover",
+          "unit": "minute",
+          "value": 30
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "time-hover",
+          "unit": "second",
+          "value": 20
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "time-hover",
+          "unit": "millisecond",
+          "value": 700
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T08:00:00.000",
+      "format": "YYYY-MM-DD hh:mm:ss.SSS A",
+      "preview": "omitted",
+      "rejectChange": false,
+      "pickerOwner": "omitted",
+      "prefixCls": null,
+      "defaultPickerValue": "2024-06-01T00:00:00.000",
+      "needConfirm": true,
+      "showTime": {
+        "format": "hh:mm:ss.SSS A",
+        "hourStep": 2,
+        "minuteStep": 15,
+        "secondStep": 10,
+        "millisecondStep": 100,
+        "showMillisecond": true,
+        "use12Hours": true
+      },
+      "preset": {
+        "label": "Exact off-grid timestamp",
+        "value": "2024-06-13T16:37:59.456"
+      },
+      "id": "datetime-disabled-meridiem",
+      "disabledHours": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        18
+      ],
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "candidate"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "time-hover",
+          "unit": "hour",
+          "value": 18
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "time-hover",
+          "unit": "meridiem",
+          "value": "am"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "time-hover",
+          "unit": "meridiem",
+          "value": "pm"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T08:00:00.000",
+      "format": "YYYY-MM-DD HH:mm:ss.SSS",
+      "preview": false,
+      "rejectChange": false,
+      "pickerOwner": "omitted",
+      "prefixCls": null,
+      "defaultPickerValue": "2024-06-01T00:00:00.000",
+      "needConfirm": true,
+      "showTime": {
+        "format": "HH:mm:ss.SSS",
+        "hourStep": 2,
+        "minuteStep": 15,
+        "secondStep": 10,
+        "millisecondStep": 100,
+        "showMillisecond": true
+      },
+      "preset": {
+        "label": "Exact off-grid timestamp",
+        "value": "2024-06-13T16:37:59.456"
+      },
+      "id": "datetime-preview-switch",
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "preset-click",
+          "value": "candidate"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "time-hover",
+          "unit": "hour",
+          "value": 18
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "preview",
+          "value": "hover"
+        },
+        {
+          "type": "time-hover",
+          "unit": "minute",
+          "value": 30
+        },
+        {
+          "type": "preview",
+          "value": false
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "preview",
+          "value": "hover"
+        },
+        {
+          "type": "time-hover",
+          "unit": "millisecond",
+          "value": 700
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "input-focus"
+        },
+        {
+          "type": "input-escape"
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T08:23:45.678",
+      "format": "YYYY-MM-DD HH:mm:ss.SSS",
+      "preview": "omitted",
+      "rejectChange": false,
+      "pickerOwner": "omitted",
+      "prefixCls": null,
+      "id": "date-only-hover-precision",
+      "alternateFormat": "DD/MM/YYYY HH:mm:ss.SSS",
+      "showTime": false,
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "cell-hover",
+          "value": "2024-06-18"
+        },
+        {
+          "type": "format",
+          "value": "DD/MM/YYYY HH:mm:ss.SSS"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "cell-hover",
+          "value": "2024-06-18"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "input-focus"
+        },
+        {
+          "type": "input-escape"
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "initialValue": "2024-06-10T00:00:00.000",
+      "format": "YYYY-MM-DD",
+      "preview": "omitted",
+      "rejectChange": false,
+      "pickerOwner": "omitted",
+      "prefixCls": null,
+      "id": "date-only-hover-dynamic-minimum",
+      "updatedMinDate": "2024-06-19T00:00:00.000",
+      "actions": [
+        {
+          "type": "open"
+        },
+        {
+          "type": "cell-hover",
+          "value": "2024-06-18"
+        },
+        {
+          "type": "min-date",
+          "value": "2024-06-19T00:00:00.000"
+        },
+        {
+          "type": "leave"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-open",
+          "value": true
+        },
+        {
+          "type": "cell-hover",
+          "value": "2024-06-20"
+        },
+        {
+          "type": "leave"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "owners": 13,
+    "actions": 123,
+    "logicalPoints": 136,
+    "uniqueInitialClosedSSRStates": 13,
+    "initialClosedSSRSerializations": 26
+  },
+  "inputPins": {
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/cases.mjs": {
+      "bytes": 5450,
+      "sha256": "d14f2eaa25ee8e6cf0cb0b544915e58b46289b3bdb4f8dbb7c8f4d7e2fa421d0"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/source-app.mjs": {
+      "bytes": 11478,
+      "sha256": "00efa034877775da0e603f04b6f2187497cf896e5944db58174c48631725c4a6"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/shared.mjs": {
+      "bytes": 1151,
+      "sha256": "6c778ec1476ad33f1ec112e060583e2af5968e4d66da41a1096edcd60cdcb210"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/read-core.mjs": {
+      "bytes": 6507,
+      "sha256": "7f2bfd90a335435ed0b8b3d387310521aff51504b320cf4f490e68f429f82948"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/reader.mjs": {
+      "bytes": 2454,
+      "sha256": "df4470356b98d781be00e0453cdcf58a4b1de1b56b23ccfe2bed404656f9fd67"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/server.mjs": {
+      "bytes": 3973,
+      "sha256": "60c06e7daac8f7ac29da64b0d68509757178f46e6a1f689f216437b77f3e7dde"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/capture.mjs": {
+      "bytes": 12815,
+      "sha256": "e650f93b463a35aeb2ea0650a61b72568bbe7d25e62d30d32f1b22bec5d7d106"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/protocol.mjs": {
+      "bytes": 14330,
+      "sha256": "32d6519b06aba266873c5e64babd7baf4f7cfaf49055d6a58f40d7b720970120"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/json-stream.mjs": {
+      "bytes": 2314,
+      "sha256": "b7e849ba0ff70e3673bcdc28b1a08747d79836ff061c5269f9b07fa26891ef93"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/source-witnesses.json": {
+      "bytes": 13667,
+      "sha256": "55390e5a2df308acc7ad3efeafd8d18557ba781801e32e56c7f098080a409e9a"
+    },
+    "tests/browser/select-surface-driver.ts": {
+      "bytes": 2262,
+      "sha256": "03cea54b5b0e2d6205b10c2bdeaf3ca40ccf2edec03ac7f215ef3cb1c483b0d7"
+    },
+    "tests/browser/select-surface-producers.mjs": {
+      "bytes": 4134,
+      "sha256": "40f7a24ab72043ea36871794a0bee004430c4201d795e592c9cece90a0cf3a9d"
+    },
+    ".upstream/artifacts/react-18.3.1/umd/react.production.min.js": {
+      "bytes": 10751,
+      "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js": {
+      "bytes": 131835,
+      "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+    },
+    "node_modules/dayjs/dayjs.min.js": {
+      "bytes": 7161,
+      "sha256": "0198dd0b1f760cded169c7e7ff7eaf56bc36c4c22c7c9b7c683e59437ed8700e"
+    },
+    ".upstream/artifacts/antd-6.6.8/dist/antd.js": {
+      "bytes": 4217353,
+      "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom-server-legacy.browser.production.min.js": {
+      "bytes": 35128,
+      "sha256": "829b2f17da148d9bc5b635c329b67068e67e4bf7d6a5bb64e49e9e92483deee5"
+    },
+    ".upstream/ant-design/components/date-picker/index.en-US.md": {
+      "bytes": 21771,
+      "sha256": "d7193bd2f1ebc35029b2553286217a4125381ae0b846635af5e6f7fe3bf9f9f3"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/interface.ts": {
+      "bytes": 5733,
+      "sha256": "d9f3e34418aaca9d1b11ffd72fc900d3e09908e8208c3ddf15427537153cd207"
+    }
+  },
+  "inheritedSource": {
+    "path": ".upstream/artifacts/date-picker-presets-source-v2/protocol-freeze.json",
+    "sha256": "04be9b4879445757027d99f383a3d3188c4190882cab0c449c1d6133b6873de6",
+    "preservation": "Existing verifier checks all old references, failed Source v1 and 13 full historical production trees. No old input or raw is rewritten."
+  },
+  "preservedSourceV2Tree": {
+    ".upstream/artifacts/date-picker-presets-source-v2/capture.mjs": {
+      "bytes": 10291,
+      "sha256": "8847ad4779f5be9630f934b90f635464baff991de16ecb1533847102a94884ec"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/cases.mjs": {
+      "bytes": 3071,
+      "sha256": "5f127a2ae2ddefc6540275c429d7493c558cc4109f506dedf33b69be0c4cc9b1"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json": {
+      "bytes": 69461,
+      "sha256": "4135dda68953555b6a8e7da12cd3d672921ea7d08de53d2f68975d675aef1c89"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.gz": {
+      "bytes": 12804,
+      "sha256": "fea54b1c0bb00c07915ddbd85481f14465e96eb9d6827b6657bda09e4eb3f84e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-beforeUnmount.json": {
+      "bytes": 1490969,
+      "sha256": "18dc8e61b0c084ff690ea4be52b4e3c71428804a2796b23d0907858a3eba9b81"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-beforeUnmount.json.gz": {
+      "bytes": 35029,
+      "sha256": "7f8ed7a13bab4f5abf199e33d9fd19f7289b706ff73a544ea7f4673936e75daa"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-cleanup.json": {
+      "bytes": 495711,
+      "sha256": "ff3689517fa920c8717860f41794ecfe3e90e06626204c2cda70e9deca96205e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-cleanup.json.gz": {
+      "bytes": 14415,
+      "sha256": "bdfb562a62e755ecff13602a9a99f1297a09df4a1aabd4a3700ba46f7c788878"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-closed-0.json": {
+      "bytes": 4427741,
+      "sha256": "0f3eb7294599e47ecc301f10ba68506d01f7511f34089dbc68d9111a81d8d841"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-closed-0.json.gz": {
+      "bytes": 99330,
+      "sha256": "4ec9035cdaa508a6a9dd05c7185c8c1f71f0fdc11cf3de629cfe954a98a584f6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-closed-1.json": {
+      "bytes": 4707780,
+      "sha256": "1f2e98bc72d608af0911fed68f0386c15ae6c3c2dce67cc702f63a621371d7ee"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-closed-1.json.gz": {
+      "bytes": 105636,
+      "sha256": "b71aac2b76ce24a643867cfc49e5f0d634ef5ad86037b36c16dd4a4e0081e0b7"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-closed-2.json": {
+      "bytes": 4860708,
+      "sha256": "8297d212511341f508b96ccef78a32b25c31047e2e3652490fae1f466fe30141"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-closed-2.json.gz": {
+      "bytes": 111251,
+      "sha256": "eec8798526b31b158c35d191d1538c4ad2b9abbff73c460f6ed34952b6dc32b2"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-initial.json": {
+      "bytes": 175069,
+      "sha256": "9b03be3911a6542b908d6231b7bbcf57606c07aa2907d5956fc2f38dcfa71ed8"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-initial.json.gz": {
+      "bytes": 8731,
+      "sha256": "55e271161c59cecb8de1822ef34efa423c20d07528c72613725ab6ed24ae9332"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-late.json": {
+      "bytes": 495711,
+      "sha256": "ff3689517fa920c8717860f41794ecfe3e90e06626204c2cda70e9deca96205e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-late.json.gz": {
+      "bytes": 14415,
+      "sha256": "bdfb562a62e755ecff13602a9a99f1297a09df4a1aabd4a3700ba46f7c788878"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-0.json": {
+      "bytes": 2599768,
+      "sha256": "796e61833af5e9fd0f3e23f5f1c37d00c365addddc6fdfb5cabd8e5a7c97b3dd"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-0.json.gz": {
+      "bytes": 61515,
+      "sha256": "cf0f3069661ef3b10c0ddb8f77f7d707e08d85bf3d1e76cfb80e39b07b0cc18b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-1.json": {
+      "bytes": 2938264,
+      "sha256": "014e49ce7c26f918fb6c97dac23b3f5f0faa83b13e3f803b4beaef52b3a5947e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-1.json.gz": {
+      "bytes": 65861,
+      "sha256": "e0d77e6d2856d2459b7d6587ec6059a182e3ec0c330cfc6e4a22b56b6b08e400"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-2.json": {
+      "bytes": 3078412,
+      "sha256": "2bc3054b02de1671a830843ef99cdc8e538a7697c8509c314a92809dd874abea"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-2.json.gz": {
+      "bytes": 71848,
+      "sha256": "3b6219b06691747a40e0b99c487084231b381e7f8babc1b4e9f3f5526716632c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-3.json": {
+      "bytes": 3078565,
+      "sha256": "df5bc631cd23f2f76b89585def99fec270974bcdf7ab82f00a9b735bac003ca6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-3.json.gz": {
+      "bytes": 71842,
+      "sha256": "e388021bfddf75250fb5d4577a26c5058436190b5a06aacaeba82f4bea252786"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-4.json": {
+      "bytes": 3078295,
+      "sha256": "30995b58a17062aa66dab8d0bb81cbb0f81f3b916588b10ec77cf6721447c01d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-4.json.gz": {
+      "bytes": 71830,
+      "sha256": "e46d2d5b1b7162dbdac09303e6f17efe2d558c3a22be5379f488e0c3a904814f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-5.json": {
+      "bytes": 3138572,
+      "sha256": "f718ff61b411fa8adaedce51fda3488fc82be9a52b85911cd8f62eaa31e0fe9c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-5.json.gz": {
+      "bytes": 70460,
+      "sha256": "ed607170acd655d9f3d318d92ba6ddcbf1a0ab72fce01f5735cfdd7c585759e9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-6.json": {
+      "bytes": 3151796,
+      "sha256": "4a13016b9c357b714f5d649420c5daf63b1bab3aaec2c5a6ad949a9a5cd077e9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-6.json.gz": {
+      "bytes": 73529,
+      "sha256": "e4ec6fd4f7705df63ce93e89920c0dd17477905911d4e4cd7b0b8f39ee592a54"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-7.json": {
+      "bytes": 3240481,
+      "sha256": "54c774b7120ef15f31d5e5ebec423715898000398f883fefbb3ff890cc349da7"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/controlled-rejection-steps-7.json.gz": {
+      "bytes": 74664,
+      "sha256": "7cdfbf23736755bff25abb657a774008a10e58af98f9db5596870b6b5d1b8a10"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-beforeUnmount.json": {
+      "bytes": 1489327,
+      "sha256": "2c553c2b12752eb03c80547c62007ca9ffb9ea85fe3132714b4b511c37c46543"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-beforeUnmount.json.gz": {
+      "bytes": 35054,
+      "sha256": "a220a61fb1b9ff7bd5ee57f1dc7b12e05a128645ec28287ce508517439bcb1c0"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-cleanup.json": {
+      "bytes": 468231,
+      "sha256": "91f017128fc03df5d7711de4a2a0483067abaf5093fca43476ea50be8a0bce94"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-cleanup.json.gz": {
+      "bytes": 13267,
+      "sha256": "7c79112878e2a0e10058dc19714e078143e952ae651a4272706da98d43d62ebc"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-closed-0.json": {
+      "bytes": 4573737,
+      "sha256": "d0ff6de43900dc8f5c5308e747bbfc7397282d12f19ea8b8349767aa8a9ce494"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-closed-0.json.gz": {
+      "bytes": 105919,
+      "sha256": "f53bd01176d843614835f4903820495b99928e20badc50cb51bc81d1e408fa0a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-closed-1.json": {
+      "bytes": 4855946,
+      "sha256": "6850b537a9b0b45ca5147a35af9a0a6787a02694ed2b5fbe2076773de73646a9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-closed-1.json.gz": {
+      "bytes": 112150,
+      "sha256": "cdbc7fd035ed08215bba93e42f1f9886f430f897e42132472f3adf9971a8fb44"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-initial.json": {
+      "bytes": 186954,
+      "sha256": "9551607e329e6b9c4f7195515d01d4dd0ab09d69581cb9b868bbcad2b9f5d826"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-initial.json.gz": {
+      "bytes": 9365,
+      "sha256": "189216839679c22a940174a248f4abfe08f6378bb347e81762b3e0e91d9a4f94"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-late.json": {
+      "bytes": 468231,
+      "sha256": "91f017128fc03df5d7711de4a2a0483067abaf5093fca43476ea50be8a0bce94"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-late.json.gz": {
+      "bytes": 13267,
+      "sha256": "7c79112878e2a0e10058dc19714e078143e952ae651a4272706da98d43d62ebc"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-0.json": {
+      "bytes": 2684770,
+      "sha256": "0532d33313b4b36c2bf8efe7853c3be5229c10d7219a2fbf8fc6e325b91d31d3"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-0.json.gz": {
+      "bytes": 65723,
+      "sha256": "89ffaf4bd0838edb69378f16519e413d581f21726eabe0231b9f912a6166a4f0"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-1.json": {
+      "bytes": 2684947,
+      "sha256": "b35cf0aaea1fcb0758b4b97feb440b73dff557a7fcb6d929487b086da696b2c7"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-1.json.gz": {
+      "bytes": 65741,
+      "sha256": "f5781a202e07776b178f41de8a40964b220bd7cefe4351bb990e1fa9caae9ee5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-2.json": {
+      "bytes": 2684649,
+      "sha256": "2e215c933d7f6dcffbd8c692eedcc5a28fac00c11c724b96f867f18cc7dbd8ac"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-2.json.gz": {
+      "bytes": 65705,
+      "sha256": "2eb173799a0046b2de4b234f9d9c331741003a7f024785ae3f4ef329f1aac51f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-3.json": {
+      "bytes": 3049239,
+      "sha256": "eb74972ca6ba3fa8ee2fd0f35636fdea129c315ba2241ead66407f9b632c1bac"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-3.json.gz": {
+      "bytes": 70659,
+      "sha256": "fde4022192d5a75a971c338bc935541130bfdfcbf3d8066106664771a0c93d63"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-4.json": {
+      "bytes": 3148956,
+      "sha256": "3f962bc0d9706eaf167ea95b5c4765ab08608f5de43a4da436bf2051dd839667"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-4.json.gz": {
+      "bytes": 75584,
+      "sha256": "9474b7ea0b55899ff4b9c6f82937d80c9bd917703b012478b499df2d03a7fa9f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-5.json": {
+      "bytes": 3149133,
+      "sha256": "2a5faa8420b28cb03d8583e1a327f5bbe2413c9c9a4f096e27bc83e4249cbb8f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-5.json.gz": {
+      "bytes": 75574,
+      "sha256": "c1b2f1e59a65e9ccefe7a1bbcfa37e0ee3ac28fd463de4598e616e36634a1fe9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-6.json": {
+      "bytes": 3148839,
+      "sha256": "a9bdafc4f1a5440dc9d4c9c37601f98a777c76cd00d236a040b855f56a9f351b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-6.json.gz": {
+      "bytes": 75565,
+      "sha256": "e65362d487393eb9c05137e9a5d6093909720123216e76340da2e9eea269bf69"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-7.json": {
+      "bytes": 3237381,
+      "sha256": "150e58cc37202ea75db5b59a78aa94d667345b173184f2b81466f2aec94e3a11"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/custom-label-prefix-steps-7.json.gz": {
+      "bytes": 75265,
+      "sha256": "e7d05f553e55a3a283afff552a4319dbda1ec28c1b6d78eebe4879415ab8a492"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-beforeUnmount.json": {
+      "bytes": 1526059,
+      "sha256": "1a44c47b4f6c696d1f0b02cc044f36d15c844dbf0a58b605b08ba37ca059ccf9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-beforeUnmount.json.gz": {
+      "bytes": 36426,
+      "sha256": "170cf7dd34580e8fd70b55358a078e95637940b8b4103f4ccc2ae76806c316a5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-cleanup.json": {
+      "bytes": 528705,
+      "sha256": "c44763746fdaf43257c90888aa6efb5ee16b571c04dea93429ae91c7eff65875"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-cleanup.json.gz": {
+      "bytes": 14401,
+      "sha256": "c48c83aeee562442620d4326943768e2c692b48577d06e7a9fe2c4e31f0d88c6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-closed-0.json": {
+      "bytes": 3862881,
+      "sha256": "5c2654eaa02418371ce6e0462578afece76375079fae184cbaea439b70bdbfe7"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-closed-0.json.gz": {
+      "bytes": 84014,
+      "sha256": "f49b222fa2381c15f3edb0316c7ac8c42509db3b3763ad2bdaeca55b6ecad7b5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-closed-1.json": {
+      "bytes": 4806750,
+      "sha256": "12905d8745b560b39147abbdc43850e2a902d42dc06994074b44406c598d9873"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-closed-1.json.gz": {
+      "bytes": 106884,
+      "sha256": "288387d666b2a0644bd760aca616609d1159c2fcbe318d345bf758709ac2220d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-closed-2.json": {
+      "bytes": 4956895,
+      "sha256": "5f8c42ec19b53050c3d54be66b90a36d2acd864679a58828cc6dbabedf2d568e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-closed-2.json.gz": {
+      "bytes": 109497,
+      "sha256": "8b47ae94fc22c2fb299a7c55e8ea5b995237580a3905a1314773c2499fa18ccb"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-initial.json": {
+      "bytes": 129848,
+      "sha256": "04f3624b07f140647610fb91f9f0fd027fbde8e156df852b327d2e3e28d7e23f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-initial.json.gz": {
+      "bytes": 7328,
+      "sha256": "c105049514c50fbae18a0c2da1c05cc589f141998b07453c10b390553cfab6f3"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-late.json": {
+      "bytes": 528705,
+      "sha256": "c44763746fdaf43257c90888aa6efb5ee16b571c04dea93429ae91c7eff65875"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-late.json.gz": {
+      "bytes": 14401,
+      "sha256": "c48c83aeee562442620d4326943768e2c692b48577d06e7a9fe2c4e31f0d88c6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-0.json": {
+      "bytes": 2498106,
+      "sha256": "2f2480af5a7ee36cffc42c01a046bffc7627a712000452803bed1f252a546f0f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-0.json.gz": {
+      "bytes": 56322,
+      "sha256": "c47806467fc595bb8d820a54b784d96a6e50f6bde742c22ca1d1a5aaa54c56c2"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-1.json": {
+      "bytes": 2637233,
+      "sha256": "50af45cf3020c8a616431c384d1a7d0d617f21b8c4a75fb3bd29ee6828e69e10"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-1.json.gz": {
+      "bytes": 62653,
+      "sha256": "d6723c2c6a1bc35259692bc6afb56b3fccb68002ccf9eb2c2e32cf2ec2011cdb"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-10.json": {
+      "bytes": 3304648,
+      "sha256": "3c39dbbfdfd17877174b93e05704ab2bbef5cc980d6ce64e8fd272bef5b2cb39"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-10.json.gz": {
+      "bytes": 73107,
+      "sha256": "36d48e56f0052696e9d2157f9aac331285884a8c2966d9a1de7a351b40d7186c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-11.json": {
+      "bytes": 3315948,
+      "sha256": "cbd8a5c92990cf3693b21003ee22929ca46a8fe03078ac02264bf093ab1cf420"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-11.json.gz": {
+      "bytes": 76023,
+      "sha256": "fbd43db99c9de4f79173aa7302f8419c1a70578d7f09a7c41895187b05b3e444"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-2.json": {
+      "bytes": 2575445,
+      "sha256": "79fd0a33214f78c2d5abdfd50fe87015ffcf3b5ad3d723a5ed8429875174818a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-2.json.gz": {
+      "bytes": 56208,
+      "sha256": "8342323e8e26d38289a57a3f7ba6ecced57a0af028d5864002cdb28ecceff0d3"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-3.json": {
+      "bytes": 2585980,
+      "sha256": "2a432c3c12dd00ee69e88b0ae504b80708084922e11ed712dd7530e600503ccc"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-3.json.gz": {
+      "bytes": 59111,
+      "sha256": "14a3e5bc423ea93276a6201e275486509e01ef8c5b5d41bb7348184dc73dcbce"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-4.json": {
+      "bytes": 2585863,
+      "sha256": "2111553b3f9cff772de1b324df459b7d98e4d9adb01905b04dba165b7a1f0e53"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-4.json.gz": {
+      "bytes": 59091,
+      "sha256": "73cbd27764854b8f0e66230348c40e98cbebfb87549f9206b44907b59b884b5a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-5.json": {
+      "bytes": 2725155,
+      "sha256": "84da54e91d93ee02d26e0539e87bdebc9017812c489caea6bd6f7f4cc9c511b4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-5.json.gz": {
+      "bytes": 64004,
+      "sha256": "456e088f6b6eaee8748e481379e58d7031991c72ddeb1bbd68de0b3c7ea8a603"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-6.json": {
+      "bytes": 3204579,
+      "sha256": "86036ff065d7020c1abf44983dd4fa11c2c17da369b9a82da9efd943dd199b50"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-6.json.gz": {
+      "bytes": 71323,
+      "sha256": "4086ca57858bf0c8d23b33820d8cfe842a11699c1b12f9ad2ac45a5669b4fb15"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-7.json": {
+      "bytes": 3302572,
+      "sha256": "b10ec95cbc68004cb86d724486d316af98d01aa3647ddc57551940d44ddeefe1"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-7.json.gz": {
+      "bytes": 75817,
+      "sha256": "de97837e92f42ec869b89de24b0f9b38946d83233661563ebebac764efb6bdaf"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-8.json": {
+      "bytes": 3302725,
+      "sha256": "37875e6f853224f71b1852dd61acaf53ee8677b0a7f607fbb6b56cd79cd74fa6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-8.json.gz": {
+      "bytes": 75812,
+      "sha256": "18e6b4e2afe6aca5f4f60be2ea97a8d6396d62c97547750f5a9594196198b4d5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-9.json": {
+      "bytes": 3302455,
+      "sha256": "0b7ac1a34a4b7d2bbb82ce5734c433f14f4f31e2f75b05882667c7f5d84cc5fb"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/lazy-hover-click-steps-9.json.gz": {
+      "bytes": 75798,
+      "sha256": "1c24ede2298f6292db17e4c1ace7a0cc94bca35ed9f27f304cc3f372bb50be4e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-beforeUnmount.json": {
+      "bytes": 1546430,
+      "sha256": "6df14dcbb08105854f0ef374327399e3ac9f5166a4e1dd0afcc76a26479d5e3d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-beforeUnmount.json.gz": {
+      "bytes": 35219,
+      "sha256": "53371afd686a2db63a50c792f27967d2cb2472e57dbb27694e0103b661d673f4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-cleanup.json": {
+      "bytes": 549858,
+      "sha256": "b79c813862012519f577e1b4d473967b09ce8e1777f15550b7261cd63efdecc4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-cleanup.json.gz": {
+      "bytes": 14583,
+      "sha256": "5a74d8f9b58c7ba5826f545e895b2a25f7ac5472c7927d86ada1c03ab62195e1"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-closed-0.json": {
+      "bytes": 4889091,
+      "sha256": "4d9e30f53547c2b9246140f4a8c94f5d6eba182b753ef2402ad8078d97cdc6c2"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-closed-0.json.gz": {
+      "bytes": 107318,
+      "sha256": "428462e8f50cafd2a73ba0d093f0850d95f8fa8468046b96f4ba4c65d90c37a3"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-closed-1.json": {
+      "bytes": 5039242,
+      "sha256": "0671d652ceac3651e8cb256e5b9dadf1ab17f12688debcd0c6416c10b19f4f18"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-closed-1.json.gz": {
+      "bytes": 110229,
+      "sha256": "5b66e3d4e6cb4c9ed2f679f5bcbc94587f40e472b4568e853efc74f3b69d517f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-initial.json": {
+      "bytes": 131212,
+      "sha256": "098d90ffe04a9b2bae78779395e118b9ea71bcb35240616125d2d0efd3ebffec"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-initial.json.gz": {
+      "bytes": 7369,
+      "sha256": "1333d519ca07a160ff5ff4bda8bab41f4a25c8ba065a0378ec896bcdb71386be"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-late.json": {
+      "bytes": 549858,
+      "sha256": "b79c813862012519f577e1b4d473967b09ce8e1777f15550b7261cd63efdecc4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-late.json.gz": {
+      "bytes": 14583,
+      "sha256": "5a74d8f9b58c7ba5826f545e895b2a25f7ac5472c7927d86ada1c03ab62195e1"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-0.json": {
+      "bytes": 2503468,
+      "sha256": "54e9e3d958e1fa032125098cdfc0fdc92852ac938346d67222bf8c9d940f55ec"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-0.json.gz": {
+      "bytes": 56482,
+      "sha256": "24c827e1e01e6a80c6bf1e5568eab85a3ace3851a0e3d697d5307e55ead7bb59"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-1.json": {
+      "bytes": 2573171,
+      "sha256": "55afd1ca59c607721ee87aee30a0ce6b4cedef3a3ca1d1e7e95562b56e6b35fd"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-1.json.gz": {
+      "bytes": 58919,
+      "sha256": "da5a9553d5e249a2afcb683702d6ec64a56854d10885880fc434262bd88b6529"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-10.json": {
+      "bytes": 3359714,
+      "sha256": "a23f681681bf63c213c47f6567168fa71757411e3a91190a00a73a147eed283b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-10.json.gz": {
+      "bytes": 76315,
+      "sha256": "bde217c70f71d1ed582e79ebf4f5d02c608bc184ddfe17372f3ab318cb0d7370"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-11.json": {
+      "bytes": 3359546,
+      "sha256": "eae600f1b699378cdb0a4580f69b53ee79f88da74060ef3c1126c06e6d101710"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-11.json.gz": {
+      "bytes": 73593,
+      "sha256": "c7bef163f4faf564596dffebcce09d658a6d7c92811761c6aeeaa9eeac473741"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-2.json": {
+      "bytes": 2573131,
+      "sha256": "4c877b8a2bdff399e31510aeb78fb88f62cc4fe7e3ca7d2ad7ef85ddd6d77592"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-2.json.gz": {
+      "bytes": 58891,
+      "sha256": "3270ed049ef78daa87e34c0b23f3097f7db9ee7c0380f4a40d6ae35904e29ca9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-3.json": {
+      "bytes": 2573169,
+      "sha256": "27a06984eea1c3f2d4ec21a7390ab6faf4ea8d2dd333ac41b40deaa21818d09b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-3.json.gz": {
+      "bytes": 58920,
+      "sha256": "03c20c5b0371028c9edf5411d30558f99ed4962a6bf0943adcaf4b6372691da5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-4.json": {
+      "bytes": 2573131,
+      "sha256": "4c877b8a2bdff399e31510aeb78fb88f62cc4fe7e3ca7d2ad7ef85ddd6d77592"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-4.json.gz": {
+      "bytes": 58891,
+      "sha256": "3270ed049ef78daa87e34c0b23f3097f7db9ee7c0380f4a40d6ae35904e29ca9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-5.json": {
+      "bytes": 2573165,
+      "sha256": "81232a812f9f01db9ea1405d24c999db6c5247f1dd1ac01dd7495718239aef2a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-5.json.gz": {
+      "bytes": 58896,
+      "sha256": "2cd3781074c1edbde8fddeb66b64518f98c47a4310f88c90a17def800f195582"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-6.json": {
+      "bytes": 2712433,
+      "sha256": "7f3551273224da8aa9b06c158c86f705c3dc2f3f7d67521642fb388fde38d95f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-6.json.gz": {
+      "bytes": 63760,
+      "sha256": "0f1948c7d1e558271d41bd799a8ccc1628aba5d91d747707bef2a9dbad5afeec"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-7.json": {
+      "bytes": 2712417,
+      "sha256": "db9be13285bc6e7a9d66c4e72f1bf101a53679e0c1ce212902a215b8b3d582f6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-7.json.gz": {
+      "bytes": 63745,
+      "sha256": "a0c6f8f37c0bf9ef86ad86c3ade20f7e2fda27de4a654ecc1a9a6e8a0e90fcfd"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-8.json": {
+      "bytes": 2712383,
+      "sha256": "cb0f7673761f5d73cb32ff63deb9755ef86e889d731f3138ca7618611fbac3c0"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-8.json.gz": {
+      "bytes": 63727,
+      "sha256": "1dd94dab6cebb5696bef8655b6f4eee37b1485afef44b71535eebc18dd2f1a1b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-9.json": {
+      "bytes": 3259473,
+      "sha256": "c04dabef35c944e9adf8f4dc9112c93ec432b1100d09c2d630d2dffac78b0e4c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/preview-false-and-switch-steps-9.json.gz": {
+      "bytes": 71614,
+      "sha256": "a62a8ce39ab8d5fb6e97874746440f43234ce628dffcc174647377a96e8736d5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-beforeUnmount.json": {
+      "bytes": 14565961,
+      "sha256": "de7200105e459b8f9c2729dd82f9834816e450a2f0f1965af7d31b7686205ea8"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-beforeUnmount.json.gz": {
+      "bytes": 194974,
+      "sha256": "0a2b9675f3813892c3285a2facb3f3f96625c10402be057ca26cb37464b79b43"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-cleanup.json": {
+      "bytes": 13530499,
+      "sha256": "82ae490a09cbeee308be5bdf0355728075cbff125c47005f15c0aeb616de46af"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-cleanup.json.gz": {
+      "bytes": 172797,
+      "sha256": "38312a7ad4a275029b1f1d152e2afa25e12a325092505e55bc18d5634f19fd0a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-closed-0.json": {
+      "bytes": 38140804,
+      "sha256": "fcab71bfd48a99818e247739138ac2e28da9e93b68acda1ac11b3e3b1c496e90"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-closed-0.json.gz": {
+      "bytes": 498954,
+      "sha256": "fd5a4af6101020a09adafe7202837dee0fadcf5592e8c97fa74aa4f23fb5a52a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-closed-1.json": {
+      "bytes": 46952870,
+      "sha256": "daa7c7d0047c883008681276cd06093294756a9b26880bf7fde4128e5a49cca2"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-closed-1.json.gz": {
+      "bytes": 604493,
+      "sha256": "731dfb702536ddf3aafbb2f1f83f10085d280de14770143b7ba814a41d13a24a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-initial.json": {
+      "bytes": 275314,
+      "sha256": "5d2ba9b99406af6b72b6fb5f1f7c1433851085f05c216542f3892d1732feee61"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-initial.json.gz": {
+      "bytes": 11109,
+      "sha256": "c059d57e1c3ddeaef7c45e6d68d8a6b10c3af35f518160131353923cfd3dde58"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-late.json": {
+      "bytes": 13530499,
+      "sha256": "82ae490a09cbeee308be5bdf0355728075cbff125c47005f15c0aeb616de46af"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-late.json.gz": {
+      "bytes": 172797,
+      "sha256": "38312a7ad4a275029b1f1d152e2afa25e12a325092505e55bc18d5634f19fd0a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-0.json": {
+      "bytes": 5070782,
+      "sha256": "6bc70aa2b58b409ac1766eebc59a5ebe6c62e24271d421d0d4b55cde201aba9f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-0.json.gz": {
+      "bytes": 97286,
+      "sha256": "28a80d8c6d468c742353ded933a24d27b5abccf4a1163b4577a58a5169eb1fce"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-1.json": {
+      "bytes": 7142256,
+      "sha256": "c00788dcfad6b5fe6652d56b8ecb3a436f83a8e3502df2dff879ecac22e4d3bc"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-1.json.gz": {
+      "bytes": 120016,
+      "sha256": "38a5edd5af909b23862ff6c80af996aae550f306a00b6a2c70cf867f273c1c41"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-2.json": {
+      "bytes": 9213881,
+      "sha256": "3b3194c10e6470e8bee0bc9bc52a7f2a99eae4d1a141bb4528d712016d4d5b98"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-2.json.gz": {
+      "bytes": 145791,
+      "sha256": "7011eef5c7a67da70ba9c1dfc37386ecd634e5f8a6aa4bdacbdec11768608188"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-3.json": {
+      "bytes": 11287089,
+      "sha256": "b026b6d54dd03b51f825daf17525e1bdc657358110939cfd9c3ad5de043f1c42"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-3.json.gz": {
+      "bytes": 168661,
+      "sha256": "0656eb88ec5d0c2bd1b25acc94be6fe1d5eea840c8d654cd97742e127513e9ca"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-4.json": {
+      "bytes": 15723087,
+      "sha256": "5c86d7913078cdaea3fdfcc0e151837c7dc44cb25529c347e0f561119a7ee760"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-4.json.gz": {
+      "bytes": 221955,
+      "sha256": "48b2fef0b12ce50bfcdf0e797acd7ae753eb415b50cfbd2a163c77ca6af94228"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-5.json": {
+      "bytes": 19977200,
+      "sha256": "2198521421017e605ff7dcb175fbb8c5437edd52a350501f974910d5d6ca587b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-5.json.gz": {
+      "bytes": 271242,
+      "sha256": "2400cc525dc7ea5f5b5a1d72373dc6a24c49f8e76a125197fbb0aa0a8f834847"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-6.json": {
+      "bytes": 23194875,
+      "sha256": "73ea88cd548e180c072dfe8dcbeaeda22723a323bd5671659c6ee5e9a5638926"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-6.json.gz": {
+      "bytes": 308064,
+      "sha256": "bf178f82693cc508c8cab929ea2b1c58187fbaef659d1836a0a544023aa02a52"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-7.json": {
+      "bytes": 25405552,
+      "sha256": "7da56396f723e4f5598efd3e62994cf0578503984906d5dfe6339cbc8fb9921f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-7.json.gz": {
+      "bytes": 331782,
+      "sha256": "cc9837817b46b6c5f467ee3a69ca67c1f2166bf881bb010d18773c9bb5f3b721"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-8.json": {
+      "bytes": 27690664,
+      "sha256": "de5f3e472db5a08353e3118779da9570cbf618137e7e9b895de1f330c4aafcff"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-8.json.gz": {
+      "bytes": 364015,
+      "sha256": "ce875f73c163d0aa6f0fcf8fa8803fb8ac288d34081e25419361f441f7b52376"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-9.json": {
+      "bytes": 31297978,
+      "sha256": "1ea40c58ef251ccbbe5c17116f0ef3bf1184a6f1e6a357959680a93e7a59c860"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/static-validity-steps-9.json.gz": {
+      "bytes": 402964,
+      "sha256": "fca0688b22cfc1b439d7afdd2fa87bd6e6add84f3eb716bfea238cf0148b1113"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-beforeUnmount.json": {
+      "bytes": 1849284,
+      "sha256": "927f52a277c23561e17246569de3e73c8f7cb848d343b7ae30d6e8bf6e490ad5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-beforeUnmount.json.gz": {
+      "bytes": 42458,
+      "sha256": "07947b71e8e8addb45f23dc7241ef8a88a6a079a9e7b391165b0a85f46982415"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-cleanup.json": {
+      "bytes": 512248,
+      "sha256": "76381caac429b1ba188ffaea51b4b96d9c7c714016517c41d1cc9cd4daa515e2"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-cleanup.json.gz": {
+      "bytes": 14442,
+      "sha256": "5d6ed5adb39b35202948f96588908a27d0d3598d7832e836af65142ba0dfff44"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-closed-0.json": {
+      "bytes": 5857134,
+      "sha256": "d34d6c267aa3403c2401db61f2cf945bf2ca94f1b2aad73b59217179ffcc411d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-closed-0.json.gz": {
+      "bytes": 126491,
+      "sha256": "981cf0ccd52d643898ac572dfb390cbc844317e5d8bd24c37743d632abcaeddc"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-closed-1.json": {
+      "bytes": 6004080,
+      "sha256": "95e6279a62f2f3e639c28b39112bd14687d9e938ceb7305178741bcca6485d25"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-closed-1.json.gz": {
+      "bytes": 129103,
+      "sha256": "46a1a52aec919be41d81018eba4f0929b3a5550ba05009875d4cbf6efe56ccab"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-initial.json": {
+      "bytes": 173160,
+      "sha256": "12ee607ede1952e3cb2ac9a3738a6ca8e78d05d5f8654621402fe51a48bbd295"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-initial.json.gz": {
+      "bytes": 8931,
+      "sha256": "2de80895e73e37744f16a7076f5a882e3f43083fbc8cbc7b1303af6bc51423a4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-late.json": {
+      "bytes": 512248,
+      "sha256": "76381caac429b1ba188ffaea51b4b96d9c7c714016517c41d1cc9cd4daa515e2"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-late.json.gz": {
+      "bytes": 14442,
+      "sha256": "5d6ed5adb39b35202948f96588908a27d0d3598d7832e836af65142ba0dfff44"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-0.json": {
+      "bytes": 3386014,
+      "sha256": "177923c0e20ce69197559cedf82a372fb0feee37a97712d7762cc04a0f9bf3a1"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-0.json.gz": {
+      "bytes": 76679,
+      "sha256": "e74d1e7d0f2151a96811b48864aabac3e61309165112cf8ab8dd99401ab566b8"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-1.json": {
+      "bytes": 3456019,
+      "sha256": "b5e9af16a6bbe47558ecdbadb96f9048219e4db5d1a1dbd84019631bc6163e2d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-1.json.gz": {
+      "bytes": 79096,
+      "sha256": "93a5f392bb836b7818c4663dd8007a522a5122e140d0c799cce1914f09d69ca5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-2.json": {
+      "bytes": 3904835,
+      "sha256": "57ec95268e8a6916d9e7a6335eb55f762fd51a6e7853577eb76a95f68f9bf08e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-2.json.gz": {
+      "bytes": 84185,
+      "sha256": "aac0de199700ac8ba0386f0b2f2fb140f4739aa8d939b84a4e4ad9890facca7c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-3.json": {
+      "bytes": 4003666,
+      "sha256": "199131bd020e1119c137922ab5c8c902274060416aa1b8266f2f5bea609487fa"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-3.json.gz": {
+      "bytes": 90080,
+      "sha256": "8ec3f7ac4a034f4a09f2423f29396c40acc2822d687a3e60f0247ec8b29bfd6c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-4.json": {
+      "bytes": 4003815,
+      "sha256": "4c47135db8d835c5f6938aee3f8ad0663c7d5c51bafdb39721194ea62044df6c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-4.json.gz": {
+      "bytes": 90070,
+      "sha256": "56fb8fe010b061fe34b0355b3a405a9dbd552c0ea60371e907569c9f4862ac8f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-5.json": {
+      "bytes": 4003545,
+      "sha256": "9c857353edf9e7a4f91209b247db64f12ddd8aec357edc11d1861904323d21ff"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-5.json.gz": {
+      "bytes": 90054,
+      "sha256": "835ca4621623adf0d97c594206d9b200dcc350ecdd3343370eb0157de61b2352"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-6.json": {
+      "bytes": 4002772,
+      "sha256": "7718af031d1be04b5717a3b070818614d1dc6459b4a82a2d392c036c9cf4585b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-6.json.gz": {
+      "bytes": 85912,
+      "sha256": "06f3c39786524d8627d63131336fb6bd9c07c288dd2786418facf17a3feaf557"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-7.json": {
+      "bytes": 4017034,
+      "sha256": "6ed7c6f3141cfd5b4326a7fb01508cba72772053dbc9a528918f2a80c17e7472"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json.parts/time-confirm-preset-steps-7.json.gz": {
+      "bytes": 90307,
+      "sha256": "2f280f25e5f00b9dce3624374a96f46f9bb8d57bf80f4a1840a6a4bcd58d734e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json": {
+      "bytes": 69654,
+      "sha256": "bf1eb81599beaa68a421005bdbf34cbb79d974d1f652ae1ce499279085df109c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.gz": {
+      "bytes": 12783,
+      "sha256": "97d72873ae90950b1498ab67b2c2c3c318d5f824f1f05a25b676b666214ccaa9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-beforeUnmount.json": {
+      "bytes": 1490977,
+      "sha256": "be29001729d156243cabd6a59e651744919c7362ccaf25b979f5c0548b6b5bd6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-beforeUnmount.json.gz": {
+      "bytes": 35026,
+      "sha256": "554093b6a6f257fd0a45d1cac406421e62ebc6cdeb78425a3db066aed97499d0"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-cleanup.json": {
+      "bytes": 495719,
+      "sha256": "279b650dce593294d653f50fa83b563c703bcc4d57981991cfaedcb1262e4ae4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-cleanup.json.gz": {
+      "bytes": 14409,
+      "sha256": "2b48e2a8b33ea03af4c2f16ec5195cfac107154fa73ebc4379472afa7129fb9a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-closed-0.json": {
+      "bytes": 4468671,
+      "sha256": "da1631a91df5f258339f65b46f4c099676bf5fcac6b5ae120891a1d0850bb9fa"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-closed-0.json.gz": {
+      "bytes": 100573,
+      "sha256": "e8cf7e8cc3b7e551f534fe1b324291d07ce15d7fa570d9d3d7c158e21d736121"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-closed-1.json": {
+      "bytes": 4707792,
+      "sha256": "bacf6f4a200fc08d555e99859a9fa0dc4dc430ff0d68ba436902f257e6ea42eb"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-closed-1.json.gz": {
+      "bytes": 105655,
+      "sha256": "aab2a2f881431406677801c4a932dfbda645c7d0494723312ae812c2a86940b9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-closed-2.json": {
+      "bytes": 4860732,
+      "sha256": "0b3c1bf57908674047d76afb5ea302908f6cbdb2a9d1fb844100ce8d1aa9c929"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-closed-2.json.gz": {
+      "bytes": 111241,
+      "sha256": "5b91f264ad5a518037efb9efaa8be6669a1e830eef1afa602fa3ed623dc62f64"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-initial.json": {
+      "bytes": 175069,
+      "sha256": "9b03be3911a6542b908d6231b7bbcf57606c07aa2907d5956fc2f38dcfa71ed8"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-initial.json.gz": {
+      "bytes": 8731,
+      "sha256": "55e271161c59cecb8de1822ef34efa423c20d07528c72613725ab6ed24ae9332"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-late.json": {
+      "bytes": 495719,
+      "sha256": "279b650dce593294d653f50fa83b563c703bcc4d57981991cfaedcb1262e4ae4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-late.json.gz": {
+      "bytes": 14409,
+      "sha256": "2b48e2a8b33ea03af4c2f16ec5195cfac107154fa73ebc4379472afa7129fb9a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-0.json": {
+      "bytes": 2599646,
+      "sha256": "a57c9d00950f2118a33b07b1affa13030bd54904b7cbb43e944202290d72bbd9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-0.json.gz": {
+      "bytes": 61489,
+      "sha256": "91e42a6fcc30a95effcead1a47222a21ca49b240e3883447898fb042fd45fc9e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-1.json": {
+      "bytes": 2979194,
+      "sha256": "95d1483c5edb5b39b62cfe75379829a1e95d3df82c62593a8caf753360b95165"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-1.json.gz": {
+      "bytes": 67148,
+      "sha256": "12f51f682e07c9a1c0702c0ddee0b8e9e3a3676ab66038629a67d3af88440c85"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-2.json": {
+      "bytes": 3078420,
+      "sha256": "c33085f6fc6137b947eaf39dd87bdea8ca8e919a81e210d738b4dd40c644135e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-2.json.gz": {
+      "bytes": 71874,
+      "sha256": "15f011a5c888077f132d4ee15750b6e7b493cc32bb19791398debe14c7132d10"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-3.json": {
+      "bytes": 3078573,
+      "sha256": "ce618c4c6df6f8e5954295159fb8998cc132eac98b23326da99cd7a300453fa5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-3.json.gz": {
+      "bytes": 71868,
+      "sha256": "e4eab0105fa7ccf2db8aa532bb174aa6b491e9744e717ff3824f73fbe2fb13d8"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-4.json": {
+      "bytes": 3078303,
+      "sha256": "4fef634a5de69648a7165994911e7b3e3edf3fe885aa3169a1df875a6688ef6c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-4.json.gz": {
+      "bytes": 71855,
+      "sha256": "c203fc20ddd1e656f9ceab7378b11be2db20918739f4aeec5ab5d95e03263535"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-5.json": {
+      "bytes": 3138580,
+      "sha256": "0bc348614c2ea6fe8df4de663e7da64de4f52f425286b2736aaa400eb96c6bf8"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-5.json.gz": {
+      "bytes": 70472,
+      "sha256": "152e244d52cb558ecc3ead7fda4aef789cb0545314db8a4d69b91f50e5c10310"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-6.json": {
+      "bytes": 3151804,
+      "sha256": "2ca290b2b81ef96cb31190212919336d0a45669944c01c85be30df12441dc0b7"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-6.json.gz": {
+      "bytes": 73543,
+      "sha256": "71f0aefe040503b302cd16267e06be369abcd387464dcb07e854937d37be29ac"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-7.json": {
+      "bytes": 3240497,
+      "sha256": "6399e70d25288c724a292b724cd26e9616af841c07fe2be6099cc54d4e88bb9e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/controlled-rejection-steps-7.json.gz": {
+      "bytes": 74659,
+      "sha256": "2152449d38335ca18571e38385983c1d0d9cc6c4b350dc92553bb9abe47652e5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-beforeUnmount.json": {
+      "bytes": 1489241,
+      "sha256": "3521ab77821733c9b04ebe81cf635a81cdc71daa47b5bcaf2c7852d694fa596f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-beforeUnmount.json.gz": {
+      "bytes": 35030,
+      "sha256": "04c49f9fbc63d32b5f0e264d6bb9627b00e6b652cafa4fff3b0097307de7fb12"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-cleanup.json": {
+      "bytes": 468145,
+      "sha256": "6de29159a5d3f2a35467c33e9db52524d969fb3e903847542e1a36f733b95188"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-cleanup.json.gz": {
+      "bytes": 13238,
+      "sha256": "9ae664745fb26bb655f541d2bb552ecfda67d181db1ce4c0453fb12fee64dd6e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-closed-0.json": {
+      "bytes": 4532625,
+      "sha256": "df81737df775025c34e16c4c0d3f9f20539d149696086bad53b07b27a0d1967f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-closed-0.json.gz": {
+      "bytes": 104641,
+      "sha256": "9f7713aed40b9e61abd1696664d6afc588107c5360f8417387d24e4d6fbafb08"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-closed-1.json": {
+      "bytes": 4855688,
+      "sha256": "4e362803682ecb96ba404f4e27d28942c55b472d976f2b853a0c1a88e6bdd3b2"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-closed-1.json.gz": {
+      "bytes": 112083,
+      "sha256": "f2d4e42c8e89cefd186b0f74433232e41f334bedb450b1fbd27ad2f9be7b5366"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-initial.json": {
+      "bytes": 186954,
+      "sha256": "9551607e329e6b9c4f7195515d01d4dd0ab09d69581cb9b868bbcad2b9f5d826"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-initial.json.gz": {
+      "bytes": 9365,
+      "sha256": "189216839679c22a940174a248f4abfe08f6378bb347e81762b3e0e91d9a4f94"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-late.json": {
+      "bytes": 468145,
+      "sha256": "6de29159a5d3f2a35467c33e9db52524d969fb3e903847542e1a36f733b95188"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-late.json.gz": {
+      "bytes": 13238,
+      "sha256": "9ae664745fb26bb655f541d2bb552ecfda67d181db1ce4c0453fb12fee64dd6e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-0.json": {
+      "bytes": 2684648,
+      "sha256": "dda305846bca22cda01a8d2383e52e3437771324a15316964f49fe9962a00c54"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-0.json.gz": {
+      "bytes": 65697,
+      "sha256": "5b301230e5a2f534a337ac5730ef010a145e9d6f2cff78398b27b4f065e420ac"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-1.json": {
+      "bytes": 2684947,
+      "sha256": "32b0d739b50742619d18b099eee8558136c5250c2aa4f7748f6afefb9eb3cd95"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-1.json.gz": {
+      "bytes": 65738,
+      "sha256": "6adcbc0eb0dfa03f1100639d6fb59ae5dc8760e1c1f0abeaf479ed5045de87ab"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-2.json": {
+      "bytes": 2684649,
+      "sha256": "ece3fbe085a7253a63ebb5605066b8f6244bb8df9bf9d5b5400a8822b0585e31"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-2.json.gz": {
+      "bytes": 65701,
+      "sha256": "e78322989ccaf90fc9b06897dd6b287315a7ce8c63d221663b292f2ea803b50f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-3.json": {
+      "bytes": 3008167,
+      "sha256": "0c8b0b8f8a58acd8113a912cd0a29a7d9eb4ae365dd31ab435b77e3f469d838e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-3.json.gz": {
+      "bytes": 69309,
+      "sha256": "2aa713fcac9764fa93f25390b43da750d3b442f7cdfe94a18332db24b3ec6f49"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-4.json": {
+      "bytes": 3148784,
+      "sha256": "393bba6ed6128c461a4a3dcda01780811b45f5bc2d6568b1b071872d4b837779"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-4.json.gz": {
+      "bytes": 75526,
+      "sha256": "f389d872ac444910002a40d47f8e43600189413894bd1d6366482f145e607011"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-5.json": {
+      "bytes": 3148961,
+      "sha256": "8835d26f48a4239dc168cfd5313903af52b873ac922a90175326372ed91511ae"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-5.json.gz": {
+      "bytes": 75517,
+      "sha256": "47637b206d79eda04e4d9ebd9e9ebc51695444225b5361f7583da74e8fcc255e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-6.json": {
+      "bytes": 3148667,
+      "sha256": "bee9f7a830169eb1ba31c1d54ce3f529d3943220f41bcbb409c7a64eaed10baa"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-6.json.gz": {
+      "bytes": 75506,
+      "sha256": "59c611119f4e5696d617376d79cf30b496139020c5eee9acfaf6eb455536901d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-7.json": {
+      "bytes": 3237209,
+      "sha256": "dbe0f55e3b80cdab8cab5eed683eab5e6374d94b6e340cefb8556aaf7331d0ea"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/custom-label-prefix-steps-7.json.gz": {
+      "bytes": 75218,
+      "sha256": "a3402f85e5193238800b3715d201e81c0c33d597ee9649e5df91742ef073b8d0"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-beforeUnmount.json": {
+      "bytes": 1526067,
+      "sha256": "b1ccb129d438f89bc1c247a58bd9b03ee38148884e25ffe0fd9d14b4a459ca44"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-beforeUnmount.json.gz": {
+      "bytes": 36419,
+      "sha256": "b489ffc6fc76f9e3e9cea55d754a9e49f9000d28b4f979c508e04a1833c86ff5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-cleanup.json": {
+      "bytes": 528713,
+      "sha256": "21acb82674f03dd36e00de567983bd1d23dfe3315d4d1b99cb70fa702c0121d8"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-cleanup.json.gz": {
+      "bytes": 14391,
+      "sha256": "7ffcd00af4853c015e73ae9c59bf2b205f51f731493e6877228ee6830f92393e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-closed-0.json": {
+      "bytes": 3862881,
+      "sha256": "9b1ee7c0805f754715e387a2e21fe56b82f95f445d91c414477aa336a6978827"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-closed-0.json.gz": {
+      "bytes": 84005,
+      "sha256": "e134306d6a6f93caa616a75fd3d2c638f4b5df3ed4a4512ca0b7e11d9d608d57"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-closed-1.json": {
+      "bytes": 4765899,
+      "sha256": "3c0528eb19bfed13795b9f3eb465cca33735039fb0e178ee089e8d30062b8da5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-closed-1.json.gz": {
+      "bytes": 105539,
+      "sha256": "2b78facf937d15254db0e9115bce7504a2eb3acd113e1909f0963d737d2762d6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-closed-2.json": {
+      "bytes": 4956919,
+      "sha256": "23b23ec60691ff27287b65b548b3173920c9807df53bd58e53136ccf496d0def"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-closed-2.json.gz": {
+      "bytes": 109459,
+      "sha256": "13c40ebb4d5e27ed971b0b06dfe856e7101cb60637c4286ea663e449e5f9c352"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-initial.json": {
+      "bytes": 129848,
+      "sha256": "04f3624b07f140647610fb91f9f0fd027fbde8e156df852b327d2e3e28d7e23f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-initial.json.gz": {
+      "bytes": 7328,
+      "sha256": "c105049514c50fbae18a0c2da1c05cc589f141998b07453c10b390553cfab6f3"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-late.json": {
+      "bytes": 528713,
+      "sha256": "21acb82674f03dd36e00de567983bd1d23dfe3315d4d1b99cb70fa702c0121d8"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-late.json.gz": {
+      "bytes": 14391,
+      "sha256": "7ffcd00af4853c015e73ae9c59bf2b205f51f731493e6877228ee6830f92393e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-0.json": {
+      "bytes": 2497984,
+      "sha256": "355327c345a98597bd188d5d29f9246e7c3befa6fe43f0fd1747a89b01058e29"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-0.json.gz": {
+      "bytes": 56291,
+      "sha256": "804bc695feffaa06e96dad4727259bcfac7db715b14941f6c901b624cb78c25b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-1.json": {
+      "bytes": 2637233,
+      "sha256": "01772775044e9849c1952606f32c968b3844c1742b6cc59074d73096b45f5351"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-1.json.gz": {
+      "bytes": 62648,
+      "sha256": "9a3da8e954408e6fb5fec91a447fdde5b6edf2a4e57ab5c293fb53648c1cc62d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-10.json": {
+      "bytes": 3304664,
+      "sha256": "668a7776defd038a813dc95ef2cf5c546d934a21359fa18d3f58414477cdcab3"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-10.json.gz": {
+      "bytes": 73085,
+      "sha256": "d9fa1e1b6dc75a02968c90dc242fd87ace79dbe304583170d2cecc3da0e5093b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-11.json": {
+      "bytes": 3315964,
+      "sha256": "2d595a6b38cd14225759d3a85fde182ab88cb1831f5a11b3a1f27d5f5c755f92"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-11.json.gz": {
+      "bytes": 76001,
+      "sha256": "a95b4ab9f3bcc3689a4cf81c647bbfe351bb136f178046a2cf367a9f06d10a51"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-2.json": {
+      "bytes": 2575447,
+      "sha256": "644e16ba58fde6fdeddd30a8238223c2dd3566b9f378dfba9795c9b6b0d48a52"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-2.json.gz": {
+      "bytes": 56202,
+      "sha256": "e58f02c1d99ba610c67d4665e06f680f978d3de22dc59e88874c7aba3c98df02"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-3.json": {
+      "bytes": 2585980,
+      "sha256": "1520ab18a3db52f6ad8d46da2288abbfd69acd9bd92b749cedad0da1399e9469"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-3.json.gz": {
+      "bytes": 59106,
+      "sha256": "dde468930f4f78df5494292cd1d4f2c368e75c79b7af24585c357f1a0b2f42d9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-4.json": {
+      "bytes": 2585863,
+      "sha256": "d62dfa5f2e35ea8ac9a46b3bb2af0a302b5cd1a85719d98cc2c020f653c5470f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-4.json.gz": {
+      "bytes": 59085,
+      "sha256": "6c445268e90163b8f9ff1b69007b07aa7b8be385820d1189b789d3e456f45fa3"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-5.json": {
+      "bytes": 2725155,
+      "sha256": "5bfe3d0acb20102aa2de51659f98fdb7e85972d38d91f9bed9810731b6176e6d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-5.json.gz": {
+      "bytes": 63999,
+      "sha256": "487a13e8131d4ae9c9c59a43f61d2a2b105d8cabe33dfa2436722f7e816185d3"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-6.json": {
+      "bytes": 3163720,
+      "sha256": "2f09073a104107aa744f368df3d779b4a1bf7407874785eab86ac7fa24ec9209"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-6.json.gz": {
+      "bytes": 69903,
+      "sha256": "d3e802b6c1430b2ddc27cab1fd70144062b0a18d8fa7b3fe30cfb78845a321ba"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-7.json": {
+      "bytes": 3302588,
+      "sha256": "590d67c2cf03d2e1440ee6d9622db2fb8d21d13f11b89bdfae3cc68854a9f99d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-7.json.gz": {
+      "bytes": 75796,
+      "sha256": "425436a5b734d21426aa16e6b117d509967a40019ddeea48d6ee3883a6743e52"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-8.json": {
+      "bytes": 3302741,
+      "sha256": "43665640d576cedb16ee78a10d481609b6fc3fe6abaa0c33b3ba9f5857862cb1"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-8.json.gz": {
+      "bytes": 75791,
+      "sha256": "791a5f17c75b84e8a792ceacfed0a7654eafba8b618d861906ff0b788340718d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-9.json": {
+      "bytes": 3302471,
+      "sha256": "b03d4ff19595fee8fb002a559218d75e7e6f03a769cf21de6b4a7f5b4d0e5d51"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/lazy-hover-click-steps-9.json.gz": {
+      "bytes": 75778,
+      "sha256": "39c4204daa9bfb25c3534b28fe9efcaffe8ad070c5b898474c57d2f3c7ab8c2a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-beforeUnmount.json": {
+      "bytes": 1546530,
+      "sha256": "42b5b8cbcda43b93ef5525e89d7b3da2968c7b398f6954aaa086b29cd5bf99a8"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-beforeUnmount.json.gz": {
+      "bytes": 35238,
+      "sha256": "fc09ce1dea5b3f9ce9907057097fc7cd72e432f2319767c00ad25c27e49d8645"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-cleanup.json": {
+      "bytes": 549958,
+      "sha256": "28b2312c88d7328ef9bb96e6b4ca73eaa20fed92f4f8983ec1c488bd5532f7e9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-cleanup.json.gz": {
+      "bytes": 14603,
+      "sha256": "e6cc62422c8c0cdcaa3b88de683c3cf9bce2b6591a955900a54bd98d4799758f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-closed-0.json": {
+      "bytes": 4848512,
+      "sha256": "700fa9842d971cc16bc2636d418101b1116e5b150e32c5433a37448023ae5704"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-closed-0.json.gz": {
+      "bytes": 106138,
+      "sha256": "e07ff46368ba467af726d7f5b24914cc95263c5242c2b8c7af0489b3a88a7475"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-closed-1.json": {
+      "bytes": 5039542,
+      "sha256": "cc6d57cf561cdc2e74c1c5e53673cec42d06792bdeaea55f21bfe0320eefc825"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-closed-1.json.gz": {
+      "bytes": 110275,
+      "sha256": "d2ba61933fe7dae208ae6e00490bee70038ffab49504d976b34066a193672069"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-initial.json": {
+      "bytes": 131212,
+      "sha256": "098d90ffe04a9b2bae78779395e118b9ea71bcb35240616125d2d0efd3ebffec"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-initial.json.gz": {
+      "bytes": 7369,
+      "sha256": "1333d519ca07a160ff5ff4bda8bab41f4a25c8ba065a0378ec896bcdb71386be"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-late.json": {
+      "bytes": 549958,
+      "sha256": "28b2312c88d7328ef9bb96e6b4ca73eaa20fed92f4f8983ec1c488bd5532f7e9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-late.json.gz": {
+      "bytes": 14603,
+      "sha256": "e6cc62422c8c0cdcaa3b88de683c3cf9bce2b6591a955900a54bd98d4799758f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-0.json": {
+      "bytes": 2503590,
+      "sha256": "164b73e73d4b5663e70a21c81565fd8c705f542fde406db5c988f4559e258f7c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-0.json.gz": {
+      "bytes": 56502,
+      "sha256": "0846b08f89a942a2d01185072e15134810dfedd064d1696069af23a586a636ad"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-1.json": {
+      "bytes": 2573171,
+      "sha256": "b4d5753a574206ce3478f3f915d2d6846f5047d92939fe491d2ffc0d4c16ac37"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-1.json.gz": {
+      "bytes": 58914,
+      "sha256": "1cea1393184c1e11fc2cd41fb1c0210a2fb8aae502e97cd86502790cb808bf04"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-10.json": {
+      "bytes": 3359914,
+      "sha256": "de7cda880a0b83e3ad9ddfcaa1e4d383a0bf79208f7ea7fa201b8c3ed62f86a7"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-10.json.gz": {
+      "bytes": 76344,
+      "sha256": "6a956659c37ca27b289659019212315b6d3950c04f56bebd98f0b2d1b5db64d9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-11.json": {
+      "bytes": 3359746,
+      "sha256": "5b802c7a85a1030356f673b331509e1e708a32e8d15f1b7cb65ba4d02bf4f800"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-11.json.gz": {
+      "bytes": 73622,
+      "sha256": "6d39719a8f4eceef3f7f5a1c89d068cc6f1c0d4ab51d4b91a10f3b6b79e44bff"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-2.json": {
+      "bytes": 2573131,
+      "sha256": "b47d3df2b3ddc693ec32230298dae7e9b26911fff468467f3aa6b30937b884ea"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-2.json.gz": {
+      "bytes": 58886,
+      "sha256": "8ba973a8d9ab4f6f55284a15b1fca41274641d654bc3f7736c8d54a3b81cbaf7"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-3.json": {
+      "bytes": 2573169,
+      "sha256": "02a8d705b8c10ce98a796acb7f10765eeb5cade93a5821d836b45579b7bc7e3d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-3.json.gz": {
+      "bytes": 58915,
+      "sha256": "3e7e7aac2ae8476efa4c9cec8622bcfecef78eb465275e2968595ac79e9a600d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-4.json": {
+      "bytes": 2573131,
+      "sha256": "b47d3df2b3ddc693ec32230298dae7e9b26911fff468467f3aa6b30937b884ea"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-4.json.gz": {
+      "bytes": 58886,
+      "sha256": "8ba973a8d9ab4f6f55284a15b1fca41274641d654bc3f7736c8d54a3b81cbaf7"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-5.json": {
+      "bytes": 2573165,
+      "sha256": "48fc9521e7bd8018a332d465cf251e6dbc39a99b2db5de354d50c76b04cda823"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-5.json.gz": {
+      "bytes": 58891,
+      "sha256": "15a82ac7b32230d6c24787f5623a41ebfea61ea04e24335d7e36f1ef74e70c60"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-6.json": {
+      "bytes": 2712433,
+      "sha256": "08169135bcbbbed611234e668e2a83911c52ebfa68f803a3ae2053516eeec15e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-6.json.gz": {
+      "bytes": 63756,
+      "sha256": "aa6ca24fd20127b664dbc59704316bf9cf1699b66759833cf494ac0fa3f19715"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-7.json": {
+      "bytes": 2712417,
+      "sha256": "5f3b9106c6f6a5434800b6d4b73ece6ce401be12e91d3d55ef886e16fcbf9540"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-7.json.gz": {
+      "bytes": 63741,
+      "sha256": "0f96f1b802c07249d10ae4f3829180132fc7de97d3d29a1918dbd7695f36dc31"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-8.json": {
+      "bytes": 2712383,
+      "sha256": "91fe5a2ccf840e5cf7bb2eb4990ad2f89674a6afad1b1bbf071e123f2686507f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-8.json.gz": {
+      "bytes": 63722,
+      "sha256": "814e6370b9e834cc0770eaffd6cf5789a5d99d2ab79c9d98ab679a66f105f034"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-9.json": {
+      "bytes": 3218794,
+      "sha256": "fa16782d73e423cf608cf7dd006859eea12c263827394eb1b1cc17b97df7beb0"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/preview-false-and-switch-steps-9.json.gz": {
+      "bytes": 70366,
+      "sha256": "a0fac792e7e9414b9258484f490095402845f1ed16ba4f6cb0818b21ffd86374"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-beforeUnmount.json": {
+      "bytes": 14566015,
+      "sha256": "0984f4e0aa5525f8330d97b4f02a944d8a3ecce38536780429f78db9711e42da"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-beforeUnmount.json.gz": {
+      "bytes": 194930,
+      "sha256": "1ae076540075f67cfd232bc40836664cca5bd88e305cdc89300f6c7743fef55b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-cleanup.json": {
+      "bytes": 13530553,
+      "sha256": "d30763f37ffb8b7fa0e85efa1602e07c50f5fb564b775065e6ccfbe1ca9519e7"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-cleanup.json.gz": {
+      "bytes": 172758,
+      "sha256": "a7ebb50221be94a5762ef9e131d294db9b0e9fd7f297005560cbc6ac9e61f207"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-closed-0.json": {
+      "bytes": 38140837,
+      "sha256": "148dae557b87061fff5d2fa40dd62297a8a27ab6538a6b8458874b690534ab93"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-closed-0.json.gz": {
+      "bytes": 498949,
+      "sha256": "98898ae6107d20d1739a1f38c321a397a9ebc8f6e3900c9dbd74c13fb581a363"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-closed-1.json": {
+      "bytes": 46887922,
+      "sha256": "725cafbffc5e06f7d586c9b930b5e3ebe88e698e4f21fd638fddc97e8dbf1e90"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-closed-1.json.gz": {
+      "bytes": 603056,
+      "sha256": "0973fe4efbe0f8cf58668884c8167c436af3ad3f8ba10bb16e733610a41291c9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-initial.json": {
+      "bytes": 275314,
+      "sha256": "5d2ba9b99406af6b72b6fb5f1f7c1433851085f05c216542f3892d1732feee61"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-initial.json.gz": {
+      "bytes": 11109,
+      "sha256": "c059d57e1c3ddeaef7c45e6d68d8a6b10c3af35f518160131353923cfd3dde58"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-late.json": {
+      "bytes": 13530553,
+      "sha256": "d30763f37ffb8b7fa0e85efa1602e07c50f5fb564b775065e6ccfbe1ca9519e7"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-late.json.gz": {
+      "bytes": 172758,
+      "sha256": "a7ebb50221be94a5762ef9e131d294db9b0e9fd7f297005560cbc6ac9e61f207"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-0.json": {
+      "bytes": 5070682,
+      "sha256": "8822b91192ac551eb5297661f1679e72ede32b5487b961adc125be72eec0ee65"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-0.json.gz": {
+      "bytes": 97272,
+      "sha256": "f46ca390cdddc82bef6cc9a12eaaf706c87f050c5d79b3d4bd719a311b3b5356"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-1.json": {
+      "bytes": 7142168,
+      "sha256": "302524b25a1286e86f60ffb7c6406c94e16fee5f329b655057ac171874a8d768"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-1.json.gz": {
+      "bytes": 120022,
+      "sha256": "d1c246ebfa981caf1f6ed8a0224dbc1f2fc5eb62c5bad1b86291e5d3dbda852e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-2.json": {
+      "bytes": 9213811,
+      "sha256": "dde865e042a8368b04d710063f3388460463977ef9e859728b11a40310bba034"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-2.json.gz": {
+      "bytes": 145799,
+      "sha256": "e33bf29ee169042c9d203b91d188950d1ba97da30d6135169e694368a0134f2c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-3.json": {
+      "bytes": 11287031,
+      "sha256": "6bf347d16d0b3007102be07b2f470bee6d30b8434cdc420d431264a78d231762"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-3.json.gz": {
+      "bytes": 168658,
+      "sha256": "b1875068802171a87f05b6ce343f58eeb0af46d6fe6c5dbb57f8ad159dcccf90"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-4.json": {
+      "bytes": 15723153,
+      "sha256": "b857f69f0b05b04a7b317e319f5c53d6d9d08e31a7d9d0cff83880f92f2f8544"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-4.json.gz": {
+      "bytes": 221995,
+      "sha256": "33d09c582d6f4df5429a2ad4aa3b0dbf214f774fa55ca38962836c00cca2edba"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-5.json": {
+      "bytes": 18940803,
+      "sha256": "fdeb9b22c250adefaa9882c4de2938252f70aa3720ae9fd4d859dda674906dc2"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-5.json.gz": {
+      "bytes": 259253,
+      "sha256": "7c740bb52db190d8370dea05f3fd009abe594c61198836eafb300eb630263624"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-6.json": {
+      "bytes": 23194959,
+      "sha256": "7985e050b821493c575e976c1b270b0a5b6675f38af26f0344038d0c96423bf9"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-6.json.gz": {
+      "bytes": 308123,
+      "sha256": "5515ca631d6989b92cb7dc061eef29c7de305088d79fbec50cad9ceab2166336"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-7.json": {
+      "bytes": 25405588,
+      "sha256": "4ea358c15f410d2562d7c68b552be535760caf9fb304e2386e45c61358b150e3"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-7.json.gz": {
+      "bytes": 331779,
+      "sha256": "384f433c1abb39964be3f640d1a148aa105516cc6e5616aa1295292f24e9054b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-8.json": {
+      "bytes": 27690680,
+      "sha256": "014aa3cfc23d528c8782fc15057dc166699a6716ada9431c77085f4822693857"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-8.json.gz": {
+      "bytes": 363988,
+      "sha256": "5d5bc8d6f86af2e66066a9159acc57b3d82cb7029b6d6ef846f8297b7112e179"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-9.json": {
+      "bytes": 31232976,
+      "sha256": "9e262e5d04cea1183655e5046d22a2545e8fbce843e68b812fd419dfa39603e6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/static-validity-steps-9.json.gz": {
+      "bytes": 401564,
+      "sha256": "30d55bb312c5855a2897aaeeaddd1d9088cb5a2230f2a738314a6ec47b9489b1"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-beforeUnmount.json": {
+      "bytes": 1849384,
+      "sha256": "360d470fc4ebfdb1f9d07900da4ac5601c94cc5325230af891743147cdddf199"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-beforeUnmount.json.gz": {
+      "bytes": 42470,
+      "sha256": "a3b66dfc4d5cd874b540a6864d735e35f50add05e3bb91bc2dba5300388eb4c8"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-cleanup.json": {
+      "bytes": 512348,
+      "sha256": "0dd6c64674ce0a706635de25a2dfe4e310c7e72f9be95de2927ee4ee6571ceeb"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-cleanup.json.gz": {
+      "bytes": 14451,
+      "sha256": "854cf2900f1ce032ed93fcb6ea5b0920899e14faa1a0e71c607510c0a5951f21"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-closed-0.json": {
+      "bytes": 5857422,
+      "sha256": "c18b7976e03e3c35b30158f5b1691302f239ce9978bee0789b216aef708f4ed4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-closed-0.json.gz": {
+      "bytes": 126555,
+      "sha256": "f7a8dfcdd00226425cd210cc4cbbca61c03301dd04182219258fe159c6afacec"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-closed-1.json": {
+      "bytes": 6004380,
+      "sha256": "b5c1396c8cb44df5e7cc5f362771d769fa0b97c78d97e6f7922fb8b4e8996a58"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-closed-1.json.gz": {
+      "bytes": 129138,
+      "sha256": "6e1469aaf329c1c5fe77e9da8421720855594077afba2d79473bb3af8e6088d5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-initial.json": {
+      "bytes": 173160,
+      "sha256": "12ee607ede1952e3cb2ac9a3738a6ca8e78d05d5f8654621402fe51a48bbd295"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-initial.json.gz": {
+      "bytes": 8931,
+      "sha256": "2de80895e73e37744f16a7076f5a882e3f43083fbc8cbc7b1303af6bc51423a4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-late.json": {
+      "bytes": 512348,
+      "sha256": "0dd6c64674ce0a706635de25a2dfe4e310c7e72f9be95de2927ee4ee6571ceeb"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-late.json.gz": {
+      "bytes": 14451,
+      "sha256": "854cf2900f1ce032ed93fcb6ea5b0920899e14faa1a0e71c607510c0a5951f21"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-0.json": {
+      "bytes": 3386014,
+      "sha256": "727560cd5cf683b879e9a568d52bad2f040c637b8ef75c33fc7c57505d158635"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-0.json.gz": {
+      "bytes": 76678,
+      "sha256": "1a24b30633fca7bcd782131373b87f0e667bc17027e7d252a99ed4e3a913b489"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-1.json": {
+      "bytes": 3456019,
+      "sha256": "703898b52451a4fb94eb8b001e5e276f978fe5726589a508b45670861178d2e8"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-1.json.gz": {
+      "bytes": 79095,
+      "sha256": "1bd0906af86c72ec76672254d4f4b1733c0ccb64a7142321aa5a9c8b1cbab1c5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-2.json": {
+      "bytes": 3905027,
+      "sha256": "ccd06a11bb3e7b017967ab8bf221155672d104c63494ed8ece878993b975f88b"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-2.json.gz": {
+      "bytes": 84224,
+      "sha256": "fd8038d3aa0afb70360db790328608ba0662f6a8ae88e58853055d43cdc33a40"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-3.json": {
+      "bytes": 4003866,
+      "sha256": "981487b43e5848ac4f5da2f33a7a60c3ab1a25a82972c97518e148870b07c79f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-3.json.gz": {
+      "bytes": 90104,
+      "sha256": "438a29a1ca33a45f23b20e8b70efd8b648bc3ca8975b4cb9064241b8db64ee8c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-4.json": {
+      "bytes": 4004015,
+      "sha256": "a34eb852d5364141564cdc7b1d41aa0439199dc2ec212e397961fa28f46a65ba"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-4.json.gz": {
+      "bytes": 90093,
+      "sha256": "cf82a5cdcca1fa4fb838ba85f389ced728a70e46f24104886bdf3c9e61dedadf"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-5.json": {
+      "bytes": 4003745,
+      "sha256": "2eb8e20ef31dbc35c3072b39e736d0ffbd0627ef05caa49c166a6dbfe236e1d6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-5.json.gz": {
+      "bytes": 90077,
+      "sha256": "459ab4d53e40af7e0a83c8db47e79353004943c9e273c3994245cb73848641d4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-6.json": {
+      "bytes": 4002972,
+      "sha256": "4b7e445b3f35b29791b8a9397a55af09cc4dbee1754b2887a4125d3ed67df9a4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-6.json.gz": {
+      "bytes": 85938,
+      "sha256": "f1a49870d9ff96fb6a269fd9c1f0de4f2dba1cd70c8d7410407523a6e1fa854c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-7.json": {
+      "bytes": 4017234,
+      "sha256": "c4ade2469b72dd86800ffc1eabe40d72454240bbcbf521486769c2011e2c90de"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json.parts/time-confirm-preset-steps-7.json.gz": {
+      "bytes": 90332,
+      "sha256": "65d05aa4100c2740463e9c83f722fe0a31f11a16304c020e164bcf2640c64f0e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/execution-freeze.json": {
+      "bytes": 239,
+      "sha256": "5f476d1c72cf03ee6c2fb2e791541867a867fe83080441a1faea7ac5ef9bbb3e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/json-stream.mjs": {
+      "bytes": 2314,
+      "sha256": "b7e849ba0ff70e3673bcdc28b1a08747d79836ff061c5269f9b07fa26891ef93"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/protocol-freeze.json": {
+      "bytes": 138854,
+      "sha256": "04be9b4879445757027d99f383a3d3188c4190882cab0c449c1d6133b6873de6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/protocol-proposal.json": {
+      "bytes": 138756,
+      "sha256": "6695c170c4b118c013d72cb0562873efb412877287a858fcc8c90554ed90cd69"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/protocol.mjs": {
+      "bytes": 12435,
+      "sha256": "7fdf3ded33f44f0930d01ecf59c2d5e6c2bbde4d61cf77f320e1808e333948d3"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/reader.mjs": {
+      "bytes": 6507,
+      "sha256": "7f2bfd90a335435ed0b8b3d387310521aff51504b320cf4f490e68f429f82948"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/server.mjs": {
+      "bytes": 3604,
+      "sha256": "bcb2b5e8ea826d14ffbe9a013a4938da4c212049fbc2d7ebb62ec11367fe4e9d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/shared.mjs": {
+      "bytes": 1151,
+      "sha256": "6c778ec1476ad33f1ec112e060583e2af5968e4d66da41a1096edcd60cdcb210"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/source-app.mjs": {
+      "bytes": 8185,
+      "sha256": "0a310260339a730aa0a82d5fe38b81ce6ef7d42e0db3bb490ea855f2a72f702e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/source-witnesses.json": {
+      "bytes": 5912,
+      "sha256": "086a36ffea0cf22b0041e72f330d1b653dd6f68a9905c49c10b8110656e214d4"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json": {
+      "bytes": 16079,
+      "sha256": "66c8427d4556b07949b5a027f0b13419eabafe5e7deeac71abdefcce98da5557"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.gz": {
+      "bytes": 3177,
+      "sha256": "872ecbdecbadf4b110185623e59026d18b47517246b8da579b96d1f7b7bd10ab"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/controlled-rejection-server.json": {
+      "bytes": 219460,
+      "sha256": "9c684758f9169dbdfe3458179e1cb5837e7de5d6ec8504a1f637f988a61d7419"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/controlled-rejection-server.json.gz": {
+      "bytes": 9999,
+      "sha256": "750bde34c14df27c71faeb312130a14298de2256194eda720b72b2acff5d398a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/custom-label-prefix-server.json": {
+      "bytes": 249720,
+      "sha256": "d4d9ec25a10703f33a6e43b9613d4159b4c01d2eeed93ca733858445427dd10e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/custom-label-prefix-server.json.gz": {
+      "bytes": 11185,
+      "sha256": "53f4420af5a6c8f1327be5506980d61931940efb28cd42acc0c7c5cbcc52f09d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/lazy-hover-click-server.json": {
+      "bytes": 185724,
+      "sha256": "a0acfdcaa39646a7df8b8b60168c711652768364ccf3098d675c5d67bd63f91e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/lazy-hover-click-server.json.gz": {
+      "bytes": 8219,
+      "sha256": "adeca16866134ba0e7d1d20551b696cc9fb54aeda86a47e46b244e6b241a2598"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/preview-false-and-switch-server.json": {
+      "bytes": 188852,
+      "sha256": "97efac310f7d3273309a7760a80976c23987a9e901551cc606bcec932b501442"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/preview-false-and-switch-server.json.gz": {
+      "bytes": 8339,
+      "sha256": "7760afcb57f40d5cfabc2f4cd38615844f774346de71e07eaa89293edfbae9d0"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/static-validity-server.json": {
+      "bytes": 426282,
+      "sha256": "04ce6624f9f4904f38c7aec7746881747351330bf7616c46f8b381c87e3fb404"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/static-validity-server.json.gz": {
+      "bytes": 14704,
+      "sha256": "4bfe8b53cd216d5a01afe89669e4695486fbc383934562b497b57b11e57020fa"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/time-confirm-preset-server.json": {
+      "bytes": 214992,
+      "sha256": "d057ed09c18cc763c3d69974362c9d296fd82c62a2b6db9eb5ceb8af930a0179"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-first.json.parts/time-confirm-preset-server.json.gz": {
+      "bytes": 10227,
+      "sha256": "b807b83be0e054cd36a61fbe4b453cc2111ac7a8162a595d76cf8866dc1ae41c"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json": {
+      "bytes": 16091,
+      "sha256": "b6922edb70ad81adf536010da5c9020cf6beadffc2dfa7d5807d72194613f08f"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.gz": {
+      "bytes": 3178,
+      "sha256": "b6f5e0f71d9598ce4c404c0ec51a996a1a0f642d65735f551ca79f2ffb1ceb6a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/controlled-rejection-server.json": {
+      "bytes": 219460,
+      "sha256": "9c684758f9169dbdfe3458179e1cb5837e7de5d6ec8504a1f637f988a61d7419"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/controlled-rejection-server.json.gz": {
+      "bytes": 9999,
+      "sha256": "750bde34c14df27c71faeb312130a14298de2256194eda720b72b2acff5d398a"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/custom-label-prefix-server.json": {
+      "bytes": 249720,
+      "sha256": "d4d9ec25a10703f33a6e43b9613d4159b4c01d2eeed93ca733858445427dd10e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/custom-label-prefix-server.json.gz": {
+      "bytes": 11185,
+      "sha256": "53f4420af5a6c8f1327be5506980d61931940efb28cd42acc0c7c5cbcc52f09d"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/lazy-hover-click-server.json": {
+      "bytes": 185724,
+      "sha256": "a0acfdcaa39646a7df8b8b60168c711652768364ccf3098d675c5d67bd63f91e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/lazy-hover-click-server.json.gz": {
+      "bytes": 8219,
+      "sha256": "adeca16866134ba0e7d1d20551b696cc9fb54aeda86a47e46b244e6b241a2598"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/preview-false-and-switch-server.json": {
+      "bytes": 188852,
+      "sha256": "97efac310f7d3273309a7760a80976c23987a9e901551cc606bcec932b501442"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/preview-false-and-switch-server.json.gz": {
+      "bytes": 8339,
+      "sha256": "7760afcb57f40d5cfabc2f4cd38615844f774346de71e07eaa89293edfbae9d0"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/static-validity-server.json": {
+      "bytes": 426282,
+      "sha256": "04ce6624f9f4904f38c7aec7746881747351330bf7616c46f8b381c87e3fb404"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/static-validity-server.json.gz": {
+      "bytes": 14704,
+      "sha256": "4bfe8b53cd216d5a01afe89669e4695486fbc383934562b497b57b11e57020fa"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/time-confirm-preset-server.json": {
+      "bytes": 214992,
+      "sha256": "d057ed09c18cc763c3d69974362c9d296fd82c62a2b6db9eb5ceb8af930a0179"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/ssr-source-repeat.json.parts/time-confirm-preset-server.json.gz": {
+      "bytes": 10227,
+      "sha256": "b807b83be0e054cd36a61fbe4b453cc2111ac7a8162a595d76cf8866dc1ae41c"
+    }
+  },
+  "helperReuse": [
+    {
+      "file": ".upstream/artifacts/date-picker-preset-transitions-source-v1/shared.mjs",
+      "exactOriginal": ".upstream/artifacts/date-picker-presets-source-v2/shared.mjs",
+      "reason": "Same two Window-opaque observation guards and recorder."
+    },
+    {
+      "file": ".upstream/artifacts/date-picker-preset-transitions-source-v1/read-core.mjs",
+      "exactOriginal": ".upstream/artifacts/date-picker-presets-source-v2/reader.mjs",
+      "reason": "Same full physical DOM/CSS/box/ownership reader."
+    },
+    {
+      "file": ".upstream/artifacts/date-picker-preset-transitions-source-v1/json-stream.mjs",
+      "exactOriginal": ".upstream/artifacts/date-picker-presets-source-v2/json-stream.mjs",
+      "reason": "Same lossless streaming JSON plus gzip writer."
+    }
+  ],
+  "caller": "Public DatePicker only; picker=date by omission. Controlled value/open. Presets omitted in two date-only owners. Stable Dayjs/style/callback/preset references. No Native module or reference is imported, and no Source callback is directly called.",
+  "format": "Two retained-calendar owners: valid June12 rejected by value owner, and disabled June15. Only format changes while open and closed; actual controlled value identity is retained. The disabled June15 owner omits defaultPickerValue to observe same-month picker-value requests.",
+  "navigation": "Six bounded owners: omitted/explicit defaultPickerValue, controlled pickerValue June1 with reject/accept, min and max clamp. Initial controlled-picker open requests are recorded separately from preset action; no callback count or panel result is assumed.",
+  "datetime": "Exact off-grid static preset 2024-06-13T16:37:59.456 with steps2/15/10/100. Actual hour/minute/second/millisecond hovers, 12h meridiem and disabled hour/all-AM cases. Preview false/hover switches and leave/close/reopen are observed without rounding expectations.",
+  "dateOnly": "No-presets date-only owner preserves a time-bearing model while rendering full precision and changing only format during hover. Second no-presets owner changes only minDate to June19 while pointer remains over June18, then leaves, closes/reopens and hovers an enabled control date.",
+  "choreography": "Open/preset/cell/time hover use physical Playwright pointer actions. Input focus is an actual DOM focus action; input Escape is real keyboard input after an explicit focus observation. Prop updates use actual authored HTMLElement.click inside ReactDOM.flushSync, changing exactly the named owner state without moving pointer or focus. No imperative calendar/hover/value reset or synthetic library callback is used.",
+  "observations": "Full current DOM topology/HTML/ordered attributes and inline CSSOM, all prior computed CSS and boxes, actual time-column scroll/selected/disabled data, input value/defaultValue/caret/focus, all calendar cells, public ref/method identities, FormData and popup ancestry. Full callback argument count/receiver/raw graphs/order, all disabledDate/disabledTime/disabledHours actual producer calls and return graphs, actual Dayjs epoch/ISO/offset/7fields and authored identity aliases.",
+  "SourceNativeBoundary": "Actual Source onPickerValueChange(value,cleanInfo) is retained unchanged. Native existing public callback arity1, calendar info and native HTML input focus contract remain separate later review questions; this Source counter does not normalize them.",
+  "SSR": "Each of 13 initial closed owners is rendered with both actual serializers in a fresh DOM-free VM. Actual pure producer counts are retained, not assumed zero. Callback/factory idleness, null refs and resource traps are inspected from actual results. No open portal markup or hydration result is invented.",
+  "closedAndCleanup": "Every observed open-to-closed transition keeps afterCall, settled and actual +1000ms observations. Actual public owner unmount then cleanup and +1000ms retain disconnected Source-owned nodes and cleared refs. Browser-owned resource counters remain honestly unmeasured/null; requests and real ResourceTiming remain raw.",
+  "storage": "Each full point is streamed immediately into its own JSON plus lossless gzip part. No fields or raw identities are omitted. Manifest stores exact bytes and hashes, keeping one point/case in memory and preserving any failed partial parts.",
+  "repeat": "Four fresh processes in serial: CSR first/repeat, SSR first/repeat. Both complete originals are retained independently. Compare bytes first and enumerate actual differences without normalizing timestamps, identity IDs, paths or data.",
+  "excluded": [
+    "Range behavior changes",
+    "Non-date picker modes",
+    "Multiple dates",
+    "cellRender/panelRender implementation",
+    "Mask/semantic API",
+    "Hydration",
+    "Broad new theme/container/disabledTime matrices"
+  ],
+  "expectedOutcomes": null,
+  "preflight": {
+    "status": "passed-static-parse-and-profile-only",
+    "scripts": 9,
+    "owners": 13,
+    "actions": 123,
+    "logicalPoints": 136,
+    "plannedInitialClosedSSRSerializations": 26,
+    "actualSourceRuns": 0
+  },
+  "commands": [
+    "node .upstream/artifacts/date-picker-preset-transitions-source-v1/protocol.mjs freeze <EXACT_REVIEWED_PROPOSAL_SHA256>",
+    "node --max-old-space-size=8192 .upstream/artifacts/date-picker-preset-transitions-source-v1/capture.mjs csr .upstream/artifacts/date-picker-preset-transitions-source-v1/csr-source-first.json",
+    "node --max-old-space-size=8192 .upstream/artifacts/date-picker-preset-transitions-source-v1/capture.mjs csr .upstream/artifacts/date-picker-preset-transitions-source-v1/csr-source-repeat.json",
+    "node --max-old-space-size=8192 .upstream/artifacts/date-picker-preset-transitions-source-v1/capture.mjs ssr .upstream/artifacts/date-picker-preset-transitions-source-v1/ssr-source-first.json",
+    "node --max-old-space-size=8192 .upstream/artifacts/date-picker-preset-transitions-source-v1/capture.mjs ssr .upstream/artifacts/date-picker-preset-transitions-source-v1/ssr-source-repeat.json"
+  ],
+  "reviewedProposalSHA256": "7cd07a4a079e1830c9cb7cb6f086eb1f12c8c131d005d52d80b821f42919f58c"
+}
