@@ -1,0 +1,174 @@
+{
+  "status": "frozen-independent-Source-only-key-opening-counter",
+  "originalSourceProtocolSha256": "85bf9833e79305571a7dcbb5d15679fd652d36f88f9a5a8b50142762cc97a45d",
+  "counterProtocol": {
+    "path": "ant-design-select-components-tag-close-key-counter-source-protocol.json",
+    "bytes": 164563,
+    "sha256": "33a7039d7f906c4bf54be36c49c65bc5d94d1f14cfb70feb752c1f512e344c76"
+  },
+  "copies": [
+    {
+      "variant": "first",
+      "path": "ant-design-select-components-tag-close-key-counter-first-reference.json.gz",
+      "storage": {
+        "bytes": 1902674,
+        "sha256": "4b0fa1c3d223b25cda8b56678e58c7b9e29e40a492c07657abe786e946b395ea"
+      },
+      "decoded": {
+        "bytes": 73008965,
+        "sha256": "94dba92aca291ea7ded4e67255d2aa34045cca6abb14322266cb3c60c1204eb5"
+      },
+      "independentRaw": ".upstream/artifacts/select-components-tag-close-source-counter-v1/source-first.json"
+    },
+    {
+      "variant": "repeat",
+      "path": "ant-design-select-components-tag-close-key-counter-repeat-reference.json.gz",
+      "storage": {
+        "bytes": 1902685,
+        "sha256": "752011e3e6e217078a58b70ecf09806edfbb59ed40c6e33d4c9d89d1a7305f0b"
+      },
+      "decoded": {
+        "bytes": 73008965,
+        "sha256": "48945b0a52301e4d65d1fe98044433188e7638f7907ca03920660af26e274fd5"
+      },
+      "independentRaw": ".upstream/artifacts/select-components-tag-close-source-counter-v1/source-repeat.json"
+    }
+  ],
+  "headers": {
+    "first": {
+      "version": "6.6.8",
+      "react": "18.3.1",
+      "rcSelect": "1.10.1",
+      "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+      "chromium": "157.0.8103.78",
+      "node": "v24.18.0",
+      "originalSourceProtocolSha256": "85bf9833e79305571a7dcbb5d15679fd652d36f88f9a5a8b50142762cc97a45d",
+      "counterProtocol": ".upstream/artifacts/select-components-tag-close-source-counter-v1/protocol.json",
+      "counterProtocolSha256": "33a7039d7f906c4bf54be36c49c65bc5d94d1f14cfb70feb752c1f512e344c76",
+      "protectedFileCount": 722,
+      "protectedProductionStandCount": 9,
+      "pinsChanged": [],
+      "errors": [],
+      "diagnostics": []
+    },
+    "repeat": {
+      "version": "6.6.8",
+      "react": "18.3.1",
+      "rcSelect": "1.10.1",
+      "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+      "chromium": "157.0.8103.78",
+      "node": "v24.18.0",
+      "originalSourceProtocolSha256": "85bf9833e79305571a7dcbb5d15679fd652d36f88f9a5a8b50142762cc97a45d",
+      "counterProtocol": ".upstream/artifacts/select-components-tag-close-source-counter-v1/protocol.json",
+      "counterProtocolSha256": "33a7039d7f906c4bf54be36c49c65bc5d94d1f14cfb70feb752c1f512e344c76",
+      "protectedFileCount": 722,
+      "protectedProductionStandCount": 9,
+      "pinsChanged": [],
+      "errors": [],
+      "diagnostics": []
+    }
+  },
+  "projection": {
+    "cases": [
+      {
+        "id": "valid-arrow-down",
+        "key": {
+          "key": "ArrowDown",
+          "code": "ArrowDown",
+          "which": 40,
+          "keyCode": 40,
+          "ctrlKey": false
+        },
+        "beforeOpen": true,
+        "immediateOpen": true,
+        "settledOpen": true,
+        "lateOpen": true,
+        "eventKindsBefore": [
+          "public-focus"
+        ],
+        "eventKindsSettled": [
+          "public-focus",
+          "input-keydown"
+        ],
+        "eventKindsAfterKeyboard": [
+          "public-focus",
+          "input-keydown"
+        ]
+      },
+      {
+        "id": "excluded-arrow-up",
+        "key": {
+          "key": "ArrowUp",
+          "code": "ArrowUp",
+          "which": 38,
+          "keyCode": 38,
+          "ctrlKey": false
+        },
+        "beforeOpen": true,
+        "immediateOpen": true,
+        "settledOpen": false,
+        "lateOpen": false,
+        "eventKindsBefore": [
+          "public-focus"
+        ],
+        "eventKindsSettled": [
+          "public-focus",
+          "input-keydown",
+          "open"
+        ],
+        "eventKindsAfterKeyboard": [
+          "public-focus",
+          "input-keydown"
+        ]
+      },
+      {
+        "id": "modifier-arrow-down",
+        "key": {
+          "key": "ArrowDown",
+          "code": "ArrowDown",
+          "which": 40,
+          "keyCode": 40,
+          "ctrlKey": true
+        },
+        "beforeOpen": true,
+        "immediateOpen": true,
+        "settledOpen": false,
+        "lateOpen": false,
+        "eventKindsBefore": [
+          "public-focus"
+        ],
+        "eventKindsSettled": [
+          "public-focus",
+          "input-keydown",
+          "open"
+        ],
+        "eventKindsAfterKeyboard": [
+          "public-focus",
+          "input-keydown"
+        ]
+      }
+    ]
+  },
+  "projectionFirstRepeatEqual": true,
+  "wholeRawByteEqual": false,
+  "rawDifferences": "Whole raw histories are retained independently; chronological pure render-call histories differ; no equivalence or normalization claim is made for them.",
+  "preservation": {
+    "protectedFiles": 722,
+    "completedProductionStands": 9,
+    "existingSourceOriginalInputs": 22,
+    "existingSourceOriginalReferences": 906,
+    "verifiedBeforeAfterEachCapture": true
+  },
+  "serialization": {
+    "lossless": true,
+    "fieldsDropped": [],
+    "fieldsRewritten": [],
+    "SourceExpectedValuesDerivedFromNative": false
+  },
+  "counts": {
+    "freshSourceCallerPerRun": 3,
+    "sameTaskDOMEventsPerCaller": 2,
+    "canonicalMainCorpusChanged": false,
+    "existingMainCounts": "2owners/18actions/20CSR+2SSR remain unchanged"
+  }
+}

@@ -793,6 +793,7 @@
     if (!componentDestroyed && !committedBlurState.disabled) committedPublicBlur?.(event);
   }
   let componentCloseTimer: ReturnType<typeof setTimeout> | undefined;
+  let componentCloseChannel: MessageChannel | undefined;
   let componentDestroyed = false;
   let componentSearchTask = 0;
   function clearComponentSearchAfterClose() {
@@ -806,17 +807,35 @@
   function cancelComponentClose() {
     if (componentCloseTimer !== undefined) clearTimeout(componentCloseTimer);
     componentCloseTimer = undefined;
+    componentCloseChannel?.port1.close();
+    componentCloseChannel?.port2.close();
+    componentCloseChannel = undefined;
   }
   onDestroy(() => { componentDestroyed = true; cancelComponentClose(); });
-  function scheduleComponentClose(fromBlur = false) {
+  function scheduleComponentClose(fromBlur = false, useMessageChannel = false) {
     if (componentDestroyed) return;
     cancelComponentClose();
-    componentCloseTimer = setTimeout(() => {
-      componentCloseTimer = undefined;
+    const close = () => {
       if (!reference?.isConnected) return;
       const active = reference.ownerDocument.activeElement;
       if (fromBlur && active && (reference.contains(active) || list?.contains(active))) return;
       setOpen(false, fromBlur);
+    };
+    if (useMessageChannel) {
+      const channel = new MessageChannel();
+      componentCloseChannel = channel;
+      channel.port1.onmessage = () => {
+        // Даже устаревшая задача освобождает собственные порты.
+        channel.port1.close();
+        channel.port2.close();
+        if (componentDestroyed || componentCloseChannel !== channel) return;
+        componentCloseChannel = undefined;
+        close();
+      };
+      channel.port2.postMessage(null);
+    } else componentCloseTimer = setTimeout(() => {
+      componentCloseTimer = undefined;
+      close();
     }, 0);
   }
   const componentSpaceOpening = new WeakMap<KeyboardEvent, boolean>();
@@ -1174,7 +1193,9 @@
   function handleCustomTagMouseDown(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
-    setOpen(!expanded);
+    // Source useOpen откладывает false; legacy default tag path сохраняется.
+    if (inputSlot && expanded) scheduleComponentClose(false, true);
+    else setOpen(!expanded);
   }
 
   function connectTagElement(node: HTMLElement, value: RawValue) {
@@ -1242,6 +1263,13 @@
     }
 
     if (inputSlot && rawTextarea && !expanded && ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    // Source valid-open keys invalidate a weak close even when already open.
+    // Preserve its legacy which filter and modifier exclusions.
+    const keyCode = event.which;
+    if (inputSlot && componentCloseChannel && expanded && keyCode
+      && !event.ctrlKey && !event.altKey && !event.metaKey
+      && ![27, 16, 8, 9, 224, 18, 91, 92, 17, 186, 187, 20, 93, 38, 37, 39].includes(keyCode)
+      && !(keyCode >= 112 && keyCode <= 123)) cancelComponentClose();
     if (expanded && event.cancelBubble) return;
     handleKeyboardNavigation(event);
   }
@@ -1773,8 +1801,8 @@
               role="presentation" onmousedown={renderTag ? handleCustomTagMouseDown : undefined}
               {@attach node => connectTagElement(node, tag.value)}>{#if renderTag}{@render renderTag({
                   label: componentTagLabel, value: tag.value, index, disabled: tag.disabled,
-                  closable: !resolvedDisabled && !tag.disabled, isMaxTag: false,
-                  onClose: event => { event?.stopPropagation(); remove(tag.value, false); }
+                  closable: !resolvedDisabled && !tag.disabled,
+                  onClose: event => { event?.stopPropagation(); remove(tag.value, false); }, isMaxTag: false
                 })}{:else}{@const initialItemContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}<span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]}
                   style={initialItemContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)}
                   {@attach selectStyle(() => semantics.styles.itemContent)}>{@render componentTagLabel()}</span>{#if !resolvedDisabled && !tag.disabled}{@const initialRemoveStyle = untrack(() => serializeSelectStyle(semantics.styles.itemRemove))}{@const tagIcon = resolveSelectRemoveIcon(removeIcon, config.select?.removeIcon, removeGlyph)}<button type="button" data-ant-select-selection-item-remove
@@ -1796,7 +1824,8 @@
               style={initialRestStyle} {...selectStyleAttributes(!renderTag ? semantics.styles.item : undefined)}
               {@attach selectStyle(() => !renderTag ? semantics.styles.item : undefined)}
               data-select-custom-tag={renderTag ? '' : undefined}
-              role="presentation" onmousedown={renderTag ? handleCustomTagMouseDown : undefined}>{#if renderTag}{@render renderTag({ label: componentRestLabel, isMaxTag: true, disabled: false, closable: false })}{:else}{@const initialRestContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}<span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]}
+              role="presentation" onmousedown={renderTag ? handleCustomTagMouseDown : undefined}>{#if renderTag}{@render renderTag({ label: componentRestLabel, value: undefined, index: undefined,
+                disabled: false, closable: false, onClose: undefined, isMaxTag: true })}{:else}{@const initialRestContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}<span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]}
                   style={initialRestContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)}
                   {@attach selectStyle(() => semantics.styles.itemContent)}>{@render componentRestLabel()}</span>{/if}</span></div>{/if}<div class={[`${prefix}-content-item`, `${prefix}-content-item-suffix`]}
           bind:this={componentInputSuffix} style:opacity={1}
@@ -1841,11 +1870,11 @@
             {#if renderTag}
               {@render renderTag({
                 label: tagLabel, value: tag.value, index, disabled: tag.disabled,
-                closable: !resolvedDisabled && !tag.disabled, isMaxTag: false,
+                closable: !resolvedDisabled && !tag.disabled,
                 onClose: event => {
                   event?.stopPropagation();
                   remove(tag.value, false);
-                }
+                }, isMaxTag: false
               })}
             {:else}
               {@const initialItemContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}
@@ -1872,7 +1901,8 @@
             role="presentation" onmousedown={renderTag ? handleCustomTagMouseDown : undefined}
             aria-hidden={!tagOverflow.omitted.length || undefined} inert={!tagOverflow.omitted.length}>
             {#if renderTag}{@render renderTag({
-              label: restLabel, isMaxTag: true, disabled: false, closable: false
+              label: restLabel, value: undefined, index: undefined,
+              disabled: false, closable: false, onClose: undefined, isMaxTag: true
             })}{:else}{@const initialRestContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}<span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]} style={initialRestContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)} {@attach selectStyle(() => semantics.styles.itemContent)}>{@render restLabel()}</span>{/if}
           </span>{/if}{/if}{#if inputSlot && inputContext}<SelectComponent component={inputSlot} context={inputContext} />{:else}<input
         {...nativeAttributes}

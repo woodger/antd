@@ -13,10 +13,11 @@ function attributes(element: Element) {
     return key === 'class' && !value ? [] : [[key, value]];
   });
 }
-export function verifySelectComponentsResponsiveSSRLayout(actualHTML: string, sourceHTML: string, label: string) {
+export function verifySelectComponentsResponsiveSSRLayout(actualHTML: string, sourceHTML: string, label: string,
+  options?: { responsiveCustomTag?: true }) {
   const actual = readSelectComponentsResponsiveSSR(actualHTML), source = readSelectComponentsResponsiveSSR(sourceHTML);
   assert.equal(actual.contents.length, source.contents.length, label + ' complete content subtree count');
-  const compare = (actual: Element, source: Element, label: string) => {
+  const compare = (actual: Element, source: Element, label: string, parent?: { actual: Element; source: Element }) => {
     assert.equal(actual.tag, source.tag, label + ' tag');
     let left = attributes(actual); const right = attributes(source), names = classes(source);
     const drop = (key: string, expected: string) => {
@@ -34,6 +35,16 @@ export function verifySelectComponentsResponsiveSSRLayout(actualHTML: string, so
       }
     }
     if (names.includes('ant-select-selection-item')) { drop('data-ant-select-selection-item', 'true'); drop('role', 'presentation'); }
+    if (options?.responsiveCustomTag && source.tag === 'span' && source.attributes.length === 0
+      && parent && classes(parent.source).includes('ant-select-content-item')
+      && !classes(parent.source).includes('ant-select-content-item-suffix')) {
+      assert.equal(actual.tag, 'span', label + ' custom renderer keeps its actual SPAN wrapper');
+      assert.equal(parent.source.tag, 'div'); assert.equal(parent.actual.tag, 'div');
+      assert.deepEqual(parent.source.children, [source], label + ' exactly one Source renderer wrapper in its Overflow item');
+      assert.deepEqual(parent.actual.children, [actual], label + ' exactly one Native renderer wrapper in the compared Overflow item');
+      assert.deepEqual(left, [['data-select-custom-tag', ''], ['role', 'presentation']], label + ' exact existing Native custom-tag annotations/order');
+      left = [];
+    }
     const style = right.find(([key]) => key === 'style');
     const directiveStyleLast = markedDirectiveWrapper && style && right.at(-1)?.[0] !== 'style'
       && right.find(([key]) => key === 'aria-hidden')?.[1] === 'true' && left.at(-1)?.[0] === 'style';
@@ -46,7 +57,7 @@ export function verifySelectComponentsResponsiveSSRLayout(actualHTML: string, so
     for (const [index, child] of source.children.entries()) {
       const current = actual.children[index];
       if (typeof current === 'string' || typeof child === 'string') assert.deepEqual(current, child, label + '/' + index + ' literal text');
-      else compare(current, child, label + '/' + index);
+      else compare(current, child, label + '/' + index, { actual, source });
     }
   };
   source.contents.forEach((element, index) => compare(actual.contents[index], element, label + '/content' + index));

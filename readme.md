@@ -10618,8 +10618,32 @@ Svelte style-attribute hoist у responsive wrappers. Две точные пус�
 Браузерные сверки выбирают измеренный Original для точной версии Chromium 156 или 157:
 у двух INPUT-случаев изменились clientWidth/scrollWidth, поэтому для них сохранены
 отдельные полные записи Ant Design; прежние эталоны не заменены.
-tagRender, leading prefix, общая responsive-матрица
-и сложные сочетания style/hydration требуют дальнейшей сверки.
+[Корпус custom tagRender и leading prefix](tests/browser/fixtures/ant-design-select-components-responsive-tag-prefix-source-manifest.json)
+добавляет 2 owners, 18 действий, 20 CSR-точек и 2 SSR-состояния с обеими
+сериализациями React. Измеряется весь Fragment-тег; ведущий prefix находится
+вне Overflow. Проверяются изменение ширины контейнера, prefix и тегов,
+поиск, восстановление prefix и реальное удаление тега. Все DOM/CSSOM/geometry
+снимки двух Source-повторов совпадают; повторные и переставленные эквивалентные
+вызовы render-функций и их исходные raw graphs сохранены отдельно.
+Аргумент tagRender сохраняет семь собственных полей в порядке Source;
+у rest value/index/onClose присутствуют со значением undefined.
+При components.input закрытие custom tag откладывается через MessageChannel,
+поэтому onOpenChange(false) следует после удаления. Оба ports закрываются
+после вызова или отмены; удаление компонента отменяет pending callback.
+[Три проверки ресурсов](tests/browser/select-components-tag-close-safety.spec.ts)
+закрепляют обычное закрытие, отмену через Escape и немедленный unmount.
+[Отдельный Source counter](tests/browser/fixtures/ant-design-select-components-tag-close-key-counter-source-manifest.json)
+и [три клавиатурные регрессии](tests/browser/select-components-tag-close-key.spec.ts)
+проверяют отмену pending close при уже открытом меню: ArrowDown отменяет задачу,
+ArrowUp и Ctrl+ArrowDown позволяют ей завершиться. Оба Source-повтора сохраняются
+полностью; совпадает измеренная key/open/event-name проекция, полное равенство
+хронологии render calls не заявляется.
+Отдельные минифицированные client/SSR-сборки публичного пакета проходят
+те же 18 действий, 20 CSR-сравнений и 2 SSR-состояния без DOM/resources.
+После удаления обоих owners и через 1000 ms нет учитываемых observers,
+mutations, frames, timers или открытых ports; callback- и ref-ledgers тихие.
+Общая responsive-матрица, disabled/stale custom callbacks и сложные сочетания
+style/hydration требуют дальнейшей сверки.
 [Browser](tests/browser/select-components.spec.ts) и
 [SSR](tests/package/select-components.ssr.test.ts) проверяют replacement DOM, события,
 полные attrs/producer ledgers, refs и cleanup. Полный перенос Select/AutoComplete
@@ -10768,7 +10792,7 @@ MaxTagCount="responsive" измеряет доступную ширину, tags,
 TagRender — Svelte Snippet с SelectTagInfo. Обычный tag получает typed value,
 index, option disabled, closable и onClose(event?). Label — Snippet с уже усечённым
 текстом. Сводный tag получает isMaxTag=true, disabled=false, closable=false,
-без value/index/onClose; его label использует maxTagPlaceholder. Single игнорирует
+с собственными value/index/onClose: undefined; его label использует maxTagPlaceholder. Single игнорирует
 renderer. Исходные selected values и поля формы сохраняются.
 
 ```svelte

@@ -1,0 +1,2646 @@
+{
+  "provenance": {
+    "kind": "literal-projection-of-independent-Source-and-two-actual-Native-renderer-contours",
+    "SourceExpectedValuesDerivedFromNative": false,
+    "sourceProtocolSha256": "85bf9833e79305571a7dcbb5d15679fd652d36f88f9a5a8b50142762cc97a45d",
+    "sourceArchive": {
+      "path": "tests/browser/fixtures/ant-design-select-components-responsive-tag-prefix-reference.json.gz",
+      "bytes": 4115582,
+      "sha256": "326fcfec346d0601feb6f500edcad776abb23af44e7988d245feb515e8db1207"
+    },
+    "sourceInMaintainedCapture": {
+      "path": ".upstream/artifacts/select-components-responsive-tag-prefix-strict-second-captures/0.json.gz",
+      "bytes": 3932010,
+      "sha256": "7d9204a508fbb522085df7cf213d10aff4869ffbec905d0e2fe0604b9350127d"
+    },
+    "hmrCapture": {
+      "path": ".upstream/artifacts/select-components-responsive-tag-prefix-strict-second-captures/0.json.gz",
+      "bytes": 3932010,
+      "sha256": "7d9204a508fbb522085df7cf213d10aff4869ffbec905d0e2fe0604b9350127d"
+    },
+    "noHmrCapture": {
+      "path": ".upstream/artifacts/select-components-responsive-tag-prefix-native-after-first.json",
+      "bytes": 62813847,
+      "sha256": "0ef7e8d650815e3f5bb298722ec46cc68ff55897738d379936a4a378d1c1f510"
+    },
+    "independentPrimaryProof": {
+      "path": ".upstream/artifacts/select-components-responsive-tag-prefix-snippet-topology-proof/receipt.json",
+      "bytes": 22156,
+      "sha256": "45bdc7802d798c861fc2f23d6a0fbb8c1578f93adb3e87bedd1d399501ba7fd7"
+    },
+    "projection": "literal JSON nodes unchanged, identities/attrs/CSS/HTML/childNodes/boxes/metrics retained; surrounding archives remain complete"
+  },
+  "source": {
+    "normalLabel": {
+      "identity": 34,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 33,
+      "html": "<span data-custom-tag-label=\"a\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\">Alpha</span>",
+      "text": "Alpha",
+      "cssText": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "inlineProperties": [
+        {
+          "name": "flex-grow",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-shrink",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-basis",
+          "value": "auto",
+          "priority": ""
+        },
+        {
+          "name": "min-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "overflow-x",
+          "value": "hidden",
+          "priority": ""
+        },
+        {
+          "name": "overflow-y",
+          "value": "hidden",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "attributes": [
+        [
+          "data-custom-tag-label",
+          "a"
+        ],
+        [
+          "style",
+          "flex: 1 1 auto; min-width: 0px; overflow: hidden;"
+        ]
+      ],
+      "css": {
+        "display": "block",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "46px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "auto",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "1 1 auto",
+        "alignItems": "normal",
+        "order": "0",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden"
+      },
+      "box": {
+        "x": 344,
+        "y": 204,
+        "width": 46,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 204,
+          "width": 46,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 46,
+        "clientWidth": 46,
+        "scrollWidth": 46,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": "Alpha"
+        }
+      ]
+    },
+    "restLabel": {
+      "identity": 59,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 58,
+      "html": "<span data-custom-tag-label=\"rest\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\">+ 0 ...</span>",
+      "text": "+ 0 ...",
+      "cssText": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "inlineProperties": [
+        {
+          "name": "flex-grow",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-shrink",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-basis",
+          "value": "auto",
+          "priority": ""
+        },
+        {
+          "name": "min-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "overflow-x",
+          "value": "hidden",
+          "priority": ""
+        },
+        {
+          "name": "overflow-y",
+          "value": "hidden",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "attributes": [
+        [
+          "data-custom-tag-label",
+          "rest"
+        ],
+        [
+          "style",
+          "flex: 1 1 auto; min-width: 0px; overflow: hidden;"
+        ]
+      ],
+      "css": {
+        "display": "block",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "36px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "none",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "1 1 auto",
+        "alignItems": "normal",
+        "order": "0",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden"
+      },
+      "box": {
+        "x": 344,
+        "y": 216,
+        "width": 36,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 216,
+          "width": 36,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 36,
+        "clientWidth": 36,
+        "scrollWidth": 36,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": "+ 0 ..."
+        }
+      ]
+    },
+    "normalTag": {
+      "identity": 33,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 32,
+      "html": "<span data-custom-tag=\"a\" style=\"display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;\"><span data-custom-tag-label=\"a\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\">Alpha</span><button type=\"button\" data-custom-tag-close=\"a\" aria-label=\"Remove a\" style=\"display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;\">×</button></span>",
+      "text": "Alpha×",
+      "cssText": "display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "inlineProperties": [
+        {
+          "name": "display",
+          "value": "inline-flex",
+          "priority": ""
+        },
+        {
+          "name": "align-items",
+          "value": "center",
+          "priority": ""
+        },
+        {
+          "name": "width",
+          "value": "64px",
+          "priority": ""
+        },
+        {
+          "name": "height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "line-height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "font-size",
+          "value": "14px",
+          "priority": ""
+        },
+        {
+          "name": "white-space-collapse",
+          "value": "collapse",
+          "priority": ""
+        },
+        {
+          "name": "text-wrap-mode",
+          "value": "nowrap",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "attributes": [
+        [
+          "data-custom-tag",
+          "a"
+        ],
+        [
+          "style",
+          "display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;"
+        ]
+      ],
+      "css": {
+        "display": "inline-flex",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "64px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "auto",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "0 1 auto",
+        "alignItems": "center",
+        "order": "0",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible"
+      },
+      "box": {
+        "x": 344,
+        "y": 204,
+        "width": 64,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 204,
+          "width": 64,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 64,
+        "clientWidth": 64,
+        "scrollWidth": 64,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": 34,
+          "type": 1,
+          "tag": "SPAN",
+          "text": null
+        },
+        {
+          "identity": 35,
+          "type": 1,
+          "tag": "BUTTON",
+          "text": null
+        }
+      ]
+    },
+    "restTag": {
+      "identity": 58,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 57,
+      "html": "<span data-custom-tag=\"rest\" style=\"display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;\"><span data-custom-tag-label=\"rest\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\">+ 0 ...</span></span>",
+      "text": "+ 0 ...",
+      "cssText": "display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "inlineProperties": [
+        {
+          "name": "display",
+          "value": "inline-flex",
+          "priority": ""
+        },
+        {
+          "name": "align-items",
+          "value": "center",
+          "priority": ""
+        },
+        {
+          "name": "width",
+          "value": "36px",
+          "priority": ""
+        },
+        {
+          "name": "height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "line-height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "font-size",
+          "value": "14px",
+          "priority": ""
+        },
+        {
+          "name": "white-space-collapse",
+          "value": "collapse",
+          "priority": ""
+        },
+        {
+          "name": "text-wrap-mode",
+          "value": "nowrap",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "attributes": [
+        [
+          "data-custom-tag",
+          "rest"
+        ],
+        [
+          "style",
+          "display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;"
+        ]
+      ],
+      "css": {
+        "display": "inline-flex",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "36px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "none",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "0 1 auto",
+        "alignItems": "center",
+        "order": "0",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible"
+      },
+      "box": {
+        "x": 344,
+        "y": 216,
+        "width": 36,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 216,
+          "width": 36,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 36,
+        "clientWidth": 36,
+        "scrollWidth": 36,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": 59,
+          "type": 1,
+          "tag": "SPAN",
+          "text": null
+        }
+      ]
+    },
+    "button": {
+      "identity": 35,
+      "tag": "BUTTON",
+      "connected": true,
+      "parentIdentity": 33,
+      "html": "<button type=\"button\" data-custom-tag-close=\"a\" aria-label=\"Remove a\" style=\"display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;\">×</button>",
+      "text": "×",
+      "cssText": "display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;",
+      "inlineProperties": [
+        {
+          "name": "display",
+          "value": "inline-block",
+          "priority": ""
+        },
+        {
+          "name": "flex-grow",
+          "value": "0",
+          "priority": ""
+        },
+        {
+          "name": "flex-shrink",
+          "value": "0",
+          "priority": ""
+        },
+        {
+          "name": "flex-basis",
+          "value": "auto",
+          "priority": ""
+        },
+        {
+          "name": "box-sizing",
+          "value": "border-box",
+          "priority": ""
+        },
+        {
+          "name": "width",
+          "value": "18px",
+          "priority": ""
+        },
+        {
+          "name": "height",
+          "value": "18px",
+          "priority": ""
+        },
+        {
+          "name": "line-height",
+          "value": "18px",
+          "priority": ""
+        },
+        {
+          "name": "margin-top",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "margin-right",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "margin-bottom",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "margin-left",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-top",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-right",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-bottom",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-left",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-top-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-right-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-bottom-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-left-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-top-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-right-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-bottom-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-left-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-top-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-right-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-bottom-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-left-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-image-source",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-image-slice",
+          "value": "100%",
+          "priority": ""
+        },
+        {
+          "name": "border-image-width",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "border-image-outset",
+          "value": "0",
+          "priority": ""
+        },
+        {
+          "name": "border-image-repeat",
+          "value": "stretch",
+          "priority": ""
+        },
+        {
+          "name": "font-size",
+          "value": "10px",
+          "priority": ""
+        },
+        {
+          "name": "background-image",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-position-x",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-position-y",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-size",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-repeat",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-attachment",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-origin",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-clip",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-color",
+          "value": "transparent",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;",
+      "attributes": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-custom-tag-close",
+          "a"
+        ],
+        [
+          "aria-label",
+          "Remove a"
+        ],
+        [
+          "style",
+          "display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;"
+        ]
+      ],
+      "css": {
+        "display": "block",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "border-box",
+        "width": "18px",
+        "height": "18px",
+        "minWidth": "auto",
+        "maxWidth": "none",
+        "font": "10px / 18px Arial",
+        "fontFamily": "Arial",
+        "fontSize": "10px",
+        "lineHeight": "18px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "auto",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "0 0 auto",
+        "alignItems": "normal",
+        "order": "0",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible"
+      },
+      "box": {
+        "x": 390,
+        "y": 207,
+        "width": 18,
+        "height": 18
+      },
+      "clientRects": [
+        {
+          "x": 390,
+          "y": 207,
+          "width": 18,
+          "height": 18
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 18,
+        "clientWidth": 18,
+        "scrollWidth": 18,
+        "offsetHeight": 18,
+        "clientHeight": 18,
+        "scrollHeight": 18
+      },
+      "focused": false,
+      "value": "",
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": "×"
+        }
+      ]
+    }
+  },
+  "hmr": {
+    "normalLabel": {
+      "identity": 34,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 33,
+      "html": "<span data-custom-tag-label=\"a\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\"><!----><!---->Alpha<!----></span>",
+      "text": "Alpha",
+      "cssText": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "inlineProperties": [
+        {
+          "name": "flex-grow",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-shrink",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-basis",
+          "value": "auto",
+          "priority": ""
+        },
+        {
+          "name": "min-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "overflow-x",
+          "value": "hidden",
+          "priority": ""
+        },
+        {
+          "name": "overflow-y",
+          "value": "hidden",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "attributes": [
+        [
+          "data-custom-tag-label",
+          "a"
+        ],
+        [
+          "style",
+          "flex: 1 1 auto; min-width: 0px; overflow: hidden;"
+        ]
+      ],
+      "css": {
+        "display": "block",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "46px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "auto",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "1 1 auto",
+        "alignItems": "normal",
+        "order": "0",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden"
+      },
+      "box": {
+        "x": 344,
+        "y": 204,
+        "width": 46,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 204,
+          "width": 46,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 46,
+        "clientWidth": 46,
+        "scrollWidth": 46,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": "Alpha"
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        }
+      ]
+    },
+    "restLabel": {
+      "identity": 59,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 58,
+      "html": "<span data-custom-tag-label=\"rest\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\"><!---->+ 0 ...<!----></span>",
+      "text": "+ 0 ...",
+      "cssText": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "inlineProperties": [
+        {
+          "name": "flex-grow",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-shrink",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-basis",
+          "value": "auto",
+          "priority": ""
+        },
+        {
+          "name": "min-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "overflow-x",
+          "value": "hidden",
+          "priority": ""
+        },
+        {
+          "name": "overflow-y",
+          "value": "hidden",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "attributes": [
+        [
+          "data-custom-tag-label",
+          "rest"
+        ],
+        [
+          "style",
+          "flex: 1 1 auto; min-width: 0px; overflow: hidden;"
+        ]
+      ],
+      "css": {
+        "display": "block",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "36px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "none",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "1 1 auto",
+        "alignItems": "normal",
+        "order": "0",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden"
+      },
+      "box": {
+        "x": 344,
+        "y": 216,
+        "width": 36,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 216,
+          "width": 36,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 36,
+        "clientWidth": 36,
+        "scrollWidth": 36,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": "+ 0 ..."
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        }
+      ]
+    },
+    "normalTag": {
+      "identity": 33,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 32,
+      "html": "<span data-custom-tag=\"a\" style=\"display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;\"><span data-custom-tag-label=\"a\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\"><!----><!---->Alpha<!----></span><!----><!----><button type=\"button\" data-custom-tag-close=\"a\" aria-label=\"Remove a\" style=\"display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;\">×</button><!----></span>",
+      "text": "Alpha×",
+      "cssText": "display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "inlineProperties": [
+        {
+          "name": "display",
+          "value": "inline-flex",
+          "priority": ""
+        },
+        {
+          "name": "align-items",
+          "value": "center",
+          "priority": ""
+        },
+        {
+          "name": "width",
+          "value": "64px",
+          "priority": ""
+        },
+        {
+          "name": "height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "line-height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "font-size",
+          "value": "14px",
+          "priority": ""
+        },
+        {
+          "name": "white-space-collapse",
+          "value": "collapse",
+          "priority": ""
+        },
+        {
+          "name": "text-wrap-mode",
+          "value": "nowrap",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "attributes": [
+        [
+          "data-custom-tag",
+          "a"
+        ],
+        [
+          "style",
+          "display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;"
+        ]
+      ],
+      "css": {
+        "display": "inline-flex",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "64px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "auto",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "0 1 auto",
+        "alignItems": "center",
+        "order": "0",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible"
+      },
+      "box": {
+        "x": 344,
+        "y": 204,
+        "width": 64,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 204,
+          "width": 64,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 64,
+        "clientWidth": 64,
+        "scrollWidth": 64,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": 34,
+          "type": 1,
+          "tag": "SPAN",
+          "text": null
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": 35,
+          "type": 1,
+          "tag": "BUTTON",
+          "text": null
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        }
+      ]
+    },
+    "restTag": {
+      "identity": 58,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 57,
+      "html": "<span data-custom-tag=\"rest\" style=\"display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;\"><span data-custom-tag-label=\"rest\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\"><!---->+ 0 ...<!----></span><!----><!----><!----></span>",
+      "text": "+ 0 ...",
+      "cssText": "display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "inlineProperties": [
+        {
+          "name": "display",
+          "value": "inline-flex",
+          "priority": ""
+        },
+        {
+          "name": "align-items",
+          "value": "center",
+          "priority": ""
+        },
+        {
+          "name": "width",
+          "value": "36px",
+          "priority": ""
+        },
+        {
+          "name": "height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "line-height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "font-size",
+          "value": "14px",
+          "priority": ""
+        },
+        {
+          "name": "white-space-collapse",
+          "value": "collapse",
+          "priority": ""
+        },
+        {
+          "name": "text-wrap-mode",
+          "value": "nowrap",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "attributes": [
+        [
+          "data-custom-tag",
+          "rest"
+        ],
+        [
+          "style",
+          "display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;"
+        ]
+      ],
+      "css": {
+        "display": "inline-flex",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "36px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "none",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "0 1 auto",
+        "alignItems": "center",
+        "order": "0",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible"
+      },
+      "box": {
+        "x": 344,
+        "y": 216,
+        "width": 36,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 216,
+          "width": 36,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 36,
+        "clientWidth": 36,
+        "scrollWidth": 36,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": 59,
+          "type": 1,
+          "tag": "SPAN",
+          "text": null
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        }
+      ]
+    },
+    "button": {
+      "identity": 35,
+      "tag": "BUTTON",
+      "connected": true,
+      "parentIdentity": 33,
+      "html": "<button type=\"button\" data-custom-tag-close=\"a\" aria-label=\"Remove a\" style=\"display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;\">×</button>",
+      "text": "×",
+      "cssText": "display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;",
+      "inlineProperties": [
+        {
+          "name": "display",
+          "value": "inline-block",
+          "priority": ""
+        },
+        {
+          "name": "flex-grow",
+          "value": "0",
+          "priority": ""
+        },
+        {
+          "name": "flex-shrink",
+          "value": "0",
+          "priority": ""
+        },
+        {
+          "name": "flex-basis",
+          "value": "auto",
+          "priority": ""
+        },
+        {
+          "name": "box-sizing",
+          "value": "border-box",
+          "priority": ""
+        },
+        {
+          "name": "width",
+          "value": "18px",
+          "priority": ""
+        },
+        {
+          "name": "height",
+          "value": "18px",
+          "priority": ""
+        },
+        {
+          "name": "line-height",
+          "value": "18px",
+          "priority": ""
+        },
+        {
+          "name": "margin-top",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "margin-right",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "margin-bottom",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "margin-left",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-top",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-right",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-bottom",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-left",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-top-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-right-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-bottom-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-left-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-top-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-right-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-bottom-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-left-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-top-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-right-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-bottom-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-left-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-image-source",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-image-slice",
+          "value": "100%",
+          "priority": ""
+        },
+        {
+          "name": "border-image-width",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "border-image-outset",
+          "value": "0",
+          "priority": ""
+        },
+        {
+          "name": "border-image-repeat",
+          "value": "stretch",
+          "priority": ""
+        },
+        {
+          "name": "font-size",
+          "value": "10px",
+          "priority": ""
+        },
+        {
+          "name": "background-image",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-position-x",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-position-y",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-size",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-repeat",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-attachment",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-origin",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-clip",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-color",
+          "value": "transparent",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;",
+      "attributes": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-custom-tag-close",
+          "a"
+        ],
+        [
+          "aria-label",
+          "Remove a"
+        ],
+        [
+          "style",
+          "display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;"
+        ]
+      ],
+      "css": {
+        "display": "block",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "border-box",
+        "width": "18px",
+        "height": "18px",
+        "minWidth": "auto",
+        "maxWidth": "none",
+        "font": "10px / 18px Arial",
+        "fontFamily": "Arial",
+        "fontSize": "10px",
+        "lineHeight": "18px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "auto",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "0 0 auto",
+        "alignItems": "normal",
+        "order": "0",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible"
+      },
+      "box": {
+        "x": 390,
+        "y": 207,
+        "width": 18,
+        "height": 18
+      },
+      "clientRects": [
+        {
+          "x": 390,
+          "y": 207,
+          "width": 18,
+          "height": 18
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 18,
+        "clientWidth": 18,
+        "scrollWidth": 18,
+        "offsetHeight": 18,
+        "clientHeight": 18,
+        "scrollHeight": 18
+      },
+      "focused": false,
+      "value": "",
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": "×"
+        }
+      ]
+    }
+  },
+  "noHmr": {
+    "normalLabel": {
+      "identity": 34,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 33,
+      "html": "<span data-custom-tag-label=\"a\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\"><!---->Alpha<!----></span>",
+      "text": "Alpha",
+      "cssText": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "inlineProperties": [
+        {
+          "name": "flex-grow",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-shrink",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-basis",
+          "value": "auto",
+          "priority": ""
+        },
+        {
+          "name": "min-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "overflow-x",
+          "value": "hidden",
+          "priority": ""
+        },
+        {
+          "name": "overflow-y",
+          "value": "hidden",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "attributes": [
+        [
+          "data-custom-tag-label",
+          "a"
+        ],
+        [
+          "style",
+          "flex: 1 1 auto; min-width: 0px; overflow: hidden;"
+        ]
+      ],
+      "css": {
+        "display": "block",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "46px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "auto",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "1 1 auto",
+        "alignItems": "normal",
+        "order": "0",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden"
+      },
+      "box": {
+        "x": 344,
+        "y": 204,
+        "width": 46,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 204,
+          "width": 46,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 46,
+        "clientWidth": 46,
+        "scrollWidth": 46,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": "Alpha"
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        }
+      ]
+    },
+    "restLabel": {
+      "identity": 59,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 58,
+      "html": "<span data-custom-tag-label=\"rest\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\"><!---->+ 0 ...<!----></span>",
+      "text": "+ 0 ...",
+      "cssText": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "inlineProperties": [
+        {
+          "name": "flex-grow",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-shrink",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "flex-basis",
+          "value": "auto",
+          "priority": ""
+        },
+        {
+          "name": "min-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "overflow-x",
+          "value": "hidden",
+          "priority": ""
+        },
+        {
+          "name": "overflow-y",
+          "value": "hidden",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "flex: 1 1 auto; min-width: 0px; overflow: hidden;",
+      "attributes": [
+        [
+          "data-custom-tag-label",
+          "rest"
+        ],
+        [
+          "style",
+          "flex: 1 1 auto; min-width: 0px; overflow: hidden;"
+        ]
+      ],
+      "css": {
+        "display": "block",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "36px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "none",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "1 1 auto",
+        "alignItems": "normal",
+        "order": "0",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden"
+      },
+      "box": {
+        "x": 344,
+        "y": 216,
+        "width": 36,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 216,
+          "width": 36,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 36,
+        "clientWidth": 36,
+        "scrollWidth": 36,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": "+ 0 ..."
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        }
+      ]
+    },
+    "normalTag": {
+      "identity": 33,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 32,
+      "html": "<span data-custom-tag=\"a\" style=\"display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;\"><span data-custom-tag-label=\"a\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\"><!---->Alpha<!----></span><!----><!----><button type=\"button\" data-custom-tag-close=\"a\" aria-label=\"Remove a\" style=\"display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;\">×</button><!----></span>",
+      "text": "Alpha×",
+      "cssText": "display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "inlineProperties": [
+        {
+          "name": "display",
+          "value": "inline-flex",
+          "priority": ""
+        },
+        {
+          "name": "align-items",
+          "value": "center",
+          "priority": ""
+        },
+        {
+          "name": "width",
+          "value": "64px",
+          "priority": ""
+        },
+        {
+          "name": "height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "line-height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "font-size",
+          "value": "14px",
+          "priority": ""
+        },
+        {
+          "name": "white-space-collapse",
+          "value": "collapse",
+          "priority": ""
+        },
+        {
+          "name": "text-wrap-mode",
+          "value": "nowrap",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "attributes": [
+        [
+          "data-custom-tag",
+          "a"
+        ],
+        [
+          "style",
+          "display: inline-flex; align-items: center; width: 64px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;"
+        ]
+      ],
+      "css": {
+        "display": "inline-flex",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "64px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "auto",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "0 1 auto",
+        "alignItems": "center",
+        "order": "0",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible"
+      },
+      "box": {
+        "x": 344,
+        "y": 204,
+        "width": 64,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 204,
+          "width": 64,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 64,
+        "clientWidth": 64,
+        "scrollWidth": 64,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": 34,
+          "type": 1,
+          "tag": "SPAN",
+          "text": null
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": 35,
+          "type": 1,
+          "tag": "BUTTON",
+          "text": null
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        }
+      ]
+    },
+    "restTag": {
+      "identity": 58,
+      "tag": "SPAN",
+      "connected": true,
+      "parentIdentity": 57,
+      "html": "<span data-custom-tag=\"rest\" style=\"display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;\"><span data-custom-tag-label=\"rest\" style=\"flex: 1 1 auto; min-width: 0px; overflow: hidden;\"><!---->+ 0 ...<!----></span><!----><!----><!----></span>",
+      "text": "+ 0 ...",
+      "cssText": "display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "inlineProperties": [
+        {
+          "name": "display",
+          "value": "inline-flex",
+          "priority": ""
+        },
+        {
+          "name": "align-items",
+          "value": "center",
+          "priority": ""
+        },
+        {
+          "name": "width",
+          "value": "36px",
+          "priority": ""
+        },
+        {
+          "name": "height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "line-height",
+          "value": "24px",
+          "priority": ""
+        },
+        {
+          "name": "font-size",
+          "value": "14px",
+          "priority": ""
+        },
+        {
+          "name": "white-space-collapse",
+          "value": "collapse",
+          "priority": ""
+        },
+        {
+          "name": "text-wrap-mode",
+          "value": "nowrap",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;",
+      "attributes": [
+        [
+          "data-custom-tag",
+          "rest"
+        ],
+        [
+          "style",
+          "display: inline-flex; align-items: center; width: 36px; height: 24px; line-height: 24px; font-size: 14px; white-space: nowrap;"
+        ]
+      ],
+      "css": {
+        "display": "inline-flex",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "content-box",
+        "width": "36px",
+        "height": "24px",
+        "minWidth": "0px",
+        "maxWidth": "none",
+        "font": "14px / 24px -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "14px",
+        "lineHeight": "24px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "none",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "0 1 auto",
+        "alignItems": "center",
+        "order": "0",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible"
+      },
+      "box": {
+        "x": 344,
+        "y": 216,
+        "width": 36,
+        "height": 24
+      },
+      "clientRects": [
+        {
+          "x": 344,
+          "y": 216,
+          "width": 36,
+          "height": 24
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 36,
+        "clientWidth": 36,
+        "scrollWidth": 36,
+        "offsetHeight": 24,
+        "clientHeight": 24,
+        "scrollHeight": 24
+      },
+      "focused": false,
+      "value": null,
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": 59,
+          "type": 1,
+          "tag": "SPAN",
+          "text": null
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": ""
+        },
+        {
+          "identity": null,
+          "type": 8,
+          "tag": null,
+          "text": ""
+        }
+      ]
+    },
+    "button": {
+      "identity": 35,
+      "tag": "BUTTON",
+      "connected": true,
+      "parentIdentity": 33,
+      "html": "<button type=\"button\" data-custom-tag-close=\"a\" aria-label=\"Remove a\" style=\"display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;\">×</button>",
+      "text": "×",
+      "cssText": "display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;",
+      "inlineProperties": [
+        {
+          "name": "display",
+          "value": "inline-block",
+          "priority": ""
+        },
+        {
+          "name": "flex-grow",
+          "value": "0",
+          "priority": ""
+        },
+        {
+          "name": "flex-shrink",
+          "value": "0",
+          "priority": ""
+        },
+        {
+          "name": "flex-basis",
+          "value": "auto",
+          "priority": ""
+        },
+        {
+          "name": "box-sizing",
+          "value": "border-box",
+          "priority": ""
+        },
+        {
+          "name": "width",
+          "value": "18px",
+          "priority": ""
+        },
+        {
+          "name": "height",
+          "value": "18px",
+          "priority": ""
+        },
+        {
+          "name": "line-height",
+          "value": "18px",
+          "priority": ""
+        },
+        {
+          "name": "margin-top",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "margin-right",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "margin-bottom",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "margin-left",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-top",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-right",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-bottom",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "padding-left",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-top-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-right-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-bottom-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-left-width",
+          "value": "0px",
+          "priority": ""
+        },
+        {
+          "name": "border-top-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-right-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-bottom-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-left-style",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-top-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-right-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-bottom-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-left-color",
+          "value": "currentcolor",
+          "priority": ""
+        },
+        {
+          "name": "border-image-source",
+          "value": "none",
+          "priority": ""
+        },
+        {
+          "name": "border-image-slice",
+          "value": "100%",
+          "priority": ""
+        },
+        {
+          "name": "border-image-width",
+          "value": "1",
+          "priority": ""
+        },
+        {
+          "name": "border-image-outset",
+          "value": "0",
+          "priority": ""
+        },
+        {
+          "name": "border-image-repeat",
+          "value": "stretch",
+          "priority": ""
+        },
+        {
+          "name": "font-size",
+          "value": "10px",
+          "priority": ""
+        },
+        {
+          "name": "background-image",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-position-x",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-position-y",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-size",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-repeat",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-attachment",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-origin",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-clip",
+          "value": "initial",
+          "priority": ""
+        },
+        {
+          "name": "background-color",
+          "value": "transparent",
+          "priority": ""
+        }
+      ],
+      "styleAttribute": "display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;",
+      "attributes": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-custom-tag-close",
+          "a"
+        ],
+        [
+          "aria-label",
+          "Remove a"
+        ],
+        [
+          "style",
+          "display: inline-block; flex: 0 0 auto; box-sizing: border-box; width: 18px; height: 18px; line-height: 18px; margin: 0px; padding: 0px; border: 0px; font-size: 10px; background: transparent;"
+        ]
+      ],
+      "css": {
+        "display": "block",
+        "position": "static",
+        "top": "auto",
+        "left": "auto",
+        "insetInlineStart": "auto",
+        "insetInlineEnd": "auto",
+        "boxSizing": "border-box",
+        "width": "18px",
+        "height": "18px",
+        "minWidth": "auto",
+        "maxWidth": "none",
+        "font": "10px / 18px Arial",
+        "fontFamily": "Arial",
+        "fontSize": "10px",
+        "lineHeight": "18px",
+        "whiteSpace": "nowrap",
+        "verticalAlign": "baseline",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "visibility": "visible",
+        "pointerEvents": "auto",
+        "padding": "0px",
+        "margin": "0px",
+        "gap": "normal",
+        "flex": "0 0 auto",
+        "alignItems": "normal",
+        "order": "0",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible"
+      },
+      "box": {
+        "x": 390,
+        "y": 207,
+        "width": 18,
+        "height": 18
+      },
+      "clientRects": [
+        {
+          "x": 390,
+          "y": 207,
+          "width": 18,
+          "height": 18
+        }
+      ],
+      "metrics": {
+        "offsetWidth": 18,
+        "clientWidth": 18,
+        "scrollWidth": 18,
+        "offsetHeight": 18,
+        "clientHeight": 18,
+        "scrollHeight": 18
+      },
+      "focused": false,
+      "value": "",
+      "defaultValue": null,
+      "selection": null,
+      "childNodes": [
+        {
+          "identity": null,
+          "type": 3,
+          "tag": null,
+          "text": "×"
+        }
+      ]
+    }
+  }
+}

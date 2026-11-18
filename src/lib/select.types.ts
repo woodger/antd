@@ -137,7 +137,7 @@ export interface SelectOmittedTag<Value extends string | number = string, Label 
 export type SelectTagPlaceholder<Value extends string | number = string> = string | number
   | boolean | null | Snippet<[SelectOmittedTag<Value>[]]>;
 
-/** Label — Snippet с итоговым текстом; summary не имеет value/index/onClose. */
+/** Label — Snippet с итоговым текстом; summary содержит value/index/onClose: undefined. */
 export type SelectTagInfo<Value extends string | number = string> = { label: Snippet } & ({
   isMaxTag: false;
   value: Value;

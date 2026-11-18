@@ -115,6 +115,7 @@ function sourceFocusGraph(value: unknown, encodedValue: unknown) {
   type.value = type.value === 'focus' ? 'focusin' : 'focusout';
   return graph;
 }
+export { focusEvent as selectComponentsFocusEvent, sourceFocusGraph as selectComponentsSourceFocusGraph };
 const alias: Record<string, string> = { class: 'className', readonly: 'readOnly', tabindex: 'tabIndex', maxlength: 'maxLength',
   autofocus: 'autoFocus', autocomplete: 'autoComplete', oninput: 'onChange', onkeydown: 'onKeyDown', onkeyup: 'onKeyUp',
   onfocusin: 'onFocus', onfocusout: 'onBlur', onblur: 'onBlur', onclick: 'onClick', onpaste: 'onPaste',
