@@ -14,6 +14,7 @@ import type { SelectComponentsModesDOM, SelectComponentsModesNode } from './sele
 import type { OwnStyleInitCase, OwnStyleInitPoint, OwnStyleInitObservation, SelectComponentsOwnStyleAction } from './select-components-own-style-init-reference';
 
 export const ownStyleSSRMarker = 'data-ant-native-select-component-ssr';
+export type OwnStyleBuildMode = 'development' | 'production';
 interface RefRow { slot: 'input'; event: 'attach' | 'detach'; tag: string | null; observation: OwnStyleRefObservation | null }
 export interface NativeOwnStyleOwner extends Omit<NativeComponentsOwner, 'componentObservations'> {
   componentObservations?: NativeComponentsOwner['componentObservations'];
@@ -193,34 +194,45 @@ export function ownStyleHydratedWrapperIcons(actual: NativeOwnStylePoint, source
   assert.equal([...ordinals.values()].reduce((sum, value) => sum + value, 0), candidates.length, label + ' every Source wrapper remains present');
   return { ...actual.icons, layout };
 }
+/** Exact two-build class contract for these frozen ordinary popup owners.
+ * Source remains its measured DEV build; only Native's explicitly selected
+ * build prefix changes. No class, hash or class order is normalized. */
+export function verifyOwnStylePopupClassNames(actual: readonly string[], source: readonly string[], control: 'select' | 'autocomplete', label: string, buildMode: OwnStyleBuildMode = 'development') {
+  assert(buildMode === 'development' || buildMode === 'production', label + ' explicit measured Native build mode');
+  const sourceClasses = ['ant-select-dropdown', 'select-icons', 'ant-select-css-var', 'css-dev-only-do-not-override-1y106cm', 'ant-select-dropdown-placement-bottomLeft'];
+  assert.deepEqual(source, sourceClasses, label + ' exact measured Source popup classes/order');
+  // createDesignTokenState changes only this prefix between the two builds.
+  const nativeHashClass = buildMode === 'development' ? 'css-dev-only-do-not-override-1y106cm' : 'css-1y106cm';
+  const nativeClasses = control === 'select' ? ['popup', 'ant-select-dropdown', 'ant-select-css-var', 'ant-select-source-popup',
+    'ant-select-dropdown-placement-bottomLeft', 'select-icons', nativeHashClass]
+    : ['popup', 'ant-select-dropdown', 'ant-select-css-var', 'select-icons', nativeHashClass,
+      'ant-select-source-popup', 'ant-select-dropdown-placement-bottomLeft'];
+  assert.deepEqual(actual, nativeClasses, label + ' exact measured Native popup classes/order for ' + buildMode);
+}
 /** Only the two frozen ordinary owners' existing popup contour is covered.
  * The missing Source-only outer DIV has no invented Native node/identity.
  * Every remaining physical role, ordered attr, CSS property and box is checked. */
-export function verifyOwnStylePopupContour(actual: NativeOwnStylePoint, source: OwnStyleInitPoint, control: 'select' | 'autocomplete', label: string) {
+export function verifyOwnStylePopupContour(actual: NativeOwnStylePoint, source: OwnStyleInitPoint, control: 'select' | 'autocomplete', label: string, buildMode: OwnStyleBuildMode = 'development') {
   if (actual.details.popup || source.details.popup) {
     const topology = actual.popupTopology?.popup; assert(topology, label + ' actual read-only popup topology');
     assert.equal(topology.identity, actual.details.popup?.identity); assert.equal(topology.popoverAttribute, 'manual');
     assert.equal(topology.popoverProperty, 'manual'); assert.equal(topology.popoverOpen, true);
     assert.equal(topology.hidden, false); assert.equal(topology.connected, true);
   }
-  return verifyOwnStyleRecordedPopupContour(actual, source, control, label);
+  return verifyOwnStyleRecordedPopupContour(actual, source, control, label, buildMode);
 }
 /** Pure recorded DOM/CSS/layout comparison also supports the immutable pre-fix
  * captures, which did not measure :popover-open metadata. Live verification
  * always enters through verifyOwnStylePopupContour above. No metadata is inferred. */
-export function verifyOwnStyleRecordedPopupContour(actual: NativeOwnStylePoint, source: OwnStyleInitPoint, control: 'select' | 'autocomplete', label: string) {
+export function verifyOwnStyleRecordedPopupContour(actual: NativeOwnStylePoint, source: OwnStyleInitPoint, control: 'select' | 'autocomplete', label: string, buildMode: OwnStyleBuildMode = 'development') {
   const pairs = new Map<number, number>(), projected = new Map<number, OwnStyleNode>();
   const a = actual.details.popup, b = source.details.popup;
   assert.equal(Boolean(a), Boolean(b), label + ' actual popup presence');
   if (!a || !b) return { pairs, projected, sourceOnlyOuter: undefined };
   assert.equal(source.owner.open, true); assert.equal(actual.owner.open, true);
   assert.equal(a.tag, 'DIV'); assert.equal(b.tag, 'DIV');
-  const sourceClasses = ['ant-select-dropdown', 'select-icons', 'ant-select-css-var', 'css-dev-only-do-not-override-1y106cm', 'ant-select-dropdown-placement-bottomLeft'];
-  assert.deepEqual(nodeClasses(b), sourceClasses, label + ' exact measured Source popup classes/order');
-  const nativeClasses = control === 'select' ? ['popup', 'ant-select-dropdown', 'ant-select-css-var', 'ant-select-source-popup',
-    'ant-select-dropdown-placement-bottomLeft', 'select-icons', 'css-dev-only-do-not-override-1y106cm']
-    : ['popup', 'ant-select-dropdown', 'ant-select-css-var', 'select-icons', 'css-dev-only-do-not-override-1y106cm',
-      'ant-select-source-popup', 'ant-select-dropdown-placement-bottomLeft'];
+  const sourceClasses = nodeClasses(b), nativeClasses = nodeClasses(a);
+  verifyOwnStylePopupClassNames(nativeClasses, sourceClasses, control, label, buildMode);
   const nativeAttrs = control === 'select' ? [['data-ant-select-dropdown', 'true'], ['data-ant-select-prefix', 'ant-select'],
     ['data-ant-select-root-prefix', 'ant'], ['data-ant-select-component-popup', ''], ['data-ant-select-source-popup', 'true'],
     ['popover', 'manual'], ['dir', 'ltr'], ['class', nativeClasses.join(' ')], ['aria-label', 'Icon value']]
@@ -310,7 +322,7 @@ export function verifyOwnStyleRecordedPopupContour(actual: NativeOwnStylePoint, 
 /** Compare existing Source DOM roles using the inherited Mode/AC comparators.
  * Numeric observer IDs are local graph identities, never cross-framework IDs.
  * Full original HTML/childNodes/ancestors remain in each raw attachment. */
-export function verifyOwnStylePoint(actual: NativeOwnStylePoint, source: OwnStyleInitPoint, entry: OwnStyleInitCase, label: string): string[] {
+export function verifyOwnStylePoint(actual: NativeOwnStylePoint, source: OwnStyleInitPoint, entry: OwnStyleInitCase, label: string, buildMode: OwnStyleBuildMode = 'development'): string[] {
   const failures: string[] = [], pairs = new Map<number, number>();
   const check = (name: string, work: () => void) => { try { work(); } catch (error) { failures.push(label + '/' + name + ': ' + String(error)); } };
   const native = { ...actual, icons: ownStyleHydratedWrapperIcons(actual, source, entry, label),
@@ -336,7 +348,7 @@ export function verifyOwnStylePoint(actual: NativeOwnStylePoint, source: OwnStyl
   }
   let popupContour: ReturnType<typeof verifyOwnStylePopupContour> | undefined;
   check('exact-inherited-popup-contour', () => {
-    popupContour = verifyOwnStylePopupContour(actual, source, entry.sample.control, label + '/default-popup');
+    popupContour = verifyOwnStylePopupContour(actual, source, entry.sample.control, label + '/default-popup', buildMode);
     for (const [sourceId, nativeId] of popupContour.pairs) {
       const old = pairs.get(sourceId); assert(old === undefined || old === nativeId, label + ' existing Source role keeps the same real Native identity');
       pairs.set(sourceId, nativeId);

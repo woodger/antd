@@ -10584,6 +10584,12 @@ DOM-строка `context.attributes.style` и CSS-string API сохранены
 авторских inline declarations и DOM-атрибутов остаётся строгим. Оба полных raw
 варианта сохранены. Прежние Native light scheme, private token aliases и
 [исключение deprecated seed vars](docs/reference/design-tokens.md) учитываются отдельно.
+Отдельные минифицированные клиентская и SSR-сборки публичного пакета проверены
+на тех же 8 путях и 96 действиях. Два SSR-состояния не обращаются к DOM;
+после удаления и через 1000 ms все учитываемые observers, timers, frames и ports
+освобождены. [Проверка режима сборки](tests/package/select-components-own-style-popup-build-mode.test.ts)
+явно различает фиксированные dev/prod hash-классы popup; остальные классы,
+их порядок, CSSOM и геометрия проверяются по прежнему эталону.
 Поиск UID этой ветки не охватывает закрытый Shadow DOM; независимые SSR-корни
 в одном документе должны иметь разные Svelte `idPrefix`. Общая гидратация family
 остаётся partial.
