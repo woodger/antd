@@ -137,6 +137,8 @@ interface PopupAlignmentGeometry {
 export function getPopupAlignment(input: PopupAlignmentGeometry & {
   placement: PopupPlacement;
   pointAtCenter: boolean;
+  htmlRegion?: PopupSourceAlign['htmlRegion'];
+  scroll?: PopupArea;
   arrowWidth?: number;
   offset?: number;
   radius?: number;
@@ -149,7 +151,10 @@ export function getPopupAlignment(input: PopupAlignmentGeometry & {
     input.radius,
     input.autoAdjustOverflow
   );
-  const initial: PopupAlign = placements[input.placement] ?? {};
+  const initial: PopupAlign = {
+    ...placements[input.placement],
+    ...(input.htmlRegion ? { htmlRegion: input.htmlRegion } : {})
+  };
   const position = getPopupPosition({
     ...input,
     placements,

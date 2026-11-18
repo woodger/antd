@@ -188,11 +188,19 @@
         previousPlacement = placement;
         const right = viewport.x + viewport.width;
         const bottom = viewport.y + viewport.height;
+        const documentElement = source.ownerDocument.documentElement;
         const result = getPopupAlignment({
           target,
           popup: { left: 0, top: 0, width: bounds.width, height: bounds.height },
           mirror: { right, bottom },
           visible: { left: viewport.x, top: viewport.y, right, bottom },
+          htmlRegion: 'visibleFirst',
+          scroll: {
+            left: -documentElement.scrollLeft,
+            top: -documentElement.scrollTop,
+            right: documentElement.scrollWidth - documentElement.scrollLeft,
+            bottom: documentElement.scrollHeight - documentElement.scrollTop
+          },
           scaleX: 1,
           scaleY: 1,
           placement,

@@ -47,6 +47,23 @@ describe('getPopupAlignment', () => {
     expect(getPopupArrowStyle(result)).toBe('');
     expect(getPopupArrowStyle(align('bottom'))).toContain('top:0');
   });
+
+  it.each([[343.625, 387], [344, 388]])('retains a bottom corner at y=%s when the document offers more scroll area', (top, popupTop) => {
+    for (const scrollTop of [0, 200]) {
+      const result = getPopupAlignment({
+        target: { left: 480, top: top - scrollTop, width: 103.875, height: 32 },
+        popup: { left: 0, top: 0, width: 258, height: 365 },
+        mirror: { right: 1280, bottom: 720 },
+        visible: { left: 0, top: 0, right: 1280, bottom: 720 },
+        scroll: { left: 0, top: -scrollTop, right: 1280, bottom: 1400 - scrollTop },
+        htmlRegion: 'visibleFirst',
+        scaleX: 1, scaleY: 1, placement: 'bottomLeft', pointAtCenter: false
+      });
+
+      expect(result.placement).toBe('bottomLeft');
+      expect(result.y).toBe(popupTop - scrollTop);
+    }
+  });
 });
 
 function position(align: PopupSourceAlign, target: PopupRect = {

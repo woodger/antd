@@ -1876,6 +1876,9 @@ Getter не вызывается до первого открытия. Escape в
 popup. DestroyOnHidden управляет сохранением черновиков;
 portal, listeners и timers очищаются. Panel изолирует FormItem и Compact. Как upstream,
 ColorPicker не добавляет скрытое поле в FormData; значение передаётся callbacks.
+Размещение учитывает прокручиваемую область документа через `visibleFirst`.
+Как в React 6.6.8, высокая панель может выходить за границу окна; нижняя группа
+палитры в таком случае становится доступной после прокрутки страницы.
 
 `ConfigProvider.theme.components.ColorPicker` поддерживает alias overrides и
 component algorithms, dark/compact, cssVar prefix и вложенные темы. Собственных

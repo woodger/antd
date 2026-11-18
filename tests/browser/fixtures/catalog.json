@@ -1021,6 +1021,11 @@
     "root": "color-picker-fixture"
   },
   {
+    "id": "color-picker-viewport",
+    "module": "./ColorPickerViewportFixtures.svelte",
+    "root": "color-picker-viewport-fixture"
+  },
+  {
     "id": "input-number-features",
     "module": "./InputNumberFeaturesFixtures.svelte",
     "root": "input-number-features-fixture"
