@@ -181,6 +181,7 @@
       },
       get autoAdjustOverflow() { return props.autoAdjustOverflow !== false; },
       allowZeroSize: () => untrack(() => designTheme.enabled),
+      allowOffscreenAnchor: true,
       maxWidth: '100vw',
       getPosition(target, bounds, viewport) {
         const placement = props.placement ?? 'bottomLeft';
@@ -189,6 +190,8 @@
         const right = viewport.x + viewport.width;
         const bottom = viewport.y + viewport.height;
         const documentElement = source.ownerDocument.documentElement;
+        const view = source.ownerDocument.defaultView!;
+        const fixed = view.getComputedStyle(surface).position === 'fixed';
         const result = getPopupAlignment({
           target,
           popup: { left: 0, top: 0, width: bounds.width, height: bounds.height },
@@ -214,8 +217,10 @@
         arrowStyle = getPopupArrowStyle(result);
         const point = result.align.points?.[0];
         return {
-          left: point?.[1] === 'r' ? right - bounds.width - result.right : result.x,
-          top: point?.[0] === 'b' ? bottom - bounds.height - result.bottom : result.y,
+          left: (point?.[1] === 'r' ? right - bounds.width - result.right : result.x)
+            + (fixed ? 0 : view.scrollX),
+          top: (point?.[0] === 'b' ? bottom - bounds.height - result.bottom : result.y)
+            + (fixed ? 0 : view.scrollY),
           arrowX: result.arrowX,
           arrowY: result.arrowY,
           placement: actualPlacement.replace(/(?:Left|Right|Top|Bottom)$/, '')
@@ -287,7 +292,7 @@
 </script>
 
 <style>
-  .color-picker-popup { position: fixed; inset: auto; margin: 0; padding: 0; border: 0; background: transparent; overflow: visible; }
+  .color-picker-popup { position: absolute; inset: auto; margin: 0; padding: 0; border: 0; background: transparent; overflow: visible; }
   .color-picker-popup[hidden], .color-picker-popup:not(:popover-open) { display: none; }
   .color-picker-surface { max-width: calc(100vw - 16px); }
   .color-picker-button { font: inherit; color: inherit; text-align: start; line-height: normal; }

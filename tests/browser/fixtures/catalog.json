@@ -1026,6 +1026,18 @@
     "root": "color-picker-viewport-fixture"
   },
   {
+    "id": "color-picker-short-page",
+    "module": "./ColorPickerViewportFixtures.svelte",
+    "root": "color-picker-viewport-fixture",
+    "kind": "short"
+  },
+  {
+    "id": "color-picker-fixed-popup",
+    "module": "./ColorPickerViewportFixtures.svelte",
+    "root": "color-picker-viewport-fixture",
+    "kind": "fixed"
+  },
+  {
     "id": "input-number-features",
     "module": "./InputNumberFeaturesFixtures.svelte",
     "root": "input-number-features-fixture"

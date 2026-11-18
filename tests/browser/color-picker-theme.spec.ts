@@ -47,7 +47,7 @@ test('ColorPicker theme updates keep popup position, hex draft, caret and collap
     const updated = reference.cases.find(item => item.name === 'updated-aliases')!;
     await expect(trigger).toHaveCSS('font-size', updated.metrics.normal.basic.root['font-size']);
     await expect(popup).toHaveCSS('font-size', updated.popups.basic.popup!['font-size']);
-    await expect(popup).toHaveCSS('position', 'fixed');
+    await expect(popup).toHaveCSS('position', 'absolute');
     expect(await popup.evaluate(node => [
       (node as HTMLElement).style.left, (node as HTMLElement).style.top
     ])).toEqual([expect.stringMatching(/px$/), expect.stringMatching(/px$/)]);

@@ -5975,6 +5975,8 @@
         "tests/browser/fixtures/PrefixDefaultStylingFixtures.svelte",
         "tests/browser/fixtures/ColorPickerViewportFixtures.svelte",
         "tests/browser/color-picker-viewport.spec.ts",
+        "tests/browser/color-picker-short-page.spec.ts",
+        "tests/browser/fixtures/ant-design-color-picker-short-page-source-reference.json",
         "src/lib/popup-position.engine.test.ts"
       ],
       "features": [
@@ -6074,9 +6076,11 @@
             "src/lib/ColorPicker.svelte",
             "tests/browser/fixtures/ColorPickerViewportFixtures.svelte",
             "tests/browser/color-picker-viewport.spec.ts",
+            "tests/browser/color-picker-short-page.spec.ts",
+            "tests/browser/fixtures/ant-design-color-picker-short-page-source-reference.json",
             "src/lib/popup-position.engine.test.ts"
           ],
-          "note": "ColorPicker → Popover/Tooltip выбирает локальную функцию getPopupContainer или ConfigProvider fallback через ||; собственный undefined сохраняет provider, в отличие от Tabs. Вложенный provider наследует функцию и при undefined, независимо от theme.inherit. Общий portal принимает HTMLElement или ShadowRoot, переносит theme variables и сохраняет native modal fallback без getter. Смена функции с тем же DOM-контейнером сохраняет popup, inputs, state/focus/selection. ComposedPath отличает pointer внутри shadow popup от внешнего; закрытие возвращает focus в native trigger. Стили document не внедряются в ShadowRoot автоматически. Приоритеты, payload trigger и обновления сверены с официальным UMD; SSR не вызывает getter. Как source lazy popup, ColorPicker не вызывает локальный/provider getter до первого открытия; destroyOnHidden снимает скрытый custom portal. Остальные source consumers общего container context переносятся отдельно. Source visibleFirst учитывает document scroll region: при y=343.64/344 панель высотой 365px остаётся bottomLeft на прокручиваемой странице. Как в React 6.6.8, размещение не гарантирует, что высокая панель целиком помещается в окне."
+          "note": "ColorPicker → Popover/Tooltip выбирает локальную функцию getPopupContainer или ConfigProvider fallback через ||; собственный undefined сохраняет provider, в отличие от Tabs. Вложенный provider наследует функцию и при undefined, независимо от theme.inherit. Общий portal принимает HTMLElement или ShadowRoot, переносит theme variables и сохраняет native modal fallback без getter. Смена функции с тем же DOM-контейнером сохраняет popup, inputs, state/focus/selection. ComposedPath отличает pointer внутри shadow popup от внешнего; закрытие возвращает focus в native trigger. Стили document не внедряются в ShadowRoot автоматически. Приоритеты, payload trigger и обновления сверены с официальным UMD; SSR не вызывает getter. Как source lazy popup, ColorPicker не вызывает локальный/provider getter до первого открытия; destroyOnHidden снимает скрытый custom portal. Остальные source consumers общего container context переносятся отдельно. Source visibleFirst учитывает document scroll region: при y=343.64/344 панель высотой 365px остаётся bottomLeft на прокручиваемой странице. Как в React 6.6.8, размещение не гарантирует, что высокая панель целиком помещается в окне. Native popover использует absolute document coordinates и добавляет scroll overflow короткой страницы: 212px при окне 1280×360 и 32px при 1280×720 с раскрытой зелёной и свёрнутой тёплой группой. Прокрутка не скрывает popup при уходе trigger за край окна; мышь выбирает нижний цвет без сворачивания верхней группы. Native buttons сохраняют Tab/Enter и полностью видимый focused rect; Source swatches остаются нетабулируемыми DIV, равенство keyboard API не заявляется."
         },
         {
           "id": "component-theme",
