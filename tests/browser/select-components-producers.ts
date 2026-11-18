@@ -82,10 +82,17 @@ export function verifySelectComponentsGraph(actualValue: unknown, sourceValue: u
         const aStyle = a.properties?.find(p => p.key === 'style'), bStyle = b.properties?.find(p => p.key === 'style');
         if (aStyle || bStyle) {
           assert(aStyle && bStyle, label + ' authored style presence');
-          assert.deepEqual(css(rawValue(actual, aStyle.value)), css(rawValue(source, bStyle.value)), label + ' every authored CSS declaration/order');
-          // The native string and original style object have just been compared.
-          aStyle.value = bStyle.value = 'component-authored-style';
-          a.ownProperties!.find(p => p.key === 'style')!.valueType = b.ownProperties!.find(p => p.key === 'style')!.valueType = 'string';
+          const nativeStyle = rawValue(actual, aStyle.value), sourceStyle = rawValue(source, bStyle.value);
+          if (typeof nativeStyle === 'string' || typeof sourceStyle === 'string') {
+            assert.deepEqual(css(nativeStyle), css(sourceStyle), label + ' every authored CSS declaration/order');
+            // Only the native string versus original object crosses representation.
+            aStyle.value = bStyle.value = 'component-authored-style';
+            a.ownProperties!.find(p => p.key === 'style')!.valueType = b.ownProperties!.find(p => p.key === 'style')!.valueType = 'string';
+          } else {
+            // Object/null/undefined already share the public representation.
+            // Preserve their full own descriptors, order, values and aliases.
+            verifyIconGraph(subgraph(actual, aStyle.value), subgraph(source, bStyle.value), label + ' complete authored style graph', specs);
+          }
         }
         verifyIconGraph(current, target, label + ' complete authored component props', specs);
       }

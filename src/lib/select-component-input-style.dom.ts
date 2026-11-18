@@ -17,6 +17,7 @@ interface EditorStyle {
   accepted: CSSStyleDeclaration;
   writer: ReturnType<typeof createSelectStyleWriter>;
   previous: SelectStyleFrame;
+  hydrationPending: boolean;
 }
 
 /**
@@ -26,7 +27,7 @@ interface EditorStyle {
  */
 export function createSelectComponentInputStyle() {
   // A ref/attachment may be re-registered without replacing its physical editor.
-  const editors = new WeakMap<Editor, EditorStyle>();
+  const editors = new WeakMap<HTMLElement, EditorStyle>();
   let lifetime: SelectComponentInputLifetime;
   let previousMeasurement: { syncWidth: boolean; value: string } | undefined;
   let measured: number | undefined;
@@ -38,22 +39,48 @@ export function createSelectComponentInputStyle() {
     measured = undefined;
   }
 
-  function editorStyle(editor: Editor, frame: SelectStyleFrame): EditorStyle {
+  function editorStyle(editor: HTMLElement, frame: SelectStyleFrame, hydrating = false): EditorStyle {
     let state = editors.get(editor);
     if (state) return state;
     const accepted = editor.ownerDocument.createElement('span').style;
-    // Preserve the existing DOM-string initialization/SSR parsing boundary.
-    // Only owner declarations enter this snapshot; extra snippet inline keys
-    // remain outside the controller's projection.
-    accepted.cssText = frame.text ?? '';
-    state = { accepted, previous: frame,
-      writer: createSelectStyleWriter(accepted, frame,
-        () => editor.ownerDocument.createElement('span').style) };
+    // При гидратации CSSOM узла сохраняется отдельно от клиентских props.
+    const preserveHydration = hydrating && !frame.string;
+    if (preserveHydration) copySelectStyle(editor.style, accepted);
+    else accepted.cssText = frame.text ?? '';
+    const writer = createSelectStyleWriter(accepted, frame,
+      () => editor.ownerDocument.createElement('span').style);
+    if (!hydrating) writer.initialize();
+    state = { accepted, previous: frame, writer, hydrationPending: preserveHydration };
     editors.set(editor, state);
     return state;
   }
 
+  function apply(editor: HTMLElement, frame: SelectStyleFrame, hydrating = false) {
+    const state = editorStyle(editor, frame, hydrating);
+    const managed: SelectStyleProperties = { ...state.previous.properties, ...frame.properties };
+    const before = state.hydrationPending ? [...state.accepted].map(property => ({ property,
+      value: state.accepted.getPropertyValue(property), priority: state.accepted.getPropertyPriority(property) })) : undefined;
+    state.writer.update(frame);
+    const untouched = before !== undefined && before.length === state.accepted.length
+      && before.every(({ property, value, priority }, index) => state.accepted.item(index) === property
+        && state.accepted.getPropertyValue(property) === value
+        && state.accepted.getPropertyPriority(property) === priority);
+    // Сохраняем SSR-атрибут до первого изменения CSSOM через writer.
+    if (!untouched) {
+      // Удаляем прежние ключи, сохраняя чужие inline-стили.
+      copySelectStyle(state.accepted, editor.style, managed);
+      state.hydrationPending = false;
+    }
+    state.previous = frame;
+    return state;
+  }
+
   return {
+    /** Подготовка до публичного ref; повторная регистрация сохраняет историю узла. */
+    prepare(editor: HTMLElement | undefined, frame: SelectStyleFrame, hydrating = false) {
+      if (editor?.isConnected) apply(editor, frame, hydrating);
+    },
+
     /** A new logical Input exposes undefined before its first layout pass. */
     width(next: SelectComponentInputLifetime): number | undefined {
       return next === lifetime ? measured : undefined;
@@ -65,13 +92,7 @@ export function createSelectComponentInputStyle() {
       enter(input.lifetime);
       if (!input.lifetime || !editor || !editor.isConnected) return measured;
 
-      const state = editorStyle(editor, frame);
-      const managed: SelectStyleProperties = { ...state.previous.properties, ...frame.properties };
-      state.writer.update(frame);
-      // Includes keys just removed from the frame, rather than a permanent
-      // historical union that would keep claiming ownership of removed keys.
-      copySelectStyle(state.accepted, editor.style, managed);
-      state.previous = frame;
+      const state = apply(editor, frame);
 
       const changed = !previousMeasurement
         || previousMeasurement.syncWidth !== input.syncWidth

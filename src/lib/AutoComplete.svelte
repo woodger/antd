@@ -798,8 +798,18 @@
     const hydrating = control && takeSelectComponentHydration(control);
     if (control instanceof HTMLTextAreaElement && !initializedComponentTextareas.has(control)) {
       initializedComponentTextareas.add(control);
-      if (!hydrating) control.setSelectionRange(0, 0);
+      if (!hydrating) {
+        const initialValue = untrack(() => {
+          const attrs = componentEditorContext.attributes;
+          return attrs.value ?? attrs.defaultValue ?? attrs.defaultvalue;
+        });
+        if (initialValue != null && control.defaultValue !== String(initialValue))
+          control.defaultValue = String(initialValue);
+        control.setSelectionRange(0, 0);
+      }
     }
+    untrack(() => componentInputStyle.prepare(control,
+      resolveSelectStyleFrame(componentInputRawStyle()), hydrating));
     componentComposing = false;
     customInput = current;
     componentInputRegistrationToken = current;
@@ -1221,7 +1231,7 @@
       !legacyColor && hasSelectedStyle && `${prefix}-content-has-option-style`, semantics.classes.content]}
     {...selectStyleAttributes(semantics.styles.content)} style={initialContentStyle} {@attach contentStyle.attach}
     title={hasSelectedStyle ? undefined : selectedTitle}>
-    {#if children}{@render children(input)}{:else if inputSlot}<SelectComponent component={inputSlot} context={componentEditorContext} />{:else}
+    {#if children}{@render children(input)}{:else if inputSlot}<SelectComponent component={inputSlot} context={componentEditorContext} hydrationId={generated} />{:else}
       {#if displayValue}
         {#if hasSelectedStyle}{@const valueStyle = createSelectStyle(() => mergeSelectStyle(searchText ? { visibility: 'hidden' } : undefined, selectedStyle))}{@const initialValueStyle = untrack(valueStyle.initialStyle)}<div class={[`${prefix}-content-value`, selectedClass]}
           {...selectStyleAttributes(mergeSelectStyle(searchText ? { visibility: 'hidden' } : undefined, selectedStyle))} style={initialValueStyle} {@attach valueStyle.attach}

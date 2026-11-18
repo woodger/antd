@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { selectComponentEditorSSRAttributes } from './select-components-editor-ssr-marker';
 import { isDeepStrictEqual } from 'node:util';
 import type { Page } from '@playwright/test';
 import { readSelectComponentsHydration, type ComponentsHydrationNode, type ComponentsHydrationPoint } from './select-components-hydration-metrics.mjs';
@@ -37,10 +38,10 @@ function markerAttributes(node: ComponentsHydrationNode, allowed: boolean) {
   return allowed ? node.attributes.filter(([name]) => name !== selectComponentsHydrationSSRMarker) : node.attributes;
 }
 function editor(actual: ComponentsHydrationNode | null, source: ComponentsHydrationNode | null,
-  timingBoundary: boolean, ssrMarker = false) {
+  timingBoundary: boolean, ssrMarker = false, editorUID = false) {
   assert.equal(Boolean(actual), Boolean(source), 'physical editor presence');
   if (!actual || !source) return;
-  assert.deepEqual(markerAttributes(actual, ssrMarker), source.attributes, 'complete intrinsic attributes');
+  assert.deepEqual(selectComponentEditorSSRAttributes(markerAttributes(actual, ssrMarker), editorUID, 'hydration editor'), source.attributes, 'complete intrinsic attributes');
   for (const field of ['identity', 'connected', 'tag', 'defaultValue', 'textContent', 'focused'] as const)
     assert.deepEqual(actual[field], source[field], field);
   if (!timingBoundary) {
@@ -79,7 +80,7 @@ export function verifySelectComponentsHydrationPoint(actual: ComponentsHydration
     && (!isDeepStrictEqual(entry.commit.editor?.value, entry.initial.editor?.value)
       || !isDeepStrictEqual(entry.commit.editor?.selection, entry.initial.editor?.selection));
   const parsedSSR = phase === 'parsed' || phase === 'dirty';
-  check('editor', () => editor(actual.editor, source.editor, commitTiming, parsedSSR && source.root?.tag === 'INPUT'));
+  check('editor', () => editor(actual.editor, source.editor, commitTiming, parsedSSR && source.root?.tag === 'INPUT', parsedSSR && ['input-string', 'input-element'].includes(entry.sample.initialSlot)));
   check('identity', () => assert.deepEqual(actual.identity, source.identity));
   check('public-refs', () => assert.deepEqual(actual.refs, source.refs));
   check('root', () => {
@@ -121,7 +122,7 @@ export function verifySelectComponentsHydrationPoint(actual: ComponentsHydration
     check('retained-editor', () => editor(actual.parsedEditor, source.parsedEditor, false));
   }
   return { failures, boundaries: [
-    ...(parsedSSR ? ['private-SSR-component-marker-on-owner-only'] : []),
+    ...(parsedSSR ? ['private-SSR-component-marker-on-owner-only', ...(['input-string', 'input-element'].includes(entry.sample.initialSlot) ? ['private-intrinsic-editor-SSR-UID-before-hydrate-only'] : [])] : []),
     ...(commitTiming ? ['react-layout-commit-vs-svelte-onMount/value-selection'] : []),
     ...(source.owner?.events.some(event => !isDeepStrictEqual(sourceCallbackEvent(event), focusEvent(event)))
       ? ['source-empty-option-deprecated-props-accessor'] : []),

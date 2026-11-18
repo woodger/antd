@@ -10565,6 +10565,28 @@ model, events и producer ledgers сверяются с исходным Source.
 содержит 2 owners, 20 действий и 16 SSR-состояний: при syncWidth=false own width
 сохраняется после ввода, disabled и clear. Без input slot сохраняется прежний
 Native путь стандартного редактора и тегов.
+[Корпус инициализации CSS-объектов](tests/browser/fixtures/ant-design-select-components-own-style-init-source-manifest.json)
+содержит 2 intrinsic редактора, 8 клиентских путей и 96 действий, а также
+2 начальных SSR-состояния с обеими сериализациями React. Он охватывает CSR,
+обычную гидратацию, различающиеся CSS-объекты сервера и клиента и изменение
+DOM-стиля перед гидратацией. CSR применяет свойства в исходном порядке;
+гидратация сохраняет фактический CSSOM и исходный текст style до первого
+изменения стилей. Клиентские props отдельно задают историю последующих setter updates.
+Intrinsic INPUT/TEXTAREA при CSR используют динамические элементы Svelte.
+При гидратации временный приватный UID связывает редактор с исходным SSR-узлом
+до обработки textarea; статическая ветка сохраняет фокус и выделение без переноса DOM.
+UID снимается до публичного ref и не входит в context.attributes. Прежние root-ветки,
+DOM-строка `context.attributes.style` и CSS-string API сохранены. Публичный ref
+видит начальные стили и textarea defaultValue до измерения ширины.
+Повторы CSR/гидратации отличаются только порядком computed custom properties,
+который [CSSOM не определяет](https://drafts.csswg.org/cssom/#dom-window-getcomputedstyle):
+все имена, значения и priorities проверяются, порядок обычных computed properties,
+авторских inline declarations и DOM-атрибутов остаётся строгим. Оба полных raw
+варианта сохранены. Прежние Native light scheme, private token aliases и
+[исключение deprecated seed vars](docs/reference/design-tokens.md) учитываются отдельно.
+Поиск UID этой ветки не охватывает закрытый Shadow DOM; независимые SSR-корни
+в одном документе должны иметь разные Svelte `idPrefix`. Общая гидратация family
+остаётся partial.
 [Отдельный responsive Original-корпус](tests/browser/fixtures/ant-design-select-components-responsive-source-manifest.json)
 содержит 2 owners, 12 действий и 2 initial SSR-состояния; first/repeat побайтно совпадают.
 Он охватывает direct input и Fragment с live adornment: fitting измеряет весь suffix,

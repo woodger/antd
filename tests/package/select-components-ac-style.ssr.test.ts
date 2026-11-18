@@ -4,6 +4,7 @@ import { expect, it, vi } from 'vitest';
 import SelectComponentsACStyleCase from '../browser/fixtures/SelectComponentsACStyleCase.svelte';
 import { readSelectComponentsACStyleSSR as readSelectComponentsSSR, selectComponentsACStyleSamples, selectComponentsACStyleStaticStates as selectComponentsStaticStates } from '../browser/select-components-ac-style-reference';
 const selectComponentsSamples = selectComponentsACStyleSamples;
+import { selectComponentEditorSSRView } from '../browser/select-components-editor-ssr-marker';
 import { readSelectComponentsSSRFields } from '../browser/select-components-ssr-metrics';
 import { normalizedSelectSurfaceAuthoredProps, verifySelectSurfaceEventGraph } from '../browser/select-surface-assertions';
 import { verifySelectComponentsAttributes, verifySelectComponentsObservations, type ComponentsObservation } from '../browser/select-components-assertions';
@@ -54,7 +55,7 @@ for (const owner of entries) for (const source of owner.states) it(`matches full
     expect(actual.bodyActivity).toEqual(source.state.bodyActivity ?? []);
     expect(Object.values(capture.readRefs!()).every(value => value == null)).toBe(true);
     verifySelectIconSSRNodes(readSelectIconsSSR(body), readSelectIconsSSR(source.rawHtml), source.state, sample as never, owner.id + '/SSR inherited icon templates');
-    const view = readSelectComponentsSSRFields(body), original = readSelectComponentsSSRFields(source.rawHtml);
+    const view = selectComponentEditorSSRView(body, authored.settings.components!.slot === 'input' && ['intrinsic', 'element'].includes(authored.settings.components!.kind), owner.id + '/SSR'), original = readSelectComponentsSSRFields(source.rawHtml);
     expect(view.fields).toHaveLength(original.fields.length);
     for (const [index, field] of view.fields.entries()) {
       expect(field.tag).toBe(original.fields[index].tag); expect(field.content).toBe(original.fields[index].content);
