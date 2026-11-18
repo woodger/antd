@@ -1190,6 +1190,21 @@
     if (focusEditor) { if (rootSlot || inputSlot) focus(); else control?.focus(); }
   }
 
+  function componentTagClose(item: { value: RawValue }) {
+    const onClose = (event?: Event) => {
+      if (event) event.stopPropagation();
+      const data = optionData(item.value);
+      // Source захватывает display-record, но при вызове читает текущие records.
+      const remaining = displayValues.filter(current => current !== item);
+      if (remaining.length !== displayValues.length) {
+        changeMultiple(remaining.map(current => current.value), 'display');
+      }
+      // Даже stale/non-closable callback отправляет deselect с актуальной option.
+      notifySelect(item.value, data, false);
+    };
+    return onClose;
+  }
+
   function handleCustomTagMouseDown(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
@@ -1802,7 +1817,7 @@
               {@attach node => connectTagElement(node, tag.value)}>{#if renderTag}{@render renderTag({
                   label: componentTagLabel, value: tag.value, index, disabled: tag.disabled,
                   closable: !resolvedDisabled && !tag.disabled,
-                  onClose: event => { event?.stopPropagation(); remove(tag.value, false); }, isMaxTag: false
+                  onClose: componentTagClose(tag), isMaxTag: false
                 })}{:else}{@const initialItemContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}<span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]}
                   style={initialItemContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)}
                   {@attach selectStyle(() => semantics.styles.itemContent)}>{@render componentTagLabel()}</span>{#if !resolvedDisabled && !tag.disabled}{@const initialRemoveStyle = untrack(() => serializeSelectStyle(semantics.styles.itemRemove))}{@const tagIcon = resolveSelectRemoveIcon(removeIcon, config.select?.removeIcon, removeGlyph)}<button type="button" data-ant-select-selection-item-remove

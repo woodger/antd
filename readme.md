@@ -10644,6 +10644,24 @@ ArrowUp и Ctrl+ArrowDown позволяют ей завершиться. Оба
 mutations, frames, timers или открытых ports; callback- и ref-ledgers тихие.
 Общая responsive-матрица, disabled/stale custom callbacks и сложные сочетания
 style/hydration требуют дальнейшей сверки.
+[Source-корпус сохранённых onClose](tests/browser/fixtures/ant-design-select-components-tag-close-handles-source-manifest.json)
+добавляет 2 owners, 12 действий, отдельное сохранение callback после initial settle
+и 2 initial SSR-состояния; CSR и SSR first/repeat совпали побайтно.
+При components.input callback сохраняет display-record, а удаление читает текущие
+records. Вызов для closable=false разрешён; устаревший callback сохраняет модель
+и отправляет onDeselect с текущей option. Отдельный cached-option counter сохраняет
+прежний payload после удаления option из options. Обычный Native remove и его
+disabled guards сохранены. Полные аргументы, descriptors, alias identities,
+события, DOM/CSSOM и все исходные diagnostics остаются в raw.
+При omitted maxTagCount Source создаёт неиспользуемый rest ReactElement через
+tagRender, но не монтирует его body/DOM. Неисполняемый Svelte Snippet не имитирует
+эти вызовы; Source-only rest records сохранены с точной проверкой семи полей
+и отсутствия body/DOM.
+[Browser](tests/browser/select-components-tag-close-handles.spec.ts) и
+[SSR](tests/package/select-components-tag-close-handles.ssr.test.ts) закрепляют этот объём;
+[negative guards](tests/package/select-components-tag-close-handles-boundaries.test.ts)
+отклоняют потерянные поля, изменённые aliases и поддельные rest-вызовы.
+Прочие сочетания callbacks и renderer API остаются partial.
 [Browser](tests/browser/select-components.spec.ts) и
 [SSR](tests/package/select-components.ssr.test.ts) проверяют replacement DOM, события,
 полные attrs/producer ledgers, refs и cleanup. Полный перенос Select/AutoComplete

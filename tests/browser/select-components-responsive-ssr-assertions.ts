@@ -14,7 +14,7 @@ function attributes(element: Element) {
   });
 }
 export function verifySelectComponentsResponsiveSSRLayout(actualHTML: string, sourceHTML: string, label: string,
-  options?: { responsiveCustomTag?: true }) {
+  options?: { responsiveCustomTag?: true; unboundedCustomTag?: true }) {
   const actual = readSelectComponentsResponsiveSSR(actualHTML), source = readSelectComponentsResponsiveSSR(sourceHTML);
   assert.equal(actual.contents.length, source.contents.length, label + ' complete content subtree count');
   const compare = (actual: Element, source: Element, label: string, parent?: { actual: Element; source: Element }) => {
@@ -29,7 +29,12 @@ export function verifySelectComponentsResponsiveSSRLayout(actualHTML: string, so
     let markedDirectiveWrapper = false;
     if (names.includes('ant-select-content-item')) {
       const rest = names.includes('ant-select-content-item-rest'), suffix = names.includes('ant-select-content-item-suffix');
-      if (!suffix) { markedDirectiveWrapper = true; drop(rest ? 'data-select-rest' : 'data-select-tag', 'true'); }
+      if (!suffix && !options?.unboundedCustomTag) { markedDirectiveWrapper = true; drop(rest ? 'data-select-rest' : 'data-select-tag', 'true'); }
+      if (options?.unboundedCustomTag) {
+        assert.equal(rest, false, label + ' unbounded Source has no rest DOM');
+        assert.equal(left.some(([key]) => key === 'data-select-tag' || key === 'data-select-rest'), false);
+        assert.equal(right.some(([key]) => key === 'data-select-tag' || key === 'data-select-rest'), false);
+      }
       if (left.some(([key]) => key === 'inert')) {
         assert.equal(right.find(([key]) => key === 'aria-hidden')?.[1], 'true'); drop('inert', '');
       }

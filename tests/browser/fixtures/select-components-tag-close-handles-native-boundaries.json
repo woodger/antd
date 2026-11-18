@@ -1,0 +1,2681 @@
+{
+  "kind": "existing-Native-root-representation-not-Source-expected",
+  "rootStyles": [
+    {
+      "name": "--ant-select-line-width-focus",
+      "value": "1px",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-internal_fixed_item_margin",
+      "value": "2px",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-z-index-popup",
+      "value": "1050",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-option-selected-color",
+      "value": "rgba(0,0,0,0.88)",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-option-selected-font-weight",
+      "value": "600",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-option-selected-bg",
+      "value": "#e6f4ff",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-option-active-bg",
+      "value": "rgba(0,0,0,0.04)",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-option-padding",
+      "value": "5px 12px",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-option-font-size",
+      "value": "14px",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-option-line-height",
+      "value": "1.5714285714285714",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-option-height",
+      "value": "32px",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-selector-bg",
+      "value": "#ffffff",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-clear-bg",
+      "value": "#ffffff",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-single-item-height-lg",
+      "value": "40px",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-multiple-item-bg",
+      "value": "rgba(0,0,0,0.06)",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-multiple-item-border-color",
+      "value": "transparent",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-multiple-item-height",
+      "value": "24px",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-multiple-item-height-sm",
+      "value": "16px",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-multiple-item-height-lg",
+      "value": "32px",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-multiple-selector-bg-disabled",
+      "value": "rgba(0,0,0,0.04)",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-multiple-item-color-disabled",
+      "value": "rgba(0,0,0,0.25)",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-multiple-item-border-color-disabled",
+      "value": "transparent",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-show-arrow-padding-inline-end",
+      "value": "18px",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-hover-border-color",
+      "value": "#4096ff",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-active-border-color",
+      "value": "#1677ff",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-active-outline-color",
+      "value": "rgba(5,145,255,0.1)",
+      "priority": ""
+    },
+    {
+      "name": "--ant-select-select-affix-padding",
+      "value": "4px",
+      "priority": ""
+    },
+    {
+      "name": "--ant-native-select-height",
+      "value": "var(--ant-select-height)",
+      "priority": ""
+    },
+    {
+      "name": "--ant-native-select-multi-item-height",
+      "value": "var(--ant-select-multi-item-height)",
+      "priority": ""
+    },
+    {
+      "name": "--ant-native-select-color",
+      "value": "var(--ant-select-color)",
+      "priority": ""
+    },
+    {
+      "name": "--ant-native-select-empty-input-gap",
+      "value": "var(--ant-select-multi-item-padding-horizontal)",
+      "priority": ""
+    }
+  ],
+  "proof": "202-node read-only audit; all Source raw unchanged",
+  "actualInitialNormalCalls": [
+    {
+      "index": 0,
+      "kind": "tagRender",
+      "side": "own",
+      "argument": {
+        "$": "array",
+        "properties": [
+          {
+            "key": "0",
+            "value": {
+              "$": "object",
+              "properties": [
+                {
+                  "key": "label",
+                  "value": {
+                    "$": "function",
+                    "name": "snippet2",
+                    "own": [
+                      {
+                        "key": "length",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "name",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "string"
+                      },
+                      {
+                        "key": "toString",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "function"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "value",
+                  "value": "a"
+                },
+                {
+                  "key": "index",
+                  "value": 0
+                },
+                {
+                  "key": "disabled",
+                  "value": {
+                    "$": "undefined"
+                  }
+                },
+                {
+                  "key": "closable",
+                  "value": true
+                },
+                {
+                  "key": "onClose",
+                  "value": {
+                    "$": "function",
+                    "name": "onClose",
+                    "own": [
+                      {
+                        "key": "length",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "name",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "string"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "isMaxTag",
+                  "value": false
+                }
+              ]
+            }
+          },
+          {
+            "key": "length",
+            "value": 1
+          }
+        ]
+      },
+      "result": {
+        "$": "authored",
+        "role": {
+          "node": "handles-tag-result-a"
+        }
+      },
+      "rawArgument": {
+        "root": {
+          "ref": 1
+        },
+        "objects": [
+          {
+            "id": 1,
+            "type": "object",
+            "array": true,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "object"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": false,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              }
+            ],
+            "properties": [
+              {
+                "key": "0",
+                "value": {
+                  "ref": 2
+                }
+              },
+              {
+                "key": "length",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "type": "object",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "label",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "value",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "index",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "disabled",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "closable",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "onClose",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "isMaxTag",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              }
+            ],
+            "properties": [
+              {
+                "key": "label",
+                "value": {
+                  "ref": 3
+                }
+              },
+              {
+                "key": "value",
+                "value": "a"
+              },
+              {
+                "key": "index",
+                "value": 0
+              },
+              {
+                "key": "disabled",
+                "value": {
+                  "$": "undefined"
+                }
+              },
+              {
+                "key": "closable",
+                "value": true
+              },
+              {
+                "key": "onClose",
+                "value": {
+                  "ref": 5
+                }
+              },
+              {
+                "key": "isMaxTag",
+                "value": false
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "toString",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "snippet2"
+              },
+              {
+                "key": "toString",
+                "value": {
+                  "ref": 4
+                }
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 0
+              },
+              {
+                "key": "name",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "onClose"
+              }
+            ]
+          }
+        ]
+      },
+      "rawResult": {
+        "root": {
+          "ref": 6
+        },
+        "objects": [
+          {
+            "id": 6,
+            "type": "function",
+            "array": false,
+            "authoredRole": {
+              "node": "handles-tag-result-a"
+            },
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "toString",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "snippet2"
+              },
+              {
+                "key": "toString",
+                "value": {
+                  "ref": 7
+                }
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 0
+              },
+              {
+                "key": "name",
+                "value": ""
+              }
+            ]
+          }
+        ]
+      },
+      "publicArgumentCount": 1,
+      "argumentOwnKeys": [
+        [
+          "label",
+          "value",
+          "index",
+          "disabled",
+          "closable",
+          "onClose",
+          "isMaxTag"
+        ]
+      ],
+      "argumentDescriptors": [
+        [
+          {
+            "key": "label",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "function"
+          },
+          {
+            "key": "value",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "string"
+          },
+          {
+            "key": "index",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "number"
+          },
+          {
+            "key": "disabled",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "undefined"
+          },
+          {
+            "key": "closable",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "boolean"
+          },
+          {
+            "key": "onClose",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "function"
+          },
+          {
+            "key": "isMaxTag",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "boolean"
+          }
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "kind": "tagRender",
+      "side": "own",
+      "argument": {
+        "$": "array",
+        "properties": [
+          {
+            "key": "0",
+            "value": {
+              "$": "object",
+              "properties": [
+                {
+                  "key": "label",
+                  "value": {
+                    "$": "function",
+                    "name": "snippet2",
+                    "own": [
+                      {
+                        "key": "length",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "name",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "string"
+                      },
+                      {
+                        "key": "toString",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "function"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "value",
+                  "value": "locked"
+                },
+                {
+                  "key": "index",
+                  "value": 1
+                },
+                {
+                  "key": "disabled",
+                  "value": true
+                },
+                {
+                  "key": "closable",
+                  "value": false
+                },
+                {
+                  "key": "onClose",
+                  "value": {
+                    "$": "function",
+                    "name": "onClose",
+                    "own": [
+                      {
+                        "key": "length",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "name",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "string"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "isMaxTag",
+                  "value": false
+                }
+              ]
+            }
+          },
+          {
+            "key": "length",
+            "value": 1
+          }
+        ]
+      },
+      "result": {
+        "$": "authored",
+        "role": {
+          "node": "handles-tag-result-locked"
+        }
+      },
+      "rawArgument": {
+        "root": {
+          "ref": 10
+        },
+        "objects": [
+          {
+            "id": 10,
+            "type": "object",
+            "array": true,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "object"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": false,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              }
+            ],
+            "properties": [
+              {
+                "key": "0",
+                "value": {
+                  "ref": 11
+                }
+              },
+              {
+                "key": "length",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "type": "object",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "label",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "value",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "index",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "disabled",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "closable",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "onClose",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "isMaxTag",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              }
+            ],
+            "properties": [
+              {
+                "key": "label",
+                "value": {
+                  "ref": 12
+                }
+              },
+              {
+                "key": "value",
+                "value": "locked"
+              },
+              {
+                "key": "index",
+                "value": 1
+              },
+              {
+                "key": "disabled",
+                "value": true
+              },
+              {
+                "key": "closable",
+                "value": false
+              },
+              {
+                "key": "onClose",
+                "value": {
+                  "ref": 14
+                }
+              },
+              {
+                "key": "isMaxTag",
+                "value": false
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "toString",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "snippet2"
+              },
+              {
+                "key": "toString",
+                "value": {
+                  "ref": 13
+                }
+              }
+            ]
+          },
+          {
+            "id": 13,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 0
+              },
+              {
+                "key": "name",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "id": 14,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "onClose"
+              }
+            ]
+          }
+        ]
+      },
+      "rawResult": {
+        "root": {
+          "ref": 15
+        },
+        "objects": [
+          {
+            "id": 15,
+            "type": "function",
+            "array": false,
+            "authoredRole": {
+              "node": "handles-tag-result-locked"
+            },
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "toString",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "snippet2"
+              },
+              {
+                "key": "toString",
+                "value": {
+                  "ref": 16
+                }
+              }
+            ]
+          },
+          {
+            "id": 16,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 0
+              },
+              {
+                "key": "name",
+                "value": ""
+              }
+            ]
+          }
+        ]
+      },
+      "publicArgumentCount": 1,
+      "argumentOwnKeys": [
+        [
+          "label",
+          "value",
+          "index",
+          "disabled",
+          "closable",
+          "onClose",
+          "isMaxTag"
+        ]
+      ],
+      "argumentDescriptors": [
+        [
+          {
+            "key": "label",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "function"
+          },
+          {
+            "key": "value",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "string"
+          },
+          {
+            "key": "index",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "number"
+          },
+          {
+            "key": "disabled",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "boolean"
+          },
+          {
+            "key": "closable",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "boolean"
+          },
+          {
+            "key": "onClose",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "function"
+          },
+          {
+            "key": "isMaxTag",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "boolean"
+          }
+        ]
+      ]
+    },
+    {
+      "index": 4,
+      "kind": "tagRender",
+      "side": "own",
+      "argument": {
+        "$": "array",
+        "properties": [
+          {
+            "key": "0",
+            "value": {
+              "$": "object",
+              "properties": [
+                {
+                  "key": "label",
+                  "value": {
+                    "$": "function",
+                    "name": "snippet2",
+                    "own": [
+                      {
+                        "key": "length",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "name",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "string"
+                      },
+                      {
+                        "key": "toString",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "function"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "value",
+                  "value": "b"
+                },
+                {
+                  "key": "index",
+                  "value": 2
+                },
+                {
+                  "key": "disabled",
+                  "value": {
+                    "$": "undefined"
+                  }
+                },
+                {
+                  "key": "closable",
+                  "value": true
+                },
+                {
+                  "key": "onClose",
+                  "value": {
+                    "$": "function",
+                    "name": "onClose",
+                    "own": [
+                      {
+                        "key": "length",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "name",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "string"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "isMaxTag",
+                  "value": false
+                }
+              ]
+            }
+          },
+          {
+            "key": "length",
+            "value": 1
+          }
+        ]
+      },
+      "result": {
+        "$": "authored",
+        "role": {
+          "node": "handles-tag-result-b"
+        }
+      },
+      "rawArgument": {
+        "root": {
+          "ref": 19
+        },
+        "objects": [
+          {
+            "id": 19,
+            "type": "object",
+            "array": true,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "object"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": false,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              }
+            ],
+            "properties": [
+              {
+                "key": "0",
+                "value": {
+                  "ref": 20
+                }
+              },
+              {
+                "key": "length",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": 20,
+            "type": "object",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "label",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "value",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "index",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "disabled",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "closable",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "onClose",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "isMaxTag",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              }
+            ],
+            "properties": [
+              {
+                "key": "label",
+                "value": {
+                  "ref": 21
+                }
+              },
+              {
+                "key": "value",
+                "value": "b"
+              },
+              {
+                "key": "index",
+                "value": 2
+              },
+              {
+                "key": "disabled",
+                "value": {
+                  "$": "undefined"
+                }
+              },
+              {
+                "key": "closable",
+                "value": true
+              },
+              {
+                "key": "onClose",
+                "value": {
+                  "ref": 23
+                }
+              },
+              {
+                "key": "isMaxTag",
+                "value": false
+              }
+            ]
+          },
+          {
+            "id": 21,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "toString",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "snippet2"
+              },
+              {
+                "key": "toString",
+                "value": {
+                  "ref": 22
+                }
+              }
+            ]
+          },
+          {
+            "id": 22,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 0
+              },
+              {
+                "key": "name",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "id": 23,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "onClose"
+              }
+            ]
+          }
+        ]
+      },
+      "rawResult": {
+        "root": {
+          "ref": 24
+        },
+        "objects": [
+          {
+            "id": 24,
+            "type": "function",
+            "array": false,
+            "authoredRole": {
+              "node": "handles-tag-result-b"
+            },
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "toString",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "snippet2"
+              },
+              {
+                "key": "toString",
+                "value": {
+                  "ref": 25
+                }
+              }
+            ]
+          },
+          {
+            "id": 25,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 0
+              },
+              {
+                "key": "name",
+                "value": ""
+              }
+            ]
+          }
+        ]
+      },
+      "publicArgumentCount": 1,
+      "argumentOwnKeys": [
+        [
+          "label",
+          "value",
+          "index",
+          "disabled",
+          "closable",
+          "onClose",
+          "isMaxTag"
+        ]
+      ],
+      "argumentDescriptors": [
+        [
+          {
+            "key": "label",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "function"
+          },
+          {
+            "key": "value",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "string"
+          },
+          {
+            "key": "index",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "number"
+          },
+          {
+            "key": "disabled",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "undefined"
+          },
+          {
+            "key": "closable",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "boolean"
+          },
+          {
+            "key": "onClose",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "function"
+          },
+          {
+            "key": "isMaxTag",
+            "enumerable": true,
+            "configurable": true,
+            "writable": true,
+            "kind": "value",
+            "valueType": "boolean"
+          }
+        ]
+      ]
+    }
+  ],
+  "origin": {
+    "path": ".upstream/artifacts/select-components-tag-close-handles-native-after.json",
+    "usage": "Recorded Native callback shape for negative guards, never Source expected data"
+  },
+  "actualInitialBodyActivity": [
+    {
+      "info": {
+        "$": "object",
+        "properties": [
+          {
+            "key": "label",
+            "value": {
+              "$": "function",
+              "name": "snippet2",
+              "own": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "toString",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                }
+              ]
+            }
+          },
+          {
+            "key": "value",
+            "value": "a"
+          },
+          {
+            "key": "index",
+            "value": 0
+          },
+          {
+            "key": "disabled",
+            "value": {
+              "$": "undefined"
+            }
+          },
+          {
+            "key": "closable",
+            "value": true
+          },
+          {
+            "key": "onClose",
+            "value": {
+              "$": "function",
+              "name": "onClose",
+              "own": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ]
+            }
+          },
+          {
+            "key": "isMaxTag",
+            "value": false
+          }
+        ]
+      },
+      "rawInfo": {
+        "root": {
+          "ref": 2
+        },
+        "objects": [
+          {
+            "id": 2,
+            "type": "object",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "label",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "value",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "index",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "disabled",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "closable",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "onClose",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "isMaxTag",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              }
+            ],
+            "properties": [
+              {
+                "key": "label",
+                "value": {
+                  "ref": 3
+                }
+              },
+              {
+                "key": "value",
+                "value": "a"
+              },
+              {
+                "key": "index",
+                "value": 0
+              },
+              {
+                "key": "disabled",
+                "value": {
+                  "$": "undefined"
+                }
+              },
+              {
+                "key": "closable",
+                "value": true
+              },
+              {
+                "key": "onClose",
+                "value": {
+                  "ref": 5
+                }
+              },
+              {
+                "key": "isMaxTag",
+                "value": false
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "toString",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "snippet2"
+              },
+              {
+                "key": "toString",
+                "value": {
+                  "ref": 4
+                }
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 0
+              },
+              {
+                "key": "name",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "onClose"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "info": {
+        "$": "object",
+        "properties": [
+          {
+            "key": "label",
+            "value": {
+              "$": "function",
+              "name": "snippet2",
+              "own": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "toString",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                }
+              ]
+            }
+          },
+          {
+            "key": "value",
+            "value": "locked"
+          },
+          {
+            "key": "index",
+            "value": 1
+          },
+          {
+            "key": "disabled",
+            "value": true
+          },
+          {
+            "key": "closable",
+            "value": false
+          },
+          {
+            "key": "onClose",
+            "value": {
+              "$": "function",
+              "name": "onClose",
+              "own": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ]
+            }
+          },
+          {
+            "key": "isMaxTag",
+            "value": false
+          }
+        ]
+      },
+      "rawInfo": {
+        "root": {
+          "ref": 11
+        },
+        "objects": [
+          {
+            "id": 11,
+            "type": "object",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "label",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "value",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "index",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "disabled",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "closable",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "onClose",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "isMaxTag",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              }
+            ],
+            "properties": [
+              {
+                "key": "label",
+                "value": {
+                  "ref": 12
+                }
+              },
+              {
+                "key": "value",
+                "value": "locked"
+              },
+              {
+                "key": "index",
+                "value": 1
+              },
+              {
+                "key": "disabled",
+                "value": true
+              },
+              {
+                "key": "closable",
+                "value": false
+              },
+              {
+                "key": "onClose",
+                "value": {
+                  "ref": 14
+                }
+              },
+              {
+                "key": "isMaxTag",
+                "value": false
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "toString",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "snippet2"
+              },
+              {
+                "key": "toString",
+                "value": {
+                  "ref": 13
+                }
+              }
+            ]
+          },
+          {
+            "id": 13,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 0
+              },
+              {
+                "key": "name",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "id": 14,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "onClose"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "info": {
+        "$": "object",
+        "properties": [
+          {
+            "key": "label",
+            "value": {
+              "$": "function",
+              "name": "snippet2",
+              "own": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                },
+                {
+                  "key": "toString",
+                  "enumerable": true,
+                  "configurable": true,
+                  "writable": true,
+                  "kind": "value",
+                  "valueType": "function"
+                }
+              ]
+            }
+          },
+          {
+            "key": "value",
+            "value": "b"
+          },
+          {
+            "key": "index",
+            "value": 2
+          },
+          {
+            "key": "disabled",
+            "value": {
+              "$": "undefined"
+            }
+          },
+          {
+            "key": "closable",
+            "value": true
+          },
+          {
+            "key": "onClose",
+            "value": {
+              "$": "function",
+              "name": "onClose",
+              "own": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ]
+            }
+          },
+          {
+            "key": "isMaxTag",
+            "value": false
+          }
+        ]
+      },
+      "rawInfo": {
+        "root": {
+          "ref": 20
+        },
+        "objects": [
+          {
+            "id": 20,
+            "type": "object",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "label",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "value",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "index",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "disabled",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "closable",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "onClose",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "isMaxTag",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              }
+            ],
+            "properties": [
+              {
+                "key": "label",
+                "value": {
+                  "ref": 21
+                }
+              },
+              {
+                "key": "value",
+                "value": "b"
+              },
+              {
+                "key": "index",
+                "value": 2
+              },
+              {
+                "key": "disabled",
+                "value": {
+                  "$": "undefined"
+                }
+              },
+              {
+                "key": "closable",
+                "value": true
+              },
+              {
+                "key": "onClose",
+                "value": {
+                  "ref": 23
+                }
+              },
+              {
+                "key": "isMaxTag",
+                "value": false
+              }
+            ]
+          },
+          {
+            "id": 21,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "toString",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "snippet2"
+              },
+              {
+                "key": "toString",
+                "value": {
+                  "ref": 22
+                }
+              }
+            ]
+          },
+          {
+            "id": 22,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 0
+              },
+              {
+                "key": "name",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "id": 23,
+            "type": "function",
+            "array": false,
+            "authoredRole": null,
+            "ownProperties": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "properties": [
+              {
+                "key": "length",
+                "value": 1
+              },
+              {
+                "key": "name",
+                "value": "onClose"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

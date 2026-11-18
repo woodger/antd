@@ -1,0 +1,552 @@
+{
+  "status": "passed-source-only-complete-pairs-byte-equal",
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "protocol": {
+    "source": {
+      "path": ".upstream/artifacts/select-components-tag-close-handles-source-v1/protocol-freeze.json",
+      "bytes": 513946,
+      "sha256": "b1678a2f9ea70c1b9cff69534e0f36348ba6eec90b4087f24832ba5543b6eb96"
+    },
+    "fixture": {
+      "path": "ant-design-select-components-tag-close-handles-source-protocol.json",
+      "bytes": 513946,
+      "sha256": "b1678a2f9ea70c1b9cff69534e0f36348ba6eec90b4087f24832ba5543b6eb96"
+    },
+    "byteEqual": true
+  },
+  "captureReview": {
+    "source": {
+      "path": ".upstream/artifacts/select-components-tag-close-handles-source-v1/capture-review.json",
+      "bytes": 85967,
+      "sha256": "54486a8c288b9473d4ae509134d0c4c901d260816306bf900705bd1a512a67cd"
+    },
+    "fixture": {
+      "path": "ant-design-select-components-tag-close-handles-capture-review.json",
+      "bytes": 85967,
+      "sha256": "54486a8c288b9473d4ae509134d0c4c901d260816306bf900705bd1a512a67cd"
+    },
+    "byteEqual": true
+  },
+  "copies": {
+    "csr": {
+      "path": "ant-design-select-components-tag-close-handles-reference.json.gz",
+      "storageBytes": 607773,
+      "storageSha256": "3a7f98b08b5741cc7d7f976df7f39979de333d82ed576510d64fd07ded5146ff",
+      "decodedBytes": 21000790,
+      "decodedSha256": "5e774df2b534a29e49a8beaf3938f37519abfa261153709393699bfe47acc179",
+      "wholePairByteEqual": true,
+      "provenance": {
+        "first": {
+          "path": ".upstream/artifacts/select-components-tag-close-handles-source-v1/csr-source-first.json",
+          "bytes": 21000790,
+          "sha256": "5e774df2b534a29e49a8beaf3938f37519abfa261153709393699bfe47acc179"
+        },
+        "repeat": {
+          "path": ".upstream/artifacts/select-components-tag-close-handles-source-v1/csr-source-repeat.json",
+          "bytes": 21000790,
+          "sha256": "5e774df2b534a29e49a8beaf3938f37519abfa261153709393699bfe47acc179"
+        }
+      }
+    },
+    "ssr": {
+      "path": "ant-design-select-components-tag-close-handles-ssr-reference.json.gz",
+      "storageBytes": 47563,
+      "storageSha256": "2ef5f431f4cc0e73e1623e70052078fcb1877c49c20aec2f112bac994eeef2bd",
+      "decodedBytes": 1519632,
+      "decodedSha256": "30146c5c2f432346fb6d98cf7c0c048502ae8a8860c57f5a282c06666f378030",
+      "wholePairByteEqual": true,
+      "provenance": {
+        "first": {
+          "path": ".upstream/artifacts/select-components-tag-close-handles-source-v1/ssr-source-first.json",
+          "bytes": 1519632,
+          "sha256": "30146c5c2f432346fb6d98cf7c0c048502ae8a8860c57f5a282c06666f378030"
+        },
+        "repeat": {
+          "path": ".upstream/artifacts/select-components-tag-close-handles-source-v1/ssr-source-repeat.json",
+          "bytes": 1519632,
+          "sha256": "30146c5c2f432346fb6d98cf7c0c048502ae8a8860c57f5a282c06666f378030"
+        }
+      }
+    }
+  },
+  "headers": {
+    "csr": {
+      "kind": "Original-public-tag-render-close-handles",
+      "mode": "csr",
+      "version": "6.6.8",
+      "react": "18.3.1",
+      "rcSelect": "1.10.1",
+      "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+      "node": "v24.18.0",
+      "chromium": "157.0.8103.78",
+      "protocolSha256": "b1678a2f9ea70c1b9cff69534e0f36348ba6eec90b4087f24832ba5543b6eb96",
+      "inputPins": {
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/cases.mjs": {
+          "bytes": 2598,
+          "sha256": "edcd1a515d3ff4395a3b26d5481bf21c6e2690e35086e0d99a92ec7fcbe88f4e"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/source-app.mjs": {
+          "bytes": 10110,
+          "sha256": "0f9fab5f192a4b690a57fc7e18fdcb41548432e725279af34173d26940b574d8"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/reader.mjs": {
+          "bytes": 3746,
+          "sha256": "e67ed651aac3219e5e4241d0a29245993dbd387849c19713ac5a7af42d5ba781"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/shared.mjs": {
+          "bytes": 332,
+          "sha256": "7a98a8443b91c2b9e786c000dd4fcd7359356964d68460329b3afac391c2b57f"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/server.mjs": {
+          "bytes": 3484,
+          "sha256": "f20450b19d1d17547a5e2876e1720337a635b48cbf6e51b010172e81a7b19764"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/capture.mjs": {
+          "bytes": 10395,
+          "sha256": "54155fabb88a6bd6e3e1e62292d8a877fa2594e3ad0988c73d3df36ded257130"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/verify.mjs": {
+          "bytes": 1856,
+          "sha256": "75369e78f02a54fb2d5d58725e427eaaa3221ad3241c163f8ce3965bf890822e"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/preflight.mjs": {
+          "bytes": 2262,
+          "sha256": "a962f77e15f2e75ae92210082dece1d14b6d720099a6d6fa7def33b86886efbe"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/prepare-review.mjs": {
+          "bytes": 12621,
+          "sha256": "92a4daf1889f7ecf47770c6edfb6458135c9d2a671544a556c6dc6a8a13b7bca"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/freeze-protocol.mjs": {
+          "bytes": 1643,
+          "sha256": "825f01c01f854bdfce0531eb4ee1667488637b90816560dc846fedb2fed1c35b"
+        },
+        "tests/browser/select-surface-producers.mjs": {
+          "bytes": 4134,
+          "sha256": "40f7a24ab72043ea36871794a0bee004430c4201d795e592c9cece90a0cf3a9d"
+        },
+        "tests/browser/select-surface-driver.ts": {
+          "bytes": 2262,
+          "sha256": "03cea54b5b0e2d6205b10c2bdeaf3ca40ccf2edec03ac7f215ef3cb1c483b0d7"
+        },
+        ".upstream/artifacts/react-18.3.1/umd/react.production.min.js": {
+          "bytes": 10751,
+          "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+        },
+        ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js": {
+          "bytes": 131835,
+          "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+        },
+        "node_modules/dayjs/dayjs.min.js": {
+          "bytes": 7161,
+          "sha256": "0198dd0b1f760cded169c7e7ff7eaf56bc36c4c22c7c9b7c683e59437ed8700e"
+        },
+        ".upstream/artifacts/antd-6.6.8/dist/antd.js": {
+          "bytes": 4217353,
+          "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4"
+        },
+        ".upstream/artifacts/react-dom-18.3.1/umd/react-dom-server-legacy.browser.production.min.js": {
+          "bytes": 35128,
+          "sha256": "829b2f17da148d9bc5b635c329b67068e67e4bf7d6a5bb64e49e9e92483deee5"
+        },
+        ".upstream/artifacts/rc-component-select-1.10.1.tgz": {
+          "bytes": 55733,
+          "sha256": "e3f8d082e7260c39942785533d153df984c3d5a32854b75e0f9c3a408d3acc4d"
+        },
+        ".upstream/artifacts/rc-select-1.10.1/es/SelectInput/Content/MultipleContent.js": {
+          "bytes": 5825,
+          "sha256": "c39c0a9330aebedff434740cb527a9771012866783ca61cb17371b81b4dae664"
+        },
+        ".upstream/artifacts/rc-select-1.10.1/es/BaseSelect/index.js": {
+          "bytes": 17660,
+          "sha256": "919654baea7e1ccc87cb1d97b86837645025f6c9efdfcdb6f4b41bf48767a131"
+        },
+        ".upstream/artifacts/rc-select-1.10.1/es/Select.js": {
+          "bytes": 19013,
+          "sha256": "d4394dd194f88c343c8a7dc94602d9643aadedc91d8b56a87e52e0c44d244992"
+        },
+        ".upstream/artifacts/rc-select-1.10.1/es/hooks/useCache.js": {
+          "bytes": 1226,
+          "sha256": "b1180e3255c330d9a5119e5c377211d491e5722a919ed2c142b247b955d401c6"
+        },
+        ".upstream/artifacts/rc-select-1.10.1/es/BaseSelect/index.d.ts": {
+          "bytes": 5765,
+          "sha256": "3652ecaf4bf43510e58864a6f7544a802b8cdcc7a823280966e705bf6c396fcb"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/matrix.json": {
+          "bytes": 7292,
+          "sha256": "9703b32f818b104c155ad8a2c0d78ae8c2f198c572fbef433c953ccf2d9ffdef"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/source-witnesses.json": {
+          "bytes": 11348,
+          "sha256": "e1fd4167514b63d98eaef69646b39a291fe4d3ed31e6240d2be25439017762ba"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/oxlint.validation.json": {
+          "bytes": 387,
+          "sha256": "8cedda0bb978c0dbb636790860a6100620411f8f6bc186b20550e009df9540f9"
+        }
+      },
+      "errors": [],
+      "diagnostics": [
+        {
+          "current": {
+            "id": "select-close-handles-retained",
+            "phase": "mount"
+          },
+          "type": "error",
+          "message": "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag.",
+          "location": {
+            "url": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+            "line": 3438,
+            "column": 14,
+            "lineNumber": 3438,
+            "columnNumber": 14
+          }
+        }
+      ],
+      "plannedScopeCounts": {
+        "owners": 2,
+        "actions": 12,
+        "logicalInitialAndActionPoints": 14,
+        "retentionSetupButtonInvocations": 1,
+        "totalCallerButtonInvocations": 13,
+        "uniqueInitialSSRStates": 2,
+        "initialSSRSerializations": 4
+      },
+      "actualCounts": {
+        "owners": 2,
+        "actions": 12,
+        "logicalInitialAndActionPoints": 14,
+        "retentionSetupButtonInvocations": 1,
+        "totalCallerButtonInvocations": 13,
+        "uniqueInitialSSRStates": 0,
+        "initialSSRSerializations": 0
+      },
+      "browserOwnedResourceCounters": {
+        "measured": false,
+        "observers": null,
+        "mutations": null,
+        "frames": null,
+        "timers": null,
+        "ports": null
+      },
+      "assertions": "No expected removal, event, payload, identity or callback counts are manufactured; only actual Source traces recorded."
+    },
+    "ssr": {
+      "kind": "Original-public-tag-render-close-handles",
+      "mode": "ssr",
+      "version": "6.6.8",
+      "react": "18.3.1",
+      "rcSelect": "1.10.1",
+      "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+      "node": "v24.18.0",
+      "chromium": null,
+      "protocolSha256": "b1678a2f9ea70c1b9cff69534e0f36348ba6eec90b4087f24832ba5543b6eb96",
+      "inputPins": {
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/cases.mjs": {
+          "bytes": 2598,
+          "sha256": "edcd1a515d3ff4395a3b26d5481bf21c6e2690e35086e0d99a92ec7fcbe88f4e"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/source-app.mjs": {
+          "bytes": 10110,
+          "sha256": "0f9fab5f192a4b690a57fc7e18fdcb41548432e725279af34173d26940b574d8"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/reader.mjs": {
+          "bytes": 3746,
+          "sha256": "e67ed651aac3219e5e4241d0a29245993dbd387849c19713ac5a7af42d5ba781"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/shared.mjs": {
+          "bytes": 332,
+          "sha256": "7a98a8443b91c2b9e786c000dd4fcd7359356964d68460329b3afac391c2b57f"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/server.mjs": {
+          "bytes": 3484,
+          "sha256": "f20450b19d1d17547a5e2876e1720337a635b48cbf6e51b010172e81a7b19764"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/capture.mjs": {
+          "bytes": 10395,
+          "sha256": "54155fabb88a6bd6e3e1e62292d8a877fa2594e3ad0988c73d3df36ded257130"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/verify.mjs": {
+          "bytes": 1856,
+          "sha256": "75369e78f02a54fb2d5d58725e427eaaa3221ad3241c163f8ce3965bf890822e"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/preflight.mjs": {
+          "bytes": 2262,
+          "sha256": "a962f77e15f2e75ae92210082dece1d14b6d720099a6d6fa7def33b86886efbe"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/prepare-review.mjs": {
+          "bytes": 12621,
+          "sha256": "92a4daf1889f7ecf47770c6edfb6458135c9d2a671544a556c6dc6a8a13b7bca"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/freeze-protocol.mjs": {
+          "bytes": 1643,
+          "sha256": "825f01c01f854bdfce0531eb4ee1667488637b90816560dc846fedb2fed1c35b"
+        },
+        "tests/browser/select-surface-producers.mjs": {
+          "bytes": 4134,
+          "sha256": "40f7a24ab72043ea36871794a0bee004430c4201d795e592c9cece90a0cf3a9d"
+        },
+        "tests/browser/select-surface-driver.ts": {
+          "bytes": 2262,
+          "sha256": "03cea54b5b0e2d6205b10c2bdeaf3ca40ccf2edec03ac7f215ef3cb1c483b0d7"
+        },
+        ".upstream/artifacts/react-18.3.1/umd/react.production.min.js": {
+          "bytes": 10751,
+          "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+        },
+        ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js": {
+          "bytes": 131835,
+          "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+        },
+        "node_modules/dayjs/dayjs.min.js": {
+          "bytes": 7161,
+          "sha256": "0198dd0b1f760cded169c7e7ff7eaf56bc36c4c22c7c9b7c683e59437ed8700e"
+        },
+        ".upstream/artifacts/antd-6.6.8/dist/antd.js": {
+          "bytes": 4217353,
+          "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4"
+        },
+        ".upstream/artifacts/react-dom-18.3.1/umd/react-dom-server-legacy.browser.production.min.js": {
+          "bytes": 35128,
+          "sha256": "829b2f17da148d9bc5b635c329b67068e67e4bf7d6a5bb64e49e9e92483deee5"
+        },
+        ".upstream/artifacts/rc-component-select-1.10.1.tgz": {
+          "bytes": 55733,
+          "sha256": "e3f8d082e7260c39942785533d153df984c3d5a32854b75e0f9c3a408d3acc4d"
+        },
+        ".upstream/artifacts/rc-select-1.10.1/es/SelectInput/Content/MultipleContent.js": {
+          "bytes": 5825,
+          "sha256": "c39c0a9330aebedff434740cb527a9771012866783ca61cb17371b81b4dae664"
+        },
+        ".upstream/artifacts/rc-select-1.10.1/es/BaseSelect/index.js": {
+          "bytes": 17660,
+          "sha256": "919654baea7e1ccc87cb1d97b86837645025f6c9efdfcdb6f4b41bf48767a131"
+        },
+        ".upstream/artifacts/rc-select-1.10.1/es/Select.js": {
+          "bytes": 19013,
+          "sha256": "d4394dd194f88c343c8a7dc94602d9643aadedc91d8b56a87e52e0c44d244992"
+        },
+        ".upstream/artifacts/rc-select-1.10.1/es/hooks/useCache.js": {
+          "bytes": 1226,
+          "sha256": "b1180e3255c330d9a5119e5c377211d491e5722a919ed2c142b247b955d401c6"
+        },
+        ".upstream/artifacts/rc-select-1.10.1/es/BaseSelect/index.d.ts": {
+          "bytes": 5765,
+          "sha256": "3652ecaf4bf43510e58864a6f7544a802b8cdcc7a823280966e705bf6c396fcb"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/matrix.json": {
+          "bytes": 7292,
+          "sha256": "9703b32f818b104c155ad8a2c0d78ae8c2f198c572fbef433c953ccf2d9ffdef"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/source-witnesses.json": {
+          "bytes": 11348,
+          "sha256": "e1fd4167514b63d98eaef69646b39a291fe4d3ed31e6240d2be25439017762ba"
+        },
+        ".upstream/artifacts/select-components-tag-close-handles-source-v1/oxlint.validation.json": {
+          "bytes": 387,
+          "sha256": "8cedda0bb978c0dbb636790860a6100620411f8f6bc186b20550e009df9540f9"
+        }
+      },
+      "errors": [],
+      "diagnostics": [
+        {
+          "current": {
+            "id": "select-close-handles-retained",
+            "phase": "initial-ssr"
+          },
+          "method": "renderToString",
+          "level": "error",
+          "message": "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag."
+        },
+        {
+          "current": {
+            "id": "select-close-handles-retained",
+            "phase": "initial-ssr"
+          },
+          "method": "renderToStaticMarkup",
+          "level": "error",
+          "message": "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag."
+        }
+      ],
+      "plannedScopeCounts": {
+        "owners": 2,
+        "actions": 12,
+        "logicalInitialAndActionPoints": 14,
+        "retentionSetupButtonInvocations": 1,
+        "totalCallerButtonInvocations": 13,
+        "uniqueInitialSSRStates": 2,
+        "initialSSRSerializations": 4
+      },
+      "actualCounts": {
+        "owners": 2,
+        "actions": 0,
+        "logicalInitialAndActionPoints": 0,
+        "retentionSetupButtonInvocations": 0,
+        "totalCallerButtonInvocations": 0,
+        "uniqueInitialSSRStates": 2,
+        "initialSSRSerializations": 4
+      },
+      "browserOwnedResourceCounters": {
+        "measured": false,
+        "observers": null,
+        "mutations": null,
+        "frames": null,
+        "timers": null,
+        "ports": null
+      },
+      "assertions": "No expected removal, event, payload, identity or callback counts are manufactured; only actual Source traces recorded."
+    }
+  },
+  "actualCounts": {
+    "csr": {
+      "owners": 2,
+      "actions": 12,
+      "logicalInitialAndActionPoints": 14,
+      "retentionSetupButtonInvocations": 1,
+      "totalCallerButtonInvocations": 13,
+      "uniqueInitialSSRStates": 0,
+      "initialSSRSerializations": 0
+    },
+    "ssr": {
+      "owners": 2,
+      "actions": 0,
+      "logicalInitialAndActionPoints": 0,
+      "retentionSetupButtonInvocations": 0,
+      "totalCallerButtonInvocations": 0,
+      "uniqueInitialSSRStates": 2,
+      "initialSSRSerializations": 4
+    }
+  },
+  "plannedScope": {
+    "owners": 2,
+    "actionsPerOwner": 6,
+    "modelAndCallbackActions": 12,
+    "logicalInitialAndActionPoints": 14,
+    "retentionSetupButtonInvocations": 1,
+    "totalCallerButtonInvocations": 13,
+    "uniqueInitialSSRStates": 2,
+    "initialSSRSerializationsPerRun": 4
+  },
+  "preservation": {
+    "frozenInputs": 26,
+    "oldReferences": 1503,
+    "wholeHistoricalStandTrees": 12,
+    "verifiedBeforeAndAfter": true,
+    "allFourOriginalRawCapturesUnchanged": true,
+    "historicalReports": {
+      "select-components-production": {
+        "path": ".upstream/artifacts/select-components-production/capture-final.json",
+        "bytes": 31970,
+        "sha256": "55968cb41ec6e834150bf17c1ab5e7e4e7f0a6ce39d23dbd1f937f2e2ca20732",
+        "status": "passed"
+      },
+      "select-components-hydration-production": {
+        "path": ".upstream/artifacts/select-components-hydration-production/capture-disposal-fixed.json",
+        "bytes": 99841,
+        "sha256": "0392c27711f9f10fe67abad858e97f135a26c7dc71c33742be2a8231fc717159",
+        "status": "passed"
+      },
+      "select-components-modes-production": {
+        "path": ".upstream/artifacts/select-components-modes-production/capture-second.json",
+        "bytes": 63177,
+        "sha256": "0d4848ba8c2c6659113238659e02affd6bd202af3737b7cf68ea5bfdfa930665",
+        "status": "passed"
+      },
+      "select-components-responsive-production": {
+        "path": ".upstream/artifacts/select-components-responsive-production/capture-first.json",
+        "bytes": 176218,
+        "sha256": "01d5165a2f5fa6b5c4bf53acf28d7ed321879714ab556ce97bcddc2ba6015971",
+        "status": "passed"
+      },
+      "select-components-own-style-production": {
+        "path": ".upstream/artifacts/select-components-own-style-production/capture-first.json",
+        "bytes": 257747,
+        "sha256": "32accf1688f111f435786e09cececf2820d16673b25c17a2da691413c30f7891",
+        "status": "failed"
+      },
+      "select-components-own-style-production-v2": {
+        "path": ".upstream/artifacts/select-components-own-style-production-v2/capture-first.json",
+        "bytes": 195614,
+        "sha256": "ff0fc338b9fdf92299299a6a3512862e7e025474ac9551e304f2b25bfc4384d5",
+        "status": "passed"
+      },
+      "select-components-own-style-production-v3": {
+        "path": ".upstream/artifacts/select-components-own-style-production-v3/capture-first.json",
+        "bytes": 195461,
+        "sha256": "e794de390527f0e830b7f9e5fb9f291785efc775811929d0cb79bad3547125ad",
+        "status": "passed"
+      },
+      "select-components-own-style-production-v4": {
+        "path": ".upstream/artifacts/select-components-own-style-production-v4/capture-first.json",
+        "bytes": 195461,
+        "sha256": "fd49b6bd769f619a7a017e41e0079b306a4be99a0f27dbfecf292bb3eb7c7ad1",
+        "status": "passed"
+      },
+      "select-components-responsive-tag-prefix-production": {
+        "path": ".upstream/artifacts/select-components-responsive-tag-prefix-production/capture-first.json",
+        "bytes": 54064,
+        "sha256": "7e4b01d46ef9a3e7fb21a284da96a88085ee84368324e466f7cd5a43af66ee5c",
+        "status": "passed"
+      },
+      "select-components-responsive-tag-prefix-production-v2": {
+        "path": ".upstream/artifacts/select-components-responsive-tag-prefix-production-v2/capture-first.json",
+        "bytes": 56826,
+        "sha256": "4b8a4f9558a0ced56a47cd7f66ec5b31bb1e4fe3d12018f4b9aca00e7bb2074d",
+        "status": "passed"
+      },
+      "select-components-responsive-tag-prefix-keyboard-production-v2": {
+        "path": ".upstream/artifacts/select-components-responsive-tag-prefix-keyboard-production-v2/capture-first.json",
+        "bytes": 42839,
+        "sha256": "394071da26996b95bc08994f0a5174ffc772a2dc86f2a29cfebbfe9ab0cb0a03",
+        "status": "failed"
+      },
+      "select-components-responsive-tag-prefix-keyboard-production-v3": {
+        "path": ".upstream/artifacts/select-components-responsive-tag-prefix-keyboard-production-v3/capture-first.json",
+        "bytes": 41022,
+        "sha256": "101a5efa41f9a619cdacd5badb5cb68e569c10e43065bf92b6643efdf0dae157",
+        "status": "passed"
+      }
+    }
+  },
+  "diagnostics": {
+    "csr": {
+      "errors": 0,
+      "diagnostics": 1
+    },
+    "ssr": {
+      "errors": 0,
+      "diagnostics": 2
+    },
+    "message": "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag.",
+    "reason": "The frozen tags owner includes the unselected disabled locked option. Every actual Source warning is retained."
+  },
+  "resources": {
+    "browserOwnedResourceCounters": {
+      "measured": false,
+      "observers": null,
+      "mutations": null,
+      "frames": null,
+      "timers": null,
+      "ports": null
+    },
+    "actualSSRForbiddenCounters": {
+      "timers": 0,
+      "frames": 0,
+      "measurements": 0,
+      "microtasks": 0,
+      "ports": 0
+    }
+  },
+  "serialization": {
+    "format": "gzip",
+    "level": 9,
+    "losslessWholeRawBytes": true,
+    "fieldsDropped": [],
+    "rewrittenValues": [],
+    "normalizedSourceFields": [],
+    "onePortablePerModeBecauseBothIndependentRawCapturesAreWholeByteEqual": true
+  },
+  "expectedValuePolicy": "No Native-derived expected values or framework transforms. The public loader returns full actual Source cases and raw chronological ledgers."
+}

@@ -1,0 +1,2914 @@
+{
+  "status": "measured-original-source-reviewed-no-portable-generated",
+  "protocolSha256": "b1678a2f9ea70c1b9cff69534e0f36348ba6eec90b4087f24832ba5543b6eb96",
+  "pairs": {
+    "csr": {
+      "first": {
+        "path": ".upstream/artifacts/select-components-tag-close-handles-source-v1/csr-source-first.json",
+        "bytes": 21000790,
+        "sha256": "5e774df2b534a29e49a8beaf3938f37519abfa261153709393699bfe47acc179"
+      },
+      "repeat": {
+        "path": ".upstream/artifacts/select-components-tag-close-handles-source-v1/csr-source-repeat.json",
+        "bytes": 21000790,
+        "sha256": "5e774df2b534a29e49a8beaf3938f37519abfa261153709393699bfe47acc179"
+      },
+      "wholeByteEqual": true
+    },
+    "ssr": {
+      "first": {
+        "path": ".upstream/artifacts/select-components-tag-close-handles-source-v1/ssr-source-first.json",
+        "bytes": 1519632,
+        "sha256": "30146c5c2f432346fb6d98cf7c0c048502ae8a8860c57f5a282c06666f378030"
+      },
+      "repeat": {
+        "path": ".upstream/artifacts/select-components-tag-close-handles-source-v1/ssr-source-repeat.json",
+        "bytes": 1519632,
+        "sha256": "30146c5c2f432346fb6d98cf7c0c048502ae8a8860c57f5a282c06666f378030"
+      },
+      "wholeByteEqual": true
+    }
+  },
+  "CSR": {
+    "actualCounts": {
+      "owners": 2,
+      "actions": 12,
+      "logicalInitialAndActionPoints": 14,
+      "retentionSetupButtonInvocations": 1,
+      "totalCallerButtonInvocations": 13,
+      "uniqueInitialSSRStates": 0,
+      "initialSSRSerializations": 0
+    },
+    "diagnostics": [
+      {
+        "current": {
+          "id": "select-close-handles-retained",
+          "phase": "mount"
+        },
+        "type": "error",
+        "message": "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag.",
+        "location": {
+          "url": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+          "line": 3438,
+          "column": 14,
+          "lineNumber": 3438,
+          "columnNumber": 14
+        }
+      }
+    ],
+    "cases": [
+      {
+        "id": "select-close-handles-nonclosable",
+        "steps": 6,
+        "callerButtonInvocations": [
+          {
+            "actionId": "latest-locked",
+            "index": 0
+          },
+          {
+            "actionId": "reset-before-disable",
+            "index": 1
+          },
+          {
+            "actionId": "disable-root",
+            "index": 2
+          },
+          {
+            "actionId": "disabled-latest-a",
+            "index": 3
+          },
+          {
+            "actionId": "enable-reset",
+            "index": 4
+          },
+          {
+            "actionId": "enabled-latest-a",
+            "index": 5
+          }
+        ],
+        "setupCaptured": false,
+        "initialModel": [
+          "a",
+          "locked",
+          "b"
+        ],
+        "phases": [
+          {
+            "id": "latest-locked",
+            "model": [
+              "a",
+              "b"
+            ],
+            "modelIdentity": 176,
+            "optionsIdentity": 124,
+            "disabled": false,
+            "open": false,
+            "eventCount": 4,
+            "producerCount": 41,
+            "retainedHandles": []
+          },
+          {
+            "id": "reset-before-disable",
+            "model": [
+              "a",
+              "locked",
+              "b"
+            ],
+            "modelIdentity": 353,
+            "optionsIdentity": 124,
+            "disabled": false,
+            "open": false,
+            "eventCount": 4,
+            "producerCount": 57,
+            "retainedHandles": []
+          },
+          {
+            "id": "disable-root",
+            "model": [
+              "a",
+              "locked",
+              "b"
+            ],
+            "modelIdentity": 353,
+            "optionsIdentity": 124,
+            "disabled": true,
+            "open": false,
+            "eventCount": 4,
+            "producerCount": 81,
+            "retainedHandles": []
+          },
+          {
+            "id": "disabled-latest-a",
+            "model": [
+              "locked",
+              "b"
+            ],
+            "modelIdentity": 488,
+            "optionsIdentity": 124,
+            "disabled": true,
+            "open": false,
+            "eventCount": 8,
+            "producerCount": 98,
+            "retainedHandles": []
+          },
+          {
+            "id": "enable-reset",
+            "model": [
+              "a",
+              "locked",
+              "b"
+            ],
+            "modelIdentity": 665,
+            "optionsIdentity": 124,
+            "disabled": false,
+            "open": false,
+            "eventCount": 8,
+            "producerCount": 114,
+            "retainedHandles": []
+          },
+          {
+            "id": "enabled-latest-a",
+            "model": [
+              "locked",
+              "b"
+            ],
+            "modelIdentity": 676,
+            "optionsIdentity": 124,
+            "disabled": false,
+            "open": false,
+            "eventCount": 12,
+            "producerCount": 131,
+            "retainedHandles": []
+          }
+        ],
+        "invocations": [
+          {
+            "id": "latest-locked",
+            "infoIdentity": 97,
+            "callbackIdentity": 98,
+            "infoOwnKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "label": "Locked old",
+            "value": "locked",
+            "index": 1,
+            "disabled": true,
+            "closable": false,
+            "callback": {
+              "length": 1,
+              "name": "onClose"
+            },
+            "callbackOwnKeys": [
+              "length",
+              "name"
+            ],
+            "callbackDescriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "callbackIsInfoOnClose": true,
+            "sameInfoAsLastProduced": true,
+            "sameCallbackAsLastProduced": true,
+            "actualArgumentCount": 1,
+            "arguments": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "0",
+                  "value": {
+                    "$": "undefined"
+                  }
+                },
+                {
+                  "key": "length",
+                  "value": 1
+                }
+              ]
+            },
+            "result": {
+              "$": "undefined"
+            },
+            "thrown": null,
+            "eventKinds": [
+              "invoke-before",
+              "change",
+              "deselect",
+              "invoke-after"
+            ],
+            "actualDeselectOptions": [
+              {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "key",
+                    "value": "option-locked"
+                  },
+                  {
+                    "key": "value",
+                    "value": "locked"
+                  },
+                  {
+                    "key": "label",
+                    "value": "Locked old"
+                  },
+                  {
+                    "key": "disabled",
+                    "value": true
+                  },
+                  {
+                    "key": "marker",
+                    "value": "initial-locked"
+                  },
+                  {
+                    "key": "props",
+                    "accessor": {
+                      "get": {
+                        "$": "function",
+                        "name": "get",
+                        "own": [
+                          {
+                            "key": "length",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "number"
+                          },
+                          {
+                            "key": "name",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "string"
+                          }
+                        ]
+                      },
+                      "set": null
+                    }
+                  }
+                ]
+              }
+            ],
+            "actualChangeModels": [
+              [
+                "a",
+                "b"
+              ]
+            ]
+          },
+          {
+            "id": "disabled-latest-a",
+            "infoIdentity": 444,
+            "callbackIdentity": 445,
+            "infoOwnKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "label": "Alpha old",
+            "value": "a",
+            "index": 0,
+            "disabled": {
+              "$": "undefined"
+            },
+            "closable": false,
+            "callback": {
+              "length": 1,
+              "name": "onClose"
+            },
+            "callbackOwnKeys": [
+              "length",
+              "name"
+            ],
+            "callbackDescriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "callbackIsInfoOnClose": true,
+            "sameInfoAsLastProduced": true,
+            "sameCallbackAsLastProduced": true,
+            "actualArgumentCount": 1,
+            "arguments": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "0",
+                  "value": {
+                    "$": "undefined"
+                  }
+                },
+                {
+                  "key": "length",
+                  "value": 1
+                }
+              ]
+            },
+            "result": {
+              "$": "undefined"
+            },
+            "thrown": null,
+            "eventKinds": [
+              "invoke-before",
+              "change",
+              "deselect",
+              "invoke-after"
+            ],
+            "actualDeselectOptions": [
+              {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "key",
+                    "value": "option-a"
+                  },
+                  {
+                    "key": "value",
+                    "value": "a"
+                  },
+                  {
+                    "key": "label",
+                    "value": "Alpha old"
+                  },
+                  {
+                    "key": "marker",
+                    "value": "initial-a"
+                  },
+                  {
+                    "key": "props",
+                    "accessor": {
+                      "get": {
+                        "$": "function",
+                        "name": "get",
+                        "own": [
+                          {
+                            "key": "length",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "number"
+                          },
+                          {
+                            "key": "name",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "string"
+                          }
+                        ]
+                      },
+                      "set": null
+                    }
+                  }
+                ]
+              }
+            ],
+            "actualChangeModels": [
+              [
+                "locked",
+                "b"
+              ]
+            ]
+          },
+          {
+            "id": "enabled-latest-a",
+            "infoIdentity": 631,
+            "callbackIdentity": 632,
+            "infoOwnKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "label": "Alpha old",
+            "value": "a",
+            "index": 0,
+            "disabled": {
+              "$": "undefined"
+            },
+            "closable": true,
+            "callback": {
+              "length": 1,
+              "name": "onClose"
+            },
+            "callbackOwnKeys": [
+              "length",
+              "name"
+            ],
+            "callbackDescriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "callbackIsInfoOnClose": true,
+            "sameInfoAsLastProduced": true,
+            "sameCallbackAsLastProduced": true,
+            "actualArgumentCount": 1,
+            "arguments": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "0",
+                  "value": {
+                    "$": "undefined"
+                  }
+                },
+                {
+                  "key": "length",
+                  "value": 1
+                }
+              ]
+            },
+            "result": {
+              "$": "undefined"
+            },
+            "thrown": null,
+            "eventKinds": [
+              "invoke-before",
+              "change",
+              "deselect",
+              "invoke-after"
+            ],
+            "actualDeselectOptions": [
+              {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "key",
+                    "value": "option-a"
+                  },
+                  {
+                    "key": "value",
+                    "value": "a"
+                  },
+                  {
+                    "key": "label",
+                    "value": "Alpha old"
+                  },
+                  {
+                    "key": "marker",
+                    "value": "initial-a"
+                  },
+                  {
+                    "key": "props",
+                    "accessor": {
+                      "get": {
+                        "$": "function",
+                        "name": "get",
+                        "own": [
+                          {
+                            "key": "length",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "number"
+                          },
+                          {
+                            "key": "name",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "string"
+                          }
+                        ]
+                      },
+                      "set": null
+                    }
+                  }
+                ]
+              }
+            ],
+            "actualChangeModels": [
+              [
+                "locked",
+                "b"
+              ]
+            ]
+          }
+        ],
+        "retention": [],
+        "tagRenderCalls": 67,
+        "tagRenderShapeVariants": [
+          {
+            "ownKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "descriptors": [
+              {
+                "key": "label",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "value",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "index",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "disabled",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "closable",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "onClose",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "isMaxTag",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              }
+            ],
+            "isMaxTag": true,
+            "undefinedOwnKeys": [
+              "value",
+              "index",
+              "onClose"
+            ]
+          },
+          {
+            "ownKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "descriptors": [
+              {
+                "key": "label",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "value",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "index",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "disabled",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "closable",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "onClose",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "isMaxTag",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              }
+            ],
+            "isMaxTag": false,
+            "undefinedOwnKeys": [
+              "disabled"
+            ]
+          },
+          {
+            "ownKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "descriptors": [
+              {
+                "key": "label",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "value",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "index",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "disabled",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "closable",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "onClose",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "isMaxTag",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              }
+            ],
+            "isMaxTag": false,
+            "undefinedOwnKeys": []
+          }
+        ],
+        "allEventKinds": [
+          "invoke-before",
+          "change",
+          "deselect",
+          "invoke-after",
+          "invoke-before",
+          "change",
+          "deselect",
+          "invoke-after",
+          "invoke-before",
+          "change",
+          "deselect",
+          "invoke-after"
+        ],
+        "sameRootAllPoints": true,
+        "sameEditorAllPoints": true,
+        "activeElementTags": [
+          "BODY",
+          "BODY",
+          "BODY",
+          "BODY",
+          "BODY",
+          "BODY",
+          "BODY"
+        ],
+        "cleanup": {
+          "refs": {
+            "control": true,
+            "root": true,
+            "editor": true
+          },
+          "ownerCount": 0,
+          "popupCount": 0,
+          "retainedConnected": [
+            {
+              "identity": 1,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 2,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 3,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 4,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 5,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 6,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 7,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 8,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 9,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 10,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 11,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 12,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 13,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 14,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 15,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 16,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 17,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 18,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 19,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 20,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 21,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 22,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 23,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 24,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 25,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 26,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 27,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 28,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 29,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 30,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 31,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 32,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 33,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 34,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 35,
+              "connected": true,
+              "ownedAtFirstObservation": false
+            },
+            {
+              "identity": 36,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 37,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 38,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 39,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 40,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 41,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 42,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 43,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            }
+          ],
+          "eventCount": 12,
+          "lateEventCount": 12,
+          "ownerUnchangedAfter1000ms": true
+        },
+        "networkFailures": [],
+        "badHTTP": []
+      },
+      {
+        "id": "select-close-handles-retained",
+        "steps": 6,
+        "callerButtonInvocations": [
+          {
+            "actionId": "retain-initial-a",
+            "index": -1
+          },
+          {
+            "actionId": "replace-options",
+            "index": 0
+          },
+          {
+            "actionId": "invoke-initial-a",
+            "index": 1
+          },
+          {
+            "actionId": "invoke-save-latest-a",
+            "index": 2
+          },
+          {
+            "actionId": "replay-after-remove",
+            "index": 3
+          },
+          {
+            "actionId": "readd-model",
+            "index": 4
+          },
+          {
+            "actionId": "replay-after-readd",
+            "index": 5
+          }
+        ],
+        "setupCaptured": true,
+        "initialModel": [
+          "a",
+          "b"
+        ],
+        "phases": [
+          {
+            "id": "replace-options",
+            "model": [
+              "a",
+              "b"
+            ],
+            "modelIdentity": 99,
+            "optionsIdentity": 105,
+            "disabled": false,
+            "open": false,
+            "eventCount": 0,
+            "producerCount": 24,
+            "retainedHandles": [
+              {
+                "slot": "initial-a",
+                "infoIdentity": 73,
+                "callbackIdentity": 74,
+                "sameInfoAsLastProduced": false,
+                "sameCallbackAsLastProduced": false,
+                "currentlySelected": true
+              }
+            ]
+          },
+          {
+            "id": "invoke-initial-a",
+            "model": [
+              "a",
+              "b"
+            ],
+            "modelIdentity": 99,
+            "optionsIdentity": 105,
+            "disabled": false,
+            "open": false,
+            "eventCount": 3,
+            "producerCount": 30,
+            "retainedHandles": [
+              {
+                "slot": "initial-a",
+                "infoIdentity": 73,
+                "callbackIdentity": 74,
+                "sameInfoAsLastProduced": false,
+                "sameCallbackAsLastProduced": false,
+                "currentlySelected": true
+              }
+            ]
+          },
+          {
+            "id": "invoke-save-latest-a",
+            "model": [
+              "b"
+            ],
+            "modelIdentity": 231,
+            "optionsIdentity": 105,
+            "disabled": false,
+            "open": false,
+            "eventCount": 7,
+            "producerCount": 41,
+            "retainedHandles": [
+              {
+                "slot": "initial-a",
+                "infoIdentity": 73,
+                "callbackIdentity": 74,
+                "sameInfoAsLastProduced": false,
+                "sameCallbackAsLastProduced": false,
+                "currentlySelected": false
+              },
+              {
+                "slot": "invoked-a",
+                "infoIdentity": 198,
+                "callbackIdentity": 199,
+                "sameInfoAsLastProduced": true,
+                "sameCallbackAsLastProduced": true,
+                "currentlySelected": false
+              }
+            ]
+          },
+          {
+            "id": "replay-after-remove",
+            "model": [
+              "b"
+            ],
+            "modelIdentity": 231,
+            "optionsIdentity": 105,
+            "disabled": false,
+            "open": false,
+            "eventCount": 10,
+            "producerCount": 45,
+            "retainedHandles": [
+              {
+                "slot": "initial-a",
+                "infoIdentity": 73,
+                "callbackIdentity": 74,
+                "sameInfoAsLastProduced": false,
+                "sameCallbackAsLastProduced": false,
+                "currentlySelected": false
+              },
+              {
+                "slot": "invoked-a",
+                "infoIdentity": 198,
+                "callbackIdentity": 199,
+                "sameInfoAsLastProduced": true,
+                "sameCallbackAsLastProduced": true,
+                "currentlySelected": false
+              }
+            ]
+          },
+          {
+            "id": "readd-model",
+            "model": [
+              "a",
+              "b"
+            ],
+            "modelIdentity": 399,
+            "optionsIdentity": 105,
+            "disabled": false,
+            "open": false,
+            "eventCount": 10,
+            "producerCount": 57,
+            "retainedHandles": [
+              {
+                "slot": "initial-a",
+                "infoIdentity": 73,
+                "callbackIdentity": 74,
+                "sameInfoAsLastProduced": false,
+                "sameCallbackAsLastProduced": false,
+                "currentlySelected": true
+              },
+              {
+                "slot": "invoked-a",
+                "infoIdentity": 198,
+                "callbackIdentity": 199,
+                "sameInfoAsLastProduced": false,
+                "sameCallbackAsLastProduced": false,
+                "currentlySelected": true
+              }
+            ]
+          },
+          {
+            "id": "replay-after-readd",
+            "model": [
+              "a",
+              "b"
+            ],
+            "modelIdentity": 399,
+            "optionsIdentity": 105,
+            "disabled": false,
+            "open": false,
+            "eventCount": 13,
+            "producerCount": 63,
+            "retainedHandles": [
+              {
+                "slot": "initial-a",
+                "infoIdentity": 73,
+                "callbackIdentity": 74,
+                "sameInfoAsLastProduced": false,
+                "sameCallbackAsLastProduced": false,
+                "currentlySelected": true
+              },
+              {
+                "slot": "invoked-a",
+                "infoIdentity": 198,
+                "callbackIdentity": 199,
+                "sameInfoAsLastProduced": false,
+                "sameCallbackAsLastProduced": false,
+                "currentlySelected": true
+              }
+            ]
+          }
+        ],
+        "invocations": [
+          {
+            "id": "invoke-initial-a",
+            "infoIdentity": 73,
+            "callbackIdentity": 74,
+            "infoOwnKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "label": "Alpha old",
+            "value": "a",
+            "index": 0,
+            "disabled": {
+              "$": "undefined"
+            },
+            "closable": true,
+            "callback": {
+              "length": 1,
+              "name": "onClose"
+            },
+            "callbackOwnKeys": [
+              "length",
+              "name"
+            ],
+            "callbackDescriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "callbackIsInfoOnClose": true,
+            "sameInfoAsLastProduced": false,
+            "sameCallbackAsLastProduced": false,
+            "actualArgumentCount": 1,
+            "arguments": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "0",
+                  "value": {
+                    "$": "undefined"
+                  }
+                },
+                {
+                  "key": "length",
+                  "value": 1
+                }
+              ]
+            },
+            "result": {
+              "$": "undefined"
+            },
+            "thrown": null,
+            "eventKinds": [
+              "invoke-before",
+              "deselect",
+              "invoke-after"
+            ],
+            "actualDeselectOptions": [
+              {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "key",
+                    "value": "option-a"
+                  },
+                  {
+                    "key": "value",
+                    "value": "a"
+                  },
+                  {
+                    "key": "label",
+                    "value": "Alpha updated"
+                  },
+                  {
+                    "key": "marker",
+                    "value": "updated-a"
+                  },
+                  {
+                    "key": "props",
+                    "accessor": {
+                      "get": {
+                        "$": "function",
+                        "name": "get",
+                        "own": [
+                          {
+                            "key": "length",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "number"
+                          },
+                          {
+                            "key": "name",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "string"
+                          }
+                        ]
+                      },
+                      "set": null
+                    }
+                  }
+                ]
+              }
+            ],
+            "actualChangeModels": []
+          },
+          {
+            "id": "invoke-save-latest-a",
+            "infoIdentity": 198,
+            "callbackIdentity": 199,
+            "infoOwnKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "label": "Alpha updated",
+            "value": "a",
+            "index": 0,
+            "disabled": {
+              "$": "undefined"
+            },
+            "closable": true,
+            "callback": {
+              "length": 1,
+              "name": "onClose"
+            },
+            "callbackOwnKeys": [
+              "length",
+              "name"
+            ],
+            "callbackDescriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "callbackIsInfoOnClose": true,
+            "sameInfoAsLastProduced": true,
+            "sameCallbackAsLastProduced": true,
+            "actualArgumentCount": 1,
+            "arguments": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "0",
+                  "value": {
+                    "$": "undefined"
+                  }
+                },
+                {
+                  "key": "length",
+                  "value": 1
+                }
+              ]
+            },
+            "result": {
+              "$": "undefined"
+            },
+            "thrown": null,
+            "eventKinds": [
+              "invoke-before",
+              "change",
+              "deselect",
+              "invoke-after"
+            ],
+            "actualDeselectOptions": [
+              {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "key",
+                    "value": "option-a"
+                  },
+                  {
+                    "key": "value",
+                    "value": "a"
+                  },
+                  {
+                    "key": "label",
+                    "value": "Alpha updated"
+                  },
+                  {
+                    "key": "marker",
+                    "value": "updated-a"
+                  },
+                  {
+                    "key": "props",
+                    "accessor": {
+                      "get": {
+                        "$": "function",
+                        "name": "get",
+                        "own": [
+                          {
+                            "key": "length",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "number"
+                          },
+                          {
+                            "key": "name",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "string"
+                          }
+                        ]
+                      },
+                      "set": null
+                    }
+                  }
+                ]
+              }
+            ],
+            "actualChangeModels": [
+              [
+                "b"
+              ]
+            ]
+          },
+          {
+            "id": "replay-after-remove",
+            "infoIdentity": 198,
+            "callbackIdentity": 199,
+            "infoOwnKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "label": "Alpha updated",
+            "value": "a",
+            "index": 0,
+            "disabled": {
+              "$": "undefined"
+            },
+            "closable": true,
+            "callback": {
+              "length": 1,
+              "name": "onClose"
+            },
+            "callbackOwnKeys": [
+              "length",
+              "name"
+            ],
+            "callbackDescriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "callbackIsInfoOnClose": true,
+            "sameInfoAsLastProduced": true,
+            "sameCallbackAsLastProduced": true,
+            "actualArgumentCount": 1,
+            "arguments": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "0",
+                  "value": {
+                    "$": "undefined"
+                  }
+                },
+                {
+                  "key": "length",
+                  "value": 1
+                }
+              ]
+            },
+            "result": {
+              "$": "undefined"
+            },
+            "thrown": null,
+            "eventKinds": [
+              "invoke-before",
+              "deselect",
+              "invoke-after"
+            ],
+            "actualDeselectOptions": [
+              {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "key",
+                    "value": "option-a"
+                  },
+                  {
+                    "key": "value",
+                    "value": "a"
+                  },
+                  {
+                    "key": "label",
+                    "value": "Alpha updated"
+                  },
+                  {
+                    "key": "marker",
+                    "value": "updated-a"
+                  },
+                  {
+                    "key": "props",
+                    "accessor": {
+                      "get": {
+                        "$": "function",
+                        "name": "get",
+                        "own": [
+                          {
+                            "key": "length",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "number"
+                          },
+                          {
+                            "key": "name",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "string"
+                          }
+                        ]
+                      },
+                      "set": null
+                    }
+                  }
+                ]
+              }
+            ],
+            "actualChangeModels": []
+          },
+          {
+            "id": "replay-after-readd",
+            "infoIdentity": 198,
+            "callbackIdentity": 199,
+            "infoOwnKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "label": "Alpha updated",
+            "value": "a",
+            "index": 0,
+            "disabled": {
+              "$": "undefined"
+            },
+            "closable": true,
+            "callback": {
+              "length": 1,
+              "name": "onClose"
+            },
+            "callbackOwnKeys": [
+              "length",
+              "name"
+            ],
+            "callbackDescriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "name",
+                "enumerable": false,
+                "configurable": true,
+                "writable": false,
+                "kind": "value",
+                "valueType": "string"
+              }
+            ],
+            "callbackIsInfoOnClose": true,
+            "sameInfoAsLastProduced": false,
+            "sameCallbackAsLastProduced": false,
+            "actualArgumentCount": 1,
+            "arguments": {
+              "$": "array",
+              "properties": [
+                {
+                  "key": "0",
+                  "value": {
+                    "$": "undefined"
+                  }
+                },
+                {
+                  "key": "length",
+                  "value": 1
+                }
+              ]
+            },
+            "result": {
+              "$": "undefined"
+            },
+            "thrown": null,
+            "eventKinds": [
+              "invoke-before",
+              "deselect",
+              "invoke-after"
+            ],
+            "actualDeselectOptions": [
+              {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "key",
+                    "value": "option-a"
+                  },
+                  {
+                    "key": "value",
+                    "value": "a"
+                  },
+                  {
+                    "key": "label",
+                    "value": "Alpha updated"
+                  },
+                  {
+                    "key": "marker",
+                    "value": "updated-a"
+                  },
+                  {
+                    "key": "props",
+                    "accessor": {
+                      "get": {
+                        "$": "function",
+                        "name": "get",
+                        "own": [
+                          {
+                            "key": "length",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "number"
+                          },
+                          {
+                            "key": "name",
+                            "enumerable": false,
+                            "configurable": true,
+                            "writable": false,
+                            "kind": "value",
+                            "valueType": "string"
+                          }
+                        ]
+                      },
+                      "set": null
+                    }
+                  }
+                ]
+              }
+            ],
+            "actualChangeModels": []
+          }
+        ],
+        "retention": [
+          {
+            "actionIndex": -1,
+            "id": "retain-initial-a",
+            "reason": "retain-latest-public-callback-after-initial-settle",
+            "slot": "initial-a",
+            "handle": {
+              "value": "a",
+              "infoIdentity": 73,
+              "callbackIdentity": 74,
+              "info": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "label",
+                    "value": "Alpha old"
+                  },
+                  {
+                    "key": "value",
+                    "value": "a"
+                  },
+                  {
+                    "key": "index",
+                    "value": 0
+                  },
+                  {
+                    "key": "disabled",
+                    "value": {
+                      "$": "undefined"
+                    }
+                  },
+                  {
+                    "key": "closable",
+                    "value": true
+                  },
+                  {
+                    "key": "onClose",
+                    "value": {
+                      "$": "function",
+                      "name": "onClose",
+                      "own": [
+                        {
+                          "key": "length",
+                          "enumerable": false,
+                          "configurable": true,
+                          "writable": false,
+                          "kind": "value",
+                          "valueType": "number"
+                        },
+                        {
+                          "key": "name",
+                          "enumerable": false,
+                          "configurable": true,
+                          "writable": false,
+                          "kind": "value",
+                          "valueType": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "isMaxTag",
+                    "value": false
+                  }
+                ]
+              },
+              "rawInfo": {
+                "root": {
+                  "ref": 73
+                },
+                "objects": [
+                  {
+                    "id": 73,
+                    "type": "object",
+                    "array": false,
+                    "authoredRole": null,
+                    "ownProperties": [
+                      {
+                        "key": "label",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "string"
+                      },
+                      {
+                        "key": "value",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "string"
+                      },
+                      {
+                        "key": "index",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "disabled",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "undefined"
+                      },
+                      {
+                        "key": "closable",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "boolean"
+                      },
+                      {
+                        "key": "onClose",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "function"
+                      },
+                      {
+                        "key": "isMaxTag",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "boolean"
+                      }
+                    ],
+                    "properties": [
+                      {
+                        "key": "label",
+                        "value": "Alpha old"
+                      },
+                      {
+                        "key": "value",
+                        "value": "a"
+                      },
+                      {
+                        "key": "index",
+                        "value": 0
+                      },
+                      {
+                        "key": "disabled",
+                        "value": {
+                          "$": "undefined"
+                        }
+                      },
+                      {
+                        "key": "closable",
+                        "value": true
+                      },
+                      {
+                        "key": "onClose",
+                        "value": {
+                          "ref": 74
+                        }
+                      },
+                      {
+                        "key": "isMaxTag",
+                        "value": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": 74,
+                    "type": "function",
+                    "array": false,
+                    "authoredRole": null,
+                    "ownProperties": [
+                      {
+                        "key": "length",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "name",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "string"
+                      }
+                    ],
+                    "properties": [
+                      {
+                        "key": "length",
+                        "value": 1
+                      },
+                      {
+                        "key": "name",
+                        "value": "onClose"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "callback": {
+                "$": "function",
+                "name": "onClose",
+                "own": [
+                  {
+                    "key": "length",
+                    "enumerable": false,
+                    "configurable": true,
+                    "writable": false,
+                    "kind": "value",
+                    "valueType": "number"
+                  },
+                  {
+                    "key": "name",
+                    "enumerable": false,
+                    "configurable": true,
+                    "writable": false,
+                    "kind": "value",
+                    "valueType": "string"
+                  }
+                ]
+              },
+              "rawCallback": {
+                "root": {
+                  "ref": 74
+                },
+                "objects": [
+                  {
+                    "id": 74,
+                    "type": "function",
+                    "array": false,
+                    "authoredRole": null,
+                    "ownProperties": [
+                      {
+                        "key": "length",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "name",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "string"
+                      }
+                    ],
+                    "properties": [
+                      {
+                        "key": "length",
+                        "value": 1
+                      },
+                      {
+                        "key": "name",
+                        "value": "onClose"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "callbackOwnKeys": [
+                "length",
+                "name"
+              ],
+              "callbackDescriptors": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "sameInfoAsLastProduced": true,
+              "sameCallbackAsLastProduced": true,
+              "callbackIsInfoOnClose": true
+            }
+          },
+          {
+            "actionIndex": 2,
+            "id": "invoke-save-latest-a",
+            "reason": "invoke-latest-and-retain-that-exact-function",
+            "slot": "invoked-a",
+            "handle": {
+              "value": "a",
+              "infoIdentity": 198,
+              "callbackIdentity": 199,
+              "info": {
+                "$": "object",
+                "properties": [
+                  {
+                    "key": "label",
+                    "value": "Alpha updated"
+                  },
+                  {
+                    "key": "value",
+                    "value": "a"
+                  },
+                  {
+                    "key": "index",
+                    "value": 0
+                  },
+                  {
+                    "key": "disabled",
+                    "value": {
+                      "$": "undefined"
+                    }
+                  },
+                  {
+                    "key": "closable",
+                    "value": true
+                  },
+                  {
+                    "key": "onClose",
+                    "value": {
+                      "$": "function",
+                      "name": "onClose",
+                      "own": [
+                        {
+                          "key": "length",
+                          "enumerable": false,
+                          "configurable": true,
+                          "writable": false,
+                          "kind": "value",
+                          "valueType": "number"
+                        },
+                        {
+                          "key": "name",
+                          "enumerable": false,
+                          "configurable": true,
+                          "writable": false,
+                          "kind": "value",
+                          "valueType": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "key": "isMaxTag",
+                    "value": false
+                  }
+                ]
+              },
+              "rawInfo": {
+                "root": {
+                  "ref": 198
+                },
+                "objects": [
+                  {
+                    "id": 198,
+                    "type": "object",
+                    "array": false,
+                    "authoredRole": null,
+                    "ownProperties": [
+                      {
+                        "key": "label",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "string"
+                      },
+                      {
+                        "key": "value",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "string"
+                      },
+                      {
+                        "key": "index",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "disabled",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "undefined"
+                      },
+                      {
+                        "key": "closable",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "boolean"
+                      },
+                      {
+                        "key": "onClose",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "function"
+                      },
+                      {
+                        "key": "isMaxTag",
+                        "enumerable": true,
+                        "configurable": true,
+                        "writable": true,
+                        "kind": "value",
+                        "valueType": "boolean"
+                      }
+                    ],
+                    "properties": [
+                      {
+                        "key": "label",
+                        "value": "Alpha updated"
+                      },
+                      {
+                        "key": "value",
+                        "value": "a"
+                      },
+                      {
+                        "key": "index",
+                        "value": 0
+                      },
+                      {
+                        "key": "disabled",
+                        "value": {
+                          "$": "undefined"
+                        }
+                      },
+                      {
+                        "key": "closable",
+                        "value": true
+                      },
+                      {
+                        "key": "onClose",
+                        "value": {
+                          "ref": 199
+                        }
+                      },
+                      {
+                        "key": "isMaxTag",
+                        "value": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": 199,
+                    "type": "function",
+                    "array": false,
+                    "authoredRole": null,
+                    "ownProperties": [
+                      {
+                        "key": "length",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "name",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "string"
+                      }
+                    ],
+                    "properties": [
+                      {
+                        "key": "length",
+                        "value": 1
+                      },
+                      {
+                        "key": "name",
+                        "value": "onClose"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "callback": {
+                "$": "function",
+                "name": "onClose",
+                "own": [
+                  {
+                    "key": "length",
+                    "enumerable": false,
+                    "configurable": true,
+                    "writable": false,
+                    "kind": "value",
+                    "valueType": "number"
+                  },
+                  {
+                    "key": "name",
+                    "enumerable": false,
+                    "configurable": true,
+                    "writable": false,
+                    "kind": "value",
+                    "valueType": "string"
+                  }
+                ]
+              },
+              "rawCallback": {
+                "root": {
+                  "ref": 199
+                },
+                "objects": [
+                  {
+                    "id": 199,
+                    "type": "function",
+                    "array": false,
+                    "authoredRole": null,
+                    "ownProperties": [
+                      {
+                        "key": "length",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "number"
+                      },
+                      {
+                        "key": "name",
+                        "enumerable": false,
+                        "configurable": true,
+                        "writable": false,
+                        "kind": "value",
+                        "valueType": "string"
+                      }
+                    ],
+                    "properties": [
+                      {
+                        "key": "length",
+                        "value": 1
+                      },
+                      {
+                        "key": "name",
+                        "value": "onClose"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "callbackOwnKeys": [
+                "length",
+                "name"
+              ],
+              "callbackDescriptors": [
+                {
+                  "key": "length",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "number"
+                },
+                {
+                  "key": "name",
+                  "enumerable": false,
+                  "configurable": true,
+                  "writable": false,
+                  "kind": "value",
+                  "valueType": "string"
+                }
+              ],
+              "sameInfoAsLastProduced": true,
+              "sameCallbackAsLastProduced": true,
+              "callbackIsInfoOnClose": true
+            },
+            "savedExactInvokedFunction": true
+          }
+        ],
+        "tagRenderCalls": 32,
+        "tagRenderShapeVariants": [
+          {
+            "ownKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "descriptors": [
+              {
+                "key": "label",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "value",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "index",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "disabled",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "closable",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "onClose",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "isMaxTag",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              }
+            ],
+            "isMaxTag": true,
+            "undefinedOwnKeys": [
+              "value",
+              "index",
+              "onClose"
+            ]
+          },
+          {
+            "ownKeys": [
+              "label",
+              "value",
+              "index",
+              "disabled",
+              "closable",
+              "onClose",
+              "isMaxTag"
+            ],
+            "descriptors": [
+              {
+                "key": "label",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "value",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "string"
+              },
+              {
+                "key": "index",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "number"
+              },
+              {
+                "key": "disabled",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "undefined"
+              },
+              {
+                "key": "closable",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              },
+              {
+                "key": "onClose",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "function"
+              },
+              {
+                "key": "isMaxTag",
+                "enumerable": true,
+                "configurable": true,
+                "writable": true,
+                "kind": "value",
+                "valueType": "boolean"
+              }
+            ],
+            "isMaxTag": false,
+            "undefinedOwnKeys": [
+              "disabled"
+            ]
+          }
+        ],
+        "allEventKinds": [
+          "invoke-before",
+          "deselect",
+          "invoke-after",
+          "invoke-before",
+          "change",
+          "deselect",
+          "invoke-after",
+          "invoke-before",
+          "deselect",
+          "invoke-after",
+          "invoke-before",
+          "deselect",
+          "invoke-after"
+        ],
+        "sameRootAllPoints": true,
+        "sameEditorAllPoints": true,
+        "activeElementTags": [
+          "BODY",
+          "BODY",
+          "BODY",
+          "BODY",
+          "BODY",
+          "BODY",
+          "BODY"
+        ],
+        "cleanup": {
+          "refs": {
+            "control": true,
+            "root": true,
+            "editor": true
+          },
+          "ownerCount": 0,
+          "popupCount": 0,
+          "retainedConnected": [
+            {
+              "identity": 1,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 2,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 3,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 4,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 5,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 6,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 7,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 8,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 9,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 10,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 11,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 12,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 13,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 14,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 15,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 16,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 17,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 18,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 19,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 20,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 21,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 22,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 23,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 24,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 25,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 26,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 27,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 28,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 29,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 30,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 31,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 32,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 33,
+              "connected": true,
+              "ownedAtFirstObservation": false
+            },
+            {
+              "identity": 34,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 35,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 36,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            },
+            {
+              "identity": 37,
+              "connected": false,
+              "ownedAtFirstObservation": true
+            }
+          ],
+          "eventCount": 13,
+          "lateEventCount": 13,
+          "ownerUnchangedAfter1000ms": true
+        },
+        "networkFailures": [],
+        "badHTTP": []
+      }
+    ]
+  },
+  "SSR": {
+    "actualCounts": {
+      "owners": 2,
+      "actions": 0,
+      "logicalInitialAndActionPoints": 0,
+      "retentionSetupButtonInvocations": 0,
+      "totalCallerButtonInvocations": 0,
+      "uniqueInitialSSRStates": 2,
+      "initialSSRSerializations": 4
+    },
+    "diagnostics": [
+      {
+        "current": {
+          "id": "select-close-handles-retained",
+          "phase": "initial-ssr"
+        },
+        "method": "renderToString",
+        "level": "error",
+        "message": "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag."
+      },
+      {
+        "current": {
+          "id": "select-close-handles-retained",
+          "phase": "initial-ssr"
+        },
+        "method": "renderToStaticMarkup",
+        "level": "error",
+        "message": "Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag."
+      }
+    ],
+    "cases": [
+      {
+        "id": "select-close-handles-nonclosable",
+        "serializations": {
+          "renderToString": {
+            "fatal": null,
+            "domFree": true,
+            "refs": {
+              "control": true,
+              "root": true,
+              "editor": true
+            },
+            "resources": {
+              "timers": 0,
+              "frames": 0,
+              "measurements": 0,
+              "microtasks": 0,
+              "ports": 0
+            },
+            "htmlBytes": 2621,
+            "htmlSha256": "6f363104fa4c4966312caf8d12ff0e41b8a40e2a55b581e04ab24b504777e679",
+            "model": [
+              "a",
+              "locked",
+              "b"
+            ],
+            "producerCalls": 8,
+            "bodyCalls": 3,
+            "invocationCount": 0,
+            "eventCount": 0
+          },
+          "renderToStaticMarkup": {
+            "fatal": null,
+            "domFree": true,
+            "refs": {
+              "control": true,
+              "root": true,
+              "editor": true
+            },
+            "resources": {
+              "timers": 0,
+              "frames": 0,
+              "measurements": 0,
+              "microtasks": 0,
+              "ports": 0
+            },
+            "htmlBytes": 2621,
+            "htmlSha256": "6f363104fa4c4966312caf8d12ff0e41b8a40e2a55b581e04ab24b504777e679",
+            "model": [
+              "a",
+              "locked",
+              "b"
+            ],
+            "producerCalls": 8,
+            "bodyCalls": 3,
+            "invocationCount": 0,
+            "eventCount": 0
+          }
+        }
+      },
+      {
+        "id": "select-close-handles-retained",
+        "serializations": {
+          "renderToString": {
+            "fatal": null,
+            "domFree": true,
+            "refs": {
+              "control": true,
+              "root": true,
+              "editor": true
+            },
+            "resources": {
+              "timers": 0,
+              "frames": 0,
+              "measurements": 0,
+              "microtasks": 0,
+              "ports": 0
+            },
+            "htmlBytes": 2449,
+            "htmlSha256": "e2be9da699930f50b94da284c2ec89f2f6afbc299d4832d0953cf6c6f608a9d8",
+            "model": [
+              "a",
+              "b"
+            ],
+            "producerCalls": 6,
+            "bodyCalls": 2,
+            "invocationCount": 0,
+            "eventCount": 0
+          },
+          "renderToStaticMarkup": {
+            "fatal": null,
+            "domFree": true,
+            "refs": {
+              "control": true,
+              "root": true,
+              "editor": true
+            },
+            "resources": {
+              "timers": 0,
+              "frames": 0,
+              "measurements": 0,
+              "microtasks": 0,
+              "ports": 0
+            },
+            "htmlBytes": 2449,
+            "htmlSha256": "e2be9da699930f50b94da284c2ec89f2f6afbc299d4832d0953cf6c6f608a9d8",
+            "model": [
+              "a",
+              "b"
+            ],
+            "producerCalls": 6,
+            "bodyCalls": 2,
+            "invocationCount": 0,
+            "eventCount": 0
+          }
+        }
+      }
+    ]
+  },
+  "SourceBrowserResourceCounters": "unmeasured-null; no zero-resource claim",
+  "Native": "not-run",
+  "trackedWrites": false
+}
