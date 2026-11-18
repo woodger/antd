@@ -161,7 +161,7 @@ Day.js должен удовлетворять peer-диапазону ^1.11.11;
 | Switch | Checked/value aliases, source events, semantic config, refs, loading, клавиатура и native формы |
 | Pagination | Страницы, переходы по пять страниц, выбор pageSize, диапазон записей, размеры, RTL и локаль |
 | Table | Типизированные колонки и snippets, фильтры, стабильная сортировка одной колонки, локальная и серверная пагинация, выбор и раскрытие строк, закрепление заголовка и колонок, loading и пустые данные |
-| Modal | Нативный dialog, заголовок, footer snippet, закрытие, confirmLoading и callbacks |
+| Modal | Нативный dialog, заголовок, footer snippet, loading Skeleton, confirmLoading и callbacks |
 | Tour | Шаги, target/mask/gap, 12 размещений, controlled/default state, keyboard, snippets и semantic config |
 | Tooltip | Текст, hover/focus, bind:open, задержки, Escape, 12 положений, стрелка, автоматический переворот и aria-describedby |
 | Popover | Интерактивные snippets, click/hover/focus, bind:open, 12 положений, стрелка, автоматический переворот, клавиатура и возврат фокуса |
@@ -3699,6 +3699,17 @@ React DEV diagnostics пока не поддерживаются.
 
 Modal сохраняет нативный dialog, `bind:open`, footer/children snippets и существующие
 правила onOk/onCancel, confirmLoading, Escape и закрытия по фону.
+`loading` заменяет body на активный Skeleton без title с четырьмя строками и скрывает
+default/custom footer. Возврат к содержимому монтирует body и footer заново;
+локальный draft дочернего компонента сбрасывается. Dialog, header, title и close
+сохраняют DOM identity. Сам `loading` не блокирует закрытие; прежние правила
+`confirmLoading` сохранены. Физический placeholder получает `${prefixCls}-body-skeleton`,
+включая локальный prefix. Сохраняются нативное центрирование dialog, отдельные
+accessibility wrappers Skeleton, max-width containment и имена CSS keyframes.
+[Независимые Source-повторы](./tests/browser/fixtures/ant-design-modal-loading-source-manifest.json)
+проверяют 2 owners, 10 действий, 12 состояний и lifecycle после удаления.
+[Browser](./tests/browser/modal-loading.spec.ts) проверяет переходы и cleanup,
+[SSR](./tests/package/modal-loading.ssr.test.ts) — закрытый Native shell без DOM и timers.
 Title и children необязательны. Title принимает scalar либо Snippet; пустой/null/false
 title убирает header, число 0 остаётся видимым. Без видимого заголовка задайте
 aria-label или aria-labelledby. Явные ARIA-имена применяются к самому dialog;
@@ -3761,7 +3772,7 @@ selector или пустой результат getter используют body
 и DocumentFragment открытие ждёт вставки в document. Стили ShadowRoot подключает
 потребитель. Нативная модальность, fullscreen-размещение, inert, scroll lock и
 возврат фокуса сохраняются в любом контейнере. Прежний SSR shell и eagerly mounted
-children сохранены; полное API Modal, semantic styles и render hooks ещё требуют переноса.
+children при loading=false сохранены; полное API Modal, semantic styles и render hooks ещё требуют переноса.
 
 Эталонные зависимости — @rc-component/dialog 1.10.0 и portal 2.1.3;
 лицензии сохранены в [LICENSE.rc-dialog](./src/lib/vendor/LICENSE.rc-dialog) и

@@ -21773,6 +21773,34 @@
           "note": "Публичные ModalProps/ModalContent выделены в type boundary; прежний Modal.svelte type export сохранён. Missing/empty/null/false title не создаёт header, scalar/Snippet title связан с native h2 id, children optional. Explicit aria-labelledby/непустой aria-label имеют приоритет перед generated name. Native dialog/bind:open/SSR shell/centering/title close-space/callbacks и retained children сохранены; title updates не пересоздают input/dialog и не теряют draft/selection/focus. Общий аудит семейства и imperative API остаются отдельными задачами."
         },
         {
+          "id": "loading-body",
+          "title": "Loading Skeleton тела Modal",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Modal.svelte",
+            "src/lib/modal.types.ts",
+            "src/lib/modal-prefix.engine.ts",
+            "src/lib/Skeleton.svelte",
+            "tests/browser/fixtures/ModalLoadingCase.svelte",
+            "tests/browser/fixtures/ModalLoadingBody.svelte",
+            "tests/browser/fixtures/ModalLoadingFooter.svelte",
+            "tests/browser/modal-loading-reference.ts",
+            "tests/browser/fixtures/ant-design-modal-loading-source-manifest.json",
+            "tests/browser/fixtures/ant-design-modal-loading-reference.json.gz",
+            "tests/browser/fixtures/ant-design-modal-loading-source-protocol.json",
+            "tests/browser/fixtures/ant-design-modal-loading-source-repeat-proof.json",
+            "tests/package/modal-loading-source.test.ts",
+            "readme.md",
+            "tests/browser/modal-loading.spec.ts",
+            "tests/browser/modal-loading-assertions.ts",
+            "tests/browser/fixtures/modal-loading-native-skeleton-proof.json",
+            "tests/package/modal-loading-verifier.test.ts",
+            "tests/package/modal-loading.ssr.test.ts"
+          ],
+          "note": "Plain Modal.loading заменяет body на активный Skeleton без title с paragraph.rows=4 и скрывает default/custom footer. Возврат монтирует содержимое заново и сбрасывает draft; dialog/header/title/close сохраняются, loading не добавляет блокировку cancel; прежние confirmLoading guards сохранены. ConfirmLoading и controller/static APIs не расширены. Независимые whole-byte-equal Original CSR first/repeat:2owners/10actions/12points, default footer и local-prefix/custom ReactNode footer. Физический placeholder получает body-skeleton class и каноническое локально scoped CSS правило. Реальные DOM/CSSOM/boxes, refs, producer/lifecycle/event graphs и cleanup+1000ms сохранены полностью. Native dialog centering/top-layer, title IDs, callback API, закрытый SSR shell и Skeleton accessibility wrappers/containment/unhashed keyframes остаются прежними; Source portal SSR parity не заявляется."
+        },
+        {
           "id": "context-confirmations",
           "title": "Контекстные подтверждения createModal / ModalHolder",
           "state": "supported",
@@ -21796,7 +21824,7 @@
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Global static methods без holder, полный button/focusable/mask config, ConfigProvider.modal, semantic classNames/styles, loading/Skeleton и modalRender ещё не перенесены. Source centering/position и lifecycle требуют отдельного аудита относительно согласованной native реализации."
+          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Global static methods без holder, полный button/focusable/mask config, ConfigProvider.modal, semantic classNames/styles, modalRender ещё не перенесены. Source centering/position и lifecycle требуют отдельного аудита относительно согласованной native реализации."
         },
         {
           "id": "native-zero-title",
@@ -21870,7 +21898,7 @@
             "tests/browser/modal-prefix.spec.ts",
             "tests/package/modal-prefix.ssr.test.ts"
           ],
-          "note": "23 raw UMD конфигурации в normal/nested/reset scopes: aliases/cssVar, width, loading, close/footer, пять типов useModal и independent Button namespace. Local nonempty prefix wins, empty/undefined наследуют ConfigProvider. 58 исходных CSS rules изолированы по local/global prefixes, canonical tokens сохранены; responsive width variables следуют local namespace. Native dialog/centering/title close-space, confirmation body padding, IDs, callbacks и open/draft/focus/selection сохраняются при шести live transitions; config prefix обновляется через handle.update. Raw лишний Source Confirm header при local prefix отделён от public styles.header.display=none counterparts. Полный semantic/config/static API и общий аудит семейства остаются отдельно. Raw shared-class cache пропускает footer Button margin во вложенном alias scope; public fresh local prefix counterpart записан отдельно. Прежний Native disabled-loading и inline SVG сохраняются; Source public button props/icon counterpart отделён от raw loading."
+          "note": "23 raw UMD конфигурации в normal/nested/reset scopes: aliases/cssVar, width, loading, close/footer, пять типов useModal и independent Button namespace. Local nonempty prefix wins, empty/undefined наследуют ConfigProvider. 58 базовых CSS rules и отдельное каноническое body-skeleton правило изолированы по local/global prefixes, canonical tokens сохранены; responsive width variables следуют local namespace. Native dialog/centering/title close-space, confirmation body padding, IDs, callbacks и open/draft/focus/selection сохраняются при шести live transitions; config prefix обновляется через handle.update. Raw лишний Source Confirm header при local prefix отделён от public styles.header.display=none counterparts. Полный semantic/config/static API и общий аудит семейства остаются отдельно. Raw shared-class cache пропускает footer Button margin во вложенном alias scope; public fresh local prefix counterpart записан отдельно. Прежний Native disabled-loading и inline SVG сохраняются; Source public button props/icon counterpart отделён от raw loading."
         },
         {
           "id": "native-confirm-header-prefix",

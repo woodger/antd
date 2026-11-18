@@ -11,6 +11,7 @@
   import type { ModalContent, ModalProps as ModalComponentProps } from './modal.types';
   import Button from './Button.svelte';
   import Icon from './Icon.svelte';
+  import Skeleton from './Skeleton.svelte';
 
   export type ModalProps = ModalComponentProps;
 
@@ -27,6 +28,7 @@
     keyboard = true,
     mask,
     confirmLoading = false,
+    loading = false,
     okText,
     cancelText,
     onOk,
@@ -180,8 +182,8 @@
         </button>
       {/if}
       {#if hasTitle}<div data-ant-modal-header class={`${componentPrefix}-header`}><h2 id={titleId} data-ant-modal-title class={`${componentPrefix}-title`}>{@render content(title)}</h2></div>{/if}
-      <div data-ant-modal-body class={`${componentPrefix}-body`}>{@render children?.()}</div>
-      {#if footer !== null}
+      <div data-ant-modal-body class={`${componentPrefix}-body`}>{#if loading}<Skeleton active title={false} paragraph={{ rows: 4 }} rootClassName={`${componentPrefix}-body-skeleton`} />{:else}{@render children?.()}{/if}</div>
+      {#if footer !== null && !loading}
         <div data-ant-modal-footer class={`${componentPrefix}-footer`}>
           {#if footer}
             {@render footer()}

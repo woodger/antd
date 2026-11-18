@@ -1,5 +1,8 @@
 import template from './vendor/modal-prefix.css.js';
 
+// Правило из закреплённого Modal: существующий prefix-шаблон исключает Skeleton.
+const loadingTemplate = '.ant-modal .ant-modal-body .ant-modal-body-skeleton{width:100%;height:100%;display:flex;justify-content:center;align-items:center;margin:var(--ant-margin) auto;}';
+
 /** Modal/Confirm разделяют local classes и общий Button prefix; token marker остаётся canonical. */
 export function getModalPrefixCss(prefix: string, rootPrefix: string) {
   if (prefix === 'ant-modal' && rootPrefix === 'ant') return undefined;
@@ -11,7 +14,7 @@ export function getModalPrefixCss(prefix: string, rootPrefix: string) {
     '-confirm-info', '-confirm-success', '-confirm-error', '-confirm-warning', '-confirm-confirm'
   ]);
 
-  return template.replace(
+  return (template + loadingTemplate).replace(
     /\.ant-modal([-\w]*)|\.ant-btn([-\w]*)|--ant-modal-(xs|sm|md|lg|xl|xxl)-width|"ant-modal"|" ant-modal"/g,
     (
       match,

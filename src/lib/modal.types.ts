@@ -27,6 +27,8 @@ export interface ModalProps {
   mask?: { closable?: boolean; };
   /** @defaultValue false */
   confirmLoading?: boolean;
+  /** Показывает Skeleton тела и скрывает footer. */
+  loading?: boolean;
   okText?: string;
   cancelText?: string;
   onOk?: () => void;

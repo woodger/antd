@@ -100,7 +100,8 @@ test('Select consumes Escape before its containing Modal', async ({ page }) => {
   await select.click();
   await select.fill('Gamma');
 
-  await expect(dialog.getByRole('option', { name: 'Gamma', exact: true })).toBeVisible();
+  await expect(select).toHaveAttribute('aria-expanded', 'true');
+  await expect(dialog.getByRole('button', { name: 'Gamma', exact: true })).toBeVisible();
 
   await select.press('Escape');
 
