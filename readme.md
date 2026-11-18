@@ -7578,6 +7578,9 @@ previewFile/isImageUrl настраивают thumbnail. По умолчанию
 Непустой `thumbUrl` имеет приоритет над `url`. Пустой `thumbUrl` сохраняет
 изображение и preview по `url`, но не запускает `previewFile`: генерация нужна
 только при `thumbUrl === undefined` и наличии `originFileObj`.
+Изменение состояния, прочитанного внутри `previewFile`, само по себе не запускает
+генерацию повторно. Замена файла или обработчика сохраняет обычный пересчёт
+миниатюры; результат устаревшего Promise не заменяет актуальную миниатюру.
 [Raw-замеры](tests/browser/fixtures/ant-design-upload-thumbnail-fallback-reference.json),
 [browser](tests/browser/upload-thumbnail-fallback.spec.ts) и
 [SSR](tests/package/upload-thumbnail-fallback.ssr.test.ts) проверяют picture/card/circle,

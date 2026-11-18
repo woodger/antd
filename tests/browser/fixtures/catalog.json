@@ -2006,6 +2006,11 @@
     "root": "upload-thumbnail-fallback-fixture"
   },
   {
+    "id": "upload-preview-reactivity",
+    "module": "./UploadPreviewReactivityFixtures.svelte",
+    "root": "upload-preview-reactivity-fixture"
+  },
+  {
     "id": "upload-motion",
     "module": "./UploadMotionFixtures.svelte",
     "root": "upload-motion-fixture"

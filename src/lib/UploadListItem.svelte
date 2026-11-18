@@ -143,8 +143,9 @@
     thumbnail = '';
     const original = file.originFileObj;
     if (!picture || file.thumbUrl !== undefined || !original) return;
+    const preview = previewFile;
     let active = true;
-    void Promise.resolve(previewFile(original)).then(value => {
+    void Promise.resolve(untrack(() => preview(original))).then(value => {
       if (active)
         thumbnail = value || '';
     });

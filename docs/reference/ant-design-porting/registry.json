@@ -14001,7 +14001,9 @@
         "tests/browser/fixtures/UploadIconRenderScope.svelte",
         "tests/browser/fixtures/UploadIconRenderFixtures.svelte",
         "tests/browser/fixtures/ant-design-upload-icon-render-reference.json",
-        "tests/package/upload-icon-render.ssr.test.ts"
+        "tests/package/upload-icon-render.ssr.test.ts",
+        "tests/browser/fixtures/UploadPreviewReactivityFixtures.svelte",
+        "tests/browser/upload-preview-reactivity.spec.ts"
       ],
       "features": [
         {
@@ -14411,9 +14413,11 @@
             "tests/browser/fixtures/UploadThumbnailFallbackFixtures.svelte",
             "tests/browser/fixtures/ant-design-upload-thumbnail-fallback-reference.json",
             "tests/package/upload-thumbnail-fallback.ssr.test.ts",
-            "readme.md"
+            "readme.md",
+            "tests/browser/fixtures/UploadPreviewReactivityFixtures.svelte",
+            "tests/browser/upload-preview-reactivity.spec.ts"
           ],
-          "note": "Непустой thumbUrl имеет приоритет над url; пустой thumbUrl сохраняет URL изображения и preview, но не вызывает previewFile при originFileObj. Генерация сохраняет guard thumbUrl===undefined. 24 raw UMD cases для picture/card/circle и пять transitions задают absent/empty/present thumbnail, URL priority, пустые источники и non-image файл. Updates сохраняют item/input DOM, thumbnail anchor до исчезновения источника и внешний draft/focus/selection. SSR использует URL без previewFile и browser resources."
+          "note": "Непустой thumbUrl имеет приоритет над url; пустой thumbUrl сохраняет URL изображения и preview, но не вызывает previewFile при originFileObj. Генерация сохраняет guard thumbUrl===undefined. 24 raw UMD cases для picture/card/circle и пять transitions задают absent/empty/present thumbnail, URL priority, пустые источники и non-image файл. Updates сохраняют item/input DOM, thumbnail anchor до исчезновения источника и внешний draft/focus/selection. SSR использует URL без previewFile и browser resources. Реактивные чтения внутри previewFile не добавляют зависимости генерации; замена callback/файла, text/picture и thumbUrl guards сохраняются, устаревшие Promise после замены/unmount игнорируются."
         },
         {
           "id": "list-item-motion",
