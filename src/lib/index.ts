@@ -200,6 +200,7 @@ export { default as DatePicker } from './DatePicker.svelte';
 export type {
   DatePickerProps,
   DatePickerPreset,
+  DatePickerCellRenderInfo,
   DatePickerLocale,
   DatePickerTimeConfig,
   DatePickerDisabledTime,

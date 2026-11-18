@@ -1,0 +1,937 @@
+{
+  "status": "Root-reviewed-frozen-before-render-hooks-Source-execution",
+  "subject": "four-public-Single-Range-DatePicker-render-hook-owners",
+  "source": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "rcPicker": "1.12.2",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "node": "v24.18.0",
+    "chromium": "157.0.8103.78",
+    "browserExecutable": "/usr/lib64/chromium-browser/chromium-browser",
+    "browserLocale": "en-US",
+    "browserTimezone": "UTC",
+    "publishedPickerTarball": {
+      "file": ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/picker-1.12.2.tgz",
+      "sha256": "f44266fb8586f0a5386e18502ed60796c1976bd60b1d0f01c5302d40f072d502",
+      "integrity": "sha512-ZB1A+tzTQkgtR4flPrAMvxIAOelIIOOOsp22fU2Nad6PbZcJacnyGJUJqUH7ZS9mwxeUwurf1pLMKXrVsK1tlA==",
+      "URL": "https://registry.npmjs.org/@rc-component/picker/-/picker-1.12.2.tgz"
+    }
+  },
+  "counts": {
+    "owners": 4,
+    "actions": 122,
+    "logicalPoints": 126,
+    "authoredCloseActions": 4,
+    "keyboardReplacementKeys": 16,
+    "SSRSerializersPerCapture": 8
+  },
+  "samples": [
+    {
+      "id": "single-date",
+      "kind": "single",
+      "datetime": false,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "values": [
+        "2024-06-13T00:00:00.000"
+      ],
+      "format": "YYYY-MM-DD",
+      "showTime": false,
+      "showNow": true,
+      "needConfirm": false,
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "owner-hooks",
+          "value": true
+        },
+        {
+          "type": "header",
+          "selector": "month"
+        },
+        {
+          "type": "header",
+          "selector": "year"
+        },
+        {
+          "type": "header",
+          "selector": "decade"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "decade",
+          "text": "2020-2029"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "year",
+          "text": "2024"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "month",
+          "text": "Jun"
+        },
+        {
+          "type": "owner-cell",
+          "value": "interactive"
+        },
+        {
+          "type": "authored-input",
+          "kind": "cell",
+          "text": "typed-cell"
+        },
+        {
+          "type": "authored-input",
+          "kind": "panel",
+          "text": "typed-panel"
+        },
+        {
+          "type": "authored-input",
+          "kind": "footer",
+          "text": "typed-footer"
+        },
+        {
+          "type": "owner-cell",
+          "value": "replace"
+        },
+        {
+          "type": "keyboard-replacement",
+          "keys": [
+            "Tab",
+            "Tab",
+            "Shift+Tab",
+            "Shift+Tab"
+          ]
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "rendered-cell",
+          "disabled": true,
+          "date": "2024-06-14"
+        },
+        {
+          "type": "rendered-cell",
+          "disabled": false,
+          "date": "2024-06-18"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "owner-cell",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-footer",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-footer",
+          "value": "absent"
+        },
+        {
+          "type": "owner-footer",
+          "value": "null"
+        },
+        {
+          "type": "owner-footer",
+          "value": "false"
+        },
+        {
+          "type": "owner-footer",
+          "value": "empty-string"
+        },
+        {
+          "type": "owner-footer",
+          "value": "zero"
+        },
+        {
+          "type": "owner-confirm",
+          "value": true
+        },
+        {
+          "type": "owner-panel",
+          "value": "replace"
+        },
+        {
+          "type": "owner-panel",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-panel",
+          "value": "wrap"
+        },
+        {
+          "type": "owner-cell",
+          "value": "wrap"
+        },
+        {
+          "type": "clock-repaint",
+          "time": "2024-06-11T09:24:46.789Z"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-repaint"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "single-datetime",
+      "kind": "single",
+      "datetime": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "values": [
+        "2024-06-13T18:30:20.500"
+      ],
+      "format": "YYYY-MM-DD hh:mm:ss.SSS A",
+      "showTime": {
+        "format": "hh:mm:ss.SSS A",
+        "use12Hours": true,
+        "hourStep": 6,
+        "minuteStep": 15,
+        "secondStep": 20,
+        "millisecondStep": 500,
+        "showHour": true,
+        "showMinute": true,
+        "showSecond": true,
+        "showMillisecond": true,
+        "hideDisabledOptions": false
+      },
+      "showNow": true,
+      "needConfirm": true,
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "owner-hooks",
+          "value": true
+        },
+        {
+          "type": "header",
+          "selector": "month"
+        },
+        {
+          "type": "header",
+          "selector": "year"
+        },
+        {
+          "type": "header",
+          "selector": "decade"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "decade",
+          "text": "2020-2029"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "year",
+          "text": "2024"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "month",
+          "text": "Jun"
+        },
+        {
+          "type": "owner-cell",
+          "value": "interactive"
+        },
+        {
+          "type": "authored-input",
+          "kind": "cell",
+          "text": "typed-cell"
+        },
+        {
+          "type": "authored-input",
+          "kind": "panel",
+          "text": "typed-panel"
+        },
+        {
+          "type": "authored-input",
+          "kind": "footer",
+          "text": "typed-footer"
+        },
+        {
+          "type": "owner-cell",
+          "value": "replace"
+        },
+        {
+          "type": "keyboard-replacement",
+          "keys": [
+            "Tab",
+            "Tab",
+            "Shift+Tab",
+            "Shift+Tab"
+          ]
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "rendered-cell",
+          "disabled": true,
+          "unit": "minute",
+          "value": 0
+        },
+        {
+          "type": "rendered-cell",
+          "disabled": false,
+          "unit": "minute",
+          "value": 15
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "owner-cell",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-footer",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-panel",
+          "value": "replace"
+        },
+        {
+          "type": "owner-panel",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-panel",
+          "value": "wrap"
+        },
+        {
+          "type": "owner-cell",
+          "value": "wrap"
+        },
+        {
+          "type": "clock-repaint",
+          "time": "2024-06-11T09:24:46.789Z"
+        },
+        {
+          "type": "owner-clock",
+          "value": "format-only"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-repaint"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "range-date",
+      "kind": "range",
+      "datetime": false,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "values": [
+        "2024-06-13T00:00:00.000",
+        "2024-06-16T00:00:00.000"
+      ],
+      "format": "YYYY-MM-DD",
+      "showTime": false,
+      "showNow": true,
+      "needConfirm": false,
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "owner-hooks",
+          "value": true
+        },
+        {
+          "type": "header",
+          "selector": "month"
+        },
+        {
+          "type": "header",
+          "selector": "year"
+        },
+        {
+          "type": "header",
+          "selector": "decade"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "decade",
+          "text": "2020-2029"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "year",
+          "text": "2024"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "month",
+          "text": "Jun"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "owner-cell",
+          "value": "interactive"
+        },
+        {
+          "type": "authored-input",
+          "kind": "cell",
+          "text": "typed-cell"
+        },
+        {
+          "type": "authored-input",
+          "kind": "panel",
+          "text": "typed-panel"
+        },
+        {
+          "type": "authored-input",
+          "kind": "footer",
+          "text": "typed-footer"
+        },
+        {
+          "type": "owner-cell",
+          "value": "replace"
+        },
+        {
+          "type": "keyboard-replacement",
+          "keys": [
+            "Tab",
+            "Tab",
+            "Shift+Tab",
+            "Shift+Tab"
+          ]
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "rendered-cell",
+          "disabled": true,
+          "date": "2024-06-14"
+        },
+        {
+          "type": "rendered-cell",
+          "disabled": false,
+          "date": "2024-06-18"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "owner-cell",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-footer",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-panel",
+          "value": "replace"
+        },
+        {
+          "type": "owner-panel",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-panel",
+          "value": "wrap"
+        },
+        {
+          "type": "owner-cell",
+          "value": "wrap"
+        },
+        {
+          "type": "clock-repaint",
+          "time": "2024-06-11T09:24:46.789Z"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-repaint"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "id": "range-datetime",
+      "kind": "range",
+      "datetime": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "values": [
+        "2024-06-13T06:15:20.500",
+        "2024-06-16T18:30:40.000"
+      ],
+      "format": "YYYY-MM-DD hh:mm:ss.SSS A",
+      "showTime": {
+        "format": "hh:mm:ss.SSS A",
+        "use12Hours": true,
+        "hourStep": 6,
+        "minuteStep": 15,
+        "secondStep": 20,
+        "millisecondStep": 500,
+        "showHour": true,
+        "showMinute": true,
+        "showSecond": true,
+        "showMillisecond": true,
+        "hideDisabledOptions": false
+      },
+      "showNow": true,
+      "needConfirm": true,
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "owner-hooks",
+          "value": true
+        },
+        {
+          "type": "header",
+          "selector": "month"
+        },
+        {
+          "type": "header",
+          "selector": "year"
+        },
+        {
+          "type": "header",
+          "selector": "decade"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "decade",
+          "text": "2020-2029"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "year",
+          "text": "2024"
+        },
+        {
+          "type": "panel-cell",
+          "panel": "month",
+          "text": "Jun"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "owner-cell",
+          "value": "interactive"
+        },
+        {
+          "type": "authored-input",
+          "kind": "cell",
+          "text": "typed-cell"
+        },
+        {
+          "type": "authored-input",
+          "kind": "panel",
+          "text": "typed-panel"
+        },
+        {
+          "type": "authored-input",
+          "kind": "footer",
+          "text": "typed-footer"
+        },
+        {
+          "type": "owner-cell",
+          "value": "replace"
+        },
+        {
+          "type": "keyboard-replacement",
+          "keys": [
+            "Tab",
+            "Tab",
+            "Shift+Tab",
+            "Shift+Tab"
+          ]
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "rendered-cell",
+          "disabled": true,
+          "unit": "minute",
+          "value": 0
+        },
+        {
+          "type": "rendered-cell",
+          "disabled": false,
+          "unit": "minute",
+          "value": 15
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "owner-cell",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-footer",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-panel",
+          "value": "replace"
+        },
+        {
+          "type": "owner-panel",
+          "value": "empty-fragment"
+        },
+        {
+          "type": "owner-panel",
+          "value": "wrap"
+        },
+        {
+          "type": "owner-cell",
+          "value": "wrap"
+        },
+        {
+          "type": "clock-repaint",
+          "time": "2024-06-11T09:24:46.789Z"
+        },
+        {
+          "type": "owner-clock",
+          "value": "format-only"
+        },
+        {
+          "type": "owner-open",
+          "value": false
+        },
+        {
+          "type": "owner-repaint"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        }
+      ]
+    }
+  ],
+  "clock": {
+    "initial": "2024-06-10T08:23:45.678Z",
+    "next": "2024-06-11T09:24:46.789Z",
+    "kind": "Playwright clock.setFixedTime: Date-only, real timers and animation frames"
+  },
+  "predecessor": {
+    "directory": ".upstream/artifacts/date-picker-render-hooks-source-v1/",
+    "failedFirstCSR": "Preserved unchanged. Actual Tab closes popup; the next visible-cell locator timed out. v2 adds an explicit actual input reopen before the next cell click. No observer views or serializer changed.",
+    "newBoundedObservation": "Only two additional datetime actions replace one public showTime prop with authored {format:HH:mm}, omitting showXXX/steps/use12Hours; outer input format and model stay unchanged. Full actual info.locale remains unmodified."
+  },
+  "caller": {
+    "API": "Only public DatePicker and DatePicker.RangePicker with controlled stable authored Dayjs value(s)/open, format/showTime/showNow/needConfirm, stable public disabledDate/disabledTime, ordinary callbacks and cellRender/panelRender/renderExtraFooter. No mode/picker/multiple/week/quarter API, deprecated dateRender/monthCellRender/addon, Native import or expected data.",
+    "state": "Four fresh owners/pages. No StrictMode. Controlled onChange records actual arguments and leaves authored model references stable. Hooks start omitted for a fresh baseline; authored DOM button.click inside ReactDOM.flushSync changes only declared hook props/state. Controls are typebutton/tabindex-1 so keyboard traversal observes actual picker/returned content. No private state or render hook is invoked by the collector.",
+    "renderers": "Each actual cell call keeps current/full info/default origin element and return snapshots, own-key order/descriptors, actual receiver/arity, today/locale/current/origin identities and return-child alias relations. Wrapped/replace content is authored SPAN; replacement never includes origin or a fallback button. Panel wrap retains the actual origin as child plus a typebutton; replacement/empty omits origin. Footer receives actual mode and returns an authored element/empty React.Fragment, plus Source-only absence/null/false/empty string/0 observations in single-date.",
+    "clock": "CSR explicitly uses Playwright clock.setFixedTime for Date only with real timers/RAF. Initial fixedDate is June10 2024 08:23:45.678 UTC. One declared advance to June11 09:24:46.789 plus a real owner repaint swaps only cellRender identity with the same output; actual per-panel today values/aliases are captured. Another repaint while closed then real input reopen observes the retained-popup boundary.",
+    "forms": "Ordinary owner form records actual submit and prevents navigation. All authored controls/rendered buttons explicitly typebutton. Source popup uses its standard body portal; no form reparenting, nested library button, forced tabindex on Source cells or fake native control methods.",
+    "filters": "Each owner also has an interactive-cell phase and actual pointer click plus keyboard.type for one custom cell input and the custom panel/footer inputs; only the cell input click stops propagation. Its authored width20px/boxSizingborder-box keeps its real hit target inside the cell; calendar target is exact2024-06-18, not day-of-month duplicates. Single-date additionally changes only public needConfirm=true with showNowtrue, observing the actual Today label alongside OK. The only restrictions are disabled calendar day14 (type=date) and datetime minute0 with hideDisabledOptionsfalse. Real disabled/enabled custom SPAN clicks are observed; no expected selection callback count/argument is authored.",
+    "SSR": "Initial CLOSED owner only, with all three public renderers supplied through the same factory initial state. This differs explicitly from CSR no-hook baseline. Each renderToString/renderToStaticMarkup has a fresh DOM-free VM. Real hook rows/refs/resources/HTML retained; hooks are never invoked to construct expected nodes. SSR uses real VM Date; no today argument is invented when a hook is idle."
+  },
+  "staticWitnesses": [
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "46223-46255,51490,52317",
+      "fact": "useCellRender appends own range. Single undefined; Range active field start/end, not visual panel side."
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "48279-48326,48820-48857",
+      "fact": "Calendar current Dayjs; time current number/am/pm. Origin is inner DIV. TD/LI handlers remain outside; calendar has no own subType, time has it before locale/range."
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "48149,48505,49125",
+      "fact": "Each Date/Time panel useInfo executes getNow and shares one today within that panel render. Per-panel object lifetime is observed, not replaced by parent-open time."
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "50122-50140,50160-50202",
+      "fact": "Panel hook gets one origin panel-layout element containing presets plus PopupPanel/Footer siblings. Its output stays inside panel-container; Range wrapper/arrow stay outside. Discarded origin descendants are not eagerly invoked by caller."
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "47860-47866,48049,48083-48093,51334-51343",
+      "fact": "Footer callback gets scalar mergedMode. Caller gates mergedShowNow outside date/time; needConfirm OK has no such mode gate. Presence distinguishes emptyFragment from absent/null/false/empty string; zero is renderable."
+    },
+    {
+      "file": ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--interface.d.ts",
+      "lines": "78-89,308-309",
+      "fact": "Published1.12.2 types include millisecond and renderExtraFooter(mode). Panel public type accepts ReactNode; observed caller supplies actual default element."
+    }
+  ],
+  "observation": {
+    "hookTape": "Every whole hook observation is retained exactly once in per-action delta parts, with a monotonic cursor. No quadratic copying of the complete history into each point. Hook counts are actual diagnostics, never pre-authored expected callback multiplicity.",
+    "graphBoundary": "All public argument/return own keys, descriptors, props/children and aliases retained. DOM/ambient Window are declared leaves. Private ReactElement._owner is opaque in BOTH encoded and raw views with identity/own surface retained; private Fiber values are outside scope. No prototype patches, getters shims, fake React elements or original node mutation.",
+    "DOM": "Whole owner/popup HTML and complete explicitly scoped element surfaces: attributes, child node types/order, selectedCSS, rectangles, input/focus/caret/ref identities, calendar/time cells, panel/Range wrappers and footer/extra/ranges parents/buttons. No all-page/all-property CSS or CDP AX inventory.",
+    "keyboard": "At full SPAN replacement actual input click followed by Tab,Tab,Shift+Tab,Shift+Tab records physical targets. No required Source cell tab stops or Source keyboard selection is inferred. Existing Native full-button origin is a separate accepted Snippet representation; custom replacement owns its interactive markup.",
+    "emptyMapping": "Primary empty renderers return React.Fragment, the explicit analogue of an empty Native Snippet body. Source callback absence/null/false/empty string/0 are extra observations, not invented Native Snippet return values or DOM-emptiness probes.",
+    "lifecycle": "Actual controlled close+1000 per owner, closed callback-prop repaint, input reopen, real unmount/frame drain/cleanup and late1000. Hidden DOM is explicitly zero-or-stale; no assumed global resource zero. Per-key observations are actual frame reads, not full settled snapshots.",
+    "storage": "Whole raw point and whole hook delta each written separately as original JSON and lossless gzip with both sizes/SHA. First/repeat separate fresh CSR processes; first/repeat separate fresh SSR processes. Original IDs/timestamps/failed attempts immutable, no normalization. Frozen input pins reverified after each run.",
+    "limits": "Bounded hook counter for existing supported Single/Range date/datetime and navigable date/month/year/decade panels, not a generic framework, supported picker/multiple expansion, hydration/production test or claim of whole React/Svelte DOM equivalence."
+  },
+  "inputPins": {
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/cases.mjs": {
+      "bytes": 3658,
+      "sha256": "b0c41b5509f051df99b675d7bcd4725b8ff24ff310bf2c81047dfae3b1ca7bde"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/source-app.mjs": {
+      "bytes": 14155,
+      "sha256": "622326c3755b539becfb8df0545a01964f3e52a752587c60e64b2b60780decb2"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/shared.mjs": {
+      "bytes": 1478,
+      "sha256": "b070e4e046e9540a3611da540d394c9aa53376cf81957438c8850b18150da4d8"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/reader.mjs": {
+      "bytes": 5132,
+      "sha256": "a01f106efdad19577ab777b307d85b69abeede6a14a94ddbb0a9db4e55773db2"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/capture.mjs": {
+      "bytes": 12332,
+      "sha256": "cca941e309939296afbfb00f8869b44d83e58771b738418dca8a25999bed1822"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/server.mjs": {
+      "bytes": 3974,
+      "sha256": "c97f917ebffcb694c2937380664f910b91b426344c5dbce18aa57a83df6880c8"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/capture-ssr.mjs": {
+      "bytes": 1926,
+      "sha256": "b351a59ceac46f6779f8202ca04eb1cfe42a7785459b7d0b4be31d69b6ec867d"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/protocol.mjs": {
+      "bytes": 15557,
+      "sha256": "247b7e281f1e45c519740d950064cc949888e41d33e13958ab124c6889655b76"
+    },
+    ".upstream/artifacts/react-18.3.1/umd/react.production.min.js": {
+      "bytes": 10751,
+      "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js": {
+      "bytes": 131835,
+      "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+    },
+    "node_modules/dayjs/dayjs.min.js": {
+      "bytes": 7161,
+      "sha256": "0198dd0b1f760cded169c7e7ff7eaf56bc36c4c22c7c9b7c683e59437ed8700e"
+    },
+    ".upstream/artifacts/antd-6.6.8/dist/antd.js": {
+      "bytes": 4217353,
+      "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom-server-legacy.browser.production.min.js": {
+      "bytes": 35128,
+      "sha256": "829b2f17da148d9bc5b635c329b67068e67e4bf7d6a5bb64e49e9e92483deee5"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/json-stream.mjs": {
+      "bytes": 2314,
+      "sha256": "b7e849ba0ff70e3673bcdc28b1a08747d79836ff061c5269f9b07fa26891ef93"
+    },
+    "tests/browser/select-surface-producers.mjs": {
+      "bytes": 4134,
+      "sha256": "40f7a24ab72043ea36871794a0bee004430c4201d795e592c9cece90a0cf3a9d"
+    },
+    ".upstream/ant-design/components/date-picker/index.en-US.md": {
+      "bytes": 21771,
+      "sha256": "d7193bd2f1ebc35029b2553286217a4125381ae0b846635af5e6f7fe3bf9f9f3"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/interface.ts": {
+      "bytes": 5733,
+      "sha256": "d9f3e34418aaca9d1b11ffd72fc900d3e09908e8208c3ddf15427537153cd207"
+    },
+    ".upstream/ant-design/components/date-picker/demo/cell-render.tsx": {
+      "bytes": 1001,
+      "sha256": "3a753580815ad772924844ad20ed905aaa004bec3c3ffc7b6ba8d07453701e66"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--PickerInput--Popup--Footer.js": {
+      "bytes": 2353,
+      "sha256": "9ad7066e58006a4fbfb167c51b6fefd063190ca34bd73b2b9b3fe836427df07e"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--PickerInput--Popup--index.js": {
+      "bytes": 6263,
+      "sha256": "e3137bb2b58400607d297a604163c6b91c33d77f1760c915ea4a2aae3629e7fc"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--PickerInput--RangePicker.js": {
+      "bytes": 19383,
+      "sha256": "f4eabc2ab206e7c7111e65a07ca7bc383bf1a1158c39c66f9c52519ad7787b41"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--PickerInput--SinglePicker.js": {
+      "bytes": 17299,
+      "sha256": "1a2cdd81ae88f3d69feadc247fe2931ec0119e84c33c034356b89815f4bfd6da"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--PickerInput--hooks--useCellRender.js": {
+      "bytes": 1210,
+      "sha256": "826ce98e7f3a72208af4ee0e871fd7c30eb6480032f00b250a6da230c94a8245"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--PickerPanel--PanelBody.js": {
+      "bytes": 4725,
+      "sha256": "3c962cb5d3b2ff016c61e3df999ad582bcaa1d703ed0d988796000026bed5762"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--PickerPanel--TimePanel--TimePanelBody--TimeColumn.js": {
+      "bytes": 3853,
+      "sha256": "7a0afb964498b9464332b13ce047589559eb0ba3cf8f8f55bcd63fbd11196d42"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--interface.d.ts": {
+      "bytes": 15103,
+      "sha256": "940f7c9f731eca31f42070c75bc9ac8b743f9838272eef1a95a531bdaefaa066"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/picker-1.12.2.metadata.json": {
+      "bytes": 12070,
+      "sha256": "303de80fba83ce1266b1e3629aaf723bbb9361d4029958da74ab6f66dbde03af"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/picker-1.12.2.tgz": {
+      "bytes": 144620,
+      "sha256": "f44266fb8586f0a5386e18502ed60796c1976bd60b1d0f01c5302d40f072d502"
+    }
+  },
+  "preservedPriorSourceMetadata": {
+    ".upstream/artifacts/date-picker-presets-source-v2/protocol-freeze.json": {
+      "bytes": 138854,
+      "sha256": "04be9b4879445757027d99f383a3d3188c4190882cab0c449c1d6133b6873de6"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/execution-freeze.json": {
+      "bytes": 239,
+      "sha256": "5f476d1c72cf03ee6c2fb2e791541867a867fe83080441a1faea7ac5ef9bbb3e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-first.json": {
+      "bytes": 69461,
+      "sha256": "4135dda68953555b6a8e7da12cd3d672921ea7d08de53d2f68975d675aef1c89"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/csr-source-repeat.json": {
+      "bytes": 69654,
+      "sha256": "bf1eb81599beaa68a421005bdbf34cbb79d974d1f652ae1ce499279085df109c"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/protocol-freeze.json": {
+      "bytes": 125703,
+      "sha256": "20a41ba69c7e91228cf6215009a1b1000376688fa46eaef911ae607fa949f0d2"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/execution-freeze.json": {
+      "bytes": 270,
+      "sha256": "be5e3951d8f9f198e7cc8b43c35a57dd02094554c53164788115abeffb869c88"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/csr-source-first.json": {
+      "bytes": 149089,
+      "sha256": "3fd73444ea0898fb045c4b0faf25393216af3746f03596db9412286c15b89696"
+    },
+    ".upstream/artifacts/date-picker-preset-transitions-source-v1/csr-source-repeat.json": {
+      "bytes": 149495,
+      "sha256": "e8237d5080befb71f1ae0b6058634a8426d05cb4e4cfdcb072e04fc7a4d065fa"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/protocol-freeze.json": {
+      "bytes": 15990,
+      "sha256": "6ab38509e7c2f926c146ed85884674c3e3c438b3163d174078aeb36d34535274"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/execution-freeze.json": {
+      "bytes": 290,
+      "sha256": "bded129c6ddacc08885bacbb247305b0afb412a3b782bf4a10c7a63c9a217d5f"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-first.json": {
+      "bytes": 21586,
+      "sha256": "4d688c3bf1ea4c57816b8d14049c321863453e7bdd12d950546be92355c2e6d4"
+    },
+    ".upstream/artifacts/date-picker-time-scroll-source-v1/csr-source-repeat.json": {
+      "bytes": 21640,
+      "sha256": "6f60c40294bb7ad9a0bd517025b7c55fc1e2871a4f8430e4fd6a30633250bb00"
+    },
+    ".upstream/artifacts/date-picker-offgrid-scroll-source-v1/protocol-freeze.json": {
+      "bytes": 11322,
+      "sha256": "b4dde680544c94e423b6dbecd607dbe3cf125d26c9821650baa609ff73a1deba"
+    },
+    ".upstream/artifacts/date-picker-offgrid-scroll-source-v1/execution-freeze.json": {
+      "bytes": 299,
+      "sha256": "a8a6139e3faa20b2f6fcccf1aaf179919715313d7647ad64b4f102f947349619"
+    },
+    ".upstream/artifacts/date-picker-offgrid-scroll-source-v1/csr-source-first.json": {
+      "bytes": 8728,
+      "sha256": "6f3bbe20afcf11b182ae5ab3f1652a0eae13b5b2bdd6cd989d715ac4f8202c92"
+    },
+    ".upstream/artifacts/date-picker-offgrid-scroll-source-v1/csr-source-repeat.json": {
+      "bytes": 8750,
+      "sha256": "b9b649966099f77ee132934e8e3db94ade075714ab5037683bf47f660b1cdeff"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v1/protocol-freeze.json": {
+      "bytes": 31905,
+      "sha256": "4968d87cdb6d528d888d5b5d0356c66009556b1a2e598046d5cee8a1228aaf5f"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v1/execution-freeze.json": {
+      "bytes": 299,
+      "sha256": "ebb42c1b1cb0af2151b0d6e6e78446bb3cfa7e7698af73eac2e76929eecdf9bf"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v1/csr-source-first.json": {
+      "bytes": 102153,
+      "sha256": "159bef82266625642c671c94e99ecc4837fd2d840b650272c4d647ad8e981d6f"
+    }
+  },
+  "validation": {
+    "status": "passed-static-matrix-parser-and-published-integrity-only",
+    "BrowserRuns": 0,
+    "SSRRuns": 0,
+    "NativeImports": 0,
+    "NativeExpectedData": false
+  },
+  "plannedCommands": [
+    "node .upstream/artifacts/date-picker-render-hooks-source-v2/protocol.mjs freeze <EXACT_ROOT_REVIEWED_PROPOSAL_SHA256>",
+    "node --max-old-space-size=8192 .upstream/artifacts/date-picker-render-hooks-source-v2/capture.mjs .upstream/artifacts/date-picker-render-hooks-source-v2/csr-source-first.json",
+    "node --max-old-space-size=8192 .upstream/artifacts/date-picker-render-hooks-source-v2/capture.mjs .upstream/artifacts/date-picker-render-hooks-source-v2/csr-source-repeat.json",
+    "node --max-old-space-size=8192 .upstream/artifacts/date-picker-render-hooks-source-v2/capture-ssr.mjs .upstream/artifacts/date-picker-render-hooks-source-v2/ssr-source-first.json",
+    "node --max-old-space-size=8192 .upstream/artifacts/date-picker-render-hooks-source-v2/capture-ssr.mjs .upstream/artifacts/date-picker-render-hooks-source-v2/ssr-source-repeat.json"
+  ],
+  "reviewedProposalSHA256": "02d336a96ab085395ca467bd5194c74946d604279bea6b08da341851f804d233"
+}

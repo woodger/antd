@@ -81,6 +81,8 @@
     onOpenChange,
     onPanelChange,
     renderExtraFooter,
+    cellRender,
+    panelRender,
     placement,
     disabled,
     id,
@@ -180,6 +182,7 @@
   let timeFormat = $derived(
     clock.format ?? (typeof formats[0] === 'string' ? formats[0] : 'HH:mm:ss')
   );
+  let panelLocale = $derived(timePickerLang(typeof showTime === 'object' ? showTime : {}, actualLocale));
   let restrictions = $derived({ minDate, maxDate, disabledDate });
   let hoverValue = $state.raw<Dayjs | null>(null);
   let timeLocale = $derived(time ? timePickerLang(time, actualLocale) : undefined);
@@ -374,7 +377,15 @@
         actualPlacement
       ),
       matchAnchorWidth: true,
-      preserveFocus: true,
+      preserveFocus: event => {
+        if (time || !(cellRender || panelRender || renderExtraFooter)) return true;
+        for (const target of event.composedPath()) {
+          if (target === popup) break;
+          if (target instanceof HTMLElement
+            && (target.matches('input, textarea, select') || target.isContentEditable)) return false;
+        }
+        return true;
+      },
       onVisibilityChange: next => {
         shown = next;
       },
@@ -762,7 +773,45 @@
   [data-picker-current] { padding:0;border:0;background:transparent;color:var(--ant-color-link);font:inherit;cursor:pointer; }
   [data-picker-current]:disabled { color:var(--ant-color-text-disabled);cursor:not-allowed; }
   [data-picker-presets] button { width:100%;padding:0;border:0;background:transparent;color:inherit;font:inherit;text-align:inherit;cursor:pointer; }
-</style>{#snippet timePanelLayout()}
+</style>{#snippet datePanelLayout()}
+  <div class={`${prefix}-panel-layout`}>
+        {#if presets?.length}<div data-picker-presets class={`${prefix}-presets`}><ul>
+          {#each presets as preset, index (index)}<li onmouseenter={() => handleDateHover(datePresetValue(preset))} onmouseleave={() => handleDateHover(null)}>
+            <button type="button" onclick={() => selectDatePreset(preset)}>{#if typeof preset.label === 'function'}{@render preset.label()}{:else}{preset.label}{/if}</button>
+          </li>{/each}
+        </ul></div>{/if}
+        <div><div class={`${prefix}-panel`} tabindex="-1">
+        <div class={showTime && mode === 'date'
+            ? `${prefix}-datetime-panel`
+            : undefined}>
+          <DatePickerCalendar prefixCls={prefix} {panel} timeTemplate={clock.defaultOpenValue} selected={draft} hovered={hoverValue ?? draft} onHover={handleDateCellHover} preserveDisabledHover direction={config.direction} {mode} locale={panelLocale} {cellRender} {restrictions} {now} onSelect={selectDate} onNavigate={navigate} onModeChange={changeMode} />
+          {#if showTime && mode === 'date'}<DatePickerTimePanel bind:this={dateTimePanel} scrollMemory={dateTimeScroll} prefixCls={prefix} value={draft ?? clock.defaultOpenValue ?? panel} selectedValue={draft} config={clock} format={timeFormat} locale={panelLocale} {now} {cellRender} {disabledTime} onSelect={selectTime} onHover={handleDateHover} />{/if}
+        </div></div>
+        {#if renderExtraFooter || confirm || mode === 'date' && showNow}<div class={`${prefix}-footer`}>
+          {#if renderExtraFooter}<div class={`${prefix}-footer-extra`}>{@render renderExtraFooter(mode)}</div>{/if}
+          {#if (confirm || showTime) && (confirm || mode === 'date' && showNow)}<ul class={`${prefix}-ranges`}>
+            {#if mode === 'date' && showNow}<li class={`${prefix}-now`}><button type="button" data-picker-current class={`${prefix}-now-btn`} disabled={pickerDateDisabled(now, restrictions)} onclick={() => {
+                const next = validPickerTime(adapter.getNow(), clock, disabledTime);
+                if (commit(next)) {
+                  requestOpen(false);
+                  input?.focus();
+                }
+              }}>{showTime ? actualLocale.now : actualLocale.today}</button></li>{/if}
+            {#if confirm}<li class={`${prefix}-ok`}><Button type="primary" size="small"
+              disabled={!valid(draft)} onclick={() => {
+                finish(true);
+                input?.focus();
+              }} children={actualLocale.ok} /></li>{/if}
+          </ul>{:else if mode === 'date' && showNow}<button type="button" data-picker-current class={`${prefix}-today-btn`} disabled={pickerDateDisabled(now, restrictions)} onclick={() => {
+              const next = validPickerTime(adapter.getNow());
+              if (commit(next))
+                requestOpen(false);
+            }}>{actualLocale.today}</button>{/if}
+        </div>{/if}
+      </div></div>
+{/snippet}
+
+{#snippet timePanelLayout()}
   <div class={`${prefix}-panel-layout`}>
     {#if time?.presets?.length}
       <div data-picker-presets class={`${prefix}-presets`}><ul>
@@ -802,13 +851,13 @@
           itemStyle={semantic?.styles.popup.item}
         />{/if}
       </div>
-      {#if confirm || showNow || renderExtraFooter}
+      {#if confirm || showNow || time?.renderExtraFooter}
         <div
           class={[`${prefix}-footer`, semantic?.classes.popup.footer]}
           style={semantic?.styles.popup.footer}
         >
-          {#if renderExtraFooter}
-            <div class={`${prefix}-footer-extra`}>{@render renderExtraFooter()}</div>
+          {#if time?.renderExtraFooter}
+            <div class={`${prefix}-footer-extra`}>{@render time.renderExtraFooter()}</div>
           {/if}
           {#if confirm || showNow}<ul class={`${prefix}-ranges`}>
             {#if showNow}<li class={`${prefix}-now`}><button
@@ -989,41 +1038,10 @@
           {:else}{@render timePanelLayout()}{/if}
         </div>
       {:else}
-      <div bind:this={datePanelContainer} class={`${prefix}-panel-container`} tabindex="-1"><div class={`${prefix}-panel-layout`}>
-        {#if presets?.length}<div data-picker-presets class={`${prefix}-presets`}><ul>
-          {#each presets as preset, index (index)}<li onmouseenter={() => handleDateHover(datePresetValue(preset))} onmouseleave={() => handleDateHover(null)}>
-            <button type="button" onclick={() => selectDatePreset(preset)}>{#if typeof preset.label === 'function'}{@render preset.label()}{:else}{preset.label}{/if}</button>
-          </li>{/each}
-        </ul></div>{/if}
-        <div><div class={`${prefix}-panel`} tabindex="-1">
-        <div class={showTime && mode === 'date'
-            ? `${prefix}-datetime-panel`
-            : undefined}>
-          <DatePickerCalendar prefixCls={prefix} {panel} selected={draft} hovered={hoverValue ?? draft} onHover={handleDateCellHover} preserveDisabledHover direction={config.direction} {mode} locale={actualLocale} {restrictions} {now} onSelect={selectDate} onNavigate={navigate} onModeChange={changeMode} />
-          {#if showTime && mode === 'date'}<DatePickerTimePanel bind:this={dateTimePanel} scrollMemory={dateTimeScroll} prefixCls={prefix} value={draft ?? clock.defaultOpenValue ?? panel} selectedValue={draft} config={clock} format={timeFormat} locale={actualLocale.locale} {disabledTime} onSelect={selectTime} onHover={handleDateHover} />{/if}
-        </div>
-        {#if renderExtraFooter}<div class={`${prefix}-footer-extra`}>{@render renderExtraFooter()}</div>{/if}
-        {#if mode === 'date' && (confirm || showNow)}<div class={`${prefix}-footer`}>
-          {#if confirm || showTime}<ul class={`${prefix}-ranges`}>
-            {#if showNow}<li class={`${prefix}-now`}><button type="button" data-picker-current class={`${prefix}-now-btn`} disabled={pickerDateDisabled(now, restrictions)} onclick={() => {
-                const next = validPickerTime(adapter.getNow(), clock, disabledTime);
-                if (commit(next)) {
-                  requestOpen(false);
-                  input?.focus();
-                }
-              }}>{actualLocale.now}</button></li>{/if}
-            {#if confirm}<li class={`${prefix}-ok`}><Button type="primary" size="small"
-              disabled={!valid(draft)} onclick={() => {
-                finish(true);
-                input?.focus();
-              }} children={actualLocale.ok} /></li>{/if}
-          </ul>{:else if showNow}<button type="button" data-picker-current class={`${prefix}-today-btn`} disabled={pickerDateDisabled(now, restrictions)} onclick={() => {
-              const next = validPickerTime(adapter.getNow());
-              if (commit(next))
-                requestOpen(false);
-            }}>{actualLocale.today}</button>{/if}
-        </div>{/if}
-      </div></div></div></div>
+      <div bind:this={datePanelContainer} class={`${prefix}-panel-container`} tabindex="-1">
+        {#if panelRender}{@render panelRender(datePanelLayout)}
+        {:else}{@render datePanelLayout()}{/if}
+      </div>
       {/if}
     </div>
 {/if}{/key}</NoCompactStyle>

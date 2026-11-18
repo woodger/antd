@@ -5085,6 +5085,52 @@ showTime/needConfirm; onOk не вызывается, время не округ
 восстанавливает committed value. Если controlled owner отклонил допустимый preset,
 его value остаётся прежним, а календарь и текст сохраняют отправленную дату до сброса.
 
+`cellRender(current, info)` заменяет содержимое календарной или временной ячейки.
+В календаре current — Dayjs, во времени — число либо `am`/`pm`. Info содержит
+фактический prefixCls, заполненную locale, today и originNode; для времени также
+subType, включая millisecond. У RangePicker range обозначает активное поле
+`start`/`end` и одинаков для обоих календарей, а не сторону панели.
+Календарный current получает время из showTime.defaultOpenValue либо нули;
+выбранное время хранится отдельно. Today и locale сохраняют границы исходных
+panel owners: календарь и время делят locale, два календаря диапазона — нет.
+Исходная ячейка учитывает locale.cellDateFormat, monthFormat и cellYearFormat.
+Fallback-поля info.locale вычисляются из исходных showTime flags, отдельно от
+формата видимых колонок: один showTime.format='HH:mm' сохраняет fieldTimeFormat='HH:mm:ss'.
+
+OriginNode — snippet полной стандартной native-кнопки. Его можно обернуть,
+сохранив выбор и клавиатурную навигацию, либо полностью заменить своим содержимым.
+При полной замене библиотека не добавляет скрытую кнопку: фокусируемые элементы
+задаёт автор snippet. Выбор мышью остаётся на внешней ячейке и учитывает disabled;
+собственный control может остановить click propagation, чтобы не выбирать дату.
+
+`panelRender(content)` получает snippet всей раскладки: presets, календарь/время
+и footer. Обёртка с `{@render content()}` сохраняет её; замена без render не
+создаёт дочерние ячейки и footer. Внешние popup, panel-container и стрелка диапазона
+остаются у библиотеки. `renderExtraFooter(mode)` получает текущий режим панели:
+date/month/year/decade, включая date при showTime. Пустой snippet сохраняет
+footer-extra, отсутствие prop убирает его. Старые snippets без аргументов совместимы.
+Today/Now показывается в режиме date; при needConfirm кнопка OK доступна и в
+остальных режимах. Пользовательские input, textarea, select и contenteditable
+в hooks получают фокус обычным нажатием мыши.
+
+```svelte
+{#snippet dateCell(current, info)}
+  <span class="custom-date-cell">{@render info.originNode()}</span>
+{/snippet}
+{#snippet datePanel(content)}<section>{@render content()}</section>{/snippet}
+{#snippet dateFooter(mode)}<small>Режим: {mode}</small>{/snippet}
+<DatePicker cellRender={dateCell} panelRender={datePanel} renderExtraFooter={dateFooter} />
+```
+
+[Проверки render hooks](./tests/browser/date-picker-render-hooks.spec.ts) сравнивают
+аргументы четырёх режимов панели и все 47 полей en_US locale с
+[неизменёнными фактами React](./tests/browser/fixtures/ant-design-date-picker-render-hooks-facts.json).
+[Source manifest](./tests/browser/fixtures/ant-design-date-picker-render-hooks-source-manifest.json)
+содержит два независимых CSR-прогона по 4 владельца, 122 действия и 126 состояний,
+а также по 8 закрытых SSR-сериализаций. Полные исходные части сохранены в gzip.
+Это проверка указанных сценариев; retained React popup, native input focus hooks
+и Svelte Snippet lifecycle сохраняют описанные границы адаптации.
+
 [Source captures presets](./tests/browser/fixtures/ant-design-date-picker-presets-source-manifest.json)
 и [переходов](./tests/browser/fixtures/ant-design-date-picker-preset-transitions-source-manifest.json)
 содержат 19 профилей, 181 действие, 200 состояний, 42 закрытия и обе закрытые SSR-сериализации каждого профиля;
@@ -5216,7 +5262,7 @@ Defaults в prefix stylesheet имеют нулевую specificity: canonical N
 SSR проверяет также defaultOpen, browser — обновление общего префикса.
 
 Остальные picker/multiple modes, generatePicker factory,
-cellRender/panelRender, mask format, полный semantic/component config
+mask format, полный semantic/component config
 и полный rc-trigger/motion API ещё не перенесены. Реестр перечисляет эти пробелы
 отдельно; данный этап не заявляет полноту семейства DatePicker.
 
@@ -5455,6 +5501,8 @@ boolean либо [start,end]. Очистка сохраняет заблокир
 Format, showTime units/steps/defaultOpenValue, inputReadOnly,
 preserveInvalidOnBlur, size/status/variant/Compact, локали, тема и RTL используют
 общие механизмы DatePicker. ShowTime.defaultOpenValue принимает пару дат времени.
+CellRender, panelRender и renderExtraFooter используют тот же Snippet-контракт,
+что DatePicker; footer получает один режим, cell info.range — активную границу.
 Календарные операции сохраняют режим входного Dayjs; UTC и wire-сериализация не
 навязываются. Native FormData.getAll(name) содержит две отображаемые строки под
 одним name. Form хранит пару объектов Dayjs, копирует tuple при snapshot и
@@ -5466,7 +5514,7 @@ bind:this даёт focus({index:0|1,preventScroll,cursor}) и blur(). Native onf
 Подтверждены SSR без browser APIs, ввод/ошибки/очистка, переходы фокуса,
 подтверждение времени, ограничения/from, nullable границы, controlled rejection,
 Form/нативная отправка и UTC в разных browser zones. Остальные picker modes,
-mask, render hooks, полный semantic/config/motion API остаются пробелами
+mask, полный semantic/config/motion API остаются пробелами
 семейства; наличие RangePicker не означает полного покрытия React DatePicker.
 
 ## Calendar

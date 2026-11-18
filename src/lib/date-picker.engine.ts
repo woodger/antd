@@ -55,7 +55,8 @@ export function calendarCells(panel: Dayjs, mode: DatePickerMode, locale: string
   if (mode === 'month') return Array.from({ length: 12 }, (_, index) => panel.month(index));
   const unit = mode === 'year' ? 1 : 10;
   const base = Math.floor(panel.year() / (unit * 10)) * unit * 10;
-  return Array.from({ length: 12 }, (_, index) => panel.year(base + (index - 1) * unit));
+  const first = panel.year(base).add(-unit, 'year');
+  return Array.from({ length: 12 }, (_, index) => first.add(index * unit, 'year'));
 }
 export function pickerDateDisabled(
   value: Dayjs,

@@ -72,7 +72,7 @@ export interface TimePickerProps extends Omit<
   DatePickerProps,
   'showTime' | 'allowClear' | 'status' | 'onCalendarChange' | 'classNames'
     | 'onPanelChange' | 'onPickerValueChange' | 'disabledDate' | 'onChange'
-    | 'prefix' | 'onclick' | 'multiple'
+    | 'prefix' | 'onclick' | 'multiple' | 'cellRender'
 >, Omit<DatePickerTimeConfig, 'format'> {
   /** На этом этапе поддерживается один Dayjs; multiple следует отдельным переносом. */
   multiple?: false;
@@ -92,6 +92,7 @@ export interface TimePickerProps extends Omit<
   cellRender?: Snippet<[number | 'am' | 'pm', TimePickerCellRenderInfo]>;
   /** Получает snippet стандартной panel layout, сохраняя внешний popup lifecycle. */
   panelRender?: Snippet<[Snippet]>;
+  renderExtraFooter?: Snippet;
   presets?: readonly TimePickerPreset[];
   onclick?: HTMLAttributes<HTMLDivElement>['onclick'];
   /** Совместимый alias; onclick имеет приоритет. */

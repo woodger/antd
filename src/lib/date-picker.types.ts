@@ -4,6 +4,7 @@ import type { Snippet } from 'svelte';
 import type { InputContent } from './input.types';
 import type { ComponentSize } from './types';
 import type { PickerLocale } from './picker-locale.types';
+import type { TimePickerColumnType } from './time-picker.types';
 export type DatePickerLocale = {
   lang: Partial<PickerLocale>;
   timePickerLocale?: { placeholder?: string; rangePlaceholder?: [string, string]; };
@@ -14,6 +15,16 @@ export type DatePickerFormat = string | ((value: Dayjs) => string);
 export interface DatePickerPreset {
   label: string | Snippet;
   value: Dayjs | (() => Dayjs);
+}
+/** OriginNode сохраняет стандартную native кнопку; renderer заменяет её целиком. */
+export interface DatePickerCellRenderInfo {
+  prefixCls: string;
+  originNode: Snippet;
+  today: Dayjs;
+  type: DatePickerMode | 'time';
+  locale: PickerLocale;
+  range?: 'start' | 'end';
+  subType?: TimePickerColumnType;
 }
 export interface DatePickerDisabledTime {
   disabledHours?: () => number[];
@@ -103,7 +114,10 @@ export interface DatePickerProps extends Omit<
   presets?: readonly DatePickerPreset[];
   /** Временное отображение даты при наведении; не меняет выбранное value. @defaultValue 'hover' */
   previewValue?: false | 'hover';
-  renderExtraFooter?: Snippet;
+  cellRender?: Snippet<[Dayjs | number | 'am' | 'pm', DatePickerCellRenderInfo]>;
+  /** Полная раскладка панели: пресеты, календарь/время и footer. */
+  panelRender?: Snippet<[Snippet]>;
+  renderExtraFooter?: Snippet<[DatePickerMode]>;
   /** По умолчанию bottomLeft в LTR и bottomRight в RTL, как rc-picker. */
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
   /** Локальный контейнер; undefined наследует ConfigProvider.getPopupContainer. */

@@ -6171,7 +6171,7 @@
       "name": "DatePicker",
       "category": "data-entry",
       "scope": "target",
-      "scopeReason": "Single DatePicker и RangePicker date/showTime по контракту Dayjs и исходной машине rc-picker; расширенные picker/render/config API отмечены отдельно.",
+      "scopeReason": "Single DatePicker и RangePicker date/showTime по контракту Dayjs и исходной машине rc-picker; дополнительные picker/config API отмечены отдельно.",
       "upstreamPath": "components/date-picker",
       "reviewedRevision": "984592267de88fbf9cdaecc96a56629e721c709d",
       "exports": [
@@ -6412,12 +6412,40 @@
           "note": "Пара Dayjs|null; calendar/submit/committed состояния, исходная useRangeValueChange, order/allowEmpty/disabled, endpoint-only validation и from, confirm/Tab/Escape, контролируемые value/open, native FormData и Form tuples. При полной очистке onChange получает (null,null), как runtime rc-picker. Нет полной поддержки extended API семейства."
         },
         {
+          "id": "render-hooks",
+          "title": "Cell renderer, полная panel layout и режим extra footer",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/date-picker.types.ts",
+            "src/lib/DatePickerCalendar.svelte",
+            "src/lib/DatePickerTimePanel.svelte",
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "tests/browser/date-picker-render-hooks.spec.ts",
+            "tests/browser/fixtures/DatePickerRenderHooksCase.svelte",
+            "tests/browser/fixtures/date-picker-render-hooks.types.ts",
+            "tests/browser/fixtures/DatePickerRenderHooksTypes.svelte",
+            "tests/package/date-picker-render-hooks.ssr.test.ts",
+            "readme.md",
+            "src/lib/date-picker.locale.ts",
+            "src/lib/picker-locale.types.ts",
+            "src/lib/date-picker.engine.test.ts",
+            "tests/browser/date-picker-render-hooks-reference.mjs",
+            "tests/browser/fixtures/ant-design-date-picker-render-hooks-source-manifest.json",
+            "tests/browser/fixtures/ant-design-date-picker-render-hooks-facts.json",
+            "tests/browser/fixtures/ant-design-date-picker-render-hooks-protocol-freeze.json",
+            "tests/package/date-picker-render-hooks-source.test.ts"
+          ],
+          "note": "Svelte cellRender заменяет полный native button-origin Snippet; обёртка сохраняет клавиатуру, полная замена задаёт собственные controls. Calendar Dayjs и time number/am/pm, filled locale/today/prefixCls, own range и time subType/millisecond. Calendar current получает время defaultOpenValue либо нули, независимо от выбранного datetime; переходы year/decade сохраняют исходное округление 29 февраля. Range обозначает активное поле для обеих панелей. Сегодня/locale разделяются по фактическим panel owners: Date+Time делят locale, два календаря Range имеют разные locale. Native tests сравнивают materialized firstwrap/month/year/decade args, все47 полей en_US locale и отношения today/locale identities с неизменённым Source snapshot. Locale форматирует origin date/month/year/decade/meridiem и header month. Panel Snippet включает presets, календарь/время и footer внутри прежнего popup; замена подавляет descendants. Footer получает scalar date/month/year/decade, empty Snippet сохраняет extra; noarg snippets и отдельные Time footer contracts сохранены. Mouse selection/disabled остаются на TD/LI; authored editables получают настоящий pointer focus. Независимые React6.6.8 first/repeat CSR:4owners/122actions/126points/4authoredclosed+1000 и16keyboardkeys каждый; SSR:4owners×2serializers в каждом процессе. Полные584raw parts и4manifest сохранены в414lossless whole-gzip blobs, максимум2.75MB. Source-only null/false/empty string/0 и retained-popup/focus boundaries не подменяются Svelte Snippet semantics; полная Native parity всех126 состояний не заявляется. Отдельный public-package production consumer повторяет27 browser tests, strict hydrate(recover:false) сохраняет parsed input/owner nodes; actual unmount+quiet1000 проверяется после каждого теста. Client/SSR graphs используют dist без src/tests/React/HMR/Source facts; timer/observer counts не измерялись и не объявляются равными Source."
+        },
+        {
           "id": "extended-api",
-          "title": "Другие picker modes, multiple, render hooks, mask и semantic API",
+          "title": "Другие picker modes, multiple, mask и semantic API",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет публичных week/month/quarter/year picker, multiple, generatePicker factory, cellRender/panelRender, mask format и полного набора semantic slots/events. RangePicker presets/previewValue перенесены."
+          "note": "Нет публичных week/month/quarter/year picker, multiple, generatePicker factory, mask format и полного набора semantic slots/events. RangePicker presets/previewValue перенесены."
         },
         {
           "id": "global-parity",

@@ -48,6 +48,17 @@ describe('DatePicker date adapter and input', () => {
       Array.from({ length: 12 }, (_, n) => 2019 + n)
     );
   });
+  it('keeps the source leap-day clamp when building year and decade cells', () => {
+    const value = dayjs('2024-02-29T18:30:45.678');
+    const years = calendarCells(value, 'year', 'en_US');
+    const decades = calendarCells(value, 'decade', 'en_US');
+
+    expect(years[0].format('YYYY-MM-DD')).toBe('2019-02-28');
+    expect(years[1].format('YYYY-MM-DD')).toBe('2020-02-28');
+    expect(years[5].format('YYYY-MM-DD')).toBe('2024-02-28');
+    expect(decades[1].format('YYYY-MM-DD')).toBe('2000-02-28');
+    expect(years[1].format('HH:mm:ss.SSS')).toBe('18:30:45.678');
+  });
   it(
     'checks date bounds at calendar-day precision and passes the panel mode to disabledDate',
     () => {

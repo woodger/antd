@@ -4,22 +4,56 @@
 
 <script lang="ts">
   import type { Dayjs } from 'dayjs';
+  import type { Snippet } from 'svelte';
+  import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
+  import type { PickerLocale } from './picker-locale.types';
   import { formatPicker, timeColumns } from './date-picker.engine';
   import { timeFormat, timePickerColumnDate, timePickerOptions } from './time-picker.engine';
-  import type { DatePickerDisabledTime, DatePickerTimeConfig } from './date-picker.types';
+  import type { DatePickerDisabledTime, DatePickerTimeConfig, DatePickerProps,
+    DatePickerCellRenderInfo } from './date-picker.types';
   let { prefixCls, value, selectedValue, config, format, locale, disabledTime, onSelect, onHover,
-    scrollMemory }: {
+    scrollMemory, cellRender, cellRange, now }: {
     prefixCls: string;
     value: Dayjs;
     selectedValue: Dayjs | null;
     config: DatePickerTimeConfig;
     format: string;
-    locale: string;
+    locale: PickerLocale;
+    now: Dayjs;
+    cellRender?: DatePickerProps['cellRender'];
+    cellRange?: 'start' | 'end';
     disabledTime?: (date: Dayjs) => DatePickerDisabledTime;
     onSelect: (value: Dayjs) => void;
     onHover?: (value: Dayjs | null) => void;
     scrollMemory?: DatePickerTimeScrollMemory;
   } = $props();
+  let renderToday = $derived.by(() => {
+    void prefixCls;
+    void value;
+    void selectedValue;
+    void config;
+    void format;
+    void locale;
+    void cellRender;
+    void cellRange;
+    void disabledTime;
+    void now;
+    return adapter.getNow();
+  });
+  function cellInfo(originNode: Snippet,
+    subType: NonNullable<DatePickerCellRenderInfo['subType']>): DatePickerCellRenderInfo {
+    return { prefixCls, originNode, today: renderToday, type: 'time', subType,
+      locale, range: cellRange };
+  }
+  function cellLabel(unit: ReturnType<typeof timeColumns>[number]['unit'], item: number) {
+    return String(config.use12Hours && unit === 'hour' ? item % 12 || 12 : item)
+      .padStart(unit === 'millisecond' ? 3 : 2, '0');
+  }
+  function meridiemLabel(hour: number) {
+    return locale.cellMeridiemFormat
+      ? adapter.locale.format(locale.locale, renderToday.hour(hour ? 15 : 9), locale.cellMeridiemFormat)
+      : hour ? 'PM' : 'AM';
+  }
   let activeValue = $derived(selectedValue ?? value);
   let columns = $derived(timeColumns(config, format));
   let headerFormat = $derived(config.format || timeFormat({
@@ -39,13 +73,13 @@
     // DatePicker дополняет время panel из defaultOpenValue или нулями.
     // Числовой optionalValue остаётся зависимостью и при заданном selectedValue.
     const optional = unit === 'meridiem' ? undefined : config.defaultOpenValue?.get(unit) ?? 0;
-    const rows = [...column.children].map((cell, index) => {
-      const button = cell.querySelector('button');
-      return { node: cell as HTMLLIElement,
-        value: unit === 'meridiem' ? index === 0 ? 'am' : 'pm'
-          : Number(button?.getAttribute('aria-label')?.slice(unit.length + 1)),
-        label: cell.textContent, disabled: button?.disabled };
-    });
+    const rows = [...column.children].map(cell => ({
+      node: cell as HTMLLIElement,
+      value: unit === 'meridiem' ? cell.getAttribute('data-picker-time-value')
+        : Number(cell.getAttribute('data-picker-time-value')),
+      label: cell.getAttribute('data-picker-time-label'),
+      disabled: cell.getAttribute('data-picker-time-disabled') === 'true'
+    }));
     const units = rows.map(row => [row.value, row.label, row.disabled].join(',')).join(';');
     return {
       signature: JSON.stringify(unit === 'meridiem' ? [selected, units]
@@ -62,7 +96,7 @@
   }
   // Родитель снимает scroll до удаления popup; память не сохраняет DOM.
   export function captureScroll() {
-    for (const column of root?.querySelectorAll<HTMLUListElement>('ul') ?? [])
+    for (const column of root?.querySelectorAll<HTMLUListElement>(':scope > div > ul') ?? [])
       rememberColumn(column);
   }
   $effect(() => {
@@ -78,11 +112,11 @@
     if (!view) return;
     const frame = view.requestAnimationFrame(() => {
       const units = new Set<string>();
-      for (const column of host.querySelectorAll<HTMLUListElement>('ul')) {
+      for (const column of host.querySelectorAll<HTMLUListElement>(':scope > div > ul')) {
         const unit = column.getAttribute('aria-label')!;
         units.add(unit);
-        const state = scrollMemory ? readColumn(column) : undefined;
-        const selected = state ? state.target : column.querySelector<HTMLLIElement>(
+        const state = readColumn(column);
+        const selected = scrollMemory || cellRender ? state.target : column.querySelector<HTMLLIElement>(
           '[data-picker-time-cell-selected]'
         ) ?? column.querySelector<HTMLButtonElement>('button[tabindex="0"]')?.closest('li');
         const first = column.querySelector<HTMLLIElement>('li');
@@ -94,11 +128,7 @@
           continue;
         }
         if (!selected && !scrollMemory) continue;
-        const signature = state ? state.signature : `${selected!.textContent}:${[...column.children].map(
-          cell => cell.textContent + cell.className
-        ).join(
-          ';'
-        )}`;
+        const signature = state.signature;
         if (scrollValues.get(column) === signature)
           continue;
         const saved = scrollMemory?.get(unit);
@@ -121,11 +151,14 @@
         item => column.unit !== 'hour' || !config.use12Hours || (item < 12) === (value.hour() < 12)
       );
   }
-  function keyboard(event: KeyboardEvent) {
+  function keyboard(event: KeyboardEvent,
+    target = event.currentTarget as HTMLButtonElement) {
     if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
-    const target = event.currentTarget as HTMLButtonElement;
+    const column = cellRender ? (event.currentTarget as HTMLLIElement).parentElement!
+      : target.closest('ul')!;
     const buttons = [
-      ...target.closest('ul')!.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')
+      ...column.querySelectorAll<HTMLButtonElement>(cellRender
+        ? 'button[data-picker-time-control]:not(:disabled)' : 'button:not(:disabled)')
     ];
     const index = buttons.indexOf(target);
     const next = event.key === 'Home'
@@ -136,6 +169,11 @@
     event.preventDefault();
     buttons[next]?.click();
     buttons[next]?.focus();
+  }
+  function cellKeyboard(event: KeyboardEvent) {
+    const target = event.target;
+    if (target instanceof HTMLButtonElement && target.hasAttribute('data-picker-time-control'))
+      keyboard(event, target);
   }
   let dynamic = $derived(disabledTime?.(value));
   let restrictions = $derived(
@@ -172,25 +210,35 @@
 </style>
 <div bind:this={root} class={`${prefixCls}-time-panel`}>
   <div class={`${prefixCls}-header`}><div class={`${prefixCls}-header-view`}>{selectedValue
-        ? formatPicker(selectedValue, locale, [headerFormat]) : '\u00a0'}</div></div>
+        ? formatPicker(selectedValue, locale.locale, [headerFormat]) : '\u00a0'}</div></div>
   <div class={`${prefixCls}-content`}>
     {#each columns as column (column.unit)}
       <ul class={`${prefixCls}-time-panel-column`} aria-label={column.unit}
         onscroll={event => rememberColumn(event.currentTarget)}>
         {#each items(column) as item (item)}
           {@const unavailable = blocked(column.unit, item)}
+          {@const label = cellLabel(column.unit, item)}
           {#if !config.hideDisabledOptions || !unavailable}
-            <li onmouseenter={onHover && (() => onHover?.(timePickerColumnDate(value, selectedValue, column.unit, item)))} onmouseleave={onHover && (() => onHover?.(null))} data-picker-time-cell-selected={selectedValue?.get(column.unit) === item || undefined} class={[
+            <li role={cellRender ? 'presentation' : undefined}
+              data-picker-time-value={item} data-picker-time-label={label}
+              data-picker-time-disabled={unavailable}
+              onclick={cellRender ? () => { if (!unavailable) onSelect(value.set(column.unit, item)); } : undefined}
+              onkeydown={cellRender ? cellKeyboard : undefined}
+              onmouseenter={onHover && (() => onHover?.(timePickerColumnDate(value, selectedValue, column.unit, item)))} onmouseleave={onHover && (() => onHover?.(null))} data-picker-time-cell-selected={selectedValue?.get(column.unit) === item || undefined} class={[
                 `${prefixCls}-time-panel-cell`,
                 selectedValue?.get(column.unit) === item && `${prefixCls}-time-panel-cell-selected`,
                 unavailable && `${prefixCls}-time-panel-cell-disabled`
               ]}>
-              <button type="button" class={`${prefixCls}-time-panel-cell-inner`} disabled={unavailable} tabindex={activeValue.get(column.unit) === item ? 0 : -1} onkeydown={keyboard} aria-label={`${column.unit} ${item}`} aria-pressed={selectedValue?.get(column.unit) === item} onclick={() => onSelect(value.set(column.unit, item))}>{String(
-                  config.use12Hours && column.unit === 'hour' ? item % 12 || 12 : item
-                ).padStart(
-                  column.unit === 'millisecond' ? 3 : 2,
-                  '0'
-                )}</button>
+              {#snippet originNode()}
+                <button type="button" class={`${prefixCls}-time-panel-cell-inner`}
+                  data-picker-time-control={cellRender ? '' : undefined}
+                  disabled={unavailable} tabindex={activeValue.get(column.unit) === item ? 0 : -1}
+                  onkeydown={cellRender ? undefined : keyboard} aria-label={`${column.unit} ${item}`}
+                  aria-pressed={selectedValue?.get(column.unit) === item}
+                  onclick={cellRender ? undefined : () => onSelect(value.set(column.unit, item))}>{label}</button>
+              {/snippet}
+              {#if cellRender}{@render cellRender(item, cellInfo(originNode, column.unit))}
+              {:else}{@render originNode()}{/if}
             </li>
           {/if}
         {/each}
@@ -202,13 +250,27 @@
         {#each [0, 12] as hour}
           {@const unavailable = timePickerOptions(24, config.hourStep, restrictions.disabledHours?.())
             .every(option => option.disabled || (option.value < 12) !== (hour === 0))}
-          <li onmouseenter={onHover && (() => onHover?.(timePickerColumnDate(value, selectedValue, 'meridiem', hour === 0 ? 'am' : 'pm')))} onmouseleave={onHover && (() => onHover?.(null))} data-picker-time-cell-selected={!!selectedValue && (selectedValue.hour() < 12) === (hour === 0) || undefined} class={[
+          <li role={cellRender ? 'presentation' : undefined}
+            data-picker-time-value={hour ? 'pm' : 'am'} data-picker-time-label={meridiemLabel(hour)}
+            data-picker-time-disabled={unavailable}
+            onclick={cellRender ? () => { if (!unavailable) onSelect(value.hour(value.hour() % 12 + hour)); } : undefined}
+            onkeydown={cellRender ? cellKeyboard : undefined}
+            onmouseenter={onHover && (() => onHover?.(timePickerColumnDate(value, selectedValue, 'meridiem', hour === 0 ? 'am' : 'pm')))} onmouseleave={onHover && (() => onHover?.(null))} data-picker-time-cell-selected={!!selectedValue && (selectedValue.hour() < 12) === (hour === 0) || undefined} class={[
               `${prefixCls}-time-panel-cell`,
               unavailable && `${prefixCls}-time-panel-cell-disabled`,
               selectedValue && (selectedValue.hour() < 12) === (hour === 0)
                 && `${prefixCls}-time-panel-cell-selected`
             ]}>
-            <button type="button" class={`${prefixCls}-time-panel-cell-inner`} disabled={unavailable} tabindex={(activeValue.hour() < 12) === (hour === 0) ? 0 : -1} onkeydown={keyboard} aria-pressed={!!selectedValue && (selectedValue.hour() < 12) === (hour === 0)} onclick={() => onSelect(value.hour(value.hour() % 12 + hour))}>{hour ? 'PM' : 'AM'}</button>
+            {#snippet originNode()}
+              <button type="button" class={`${prefixCls}-time-panel-cell-inner`}
+                data-picker-time-control={cellRender ? '' : undefined}
+                disabled={unavailable} tabindex={(activeValue.hour() < 12) === (hour === 0) ? 0 : -1}
+                onkeydown={cellRender ? undefined : keyboard}
+                aria-pressed={!!selectedValue && (selectedValue.hour() < 12) === (hour === 0)}
+                onclick={cellRender ? undefined : () => onSelect(value.hour(value.hour() % 12 + hour))}>{meridiemLabel(hour)}</button>
+            {/snippet}
+            {#if cellRender}{@render cellRender(hour ? 'pm' : 'am', cellInfo(originNode, 'meridiem'))}
+            {:else}{@render originNode()}{/if}
           </li>
         {/each}
       </ul>

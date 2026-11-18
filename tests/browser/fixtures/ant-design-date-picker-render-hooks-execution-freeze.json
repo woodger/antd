@@ -1,0 +1,6 @@
+{
+  "file": ".upstream/artifacts/date-picker-render-hooks-source-v2/protocol-freeze.json",
+  "sha256": "3cd5f9c3b2131ce68fbd8ca0a79f30b48952609c0a4a0d4d1965f5614c1424a3",
+  "proposalSHA256": "02d336a96ab085395ca467bd5194c74946d604279bea6b08da341851f804d233",
+  "frozenBeforeSourceExecution": true
+}

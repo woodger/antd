@@ -736,6 +736,11 @@
     "root": "remote-select-fixture"
   },
   {
+    "id": "date-picker-render-hooks",
+    "module": "./DatePickerRenderHooksFixtures.svelte",
+    "root": "date-picker-render-hooks-fixture"
+  },
+  {
     "id": "date-picker",
     "module": "./DatePickerFixtures.svelte",
     "root": "date-picker-fixture"

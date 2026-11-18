@@ -98,6 +98,8 @@
     onblur,
     onkeydown,
     renderExtraFooter,
+    cellRender,
+    panelRender,
     separator,
     presets,
     previewValue = 'hover',
@@ -220,6 +222,9 @@
   let timeFormat = $derived(
     clock.format ?? (typeof formats[0] === 'string' ? formats[0] : 'HH:mm:ss')
   );
+  let panelLocale = $derived(timePickerLang(typeof showTime === 'object' ? showTime : {}, lang));
+  let secondPanelLocale = $derived({ ...panelLocale });
+  let cellRange = $derived<'start' | 'end'>(active === 1 ? 'end' : 'start');
   let focused = $state(false);
   let shown = $state(false);
   let rootElement = $state<HTMLDivElement>();
@@ -416,7 +421,15 @@
         actualPlacement
       ),
       matchAnchorWidth: true,
-      preserveFocus: true,
+      preserveFocus: event => {
+        if (time || !(cellRender || panelRender || renderExtraFooter)) return true;
+        for (const target of event.composedPath()) {
+          if (target === popup) break;
+          if (target instanceof HTMLElement
+            && (target.matches('input, textarea, select') || target.isContentEditable)) return false;
+        }
+        return true;
+      },
       onPlacement: next => {
         verticalPlacement = next === 'top' ? 'top' : 'bottom';
       },
@@ -726,6 +739,13 @@
       : date;
     send(active, showTime ? 'panel-intermediate' : 'panel-final', next);
   }
+  function handleDateHover(date: Dayjs | null) {
+    if (date && showTime) {
+      const base = calendar[active] ?? clock.defaultOpenValue ?? view;
+      date = base.year(date.year()).month(date.month()).date(date.date());
+    }
+    hover = date;
+  }
   function selectTime(date: Dayjs) {
     send(active, 'panel-intermediate', time ? date : validPickerTime(date, clock, timeRestriction));
     if (time) setTimePanel(active, date, 'panel');
@@ -946,6 +966,61 @@
   [data-picker-current]:disabled { color:var(--ant-color-text-disabled);cursor:not-allowed; }
   [data-picker-presets] button { border:0;padding:0;background:transparent;color:inherit;font:inherit;cursor:pointer; }
 </style>
+
+{#snippet datePanelLayout()}
+  <div class={`${prefix}-panel-layout`}>
+        {#if presets?.length}<div data-picker-presets class={`${prefix}-presets`}><ul>{#each presets as preset, index (index)}<li><button type="button" onpointerenter={() => {
+            if (previewValue)
+              presetHover = rangePair(
+                typeof preset.value === 'function' ? preset.value() : preset.value
+              );
+          }} onpointerleave={() => {
+              presetHover = null;
+            }} onclick={() => presetValue(
+              rangePair(typeof preset.value === 'function' ? preset.value() : preset.value)
+            )}>{#if typeof preset.label === 'function'}{@render preset.label()}{:else}{preset.label}{/if}</button></li>{/each}</ul></div>{/if}
+        <div><div class={!showTime && mode === 'date' ? `${prefix}-panels` : undefined}>
+          <div class={`${prefix}-panel`} tabindex="-1"><div class={showTime && mode === 'date'
+              ? `${prefix}-datetime-panel`
+              : undefined}>
+            <DatePickerCalendar prefixCls={prefix} panel={view} timeTemplate={clock.defaultOpenValue} selected={calendar[active]} range={displayRange} onHover={handleDateHover} {mode} locale={panelLocale} {cellRender} {cellRange} restrictions={{ minDate, maxDate, disabledDate: panelDisabled }} {now} direction={config.direction} showNext={Boolean(showTime) || mode !== 'date'} onSelect={selectDate} onNavigate={next => syncPanel(active, 'panel', false, next)} onModeChange={next => {
+                  mode = next;
+                  onPanelChange?.([...calendar], [next, next]);
+                }} />
+            {#if showTime && mode === 'date'}<DatePickerTimePanel prefixCls={prefix} value={calendar[active] ?? clock.defaultOpenValue ?? view} selectedValue={calendar[active]} config={clock} format={timeFormat} locale={panelLocale} {now} {cellRender} {cellRange} disabledTime={timeRestriction} onSelect={selectTime} />{/if}
+          </div></div>
+          {#if !showTime && mode === 'date'}<div class={`${prefix}-panel`} tabindex="-1"><DatePickerCalendar prefixCls={prefix} panel={view.add(1, 'month')} selected={calendar[active]} range={displayRange} onHover={handleDateHover} {mode} locale={secondPanelLocale} {cellRender} {cellRange} restrictions={{ minDate, maxDate, disabledDate: panelDisabled }} {now} direction={config.direction} showPrevious={false} onSelect={selectDate} onNavigate={next => syncPanel(
+                active,
+                'panel',
+                false,
+                next.add(-1, 'month')
+              )} onModeChange={next => {
+                syncPanel(active, 'panel', false, view.add(1, 'month'));
+                mode = next;
+                onPanelChange?.([...calendar], [next, next]);
+              }} /></div>{/if}
+        </div>
+        {#if renderExtraFooter || confirm || mode === 'date' && showCurrent}<div class={`${prefix}-footer`}>
+          {#if renderExtraFooter}<div class={`${prefix}-footer-extra`}>{@render renderExtraFooter(mode)}</div>{/if}
+          {#if confirm || mode === 'date' && showCurrent}<ul class={`${prefix}-ranges`}>{#if mode === 'date' && showCurrent}<li class={`${prefix}-now`}><button type="button" data-picker-current class={`${prefix}-now-btn`} disabled={pickerDateDisabled(
+            now,
+            { minDate, maxDate, disabledDate: panelDisabled }
+          )} onclick={() => send(
+              active,
+              'confirm',
+              validPickerTime(adapter.getNow(), clock)
+            )}>{showTime ? lang.now : lang.today}</button></li>{/if}{#if confirm}<li class={`${prefix}-ok`}><Button
+              type="primary" size="small" disabled={!calendar[active]
+              && !empty[active]
+              || Boolean(
+                calendar[active] && invalid(calendar[active]!, active, from())
+              )} onclick={() => {
+                send(active, 'confirm');
+                onOk?.([...calendar]);
+              }} children={lang.ok} /></li>{/if}</ul>{/if}</div>{/if}
+        </div>
+      </div>
+{/snippet}
 
 {#snippet timePanelLayout()}
   <div class={`${prefix}-panel-layout`}>
@@ -1187,61 +1262,10 @@
         </div>
       {:else}
       <div data-picker-range-arrow class={`${prefix}-range-arrow`} style={`left:${bar.left + bar.width / 2}px`}></div>
-      <div class={`${prefix}-panel-container`}><div class={`${prefix}-panel-layout`}>
-        {#if presets?.length}<div data-picker-presets class={`${prefix}-presets`}><ul>{#each presets as preset, index (index)}<li><button type="button" onpointerenter={() => {
-            if (previewValue)
-              presetHover = rangePair(
-                typeof preset.value === 'function' ? preset.value() : preset.value
-              );
-          }} onpointerleave={() => {
-              presetHover = null;
-            }} onclick={() => presetValue(
-              rangePair(typeof preset.value === 'function' ? preset.value() : preset.value)
-            )}>{#if typeof preset.label === 'function'}{@render preset.label()}{:else}{preset.label}{/if}</button></li>{/each}</ul></div>{/if}
-        <div><div class={!showTime && mode === 'date' ? `${prefix}-panels` : undefined}>
-          <div class={`${prefix}-panel`} tabindex="-1"><div class={showTime && mode === 'date'
-              ? `${prefix}-datetime-panel`
-              : undefined}>
-            <DatePickerCalendar prefixCls={prefix} panel={view} selected={calendar[active]} range={displayRange} onHover={date => {
-                hover = date;
-              }} {mode} locale={lang} restrictions={{ minDate, maxDate, disabledDate: panelDisabled }} {now} direction={config.direction} showNext={Boolean(showTime) || mode !== 'date'} onSelect={selectDate} onNavigate={next => syncPanel(active, 'panel', false, next)} onModeChange={next => {
-                  mode = next;
-                  onPanelChange?.([...calendar], [next, next]);
-                }} />
-            {#if showTime && mode === 'date'}<DatePickerTimePanel prefixCls={prefix} value={calendar[active] ?? clock.defaultOpenValue ?? view} selectedValue={calendar[active]} config={clock} format={timeFormat} locale={lang.locale} disabledTime={timeRestriction} onSelect={selectTime} />{/if}
-          </div></div>
-          {#if !showTime && mode === 'date'}<div class={`${prefix}-panel`} tabindex="-1"><DatePickerCalendar prefixCls={prefix} panel={view.add(1, 'month')} selected={calendar[active]} range={displayRange} onHover={date => {
-              hover = date;
-            }} {mode} locale={lang} restrictions={{ minDate, maxDate, disabledDate: panelDisabled }} {now} direction={config.direction} showPrevious={false} onSelect={selectDate} onNavigate={next => syncPanel(
-                active,
-                'panel',
-                false,
-                next.add(-1, 'month')
-              )} onModeChange={next => {
-                syncPanel(active, 'panel', false, view.add(1, 'month'));
-                mode = next;
-                onPanelChange?.([...calendar], [next, next]);
-              }} /></div>{/if}
-        </div>
-        {#if renderExtraFooter}<div class={`${prefix}-footer-extra`}>{@render renderExtraFooter()}</div>{/if}
-        {#if (confirm || showCurrent) && mode === 'date'}<div class={`${prefix}-footer`}><ul class={`${prefix}-ranges`}>{#if showCurrent}<li class={`${prefix}-now`}><button type="button" data-picker-current class={`${prefix}-now-btn`} disabled={pickerDateDisabled(
-            now,
-            { minDate, maxDate, disabledDate: panelDisabled }
-          )} onclick={() => send(
-              active,
-              'confirm',
-              validPickerTime(adapter.getNow(), clock)
-            )}>{showTime ? lang.now : lang.today}</button></li>{/if}{#if confirm}<li class={`${prefix}-ok`}><Button
-              type="primary" size="small" disabled={!calendar[active]
-              && !empty[active]
-              || Boolean(
-                calendar[active] && invalid(calendar[active]!, active, from())
-              )} onclick={() => {
-                send(active, 'confirm');
-                onOk?.([...calendar]);
-              }} children={lang.ok} /></li>{/if}</ul></div>{/if}
-        </div>
-      </div></div>
+      <div class={`${prefix}-panel-container`}>
+        {#if panelRender}{@render panelRender(datePanelLayout)}
+        {:else}{@render datePanelLayout()}{/if}
+      </div>
       {/if}
     </div>
 {/if}{/key}</NoCompactStyle>

@@ -28,6 +28,7 @@ export interface TimeRangePickerProps extends Omit<
   'showTime' | 'allowClear' | 'status' | 'disabledDate' | 'disabledTime'
     | 'onPickerValueChange' | 'onPanelChange' | 'prefix' | 'onclick'
     | 'onfocus' | 'onblur' | 'multiple' | 'placeholder' | 'renderExtraFooter' | 'classNames'
+    | 'cellRender'
 >, Omit<DatePickerTimeConfig, 'format' | 'defaultOpenValue'> {
   placeholder?: string | [string, string];
   /** Заполняет только панель и кандидат OK; одиночный Dayjs относится к start. */
