@@ -98,6 +98,10 @@
     if (paths.length) previousTimestamp = Date.now();
   });
 
+  function defaultTooltipContainer(trigger: HTMLElement) {
+    return trigger.closest<HTMLDialogElement>('dialog:modal') ?? trigger.ownerDocument.body;
+  }
+
   function writeStyle(node: SVGCircleElement, value: InlineStyleLayer[]) {
     let writer = styleWriters.get(node);
     if (!writer) {
@@ -195,4 +199,12 @@
 {/snippet}
 
 <!-- Native Tooltip сохраняет скрытый контент; маленький Progress создаёт подпись при открытии. -->
-{#if diameter <= 20}<Tooltip title={indicator ? tooltipTitle : undefined} onOpenChange={(next) => { if (next) tooltipRendered = true; }}>{@render body()}</Tooltip>{:else}{@render body()}{/if}
+{#if diameter <= 20}
+  <Tooltip title={indicator ? tooltipTitle : undefined}
+    getPopupContainer={config.getPopupContainer ? undefined : defaultTooltipContainer}
+    onOpenChange={(next) => { if (next) tooltipRendered = true; }}>
+    {@render body()}
+  </Tooltip>
+{:else}
+  {@render body()}
+{/if}

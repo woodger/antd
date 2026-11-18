@@ -60,7 +60,7 @@
   const config = useConfig();
   const componentTheme = useComponentTheme('Progress');
   const icons = {
-    line: { success: 'check-circle-filled', exception: 'close-circle-filled' },
+    line: { success: 'check-circle', exception: 'close-circle' },
     circle: { success: 'check', exception: 'close' }
   } as const;
   let host = $state<HTMLDivElement>();
@@ -180,9 +180,9 @@
     semantics.classes.indicator
   ]} data-ant-progress-part="indicator" data-ant-progress-position={pureLine ? infoPosition : undefined}
     data-ant-progress-icon={Boolean(statusIcon) || undefined}
-    style={semantics.styles.indicator} aria-hidden="true"
+    style={semantics.styles.indicator}
     title={typeof text === 'function' ? undefined : valueText}
-    dir={statusIcon || infoPosition === 'inner' || steps ? undefined : 'auto'}>{#if statusIcon}<span class="anticon"><svg viewBox="64 64 896 896" width="1em" height="1em" fill="currentColor" fill-rule={type === 'line' && resolvedStatus === 'exception' ? 'evenodd' : undefined} aria-hidden="true" focusable="false"><path d={type === 'line' ? statusIcons[resolvedStatus === 'success' ? 'check-circle-filled' : 'close-circle-filled'] : progressCircleIcons[resolvedStatus === 'success' ? 'success' : 'exception']} /></svg></span>{:else if typeof text === 'function'}{@render text()}{:else if typeof text !== 'boolean'}{text}{/if}</span>
+    dir={statusIcon || infoPosition === 'inner' || steps ? undefined : 'auto'}>{#if statusIcon}<span class="anticon" role="img" aria-label={statusIcon}><svg viewBox="64 64 896 896" width="1em" height="1em" fill="currentColor" fill-rule={type === 'line' && resolvedStatus === 'exception' ? 'evenodd' : undefined} aria-hidden="true" focusable="false"><path d={type === 'line' ? statusIcons[resolvedStatus === 'success' ? 'check-circle-filled' : 'close-circle-filled'] : progressCircleIcons[resolvedStatus === 'success' ? 'success' : 'exception']} /></svg></span>{:else if typeof text === 'function'}{@render text()}{:else if typeof text !== 'boolean'}{text}{/if}</span>
 {/snippet}
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`progress-prefix:${prefix}`} />{/if}<div

@@ -1,5 +1,6 @@
 <script lang="ts">
   import ProgressCircleCase from './ProgressCircleCase.svelte';
+  import ProgressMiniTooltipCases from './ProgressMiniTooltipCases.svelte';
   import type { ProgressCircleSample } from './ProgressCircleCase.svelte';
   import reference from './ant-design-progress-circle-reference.json';
 
@@ -12,6 +13,7 @@
   let gradient = $state(false);
   let prefix = $state<string>();
   let mounted = $state(true);
+  let miniTooltipCases = $state(false);
   let rtl = $state<boolean>();
   let sample = $derived.by((): ProgressCircleSample => {
     const source = reference.cases.find(item => item.name === selected)! as ProgressCircleSample;
@@ -63,3 +65,6 @@
   {#key selected}<ProgressCircleCase {sample} {mounted} />{/key}
   <button type="button">After circle</button>
 </section>
+
+<label><input type="checkbox" bind:checked={miniTooltipCases} /> Mount tiny Progress cases</label>
+{#if miniTooltipCases}<ProgressMiniTooltipCases />{/if}

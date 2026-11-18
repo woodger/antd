@@ -22729,7 +22729,9 @@
         "tests/browser/fixtures/ant-design-progress-circle-reference.json",
         "tests/package/prefix-text-boundaries.ssr.test.ts",
         "tests/browser/fixtures/PrefixTextBoundariesFixtures.svelte",
-        "tests/browser/prefix-text-boundaries.spec.ts"
+        "tests/browser/prefix-text-boundaries.spec.ts",
+        "tests/browser/fixtures/ProgressMiniTooltipCases.svelte",
+        "tests/browser/fixtures/ant-design-progress-mini-tooltip-reference.json"
       ],
       "features": [
         {
@@ -22817,9 +22819,11 @@
             "src/lib/progress-circle-reference.test.ts",
             "tests/browser/progress-circle.spec.ts",
             "tests/package/progress-circle.ssr.test.ts",
-            "tests/browser/fixtures/ant-design-progress-circle-reference.json"
+            "tests/browser/fixtures/ant-design-progress-circle-reference.json",
+            "tests/browser/fixtures/ProgressMiniTooltipCases.svelte",
+            "tests/browser/fixtures/ant-design-progress-mini-tooltip-reference.json"
           ],
-          "note": "69 UMD-сценариев в standards mode и rapid-update trace: circle/dashboard, success paint order, logical gaps с RTL, size и текущий circle strokeWidth, round cap correction и source step spacing. Circular rounding игнорируется; gradient использует insertion order процентных stops, masks/foreignObject/conic background и butt cap. SVG styles пишутся через общий declaration writer с приоритетом semantic slots. Сохранены source особенности: default inactive steps наследуют основной stroke без railColor, gradient steps ссылаются на отсутствующее definition, gap у circle без placement не применяет rotation. Tiny Tooltip ленивый, сохраняет содержимое после закрытия и не добавляет Tab stop; используется native Svelte wrapper. Source outlined status icons, уникальные SSR masks и cleanup refs/popup проверены."
+          "note": "69 UMD-сценариев в standards mode и rapid-update trace: circle/dashboard, success paint order, logical gaps с RTL, size и текущий circle strokeWidth, round cap correction и source step spacing. Circular rounding игнорируется; gradient использует insertion order процентных stops, masks/foreignObject/conic background и butt cap. SVG styles пишутся через общий declaration writer с приоритетом semantic slots. Сохранены source особенности: default inactive steps наследуют основной stroke без railColor, gradient steps ссылаются на отсутствующее definition, gap у circle без placement не применяет rotation. Tiny Tooltip ленивый, сохраняет содержимое после закрытия и не добавляет Tab stop; используется native Svelte wrapper. Source outlined status icons, уникальные SSR masks и cleanup refs/popup проверены. Tiny Tooltip использует provider container либо body/native modal; подпись получает исходные белый цвет и AX-имена 60%, check, close. Проверены 3 независимых Source first/repeat hover projections, provider replacement и ленивый retained formatter Snippet; SVG остаётся декоративным."
         },
         {
           "id": "global-prefix-warnings",

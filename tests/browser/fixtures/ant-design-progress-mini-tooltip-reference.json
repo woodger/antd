@@ -1,0 +1,167 @@
+{
+  "reference": {
+    "library": "Ant Design",
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "sourceProtocolSHA256": "eefb6108f80b843eb29e51dff6997c5d48cc4a68ecfdcba393dfd83a7522b488",
+    "firstManifestSHA256": "6982ef92f06c757e3e5a884683c998577b341bacea99317cab60df32e597e3ca",
+    "repeatManifestSHA256": "a6c2ce32224aa7877b3059676ca88f36368fcbc7d0cd784605a82384ec529b36",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "theme": "official standard light; ConfigProvider props empty",
+    "projection": "Actual settled hover CSS/DOM attributes and full-CDP-AX tooltip names, selected from immutable originals. First/repeat projections verified equal. No Native output is used."
+  },
+  "cases": [
+    {
+      "name": "normal",
+      "props": {
+        "type": "circle",
+        "size": 18,
+        "percent": 60,
+        "status": "normal"
+      },
+      "snapshot": {
+        "tooltipName": "60%",
+        "indicator": {
+          "ariaHidden": null,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "display": "inline",
+            "position": "static",
+            "transform": "none",
+            "font-size": "14px",
+            "line-height": "22px"
+          }
+        },
+        "container": {
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background-color": "rgba(0, 0, 0, 0.85)"
+          }
+        },
+        "iconLabels": []
+      },
+      "sourceParts": {
+        "first": {
+          "file": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-first.json.parts/progress-normal-step-0.json",
+          "bytes": 4065496,
+          "sha256": "6864bdbb0374902a3ef40f9548c93d50b0705ecac32cab17112c52cd32b7de46",
+          "gzipFile": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-first.json.parts/progress-normal-step-0.json.gz",
+          "gzipBytes": 352256,
+          "gzipSHA256": "2ad4143b60d21f419ea6029f0dbad725855d0e4c2a858ef7b1e1bd6db79e8497"
+        },
+        "repeat": {
+          "file": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-repeat.json.parts/progress-normal-step-0.json",
+          "bytes": 4065496,
+          "sha256": "7d8595e6a82285b267bf38bdf6d4b87c4131e5e91b1da25e8059730dfb2756b7",
+          "gzipFile": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-repeat.json.parts/progress-normal-step-0.json.gz",
+          "gzipBytes": 352260,
+          "gzipSHA256": "65fa9ae184b9c6fa0630733e8bb82ea4dae91b86af7c69a251b586a13be231d2"
+        }
+      }
+    },
+    {
+      "name": "success",
+      "props": {
+        "type": "circle",
+        "size": 18,
+        "percent": 100,
+        "status": "success"
+      },
+      "snapshot": {
+        "tooltipName": "check",
+        "indicator": {
+          "ariaHidden": null,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "display": "inline",
+            "position": "static",
+            "transform": "none",
+            "font-size": "14px",
+            "line-height": "22px"
+          }
+        },
+        "container": {
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background-color": "rgba(0, 0, 0, 0.85)"
+          }
+        },
+        "iconLabels": [
+          "check"
+        ]
+      },
+      "sourceParts": {
+        "first": {
+          "file": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-first.json.parts/progress-success-step-0.json",
+          "bytes": 4845746,
+          "sha256": "fe2e0f95aee5ad4bbdfa8bcaba13a28b65d76cedef5a0ce26aa62402f39ef6fb",
+          "gzipFile": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-first.json.parts/progress-success-step-0.json.gz",
+          "gzipBytes": 423612,
+          "gzipSHA256": "87d576474dc88eb11bd63f8260c16a700591e94685b6a4f4cfd0dfaf52d7529c"
+        },
+        "repeat": {
+          "file": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-repeat.json.parts/progress-success-step-0.json",
+          "bytes": 4845746,
+          "sha256": "5b30c006b6efb0a53607910995d424e20de3c93b67ee9d2c22fe8d5cd3d66f61",
+          "gzipFile": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-repeat.json.parts/progress-success-step-0.json.gz",
+          "gzipBytes": 423555,
+          "gzipSHA256": "9756fd0a0abe71413fd82a1d6c589bdc60e4d51250f7dcefe8aee6bd0a94da89"
+        }
+      }
+    },
+    {
+      "name": "exception",
+      "props": {
+        "type": "circle",
+        "size": 18,
+        "percent": 60,
+        "status": "exception"
+      },
+      "snapshot": {
+        "tooltipName": "close",
+        "indicator": {
+          "ariaHidden": null,
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "display": "inline",
+            "position": "static",
+            "transform": "none",
+            "font-size": "14px",
+            "line-height": "22px"
+          }
+        },
+        "container": {
+          "css": {
+            "color": "rgb(255, 255, 255)",
+            "background-color": "rgba(0, 0, 0, 0.85)"
+          }
+        },
+        "iconLabels": [
+          "close"
+        ]
+      },
+      "sourceParts": {
+        "first": {
+          "file": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-first.json.parts/progress-exception-step-0.json",
+          "bytes": 4848855,
+          "sha256": "a0376a3c9ec8bb48a4fa8b6455d7568cb30cc59665c51a04bda524a3f8f2f811",
+          "gzipFile": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-first.json.parts/progress-exception-step-0.json.gz",
+          "gzipBytes": 424061,
+          "gzipSHA256": "7c0d102d6f86b3b34657ef840446ad2ed31e173a6f0ff9460d92b4ac174e6428"
+        },
+        "repeat": {
+          "file": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-repeat.json.parts/progress-exception-step-0.json",
+          "bytes": 4848859,
+          "sha256": "e9bc2931352df29e764e4c17300f60408027ffd5d1a294a6714778be089353a5",
+          "gzipFile": ".upstream/artifacts/homepage-five-source-review-v1/csr-source-repeat.json.parts/progress-exception-step-0.json.gz",
+          "gzipBytes": 424062,
+          "gzipSHA256": "79d553ed500fa72fe854cd30659c817907807ed04cee5b2815d9bf75a88a9db4"
+        }
+      }
+    }
+  ]
+}
