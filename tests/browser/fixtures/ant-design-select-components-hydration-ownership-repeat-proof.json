@@ -1,0 +1,445 @@
+{
+  "status": "passed",
+  "sourceOnly": true,
+  "wholePairByteEqual": true,
+  "comparison": {
+    "method": "Buffer.equals",
+    "comparedBytes": 44787854,
+    "exclusions": [],
+    "normalization": "none",
+    "allRawFieldsEqual": true
+  },
+  "independentlyCapturedRaw": {
+    "first": {
+      "path": ".upstream/artifacts/select-components-hydration-ownership-source-v1/source-first.json",
+      "bytes": 44787854,
+      "sha256": "60043a0466e56bf05887e3f3d1125d2ee334b566f4b1b0a843e6fc082f66b20e"
+    },
+    "repeat": {
+      "path": ".upstream/artifacts/select-components-hydration-ownership-source-v1/source-repeat.json",
+      "bytes": 44787854,
+      "sha256": "60043a0466e56bf05887e3f3d1125d2ee334b566f4b1b0a843e6fc082f66b20e"
+    }
+  },
+  "protocol": {
+    "path": ".upstream/artifacts/select-components-hydration-ownership-source-v1/protocol-freeze.json",
+    "bytes": 319871,
+    "sha256": "9e9b8ace4ca04684095e2158b168ccb14e8a39c08a351c9c4542688adc90462d"
+  },
+  "counts": {
+    "scenarios": 12,
+    "actualHydratedRoots": 16,
+    "targetActions": 60,
+    "finalPeerCleanups": 4
+  },
+  "rawPointsPerRun": 204,
+  "actualInitialSSRSerializationsPerRun": 32,
+  "actualDiagnostics": {
+    "pageErrors": 0,
+    "consoleMessages": 0,
+    "serverDiagnostics": 0,
+    "recoverableErrors": 0,
+    "fatalScenarios": 0,
+    "networkRequests": 0,
+    "networkFailures": 0
+  },
+  "browserOwnedResourceCounters": {
+    "measured": false,
+    "observers": null,
+    "mutations": null,
+    "frames": null,
+    "timers": null,
+    "ports": null,
+    "reason": "Official Original browser globals stay unpatched; resource timings/network and actual DOM/ref cleanup are retained"
+  },
+  "pointBrowserOwnedResourceCounters": {
+    "measured": false,
+    "observers": null,
+    "mutations": null,
+    "frames": null,
+    "timers": null,
+    "ports": null,
+    "reason": "Original browser APIs remain unpatched; actual owned counts are not measured"
+  },
+  "ssrOwnedResourceCountersMeasured": true,
+  "preservation": {
+    "inputFiles": 10,
+    "references": 881,
+    "priorProductionStandTrees": 6,
+    "verifiedBeforeAndAfter": true
+  },
+  "facts": [
+    {
+      "id": "select-multiple-input/independent-document-roots/clean-focused",
+      "rawPoints": 21,
+      "documentPairCallerUIDEqual": true,
+      "firstAuthoredRef": {
+        "tag": "INPUT",
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": true
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": true,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    },
+    {
+      "id": "select-multiple-input/independent-document-roots/dirty-focused-backward",
+      "rawPoints": 21,
+      "documentPairCallerUIDEqual": true,
+      "firstAuthoredRef": {
+        "tag": "INPUT",
+        "value": "Draft before hydration",
+        "defaultValue": "a",
+        "selection": [
+          2,
+          8,
+          "backward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": true
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          1,
+          1,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": true,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    },
+    {
+      "id": "select-multiple-input/open-shadow-target/clean-focused",
+      "rawPoints": 15,
+      "documentPairCallerUIDEqual": null,
+      "firstAuthoredRef": {
+        "tag": "INPUT",
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": false
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": null,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    },
+    {
+      "id": "select-multiple-input/open-shadow-target/dirty-focused-backward",
+      "rawPoints": 15,
+      "documentPairCallerUIDEqual": null,
+      "firstAuthoredRef": {
+        "tag": "INPUT",
+        "value": "Draft before hydration",
+        "defaultValue": "a",
+        "selection": [
+          2,
+          8,
+          "backward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": false
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          1,
+          1,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": null,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    },
+    {
+      "id": "select-multiple-input/closed-shadow-target/clean-focused",
+      "rawPoints": 15,
+      "documentPairCallerUIDEqual": null,
+      "firstAuthoredRef": {
+        "tag": "INPUT",
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": false
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": null,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    },
+    {
+      "id": "select-multiple-input/closed-shadow-target/dirty-focused-backward",
+      "rawPoints": 15,
+      "documentPairCallerUIDEqual": null,
+      "firstAuthoredRef": {
+        "tag": "INPUT",
+        "value": "Draft before hydration",
+        "defaultValue": "a",
+        "selection": [
+          2,
+          8,
+          "backward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": false
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          1,
+          1,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": null,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    },
+    {
+      "id": "ac-textarea/independent-document-roots/clean-focused",
+      "rawPoints": 21,
+      "documentPairCallerUIDEqual": true,
+      "firstAuthoredRef": {
+        "tag": "TEXTAREA",
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": true
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": true,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    },
+    {
+      "id": "ac-textarea/independent-document-roots/dirty-focused-backward",
+      "rawPoints": 21,
+      "documentPairCallerUIDEqual": true,
+      "firstAuthoredRef": {
+        "tag": "TEXTAREA",
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          1,
+          1,
+          "forward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": true
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          1,
+          1,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": true,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    },
+    {
+      "id": "ac-textarea/open-shadow-target/clean-focused",
+      "rawPoints": 15,
+      "documentPairCallerUIDEqual": null,
+      "firstAuthoredRef": {
+        "tag": "TEXTAREA",
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": false
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": null,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    },
+    {
+      "id": "ac-textarea/open-shadow-target/dirty-focused-backward",
+      "rawPoints": 15,
+      "documentPairCallerUIDEqual": null,
+      "firstAuthoredRef": {
+        "tag": "TEXTAREA",
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          1,
+          1,
+          "forward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": false
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          1,
+          1,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": null,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    },
+    {
+      "id": "ac-textarea/closed-shadow-target/clean-focused",
+      "rawPoints": 15,
+      "documentPairCallerUIDEqual": null,
+      "firstAuthoredRef": {
+        "tag": "TEXTAREA",
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": false
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          0,
+          0,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": null,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    },
+    {
+      "id": "ac-textarea/closed-shadow-target/dirty-focused-backward",
+      "rawPoints": 15,
+      "documentPairCallerUIDEqual": null,
+      "firstAuthoredRef": {
+        "tag": "TEXTAREA",
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          1,
+          1,
+          "forward"
+        ],
+        "sameParsedEditor": true,
+        "scopeFocused": true,
+        "documentFocused": false
+      },
+      "settled": {
+        "value": "a",
+        "defaultValue": "a",
+        "selection": [
+          1,
+          1,
+          "forward"
+        ]
+      },
+      "peerUnchangedThroughTargetDisposal": null,
+      "replacementUsesNewPhysicalNode": true,
+      "targetLateQuiet": true,
+      "browserOwnedResourceCountersMeasured": false
+    }
+  ]
+}

@@ -1751,7 +1751,7 @@
         style={initialContentStyle} {...selectStyleAttributes(semantics.styles.content)} {@attach selectStyle(() => semantics.styles.content)} title={hasSelectedStyle ? undefined : selectedTitle}>
         {#if selected}{#if hasSelectedStyle}<div class={[`${prefix}-content-value`, selectedClass]} style={serializeSelectStyle(mergeSelectStyle(search ? { visibility: 'hidden' } : undefined, selectedStyle))} title={selectedTitle}><RenderContent value={selected.label as RenderEmptyContent} /></div>
           {:else}<RenderContent value={selected.label as RenderEmptyContent} />{/if}
-        {:else}<div class={`${prefix}-placeholder`} style={search ? 'visibility:hidden' : undefined}>{placeholder ?? ''}</div>{/if}<SelectComponent component={inputSlot} context={inputContext} hydrationId={generatedId} />
+        {:else}<div class={`${prefix}-placeholder`} style={search ? 'visibility:hidden' : undefined}>{placeholder ?? ''}</div>{/if}<SelectComponent component={inputSlot} context={inputContext} />
       </div>
     {:else if inputSlot && inputContext && multiple}{@const multipleInputValue = componentInputValue}<div data-ant-select-content class={[`${prefix}-content`, semantics.classes.content]}
         style={initialContentStyle} {...selectStyleAttributes(semantics.styles.content)}
@@ -1800,7 +1800,7 @@
                   style={initialRestContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)}
                   {@attach selectStyle(() => semantics.styles.itemContent)}>{@render componentRestLabel()}</span>{/if}</span></div>{/if}<div class={[`${prefix}-content-item`, `${prefix}-content-item-suffix`]}
           bind:this={componentInputSuffix} style:opacity={1}
-          style:order={responsiveTags ? (componentOverflow?.omittedStart ?? 1) - 1 : undefined}><SelectComponent component={inputSlot} context={inputContext} hydrationId={generatedId} /></div></div>{:else}<div data-ant-select-content
+          style:order={responsiveTags ? (componentOverflow?.omittedStart ?? 1) - 1 : undefined}><SelectComponent component={inputSlot} context={inputContext} /></div></div>{:else}<div data-ant-select-content
       data-select-source-empty-input={multiple && !selectedValues.length && !leading && semantics.sourceControlColors || undefined}
       data-select-value-layer={selectedLayer || undefined}
       data-select-value-has-content={selectedHasValue || undefined}
@@ -1874,7 +1874,7 @@
             {#if renderTag}{@render renderTag({
               label: restLabel, isMaxTag: true, disabled: false, closable: false
             })}{:else}{@const initialRestContentStyle = untrack(() => serializeSelectStyle(semantics.styles.itemContent))}<span class={[`${prefix}-selection-item-content`, semantics.classes.itemContent]} style={initialRestContentStyle} {...selectStyleAttributes(semantics.styles.itemContent)} {@attach selectStyle(() => semantics.styles.itemContent)}>{@render restLabel()}</span>{/if}
-          </span>{/if}{/if}{#if inputSlot && inputContext}<SelectComponent component={inputSlot} context={inputContext} hydrationId={generatedId} />{:else}<input
+          </span>{/if}{/if}{#if inputSlot && inputContext}<SelectComponent component={inputSlot} context={inputContext} />{:else}<input
         {...nativeAttributes}
         bind:this={defaultControl}
         id={controlId}

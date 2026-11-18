@@ -1,5 +1,4 @@
 import assert from 'node:assert/strict';
-import { selectComponentEditorSSRAttributes } from './select-components-editor-ssr-marker';
 import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 import type { Page } from '@playwright/test';
@@ -401,7 +400,7 @@ export function verifyOwnStyleParsed(actual: OwnStyleInitObservation, source: Ow
   for (const key of ['connected', 'tag', 'namespaceURI', 'cssText', 'styleAttribute', 'inlineProperties', 'text',
     'value', 'defaultValue', 'selection', 'focused'] as const) assert.deepEqual(current[key], original[key], label + '/parsed/' + key);
   assert(['INPUT', 'TEXTAREA'].includes(current.tag), label + ' intrinsic parsed editor tag');
-  fieldAttributes({ ...current, attributes: selectComponentEditorSSRAttributes(current.attributes, true, label + '/parsed') }, original, label + '/parsed');
+  fieldAttributes(current, original, label + '/parsed');
   assert.deepEqual(current.childNodes.map(({ identity: _identity, ...node }) => node),
     original.childNodes.map(({ identity: _identity, ...node }) => node), label + ' exact parsed field text/element topology');
   assert.equal(current.identity, actual.details.editor?.identity, label + ' current editor is the retained real parsed field');

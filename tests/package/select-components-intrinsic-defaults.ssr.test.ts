@@ -2,7 +2,7 @@ import { render } from 'svelte/server';
 import type { ComponentProps } from 'svelte';
 import { expect, it, vi } from 'vitest';
 import IntrinsicDefaults from '../browser/fixtures/SelectComponentsIntrinsicDefaultsSSR.svelte';
-import { selectComponentEditorSSRView } from '../browser/select-components-editor-ssr-marker';
+import { readSelectComponentsSSRFields } from '../browser/select-components-ssr-metrics';
 
 type Props = ComponentProps<typeof IntrinsicDefaults>;
 for (const control of ['select', 'autocomplete'] as const)
@@ -17,7 +17,8 @@ for (const control of ['select', 'autocomplete'] as const)
         expect(typeof window).toBe('undefined'); expect(typeof document).toBe('undefined');
         const capture: NonNullable<Props['capture']> = {};
         const { body } = render(IntrinsicDefaults, { props: { control, kind, capture } });
-        const fields = selectComponentEditorSSRView(body, true, control + '/' + kind).fields.filter(field => field.attributes
+        expect(body).not.toContain('data-ant-native-select-component-editor-ssr');
+        const fields = readSelectComponentsSSRFields(body).fields.filter(field => field.attributes
           .some(([name, value]) => name === 'data-intrinsic-defaults-editor' && value === kind));
         expect(fields).toHaveLength(1);
         const field = fields[0], attributes = Object.fromEntries(field.attributes);

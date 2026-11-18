@@ -10573,9 +10573,9 @@ DOM-стиля перед гидратацией. CSR применяет сво�
 гидратация сохраняет фактический CSSOM и исходный текст style до первого
 изменения стилей. Клиентские props отдельно задают историю последующих setter updates.
 Intrinsic INPUT/TEXTAREA при CSR используют динамические элементы Svelte.
-При гидратации временный приватный UID связывает редактор с исходным SSR-узлом
-до обработки textarea; статическая ветка сохраняет фокус и выделение без переноса DOM.
-UID снимается до публичного ref и не входит в context.attributes. Прежние root-ветки,
+При гидратации публичный Svelte `createRawSnippet` получает исходный редактор
+непосредственно из текущего SSR-поддерева, сохраняя DOM, фокус и выделение.
+SSR разметку input/textarea по-прежнему создаёт компилятор Svelte. Прежние root-ветки,
 DOM-строка `context.attributes.style` и CSS-string API сохранены. Публичный ref
 видит начальные стили и textarea defaultValue до измерения ширины.
 Повторы CSR/гидратации отличаются только порядком computed custom properties,
@@ -10590,9 +10590,20 @@ DOM-строка `context.attributes.style` и CSS-string API сохранены
 освобождены. [Проверка режима сборки](tests/package/select-components-own-style-popup-build-mode.test.ts)
 явно различает фиксированные dev/prod hash-классы popup; остальные классы,
 их порядок, CSSOM и геометрия проверяются по прежнему эталону.
-Поиск UID этой ветки не охватывает закрытый Shadow DOM; независимые SSR-корни
-в одном документе должны иметь разные Svelte `idPrefix`. Общая гидратация family
-остаётся partial.
+[Отдельный корпус владения гидратацией](tests/browser/fixtures/ant-design-select-components-hydration-ownership-source-manifest.json)
+проверяет независимые SSR-корни в одном документе и прямые targets в открытом
+и закрытом ShadowRoot без обязательного `idPrefix`. Он содержит 12 сценариев,
+16 гидратируемых корней и 60 действий; два полных Original-повтора побайтно совпадают.
+Проверяются исходный editor, первый authored ref, фокус, value/defaultValue,
+выделение и CSSOM, обновления, замена тега и независимая очистка корней.
+React layout commit и Svelte onMount, SyntheticEvent/native DOM event и deprecated
+getter свободной AutoComplete option сверяются через отдельные точные границы;
+оба полных raw снимка сохраняются.
+[20 Native-регрессий обновления редактора](tests/browser/select-components-controlled-removal.spec.ts)
+проверяют own `undefined`/`null`, value/defaultValue, checked/defaultChecked и тело textarea.
+Начальная гидратация следует измеренной семантике React; последующие setters сохраняют
+прежнее поведение Svelte, включая отдельные правила defaults для CSR и гидратации.
+Общая гидратация family остаётся partial.
 [Отдельный responsive Original-корпус](tests/browser/fixtures/ant-design-select-components-responsive-source-manifest.json)
 содержит 2 owners, 12 действий и 2 initial SSR-состояния; first/repeat побайтно совпадают.
 Он охватывает direct input и Fragment с live adornment: fitting измеряет весь suffix,

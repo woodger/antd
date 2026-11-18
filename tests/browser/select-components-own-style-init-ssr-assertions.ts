@@ -1,5 +1,4 @@
 import assert from 'node:assert/strict';
-import { selectComponentEditorSSRView } from './select-components-editor-ssr-marker';
 import { readSelectComponentsResponsiveSSR } from './select-components-responsive-ssr-metrics';
 import { readSelectComponentsSSRFields } from './select-components-ssr-metrics';
 import { verifySelectIconSSRNodes, verifyIconGraph } from './select-icons-assertions';
@@ -25,8 +24,7 @@ type ContentElement = ReturnType<typeof readSelectComponentsResponsiveSSR>['cont
  */
 export function verifyOwnStyleSSRLayout(actualHTML: string, sourceHTML: string,
   control: SelectComponentsOwnStyleSample['control'], label: string) {
-  const markerView = selectComponentEditorSSRView(actualHTML, true, label);
-  const actual = readSelectComponentsResponsiveSSR(markerView.comparisonHTML), source = readSelectComponentsResponsiveSSR(sourceHTML);
+  const actual = readSelectComponentsResponsiveSSR(actualHTML), source = readSelectComponentsResponsiveSSR(sourceHTML);
   assert.equal(source.contents.length, 1, label + ' one measured Source content subtree');
   assert.equal(actual.contents.length, source.contents.length, label + ' complete content subtree count');
   const compare = (actual: ContentElement, source: ContentElement, path: string, itemTitle?: string) => {
@@ -97,7 +95,7 @@ export function verifyOwnStyleSSR(html: string, actual: NativeOwnStyleOwner, ref
   assert(Object.values(refs).every(Boolean), label + ' SSR has no live DOM refs');
   verifyOwnStyleSSRLayout(html, source.rawHtml, sample.control, label + '/content-layout');
   verifySelectIconSSRNodes(readSelectIconsSSR(html), readSelectIconsSSR(source.rawHtml), source.state, sample as never, label + '/inherited-icons');
-  const native = selectComponentEditorSSRView(html, true, label), original = readSelectComponentsSSRFields(source.rawHtml);
+  const native = readSelectComponentsSSRFields(html), original = readSelectComponentsSSRFields(source.rawHtml);
   assert.equal(native.fields.length, original.fields.length);
   for (const [index, field] of native.fields.entries()) {
     const expected = original.fields[index];

@@ -53,7 +53,7 @@ function attrs(node: SelectIconNode) {
   });
 }
 /** Svelte sets INPUT type before the spread's remaining attributes when value is present. */
-export function verifySelectComponentsDOMAttributes(actual: SelectIconNode, source: SelectIconNode,
+export function verifySelectComponentsDOMAttributes(actual: Pick<SelectIconNode, 'tag'>, source: Pick<SelectIconNode, 'tag'>,
   current: string[][], original: string[][], label: string) {
   let expected = original;
   const get = (values: string[][], key: string) => values.find(([name]) => name === key)?.[1];

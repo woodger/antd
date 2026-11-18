@@ -5,7 +5,6 @@ import SelectComponentsCase from '../browser/fixtures/SelectComponentsCase.svelt
 import SelectComponentsHydrationCase, { type HydrationCapture } from '../browser/fixtures/SelectComponentsHydrationCase.svelte';
 import { readSelectComponentsSSR, selectComponentsSamples, selectComponentsStaticStates } from '../browser/select-components-reference';
 import { selectComponentsHydrationReference } from '../browser/select-components-hydration-reference';
-import { selectComponentEditorSSRView } from '../browser/select-components-editor-ssr-marker';
 import { readSelectComponentsSSRFields } from '../browser/select-components-ssr-metrics';
 import { normalizedSelectSurfaceAuthoredProps, verifySelectSurfaceEventGraph } from '../browser/select-surface-assertions';
 import { verifySelectComponentsAttributes, verifySelectComponentsObservations, type ComponentsObservation } from '../browser/select-components-assertions';
@@ -15,7 +14,7 @@ import { verifyIconGraph } from '../browser/select-icons-assertions';
 type Capture = NonNullable<ComponentProps<typeof SelectComponentsCase>['capture']>;
 const entries = readSelectComponentsSSR().cases;
 const componentSSRMarker = 'data-ant-native-select-component-ssr';
-function nativeFields(body: string, markerScope: 'root-input' | 'input-root' | undefined, editorUID = false) {
+function nativeFields(body: string, markerScope: 'root-input' | 'input-root' | undefined) {
   const marked = [...body.matchAll(/<([a-z][\w:-]*)\b([^>]*)>/gi)].flatMap(match => {
     const attrs = [...match[2].matchAll(/([^\s=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s]+)))?/g)]
       .map(attr => [attr[1].toLowerCase(), attr[2] ?? attr[3] ?? attr[4] ?? '']);
@@ -34,7 +33,7 @@ function nativeFields(body: string, markerScope: 'root-input' | 'input-root' | u
         || name === 'data-ant-auto-complete-component-input')).toBe(true);
     }
   }
-  const view = selectComponentEditorSSRView(body, editorUID, 'public components SSR');
+  const view = readSelectComponentsSSRFields(body);
   expect(view.fields.filter(field => field.attributes.some(([name]) => name === componentSSRMarker)))
     .toHaveLength(markerScope === 'root-input' ? 1 : 0);
   // The exact marker is a Native SSR implementation detail, checked above.
@@ -86,7 +85,7 @@ for (const owner of entries) for (const source of owner.states) it(`matches full
     const markerScope = slot === 'input' ? 'input-root'
       : kind === 'intrinsic' || kind === 'element' ? 'root-input' : undefined;
     expect(source.rawHtml).not.toContain(componentSSRMarker);
-    const view = nativeFields(body, markerScope, slot === 'input' && ['intrinsic', 'element'].includes(kind)), original = readSelectComponentsSSRFields(source.rawHtml);
+    const view = nativeFields(body, markerScope), original = readSelectComponentsSSRFields(source.rawHtml);
     expect(view.fields).toHaveLength(original.fields.length);
     for (const [index, field] of view.fields.entries()) {
       expect(field.tag).toBe(original.fields[index].tag); expect(field.content).toBe(original.fields[index].content);
@@ -116,7 +115,7 @@ for (const entry of selectComponentsHydrationReference.cases) it(`renders compon
     expect(typeof window).toBe('undefined'); expect(typeof document).toBe('undefined');
     const capture: HydrationCapture = {};
     const { body } = render(SelectComponentsHydrationCase, { props: { sample: entry.sample, capture }, idPrefix: 'components-hydration' });
-    const view = nativeFields(body, entry.sample.initialSlot.startsWith('root-') ? 'root-input' : 'input-root', ['input-string', 'input-element'].includes(entry.sample.initialSlot));
+    const view = nativeFields(body, entry.sample.initialSlot.startsWith('root-') ? 'root-input' : 'input-root');
     for (const source of Object.values(entry.server)) {
       expect(source.rawHtml).not.toContain(componentSSRMarker);
       expect(capture.read!()).toEqual(source.state);

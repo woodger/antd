@@ -1,5 +1,6 @@
 <script lang="ts" generics="Element extends HTMLElement = HTMLDivElement">
-  import { untrack, type Snippet } from 'svelte';
+  import { createRawSnippet, untrack, type Snippet } from 'svelte';
+  import { createSelectComponentHydration } from './select-component-hydration.dom';
   import { isSelectComponentHydration, selectComponentHydrationAttributes, takeSelectComponentHydration } from './select-components-hydration.dom';
   type Context = { attributes: object; register: (registration: Element) => () => void };
   type Intrinsic = { element: string; ref?: (node: Element | null) => void };
@@ -7,40 +8,18 @@
   // Own props уже объединены вызывающим полем; renderer использует только context.attributes.
   type Component = string | Renderer | (Intrinsic & { props?: object })
     | { render: Renderer; props?: object };
-  let { component, context, root = false, hydrationId }: {
+  let { component, context, root = false }: {
     component: Component;
     context: Context;
     root?: boolean;
-    hydrationId?: string;
   } = $props();
 
   let intrinsic: Intrinsic | undefined = $derived(typeof component === 'object' && 'element' in component ? component : undefined);
   let tag = $derived(typeof component === 'string' ? component : intrinsic?.element);
-  const editorHydrationAttribute = 'data-ant-native-select-component-editor-ssr';
-  const hydratedEditor = untrack(() => {
-    if (root || !hydrationId || typeof document === 'undefined' || !['input', 'textarea'].includes(tag ?? '')) return;
-    const matches = [...document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(`[${editorHydrationAttribute}]`)]
-      .filter(node => node.getAttribute(editorHydrationAttribute) === hydrationId);
-    if (matches.length > 1) throw new Error('Select editor SSR hydration id must be unique');
-    const node = matches[0];
-    if (!node || node.localName !== tag) return;
-    const defaultValue = node.defaultValue;
-    // До compiler reset помечаем value dirty без смены значения, фокуса и selection.
-    if (node instanceof HTMLTextAreaElement) {
-      const value = node.value;
-      node.value = value;
-    }
-    return { node, defaultValue };
-  });
-  let retainHydratedEditor = $state(Boolean(hydratedEditor));
-  let restoredHydratedDefault = false;
-  $effect.pre(() => {
-    // Новый tag создаёт новый DOM editor обычным client-конструктором.
-    if (retainHydratedEditor && tag !== hydratedEditor?.node.localName) retainHydratedEditor = false;
-  });
-  let staticEditor = $derived(!root && (typeof document === 'undefined' ? Boolean(hydrationId) : retainHydratedEditor));
-  let editorHydrationAttributes = $derived(!root && hydrationId && typeof document === 'undefined'
-    && ['input', 'textarea'].includes(tag ?? '') ? { [editorHydrationAttribute]: hydrationId } : {});
+  let constructorCSR = $state(false);
+  let constructorRequested = $state(false);
+  let renderedOnClient = false;
+  $effect.pre(() => { if (constructorRequested) constructorCSR = true; });
   let register = $derived(context.register);
   let reference = $derived(intrinsic?.ref);
   const initializedInputs = new WeakSet<HTMLInputElement>();
@@ -102,12 +81,6 @@
     const attachedRegister = register;
     const attachedReference = reference;
     const element = node as Element;
-    if (node === hydratedEditor?.node && !restoredHydratedDefault) {
-      restoredHydratedDefault = true;
-      node.removeAttribute(editorHydrationAttribute);
-      if (node instanceof HTMLTextAreaElement && node.defaultValue !== hydratedEditor.defaultValue)
-        node.defaultValue = hydratedEditor.defaultValue;
-    }
     const attrs = untrack(() => context.attributes) as { value?: unknown; defaultValue?: unknown; defaultvalue?: unknown };
     const initialValue = attrs.defaultValue ?? attrs.defaultvalue;
     if (node instanceof HTMLInputElement && !initializedInputs.has(node)) {
@@ -129,15 +102,60 @@
       finally { unregister(); }
     };
   }
+  type Editor = HTMLInputElement | HTMLTextAreaElement;
+  let hydration: { node: Editor; attributes: Record<string, unknown>;
+    writer: ReturnType<typeof createSelectComponentHydration> } | undefined;
+  let editorAttributes = $derived(tag === 'input' ? input
+    : { ...textarea.attributes, value: textarea.value });
+  function setupHydratedEditor(node: globalThis.Element) {
+    if (renderedOnClient) {
+      // Пустой CSR placeholder не получает attrs/ref; новый DOM создаёт прежняя ветка.
+      constructorRequested = true;
+      return;
+    }
+    if ((node.localName !== 'input' && node.localName !== 'textarea') || node.localName !== tag)
+      throw new Error('Select hydration requires its matching input or textarea');
+    const editor = node as Editor;
+    const initial = untrack(() => editorAttributes);
+    const writer = untrack(() => createSelectComponentHydration(editor, initial));
+    const current = { node: editor, attributes: initial, writer };
+    hydration = current;
+    // Как attachment: register/CSS prepare/authored ref получают connected DOM.
+    $effect(() => attachElement(editor));
+    return () => {
+      writer.destroy();
+      if (hydration === current) hydration = undefined;
+    };
+  }
+  $effect(() => {
+    if (root || tag !== 'input' && tag !== 'textarea') return;
+    const attributes = editorAttributes;
+    const current = hydration;
+    if (current && attributes !== current.attributes) {
+      untrack(() => current.writer.update(attributes, (context.attributes as { value?: unknown }).value != null));
+      current.attributes = attributes;
+    }
+  });
+  const hydratedEditor = createRawSnippet(() => ({
+    render() {
+      renderedOnClient = true;
+      return untrack(() => tag === 'input' ? '<input>' : '<textarea></textarea>');
+    },
+    setup: setupHydratedEditor
+  }));
+  let editorRenderer = $derived(typeof document === 'undefined'
+    ? tag === 'input' ? ssrInput : ssrTextarea : hydratedEditor);
 </script>
 
-{#if tag === 'input'}
-  {#if root}<input {...input} {...selectComponentHydrationAttributes(root)} {@attach attachElement} />
-  {:else if staticEditor}<input {...input} {...editorHydrationAttributes} {@attach attachElement} />
-  {:else}<svelte:element this={tag} {...input} {@attach attachElement} />{/if}
-{:else if tag === 'textarea'}
-  {#if root}<textarea {...textarea.attributes} value={textarea.value} {@attach attachElement}></textarea>
-  {:else if staticEditor}<textarea {...textarea.attributes} value={typeof document === 'undefined' ? textareaText : textarea.value} {...editorHydrationAttributes} {@attach attachElement}></textarea>
+{#if !root && constructorCSR && (tag === 'input' || tag === 'textarea')}
+  {#if tag === 'input'}<svelte:element this={tag} {...input} {@attach attachElement} />
   {:else}<svelte:element this={tag} {...textarea.attributes} {...textareaValueAttributes} {@attach attachElement}>{textareaText}</svelte:element>{/if}
+{:else if !root && (tag === 'input' || tag === 'textarea')}
+  {#key tag}{@render editorRenderer()}{/key}
+{:else if tag === 'input'}<input {...input} {...selectComponentHydrationAttributes(root)} {@attach attachElement} />
+{:else if tag === 'textarea'}<textarea {...textarea.attributes} value={textarea.value} {@attach attachElement}></textarea>
 {:else if tag}<svelte:element this={tag} {...attributes} {@attach attachElement} />
 {:else if render}{@render render(context)}{/if}
+
+{#snippet ssrInput()}<input {...input} />{/snippet}
+{#snippet ssrTextarea()}<textarea {...textarea.attributes} value={textareaText}></textarea>{/snippet}
