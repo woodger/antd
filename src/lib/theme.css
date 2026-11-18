@@ -461,7 +461,8 @@
   --ant-list-description-font-size: var(--ant-font-size);
 }
 
-.ant-pagination {
+.ant-pagination,
+[data-ant-pagination]:not([data-ant-pagination-source-theme]) {
   --ant-pagination-item-bg: var(--ant-color-bg-container);
   --ant-pagination-item-active-bg: var(--ant-color-bg-container);
   --ant-pagination-item-active-color: var(--ant-color-primary);

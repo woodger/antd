@@ -16,6 +16,10 @@ describe('Pagination prefix stylesheet', () => {
     expect(css).toContain('--suite-pagination-item-spacing-actual');
     expect(css).toContain('--ant-pagination-item-active-color');
     expect(css).toContain('.pages-options-size-changer');
+    expect(css).toContain('[class^="pages"]');
+    expect(css).toContain('[class*=" pages"]');
+    expect(css).not.toContain('[class^="ant-pagination"]');
+    expect(css).not.toContain('[class*=" ant-pagination"]');
     expect(css).not.toContain('.ant-input-group');
     expect(css).not.toContain('.ant-pagination-options');
     expect(getPaginationPrefixCss('ant-pagination', 'suite.root'))

@@ -66,3 +66,22 @@ test('Pagination prefix changes retain active page, jumper draft, focus/selectio
   await expect(page.getByLabel('Pagination prefix events', { exact: true })).toHaveText('["12:10"]');
   await expect(active).toHaveClass(/pages-item-12/);
 });
+
+for (const [theme, height] of [['light-blue', 32], ['dark-green', 32], ['compact-purple', 28]] as const) {
+  test(`Pagination retains ${theme} item geometry across prefix changes`, async ({ page }) => {
+    await page.goto('/?fixture=pagination-prefix');
+    await page.getByRole('combobox', { name: 'Pagination native theme', exact: true }).selectOption(theme);
+    await page.getByRole('checkbox', { name: 'Live Pagination prefix', exact: true }).check();
+    const prefix = page.getByRole('textbox', { name: 'Live Pagination prefix value', exact: true });
+    const active = page.locator('.fixture-pagination-prefix [data-ant-pagination-active]');
+
+    for (const value of ['ant', 'suite', 'ant']) {
+      await prefix.fill(value);
+      await expect(active).toHaveCSS('box-sizing', 'border-box');
+      await expect(active).toHaveCSS('height', `${height}px`);
+      await expect.poll(() => active.evaluate(node => node.getBoundingClientRect().height)).toBe(height);
+      await expect(active).toHaveText('5');
+      await expect(page.getByLabel('Pagination prefix events', { exact: true })).toHaveText('[]');
+    }
+  });
+}

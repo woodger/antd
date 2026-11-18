@@ -9,9 +9,11 @@ export function getPaginationPrefixCss(prefix: string, rootPrefix: string) {
   const roots = new Set(['', '-small', '-large', '-mini', '-simple', '-rtl', '-bordered',
     '-start', '-center', '-end', '-filled', '-borderless', '-underlined']);
 
-  return template.replace(/--ant-pagination-(item-size-actual|item-spacing-actual)|\.ant-pagination([-\w]*)/g,
-    (_match, metric: string | undefined, suffix: string | undefined) => {
+  return template.replace(/--ant-pagination-(item-size-actual|item-spacing-actual)|\.ant-pagination([-\w]*)|\[class([\^*])="( ?)ant-pagination/g,
+    (_match, metric: string | undefined, suffix: string | undefined,
+      operator: string | undefined, space: string | undefined) => {
       if (metric !== undefined) return `--${rootPrefix.replaceAll('.', '')}-pagination-${metric}`;
+      if (operator !== undefined) return `[class${operator}="${space}${prefix}`;
       if (suffix === '-css-var') return `.ant-pagination-css-var${scope}`;
       const part = suffix ?? '';
 

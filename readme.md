@@ -11491,6 +11491,7 @@ prefix, без четырёх общих Input Group rules. Частные item-
 item-spacing-actual следуют общему namespace с исходным удалением точек;
 публичные token variables сохраняются. Смена префикса сохраняет current/pageSize,
 DOM активного пункта и jumper, его draft/focus/selection и callbacks.
+Пункты сохраняют `border-box` и размер темы, включая 28px для medium в native compact.
 Source button Arial и [public itemRender counterparts с fontFamily:inherit](./tests/browser/fixtures/ant-design-pagination-prefix-reference.json)
 разделены: прежняя Native typography, active colors и wireframe сохранены.
 

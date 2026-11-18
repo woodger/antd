@@ -3472,7 +3472,8 @@
         "tests/browser/fixtures/ResponsiveControlsCase.svelte",
         "tests/browser/fixtures/ResponsiveControlsFixtures.svelte",
         "tests/browser/fixtures/ant-design-responsive-controls-reference.json",
-        "tests/package/responsive-controls.ssr.test.ts"
+        "tests/package/responsive-controls.ssr.test.ts",
+        "src/lib/theme.css"
       ],
       "features": [
         {
@@ -3633,9 +3634,10 @@
             "tests/browser/fixtures/ant-design-pagination-prefix-reference.json",
             "tests/browser/pagination-prefix-metrics.ts",
             "tests/browser/pagination-prefix.spec.ts",
-            "tests/package/pagination-prefix.ssr.test.ts"
+            "tests/package/pagination-prefix.ssr.test.ts",
+            "src/lib/theme.css"
           ],
-          "note": "23 raw UMD конфигурации в normal/nested/reset scopes: sizes, disabled/simple/readOnly/quick/size changer, align, wireframe, aliases/cssVar. Local/empty priority соответствует ConfigProvider; 111 исходных rules/media изолированы по local/global prefixes без четырёх общих Input Group selectors. Private item-size-actual/item-spacing-actual следуют global namespace с удалением точек; public variables canonical. Native wrapping/nav/buttons/active colors/wireframe, Select namespace и custom size renderer info сохранены. Raw prev/next button Arial отделён от public itemRender fontFamily=inherit counterparts для прежней Native typography. Live changes сохраняют current/pageSize, active/jumper DOM, draft/focus/selection и callbacks. CSS selectPrefixCls и полный Select API остаются в advanced-api."
+          "note": "23 raw UMD конфигурации в normal/nested/reset scopes: sizes, disabled/simple/readOnly/quick/size changer, align, wireframe, aliases/cssVar. Local/empty priority соответствует ConfigProvider; 111 исходных rules/media изолированы по local/global prefixes без четырёх общих Input Group selectors. Private item-size-actual/item-spacing-actual следуют global namespace с удалением точек; public variables canonical. Native wrapping/nav/buttons/active colors/wireframe, Select namespace и custom size renderer info сохранены. Raw prev/next button Arial отделён от public itemRender fontFamily=inherit counterparts для прежней Native typography. Live changes сохраняют current/pageSize, active/jumper DOM, draft/focus/selection и callbacks. CSS selectPrefixCls и полный Select API остаются в advanced-api. Attribute reset selectors следуют namespace, включая pseudo-elements. Native compact medium сохраняет 28px и border-box при смене общего prefix; Source token path сохраняет свой приоритет."
         },
         {
           "id": "responsive-theme-breakpoints",

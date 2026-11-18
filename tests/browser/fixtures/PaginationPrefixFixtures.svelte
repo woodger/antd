@@ -8,6 +8,7 @@
   let live = $state(false);
   let prefix = $state('suite');
   let local = $state('');
+  let nativeTheme = $state('');
   let sample = $derived(live ? { id: 'live', prefix, local: local || undefined, quick: true } :
     (reference.cases.find(entry => entry.sample.id === selected) ?? reference.cases[0])
       .sample as PaginationPrefixSample);
@@ -23,8 +24,17 @@
   <label><input type="checkbox" bind:checked={live} /> Live Pagination prefix</label>
   <label>Live Pagination prefix value<input bind:value={prefix} /></label>
   <label>Local Pagination prefix value<input bind:value={local} /></label>
+  <label>Pagination native theme<select bind:value={nativeTheme}>
+    <option value="">Source tokens</option>
+    <option value="light-blue">Light blue</option>
+    <option value="dark-green">Dark green</option>
+    <option value="compact-purple">Compact purple</option>
+  </select></label>
   <ConfigProvider prefixCls={sample.prefix} direction={sample.rtl ? 'rtl' : 'ltr'} locale={enUS}
-    theme={{ cssVar: sample.variablePrefix ? { prefix: sample.variablePrefix } : {},
+    theme={nativeTheme ? { mode: nativeTheme === 'dark-green' ? 'dark' : 'light',
+      primary: nativeTheme === 'light-blue' ? 'blue' : nativeTheme === 'dark-green' ? 'green' : 'purple',
+      compact: nativeTheme === 'compact-purple' } : {
+      cssVar: sample.variablePrefix ? { prefix: sample.variablePrefix } : {},
       token: sample.wireframe ? { wireframe: true } : undefined,
       components: sample.aliases ? { Pagination: {
         itemSize: 38, itemActiveColor: '#135200', itemActiveBg: '#fffbe6', marginXS: 12
