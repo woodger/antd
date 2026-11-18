@@ -11916,7 +11916,8 @@
         "tests/browser/fixtures/PrefixDefaultStylingFixtures.svelte",
         "tests/package/prefix-text-boundaries.ssr.test.ts",
         "tests/browser/prefix-text-boundaries.spec.ts",
-        "tests/browser/fixtures/PrefixTextBoundariesFixtures.svelte"
+        "tests/browser/fixtures/PrefixTextBoundariesFixtures.svelte",
+        "tests/browser/time-range-picker-prefix-state.spec.ts"
       ],
       "features": [
         {
@@ -11975,9 +11976,11 @@
             "src/lib/time-range-picker.engine.test.ts",
             "src/lib/time-range-picker.ssr.test.ts",
             "tests/package/time-range-picker.ssr.test.ts",
-            "tests/browser/time-range-picker.spec.ts"
+            "tests/browser/time-range-picker.spec.ts",
+            "tests/browser/fixtures/TimeRangePickerFixtures.svelte",
+            "tests/browser/time-range-picker-prefix-state.spec.ts"
           ],
-          "note": "Общая машина RangePicker: calendar/submit/owner, последовательные OK/Enter/Tab, focus lock и strong/weak close, onOk до перехода/change, сортировка только final pair и locked boundary clear. Nullable panels/defaultOpenValue/pickerValue, from-dependent validation, native FormData/Dayjs/Form/refs и cleanup. Icons/semantic берутся из timePicker; variant/separator/class/plain style из rangePicker, один semantic слой. Узкая панель/стрелка сдвигаются под активное поле; source RTL column order. Svelte native buttons/popover и deferred focus адаптированы без изменения календарного RangePicker API."
+          "note": "Общая машина RangePicker: calendar/submit/owner, последовательные OK/Enter/Tab, focus lock и strong/weak close, onOk до перехода/change, сортировка только final pair и locked boundary clear. Nullable panels/defaultOpenValue/pickerValue, from-dependent validation, native FormData/Dayjs/Form/refs и cleanup. Icons/semantic берутся из timePicker; variant/separator/class/plain style из rangePicker, один semantic слой. Узкая панель/стрелка сдвигаются под активное поле; source RTL column order. Svelte native buttons/popover и deferred focus адаптированы без изменения календарного RangePicker API. Локальный prefixCls при той же controlled-паре сохраняет текст, selection и неподтверждённый выбор; новый массив value с прежними Dayjs по-прежнему синхронизирует черновик."
         },
         {
           "id": "advanced-api",

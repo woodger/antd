@@ -13,6 +13,7 @@
     ...props
   }: TimeRangePickerProps = $props();
   let shared = $derived(timeRangeSharedProps(props));
+  let value = $derived(props.value);
   let picker = $state<{
     focus(options?: TimeRangePickerFocusOptions): void;
     blur(): void;
@@ -30,6 +31,7 @@
 
 <RangePickerCore
   {...shared}
+  {value}
   time={props}
   bind:nativeElement
   bind:startInput

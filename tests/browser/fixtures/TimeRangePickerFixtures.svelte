@@ -43,6 +43,7 @@
   let allowClear = $state(true);
   let icons = $state(false);
   let styled = $state(false);
+  let localPrefix = $state<string>();
   let nested = $state(false);
   let dark = $state(false);
   let compact = $state(false);
@@ -74,6 +75,14 @@
     initialValues: { interval: null },
     rules: { interval: [{ required: true, message: 'Choose a time interval' }] }
   });
+
+  const refIdentities = new WeakMap<object, number>();
+  let nextRefIdentity = 0;
+  function refIdentity(value: object | undefined) {
+    if (!value) return 'none';
+    if (!refIdentities.has(value)) refIdentities.set(value, ++nextRefIdentity);
+    return refIdentities.get(value)!;
+  }
 
   function stamp(value: Dayjs | null | undefined) {
     return value?.toISOString() ?? 'null';
@@ -165,6 +174,10 @@
     <button type="button" onclick={() => {
       value = [dayjs.utc('2025-02-28T18:45:56.789Z'), dayjs.utc('2025-03-01T19:20:30.123Z')];
     }}>Set external interval</button>
+    <button type="button" onclick={() => { if (value) value = [...value]; }}>Replace interval array</button>
+    <button type="button" onclick={() => {
+      localPrefix = localPrefix === 'project-picker' ? 'suite-picker' : 'project-picker';
+    }}>Toggle interval prefix</button>
     <button type="button" onclick={() => { defaults = [null, null]; }}>Change interval default</button>
     <button type="button" onclick={() => { events = []; }}>Clear interval events</button>
     <button type="button" onclick={() => picker?.focus({ index: 1, cursor: 'all' })}>Focus interval ref</button>
@@ -203,6 +216,7 @@
             bind:endInput={end}
             id={{ start: 'interval-start', end: 'interval-end' }}
             name="interval"
+            prefixCls={localPrefix}
             value={controlledValue ? value : undefined}
             defaultValue={defaults}
             pickerValue={controlledPanel ? pickerValues : undefined}
@@ -293,10 +307,12 @@
     </ConfigProvider>
   </ConfigProvider>
   <output aria-label="Interval value">{stamps(value)}</output>
+  <output aria-label="Interval value refs">{value === initial},{value?.[0] === initial[0]},{value?.[1] === initial[1]}</output>
   <output aria-label="Interval events">{events.join('|')}</output>
   <output aria-label="Interval focus">{focusEvents.join('|')}</output>
   <output aria-label="Interval panels">{panelEvents.join('|')}</output>
   <output aria-label="Interval refs">{root?.tagName ?? 'none'},{start?.tagName ?? 'none'},{end?.tagName ?? 'none'}</output>
+  <output aria-label="Interval control refs">{refIdentity(picker)},{refIdentity(picker?.focus)},{refIdentity(picker?.blur)}</output>
   <output aria-label="Interval data">{data}</output>
   <Form {form} onFinish={values => { submitted = stamps(values.interval); }} class="interval-form">
     <FormItem name="interval" label="Form interval">
