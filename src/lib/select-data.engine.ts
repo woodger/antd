@@ -1,3 +1,5 @@
+// Строит строки списка и индексы Select из пользовательских options. Кэш
+// сохраняет подписи выбранных значений, когда исходные options исчезают.
 // @rc-component/select1.10.1 / @rc-component/util; MIT, vendor/LICENSE.rc-select и LICENSE.rc-util.
 import type { SelectFieldNames, SelectScrollKey } from './select.types';
 import type {
@@ -5,59 +7,82 @@ import type {
   SelectDataMaps, SelectDataRow, SelectDataValue
 } from './select-data.types';
 
+// Нормализует имена полей. Подпись группы по умолчанию использует то же поле, что option.
 export function selectFields(fields?: SelectFieldNames): SelectDataFields {
   const label = fields?.label || 'label';
   return { label, value: fields?.value || 'value', options: fields?.options || 'options',
     groupLabel: fields?.groupLabel || label };
 }
 
+// Читает значение по настройке поля. Тип Value задаёт потребитель options.
 export function selectOptionValue<Value extends SelectDataValue = SelectDataValue>(
   data: object, fields: SelectDataFields
 ) {
   return Reflect.get(data, fields.value) as Value | undefined;
 }
 
+// Оставляет содержимое подписи непрозрачным, включая snippet и числовое значение.
 export function selectOptionLabel(data: object, fields: SelectDataFields): unknown {
   return Reflect.get(data, fields.label);
 }
 
+// Ключ строки выбирается независимо от fieldNames. Ноль и пустая строка допустимы.
 function optionKey(data: object, index: number): SelectScrollKey {
   const key: unknown = Reflect.get(data, 'key');
   const value: unknown = 'value' in data ? Reflect.get(data, 'value') : undefined;
   return (key != null ? key : value !== undefined ? value : `rc-index-key-${index}`) as SelectScrollKey;
 }
 
+// Сохраняет порядок строк и исходный объект для callbacks и пользовательского render.
 export function flattenSelectData<
   Value extends SelectDataValue = SelectDataValue, Data extends object = object
 >(options: readonly Data[], fields: SelectDataFields): SelectDataRow<Value, Data>[] {
   const rows: SelectDataRow<Value, Data>[] = [];
-  function dig(items: readonly Data[], grouped: boolean) {
+
+  // Заголовки групп создаются только на верхнем уровне, как в исходном списке.
+  function appendRows(items: readonly Data[], grouped: boolean) {
     if (!Array.isArray(items)) {
       return;
     }
     for (const item of items) {
       const data = item as Data & Readonly<Record<string, unknown>>;
       if (grouped || !(fields.options in item)) {
+        const key = optionKey(item, rows.length);
+        const label = selectOptionLabel(item, fields);
+        const value = selectOptionValue<Value>(item, fields);
         rows.push({
-          key: optionKey(item, rows.length), groupOption: grouped, data,
-          label: selectOptionLabel(item, fields), value: selectOptionValue<Value>(item, fields)
+          key,
+          groupOption: grouped,
+          data,
+          label,
+          value
         });
       }
       else {
-        rows.push({ key: optionKey(item, rows.length), group: true, data,
-          label: Reflect.get(item, fields.groupLabel) });
-        dig(Reflect.get(item, fields.options) as readonly Data[], true);
+        const key = optionKey(item, rows.length);
+        const label = Reflect.get(item, fields.groupLabel);
+        rows.push({ key, group: true, data, label });
+
+        const children = Reflect.get(item, fields.options) as readonly Data[];
+        appendRows(children, true);
       }
     }
   }
-  dig(options, false);
+
+  appendRows(options, false);
   return rows;
 }
 
+// Приводит заданные поля поиска к списку, игнорируя пустую строку.
 function filterProperties(properties?: string | readonly string[]): readonly string[] {
-  return typeof properties === 'string' ? properties ? [properties] : [] : properties ?? [];
+  if (typeof properties === 'string') {
+    return properties ? [properties] : [];
+  }
+
+  return properties ?? [];
 }
 
+// Разделяет обычный lookup по подписям и lookup только по собственным полям.
 export function collectSelectData<
   Value extends SelectDataValue = SelectDataValue, Data extends object = object
 >(options: readonly Data[], fields: SelectDataFields,
@@ -67,13 +92,16 @@ export function collectSelectData<
   const labelOptions = new Map<unknown, Data>();
   const nativeLabelOptions = new Map<unknown, Data>();
   const labels = [fields.label, ...filterProperties(optionFilterProp), optionLabelProp];
-  function dig(items: readonly Data[], grouped: boolean) {
+
+  // Читает заголовки и значения в порядке обхода. При совпадении выигрывает последняя запись.
+  function indexOptions(items: readonly Data[], grouped: boolean) {
     for (let index = 0; index < items.length; index++) {
       const item = items[index];
       const children: unknown = Reflect.get(item, fields.options);
       // Lookup использует truthiness; flatten выше намеренно проверяет наличие свойства.
       if (!children || grouped) {
-        valueOptions.set(selectOptionValue<Value>(item, fields), item);
+        const value = selectOptionValue<Value>(item, fields);
+        valueOptions.set(value, item);
         for (const field of labels) {
           if (field && typeof field === 'string') {
             const label: unknown = Reflect.get(item, field);
@@ -82,23 +110,29 @@ export function collectSelectData<
           }
         }
       }
-      else dig(children as readonly Data[], true);
+      else {
+        indexOptions(children as readonly Data[], true);
+      }
     }
   }
-  dig(options, false);
+
+  indexOptions(options, false);
   return { valueOptions, labelOptions, nativeLabelOptions };
 }
 
+// Возвращает поверхностную копию option для публичного callback.
 export function copySelectData<Data extends object>(data: Data): Data;
 export function copySelectData<Data extends object>(data: Data | undefined): Partial<Data>;
 export function copySelectData<Data extends object>(data: Data | undefined): Partial<Data> {
   return { ...data };
 }
 
+// Поиск сравнивает текст и объединённые фрагменты подписи без учёта регистра.
 function includes(value: unknown, query: string) {
   return (Array.isArray(value) ? value : [value]).join('').toUpperCase().includes(query);
 }
 
+// Фильтрует группы целиком при совпадении заголовка или оставляет подходящих потомков.
 export function filterSelectData<Data extends object>(
   options: readonly Data[], search: string, fields: SelectDataFields,
   config: SelectDataFilter<Data> = {}
@@ -109,6 +143,7 @@ export function filterSelectData<Data extends object>(
   const properties = filterProperties(config.optionFilterProp);
   const query = search.toUpperCase();
   const custom = config.filterOption;
+  // Выбирает только один способ поиска и сохраняет приоритет пользовательской функции.
   const match = (item: Data) => {
     if (typeof custom === 'function') {
       return custom(search, copySelectData(item));
@@ -122,8 +157,16 @@ export function filterSelectData<Data extends object>(
     if (config.defaultMatch) {
       return config.defaultMatch(search, item, fields, group);
     }
-    return includes(Reflect.get(item, group
-      ? fields.label === 'children' ? 'label' : fields.label : fields.value), query);
+    let field: string;
+    if (group) {
+      field = fields.label === 'children' ? 'label' : fields.label;
+    }
+    else {
+      field = fields.value;
+    }
+
+    const text = Reflect.get(item, field);
+    return includes(text, query);
   };
   const result: Data[] = [];
   for (const item of options) {
@@ -140,6 +183,7 @@ export function filterSelectData<Data extends object>(
   return result;
 }
 
+// Сортирует копию options и оставляет вложенные группы в той же структуре.
 export function sortSelectData<Data extends object>(
   options: readonly Data[], search: string,
   comparator?: (left: Data, right: Data, info: { searchValue: string }) => number
@@ -147,19 +191,31 @@ export function sortSelectData<Data extends object>(
   if (!comparator) {
     return options;
   }
-  return [...options].sort((left, right) => comparator(left, right, { searchValue: search })).map(item => {
+
+  const sorted = [...options].sort((left, right) => comparator(left, right, { searchValue: search }));
+  return sorted.map(sortGroup);
+
+  // Исходный sorter читает поле options независимо от настройки fieldNames.
+  function sortGroup(item: Data) {
     const children: unknown = Reflect.get(item, 'options');
-    // Source sorter использует literal options, независимо от mapped children field.
-    return Array.isArray(children) ? { ...item, options: children.length
-      ? sortSelectData(children as Data[], search, comparator) : children } : item;
-  });
+    if (!Array.isArray(children)) {
+      return item;
+    }
+
+    return {
+      ...item,
+      options: children.length ? sortSelectData(children as Data[], search, comparator) : children
+    };
+  }
 }
 
+// Начальное состояние не удерживает записи из предыдущего экземпляра Select.
 export function emptySelectDataCache<Value extends SelectDataValue, Data extends object>():
-SelectDataCache<Value, Data> {
+  SelectDataCache<Value, Data> {
   return { labels: new Map(), options: new Map(), display: [] };
 }
 
+// Сравнивает значения и порядок записей перед переиспользованием Map.
 function sameMap<Key, Value>(left: ReadonlyMap<Key, Value>, right: ReadonlyMap<Key, Value>) {
   if (left.size !== right.size) {
     return false;
@@ -174,51 +230,77 @@ function sameMap<Key, Value>(left: ReadonlyMap<Key, Value>, right: ReadonlyMap<K
   return true;
 }
 
+// Строку можно сохранить, только если данные и все видимые поля совпадают.
 function sameDisplay<Value extends SelectDataValue, Data extends object>(
-  previous: SelectDataDisplay<Value, Data> | undefined, next: SelectDataDisplay<Value, Data>
+  previous: SelectDataDisplay<Value, Data>,
+  next: SelectDataDisplay<Value, Data>
 ) {
-  return previous && Object.is(previous.value, next.value) && Object.is(previous.label, next.label)
+  return Object.is(previous.value, next.value) && Object.is(previous.label, next.label)
     && previous.data === next.data && Object.is(previous.disabled, next.disabled)
     && Object.is(previous.title, next.title);
 }
 
+// Вычисляет подписи и метаданные текущего выбора с сохранением неизменившихся ссылок.
 export function resolveSelectDataCache<Value extends SelectDataValue, Data extends object>(
-  values: readonly Value[], maps: SelectDataMaps<Value, Data>, fields: SelectDataFields,
+  values: readonly Value[],
+  maps: SelectDataMaps<Value, Data>,
+  fields: SelectDataFields,
   previous: SelectDataCache<Value, Data>
 ): SelectDataCache<Value, Data> {
   const labels = new Map<Value, unknown>();
   const options = new Map<Value, Data | undefined>();
   const previousDisplay = new Map(previous.display.map(item => [item.value, item]));
-  const display = values.map(value => {
+
+  const display = values.map(resolveDisplay);
+  const nextLabels = sameMap(previous.labels, labels) ? previous.labels : labels;
+  const nextOptions = sameMap(previous.options, options) ? previous.options : options;
+  const unchangedDisplay = display.length === previous.display.length
+    && display.every((item, index) => item === previous.display[index]);
+  const nextDisplay = unchangedDisplay ? previous.display : display;
+
+  if (nextLabels === previous.labels && nextOptions === previous.options
+    && nextDisplay === previous.display) {
+    return previous;
+  }
+
+  return { labels: nextLabels, options: nextOptions, display: nextDisplay };
+
+  // Читает актуальную подпись и использует старую только при undefined.
+  function resolveDisplay(value: Value) {
     const current = maps.valueOptions.get(value);
     const data = current ?? previous.options.get(value);
     const rawLabel = current ? selectOptionLabel(current, fields) : undefined;
     const label = rawLabel === undefined ? previous.labels.get(value) : rawLabel;
-    const next: SelectDataDisplay<Value, Data> = { value, label, data,
-      // Сохраняем прежний Native disabled удалённого option; title относится к текущим данным.
+    const next: SelectDataDisplay<Value, Data> = {
+      value,
+      label,
+      data,
+      // У удалённого option сохраняется disabled. Title относится к текущим данным.
       disabled: data ? Reflect.get(data, 'disabled') as boolean | undefined : undefined,
-      title: current ? Reflect.get(current, 'title') : undefined };
+      title: current ? Reflect.get(current, 'title') : undefined
+    };
     labels.set(value, label);
     options.set(value, data);
-    const old = previousDisplay.get(value);
-    return sameDisplay(old, next) ? old! : next;
-  });
-  const nextLabels = sameMap(previous.labels, labels) ? previous.labels : labels;
-  const nextOptions = sameMap(previous.options, options) ? previous.options : options;
-  const nextDisplay = display.length === previous.display.length
-    && display.every((item, index) => item === previous.display[index]) ? previous.display : display;
-  return nextLabels === previous.labels && nextOptions === previous.options && nextDisplay === previous.display
-    ? previous : { labels: nextLabels, options: nextOptions, display: nextDisplay };
+
+    const previousRow = previousDisplay.get(value);
+    return previousRow && sameDisplay(previousRow, next) ? previousRow : next;
+  }
 }
 
-export function selectDataContent<Value extends SelectDataValue, Data extends object>(row: SelectDataRow<Value, Data>): unknown {
+// Подпись с числовым значением, включая 0, отображается как задана.
+export function selectDataContent<Value extends SelectDataValue, Data extends object>(
+  row: SelectDataRow<Value, Data>
+): unknown {
   if (row.group) {
     return row.label !== undefined ? row.label : Reflect.get(row.data, 'key');
   }
   return typeof row.label === 'number' ? row.label : row.label || row.value;
 }
 
-export function selectDataTitle<Value extends SelectDataValue, Data extends object>(row: SelectDataRow<Value, Data>): unknown {
+// Резервный title берётся из текстового содержимого, а не из пользовательского render.
+export function selectDataTitle<Value extends SelectDataValue, Data extends object>(
+  row: SelectDataRow<Value, Data>
+): unknown {
   const raw: unknown = Reflect.get(row.data, 'title');
   const content = row.group ? row.label : selectDataContent(row);
   const fallback = typeof content === 'string' || typeof content === 'number' ? String(content) : undefined;
@@ -248,8 +330,10 @@ const nativeEvents = new Set(`onCopy onCut onPaste onCompositionEnd onCompositio
 const aliases: Readonly<Record<string, string>> = { acceptCharset: 'accept-charset', htmlFor: 'for',
   httpEquiv: 'http-equiv', onDoubleClick: 'ondblclick', onFocus: 'onfocusin', onBlur: 'onfocusout' };
 
+// Оставляет у группы доступные атрибуты, у option также пропускает нативные props.
 export function selectDataAttributes<Value extends SelectDataValue, Data extends object>(
-  row: SelectDataRow<Value, Data>, fields: SelectDataFields
+  row: SelectDataRow<Value, Data>,
+  fields: SelectDataFields
 ): SelectDataAttributes {
   const physical: Record<string, unknown> = {};
   const aria: Record<string, unknown> = {};
