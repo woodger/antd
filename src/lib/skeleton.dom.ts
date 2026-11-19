@@ -1,20 +1,28 @@
+// Сохраняет точку возврата фокуса при замене содержимого на Skeleton. Соседи
+// фиксируются в момент парковки, пока исходная позиция в DOM ещё доступна.
 import { focusAfterNotice } from './notice.dom';
 
+// Проверяет исходных соседей заново: они могли скрыться или стать недоступными.
 function available(node: HTMLElement): boolean {
-  return node.isConnected
-    && !node.matches(':disabled')
-    && !node.closest('[inert]')
-    && node.getClientRects().length > 0
-    && node.ownerDocument.defaultView!.getComputedStyle(
-      node
-    ).visibility === 'visible';
+  if (!node.isConnected
+    || node.matches(':disabled')
+    || node.closest('[inert]')
+    || !node.getClientRects().length) {
+    return false;
+  }
+
+  // Правило 2: кандидаты поступают из browser document смонтированного Skeleton.
+  const view = node.ownerDocument.defaultView!;
+  return view.getComputedStyle(node).visibility === 'visible';
 }
 
+// Состояние парковки принадлежит одному компоненту Skeleton.
 export function createSkeletonFocus() {
   let parked: HTMLElement | undefined;
   let neighbors: HTMLElement[] = [];
   let removeListener: (() => void) | undefined;
 
+  // Снимает слушатель и очищает сохранённую позицию.
   function clear() {
     removeListener?.();
     removeListener = undefined;
@@ -23,6 +31,7 @@ export function createSkeletonFocus() {
   }
 
   return {
+    // Переносит фокус на Skeleton только с элемента, который будет скрыт.
     update(host: HTMLElement, content: HTMLElement | undefined, loading: boolean) {
       if (!loading || !content?.contains(host.ownerDocument.activeElement)) {
         return;
@@ -55,13 +64,16 @@ export function createSkeletonFocus() {
         ).reverse(),
         ...(dialog ? [dialog] : [])
       ];
+      // Фокус вне Skeleton завершает парковку. Body может быть результатом удаления узла.
       function handleFocus() {
         if (document.activeElement !== host && document.activeElement !== document.body)
           clear();
       }
       document.addEventListener('focusin', handleFocus);
+      // Освобождает слушатель того document, где началась парковка.
       removeListener = () => document.removeEventListener('focusin', handleFocus);
     },
+    // Восстанавливает навигацию по текущим или сохранённым соседям при teardown.
     destroy() {
       const host = parked;
       const candidates = neighbors;
@@ -69,8 +81,10 @@ export function createSkeletonFocus() {
       if (host?.isConnected) {
         focusAfterNotice(host, host.ownerDocument.activeElement === host);
       }
-      else if (host && host.ownerDocument.activeElement === host.ownerDocument.body)
-        candidates.find(available)?.focus({ preventScroll: true });
+      else if (host && host.ownerDocument.activeElement === host.ownerDocument.body) {
+        const next = candidates.find(available);
+        next?.focus({ preventScroll: true });
+      }
     }
   };
 }

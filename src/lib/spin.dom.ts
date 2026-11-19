@@ -1,6 +1,9 @@
+// Паркует фокус на Spin, пока его содержимое заблокировано. Ревизия фокуса
+// отменяет отложенное восстановление после нового перехода или удаления Spin.
 import { tick } from 'svelte';
 import { focusAfterNotice } from './notice.dom';
 
+// Для восстановления выбирается только видимый и интерактивный DOM-узел.
 function available(node: HTMLElement | undefined): node is HTMLElement {
   if (!node?.isConnected
     || node.matches(':disabled')
@@ -9,17 +12,21 @@ function available(node: HTMLElement | undefined): node is HTMLElement {
     return false;
   }
 
-  return node.ownerDocument.defaultView!.getComputedStyle(node).visibility === 'visible';
+  // Правило 2: кандидаты поступают из mounted Spin и его текущего browser document.
+  const view = node.ownerDocument.defaultView!;
+  return view.getComputedStyle(node).visibility === 'visible';
 }
 
+// Хранит исходный элемент и соседей только пока Spin владеет фокусом.
 export function createSpinFocus() {
   let target: HTMLElement | undefined;
   let parked: HTMLElement | undefined;
   let neighbors: HTMLElement[] = [];
   let removeListener: (() => void) | undefined;
-  let version = 0;
+  let focusRevision = 0;
   let active = true;
 
+  // Снимает слушатель до освобождения ссылок на элементы предыдущей парковки.
   function clearTarget() {
     removeListener?.();
     removeListener = undefined;
@@ -28,11 +35,12 @@ export function createSpinFocus() {
     neighbors = [];
   }
 
+  // Ждёт применения доступности после tick и восстанавливает только прежний фокус Spin.
   function release(host: HTMLElement, content?: HTMLElement) {
-    const current = ++version;
+    const releaseRevision = ++focusRevision;
     const previous = target;
     void tick().then(() => {
-      if (!active || current !== version) {
+      if (!active || releaseRevision !== focusRevision) {
         return;
       }
 
@@ -43,28 +51,24 @@ export function createSpinFocus() {
 
       if (content?.contains(previous ?? null) && available(previous)) {
         previous.focus({ preventScroll: true });
+        return;
+      }
+
+      const candidates = content?.querySelectorAll<HTMLElement>(
+        'button, input, select, textarea, a[href], summary, [tabindex], [contenteditable="true"]'
+      );
+      const next = candidates && [...candidates].find(node => node.tabIndex >= 0 && available(node));
+      if (next) {
+        next.focus({ preventScroll: true });
       }
       else {
-        const next = content
-          ? [
-            ...content.querySelectorAll<HTMLElement>(
-              'button, input, select, textarea, a[href], summary, [tabindex], [contenteditable="true"]'
-            )
-          ].find(
-            (node) => node.tabIndex >= 0 && available(node)
-          )
-          : undefined;
-        if (next) {
-          next.focus({ preventScroll: true });
-        }
-        else {
-          focusAfterNotice(host, true);
-        }
+        focusAfterNotice(host, true);
       }
     });
   }
 
   return {
+    // Паркует фокус при блокировке содержимого и запоминает порядок соседей в scope.
     update(host: HTMLElement, content: HTMLElement | undefined, busy: boolean) {
       if (!active) {
         return;
@@ -75,7 +79,7 @@ export function createSpinFocus() {
           release(host, content);
         return;
       }
-      version++;
+      focusRevision++;
       const focused = host.ownerDocument.activeElement;
       if (focused instanceof HTMLElement && content.contains(focused)) {
         clearTarget();
@@ -107,29 +111,34 @@ export function createSpinFocus() {
           ).reverse(),
           ...(dialog ? [dialog] : [])
         ];
+        // Добровольный переход пользователя отменяет прежнюю парковку.
         function handleFocus() {
           if (parked
             && document.activeElement !== parked
             && document.activeElement !== document.body) {
-            version++;
+            focusRevision++;
             clearTarget();
           }
         }
         document.addEventListener('focusin', handleFocus);
+        // Слушатель принадлежит document, в котором была создана парковка.
         removeListener = () => document.removeEventListener('focusin', handleFocus);
       }
     },
+    // При teardown ищет доступного соседа, только если прежний фокус ещё принадлежит Spin.
     destroy() {
       active = false;
-      version++;
+      focusRevision++;
       const host = parked;
       const candidates = neighbors;
       clearTarget();
       if (host?.isConnected) {
         focusAfterNotice(host, host.ownerDocument.activeElement === host);
       }
-      else if (host && host.ownerDocument.activeElement === host.ownerDocument.body)
-        candidates.find(available)?.focus({ preventScroll: true });
+      else if (host && host.ownerDocument.activeElement === host.ownerDocument.body) {
+        const next = candidates.find(available);
+        next?.focus({ preventScroll: true });
+      }
     }
   };
 }
