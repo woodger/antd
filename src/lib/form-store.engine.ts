@@ -1,3 +1,5 @@
+// Операции со значениями и путями Form. Копирование ограничено plain objects
+// и массивами, а чтение пути учитывает только собственные свойства контейнеров.
 import type { Dayjs } from 'dayjs';
 
 /** Строка — буквальный ключ; только массив задаёт вложенный путь. Число создаёт индекс массива. */
@@ -27,10 +29,12 @@ export type PartialFormValues<Value> = Value extends
       ? { [Key in keyof Value]?: PartialFormValues<Value[Key]> }
       : Value;
 
+// Сохраняет строковый ключ целиком, включая точки, и копирует переданный массив.
 export function formNamePath(name: NamePath): (string | number)[] {
   return Array.isArray(name) ? [...name] : [name as string | number];
 }
 
+// Требует точного совпадения всех сегментов, включая их типы.
 export function sameFormPath(first: NamePath, second: NamePath): boolean {
   const left = formNamePath(first);
   const right = formNamePath(second);
@@ -38,6 +42,7 @@ export function sameFormPath(first: NamePath, second: NamePath): boolean {
   return left.length === right.length && left.every((part, index) => part === right[index]);
 }
 
+// Пустой путь охватывает все поля, остальные проверяются как префиксы.
 export function containsFormPath(parent: NamePath, child: NamePath): boolean {
   const prefix = formNamePath(parent);
   const path = formNamePath(child);
@@ -45,6 +50,7 @@ export function containsFormPath(parent: NamePath, child: NamePath): boolean {
   return prefix.length <= path.length && prefix.every((part, index) => part === path[index]);
 }
 
+// Допускает словари без прототипа. Экземпляры классов остаются непрозрачными.
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   if (value === null || typeof value !== 'object') {
     return false;
@@ -55,6 +61,7 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
   return prototype === Object.prototype || prototype === null;
 }
 
+// Пишет собственное поле даже для имён вроде __proto__, минуя setter прототипа.
 function defineValue(target: object, key: string | number, value: unknown) {
   Object.defineProperty(
     target,
@@ -77,12 +84,15 @@ export function copyFormValue<Value>(value: Value, seen = new WeakMap<object, un
   seen.set(value, copy);
 
   for (const key of Object.keys(value)) {
-    defineValue(copy, key, copyFormValue((value as Record<string, unknown>)[key], seen));
+    const original = (value as Record<string, unknown>)[key];
+    const copied = copyFormValue(original, seen);
+    defineValue(copy, key, copied);
   }
 
   return copy as Value;
 }
 
+// Прерывает переход по отсутствующему или унаследованному сегменту пути.
 export function getFormValue(store: unknown, name: NamePath): unknown {
   let current = store;
 
@@ -97,32 +107,43 @@ export function getFormValue(store: unknown, name: NamePath): unknown {
   return current;
 }
 
+// Копирует контейнеры только вдоль пути и копирует записываемое значение.
 export function setFormValue(store: unknown, name: NamePath, value: unknown): unknown {
   const path = formNamePath(name);
+  return setAtPath(store, 0);
 
-  function set(current: unknown, index: number): unknown {
+  // При отсутствующем контейнере тип следующего сегмента выбирает массив или объект.
+  function setAtPath(current: unknown, index: number): unknown {
     if (index === path.length) {
       return copyFormValue(value);
     }
 
     const part = path[index];
-    const copy = Array.isArray(current)
-      ? [...current]
-      : isPlainObject(current)
-        ? { ...current }
-        : typeof part === 'number' ? [] : {};
+    let copy: unknown[] | Record<string, unknown>;
+    if (Array.isArray(current)) {
+      copy = [...current];
+    }
+    else if (isPlainObject(current)) {
+      copy = { ...current };
+    }
+    else {
+      copy = typeof part === 'number' ? [] : {};
+    }
 
-    defineValue(copy, part, set(getFormValue(current, [part]), index + 1));
+    const previous = getFormValue(current, [part]);
+    const replacement = setAtPath(previous, index + 1);
+    defineValue(copy, part, replacement);
 
     return copy;
   }
-
-  return set(store, 0);
 }
 
+// Рекурсивно объединяет словари и заменяет остальные значения, включая массивы.
 export function mergeFormValues<Values>(store: Values, next: unknown): Values {
   const seen = new WeakMap<object, unknown>();
+  return merge(store, next) as Values;
 
+  // Регистрирует копию перед рекурсией, чтобы сохранить циклы входного объекта.
   function merge(current: unknown, value: unknown): unknown {
     if (!isPlainObject(value)) {
       return copyFormValue(value, seen);
@@ -135,19 +156,20 @@ export function mergeFormValues<Values>(store: Values, next: unknown): Values {
     seen.set(value, copy);
 
     for (const key of Object.keys(value)) {
-      defineValue(copy, key, merge(getFormValue(copy, key), value[key]));
+      const previous = getFormValue(copy, key);
+      const replacement = merge(previous, value[key]);
+      defineValue(copy, key, replacement);
     }
 
     return copy;
   }
-
-  return merge(store, next) as Values;
 }
 
 /** Plain containers сравниваются по собственным значениям; непрозрачные экземпляры — по identity. */
 export function sameFormValue(left: unknown, right: unknown): boolean {
   const pairs = new WeakMap<object, WeakSet<object>>();
 
+  // Повтор пары объектов завершает рекурсию, не требуя общей identity контейнеров.
   function equal(first: unknown, second: unknown): boolean {
     if (Object.is(first, second)) {
       return true;
@@ -167,11 +189,12 @@ export function sameFormValue(left: unknown, right: unknown): boolean {
     if (keys.length !== Object.keys(second).length) {
       return false;
     }
-    if (pairs.get(first)?.has(second)) {
+    const compared = pairs.get(first);
+    if (compared?.has(second)) {
       return true;
     }
 
-    const matched = pairs.get(first) ?? new WeakSet<object>();
+    const matched = compared ?? new WeakSet<object>();
     matched.add(second);
     pairs.set(first, matched);
 

@@ -1,3 +1,5 @@
+// Выполняет правила Form и собирает ошибки отдельно от предупреждений.
+// Transform действует только внутри правила. Порядок завершения зависит от validateFirst.
 import {
   matchesValidationType, normalizeValidationType, type ValidationRuleType
 } from './validation-type.engine';
@@ -57,6 +59,7 @@ export type FormRules<Values extends FormValues> = Partial<
   Record<FieldName<Values>, readonly FormRule<Values>[]>
 >;
 
+// Раскрывает фабрики относительно текущей Form, сохраняя массив без фабрик.
 export function resolveValidationRules<Values extends FormValues>(
   rules: readonly FormRule<Values>[],
   form: FormInstance<Values>
@@ -78,14 +81,17 @@ export interface FieldError {
   warnings: string[];
 }
 
+// Возвращает блокирующие сообщения для прежнего плоского API проверки.
 export async function validateValue<Values extends FormValues>(
   value: FormValue,
   values: Readonly<Values>,
   rules: readonly ValidationRule<Values>[]
 ): Promise<string[]> {
-  return (await validateFieldValue(value, values, rules)).errors;
+  const result = await validateFieldValue(value, values, rules);
+  return result.errors;
 }
 
+// Начинает проверку поля без состояния рекурсии по вложенным значениям.
 export async function validateFieldValue<Values extends FormValues>(
   value: FormValue,
   values: Readonly<Values>,
@@ -96,6 +102,7 @@ export async function validateFieldValue<Values extends FormValues>(
   return validateRules(value, values, rules, validateFirst, undefined, context);
 }
 
+// Запускает блокирующие правила раньше warningOnly. Обычный режим сохраняет порядок результатов.
 async function validateRules<Values extends FormValues>(
   value: FormValue,
   values: Readonly<Values>,
@@ -126,35 +133,7 @@ async function validateRules<Values extends FormValues>(
 
   const checks = ordered.map((rule) => validateRuleValue(value, values, rule, ancestor, context));
   if (validateFirst === 'parallel') {
-    if (!checks.length) {
-      return { errors: [], warnings: [] };
-    }
-
-    return new Promise((resolve, reject) => {
-      let remaining = checks.length;
-      let blocking = ordered.filter((rule) => !rule.warningOnly).length;
-      let warning: string[] | undefined;
-
-      checks.forEach((check, index) => {
-        check.then((messages) => {
-          remaining--;
-          if (!ordered[index].warningOnly) {
-            blocking--;
-            if (messages.errors.length) {
-              resolve({ errors: messages.errors, warnings: [] });
-              return;
-            }
-          }
-          if (messages.warnings.length) warning ??= messages.warnings;
-
-          // Source выбирает и ранний warning, теряя позднюю ошибку; блокирующие правила ждём.
-          if (!blocking && warning) {
-            resolve({ errors: [], warnings: warning });
-          }
-          else if (!remaining) resolve({ errors: [], warnings: [] });
-        }, reject);
-      });
-    });
+    return checks.length ? firstParallelResult(checks, ordered) : { errors: [], warnings: [] };
   }
 
   const results = await Promise.all(checks);
@@ -168,6 +147,41 @@ async function validateRules<Values extends FormValues>(
   return { errors, warnings };
 }
 
+// Берёт первую завершившуюся ошибку. Предупреждение может завершить результат,
+// когда все блокирующие правила уже проверены.
+function firstParallelResult(
+  checks: readonly Promise<ValidationMessages>[],
+  ordered: readonly { warningOnly?: boolean }[]
+): Promise<ValidationMessages> {
+  return new Promise((resolve, reject) => {
+    let remaining = checks.length;
+    let blocking = ordered.filter((rule) => !rule.warningOnly).length;
+    let warning: string[] | undefined;
+
+    checks.forEach((check, index) => {
+      check.then((messages) => {
+        remaining--;
+        if (!ordered[index].warningOnly) {
+          blocking--;
+          if (messages.errors.length) {
+            resolve({ errors: messages.errors, warnings: [] });
+            return;
+          }
+        }
+        if (messages.warnings.length) warning ??= messages.warnings;
+
+        if (!blocking && warning) {
+          resolve({ errors: [], warnings: warning });
+        }
+        else if (!remaining) {
+          resolve({ errors: [], warnings: [] });
+        }
+      }, reject);
+    });
+  });
+}
+
+// Применяет transform до скалярных и вложенных правил, сохраняя исходное значение.
 async function validateRuleValue<Values extends FormValues>(
   originalValue: FormValue,
   values: Readonly<Values>,
@@ -175,27 +189,24 @@ async function validateRuleValue<Values extends FormValues>(
   ancestor?: ValidationAncestor,
   context?: ValidationMessageContext
 ): Promise<ValidationMessages> {
-  const rule = ancestor || (configuration.type === 'object' || configuration.type === 'array')
-    && (configuration.fields || configuration.defaultField) ? { ...configuration } : configuration;
+  const copyConfiguration = ancestor || (configuration.type === 'object' || configuration.type === 'array')
+    && (configuration.fields || configuration.defaultField);
+  const rule = copyConfiguration ? { ...configuration } : configuration;
   let transformedValue = originalValue;
   if (rule.transform) {
     try {
       transformedValue = rule.transform(originalValue);
     }
     catch (error) {
-      // Source теряет исключение transform и принимает значение; ошибка не должна давать success.
-      return collectValidationMessages(rule, formatValidationMessages(
-        [rule.message ?? (error instanceof Error ? error.message : 'Проверьте значение.')],
-        rule,
-        context
-      ), []);
+      // Исключение transform учитывается при проверке, включая warningOnly.
+      const message = rule.message ?? (error instanceof Error ? error.message : 'Проверьте значение.');
+      const formatted = formatValidationMessages([message], rule, context);
+      return collectValidationMessages(rule, formatted, []);
     }
   }
-  const messages = formatValidationMessages(
-    await validatePrimitiveRule(transformedValue, values, rule, context),
-    rule,
-    context
-  );
+
+  const primitiveMessages = await validatePrimitiveRule(transformedValue, values, rule, context);
+  const messages = formatValidationMessages(primitiveMessages, rule, context);
 
   return validateNestedRule(
     transformedValue,
@@ -216,6 +227,7 @@ async function validateRuleValue<Values extends FormValues>(
   );
 }
 
+// Проверяет тип, обязательность и ограничения. Явный type с validator делегирует ему проверку.
 async function validatePrimitiveRule<Values extends FormValues>(
   transformedValue: FormValue,
   values: Readonly<Values>,
@@ -228,6 +240,7 @@ async function validatePrimitiveRule<Values extends FormValues>(
     return validateCustomRule(transformedValue, values, rule, context);
   }
 
+  // Подставляет путь поля и аргументы конкретного ограничения в локализованное сообщение.
   const message = (
     path: string | readonly [string, string],
     fallback: string,
@@ -337,6 +350,7 @@ async function validatePrimitiveRule<Values extends FormValues>(
   return validateCustomRule(value, values, rule, context);
 }
 
+// Принимает текст валидатора или нормализует его исключение в сообщение поля.
 async function validateCustomRule<Values extends FormValues>(
   value: FormValue,
   values: Readonly<Values>,
