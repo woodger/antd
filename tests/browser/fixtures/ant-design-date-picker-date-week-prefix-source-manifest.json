@@ -1,0 +1,2390 @@
+{
+  "format": "ant-design-public-date-picker-date-week-prefix-source-v1",
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "sourceProtocolSHA256": "22e37486124e2066fbf53f7e53a9bfd7ae119c154413fcad03a46f07a76eccc6",
+  "counts": {
+    "owners": 2,
+    "actions": 20,
+    "initialAndSettledPoints": 22,
+    "declaredEscapeReadsAfter1000": 2,
+    "wholeUnmounts": 2,
+    "initialClosedSSRSerializations": 4
+  },
+  "captures": {
+    "csr-first": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json",
+        "bytes": 46929,
+        "sha256": "121802f6e72cf103cf5289adb2ac8c38fa67f8b4007ba4c469c9c52b2b4e7e3a",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.gz",
+        "gzipBytes": 8266,
+        "gzipSHA256": "60cbf406c86b1dbea1044c2cf3a7356148efb582789d54128c0bb11d8ee2ae61"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/60cbf406c86b1dbea1044c2cf3a7356148efb582789d54128c0bb11d8ee2ae61.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    "csr-repeat": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json",
+        "bytes": 47054,
+        "sha256": "a0be3be3b0343ec796e6f5646e12a17b7a0b133060b04e2007a414da161285a1",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.gz",
+        "gzipBytes": 8254,
+        "gzipSHA256": "0b2d7fe1062871d44f0947ffdc8b5f2e28afde76c0b969051b36897740200c31"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/0b2d7fe1062871d44f0947ffdc8b5f2e28afde76c0b969051b36897740200c31.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    "ssr-first": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json",
+        "bytes": 3637,
+        "sha256": "b93f0f7af63856916b1326b08d95d88f0c02dc830430114fd6425ac15e973463",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.gz",
+        "gzipBytes": 1072,
+        "gzipSHA256": "2b60b81d1dfc27578f45035d54dff4903ce793e03abf9e72440968c68292b772"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/2b60b81d1dfc27578f45035d54dff4903ce793e03abf9e72440968c68292b772.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    "ssr-repeat": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json",
+        "bytes": 3646,
+        "sha256": "cd87f298300d1dd27e8b7b58acd7e9ee34340fdab3d78cb0199eb7f1b98d6409",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.gz",
+        "gzipBytes": 1073,
+        "gzipSHA256": "b9e32f6521fc6bcc3807a980a2e9875bf01ec51debc49c81962719fe8c79484f"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/b9e32f6521fc6bcc3807a980a2e9875bf01ec51debc49c81962719fe8c79484f.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    }
+  },
+  "captureCounts": {
+    "csr-first": {
+      "owners": 2,
+      "actions": 20,
+      "initialAndSettledPoints": 22,
+      "declaredEscapeReadsAfter1000": 2,
+      "wholeUnmounts": 2,
+      "cleanupReads": 2,
+      "lateReads": 2,
+      "rawPointParts": 30,
+      "producerParts": 32,
+      "producerInvocations": 3492,
+      "rawParts": 62
+    },
+    "csr-repeat": {
+      "owners": 2,
+      "actions": 20,
+      "initialAndSettledPoints": 22,
+      "declaredEscapeReadsAfter1000": 2,
+      "wholeUnmounts": 2,
+      "cleanupReads": 2,
+      "lateReads": 2,
+      "rawPointParts": 30,
+      "producerParts": 32,
+      "producerInvocations": 3492,
+      "rawParts": 62
+    },
+    "ssr-first": {
+      "owners": 2,
+      "serializations": 4
+    },
+    "ssr-repeat": {
+      "owners": 2,
+      "serializations": 4
+    }
+  },
+  "parts": {
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-initial.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-initial.json",
+        "bytes": 76156,
+        "sha256": "71defa399bc7a8e7d4e998a7275bddf32cc11cecf2c0e267df497a014c382508",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-initial.json.gz",
+        "gzipBytes": 5886,
+        "gzipSHA256": "52127887e5a0700f8456145666b0e201303f17f12b52050580f713f8acbfe59b"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/52127887e5a0700f8456145666b0e201303f17f12b52050580f713f8acbfe59b.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-0.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-0.json",
+        "bytes": 1018227,
+        "sha256": "b2f571241f26fa16b2165dd94c1a7e1845a0758150ee4c2c5b3bdcb01118c335",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-0.json.gz",
+        "gzipBytes": 41480,
+        "gzipSHA256": "0397418fdbd647818aa7f8b2740e64b3d74db1c66d06a726b4a64a5fcf8ab768"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/0397418fdbd647818aa7f8b2740e64b3d74db1c66d06a726b4a64a5fcf8ab768.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-1.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-1.json",
+        "bytes": 1406134,
+        "sha256": "47f7eaf8ec4f7852f8cf633fa80dbb407daffd8ecf93e13742f6298dfce5afbc",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-1.json.gz",
+        "gzipBytes": 53784,
+        "gzipSHA256": "65d5cfb420a889ada94bc5c4ac50a26aa25154b8e89b1c4776296b2a07dcc65f"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/65d5cfb420a889ada94bc5c4ac50a26aa25154b8e89b1c4776296b2a07dcc65f.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-2.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-2.json",
+        "bytes": 1329696,
+        "sha256": "dd552f27600928ef9cea85a3801952fb19d40c177779414efe9ae7b85d0e3d4d",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-2.json.gz",
+        "gzipBytes": 52071,
+        "gzipSHA256": "6f9c5223f4b7b701766eac6d8fc7fa6194e33730feb708d0eb1430e17d755860"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/6f9c5223f4b7b701766eac6d8fc7fa6194e33730feb708d0eb1430e17d755860.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-3.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-3.json",
+        "bytes": 1441015,
+        "sha256": "f24020ca4165075200594e89eef3ff7e61918cea63277bfb1038c9841c9b40bd",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-3.json.gz",
+        "gzipBytes": 51193,
+        "gzipSHA256": "47c0182f5dfd48e6358c3e64c1b69584c598e3ce1b533a1388a2604e7e534898"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/47c0182f5dfd48e6358c3e64c1b69584c598e3ce1b533a1388a2604e7e534898.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-4.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-4.json",
+        "bytes": 1517931,
+        "sha256": "3ead25e96ccdcb8640a8f484585d2aa2adf264b6180cfa8a9aee57cdc131b7f7",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-4.json.gz",
+        "gzipBytes": 51334,
+        "gzipSHA256": "77baac66210099d0097947486914fefd755031db548db00408a95aa60a892ed7"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/77baac66210099d0097947486914fefd755031db548db00408a95aa60a892ed7.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-5.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-5.json",
+        "bytes": 1530474,
+        "sha256": "20b33773ed8d35d6ed28fe824e9b73e54c096b7f44ea0643dc7289389d7cee96",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-5.json.gz",
+        "gzipBytes": 51931,
+        "gzipSHA256": "582f23cf47306a0929a34d5da411ca575b572c997ddcd77b48ef7e53982387aa"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/582f23cf47306a0929a34d5da411ca575b572c997ddcd77b48ef7e53982387aa.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-6.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-6.json",
+        "bytes": 1673156,
+        "sha256": "20159c60518e08dbac1f89350851c1471987611c95fd054a19966466df0519de",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-6.json.gz",
+        "gzipBytes": 59246,
+        "gzipSHA256": "26804f4e5cc4423c8a550c8884d5bb5efdaf88b5720ed115d29f35a74524041d"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/26804f4e5cc4423c8a550c8884d5bb5efdaf88b5720ed115d29f35a74524041d.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-7.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-7.json",
+        "bytes": 1743472,
+        "sha256": "deb9e049ed0e9d3f27e8e6d773939f6394e4c41ae5b40c5b80b4c804c93048b3",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-7.json.gz",
+        "gzipBytes": 62786,
+        "gzipSHA256": "9324a1cafff4c57230e8f4b4e33e22024db9b4fc63943e6de095b7135f1c068e"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/9324a1cafff4c57230e8f4b4e33e22024db9b4fc63943e6de095b7135f1c068e.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-8.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-8.json",
+        "bytes": 1874693,
+        "sha256": "6cfe166a14147c870dc5677e2a321ac4f443313bf9d8d04536cdc68738b7185c",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-8.json.gz",
+        "gzipBytes": 60758,
+        "gzipSHA256": "225a13e484aea217b5b412f40dff87aee4aa774261ad5e93a0099f2c6538c225"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/225a13e484aea217b5b412f40dff87aee4aa774261ad5e93a0099f2c6538c225.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-9.json",
+        "bytes": 2703705,
+        "sha256": "c6fe521582b8661a00648887881b09b29a11e8178c0b42f44d378ed82b6db798",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-9.json.gz",
+        "gzipBytes": 85552,
+        "gzipSHA256": "f51d36609dbaa76a7d1dff623c7f26046079f9670f9e9f8b450e523d83bc67ae"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/f51d36609dbaa76a7d1dff623c7f26046079f9670f9e9f8b450e523d83bc67ae.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-closed-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-closed-9.json",
+        "bytes": 672029,
+        "sha256": "08622a1ca871c9cbe6444dbc019400d3c742c52e674c2f4e88de25da37a7f1d2",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-closed-9.json.gz",
+        "gzipBytes": 20527,
+        "gzipSHA256": "94f3e9b779559b8b96bb4fdf1c87c3660dc3851156da2c378499cbde9d37e0df"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/94f3e9b779559b8b96bb4fdf1c87c3660dc3851156da2c378499cbde9d37e0df.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-before-unmount.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-before-unmount.json",
+        "bytes": 632640,
+        "sha256": "8a0343a186dd9e4cc8ebef4707c6b0ccd6dff663abf750c794e712e6b25bc417",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-before-unmount.json.gz",
+        "gzipBytes": 20329,
+        "gzipSHA256": "0172a4b4cb27a2e0524823eafd0328f0c7f18bedff74d1f9e3d2b391c42bb06d"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/0172a4b4cb27a2e0524823eafd0328f0c7f18bedff74d1f9e3d2b391c42bb06d.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-cleanup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-cleanup.json",
+        "bytes": 273258,
+        "sha256": "3ddaeb26b175576621868c5841a15fd3f82eb14a8a4727d03479cbc97c0e7db7",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-cleanup.json.gz",
+        "gzipBytes": 9229,
+        "gzipSHA256": "0116fb948e7acdaa1d196b6707260d096afa38397fb6c699f89eaec0c9656f1e"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/0116fb948e7acdaa1d196b6707260d096afa38397fb6c699f89eaec0c9656f1e.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-late.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-late.json",
+        "bytes": 273258,
+        "sha256": "3ddaeb26b175576621868c5841a15fd3f82eb14a8a4727d03479cbc97c0e7db7",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-late.json.gz",
+        "gzipBytes": 9229,
+        "gzipSHA256": "0116fb948e7acdaa1d196b6707260d096afa38397fb6c699f89eaec0c9656f1e"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/0116fb948e7acdaa1d196b6707260d096afa38397fb6c699f89eaec0c9656f1e.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-initial-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-initial-producers.json",
+        "bytes": 30790,
+        "sha256": "368540732e9e2a3c154095bcf41db1893aaea4819a6dae7346a7a0d1eaf43260",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-initial-producers.json.gz",
+        "gzipBytes": 1416,
+        "gzipSHA256": "811e860ecc5cb3d10cdb25f523ee28320e87e3f3e273c3d1499fb369053af7fb"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/811e860ecc5cb3d10cdb25f523ee28320e87e3f3e273c3d1499fb369053af7fb.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-0-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-0-producers.json",
+        "bytes": 1842808,
+        "sha256": "f0d198b0cd4bb20227172f3b2ad2cd1780a069998a443e0451aa5f7683c72902",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-0-producers.json.gz",
+        "gzipBytes": 22553,
+        "gzipSHA256": "ec507c2711866a70d29756801e5c653101e2873c0e6666ec415432519c2d922c"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/ec507c2711866a70d29756801e5c653101e2873c0e6666ec415432519c2d922c.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-1-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-1-producers.json",
+        "bytes": 1778893,
+        "sha256": "3fd65ccb7e6eae5891b3bb5dcb38ec26259f5479b041377c6f6e7ba3715620b1",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-1-producers.json.gz",
+        "gzipBytes": 21578,
+        "gzipSHA256": "8e0a08072da6993b6e73b6d5b9144dd519b06be533c5f6ac278df71ba058025a"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/8e0a08072da6993b6e73b6d5b9144dd519b06be533c5f6ac278df71ba058025a.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-2-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-2-producers.json",
+        "bytes": 1561664,
+        "sha256": "6a0a0beb98808380f64491fbef151baad836d7d2d86d87b7517b449b829953da",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-2-producers.json.gz",
+        "gzipBytes": 19545,
+        "gzipSHA256": "46b0ec24c1630e39a18f3644336ae3fbeaec55f1149ad768d40398f70f526bae"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/46b0ec24c1630e39a18f3644336ae3fbeaec55f1149ad768d40398f70f526bae.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-3-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-3-producers.json",
+        "bytes": 2453238,
+        "sha256": "3bb70c4adce5745e5513e350a96b7c6cf828444a3eb6e987470f19c08527eb06",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-3-producers.json.gz",
+        "gzipBytes": 29633,
+        "gzipSHA256": "dfaa15a3bde57eafc8d219ff8a8b6bdd16a9a82d18b7cd03f19160a49caac9b2"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/dfaa15a3bde57eafc8d219ff8a8b6bdd16a9a82d18b7cd03f19160a49caac9b2.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-4-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-4-producers.json",
+        "bytes": 800641,
+        "sha256": "5eb94b7bbba73f3b4197566e0fbb133e0c45db9f601135c3cbf5457c4b0dfa99",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-4-producers.json.gz",
+        "gzipBytes": 10627,
+        "gzipSHA256": "ff044906d740b794bb06d4b7aa5eb3327e2f7e232f734041465ee77eac8274cc"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/ff044906d740b794bb06d4b7aa5eb3327e2f7e232f734041465ee77eac8274cc.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-5-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-5-producers.json",
+        "bytes": 800641,
+        "sha256": "d00fcff53ad6fd7af464fcdb3aab9757f93899193860484e30a8bc98d08fa093",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-5-producers.json.gz",
+        "gzipBytes": 10655,
+        "gzipSHA256": "9c9b64922b0ef8265dfc1f848df3391303a06f9b4e8e34f09ca74d951e1e7c7f"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/9c9b64922b0ef8265dfc1f848df3391303a06f9b4e8e34f09ca74d951e1e7c7f.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-6-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-6-producers.json",
+        "bytes": 2728826,
+        "sha256": "9171a715204517db565c267e4c7fc062c8706979b0bd714845b6f689f0a1e543",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-6-producers.json.gz",
+        "gzipBytes": 32030,
+        "gzipSHA256": "48ed2242d3627a55223fd647e28cc450afbfc50f716cfa7fa791ef9725cb9117"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/48ed2242d3627a55223fd647e28cc450afbfc50f716cfa7fa791ef9725cb9117.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-7-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-7-producers.json",
+        "bytes": 1782995,
+        "sha256": "f823d1a580377f0569d2ae61baef571071e4bc1870b66f164454f74b3d371e24",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-7-producers.json.gz",
+        "gzipBytes": 21399,
+        "gzipSHA256": "72ebefa237c07bfffc2d1a51fd7440d00c5e90a8229b75fde54aa83b85d1712a"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/72ebefa237c07bfffc2d1a51fd7440d00c5e90a8229b75fde54aa83b85d1712a.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-8-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-8-producers.json",
+        "bytes": 2783591,
+        "sha256": "d063f4df86d046579e3cd130cba97a63b4fbd6e924cd7cb43aeb15716d0e26a1",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-8-producers.json.gz",
+        "gzipBytes": 32591,
+        "gzipSHA256": "314de4e558a819c3492716675e26a0432e7b7f70a7e4c0f752bc39b31528a258"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/314de4e558a819c3492716675e26a0432e7b7f70a7e4c0f752bc39b31528a258.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-9-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-9-producers.json",
+        "bytes": 5458099,
+        "sha256": "d762ccb0e25d3dd0d1797837f5e5d3329621b6b68dcf3c07c675b317cbedaf1e",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-step-9-producers.json.gz",
+        "gzipBytes": 62638,
+        "gzipSHA256": "ab78106b2acc99b5c812c2c00db1544f5135b3909b476d8a97aa66c272756b6b"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/ab78106b2acc99b5c812c2c00db1544f5135b3909b476d8a97aa66c272756b6b.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-closed-9-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-closed-9-producers.json",
+        "bytes": 144,
+        "sha256": "f252b457d0da0d45621d2d6ee404d83f01d29ea012d046ba54f1fc5654555767",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-closed-9-producers.json.gz",
+        "gzipBytes": 116,
+        "gzipSHA256": "5ef4970fc6a4e947a46cb42acb4b84ca2a662fedd681d4f4bf9e519d8ad00813"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/5ef4970fc6a4e947a46cb42acb4b84ca2a662fedd681d4f4bf9e519d8ad00813.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-before-unmount-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-before-unmount-producers.json",
+        "bytes": 156,
+        "sha256": "50dc5c8cc20fd91e5fd9b55813211e2268d863933e2bab4ac6bd45249b4e6d43",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-before-unmount-producers.json.gz",
+        "gzipBytes": 121,
+        "gzipSHA256": "bbe554765fbb3d9c3c6af1be8d6f0b764b5e6c88b93339091d640a1560f17f1f"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/bbe554765fbb3d9c3c6af1be8d6f0b764b5e6c88b93339091d640a1560f17f1f.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-cleanup-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-cleanup-producers.json",
+        "bytes": 142,
+        "sha256": "0122436f789c7fbb8b11b047db70cfe3079ce5ba59577b31a832a0aabfe34f01",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-cleanup-producers.json.gz",
+        "gzipBytes": 115,
+        "gzipSHA256": "65e6bad8a114559365a4faa255cfb571065efdaec67d04b36ee70efb5cef6bac"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/65e6bad8a114559365a4faa255cfb571065efdaec67d04b36ee70efb5cef6bac.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-late-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-late-producers.json",
+        "bytes": 136,
+        "sha256": "aae1b4804f580bc8cdc67361c86def978f57989c68da8a9dc7e3b40c614677e2",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-late-producers.json.gz",
+        "gzipBytes": 112,
+        "gzipSHA256": "1170287809bbfea87cf11805668788c641de0c0d3613f1a6718ef09bcb71d8c1"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/1170287809bbfea87cf11805668788c641de0c0d3613f1a6718ef09bcb71d8c1.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-terminal-tail-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-terminal-tail-producers.json",
+        "bytes": 150,
+        "sha256": "603e1af265bc58a0ab6471082cead55a875382425ea0dc512dfd5f874f58a05b",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/single-date-week-prefix-terminal-tail-producers.json.gz",
+        "gzipBytes": 127,
+        "gzipSHA256": "10b0805a21d6092636f2603eaa66618e779ae2f83f568babe31b82ced65d0b10"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/10b0805a21d6092636f2603eaa66618e779ae2f83f568babe31b82ced65d0b10.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-initial.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-initial.json",
+        "bytes": 103723,
+        "sha256": "f0859b94a8dc569578fc02be43b5753ae672381f48c85b2182bb45c13c94cc63",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-initial.json.gz",
+        "gzipBytes": 6942,
+        "gzipSHA256": "6be9858e1edcf371e1182e409a0f26f1b942bfd1791ceee00e3d3213de3d0aca"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/6be9858e1edcf371e1182e409a0f26f1b942bfd1791ceee00e3d3213de3d0aca.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-0.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-0.json",
+        "bytes": 1859330,
+        "sha256": "4166ac5516cfa2c6dff3fbe571afe5e64c35d5dc953250a9d386a25d0a22ab33",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-0.json.gz",
+        "gzipBytes": 66606,
+        "gzipSHA256": "1394306b1941b959f35c75b8cee1da4f8d988cfb374de05455a9a6d55f7717a6"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/1394306b1941b959f35c75b8cee1da4f8d988cfb374de05455a9a6d55f7717a6.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-1.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-1.json",
+        "bytes": 2627617,
+        "sha256": "f2b5636918294353f4e39305e5c95a2fff7124030a855b2e3f3525b5ede57f8e",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-1.json.gz",
+        "gzipBytes": 89743,
+        "gzipSHA256": "a00724c1eaa95bc0d72b2a6b43afd32fc2984784e92dbd470ed9bd6b216d463c"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/a00724c1eaa95bc0d72b2a6b43afd32fc2984784e92dbd470ed9bd6b216d463c.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-2.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-2.json",
+        "bytes": 2471068,
+        "sha256": "a78ed8ae30ecb2726ddca89be581b0a01d2a51cc56cbd2888fa47f6415a2870e",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-2.json.gz",
+        "gzipBytes": 85417,
+        "gzipSHA256": "650353b63a436fb643016936afceb084b3b1769040013dbe801e3615dd8e5201"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/650353b63a436fb643016936afceb084b3b1769040013dbe801e3615dd8e5201.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-3.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-3.json",
+        "bytes": 2553352,
+        "sha256": "053ad338c8928215b70df064b573feb900f3bb95f0f717495c6d703dd48e971b",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-3.json.gz",
+        "gzipBytes": 88628,
+        "gzipSHA256": "d5b10ed1e6edb5a8e135d1be18091378675542b97e1e59291ce42dcad88c82c1"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/d5b10ed1e6edb5a8e135d1be18091378675542b97e1e59291ce42dcad88c82c1.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-4.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-4.json",
+        "bytes": 2805555,
+        "sha256": "81779f260c98cfe3183a31e17bd378900158da1faccddb6d75212fb7b7f03b90",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-4.json.gz",
+        "gzipBytes": 96231,
+        "gzipSHA256": "71c489b2b93b8f91b8e56f1e9c9a0c6a3ea828f19b6988b42cdbb0908154ca2e"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/71c489b2b93b8f91b8e56f1e9c9a0c6a3ea828f19b6988b42cdbb0908154ca2e.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-5.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-5.json",
+        "bytes": 2896440,
+        "sha256": "1ca57e722fcfa90b50e8731902d476d9c601c9071912c2d145d6b6566f99e164",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-5.json.gz",
+        "gzipBytes": 99045,
+        "gzipSHA256": "5024bfa534a9ddc2b7bbd74826a0aecaad3e20a260120828719318fa16a1704c"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/5024bfa534a9ddc2b7bbd74826a0aecaad3e20a260120828719318fa16a1704c.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-6.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-6.json",
+        "bytes": 2911997,
+        "sha256": "046353966120e81241450b3ab300c8bdfa6ae20605f0970aff130bf7ca463235",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-6.json.gz",
+        "gzipBytes": 99676,
+        "gzipSHA256": "b16619184337c551a84eeb57d3b53df309c33e5ee57fb401039aae151b073895"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/b16619184337c551a84eeb57d3b53df309c33e5ee57fb401039aae151b073895.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-7.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-7.json",
+        "bytes": 2922041,
+        "sha256": "37c0ab3e01f3cb08bc42742f4b4b22b5ab205b8c2155ad7e700bcfd589be3415",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-7.json.gz",
+        "gzipBytes": 100084,
+        "gzipSHA256": "125cf5be63c169bd76066c72a8ad9a437cc254e6c18b0f94d37662c25455d733"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/125cf5be63c169bd76066c72a8ad9a437cc254e6c18b0f94d37662c25455d733.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-8.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-8.json",
+        "bytes": 3284723,
+        "sha256": "92de4bd66d2209b203017a373fe54c1972ae702d917ca956a79fb448b383f744",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-8.json.gz",
+        "gzipBytes": 103189,
+        "gzipSHA256": "6c7272b05c1f4e79d3e9debf3c844d382a7a2b844e0df9bbfbbbd67c6c6146cf"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/6c7272b05c1f4e79d3e9debf3c844d382a7a2b844e0df9bbfbbbd67c6c6146cf.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-9.json",
+        "bytes": 4850493,
+        "sha256": "01074bef25d17d1d0e822efa195b96e11202cf448e2483a5d8a12f5cf9cd2005",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-9.json.gz",
+        "gzipBytes": 154032,
+        "gzipSHA256": "1ff5cb6011ea173c060df633e64c2c3985c70575147b402cb878b8aaa5923aea"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/1ff5cb6011ea173c060df633e64c2c3985c70575147b402cb878b8aaa5923aea.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-closed-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-closed-9.json",
+        "bytes": 1203308,
+        "sha256": "0597fdc1b72b8e0eb27f6b48f0932c5b859de244f935c7be60420b35d081b110",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-closed-9.json.gz",
+        "gzipBytes": 36681,
+        "gzipSHA256": "2d04f2e14f10d401636f1e018ea61c903a19d8405933f2d3bc03622325def54c"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/2d04f2e14f10d401636f1e018ea61c903a19d8405933f2d3bc03622325def54c.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-before-unmount.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-before-unmount.json",
+        "bytes": 1134831,
+        "sha256": "3116ae73733b9e640fe34d9a0b345d569f6b72d86a3ed3cd8244af7c51cd2811",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-before-unmount.json.gz",
+        "gzipBytes": 35387,
+        "gzipSHA256": "ca642b8052c1c6e662b406431500fe6e9770854c5e83f2fac390a76d0c8d62e0"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/ca642b8052c1c6e662b406431500fe6e9770854c5e83f2fac390a76d0c8d62e0.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-cleanup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-cleanup.json",
+        "bytes": 443834,
+        "sha256": "5b5f0bab182e44bab2af6ce6aeb22a7139e8101dedbbaece915a846462dbabe4",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-cleanup.json.gz",
+        "gzipBytes": 15956,
+        "gzipSHA256": "2ffab406980eb3b26cb63917d7fbd3b7fae3fbef94a8a95a71f780559bb18810"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/2ffab406980eb3b26cb63917d7fbd3b7fae3fbef94a8a95a71f780559bb18810.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-late.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-late.json",
+        "bytes": 443834,
+        "sha256": "5b5f0bab182e44bab2af6ce6aeb22a7139e8101dedbbaece915a846462dbabe4",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-late.json.gz",
+        "gzipBytes": 15956,
+        "gzipSHA256": "2ffab406980eb3b26cb63917d7fbd3b7fae3fbef94a8a95a71f780559bb18810"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/2ffab406980eb3b26cb63917d7fbd3b7fae3fbef94a8a95a71f780559bb18810.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-initial-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-initial-producers.json",
+        "bytes": 30778,
+        "sha256": "4899740c7811edba1653ebb6bf476062da70899f25d9a447d50e436f64102695",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-initial-producers.json.gz",
+        "gzipBytes": 1586,
+        "gzipSHA256": "00f6bb1deebc03d8310b5cd4282a8dc567a94c4c712190c35f91bd8998e8869e"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/00f6bb1deebc03d8310b5cd4282a8dc567a94c4c712190c35f91bd8998e8869e.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-0-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-0-producers.json",
+        "bytes": 5495012,
+        "sha256": "625edc12555b9fab247fc33d470a698a07098cb37c6273742a4c62ba3cec117e",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-0-producers.json.gz",
+        "gzipBytes": 63062,
+        "gzipSHA256": "78ed8da47be5ca8da3c26be8997b23d94d2f348100de35b58ae0764bd8c2addb"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/78ed8da47be5ca8da3c26be8997b23d94d2f348100de35b58ae0764bd8c2addb.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-1-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-1-producers.json",
+        "bytes": 1817642,
+        "sha256": "01e64d802027325aeb9f407f6390248974d23d244e80fd9ba2068ec7b45261f0",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-1-producers.json.gz",
+        "gzipBytes": 21674,
+        "gzipSHA256": "151773ee6fd27651026728d0d2b434ba1c555f87289ba61e165f20442e3a1369"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/151773ee6fd27651026728d0d2b434ba1c555f87289ba61e165f20442e3a1369.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-2-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-2-producers.json",
+        "bytes": 1623465,
+        "sha256": "5954c96fbdc541da1598751cde88e7aef45e0bc764408ddbbc37d3851a3f37b4",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-2-producers.json.gz",
+        "gzipBytes": 20243,
+        "gzipSHA256": "a9650550a1943225a1d4a6476b7d7a13898f32ef51f748f098ade1ec698a908c"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/a9650550a1943225a1d4a6476b7d7a13898f32ef51f748f098ade1ec698a908c.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-3-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-3-producers.json",
+        "bytes": 13285984,
+        "sha256": "9af0d2a91b71cd12d3d7322be19dda57ae740d2ac3fdefd828871d91cb909bb0",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-3-producers.json.gz",
+        "gzipBytes": 295049,
+        "gzipSHA256": "8da74504b619e520519159e156c256487f951073cdeb8c2fa52fc32442d261d4"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/8da74504b619e520519159e156c256487f951073cdeb8c2fa52fc32442d261d4.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-4-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-4-producers.json",
+        "bytes": 6677885,
+        "sha256": "d85cdd53a1a7a31e55bb6a2c839bb3058fbb5d868fdb9846af3abecdad466ad9",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-4-producers.json.gz",
+        "gzipBytes": 157796,
+        "gzipSHA256": "41d0c00a0ed47e5cc862a668c74a1a614d7de6ce5e4c080786accbe311e20691"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/41d0c00a0ed47e5cc862a668c74a1a614d7de6ce5e4c080786accbe311e20691.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-5-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-5-producers.json",
+        "bytes": 3355820,
+        "sha256": "2d440ac85dc9ceddf824e5638b9efac9fc9ee368b5a68611f9569879f9c8604a",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-5-producers.json.gz",
+        "gzipBytes": 79980,
+        "gzipSHA256": "8ab0dd89a7eaa92841ef5637ad9eddc448f4950289527c74f9cb5fe2f4cd3c4f"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/8ab0dd89a7eaa92841ef5637ad9eddc448f4950289527c74f9cb5fe2f4cd3c4f.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-6-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-6-producers.json",
+        "bytes": 6644424,
+        "sha256": "f8fea178bc6ae90754563949fa02e450029d4bbcc2a29d26cfd7631d3114615c",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-6-producers.json.gz",
+        "gzipBytes": 157763,
+        "gzipSHA256": "d5bc3baa6f5fa458d4d3fcba8e023fd5772d930161eef749264fbec42ababb8c"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/d5bc3baa6f5fa458d4d3fcba8e023fd5772d930161eef749264fbec42ababb8c.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-7-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-7-producers.json",
+        "bytes": 3322305,
+        "sha256": "03b41cf111fa78df5682aaf4d5aca962e8a4c59909a0eba96bdeb0f57a1343d7",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-7-producers.json.gz",
+        "gzipBytes": 79355,
+        "gzipSHA256": "61ecf291377a510abb5941f5822668a760d240fc4eee47f1daa1168740dce6d0"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/61ecf291377a510abb5941f5822668a760d240fc4eee47f1daa1168740dce6d0.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-8-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-8-producers.json",
+        "bytes": 6769635,
+        "sha256": "216cfb2b5304bb3f17932cef3bbb72be1a4d651afd111c5e4f7876313b7424b3",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-8-producers.json.gz",
+        "gzipBytes": 159661,
+        "gzipSHA256": "a6d23c089b5affc4ec3da2cb633db994217bdd01c8dbea72e8c536398365fcac"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/a6d23c089b5affc4ec3da2cb633db994217bdd01c8dbea72e8c536398365fcac.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-9-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-9-producers.json",
+        "bytes": 10977632,
+        "sha256": "72ed67f44b796f7ba772a52eab5da02cfc8c2f053d9f908c03d611170d2d2673",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-step-9-producers.json.gz",
+        "gzipBytes": 123539,
+        "gzipSHA256": "fc1f111fea3582ae041b061da516f4225b3d1d059bce9bacc965d849221208fd"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/fc1f111fea3582ae041b061da516f4225b3d1d059bce9bacc965d849221208fd.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-closed-9-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-closed-9-producers.json",
+        "bytes": 144,
+        "sha256": "97e38a4bc89da9a6c5e5c224f91d02796424f8ec605921be9057d656990f8a0a",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-closed-9-producers.json.gz",
+        "gzipBytes": 116,
+        "gzipSHA256": "bf23a5ce2a0ad133fc1f9feef8ec4575d2231223d955a9d217b3d1f655ca015e"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/bf23a5ce2a0ad133fc1f9feef8ec4575d2231223d955a9d217b3d1f655ca015e.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-before-unmount-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-before-unmount-producers.json",
+        "bytes": 156,
+        "sha256": "28be1fe07355c0e8a9df4f11185ae8d816f47361820d939d6d56df2eb7995081",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-before-unmount-producers.json.gz",
+        "gzipBytes": 121,
+        "gzipSHA256": "79aa9789cc46d8989d4da94026e35f3e8bae3f2514b6862b79973d9e2788c2cf"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/79aa9789cc46d8989d4da94026e35f3e8bae3f2514b6862b79973d9e2788c2cf.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-cleanup-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-cleanup-producers.json",
+        "bytes": 142,
+        "sha256": "92c69d0616861147a4b519d0b20d2826260892387bcf1a2e291bf3179902739e",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-cleanup-producers.json.gz",
+        "gzipBytes": 115,
+        "gzipSHA256": "11b9aff1609176d5c5a782a6bbf87d4cb22c42dcd651ecad687584efd9ec86b2"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/11b9aff1609176d5c5a782a6bbf87d4cb22c42dcd651ecad687584efd9ec86b2.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-late-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-late-producers.json",
+        "bytes": 136,
+        "sha256": "96ec720d39c67b3dceeb1d543a0b55ff0dd83f200c9c48872eff848ac1936219",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-late-producers.json.gz",
+        "gzipBytes": 112,
+        "gzipSHA256": "4d4fc5725db04498d6beecc6571ef71d958663d4f0455c7c83757c4a00058b0f"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/4d4fc5725db04498d6beecc6571ef71d958663d4f0455c7c83757c4a00058b0f.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-terminal-tail-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-terminal-tail-producers.json",
+        "bytes": 150,
+        "sha256": "4c3ffe5107d4449bbf56f17bf61ec50f512772193b5f80607a22a866ce34d2b9",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/range-date-week-prefix-terminal-tail-producers.json.gz",
+        "gzipBytes": 127,
+        "gzipSHA256": "361c5d8351e89abe68d09afdb59900ef70c853d95b45f0c572fd0569d4d78060"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/361c5d8351e89abe68d09afdb59900ef70c853d95b45f0c572fd0569d4d78060.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-initial.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-initial.json",
+        "bytes": 76156,
+        "sha256": "6d5c7431fb836e005cefe401e254bdcf32c1b2b735e7a2011b856536b926de36",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-initial.json.gz",
+        "gzipBytes": 5887,
+        "gzipSHA256": "8d4b5e1c21409ce760d02acd9d015560425294bfd46d88acd60d62e115e554f2"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/8d4b5e1c21409ce760d02acd9d015560425294bfd46d88acd60d62e115e554f2.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-0.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-0.json",
+        "bytes": 1018227,
+        "sha256": "555623afc7ba37bb76a640ff38a2ab7ac44e9097fc6212b793a803a4c75d5481",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-0.json.gz",
+        "gzipBytes": 41482,
+        "gzipSHA256": "60d16292ee58b6f8422182b4744dce0868bb99923946cb2ee184e6ea58e085bb"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/60d16292ee58b6f8422182b4744dce0868bb99923946cb2ee184e6ea58e085bb.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-1.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-1.json",
+        "bytes": 1406134,
+        "sha256": "be30b958e2edbc57c72c877bf7250d386b4effdd0931f8741a84d0a5c9b1c885",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-1.json.gz",
+        "gzipBytes": 53786,
+        "gzipSHA256": "4deaa94ad8e93281d23dc64d8f14da20a4da4fa11705fef7e30aeb5337eceaa3"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/4deaa94ad8e93281d23dc64d8f14da20a4da4fa11705fef7e30aeb5337eceaa3.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-2.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-2.json",
+        "bytes": 1329696,
+        "sha256": "f06fd6da1df5f3391f59d492b25cc464ad9c7cffa1be6f0ee6bf48cf2b730e49",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-2.json.gz",
+        "gzipBytes": 52072,
+        "gzipSHA256": "b8ddfc835c280359759fc4320cb0ad156469827bf811613a9fcb64cb362ece92"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/b8ddfc835c280359759fc4320cb0ad156469827bf811613a9fcb64cb362ece92.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-3.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-3.json",
+        "bytes": 1441015,
+        "sha256": "4a038df246bb884d731534b0ac2ba642c247f3802c99bd8f94b767390953d9db",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-3.json.gz",
+        "gzipBytes": 51213,
+        "gzipSHA256": "203f92dc6e98e66f87b71bc574eae655e76c9afe1afc9bcdddeaccc45be37e8a"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/203f92dc6e98e66f87b71bc574eae655e76c9afe1afc9bcdddeaccc45be37e8a.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-4.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-4.json",
+        "bytes": 1517931,
+        "sha256": "a7d3175ee21314646639147a1841c43b05986a527087d35359298b07df44105a",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-4.json.gz",
+        "gzipBytes": 51364,
+        "gzipSHA256": "c9015c6213018b882c4fcd06e37d183a67210e3b96cf5103118cd9514c4b036b"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/c9015c6213018b882c4fcd06e37d183a67210e3b96cf5103118cd9514c4b036b.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-5.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-5.json",
+        "bytes": 1530474,
+        "sha256": "5d4e907529e3531a923d7d67b6592a9c9c9c36e45c4964b065c088b62b88f818",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-5.json.gz",
+        "gzipBytes": 51963,
+        "gzipSHA256": "68f652c4a12a99ba19ceb442348f3cca78be840c6124419ae3af204b5e99c001"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/68f652c4a12a99ba19ceb442348f3cca78be840c6124419ae3af204b5e99c001.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-6.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-6.json",
+        "bytes": 1673156,
+        "sha256": "479a3f3260f73a932e7e3699e587d51b09fe3b830be18f1caca216dbee6b7e27",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-6.json.gz",
+        "gzipBytes": 59275,
+        "gzipSHA256": "be4c5e26ee601846db51a846bb3d0d1864f66a687ff44a99dd5fcc7532944bce"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/be4c5e26ee601846db51a846bb3d0d1864f66a687ff44a99dd5fcc7532944bce.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-7.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-7.json",
+        "bytes": 1743472,
+        "sha256": "517f67a364f0938294fac25e2889e6495f42cc364d184d61965b4306fd69e722",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-7.json.gz",
+        "gzipBytes": 62817,
+        "gzipSHA256": "1baceffcfe1b6e41eb60d46c08ff7e72d9fcca4f27942ebe68d83291fd851f18"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/1baceffcfe1b6e41eb60d46c08ff7e72d9fcca4f27942ebe68d83291fd851f18.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-8.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-8.json",
+        "bytes": 1874693,
+        "sha256": "d0f96d8bdffa7eaf360bd3b084ef81e0dad3472436d533d23185f26a90598e68",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-8.json.gz",
+        "gzipBytes": 60789,
+        "gzipSHA256": "349d0dc8b892fdacbb1b3bf5335e5bfabb46e9e218422d83e58327c1e1c59375"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/349d0dc8b892fdacbb1b3bf5335e5bfabb46e9e218422d83e58327c1e1c59375.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-9.json",
+        "bytes": 2703705,
+        "sha256": "7973593b1a4e0f491c15485928fb94b61e26ba9ef0489f6b4fce2b4bf31d549c",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-9.json.gz",
+        "gzipBytes": 85597,
+        "gzipSHA256": "f968c54ee09cde0dff6fd897996db32b120b329c707f4babd18902ebea83cf88"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/f968c54ee09cde0dff6fd897996db32b120b329c707f4babd18902ebea83cf88.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-closed-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-closed-9.json",
+        "bytes": 672029,
+        "sha256": "b34ee43204f57b1b3561b281ad0e98d96eda9a34168da8f920838543582bf263",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-closed-9.json.gz",
+        "gzipBytes": 20539,
+        "gzipSHA256": "536abfd8ea9e075cbb0a462dd44aab218be363bc13239f071e0fa7e3e36533ae"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/536abfd8ea9e075cbb0a462dd44aab218be363bc13239f071e0fa7e3e36533ae.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-before-unmount.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-before-unmount.json",
+        "bytes": 632640,
+        "sha256": "bb129abae337933bf30e2114b4ffa6b8d671198e1fcf6e30eafd2a6d75125e5e",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-before-unmount.json.gz",
+        "gzipBytes": 20338,
+        "gzipSHA256": "7a8265e9dcab279ee17cfd7a710be2b8ba126af4a138d47a2a4ca4286d28f303"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/7a8265e9dcab279ee17cfd7a710be2b8ba126af4a138d47a2a4ca4286d28f303.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-cleanup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-cleanup.json",
+        "bytes": 273258,
+        "sha256": "577a49772f1fae4be2da5e3e1f02fcb9377c8c597e0ded2d889d94f474562c9c",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-cleanup.json.gz",
+        "gzipBytes": 9232,
+        "gzipSHA256": "6b7aaf2f4fd242753c33450ddb2ce3582135d3a2d86a5d44f6c240ac8beae5b7"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/6b7aaf2f4fd242753c33450ddb2ce3582135d3a2d86a5d44f6c240ac8beae5b7.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-late.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-late.json",
+        "bytes": 273258,
+        "sha256": "577a49772f1fae4be2da5e3e1f02fcb9377c8c597e0ded2d889d94f474562c9c",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-late.json.gz",
+        "gzipBytes": 9232,
+        "gzipSHA256": "6b7aaf2f4fd242753c33450ddb2ce3582135d3a2d86a5d44f6c240ac8beae5b7"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/6b7aaf2f4fd242753c33450ddb2ce3582135d3a2d86a5d44f6c240ac8beae5b7.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-initial-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-initial-producers.json",
+        "bytes": 30790,
+        "sha256": "368540732e9e2a3c154095bcf41db1893aaea4819a6dae7346a7a0d1eaf43260",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-initial-producers.json.gz",
+        "gzipBytes": 1416,
+        "gzipSHA256": "811e860ecc5cb3d10cdb25f523ee28320e87e3f3e273c3d1499fb369053af7fb"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/811e860ecc5cb3d10cdb25f523ee28320e87e3f3e273c3d1499fb369053af7fb.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-0-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-0-producers.json",
+        "bytes": 1842808,
+        "sha256": "f0d198b0cd4bb20227172f3b2ad2cd1780a069998a443e0451aa5f7683c72902",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-0-producers.json.gz",
+        "gzipBytes": 22553,
+        "gzipSHA256": "ec507c2711866a70d29756801e5c653101e2873c0e6666ec415432519c2d922c"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/ec507c2711866a70d29756801e5c653101e2873c0e6666ec415432519c2d922c.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-1-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-1-producers.json",
+        "bytes": 1778893,
+        "sha256": "3fd65ccb7e6eae5891b3bb5dcb38ec26259f5479b041377c6f6e7ba3715620b1",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-1-producers.json.gz",
+        "gzipBytes": 21578,
+        "gzipSHA256": "8e0a08072da6993b6e73b6d5b9144dd519b06be533c5f6ac278df71ba058025a"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/8e0a08072da6993b6e73b6d5b9144dd519b06be533c5f6ac278df71ba058025a.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-2-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-2-producers.json",
+        "bytes": 1561664,
+        "sha256": "6a0a0beb98808380f64491fbef151baad836d7d2d86d87b7517b449b829953da",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-2-producers.json.gz",
+        "gzipBytes": 19545,
+        "gzipSHA256": "46b0ec24c1630e39a18f3644336ae3fbeaec55f1149ad768d40398f70f526bae"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/46b0ec24c1630e39a18f3644336ae3fbeaec55f1149ad768d40398f70f526bae.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-3-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-3-producers.json",
+        "bytes": 2453238,
+        "sha256": "3bb70c4adce5745e5513e350a96b7c6cf828444a3eb6e987470f19c08527eb06",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-3-producers.json.gz",
+        "gzipBytes": 29633,
+        "gzipSHA256": "dfaa15a3bde57eafc8d219ff8a8b6bdd16a9a82d18b7cd03f19160a49caac9b2"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/dfaa15a3bde57eafc8d219ff8a8b6bdd16a9a82d18b7cd03f19160a49caac9b2.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-4-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-4-producers.json",
+        "bytes": 800641,
+        "sha256": "5eb94b7bbba73f3b4197566e0fbb133e0c45db9f601135c3cbf5457c4b0dfa99",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-4-producers.json.gz",
+        "gzipBytes": 10627,
+        "gzipSHA256": "ff044906d740b794bb06d4b7aa5eb3327e2f7e232f734041465ee77eac8274cc"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/ff044906d740b794bb06d4b7aa5eb3327e2f7e232f734041465ee77eac8274cc.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-5-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-5-producers.json",
+        "bytes": 800641,
+        "sha256": "d00fcff53ad6fd7af464fcdb3aab9757f93899193860484e30a8bc98d08fa093",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-5-producers.json.gz",
+        "gzipBytes": 10655,
+        "gzipSHA256": "9c9b64922b0ef8265dfc1f848df3391303a06f9b4e8e34f09ca74d951e1e7c7f"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/9c9b64922b0ef8265dfc1f848df3391303a06f9b4e8e34f09ca74d951e1e7c7f.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-6-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-6-producers.json",
+        "bytes": 2728826,
+        "sha256": "9171a715204517db565c267e4c7fc062c8706979b0bd714845b6f689f0a1e543",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-6-producers.json.gz",
+        "gzipBytes": 32030,
+        "gzipSHA256": "48ed2242d3627a55223fd647e28cc450afbfc50f716cfa7fa791ef9725cb9117"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/48ed2242d3627a55223fd647e28cc450afbfc50f716cfa7fa791ef9725cb9117.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-7-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-7-producers.json",
+        "bytes": 1782995,
+        "sha256": "f823d1a580377f0569d2ae61baef571071e4bc1870b66f164454f74b3d371e24",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-7-producers.json.gz",
+        "gzipBytes": 21399,
+        "gzipSHA256": "72ebefa237c07bfffc2d1a51fd7440d00c5e90a8229b75fde54aa83b85d1712a"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/72ebefa237c07bfffc2d1a51fd7440d00c5e90a8229b75fde54aa83b85d1712a.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-8-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-8-producers.json",
+        "bytes": 2783591,
+        "sha256": "d063f4df86d046579e3cd130cba97a63b4fbd6e924cd7cb43aeb15716d0e26a1",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-8-producers.json.gz",
+        "gzipBytes": 32591,
+        "gzipSHA256": "314de4e558a819c3492716675e26a0432e7b7f70a7e4c0f752bc39b31528a258"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/314de4e558a819c3492716675e26a0432e7b7f70a7e4c0f752bc39b31528a258.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-9-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-9-producers.json",
+        "bytes": 5458099,
+        "sha256": "d762ccb0e25d3dd0d1797837f5e5d3329621b6b68dcf3c07c675b317cbedaf1e",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-step-9-producers.json.gz",
+        "gzipBytes": 62638,
+        "gzipSHA256": "ab78106b2acc99b5c812c2c00db1544f5135b3909b476d8a97aa66c272756b6b"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/ab78106b2acc99b5c812c2c00db1544f5135b3909b476d8a97aa66c272756b6b.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-closed-9-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-closed-9-producers.json",
+        "bytes": 144,
+        "sha256": "f252b457d0da0d45621d2d6ee404d83f01d29ea012d046ba54f1fc5654555767",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-closed-9-producers.json.gz",
+        "gzipBytes": 116,
+        "gzipSHA256": "5ef4970fc6a4e947a46cb42acb4b84ca2a662fedd681d4f4bf9e519d8ad00813"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/5ef4970fc6a4e947a46cb42acb4b84ca2a662fedd681d4f4bf9e519d8ad00813.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-before-unmount-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-before-unmount-producers.json",
+        "bytes": 156,
+        "sha256": "50dc5c8cc20fd91e5fd9b55813211e2268d863933e2bab4ac6bd45249b4e6d43",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-before-unmount-producers.json.gz",
+        "gzipBytes": 121,
+        "gzipSHA256": "bbe554765fbb3d9c3c6af1be8d6f0b764b5e6c88b93339091d640a1560f17f1f"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/bbe554765fbb3d9c3c6af1be8d6f0b764b5e6c88b93339091d640a1560f17f1f.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-cleanup-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-cleanup-producers.json",
+        "bytes": 142,
+        "sha256": "0122436f789c7fbb8b11b047db70cfe3079ce5ba59577b31a832a0aabfe34f01",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-cleanup-producers.json.gz",
+        "gzipBytes": 115,
+        "gzipSHA256": "65e6bad8a114559365a4faa255cfb571065efdaec67d04b36ee70efb5cef6bac"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/65e6bad8a114559365a4faa255cfb571065efdaec67d04b36ee70efb5cef6bac.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-late-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-late-producers.json",
+        "bytes": 136,
+        "sha256": "aae1b4804f580bc8cdc67361c86def978f57989c68da8a9dc7e3b40c614677e2",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-late-producers.json.gz",
+        "gzipBytes": 112,
+        "gzipSHA256": "1170287809bbfea87cf11805668788c641de0c0d3613f1a6718ef09bcb71d8c1"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/1170287809bbfea87cf11805668788c641de0c0d3613f1a6718ef09bcb71d8c1.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-terminal-tail-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-terminal-tail-producers.json",
+        "bytes": 150,
+        "sha256": "603e1af265bc58a0ab6471082cead55a875382425ea0dc512dfd5f874f58a05b",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/single-date-week-prefix-terminal-tail-producers.json.gz",
+        "gzipBytes": 127,
+        "gzipSHA256": "10b0805a21d6092636f2603eaa66618e779ae2f83f568babe31b82ced65d0b10"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/10b0805a21d6092636f2603eaa66618e779ae2f83f568babe31b82ced65d0b10.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-initial.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-initial.json",
+        "bytes": 103723,
+        "sha256": "8653e209f031a39d5ba26dbcb92a7dd072b953e75f6ee68ea8db35f114781f72",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-initial.json.gz",
+        "gzipBytes": 6939,
+        "gzipSHA256": "bfb8e3b60bbc6dd7fe4c084e89e553ffa25bb7b3895c30a6dbee6c2407509f5a"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/bfb8e3b60bbc6dd7fe4c084e89e553ffa25bb7b3895c30a6dbee6c2407509f5a.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-0.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-0.json",
+        "bytes": 1859330,
+        "sha256": "4bcbaa54b40611e7bc595c220c7735a862f830cb4577343faa1bb82c8709897b",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-0.json.gz",
+        "gzipBytes": 66602,
+        "gzipSHA256": "6fb8981a19e76001009368b48ae6baacd5853b2867cac6d19d32a909e11870b0"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/6fb8981a19e76001009368b48ae6baacd5853b2867cac6d19d32a909e11870b0.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-1.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-1.json",
+        "bytes": 2627617,
+        "sha256": "5098fa42ac8014309d21a2646b780392311a2105ca84c58b7c19e771803295a5",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-1.json.gz",
+        "gzipBytes": 89743,
+        "gzipSHA256": "9d5d0be2d1931ad8eb20f144d08a1b00c0c0e8887f4f53c5ed6dfc92d984ae8e"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/9d5d0be2d1931ad8eb20f144d08a1b00c0c0e8887f4f53c5ed6dfc92d984ae8e.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-2.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-2.json",
+        "bytes": 2471068,
+        "sha256": "e28edf62a9ca33d47a71486de2b0a8fbe84cb7c535a7c8f1069b92ec83250a97",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-2.json.gz",
+        "gzipBytes": 85412,
+        "gzipSHA256": "9afd3abc9573298066703de15f9644d430f75262e31b7e0f70348aa581810b8e"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/9afd3abc9573298066703de15f9644d430f75262e31b7e0f70348aa581810b8e.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-3.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-3.json",
+        "bytes": 2553352,
+        "sha256": "675467c5ae95e97a24734ac8f0e375a205b1c64b6b75400cea4419b05e28f48e",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-3.json.gz",
+        "gzipBytes": 88620,
+        "gzipSHA256": "7a1ad0f359932aab470bd2b8fe34025be9161c636a8da894d5b2cfb5f5d8e9db"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/7a1ad0f359932aab470bd2b8fe34025be9161c636a8da894d5b2cfb5f5d8e9db.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-4.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-4.json",
+        "bytes": 2805555,
+        "sha256": "7344eb8287835cd7e81d66cd26d56bcd6f1e4b9a4d3cec55137dfd3076ac0d44",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-4.json.gz",
+        "gzipBytes": 96226,
+        "gzipSHA256": "25557a750bd88b5ee1e72ec386dbe1eac0dcd4795a76df9d79652e22e4ecb4ea"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/25557a750bd88b5ee1e72ec386dbe1eac0dcd4795a76df9d79652e22e4ecb4ea.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-5.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-5.json",
+        "bytes": 2896440,
+        "sha256": "b71cb7ab4e60587a391813873fe11533d68f0d714b69e0e0b3de063b60a50c8f",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-5.json.gz",
+        "gzipBytes": 99033,
+        "gzipSHA256": "f8dd9b56761e9ed375ab44eef1d85ec2a6d80c72be3a684442dfa8f94f6a199a"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/f8dd9b56761e9ed375ab44eef1d85ec2a6d80c72be3a684442dfa8f94f6a199a.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-6.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-6.json",
+        "bytes": 2916557,
+        "sha256": "e4a8bf944a98236b41a7dda3c2dac48fbaf7eca805ae19e6ea7a7054dc361edd",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-6.json.gz",
+        "gzipBytes": 99820,
+        "gzipSHA256": "0d164f10de9a1d89bb340d456895dce00377eb16b49c56368e12d3990506b796"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/0d164f10de9a1d89bb340d456895dce00377eb16b49c56368e12d3990506b796.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-7.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-7.json",
+        "bytes": 2922041,
+        "sha256": "10c36a81fe90d56218363398645bd33e9bfca20e5912fff3ecda02b963f57395",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-7.json.gz",
+        "gzipBytes": 100064,
+        "gzipSHA256": "711a3de3d71f4152927bc261d32a216cf0c8537f163aaf46cc3b6532799bd2b1"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/711a3de3d71f4152927bc261d32a216cf0c8537f163aaf46cc3b6532799bd2b1.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-8.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-8.json",
+        "bytes": 3284723,
+        "sha256": "e13f4427438fa9330ce5353f400253d45c64ba55ec36a93e7fc84d1117665e5c",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-8.json.gz",
+        "gzipBytes": 103160,
+        "gzipSHA256": "4e3812469eb61f043a0367d47c5d2588c47b01b8ba9a313bc0ab1f177716e125"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/4e3812469eb61f043a0367d47c5d2588c47b01b8ba9a313bc0ab1f177716e125.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-9.json",
+        "bytes": 4850493,
+        "sha256": "18a61e02bb936725ce8338604b3a1fb1e1881e5a927b1c69fd67dcc21d542ff1",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-9.json.gz",
+        "gzipBytes": 153976,
+        "gzipSHA256": "7d5010c289f11e5cdcd06fd6eab4cad7c3e613b25c9e8a294a447af4930e9006"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/7d5010c289f11e5cdcd06fd6eab4cad7c3e613b25c9e8a294a447af4930e9006.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-closed-9.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-closed-9.json",
+        "bytes": 1203308,
+        "sha256": "cf13d0885a51f4094ec5818670081b4101b547b7d1fd5669b4631dbe9f4ddecc",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-closed-9.json.gz",
+        "gzipBytes": 36667,
+        "gzipSHA256": "5cb9a9875ce2dd4c53b130dca9828f04568f14f5cf29a20cd4109d51a6892961"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/5cb9a9875ce2dd4c53b130dca9828f04568f14f5cf29a20cd4109d51a6892961.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-before-unmount.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-before-unmount.json",
+        "bytes": 1134831,
+        "sha256": "4900b12378ee1c9e5abdc3b06be8d99a9afe8ccaf8f7f8ac356a5005313df784",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-before-unmount.json.gz",
+        "gzipBytes": 35373,
+        "gzipSHA256": "3b5172a28ecf68a76b15e4035ff3624c6ef453baf227b9cdf0dce8b76a4629eb"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/3b5172a28ecf68a76b15e4035ff3624c6ef453baf227b9cdf0dce8b76a4629eb.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-cleanup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-cleanup.json",
+        "bytes": 443834,
+        "sha256": "8fc1d7da05587f834d9a1fcb14c938bcbc3c305497ba7ea3a12457712933aa21",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-cleanup.json.gz",
+        "gzipBytes": 15943,
+        "gzipSHA256": "d158e28df3aa7c798e687fc21357df02cb887494eb44e3573e43c8275f7454af"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/d158e28df3aa7c798e687fc21357df02cb887494eb44e3573e43c8275f7454af.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-late.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-late.json",
+        "bytes": 443834,
+        "sha256": "8fc1d7da05587f834d9a1fcb14c938bcbc3c305497ba7ea3a12457712933aa21",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-late.json.gz",
+        "gzipBytes": 15943,
+        "gzipSHA256": "d158e28df3aa7c798e687fc21357df02cb887494eb44e3573e43c8275f7454af"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/d158e28df3aa7c798e687fc21357df02cb887494eb44e3573e43c8275f7454af.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-initial-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-initial-producers.json",
+        "bytes": 30778,
+        "sha256": "4899740c7811edba1653ebb6bf476062da70899f25d9a447d50e436f64102695",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-initial-producers.json.gz",
+        "gzipBytes": 1586,
+        "gzipSHA256": "00f6bb1deebc03d8310b5cd4282a8dc567a94c4c712190c35f91bd8998e8869e"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/00f6bb1deebc03d8310b5cd4282a8dc567a94c4c712190c35f91bd8998e8869e.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-0-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-0-producers.json",
+        "bytes": 5495012,
+        "sha256": "625edc12555b9fab247fc33d470a698a07098cb37c6273742a4c62ba3cec117e",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-0-producers.json.gz",
+        "gzipBytes": 63062,
+        "gzipSHA256": "78ed8da47be5ca8da3c26be8997b23d94d2f348100de35b58ae0764bd8c2addb"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/78ed8da47be5ca8da3c26be8997b23d94d2f348100de35b58ae0764bd8c2addb.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-1-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-1-producers.json",
+        "bytes": 1817642,
+        "sha256": "01e64d802027325aeb9f407f6390248974d23d244e80fd9ba2068ec7b45261f0",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-1-producers.json.gz",
+        "gzipBytes": 21674,
+        "gzipSHA256": "151773ee6fd27651026728d0d2b434ba1c555f87289ba61e165f20442e3a1369"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/151773ee6fd27651026728d0d2b434ba1c555f87289ba61e165f20442e3a1369.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-2-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-2-producers.json",
+        "bytes": 1623465,
+        "sha256": "5954c96fbdc541da1598751cde88e7aef45e0bc764408ddbbc37d3851a3f37b4",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-2-producers.json.gz",
+        "gzipBytes": 20243,
+        "gzipSHA256": "a9650550a1943225a1d4a6476b7d7a13898f32ef51f748f098ade1ec698a908c"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/a9650550a1943225a1d4a6476b7d7a13898f32ef51f748f098ade1ec698a908c.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-3-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-3-producers.json",
+        "bytes": 13285984,
+        "sha256": "9af0d2a91b71cd12d3d7322be19dda57ae740d2ac3fdefd828871d91cb909bb0",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-3-producers.json.gz",
+        "gzipBytes": 295049,
+        "gzipSHA256": "8da74504b619e520519159e156c256487f951073cdeb8c2fa52fc32442d261d4"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/8da74504b619e520519159e156c256487f951073cdeb8c2fa52fc32442d261d4.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-4-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-4-producers.json",
+        "bytes": 6677885,
+        "sha256": "d85cdd53a1a7a31e55bb6a2c839bb3058fbb5d868fdb9846af3abecdad466ad9",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-4-producers.json.gz",
+        "gzipBytes": 157796,
+        "gzipSHA256": "41d0c00a0ed47e5cc862a668c74a1a614d7de6ce5e4c080786accbe311e20691"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/41d0c00a0ed47e5cc862a668c74a1a614d7de6ce5e4c080786accbe311e20691.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-5-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-5-producers.json",
+        "bytes": 3355820,
+        "sha256": "2d440ac85dc9ceddf824e5638b9efac9fc9ee368b5a68611f9569879f9c8604a",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-5-producers.json.gz",
+        "gzipBytes": 79980,
+        "gzipSHA256": "8ab0dd89a7eaa92841ef5637ad9eddc448f4950289527c74f9cb5fe2f4cd3c4f"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/8ab0dd89a7eaa92841ef5637ad9eddc448f4950289527c74f9cb5fe2f4cd3c4f.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-6-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-6-producers.json",
+        "bytes": 6644424,
+        "sha256": "db17f766d25df08931e5674e76793fd7bbec936503a0ddfb4704cd6ce4ca9adc",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-6-producers.json.gz",
+        "gzipBytes": 157762,
+        "gzipSHA256": "84d06600f5bb755bb0fdd8109f08949dbbae0058f44de3ee0e8e9de18d6b01b6"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/84d06600f5bb755bb0fdd8109f08949dbbae0058f44de3ee0e8e9de18d6b01b6.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-7-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-7-producers.json",
+        "bytes": 3322305,
+        "sha256": "03b41cf111fa78df5682aaf4d5aca962e8a4c59909a0eba96bdeb0f57a1343d7",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-7-producers.json.gz",
+        "gzipBytes": 79355,
+        "gzipSHA256": "61ecf291377a510abb5941f5822668a760d240fc4eee47f1daa1168740dce6d0"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/61ecf291377a510abb5941f5822668a760d240fc4eee47f1daa1168740dce6d0.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-8-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-8-producers.json",
+        "bytes": 6769635,
+        "sha256": "216cfb2b5304bb3f17932cef3bbb72be1a4d651afd111c5e4f7876313b7424b3",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-8-producers.json.gz",
+        "gzipBytes": 159661,
+        "gzipSHA256": "a6d23c089b5affc4ec3da2cb633db994217bdd01c8dbea72e8c536398365fcac"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/a6d23c089b5affc4ec3da2cb633db994217bdd01c8dbea72e8c536398365fcac.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-9-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-9-producers.json",
+        "bytes": 10977632,
+        "sha256": "72ed67f44b796f7ba772a52eab5da02cfc8c2f053d9f908c03d611170d2d2673",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-step-9-producers.json.gz",
+        "gzipBytes": 123539,
+        "gzipSHA256": "fc1f111fea3582ae041b061da516f4225b3d1d059bce9bacc965d849221208fd"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/fc1f111fea3582ae041b061da516f4225b3d1d059bce9bacc965d849221208fd.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-closed-9-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-closed-9-producers.json",
+        "bytes": 144,
+        "sha256": "97e38a4bc89da9a6c5e5c224f91d02796424f8ec605921be9057d656990f8a0a",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-closed-9-producers.json.gz",
+        "gzipBytes": 116,
+        "gzipSHA256": "bf23a5ce2a0ad133fc1f9feef8ec4575d2231223d955a9d217b3d1f655ca015e"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/bf23a5ce2a0ad133fc1f9feef8ec4575d2231223d955a9d217b3d1f655ca015e.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-before-unmount-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-before-unmount-producers.json",
+        "bytes": 156,
+        "sha256": "28be1fe07355c0e8a9df4f11185ae8d816f47361820d939d6d56df2eb7995081",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-before-unmount-producers.json.gz",
+        "gzipBytes": 121,
+        "gzipSHA256": "79aa9789cc46d8989d4da94026e35f3e8bae3f2514b6862b79973d9e2788c2cf"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/79aa9789cc46d8989d4da94026e35f3e8bae3f2514b6862b79973d9e2788c2cf.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-cleanup-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-cleanup-producers.json",
+        "bytes": 142,
+        "sha256": "92c69d0616861147a4b519d0b20d2826260892387bcf1a2e291bf3179902739e",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-cleanup-producers.json.gz",
+        "gzipBytes": 115,
+        "gzipSHA256": "11b9aff1609176d5c5a782a6bbf87d4cb22c42dcd651ecad687584efd9ec86b2"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/11b9aff1609176d5c5a782a6bbf87d4cb22c42dcd651ecad687584efd9ec86b2.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-late-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-late-producers.json",
+        "bytes": 136,
+        "sha256": "96ec720d39c67b3dceeb1d543a0b55ff0dd83f200c9c48872eff848ac1936219",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-late-producers.json.gz",
+        "gzipBytes": 112,
+        "gzipSHA256": "4d4fc5725db04498d6beecc6571ef71d958663d4f0455c7c83757c4a00058b0f"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/4d4fc5725db04498d6beecc6571ef71d958663d4f0455c7c83757c4a00058b0f.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-terminal-tail-producers.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-terminal-tail-producers.json",
+        "bytes": 150,
+        "sha256": "4c3ffe5107d4449bbf56f17bf61ec50f512772193b5f80607a22a866ce34d2b9",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/range-date-week-prefix-terminal-tail-producers.json.gz",
+        "gzipBytes": 127,
+        "gzipSHA256": "361c5d8351e89abe68d09afdb59900ef70c853d95b45f0c572fd0569d4d78060"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/361c5d8351e89abe68d09afdb59900ef70c853d95b45f0c572fd0569d4d78060.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/single-date-week-prefix-us-renderToString.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/single-date-week-prefix-us-renderToString.json",
+        "bytes": 76025,
+        "sha256": "5d2c3ec111ab032e6fae8ac54c66e40d814f10584cf054be8a45d8875eafe3aa",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/single-date-week-prefix-us-renderToString.json.gz",
+        "gzipBytes": 4891,
+        "gzipSHA256": "29c1e68c2363642c5b8f455d2b11d00c6e4907b9a007a026845bae1edbc2cf0c"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/29c1e68c2363642c5b8f455d2b11d00c6e4907b9a007a026845bae1edbc2cf0c.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/single-date-week-prefix-us-renderToStaticMarkup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/single-date-week-prefix-us-renderToStaticMarkup.json",
+        "bytes": 76031,
+        "sha256": "a7c999d183c3d695c35fbdbba4ee3cef2cb0e16713b93fe5098000ad55d7b081",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/single-date-week-prefix-us-renderToStaticMarkup.json.gz",
+        "gzipBytes": 4897,
+        "gzipSHA256": "fd73aec7af6e3c83b38a05023f128267bbe0744fe37c17e902539f060b902282"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/fd73aec7af6e3c83b38a05023f128267bbe0744fe37c17e902539f060b902282.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/range-date-week-prefix-us-renderToString.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/range-date-week-prefix-us-renderToString.json",
+        "bytes": 118728,
+        "sha256": "20b18a823c0b034686e1417855aaaace785d65249c473bf081a4b65430033e80",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/range-date-week-prefix-us-renderToString.json.gz",
+        "gzipBytes": 6208,
+        "gzipSHA256": "20d6f06099157e20800307b720625d63edca54f5e32421e1288d23146aae0919"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/20d6f06099157e20800307b720625d63edca54f5e32421e1288d23146aae0919.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/range-date-week-prefix-us-renderToStaticMarkup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/range-date-week-prefix-us-renderToStaticMarkup.json",
+        "bytes": 118734,
+        "sha256": "97de08eec6e2ebbc7f19e31a71761fae31ddfea75b919e182afba6b6e1315aab",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/range-date-week-prefix-us-renderToStaticMarkup.json.gz",
+        "gzipBytes": 6214,
+        "gzipSHA256": "5bddc0ff131a8b24d0da12ccd2f43f1a27ea884194eaadb027d953e2e06ff5fb"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/5bddc0ff131a8b24d0da12ccd2f43f1a27ea884194eaadb027d953e2e06ff5fb.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/single-date-week-prefix-us-renderToString.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/single-date-week-prefix-us-renderToString.json",
+        "bytes": 76025,
+        "sha256": "5d2c3ec111ab032e6fae8ac54c66e40d814f10584cf054be8a45d8875eafe3aa",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/single-date-week-prefix-us-renderToString.json.gz",
+        "gzipBytes": 4891,
+        "gzipSHA256": "29c1e68c2363642c5b8f455d2b11d00c6e4907b9a007a026845bae1edbc2cf0c"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/29c1e68c2363642c5b8f455d2b11d00c6e4907b9a007a026845bae1edbc2cf0c.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/single-date-week-prefix-us-renderToStaticMarkup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/single-date-week-prefix-us-renderToStaticMarkup.json",
+        "bytes": 76031,
+        "sha256": "a7c999d183c3d695c35fbdbba4ee3cef2cb0e16713b93fe5098000ad55d7b081",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/single-date-week-prefix-us-renderToStaticMarkup.json.gz",
+        "gzipBytes": 4897,
+        "gzipSHA256": "fd73aec7af6e3c83b38a05023f128267bbe0744fe37c17e902539f060b902282"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/fd73aec7af6e3c83b38a05023f128267bbe0744fe37c17e902539f060b902282.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/range-date-week-prefix-us-renderToString.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/range-date-week-prefix-us-renderToString.json",
+        "bytes": 118728,
+        "sha256": "20b18a823c0b034686e1417855aaaace785d65249c473bf081a4b65430033e80",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/range-date-week-prefix-us-renderToString.json.gz",
+        "gzipBytes": 6208,
+        "gzipSHA256": "20d6f06099157e20800307b720625d63edca54f5e32421e1288d23146aae0919"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/20d6f06099157e20800307b720625d63edca54f5e32421e1288d23146aae0919.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/range-date-week-prefix-us-renderToStaticMarkup.json": {
+      "original": {
+        "file": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/range-date-week-prefix-us-renderToStaticMarkup.json",
+        "bytes": 118734,
+        "sha256": "97de08eec6e2ebbc7f19e31a71761fae31ddfea75b919e182afba6b6e1315aab",
+        "gzipFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/range-date-week-prefix-us-renderToStaticMarkup.json.gz",
+        "gzipBytes": 6214,
+        "gzipSHA256": "5bddc0ff131a8b24d0da12ccd2f43f1a27ea884194eaadb027d953e2e06ff5fb"
+      },
+      "fixture": "ant-design-date-picker-date-week-prefix-parts/5bddc0ff131a8b24d0da12ccd2f43f1a27ea884194eaadb027d953e2e06ff5fb.json.gz",
+      "originalStoredGzipBytesCopiedExactly": true
+    }
+  },
+  "blobs": {
+    "ant-design-date-picker-date-week-prefix-parts/60cbf406c86b1dbea1044c2cf3a7356148efb582789d54128c0bb11d8ee2ae61.json.gz": {
+      "bytes": 8266,
+      "sha256": "60cbf406c86b1dbea1044c2cf3a7356148efb582789d54128c0bb11d8ee2ae61",
+      "rawBytes": 46929,
+      "rawSHA256": "121802f6e72cf103cf5289adb2ac8c38fa67f8b4007ba4c469c9c52b2b4e7e3a"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/52127887e5a0700f8456145666b0e201303f17f12b52050580f713f8acbfe59b.json.gz": {
+      "bytes": 5886,
+      "sha256": "52127887e5a0700f8456145666b0e201303f17f12b52050580f713f8acbfe59b",
+      "rawBytes": 76156,
+      "rawSHA256": "71defa399bc7a8e7d4e998a7275bddf32cc11cecf2c0e267df497a014c382508"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/0397418fdbd647818aa7f8b2740e64b3d74db1c66d06a726b4a64a5fcf8ab768.json.gz": {
+      "bytes": 41480,
+      "sha256": "0397418fdbd647818aa7f8b2740e64b3d74db1c66d06a726b4a64a5fcf8ab768",
+      "rawBytes": 1018227,
+      "rawSHA256": "b2f571241f26fa16b2165dd94c1a7e1845a0758150ee4c2c5b3bdcb01118c335"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/65d5cfb420a889ada94bc5c4ac50a26aa25154b8e89b1c4776296b2a07dcc65f.json.gz": {
+      "bytes": 53784,
+      "sha256": "65d5cfb420a889ada94bc5c4ac50a26aa25154b8e89b1c4776296b2a07dcc65f",
+      "rawBytes": 1406134,
+      "rawSHA256": "47f7eaf8ec4f7852f8cf633fa80dbb407daffd8ecf93e13742f6298dfce5afbc"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/6f9c5223f4b7b701766eac6d8fc7fa6194e33730feb708d0eb1430e17d755860.json.gz": {
+      "bytes": 52071,
+      "sha256": "6f9c5223f4b7b701766eac6d8fc7fa6194e33730feb708d0eb1430e17d755860",
+      "rawBytes": 1329696,
+      "rawSHA256": "dd552f27600928ef9cea85a3801952fb19d40c177779414efe9ae7b85d0e3d4d"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/47c0182f5dfd48e6358c3e64c1b69584c598e3ce1b533a1388a2604e7e534898.json.gz": {
+      "bytes": 51193,
+      "sha256": "47c0182f5dfd48e6358c3e64c1b69584c598e3ce1b533a1388a2604e7e534898",
+      "rawBytes": 1441015,
+      "rawSHA256": "f24020ca4165075200594e89eef3ff7e61918cea63277bfb1038c9841c9b40bd"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/77baac66210099d0097947486914fefd755031db548db00408a95aa60a892ed7.json.gz": {
+      "bytes": 51334,
+      "sha256": "77baac66210099d0097947486914fefd755031db548db00408a95aa60a892ed7",
+      "rawBytes": 1517931,
+      "rawSHA256": "3ead25e96ccdcb8640a8f484585d2aa2adf264b6180cfa8a9aee57cdc131b7f7"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/582f23cf47306a0929a34d5da411ca575b572c997ddcd77b48ef7e53982387aa.json.gz": {
+      "bytes": 51931,
+      "sha256": "582f23cf47306a0929a34d5da411ca575b572c997ddcd77b48ef7e53982387aa",
+      "rawBytes": 1530474,
+      "rawSHA256": "20b33773ed8d35d6ed28fe824e9b73e54c096b7f44ea0643dc7289389d7cee96"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/26804f4e5cc4423c8a550c8884d5bb5efdaf88b5720ed115d29f35a74524041d.json.gz": {
+      "bytes": 59246,
+      "sha256": "26804f4e5cc4423c8a550c8884d5bb5efdaf88b5720ed115d29f35a74524041d",
+      "rawBytes": 1673156,
+      "rawSHA256": "20159c60518e08dbac1f89350851c1471987611c95fd054a19966466df0519de"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/9324a1cafff4c57230e8f4b4e33e22024db9b4fc63943e6de095b7135f1c068e.json.gz": {
+      "bytes": 62786,
+      "sha256": "9324a1cafff4c57230e8f4b4e33e22024db9b4fc63943e6de095b7135f1c068e",
+      "rawBytes": 1743472,
+      "rawSHA256": "deb9e049ed0e9d3f27e8e6d773939f6394e4c41ae5b40c5b80b4c804c93048b3"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/225a13e484aea217b5b412f40dff87aee4aa774261ad5e93a0099f2c6538c225.json.gz": {
+      "bytes": 60758,
+      "sha256": "225a13e484aea217b5b412f40dff87aee4aa774261ad5e93a0099f2c6538c225",
+      "rawBytes": 1874693,
+      "rawSHA256": "6cfe166a14147c870dc5677e2a321ac4f443313bf9d8d04536cdc68738b7185c"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/f51d36609dbaa76a7d1dff623c7f26046079f9670f9e9f8b450e523d83bc67ae.json.gz": {
+      "bytes": 85552,
+      "sha256": "f51d36609dbaa76a7d1dff623c7f26046079f9670f9e9f8b450e523d83bc67ae",
+      "rawBytes": 2703705,
+      "rawSHA256": "c6fe521582b8661a00648887881b09b29a11e8178c0b42f44d378ed82b6db798"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/94f3e9b779559b8b96bb4fdf1c87c3660dc3851156da2c378499cbde9d37e0df.json.gz": {
+      "bytes": 20527,
+      "sha256": "94f3e9b779559b8b96bb4fdf1c87c3660dc3851156da2c378499cbde9d37e0df",
+      "rawBytes": 672029,
+      "rawSHA256": "08622a1ca871c9cbe6444dbc019400d3c742c52e674c2f4e88de25da37a7f1d2"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/0172a4b4cb27a2e0524823eafd0328f0c7f18bedff74d1f9e3d2b391c42bb06d.json.gz": {
+      "bytes": 20329,
+      "sha256": "0172a4b4cb27a2e0524823eafd0328f0c7f18bedff74d1f9e3d2b391c42bb06d",
+      "rawBytes": 632640,
+      "rawSHA256": "8a0343a186dd9e4cc8ebef4707c6b0ccd6dff663abf750c794e712e6b25bc417"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/0116fb948e7acdaa1d196b6707260d096afa38397fb6c699f89eaec0c9656f1e.json.gz": {
+      "bytes": 9229,
+      "sha256": "0116fb948e7acdaa1d196b6707260d096afa38397fb6c699f89eaec0c9656f1e",
+      "rawBytes": 273258,
+      "rawSHA256": "3ddaeb26b175576621868c5841a15fd3f82eb14a8a4727d03479cbc97c0e7db7"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/811e860ecc5cb3d10cdb25f523ee28320e87e3f3e273c3d1499fb369053af7fb.json.gz": {
+      "bytes": 1416,
+      "sha256": "811e860ecc5cb3d10cdb25f523ee28320e87e3f3e273c3d1499fb369053af7fb",
+      "rawBytes": 30790,
+      "rawSHA256": "368540732e9e2a3c154095bcf41db1893aaea4819a6dae7346a7a0d1eaf43260"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/ec507c2711866a70d29756801e5c653101e2873c0e6666ec415432519c2d922c.json.gz": {
+      "bytes": 22553,
+      "sha256": "ec507c2711866a70d29756801e5c653101e2873c0e6666ec415432519c2d922c",
+      "rawBytes": 1842808,
+      "rawSHA256": "f0d198b0cd4bb20227172f3b2ad2cd1780a069998a443e0451aa5f7683c72902"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/8e0a08072da6993b6e73b6d5b9144dd519b06be533c5f6ac278df71ba058025a.json.gz": {
+      "bytes": 21578,
+      "sha256": "8e0a08072da6993b6e73b6d5b9144dd519b06be533c5f6ac278df71ba058025a",
+      "rawBytes": 1778893,
+      "rawSHA256": "3fd65ccb7e6eae5891b3bb5dcb38ec26259f5479b041377c6f6e7ba3715620b1"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/46b0ec24c1630e39a18f3644336ae3fbeaec55f1149ad768d40398f70f526bae.json.gz": {
+      "bytes": 19545,
+      "sha256": "46b0ec24c1630e39a18f3644336ae3fbeaec55f1149ad768d40398f70f526bae",
+      "rawBytes": 1561664,
+      "rawSHA256": "6a0a0beb98808380f64491fbef151baad836d7d2d86d87b7517b449b829953da"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/dfaa15a3bde57eafc8d219ff8a8b6bdd16a9a82d18b7cd03f19160a49caac9b2.json.gz": {
+      "bytes": 29633,
+      "sha256": "dfaa15a3bde57eafc8d219ff8a8b6bdd16a9a82d18b7cd03f19160a49caac9b2",
+      "rawBytes": 2453238,
+      "rawSHA256": "3bb70c4adce5745e5513e350a96b7c6cf828444a3eb6e987470f19c08527eb06"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/ff044906d740b794bb06d4b7aa5eb3327e2f7e232f734041465ee77eac8274cc.json.gz": {
+      "bytes": 10627,
+      "sha256": "ff044906d740b794bb06d4b7aa5eb3327e2f7e232f734041465ee77eac8274cc",
+      "rawBytes": 800641,
+      "rawSHA256": "5eb94b7bbba73f3b4197566e0fbb133e0c45db9f601135c3cbf5457c4b0dfa99"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/9c9b64922b0ef8265dfc1f848df3391303a06f9b4e8e34f09ca74d951e1e7c7f.json.gz": {
+      "bytes": 10655,
+      "sha256": "9c9b64922b0ef8265dfc1f848df3391303a06f9b4e8e34f09ca74d951e1e7c7f",
+      "rawBytes": 800641,
+      "rawSHA256": "d00fcff53ad6fd7af464fcdb3aab9757f93899193860484e30a8bc98d08fa093"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/48ed2242d3627a55223fd647e28cc450afbfc50f716cfa7fa791ef9725cb9117.json.gz": {
+      "bytes": 32030,
+      "sha256": "48ed2242d3627a55223fd647e28cc450afbfc50f716cfa7fa791ef9725cb9117",
+      "rawBytes": 2728826,
+      "rawSHA256": "9171a715204517db565c267e4c7fc062c8706979b0bd714845b6f689f0a1e543"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/72ebefa237c07bfffc2d1a51fd7440d00c5e90a8229b75fde54aa83b85d1712a.json.gz": {
+      "bytes": 21399,
+      "sha256": "72ebefa237c07bfffc2d1a51fd7440d00c5e90a8229b75fde54aa83b85d1712a",
+      "rawBytes": 1782995,
+      "rawSHA256": "f823d1a580377f0569d2ae61baef571071e4bc1870b66f164454f74b3d371e24"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/314de4e558a819c3492716675e26a0432e7b7f70a7e4c0f752bc39b31528a258.json.gz": {
+      "bytes": 32591,
+      "sha256": "314de4e558a819c3492716675e26a0432e7b7f70a7e4c0f752bc39b31528a258",
+      "rawBytes": 2783591,
+      "rawSHA256": "d063f4df86d046579e3cd130cba97a63b4fbd6e924cd7cb43aeb15716d0e26a1"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/ab78106b2acc99b5c812c2c00db1544f5135b3909b476d8a97aa66c272756b6b.json.gz": {
+      "bytes": 62638,
+      "sha256": "ab78106b2acc99b5c812c2c00db1544f5135b3909b476d8a97aa66c272756b6b",
+      "rawBytes": 5458099,
+      "rawSHA256": "d762ccb0e25d3dd0d1797837f5e5d3329621b6b68dcf3c07c675b317cbedaf1e"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/5ef4970fc6a4e947a46cb42acb4b84ca2a662fedd681d4f4bf9e519d8ad00813.json.gz": {
+      "bytes": 116,
+      "sha256": "5ef4970fc6a4e947a46cb42acb4b84ca2a662fedd681d4f4bf9e519d8ad00813",
+      "rawBytes": 144,
+      "rawSHA256": "f252b457d0da0d45621d2d6ee404d83f01d29ea012d046ba54f1fc5654555767"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/bbe554765fbb3d9c3c6af1be8d6f0b764b5e6c88b93339091d640a1560f17f1f.json.gz": {
+      "bytes": 121,
+      "sha256": "bbe554765fbb3d9c3c6af1be8d6f0b764b5e6c88b93339091d640a1560f17f1f",
+      "rawBytes": 156,
+      "rawSHA256": "50dc5c8cc20fd91e5fd9b55813211e2268d863933e2bab4ac6bd45249b4e6d43"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/65e6bad8a114559365a4faa255cfb571065efdaec67d04b36ee70efb5cef6bac.json.gz": {
+      "bytes": 115,
+      "sha256": "65e6bad8a114559365a4faa255cfb571065efdaec67d04b36ee70efb5cef6bac",
+      "rawBytes": 142,
+      "rawSHA256": "0122436f789c7fbb8b11b047db70cfe3079ce5ba59577b31a832a0aabfe34f01"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/1170287809bbfea87cf11805668788c641de0c0d3613f1a6718ef09bcb71d8c1.json.gz": {
+      "bytes": 112,
+      "sha256": "1170287809bbfea87cf11805668788c641de0c0d3613f1a6718ef09bcb71d8c1",
+      "rawBytes": 136,
+      "rawSHA256": "aae1b4804f580bc8cdc67361c86def978f57989c68da8a9dc7e3b40c614677e2"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/10b0805a21d6092636f2603eaa66618e779ae2f83f568babe31b82ced65d0b10.json.gz": {
+      "bytes": 127,
+      "sha256": "10b0805a21d6092636f2603eaa66618e779ae2f83f568babe31b82ced65d0b10",
+      "rawBytes": 150,
+      "rawSHA256": "603e1af265bc58a0ab6471082cead55a875382425ea0dc512dfd5f874f58a05b"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/6be9858e1edcf371e1182e409a0f26f1b942bfd1791ceee00e3d3213de3d0aca.json.gz": {
+      "bytes": 6942,
+      "sha256": "6be9858e1edcf371e1182e409a0f26f1b942bfd1791ceee00e3d3213de3d0aca",
+      "rawBytes": 103723,
+      "rawSHA256": "f0859b94a8dc569578fc02be43b5753ae672381f48c85b2182bb45c13c94cc63"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/1394306b1941b959f35c75b8cee1da4f8d988cfb374de05455a9a6d55f7717a6.json.gz": {
+      "bytes": 66606,
+      "sha256": "1394306b1941b959f35c75b8cee1da4f8d988cfb374de05455a9a6d55f7717a6",
+      "rawBytes": 1859330,
+      "rawSHA256": "4166ac5516cfa2c6dff3fbe571afe5e64c35d5dc953250a9d386a25d0a22ab33"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/a00724c1eaa95bc0d72b2a6b43afd32fc2984784e92dbd470ed9bd6b216d463c.json.gz": {
+      "bytes": 89743,
+      "sha256": "a00724c1eaa95bc0d72b2a6b43afd32fc2984784e92dbd470ed9bd6b216d463c",
+      "rawBytes": 2627617,
+      "rawSHA256": "f2b5636918294353f4e39305e5c95a2fff7124030a855b2e3f3525b5ede57f8e"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/650353b63a436fb643016936afceb084b3b1769040013dbe801e3615dd8e5201.json.gz": {
+      "bytes": 85417,
+      "sha256": "650353b63a436fb643016936afceb084b3b1769040013dbe801e3615dd8e5201",
+      "rawBytes": 2471068,
+      "rawSHA256": "a78ed8ae30ecb2726ddca89be581b0a01d2a51cc56cbd2888fa47f6415a2870e"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/d5b10ed1e6edb5a8e135d1be18091378675542b97e1e59291ce42dcad88c82c1.json.gz": {
+      "bytes": 88628,
+      "sha256": "d5b10ed1e6edb5a8e135d1be18091378675542b97e1e59291ce42dcad88c82c1",
+      "rawBytes": 2553352,
+      "rawSHA256": "053ad338c8928215b70df064b573feb900f3bb95f0f717495c6d703dd48e971b"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/71c489b2b93b8f91b8e56f1e9c9a0c6a3ea828f19b6988b42cdbb0908154ca2e.json.gz": {
+      "bytes": 96231,
+      "sha256": "71c489b2b93b8f91b8e56f1e9c9a0c6a3ea828f19b6988b42cdbb0908154ca2e",
+      "rawBytes": 2805555,
+      "rawSHA256": "81779f260c98cfe3183a31e17bd378900158da1faccddb6d75212fb7b7f03b90"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/5024bfa534a9ddc2b7bbd74826a0aecaad3e20a260120828719318fa16a1704c.json.gz": {
+      "bytes": 99045,
+      "sha256": "5024bfa534a9ddc2b7bbd74826a0aecaad3e20a260120828719318fa16a1704c",
+      "rawBytes": 2896440,
+      "rawSHA256": "1ca57e722fcfa90b50e8731902d476d9c601c9071912c2d145d6b6566f99e164"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/b16619184337c551a84eeb57d3b53df309c33e5ee57fb401039aae151b073895.json.gz": {
+      "bytes": 99676,
+      "sha256": "b16619184337c551a84eeb57d3b53df309c33e5ee57fb401039aae151b073895",
+      "rawBytes": 2911997,
+      "rawSHA256": "046353966120e81241450b3ab300c8bdfa6ae20605f0970aff130bf7ca463235"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/125cf5be63c169bd76066c72a8ad9a437cc254e6c18b0f94d37662c25455d733.json.gz": {
+      "bytes": 100084,
+      "sha256": "125cf5be63c169bd76066c72a8ad9a437cc254e6c18b0f94d37662c25455d733",
+      "rawBytes": 2922041,
+      "rawSHA256": "37c0ab3e01f3cb08bc42742f4b4b22b5ab205b8c2155ad7e700bcfd589be3415"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/6c7272b05c1f4e79d3e9debf3c844d382a7a2b844e0df9bbfbbbd67c6c6146cf.json.gz": {
+      "bytes": 103189,
+      "sha256": "6c7272b05c1f4e79d3e9debf3c844d382a7a2b844e0df9bbfbbbd67c6c6146cf",
+      "rawBytes": 3284723,
+      "rawSHA256": "92de4bd66d2209b203017a373fe54c1972ae702d917ca956a79fb448b383f744"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/1ff5cb6011ea173c060df633e64c2c3985c70575147b402cb878b8aaa5923aea.json.gz": {
+      "bytes": 154032,
+      "sha256": "1ff5cb6011ea173c060df633e64c2c3985c70575147b402cb878b8aaa5923aea",
+      "rawBytes": 4850493,
+      "rawSHA256": "01074bef25d17d1d0e822efa195b96e11202cf448e2483a5d8a12f5cf9cd2005"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/2d04f2e14f10d401636f1e018ea61c903a19d8405933f2d3bc03622325def54c.json.gz": {
+      "bytes": 36681,
+      "sha256": "2d04f2e14f10d401636f1e018ea61c903a19d8405933f2d3bc03622325def54c",
+      "rawBytes": 1203308,
+      "rawSHA256": "0597fdc1b72b8e0eb27f6b48f0932c5b859de244f935c7be60420b35d081b110"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/ca642b8052c1c6e662b406431500fe6e9770854c5e83f2fac390a76d0c8d62e0.json.gz": {
+      "bytes": 35387,
+      "sha256": "ca642b8052c1c6e662b406431500fe6e9770854c5e83f2fac390a76d0c8d62e0",
+      "rawBytes": 1134831,
+      "rawSHA256": "3116ae73733b9e640fe34d9a0b345d569f6b72d86a3ed3cd8244af7c51cd2811"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/2ffab406980eb3b26cb63917d7fbd3b7fae3fbef94a8a95a71f780559bb18810.json.gz": {
+      "bytes": 15956,
+      "sha256": "2ffab406980eb3b26cb63917d7fbd3b7fae3fbef94a8a95a71f780559bb18810",
+      "rawBytes": 443834,
+      "rawSHA256": "5b5f0bab182e44bab2af6ce6aeb22a7139e8101dedbbaece915a846462dbabe4"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/00f6bb1deebc03d8310b5cd4282a8dc567a94c4c712190c35f91bd8998e8869e.json.gz": {
+      "bytes": 1586,
+      "sha256": "00f6bb1deebc03d8310b5cd4282a8dc567a94c4c712190c35f91bd8998e8869e",
+      "rawBytes": 30778,
+      "rawSHA256": "4899740c7811edba1653ebb6bf476062da70899f25d9a447d50e436f64102695"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/78ed8da47be5ca8da3c26be8997b23d94d2f348100de35b58ae0764bd8c2addb.json.gz": {
+      "bytes": 63062,
+      "sha256": "78ed8da47be5ca8da3c26be8997b23d94d2f348100de35b58ae0764bd8c2addb",
+      "rawBytes": 5495012,
+      "rawSHA256": "625edc12555b9fab247fc33d470a698a07098cb37c6273742a4c62ba3cec117e"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/151773ee6fd27651026728d0d2b434ba1c555f87289ba61e165f20442e3a1369.json.gz": {
+      "bytes": 21674,
+      "sha256": "151773ee6fd27651026728d0d2b434ba1c555f87289ba61e165f20442e3a1369",
+      "rawBytes": 1817642,
+      "rawSHA256": "01e64d802027325aeb9f407f6390248974d23d244e80fd9ba2068ec7b45261f0"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/a9650550a1943225a1d4a6476b7d7a13898f32ef51f748f098ade1ec698a908c.json.gz": {
+      "bytes": 20243,
+      "sha256": "a9650550a1943225a1d4a6476b7d7a13898f32ef51f748f098ade1ec698a908c",
+      "rawBytes": 1623465,
+      "rawSHA256": "5954c96fbdc541da1598751cde88e7aef45e0bc764408ddbbc37d3851a3f37b4"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/8da74504b619e520519159e156c256487f951073cdeb8c2fa52fc32442d261d4.json.gz": {
+      "bytes": 295049,
+      "sha256": "8da74504b619e520519159e156c256487f951073cdeb8c2fa52fc32442d261d4",
+      "rawBytes": 13285984,
+      "rawSHA256": "9af0d2a91b71cd12d3d7322be19dda57ae740d2ac3fdefd828871d91cb909bb0"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/41d0c00a0ed47e5cc862a668c74a1a614d7de6ce5e4c080786accbe311e20691.json.gz": {
+      "bytes": 157796,
+      "sha256": "41d0c00a0ed47e5cc862a668c74a1a614d7de6ce5e4c080786accbe311e20691",
+      "rawBytes": 6677885,
+      "rawSHA256": "d85cdd53a1a7a31e55bb6a2c839bb3058fbb5d868fdb9846af3abecdad466ad9"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/8ab0dd89a7eaa92841ef5637ad9eddc448f4950289527c74f9cb5fe2f4cd3c4f.json.gz": {
+      "bytes": 79980,
+      "sha256": "8ab0dd89a7eaa92841ef5637ad9eddc448f4950289527c74f9cb5fe2f4cd3c4f",
+      "rawBytes": 3355820,
+      "rawSHA256": "2d440ac85dc9ceddf824e5638b9efac9fc9ee368b5a68611f9569879f9c8604a"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/d5bc3baa6f5fa458d4d3fcba8e023fd5772d930161eef749264fbec42ababb8c.json.gz": {
+      "bytes": 157763,
+      "sha256": "d5bc3baa6f5fa458d4d3fcba8e023fd5772d930161eef749264fbec42ababb8c",
+      "rawBytes": 6644424,
+      "rawSHA256": "f8fea178bc6ae90754563949fa02e450029d4bbcc2a29d26cfd7631d3114615c"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/61ecf291377a510abb5941f5822668a760d240fc4eee47f1daa1168740dce6d0.json.gz": {
+      "bytes": 79355,
+      "sha256": "61ecf291377a510abb5941f5822668a760d240fc4eee47f1daa1168740dce6d0",
+      "rawBytes": 3322305,
+      "rawSHA256": "03b41cf111fa78df5682aaf4d5aca962e8a4c59909a0eba96bdeb0f57a1343d7"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/a6d23c089b5affc4ec3da2cb633db994217bdd01c8dbea72e8c536398365fcac.json.gz": {
+      "bytes": 159661,
+      "sha256": "a6d23c089b5affc4ec3da2cb633db994217bdd01c8dbea72e8c536398365fcac",
+      "rawBytes": 6769635,
+      "rawSHA256": "216cfb2b5304bb3f17932cef3bbb72be1a4d651afd111c5e4f7876313b7424b3"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/fc1f111fea3582ae041b061da516f4225b3d1d059bce9bacc965d849221208fd.json.gz": {
+      "bytes": 123539,
+      "sha256": "fc1f111fea3582ae041b061da516f4225b3d1d059bce9bacc965d849221208fd",
+      "rawBytes": 10977632,
+      "rawSHA256": "72ed67f44b796f7ba772a52eab5da02cfc8c2f053d9f908c03d611170d2d2673"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/bf23a5ce2a0ad133fc1f9feef8ec4575d2231223d955a9d217b3d1f655ca015e.json.gz": {
+      "bytes": 116,
+      "sha256": "bf23a5ce2a0ad133fc1f9feef8ec4575d2231223d955a9d217b3d1f655ca015e",
+      "rawBytes": 144,
+      "rawSHA256": "97e38a4bc89da9a6c5e5c224f91d02796424f8ec605921be9057d656990f8a0a"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/79aa9789cc46d8989d4da94026e35f3e8bae3f2514b6862b79973d9e2788c2cf.json.gz": {
+      "bytes": 121,
+      "sha256": "79aa9789cc46d8989d4da94026e35f3e8bae3f2514b6862b79973d9e2788c2cf",
+      "rawBytes": 156,
+      "rawSHA256": "28be1fe07355c0e8a9df4f11185ae8d816f47361820d939d6d56df2eb7995081"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/11b9aff1609176d5c5a782a6bbf87d4cb22c42dcd651ecad687584efd9ec86b2.json.gz": {
+      "bytes": 115,
+      "sha256": "11b9aff1609176d5c5a782a6bbf87d4cb22c42dcd651ecad687584efd9ec86b2",
+      "rawBytes": 142,
+      "rawSHA256": "92c69d0616861147a4b519d0b20d2826260892387bcf1a2e291bf3179902739e"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/4d4fc5725db04498d6beecc6571ef71d958663d4f0455c7c83757c4a00058b0f.json.gz": {
+      "bytes": 112,
+      "sha256": "4d4fc5725db04498d6beecc6571ef71d958663d4f0455c7c83757c4a00058b0f",
+      "rawBytes": 136,
+      "rawSHA256": "96ec720d39c67b3dceeb1d543a0b55ff0dd83f200c9c48872eff848ac1936219"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/361c5d8351e89abe68d09afdb59900ef70c853d95b45f0c572fd0569d4d78060.json.gz": {
+      "bytes": 127,
+      "sha256": "361c5d8351e89abe68d09afdb59900ef70c853d95b45f0c572fd0569d4d78060",
+      "rawBytes": 150,
+      "rawSHA256": "4c3ffe5107d4449bbf56f17bf61ec50f512772193b5f80607a22a866ce34d2b9"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/0b2d7fe1062871d44f0947ffdc8b5f2e28afde76c0b969051b36897740200c31.json.gz": {
+      "bytes": 8254,
+      "sha256": "0b2d7fe1062871d44f0947ffdc8b5f2e28afde76c0b969051b36897740200c31",
+      "rawBytes": 47054,
+      "rawSHA256": "a0be3be3b0343ec796e6f5646e12a17b7a0b133060b04e2007a414da161285a1"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/8d4b5e1c21409ce760d02acd9d015560425294bfd46d88acd60d62e115e554f2.json.gz": {
+      "bytes": 5887,
+      "sha256": "8d4b5e1c21409ce760d02acd9d015560425294bfd46d88acd60d62e115e554f2",
+      "rawBytes": 76156,
+      "rawSHA256": "6d5c7431fb836e005cefe401e254bdcf32c1b2b735e7a2011b856536b926de36"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/60d16292ee58b6f8422182b4744dce0868bb99923946cb2ee184e6ea58e085bb.json.gz": {
+      "bytes": 41482,
+      "sha256": "60d16292ee58b6f8422182b4744dce0868bb99923946cb2ee184e6ea58e085bb",
+      "rawBytes": 1018227,
+      "rawSHA256": "555623afc7ba37bb76a640ff38a2ab7ac44e9097fc6212b793a803a4c75d5481"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/4deaa94ad8e93281d23dc64d8f14da20a4da4fa11705fef7e30aeb5337eceaa3.json.gz": {
+      "bytes": 53786,
+      "sha256": "4deaa94ad8e93281d23dc64d8f14da20a4da4fa11705fef7e30aeb5337eceaa3",
+      "rawBytes": 1406134,
+      "rawSHA256": "be30b958e2edbc57c72c877bf7250d386b4effdd0931f8741a84d0a5c9b1c885"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/b8ddfc835c280359759fc4320cb0ad156469827bf811613a9fcb64cb362ece92.json.gz": {
+      "bytes": 52072,
+      "sha256": "b8ddfc835c280359759fc4320cb0ad156469827bf811613a9fcb64cb362ece92",
+      "rawBytes": 1329696,
+      "rawSHA256": "f06fd6da1df5f3391f59d492b25cc464ad9c7cffa1be6f0ee6bf48cf2b730e49"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/203f92dc6e98e66f87b71bc574eae655e76c9afe1afc9bcdddeaccc45be37e8a.json.gz": {
+      "bytes": 51213,
+      "sha256": "203f92dc6e98e66f87b71bc574eae655e76c9afe1afc9bcdddeaccc45be37e8a",
+      "rawBytes": 1441015,
+      "rawSHA256": "4a038df246bb884d731534b0ac2ba642c247f3802c99bd8f94b767390953d9db"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/c9015c6213018b882c4fcd06e37d183a67210e3b96cf5103118cd9514c4b036b.json.gz": {
+      "bytes": 51364,
+      "sha256": "c9015c6213018b882c4fcd06e37d183a67210e3b96cf5103118cd9514c4b036b",
+      "rawBytes": 1517931,
+      "rawSHA256": "a7d3175ee21314646639147a1841c43b05986a527087d35359298b07df44105a"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/68f652c4a12a99ba19ceb442348f3cca78be840c6124419ae3af204b5e99c001.json.gz": {
+      "bytes": 51963,
+      "sha256": "68f652c4a12a99ba19ceb442348f3cca78be840c6124419ae3af204b5e99c001",
+      "rawBytes": 1530474,
+      "rawSHA256": "5d4e907529e3531a923d7d67b6592a9c9c9c36e45c4964b065c088b62b88f818"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/be4c5e26ee601846db51a846bb3d0d1864f66a687ff44a99dd5fcc7532944bce.json.gz": {
+      "bytes": 59275,
+      "sha256": "be4c5e26ee601846db51a846bb3d0d1864f66a687ff44a99dd5fcc7532944bce",
+      "rawBytes": 1673156,
+      "rawSHA256": "479a3f3260f73a932e7e3699e587d51b09fe3b830be18f1caca216dbee6b7e27"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/1baceffcfe1b6e41eb60d46c08ff7e72d9fcca4f27942ebe68d83291fd851f18.json.gz": {
+      "bytes": 62817,
+      "sha256": "1baceffcfe1b6e41eb60d46c08ff7e72d9fcca4f27942ebe68d83291fd851f18",
+      "rawBytes": 1743472,
+      "rawSHA256": "517f67a364f0938294fac25e2889e6495f42cc364d184d61965b4306fd69e722"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/349d0dc8b892fdacbb1b3bf5335e5bfabb46e9e218422d83e58327c1e1c59375.json.gz": {
+      "bytes": 60789,
+      "sha256": "349d0dc8b892fdacbb1b3bf5335e5bfabb46e9e218422d83e58327c1e1c59375",
+      "rawBytes": 1874693,
+      "rawSHA256": "d0f96d8bdffa7eaf360bd3b084ef81e0dad3472436d533d23185f26a90598e68"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/f968c54ee09cde0dff6fd897996db32b120b329c707f4babd18902ebea83cf88.json.gz": {
+      "bytes": 85597,
+      "sha256": "f968c54ee09cde0dff6fd897996db32b120b329c707f4babd18902ebea83cf88",
+      "rawBytes": 2703705,
+      "rawSHA256": "7973593b1a4e0f491c15485928fb94b61e26ba9ef0489f6b4fce2b4bf31d549c"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/536abfd8ea9e075cbb0a462dd44aab218be363bc13239f071e0fa7e3e36533ae.json.gz": {
+      "bytes": 20539,
+      "sha256": "536abfd8ea9e075cbb0a462dd44aab218be363bc13239f071e0fa7e3e36533ae",
+      "rawBytes": 672029,
+      "rawSHA256": "b34ee43204f57b1b3561b281ad0e98d96eda9a34168da8f920838543582bf263"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/7a8265e9dcab279ee17cfd7a710be2b8ba126af4a138d47a2a4ca4286d28f303.json.gz": {
+      "bytes": 20338,
+      "sha256": "7a8265e9dcab279ee17cfd7a710be2b8ba126af4a138d47a2a4ca4286d28f303",
+      "rawBytes": 632640,
+      "rawSHA256": "bb129abae337933bf30e2114b4ffa6b8d671198e1fcf6e30eafd2a6d75125e5e"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/6b7aaf2f4fd242753c33450ddb2ce3582135d3a2d86a5d44f6c240ac8beae5b7.json.gz": {
+      "bytes": 9232,
+      "sha256": "6b7aaf2f4fd242753c33450ddb2ce3582135d3a2d86a5d44f6c240ac8beae5b7",
+      "rawBytes": 273258,
+      "rawSHA256": "577a49772f1fae4be2da5e3e1f02fcb9377c8c597e0ded2d889d94f474562c9c"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/bfb8e3b60bbc6dd7fe4c084e89e553ffa25bb7b3895c30a6dbee6c2407509f5a.json.gz": {
+      "bytes": 6939,
+      "sha256": "bfb8e3b60bbc6dd7fe4c084e89e553ffa25bb7b3895c30a6dbee6c2407509f5a",
+      "rawBytes": 103723,
+      "rawSHA256": "8653e209f031a39d5ba26dbcb92a7dd072b953e75f6ee68ea8db35f114781f72"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/6fb8981a19e76001009368b48ae6baacd5853b2867cac6d19d32a909e11870b0.json.gz": {
+      "bytes": 66602,
+      "sha256": "6fb8981a19e76001009368b48ae6baacd5853b2867cac6d19d32a909e11870b0",
+      "rawBytes": 1859330,
+      "rawSHA256": "4bcbaa54b40611e7bc595c220c7735a862f830cb4577343faa1bb82c8709897b"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/9d5d0be2d1931ad8eb20f144d08a1b00c0c0e8887f4f53c5ed6dfc92d984ae8e.json.gz": {
+      "bytes": 89743,
+      "sha256": "9d5d0be2d1931ad8eb20f144d08a1b00c0c0e8887f4f53c5ed6dfc92d984ae8e",
+      "rawBytes": 2627617,
+      "rawSHA256": "5098fa42ac8014309d21a2646b780392311a2105ca84c58b7c19e771803295a5"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/9afd3abc9573298066703de15f9644d430f75262e31b7e0f70348aa581810b8e.json.gz": {
+      "bytes": 85412,
+      "sha256": "9afd3abc9573298066703de15f9644d430f75262e31b7e0f70348aa581810b8e",
+      "rawBytes": 2471068,
+      "rawSHA256": "e28edf62a9ca33d47a71486de2b0a8fbe84cb7c535a7c8f1069b92ec83250a97"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/7a1ad0f359932aab470bd2b8fe34025be9161c636a8da894d5b2cfb5f5d8e9db.json.gz": {
+      "bytes": 88620,
+      "sha256": "7a1ad0f359932aab470bd2b8fe34025be9161c636a8da894d5b2cfb5f5d8e9db",
+      "rawBytes": 2553352,
+      "rawSHA256": "675467c5ae95e97a24734ac8f0e375a205b1c64b6b75400cea4419b05e28f48e"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/25557a750bd88b5ee1e72ec386dbe1eac0dcd4795a76df9d79652e22e4ecb4ea.json.gz": {
+      "bytes": 96226,
+      "sha256": "25557a750bd88b5ee1e72ec386dbe1eac0dcd4795a76df9d79652e22e4ecb4ea",
+      "rawBytes": 2805555,
+      "rawSHA256": "7344eb8287835cd7e81d66cd26d56bcd6f1e4b9a4d3cec55137dfd3076ac0d44"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/f8dd9b56761e9ed375ab44eef1d85ec2a6d80c72be3a684442dfa8f94f6a199a.json.gz": {
+      "bytes": 99033,
+      "sha256": "f8dd9b56761e9ed375ab44eef1d85ec2a6d80c72be3a684442dfa8f94f6a199a",
+      "rawBytes": 2896440,
+      "rawSHA256": "b71cb7ab4e60587a391813873fe11533d68f0d714b69e0e0b3de063b60a50c8f"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/0d164f10de9a1d89bb340d456895dce00377eb16b49c56368e12d3990506b796.json.gz": {
+      "bytes": 99820,
+      "sha256": "0d164f10de9a1d89bb340d456895dce00377eb16b49c56368e12d3990506b796",
+      "rawBytes": 2916557,
+      "rawSHA256": "e4a8bf944a98236b41a7dda3c2dac48fbaf7eca805ae19e6ea7a7054dc361edd"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/711a3de3d71f4152927bc261d32a216cf0c8537f163aaf46cc3b6532799bd2b1.json.gz": {
+      "bytes": 100064,
+      "sha256": "711a3de3d71f4152927bc261d32a216cf0c8537f163aaf46cc3b6532799bd2b1",
+      "rawBytes": 2922041,
+      "rawSHA256": "10c36a81fe90d56218363398645bd33e9bfca20e5912fff3ecda02b963f57395"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/4e3812469eb61f043a0367d47c5d2588c47b01b8ba9a313bc0ab1f177716e125.json.gz": {
+      "bytes": 103160,
+      "sha256": "4e3812469eb61f043a0367d47c5d2588c47b01b8ba9a313bc0ab1f177716e125",
+      "rawBytes": 3284723,
+      "rawSHA256": "e13f4427438fa9330ce5353f400253d45c64ba55ec36a93e7fc84d1117665e5c"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/7d5010c289f11e5cdcd06fd6eab4cad7c3e613b25c9e8a294a447af4930e9006.json.gz": {
+      "bytes": 153976,
+      "sha256": "7d5010c289f11e5cdcd06fd6eab4cad7c3e613b25c9e8a294a447af4930e9006",
+      "rawBytes": 4850493,
+      "rawSHA256": "18a61e02bb936725ce8338604b3a1fb1e1881e5a927b1c69fd67dcc21d542ff1"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/5cb9a9875ce2dd4c53b130dca9828f04568f14f5cf29a20cd4109d51a6892961.json.gz": {
+      "bytes": 36667,
+      "sha256": "5cb9a9875ce2dd4c53b130dca9828f04568f14f5cf29a20cd4109d51a6892961",
+      "rawBytes": 1203308,
+      "rawSHA256": "cf13d0885a51f4094ec5818670081b4101b547b7d1fd5669b4631dbe9f4ddecc"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/3b5172a28ecf68a76b15e4035ff3624c6ef453baf227b9cdf0dce8b76a4629eb.json.gz": {
+      "bytes": 35373,
+      "sha256": "3b5172a28ecf68a76b15e4035ff3624c6ef453baf227b9cdf0dce8b76a4629eb",
+      "rawBytes": 1134831,
+      "rawSHA256": "4900b12378ee1c9e5abdc3b06be8d99a9afe8ccaf8f7f8ac356a5005313df784"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/d158e28df3aa7c798e687fc21357df02cb887494eb44e3573e43c8275f7454af.json.gz": {
+      "bytes": 15943,
+      "sha256": "d158e28df3aa7c798e687fc21357df02cb887494eb44e3573e43c8275f7454af",
+      "rawBytes": 443834,
+      "rawSHA256": "8fc1d7da05587f834d9a1fcb14c938bcbc3c305497ba7ea3a12457712933aa21"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/84d06600f5bb755bb0fdd8109f08949dbbae0058f44de3ee0e8e9de18d6b01b6.json.gz": {
+      "bytes": 157762,
+      "sha256": "84d06600f5bb755bb0fdd8109f08949dbbae0058f44de3ee0e8e9de18d6b01b6",
+      "rawBytes": 6644424,
+      "rawSHA256": "db17f766d25df08931e5674e76793fd7bbec936503a0ddfb4704cd6ce4ca9adc"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/2b60b81d1dfc27578f45035d54dff4903ce793e03abf9e72440968c68292b772.json.gz": {
+      "bytes": 1072,
+      "sha256": "2b60b81d1dfc27578f45035d54dff4903ce793e03abf9e72440968c68292b772",
+      "rawBytes": 3637,
+      "rawSHA256": "b93f0f7af63856916b1326b08d95d88f0c02dc830430114fd6425ac15e973463"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/29c1e68c2363642c5b8f455d2b11d00c6e4907b9a007a026845bae1edbc2cf0c.json.gz": {
+      "bytes": 4891,
+      "sha256": "29c1e68c2363642c5b8f455d2b11d00c6e4907b9a007a026845bae1edbc2cf0c",
+      "rawBytes": 76025,
+      "rawSHA256": "5d2c3ec111ab032e6fae8ac54c66e40d814f10584cf054be8a45d8875eafe3aa"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/fd73aec7af6e3c83b38a05023f128267bbe0744fe37c17e902539f060b902282.json.gz": {
+      "bytes": 4897,
+      "sha256": "fd73aec7af6e3c83b38a05023f128267bbe0744fe37c17e902539f060b902282",
+      "rawBytes": 76031,
+      "rawSHA256": "a7c999d183c3d695c35fbdbba4ee3cef2cb0e16713b93fe5098000ad55d7b081"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/20d6f06099157e20800307b720625d63edca54f5e32421e1288d23146aae0919.json.gz": {
+      "bytes": 6208,
+      "sha256": "20d6f06099157e20800307b720625d63edca54f5e32421e1288d23146aae0919",
+      "rawBytes": 118728,
+      "rawSHA256": "20b18a823c0b034686e1417855aaaace785d65249c473bf081a4b65430033e80"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/5bddc0ff131a8b24d0da12ccd2f43f1a27ea884194eaadb027d953e2e06ff5fb.json.gz": {
+      "bytes": 6214,
+      "sha256": "5bddc0ff131a8b24d0da12ccd2f43f1a27ea884194eaadb027d953e2e06ff5fb",
+      "rawBytes": 118734,
+      "rawSHA256": "97de08eec6e2ebbc7f19e31a71761fae31ddfea75b919e182afba6b6e1315aab"
+    },
+    "ant-design-date-picker-date-week-prefix-parts/b9e32f6521fc6bcc3807a980a2e9875bf01ec51debc49c81962719fe8c79484f.json.gz": {
+      "bytes": 1073,
+      "sha256": "b9e32f6521fc6bcc3807a980a2e9875bf01ec51debc49c81962719fe8c79484f",
+      "rawBytes": 3646,
+      "rawSHA256": "cd87f298300d1dd27e8b7b58acd7e9ee34340fdab3d78cb0199eb7f1b98d6409"
+    }
+  },
+  "documents": {
+    "protocol-proposal": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/protocol-proposal.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-protocol-proposal.json",
+      "bytes": 19716,
+      "sha256": "521f219a14d99d904f07df0731fec278b8986b255182a7c0038097dce5a79e7c"
+    },
+    "protocol-freeze": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/protocol-freeze.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-protocol-freeze.json",
+      "bytes": 19851,
+      "sha256": "22e37486124e2066fbf53f7e53a9bfd7ae119c154413fcad03a46f07a76eccc6"
+    },
+    "execution-freeze": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/execution-freeze.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-execution-freeze.json",
+      "bytes": 359,
+      "sha256": "0211ad4dcfe5c9fe9bc9d3648d14dba513a116262d187885d44ed4cb91e90d19"
+    },
+    "release": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/source-process-release.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-release.json",
+      "bytes": 2802,
+      "sha256": "d4056c4841185c81b02d1715fb3fa1611a87276ae2bf8fb9a12e5dbb18c01d9e"
+    },
+    "csr-first-audit": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/csr-first-audit.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-csr-first-audit.json",
+      "bytes": 4191373,
+      "sha256": "4b6d3b3ca7780fe188080fc44bd747a889b8310a004871489f5e62175296533f"
+    },
+    "csr-repeat-audit": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/csr-repeat-audit.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-csr-repeat-audit.json",
+      "bytes": 4191375,
+      "sha256": "9b3a174fc36a8066505055fcbfbc08b54c78b19ca9d8d89dbf432c83f5d207a1"
+    },
+    "ssr-first-audit": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/ssr-first-audit.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-ssr-first-audit.json",
+      "bytes": 443267,
+      "sha256": "4f5c65ad1a4a90f6c5594789c25e8d8ff08cc6af096b3415fdef15b21ea40f1c"
+    },
+    "ssr-repeat-audit": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/ssr-repeat-audit.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-ssr-repeat-audit.json",
+      "bytes": 443269,
+      "sha256": "70a50b9a67c96cdb74821ea679f9ee31b725aac91a682bb405b387cf4b0a9572"
+    },
+    "semantic-review": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/semantic-review.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-semantic-review.json",
+      "bytes": 4637882,
+      "sha256": "97d8ab7f01951e43cbe7e01444cc5571fdf0acaff25b6b85eb2bee8ff49fed0a"
+    },
+    "selected-variances": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/selected-facts-variances.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-selected-variances.json",
+      "bytes": 473,
+      "sha256": "2635e1a84716eb95fd69449f71548a381edabb51d4727f87b94e26c10eb88c16"
+    },
+    "producer-variances": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/producer-variances.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-producer-variances.json",
+      "bytes": 1774,
+      "sha256": "2b9da0a5d6f927d860ffc2ff0b2d7cf917334f51fcb23433b0a1dd9e56dbb55e"
+    },
+    "phase-stability": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/action-phase-stability.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-phase-stability.json",
+      "bytes": 1256,
+      "sha256": "26fa68abb86cb79a0467461c173841b2d53cbe8d457a0177d3e069f50e788921"
+    },
+    "all-point-stability": {
+      "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/all-point-stability.json",
+      "fixture": "ant-design-date-picker-date-week-prefix-all-point-stability.json",
+      "bytes": 1510,
+      "sha256": "cf73d4d52b3668d4ebdc5f25ded7e34aa232e19232d1b53a01d3a0fe7cb20255"
+    }
+  },
+  "sharedCases": {
+    "file": "date-picker-date-week-prefix-cases.mjs",
+    "originalFile": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/cases.mjs",
+    "bytes": 1281,
+    "sha256": "32f6b1a97ce95ceb375f0b535c6d3c2b60a41e5a9dcc9fcac966f677f32d66fb"
+  },
+  "sharedSchema": {
+    "file": "date-picker-date-week-prefix-cases.d.mts",
+    "bytes": 1247,
+    "sha256": "b95ab53a732b688f199eacc691bd6a1ac8e8f5e950e8fe0a747828638a86ab27",
+    "meaning": "Shared declaration derived from the two frozen authored Source cases; byte-equal to the accepted shared schema. No Native outcomes used."
+  },
+  "serialization": {
+    "completeOriginalParts": 132,
+    "completeOriginalManifests": 4,
+    "oneCompletePartAtATime": true,
+    "wholeCorpusCache": false,
+    "originalStoredGzipBytesCopiedExactly": true,
+    "originalRawAndGzipVerified": true,
+    "rawFieldsDropped": [],
+    "rawFieldsRewritten": [],
+    "normalizedFields": [],
+    "IDsRenumbered": false,
+    "maxStoredBytes": 295049,
+    "maxRawBytes": 13285984,
+    "storedWholeBlobBytes": 5031847
+  },
+  "observationScope": "Two public Single/Range date + showWeek owners only; 20actions/22states perCSR, 2 explicit Escape+1000 reads, all callbacks/raw dates/model aliases, full producer boundaries/terminal tails, date/week-prefix rows and complete TH/TD surfaces. Closed US SSR only, with actual nonempty model validation producers. GB is a CSR transition. Audit annotations do not replace originals; no Native parity claim.",
+  "clockBoundary": "CSR Date-only fixed2024-06-10; SSR actual VM wall clock. Raw event time, DOM IDs and immediate scheduling variance remain untouched.",
+  "repeatFacts": {
+    "selectedPoints": 72,
+    "selectedStablePoints": 71,
+    "differingPoints": 1,
+    "differingPoint": "range-date-week-prefix step6 afterCall input-end Jan3 vs Jan15",
+    "producerPairs": 32,
+    "wholeProducerByteEqual": 31,
+    "producerDifference": "same afterCall boundary1300 vs1397; complete rows/IDs/args remain unchanged",
+    "settledActionsStable": 20,
+    "rawNormalization": false
+  }
+}

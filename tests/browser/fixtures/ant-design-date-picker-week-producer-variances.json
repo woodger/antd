@@ -1,0 +1,65 @@
+{
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "normalization": [],
+  "IDsRenumbered": false,
+  "scope": "Every differing whole original producer JSON leaf and own-key order is recorded. First/repeat byte-equal parts are verified by their hashes; original indices, cursors, full arguments and IDs remain unchanged.",
+  "paired": 152,
+  "exactByteEqual": 150,
+  "different": [
+    {
+      "id": "single-week",
+      "phase": "step-38",
+      "first": {
+        "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-first.json.parts/single-week-step-38-producers.json",
+        "bytes": 6363486,
+        "sha256": "c6e994b00e12074a5c607144c050f029a5cfde366cc57cac1146a84ac3bd734c",
+        "gzipFile": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-first.json.parts/single-week-step-38-producers.json.gz",
+        "gzipBytes": 71303,
+        "gzipSHA256": "4006c04d7dcc105480841408b57ed99753de045ce578070cb4cd5494ad3f546f"
+      },
+      "repeat": {
+        "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-repeat.json.parts/single-week-step-38-producers.json",
+        "bytes": 6363486,
+        "sha256": "c36866bfdc8cf7afce5093a7b8dda91a71effe8a3906f9dc51d452a13f7f670c",
+        "gzipFile": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-repeat.json.parts/single-week-step-38-producers.json.gz",
+        "gzipBytes": 71305,
+        "gzipSHA256": "0f2342f53fc339e245b7b5475b4377c956a9050f35e155422168e61a6d9d8312"
+      },
+      "differences": [
+        {
+          "path": "/boundaries/afterCall",
+          "first": 1395,
+          "repeat": 1343
+        }
+      ]
+    },
+    {
+      "id": "range-week",
+      "phase": "step-53",
+      "first": {
+        "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-first.json.parts/range-week-step-53-producers.json",
+        "bytes": 6723959,
+        "sha256": "643903590062ce8dd45c83c78b15d92ad69e696b7b85863f19bf1c4698aade56",
+        "gzipFile": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-first.json.parts/range-week-step-53-producers.json.gz",
+        "gzipBytes": 160467,
+        "gzipSHA256": "eae6e45c364126b703cf355d419e3948312eed00865a84c308014f8fd899c54b"
+      },
+      "repeat": {
+        "file": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-repeat.json.parts/range-week-step-53-producers.json",
+        "bytes": 6723959,
+        "sha256": "e7159d4f34666a7099cd8ac2bf63f6bd222d01c55169d398b7ea3db52745a658",
+        "gzipFile": ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-repeat.json.parts/range-week-step-53-producers.json.gz",
+        "gzipBytes": 160469,
+        "gzipSHA256": "5d3d2726c5701127a9a9f88a7054282a708d9da2e633fa4e88020e464aee7cfd"
+      },
+      "differences": [
+        {
+          "path": "/boundaries/afterCall",
+          "first": 880,
+          "repeat": 783
+        }
+      ]
+    }
+  ]
+}

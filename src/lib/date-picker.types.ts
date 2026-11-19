@@ -9,9 +9,9 @@ export type DatePickerLocale = {
   lang: Partial<PickerLocale>;
   timePickerLocale?: { placeholder?: string; rangePlaceholder?: [string, string]; };
 };
-export type DatePickerMode = 'date' | 'month' | 'year' | 'decade' | 'quarter';
+export type DatePickerMode = 'date' | 'week' | 'month' | 'year' | 'decade' | 'quarter';
 /** Терминальный выбор; decade остаётся только режимом навигации панели. */
-export type DatePickerPicker = 'date' | 'month' | 'year' | 'quarter';
+export type DatePickerPicker = 'date' | 'week' | 'month' | 'year' | 'quarter';
 export type DatePickerFormat = string | ((value: Dayjs) => string);
 /** Быстрый выбор одной даты: готовое или лениво вычисляемое значение. */
 export interface DatePickerPreset {
@@ -62,7 +62,7 @@ export interface DatePickerProps extends Omit<
   HTMLInputAttributes,
   'value' | 'defaultValue' | 'size' | 'type' | 'children' | 'onchange' | 'oninput' | 'onselect'
 > {
-  /** Выбор даты, месяца, года или квартала. @defaultValue 'date' */
+  /** Выбор даты, недели, месяца, года или квартала. @defaultValue 'date' */
   picker?: DatePickerPicker;
   /** Управляемый Dayjs или null; компонент не вводит прикладную UTC-сериализацию. */
   value?: Dayjs | null;
@@ -70,8 +70,10 @@ export interface DatePickerProps extends Omit<
   defaultValue?: Dayjs;
   /** Локальный picker owner перекрывает ConfigProvider.prefixCls для поля и panel. */
   prefixCls?: string;
-  /** Колонки времени для picker=date; month/year/quarter игнорируют настройку. @defaultValue false */
+  /** Колонки времени для picker=date; week/month/year/quarter игнорируют настройку. @defaultValue false */
   showTime?: boolean | DatePickerTimeConfig;
+  /** Номера недель в date/week панели; по умолчанию включены только для picker=week. */
+  showWeek?: boolean;
   /** Первый формат используется для вывода; дополнительные строки допускаются при разборе ввода. */
   format?: DatePickerFormat | DatePickerFormat[];
   /** Начальная дата панели; применяется заново при каждом открытии popup. */

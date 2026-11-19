@@ -49,6 +49,15 @@ for (const kind of ['single', 'range'] as const) {
     await input.press('Control+A');
     await page.keyboard.type('not-a-quarter');
     await expect(input).toHaveAttribute('aria-invalid', 'true');
+    if (kind === 'single') {
+      await input.press('Enter');
+      await expect(popup).toHaveCount(1);
+      await expect(input).toHaveValue('not-a-quarter');
+      await expect(input).toHaveAttribute('aria-invalid', 'true');
+      const malformed = await read();
+      expect(malformed.model).toEqual(initial.model);
+      expect(malformed.changes).toEqual([]);
+    }
     await input.press('Escape');
     await expect(input).toHaveValue('2024-Q1');
     await expect(input).not.toHaveAttribute('aria-invalid', 'true');

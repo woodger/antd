@@ -1,0 +1,20 @@
+{
+  "scope": "Exact comparison of every selected csr audit.rows annotation, including original Date, DOM and alias IDs. Whole original UI/producer bytes remain separate; no timing-only or whole-DOM equality claim.",
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "normalization": [],
+  "IDsRenumbered": false,
+  "varianceCount": 2,
+  "variances": [
+    {
+      "path": "/0/producers/chunks/42/boundaries/afterCall",
+      "first": 1395,
+      "repeat": 1343
+    },
+    {
+      "path": "/1/producers/chunks/61/boundaries/afterCall",
+      "first": 880,
+      "repeat": 783
+    }
+  ]
+}

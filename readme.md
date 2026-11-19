@@ -5029,7 +5029,7 @@ Semantic root styles и plain style сохраняют приоритет. Custo
 
 ## DatePicker
 
-DatePicker переносит выбор даты, datetime, месяца, квартала и года из Ant Design 6.6.8 и rc-picker 1.12.2.
+DatePicker переносит выбор даты, datetime, недели, месяца, квартала и года из Ant Design 6.6.8 и rc-picker 1.12.2.
 Public value — Dayjs или null при очистке; undefined включает внутреннее состояние
 с defaultValue. OnChange(value, dateString) получает объект даты и отображаемую
 строку. Это не контракт ISO/timestamp. Day.js 1.11.23 установлен в стенде; пакет
@@ -5052,7 +5052,7 @@ Public value — Dayjs или null при очистке; undefined включа
 Value/open/pickerValue — controlled props с callbacks: владелец может отклонить
 изменение; component сам не переписывает переданный value. Без value/open
 используются defaultValue/defaultOpen и внутреннее состояние. DefaultPickerValue
-задаёт исходную дату панели при каждом открытии. `picker` выбирает date, month, quarter или year;
+задаёт исходную дату панели при каждом открытии. `picker` выбирает date, week, month, quarter или year;
 decade служит экраном навигации. NativeElement с bind указывает на root div; bind:this даёт методы
 focus({preventScroll,cursor:'start'|'end'|'all'}) и blur().
 
@@ -5079,6 +5079,7 @@ onOk вызывается до onChange. Выбор периода сохран�
 </script>
 <DatePicker picker="month" />
 <DatePicker picker="quarter" />
+<DatePicker picker="week" />
 <RangePicker picker="year" />
 ```
 
@@ -5098,6 +5099,27 @@ DisabledDate получает фактическую дату ячейки с ty
 полные timestamps; заблокированная граница допускает обратные скрытые даты внутри
 одного квартала. Нативные кнопки ячеек поддерживают Tab и стрелки.
 
+`picker="week"` использует исходный формат gggg-wo и выделяет недельные строки.
+Range показывает соседние месяцы. Начало и номер недели определяет locale панели,
+включая границу года: 31 декабря 2020 даёт 2021-1st для en_US и 2020-53rd для en_GB.
+Для en_GB потребитель загружает `dayjs/locale/en-gb.js`; глобальный Dayjs locale
+менять не требуется. Ввод ordinal-недели сохраняет исходный алгоритм адаптера:
+подбирается 1 января плюс целое число недель, с weekday этого 1 января.
+Клик по дню сохраняет его weekday; номер недели выбирает фактическое начало строки.
+`showWeek` по умолчанию включает номера для week и выключает для date; явный false
+убирает колонку номеров. У обычного date номера проверяются с type=week, а дни —
+с type=date. Prefix и дни используют фактические кандидаты без проверки всей недели
+одним агрегатом. Min/max допускают частичную граничную неделю; сортировка сохраняет
+полные timestamps, а заблокированная граница допускает обратные даты внутри одной
+locale-недели. ShowTime игнорируется, needConfirm по умолчанию false.
+
+При отображении поля date/week/quarter проверка disabledDate получает исходный
+Dayjs модели или календаря с его скрытым временем и ссылкой. После реального ввода
+проверяется сохранённый кандидат, а не повторно разобранная строка. В этих режимах Range передаёт
+при проверке поля только type; при отправке полного диапазона начало проверяется
+без from, а конец — с фактическим началом. Panel сохраняет собственный from.
+Массив mode в onPickerValueChange режима date сохраняет ссылку до смены режима.
+
 ShowTime=true или объект добавляет time columns. Поддержаны format, видимость
 units, шаги, use12Hours, hideDisabledOptions и defaultOpenValue. Ограничения
 времени задаются через disabledTime, а не через поля showTime. NeedConfirm по умолчанию true для datetime и false для date. Выбор
@@ -5115,7 +5137,8 @@ onOk. Escape/внешний клик отменяют неподтверждён
 Выбор ячейки календаря или пункта времени сначала вызывает `onCalendarChange`, затем сообщает
 изменившуюся дату панели через `onPickerValueChange` с `source: 'panel'`.
 Сравнение учитывает год, месяц и день, а для datetime также все разряды времени.
-Для picker month сравниваются год/месяц, для quarter — год/квартал, для year — год;
+Для picker week сравниваются год начала locale-недели и её номер,
+для month — год/месяц, для quarter — год/квартал, для year — год;
 calendar/change сохраняют полное значение.
 Повторное открытие сначала сообщает об открытии, затем о фактическом сбросе
 панели; отклонённое controlled-открытие её не сбрасывает. Escape в поле DatePicker

@@ -6171,7 +6171,7 @@
       "name": "DatePicker",
       "category": "data-entry",
       "scope": "target",
-      "scopeReason": "DatePicker и RangePicker date/showTime/month/year/quarter с Dayjs по исходной машине rc-picker; остальные picker/config API отмечены отдельно.",
+      "scopeReason": "DatePicker и RangePicker date/showTime/week/month/year/quarter с Dayjs по исходной машине rc-picker; остальные picker/config API отмечены отдельно.",
       "upstreamPath": "components/date-picker",
       "reviewedRevision": "984592267de88fbf9cdaecc96a56629e721c709d",
       "exports": [
@@ -6503,12 +6503,49 @@
           "note": "Ant Design6.6.8: четыре quarter cells от January base с сохранением/clamp скрытого дня; locale field/cellQuarterFormat и placeholders, default YYYY-[Q]Q, showTime ignored и needConfirm default false. Range terminal показывает соседние годы, year→quarter descent, manual year+floor(month/3) comparison без нового Dayjs plugin. Actual candidate disabledDate без endpoint probes; partial-quarter min/max, full timestamp sorting и locked same-quarter reverse. Второй Range panel сохраняет исходный picker-value backoffset: Source scenario34 выбирает Oct31 2025, а END picker-value сообщает отдельный Oct31 2024. Render validation использует actual model/calendar ref; real typed candidate хранится отдельно, включая invalid text с прежней видимой строкой. Quarter field validation передаёт type-only info; panel/submit сохраняют свои from shapes/refs. Reactive quarter→date и native Tab/ArrowRight проверяются отдельно. Независимые Source first/repeat по2 owners/90 actions/92 points/13 Escape+1000/2unmount+late и8 total closedSSR packets:456 original parts/4 manifests в323 целых gzip blobs (21.3MB, max281KB), без переписи аргументов/IDs. Actual Native AFTER:428 full UI/model/callback/Dayjs/mode-sharing comparisons против обоих Source runs и все464 actual producer argument/return/within-call-alias signatures имеют Source witness в каждом run. Receiver/Singlecalendar-info/HTMLfocus/ref/retained-popup boundaries прежние; afterCall variances и все raw graphs сохранены. Pure producer multiplicity не сравнивается; private browser resource counters не измерялись. Production public-dist consumer прошёл2 сценария/90 действий,2 closedSSR renders, strict hydration с прежними DOM nodes и real unmount/+1000; client/SSR graphs без projectsrc/tests/Sourcefacts/React/HMR. Полный API семейства не заявляется."
         },
         {
+          "id": "week-picker",
+          "title": "Публичный picker week и showWeek для Single и Range",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/date-picker.types.ts",
+            "src/lib/DatePickerCalendar.svelte",
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "src/lib/date-picker.engine.test.ts",
+            "src/lib/range-picker.engine.test.ts",
+            "tests/browser/fixtures/DatePickerWeekCase.svelte",
+            "tests/browser/fixtures/date-picker-week.types.ts",
+            "tests/browser/date-picker-week.spec.ts",
+            "tests/browser/date-picker-week-assertions.ts",
+            "tests/browser/date-picker-week-driver.ts",
+            "tests/browser/date-picker-week-validation.spec.ts",
+            "tests/browser/date-picker-week-keyboard.spec.ts",
+            "tests/browser/date-picker-period-mode.spec.ts",
+            "tests/browser/date-picker-week-reference.mjs",
+            "tests/browser/fixtures/ant-design-date-picker-week-source-manifest.json",
+            "tests/browser/fixtures/ant-design-date-picker-week-semantic-review.json",
+            "tests/package/date-picker-week-source.test.ts",
+            "tests/package/date-picker-week.ssr.test.ts",
+            "readme.md",
+            "tests/browser/fixtures/DatePickerDateWeekPrefixCase.svelte",
+            "tests/browser/date-picker-date-week-prefix.spec.ts",
+            "tests/browser/date-picker-date-week-prefix-assertions.ts",
+            "tests/browser/date-picker-date-week-prefix-driver.ts",
+            "tests/browser/date-picker-date-week-prefix-reference.mjs",
+            "tests/browser/fixtures/ant-design-date-picker-date-week-prefix-source-manifest.json",
+            "tests/package/date-picker-date-week-prefix-source.test.ts",
+            "tests/package/date-picker-date-week-prefix.ssr.test.ts"
+          ],
+          "note": "Ant Design6.6.8: locale-недели с исходным gggg-wo, US/GB week-year boundary, ordinal parser от January1 без нормализации weekday. Week selection/range/hover располагаются на строках; showWeek по умолчанию включает номера для week, явный false убирает колонку, а CSS show-week modifier появляется только при явном true. Номер выбирает фактическое начало строки, использует тот же Date ref, что первый день, проверяется с type=week и обходит cellRender; date-дни сохраняют type=date. Actual candidate validation без endpoint probes, partial-week min/max, full timestamp sorting и locked same-week reverse. Range показывает соседние месяцы; year→month→week descent и second-panel picker-value backoffset сохраняют Source payloads. ShowTime ignored, needConfirm default false. Typed candidate хранится отдельно от model ref; malformed Enter сохраняет открытый invalid input. Native Tab/стрелки сохраняют семидневный шаг и фокус при смене месяца; reactive week→date проверяется отдельно. Независимые Source first/repeat по2 owners/125 actions/127 points/17 Escape+1000/2unmount+late, по8 closedSSR packets US/GB:620 original parts/4 manifests в435 целых gzip blobs (43.5MB, max375KB). Native FIRST:584 public-state comparisons против обоих Source и все2579 actual producer argument/return/raw-Date/from/public-model-alias signatures имеют witness в каждом run в наблюдаемых model-transition windows. Pure producer count/order/timing не объявляются равными. Полные afterCall raw graphs сохранены отдельно от settled equality. Receiver/Singlecalendar-info/HTMLfocus/ref/retained-popup boundaries прежние; private browser resource counters не измерялись. Обычный picker=date с showWeek сверяется отдельно:2 owners/20 actions/22 settled points/2 Escape+1000 и8 total US closedSSR packets;132 original parts/4 manifests в97 целых gzip (5.0MB). Все104 public-phase comparisons и3840 actual producer signatures имеют BOTH Source witnesses, включая строгий initial-only bucket и ссылки на даты из callback/model graphs. Date field validation сохраняет full model Dayjs/ref вместо повторного разбора строки; поле и submit-start используют type-only info, submit-end сохраняет actual from:start, panel from не меняется. Date mode tuple сохраняет identity. Source Today A с disabled:null и aria-disabled остаётся raw; существующий Native Today BUTTON проверяет реальную disabled-семантику, role и accessible name. AfterCall variance Range step6 сохранена отдельно. Production public-dist consumers:6 tests/145 authored actions,6 actual closedSSR profiles, strict hydrate(recover:false) с сохранением parsed DOM и real unmount/+1000. Все actual SSR validation args/ref имеют closed Source witnesses; pure multiplicity не сравнивается. Client/SSR graphs исключают projectsrc/tests/React/HMR/Sourcefacts; external Dayjs/Svelte runtime и compiler entries закреплены хешами. Полный API семейства не заявляется."
+        },
+        {
           "id": "extended-api",
-          "title": "Другие picker modes, multiple, mask и semantic API",
+          "title": "Multiple, mask, generatePicker и полный semantic API",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет публичных week picker, multiple, generatePicker factory, mask format и полного набора semantic slots/events. Month/year/quarter и RangePicker presets/previewValue перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно; остальные события семейства ещё не покрыты полностью. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
+          "note": "Нет multiple, generatePicker factory, mask format и полного набора semantic slots/events. Week/month/year/quarter, showWeek и RangePicker presets/previewValue перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно; остальные события семейства ещё не покрыты полностью. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
         },
         {
           "id": "global-parity",

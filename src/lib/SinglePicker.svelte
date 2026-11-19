@@ -55,6 +55,7 @@
     defaultValue,
     showTime: providedShowTime = false,
     picker = 'date',
+    showWeek,
     format,
     pickerValue,
     defaultPickerValue,
@@ -187,7 +188,7 @@
   let invalid = $derived(
     time
       ? !!draft && !valid(draft) || invalidTimeInput
-      : text !== '' && !valid(picker === 'quarter'
+      : text !== '' && !valid(picker === 'date' || picker === 'quarter' || picker === 'week'
         ? dirty && draftSource === 'input' ? quarterInputValue : draft
         : parsePicker(text, actualLocale.locale, formats)) && !readOnly
   );
@@ -233,7 +234,8 @@
     ? attributes.placeholder ?? locale?.timePickerLocale?.placeholder
       ?? config.locale.datePicker?.timePickerLocale?.placeholder
       ?? datePickerEnUS.timePickerLocale.placeholder
-    : attributes.placeholder ?? (picker === 'quarter' ? actualLocale.quarterPlaceholder
+    : attributes.placeholder ?? (picker === 'week' ? actualLocale.weekPlaceholder
+      : picker === 'quarter' ? actualLocale.quarterPlaceholder
       : picker === 'month' ? actualLocale.monthPlaceholder
       : picker === 'year' ? actualLocale.yearPlaceholder : actualLocale.placeholder));
   let displayText = $derived(hoverValue
@@ -433,7 +435,7 @@
       && !pickerTimeDisabled(next, { showTime: clock, disabledTime }));
     return Boolean(
       next?.isValid()
-      && !pickerDateDisabled(next, { minDate, maxDate, disabledDate }, picker)
+      && !pickerDateDisabled(next, { minDate, maxDate, disabledDate }, picker, actualLocale.locale)
       && !pickerTimeDisabled(
         next,
         { showTime, disabledTime }
@@ -534,7 +536,7 @@
     event?: { previous: Dayjs; mode: DatePickerMode }) {
     const previous = event?.previous ?? panel;
     if (pickerValue === undefined) internalPanel = next;
-    if (!samePickerPanelValue(previous, next, Boolean(showTime), picker))
+    if (!samePickerPanelValue(previous, next, Boolean(showTime), picker, actualLocale.locale))
       onPickerValueChange?.(next, { source, mode: event?.mode ?? mode });
   }
   function navigate(next: Dayjs) {
@@ -572,7 +574,8 @@
       dirty = true;
       // onPanelValueSelect и triggerModeChange используют один React batch snapshot.
       setDatePanel(next, 'panel', event);
-      selectPanelMode(mode === 'decade' ? 'year' : picker === 'quarter' ? 'quarter' : 'month', next, event!);
+      selectPanelMode(mode === 'decade' ? 'year' : picker === 'quarter' ? 'quarter'
+        : picker === 'week' && mode === 'month' ? 'week' : 'month', next, event!);
       return;
     }
     if (picker === 'date' && mode !== 'date') {
@@ -589,7 +592,7 @@
         disabledTime
       )
       : next;
-    if (pickerDateDisabled(candidate, restrictions, picker)) return;
+    if (pickerDateDisabled(candidate, restrictions, picker, actualLocale.locale)) return;
     draftSource = 'panel';
     setDraft(candidate, 'date');
     text = formatPicker(candidate, actualLocale.locale, formats);
@@ -671,6 +674,8 @@
         if (parsePicker(text, actualLocale.locale, formats)) datePresetInteraction.reset();
         requestOpen(true);
       } else {
+        if ((picker === 'quarter' || picker === 'week') && dirty
+          && draftSource === 'input' && text !== '' && !quarterInputValue) return;
         const next = text
           ? picker !== 'date' || readOnly || draftSource === 'panel'
             ? draft
@@ -780,7 +785,7 @@
     // Preset меняет calendar до validation; popupClose управляет сессией отдельно.
     if (!timePickerSameValue(next, draft)) setDraft(next, 'date');
     if (!next.isValid() || disabledDate?.(next, { type: picker })
-      || pickerDateDisabled(next, { minDate, maxDate }, picker)
+      || pickerDateDisabled(next, { minDate, maxDate }, picker, actualLocale.locale)
       || pickerTimeDisabled(next, { showTime, disabledTime })) return false;
     const changed = !timePickerSameValue(next, mergedValue);
     if (value === undefined) internalValue = next;
@@ -831,7 +836,7 @@
         <div class={showTime && mode === 'date'
             ? `${prefix}-datetime-panel`
             : undefined}>
-          <DatePickerCalendar {picker} prefixCls={prefix} {panel} timeTemplate={clock.defaultOpenValue} selected={draft} hovered={hoverValue ?? draft} onHover={handleDateCellHover} preserveDisabledHover direction={config.direction} {mode} locale={panelLocale} {cellRender} {restrictions} {now} onSelect={selectDate} onNavigate={navigate} onModeChange={changeMode} />
+          <DatePickerCalendar {picker} {showWeek} prefixCls={prefix} {panel} timeTemplate={clock.defaultOpenValue} selected={draft} hovered={hoverValue ?? draft} onHover={handleDateCellHover} preserveDisabledHover direction={config.direction} {mode} locale={panelLocale} {cellRender} {restrictions} {now} onSelect={selectDate} onNavigate={navigate} onModeChange={changeMode} />
           {#if showTime && mode === 'date'}<DatePickerTimePanel bind:this={dateTimePanel} scrollMemory={dateTimeScroll} prefixCls={prefix} value={draft ?? datePanelValue} selectedValue={draft} config={clock} format={timeFormat} locale={panelLocale} {now} {cellRender} {disabledTime} onSelect={selectTime} onHover={handleDateHover} />{/if}
         </div></div>
         {#if renderExtraFooter || confirm || mode === 'date' && showNow}<div class={`${prefix}-footer`}>
@@ -1036,7 +1041,7 @@
           dirty = true;
           draftSource = 'input';
           const parsed = parsePicker(text, actualLocale.locale, formats);
-          if (!time && picker === 'quarter') quarterInputValue = parsed;
+          if (!time && (picker === 'date' || picker === 'quarter' || picker === 'week')) quarterInputValue = parsed;
           if (time) {
             invalidTimeInput = text !== '' && !parsed?.isValid();
             timeInteraction.trigger(0, 'input', parsed?.isValid() ? [parsed] : undefined);

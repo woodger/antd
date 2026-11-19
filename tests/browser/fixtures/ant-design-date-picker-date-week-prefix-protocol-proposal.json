@@ -1,0 +1,461 @@
+{
+  "status": "prepared-awaiting-Root-review-freeze-and-exclusive-lease-no-execution",
+  "subject": "public-Single-Range-picker-date-showWeek-prefix-addon-only",
+  "source": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "react": "18.3.1",
+    "rcPicker": "1.12.2",
+    "node": "v24.18.0",
+    "environment": {
+      "browserExecutable": "/usr/lib64/chromium-browser/chromium-browser",
+      "chromium": "157.0.8103.78",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "locale": "en-US",
+      "timezone": "UTC",
+      "fixedDate": "2024-06-10T08:23:45.678Z",
+      "clock": "CSR Date-only fixed time with real timers/RAF/events; SSR actual VM wall clock."
+    },
+    "scripts": [
+      ".upstream/artifacts/react-18.3.1/umd/react.production.min.js",
+      ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js",
+      "node_modules/dayjs/dayjs.min.js",
+      "node_modules/dayjs/locale/en-gb.js",
+      ".upstream/artifacts/antd-6.6.8/dist/antd.js"
+    ]
+  },
+  "samples": [
+    {
+      "id": "single-date-week-prefix",
+      "kind": "single",
+      "picker": "date",
+      "initialLocale": "us",
+      "initialShowWeek": true,
+      "initialStart": "2020-12-31T16:37:59.456",
+      "initialEnd": "2021-01-15T09:12:34.567",
+      "blocked": {
+        "year": 2021,
+        "month": 0,
+        "day": 2
+      },
+      "localeGB": {
+        "lang": {
+          "locale": "en_GB",
+          "placeholder": "Authored date",
+          "rangePlaceholder": [
+            "Authored start date",
+            "Authored end date"
+          ]
+        }
+      },
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "week-number-hover",
+          "contains": "2021-01-01",
+          "panel": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "hide-week-numbers"
+        },
+        {
+          "type": "cell-click",
+          "title": "2021-01-03",
+          "panel": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "show-week-numbers"
+        },
+        {
+          "type": "owner-control",
+          "value": "locale-gb"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "week-number-hover",
+          "contains": "2021-01-01",
+          "panel": 0
+        },
+        {
+          "type": "week-number-click",
+          "contains": "2021-01-01",
+          "panel": 0
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "range-date-week-prefix",
+      "kind": "range",
+      "picker": "date",
+      "initialLocale": "us",
+      "initialShowWeek": true,
+      "initialStart": "2020-12-31T16:37:59.456",
+      "initialEnd": "2021-01-15T09:12:34.567",
+      "blocked": {
+        "year": 2021,
+        "month": 0,
+        "day": 2
+      },
+      "localeGB": {
+        "lang": {
+          "locale": "en_GB",
+          "placeholder": "Authored date",
+          "rangePlaceholder": [
+            "Authored start date",
+            "Authored end date"
+          ]
+        }
+      },
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "week-number-hover",
+          "contains": "2021-01-01",
+          "panel": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "hide-week-numbers"
+        },
+        {
+          "type": "cell-click",
+          "title": "2021-01-03",
+          "panel": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "show-week-numbers"
+        },
+        {
+          "type": "owner-control",
+          "value": "locale-gb"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "week-number-hover",
+          "contains": "2021-01-01",
+          "panel": 0
+        },
+        {
+          "type": "week-number-click",
+          "contains": "2021-01-01",
+          "panel": 0
+        },
+        {
+          "type": "input-escape",
+          "index": 1
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "owners": 2,
+    "actions": 20,
+    "initialAndSettledPoints": 22,
+    "declaredEscapeReadsAfter1000": 2,
+    "wholeUnmounts": 2,
+    "initialClosedSSRSerializations": 4
+  },
+  "caller": {
+    "publicOnly": "Ordinary React DatePicker/DatePicker.RangePicker with picker date and explicit showWeek. Actual controlled value/open accept callback payload objects. Stable authored dates, panel/id/style/theme/locale references, callbacks and disabledDate; only ordinary React prop wrappers may be fresh.",
+    "validation": "Stable disabledDate blocks only Jan2 2021 and logs all actual arguments/receiver/date/from aliases/return. No min/max, aggregate week validity, manually invoked producers or pre-authored outcomes.",
+    "actions": "Exactly20 real public actions. Scoped panel0 prefix hover and physical prefix/day clicks. Real input clicks/keyboard Escape; actual owner button.click inside flushSync changes one declared prop. No forced events, DOM moves, private API, fake callbacks or refs.",
+    "locale": "Initial US prop omitted; stable partial GB lang.locale=en_GB and authored date placeholders on actual CSR transition. Pinned en-gb registration preserves global en. SSR baseline remains US only.",
+    "layout": "1440x1000/body margin0,minheight900; owner absoluteleft160/top80/width520; public ConfigProvider token.motion=false."
+  },
+  "observation": {
+    "raw": "Whole actual before/afterFocusPointer/afterCall/settled/declaredEscape+1000/beforeUnmount/cleanup/late records. Full scoped rows/TR/TH/TD/week-number distinction/hidden Week span/HTML/attrs/12CSS fields, geometry/input/caret/focus/refs/connectivity/events/resources. All raw/encoded callback graphs, actual arity/receiver/actionIndex/full temporal Date fields/locale/authored aliases remain unchanged.",
+    "producers": "All actual rows retain monotonic indices and contiguous cursor deltas. Every UI phase count is bound; observationEnd and terminal tail retain calls after reads. Pure counts and order are not Native parity assertions. No input Date or from shape is normalized.",
+    "settling": "Known four equal complete reads through actual doubleRAF+25ms, bounded70 polls. afterCall is separately measured and never treated as settled.",
+    "cleanup": "Every Escape gets actual+1000 read regardless of outcome. Real root.unmount plus frame drain, cleanup/+1000 late, whole terminal producer tail; removable document capture observer then disposed.",
+    "resources": "Actual browser errors/console/network/ResourceTiming; global CSR timers/RAF/observer counts unmeasured."
+  },
+  "SSR": {
+    "initialLocaleProps": [
+      "us"
+    ],
+    "owners": 2,
+    "methods": [
+      "renderToString",
+      "renderToStaticMarkup"
+    ],
+    "serializationsPerRun": 4,
+    "baseline": "Initial closed showWeek=true date only, original DOM-free VM renderers and actual VM wall clock. No GB SSR claim and no open popup simulation.",
+    "retained": "Whole actual HTML/hash, model/props/callbacks/producers/refs, measured forbidden DOM/timer/RAF/observer/microtask/port attempts and errors."
+  },
+  "storage": {
+    "rawPointPartsPerCSR": 30,
+    "producerPartsPerCSR": 32,
+    "totalPartsPerCSR": 62,
+    "serializersPerSSR": 4,
+    "originalPartsAcrossFourRuns": 132,
+    "writer": ".upstream/artifacts/date-picker-presets-source-v2/json-stream.mjs unchanged",
+    "preservation": "Whole independently hashed/sized original raw JSON and gzip. No fields dropped, identity renumbering, automatic amendment or retry. Failed runs remain immutable."
+  },
+  "outputMap": {
+    "csr-first": {
+      "manifest": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json",
+      "gzip": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.gz",
+      "parts": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json.parts/"
+    },
+    "csr-repeat": {
+      "manifest": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json",
+      "gzip": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.gz",
+      "parts": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json.parts/"
+    },
+    "ssr-first": {
+      "manifest": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json",
+      "gzip": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.gz",
+      "parts": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json.parts/"
+    },
+    "ssr-repeat": {
+      "manifest": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json",
+      "gzip": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.gz",
+      "parts": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json.parts/"
+    }
+  },
+  "inputPins": {
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/cases.mjs": {
+      "bytes": 1281,
+      "sha256": "32f6b1a97ce95ceb375f0b535c6d3c2b60a41e5a9dcc9fcac966f677f32d66fb"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/source-case.mjs": {
+      "bytes": 6629,
+      "sha256": "e8b1b0316619f19f94eb7a44708b8d066a40f1b52c114ea4e9c6ca3f6adf56f6"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/capture.mjs": {
+      "bytes": 15457,
+      "sha256": "6bc81772d708e8aba131fce841ab788947261c2918d30064736af40c9a510954"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/server.mjs": {
+      "bytes": 4171,
+      "sha256": "0a05cbfc6ccbaf24b6f3385a9fcdb8683279d318db0f1dcb0d05a163f748c32d"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/capture-ssr.mjs": {
+      "bytes": 2333,
+      "sha256": "2ab8541810ebea827ec198e40e4482fca05ab5b182d0116294ace185f5ceeccf"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/protocol.mjs": {
+      "bytes": 13232,
+      "sha256": "60097c6ca39ba5a41133a82321768dcc8273b35fdfcd75936805c069c8706610"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/plan.md": {
+      "bytes": 3755,
+      "sha256": "a3d1c82e5ee68a1d11484ff7969cb7d503d9b39fecffb6013fa5845a112099c1"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/reader.mjs": {
+      "bytes": 7710,
+      "sha256": "492336e8c35d3dafaa865c92b160d9d526d89aad6a5f448d7c9a99868ae22808"
+    },
+    ".upstream/artifacts/homepage-five-source-review-v1/shared.mjs": {
+      "bytes": 994,
+      "sha256": "27d35cd7ac9834dad22ddaa6bf91ea82b59e14bf7edc96519a64f3fde41b661e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/json-stream.mjs": {
+      "bytes": 2314,
+      "sha256": "b7e849ba0ff70e3673bcdc28b1a08747d79836ff061c5269f9b07fa26891ef93"
+    },
+    "tests/browser/select-surface-producers.mjs": {
+      "bytes": 4134,
+      "sha256": "40f7a24ab72043ea36871794a0bee004430c4201d795e592c9cece90a0cf3a9d"
+    },
+    ".upstream/artifacts/react-18.3.1/umd/react.production.min.js": {
+      "bytes": 10751,
+      "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js": {
+      "bytes": 131835,
+      "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+    },
+    "node_modules/dayjs/dayjs.min.js": {
+      "bytes": 7161,
+      "sha256": "0198dd0b1f760cded169c7e7ff7eaf56bc36c4c22c7c9b7c683e59437ed8700e"
+    },
+    "node_modules/dayjs/locale/en-gb.js": {
+      "bytes": 1215,
+      "sha256": "568b48aab0d3c9595c0da291a579af34d6e35e1b155bdd49a8ae3decc2af15da"
+    },
+    ".upstream/artifacts/antd-6.6.8/dist/antd.js": {
+      "bytes": 4217353,
+      "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom-server-legacy.browser.production.min.js": {
+      "bytes": 35128,
+      "sha256": "829b2f17da148d9bc5b635c329b67068e67e4bf7d6a5bb64e49e9e92483deee5"
+    },
+    "/usr/lib64/chromium-browser/chromium-browser": {
+      "bytes": 341191224,
+      "sha256": "93bccc93e19199a3998a758b841cb660dbd4d14922d525f6e1787fbf9a522a84"
+    },
+    "/usr/bin/node-24": {
+      "bytes": 27944,
+      "sha256": "491845f89f219ea0f463780989543b16a8b32be2d66888f074a100c0aa93ec8f"
+    },
+    "node_modules/@playwright/test/package.json": {
+      "bytes": 754,
+      "sha256": "6b1c8bb530059f2555530e8dcc1b3803565237e17598683b3766c0fa313b3fd6"
+    },
+    "node_modules/playwright-core/package.json": {
+      "bytes": 876,
+      "sha256": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6"
+    },
+    "node_modules/dayjs/package.json": {
+      "bytes": 2974,
+      "sha256": "680d74784223a074188617adc534fa5460171176d9904501241bbea087c3963b"
+    },
+    ".upstream/ant-design/components/date-picker/index.en-US.md": {
+      "bytes": 21771,
+      "sha256": "d7193bd2f1ebc35029b2553286217a4125381ae0b846635af5e6f7fe3bf9f9f3"
+    },
+    ".upstream/ant-design/components/date-picker/util.ts": {
+      "bytes": 2523,
+      "sha256": "c1c68b4f3026923dce6d8e315b9879260cddb659e5225ea3289f03153556707b"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/interface.ts": {
+      "bytes": 5733,
+      "sha256": "d9f3e34418aaca9d1b11ffd72fc900d3e09908e8208c3ddf15427537153cd207"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/generateSinglePicker.tsx": {
+      "bytes": 10552,
+      "sha256": "f5d941ecf84732d7df3b36bc566e6021c69b155cd9eded2898961d43870736a3"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/generateRangePicker.tsx": {
+      "bytes": 8447,
+      "sha256": "1f29528186aea3ad0502d423d435cbee36c1d07cb8c5e5c2e3d4bcd36e7ecea4"
+    },
+    ".upstream/ant-design/components/date-picker/locale/en_US.ts": {
+      "bytes": 944,
+      "sha256": "94925a99aca58d454e977b9bff6f56f147a0a6e0ab839eea19387fbe316e8473"
+    },
+    ".upstream/ant-design/components/date-picker/locale/en_GB.ts": {
+      "bytes": 944,
+      "sha256": "4eefdee4f7debfb03f27ac5af92f0766756122705b9e8e6217f05bafb39266c8"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--interface.d.ts": {
+      "bytes": 15103,
+      "sha256": "940f7c9f731eca31f42070c75bc9ac8b743f9838272eef1a95a531bdaefaa066"
+    }
+  },
+  "preservedWeekSource": {
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/cases.mjs": {
+      "bytes": 3556,
+      "sha256": "89ba82460962013d2e2b0c5b092fa04bd5c8c279b6d394e43a0ca7ec22f7ef57"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/source-case.mjs": {
+      "bytes": 8888,
+      "sha256": "fe082309cc9b9f7ab9fd9e76f874c7daabf225291d9af2c8c891074d34f8b4d3"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/reader.mjs": {
+      "bytes": 7710,
+      "sha256": "492336e8c35d3dafaa865c92b160d9d526d89aad6a5f448d7c9a99868ae22808"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/capture.mjs": {
+      "bytes": 16644,
+      "sha256": "f635b004f111ff3412c71b01b8cd6103f65f1393310281d798c71309a6aae47b"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/server.mjs": {
+      "bytes": 4079,
+      "sha256": "7e839ea1752c803a0bd574d35534149ca7644a20683b46e25966e1e1c1f22aff"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/capture-ssr.mjs": {
+      "bytes": 2290,
+      "sha256": "f5973c9155724752a93c85f335bd1aa329682c5e883726e64b905f13e8daf1bf"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/protocol.mjs": {
+      "bytes": 17332,
+      "sha256": "f19b1aa5b956768b91f84b8f17f8235b12550c550a2417dbc35963106e4dcc7a"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/plan.md": {
+      "bytes": 11129,
+      "sha256": "6d91e1563a9e953c06405ddea9251b0422ad72b2c96e0e8b5fdb42a3ef261956"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/protocol-proposal.json": {
+      "bytes": 33492,
+      "sha256": "d48ed6d044484a6621b787862c1feb93ba8318cdbe0b23ef25535db52c4cea8c"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/protocol-freeze.json": {
+      "bytes": 33610,
+      "sha256": "fa8b261d9bd6fdd152e7510dff2231e278356ebac2d6b3ef8c606be64ac5f200"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/execution-freeze.json": {
+      "bytes": 335,
+      "sha256": "0b3fec968f494c39054bb7556847b95ca507c55e9c866cdee67f337eb23175c5"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-first.json": {
+      "bytes": 202983,
+      "sha256": "a865c2a4446e90d215742a9a51d3e1c1f3852cb26e9bbf652030fdc442b5c128"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-repeat.json": {
+      "bytes": 203588,
+      "sha256": "8b875ce8710780626f79d42ede1dddf6eb98da374b5c63371b6e9e996c9c4f25"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/ssr-source-first.json": {
+      "bytes": 5930,
+      "sha256": "b13f3cab5a50dca291d5317344f9a3be6793a802fbbbcbc55c4257dadc58aa46"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/ssr-source-repeat.json": {
+      "bytes": 5947,
+      "sha256": "5e3c1ebfca633442e01bbd7c8ce17c626dd4dc399fc2fd6962e96f29d14965bf"
+    },
+    ".upstream/artifacts/date-picker-week-source-review-v1/release.json": {
+      "bytes": 5739,
+      "sha256": "6e0ff21763187caa77f8f3771f84dc74fe51d5994bf705edba57251dc4ccc572"
+    },
+    ".upstream/artifacts/date-picker-week-source-review-v1/semantic-review.json": {
+      "bytes": 25707245,
+      "sha256": "cba99753dd56b9385fc4e123248606df70853a52d0f3ebeed333fa9e8dfcbd13"
+    },
+    ".upstream/artifacts/date-picker-week-source-review-v1/all-point-stability.json": {
+      "bytes": 5439,
+      "sha256": "d28d7ba72c0cc84f212cb1a269fb300bb04081ec4acca6a9948d68dc0834c86c"
+    }
+  },
+  "validation": {
+    "matrixAndSyntax": "passed",
+    "SourceExecution": false,
+    "NativeDataRead": false,
+    "browserRuns": 0,
+    "SSRRuns": 0,
+    "builds": 0
+  },
+  "implementationPlan": ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/plan.md",
+  "lease": "Root reviews exact proposal SHA and grants an exclusive lease separately. Only Root-reviewed freeze SHA and that exact lease allow a coordinator to execute. Preparation grants no lease.",
+  "plannedCommands": [
+    "node .upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/protocol.mjs freeze <ROOT_REVIEWED_PROPOSAL_SHA> <ROOT_EXCLUSIVE_LEASE>",
+    "node .upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/capture.mjs first <ROOT_REVIEWED_FROZEN_SHA> <ROOT_EXCLUSIVE_LEASE>",
+    "node .upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/capture.mjs repeat <ROOT_REVIEWED_FROZEN_SHA> <ROOT_EXCLUSIVE_LEASE>",
+    "node .upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/capture-ssr.mjs first <ROOT_REVIEWED_FROZEN_SHA> <ROOT_EXCLUSIVE_LEASE>",
+    "node .upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/capture-ssr.mjs repeat <ROOT_REVIEWED_FROZEN_SHA> <ROOT_EXCLUSIVE_LEASE>"
+  ],
+  "exclusions": [
+    "week picker mode reimplementation",
+    "multiple",
+    "mask",
+    "custom editors",
+    "min/max matrix",
+    "GB SSR baseline",
+    "Native code/outcomes",
+    "whole DatePicker parity claim"
+  ]
+}

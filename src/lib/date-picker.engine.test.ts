@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import 'dayjs/locale/en-gb.js';
 import utc from 'dayjs/plugin/utc.js';
 import { describe, expect, it } from 'vitest';
 import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
@@ -9,6 +10,7 @@ import {
   offsetPickerPanel,
   samePickerPanel,
   samePickerQuarter,
+  samePickerWeek,
   pickerPanelDateDisabled,
   pickerFormats,
   parsePicker,
@@ -20,6 +22,78 @@ import {
 } from './date-picker.engine';
 dayjs.extend(utc);
 describe('DatePicker date adapter and input', () => {
+  it('formats locale weeks and preserves the Source Jan1 weekday when parsing ordinals', () => {
+    const value = dayjs('2020-12-31T16:37:59.456');
+    const formats = pickerFormats({ picker: 'week', showTime: true });
+
+    expect(formats).toEqual(['gggg-wo']);
+    expect(pickerFormats({ picker: 'week' }, { fieldWeekFormat: '' })).toEqual(['gggg-wo']);
+    expect(pickerFormats({ picker: 'week' }, { fieldWeekFormat: '[Week ]wo gggg' }))
+      .toEqual(['[Week ]wo gggg']);
+    expect(formatPicker(value, 'en_US', formats)).toBe('2021-1st');
+    expect(formatPicker(value, 'en_GB', formats)).toBe('2020-53rd');
+    expect(parsePicker('2021-2nd', 'en_US', formats)?.format('YYYY-MM-DD HH:mm:ss.SSS'))
+      .toBe('2021-01-08 00:00:00.000');
+    const gb = parsePicker('2020-53rd', 'en_GB', formats)!;
+    expect(gb.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2020-12-30 00:00:00.000');
+    expect(gb.day()).toBe(dayjs('2020-01-01').day());
+    expect(gb.locale()).toBe('en-gb');
+    expect(parsePicker('2021-1st', 'en_GB', formats)?.format('YYYY-MM-DD'))
+      .toBe('2021-01-08');
+    expect(parsePicker('2021-99th', 'en_GB', formats)).toBeNull();
+    expect(value.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2020-12-31 16:37:59.456');
+    expect(value.locale()).toBe('en');
+    expect(dayjs.locale()).toBe('en');
+  });
+  it('aligns six week rows with the requested locale without changing candidate own locale', () => {
+    const panel = dayjs('2020-12-31T16:37:59.456');
+    const us = calendarCells(pickerCalendarValue(panel), 'week', 'en_US');
+    const gb = calendarCells(pickerCalendarValue(panel), 'week', 'en_GB');
+
+    expect(us).toHaveLength(42);
+    expect(gb).toHaveLength(42);
+    expect(us[0].format('YYYY-MM-DD')).toBe('2020-11-29');
+    expect(gb[0].format('YYYY-MM-DD')).toBe('2020-11-30');
+    expect(gb[41].format('YYYY-MM-DD')).toBe('2021-01-10');
+    expect(gb.every(value => value.locale() === 'en')).toBe(true);
+    expect(gb.every(value => value.hour() === 0 && value.millisecond() === 0)).toBe(true);
+    expect(panel.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2020-12-31 16:37:59.456');
+  });
+  it('compares picker values by requested locale week and offsets range panels by months', () => {
+    const sunday = dayjs('2021-01-03T16:37:59.456');
+    const monday = dayjs('2020-12-28T08:23:45.678');
+
+    expect(samePickerWeek(sunday, monday, 'en_GB')).toBe(true);
+    expect(samePickerWeek(sunday, monday, 'en_US')).toBe(false);
+    expect(samePickerPanelValue(sunday, monday, true, 'week', 'en_GB')).toBe(true);
+    expect(samePickerPanelValue(sunday, monday, false, 'week', 'en_US')).toBe(false);
+    expect(samePickerPanel(sunday, monday, 'week')).toBe(false);
+    expect(offsetPickerPanel(dayjs('2020-12-31T16:37:59.456'), 'week', 1)
+      .format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2021-01-31 16:37:59.456');
+    expect(offsetPickerPanel(dayjs('2021-01-08'), 'week', -1).format('YYYY-MM-DD'))
+      .toBe('2020-12-08');
+    expect(sunday.locale()).toBe('en');
+  });
+  it('checks each actual week candidate once and permits partial boundary weeks', () => {
+    const minDate = dayjs('2020-12-30T18:30:20.500');
+    const maxDate = dayjs('2021-01-05T09:12:34.567');
+    const calls: Array<{ date: typeof minDate; type: string }> = [];
+    const disabledDate = (date: typeof minDate, info: { type: string }) => {
+      calls.push({ date, type: info.type });
+      return date.year() === 2021 && date.month() === 0 && date.date() === 1;
+    };
+    const prefix = dayjs('2020-12-28T00:00:00.000');
+    expect(pickerPanelDateDisabled(prefix, { minDate, maxDate, disabledDate }, 'week', 'en_GB'))
+      .toBe(false);
+    expect(calls).toHaveLength(1);
+    expect(calls[0]).toEqual({ date: prefix, type: 'week' });
+    expect(calls[0].date).toBe(prefix);
+    expect(pickerPanelDateDisabled(dayjs('2021-01-01'), { minDate, maxDate, disabledDate }, 'week', 'en_GB'))
+      .toBe(true);
+    expect(pickerDateDisabled(dayjs('2021-01-10'), { minDate, maxDate }, 'week', 'en_GB')).toBe(false);
+    expect(pickerDateDisabled(dayjs('2021-01-10'), { minDate, maxDate }, 'week', 'en_US')).toBe(true);
+    expect(pickerDateDisabled(dayjs('2021-01-11'), { minDate, maxDate }, 'week', 'en_GB')).toBe(true);
+  });
   it('formats and parses terminal quarters with existing Dayjs support and locale overrides', () => {
     const value = dayjs.utc('2024-05-20T16:37:59.456Z');
 

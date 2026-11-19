@@ -1,7 +1,7 @@
 import type { Dayjs } from 'dayjs';
 import type { RangePickerInputValue, RangePickerValue } from './range-picker.types';
 import type { DatePickerPicker } from './date-picker.types';
-import { samePickerQuarter } from './date-picker.engine';
+import { samePickerQuarter, samePickerWeek } from './date-picker.engine';
 export function rangePair(value: RangePickerInputValue | null | undefined): RangePickerValue {
   return [value?.[0] ?? null, value?.[1] ?? null];
 }
@@ -40,7 +40,8 @@ export function validRange(
   order: boolean,
   disabled: readonly boolean[],
   invalid: (date: Dayjs, index: number, from?: Dayjs) => boolean,
-  picker: DatePickerPicker = 'date'
+  picker: DatePickerPicker = 'date',
+  locale = 'en_US'
 ): boolean {
   const [start, end] = value;
   return Boolean(
@@ -51,7 +52,8 @@ export function validRange(
     && (!order
       || !start
       || !end
-      || (picker === 'quarter' ? samePickerQuarter(start, end) : start.isSame(
+      || (picker === 'week' ? samePickerWeek(start, end, locale)
+        : picker === 'quarter' ? samePickerQuarter(start, end) : start.isSame(
         end,
         picker === 'date' ? 'day' : picker
       ))

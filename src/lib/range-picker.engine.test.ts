@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import 'dayjs/locale/en-gb.js';
 import { describe, expect, it } from 'vitest';
 import {
   rangePair,
@@ -9,6 +10,27 @@ import {
   rangeFrom
 } from './range-picker.engine';
 describe('RangePicker source value semantics', () => {
+  it('validates locked same-week reverse dates with requested locale and preserves full timestamp order', () => {
+    const sunday = dayjs('2021-01-03T16:37:59.456');
+    const monday = dayjs('2020-12-28T08:23:45.678');
+    const pair: [typeof sunday, typeof monday] = [sunday, monday];
+    const locked = orderedRange(pair, true, [true, false]);
+
+    expect(locked[0]).toBe(sunday);
+    expect(locked[1]).toBe(monday);
+    expect(validRange(locked, [false, false], true, [true, false], () => false, 'week', 'en_GB'))
+      .toBe(true);
+    expect(validRange(locked, [false, false], true, [true, false], () => false, 'week', 'en_US'))
+      .toBe(false);
+    const ordered = orderedRange(pair, true, [false, false]);
+    expect(ordered[0]).toBe(monday);
+    expect(ordered[1]).toBe(sunday);
+    expect(orderedRange(pair, false, [false, false])).toEqual([sunday, monday]);
+    expect(sameRange(pair, [sunday, sunday])).toBe(false);
+    expect(sameRange(pair, [sunday.clone(), monday.clone()])).toBe(true);
+    expect(sunday.locale()).toBe('en');
+    expect(monday.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2020-12-28 08:23:45.678');
+  });
   it('validates locked reverse hidden dates by quarter without changing timestamp sorting or aliases', () => {
     const start = dayjs('2024-05-20T16:37:59.456');
     const end = dayjs('2024-04-10T00:00:00.000');
