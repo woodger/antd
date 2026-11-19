@@ -3,7 +3,7 @@ import utc from 'dayjs/plugin/utc.js';
 import { describe, expect, it } from 'vitest';
 import { datePickerEnUS } from './date-picker.locale';
 import {
-  sameTimeRange, timeRangeClock, timeRangeInvalid, validTimeRange
+  parseTimeRangeInput, sameTimeRange, timeRangeClock, timeRangeInvalid, validTimeRange
 } from './time-range-picker.engine';
 import { timeRangeSemantic } from './time-range-picker-semantic.engine';
 import type { RangePickerValue } from './range-picker.types';
@@ -13,6 +13,20 @@ const start = dayjs.utc('2024-09-15T10:23:44.567Z');
 const end = dayjs.utc('2024-09-15T17:45:56.789Z');
 
 describe('TimeRangePicker values and validation', () => {
+  it('applies time-only input to the saved UTC date and accepts explicit dates in other formats', () => {
+    const formats = ['YYYY-MM-DD HH:mm', '[Day]HH:mm'];
+    const current = start.locale('ru');
+
+    const time = parseTimeRangeInput('Day09:31', 'en_US', formats, current);
+    const date = parseTimeRangeInput('2024-10-19 09:31', 'en_US', formats, current);
+
+    expect(time?.toISOString()).toBe('2024-09-15T09:31:00.000Z');
+    expect(time?.isUTC()).toBe(true);
+    expect(time?.locale()).toBe('en');
+    expect(date?.format('YYYY-MM-DD HH:mm')).toBe('2024-10-19 09:31');
+    expect(parseTimeRangeInput('Day29:31', 'en_US', formats, start)).toBeNull();
+  });
+
   it('compares wall-clock calendar fields and milliseconds without timestamp offset conversion', () => {
     expect(sameTimeRange([start, end], [start.utcOffset(60, true), end.utcOffset(60, true)]))
       .toBe(true);

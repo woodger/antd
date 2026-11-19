@@ -177,6 +177,31 @@ test('TimeRangePicker Enter confirms each typed field without calling the footer
   await expect(events(page)).not.toContainText('ok:');
 });
 
+for (const format of ['short', 'mask']) {
+  test(
+    `TimeRangePicker manual input with ${format} format keeps the saved interval date`,
+    async ({ page }) => {
+      await page.clock.setSystemTime(new Date('2024-10-19T12:34:56.789Z'));
+      await control(page, 'Interval format').selectOption(format);
+
+      if (format === 'mask') {
+        await start(page).focus();
+        await start(page).press('ArrowRight');
+        await start(page).press('ArrowUp');
+      }
+      else {
+        await start(page).fill('10:24');
+      }
+      await start(page).press('Enter');
+      await end(page).press('Enter');
+
+      await expect(start(page)).toHaveValue('10:24');
+      await expect(end(page)).toHaveValue('17:45');
+      await expect(owner(page)).toHaveText('2024-09-15T10:24:00.000Z,2024-09-15T17:45:56.789Z');
+    }
+  );
+}
+
 test('TimeRangePicker order false preserves reversed field positions', async ({ page }) => {
   await control(page, 'Order interval').uncheck();
   await start(page).click();

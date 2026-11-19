@@ -4,13 +4,20 @@
   import {
     TimeRangePicker, ConfigProvider, Form, FormItem, createForm,
     type RangePickerValue, type TimePickerCellRenderInfo,
-    type TimeRangePickerFocusOptions
+    type TimeRangePickerFocusOptions, type TimeRangePickerProps
   } from 'antd-svelte';
 
   dayjs.extend(utc);
   const initial: RangePickerValue = [
     dayjs.utc('2024-09-15T10:23:44.567Z'), dayjs.utc('2024-09-15T17:45:56.789Z')
   ];
+  const intervalFormats = {
+    default: undefined,
+    short: 'HH:mm',
+    mask: { format: 'HH:mm', type: 'mask' },
+    array: ['HH:mm', 'H:m'],
+    callback: (value: Dayjs) => `At ${value.format('HH:mm:ss')}`
+  } satisfies Record<string, TimeRangePickerProps['format']>;
   let value = $state.raw<RangePickerValue | null>(initial);
   let defaults = $state.raw<RangePickerValue>(initial);
   let accept = $state(true);
@@ -39,7 +46,7 @@
   let showNow = $state(false);
   let mounted = $state(true);
   let instance = $state(0);
-  let format = $state('default');
+  let format = $state<keyof typeof intervalFormats>('default');
   let allowClear = $state(true);
   let icons = $state(false);
   let styled = $state(false);
@@ -155,6 +162,7 @@
     <label><input type="checkbox" bind:checked={defaultPanel} /> Default interval panel</label>
     <label>Interval format<select aria-label="Interval format" bind:value={format}>
       <option value="default">Default</option><option value="short">Short</option>
+      <option value="mask">Short mask</option>
       <option value="callback">Callback</option><option value="array">Input formats</option>
     </select></label>
     <label>Interval size<select aria-label="Interval size" bind:value={size}>
@@ -251,9 +259,7 @@
                 && info.from && hour === info.from.hour() ? [0, 15, 30] : [],
               disabledSeconds: () => date.second() === 59 && restricted ? [59] : []
             })}
-            format={format === 'short' ? 'HH:mm'
-              : format === 'array' ? ['HH:mm', 'H:m']
-              : format === 'callback' ? value => `At ${value.format('HH:mm:ss')}` : undefined}
+            format={intervalFormats[format]}
             size={size === 'inherit' ? undefined : size}
             variant={variant === 'inherit' ? undefined : variant}
             allowClear={allowClear ? { clearIcon: icons ? clear : undefined } : false}

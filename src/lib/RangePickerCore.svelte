@@ -62,6 +62,7 @@
     datePickerClock, timePickerFormats, timePickerLang, timePickerSameValue
   } from './time-picker.engine';
   import {
+    parseTimeRangeInput,
     sameTimeRange,
     samePickerTime,
     timeRangeClock,
@@ -991,8 +992,12 @@
     const copy: [string, string] = [...texts];
     copy[index] = text;
     texts = copy;
-    const parsed = text ? parsePicker(text, lang.locale, formats) : null;
     const current = calendar[index];
+    let parsed: Dayjs | null = null;
+    if (text) {
+      parsed = time ? parseTimeRangeInput(text, lang.locale, formats, current)
+        : parsePicker(text, lang.locale, formats);
+    }
     const next = !time && picker === 'date' && parsed && current
       && timePickerSameValue(parsed, current) ? current : parsed;
     if (!time && (picker === 'date' || picker === 'quarter' || picker === 'week')) {

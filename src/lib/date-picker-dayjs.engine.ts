@@ -46,6 +46,33 @@ const localeName = (locale: string) => localeMap[locale] || locale.split('_')[0]
 const own = (value: Dayjs) => !dayjs.isDayjs(value) || value instanceof dayjs
   ? value
   : dayjs(value.valueOf());
+
+// Строго разбирает текст и возвращает подошедший формат. Ветка недели завершает поиск.
+export function parseDayjsInput(
+  locale: string,
+  text: string,
+  formats: readonly string[]
+): { value: Dayjs; format: string; } | null {
+  for (const format of formats) {
+    if (format.includes('wo') || format.includes('Wo')) {
+      const [year, week] = text.split('-');
+      const first = dayjs(year, 'YYYY').startOf('year').locale(localeName(locale));
+      for (let n = 0; n <= 52; n++) {
+        const date = first.add(n, 'week');
+        if (date.format('Wo') === week) {
+          return { value: date, format };
+        }
+      }
+      return null;
+    }
+    const date = dayjs(text, format, true).locale(localeName(locale));
+    if (date.isValid()) {
+      return { value: date, format };
+    }
+  }
+  return null;
+}
+
 export const dayjsGenerateConfig: GenerateConfig<Dayjs> = {
   // Учитывает текущую зону, если у установленного Dayjs доступен plugin timezone.
   getNow: () => {
@@ -112,27 +139,7 @@ export const dayjsGenerateConfig: GenerateConfig<Dayjs> = {
     getShortMonths: locale => dayjs().locale(localeName(locale)).localeData().monthsShort(),
     // Форматирует значение в указанной locale с поддержкой обозначения номера недели.
     format: (locale, value, format) => own(value).locale(localeName(locale)).format(format),
-    // Проверяет форматы строго. Ветка номера недели завершает поиск независимо от оставшихся
-    // форматов.
-    parse: (locale, text, formats) => {
-      for (const format of formats) {
-        if (format.includes('wo') || format.includes('Wo')) {
-          const [year, week] = text.split('-');
-          const first = dayjs(year, 'YYYY').startOf('year').locale(localeName(locale));
-          for (let n = 0; n <= 52; n++) {
-            const date = first.add(n, 'week');
-            if (date.format('Wo') === week) {
-              return date;
-            }
-          }
-          return null;
-        }
-        const date = dayjs(text, format, true).locale(localeName(locale));
-        if (date.isValid()) {
-          return date;
-        }
-      }
-      return null;
-    }
+    // Возвращает только значение для общего контракта GenerateConfig.
+    parse: (locale, text, formats) => parseDayjsInput(locale, text, formats)?.value ?? null
   }
 };

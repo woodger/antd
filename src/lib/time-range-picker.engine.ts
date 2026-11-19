@@ -1,13 +1,37 @@
-// Разрешает настройки и проверки времени для двух концов диапазона. Контекст from передаётся для
-// зависимых ограничений конца.
+// Разрешает ввод, настройки и проверки времени для двух концов диапазона. Контекст from
+// передаётся для зависимых ограничений конца.
 // Range time paths rc-picker 1.12.2; MIT, vendor/LICENSE.rc-picker.
 import type { Dayjs } from 'dayjs';
 import type { RangePickerValue } from './range-picker.types';
 import type { TimeRangePickerProps } from './time-range-picker.types';
-import type { DatePickerTimeConfig } from './date-picker.types';
+import type { DatePickerFormat, DatePickerTimeConfig } from './date-picker.types';
 import type { PickerLocale } from './picker-locale.types';
 import { timePickerClock, timePickerSameValue, timePickerDateDisabled } from './time-picker.engine';
-import { pickerTimeDisabled } from './date-picker.engine';
+import { pickerCalendarValue, pickerTimeDisabled } from './date-picker.engine';
+import { parseDayjsInput } from './date-picker-dayjs.engine';
+
+// Ввод только времени наследует дату и режим Dayjs редактируемой границы.
+export function parseTimeRangeInput(
+  text: string,
+  locale: string,
+  formats: readonly DatePickerFormat[],
+  currentBoundary: Dayjs | null
+): Dayjs | null {
+  const stringFormats = formats.filter((format): format is string => typeof format === 'string');
+  const parsed = parseDayjsInput(locale, text, stringFormats);
+  if (!parsed) {
+    return null;
+  }
+
+  // Явные календарные поля, смещение и timestamp сохраняют результат разбора.
+  const remainingFormat = parsed.format.replace(/\[[^\]]*\]|LTS?|[HhmsSAa]/g, '');
+  if (!currentBoundary?.isValid() || /[A-Za-z]/.test(remainingFormat)) {
+    return parsed.value;
+  }
+
+  const value = pickerCalendarValue(currentBoundary, parsed.value);
+  return value.locale(parsed.value.locale());
+}
 
 // Сравнивает соответствующие даты по календарным полям времени с точностью до миллисекунд.
 export function sameTimeRange(a: RangePickerValue, b: RangePickerValue) {
