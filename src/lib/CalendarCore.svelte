@@ -1,4 +1,6 @@
 <script lang="ts" generics="DateType">
+  // Связывает режимы Calendar с календарным адаптером и состоянием выбора.
+  // Сетка сохраняет порядок ячеек, которым пользуются клавиатура и tabIndex.
   import { untrack, type Snippet } from 'svelte';
   import CalendarHeader from './CalendarHeader.svelte';
   import { useConfig } from './config-context';
@@ -111,11 +113,27 @@
     return generateConfig.getNow();
   });
   let rows = $derived.by(() => {
-    let position = 0;
+    let cellIndex = 0;
+    const dates = calendarRows(
+      pickerValue,
+      actualMode === 'year' ? 'year' : 'month',
+      filledLocale.locale,
+      generateConfig
+    );
+    return dates.map(buildRow);
 
-    return calendarRows(pickerValue, actualMode === 'year' ? 'year' : 'month',
-      filledLocale.locale, generateConfig).map(row => {
-      const cells = row.map((date, column) => ({
+    // Индекс охватывает всю сетку, включая дополнительную ячейку номера недели.
+    function buildRow(row: DateType[]) {
+      const rowCells = row.map(createDateCell);
+      if (showWeek && panelType === 'date') {
+        rowCells.unshift(createWeekCell(row[0]));
+      }
+
+      return rowCells.map(cell => ({ ...cell, index: cellIndex++ }));
+    }
+
+    function createDateCell(date: DateType, column: number) {
+      return {
         date,
         key: String(column),
         week: false,
@@ -129,35 +147,44 @@
         isToday: panelType === 'date'
           ? calendarSameDate(date, today, generateConfig)
           : calendarSameMonth(date, today, generateConfig),
-        title: generateConfig.locale.format(filledLocale.locale, date,
-          panelType === 'date' ? filledLocale.fieldDateFormat! : filledLocale.fieldMonthFormat!)
-      }));
-
-      if (showWeek && panelType === 'date') {
-        const date = row[0];
-        cells.unshift({
+        title: generateConfig.locale.format(
+          filledLocale.locale,
           date,
-          key: 'week',
-          week: true,
-          disabled: calendarDateDisabled(date, validRange, disabledDate, generateConfig),
-          selected: false,
-          inView: false,
-          isToday: false,
-          title: `${filledLocale.week} ${generateConfig.locale.getWeek(filledLocale.locale, date)}`
-        });
-      }
+          // Правило 2: calendarFilledLocale всегда задаёт оба формата и сохраняет тип PickerLocale.
+          panelType === 'date' ? filledLocale.fieldDateFormat! : filledLocale.fieldMonthFormat!
+        )
+      };
+    }
 
-      return cells.map(cell => ({ ...cell, index: position++ }));
-    });
+    // Номер недели использует дату первого столбца и не считается выбранной ячейкой.
+    function createWeekCell(date: DateType) {
+      return {
+        date,
+        key: 'week',
+        week: true,
+        disabled: calendarDateDisabled(date, validRange, disabledDate, generateConfig),
+        selected: false,
+        inView: false,
+        isToday: false,
+        title: `${filledLocale.week} ${generateConfig.locale.getWeek(filledLocale.locale, date)}`
+      };
+    }
   });
   let cells = $derived(rows.flat());
-  let tabStop = $derived(
-    focusIndex !== undefined && cells[focusIndex] && !cells[focusIndex].disabled
-      ? focusIndex
-      : cells.find(cell => cell.selected && cell.inView && !cell.disabled)?.index
-        ?? cells.find(cell => cell.inView && !cell.disabled)?.index
-        ?? cells.find(cell => !cell.disabled)?.index
-  );
+  let tabStop = $derived.by(() => {
+    if (focusIndex !== undefined) {
+      const focusedCell = cells[focusIndex];
+      if (focusedCell && !focusedCell.disabled) {
+        return focusIndex;
+      }
+    }
+
+    const selectedCell = cells.find(cell => cell.selected && cell.inView && !cell.disabled);
+    const targetCell = selectedCell
+      ?? cells.find(cell => cell.inView && !cell.disabled)
+      ?? cells.find(cell => !cell.disabled);
+    return targetCell?.index;
+  });
   let weekdays = $derived(filledLocale.shortWeekDays
     || generateConfig.locale.getShortWeekDays?.(filledLocale.locale) || []);
   let months = $derived(mergedLocale.lang.shortMonths

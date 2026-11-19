@@ -3,6 +3,8 @@
 </script>
 
 <script lang="ts">
+  // Рендерит колонки времени DatePicker. Память scroll связывает позицию с
+  // содержимым колонки, чтобы повторное открытие не применяло старое измерение.
   import type { Dayjs } from 'dayjs';
   import type { Snippet } from 'svelte';
   import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
@@ -71,6 +73,8 @@
   }));
   let root: HTMLDivElement;
   const scrollValues = new WeakMap<Element, string>();
+
+  // Выбранное значение и подписи опций участвуют в ключе восстановления scroll.
   function readColumn(column: HTMLUListElement) {
     const unit = column.getAttribute('aria-label') as
       'hour' | 'minute' | 'second' | 'millisecond' | 'meridiem';
@@ -87,17 +91,20 @@
       disabled: cell.getAttribute('data-picker-time-disabled') === 'true'
     }));
     const units = rows.map(row => [row.value, row.label, row.disabled].join(',')).join(';');
-    return {
-      signature: JSON.stringify(unit === 'meridiem' ? [selected, units]
-        : [selected, optional, units]),
-      target: rows.find(row => row.value === (selected ?? optional))?.node
-    };
+    const signatureValues = unit === 'meridiem' ? [selected, units] : [selected, optional, units];
+    const signature = JSON.stringify(signatureValues);
+    const targetRow = rows.find(row => row.value === (selected ?? optional));
+    return { signature, target: targetRow?.node };
   }
+
+  // Сохраняет позицию только для колонки, которую успели измерить с её текущими опциями.
   function rememberColumn(column: HTMLUListElement) {
     if (!scrollMemory || !column.isConnected || column.clientHeight === 0) {
       return;
     }
-    const unit = column.getAttribute('aria-label')!, signature = scrollValues.get(column);
+    // Правило 2: aria-label задаётся именем unit на всех ul, которые выбирает captureScroll.
+    const unit = column.getAttribute('aria-label')!;
+    const signature = scrollValues.get(column);
     if (signature && signature === readColumn(column).signature) {
       scrollMemory.set(unit, { signature, top: column.scrollTop });
     }
