@@ -2,10 +2,15 @@
 export function readNativeQuarter() {
   const api = window.nativeQuarter, observation = window.nativeQuarterObservation;
   const recorder = api.getRecorder(), refs = api.readRefs();
+  // Связывает повторный снимок с тем же объектом в recorder. Отсутствующее значение остаётся
+  // null.
   const id = value => value == null ? null : recorder.identity(value);
+  // Сохраняет полный фактический список пар имя и значение в порядке DOM.
   const attributes = node => [...node.attributes].map(item => [item.name, item.value]);
   const cssKeys = ['display', 'visibility', 'opacity', 'position', 'overflow', 'overflow-y',
     'color', 'background-color', 'border-color', 'font-size', 'line-height', 'text-align'];
+  // Снимает геометрию, атрибуты и стиль. Ссылка остаётся в журнале для повторного чтения после
+  // unmount.
   const describe = node => {
     if (node == null) {
       return null;
@@ -83,9 +88,11 @@ export function readNativeQuarter() {
       timers: null, frames: null, observers: null,
       note: 'Private resource counters unmeasured. One removable document capture observer; no global timer/frame/observer hooks.' } };
 }
+// Считывает накопленные вызовы render callbacks начиная с позиции курсора.
 export function readNativeQuarterProducers(cursor = 0) {
   return window.nativeQuarter.readProducers(cursor);
 }
+// Считывает накопленные уведомления компонента начиная с позиции курсора.
 export function readNativeQuarterCallbacks(cursor = 0) {
   return window.nativeQuarter.readCallbacks(cursor);
 }

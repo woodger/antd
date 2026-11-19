@@ -3,8 +3,12 @@ export function readNativeTimeScroll() {
   const api = window.nativeTimeScroll;
   const raw = window.nativeTimeScrollObservation;
   const recorder = api.getRecorder();
+  // Связывает повторный снимок с тем же объектом в recorder. Отсутствующее значение остаётся
+  // null.
   const id = value => value == null ? null : recorder.identity(value);
+  // Сохраняет полный фактический список пар имя и значение в порядке DOM.
   const attributes = node => [...node.attributes].map(attribute => [attribute.name, attribute.value]);
+  // Фиксирует экранную геометрию до сериализации снимка browser realm.
   const box = node => {
     const value = node.getBoundingClientRect();
     return { x: value.x, y: value.y, top: value.top, right: value.right,
@@ -14,6 +18,8 @@ export function readNativeTimeScroll() {
     'width', 'height', 'min-height', 'max-height', 'overflow', 'overflow-y',
     'font-size', 'line-height', 'padding-top', 'padding-bottom',
     'border-top-width', 'border-bottom-width', 'scroll-behavior', 'overscroll-behavior-y'];
+  // Снимает геометрию, атрибуты и стиль. Ссылка остаётся в журнале для повторного чтения после
+  // unmount.
   const describe = node => {
     if (node == null) {
       return null;
