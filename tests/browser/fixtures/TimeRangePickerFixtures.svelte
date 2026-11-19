@@ -184,6 +184,12 @@
     <button type="button" onclick={() => {
       value = [dayjs.utc('2025-02-28T18:45:56.789Z'), dayjs.utc('2025-03-01T19:20:30.123Z')];
     }}>Set external interval</button>
+    {#each ['2026-03-07', '2026-03-08'] as date (date)}
+      <button type="button" onclick={() => {
+        value = [dayjs(`${date}T01:30`), dayjs(`${date}T04:30`)];
+        events = [];
+      }}>Set local interval for {date}</button>
+    {/each}
     <button type="button" onclick={() => {
       if (value) value = [...value];
     }}>Replace interval array</button>

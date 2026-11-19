@@ -1,7 +1,8 @@
 // Разрешает ввод, настройки и проверки времени для двух концов диапазона. Контекст from
 // передаётся для зависимых ограничений конца.
 // Range time paths rc-picker 1.12.2; MIT, vendor/LICENSE.rc-picker.
-import type { Dayjs } from 'dayjs';
+import dayjs, { type Dayjs } from 'dayjs';
+import type {} from 'dayjs/plugin/utc.js';
 import type { RangePickerValue } from './range-picker.types';
 import type { TimeRangePickerProps } from './time-range-picker.types';
 import type { DatePickerFormat, DatePickerTimeConfig } from './date-picker.types';
@@ -9,6 +10,33 @@ import type { PickerLocale } from './picker-locale.types';
 import { timePickerClock, timePickerSameValue, timePickerDateDisabled } from './time-picker.engine';
 import { pickerCalendarValue, pickerTimeDisabled } from './date-picker.engine';
 import { parseDayjsInput } from './date-picker-dayjs.engine';
+
+const calendarFormat = 'YYYY-MM-DD';
+
+// Проверяет время на дате границы. Форматы с явной датой, смещением или timestamp
+// разбираются напрямую, поскольку значения этих полей задаёт сам текст.
+function parseTimeRangeFormat(text: string, format: string, boundary: Dayjs): Dayjs | null {
+  const remainingFormat = format.replace(/\[[^\]]*\]|LTS?|[HhmsSAa]/g, '');
+  if (/[A-Za-z]/.test(remainingFormat)) {
+    return dayjs(text, format, true);
+  }
+
+  const date = boundary.locale('en').format(calendarFormat);
+  const input = `${date} ${text}`;
+  const inputFormat = `${calendarFormat} ${format}`;
+
+  // Если потребитель подключил UTC, извлекаем поля времени независимо от зоны браузера.
+  const parsed = typeof dayjs.utc === 'function'
+    ? dayjs.utc(input, inputFormat, true) : dayjs(input, inputFormat, true);
+  if (!parsed.isValid()) {
+    return null;
+  }
+
+  // Перенос сохраняет режим Dayjs границы. Переход на летнее время может сдвинуть
+  // часы при установке, поэтому сверяем итоговые поля с разобранным вводом.
+  const value = pickerCalendarValue(boundary, parsed);
+  return timePickerSameValue(value, parsed) ? value : null;
+}
 
 // Ввод только времени наследует дату и режим Dayjs редактируемой границы.
 export function parseTimeRangeInput(
@@ -18,19 +46,14 @@ export function parseTimeRangeInput(
   currentBoundary: Dayjs | null
 ): Dayjs | null {
   const stringFormats = formats.filter((format): format is string => typeof format === 'string');
-  const parsed = parseDayjsInput(locale, text, stringFormats);
-  if (!parsed) {
-    return null;
+  if (!currentBoundary?.isValid()) {
+    return parseDayjsInput(locale, text, stringFormats);
   }
 
-  // Явные календарные поля, смещение и timestamp сохраняют результат разбора.
-  const remainingFormat = parsed.format.replace(/\[[^\]]*\]|LTS?|[HhmsSAa]/g, '');
-  if (!currentBoundary?.isValid() || /[A-Za-z]/.test(remainingFormat)) {
-    return parsed.value;
-  }
-
-  const value = pickerCalendarValue(currentBoundary, parsed.value);
-  return value.locale(parsed.value.locale());
+  // Использует исходный порядок форматов, подставляя дату только при разборе времени.
+  const parseFormat = (input: string, format: string) =>
+    parseTimeRangeFormat(input, format, currentBoundary);
+  return parseDayjsInput(locale, text, stringFormats, parseFormat);
 }
 
 // Сравнивает соответствующие даты по календарным полям времени с точностью до миллисекунд.

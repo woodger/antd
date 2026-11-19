@@ -47,12 +47,16 @@ const own = (value: Dayjs) => !dayjs.isDayjs(value) || value instanceof dayjs
   ? value
   : dayjs(value.valueOf());
 
-// Строго разбирает текст и возвращает подошедший формат. Ветка недели завершает поиск.
+// Проверяет точное совпадение текста с форматом средствами Dayjs.
+const parseStrictDayjs = (text: string, format: string) => dayjs(text, format, true);
+
+// Возвращает первый подходящий вариант с локалью поля. Ветка недели завершает поиск.
 export function parseDayjsInput(
   locale: string,
   text: string,
-  formats: readonly string[]
-): { value: Dayjs; format: string; } | null {
+  formats: readonly string[],
+  parseFormat: (text: string, format: string) => Dayjs | null = parseStrictDayjs
+): Dayjs | null {
   for (const format of formats) {
     if (format.includes('wo') || format.includes('Wo')) {
       const [year, week] = text.split('-');
@@ -67,14 +71,14 @@ export function parseDayjsInput(
 
         // Январская дата может относиться к последней неделе предыдущего года.
         if (!usesWeekYear || candidate.weekYear() === requestedYear) {
-          return { value: candidate, format };
+          return candidate;
         }
       }
       return null;
     }
-    const date = dayjs(text, format, true).locale(localeName(locale));
-    if (date.isValid()) {
-      return { value: date, format };
+    const date = parseFormat(text, format)?.locale(localeName(locale));
+    if (date?.isValid()) {
+      return date;
     }
   }
   return null;
@@ -147,6 +151,6 @@ export const dayjsGenerateConfig: GenerateConfig<Dayjs> = {
     // Форматирует значение в указанной locale с поддержкой обозначения номера недели.
     format: (locale, value, format) => own(value).locale(localeName(locale)).format(format),
     // Возвращает только значение для общего контракта GenerateConfig.
-    parse: (locale, text, formats) => parseDayjsInput(locale, text, formats)?.value ?? null
+    parse: (locale, text, formats) => parseDayjsInput(locale, text, formats)
   }
 };

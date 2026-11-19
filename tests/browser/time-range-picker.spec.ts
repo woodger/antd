@@ -202,6 +202,56 @@ for (const format of ['short', 'mask']) {
   );
 }
 
+test.describe('TimeRangePicker daylight-saving input', () => {
+  test.use({ timezoneId: 'America/New_York' });
+
+  for (const format of ['short', 'mask']) {
+    for (const endpoint of ['start', 'end']) {
+      test(`accepts a saved date's valid ${endpoint} time with ${format} format`, async ({ page }) => {
+        await page.clock.setSystemTime(new Date('2026-03-08T16:00:00Z'));
+        await button(page, 'Set local interval for 2026-03-07').click();
+        await control(page, 'Interval format').selectOption(format);
+        const input = endpoint === 'start' ? start(page) : end(page);
+        const other = endpoint === 'start' ? end(page) : start(page);
+
+        if (format === 'mask') {
+          // Указатель после нажатия кнопки подготовки может попасть на открывшуюся панель.
+          await page.mouse.move(0, 0);
+          await input.focus();
+          const hourKeys = endpoint === 'start' ? ['ArrowUp'] : ['ArrowDown', 'ArrowDown'];
+          for (const key of [...hourKeys, 'ArrowRight', 'ArrowUp']) {
+            await input.press(key);
+          }
+        }
+        else {
+          await input.fill('02:31');
+        }
+        await input.press('Enter');
+        await other.press('Enter');
+
+        const expected = endpoint === 'start'
+          ? '2026-03-07T07:31:00.000Z,2026-03-07T09:30:00.000Z'
+          : '2026-03-07T06:30:00.000Z,2026-03-07T07:31:00.000Z';
+        await expect(owner(page)).toHaveText(expected);
+        await expect(input).toHaveValue('02:31');
+      });
+    }
+  }
+
+  test('rejects a missing hour on the saved date even when today has that hour', async ({ page }) => {
+    await page.clock.setSystemTime(new Date('2026-03-09T16:00:00Z'));
+    await button(page, 'Set local interval for 2026-03-08').click();
+    await control(page, 'Interval format').selectOption('short');
+
+    await start(page).fill('02:31');
+    await start(page).press('Enter');
+    await end(page).press('Enter');
+
+    await expect(owner(page)).toHaveText('2026-03-08T06:30:00.000Z,2026-03-08T08:30:00.000Z');
+    await expect(events(page)).not.toContainText('change:');
+  });
+});
+
 test('TimeRangePicker order false preserves reversed field positions', async ({ page }) => {
   await control(page, 'Order interval').uncheck();
   await start(page).click();

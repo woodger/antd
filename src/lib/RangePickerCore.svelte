@@ -293,7 +293,7 @@
     text: displayedTexts[index], mask: maskFormat, active: active === index,
     helped: !!previewValue && !!(presetHover || hover && active === index),
     readOnly, preserveInvalidOnBlur,
-    validateText: next => !!parsePicker(next, lang.locale, formats),
+    validateText: next => !!parseFieldInput(next, calendar[index]),
     acceptInput: next => inputChange(index, next, true),
     onHelp: () => requestOpen(true)
   })));
@@ -985,6 +985,12 @@
       setDatePanel(index, next, 'panel');
     }
   }
+  // Ввод, маска и подтверждение используют дату одной и той же редактируемой границы.
+  function parseFieldInput(text: string, boundary: Dayjs | null): Dayjs | null {
+    return time ? parseTimeRangeInput(text, lang.locale, formats, boundary)
+      : parsePicker(text, lang.locale, formats);
+  }
+
   function inputChange(index: number, text: string, masked = false) {
     focusField(index, masked);
     if (time && !masked && text && text !== formatPicker(calendar[index], lang.locale, formats))
@@ -992,12 +998,9 @@
     const copy: [string, string] = [...texts];
     copy[index] = text;
     texts = copy;
+
     const current = calendar[index];
-    let parsed: Dayjs | null = null;
-    if (text) {
-      parsed = time ? parseTimeRangeInput(text, lang.locale, formats, current)
-        : parsePicker(text, lang.locale, formats);
-    }
+    const parsed = text ? parseFieldInput(text, current) : null;
     const next = !time && picker === 'date' && parsed && current
       && timePickerSameValue(parsed, current) ? current : parsed;
     if (!time && (picker === 'date' || picker === 'quarter' || picker === 'week')) {
@@ -1097,8 +1100,9 @@
     if (time) {
       if (event.key === 'Enter') {
         event.preventDefault();
-        if (maskKey ? maskKey.enterValid : parsePicker(texts[index], lang.locale, formats))
+        if (maskKey ? maskKey.enterValid : parseFieldInput(texts[index], calendar[index])) {
           send(index, 'keyboard-submit');
+        }
       }
       else if (event.key === 'ArrowDown' && !maskKey) {
         event.preventDefault();

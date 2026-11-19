@@ -27,6 +27,15 @@ describe('TimeRangePicker values and validation', () => {
     expect(parseTimeRangeInput('Day29:31', 'en_US', formats, start)).toBeNull();
   });
 
+  it('keeps the fixed offset of the saved boundary when editing the time', () => {
+    const current = start.utcOffset(60, true);
+
+    const time = parseTimeRangeInput('09:31', 'en_US', ['HH:mm'], current);
+
+    expect(time?.utcOffset()).toBe(60);
+    expect(time?.toISOString()).toBe('2024-09-15T08:31:00.000Z');
+  });
+
   it('compares wall-clock calendar fields and milliseconds without timestamp offset conversion', () => {
     expect(sameTimeRange([start, end], [start.utcOffset(60, true), end.utcOffset(60, true)]))
       .toBe(true);
