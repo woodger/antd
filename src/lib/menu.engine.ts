@@ -18,7 +18,10 @@ export function buildMenuEntries(items: readonly MenuItemType[]) {
 
   // Разворачивает путь пункта, исключая группу из цепочки родителей её элементов.
   function build(list: readonly MenuItemType[], parent?: MenuEntry): MenuEntry[] {
-    return list.flatMap((item, index) => {
+    return list.flatMap(createEntry);
+
+    // Записывает доступный для событий ключ до обхода потомков.
+    function createEntry(item: MenuItemType, index: number): MenuEntry[] {
       if (!item) {
         return [];
       }
@@ -36,12 +39,16 @@ export function buildMenuEntries(items: readonly MenuItemType[]) {
         level: (parent?.level ?? 0) + 1,
         children: []
       };
-      if (kind === 'item' || kind === 'submenu')
+      if (kind === 'item' || kind === 'submenu') {
         entries.set(key, entry);
-      if ('children' in item)
-        entry.children = build(item.children ?? [], kind === 'group' ? parent : entry);
+      }
+      if ('children' in item) {
+        const childParent = kind === 'group' ? parent : entry;
+        entry.children = build(item.children ?? [], childParent);
+      }
+
       return [entry];
-    });
+    }
   }
 
   const roots = build(items);
@@ -110,30 +117,34 @@ export function menuKeyboardAction(
   root: boolean,
   rtl: boolean,
   key: string
-):
-  'previous'
-  | 'next'
-  | 'children'
-  | 'parent'
-  | 'toggle'
-  | null {
-  if (mode === 'inline') {
-    return key === 'ArrowUp'
-      ? 'previous'
-      : key === 'ArrowDown' ? 'next' : key === 'Enter' ? 'toggle' : null;
-  }
+): 'previous' | 'next' | 'children' | 'parent' | 'toggle' | null {
   if (mode === 'horizontal' && root) {
-    return key === 'ArrowLeft' ? (rtl ? 'next' : 'previous')
-      : key === 'ArrowRight'
-        ? (rtl ? 'previous' : 'next')
-        : key === 'ArrowDown' || key === 'Enter' ? 'children' : null;
+    switch (key) {
+      case 'ArrowLeft': return rtl ? 'next' : 'previous';
+      case 'ArrowRight': return rtl ? 'previous' : 'next';
+      case 'ArrowDown':
+      case 'Enter': return 'children';
+      default: return null;
+    }
   }
-  return key === 'ArrowUp'
-    ? 'previous'
-    : key === 'ArrowDown' ? 'next' : key === 'ArrowLeft' ? (rtl ? 'children' : 'parent')
-      : key === 'ArrowRight'
-        ? (rtl ? 'parent' : 'children')
-        : key === 'Enter' ? 'children' : key === 'Escape' ? 'parent' : null;
+
+  if (key === 'ArrowUp') {
+    return 'previous';
+  }
+  if (key === 'ArrowDown') {
+    return 'next';
+  }
+  if (mode === 'inline') {
+    return key === 'Enter' ? 'toggle' : null;
+  }
+
+  switch (key) {
+    case 'ArrowLeft': return rtl ? 'children' : 'parent';
+    case 'ArrowRight': return rtl ? 'parent' : 'children';
+    case 'Enter': return 'children';
+    case 'Escape': return 'parent';
+    default: return null;
+  }
 }
 
 // Переводит индексированную запись kind=item в контракт элемента.
