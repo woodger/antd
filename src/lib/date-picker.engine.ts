@@ -213,18 +213,23 @@ export function pickerTimeDisabled(
     ) => DatePickerDisabledTime;
   } = props;
   const config = field.disabledTime?.(value, 'start', { from: undefined }) ?? {};
-  return Boolean(
-    config.disabledHours?.().includes(value.hour())
-    || config.disabledMinutes?.(value.hour()).includes(
-      value.minute()
-    )
-    || config.disabledSeconds?.(value.hour(), value.minute()).includes(
-      value.second()
-    )
-    || config.disabledMilliseconds?.(value.hour(), value.minute(), value.second()).includes(
-      value.millisecond()
-    )
-  );
+
+  if (config.disabledHours?.().includes(value.hour())) {
+    return true;
+  }
+  if (config.disabledMinutes?.(value.hour()).includes(value.minute())) {
+    return true;
+  }
+  if (config.disabledSeconds?.(value.hour(), value.minute()).includes(value.second())) {
+    return true;
+  }
+
+  const disabledMillisecond = config.disabledMilliseconds?.(
+    value.hour(),
+    value.minute(),
+    value.second()
+  ).includes(value.millisecond());
+  return Boolean(disabledMillisecond);
 }
 export function timeColumns(config: DatePickerTimeConfig, format: string) {
   const explicit = [
@@ -244,7 +249,7 @@ export function timeColumns(config: DatePickerTimeConfig, format: string) {
     value => value === true
   );
   const fallback = existFalse || !existTrue;
-  return [
+  const columns = [
     {
       unit: 'hour' as const,
       shown: config.showHour ?? (explicit ? fallback : /[Hh]/.test(clean)),
@@ -269,14 +274,16 @@ export function timeColumns(config: DatePickerTimeConfig, format: string) {
       count: 1000,
       step: config.millisecondStep
     }
-  ].filter(column => column.shown).map(
-    column => ({
-      ...column,
-      step: Number.isInteger(column.step) && column.step! > 0
-        ? column.step!
-        : column.unit === 'millisecond' ? 100 : 1
-    })
-  );
+  ];
+  const visibleColumns = columns.filter(column => column.shown);
+
+  return visibleColumns.map(column => {
+    const { step, unit } = column;
+    const validStep = step !== undefined && Number.isInteger(step) && step > 0;
+    const defaultStep = unit === 'millisecond' ? 100 : 1;
+
+    return { ...column, step: validStep ? step : defaultStep };
+  });
 }
 
 // Как findValidateTime: ближайший разрешённый unit слева, иначе первый разрешённый.
@@ -321,19 +328,15 @@ export function validPickerTime(
   ]) {
     const step = column.step >= 1 ? column.step | 0 : 1;
     const forbidden = column.disabled();
-    const allowed = Array
-      .from({
-        length: Math
-          .ceil(column
-            .count / step)
-      }, (_, n) => n * step)
-      .filter(
-        n => !forbidden.includes(n)
-      );
+    const valueCount = Math.ceil(column.count / step);
+    const values = Array.from({ length: valueCount }, (_, index) => index * step);
+    const allowedValues = values.filter(unitValue => !forbidden.includes(unitValue));
+
     const current = next.get(column.unit);
-    const selected = allowed.findLast(n => n <= current) ?? allowed[0];
-    if (selected !== undefined && selected !== current)
+    const selected = allowedValues.findLast(unitValue => unitValue <= current) ?? allowedValues[0];
+    if (selected !== undefined && selected !== current) {
       next = next.set(column.unit, selected);
+    }
   }
   return next;
 }
