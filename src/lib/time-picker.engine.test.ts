@@ -105,6 +105,26 @@ describe('TimePicker formatting and units', () => {
     expect(panel.template.toISOString()).toBe('2024-09-15T02:15:01.000Z');
   });
 
+  it.each([
+    ['minute', 'disabledMinutes', 60, '00:34:00.000'],
+    ['second', 'disabledSeconds', 60, '00:00:56.000'],
+    ['millisecond', 'disabledMilliseconds', 1000, '00:00:00.789']
+  ] as const)('retains the base %s when its column has no available values',
+    (unit, callback, count, expectedTime) => {
+      const now = dayjs.utc('2024-09-15T12:34:56.789Z');
+      const clock = timePickerClock({ format: 'HH:mm:ss.SSS', hideDisabledOptions: true });
+      const disabledUnits = Array.from({ length: count }, (_, index) => index);
+      const disabledTime = () => ({ [callback]: () => disabledUnits });
+
+      const panel = timePickerPanel(null, undefined, clock, disabledTime, datePickerEnUS.lang, now);
+      const column = panel.columns.find(column => column.type === unit);
+
+      expect(column?.options).toEqual([]);
+      expect(panel.template.toISOString()).toBe(`2024-09-15T${expectedTime}Z`);
+      expect(panel.template.isUTC()).toBe(true);
+    }
+  );
+
   it('aligns all units with restrictions evaluated from the current panel value', () => {
     const value = dayjs.utc('2024-09-15T10:23:44.567Z');
     const observed: string[] = [];

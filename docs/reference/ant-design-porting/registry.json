@@ -12177,7 +12177,7 @@
             "src/lib/time-picker.engine.test.ts",
             "tests/browser/time-picker.spec.ts"
           ],
-          "note": "HH:mm:ss/hh:mm:ss A, locale field formats, display callback readonly, строгие input formats, show flags, disabledTime units, hideDisabledOptions. Panel selection выравнивает все units, включая скрытые milliseconds (default step=100); step=1 сохраняет точность. Сохранены дата и UTC режим входного Dayjs; parser/getNow используют общий adapter."
+          "note": "HH:mm:ss/hh:mm:ss A, locale field formats, display callback readonly, строгие input formats, show flags, disabledTime units, hideDisabledOptions. Panel selection выравнивает все units, включая скрытые milliseconds (default step=100); step=1 сохраняет точность. Сохранены дата и UTC режим входного Dayjs; parser/getNow используют общий adapter. При расчёте панели без value и pickerValue отсутствие доступных минут, секунд или миллисекунд сохраняет соответствующую единицу базового Dayjs. Штатное открытие TimePicker передаёт опорное время панели."
         },
         {
           "id": "hover-scroll-lifecycle",

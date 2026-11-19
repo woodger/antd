@@ -200,7 +200,17 @@ export function timePickerPanel(
       .second(source.second()).millisecond(source.millisecond());
   }
   else if (hour !== undefined) {
-    template = template.hour(hour).minute(minute!).second(second!).millisecond(millisecond!);
+    // Пустая колонка сохраняет единицу времени шаблона. С undefined Dayjs читает её значение.
+    template = template.hour(hour);
+    if (minute !== undefined) {
+      template = template.minute(minute);
+    }
+    if (second !== undefined) {
+      template = template.second(second);
+    }
+    if (millisecond !== undefined) {
+      template = template.millisecond(millisecond);
+    }
   }
 
   return {
