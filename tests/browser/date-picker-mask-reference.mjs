@@ -94,11 +94,13 @@ export function verifyMaskSourcePartBinding(reference, kind, variant = 'first', 
   const original = reference.rawJSONPart ?? reference;
   assert(original.file.startsWith(scope(kind, variant) + '.parts/'), 'Original capture binding');
   assert.equal(original.gzipFile, original.file + '.gz');
-  if (expectedFile !== undefined) assert.equal(
-    original.file,
-    expectedFile,
-    'Original owner/action/substep slot binding'
-  );
+  if (expectedFile !== undefined) {
+    assert.equal(
+      original.file,
+      expectedFile,
+      'Original owner/action/substep slot binding'
+    );
+  }
   const entry = metadata.parts[original.file];
   assert(entry, 'Missing original Source whole part');
   assert.deepEqual(entry.original, original);
@@ -106,8 +108,13 @@ export function verifyMaskSourcePartBinding(reference, kind, variant = 'first', 
 }
 function partScope(reference) {
   const original = reference.rawJSONPart ?? reference;
-  for (const kind of ['csr', 'ssr']) for (const variant of ['first', 'repeat'])
-    if (original.file.startsWith(scope(kind, variant) + '.parts/')) return { kind, variant };
+  for (const kind of ['csr', 'ssr']) {
+    for (const variant of ['first', 'repeat']) {
+      if (original.file.startsWith(scope(kind, variant) + '.parts/')) {
+        return { kind, variant };
+      }
+    }
+  }
   throw Error('Part does not belong to this independent Source corpus');
 }
 export function verifyMaskSourceStoredBytes(reference, stored) {
@@ -137,10 +144,12 @@ export function verifyMaskSourceManifest(value, kind = 'csr', variant = 'first')
       }))));
     assert.equal(value.cases.length, expected.length);
     value.cases.forEach((row, index) => {
-      for (const key of ['id', 'formatProfile', 'method']) assert.equal(
-        row[key],
-        expected[index][key]
-      );
+      for (const key of ['id', 'formatProfile', 'method']) {
+        assert.equal(
+          row[key],
+          expected[index][key]
+        );
+      }
       verifyMaskSourcePartBinding(row, kind, variant, file + '.parts/' + row.id + '-'
         + row.formatProfile + '-' + row.method + '.json');
     });
@@ -160,10 +169,12 @@ export function verifyMaskSourceManifest(value, kind = 'csr', variant = 'first')
   for (const [index, row] of value.cases.entries()) {
     const sample = samples[index];
     assert.deepEqual(row.sample, sample);
-    for (const key of ['failure', 'interruptedAction', 'interruptedSubstep']) assert.equal(
-      row[key],
-      null
-    );
+    for (const key of ['failure', 'interruptedAction', 'interruptedSubstep']) {
+      assert.equal(
+        row[key],
+        null
+      );
+    }
     assert.deepEqual(row.observationErrors, []);
     assert.deepEqual(row.network.failures, []);
     assert(row.network.responses.every(response => response.status < 400));
@@ -187,10 +198,12 @@ export function verifyMaskSourceManifest(value, kind = 'csr', variant = 'first')
     assert.equal(row.substeps.length, expectedChildren.length);
     row.substeps.forEach((ref, index) => {
       const expected = expectedChildren[index];
-      for (const key of ['actionIndex', 'substepIndex', 'command']) assert.deepEqual(
-        ref[key],
-        expected[key]
-      );
+      for (const key of ['actionIndex', 'substepIndex', 'command']) {
+        assert.deepEqual(
+          ref[key],
+          expected[key]
+        );
+      }
       bind(ref, 'step-' + ref.actionIndex + '-substep-' + ref.substepIndex);
     });
     assert.equal(row.closed.length, closes.length);
@@ -244,21 +257,27 @@ function dateSnapshot(value, authored) {
   assert.equal(value.temporal.fields.length, 7);
   for (const [index, key] of ['$y', '$M', '$D', '$H', '$m', '$s', '$ms'].entries()) {
     const field = property(value.raw, value.identity, key);
-    if (field && typeof field === 'object' && field.$ === 'number') assert.equal(
-      value.temporal.fields[index],
-      null
-    );
+    if (field && typeof field === 'object' && field.$ === 'number') {
+      assert.equal(
+        value.temporal.fields[index],
+        null
+      );
+    }
     else assert.deepEqual(value.temporal.fields[index], field);
   }
   assert.equal(property(value.raw, value.identity, '$L'), value.temporal.locale);
-  if (value.temporal.valid) assert.equal(
-    new Date(value.temporal.epoch).toISOString(),
-    value.temporal.iso
-  );
+  if (value.temporal.valid) {
+    assert.equal(
+      new Date(value.temporal.epoch).toISOString(),
+      value.temporal.iso
+    );
+  }
   else assert.equal(value.temporal.iso, null);
   assert.deepEqual(Object.keys(value.sameAsAuthored), authoredNames);
-  for (const name of authoredNames) assert.equal(value.sameAsAuthored[name], authored
-    ? value.identity === authored[name].identity : rawNode(value.raw, value.identity).authoredRole?.authoredDate === name);
+  for (const name of authoredNames) {
+    assert.equal(value.sameAsAuthored[name], authored
+      ? value.identity === authored[name].identity : rawNode(value.raw, value.identity).authoredRole?.authoredDate === name);
+  }
 }
 function invocation(call, index, authored, producer = false) {
   assert.equal(call.index, index);
@@ -325,10 +344,12 @@ function verifyOwner(owner) {
       property(format.raw, format.identity, 'format'),
       owner.formatProfile === 'mask' ? sample.maskFormat : sample.plainFormat
     );
-    if (owner.formatProfile === 'mask') assert.equal(
-      property(format.raw, format.identity, 'type'),
-      'mask'
-    );
+    if (owner.formatProfile === 'mask') {
+      assert.equal(
+        property(format.raw, format.identity, 'type'),
+        'mask'
+      );
+    }
   }
   assert.deepEqual(rawAt(owner.rawAuthoredProps, ['format']), format.raw.root);
   assert.deepEqual(rawAt(owner.rawAuthoredProps, ['value']), owner.rawModel.root);
@@ -360,8 +381,9 @@ export function verifyMaskSourceRows(point) {
       for (const row of table.rows) {
         assert.equal(row.surface.tag, 'TR');
         for (const [flag, name] of [['selected', 'selected'], ['hover', 'hover'], ['rangeStart', 'range-start'],
-          ['rangeEnd', 'range-end'], ['rangeHover', 'range-hover']])
+          ['rangeEnd', 'range-end'], ['rangeHover', 'range-hover']]) {
           assert.equal(row[flag], has(row.surface, 'ant-picker-week-panel-row-' + name));
+        }
         for (const cell of row.cells) {
           assert.equal(cell.surface.tag, 'TD');
           assert.equal(cell.surface.parentIdentity, row.surface.identity);
@@ -377,14 +399,17 @@ export function verifyMaskSourceRows(point) {
       const binding = cells.get(cell.surface.identity);
       assert(binding);
       assert.equal(cell.rowIdentity, binding.row.surface.identity);
-      for (const key of ['title', 'weekNumber', 'disabled']) assert.deepEqual(
-        cell[key],
-        binding.cell[key]
-      );
+      for (const key of ['title', 'weekNumber', 'disabled']) {
+        assert.deepEqual(
+          cell[key],
+          binding.cell[key]
+        );
+      }
       assert(popup.panels.some(panel => panel.identity === cell.panelIdentity));
       for (const [flag, name] of [['selected', 'selected'], ['rangeStart', 'range-start'],
-        ['rangeEnd', 'range-end'], ['inRange', 'in-range']])
+        ['rangeEnd', 'range-end'], ['inRange', 'in-range']]) {
         assert.equal(cell[flag], has(cell.surface, 'ant-picker-cell-' + name));
+      }
     }
   }
 }
@@ -493,10 +518,14 @@ export function readMaskSourceProducerChunks(id, variant = 'first') {
   return readMaskSourceCase(id, variant).producerParts;
 }
 export function verifyMaskSourceProducerChunk(value, envelope) {
-  if (envelope) for (const key of ['phase', 'cursor', 'next']) assert.deepEqual(
-    value[key],
-    envelope[key]
-  );
+  if (envelope) {
+    for (const key of ['phase', 'cursor', 'next']) {
+      assert.deepEqual(
+        value[key],
+        envelope[key]
+      );
+    }
+  }
   assert(['local-substep-or-lifecycle-window', 'aggregate-macro-window-covering-earlier-child-parts'].includes(value.boundaryScope));
   assert(Number.isInteger(value.cursor) && value.cursor >= 0);
   assert.equal(value.next - value.cursor, value.rows.length);
@@ -554,10 +583,14 @@ export function verifyMaskSourceStoredParts() {
   for (const entry of [...Object.values(metadata.captures), ...Object.values(metadata.parts)])
     decodeStored(entry, fs.readFileSync(fixture(entry.fixture)));
   for (const name of Object.keys(metadata.documents)) readMaskSourceEvidence(name);
-  for (const kind of ['csr', 'ssr']) for (const variant of ['first', 'repeat']) readMaskSourceManifest(
-    kind,
-    variant
-  );
+  for (const kind of ['csr', 'ssr']) {
+    for (const variant of ['first', 'repeat']) {
+      readMaskSourceManifest(
+        kind,
+        variant
+      );
+    }
+  }
   return {
     sourceOnly: true,
     captures: 4,

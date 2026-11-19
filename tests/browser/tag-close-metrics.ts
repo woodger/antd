@@ -1,6 +1,8 @@
 export function snapshotTagClose(host: HTMLElement) {
   const root = host.querySelector<HTMLElement>('[data-tag-api-root]');
-  if (!root || root.classList.contains('ant-tag-hidden')) return null;
+  if (!root || root.classList.contains('ant-tag-hidden')) {
+    return null;
+  }
 
   const close = root.querySelector<HTMLElement>('.ant-tag-close-icon');
   const link = root.querySelector<HTMLAnchorElement>('a');

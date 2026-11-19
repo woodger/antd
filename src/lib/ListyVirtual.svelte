@@ -43,12 +43,16 @@
   $effect(() => {
     const viewport = holder;
     const content = inner;
-    if (!viewport || !content) return;
+    if (!viewport || !content) {
+      return;
+    }
     return untrack(() => model.connect(viewport, content));
   });
 
   $effect(() => {
-    if (!nativeElement) return;
+    if (!nativeElement) {
+      return;
+    }
     ref = { scrollTo: model.scrollTo };
     return () => { ref = undefined; };
   });
@@ -57,7 +61,9 @@
     const viewport = holder;
     const enabled = useVirtual;
     const virtual = inVirtual;
-    if (!viewport) return;
+    if (!viewport) {
+      return;
+    }
     return untrack(() => connectListyGestures(viewport, {
       useVirtual: enabled,
       virtual,

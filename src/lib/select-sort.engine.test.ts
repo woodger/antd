@@ -24,8 +24,12 @@ describe('Select search sorting source boundaries', () => {
       const compare = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
       const sorter: SelectSearchConfig<string | number>['filterSort'] = sample.sort === 'none'
         ? undefined : (a, b, { searchValue }) => {
-          if (sample.sort === 'equal') return 0;
-          if (sample.sort === 'value') return compare(String(a.value), String(b.value));
+          if (sample.sort === 'equal') {
+            return 0;
+          }
+          if (sample.sort === 'value') {
+            return compare(String(a.value), String(b.value));
+          }
           const order = compare(String(a.label).toLowerCase(), String(b.label).toLowerCase());
           return sample.sort === 'desc'
             || sample.sort === 'query' && searchValue.trim() === 'turn' ? -order : order;

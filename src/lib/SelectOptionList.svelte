@@ -49,7 +49,9 @@
     const holder = holderElement;
     const content = inner;
     const current = model;
-    if (!holder || !content) return;
+    if (!holder || !content) {
+      return;
+    }
     return untrack(() => {
       connectedHolder = holder;
       const disconnect = current.connect(holder, content);
@@ -65,7 +67,9 @@
     const current = viewport;
     const useVirtual = range.useVirtual;
     const virtual = range.virtual;
-    if (!holder) return;
+    if (!holder) {
+      return;
+    }
     return untrack(() => connectListyGestures(holder, {
       useVirtual,
       virtual,
@@ -76,8 +80,12 @@
   });
 
   function handleScroll(event: UIEvent & { currentTarget: HTMLDivElement }) {
-    if (event.currentTarget !== connectedHolder || !event.currentTarget.isConnected) return;
-    if (model.initializingScroll(event)) return;
+    if (event.currentTarget !== connectedHolder || !event.currentTarget.isConnected) {
+      return;
+    }
+    if (model.initializingScroll(event)) {
+      return;
+    }
     const top = event.currentTarget.scrollTop;
     if (top !== viewport.top) viewport.sync(top);
     onScroll?.call(event.currentTarget, event);

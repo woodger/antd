@@ -124,7 +124,9 @@ const readPinned = (name: string, expected: Pin) => {
 };
 let metadata: { portable: PortableManifest; protocol: Protocol } | undefined;
 function readMetadata() {
-  if (metadata) return metadata;
+  if (metadata) {
+    return metadata;
+  }
   const portable = JSON.parse(readPinned(prefix + 'source-manifest.json', portablePin).toString('utf8')) as PortableManifest;
   assert.equal(portable.format, 'ant-design-single-date-picker-presets-source-v1');
   assert.equal(portable.sourceOnly, true);
@@ -399,11 +401,13 @@ export function verifyDatePickerPresetsSourceOwner(value: DatePickerPresetOwner)
       assert.deepEqual(datePickerPresetsRawRoot(callback.rawInfo).properties, []);
     }
     array(snapshot.sameAsLazyReturns).forEach((same, index) => {
-      if (same) assert.equal(
-        snapshot.identity,
-        record(lazy[index].result).identity,
-        'Actual callback preserves the recorded returned Dayjs alias'
-      );
+      if (same) {
+        assert.equal(
+          snapshot.identity,
+          record(lazy[index].result).identity,
+          'Actual callback preserves the recorded returned Dayjs alias'
+        );
+      }
     });
   }
 }

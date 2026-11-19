@@ -6,7 +6,9 @@ async function textMetrics(root: Locator) {
     const walker = document.createTreeWalker(item, NodeFilter.SHOW_TEXT);
     let text = walker.nextNode();
     while (text && !text.textContent?.trim()) text = walker.nextNode();
-    if (!text) throw new Error('Breadcrumb item must contain text');
+    if (!text) {
+      throw new Error('Breadcrumb item must contain text');
+    }
 
     const range = document.createRange();
     range.selectNodeContents(text);

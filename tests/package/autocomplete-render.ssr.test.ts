@@ -23,13 +23,17 @@ function inputs(html: string) {
 for (const { owner, state } of samples) it(`renders actual Original SSR ${owner.id}/${state.name} without browser resources`, () => {
   vi.useFakeTimers();
   const resource = vi.fn(() => { throw Error('AutoComplete renderer SSR must remain DOM-free'); });
-  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(
-    name,
-    resource
-  );
-  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() {
-    resource();
-  } });
+  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) {
+    vi.stubGlobal(
+      name,
+      resource
+    );
+  }
+  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) {
+    vi.stubGlobal(name, class { constructor() {
+      resource();
+    } });
+  }
   const warn = vi.spyOn(console, 'warn'), error = vi.spyOn(console, 'error');
   try {
     expect(typeof window).toBe('undefined');

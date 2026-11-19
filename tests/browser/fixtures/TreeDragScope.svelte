@@ -48,7 +48,9 @@
     nativeEvents &&= info.event instanceof DragEvent;
   }
   function mutate(info: TreeDragInfo<TreeDragData>) {
-    if (!sample.mutateEvents) return;
+    if (!sample.mutateEvents) {
+      return;
+    }
     info.node.key = 'consumer';
     info.node.pos = 'consumer';
     info.node.expanded = !info.node.expanded;
@@ -119,10 +121,14 @@
         dragNodesKeys: info.dragNodesKeys, dropPosition: info.dropPosition, dropToGap: info.dropToGap });
       if (reorder && info.dropToGap) {
         const source = data.find(node => node.key === info.dragNode.key);
-        if (!source) return;
+        if (!source) {
+          return;
+        }
         const remaining = data.filter(node => node !== source);
         const target = remaining.findIndex(node => node.key === info.node.key);
-        if (target < 0) return;
+        if (target < 0) {
+          return;
+        }
         const position = Number(info.node.pos.split('-').at(-1));
         remaining.splice(target + (info.dropPosition > position ? 1 : 0), 0, source);
         data = remaining;

@@ -225,11 +225,15 @@
 
   function publish(event: Event, raw: string) {
     const element = inputElement;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     const next = inputExceedValue(raw, count, composing);
     // Input, в отличие от TextArea, пропускает неизменённый compositionend.
-    if (event.type === 'compositionend' && raw === next) return;
+    if (event.type === 'compositionend' && raw === next) {
+      return;
+    }
 
     const selection = raw !== next &&
       typeof element.selectionStart === 'number' &&
@@ -244,7 +248,9 @@
     onChange?.(inputChangeEvent(event, element, next));
 
     void tick().then(() => {
-      if (!alive || inputElement !== element || !element.isConnected) return;
+      if (!alive || inputElement !== element || !element.isConnected) {
+        return;
+      }
       if (element.value !== text)
         element.value = text;
       if (selection)
@@ -254,7 +260,9 @@
 
   function handleClear(event: MouseEvent) {
     const element = inputElement;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     useDefault = false;
     value = '';

@@ -5,7 +5,9 @@ export function snapshotNotificationPrefix() {
   const root = notice.closest(`[class~="${prefix}-list"]`)!;
   const part = (suffix: string) => root.querySelector(`[class~="${prefix}${suffix}"]`);
   const css = (node: Element | null, keys: readonly string[]) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   };

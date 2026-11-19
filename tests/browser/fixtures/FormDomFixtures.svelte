@@ -39,7 +39,9 @@
       return customRoot;
     },
     focus() {
-      if (this !== custom) throw new Error('Lost custom focus receiver');
+      if (this !== custom) {
+        throw new Error('Lost custom focus receiver');
+      }
       customCalls++;
       customInput?.focus();
     }

@@ -67,7 +67,9 @@
   $effect(() => {
     const viewport = list;
     const rail = track;
-    if (!viewport || !rail) return;
+    if (!viewport || !rail) {
+      return;
+    }
     return untrack(() => model.mount(viewport, rail));
   });
 

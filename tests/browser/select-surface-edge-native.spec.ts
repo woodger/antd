@@ -33,7 +33,9 @@ for (const entry of selectSurfaceEdgeNativeReference.cases) {
         'surfacecapture',
         { detail }
       ));
-      if (!detail.read || !detail.readRefs || !detail.dispose) throw Error('Actual Native edge owner capture missing');
+      if (!detail.read || !detail.readRefs || !detail.dispose) {
+        throw Error('Actual Native edge owner capture missing');
+      }
       return { read: detail.read, readRefs: detail.readRefs, dispose: detail.dispose };
     });
     const retained = await page.evaluateHandle(() => {

@@ -5,7 +5,9 @@ const rootStates = new Set(['', '-horizontal', '-vertical', '-with-text', '-with
 
 /** Меняет componentCls и descendant resets; marker и CSS variables остаются общими. */
 export function getDividerPrefixCss(prefix: string) {
-  if (prefix === 'ant-divider') return undefined;
+  if (prefix === 'ant-divider') {
+    return undefined;
+  }
 
   return template
     .replace(/\.ant-divider(?!-css-var\b)([-\w]*)/g, (_, suffix: string) =>

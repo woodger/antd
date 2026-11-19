@@ -20,10 +20,12 @@ export function verifyTagCloseHandleDisposal(
   assert(cleanup.retainedConnected.filter(node => node.ownedAtFirstObservation).every(node => !node.connected));
   assert(source.cleanup.retainedConnected.filter(node => node.ownedAtFirstObservation).every(node => !node.connected));
   for (const key of ['model', 'options', 'disabled', 'open', 'invocations', 'retention'] as const) {
-    if (key !== 'invocations' && key !== 'retention') assert.deepEqual(
-      cleanup.owner[key],
-      source.cleanup.owner[key]
-    );
+    if (key !== 'invocations' && key !== 'retention') {
+      assert.deepEqual(
+        cleanup.owner[key],
+        source.cleanup.owner[key]
+      );
+    }
     else assert.equal(cleanup.owner[key].length, source.cleanup.owner[key].length);
   }
   assert.deepEqual(

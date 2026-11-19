@@ -1,6 +1,8 @@
 export function snapshotTableColumnClasses() {
   const root = document.querySelector('#table-column-classes-control');
-  if (!root) throw new Error('Table column class control is missing');
+  if (!root) {
+    throw new Error('Table column class control is missing');
+  }
   const cells = (nodes: Iterable<Element>) => [...nodes].map(node => {
     const css = getComputedStyle(node);
 

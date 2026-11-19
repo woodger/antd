@@ -117,7 +117,9 @@ export function verifyNativeOwnStyleComputed(
   if (control) actual = ownStyleNativeComputedBridge(actual, source, control, label);
   const deprecated = new Map([['--ant-pink', '#EB2F96'], ['--ant-control-tmp-outline', 'rgba(0,0,0,0.02)']]);
   const expected = source.filter(property => {
-    if (!deprecated.has(property.name)) return true;
+    if (!deprecated.has(property.name)) {
+      return true;
+    }
     assert.deepEqual(
       property,
       { name: property.name, value: deprecated.get(property.name), priority: '' },
@@ -177,16 +179,20 @@ export async function settleNativeOwnStylePoint(page: Page): Promise<NativeOwnSt
     await drainSelectSurface(page);
     const point = await readNativeOwnStylePoint(page), key = stableKey(point);
     stable = previous === key ? stable + 1 : 0;
-    if (stable >= 3) return point;
+    if (stable >= 3) {
+      return point;
+    }
     previous = key;
   }
   throw Error('Actual own-style CSSOM, owner, refs and complete raw ledgers did not settle');
 }
 export async function actNativeOwnStyle(page: Page, action: SelectComponentsOwnStyleAction) {
-  if (action.type === 'own-style-phase') await page.evaluate(
-    action => window.ownStyleProbe.flushUpdate!(action),
-    action
-  );
+  if (action.type === 'own-style-phase') {
+    await page.evaluate(
+      action => window.ownStyleProbe.flushUpdate!(action),
+      action
+    );
+  }
   else if (action.type === 'fill') {
     const handle = await page.evaluateHandle(() => window.raw.current.readRefs().editor);
     const editor = handle.asElement();
@@ -278,17 +284,23 @@ export function ownStyleHydratedWrapperIcons(
   entry: OwnStyleInitCase,
   label: string
 ) {
-  if (entry.entryPath === 'csr' || entry.sample.control !== 'select') return actual.icons;
+  if (entry.entryPath === 'csr' || entry.sample.control !== 'select') {
+    return actual.icons;
+  }
   const candidates = source.icons.layout.filter(node => node.tag === 'DIV' && node.classes.includes('ant-select-content-item'));
   const ordinals = new Map<string, number>();
   const layout = actual.icons.layout.map(node => {
-    if (node.tag !== 'DIV' || !node.classes.includes('ant-select-content-item')) return node;
+    if (node.tag !== 'DIV' || !node.classes.includes('ant-select-content-item')) {
+      return node;
+    }
     const role = node.classes.includes('ant-select-content-item-suffix') ? 'suffix' : 'item';
     const ordinal = ordinals.get(role) ?? 0;
     ordinals.set(role, ordinal + 1);
     const original = candidates.filter(value => value.classes.includes('ant-select-content-item-suffix') === (role === 'suffix'))[ordinal];
     assert(original, label + ' hydrated wrapper has the exact Source role/ordinal');
-    if (node.styleAttribute === original.styleAttribute) return node;
+    if (node.styleAttribute === original.styleAttribute) {
+      return node;
+    }
     assert.notEqual(
       node.identity,
       actual.icons.current.editor?.identity,
@@ -385,7 +397,9 @@ export function verifyOwnStyleRecordedPopupContour(
   const pairs = new Map<number, number>(), projected = new Map<number, OwnStyleNode>();
   const a = actual.details.popup, b = source.details.popup;
   assert.equal(Boolean(a), Boolean(b), label + ' actual popup presence');
-  if (!a || !b) return { pairs, projected, sourceOnlyOuter: undefined };
+  if (!a || !b) {
+    return { pairs, projected, sourceOnlyOuter: undefined };
+  }
   assert.equal(source.owner.open, true);
   assert.equal(actual.owner.open, true);
   assert.equal(a.tag, 'DIV');
@@ -423,11 +437,13 @@ export function verifyOwnStyleRecordedPopupContour(
   const tokens = a.inlineProperties.slice(0, 27);
   assert.equal(createHash('sha256').update(JSON.stringify(tokens.map(value => value.name))).digest('hex'),
     '8af881022faad0885cd0e1a903d827e44c7594743e1dbbbb1611d280c379f1ff', label + ' exact ordered existing 27 Native popup token names');
-  for (const token of tokens) assert.deepEqual(
-    b.computedProperties.find(value => value.name === token.name),
-    token,
-    label + ' every Native token equals its actual Source value/priority'
-  );
+  for (const token of tokens) {
+    assert.deepEqual(
+      b.computedProperties.find(value => value.name === token.name),
+      token,
+      label + ' every Native token equals its actual Source value/priority'
+    );
+  }
   assert.deepEqual(a.inlineProperties.slice(27), [prop('width', px(b.box.width)), prop(
     control === 'select' ? '--ant-native-select-anchor-width' : '--ant-native-auto-complete-anchor-width',
     px(b.box.width)
@@ -494,15 +510,18 @@ export function verifyOwnStyleRecordedPopupContour(
     [nativeList.identity],
     label + ' Native popup contains the real list directly'
   );
-  for (const field of ['connected', 'namespaceURI', 'text', 'box', 'clientRects', 'metrics'] as const)
+  for (const field of ['connected', 'namespaceURI', 'text', 'box', 'clientRects', 'metrics'] as const) {
     assert.deepEqual(
       outer[field],
       nativeList[field],
       label + ' omitted Source wrapper retains exact real list region/' + field
     );
+  }
   const roles = (node: OwnStyleNode) => {
     const names = nodeClasses(node);
-    if (names.length) return names.join(' ');
+    if (names.length) {
+      return names.join(' ');
+    }
     return node.tag.toLowerCase() === 'svg' || node.tag.toLowerCase() === 'path' ? node.tag.toLowerCase() : 'anonymous-DIV';
   };
   const contour = original.slice(1);
@@ -623,11 +642,13 @@ export function verifyOwnStylePoint(
   pair(actual.icons.current.root, source.icons.current.root);
   pair(actual.icons.current.editor, source.icons.current.editor);
   pair(actual.icons.current.popup, source.icons.current.popup);
-  if (entry.sample.control === 'select') failures.push(...verifySelectComponentsModesPoint(native, source as never, entry as never, entry.sample as never, label,
-    (current, original) => {
-      pair(current, original);
-      return false;
-    }));
+  if (entry.sample.control === 'select') {
+    failures.push(...verifySelectComponentsModesPoint(native, source as never, entry as never, entry.sample as never, label,
+      (current, original) => {
+        pair(current, original);
+        return false;
+      }));
+  }
   else {
     // Commit snapshots are captured in the ordinary owner itself. If no popup
     // exists, its already-observed presence/count/root ID fully proves topology.
@@ -646,10 +667,12 @@ export function verifyOwnStylePoint(
     ));
     const excluded = new Set(topology.popup?.subtreeIdentities ?? []);
     const layout = actual.icons.layout.filter(node => !excluded.has(node.identity));
-    for (const key of ['nodes', 'svg'] as const) source.icons[key].forEach((node, index) => pair(
-      actual.icons[key][index] ?? null,
-      node
-    ));
+    for (const key of ['nodes', 'svg'] as const) {
+      source.icons[key].forEach((node, index) => pair(
+        actual.icons[key][index] ?? null,
+        node
+      ));
+    }
     source.icons.layout.forEach((node, index) => pair(layout[index] ?? null, node));
   }
   let popupContour: ReturnType<typeof verifyOwnStylePopupContour> | undefined;
@@ -714,11 +737,13 @@ export function verifyOwnStylePoint(
   check('hydration-real-DOM-identity', () => {
     const current = actual.details.hydration, original = source.details.hydration;
     assert(current && original);
-    for (const key of ['kind', 'owner', 'root', 'editor', 'rootConnected', 'editorConnected'] as const) assert.deepEqual(
-      current[key],
-      original[key],
-      key
-    );
+    for (const key of ['kind', 'owner', 'root', 'editor', 'rootConnected', 'editorConnected'] as const) {
+      assert.deepEqual(
+        current[key],
+        original[key],
+        key
+      );
+    }
     assert.equal(current.root, true);
     assert.equal(current.editor, true);
     assert.equal(current.owner, true);
@@ -751,11 +776,13 @@ export function verifyOwnStyleParsed(
   );
   assert(actual.details.hydration && source.details.hydration);
   const a = actual.details.hydration, b = source.details.hydration;
-  for (const key of ['kind', 'owner', 'root', 'editor', 'rootConnected', 'editorConnected'] as const) assert.deepEqual(
-    a[key],
-    b[key],
-    label + '/' + key
-  );
+  for (const key of ['kind', 'owner', 'root', 'editor', 'rootConnected', 'editorConnected'] as const) {
+    assert.deepEqual(
+      a[key],
+      b[key],
+      label + '/' + key
+    );
+  }
   assert(a.parsedEditor && b.parsedEditor);
   const current = a.parsedEditor, original = b.parsedEditor;
   // Original parsed/beforeHydration precedes Antd's client CSS insertion;
@@ -763,11 +790,13 @@ export function verifyOwnStyleParsed(
   // stylesheet phases do not define a shared computed/layout oracle. The
   // authored inline DOM, native value/caret and real node identity stay exact.
   for (const key of ['connected', 'tag', 'namespaceURI', 'cssText', 'styleAttribute', 'inlineProperties', 'text',
-    'value', 'defaultValue', 'selection', 'focused'] as const) assert.deepEqual(
+    'value', 'defaultValue', 'selection', 'focused'] as const) {
+    assert.deepEqual(
       current[key],
       original[key],
       label + '/parsed/' + key
     );
+  }
   assert(['INPUT', 'TEXTAREA'].includes(current.tag), label + ' intrinsic parsed editor tag');
   fieldAttributes(current, original, label + '/parsed');
   assert.deepEqual(current.childNodes.map(({ identity: _identity, ...node }) => node),

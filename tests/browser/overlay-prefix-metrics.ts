@@ -16,14 +16,18 @@ export function snapshotOverlayPrefix(sample: { component: string; prefixCls?: s
   const confirm = sample.prefixCls || 'ant-popconfirm';
   const roots = [...document.querySelectorAll<HTMLElement>(`.${CSS.escape(prefix)}`)]
     .filter(node => getComputedStyle(node).display !== 'none' && node.getClientRects().length);
-  if (!roots.length) return null;
+  if (!roots.length) {
+    return null;
+  }
 
   const classes = (node: HTMLElement | null) => node ? [...node.classList]
     .filter(name => (name === prefix || name.startsWith(`${prefix}-`)
       || sample.component === 'popconfirm' && (name === confirm || name.startsWith(`${confirm}-`)))
       && !name.endsWith('-css-var')).sort() : null;
   const paint = (node: HTMLElement | null) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return {
       color: style.color, background: style.backgroundColor, image: style.backgroundImage,

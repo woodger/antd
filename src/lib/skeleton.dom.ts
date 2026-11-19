@@ -24,12 +24,16 @@ export function createSkeletonFocus() {
 
   return {
     update(host: HTMLElement, content: HTMLElement | undefined, loading: boolean) {
-      if (!loading || !content?.contains(host.ownerDocument.activeElement)) return;
+      if (!loading || !content?.contains(host.ownerDocument.activeElement)) {
+        return;
+      }
 
       clear();
       host.focus({ preventScroll: true });
       const document = host.ownerDocument;
-      if (document.activeElement !== host) return;
+      if (document.activeElement !== host) {
+        return;
+      }
 
       parked = host;
       const dialog = host.closest<HTMLDialogElement>('dialog[open]');

@@ -45,8 +45,9 @@ describe('Avatar text fitting', () => {
         [100, -1],
         [NaN, 32],
         [100, Infinity]
-      ])
+      ]) {
       expect(getAvatarScale(text, width)).toBe(1);
+    }
 
     expect(getAvatarScale(100, 32, 16)).toBe(1);
     expect(getAvatarScale(100, 32, 100)).toBe(1);

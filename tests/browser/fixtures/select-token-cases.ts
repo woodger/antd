@@ -10,9 +10,17 @@ export interface SelectTokenSample extends SelectTagsSample {
 }
 
 export function getSelectTokenSeparators(sample: SelectTokenSample): SelectTokenSeparators {
-  if (sample.separators) return sample.separators;
-  if (sample.splitter === 'csv') return text => text.split(',');
-  if (sample.splitter === 'spaces') return text => text.split(/\s+/);
-  if (sample.splitter === 'empty') return () => [];
+  if (sample.separators) {
+    return sample.separators;
+  }
+  if (sample.splitter === 'csv') {
+    return text => text.split(',');
+  }
+  if (sample.splitter === 'spaces') {
+    return text => text.split(/\s+/);
+  }
+  if (sample.splitter === 'empty') {
+    return () => [];
+  }
   return text => [text];
 }

@@ -208,8 +208,12 @@ describe('Upload lifecycle', () => {
     async () => {
       const h = setup([], {
         beforeUpload: async current => {
-          if (current.name === 'skip.txt') return UPLOAD_LIST_IGNORE;
-          if (current.name === 'reject.txt') throw Error('rejected');
+          if (current.name === 'skip.txt') {
+            return UPLOAD_LIST_IGNORE;
+          }
+          if (current.name === 'reject.txt') {
+            throw Error('rejected');
+          }
           return false;
         }
       });

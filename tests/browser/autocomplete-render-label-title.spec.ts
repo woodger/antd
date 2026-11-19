@@ -45,7 +45,9 @@ for (const original of autocompleteLabelTitleReference.cases) test(`AutoComplete
       if (stable >= 3) break;
       prior = key;
     }
-    if (stable < 3 || !actual) throw Error('Actual Native label/title view did not settle');
+    if (stable < 3 || !actual) {
+      throw Error('Actual Native label/title view did not settle');
+    }
     const current = actual;
     trace.push({ label, actual: current });
     const check = (name: string, fn: () => void) => {
@@ -57,10 +59,12 @@ for (const original of autocompleteLabelTitleReference.cases) test(`AutoComplete
     }
     };
     check('whole-public-owner', () => {
-      for (const key of ['renderer', 'open', 'model', 'optionTitleOwnKey', 'optionOwnKeys'] as const) assert.deepEqual(
-        current.owner[key],
-        point.owner[key]
-      );
+      for (const key of ['renderer', 'open', 'model', 'optionTitleOwnKey', 'optionOwnKeys'] as const) {
+        assert.deepEqual(
+          current.owner[key],
+          point.owner[key]
+        );
+      }
       assert.deepEqual(
         normalizedSelectSurfaceAuthoredProps(current.owner.authoredProps),
         normalizedSelectSurfaceAuthoredProps(point.owner.authoredProps)
@@ -86,22 +90,26 @@ for (const original of autocompleteLabelTitleReference.cases) test(`AutoComplete
         current.owner.events.map(selectSurfaceEventValue),
         original.events.slice(0, point.owner.eventCount).map(selectSurfaceEventValue)
       );
-      for (const [i, event] of current.owner.rawEvents.entries()) verifySelectSurfaceEventGraph(
-        event,
-        original.rawEvents[i],
-        label + '/event' + i
-      );
+      for (const [i, event] of current.owner.rawEvents.entries()) {
+        verifySelectSurfaceEventGraph(
+          event,
+          original.rawEvents[i],
+          label + '/event' + i
+        );
+      }
     });
     check('actual-css-geometry-editor', () => {
       for (const [slot, nodes] of Object.entries(point.dom.view.slots)) {
         assert.equal(current.dom.view.slots[slot].length, nodes.length, slot + ' count');
-        for (const [i, node] of nodes.entries()) verifySelectSurfaceNode(current.dom.view.slots[slot][i], node, slot, { control: 'autocomplete' },
-          ['surface-control'], label, point.dom.raw.slots[slot][i].attributes.find(([k]) => k === 'style')?.[1] ?? '',
-          {
-            callerLabel: 'Label title value',
-            inputLayout: current.topology.editorLayout,
-            raw: current.dom.raw.slots[slot][i]
-          });
+        for (const [i, node] of nodes.entries()) {
+          verifySelectSurfaceNode(current.dom.view.slots[slot][i], node, slot, { control: 'autocomplete' },
+            ['surface-control'], label, point.dom.raw.slots[slot][i].attributes.find(([k]) => k === 'style')?.[1] ?? '',
+            {
+              callerLabel: 'Label title value',
+              inputLayout: current.topology.editorLayout,
+              raw: current.dom.raw.slots[slot][i]
+            });
+        }
       }
       assert.deepEqual(current.dom.view.editor, point.dom.view.editor);
       assert.equal(current.dom.view.focus, point.dom.view.focus);
@@ -133,14 +141,18 @@ for (const original of autocompleteLabelTitleReference.cases) test(`AutoComplete
   try {
     await verify(original.initial, 'initial');
     for (const [i, step] of original.steps.entries()) {
-      if (step.action.type === 'renderer') await capture.evaluate(
-        (value, action) => value.update(action),
-        step.action
-      );
-      else if (step.action.type === 'click') await page.getByRole(
-        'combobox',
-        { name: 'Label title value', exact: true }
-      ).click();
+      if (step.action.type === 'renderer') {
+        await capture.evaluate(
+          (value, action) => value.update(action),
+          step.action
+        );
+      }
+      else if (step.action.type === 'click') {
+        await page.getByRole(
+          'combobox',
+          { name: 'Label title value', exact: true }
+        ).click();
+      }
       else await page.locator('[data-surface-outside]').click();
       await verify(step, i + '/' + JSON.stringify(step.action));
     }

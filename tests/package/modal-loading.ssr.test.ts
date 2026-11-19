@@ -9,13 +9,17 @@ for (const sample of modalLoadingSamples) for (const loading of [false, true]) i
   const resource = vi.fn(() => {
     throw Error('Modal.loading SSR must stay DOM-free');
   });
-  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(
-    name,
-    resource
-  );
-  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() {
-    resource();
-  } });
+  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) {
+    vi.stubGlobal(
+      name,
+      resource
+    );
+  }
+  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) {
+    vi.stubGlobal(name, class { constructor() {
+      resource();
+    } });
+  }
   const warn = vi.spyOn(console, 'warn'), error = vi.spyOn(console, 'error');
   const timeout = vi.spyOn(globalThis, 'setTimeout'), interval = vi.spyOn(globalThis, 'setInterval');
   try {

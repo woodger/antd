@@ -31,12 +31,16 @@ export function createIconIdentityLedger() {
     label: string
   ) => {
     assert.equal(Boolean(actual), Boolean(source), label + ' physical node presence');
-    if (!actual || !source) return;
-    if (native.has(actual.identity)) assert.equal(
-      native.get(actual.identity),
-      source.identity,
-      label + ' retained Native node matches the same Source node'
-    );
+    if (!actual || !source) {
+      return;
+    }
+    if (native.has(actual.identity)) {
+      assert.equal(
+        native.get(actual.identity),
+        source.identity,
+        label + ' retained Native node matches the same Source node'
+      );
+    }
     else {
       assert(
         !original.has(source.identity),
@@ -148,20 +152,22 @@ export function verifyIconGraph(actualValue: unknown, sourceValue: unknown, labe
       && property(node, 'name') === 'iconsRenderNode' && property(node, 'length') === 0;
     const strictIconProducer = iconProducer(x) && iconProducer(y)
       && y.ownProperties?.some(p => p.key === 'arguments' || p.key === 'caller');
-    if (strictIconProducer) for (const key of ['arguments', 'caller']) {
-      assert.deepEqual(y.ownProperties?.find(p => p.key === key), { key, enumerable: false, configurable: false,
-        writable: false, kind: 'value', valueType: 'object' }, label + ' fixed non-strict Source function reflection');
-      assert.deepEqual(
-        y.properties?.find(p => p.key === key),
-        { key, value: null },
-        label + ' reflection-only Source null'
-      );
-      assert.equal(
-        x.ownProperties?.some(p => p.key === key),
-        false,
-        label + ' strict Native producer has no own reflection field'
-      );
-      assert.equal(x.properties?.some(p => p.key === key), false);
+    if (strictIconProducer) {
+      for (const key of ['arguments', 'caller']) {
+        assert.deepEqual(y.ownProperties?.find(p => p.key === key), { key, enumerable: false, configurable: false,
+          writable: false, kind: 'value', valueType: 'object' }, label + ' fixed non-strict Source function reflection');
+        assert.deepEqual(
+          y.properties?.find(p => p.key === key),
+          { key, value: null },
+          label + ' reflection-only Source null'
+        );
+        assert.equal(
+          x.ownProperties?.some(p => p.key === key),
+          false,
+          label + ' strict Native producer has no own reflection field'
+        );
+        assert.equal(x.properties?.some(p => p.key === key), false);
+      }
     }
     const reflectionOnly = (key: unknown) => strictIconProducer && (key === 'arguments' || key === 'caller');
     const sourceFields = ordered(y.ownProperties?.filter(p => !(authoredProps && root && p.key === 'ref')
@@ -173,7 +179,9 @@ export function verifyIconGraph(actualValue: unknown, sourceValue: unknown, labe
           y,
           String(key)
         ))!);
-        if (an?.type === 'function' && reactElement(sn)) return { ...p, key, valueType: 'object' };
+        if (an?.type === 'function' && reactElement(sn)) {
+          return { ...p, key, valueType: 'object' };
+        }
       }
       return { ...p, key };
     });
@@ -182,7 +190,9 @@ export function verifyIconGraph(actualValue: unknown, sourceValue: unknown, labe
       sourceFields,
       label + ' full own descriptors/order with only named binding placement'
     );
-    if (x.opaque || y.opaque) return;
+    if (x.opaque || y.opaque) {
+      return;
+    }
     const xs = ordered((x.properties ?? []).map(p => ({ ...p, key: aliasKey(p.key) })));
     const ys = ordered((y.properties ?? []).filter(p => !(authoredProps && root && p.key === 'ref')
       && !omittedBinding(p.key) && !reflectionOnly(p.key)));
@@ -200,7 +210,9 @@ export function verifyIconGraph(actualValue: unknown, sourceValue: unknown, labe
 }
 function argument(call: SelectSurfaceProducerCall) {
   const value = decodeSelectSurface(call.argument) as { props?: Record<string, unknown> };
-  if (!value?.props) return value;
+  if (!value?.props) {
+    return value;
+  }
   const props = { ...value.props };
   if (Object.hasOwn(props, 'class')) {
     props.className = props.class;
@@ -224,11 +236,13 @@ function sameInvocation(a: SelectSurfaceProducerCall, b: SelectSurfaceProducerCa
 export function verifyIconCalls(actual: readonly SelectSurfaceProducerCall[], sources: readonly (readonly SelectSurfaceProducerCall[])[],
   label: string, specs: readonly IconNodeSpecification[], ssr = false) {
   const all = sources.flat();
-  if (ssr) assert.deepEqual(
-    actual.map(p => [p.kind, p.side]),
-    all.map(p => [p.kind, p.side]),
-    label + ' exact SSR pure call order/count'
-  );
+  if (ssr) {
+    assert.deepEqual(
+      actual.map(p => [p.kind, p.side]),
+      all.map(p => [p.kind, p.side]),
+      label + ' exact SSR pure call order/count'
+    );
+  }
   for (const [index, call] of actual.entries()) {
     assert.equal(call.index, index, label + ' full Native call ledger');
     const source = ssr ? all[index] : all.find(p => sameInvocation(call, p));
@@ -248,16 +262,20 @@ export function verifyIconCalls(actual: readonly SelectSurfaceProducerCall[], so
       label + ' raw result descriptors/aliases',
       specs
     );
-    for (const key of ['argumentCount', 'argumentOwnKeys', 'argumentDescriptors']) assert.deepEqual(
-      call[key],
-      source[key],
-      label + '/' + key
+    for (const key of ['argumentCount', 'argumentOwnKeys', 'argumentDescriptors']) {
+      assert.deepEqual(
+        call[key],
+        source[key],
+        label + '/' + key
+      );
+    }
+  }
+  for (const source of all) {
+    assert(
+      actual.some(p => sameInvocation(p, source)),
+      label + ' every observed Original semantic invocation executed'
     );
   }
-  for (const source of all) assert(
-    actual.some(p => sameInvocation(p, source)),
-    label + ' every observed Original semantic invocation executed'
-  );
 }
 const scopeClass = (name: string) => name.startsWith('svelte-') || /^s-[A-Za-z0-9]+$/.test(name);
 function attrs(n: SelectIconNode) {
@@ -477,11 +495,13 @@ export function verifyIconNode(
   }
   for (const key of ['tag', 'connected', 'text', 'styleAttribute', 'cssText', 'inlineProperties', 'css', 'box', 'geometryBoundary', 'value', 'caret', 'focused'] as const)
     assert.deepEqual(actual[key], source[key], label + '/' + key);
-  if (wrapper) assert.deepEqual(
-    Object.fromEntries(currentAttrs),
-    Object.fromEntries(originalAttrs),
-    label + ' all physical-wrapper attributes'
-  );
+  if (wrapper) {
+    assert.deepEqual(
+      Object.fromEntries(currentAttrs),
+      Object.fromEntries(originalAttrs),
+      label + ' all physical-wrapper attributes'
+    );
+  }
   else assert.deepEqual(currentAttrs, originalAttrs, label + ' all attributes/order');
   const classes = (values: string[][]) => attribute(values, 'class')?.split(/\s+/).filter(Boolean) ?? [];
   assert.deepEqual(classes(currentAttrs), classes(originalAttrs), label + ' all classes/order');
@@ -495,11 +515,13 @@ export function verifyIconNode(
         label + ' exact feedback SVG descendants and paths'
       );
     }
-    else assert.equal(
-      withoutCompilerComments(actual.html),
-      withoutCompilerComments(source.html),
-      label + ' complete SVG and descendant paths'
-    );
+    else {
+      assert.equal(
+        withoutCompilerComments(actual.html),
+        withoutCompilerComments(source.html),
+        label + ' complete SVG and descendant paths'
+      );
+    }
   }
 }
 interface SSRIconElement { tag: string; attributes: string[][]; children?: Array<SSRIconElement | string>; text?: string }
@@ -514,7 +536,9 @@ export function verifySelectIconSSRNodes(actual: ReturnType<typeof readSelectIco
     return { property: match[1], value: match[2], priority: match[3] ?? '' };
   });
   const clean = (attributes: string[][]) => attributes.flatMap(([key, value]) => {
-    if (key !== 'class') return [[key, value]];
+    if (key !== 'class') {
+      return [[key, value]];
+    }
     const classes = value.split(/\s+/).filter(c => !scopeClass(c));
     return classes.length ? [[key, classes.join(' ')]] : [];
   });
@@ -610,11 +634,13 @@ export function verifySelectIconSSRNodes(actual: ReturnType<typeof readSelectIco
       );
       x = x.map(([key, value]) => [key, key === 'style' ? get(y, 'style')! : value]);
     }
-    if (wrapper) assert.deepEqual(
-      Object.fromEntries(x),
-      Object.fromEntries(y),
-      point + ' complete physical-wrapper attributes'
-    );
+    if (wrapper) {
+      assert.deepEqual(
+        Object.fromEntries(x),
+        Object.fromEntries(y),
+        point + ' complete physical-wrapper attributes'
+      );
+    }
     else assert.deepEqual(x, y, point + ' complete attributes and order');
     if (Object.hasOwn(b, 'text')) assert.equal(a.text, b.text, point + ' complete text');
     assert.equal(
@@ -626,19 +652,23 @@ export function verifySelectIconSSRNodes(actual: ReturnType<typeof readSelectIco
       assert.equal(a.children?.length, b.children.length, point + ' every descendant');
       for (const [index, child] of b.children.entries()) {
         const other: SSRIconElement | string = a.children![index];
-        if (typeof other === 'string' || typeof child === 'string') assert.deepEqual(
-          other,
-          child,
-          point + '/' + index + ' text'
-        );
+        if (typeof other === 'string' || typeof child === 'string') {
+          assert.deepEqual(
+            other,
+            child,
+            point + '/' + index + ' text'
+          );
+        }
         else compare(other, child, point + '/' + index, hasFeedback);
       }
     }
   };
   for (const key of ['authored', 'svg', 'affixes'] as const) {
     assert.equal(actual[key].length, source[key].length, label + '/' + key + ' all nodes');
-    for (const [index, node] of source[key].entries()) compare(actual[key][index] as SSRIconElement, node as SSRIconElement,
-      label + '/' + key + index, key === 'svg' && actual.feedbackSVGIndices.includes(index));
+    for (const [index, node] of source[key].entries()) {
+      compare(actual[key][index] as SSRIconElement, node as SSRIconElement,
+        label + '/' + key + index, key === 'svg' && actual.feedbackSVGIndices.includes(index));
+    }
   }
 }
 export async function readNativeSelectIcons(page: Page): Promise<NativeIconPoint> {
@@ -649,7 +679,9 @@ export async function readNativeSelectIcons(page: Page): Promise<NativeIconPoint
       'selecticonscapture',
       { detail }
     ));
-    if (!detail.read) throw Error('Actual icon owner absent');
+    if (!detail.read) {
+      throw Error('Actual icon owner absent');
+    }
     return detail.read();
   });
   return { dom, icons, topology, owner };
@@ -660,7 +692,9 @@ export async function settleNativeSelectIcons(page: Page) {
     await drainSelectSurface(page);
     const current = await readNativeSelectIcons(page), next = JSON.stringify(current);
     stable = next === previous ? stable + 1 : 0;
-    if (stable >= 3) return current;
+    if (stable >= 3) {
+      return current;
+    }
     previous = next;
   }
   throw Error('Actual Native public icon owner, all raw ledgers and UI did not settle');
@@ -715,10 +749,12 @@ export function verifySelectIconPoint(actual: NativeIconPoint, source: IconPoint
       );
     }
   }
-  if (unmountedPopup) identity.releaseDefaultPopup(new Set([
-    source.icons.current.popup!.identity, ...(source.icons.current.list ? [source.icons.current.list.identity] : []),
-    ...source.icons.nodes.filter(inSourcePopup).map(node => node.identity), ...source.icons.svg.filter(inSourcePopup).map(node => node.identity)
-  ]));
+  if (unmountedPopup) {
+    identity.releaseDefaultPopup(new Set([
+      source.icons.current.popup!.identity, ...(source.icons.current.list ? [source.icons.current.list.identity] : []),
+      ...source.icons.nodes.filter(inSourcePopup).map(node => node.identity), ...source.icons.svg.filter(inSourcePopup).map(node => node.identity)
+    ]));
+  }
   const boundary: IconBoundary = { control: sample.control, legacyClear: usesLegacyClear(
     source.owner,
     sample
@@ -734,11 +770,13 @@ export function verifySelectIconPoint(actual: NativeIconPoint, source: IconPoint
     feedbackSVG: node.tag.toLowerCase() === 'svg' && actual.icons.nodes.some(parent => parent.attributes.some(([key]) => key === 'data-form-feedback-glyph') && parent.html.includes(node.html)) });
   check('whole-public-owner', () => {
     assert.equal(actual.owner.alive, true);
-    for (const key of ['settings', 'model', 'open', 'query', 'authoredProvider', 'authoredInnerProvider'] as const) assert.deepEqual(
-      actual.owner[key],
-      source.owner[key],
-      key
-    );
+    for (const key of ['settings', 'model', 'open', 'query', 'authoredProvider', 'authoredInnerProvider'] as const) {
+      assert.deepEqual(
+        actual.owner[key],
+        source.owner[key],
+        key
+      );
+    }
     assert.deepEqual(
       normalizedSelectSurfaceAuthoredProps(actual.owner.authoredProps),
       normalizedSelectSurfaceAuthoredProps(source.owner.authoredProps)
@@ -812,11 +850,13 @@ export function verifySelectIconPoint(actual: NativeIconPoint, source: IconPoint
     }
     assert.deepEqual(actual.owner.events.map(selectSurfaceEventValue), expected);
     assert.equal(actual.owner.rawEvents.length, rawExpected.length);
-    for (const [i, event] of actual.owner.rawEvents.entries()) verifySelectSurfaceEventGraph(
-      event,
-      rawExpected[i],
-      label + '/event' + i
-    );
+    for (const [i, event] of actual.owner.rawEvents.entries()) {
+      verifySelectSurfaceEventGraph(
+        event,
+        rawExpected[i],
+        label + '/event' + i
+      );
+    }
     assert.deepEqual(
       actual.owner.lifecycle,
       entries[0].lifecycle.slice(0, source.owner.lifecycleCount)
@@ -898,20 +938,26 @@ export function verifySelectIconPoint(actual: NativeIconPoint, source: IconPoint
       actual.dom.view.popup.extras.length,
       unmountedPopup ? 0 : surface.view.popup.extras.length
     );
-    for (const [i, node] of (unmountedPopup ? [] : surface.view.popup.extras).entries()) verifySelectSurfaceNode(actual.dom.view.popup.extras[i], node, 'extra',
-      { control: sample.control }, [], label + '/extra' + i, surface.raw.extras[i].attributes.find(([name]) => name === 'style')?.[1] ?? '',
-      { callerLabel: 'Icon value', raw: actual.dom.raw.extras[i] });
+    for (const [i, node] of (unmountedPopup ? [] : surface.view.popup.extras).entries()) {
+      verifySelectSurfaceNode(actual.dom.view.popup.extras[i], node, 'extra',
+        { control: sample.control }, [], label + '/extra' + i, surface.raw.extras[i].attributes.find(([name]) => name === 'style')?.[1] ?? '',
+        { callerLabel: 'Icon value', raw: actual.dom.raw.extras[i] });
+    }
   });
   check('all-current-ref-identities', () => {
     const original = { ...source.icons.sameAsOriginal };
-    if (defaultPopup) for (const key of ['popup', 'list'] as const) {
-      const first = actual.icons.original[key], current = actual.icons.current[key];
-      original[key] = first ? current?.identity === first.identity : null;
-      if (first && first.identity !== current?.identity) assert.equal(
-        first.connected,
-        false,
-        label + ' old default popup disconnected'
-      );
+    if (defaultPopup) {
+      for (const key of ['popup', 'list'] as const) {
+        const first = actual.icons.original[key], current = actual.icons.current[key];
+        original[key] = first ? current?.identity === first.identity : null;
+        if (first && first.identity !== current?.identity) {
+          assert.equal(
+            first.connected,
+            false,
+            label + ' old default popup disconnected'
+          );
+        }
+      }
     }
     assert.deepEqual(actual.icons.sameAsOriginal, original);
     assert.equal(actual.icons.publicRefs.rootMatches, false);
@@ -927,17 +973,20 @@ export function verifySelectIconPoint(actual: NativeIconPoint, source: IconPoint
       assert.equal(Boolean(current), Boolean(node), label + '/' + key + ' present');
       assert.equal(current?.connected ?? null, node?.connected ?? null);
       identity(current, node, label + '/' + key);
-      if (!defaultPopup || key !== 'popup' && key !== 'list')
+      if (!defaultPopup || key !== 'popup' && key !== 'list') {
         identity(
           actual.icons.original[key as keyof typeof actual.icons.current],
           source.icons.original[key as keyof typeof source.icons.current],
           label + '/original-' + key
         );
+      }
     }
-    for (const key of ['focus', 'blur', 'scrollTo']) assert.equal(
-      actual.icons.publicRefs.methods?.[key],
-      source.icons.publicRefs.methods?.[key]
-    );
+    for (const key of ['focus', 'blur', 'scrollTo']) {
+      assert.equal(
+        actual.icons.publicRefs.methods?.[key],
+        source.icons.publicRefs.methods?.[key]
+      );
+    }
   });
   check('all-authored-icon-nodes', () => {
     const authored = (nodes: SelectIconNode[]) => nodes.filter(n => n.attributes.some(([name]) => name === 'data-select-icons-node'));

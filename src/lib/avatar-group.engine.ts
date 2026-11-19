@@ -3,7 +3,9 @@ import type { AvatarGroupItem, AvatarGroupKey } from './avatar-group.types';
 export function getAvatarGroupItems(items: readonly AvatarGroupItem[], maxCount?: number) {
   const seen = new Set<AvatarGroupKey>();
   const unique = items.filter(item => {
-    if (seen.has(item.key)) return false;
+    if (seen.has(item.key)) {
+      return false;
+    }
 
     seen.add(item.key);
     return true;

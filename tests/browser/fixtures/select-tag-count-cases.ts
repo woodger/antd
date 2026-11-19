@@ -12,7 +12,9 @@ export interface SelectTagCountSample {
 }
 
 export function getSelectTagCount(value?: string | number): number | 'responsive' | undefined {
-  if (value === 'responsive') return 'responsive';
+  if (value === 'responsive') {
+    return 'responsive';
+  }
   return value === 'nan' ? Number.NaN : value === 'infinity' ? Number.POSITIVE_INFINITY
     : typeof value === 'number' ? value : undefined;
 }

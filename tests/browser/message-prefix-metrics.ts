@@ -8,7 +8,9 @@ export function snapshotMessagePrefix() {
   const box = ['width', 'height', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
     'border-top-width', 'border-top-color', 'border-radius', 'background-color', 'box-shadow'];
   function css(node: Element | null, keys: string[]) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
 
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));

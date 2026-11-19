@@ -8,7 +8,9 @@ export function renderSelectSurfaceHydration(id: string) {
     throw Error('Select surface hydration must start with DOM-free SSR');
   }
   const sample = selectSurfaceHydrationSamples.find(sample => sample.id === id);
-  if (!sample) throw Error(`Unknown Select surface hydration sample: ${id}`);
+  if (!sample) {
+    throw Error(`Unknown Select surface hydration sample: ${id}`);
+  }
   const capture: NonNullable<ComponentProps<typeof SelectSurfaceHydrationCase>['capture']> = {};
   const rendered = render(
     SelectSurfaceHydrationCase,

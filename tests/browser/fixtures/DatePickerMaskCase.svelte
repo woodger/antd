@@ -15,7 +15,9 @@
     owner: MaskOwner; capture: MaskCapture; initialFormatProfile?: MaskFormatProfile
   } = $props();
   const selected = untrack(() => samples.find(sample => sample.id === owner));
-  if (!selected) throw Error('Choose one authored mask owner');
+  if (!selected) {
+    throw Error('Choose one authored mask owner');
+  }
   const sample = selected, output = untrack(() => capture);
   const range = sample.kind === 'range', time = sample.family === 'time';
   const recorder = createDatePickerPresetsRecorder();
@@ -57,13 +59,18 @@
         value.minute(), value.second(), value.millisecond()], locale: value.locale() },
     sameAsAuthored: Object.fromEntries(Object.entries(authored).map(([name, date]) => [name, date === value])) });
   function nestedDates(value: unknown, path: Array<string | number> = []): unknown[] {
-    if (dayjs.isDayjs(value)) return [{ path, value: dates(value) }];
-    if (Array.isArray(value)) return value.flatMap((item, index) => nestedDates(
-      item,
-      [...path, index]
-    ));
-    if (value && typeof value === 'object' && Object.getPrototypeOf(value) === Object.prototype)
+    if (dayjs.isDayjs(value)) {
+      return [{ path, value: dates(value) }];
+    }
+    if (Array.isArray(value)) {
+      return value.flatMap((item, index) => nestedDates(
+        item,
+        [...path, index]
+      ));
+    }
+    if (value && typeof value === 'object' && Object.getPrototypeOf(value) === Object.prototype) {
       return Object.entries(value).flatMap(([key, item]) => nestedDates(item, [...path, key]));
+    }
     return [];
   }
   const context = (value: unknown) => ({ type: typeof value, isUndefined: value === undefined,
@@ -131,7 +138,9 @@
     showSecond: true, showMillisecond: true, disabledTime } satisfies TimeRangePickerProps);
   const controls: MaskControlName[] = ['format-object', 'restore-authored-value', 'format-mask'];
   const delta = (rows: MaskInvocation[], cursor = 0) => {
-    if (!Number.isInteger(cursor) || cursor < 0 || cursor > rows.length) throw Error('Invalid observation cursor');
+    if (!Number.isInteger(cursor) || cursor < 0 || cursor > rows.length) {
+      throw Error('Invalid observation cursor');
+    }
     return { cursor, next: rows.length, rows: rows.slice(cursor) };
   };
   output.recorder = recorder;

@@ -16,7 +16,9 @@ async function settle(page: Page) {
     const actual = await page.evaluate(readSelectVirtual);
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Select virtual geometry, window or callback ledger did not settle');
@@ -115,10 +117,13 @@ for (const entry of selectVirtualNativeCases) {
             .dispatchEvent(new CustomEvent('virtualrefs', { detail: refs }));
           const editor = refs.editor!;
           const id = editor.getAttribute('aria-activedescendant');
-          if (editor.getAttribute('aria-expanded') !== 'true' || !id) return [];
+          if (editor.getAttribute('aria-expanded') !== 'true' || !id) {
+            return [];
+          }
           const roots: (Document | ShadowRoot)[] = [document];
-          for (const host of document.querySelectorAll('[data-select-virtual-shadow]'))
+          for (const host of document.querySelectorAll('[data-select-virtual-shadow]')) {
             if (host.shadowRoot) roots.push(host.shadowRoot);
+          }
           const targets = roots.map(root => root.getElementById(id)).filter(node => node != null);
           return targets.map(node => ({ role: node!.getAttribute('role'), text: node!.textContent,
             label: node!.getAttribute('aria-label'), selected: node!.getAttribute('aria-selected'),

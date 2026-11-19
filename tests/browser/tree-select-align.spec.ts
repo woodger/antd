@@ -13,7 +13,9 @@ type Projection = ReturnType<typeof readTreeSelectAlign>;
 
 async function field(page: Page) {
   const marked = page.locator('[data-align-case] [data-align-editor]');
-  if (await marked.count()) return marked.first();
+  if (await marked.count()) {
+    return marked.first();
+  }
   const input = page.locator('[data-align-case] input[role="combobox"],[data-align-case] textarea[role="combobox"]');
   return await input.count() ? input.first() : page.locator('[data-align-root]').first();
 }
@@ -25,7 +27,9 @@ async function settle(page: Page) {
     await page.locator('[data-align-command]').dispatchEvent('alignshadowstyles');
     const projection = await page.evaluate(readTreeSelectAlign), key = JSON.stringify(projection);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 6) return projection;
+    if (stable >= 6) {
+      return projection;
+    }
     previous = key;
   }
   throw Error('TreeSelect alignment did not settle after 150 frames');
@@ -34,37 +38,53 @@ async function act(page: Page, action: TreeSelectAlignAction) {
   if (action.type === 'click') await (await field(page)).click();
   else if (action.type === 'focus') await (await field(page)).focus();
   else if (action.type === 'fill') await (await field(page)).fill(action.text);
-  else if (action.type === 'caret') await (await field(page)).evaluate((node, range) => {
-    if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) throw Error('Expected editable field');
-    node.setSelectionRange(range.start, range.end);
-  }, action);
-  else if (action.type === 'props' || action.type === 'host') await page.locator('[data-align-command]').evaluate((
-    node,
-    detail
-  ) => {
-    node.dispatchEvent(new CustomEvent('alignupdate', { detail }));
-  }, action);
-  else if (action.type === 'viewport') await page.setViewportSize({
-    width: action.width,
-    height: action.height
-  });
-  else if (action.type === 'scroll') await page.locator('[data-align-scroller]').evaluate((
-    node,
-    position
-  ) => {
-    node.scrollTop = position.top;
-    node.scrollLeft = position.left;
-  }, action);
-  else if (action.type === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside align', exact: true }
-  ).click();
-  else if (action.type === 'choose') await page.getByText(
-    action.value === 'a' ? 'Alpha' : 'Beta',
-    { exact: true }
-  ).last().click();
-  else if (action.type === 'remove') await page.locator('.ant-select-selection-item').filter({ hasText: action.value === 'a' ? 'Alpha' : 'Beta' })
-    .locator('.ant-select-selection-item-remove').click();
+  else if (action.type === 'caret') {
+    await (await field(page)).evaluate((node, range) => {
+      if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) {
+        throw Error('Expected editable field');
+      }
+      node.setSelectionRange(range.start, range.end);
+    }, action);
+  }
+  else if (action.type === 'props' || action.type === 'host') {
+    await page.locator('[data-align-command]').evaluate((
+      node,
+      detail
+    ) => {
+      node.dispatchEvent(new CustomEvent('alignupdate', { detail }));
+    }, action);
+  }
+  else if (action.type === 'viewport') {
+    await page.setViewportSize({
+      width: action.width,
+      height: action.height
+    });
+  }
+  else if (action.type === 'scroll') {
+    await page.locator('[data-align-scroller]').evaluate((
+      node,
+      position
+    ) => {
+      node.scrollTop = position.top;
+      node.scrollLeft = position.left;
+    }, action);
+  }
+  else if (action.type === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside align', exact: true }
+    ).click();
+  }
+  else if (action.type === 'choose') {
+    await page.getByText(
+      action.value === 'a' ? 'Alpha' : 'Beta',
+      { exact: true }
+    ).last().click();
+  }
+  else if (action.type === 'remove') {
+    await page.locator('.ant-select-selection-item').filter({ hasText: action.value === 'a' ? 'Alpha' : 'Beta' })
+      .locator('.ant-select-selection-item-remove').click();
+  }
 }
 function verify(projection: Projection, expected: Projection, sample: TreeSelectAlignSample) {
   expect(projection.view).toEqual(treeSelectAlignNativeExpected(expected.view, sample.id));

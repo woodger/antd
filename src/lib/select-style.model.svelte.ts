@@ -61,12 +61,16 @@ export function createSelectOverlayStyle(getLayers: () => readonly InlineStyleLa
   function read() {
     const frame = resolveSelectStyleFrame(options.style(), [position, ...getLayers()],
       [...options.after?.() ?? [], projection]);
-    if (!sourceWidthVariable) return frame;
+    if (!sourceWidthVariable) {
+      return frame;
+    }
     if (getSourceOpen?.()) {
       const current = element?.style.getPropertyValue(sourceWidthVariable).trim();
       if (current) targetWidth = current;
     }
-    if (!targetWidth) return frame;
+    if (!targetWidth) {
+      return frame;
+    }
     const properties = { ...frame.properties };
     let changed = false;
     for (const key of ['width', 'minWidth']) {
@@ -94,7 +98,9 @@ export function createSelectOverlayStyle(getLayers: () => readonly InlineStyleLa
 
   return {
     initialStyle() {
-      if (!writer) return read().text;
+      if (!writer) {
+        return read().text;
+      }
       update();
       return (element?.style ?? accepted)?.cssText || undefined;
     },

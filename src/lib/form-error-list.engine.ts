@@ -36,7 +36,9 @@ export function buildFormErrorList({
   const used = new Set(messages.filter(({ key }) => counts.get(key) === 1).map(({ key }) => key));
 
   return messages.map((message, index) => {
-    if (counts.get(message.key) === 1) return message;
+    if (counts.get(message.key) === 1) {
+      return message;
+    }
 
     let key = `${message.key}-fallback-${index}`;
     while (used.has(key)) key = `${key}-fallback-${index}`;

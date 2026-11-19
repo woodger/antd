@@ -99,7 +99,9 @@ export function selectComponentsACStyleStaticStates(sample: SelectComponentsACSt
   let settings = { ...sample.settings };
   const states = [{ name: 'initial', settings }];
   sample.actions.forEach((action, index) => {
-    if (action.type !== 'props') return;
+    if (action.type !== 'props') {
+      return;
+    }
     settings = { ...settings, ...action.set };
     for (const key of action.drop ?? []) delete settings[key];
     states.push({ name: 'authored-props-' + index, settings });

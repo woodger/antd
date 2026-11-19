@@ -56,7 +56,9 @@ async function settle(page: Parameters<typeof actTreeSelectCheckable>[0]) {
     const actual = await page.evaluate(readTreeSelectCheckable);
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 2) return actual;
+    if (stable >= 2) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Hydrated checkable state did not settle');
@@ -129,7 +131,9 @@ for (const id of ['search-live-truthy', 'search-live-falsy']) {
       const schedule = browser.setTimeout.bind(browser);
       const clear = browser.clearTimeout.bind(browser);
       browser.setTimeout = (handler, timeout, ...args) => {
-        if (typeof handler !== 'function') throw Error('Expected a function hydration timer');
+        if (typeof handler !== 'function') {
+          throw Error('Expected a function hydration timer');
+        }
         const timer = schedule(() => {
           timers.delete(timer);
           handler(...args);

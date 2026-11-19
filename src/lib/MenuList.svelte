@@ -38,7 +38,9 @@
     }
     if (event.key === 'Enter') {
       // Enter на настоящей ссылке создаёт native click, который запускает callback.
-      if (event.composedPath()[0] instanceof HTMLAnchorElement) return;
+      if (event.composedPath()[0] instanceof HTMLAnchorElement) {
+        return;
+      }
       event.preventDefault();
       context.click(entry, event);
     }

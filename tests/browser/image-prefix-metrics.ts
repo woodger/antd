@@ -6,7 +6,9 @@ export function snapshotImagePrefix(override?: string) {
   const previewPrefix = override ?? (viewer
     ? [...viewer.classList].find(value => value.endsWith('-preview')) : '');
   function css(node: Element | null, keys: string[]) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
 
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));

@@ -32,7 +32,9 @@ const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('h
 const protocolSHA = 'f3b0ed104dc916bbcb429bf48682c0b6fb2f2b7cd5507a2277df37d05487a735';
 let manifestCache: Manifest | undefined, caseCache: SourceCSRCase | undefined;
 export function readSelectTagCloseHandlesCachedOptionManifest() {
-  if (manifestCache) return manifestCache;
+  if (manifestCache) {
+    return manifestCache;
+  }
   const bytes = readFileSync(fixture(prefix + 'source-manifest.json'));
   assert.equal(bytes.length, 5909);
   assert.equal(hash(bytes), '953888e3eaf15923cf6c8b0246bf23f767e4084a0989f485914e06de32b69579');
@@ -52,9 +54,11 @@ export function readSelectTagCloseHandlesCachedOptionManifest() {
   assert.equal(Object.keys(frozen.inputPins).length, 3);
   assert.deepEqual(frozen.samples, [manifest.sample]);
   assert(manifest.rawPair.wholeByteEqual);
-  for (const variant of ['first', 'repeat'] as const) assert.deepEqual(manifest.rawPair[variant], {
-    path: '.upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/source-' + variant + '.json',
-    bytes: 3781242, sha256: 'd07a82838bd206cfde897c37b81a1c900c12634ff7c272f089225cb9adf65f24' });
+  for (const variant of ['first', 'repeat'] as const) {
+    assert.deepEqual(manifest.rawPair[variant], {
+      path: '.upstream/artifacts/select-components-tag-close-handles-cached-option-source-counter-v1/source-' + variant + '.json',
+      bytes: 3781242, sha256: 'd07a82838bd206cfde897c37b81a1c900c12634ff7c272f089225cb9adf65f24' });
+  }
   assert.deepEqual(
     manifest.serialization,
     {
@@ -101,10 +105,12 @@ export function validateSelectTagCloseHandlesCachedOptionCase(entry: SourceCSRCa
     value: 'a',
     label: 'Alpha old',
     marker: 'initial-a'
-  })) assert.equal(
-    option.find(row => row.key === key)?.value,
-    value
-  );
+  })) {
+    assert.equal(
+      option.find(row => row.key === key)?.value,
+      value
+    );
+  }
   assert(
     option.find(row => row.key === 'props')?.accessor,
     'Actual deprecated Source getter remains in the full raw oracle'
@@ -116,7 +122,9 @@ export function validateSelectTagCloseHandlesCachedOptionCase(entry: SourceCSRCa
   assert.deepEqual(invocation.result, { $: 'undefined' });
   assert.equal(invocation.thrown, null);
   assert(invocation.handle.callbackIsInfoOnClose);
-  for (const call of entry.ledger.producerCalls) if (call.kind === 'tagRender') readTagCloseHandleSourceInfo(call);
+  for (const call of entry.ledger.producerCalls) {
+    if (call.kind === 'tagRender') readTagCloseHandleSourceInfo(call);
+  }
   assert.deepEqual(entry.network, { requests: [], requestFailures: [], responses: [] });
   for (const point of [entry.initial, ...entry.steps]) assert(point.dom.sameRoot && point.dom.sameEditor);
   assert(Object.values(entry.cleanup.refs).every(Boolean));
@@ -132,7 +140,9 @@ export function validateSelectTagCloseHandlesCachedOptionCase(entry: SourceCSRCa
 }
 /** One complete independently captured Source case; no Native-shaped projection. */
 export function readSelectTagCloseHandlesCachedOptionCase(): SourceCSRCase {
-  if (caseCache) return caseCache;
+  if (caseCache) {
+    return caseCache;
+  }
   const manifest = readSelectTagCloseHandlesCachedOptionManifest(), stored = readFileSync(fixture(manifest.portable.path));
   assert.equal(stored.length, 112895);
   assert.equal(hash(stored), '8853919e17555a9efb20412247ac60294e05ad48b3a9b6ace3b6a33021b04a6d');

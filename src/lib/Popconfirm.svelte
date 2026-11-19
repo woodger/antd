@@ -149,7 +149,9 @@
   });
 
   function request(next: boolean) {
-    if (!active || resolvedDisabled || action.loading || next === rawOpen) return;
+    if (!active || resolvedDisabled || action.loading || next === rawOpen) {
+      return;
+    }
 
     uncontrolledOpen = next;
     open = next;
@@ -157,20 +159,28 @@
   }
 
   function confirm(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
-    if (!visible || action.loading || okButtonProps?.disabled) return;
+    if (!visible || action.loading || okButtonProps?.disabled) {
+      return;
+    }
 
     okButtonProps?.onclick?.(event);
-    if (event.defaultPrevented) return;
+    if (event.defaultPrevented) {
+      return;
+    }
 
     errorSession = undefined;
     void action.run(() => onConfirm?.(event));
   }
 
   function cancel(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
-    if (!visible || action.loading || cancelButtonProps?.disabled) return;
+    if (!visible || action.loading || cancelButtonProps?.disabled) {
+      return;
+    }
 
     cancelButtonProps?.onclick?.(event);
-    if (event.defaultPrevented) return;
+    if (event.defaultPrevented) {
+      return;
+    }
 
     request(false);
     onCancel?.(event);

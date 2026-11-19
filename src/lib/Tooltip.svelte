@@ -81,7 +81,9 @@
   $effect(() => {
     const element = host;
 
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     function update() {
       anchor = element!.firstElementChild ?? element;
@@ -140,7 +142,9 @@
         )
         || !independentActions && !actionOverrides && next
         && !wanted()
-        || next === rawOpen) return;
+        || next === rawOpen) {
+        return;
+      }
 
       uncontrolledOpen = next;
       open = next;
@@ -153,7 +157,9 @@
   }
 
   function handleEnter(event: PointerEvent) {
-    if (event.pointerType === 'touch' || sourceTouch && touched) return;
+    if (event.pointerType === 'touch' || sourceTouch && touched) {
+      return;
+    }
 
     hovered = true;
     dismissed = false;
@@ -162,7 +168,9 @@
   }
 
   function handleLeave() {
-    if (sourceTouch && touched) return;
+    if (sourceTouch && touched) {
+      return;
+    }
 
     hovered = false;
     if (sourceTrigger ? actions.hide.has('hover') : !wanted())
@@ -179,8 +187,12 @@
   function handleBlur(event: FocusEvent) {
     const target = anchor;
     function closeIfOutside() {
-      if (!active || !target?.isConnected || target !== anchor) return;
-      if (event.relatedTarget instanceof Node && host?.contains(event.relatedTarget)) return;
+      if (!active || !target?.isConnected || target !== anchor) {
+        return;
+      }
+      if (event.relatedTarget instanceof Node && host?.contains(event.relatedTarget)) {
+        return;
+      }
 
       focused = false;
       if (sourceTrigger ? actions.hide.has('focus') : !wanted()) {
@@ -200,7 +212,9 @@
       else if (actions.hide.has('hover')) request(false, getTooltipDelay(leaveDelay));
       return;
     }
-    if (sourceTrigger && !supports('hover')) return;
+    if (sourceTrigger && !supports('hover')) {
+      return;
+    }
 
     popupHovered = next;
     if (next)
@@ -210,7 +224,9 @@
   }
 
   function showByClick() {
-    if (anchor?.matches(':disabled, [aria-disabled="true"]')) return;
+    if (anchor?.matches(':disabled, [aria-disabled="true"]')) {
+      return;
+    }
 
     dismissed = false;
     clicked = true;
@@ -221,7 +237,9 @@
   function handleClick(event: MouseEvent) {
     const show = actions.show.has('click');
     const hide = actions.hide.has('click') || actions.hide.has('contextMenu');
-    if (event.defaultPrevented && !actionOverrides || !show && !hide) return;
+    if (event.defaultPrevented && !actionOverrides || !show && !hide) {
+      return;
+    }
 
     if (visible && hide) dismiss();
     else if (!visible && show) showByClick();
@@ -229,7 +247,9 @@
   }
 
   function handleContextMenu(event: MouseEvent) {
-    if (!actions.show.has('contextMenu')) return;
+    if (!actions.show.has('contextMenu')) {
+      return;
+    }
 
     event.preventDefault();
     if (visible && actions.hide.has('contextMenu')) dismiss();
@@ -237,7 +257,9 @@
   }
 
   function handleTouchStart() {
-    if (!sourceTouch || !actions.show.has('touch') && !actions.hide.has('touch')) return;
+    if (!sourceTouch || !actions.show.has('touch') && !actions.hide.has('touch')) {
+      return;
+    }
 
     touched = true;
     if (visible && actions.hide.has('touch')) dismiss();
@@ -246,7 +268,9 @@
 
   function dismiss(reason?: 'escape' | 'outside') {
     if (reason === 'outside' && actionOverrides && !actions.hide.has('click')
-      && !actions.hide.has('contextMenu') && !actions.hide.has('touch')) return;
+      && !actions.hide.has('contextMenu') && !actions.hide.has('touch')) {
+      return;
+    }
 
     dismissed = true;
     clicked = false;

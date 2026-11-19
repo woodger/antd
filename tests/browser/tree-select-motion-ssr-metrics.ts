@@ -4,14 +4,18 @@ export function readTreeSelectMotionSSR(html: string, selectPrefix = 'ant-select
     ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&#x27;': "'" })[entity]!);
   const tags = [...html.matchAll(/<[A-Za-z][\w:-]*\b[^>]*>/g)].map(match => match[0]);
   const attribute = (tag: string | undefined, name: string) => {
-    if (!tag) return null;
+    if (!tag) {
+      return null;
+    }
     const match = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s/>]))`, 'i').exec(tag);
     return match ? decode(match[1] ?? '') : null;
   };
   const root = tags.find(tag => attribute(tag, 'data-motion-root') !== null)
     ?? tags.find(tag => attribute(tag, 'class')?.split(/\s+/).includes('motion-audit-root'))
     ?? tags.find(tag => attribute(tag, 'class')?.split(/\s+/).includes(selectPrefix));
-  if (!root) throw Error('Missing TreeSelect motion SSR root');
+  if (!root) {
+    throw Error('Missing TreeSelect motion SSR root');
+  }
   const editor = tags.find(tag => /^(?:<input|<textarea)\b/i.test(tag)
     && (attribute(tag, 'data-motion-editor') !== null || attribute(tag, 'role') === 'combobox'));
   const style = (tag: string | undefined, name: string) => {

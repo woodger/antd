@@ -34,7 +34,9 @@ export function snapshotAvatarPrefix(host: HTMLElement, sample: {
     };
   };
 
-  if (!sample.group) return { root: metric(root, prefix), members: [] };
+  if (!sample.group) {
+    return { root: metric(root, prefix), members: [] };
+  }
 
   const alpha = root.querySelector<HTMLElement>('[data-member="alpha"]')!;
   const beta = root.querySelector<HTMLElement>('.case-beta')!;

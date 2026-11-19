@@ -50,7 +50,9 @@ export function connectTooltipDescription(element: Element, id: string): () => v
 
   return () => {
     observer.disconnect();
-    if (!owned.size) return;
+    if (!owned.size) {
+      return;
+    }
 
     const tokens = (element.getAttribute('aria-describedby') ?? '').split(/\s+/).filter(
       (token) => token && !owned.has(token)

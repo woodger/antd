@@ -18,7 +18,9 @@ test.beforeEach(async ({ page }) => {
     const request = window.requestAnimationFrame.bind(window);
     const cancel = window.cancelAnimationFrame.bind(window);
     window.setTimeout = ((callback: TimerHandler, delay?: number, ...args: unknown[]) => {
-      if (typeof callback !== 'function') return set(callback, delay, ...args);
+      if (typeof callback !== 'function') {
+        return set(callback, delay, ...args);
+      }
 
       const timer = set(() => {
         timers.delete(timer);
@@ -107,7 +109,9 @@ for (const sample of reference.cases) {
       await next(page);
       if (frame.step.kind === 'wait') {
         const delay = 'ms' in frame.step ? frame.step.ms : undefined;
-        if (typeof delay !== 'number') throw new Error('Missing source RAF/deadline delay');
+        if (typeof delay !== 'number') {
+          throw new Error('Missing source RAF/deadline delay');
+        }
         await page.clock.runFor(delay);
       }
 

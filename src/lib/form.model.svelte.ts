@@ -199,7 +199,9 @@ export function createForm<Values extends FormValues>({
         callback?.(undefined);
         return;
       }
-      if (!callback) return;
+      if (!callback) {
+        return;
+      }
 
       const meta = fieldMeta(field);
       if (!sameFormValue(meta, field.metaCache)) {
@@ -224,7 +226,9 @@ export function createForm<Values extends FormValues>({
 
   function ensureField(name: NamePath): StoredField {
     const existing = findField(name);
-    if (existing) return existing;
+    if (existing) {
+      return existing;
+    }
 
     return addField(name);
   }
@@ -283,7 +287,9 @@ export function createForm<Values extends FormValues>({
     const names = Array.isArray(namesOrAll) ? namesOrAll as readonly NamePath[] : undefined;
     const all = typeof namesOrAll === 'boolean' ? namesOrAll : allTouched;
 
-    if (names) return all ? names.every(isFieldTouched) : names.some(isFieldTouched);
+    if (names) {
+      return all ? names.every(isFieldTouched) : names.some(isFieldTouched);
+    }
 
     // Корни initialValues без binding — контейнеры store, а не дополнительные controls.
     const bindings = fields.filter((field) =>
@@ -305,7 +311,9 @@ export function createForm<Values extends FormValues>({
     filter?: FormFilterFunc
   ): Values {
     void revision;
-    if (namesOrConfig === true && !filter) return values;
+    if (namesOrConfig === true && !filter) {
+      return values;
+    }
 
     const names = Array.isArray(namesOrConfig) ? namesOrConfig as readonly NamePath[] : undefined;
     const select = names || namesOrConfig === true
@@ -365,7 +373,9 @@ export function createForm<Values extends FormValues>({
 
   function cancelValidationDelay(field: StoredField): boolean {
     const cancel = validationDelays.get(field);
-    if (!cancel) return false;
+    if (!cancel) {
+      return false;
+    }
 
     cancel();
 
@@ -427,7 +437,9 @@ export function createForm<Values extends FormValues>({
     }
 
     const results = await Promise.all(entries.map(async ({ field, path, hasRules, delay }) => {
-      if (!hasRules) return { name: path, errors: [], warnings: [] };
+      if (!hasRules) {
+        return { name: path, errors: [], warnings: [] };
+      }
 
       let rules: readonly ValidationRule<Values>[];
       try {
@@ -531,13 +543,17 @@ export function createForm<Values extends FormValues>({
   }
 
   function revalidateTouched() {
-    if (isSubmitting) return;
+    if (isSubmitting) {
+      return;
+    }
 
     const selected = fields.filter((field) => field.touched);
 
     if (selected.length) {
       void validate(selected, false, true).catch((error: unknown) => {
-        if (!(error instanceof FormValidationError)) throw error;
+        if (!(error instanceof FormValidationError)) {
+          throw error;
+        }
       });
     }
   }
@@ -605,7 +621,9 @@ export function createForm<Values extends FormValues>({
       const field = controlRegistration(name);
       const instance = field?.getInstance?.();
       const node = getFormFieldElement(instance) ?? field?.getElement?.();
-      if (!node) return;
+      if (!node) {
+        return;
+      }
 
       scrollFormField(node, options);
       if (options?.focus) form.focusField(name);
@@ -719,7 +737,9 @@ export function createForm<Values extends FormValues>({
       revalidateTouched();
     },
     resetFields(names) {
-      if (names?.length === 0) return;
+      if (names?.length === 0) {
+        return;
+      }
 
       const selected = names ? fields.filter((field) =>
         names.some((name) => sameFormPath(name, fieldPath(field)))
@@ -783,7 +803,9 @@ export function createForm<Values extends FormValues>({
     },
     validateFields,
     async submit(onFinish) {
-      if (isSubmitting) return { status: 'busy' };
+      if (isSubmitting) {
+        return { status: 'busy' };
+      }
 
       isSubmitting = true;
       submissionError = undefined;
@@ -800,7 +822,9 @@ export function createForm<Values extends FormValues>({
         return { status: 'success' };
       }
       catch (error) {
-        if (error instanceof FormValidationError) return { status: 'invalid', error };
+        if (error instanceof FormValidationError) {
+          return { status: 'invalid', error };
+        }
 
         submissionError = error;
 

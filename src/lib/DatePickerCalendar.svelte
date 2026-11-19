@@ -106,7 +106,9 @@
       : date.format(datePanel ? 'YYYY-MM-DD' : mode === 'month' ? 'YYYY-MM' : 'YYYY');
   }
   function cellText(date: Dayjs) {
-    if (mode === 'month' && !locale.monthFormat) return months[date.month()];
+    if (mode === 'month' && !locale.monthFormat) {
+      return months[date.month()];
+    }
     const format = mode === 'quarter' ? locale.cellQuarterFormat ?? '[Q]Q'
       : datePanel ? locale.cellDateFormat ?? 'D'
       : mode === 'month' ? locale.monthFormat! : locale.cellYearFormat ?? 'YYYY';
@@ -140,7 +142,9 @@
       : mode === 'quarter' ? samePickerQuarter(value, date) : value.isSame(date, unit));
   }
   function inRangeCell(date: Dayjs) {
-    if (!range?.[0] || !range[1]) return false;
+    if (!range?.[0] || !range[1]) {
+      return false;
+    }
     return mode === 'quarter'
       ? !samePickerQuarter(date, range[0]) && !samePickerQuarter(date, range[1])
         && date.isAfter(range[0]) && date.isBefore(range[1])
@@ -157,7 +161,9 @@
         ? !!restrictions.minDate && target.endOf('month').isBefore(restrictions.minDate, 'day')
         : !!restrictions.maxDate && target.startOf('month').isAfter(restrictions.maxDate, 'day');
     }
-    if (picker === 'date' || mode === 'date') return false;
+    if (picker === 'date' || mode === 'date') {
+      return false;
+    }
     const target = cellPanel.add(
       amount * (mode === 'month' || mode === 'quarter' ? 1 : mode === 'year' ? 10 : 100),
       'year'
@@ -170,7 +176,9 @@
       : !!restrictions.maxDate && first > restrictions.maxDate.year();
   }
   function weekRowClasses(date: Dayjs) {
-    if (!weekPanel) return undefined;
+    if (!weekPanel) {
+      return undefined;
+    }
     const start = range?.[0] && samePickerWeek(range[0], date, locale.locale);
     const end = range?.[1] && samePickerWeek(range[1], date, locale.locale);
     return [
@@ -186,21 +194,23 @@
   async function key(event: KeyboardEvent, date: Dayjs) {
     let next: Dayjs;
     const step = mode === 'decade' ? 10 : mode === 'quarter' ? 3 : 1;
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       next = date.add(
         (event.key === 'ArrowLeft' ? -1 : 1) * (direction === 'rtl' ? -1 : 1) * step,
         unit
       );
+    }
     else if (event.key === 'ArrowUp' || event.key === 'ArrowDown')
       next = date.add((event.key === 'ArrowUp' ? -1 : 1) * width * step, unit);
-    else if (event.key === 'PageUp' || event.key === 'PageDown')
+    else if (event.key === 'PageUp' || event.key === 'PageDown') {
       next = datePanel
         ? date.add(event.key === 'PageUp' ? -1 : 1, event.shiftKey ? 'year' : 'month')
         : date.add(
           (event.key === 'PageUp' ? -1 : 1) * (mode === 'month' || mode === 'quarter' ? 1 : mode === 'year' ? 10 : 100),
           'year'
         );
-    else if (event.key === 'Home' || event.key === 'End')
+    }
+    else if (event.key === 'Home' || event.key === 'End') {
       next = datePanel
         ? event.key === 'Home' ? date.startOf('month') : date.endOf('month')
         : mode === 'month' || mode === 'quarter'
@@ -214,6 +224,7 @@
                   ? 0
                   : mode === 'year' ? 9 : 90)
           );
+    }
     else return;
     event.preventDefault();
     const sign = next.isBefore(date) ? -1 : 1;
@@ -229,10 +240,14 @@
         && !(weekPanel && samePickerWeek(next, restrictions.minDate, locale.locale))
         && next.endOf(unit).isBefore(
           restrictions.minDate.startOf(unit)
-        )) return;
+        )) {
+        return;
+      }
       next = next.add(sign * step, unit);
     }
-    if (unavailable(next)) return;
+    if (unavailable(next)) {
+      return;
+    }
     const previous = event.target instanceof HTMLElement ? event.target : undefined;
     // Смена месяца переносит дни между keyed-строками; удерживаем фокус внутри popup.
     root.closest<HTMLElement>(`.${prefixCls}-panel`)?.focus({ preventScroll: true });

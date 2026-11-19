@@ -19,8 +19,10 @@ for (const source of [false, true]) {
         let generatedId: string | undefined;
 
         for (const [index, frame] of sample.frames.entries()) {
-          if (index) await page.getByRole('button', { name: 'Next lifecycle step', exact: true })
-            .evaluate(node => (node as HTMLButtonElement).click());
+          if (index) {
+            await page.getByRole('button', { name: 'Next lifecycle step', exact: true })
+              .evaluate(node => (node as HTMLButtonElement).click());
+          }
           if (frame.action.kind === 'widget') {
             await page.getByLabel('Lifecycle draft', { exact: true }).evaluate((node, value) => {
               (node as HTMLInputElement).value = value;

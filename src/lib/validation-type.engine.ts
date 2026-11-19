@@ -6,8 +6,12 @@ export type ValidationRuleType = 'string' | 'number' | 'integer' | 'float' | 'bo
   | 'enum' | 'email' | 'url' | 'hex' | 'tel' | 'pattern';
 
 export function normalizeValidationType(value: unknown, type: ValidationRuleType | undefined) {
-  if (type === 'number' && value === '') return undefined;
-  if (type !== 'date' || value == null || value === '' || value instanceof Date) return value;
+  if (type === 'number' && value === '') {
+    return undefined;
+  }
+  if (type !== 'date' || value == null || value === '' || value instanceof Date) {
+    return value;
+  }
 
   try {
     return new Date(value as string);
@@ -31,7 +35,9 @@ export function matchesValidationType(value: unknown, type: ValidationRuleType) 
     case 'date': return value instanceof Date && !Number.isNaN(value.getTime());
     case 'method': return typeof value === 'function';
     case 'regexp':
-      if (value instanceof RegExp) return true;
+      if (value instanceof RegExp) {
+        return true;
+      }
       try {
         new RegExp(value as string);
         return true;

@@ -32,8 +32,12 @@ export function connectStepsFocus(root: HTMLElement) {
   document.addEventListener('focusin', remember);
   remember();
   const observer = new document.defaultView!.MutationObserver(() => {
-    if (!focused || !root.isConnected) return;
-    if (document.activeElement !== document.body && document.activeElement !== focused) return;
+    if (!focused || !root.isConnected) {
+      return;
+    }
+    if (document.activeElement !== document.body && document.activeElement !== focused) {
+      return;
+    }
 
     if (root.contains(focused) && available(focused)) {
       if (document.activeElement === document.body)

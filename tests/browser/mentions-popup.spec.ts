@@ -34,7 +34,9 @@ async function snapshot(page: Page, context: boolean) {
     const shadow = document.getElementById('mention-shadow')!.shadowRoot!;
     const popup = document.querySelector('.ant-mentions-dropdown')
       ?? shadow.querySelector('.ant-mentions-dropdown');
-    if (!popup) return null;
+    if (!popup) {
+      return null;
+    }
     const calls: unknown[] = JSON.parse(
       document.querySelector('[aria-label="Mention popup calls"]')!.textContent!
     );
@@ -78,8 +80,10 @@ for (const sample of reference.cases) {
       });
       const original = await input(page).elementHandle();
       const popup = await page.locator(surface).elementHandle();
-      if (sample.custom) await page.locator('[data-mention-count]')
-        .evaluate(node => (node as HTMLElement).click());
+      if (sample.custom) {
+        await page.locator('[data-mention-count]')
+          .evaluate(node => (node as HTMLElement).click());
+      }
 
       await page.getByRole('button', { name: 'Refresh mention function', exact: true })
         .evaluate(node => (node as HTMLElement).click());

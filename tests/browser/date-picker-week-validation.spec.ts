@@ -29,8 +29,10 @@ for (const picker of ['week', 'date'] as const) for (const kind of ['single', 'r
       expect(call.rejected).toBe(false);
     }
     await expect(input).not.toHaveAttribute('aria-invalid', 'true');
-    if (kind === 'range') await expect(page.locator('#week-validation-end'))
-      .not.toHaveAttribute('aria-invalid', 'true');
+    if (kind === 'range') {
+      await expect(page.locator('#week-validation-end'))
+        .not.toHaveAttribute('aria-invalid', 'true');
+    }
     await expect(input).not.toHaveAttribute('readonly');
     const original = await input.elementHandle();
     await input.click();

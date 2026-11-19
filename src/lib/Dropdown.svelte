@@ -118,7 +118,9 @@
 
   $effect(() => {
     const element = host;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     function update() {
       anchor = element!.firstElementChild ?? element;
@@ -131,7 +133,9 @@
   });
 
   $effect(() => {
-    if (anchor) return connectPopoverTrigger(anchor, menuId, shown, 'menu');
+    if (anchor) {
+      return connectPopoverTrigger(anchor, menuId, shown, 'menu');
+    }
   });
 
   $effect.pre(() => {
@@ -174,7 +178,9 @@
   $effect(() => {
     const surface = popup;
     const source = anchor;
-    if (!surface || !source || !visible) return;
+    if (!surface || !source || !visible) {
+      return;
+    }
 
     const disconnect = untrack(() => connectPopup(surface, source, {
       trigger: host,
@@ -258,7 +264,9 @@
         || !Object.is(
           isOpen,
           ownerValue
-        )) return;
+        )) {
+        return;
+      }
 
       if (next !== isOpen) {
         internalOpen = next;
@@ -279,7 +287,9 @@
   }
 
   function focusItem(key: string | null) {
-    if (!list) return;
+    if (!list) {
+      return;
+    }
 
     const element = Array.from(list.querySelectorAll<HTMLElement>('[role="menuitem"]')).find(
       (item) => item.dataset.dropdownKey === key
@@ -329,7 +339,9 @@
       || event.pointerType === 'touch'
       || anchor?.matches(
         ':disabled, [aria-disabled="true"]'
-      )) return;
+      )) {
+      return;
+    }
 
     hovered = true;
     dismissed = false;
@@ -355,7 +367,9 @@
       && !(event.detail === 0
         && supports(
           'hover'
-        ))) return;
+        ))) {
+      return;
+    }
 
     if (clicked || visible && !wanted())
       close('trigger');
@@ -378,8 +392,12 @@
       && !visible
       || anchor?.matches(
         ':disabled, [aria-disabled="true"]'
-      )) return;
-    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+      )) {
+      return;
+    }
+    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
+      return;
+    }
 
     event.preventDefault();
     clicked = true;
@@ -402,8 +420,12 @@
       || event.relatedTarget instanceof Node
       && popup?.contains(
         event.relatedTarget
-      )) return;
-    if (event.relatedTarget === null && !leavingByTab) return;
+      )) {
+      return;
+    }
+    if (event.relatedTarget === null && !leavingByTab) {
+      return;
+    }
     if (!leavingByTab
       && event.relatedTarget instanceof Node
       && host?.contains(event.relatedTarget)) {
@@ -421,7 +443,9 @@
       || event.isComposing
       || event.ctrlKey
       || event.altKey
-      || event.metaKey) return;
+      || event.metaKey) {
+      return;
+    }
 
     leavingByTab = event.key === 'Tab';
     const direction = event.key === 'ArrowDown'
@@ -445,7 +469,9 @@
       }
       return;
     }
-    if (Array.from(event.key).length !== 1) return;
+    if (Array.from(event.key).length !== 1) {
+      return;
+    }
 
     event.preventDefault();
     const now = Date.now();
@@ -480,11 +506,15 @@
       || !shown
       || resolvedDisabled
       || !item
-      || event.defaultPrevented) return;
+      || event.defaultPrevented) {
+      return;
+    }
 
     const info: DropdownClickInfo = { key, domEvent: event };
     item.onClick?.(info);
-    if (!active || event.defaultPrevented) return;
+    if (!active || event.defaultPrevented) {
+      return;
+    }
     menu.onClick?.(info);
     if (active && !event.defaultPrevented)
       close('menu');

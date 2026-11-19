@@ -4,11 +4,17 @@ import type { UploadFile, UploadProps, UploadRcFile } from './upload.types';
 export const UPLOAD_LIST_IGNORE = '__ANT_SVELTE_UPLOAD_LIST_IGNORE__';
 
 export function getUploadErrorMessage(response: unknown, error: unknown, fallback: string): string {
-  if (typeof response === 'string' && response) return response;
-  if (error === null || (typeof error !== 'object' && typeof error !== 'function')) return fallback;
+  if (typeof response === 'string' && response) {
+    return response;
+  }
+  if (error === null || (typeof error !== 'object' && typeof error !== 'function')) {
+    return fallback;
+  }
 
   const statusText: unknown = Reflect.get(error, 'statusText');
-  if (typeof statusText === 'string' && statusText) return statusText;
+  if (typeof statusText === 'string' && statusText) {
+    return statusText;
+  }
   const message: unknown = Reflect.get(error, 'message');
 
   return typeof message === 'string' && message ? message : fallback;
@@ -67,20 +73,26 @@ export function limitUploadList<T = unknown>(
   };
 }
 export function uploadAccept(file: Pick<File, 'name' | 'type'>, accept?: string): boolean {
-  if (!accept) return true;
+  if (!accept) {
+    return true;
+  }
   return accept.split(',').some(type => {
     const valid = type.trim();
-    if (/^\*(\/\*)?$/.test(type)) return true;
+    if (/^\*(\/\*)?$/.test(type)) {
+      return true;
+    }
     if (valid.startsWith('.')) {
       const lower = valid.toLowerCase();
       return (lower === '.jpg' || lower === '.jpeg' ? ['.jpg', '.jpeg'] : [lower]).some(
         ext => file.name.toLowerCase().endsWith(ext)
       );
     }
-    if (valid.endsWith('/*')) return file.type.replace(/\/.*$/, '') === valid.replace(
-      /\/.*$/,
-      ''
-    );
+    if (valid.endsWith('/*')) {
+      return file.type.replace(/\/.*$/, '') === valid.replace(
+        /\/.*$/,
+        ''
+      );
+    }
     return file.type === valid || /^\w+$/.test(valid);
   });
 }
@@ -90,13 +102,19 @@ export function filterUploadFile(
   force: boolean
 ): boolean {
   if (typeof accept === 'object') {
-    if (accept.filter === 'native') return true;
-    if (typeof accept.filter === 'function') return accept.filter(file);
+    if (accept.filter === 'native') {
+      return true;
+    }
+    if (typeof accept.filter === 'function') {
+      return accept.filter(file);
+    }
   }
   return !force || uploadAccept(file, typeof accept === 'string' ? accept : accept?.format);
 }
 export function uploadIsImage(file: UploadFile): boolean {
-  if (file.type && !file.thumbUrl) return file.type.startsWith('image/');
+  if (file.type && !file.thumbUrl) {
+    return file.type.startsWith('image/');
+  }
   const url = file.thumbUrl || file.url || '';
   const name = (url || file.name).split('/').at(-1)?.split(/#|\?/)[0] ?? '';
   const ext = /\.[^./\\]*$/.exec(name)?.[0]?.toLowerCase();
@@ -119,6 +137,8 @@ export function uploadIsImage(file: UploadFile): boolean {
       '.webp'
     ].includes(
       ext ?? ''
-    )) return true;
+    )) {
+    return true;
+  }
   return !url.startsWith('data:') && !ext;
 }

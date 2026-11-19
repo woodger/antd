@@ -30,7 +30,9 @@ const readPinned = (name: string, bytes: number, sha256: string) => {
 let cache: ModalLoadingSourceCSR | undefined;
 /** Returns the complete unmodified Source corpus, including all raw graphs and DOM snapshots. */
 export function readModalLoadingSourceCSR(): ModalLoadingSourceCSR {
-  if (cache) return cache;
+  if (cache) {
+    return cache;
+  }
   const manifestBytes = readPinned(
     'ant-design-modal-loading-source-manifest.json',
     6291,
@@ -146,10 +148,12 @@ export function readModalLoadingSourceCSR(): ModalLoadingSourceCSR {
       assert.equal(point.owner.events.length, point.owner.rawEvents.length);
       assert.deepEqual(point.browserOwnedResourceCounters, manifest.browserOwnedResourceCounters);
     }
-    for (const point of [entry.cleanup, entry.late]) assert.deepEqual(
-      point.browserOwnedResourceCounters,
-      manifest.browserOwnedResourceCounters
-    );
+    for (const point of [entry.cleanup, entry.late]) {
+      assert.deepEqual(
+        point.browserOwnedResourceCounters,
+        manifest.browserOwnedResourceCounters
+      );
+    }
     assert.deepEqual(entry.cleanup, entry.late);
   });
   return cache = source;

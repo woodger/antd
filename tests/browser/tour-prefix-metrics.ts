@@ -2,7 +2,9 @@ export function snapshotTourPrefix() {
   const section = document.querySelector('.fixture-tour-section')!;
   const root = section.closest('.fixture-tour-prefix')!;
   function css(node: Element | null, names: string[]) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
 
     return Object.fromEntries(names.map(name => [name, style.getPropertyValue(name)]));

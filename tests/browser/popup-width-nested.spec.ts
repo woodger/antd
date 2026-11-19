@@ -55,7 +55,9 @@ function verify(
   if (sample.family === 'cascader') {
     expect(projection.view, `${label}/existing Cascader local width and global nonreader`).toEqual(source.view);
   }
-  if (!projection.view.popup || !source.view.popup) return;
+  if (!projection.view.popup || !source.view.popup) {
+    return;
+  }
   expect(projection.view.popup.placement, `${label}/Source placement outcome`).toEqual(source.view.popup.placement);
   expect(projection.view.popup.stretch, `${label}/Source width versus min-width declaration`).toEqual(source.view.popup.stretch);
   const actualPopup = projection.raw.popups.filter(node => node.visible);
@@ -84,8 +86,10 @@ function verify(
       if (sourceWidth > sourceAnchor)
         expect(actualWidth, `${label}/wide natural content grows beyond the actual anchor`).toBeGreaterThan(actualAnchor);
     }
-    if (sample.family === 'pagination') expect(projection.raw.itemContents.map(node => node.text))
-      .toEqual(source.raw.itemContents.map(node => node.text));
+    if (sample.family === 'pagination') {
+      expect(projection.raw.itemContents.map(node => node.text))
+        .toEqual(source.raw.itemContents.map(node => node.text));
+    }
   }
   if (sample.family === 'color-picker') {
     expect(projection.view.popup.box!.width, `${label}/Source format numeric width`).toBe(source.view.popup.box!.width);
@@ -109,7 +113,9 @@ async function settle(page: Page) {
     const projection = await page.evaluate(readPopupWidth);
     const key = JSON.stringify(projection);
     equal = key === previous ? equal + 1 : 0;
-    if (equal >= 3) return projection;
+    if (equal >= 3) {
+      return projection;
+    }
     previous = key;
   }
   throw Error('Native nested popup width projection did not settle');
@@ -208,8 +214,10 @@ test('nested popup width keeps the complete independent Source evidence', () => 
       message: 'Warning: You provided a `current` prop to a Pagination component without an `onChange` handler. This will render a read-only component.' })));
   expect(reference.cases.map(entry => entry.id)).toEqual(popupWidthNestedSamples.map(sample => sample.id));
   expect(reference.cases.reduce((sum, entry) => sum + entry.steps.length, 0)).toBe(48);
-  for (const entry of reference.cases) expect(entry.steps.map(step => step.action))
-    .toEqual(popupWidthActions(popupWidthNestedSamples.find(sample => sample.id === entry.id)!));
+  for (const entry of reference.cases) {
+    expect(entry.steps.map(step => step.action))
+      .toEqual(popupWidthActions(popupWidthNestedSamples.find(sample => sample.id === entry.id)!));
+  }
   for (const ids of [['pagination-default-local-false', 'pagination-default-over-global-number'],
     ['color-picker-global-true', 'color-picker-global-false'], ['cascader-global-true', 'cascader-global-false']]) {
     const [left, right] = ids.map(id => reference.cases.find(entry => entry.id === id)!);
@@ -229,13 +237,14 @@ for (const family of families) {
     });
     const captures: { id: string; states: Projection[]; bindings: unknown[] }[] = [];
     try {
-      for (const sample of popupWidthNestedSamples.filter(sample => sample.family === family))
+      for (const sample of popupWidthNestedSamples.filter(sample => sample.family === family)) {
         await capture(
           page,
           sample,
           reference.cases.find(entry => entry.id === sample.id)!,
           captures
         );
+      }
       const pair = family === 'pagination'
         ? ['pagination-default-local-false', 'pagination-default-over-global-number']
         : family === 'color-picker' ? ['color-picker-global-true', 'color-picker-global-false']

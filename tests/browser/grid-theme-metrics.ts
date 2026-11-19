@@ -1,6 +1,8 @@
 export function snapshotGridTheme() {
   const row = document.querySelector('#grid-theme-control .ant-row');
-  if (!row) throw new Error('Grid row is missing');
+  if (!row) {
+    throw new Error('Grid row is missing');
+  }
   const css = (node: Element) => {
     const style = getComputedStyle(node);
     return Object.fromEntries([

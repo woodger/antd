@@ -21,7 +21,9 @@ export const sliderPrefixCases = reference.cases as SliderPrefixCase[];
 export function sliderPrefixTheme(sample: SliderPrefixCase): ThemeConfig {
   const dark = ['dark', 'green', 'purple'].includes(sample.theme ?? '');
   const primary = sample.theme === 'green' ? 'green' : sample.theme === 'purple' ? 'purple' : 'blue';
-  if (sample.native) return { mode: dark ? 'dark' : 'light', primary };
+  if (sample.native) {
+    return { mode: dark ? 'dark' : 'light', primary };
+  }
 
   return {
     cssVar: {

@@ -38,9 +38,11 @@ function setup(previous?: boolean) {
     for (const callback of pending) callback(0);
   };
   const timer = (delay: number) => {
-    for (const [id, entry] of timers) if (entry.delay === delay) {
-      timers.delete(id);
-      entry.callback();
+    for (const [id, entry] of timers) {
+      if (entry.delay === delay) {
+        timers.delete(id);
+        entry.callback();
+      }
     }
   };
   return { node, media, frames, timers, states, visible, motion, frame, timer };

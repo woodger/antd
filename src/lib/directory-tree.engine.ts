@@ -25,16 +25,24 @@ export function getDirectoryRangeKeys<Data extends object>(
   endKey: TreeKey | null | undefined,
   fieldNames?: TreeFieldNames
 ): TreeKey[] {
-  if (startKey == null || endKey == null) return [];
-  if (startKey === endKey) return [startKey];
+  if (startKey == null || endKey == null) {
+    return [];
+  }
+  if (startKey === endKey) {
+    return [startKey];
+  }
 
   const keys: TreeKey[] = [];
   let record: 'none' | 'start' | 'end' = 'none';
 
   traverse(treeData, node => {
-    if (record === 'end') return false;
+    if (record === 'end') {
+      return false;
+    }
     const key = nodeKey(node, fieldNames);
-    if (key === undefined) return false;
+    if (key === undefined) {
+      return false;
+    }
     if (key === startKey || key === endKey) {
       keys.push(key);
       if (record === 'none') record = 'start';

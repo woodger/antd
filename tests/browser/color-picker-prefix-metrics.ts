@@ -6,7 +6,9 @@ export function snapshotColorPickerPrefix() {
   const candidate = document.querySelector('.fixture-color-prefix-popup');
   const popup = candidate && candidate.getClientRects().length > 0 ? candidate : null;
   const css = (node: Element | null | undefined, names: string[]) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries(names.map(name => [name, style.getPropertyValue(name)]));
   };

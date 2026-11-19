@@ -11,7 +11,9 @@ async function observeColumn(page: Page) {
     for (const type of ['pointerdown', 'pointerup', 'click', 'dblclick']) {
       document.addEventListener(type, event => {
         const target = event.target as Element;
-        if (!target.closest('[data-type="hour"]')) return;
+        if (!target.closest('[data-type="hour"]')) {
+          return;
+        }
         events.push({ type, tagName: target.tagName,
           value: target.closest('li[data-value]')?.getAttribute('data-value') ?? null });
       }, { capture: true });

@@ -145,7 +145,9 @@ for (const { id, pending, events } of scenarios) {
       const schedule = browser.setTimeout.bind(browser);
       const clear = browser.clearTimeout.bind(browser);
       browser.setTimeout = (handler, timeout, ...args) => {
-        if (typeof handler !== 'function') throw Error('Expected a function timer during hydration');
+        if (typeof handler !== 'function') {
+          throw Error('Expected a function timer during hydration');
+        }
         const timer = schedule(() => {
           timers.delete(timer);
           handler(...args);
@@ -161,8 +163,9 @@ for (const { id, pending, events } of scenarios) {
       const originalAnimations = Element.prototype.getAnimations;
       Element.prototype.getAnimations = function(options?: GetAnimationsOptions) {
         const result = originalAnimations.call(this, options);
-        if (this.classList.contains('motion-audit-popup'))
+        if (this.classList.contains('motion-audit-popup')) {
           for (const animation of result) animations.add(animation);
+        }
         return result;
       };
       window.motionHydrationResources = {
@@ -240,7 +243,9 @@ for (const { id, pending, events } of scenarios) {
         const action = step.action as TreeSelectMotionAction;
         if (action.type === 'open' && !action.value || action.type === 'outside') closing = true;
         if (action.type === 'end' && action.target === 'popup'
-          && (pending === 'appear' || closing)) break;
+          && (pending === 'appear' || closing)) {
+          break;
+        }
         await actTreeSelectMotion(page, action);
         await drain();
         expect((await page.evaluate(readTreeSelectMotion)).view, JSON.stringify(action))

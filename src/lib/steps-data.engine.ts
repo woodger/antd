@@ -58,7 +58,9 @@ export function stepsDataItems(items: readonly (
     const key = typeof item.key === 'string'
       ? item.key
       : item.key === undefined ? `${namespace}index:${index}` : `${namespace}number:${item.key}`;
-    if (seen.has(key)) return [];
+    if (seen.has(key)) {
+      return [];
+    }
     seen.add(key);
     return [{ ...item, key, originalKey: item.key, content: item.content }];
   });

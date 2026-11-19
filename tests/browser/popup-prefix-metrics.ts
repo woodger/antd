@@ -1,7 +1,9 @@
 export function snapshotPopupPrefix() {
   function textNodes(node: Node): string[] {
     return [...node.childNodes].flatMap(child => {
-      if (child.nodeType !== Node.TEXT_NODE) return textNodes(child);
+      if (child.nodeType !== Node.TEXT_NODE) {
+        return textNodes(child);
+      }
       const text = child.textContent?.trim();
       return text ? [text] : [];
     });

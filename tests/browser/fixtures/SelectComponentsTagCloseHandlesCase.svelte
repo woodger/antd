@@ -26,8 +26,9 @@
     initial.replacementOptions,
     { dataset: 'handles-options-updated' }
   );
-  for (const [phase, rows] of [['initial', initialOptions], ['updated', replacementOptions]] as const)
+  for (const [phase, rows] of [['initial', initialOptions], ['updated', replacementOptions]] as const) {
     for (const option of rows) recorder.register(option, { option: option.value, phase });
+  }
   let model = $state.raw<string[] | undefined>(initial.initialModel), options = $state.raw(initialOptions);
   let disabled = $state(false), open = $state(false), control = $state<SelectRef>(), root = $state<HTMLDivElement>(), editor = $state<HTMLInputElement>();
   let authoredInput: HTMLInputElement | null = null, alive = false, actionIndex = -1;
@@ -97,10 +98,12 @@
     return recorder.record('components.input', 'own', context, result, { publicArgumentCount: 1 });
   }
   function tagCall(info: Info, result: Snippet) {
-    if (!info.isMaxTag && typeof info.onClose === 'function') latest.set(
-      info.value,
-      { value: info.value, info, callback: info.onClose }
-    );
+    if (!info.isMaxTag && typeof info.onClose === 'function') {
+      latest.set(
+        info.value,
+        { value: info.value, info, callback: info.onClose }
+      );
+    }
     recorder.register(result, { node: 'handles-tag-result-' + info.value });
     return recorder.record('tagRender', 'own', [info], result, { publicArgumentCount: 1,
       argumentOwnKeys: [Reflect.ownKeys(info)], argumentDescriptors: [recorder.own(info)] });
@@ -115,7 +118,9 @@
   }
   function actualHandle(action: SelectTagCloseHandleRetain | SelectTagCloseHandleInvoke) {
     const handle = action.from === 'retained' ? retained.get(action.slot) : latest.get(action.value);
-    if (!handle || typeof handle.callback !== 'function') throw Error('Actual supplied public onClose required: ' + action.id);
+    if (!handle || typeof handle.callback !== 'function') {
+      throw Error('Actual supplied public onClose required: ' + action.id);
+    }
     return handle;
   }
   function retain(action: SelectTagCloseHandleRetain) {
@@ -181,10 +186,12 @@
     onChange, onDeselect, onSelect, onOpenChange, onFocus, onBlur, 'aria-label': 'Tag close handles' });
   let last: { authoredProps: unknown; rawAuthoredProps: unknown } | undefined;
   export function read() {
-    if (alive || !last) last = {
-      authoredProps: recorder.encode(ownerProps),
-      rawAuthoredProps: recorder.raw(ownerProps)
-    };
+    if (alive || !last) {
+      last = {
+        authoredProps: recorder.encode(ownerProps),
+        rawAuthoredProps: recorder.raw(ownerProps)
+      };
+    }
     return { model: recorder.encode(model), rawModel: recorder.raw(model), options: recorder.encode(options), rawOptions: recorder.raw(options),
       modelIdentity: model ? recorder.identity(model) : null, optionsIdentity: recorder.identity(options), optionIdentities: options.map(option => ({
         value: option.value,

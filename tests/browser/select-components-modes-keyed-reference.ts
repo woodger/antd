@@ -77,10 +77,12 @@ export function readSelectComponentsModesKeyedSource() {
     'csr'
   );
   assert.equal(source.cases.reduce((sum, value) => sum + value.steps.length, 0), 72);
-  for (const value of source.cases) assert.deepEqual(
-    value.steps.map(step => step.action),
-    selectComponentSamples.find(sample => sample.id === value.id)!.actions
-  );
+  for (const value of source.cases) {
+    assert.deepEqual(
+      value.steps.map(step => step.action),
+      selectComponentSamples.find(sample => sample.id === value.id)!.actions
+    );
+  }
   return source;
 }
 export function readSelectComponentsModesKeyedCase(id: string) {

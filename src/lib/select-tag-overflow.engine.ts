@@ -2,12 +2,16 @@ import type { SelectOmittedTag } from './select.types';
 
 /** Rest не занимает место, когда все tags уже помещаются. */
 export function getResponsiveTagCount(widths: readonly number[], available: number, rest: number) {
-  if (widths.reduce((sum, width) => sum + width, 0) <= available) return widths.length;
+  if (widths.reduce((sum, width) => sum + width, 0) <= available) {
+    return widths.length;
+  }
 
   let used = 0;
   for (let index = 0; index < widths.length; index++) {
     used += widths[index];
-    if (used + rest > available) return index;
+    if (used + rest > available) {
+      return index;
+    }
   }
   return widths.length;
 }

@@ -164,7 +164,9 @@
     initializeList: (name, initialValue) => getFormHooks(form)?.initializeList(name, initialValue),
     changeList: (name, values) => {
       const hooks = getFormHooks(form);
-      if (!hooks) throw new Error('FormList requires a createForm model');
+      if (!hooks) {
+        throw new Error('FormList requires a createForm model');
+      }
 
       hooks.changeList(name, values);
     }
@@ -199,7 +201,9 @@
 
       if (!result.error.outOfDate) {
         await tick();
-        if (!active || form !== submittedForm) return;
+        if (!active || form !== submittedForm) {
+          return;
+        }
 
         if (scroll !== undefined) {
           const first = result.error.errorFields[0];

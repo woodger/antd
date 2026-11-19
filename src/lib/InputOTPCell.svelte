@@ -56,7 +56,9 @@
   function syncSelection() {
     const element = inputElement;
     const view = element?.ownerDocument.defaultView;
-    if (!element || !view) return;
+    if (!element || !view) {
+      return;
+    }
 
     const frame = view.requestAnimationFrame(() => {
       selections.delete(cancel);

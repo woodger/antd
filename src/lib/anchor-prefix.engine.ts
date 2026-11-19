@@ -2,7 +2,9 @@ import template from './vendor/anchor-prefix.css.js';
 
 /** Общий token marker сохраняется; wrapper/alias reset ограничен владельцем prefix. */
 export function getAnchorPrefixCss(prefix: string) {
-  if (prefix === 'ant-anchor') return undefined;
+  if (prefix === 'ant-anchor') {
+    return undefined;
+  }
 
   const scope = `:where([data-ant-anchor-prefix=${JSON.stringify(prefix)}])`;
 

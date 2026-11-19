@@ -95,7 +95,9 @@
   function watchImage(node: HTMLImageElement, request: typeof source) {
     let reported = false;
     const error = () => {
-      if (reported || request !== source) return;
+      if (reported || request !== source) {
+        return;
+      }
 
       reported = true;
       const fallback = onError?.() !== false;
@@ -113,7 +115,9 @@
   function fitText(node: HTMLSpanElement) {
     const container = host;
     const distance = resolvedGap;
-    if (container) return connectAvatarText(container, node, distance);
+    if (container) {
+      return connectAvatarText(container, node, distance);
+    }
   }
 </script>
 

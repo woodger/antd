@@ -45,18 +45,23 @@
 
   function confirm() {
     confirms++;
-    if (mode === 'throw') throw new Error('Private backend details');
-    if (mode === 'async')
+    if (mode === 'throw') {
+      throw new Error('Private backend details');
+    }
+    if (mode === 'async') {
       return new Promise<void>(
         (resolve, reject) => {
           requests.push({ id: requests.length + 1, resolve, reject, settled: false });
         }
       );
+    }
   }
 
   function finish(id: number, success: boolean) {
     const request = requests.find((item) => item.id === id);
-    if (!request || request.settled) return;
+    if (!request || request.settled) {
+      return;
+    }
 
     request.settled = true;
     if (success) request.resolve();

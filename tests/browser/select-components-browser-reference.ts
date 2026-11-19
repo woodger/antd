@@ -35,13 +35,16 @@ export function readSelectComponentsBrowserReference(
   id: string,
   chromiumVersion?: string
 ): Selection<ModesCase | ACStyleCase> {
-  if (chromiumVersion !== undefined && chromiumVersion !== canonicalVersion && chromiumVersion !== currentVersion)
+  if (chromiumVersion !== undefined && chromiumVersion !== canonicalVersion && chromiumVersion !== currentVersion) {
     throw Error('Unmeasured Chromium Source oracle: ' + chromiumVersion + '; supported exact versions: ' + canonicalVersion + ', ' + currentVersion);
+  }
   const canonical = axis === 'modes' ? readSelectComponentsModesCase(id) : readSelectComponentsACStyleCase(id);
   const referenceVariant: SelectComponentsReferenceVariant = { requestedChromiumVersion: chromiumVersion ?? null,
     oracleChromiumVersion: canonicalVersion, axis, caseId: id, measured157Input: false,
     completeCaseEquivalentUnder157: false, variantManifestSHA256: null, oracleStorageSHA256: null };
-  if (chromiumVersion !== currentVersion) return { source: canonical, referenceVariant };
+  if (chromiumVersion !== currentVersion) {
+    return { source: canonical, referenceVariant };
+  }
   const entry = selectComponentsChromium157Metadata(axis), proof = entry.cases.find(value => value.id === id);
   assert(proof, 'Every selected case has an independent Source fingerprint');
   assert.equal(

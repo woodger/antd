@@ -11,7 +11,9 @@ export function createSelectActive<Value>(getCallback: () => ((value: Value | nu
   return (value: Value | null) => {
     const current = ++generation;
     const callback = getCallback();
-    if (!callback) return;
+    if (!callback) {
+      return;
+    }
     void Promise.resolve().then(() => {
       if (!disposed && current === generation) callback(value);
     });

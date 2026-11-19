@@ -38,7 +38,9 @@ export class FastColor {
   private minimum?: number;
 
   constructor(input: FastColorInput) {
-    if (!input) return;
+    if (!input) {
+      return;
+    }
     if (typeof input === 'string') {
       const text = input.trim();
       if (/^#?[A-F\d]{3,8}$/i.test(text)) this.fromHex(text);
@@ -279,7 +281,9 @@ export class FastColor {
     this.value = v;
     this.a = typeof a === 'number' ? a : 1;
     this.r = this.g = this.b = Math.round(v * 255);
-    if (s <= 0) return;
+    if (s <= 0) {
+      return;
+    }
     const hh = h / 60;
     const index = Math.floor(hh);
     const fraction = hh - index;

@@ -33,7 +33,9 @@ declare global {
 
 const id = new URL(location.href).searchParams.get('sample');
 const sample = selectVirtualSamples.find(sample => sample.id === id);
-if (!sample) throw Error(`Unknown Select virtual sample: ${id}`);
+if (!sample) {
+  throw Error(`Unknown Select virtual sample: ${id}`);
+}
 const target = document.getElementById('root')!;
 const outer = target.querySelector<HTMLElement>('.select-virtual-control')!;
 const root = sample.family === 'select'

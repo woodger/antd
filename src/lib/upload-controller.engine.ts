@@ -40,7 +40,9 @@ export function createUploadController<T = unknown>(
     patch: Partial<UploadFile<T>>,
     event?: { percent: number; }
   ) => {
-    if (disposed || !options.files().some(item => item.uid === file.uid)) return;
+    if (disposed || !options.files().some(item => item.uid === file.uid)) {
+      return;
+    }
     const item = { ...uploadFileObject<T>(file), ...patch };
     publish(item, updateUploadList(item, options.files()), event);
   };
@@ -59,13 +61,17 @@ export function createUploadController<T = unknown>(
     update(file, { status: 'error', error, response });
   };
   const onBatchStart: UploadRef<T>['onBatchStart'] = batch => {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     const accepted = batch.filter(item => !Reflect.get(item.file, UPLOAD_LIST_IGNORE));
     let list = [...options.files()];
     const items = accepted.map(item => uploadFileObject<T>(item.file));
     for (const item of items) list = updateUploadList(item, list);
     accepted.forEach((item, index) => {
-      if (disposed) return;
+      if (disposed) {
+        return;
+      }
       if (item.parsedFile) {
         items[index].status = 'uploading';
         publish(items[index], list);
@@ -98,13 +104,15 @@ export function createUploadController<T = unknown>(
       result = false;
     }
     if (result === false
-      || result === UPLOAD_LIST_IGNORE) return {
+      || result === UPLOAD_LIST_IGNORE) {
+      return {
         origin: file,
         parsed: null,
         ignored: result === UPLOAD_LIST_IGNORE,
         action: '',
         data: {}
       };
+    }
     const props = options.props();
     const action = typeof props.action === 'function'
       ? await props.action(file)
@@ -121,7 +129,9 @@ export function createUploadController<T = unknown>(
   async function upload(files: readonly File[]) {
     const batch = files.map(file => Object.assign(file, { uid: options.uid() }));
     const ready = await Promise.all(batch.map(file => process(file, batch)));
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     const accepted = ready.filter(item => !item.ignored);
     onBatchStart(accepted.map(item => ({ file: item.origin, parsedFile: item.parsed })));
     for (const item of accepted) {
@@ -159,13 +169,18 @@ export function createUploadController<T = unknown>(
   }
   async function remove(file: UploadFile<T>) {
     const result = await options.props().onRemove?.(file);
-    if (disposed || result === false) return;
+    if (disposed || result === false) {
+      return;
+    }
     const list = options.files();
     const next = list.filter(item => item.uid !== file.uid);
-    if (next.length === list.length) return;
-    for (const item of list)
+    if (next.length === list.length) {
+      return;
+    }
+    for (const item of list) {
       if (item.uid === file.uid && !Object.isFrozen(item))
         item.status = 'removed';
+    }
     abort(file);
     publish({ ...file, status: 'removed' }, next);
   }

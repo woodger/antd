@@ -36,7 +36,9 @@ export async function settleDatePickerPresetTransitions(page: Page): Promise<Poi
     const actual = await page.evaluate(readDatePickerPresetTransitions);
     const encoded = JSON.stringify(actual);
     stable = encoded === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = encoded;
     prior = latest;
     latest = actual;
@@ -70,8 +72,9 @@ export async function actDatePickerPresetTransitions(
   else if (action.type === 'input-focus') await page.locator('#preset-field').focus();
   else if (action.type === 'input-escape') {
     const input = page.locator('#preset-field');
-    if (!await input.evaluate(node => node.ownerDocument.activeElement === node))
+    if (!await input.evaluate(node => node.ownerDocument.activeElement === node)) {
       throw Error('Input Escape requires preceding actual input focus');
+    }
     await input.press('Escape');
   }
   else if (action.type === 'format' || action.type === 'preview'
@@ -81,7 +84,9 @@ export async function actDatePickerPresetTransitions(
       const button = [...document.querySelectorAll('[data-transition-control]')].find(node =>
         node.getAttribute('data-transition-control') === kind
           && node.getAttribute('data-transition-value') === String(action.value));
-      if (!(button instanceof HTMLButtonElement)) throw Error('Actual authored transition control is missing');
+      if (!(button instanceof HTMLButtonElement)) {
+        throw Error('Actual authored transition control is missing');
+      }
       let observed: null | {
         type: string; isTrusted: boolean; targetTag: string | null;
         currentTargetMatches: boolean; activeBefore: string | null;

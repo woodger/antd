@@ -3,9 +3,13 @@ import type { SelectSurfaceSample } from './fixtures/select-surface-cases';
 import type { SelectSurfaceProducerCall } from './select-surface-producers.mjs';
 
 export function decodeSelectSurface(value: unknown): unknown {
-  if (value === null || typeof value !== 'object') return value;
+  if (value === null || typeof value !== 'object') {
+    return value;
+  }
   const encoded = value as Record<string, unknown>;
-  if (encoded.$ === 'undefined') return undefined;
+  if (encoded.$ === 'undefined') {
+    return undefined;
+  }
   if (encoded.$ === 'object' || encoded.$ === 'array') {
     const properties = encoded.properties as Array<{ key: unknown; value: unknown }>;
     const result: Record<string, unknown> = {};
@@ -13,15 +17,19 @@ export function decodeSelectSurface(value: unknown): unknown {
       const key = typeof property.key === 'string' ? property.key : JSON.stringify(property.key);
       result[key] = decodeSelectSurface(property.value);
     }
-    if (encoded.$ !== 'array') return result;
+    if (encoded.$ !== 'array') {
+      return result;
+    }
     const array: unknown[] = [];
     array.length = Number(result.length);
-    for (const [key, item] of Object.entries(result)) if (key !== 'length') {
-      Object.defineProperty(
-        array,
-        key,
-        { value: item, enumerable: true, configurable: true, writable: true }
-      );
+    for (const [key, item] of Object.entries(result)) {
+      if (key !== 'length') {
+        Object.defineProperty(
+          array,
+          key,
+          { value: item, enumerable: true, configurable: true, writable: true }
+        );
+      }
     }
     return array;
   }
@@ -30,7 +38,9 @@ export function decodeSelectSurface(value: unknown): unknown {
 
 function semanticArgument(call: SelectSurfaceProducerCall, sample: SelectSurfaceSample) {
   const argument = decodeSelectSurface(call.argument) as { props?: Record<string, unknown> };
-  if (call.kind === 'popupRender' || !argument.props) return argument;
+  if (call.kind === 'popupRender' || !argument.props) {
+    return argument;
+  }
   const props = { ...argument.props };
   // class — существующее имя Svelte prop; Source сохраняет исходное className.
   if (Object.hasOwn(props, 'class')) {

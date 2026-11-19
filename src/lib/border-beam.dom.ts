@@ -28,7 +28,9 @@ export function createBorderBeamRuntime(host: HTMLElement) {
   let observer: MutationObserver | undefined;
 
   function sync() {
-    if (!active || !current) return;
+    if (!active || !current) {
+      return;
+    }
     const inherited: string[] = [];
     if (origin) {
       const source = view.getComputedStyle(origin);
@@ -73,7 +75,9 @@ export function createBorderBeamRuntime(host: HTMLElement) {
 
   return {
     configure(options: BorderBeamRuntimeOptions) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
 
       current = options;
       if (origin !== options.themeOrigin) {

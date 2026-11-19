@@ -4,12 +4,16 @@ export function readAutocompleteLabelTitle() {
   raw.labelTitleObserver ??= { ids: new WeakMap(), nextId: 0, original: {} };
   const observer = raw.labelTitleObserver;
   const identity = node => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     if (!observer.ids.has(node)) observer.ids.set(node, ++observer.nextId);
     return observer.ids.get(node);
   };
   const describe = node => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node), box = node.getBoundingClientRect();
     return { identity: identity(node), connected: node.isConnected, tag: node.tagName,
       attributes: [...node.attributes].map(attr => [attr.name, attr.value]), text: node.textContent,
@@ -26,7 +30,9 @@ export function readAutocompleteLabelTitle() {
   };
   const current = { root: refs.root, editor: refs.editor, child: refs.child,
     content: refs.root?.querySelector('.ant-select-content'), popup: document.querySelector('.ant-select-dropdown') };
-  for (const [key, node] of Object.entries(current)) if (node && !observer.original[key]) observer.original[key] = node;
+  for (const [key, node] of Object.entries(current)) {
+    if (node && !observer.original[key]) observer.original[key] = node;
+  }
   return { current: Object.fromEntries(Object.entries(current).map(([key, node]) => [key, describe(node)])),
     original: Object.fromEntries(Object.entries(observer.original).map(([key, node]) => [key, describe(node)])),
     sameAsOriginal: Object.fromEntries(Object.entries(current).map(([key, node]) => [key, observer.original[key] ? node === observer.original[key] : null])),

@@ -216,7 +216,9 @@
   }
 
   function move(direction: TransferDirection) {
-    if (disabled) return;
+    if (disabled) {
+      return;
+    }
 
     const left = direction === 'left';
     const result = transferMove(props.targetKeys ?? [], left ? targetSelected : sourceSelected,

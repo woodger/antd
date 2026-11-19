@@ -31,7 +31,9 @@ declare global {
 
 const id = new URL(location.href).searchParams.get('sample');
 const sample = popupWidthSamples.find(sample => sample.id === id);
-if (!sample?.live) throw Error(`Unknown live popup width sample: ${id}`);
+if (!sample?.live) {
+  throw Error(`Unknown live popup width sample: ${id}`);
+}
 const target = document.getElementById('root')!;
 const root = target.querySelector<HTMLElement>('[data-ant-select-control]')
   ?? target.querySelector<HTMLElement>('.popup-width-control')!;

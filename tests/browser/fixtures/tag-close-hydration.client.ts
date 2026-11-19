@@ -16,7 +16,9 @@ declare global {
 
 const name = new URL(location.href).searchParams.get('name');
 const sample = reference.cases.find(sample => sample.name === name);
-if (!sample) throw new Error(`Unknown Tag hydration case: ${name}`);
+if (!sample) {
+  throw new Error(`Unknown Tag hydration case: ${name}`);
+}
 
 const root = document.querySelector('[data-tag-api-root]');
 const close = document.querySelector<HTMLButtonElement>('.ant-tag-close-icon');

@@ -53,7 +53,9 @@ test(
               .filter(rect => rect.width > 0)
               .map(rect => ({ x: rect.x, right: rect.right }))
         );
-        if (bounds.length !== 4) return Infinity;
+        if (bounds.length !== 4) {
+          return Infinity;
+        }
 
         return Math.max(
           ...bounds.slice(1).map(

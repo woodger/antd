@@ -44,7 +44,9 @@
       blurCalls: [...blurCalls], validatorCalls: [...validatorCalls], touched: form.isFieldTouched('choice'), clears };
   }
   function focus() {
-    if (!control) throw Error('Mounted public control required');
+    if (!control) {
+      throw Error('Mounted public control required');
+    }
     control.focus();
   }
 </script>

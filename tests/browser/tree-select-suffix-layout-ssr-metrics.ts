@@ -34,15 +34,20 @@ export function readTreeSelectSuffixLayoutSSR(html: string) {
       '&#x27;': "'"
     })[entity]!);
   const attribute = (node: HtmlNode | undefined, name: string) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const match = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s>]))`).exec(node.opening);
     return match ? decode(match[1] ?? '') : null;
   };
   const marked = (node: HtmlNode, marker: string) => attribute(node, marker) !== null;
   const text = (node: HtmlNode) => decode(html.slice(node.start, node.end).replace(/<[^>]*>/g, ''));
   const visible = (node: HtmlNode) => {
-    for (let current: HtmlNode | undefined = node; current; current = current.parent)
-      if (attribute(current, 'aria-hidden') === 'true' || attribute(current, 'inert') !== null) return false;
+    for (let current: HtmlNode | undefined = node; current; current = current.parent) {
+      if (attribute(current, 'aria-hidden') === 'true' || attribute(current, 'inert') !== null) {
+        return false;
+      }
+    }
     return true;
   };
   const editor = nodes.find(node => marked(node, 'data-suffix-layout-editor'))!;

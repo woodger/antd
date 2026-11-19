@@ -85,13 +85,15 @@ export function treeSelectNodeSpecs(sample: TreeSelectNodesSample, revision = 0,
   if (sample.long) return Array.from({ length: 80 }, (_, value) => ({
     value, title: `Node ${value}`, payload: `item-${value}`, icon: 'text'
   }));
-  if (sample.missingTitle) return [
-    { value: 'untitled', payload: 'untitled' },
-    { value: 'empty-title', title: '', payload: 'empty' },
-    { value: 'zero-title', title: 0, payload: 'zero' },
-    { value: 'null-title', title: null, payload: 'null' },
-    { value: 'fallback', label: 'Label fallback', payload: 'fallback' }
-  ];
+  if (sample.missingTitle) {
+    return [
+      { value: 'untitled', payload: 'untitled' },
+      { value: 'empty-title', title: '', payload: 'empty' },
+      { value: 'zero-title', title: 0, payload: 'zero' },
+      { value: 'null-title', title: null, payload: 'null' },
+      { value: 'fallback', label: 'Label fallback', payload: 'fallback' }
+    ];
+  }
   let children: TreeSelectNodeSpec[] = [
     {
       value: 0,

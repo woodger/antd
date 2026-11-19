@@ -1,7 +1,9 @@
 /** Исходные usePercent buckets; после последнего порога значение больше не растёт. */
 export function advanceSpinPercent(percent: number) {
   for (const [limit, step] of [[30, 0.05], [70, 0.03], [96, 0.01]]) {
-    if (percent <= limit) return percent + (100 - percent) * step;
+    if (percent <= limit) {
+      return percent + (100 - percent) * step;
+    }
   }
   return percent;
 }

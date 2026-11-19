@@ -29,7 +29,9 @@ export function createBreakpoint() {
         ([key, query]) => [key as GridBreakpoint, view.matchMedia(query)] as const
       );
       function publish() {
-        if (version !== generation) return;
+        if (version !== generation) {
+          return;
+        }
 
         screens = Object.fromEntries(queries.map(([key, media]) => [key, media.matches]));
         connected = true;
@@ -39,7 +41,9 @@ export function createBreakpoint() {
       publish();
       let active = true;
       dispose = () => {
-        if (!active) return;
+        if (!active) {
+          return;
+        }
 
         active = false;
         for (const [, media] of queries)

@@ -184,8 +184,9 @@
   let displayValue = $derived(text ? cache.display[0] : undefined);
   let displayLabel = $derived.by(() => {
     const item = displayValue;
-    if (typeof labelRender !== 'function' || !item)
+    if (typeof labelRender !== 'function' || !item) {
       return (item?.label ?? actualValue) as RenderEmptyContent;
+    }
     return labelRender({ label: item.label, value: item.value, key: item.value,
       disabled: maps.valueOptions.has(item.value) ? item.disabled : undefined,
       title: item.title }) ?? item.value;
@@ -320,7 +321,9 @@
   let initialInputStyle = $state(untrack(inputStyle.initialStyle));
   $effect(() => {
     const control = editor;
-    if (control && !rootSlot && !inputSlot) return untrack(() => inputStyle.attach(control));
+    if (control && !rootSlot && !inputSlot) {
+      return untrack(() => inputStyle.attach(control));
+    }
   });
   $effect(() => {
     const control = editor;
@@ -408,7 +411,9 @@
     });
   });
   $effect(() => {
-    if (!visible || !popup || !root) return;
+    if (!visible || !popup || !root) {
+      return;
+    }
     const node = popup;
     const anchor = root;
     const source = untrack(() => createTreeSelectAlign(anchor, node, () => untrack(() => ({
@@ -428,9 +433,13 @@
       get dismissOnEscape() { return !customPopup || Boolean(menuElement); },
       preserveFocus: event => {
         const path = event.composedPath();
-        if (isMenuIconEvent(event)) return false;
+        if (isMenuIconEvent(event)) {
+          return false;
+        }
         if (path.some(node => node instanceof Element
-          && node.classList.contains(`${prefix}-dropdown-list-scrollbar`))) return false;
+          && node.classList.contains(`${prefix}-dropdown-list-scrollbar`))) {
+          return false;
+        }
         return !customPopup || path.some(node => node instanceof Element
           && (node.classList.contains(`${prefix}-dropdown-list`)
             || node.classList.contains(`${prefix}-item-empty`)));
@@ -485,7 +494,9 @@
     const expanded = visible;
     const rows = optionList.items;
     const query = listSearch;
-    if (!listVisited && !expanded) return;
+    if (!listVisited && !expanded) {
+      return;
+    }
     if (!listVisited || rows.length !== lastListLength || query !== lastListSearch) {
       listVisited = true;
       lastListLength = rows.length;
@@ -519,7 +530,9 @@
   }
 
   function reservePointerUpdate() {
-    if (pendingPointerUpdate) return;
+    if (pendingPointerUpdate) {
+      return;
+    }
     const channel = new MessageChannel();
     pendingPointerUpdate = channel;
     channel.port1.onmessage = () => {
@@ -545,7 +558,9 @@
   }
   function requestOpen(next: boolean) {
     cancelClearClose();
-    if (next && (blocked || readonly)) return;
+    if (next && (blocked || readonly)) {
+      return;
+    }
     if (next !== visible)
       onOpenChange?.(next);
     innerOpen = next;
@@ -557,16 +572,22 @@
       componentClearMouseDowns.add(event);
       return;
     }
-    if (!visible) return;
+    if (!visible) {
+      return;
+    }
     scheduleClose();
   }
   function clearKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter' || event.key === ' ') event.stopPropagation();
   }
   function suffixMouseDown(event: MouseEvent) {
-    if (blocked || readonly) return;
+    if (blocked || readonly) {
+      return;
+    }
     event.preventDefault();
-    if (inputSlot) return;
+    if (inputSlot) {
+      return;
+    }
     editor?.focus({ preventScroll: true });
     requestOpen(true);
   }
@@ -579,7 +600,9 @@
   }
 
   function scheduleClose(synchronizeSearch = false) {
-    if (componentDestroyed) return;
+    if (componentDestroyed) {
+      return;
+    }
     cancelClearClose();
     searchBeforeClose = synchronizeSearch;
     // Source закрывает следующим task; query имеет отдельную очередь обновления.
@@ -609,7 +632,9 @@
   }
   function handleInput(event: Event) {
     const control = event.currentTarget as HTMLInputElement | HTMLTextAreaElement;
-    if (blocked || readonly) return;
+    if (blocked || readonly) {
+      return;
+    }
     const next = control.value;
     preview = undefined;
     if (next !== text) {
@@ -624,7 +649,9 @@
     });
   }
   function choose(entry: Entry) {
-    if (blocked || readonly || entry.group || entry.data.disabled || entry.value === undefined) return;
+    if (blocked || readonly || entry.group || entry.data.disabled || entry.value === undefined) {
+      return;
+    }
     const overridden = Boolean(rootSlot) || Boolean(inputSlot);
     change(entry.value);
     const option = maps.valueOptions.get(entry.value) ?? cache.options.get(entry.value);
@@ -634,7 +661,9 @@
     if (!overridden) editor?.focus({ preventScroll: true });
   }
   function clear() {
-    if (blocked || readonly) return;
+    if (blocked || readonly) {
+      return;
+    }
     const overridden = Boolean(rootSlot) || Boolean(inputSlot);
     const before = actualValue;
     const beforeText = text;
@@ -652,9 +681,13 @@
   function handleKeydown(event: KeyboardEvent) {
     const alreadyPrevented = event.defaultPrevented;
     if (visible && !(editor instanceof HTMLTextAreaElement)
-      && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) event.preventDefault();
+      && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
+      event.preventDefault();
+    }
     onInputKeyDown?.(event);
-    if (alreadyPrevented || event.isComposing || blocked || readonly || visible && event.cancelBubble) return;
+    if (alreadyPrevented || event.isComposing || blocked || readonly || visible && event.cancelBubble) {
+      return;
+    }
     if (visible && customPopup && !menuElement) {
       if (event.key === 'ArrowDown' || event.key === 'ArrowUp') event.preventDefault();
       return;
@@ -696,8 +729,9 @@
     else if (!event.ctrlKey && !event.altKey && !event.metaKey && event.keyCode
       && event.code !== 'Semicolon' && event.code !== 'Equal' && !/^F(?:[1-9]|1[0-2])$/.test(event.key)
       && !['Escape', 'Shift', 'Backspace', 'Tab', 'Meta', 'OS', 'Alt', 'Control', 'CapsLock',
-        'ContextMenu', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key))
+        'ContextMenu', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       requestOpen(true);
+    }
   }
   function handleBlur(event: FocusEvent) {
     focused = false;
@@ -709,9 +743,13 @@
     onBlur?.(event);
   }
   function handlePopupFocusOut(event: FocusEvent & { currentTarget: HTMLDivElement }) {
-    if (!customPopup || !event.currentTarget.isConnected) return;
+    if (!customPopup || !event.currentTarget.isConnected) {
+      return;
+    }
     const next = event.relatedTarget;
-    if (next instanceof Node && (root?.contains(next) || popup?.contains(next))) return;
+    if (next instanceof Node && (root?.contains(next) || popup?.contains(next))) {
+      return;
+    }
     focused = false;
     enterLock = false;
     preview = undefined;
@@ -736,7 +774,9 @@
     }
     const target = event.target;
     if (blocked || readonly || !(target instanceof Node) || popup?.contains(target)
-      || target instanceof Element && target.closest('button')) return;
+      || target instanceof Element && target.closest('button')) {
+      return;
+    }
     if (target === editor || editor?.contains(target)) {
       mouseActivated = true;
       editor?.focus({ preventScroll: true });
@@ -748,7 +788,9 @@
     requestOpen(true);
   }
   function handleReset(event: Event) {
-    if (Boolean(rootSlot) || Boolean(inputSlot) || event.target !== editor?.form) return;
+    if (Boolean(rootSlot) || Boolean(inputSlot) || event.target !== editor?.form) {
+      return;
+    }
     queueMicrotask(() => {
       if (!event.defaultPrevented && editor?.isConnected) {
         innerValue = defaultValue;
@@ -851,7 +893,9 @@
   }
   function componentRootBlur(event: FocusEvent) {
     // Default root получает тот же teardown guard, что merged custom callbacks.
-    if ((event.currentTarget as Element | null)?.isConnected === false) return;
+    if ((event.currentTarget as Element | null)?.isConnected === false) {
+      return;
+    }
     const state = committedComponentState;
     focused = false;
     enterLock = false;
@@ -863,7 +907,9 @@
     }
   }
   function componentDefaultRootBlur(event: FocusEvent) {
-    if (replacingDefaultComponentRoot) return;
+    if (replacingDefaultComponentRoot) {
+      return;
+    }
     if (componentInputBlurBlocked) {
       focused = false;
       enterLock = false;
@@ -927,12 +973,15 @@
       cancelledComponentInputKeys.add(event);
       return;
     }
-    if (rawTextarea && !state.visible && ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    if (rawTextarea && !state.visible && ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+      return;
+    }
     if (!event.ctrlKey && !event.altKey && !event.metaKey && event.keyCode
       && event.code !== 'Semicolon' && event.code !== 'Equal' && !/^F(?:[1-9]|1[0-2])$/.test(event.key)
       && !['Escape', 'Shift', 'Backspace', 'Tab', 'Meta', 'OS', 'Alt', 'Control', 'CapsLock',
-        'ContextMenu', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key))
+        'ContextMenu', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       requestComponentOpen(true, state.visible);
+    }
   }
   function componentInputPaste(event: ClipboardEvent) {
     attributes.onpaste?.call(event.currentTarget as HTMLInputElement,
@@ -961,7 +1010,9 @@
     if (next) requestComponentOpen(true, state.visible);
     const token = ++componentInputChangeToken, registration = componentInputRegistrationToken;
     void tick().then(() => {
-      if (!node.isConnected || token !== componentInputChangeToken || registration !== componentInputRegistrationToken) return;
+      if (!node.isConnected || token !== componentInputChangeToken || registration !== componentInputRegistrationToken) {
+        return;
+      }
       const accepted = committedComponentInputAttributes.value;
       if (accepted !== undefined && accepted !== null && node.value !== String(accepted)) node.value = String(accepted);
     });
@@ -1044,7 +1095,9 @@
   }
   let committedComponentState = untrack(readComponentState);
   function readComponentInputAttributes(): Record<string, unknown> {
-    if (!inputSlot) return {};
+    if (!inputSlot) {
+      return {};
+    }
     return componentEditorContext.attributes;
   }
   let committedComponentInputAttributes = untrack(readComponentInputAttributes);
@@ -1058,7 +1111,9 @@
       const text = String(accepted);
       if ((control instanceof HTMLTextAreaElement || control instanceof HTMLInputElement
         && (attrs?.type !== 'number' || control.ownerDocument.activeElement !== control))
-        && control.defaultValue !== text) control.defaultValue = text;
+        && control.defaultValue !== text) {
+        control.defaultValue = text;
+      }
     }
     componentInputStyle.commit(inputSlot ? control : undefined, resolveSelectStyleFrame(componentInputRawStyle()), {
       lifetime: rootSlot ? undefined : 'single', syncWidth: false, value: searchText
@@ -1066,7 +1121,9 @@
   });
   $effect(() => {
     const disabled = blocked, expanded = visible, overridden = Boolean(rootSlot) || Boolean(inputSlot);
-    if (!overridden) return;
+    if (!overridden) {
+      return;
+    }
     untrack(() => {
       if (disabled) {
         void resolvedSuffix;
@@ -1077,15 +1134,23 @@
   });
   export function focus(options?: FocusOptions) {
     if (customRoot) {
-      if (arguments.length) return focusSelectComponent(customRoot.registration, options);
+      if (arguments.length) {
+        return focusSelectComponent(customRoot.registration, options);
+      }
       return focusSelectComponent(customRoot.registration);
     }
-    if (customInput) return focusSelectComponent(customInput.registration, options);
+    if (customInput) {
+      return focusSelectComponent(customInput.registration, options);
+    }
     defaultEditor?.focus(options);
   }
   export function blur() {
-    if (customRoot) return blurSelectComponent(customRoot.registration);
-    if (customInput) return blurSelectComponent(customInput.registration);
+    if (customRoot) {
+      return blurSelectComponent(customRoot.registration);
+    }
+    if (customInput) {
+      return blurSelectComponent(customInput.registration);
+    }
     defaultEditor?.blur();
   }
   export function scrollTo(config?: SelectScrollConfig | null) {

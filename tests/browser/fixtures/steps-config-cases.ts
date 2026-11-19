@@ -36,7 +36,9 @@ const parts = ['root', 'item', 'itemWrapper', 'itemIcon', 'itemSection', 'itemHe
   'itemTitle', 'itemSubtitle', 'itemContent', 'itemRail'] as const;
 
 function css(style?: Readonly<Record<string, string | number>>) {
-  if (!style) return;
+  if (!style) {
+    return;
+  }
   return Object.entries(style).map(([key, value]) => {
     const property = key.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
     const unit = typeof value === 'number' && key !== 'fontWeight' ? 'px' : '';
@@ -53,14 +55,18 @@ function classes(prefix: string): StepsSemanticSlots {
 }
 
 export function stepsConfigRecord(descriptor?: StepsConfigDescriptor): StepsConfig | undefined {
-  if (!descriptor) return;
+  if (!descriptor) {
+    return;
+  }
   return { class: descriptor.className, style: css(descriptor.style),
     classNames: descriptor.classNames, styles: styles(descriptor.styles) };
 }
 
 export function stepsContextConfig(sample: StepsConfigSample): StepsConfig {
   const context = stepsConfigRecord(sample.context) ?? {};
-  if (!sample.contextCallback) return context;
+  if (!sample.contextCallback) {
+    return context;
+  }
 
   if (sample.kind === 'timeline') {
     // Source InternalContext не должен даже вызывать исключённые Steps semantics.
@@ -89,7 +95,9 @@ export function stepsLocalProps(sample: StepsConfigSample): Partial<StepsProps> 
     type: sample.type, orientation: sample.orientation, current: sample.current,
     size: sample.size, percent: sample.percent, maxCount: sample.maxCount
   };
-  if (!sample.localCallback) return props;
+  if (!sample.localCallback) {
+    return props;
+  }
 
   return {
     ...props,
@@ -119,7 +127,9 @@ export function stepsConfigItems(sample: StepsConfigSample): readonly StepsDataI
 
 export function stepsTimelineConfig(sample: StepsConfigSample): TimelineConfig | undefined {
   const descriptor = sample.timeline;
-  if (!descriptor) return;
+  if (!descriptor) {
+    return;
+  }
 
   return {
     class: descriptor.className,

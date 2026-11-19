@@ -49,7 +49,9 @@ async function settle(page: Page) {
       requestAnimationFrame(() => requestAnimationFrame(() => resolve())))));
     const view = (await page.evaluate(readTreeSelectAlign)).view, key = JSON.stringify(view);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 6) return view;
+    if (stable >= 6) {
+      return view;
+    }
     previous = key;
   }
   throw Error('Hydrated alignment did not settle after 150 frames');
@@ -59,23 +61,33 @@ async function act(page: Page, action: TreeSelectAlignAction) {
   const editor = page.locator('[data-align-case] [data-align-editor], [data-align-case] input[role="combobox"]');
   if (action.type === 'click') await editor.click();
   else if (action.type === 'fill') await editor.fill(action.text);
-  else if (action.type === 'caret') await editor.evaluate((node, range) => {
-    if (!(node instanceof HTMLInputElement)) throw Error('Expected native align editor');
-    node.setSelectionRange(range.start, range.end);
-  }, action);
-  else if (action.type === 'props' || action.type === 'host') await page.evaluate(action =>
-    window.treeSelectAlignHydration!.update(action), action);
-  else if (action.type === 'viewport') await page.setViewportSize({
-    width: action.width,
-    height: action.height
-  });
-  else if (action.type === 'scroll') await page.locator('[data-align-scroller]').evaluate((
-    node,
-    action
-  ) => {
-    node.scrollTop = action.top;
-    node.scrollLeft = action.left;
-  }, action);
+  else if (action.type === 'caret') {
+    await editor.evaluate((node, range) => {
+      if (!(node instanceof HTMLInputElement)) {
+        throw Error('Expected native align editor');
+      }
+      node.setSelectionRange(range.start, range.end);
+    }, action);
+  }
+  else if (action.type === 'props' || action.type === 'host') {
+    await page.evaluate(action =>
+      window.treeSelectAlignHydration!.update(action), action);
+  }
+  else if (action.type === 'viewport') {
+    await page.setViewportSize({
+      width: action.width,
+      height: action.height
+    });
+  }
+  else if (action.type === 'scroll') {
+    await page.locator('[data-align-scroller]').evaluate((
+      node,
+      action
+    ) => {
+      node.scrollTop = action.top;
+      node.scrollLeft = action.left;
+    }, action);
+  }
   else throw Error(`Unexpected strict hydration action: ${action.type}`);
 }
 

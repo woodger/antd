@@ -9,7 +9,9 @@ function nativeRootView<View extends { events: readonly unknown[][] }>(
   action: string,
   view: View
 ) {
-  if (id !== 'composite-unmount' || action !== 'unmount') return view;
+  if (id !== 'composite-unmount' || action !== 'unmount') {
+    return view;
+  }
   // React снимает synthetic callbacks до удаления DOM. Chromium доставляет
   // Native focusout ещё подключённому input, до cleanup регистрации.
   // Эта граница Svelte DOM отражена отдельно; raw Source остаётся неизменным.
@@ -24,19 +26,25 @@ async function apply(page: Page, action: TreeSelectRootAction) {
   const child = page.locator('[data-root-child]');
   if (action === 'click') await field.click();
   else if (action === 'click-only') await field.evaluate(node => (node as HTMLElement).click());
-  else if (action === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside root', exact: true }
-  ).click();
+  else if (action === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside root', exact: true }
+    ).click();
+  }
   else if (action === 'focus' || action === 'child-focus') await (action === 'focus' ? field : child).focus();
   else if (action === 'blur') await field.evaluate(node => (node as HTMLElement).blur());
-  else if (action === 'ref-focus' || action === 'ref-blur') await page.getByRole('button', {
-    name: action === 'ref-focus' ? 'Root ref focus' : 'Root ref blur', exact: true
-  }).dispatchEvent('click');
-  else if (action === 'unmount') await page.getByRole(
-    'button',
-    { name: 'Unmount root', exact: true }
-  ).dispatchEvent('click');
+  else if (action === 'ref-focus' || action === 'ref-blur') {
+    await page.getByRole('button', {
+      name: action === 'ref-focus' ? 'Root ref focus' : 'Root ref blur', exact: true
+    }).dispatchEvent('click');
+  }
+  else if (action === 'unmount') {
+    await page.getByRole(
+      'button',
+      { name: 'Unmount root', exact: true }
+    ).dispatchEvent('click');
+  }
   else if (action === 'type' || action === 'child-type') await (action === 'type' ? field : child).fill('Draft query');
   else {
     const key = action === 'enter' || action === 'child-enter' ? 'Enter' : action === 'space' ? 'Space' : 'ArrowDown';
@@ -65,15 +73,19 @@ for (const entry of reference.cases) {
     const original = await field.elementHandle();
     for (const step of entry.steps) {
       const unmountBoundary = entry.id === 'composite-unmount' && step.action === 'unmount';
-      if (unmountBoundary) expect(step.view.events.filter(event =>
-        event[0] === 'generated:blur' || event[0] === 'own:blur')).toEqual([]);
+      if (unmountBoundary) {
+        expect(step.view.events.filter(event =>
+          event[0] === 'generated:blur' || event[0] === 'own:blur')).toEqual([]);
+      }
       await apply(page, step.action as TreeSelectRootAction);
       const expected = nativeRootView(entry.id, step.action, step.view);
       await expect.poll(read, { message: step.action }).toEqual(expected);
-      if (step.sameField) expect(await field.evaluate(
-        (node, previous) => node === previous,
-        original
-      )).toBe(true);
+      if (step.sameField) {
+        expect(await field.evaluate(
+          (node, previous) => node === previous,
+          original
+        )).toBe(true);
+      }
       await expect(page.locator('[data-root-native-editor]')).toHaveText('');
       if (unmountBoundary) {
         await page.evaluate(() => new Promise<void>(resolve =>

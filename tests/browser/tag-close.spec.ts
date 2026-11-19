@@ -106,8 +106,10 @@ for (const name of ['reactive-root-type', 'reactive-root-span']) {
     const root = page.locator('#tag-close-surface [data-tag-api-root]');
 
     for (let index = 0; index < 3; index++) {
-      if (index) await page.getByRole('button', { name: 'Change close API props', exact: true })
-        .dispatchEvent('click');
+      if (index) {
+        await page.getByRole('button', { name: 'Change close API props', exact: true })
+          .dispatchEvent('click');
+      }
       await page.getByRole('button', { name: 'Focus Tag root ref', exact: true }).click();
 
       await expect(root).toBeFocused();

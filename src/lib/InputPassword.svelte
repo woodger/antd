@@ -124,7 +124,9 @@
   });
 
   function handleVisibleChange() {
-    if (blocked) return;
+    if (blocked) {
+      return;
+    }
 
     if (visible) {
       const timeout = setTimeout(() => {
@@ -140,7 +142,9 @@
   }
 
   function handleKeyDown(event: KeyboardEvent) {
-    if (event.key !== 'Enter' && event.key !== ' ') return;
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
 
     event.preventDefault();
     if (!event.repeat) handleVisibleChange();

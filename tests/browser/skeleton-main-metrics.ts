@@ -1,7 +1,9 @@
 export function snapshotSkeletonMain(prefix = 'ant-skeleton') {
   const root = document.querySelector('[data-skeleton-main-frame]')!
     .querySelector<HTMLElement>(`.${prefix}`);
-  if (!root) return null;
+  if (!root) {
+    return null;
+  }
 
   const classes = (node: Element) => [...node.classList].filter(name =>
     !/^svelte-|^s-[\w-]{12}$|^css-|^ant-skeleton-css-var$|^skeleton-main-source-scope$/.test(name)
@@ -12,7 +14,9 @@ export function snapshotSkeletonMain(prefix = 'ant-skeleton') {
   const part = (name: string) => {
     const marker = root.querySelector(`[data-ant-skeleton-part="${name}"]`);
     const selected = marker ?? root.querySelector(`.${prefix}-${name}, .nested-${name}`);
-    if (!selected) return null;
+    if (!selected) {
+      return null;
+    }
     return {
       classes: classes(selected),
       style: style(selected, ['background-color', 'border-radius', 'color', 'padding-top',

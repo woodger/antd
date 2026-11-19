@@ -7,12 +7,14 @@ export function anchorSection(
   bounds = 5
 ): string {
   let current: { href: string; top: number; } | undefined;
-  for (const section of sections)
+  for (const section of sections) {
     if (section.top <= (section.targetOffset
       ?? offset) + bounds
       && (!current
-        || section.top > current.top))
+        || section.top > current.top)) {
       current = section;
+    }
+  }
   return current?.href ?? '';
 }
 export { scrollFrame as anchorScrollFrame } from './scroll.engine';

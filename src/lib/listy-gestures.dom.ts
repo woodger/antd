@@ -22,7 +22,9 @@ interface ListyGestureOptions {
 /** Native wheel/touch нужны для passive:false и передачи жеста внешнему scroll container. */
 export function connectListyGestures(holder: HTMLDivElement, options: ListyGestureOptions) {
   const view = holder.ownerDocument.defaultView;
-  if (!view) return () => {};
+  if (!view) {
+    return () => {};
+  }
   const document = holder.ownerDocument;
   const firefox = view.navigator.userAgent.includes('Firefox');
   const cleanups: (() => void)[] = [];
@@ -62,7 +64,9 @@ export function connectListyGestures(holder: HTMLDivElement, options: ListyGestu
   let mouseScroll = false;
 
   function handleWheel(event: WheelInput) {
-    if (!options.useVirtual) return;
+    if (!options.useVirtual) {
+      return;
+    }
     view!.cancelAnimationFrame(directionFrame);
     directionFrame = view!.requestAnimationFrame(() => {
       directionFrame = view!.requestAnimationFrame(() => { direction = undefined; });
@@ -78,7 +82,9 @@ export function connectListyGestures(holder: HTMLDivElement, options: ListyGestu
     }
 
     view!.cancelAnimationFrame(frame);
-    if (wheelOrigin(false, event.deltaY) || event._virtualHandled) return;
+    if (wheelOrigin(false, event.deltaY) || event._virtualHandled) {
+      return;
+    }
     event._virtualHandled = true;
     offset += event.deltaY;
     lastWheel = event.deltaY;
@@ -94,7 +100,9 @@ export function connectListyGestures(holder: HTMLDivElement, options: ListyGestu
   }
 
   function handleMozPixel(event: Event) {
-    if (!options.useVirtual || !('detail' in event) || typeof event.detail !== 'number') return;
+    if (!options.useVirtual || !('detail' in event) || typeof event.detail !== 'number') {
+      return;
+    }
     const boundary = options.top() <= 0 && event.detail < 0
       || options.top() >= options.maximum() && event.detail > 0;
     if (!boundary) event.preventDefault();
@@ -118,9 +126,13 @@ export function connectListyGestures(holder: HTMLDivElement, options: ListyGestu
   }
 
   function moveTouch(horizontal: boolean, delta: number, smooth: boolean, event?: TouchEvent) {
-    if (touchOrigin(horizontal, delta, smooth)) return false;
+    if (touchOrigin(horizontal, delta, smooth)) {
+      return false;
+    }
     const marked = event as (TouchEvent & { _virtualHandled?: boolean; }) | undefined;
-    if (marked?._virtualHandled) return false;
+    if (marked?._virtualHandled) {
+      return false;
+    }
     if (marked) marked._virtualHandled = true;
     handleWheel({
       deltaX: horizontal ? delta : 0,
@@ -132,7 +144,9 @@ export function connectListyGestures(holder: HTMLDivElement, options: ListyGestu
 
   function handleTouchMove(raw: Event) {
     const event = raw as TouchEvent;
-    if (!touched || !event.touches.length) return;
+    if (!touched || !event.touches.length) {
+      return;
+    }
     const currentX = Math.ceil(event.touches[0].pageX);
     const currentY = Math.ceil(event.touches[0].pageY);
     let deltaX = touchX - currentX;
@@ -161,9 +175,13 @@ export function connectListyGestures(holder: HTMLDivElement, options: ListyGestu
   }
 
   function handleTouchStart(event: TouchEvent) {
-    if (!options.useVirtual) return;
+    if (!options.useVirtual) {
+      return;
+    }
     cleanTouch();
-    if (event.touches.length !== 1 || touched) return;
+    if (event.touches.length !== 1 || touched) {
+      return;
+    }
     touched = true;
     touchX = Math.ceil(event.touches[0].pageX);
     touchY = Math.ceil(event.touches[0].pageY);
@@ -195,13 +213,17 @@ export function connectListyGestures(holder: HTMLDivElement, options: ListyGestu
   function handleMouseDown(event: MouseEvent & { _virtualHandled?: boolean; }) {
     const target = event.target;
     if (!options.virtual || event.button !== 0 || event._virtualHandled
-      || target instanceof view!.HTMLElement && target.draggable) return;
+      || target instanceof view!.HTMLElement && target.draggable) {
+      return;
+    }
     event._virtualHandled = true;
     mouseDown = true;
   }
 
   function handleMouseMove(event: MouseEvent) {
-    if (!mouseDown) return;
+    if (!mouseDown) {
+      return;
+    }
     const y = event.pageY - view!.scrollY;
     const rect = holder.getBoundingClientRect();
     if (y <= rect.top) {

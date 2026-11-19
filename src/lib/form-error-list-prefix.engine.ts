@@ -1,6 +1,8 @@
 /** Только explain styles Form; prefix списка не меняет оформление соседних FormItem. */
 export function getFormErrorListPrefixCss(prefix: string, scoped = false) {
-  if (prefix === 'ant-form' && !scoped) return undefined;
+  if (prefix === 'ant-form' && !scoped) {
+    return undefined;
+  }
 
   return `
 .${prefix}-item .${prefix}-item-explain{clear:both;color:var(--ant-color-text-description);font-size:var(--ant-font-size);line-height:var(--ant-line-height);}

@@ -13,10 +13,12 @@
   let editor = $state<HTMLInputElement>();
   function record(...entry: unknown[]) { events = [...events, entry]; }
   $effect(() => {
-    if (root) untrack(() => {
-      const content = root!.querySelector<HTMLElement>('.ant-select-content')!;
-      rootWidth = sample.width + root!.getBoundingClientRect().width - content.clientWidth;
-    });
+    if (root) {
+      untrack(() => {
+        const content = root!.querySelector<HTMLElement>('.ant-select-content')!;
+        rootWidth = sample.width + root!.getBoundingClientRect().width - content.clientWidth;
+      });
+    }
   });
 </script>
 

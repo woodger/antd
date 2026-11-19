@@ -3,7 +3,9 @@ import type { TooltipAlignmentHost } from './fixtures/tooltip-align.types';
 export function snapshotTooltipAlignment() {
   const root = document.querySelector<TooltipAlignmentHost>('#tooltip-align-case')!;
   const popup = root.tooltipRef?.popupElement;
-  if (!popup) return null;
+  if (!popup) {
+    return null;
+  }
   const anchor = document.querySelector<HTMLElement>('[data-alignment-anchor]')!;
   const rect = (node: Element) => {
     const value = node.getBoundingClientRect();

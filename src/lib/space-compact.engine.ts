@@ -7,7 +7,9 @@ export function compactClasses(
   direction: 'ltr' | 'rtl',
   context: SpaceCompactContext | null
 ): string {
-  if (!context) return '';
+  if (!context) {
+    return '';
+  }
 
   const middle = context.orientation === 'vertical' ? '-vertical-' : '-';
   return [

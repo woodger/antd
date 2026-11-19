@@ -259,7 +259,9 @@
       // A focused number input retains its existing default until blur.
       if ((input instanceof HTMLTextAreaElement || input instanceof HTMLInputElement
         && (committedInputAttributes.type !== 'number' || input.ownerDocument.activeElement !== input))
-        && (input.defaultValue !== text || input instanceof HTMLInputElement && !input.hasAttribute('value'))) input.defaultValue = text;
+        && (input.defaultValue !== text || input instanceof HTMLInputElement && !input.hasAttribute('value'))) {
+        input.defaultValue = text;
+      }
     }
     // This effect already runs after attrs/value forwarding for ordinary snippets.
     // Read raw object styles as well as the serialized public context: width 20
@@ -400,14 +402,20 @@
     const input = control;
     const active = input?.ownerDocument.activeElement;
     if (!input || !active || ![...tagElements].some(([value, node]) =>
-      !visible.has(value) && node.contains(active))) return;
+      !visible.has(value) && node.contains(active))) {
+      return;
+    }
 
     // Скрытый native remove button передаёт фокус input, не отменяя новый выбор владельца.
     void tick().then(() => {
-      if (!input.isConnected || active.isConnected && !active.closest('[inert]')) return;
+      if (!input.isConnected || active.isConnected && !active.closest('[inert]')) {
+        return;
+      }
       const doc = input.ownerDocument;
       if (!doc.activeElement || doc.activeElement === active || doc.activeElement === doc.body
-        || doc.activeElement === doc.documentElement) input.focus();
+        || doc.activeElement === doc.documentElement) {
+        input.focus();
+      }
     });
   });
   let measuredInputWidth = $state<number>();
@@ -415,7 +423,9 @@
     if (!componentResponsive) componentOverflow = undefined;
   });
   $effect(() => {
-    if (!componentResponsive || !contentElement || !componentInputSuffix) return;
+    if (!componentResponsive || !contentElement || !componentInputSuffix) {
+      return;
+    }
     const host = contentElement, suffix = componentInputSuffix;
     const overflow = untrack(() => connectTreeSelectComponentOverflow(host, suffix, () => tags.length,
       layout => { componentOverflow = layout; }, {
@@ -430,7 +440,9 @@
     return overflow.destroy;
   });
   $effect(() => {
-    if (!contentElement || !responsiveTags || componentResponsive) return;
+    if (!contentElement || !responsiveTags || componentResponsive) {
+      return;
+    }
     const sourceWidth = sourceInputWidth;
     const input = sourceWidth ? control : undefined;
     void tags;
@@ -616,7 +628,9 @@
   }));
 
   $effect(() => {
-    if (!expanded || !list || !reference) return;
+    if (!expanded || !list || !reference) {
+      return;
+    }
 
     const popup = list;
     const anchor = reference;
@@ -665,7 +679,9 @@
   });
 
   $effect(() => {
-    if (!control || !multiple) return;
+    if (!control || !multiple) {
+      return;
+    }
 
     const input = control;
     input.setCustomValidity(
@@ -726,7 +742,9 @@
     }
     const rows = optionList.items;
     const query = search;
-    if (!listVisited && !visible) return;
+    if (!listVisited && !visible) {
+      return;
+    }
     if (!listVisited || rows.length !== lastListLength || query !== lastListSearch) {
       listVisited = true;
       lastListLength = rows.length;
@@ -750,7 +768,9 @@
   });
 
   function activate(index: number, keyboard = false) {
-    if (customPopup && !menuElement) return;
+    if (customPopup && !menuElement) {
+      return;
+    }
     activeIndex = index;
     componentAccessibilityIndex = index;
     notifyActive(optionList.items[index]?.item.value ?? null);
@@ -801,7 +821,9 @@
     if (!resolvedDisabled) onFocus?.(event);
   }
   function componentBlur(event: FocusEvent) {
-    if (componentDestroyed) return;
+    if (componentDestroyed) {
+      return;
+    }
     focused = false;
     composing = false;
     pastedText = undefined;
@@ -825,7 +847,9 @@
     const task = ++componentSearchTask;
     const registration = customInput;
     void tick().then(() => {
-      if (componentDestroyed || task !== componentSearchTask || isOpen || customInput !== registration) return;
+      if (componentDestroyed || task !== componentSearchTask || isOpen || customInput !== registration) {
+        return;
+      }
       internalSearch = '';
     });
   }
@@ -841,12 +865,18 @@
     cancelComponentClose();
   });
   function scheduleComponentClose(fromBlur = false, useMessageChannel = false) {
-    if (componentDestroyed) return;
+    if (componentDestroyed) {
+      return;
+    }
     cancelComponentClose();
     const close = () => {
-      if (!reference?.isConnected) return;
+      if (!reference?.isConnected) {
+        return;
+      }
       const active = reference.ownerDocument.activeElement;
-      if (fromBlur && active && (reference.contains(active) || list?.contains(active))) return;
+      if (fromBlur && active && (reference.contains(active) || list?.contains(active))) {
+        return;
+      }
       setOpen(false, fromBlur);
     };
     if (useMessageChannel) {
@@ -856,16 +886,20 @@
         // Даже устаревшая задача освобождает собственные порты.
         channel.port1.close();
         channel.port2.close();
-        if (componentDestroyed || componentCloseChannel !== channel) return;
+        if (componentDestroyed || componentCloseChannel !== channel) {
+          return;
+        }
         componentCloseChannel = undefined;
         close();
       };
       channel.port2.postMessage(null);
     }
-    else componentCloseTimer = setTimeout(() => {
-      componentCloseTimer = undefined;
-      close();
-    }, 0);
+    else {
+      componentCloseTimer = setTimeout(() => {
+        componentCloseTimer = undefined;
+        close();
+      }, 0);
+    }
   }
   const componentSpaceOpening = new WeakMap<KeyboardEvent, boolean>();
   function componentInputRootKeyboard(event: KeyboardEvent) {
@@ -936,7 +970,9 @@
   function restoreComponentInput(input: HTMLInputElement) {
     const registration = customInput;
     void tick().then(() => {
-      if (!input.isConnected || customInput !== registration) return;
+      if (!input.isConnected || customInput !== registration) {
+        return;
+      }
       const value = committedInputAttributes.value;
       if (value != null && input.value !== String(value)) input.value = String(value);
     });
@@ -1003,7 +1039,9 @@
     if (next) componentSearchTask++;
     if (fromBlur) {
       const state = committedBlurState;
-      if (next && state.disabled) return;
+      if (next && state.disabled) {
+        return;
+      }
       internalOpen = next;
       open = next;
       if (state.expanded !== next) committedOpenChange?.(next);
@@ -1049,7 +1087,9 @@
     else defaultControl?.blur();
   }
   export function scrollTo(config?: SelectScrollConfig | null) {
-    if (customPopup && !menuElement) return;
+    if (customPopup && !menuElement) {
+      return;
+    }
     optionList.scrollTo(config);
   }
 
@@ -1079,7 +1119,9 @@
   }
 
   function changeMultiple(next: RawValue[], origin: 'select' | 'display' | 'raw' = 'select') {
-    if (!multiple) return;
+    if (!multiple) {
+      return;
+    }
     const changed = next.length !== selectedValues.length
       || next.some((item, index) => item !== selectedValues[index]);
     const previous = origin === 'display' ? displayValues : selectionData.values;
@@ -1115,7 +1157,9 @@
 
   function submitTag(text: string) {
     const next = text.trim();
-    if (!next || !tagMode || resolvedDisabled) return;
+    if (!next || !tagMode || resolvedDisabled) {
+      return;
+    }
     const data = optionData(next);
     if (!countReached && !Reflect.get(data ?? {}, 'disabled')) {
       if (!selectedKeys.has(next)) changeMultiple([...selectedValues, next], 'raw');
@@ -1125,7 +1169,9 @@
   }
 
   function clearSelection() {
-    if (resolvedDisabled) return;
+    if (resolvedDisabled) {
+      return;
+    }
     const previousSearch = search;
     const blockedSearch = countReached;
     const preserveSearch = !multiple && controlledSearch !== undefined && Boolean(selected);
@@ -1165,9 +1211,13 @@
   }
 
   function suffixMouseDown(event: MouseEvent) {
-    if (resolvedDisabled) return;
+    if (resolvedDisabled) {
+      return;
+    }
     event.preventDefault();
-    if (inputSlot) return;
+    if (inputSlot) {
+      return;
+    }
     control?.focus({ preventScroll: true });
     if (!(expanded && !multiple && canSearch)) setOpen(!expanded);
   }
@@ -1203,7 +1253,9 @@
         else next.add(chosenValue);
       }
       else {
-        if (!next.size && !clearQuery) return;
+        if (!next.size && !clearQuery) {
+          return;
+        }
         onClear?.();
         next.clear();
       }
@@ -1246,7 +1298,9 @@
   }
 
   function remove(item: RawValue, focusEditor = true) {
-    if (resolvedDisabled || selectionOptions.get(item)?.disabled) return;
+    if (resolvedDisabled || selectionOptions.get(item)?.disabled) {
+      return;
+    }
 
     const next = new Set(selectedValues);
     const data = optionData(item);
@@ -1291,10 +1345,14 @@
   function handleReset(event: Event) {
     const input = control;
 
-    if (!multiple || !input || event.target !== input.form) return;
+    if (!multiple || !input || event.target !== input.form) {
+      return;
+    }
 
     queueMicrotask(() => {
-      if (event.defaultPrevented || !input.isConnected || input !== control || !multiple) return;
+      if (event.defaultPrevented || !input.isConnected || input !== control || !multiple) {
+        return;
+      }
 
       useDefault = false;
       value = (Array.isArray(initialDefault) ? [...initialDefault] : []) as typeof value;
@@ -1345,15 +1403,21 @@
       return;
     }
 
-    if (inputSlot && rawTextarea && !expanded && ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    if (inputSlot && rawTextarea && !expanded && ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+      return;
+    }
     // Source valid-open keys invalidate a weak close even when already open.
     // Preserve its legacy which filter and modifier exclusions.
     const keyCode = event.which;
     if (inputSlot && componentCloseChannel && expanded && keyCode
       && !event.ctrlKey && !event.altKey && !event.metaKey
       && ![27, 16, 8, 9, 224, 18, 91, 92, 17, 186, 187, 20, 93, 38, 37, 39].includes(keyCode)
-      && !(keyCode >= 112 && keyCode <= 123)) cancelComponentClose();
-    if (expanded && event.cancelBubble) return;
+      && !(keyCode >= 112 && keyCode <= 123)) {
+      cancelComponentClose();
+    }
+    if (expanded && event.cancelBubble) {
+      return;
+    }
     handleKeyboardNavigation(event);
   }
 
@@ -1456,7 +1520,9 @@
       restoreComponentInput(input);
       return;
     }
-    if (controlledSearch === undefined) return;
+    if (controlledSearch === undefined) {
+      return;
+    }
 
     void tick().then(() => {
       if (input === control && input.isConnected && (multiple || expanded) && canSearch)
@@ -1493,7 +1559,9 @@
         return;
       }
     }
-    if (compositionEnd && next === search) return;
+    if (compositionEnd && next === search) {
+      return;
+    }
 
     internalSearch = next;
     searchCallback?.(next);
@@ -1563,7 +1631,9 @@
   function handleMouseDown(event: MouseEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
     mouseActivated = false;
     onmousedown?.call(event.currentTarget, event);
-    if (event.defaultPrevented || resolvedDisabled) return;
+    if (event.defaultPrevented || resolvedDisabled) {
+      return;
+    }
     mouseActivated = true;
     if (rootSlot || inputSlot) focus(); else control?.focus();
     if (!expanded) openList();
@@ -1589,7 +1659,9 @@
   function handleListFocusOut(event: FocusEvent) {
     const next = event.relatedTarget;
 
-    if (next instanceof Node && ((rootSlot ? reference : container)?.contains(next) || list?.contains(next))) return;
+    if (next instanceof Node && ((rootSlot ? reference : container)?.contains(next) || list?.contains(next))) {
+      return;
+    }
 
     focused = false;
     const state = committedBlurState;
@@ -1608,9 +1680,13 @@
     event: PointerEvent & { currentTarget: EventTarget & HTMLDivElement; }
   ) {
     const target = event.target;
-    if (renderTag && target instanceof Element && target.closest('[data-select-custom-tag]')) return;
+    if (renderTag && target instanceof Element && target.closest('[data-select-custom-tag]')) {
+      return;
+    }
     if (event.composedPath().some(node => node instanceof Element
-      && node.classList.contains(`${prefix}-suffix`) && node.parentElement === event.currentTarget)) return;
+      && node.classList.contains(`${prefix}-suffix`) && node.parentElement === event.currentTarget)) {
+      return;
+    }
 
     if (multiple
       && target instanceof Element

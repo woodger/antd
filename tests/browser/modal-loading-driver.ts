@@ -15,7 +15,9 @@ export async function settleNativeModalLoading(page: Page) {
     latest = await page.evaluate(readModalLoading);
     const encoded = JSON.stringify(latest);
     stable = previous === encoded ? stable + 1 : 0;
-    if (stable >= 3) return latest;
+    if (stable >= 3) {
+      return latest;
+    }
     previous = encoded;
   }
   throw Object.assign(Error('Actual Native Modal.loading did not settle'), { observation: latest });
@@ -25,13 +27,17 @@ export async function actNativeModalLoading(
   sample: ModalLoadingSample,
   action: ModalLoadingAction
 ) {
-  if (action.type === 'loading') await page.evaluate(
-    action => window.modalLoadingNative.update(action),
-    action
-  );
+  if (action.type === 'loading') {
+    await page.evaluate(
+      action => window.modalLoadingNative.update(action),
+      action
+    );
+  }
   else if (action.type === 'fill') {
     const handle = await page.evaluateHandle(() => window.modalLoadingNative.readRefs().editor), editor = handle.asElement();
-    if (!editor) throw Error('Actual authored body input ref required');
+    if (!editor) {
+      throw Error('Actual authored body input ref required');
+    }
     try { await editor.fill(action.text); } finally { await handle.dispose(); }
   }
   else if (action.type === 'cancel-close') await page.locator('[data-modal-loading-owner="' + sample.id + '"] button.' + sample.prefixCls + '-close').click();

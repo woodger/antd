@@ -78,10 +78,14 @@ interface CallbackProps {
 }
 
 export function buildOverlayConfig(spec: OverlayConfigSpec | undefined) {
-  if (!spec) return undefined;
+  if (!spec) {
+    return undefined;
+  }
   const { callback, classNames, styles, container, ...rest } = spec;
   const props = container ? { ...rest, getPopupContainer: () => document.body } : rest;
-  if (!callback) return { ...props, classNames, styles };
+  if (!callback) {
+    return { ...props, classNames, styles };
+  }
 
   return {
     ...props,

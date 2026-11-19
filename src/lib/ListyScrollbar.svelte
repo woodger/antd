@@ -34,7 +34,9 @@
   let geometry = $derived(listyScrollbar(size, range, offset));
 
   function show() {
-    if (showScrollBar === true || showScrollBar === false) return;
+    if (showScrollBar === true || showScrollBar === false) {
+      return;
+    }
     clearTimeout(timer);
     visible = true;
     timer = setTimeout(() => { visible = false; }, 3000);
@@ -50,13 +52,17 @@
   $effect(() => {
     const track = bar;
     const handle = thumb;
-    if (!track || !handle) return;
+    if (!track || !handle) {
+      return;
+    }
     return untrack(() => connect(track, handle));
   });
 
   function connect(track: HTMLDivElement, handle: HTMLDivElement) {
     const view = track.ownerDocument.defaultView;
-    if (!view) return;
+    if (!view) {
+      return;
+    }
     let startY = 0;
     let startTop = 0;
     let frame = 0;
@@ -104,11 +110,15 @@
     function trackDown(event: MouseEvent) {
       event.stopPropagation();
       event.preventDefault();
-      if (event.button !== 0 || handle.contains(event.target as Node)) return;
+      if (event.button !== 0 || handle.contains(event.target as Node)) {
+        return;
+      }
       const y = position(event);
       const rect = track.getBoundingClientRect();
       const start = horizontal ? rtl ? rect.right : rect.left : rect.top;
-      if (!Number.isFinite(y) || !Number.isFinite(start)) return;
+      if (!Number.isFinite(y) || !Number.isFinite(start)) {
+        return;
+      }
       const distance = (y - start) * (horizontal && rtl ? -1 : 1);
       onScroll(listyScrollbarOffset(distance - geometry.thumb / 2, geometry.thumb, size, range));
     }

@@ -2,7 +2,9 @@
 export function snapshotResponsiveControls() {
   const masonry = document.querySelector<HTMLElement>('[data-responsive-masonry] > div');
   const pagination = document.querySelector<HTMLElement>('.fixture-responsive-pagination');
-  if (!masonry || !pagination) throw new Error('Responsive controls are missing');
+  if (!masonry || !pagination) {
+    throw new Error('Responsive controls are missing');
+  }
   const bounds = masonry.getBoundingClientRect();
   const page = pagination.querySelector('.ant-pagination-item-4');
   const pageStyle = page && getComputedStyle(page);

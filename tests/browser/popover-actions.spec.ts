@@ -49,9 +49,11 @@ async function send(page: Page, event: string) {
         event === 'popupEnter' ? 'pointerenter' : 'pointerleave', { pointerType: 'mouse' }
       ));
     }
-    else trigger.parentElement!.dispatchEvent(new PointerEvent(
-      event === 'enter' ? 'pointerenter' : 'pointerleave', { pointerType: 'mouse' }
-    ));
+    else {
+      trigger.parentElement!.dispatchEvent(new PointerEvent(
+        event === 'enter' ? 'pointerenter' : 'pointerleave', { pointerType: 'mouse' }
+      ));
+    }
     return (host as HTMLElement & { actionEvents: readonly boolean[]; }).actionEvents;
   }, event);
 }

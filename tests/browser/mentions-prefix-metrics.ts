@@ -3,11 +3,15 @@ export function snapshotMentionsPrefix() {
   /** Сравнивает CSS control и popup, не привязываясь к React/Svelte DOM-обёрткам. */
   function snapshotMentionsPart(host: HTMLElement) {
     const root = host.querySelector<HTMLElement>('.fixture-mentions-prefix');
-    if (!root) throw new Error('Mentions root is missing');
+    if (!root) {
+      throw new Error('Mentions root is missing');
+    }
 
     const prefix = root.classList[0];
     const css = (node: Element | null, keys: readonly string[]) => {
-      if (!node) return null;
+      if (!node) {
+        return null;
+      }
       const style = getComputedStyle(node);
 
       return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));

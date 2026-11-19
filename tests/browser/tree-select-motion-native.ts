@@ -9,7 +9,9 @@ export function treeSelectMotionNativeObserved<
 export function treeSelectMotionNativeHydrationExpected<
   View extends { popup: { draft: { selection: (number | null)[] } | null } | null }
 >(source: View, initialPanel: boolean): View {
-  if (!initialPanel || !source.popup?.draft) return source;
+  if (!initialPanel || !source.popup?.draft) {
+    return source;
+  }
   return {
     ...source,
     popup: { ...source.popup, draft: { ...source.popup.draft, selection: [0, 0] } }
@@ -24,6 +26,8 @@ export function treeSelectMotionNativeView<
   }
 >(source: View, id: string): View {
   if (id !== 'outside-escape-choice' || source.model !== 'b'
-    || source.editor?.expanded !== 'false') return source;
+    || source.editor?.expanded !== 'false') {
+    return source;
+  }
   return { ...source, editor: { ...source.editor, value: 'Beta', selection: [4, 4] } };
 }

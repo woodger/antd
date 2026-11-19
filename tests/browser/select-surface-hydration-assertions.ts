@@ -18,7 +18,9 @@ export async function settleSelectSurfaceHydration(page: Page): Promise<NativeSt
     const owner = await page.evaluate(() => window.selectSurfaceHydration!.read()) as NativeStyleHistoryOwner;
     const point = { dom, border, owner }, key = JSON.stringify(point);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return point;
+    if (stable >= 3) {
+      return point;
+    }
     previous = key;
   }
   throw Error('Hydrated surface styles and public owner did not settle');

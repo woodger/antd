@@ -103,14 +103,18 @@
   }
 
   function change(optionValue: Value, checked: boolean) {
-    if (resolvedDisabled) return;
+    if (resolvedDisabled) {
+      return;
+    }
 
     let values: Value[];
     let nextValue: Value[];
 
     if (items.length) {
       const option = items.find(item => item.value === optionValue);
-      if (!option || option.disabled || selected.has(optionValue) === checked) return;
+      if (!option || option.disabled || selected.has(optionValue) === checked) {
+        return;
+      }
 
       const next = new Set(selected);
       if (checked) next.add(optionValue);
@@ -146,13 +150,17 @@
   function handleReset(event: Event) {
     const element = container;
 
-    if (!element || event.target !== element.form) return;
+    if (!element || event.target !== element.form) {
+      return;
+    }
 
     // Следующая задача учитывает отмену reset даже в позднем listener на window.
     const reset = setTimeout(() => {
       resets.delete(reset);
 
-      if (event.defaultPrevented || !element.isConnected || element !== container) return;
+      if (event.defaultPrevented || !element.isConnected || element !== container) {
+        return;
+      }
 
       value = [...initialDefault];
       syncMembers();

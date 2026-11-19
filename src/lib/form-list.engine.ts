@@ -47,7 +47,9 @@ export function changeFormList(
 
   if (action.type === 'remove') {
     const removed = new Set(Array.isArray(action.index) ? action.index : [action.index]);
-    if (!removed.size) return;
+    if (!removed.size) {
+      return;
+    }
 
     return {
       values: values.filter((_, index) => !removed.has(index)),
@@ -60,7 +62,9 @@ export function changeFormList(
 
   const { from, to } = action;
   if (!Number.isInteger(from) || !Number.isInteger(to) || from === to
-    || from < 0 || to < 0 || from >= values.length || to >= values.length) return;
+    || from < 0 || to < 0 || from >= values.length || to >= values.length) {
+    return;
+  }
 
   const movedValues = [...values];
   const movedKeys = [...state.keys];

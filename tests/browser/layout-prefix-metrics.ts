@@ -18,7 +18,9 @@ export function snapshotLayoutPrefix() {
         siderPrefix: sider.classList.contains(sidebar),
         defaultSider: sider.classList.contains('ant-layout-sider'),
         slots: Object.fromEntries(Object.entries(nodes).map(([part, node]) => {
-          if (!node) return [part, null];
+          if (!node) {
+            return [part, null];
+          }
           const css = getComputedStyle(node);
 
           return [part, {

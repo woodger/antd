@@ -145,7 +145,9 @@
   $effect(() => {
     const panelNode = activePopup;
     const targetNode = activePlaceholder;
-    if (!panelNode || !targetNode) return;
+    if (!panelNode || !targetNode) {
+      return;
+    }
     const controller = connectTourLayout(
       panelNode,
       targetNode,
@@ -168,7 +170,9 @@
 
   $effect(() => {
     const controller = layout;
-    if (!controller) return;
+    if (!controller) {
+      return;
+    }
     void panel;
     void portalRevision;
     const options = {
@@ -190,7 +194,9 @@
   });
 
   $effect(() => {
-    if (!visible || !mounted) return;
+    if (!visible || !mounted) {
+      return;
+    }
     const view = window;
     const escape = connectTourEscape(view, event => {
       if ((props.keyboard ?? true) && closable !== null) {
@@ -199,7 +205,9 @@
       }
     });
     function handleKeydown(event: KeyboardEvent) {
-      if (!(props.keyboard ?? true) || isTourEditableTarget(event)) return;
+      if (!(props.keyboard ?? true) || isTourEditableTarget(event)) {
+        return;
+      }
       if (event.key === 'ArrowLeft' && current > 0) {
         event.preventDefault();
         change(current - 1);

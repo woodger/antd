@@ -5,9 +5,13 @@
 export function getSelectTagText(text: string, maxLength?: number): string;
 export function getSelectTagText<Content>(text: Content, maxLength?: number): Content | string;
 export function getSelectTagText(text: unknown, maxLength?: number): unknown {
-  if (typeof text !== 'string' && typeof text !== 'number') return text;
+  if (typeof text !== 'string' && typeof text !== 'number') {
+    return text;
+  }
   const label = String(text);
-  if (typeof maxLength !== 'number' || !(label.length > maxLength)) return text;
+  if (typeof maxLength !== 'number' || !(label.length > maxLength)) {
+    return text;
+  }
 
   const shortened = label.slice(0, maxLength);
   const high = label.charCodeAt(shortened.length - 1);

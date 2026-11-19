@@ -14,10 +14,12 @@ for (const sample of datePickerPresetTransitionSamples) {
     const resource = vi.fn(() => {
       throw Error('Closed DatePicker transition SSR must remain DOM-free');
     });
-    for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(
-      name,
-      resource
-    );
+    for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) {
+      vi.stubGlobal(
+        name,
+        resource
+      );
+    }
     for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel'])
       vi.stubGlobal(name, class { constructor() { resource(); } });
     const timeout = vi.spyOn(globalThis, 'setTimeout'), interval = vi.spyOn(

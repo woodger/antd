@@ -7,9 +7,13 @@ function isOwner(value: string | null): value is MonthYearOwner {
   return value === 'single-month' || value === 'single-year' || value === 'range-month' || value === 'range-year';
 }
 const owner = new URL(location.href).searchParams.get('owner');
-if (!isOwner(owner)) throw Error('Choose one of four authored month/year owners');
+if (!isOwner(owner)) {
+  throw Error('Choose one of four authored month/year owners');
+}
 const target = document.getElementById('root');
-if (!target) throw Error('Actual ordinary Native mount root missing');
+if (!target) {
+  throw Error('Actual ordinary Native mount root missing');
+}
 const capture: MonthYearCapture = {};
 window.nativeMonthYearObservation = { preMountNodes: new Set(document.querySelectorAll('*')),
   retainedNodes: new Set(), events: [] };
@@ -17,7 +21,9 @@ const types = ['pointerdown', 'click', 'mouseover', 'mouseout', 'keydown',
   'input', 'change', 'focusin', 'focusout'];
 const listener = (event: Event) => {
   const recorder = capture.recorder;
-  if (!recorder || !capture.read) return;
+  if (!recorder || !capture.read) {
+    return;
+  }
   const id = (value: object | null) => value == null ? null : recorder.identity(value);
   const mouse = event instanceof MouseEvent ? event : null;
   const keyboard = event instanceof KeyboardEvent ? event : null;
@@ -39,7 +45,9 @@ for (const type of types) document.addEventListener(type, listener, true);
 const app = mount(Case, { target, props: { owner, capture } });
 await tick();
 if (!capture.recorder || !capture.read || !capture.readRefs || !capture.setActionIndex
-  || !capture.readCallbacks || !capture.readProducers) throw Error('Complete authored month/year capture unavailable');
+  || !capture.readCallbacks || !capture.readProducers) {
+  throw Error('Complete authored month/year capture unavailable');
+}
 let disposed = false;
 window.nativeMonthYear = {
   ready: true, getRecorder: () => capture.recorder!, read: () => capture.read!(),
@@ -48,7 +56,9 @@ window.nativeMonthYear = {
   activateControl(value) {
     const button = [...document.querySelectorAll<HTMLButtonElement>('[data-month-year-control]')]
       .find(node => node.getAttribute('data-month-year-control') === value);
-    if (!button) throw Error('Actual authored owner control missing');
+    if (!button) {
+      throw Error('Actual authored owner control missing');
+    }
     const active = document.activeElement;
     let observed: unknown = null;
     button.addEventListener('click', event => { observed = { type: event.type, isTrusted: event.isTrusted,
@@ -58,7 +68,9 @@ window.nativeMonthYear = {
     return { click: observed, focusIdentityPreserved: active === document.activeElement };
   },
   async dispose() {
-    if (disposed) throw Error('Actual owner is already unmounted');
+    if (disposed) {
+      throw Error('Actual owner is already unmounted');
+    }
     disposed = true;
     await unmount(app);
     await tick();

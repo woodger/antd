@@ -5,7 +5,9 @@ import { treeDragSamples, treeDragObservations, treeDragNativeSamples } from './
 export async function mountTreeDrag(page: Page, id: string) {
   const samples = [...treeDragSamples, ...treeDragObservations, ...treeDragNativeSamples];
   const index = samples.findIndex(sample => sample.id === id);
-  if (index < 0) throw new Error(`Unknown drag fixture: ${id}`);
+  if (index < 0) {
+    throw new Error(`Unknown drag fixture: ${id}`);
+  }
   await page.clock.install({ time: new Date('2026-11-10T12:00:00Z') });
   await page.goto('/?fixture=tree-drag');
   await page.getByRole('combobox', { name: 'Tree drag sample', exact: true }).selectOption(String(index));
@@ -55,7 +57,9 @@ export async function treeDragAction(page: Page, action: TreeDragAction, prefix 
     return page.evaluate(({ action, prefix }) => {
       const root = document.querySelector(`.${prefix}`)!;
       const title = root.querySelector(`[data-tree-drag-key="${action.key}"]`);
-      if (!title) throw new Error(`Native row not mounted: ${action.key}`);
+      if (!title) {
+        throw new Error(`Native row not mounted: ${action.key}`);
+      }
       const row = title.closest('[role="treeitem"]')!;
       const target = action.target === 'title' ? title
         : action.target === 'content' ? row.querySelector(`.${prefix}-node-content-wrapper`)!

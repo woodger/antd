@@ -32,7 +32,9 @@ export function connectTimePickerColumn(
 
   function align() {
     stopScroll();
-    if (disposed || !first || !target) return;
+    if (disposed || !first || !target) {
+      return;
+    }
 
     scrolling = true;
     attempts++;
@@ -65,15 +67,21 @@ export function connectTimePickerColumn(
 
   function handleScroll() {
     clearDelay();
-    if (scrolling || !changeOnScroll()) return;
+    if (scrolling || !changeOnScroll()) {
+      return;
+    }
 
     timer = setTimeout(() => {
       timer = undefined;
-      if (disposed) return;
+      if (disposed) {
+        return;
+      }
 
       const items = [...column.querySelectorAll<HTMLElement>('li')];
       const first = items[0];
-      if (!first) return;
+      if (!first) {
+        return;
+      }
 
       let minimum = Number.MAX_SAFE_INTEGER;
       let nearest: TimePickerOption | undefined;

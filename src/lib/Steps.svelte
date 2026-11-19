@@ -135,7 +135,9 @@
   $effect(() => {
     if (!responsive
       || orientation === 'vertical'
-      || layout.type === 'panel') return;
+      || layout.type === 'panel') {
+      return;
+    }
     const media = window.matchMedia(
       composition?.timeline ? '(max-width: 575.98px)' : '(max-width: 531.98px)'
     );
@@ -147,11 +149,15 @@
     return () => media.removeEventListener('change', update);
   });
   $effect(() => {
-    if (nativeElement) return connectStepsFocus(nativeElement);
+    if (nativeElement) {
+      return connectStepsFocus(nativeElement);
+    }
   });
 
   function choose(event: MouseEvent, item: NormalizedStepsDataItem, index: number) {
-    if ((disabled ?? config.componentDisabled) || item.disabled) return;
+    if ((disabled ?? config.componentDisabled) || item.disabled) {
+      return;
+    }
     item.onClick?.(event);
     if (index !== selected)
       onChange?.(index);

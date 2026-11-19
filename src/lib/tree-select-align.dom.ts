@@ -75,12 +75,18 @@ export function createTreeSelectAlign(
 
   function schedule(force: boolean) {
     const options = getOptions();
-    if (options.open === false || options.inMotion && !force) return;
+    if (options.open === false || options.inMotion && !force) {
+      return;
+    }
     const token = ++request;
     Promise.resolve().then(() => {
-      if (!active || request !== token) return;
+      if (!active || request !== token) {
+        return;
+      }
       const latest = getOptions();
-      if (latest.open === false || latest.inMotion && !force) return;
+      if (latest.open === false || latest.inMotion && !force) {
+        return;
+      }
       dirty = true;
       forced ||= force;
       notify?.();
@@ -136,7 +142,9 @@ export function createTreeSelectAlign(
     const placements = options.builtinPlacements || defaults;
     const align = JSON.stringify(options.popupAlign);
     if (options.placement !== latestPlacement
-      || align !== latestAlign && !placements[options.placement]) invalidate();
+      || align !== latestAlign && !placements[options.placement]) {
+      invalidate();
+    }
     latestPlacement = options.placement;
     latestAlign = align;
 
@@ -160,8 +168,9 @@ export function createTreeSelectAlign(
         presentationSignature = '';
       }
     }
-    if (!cache)
+    if (!cache) {
       return { left: -1000000, top: -1000000, arrowX: 0, arrowY: 0, placement: options.placement };
+    }
     // CSSMotion can finish internally while its memoized popup still paints the ACTIVE frame.
     // Keep calculating the next alignment, but publish it only when those children are ready.
     if (options.renderReady !== false) presentationAlignment = cache;

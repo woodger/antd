@@ -53,7 +53,9 @@ export function connectMentionsMeasure(
   let width = -1;
   let height = -1;
   function sync() {
-    if (disposed || !textarea.isConnected) return;
+    if (disposed || !textarea.isConnected) {
+      return;
+    }
     const style = view.getComputedStyle(textarea);
     for (const name of sizing)
       mirror.style.setProperty(name, style.getPropertyValue(name));
@@ -106,11 +108,12 @@ export function connectMentionsMeasure(
     }
   }
   function schedule() {
-    if (!frame)
+    if (!frame) {
       frame = view.requestAnimationFrame(() => {
         frame = 0;
         sync();
       });
+    }
   }
   const observer = new view.ResizeObserver(schedule);
   observer.observe(textarea);

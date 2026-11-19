@@ -32,7 +32,9 @@ declare global {
 
 const id = new URL(location.href).searchParams.get('sample');
 const sample = treeSelectMotionSamples.find(sample => sample.id === id);
-if (!sample) throw Error(`Unknown TreeSelect motion hydration sample: ${id}`);
+if (!sample) {
+  throw Error(`Unknown TreeSelect motion hydration sample: ${id}`);
+}
 const target = document.getElementById('root')!;
 const host = target.querySelector<HTMLElement>('[data-motion-case]')!;
 const selectPrefix = sample.local ?? `${sample.prefix ?? 'ant'}-select`;

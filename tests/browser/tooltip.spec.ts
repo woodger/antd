@@ -272,9 +272,15 @@ for (const placement of ['top', 'bottom', 'left', 'right']) {
     await expect.poll(async () => {
       const target = (await button.boundingBox())!;
       const box = (await tip.boundingBox())!;
-      if (placement === 'top') return Math.abs(target.y - box.y - box.height - 8);
-      if (placement === 'bottom') return Math.abs(box.y - target.y - target.height - 8);
-      if (placement === 'left') return Math.abs(target.x - box.x - box.width - 8);
+      if (placement === 'top') {
+        return Math.abs(target.y - box.y - box.height - 8);
+      }
+      if (placement === 'bottom') {
+        return Math.abs(box.y - target.y - target.height - 8);
+      }
+      if (placement === 'left') {
+        return Math.abs(target.x - box.x - box.width - 8);
+      }
 
       return Math.abs(box.x - target.x - target.width - 8);
     }).toBeLessThan(2);

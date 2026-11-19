@@ -7,9 +7,15 @@ const native805EditorBoxes: Readonly<Record<string, EditorBox>> = editorReferenc
 
 /** Only the established default multiple editor flow differs from the Source counterpart. */
 export function treeSelectAlignNativeExpected(source: AlignView, id: string): AlignView {
-  if (id !== 'multiple-choice-live') return source;
-  if (!source.editor) throw Error('Expected the Source multiple editor');
+  if (id !== 'multiple-choice-live') {
+    return source;
+  }
+  if (!source.editor) {
+    throw Error('Expected the Source multiple editor');
+  }
   const box = native805EditorBoxes[JSON.stringify(source.model)];
-  if (!box) throw Error('Missing independently captured Native805 editor geometry');
+  if (!box) {
+    throw Error('Missing independently captured Native805 editor geometry');
+  }
   return { ...source, editor: { ...source.editor, box } };
 }

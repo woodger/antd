@@ -120,7 +120,9 @@
   $effect(() => {
     const node = host;
     const current = request;
-    if (!node) return;
+    if (!node) {
+      return;
+    }
 
     const view = node.ownerDocument.defaultView!;
     return untrack(() => model.connect(current, {
@@ -134,7 +136,9 @@
   $effect(() => {
     const node = host;
     const active = isAuto && visible;
-    if (!node || !active) return;
+    if (!node || !active) {
+      return;
+    }
 
     mockPercent = 0;
     const view = node.ownerDocument.defaultView!;

@@ -42,7 +42,9 @@ export function treeSelectComponentOverflow({
       restReady: unchanged || notReady ? result.restReady : omittedStart < dataCount,
       offset: offset === undefined ? result.offset : offset };
   }
-  if (!containerWidth) return result;
+  if (!containerWidth) {
+    return result;
+  }
   if (!renderCount) {
     update(1, null);
     return result;

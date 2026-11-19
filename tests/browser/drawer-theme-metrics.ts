@@ -1,9 +1,13 @@
 /** Сверяет панель Drawer при одинаковом фокусе в поле, сохраняя native dialog семантику. */
 export function snapshotDrawerTheme() {
   const root = document.querySelector('.ant-drawer');
-  if (!root) throw new Error('Drawer root is missing');
+  if (!root) {
+    throw new Error('Drawer root is missing');
+  }
   const css = (node: Element | null, keys: readonly string[]) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   };
@@ -44,14 +48,18 @@ export function snapshotDrawerTheme() {
 /** Все объявления из component registration rule, включая component aliases. */
 export function snapshotDrawerThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-drawer');
-  if (!root) throw new Error('Drawer root is missing');
+  if (!root) {
+    throw new Error('Drawer root is missing');
+  }
   const declarations: Record<string, string> = {};
 
   for (const sheet of document.styleSheets) {
     for (const rule of sheet.cssRules) {
       if (!(rule instanceof CSSStyleRule)
         || !root.matches(rule.selectorText)
-        || ![...rule.style].some(name => name.startsWith(`--${prefix}-drawer-`))) continue;
+        || ![...rule.style].some(name => name.startsWith(`--${prefix}-drawer-`))) {
+        continue;
+      }
 
       for (const name of rule.style) {
         if (name.startsWith(`--${prefix}-`)) {

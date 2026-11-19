@@ -12,7 +12,9 @@ test.beforeEach(async ({ page }) => {
     const originalSet = window.setTimeout.bind(window);
     const originalClear = window.clearTimeout.bind(window);
     window.setTimeout = ((callback: TimerHandler, delay?: number, ...args: unknown[]) => {
-      if (typeof callback !== 'function') return originalSet(callback, delay, ...args);
+      if (typeof callback !== 'function') {
+        return originalSet(callback, delay, ...args);
+      }
 
       const timer = originalSet(() => {
         active.delete(timer);
@@ -87,7 +89,9 @@ for (const sample of reference.cases) {
         .evaluate(node => (node as HTMLButtonElement).click());
       if (frame.step.kind === 'timer') {
         const delay = 'ms' in frame.step ? frame.step.ms : undefined;
-        if (typeof delay !== 'number') throw new Error('Missing source timer delay');
+        if (typeof delay !== 'number') {
+          throw new Error('Missing source timer delay');
+        }
         await page.clock.runFor(delay);
       }
       await page.clock.runFor(32);

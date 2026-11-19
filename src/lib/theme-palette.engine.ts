@@ -30,7 +30,9 @@ function getHue(hsv: ColorHsv, index: number, light = false) {
 }
 
 function getSaturation(hsv: ColorHsv, index: number, light = false) {
-  if (hsv.h === 0 && hsv.s === 0) return hsv.s;
+  if (hsv.h === 0 && hsv.s === 0) {
+    return hsv.s;
+  }
 
   let saturation: number;
   if (light) saturation = hsv.s - 0.16 * index;

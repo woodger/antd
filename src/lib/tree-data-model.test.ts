@@ -9,12 +9,16 @@ function key(value: unknown) {
 }
 
 function queryKey(query: { type: string; value: string | null; }): TreeKey {
-  if (query.type === 'number') return Number(query.value);
+  if (query.type === 'number') {
+    return Number(query.value);
+  }
   return query.value ?? '';
 }
 
 function collectObjects(value: unknown, result = new Set<object>()) {
-  if (value === null || typeof value !== 'object' || result.has(value)) return result;
+  if (value === null || typeof value !== 'object' || result.has(value)) {
+    return result;
+  }
 
   result.add(value);
   for (const child of Object.values(value)) collectObjects(child, result);

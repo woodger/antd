@@ -39,7 +39,9 @@ export function createStatisticTimerModel(
       current = run;
       now = clock.now();
       run.cancel = clock.repeat(() => {
-        if (!run.active || read() !== request) return;
+        if (!run.active || read() !== request) {
+          return;
+        }
 
         const time = clock.now();
         const target = new Date(request.value as StatisticValue).getTime();
@@ -47,7 +49,9 @@ export function createStatisticTimerModel(
         now = time;
         callbacks().onChange?.(down ? target - time : time - target);
         // Callback может изменить цель или удалить компонент до onFinish.
-        if (!run.active || read() !== request) return;
+        if (!run.active || read() !== request) {
+          return;
+        }
         if (down && target < time) {
           stop(run);
           callbacks().onFinish?.();

@@ -4,13 +4,17 @@
     effectFailure?: boolean;
   } = $props();
   let initialValue = $derived.by(() => {
-    if (fail) throw new Error('Boundary failure');
+    if (fail) {
+      throw new Error('Boundary failure');
+    }
 
     return 'Retained draft';
   });
 
   $effect(() => {
-    if (effectFailure) throw new Error('Boundary effect failure');
+    if (effectFailure) {
+      throw new Error('Boundary effect failure');
+    }
   });
 </script>
 

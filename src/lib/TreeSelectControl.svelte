@@ -372,7 +372,9 @@
     : legacyPopupClass);
   $effect(() => {
     if (popupAlign !== undefined || builtinPlacements !== undefined
-      || config.popupOverflow !== undefined) sourceAlignmentUsed = true;
+      || config.popupOverflow !== undefined) {
+      sourceAlignmentUsed = true;
+    }
     if (popupMotionName && tokens.token.motion) sourceMotionUsed = true;
   });
   $effect(() => {
@@ -442,16 +444,24 @@
     const input = editor;
     const active = input?.ownerDocument.activeElement;
     if (!input || !active || ![...tagElements].some(([value, node]) =>
-      !visible.has(value) && node.contains(active))) return;
+      !visible.has(value) && node.contains(active))) {
+      return;
+    }
     void tick().then(() => {
-      if (!input.isConnected || active.isConnected && !active.closest('[inert]')) return;
+      if (!input.isConnected || active.isConnected && !active.closest('[inert]')) {
+        return;
+      }
       const doc = input.ownerDocument;
       if (!doc.activeElement || doc.activeElement === active || doc.activeElement === doc.body
-        || doc.activeElement === doc.documentElement) input.focus();
+        || doc.activeElement === doc.documentElement) {
+        input.focus();
+      }
     });
   });
   $effect(() => {
-    if (!editor || !responsiveTags || inputSlot) return;
+    if (!editor || !responsiveTags || inputSlot) {
+      return;
+    }
     void search;
     const input = editor;
     const previous = input.style.width;
@@ -471,7 +481,9 @@
     if (!componentResponsive) componentOverflow = undefined;
   });
   $effect(() => {
-    if (!componentResponsive || !tagContent || !componentInputSuffix) return;
+    if (!componentResponsive || !tagContent || !componentInputSuffix) {
+      return;
+    }
     const host = tagContent, suffix = componentInputSuffix;
     const overflow = untrack(() => connectTreeSelectComponentOverflow(host, suffix, () => display.length,
       layout => { componentOverflow = layout; }));
@@ -483,7 +495,9 @@
     return overflow.destroy;
   });
   $effect(() => {
-    if (!tagContent || !responsiveTags || componentResponsive) return;
+    if (!tagContent || !responsiveTags || componentResponsive) {
+      return;
+    }
     void display;
     void maxTagTextLength;
     void maxTagPlaceholder;
@@ -494,11 +508,13 @@
     let disposed = false;
     let disconnect: (() => void) | undefined;
     void tick().then(() => {
-      if (!disposed) disconnect = connectSelectTagOverflow(host,
-        count => { responsiveCount = count; }, {
-          tag: ':scope > [data-tree-choice-tag]', rest: ':scope > [data-tree-choice-rest]',
-          input: suffix
-        });
+      if (!disposed) {
+        disconnect = connectSelectTagOverflow(host,
+          count => { responsiveCount = count; }, {
+            tag: ':scope > [data-tree-choice-tag]', rest: ':scope > [data-tree-choice-rest]',
+            input: suffix
+          });
+      }
     });
     return () => {
       disposed = true;
@@ -532,22 +548,27 @@
   });
   $effect(() => {
     const isOpen = rawOpen;
-    if (handledSearchOpen === isOpen) return;
+    if (handledSearchOpen === isOpen) {
+      return;
+    }
     const resetSearch = handledSearchOpen === undefined || !isOpen;
     handledSearchOpen = isOpen;
     // Source монтируется с закрытым ssrSafeOpen даже при initial open=true.
-    if (resetSearch) untrack(() => {
-      if (!isMultiple) searchInput('', false, false);
-      // Synchronous owner update уже обработан mount cleanup в React batch.
-      handledSearchOpen = rawOpen;
-    });
+    if (resetSearch) {
+      untrack(() => {
+        if (!isMultiple) searchInput('', false, false);
+        // Synchronous owner update уже обработан mount cleanup в React batch.
+        handledSearchOpen = rawOpen;
+      });
+    }
   });
   $effect(() => {
     const nextSearch = search;
-    if (nextSearch !== previousSearch && nextSearch)
+    if (nextSearch !== previousSearch && nextSearch) {
       searchExpanded = filteredIndex.ordered.filter(entry => entry.node.children !== undefined).map(
         entry => entry.key
       );
+    }
     if (visible) {
       mounted = true;
       untrack(initializePanel);
@@ -561,7 +582,9 @@
     }
     const panel = tree;
     const query = search;
-    if (!shown || panelOpened && panelSearch === query) return;
+    if (!shown || panelOpened && panelSearch === query) {
+      return;
+    }
     const opening = !panelOpened;
     panelOpened = true;
     panelSearch = query;
@@ -596,8 +619,12 @@
     }
   });
   $effect(() => {
-    if (!popupPresent) return;
-    if (!popup || !root) return;
+    if (!popupPresent) {
+      return;
+    }
+    if (!popup || !root) {
+      return;
+    }
     const anchor = root;
     const surface = popup;
     const sourceMode = () => untrack(() => sourceAlignmentUsed || sourceMotionUsed);
@@ -637,7 +664,9 @@
         return sourceMode() ? value : undefined;
       },
       getAnchorRect: rect => {
-        if (sourceMode() || !untrack(() => componentResponsive)) return rect;
+        if (sourceMode() || !untrack(() => componentResponsive)) {
+          return rect;
+        }
         const right = requestedPlacement().endsWith('Right');
         if (!sourceAnchor || sourceAnchorRight !== right) {
           sourceAnchor?.destroy();
@@ -721,7 +750,9 @@
   }
   $effect(() => {
     const state = popupMotionState;
-    if (sourceAlignmentUsed || visible || shown || !state.running) return;
+    if (sourceAlignmentUsed || visible || shown || !state.running) {
+      return;
+    }
     const motion = popupMotion;
     let active = true;
     // Native hides offscreen triggers. Their cancelled CSS effects cannot finish a closed panel.
@@ -731,7 +762,9 @@
     return () => { active = false; };
   });
   $effect(() => {
-    if (!editor) return;
+    if (!editor) {
+      return;
+    }
     const input = editor;
     input.setCustomValidity(
       (attributes.required ?? field?.required) && !display.length
@@ -747,9 +780,13 @@
       if (!search
         || String(Reflect.get(node, searchConfig.treeNodeFilterProp ?? 'value')).toLowerCase().includes(
           search.toLowerCase()
-        )) return treeSelectNodeValue(node, index.fields);
+        )) {
+        return treeSelectNodeValue(node, index.fields);
+      }
       const child = firstNode(treeSelectChildren(node, index.fields));
-      if (child !== null) return child;
+      if (child !== null) {
+        return child;
+      }
     }
     return null;
   }
@@ -780,7 +817,9 @@
     return () => { if (customInput === current) customInput = undefined; };
   }
   function rootFocus(event: FocusEvent & { currentTarget: EventTarget & (RootElement | HTMLDivElement); }) {
-    if (event.target instanceof Node && popup?.contains(event.target)) return;
+    if (event.target instanceof Node && popup?.contains(event.target)) {
+      return;
+    }
     focused = true;
     if (!blocked) {
       if (showAction?.includes('focus')) requestOpen(true);
@@ -788,7 +827,9 @@
     }
   }
   function rootBlur(event: FocusEvent & { currentTarget: EventTarget & (RootElement | HTMLDivElement); }) {
-    if (event.target instanceof Node && popup?.contains(event.target)) return;
+    if (event.target instanceof Node && popup?.contains(event.target)) {
+      return;
+    }
     if (rootSlot || inputSlot || event.relatedTarget instanceof Node && popup?.contains(event.relatedTarget)) focused = false;
     if ((rootSlot || inputSlot) && isMultiple && search) {
       internalSearch = '';
@@ -897,7 +938,9 @@
   }
   function requestOpen(next: boolean, allowBlocked = false) {
     cancelClose();
-    if (next && blocked && !allowBlocked || next === visible) return;
+    if (next && blocked && !allowBlocked || next === visible) {
+      return;
+    }
     if (next && !blocked) {
       initializePanel();
       mounted = true;
@@ -917,7 +960,9 @@
 
     if (fromTyping && (decision.split || inputSlot || searchConfig.searchValue !== undefined) && input) {
       void tick().then(() => {
-        if (!input.isConnected || input !== editor) return;
+        if (!input.isConnected || input !== editor) {
+          return;
+        }
         if (inputSlot) {
           const value = inputContext.attributes.value;
           if (value != null) input.value = String(value);
@@ -928,7 +973,9 @@
   }
   function publish(raw: TreeSelectRawValue[], triggerValue?: TreeSelectRawValue) {
     const formatted = treeSelectStrategy(raw, strategy, index);
-    if (limit.changeMaxCount && formatted.length > limit.changeMaxCount) return;
+    if (limit.changeMaxCount && formatted.length > limit.changeMaxCount) {
+      return;
+    }
     const before = items;
     const nextItems = treeSelectLabels(
       raw.map(value => ({ value })),
@@ -940,7 +987,9 @@
     internalValue = nextItems;
     if (autoClear)
       internalSearch = '';
-    if (!onChange) return;
+    if (!onChange) {
+      return;
+    }
     const values = conduction ? formatted : raw;
     const returnItems = treeSelectLabels(
       [
@@ -976,19 +1025,25 @@
         || checkable
         && treeCheckDisabled(
           index.entities.get(String(raw))!.node
-        ))) return;
+        ))) {
+      return;
+    }
     const selected = source === 'selection' ? false : !isMultiple || !checks.checked.includes(raw);
     const next = isMultiple
       ? toggleTreeSelect(raw, selected, items, checks, conduction, index)
       : [raw];
     publish(next, raw);
-    if (selected)
+    if (selected) {
       onSelect?.(raw, node
         ? { ...node }
-        : undefined); else onDeselect?.(
-          raw,
-          node ? { ...node } : undefined
-        );
+        : undefined);
+    }
+    else {
+      onDeselect?.(
+        raw,
+        node ? { ...node } : undefined
+      );
+    }
     if (!isMultiple) {
       if (deferClose) scheduleClose();
       else requestOpen(false);
@@ -1007,14 +1062,20 @@
   }
   function pointerOpen(event: PointerEvent | MouseEvent) {
     if (renderTag && event.target instanceof Element
-      && event.target.closest('[data-tree-choice-custom-tag]')) return;
-    if (blocked || !(event.target instanceof Node)) return;
+      && event.target.closest('[data-tree-choice-custom-tag]')) {
+      return;
+    }
+    if (blocked || !(event.target instanceof Node)) {
+      return;
+    }
     if (popup?.contains(event.target)) {
       requestOpen(true);
       return;
     }
     if (event.target instanceof Element
-      && event.target.closest('[data-ant-tree-choice-selection-item-remove], [data-ant-tree-choice-clear]')) return;
+      && event.target.closest('[data-ant-tree-choice-selection-item-remove], [data-ant-tree-choice-clear]')) {
+      return;
+    }
     const wasOpen = visible;
     const onInput = Boolean(editorContainer && (event.target === editorContainer || editorContainer.contains(event.target)));
     if (editorContainer && !onInput) event.preventDefault();
@@ -1034,7 +1095,9 @@
     const channel = new MessageChannel();
     pendingClose = channel;
     channel.port1.onmessage = () => {
-      if (pendingClose !== channel) return;
+      if (pendingClose !== channel) {
+        return;
+      }
       requestOpen(false);
     };
     channel.port2.postMessage(null);
@@ -1061,7 +1124,9 @@
     return () => { if (tagElements.get(value) === node) tagElements.delete(value); };
   }
   function clear() {
-    if (blocked) return;
+    if (blocked) {
+      return;
+    }
     const hadSearch = Boolean(search);
     onClear?.();
     editor?.focus();
@@ -1095,7 +1160,9 @@
   function preserveEditorFocus(event: PointerEvent) {
     // Source OptionList отменяет mousedown только в Tree, не на padding popup.
     if (componentResponsive && event.target instanceof Node
-      && !(treeElement ?? menuElement)?.contains(event.target)) return false;
+      && !(treeElement ?? menuElement)?.contains(event.target)) {
+      return false;
+    }
     // Полоса прокрутки сама удерживает фокус при обработке mousedown.
     return !(event.target instanceof Element && event.target.closest('.ant-tree-list-scrollbar'));
   }
@@ -1105,22 +1172,32 @@
   }
   function blurWithin(event: FocusEvent) {
     const element = root;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
     if (event.relatedTarget instanceof Node
       && (element.contains(event.relatedTarget)
         || popup?.contains(
           event.relatedTarget
-        ))) return;
+        ))) {
+      return;
+    }
     const mouseDownInPopup = popupMouseDownTimer !== undefined || selectorMouseDown !== undefined;
     queueMicrotask(() => {
-      if (!element.isConnected || root !== element) return;
+      if (!element.isConnected || root !== element) {
+        return;
+      }
       const target = getPopupActiveElement(element);
       const popupTarget = popup && getPopupActiveElement(popup);
       if (target && element.contains(target)
-        || popupTarget && popup?.contains(popupTarget)) return;
+        || popupTarget && popup?.contains(popupTarget)) {
+        return;
+      }
       focused = false;
       field?.onBlur();
-      if (mouseDownInPopup) return;
+      if (mouseDownInPopup) {
+        return;
+      }
       requestOpen(false);
       if (autoClear && isMultiple && !rootSlot && !inputSlot)
         internalSearch = '';
@@ -1142,16 +1219,21 @@
       cancelledKeys.add(event);
       return;
     }
-    if (cancelled || event.ctrlKey || event.altKey || event.metaKey) return;
+    if (cancelled || event.ctrlKey || event.altKey || event.metaKey) {
+      return;
+    }
     // rc-select открывает поле разрешённой клавишей ещё до root handler.
     if (event.key && !/^F(?:[1-9]|1[0-2])$/.test(event.key)
       && event.code !== 'Semicolon' && event.code !== 'Equal'
       && !['Escape', 'Shift', 'Backspace', 'Tab', 'Meta', 'OS', 'Alt', 'Control', 'CapsLock',
-        'ContextMenu', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key))
+        'ContextMenu', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       requestOpen(true, Boolean(inputSlot));
+    }
   }
   function keyboard(event: KeyboardEvent & { currentTarget: EventTarget & (RootElement | HTMLDivElement); }) {
-    if (forwardedKeys.has(event)) return;
+    if (forwardedKeys.has(event)) {
+      return;
+    }
     if (event.target === editor && !cancelledKeys.has(event) && !event.isComposing && (!blocked || inputSlot)) {
       if (inputSlot && openingKeys.has(event) && visible && (event.key === 'Enter' || event.key === ' ')) onOpenChange?.(true);
       handleKeyboard(event, visible && !openingKeys.has(event));
@@ -1185,7 +1267,9 @@
         requestOpen(true, Boolean(inputSlot));
         return;
       }
-      if (enterLocked) return;
+      if (enterLocked) {
+        return;
+      }
       enterLocked = true;
       const node = treeElement?.isConnected && active !== null && index.values.get(active as TreeSelectRawValue);
       if (node && Reflect.get(node, 'selectable') !== false)
@@ -1223,7 +1307,9 @@
     else (rootSlot ? root : editor)?.blur();
   }
   export function scrollTo(settings?: TreeScrollConfig | null) {
-    if (!tree) return;
+    if (!tree) {
+      return;
+    }
     if (settings && typeof settings === 'object' && 'key' in settings && settings.autoExpand
       && treeExpandedKeys === undefined && componentProps.treeDefaultExpandedKeys === undefined
       && !expandedByUser && !search && !expanded.includes(settings.key)) {

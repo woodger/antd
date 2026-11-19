@@ -33,8 +33,10 @@ it('preserves full Source captures and honest producer variance with exact froze
   expect(proof.cases.flatMap(entry => entry.points)).toHaveLength(20);
   expect(proof.cases.map(entry => [entry.producerAlignment.firstCount, entry.producerAlignment.repeatCount])).toEqual([[607, 619], [634, 646]]);
   expect(proof.cases.map(entry => [entry.producerAlignment.onlyFirst.length, entry.producerAlignment.onlyRepeat.length])).toEqual([[12, 24], [15, 27]]);
-  for (const owner of proof.cases) for (const alignment of [owner.producerAlignment, owner.bodyAlignment])
-    expect([...alignment.onlyFirst, ...alignment.onlyRepeat].every(row => row.hasCompleteEquivalentOtherSide)).toBe(true);
+  for (const owner of proof.cases) {
+    for (const alignment of [owner.producerAlignment, owner.bodyAlignment])
+      expect([...alignment.onlyFirst, ...alignment.onlyRepeat].every(row => row.hasCompleteEquivalentOtherSide)).toBe(true);
+  }
   expect(proof.rawGraphComparison.globalCrossRenderIdentityStabilityClaim).toBe(false);
   expect(proof.rawGraphComparison.allAllocatorIDsRetainedInOriginalFiles).toBe(true);
 });

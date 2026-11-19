@@ -10,8 +10,12 @@ export function spaceOrientation(
   orientation?: SpaceOrientation,
   vertical?: boolean
 ): SpaceOrientation {
-  if (orientation === 'horizontal' || orientation === 'vertical') return orientation;
-  if (typeof vertical === 'boolean') return vertical ? 'vertical' : 'horizontal';
+  if (orientation === 'horizontal' || orientation === 'vertical') {
+    return orientation;
+  }
+  if (typeof vertical === 'boolean') {
+    return vertical ? 'vertical' : 'horizontal';
+  }
   return 'horizontal';
 }
 export function spaceHasContent(content: SpaceContent): boolean {

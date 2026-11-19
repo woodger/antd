@@ -28,7 +28,9 @@ export function blurSelectComponent(registration: ComponentRegistration | null |
 export function selectComponentNativeElement<Element extends HTMLElement>(
   registration: Element | { nativeElement: Element } | null | undefined
 ): Element | undefined {
-  if (!registration) return undefined;
+  if (!registration) {
+    return undefined;
+  }
   return 'nodeType' in registration ? registration : registration.nativeElement;
 }
 
@@ -36,9 +38,12 @@ export function selectComponentNativeElement<Element extends HTMLElement>(
 export function selectComponentInputElement<Editor extends HTMLElement = HTMLInputElement | HTMLTextAreaElement>(
   registration: HTMLElement | { nativeElement: HTMLElement; inputElement?: Editor } | null | undefined
 ): Editor | undefined {
-  if (registration && !('nodeType' in registration) && registration.inputElement)
+  if (registration && !('nodeType' in registration) && registration.inputElement) {
     return registration.inputElement;
+  }
   const node = selectComponentNativeElement(registration);
-  if (node?.matches('input,textarea')) return node as Editor;
+  if (node?.matches('input,textarea')) {
+    return node as Editor;
+  }
   return node?.querySelector<Editor>('input,textarea') ?? undefined;
 }

@@ -156,7 +156,9 @@
     };
   });
   let classPlacement = $derived.by(() => {
-    if (!customPosition) return open ? actualPlacement : placement;
+    if (!customPosition) {
+      return open ? actualPlacement : placement;
+    }
     return actualPosition?.sourceAlign
       ? getPopupPlacement(callbackProps.builtinPlacements, actualPosition.sourceAlign) : undefined;
   });
@@ -239,11 +241,15 @@
   }
 
   $effect(() => {
-    if (describe && available && !resolvedDisabled) return connectTooltipDescription(describe, id);
+    if (describe && available && !resolvedDisabled) {
+      return connectTooltipDescription(describe, id);
+    }
   });
 
   $effect(() => {
-    if (anchor && open && available) return connectTooltipOpenClass(anchor, resolvedOpenClassName);
+    if (anchor && open && available) {
+      return connectTooltipOpenClass(anchor, resolvedOpenClassName);
+    }
   });
 
   $effect(() => {
@@ -251,7 +257,9 @@
     const reference = anchor;
     const source = trigger;
 
-    if (!surface || !reference || !open || !available) return;
+    if (!surface || !reference || !open || !available) {
+      return;
+    }
 
     const connection = untrack(() => connectPopup(surface, reference, {
       trigger: source,
@@ -270,9 +278,11 @@
         } : undefined;
       },
       onVisibilityChange: shown => {
-        if (shown && customPosition) queueMicrotask(() => {
-          if (open && available) realign?.();
-        });
+        if (shown && customPosition) {
+          queueMicrotask(() => {
+            if (open && available) realign?.();
+          });
+        }
       },
       gap: () => untrack(() => designTokens.enabled || isTooltipCorner(placement) || sourcePlacement
         ? (arrowConfig.show ? designTokens.state.token.sizePopupArrow / 2 : 0)

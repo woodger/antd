@@ -26,8 +26,12 @@ export function selectStyleValue(property: string, value: SelectStyleValue): str
 
 export function snapshotSelectStyle(style: unknown): SelectStyleProperties {
   const result: Record<string, SelectStyleValue> = {};
-  if (style == null) return result;
-  if (typeof style !== 'object' || Array.isArray(style)) throw new TypeError('Select style must be a CSS object');
+  if (style == null) {
+    return result;
+  }
+  if (typeof style !== 'object' || Array.isArray(style)) {
+    throw new TypeError('Select style must be a CSS object');
+  }
   for (const [property, value] of Object.entries(style)) {
     if (value == null || typeof value === 'string' || typeof value === 'number') result[property] = value;
     else if (typeof value === 'boolean') result[property] = undefined;
@@ -49,7 +53,9 @@ export function diffSelectStyle(previous: SelectStyleProperties, next: SelectSty
 }
 
 function logicalName(property: string): string {
-  if (property.startsWith('--')) return property;
+  if (property.startsWith('--')) {
+    return property;
+  }
   return property.replace(/^-ms-/, 'ms-').replace(
     /-([a-z])/g,
     (_, letter: string) => letter.toUpperCase()

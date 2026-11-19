@@ -24,7 +24,9 @@ export async function settleDateWeekPrefix(page: Page) {
     const actual = await readDateWeekPrefix(page);
     const encoded = JSON.stringify(actual);
     stable = encoded === previous ? stable + 1 : 0;
-    if (stable >= 4) return actual;
+    if (stable >= 4) {
+      return actual;
+    }
     previous = encoded;
   }
   throw Error('Complete Native date week-prefix observation did not settle');

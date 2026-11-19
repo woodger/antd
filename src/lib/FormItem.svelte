@@ -180,7 +180,9 @@
   let status = $derived(ownStatus ?? (!hasLayout ? parentStatus.status : undefined));
   let ownFeedback = $derived.by<{ hasFeedback: boolean; icon?: FormFeedbackIcon; }>(() => {
     const enabled = Boolean(hasFeedback);
-    if (!enabled || !ownStatus) return { hasFeedback: enabled };
+    if (!enabled || !ownStatus) {
+      return { hasFeedback: enabled };
+    }
     const icons = typeof hasFeedback === 'object' && hasFeedback.icons || form?.feedbackIcons;
     const icon = icons?.({ status: ownStatus, errors, warnings })?.[ownStatus];
     return { hasFeedback: enabled, icon: icon === false ? undefined
@@ -257,16 +259,22 @@
   }
 
   function getControlInstance() {
-    if (controlRef != null) return controlRef;
+    if (controlRef != null) {
+      return controlRef;
+    }
     for (const getInstance of controls) {
       const instance = getInstance();
-      if (instance != null) return instance;
+      if (instance != null) {
+        return instance;
+      }
     }
   }
 
   function getControlElement() {
     const root = getFormFieldElement(getControlInstance());
-    if (!root || root.id === id) return root;
+    if (!root || root.id === id) {
+      return root;
+    }
 
     return [...root.querySelectorAll<HTMLElement>('[id]')].find(node => node.id === id) ?? root;
   }
@@ -329,7 +337,9 @@
       getInstance: getControlInstance,
       getElement() {
         const host = content;
-        if (!host?.isConnected) return getControlElement();
+        if (!host?.isConnected) {
+          return getControlElement();
+        }
 
         // Сначала свой binding: одинаковый htmlFor соседней формы не выбирает чужой control.
         return [...host.querySelectorAll<HTMLElement>('[id]')].find((node) => node.id === id)
@@ -383,7 +393,9 @@
       return hasName && (hasLayout ? messages.errors.length > 0 : errors.length > 0);
     },
     get describedBy() {
-      if (!hasName) return;
+      if (!hasName) {
+        return;
+      }
 
       const controlDescription = hasLayout ? descriptionId
         : help !== false && (errors.length || warnings.length) ? parentMeta?.describedBy : undefined;

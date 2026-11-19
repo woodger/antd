@@ -49,7 +49,9 @@
     const result = { ...attributes, ...(value != null ? { value,
       ...(!root && typeof document !== 'undefined' ? { defaultValue: value } : {}) }
       : initialValue != null ? { defaultValue: initialValue } : {}) };
-    if (root || typeof document !== 'undefined') return result;
+    if (root || typeof document !== 'undefined') {
+      return result;
+    }
     // Dynamic input не получает compiler input-flag для SSR defaults.
     const entries = Object.entries(result);
     return Object.fromEntries(entries.flatMap(([name, value]) => {
@@ -91,10 +93,12 @@
       initializedInputs.add(node);
       if (!isSelectComponentHydration(node) && attrs.value == null && initialValue != null) {
         node.value = String(initialValue);
-        if (node.selectionStart !== null) node.setSelectionRange(
-          node.value.length,
-          node.value.length
-        );
+        if (node.selectionStart !== null) {
+          node.setSelectionRange(
+            node.value.length,
+            node.value.length
+          );
+        }
       }
     }
     const unregister = untrack(() => attachedRegister(element));
@@ -106,7 +110,9 @@
     }
     let released = false;
     return () => {
-      if (released) return;
+      if (released) {
+        return;
+      }
       released = true;
       try { attachedReference?.(null); }
       finally { unregister(); }
@@ -123,8 +129,9 @@
       constructorRequested = true;
       return;
     }
-    if ((node.localName !== 'input' && node.localName !== 'textarea') || node.localName !== tag)
+    if ((node.localName !== 'input' && node.localName !== 'textarea') || node.localName !== tag) {
       throw new Error('Select hydration requires its matching input or textarea');
+    }
     const editor = node as Editor;
     const initial = untrack(() => editorAttributes);
     const writer = untrack(() => createSelectComponentHydration(editor, initial));
@@ -138,7 +145,9 @@
     };
   }
   $effect(() => {
-    if (root || tag !== 'input' && tag !== 'textarea') return;
+    if (root || tag !== 'input' && tag !== 'textarea') {
+      return;
+    }
     const attributes = editorAttributes;
     const current = hydration;
     if (current && attributes !== current.attributes) {

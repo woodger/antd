@@ -47,23 +47,29 @@ function attributes(value: Array<[string, string]>) {
     if (key === 'class') text = text.split(/\s+/).filter(Boolean).filter(name => !/^(?:svelte-[\w-]+|s-[\w-]+)$/.test(name)).join(' ');
     // HTML names are case-insensitive; Source SSR prints autoComplete.
     // Native CSS strings retain a different harmless space/trailing-semicolon format.
-    if (key === 'style') text = text.split(';').map(part => part.trim()).filter(Boolean).map(part => {
-      const colon = part.indexOf(':');
-      return part.slice(0, colon).trim() + ':' + part.slice(colon + 1).trim();
-    }).join(';');
+    if (key === 'style') {
+      text = text.split(';').map(part => part.trim()).filter(Boolean).map(part => {
+        const colon = part.indexOf(':');
+        return part.slice(0, colon).trim() + ':' + part.slice(colon + 1).trim();
+      }).join(';');
+    }
     return key === 'class' && !text ? [] : [[key, text]];
   });
 }
 for (const owner of entries) for (const source of owner.states) it(`matches full component SSR ${owner.id}/${source.name}`, () => {
   vi.useFakeTimers();
   const resource = vi.fn(() => { throw Error('Select component SSR must stay DOM-free'); });
-  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(
-    name,
-    resource
-  );
-  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() {
-    resource();
-  } });
+  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) {
+    vi.stubGlobal(
+      name,
+      resource
+    );
+  }
+  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) {
+    vi.stubGlobal(name, class { constructor() {
+      resource();
+    } });
+  }
   const warn = vi.spyOn(console, 'warn'), error = vi.spyOn(console, 'error');
   try {
     expect(typeof window).toBe('undefined');
@@ -166,13 +172,17 @@ for (const entry of selectComponentsHydrationReference.cases) it(`renders compon
   const resource = vi.fn(() => {
     throw Error('Select component hydration SSR must stay DOM-free');
   });
-  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(
-    name,
-    resource
-  );
-  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() {
-    resource();
-  } });
+  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) {
+    vi.stubGlobal(
+      name,
+      resource
+    );
+  }
+  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) {
+    vi.stubGlobal(name, class { constructor() {
+      resource();
+    } });
+  }
   const warn = vi.spyOn(console, 'warn'), error = vi.spyOn(console, 'error');
   try {
     expect(typeof window).toBe('undefined');

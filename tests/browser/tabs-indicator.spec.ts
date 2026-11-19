@@ -23,7 +23,9 @@ async function sample(page: Page, name: string) {
 
 async function clearScroll(page: Page) {
   await page.getByRole('button', { name: 'Clear indicator events', exact: true }).evaluate(element => {
-    if (!(element instanceof HTMLButtonElement)) throw new Error('Expected a native button');
+    if (!(element instanceof HTMLButtonElement)) {
+      throw new Error('Expected a native button');
+    }
     element.click();
   });
 }
@@ -46,7 +48,9 @@ for (const expected of reference.cases) {
     else await expect(ink(page)).toBeVisible();
     await expect.poll(() => ink(page).evaluate(async element => {
       await Promise.all(element.getAnimations().map(animation => animation.finished.catch(error => {
-        if (!(error instanceof DOMException) || error.name !== 'AbortError') throw error;
+        if (!(error instanceof DOMException) || error.name !== 'AbortError') {
+          throw error;
+        }
       })));
       const box = element.getBoundingClientRect();
       const list = element.closest('.ant-tabs-nav-list')!.getBoundingClientRect();

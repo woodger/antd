@@ -56,7 +56,9 @@
   }
   let containerProps = $derived(sample.layout === 'scaled-shadow' ? { getPopupContainer } : {});
   function copyShadowStyles() {
-    if (!shadow) return;
+    if (!shadow) {
+      return;
+    }
     for (const node of shadow.querySelectorAll('[data-width-shadow-style]')) node.remove();
     for (const original of document.head.querySelectorAll('style,link[rel="stylesheet"]')) {
       const node = original.cloneNode(true) as HTMLElement;

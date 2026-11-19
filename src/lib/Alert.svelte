@@ -112,7 +112,9 @@
 
   function handleClose(event: MouseEvent) {
     const node = root;
-    if (!active || !node || phase !== 'open' || !closeConfig.enabled || closeConfig.disabled) return;
+    if (!active || !node || phase !== 'open' || !closeConfig.enabled || closeConfig.disabled) {
+      return;
+    }
 
     const ownedFocus = node.contains(node.ownerDocument.activeElement);
     const onClose = closeConfig.onClose;

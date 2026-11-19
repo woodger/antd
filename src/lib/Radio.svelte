@@ -78,7 +78,9 @@
     .filter(([key]) => !owned.has(key))));
 
   $effect(() => {
-    if (!control || group) return;
+    if (!control || group) {
+      return;
+    }
 
     return connectRadio(control, (next) => {
       checked = next;
@@ -91,7 +93,9 @@
 
   $effect(() => {
     const input = control;
-    if (!input || !group) return;
+    if (!input || !group) {
+      return;
+    }
 
     return group.register(input, value);
   });
@@ -99,7 +103,9 @@
   $effect(() => {
     const input = control;
     const root = nativeElement;
-    if (!input || !root) return;
+    if (!input || !root) {
+      return;
+    }
 
     const handle = {
       input,
@@ -139,7 +145,9 @@
   }
 
   function handleChange(event: Event & { currentTarget: EventTarget & HTMLInputElement; }) {
-    if (resolvedDisabled) return;
+    if (resolvedDisabled) {
+      return;
+    }
 
     const next = event.currentTarget.checked;
     const change: RadioChangeEvent = {
@@ -153,10 +161,14 @@
       checked = next;
       props.onCheckedChange?.(next);
     }
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     props.onChange?.(change);
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     if (group && next) group.select(value, change);
     if (alive) props.onchange?.(event);
@@ -164,7 +176,9 @@
 
   function handleBlur(event: FocusEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
     field?.onBlur();
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     props.onBlur?.(event);
     if (alive) props.onblur?.(event);
@@ -173,12 +187,16 @@
   function handleReset(event: Event) {
     const input = control;
 
-    if (group || !input || event.target !== input.form) return;
+    if (group || !input || event.target !== input.form) {
+      return;
+    }
 
     const reset = setTimeout(() => {
       resets.delete(reset);
 
-      if (event.defaultPrevented || !input.isConnected || input !== control) return;
+      if (event.defaultPrevented || !input.isConnected || input !== control) {
+        return;
+      }
 
       checked = input.checked;
     }, 0);

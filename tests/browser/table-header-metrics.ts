@@ -1,8 +1,12 @@
 export function snapshotTableHeader() {
   const root = document.querySelector('#table-header-control .ant-table');
-  if (!root) throw new Error('Table header fixture is missing');
+  if (!root) {
+    throw new Error('Table header fixture is missing');
+  }
   const css = (node: Element | null) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries([
       'font-size', 'line-height', 'color', 'background-color',

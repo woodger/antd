@@ -43,7 +43,7 @@ for (const control of ['select', 'autocomplete'] as const) {
       production.map(name => name === prod ? 'css-dev-only-do-not-override-otherhash' : name),
       production.map(name => name === prod ? 'unknown-1y106cm' : name),
       production.filter(name => name !== prod), [...production, prod], [...production, dev], swapped];
-    for (const classes of invalid)
+    for (const classes of invalid) {
       expect(() => verifyOwnStylePopupClassNames(
         classes,
         source,
@@ -51,6 +51,7 @@ for (const control of ['select', 'autocomplete'] as const) {
         'invalid PROD',
         'production'
       )).toThrow();
+    }
     // @ts-expect-error Unmeasured build modes must also fail for JavaScript callers.
     expect(() => verifyOwnStylePopupClassNames(production, source, control, 'unmeasured', 'staging')).toThrow();
   });

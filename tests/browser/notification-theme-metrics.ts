@@ -1,9 +1,13 @@
 /** Сверяет тему Notification с сохранением native close target и top-layer поверхности. */
 export function snapshotNotificationTheme() {
   const root = document.querySelector('.ant-notification');
-  if (!root) throw new Error('Notification root is missing');
+  if (!root) {
+    throw new Error('Notification root is missing');
+  }
   const css = (node: Element | null, keys: readonly string[]) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   };
@@ -53,14 +57,18 @@ export function snapshotNotificationTheme() {
 /** Все объявления component registration rule из официального UMD. */
 export function snapshotNotificationThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-notification');
-  if (!root) throw new Error('Notification source scope is missing');
+  if (!root) {
+    throw new Error('Notification source scope is missing');
+  }
   const declarations: Record<string, string> = {};
 
   for (const sheet of document.styleSheets) {
     for (const rule of sheet.cssRules) {
       if (!(rule instanceof CSSStyleRule)
         || !root.matches(rule.selectorText)
-        || ![...rule.style].some(name => name.startsWith(`--${prefix}-notification-`))) continue;
+        || ![...rule.style].some(name => name.startsWith(`--${prefix}-notification-`))) {
+        continue;
+      }
 
       for (const name of rule.style) {
         if (name.startsWith(`--${prefix}-`)) {

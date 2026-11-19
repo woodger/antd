@@ -2,7 +2,9 @@ import template from './vendor/breadcrumb-prefix.css.js';
 
 /** Canonical token marker и anticon сохраняются; root/reset selectors ограничены владельцем. */
 export function getBreadcrumbPrefixCss(prefix: string) {
-  if (prefix === 'ant-breadcrumb') return undefined;
+  if (prefix === 'ant-breadcrumb') {
+    return undefined;
+  }
 
   const scope = `:where([data-ant-breadcrumb-prefix=${JSON.stringify(prefix)}])`;
 

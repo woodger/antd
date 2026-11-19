@@ -30,10 +30,12 @@
       { length: 10 },
       (_, index) => ({ value: 'filler-' + index, label: 'Filler ' + index })
     )];
-  for (const option of options) recorder.register(
-    option,
-    { data: 'close-contrast-option', value: option.value }
-  );
+  for (const option of options) {
+    recorder.register(
+      option,
+      { data: 'close-contrast-option', value: option.value }
+    );
+  }
   const events: unknown[] = [], rawEvents: unknown[] = [];
   let value = $state<string | undefined>(''), open = $state(false);
   let control = $state<SelectRef>(), root = $state<HTMLDivElement>(), editor = $state<HTMLInputElement | HTMLTextAreaElement>();
@@ -83,9 +85,13 @@
     showSearch: search, onChange, onSelect, onOpenChange, onActive, optionRender: optionRenderer });
   function readRefs() { return { control, root, editor }; }
   function read() {
-    if (alive) lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
-      authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider) };
-    if (!lastAuthored) throw Error('Read the actual live close owner before unmount');
+    if (alive) {
+      lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
+        authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider) };
+    }
+    if (!lastAuthored) {
+      throw Error('Read the actual live close owner before unmount');
+    }
     return {
       value,
       query: value,

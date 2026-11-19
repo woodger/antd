@@ -38,7 +38,9 @@
   }
 
   function hotkey(event: KeyboardEvent) {
-    if (!event.ctrlKey || !event.altKey) return;
+    if (!event.ctrlKey || !event.altKey) {
+      return;
+    }
     if (event.key === 'r') renderer = renderer === 'custom' ? 'alternate' : 'custom';
     if (event.key === 'd') renderer = renderer === 'default' ? 'custom' : 'default';
     if (event.key === 'h') enabled = !enabled;

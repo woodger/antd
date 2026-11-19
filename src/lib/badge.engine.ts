@@ -63,7 +63,9 @@ export function getBadgeState(
 export function normalizeBadgeOffset(
   offset: BadgeOffset | undefined
 ): readonly [number, number | string] | undefined {
-  if (!offset) return undefined;
+  if (!offset) {
+    return undefined;
+  }
 
   return [
     typeof offset[0] === 'string' ? Number.parseFloat(offset[0])

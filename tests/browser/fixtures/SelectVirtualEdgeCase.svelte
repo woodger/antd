@@ -49,10 +49,12 @@
   }
   export function update(action: SelectVirtualEdgeAction) {
     if (action.type === 'ref') {
-      if (action.target.kind === 'key') control?.scrollTo({
-        key: action.target.key,
-        align: action.target.align
-      });
+      if (action.target.kind === 'key') {
+        control?.scrollTo({
+          key: action.target.key,
+          align: action.target.align
+        });
+      }
       else control?.scrollTo({ index: action.target.index });
     }
   }

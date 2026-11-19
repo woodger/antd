@@ -16,14 +16,18 @@ const urlPattern = new RegExp(
 );
 
 export function matchesValidationFormat(value: unknown, type: string) {
-  if (typeof value !== 'string') return false;
+  if (typeof value !== 'string') {
+    return false;
+  }
 
   switch (type) {
     case 'email': return value.length <= 320 && emailPattern.test(value);
     case 'tel': return value.length <= 32 && telPattern.test(value);
     case 'hex': return hexPattern.test(value);
     case 'url':
-      if (value.length > 2048 || !urlPattern.test(value)) return false;
+      if (value.length > 2048 || !urlPattern.test(value)) {
+        return false;
+      }
       try {
         // URL проверяет IPv6 brackets и диапазон порта, которые source regex теряет.
         new URL(value.startsWith('//') ? `http:${value}`
@@ -36,7 +40,9 @@ export function matchesValidationFormat(value: unknown, type: string) {
 }
 
 export function matchesValidationPattern(value: unknown, pattern: RegExp | string, coerce: boolean) {
-  if (!pattern) return true;
+  if (!pattern) {
+    return true;
+  }
 
   try {
     const expression = typeof pattern === 'string' ? new RegExp(pattern)

@@ -6,7 +6,9 @@ export function configVariant(value: unknown): Variant | undefined {
 }
 
 export function configVariantProps(value: unknown): Partial<ConfigProviderProps> {
-  if (typeof value !== 'object' || value === null) return {};
+  if (typeof value !== 'object' || value === null) {
+    return {};
+  }
   const record = value as Record<string, unknown>;
   const result: Partial<ConfigProviderProps> = { variant: configVariant(record.variant) };
 

@@ -2,7 +2,9 @@
 export function readSelectValueOpacity() {
   const root = document.querySelector('.select-value-control');
   const content = root?.querySelector('.ant-select-content');
-  if (!root || !content) throw Error('Selected-value opacity observer requires actual root/content DOM');
+  if (!root || !content) {
+    throw Error('Selected-value opacity observer requires actual root/content DOM');
+  }
   const styledValue = content.querySelector('.ant-select-content-value');
   const properties = ['opacity', 'visibility', 'display', 'color', 'fontFamily', 'fontSize', 'fontWeight',
     'fontStyle', 'lineHeight', 'overflow', 'position'];
@@ -25,7 +27,9 @@ export function readSelectValueOpacity() {
     for (let element = node.parentElement; element; element = element.parentElement) {
       const css = computed(element);
       const factor = Number(css.opacity);
-      if (!Number.isFinite(factor)) throw Error('Actual computed opacity is not finite: ' + css.opacity);
+      if (!Number.isFinite(factor)) {
+        throw Error('Actual computed opacity is not finite: ' + css.opacity);
+      }
       effectiveOpacity *= factor;
       if (!targets.has(element)) targets.set(
         element,
@@ -34,7 +38,9 @@ export function readSelectValueOpacity() {
       ancestors.push({ target: targets.get(element), ...measure(element) });
       if (element === content) break;
     }
-    if (!ancestors.length || ancestors.at(-1).target !== 'content') throw Error('Text paint chain escaped content');
+    if (!ancestors.length || ancestors.at(-1).target !== 'content') {
+      throw Error('Text paint chain escaped content');
+    }
     const path = [];
     for (let current = node; current !== content; current = current.parentNode) {
       path.unshift([...current.parentNode.childNodes].indexOf(current));
@@ -49,12 +55,18 @@ export function readSelectValueOpacity() {
       const currentPath = [...indexPath, index];
       if (rule.selectorText) {
         const matches = [];
-        for (const [node, name] of targets) if (node.matches(rule.selectorText)) matches.push(name);
-        if (matches.length) cssRules.push({ sheetIndex, indexPath: currentPath, context,
-          selectorText: rule.selectorText, cssText: rule.cssText, declaration: rule.style.cssText, matches });
+        for (const [node, name] of targets) {
+          if (node.matches(rule.selectorText)) matches.push(name);
+        }
+        if (matches.length) {
+          cssRules.push({ sheetIndex, indexPath: currentPath, context,
+            selectorText: rule.selectorText, cssText: rule.cssText, declaration: rule.style.cssText, matches });
+        }
       }
-      if (rule.cssRules) readRules(rule.cssRules, sheetIndex, currentPath,
-        [...context, rule.conditionText ?? rule.name ?? rule.cssText.split('{')[0]]);
+      if (rule.cssRules) {
+        readRules(rule.cssRules, sheetIndex, currentPath,
+          [...context, rule.conditionText ?? rule.name ?? rule.cssText.split('{')[0]]);
+      }
     }
   }
   const styleSheets = [...document.styleSheets].map((sheet, index) => {

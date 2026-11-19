@@ -129,11 +129,13 @@ function callbacks(
 ) {
   assert.deepEqual(actual.events, source.events, label + ' complete zero-argument caller signals');
   assert.equal(actual.rawEvents.length, source.rawEvents.length);
-  for (const [index, event] of actual.rawEvents.entries()) verifySelectSurfaceEventGraph(
-    event,
-    source.rawEvents[index],
-    label + '/raw-event' + index
-  );
+  for (const [index, event] of actual.rawEvents.entries()) {
+    verifySelectSurfaceEventGraph(
+      event,
+      source.rawEvents[index],
+      label + '/raw-event' + index
+    );
+  }
 }
 function lifecycle(
   actual: ModalLoadingPoint['owner'],
@@ -141,9 +143,11 @@ function lifecycle(
   label: string
 ) {
   for (const slot of ['owner', 'body', 'editor', 'footer']) {
-    for (const event of ['attach', 'detach', 'mount', 'unmount']) assert.equal(
-      actual.lifecycle.filter(row => row.slot === slot && row.event === event).length,
-      source.lifecycle.filter(row => row.slot === slot && row.event === event).length, label + '/' + slot + '/' + event);
+    for (const event of ['attach', 'detach', 'mount', 'unmount']) {
+      assert.equal(
+        actual.lifecycle.filter(row => row.slot === slot && row.event === event).length,
+        source.lifecycle.filter(row => row.slot === slot && row.event === event).length, label + '/' + slot + '/' + event);
+    }
     for (const events of [['attach', 'detach'], ['mount', 'unmount']]) {
       const rows = actual.lifecycle.filter(row => row.slot === slot && events.includes(row.event));
       rows.forEach((row, index) => assert.equal(
@@ -154,13 +158,17 @@ function lifecycle(
     }
   }
   assert(actual.lifecycle.every(row => ['owner', 'body', 'editor', 'footer'].includes(row.slot)));
-  for (const row of actual.lifecycle.filter(row => row.event === 'attach')) assert(
-    row.observation?.connected && row.observation.name === (row.slot === 'editor' ? 'INPUT' : row.slot === 'footer' ? 'BUTTON' : 'SECTION'),
-    label + ' real connected authored ref'
-  );
-  for (const kind of ['body-render', 'footer-render']) assert.equal(actual.activity.filter(row => row.kind === kind).length,
-    actual.lifecycle.filter(row => row.slot === (kind === 'body-render' ? 'body' : 'footer') && row.event === 'mount').length,
-    label + ' actual Svelte setup belongs to a mounted child');
+  for (const row of actual.lifecycle.filter(row => row.event === 'attach')) {
+    assert(
+      row.observation?.connected && row.observation.name === (row.slot === 'editor' ? 'INPUT' : row.slot === 'footer' ? 'BUTTON' : 'SECTION'),
+      label + ' real connected authored ref'
+    );
+  }
+  for (const kind of ['body-render', 'footer-render']) {
+    assert.equal(actual.activity.filter(row => row.kind === kind).length,
+      actual.lifecycle.filter(row => row.slot === (kind === 'body-render' ? 'body' : 'footer') && row.event === 'mount').length,
+      label + ' actual Svelte setup belongs to a mounted child');
+  }
   assert(actual.activity.every(row => ['body-render', 'footer-render'].includes(row.kind)));
 }
 export function verifyModalLoadingPoint(actual: ModalLoadingPoint, source: ModalLoadingPoint, initial: ModalLoadingPoint,
@@ -175,11 +183,13 @@ export function verifyModalLoadingPoint(actual: ModalLoadingPoint, source: Modal
   }
   };
   check('owner', () => {
-    for (const key of ['alive', 'open', 'loading', 'footer', 'prefixCls'] as const) assert.equal(
-      actual.owner[key],
-      source.owner[key],
-      key
-    );
+    for (const key of ['alive', 'open', 'loading', 'footer', 'prefixCls'] as const) {
+      assert.equal(
+        actual.owner[key],
+        source.owner[key],
+        key
+      );
+    }
     assert(
       actual.owner.props && actual.owner.rawProps,
       'Complete actual public props/definition graphs retained'
@@ -187,11 +197,13 @@ export function verifyModalLoadingPoint(actual: ModalLoadingPoint, source: Modal
     assert.deepEqual(actual.browserOwnedResourceCounters, source.browserOwnedResourceCounters);
     callbacks(actual.owner, source.owner, label);
     lifecycle(actual.owner, source.owner, label);
-    if (source.owner.loading && previous) assert.deepEqual(
-      actual.owner.activity,
-      previous.owner.activity,
-      'Loading must not invoke body/footer'
-    );
+    if (source.owner.loading && previous) {
+      assert.deepEqual(
+        actual.owner.activity,
+        previous.owner.activity,
+        'Loading must not invoke body/footer'
+      );
+    }
     applied?.add('react-child-render-vs-svelte-setup-and-layout-vs-onMount-ref-order-raw-retained');
   });
   check('chrome', () => {
@@ -225,11 +237,13 @@ export function verifyModalLoadingPoint(actual: ModalLoadingPoint, source: Modal
     }
   });
   check('children', () => {
-    for (const role of ['authoredBody', 'editor', 'footer', 'authoredFooter'] as const) assert.equal(
-      Boolean(actual.nodes[role]),
-      Boolean(source.nodes[role]),
-      role + ' presence'
-    );
+    for (const role of ['authoredBody', 'editor', 'footer', 'authoredFooter'] as const) {
+      assert.equal(
+        Boolean(actual.nodes[role]),
+        Boolean(source.nodes[role]),
+        role + ' presence'
+      );
+    }
     if (source.nodes.editor) {
       const editor = actual.nodes.editor!;
       assert.equal(editor.name, 'INPUT');
@@ -240,12 +254,15 @@ export function verifyModalLoadingPoint(actual: ModalLoadingPoint, source: Modal
       assert.equal(actual.nodes.authoredBody!.name, 'SECTION');
       assert.deepEqual(actual.nodes.authoredBody!.attributes, source.nodes.authoredBody!.attributes);
       assert.equal(actual.nodes.authoredBody!.text, source.nodes.authoredBody!.text);
-      for (const role of ['editor', 'authoredBody', 'authoredFooter', 'footer'] as const) if (source.nodes[role] && source.initialIdentity[role] === false)
-        assert.notEqual(
-          actual.nodes[role]!.identity,
-          initial.nodes[role]!.identity,
-          role + ' recreated after loading'
-        );
+      for (const role of ['editor', 'authoredBody', 'authoredFooter', 'footer'] as const) {
+        if (source.nodes[role] && source.initialIdentity[role] === false) {
+          assert.notEqual(
+            actual.nodes[role]!.identity,
+            initial.nodes[role]!.identity,
+            role + ' recreated after loading'
+          );
+        }
+      }
     }
     if (source.nodes.footer) {
       assert.deepEqual(actual.nodes.footer!.children!.filter(node => node.nodeType === 1).map(node => node.name),

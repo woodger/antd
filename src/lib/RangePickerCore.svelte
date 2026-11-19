@@ -228,7 +228,9 @@
     return interaction.activeIndex;
   });
   let clock = $derived.by((): DatePickerTimeConfig => {
-    if (time) return timeRangeClock(time, lang, active);
+    if (time) {
+      return timeRangeClock(time, lang, active);
+    }
     const raw = typeof showTime === 'object' ? showTime : {};
     return datePickerClock({
       format,
@@ -309,9 +311,13 @@
   }) : undefined);
   let timeLocale = $derived(time ? timePickerLang(time, lang) : undefined);
   let timePlaceholder = $derived.by(() => {
-    if (!time) return undefined;
-    if (time.placeholder !== undefined) return Array.isArray(time.placeholder)
-      ? time.placeholder : [time.placeholder, time.placeholder];
+    if (!time) {
+      return undefined;
+    }
+    if (time.placeholder !== undefined) {
+      return Array.isArray(time.placeholder)
+        ? time.placeholder : [time.placeholder, time.placeholder];
+    }
     return locale?.timePickerLocale?.rangePlaceholder
       ?? config.locale.datePicker?.timePickerLocale?.rangePlaceholder
       ?? datePickerEnUS.timePickerLocale.rangePlaceholder;
@@ -328,7 +334,9 @@
     ? time.suffixIcon === undefined ? config.timePicker?.suffixIcon : time.suffixIcon
     : suffixIcon !== undefined ? suffixIcon : config.datePicker?.suffixIcon);
   let timeInputSize = $derived.by(() => {
-    if (!time) return undefined;
+    if (!time) {
+      return undefined;
+    }
     const first = formats[0];
     return Math.max(8, typeof first === 'function' ? first(now).length : first.length) + 2;
   });
@@ -352,7 +360,9 @@
   let previousPeriodMode = untrack(() => ({ open: false, active, picker }));
   let dateFocusIndex: number | null = null;
   $effect(() => {
-    if (time) return;
+    if (time) {
+      return;
+    }
     const current = { open: visible, active, picker };
     if (current.open && (current.picker !== previousPeriodMode.picker
       || picker !== 'date' && (!previousPeriodMode.open
@@ -396,7 +406,9 @@
     const modelChanged = !time && value !== undefined
       ? value !== previousDateValue : committed !== previousCommitted;
     if (!modelChanged
-      && (time || start === previousDateStartText && end === previousDateEndText)) return;
+      && (time || start === previousDateStartText && end === previousDateEndText)) {
+      return;
+    }
 
     if (!time && !modelChanged) {
       texts = dateTexts(calendar);
@@ -436,17 +448,23 @@
     previousVisible = next;
   });
   $effect(() => {
-    if (!time) return;
+    if (!time) {
+      return;
+    }
     const opened = visible;
     const index = active;
     void calendar[index];
-    if (opened) untrack(() => syncTimePanel(index,
-      !timePanelWasOpen || previousTimeActive !== index));
+    if (opened) {
+      untrack(() => syncTimePanel(index,
+        !timePanelWasOpen || previousTimeActive !== index));
+    }
     timePanelWasOpen = opened;
     previousTimeActive = index;
   });
   $effect(() => {
-    if (time) return;
+    if (time) {
+      return;
+    }
     const opened = visible;
     const index = active;
     const current = calendar[index];
@@ -455,7 +473,9 @@
     const priorFocusIndex = dateFocusIndex;
     previousDatePanel = { opened, index, calendar: current, focused: preserve };
     dateFocusIndex = opened && preserve ? index : null;
-    if (!opened) return;
+    if (!opened) {
+      return;
+    }
     const opening = !previous.opened;
     const switched = previous.index !== index;
     untrack(() => {
@@ -475,11 +495,15 @@
     void revision;
     const index = interaction.currentIndex;
     const view = rootElement?.ownerDocument.defaultView;
-    if (!time || index === null || !interaction.forceFocus || !view) return;
+    if (!time || index === null || !interaction.forceFocus || !view) {
+      return;
+    }
 
     // React useFocusLock выполняет сильный переход после native focus внешнего клика.
     const frame = view.requestAnimationFrame(() => {
-      if (interaction.currentIndex !== index || !interaction.forceFocus) return;
+      if (interaction.currentIndex !== index || !interaction.forceFocus) {
+        return;
+      }
       requestOpen(true);
       inputs()[index]?.focus();
     });
@@ -488,7 +512,9 @@
   $effect(() => {
     if (blocked.every(Boolean)) {
       internalOpen = false;
-      if (time) return;
+      if (time) {
+        return;
+      }
       interaction.reset();
       revision = untrack(() => revision + 1);
       calendar = [...committed];
@@ -500,7 +526,9 @@
       untrack(() => send(blocked.findIndex(item => !item), 'field-switch'));
   });
   $effect(() => {
-    if (!visible || !popup || !rootElement) return;
+    if (!visible || !popup || !rootElement) {
+      return;
+    }
     return connectPopup(popup, rootElement, {
       placement: actualPlacement.startsWith('top') ? 'top' : 'bottom',
       align: actualPlacement.endsWith('Right') ? 'right' : 'left',
@@ -515,11 +543,15 @@
       ),
       matchAnchorWidth: true,
       preserveFocus: event => {
-        if (time || !(cellRender || panelRender || renderExtraFooter)) return true;
+        if (time || !(cellRender || panelRender || renderExtraFooter)) {
+          return true;
+        }
         for (const target of event.composedPath()) {
           if (target === popup) break;
           if (target instanceof HTMLElement
-            && (target.matches('input, textarea, select') || target.isContentEditable)) return false;
+            && (target.matches('input, textarea, select') || target.isContentEditable)) {
+            return false;
+          }
         }
         return true;
       },
@@ -539,7 +571,9 @@
     });
   });
   $effect(() => {
-    if (!time || !visible || !rootElement || !timeWrapper || !timeContainer) return;
+    if (!time || !visible || !rootElement || !timeWrapper || !timeContainer) {
+      return;
+    }
     return connectTimeRangePopup(rootElement, timeWrapper, timeContainer,
       () => inputs()[active], () => config.direction === 'rtl', (arrow, offset) => {
         timePosition = { arrow, offset };
@@ -548,7 +582,9 @@
   $effect(() => {
     const root = rootElement;
     const input = inputs()[active];
-    if (!root || !input) return;
+    if (!root || !input) {
+      return;
+    }
     function measure() {
       const rect = input!.getBoundingClientRect();
       const parent = root!.getBoundingClientRect();
@@ -591,15 +627,19 @@
     return rangeFrom(calendar, interaction.triggeredFields, active);
   }
   function timeRestriction(date: Dayjs) {
-    if (time) return time.disabledTime?.(date, active === 1 ? 'end' : 'start', {
-      from: from()
-    }) ?? {};
+    if (time) {
+      return time.disabledTime?.(date, active === 1 ? 'end' : 'start', {
+        from: from()
+      }) ?? {};
+    }
     return disabledTime?.(date, active === 1 ? 'end' : 'start', { from: from() }) ?? {};
   }
   function invalid(date: Dayjs, index: number, reference?: Dayjs, type: DatePickerMode = picker,
     typeOnlyInfo = false) {
-    if (time) return timeRangeInvalid(date, time, clock, index,
-      reference === undefined ? undefined : { from: reference });
+    if (time) {
+      return timeRangeInvalid(date, time, clock, index,
+        reference === undefined ? undefined : { from: reference });
+    }
     const other = calendar[index ^ 1];
     const same = other
       && (type === 'decade'
@@ -612,7 +652,9 @@
       && !same
       && (index === 1
         ? other.isAfter(date)
-        : date.isAfter(other))) return true;
+        : date.isAfter(other))) {
+      return true;
+    }
     if (pickerDateDisabled(
       date,
       {
@@ -624,7 +666,9 @@
       },
       type,
       lang.locale
-    )) return true;
+    )) {
+      return true;
+    }
     const config = typeof showTime === 'object'
       ? { ...showTime, defaultOpenValue: undefined }
       : showTime;
@@ -669,9 +713,10 @@
     const part = sameDate(calendar[0], next[0]) ? 'end' : 'start';
     if (changed) {
       const nextTexts: [string, string] = [...texts];
-      for (const index of [0, 1])
+      for (const index of [0, 1]) {
         if (!sameDate(calendar[index], next[index]))
           nextTexts[index] = formatPicker(next[index], lang.locale, formats);
+      }
       calendar = [...next];
       texts = nextTexts;
     }
@@ -694,16 +739,19 @@
       const changed = time ? !sameTimeRange(pair, committed) : !sameRange(pair, committed);
       if (time || value === undefined)
         internalValue = [...pair];
-      if (changed)
+      if (changed) {
         onChange?.(
           next === null && pair.every(item => !item) ? null : [...pair],
           pair.every(item => !item) ? null : dateTexts(pair)
         );
+      }
     }
     return passed;
   }
   function requestOpen(next: boolean) {
-    if (next && blocked.every(Boolean) || next === visible) return;
+    if (next && blocked.every(Boolean) || next === visible) {
+      return;
+    }
     if (next) {
       now = adapter.getNow();
     }
@@ -750,8 +798,9 @@
       && !calendar[1].isSame(
         calendar[0].add(1, 'month'),
         'month'
-      ))
+      )) {
       next = calendar[1].add(-1, 'month');
+    }
     if (minDate && next.isBefore(minDate))
       next = minDate;
     const dual = picker === 'date' ? !showTime : multiplePanels;
@@ -811,11 +860,12 @@
     send(index, 'field-switch');
     if (!time && !suppressOpen) requestOpen(true);
     const accepted = interaction.currentIndex;
-    if (accepted !== null && accepted !== index)
+    if (accepted !== null && accepted !== index) {
       void tick().then(() => {
         if (visible && inputs()[index]?.ownerDocument.activeElement === inputs()[index])
           inputs()[accepted]?.focus();
       });
+    }
   }
   function blurInput(
     index: number,
@@ -840,7 +890,9 @@
       && (rootElement?.contains(event.relatedTarget)
         || popup?.contains(
           event.relatedTarget
-        ))) return;
+        ))) {
+      return;
+    }
     queueMicrotask(() => {
       const current = popup ? getPopupActiveElement(popup)
         : startElement?.ownerDocument.activeElement;
@@ -849,7 +901,9 @@
         && (rootElement?.contains(current)
           || popup?.contains(
             current
-          ))) return;
+          ))) {
+        return;
+      }
       focused = false;
       field?.onBlur();
       requestOpen(false);
@@ -943,7 +997,9 @@
     else send(index, 'input');
   }
   function resetQuarterInput(index?: number) {
-    if (time || picker !== 'date' && picker !== 'quarter' && picker !== 'week') return;
+    if (time || picker !== 'date' && picker !== 'quarter' && picker !== 'week') {
+      return;
+    }
     if (index === undefined) quarterInputValues = [undefined, undefined];
     else {
       const values: typeof quarterInputValues = [...quarterInputValues];
@@ -952,8 +1008,10 @@
     }
   }
   function inputInvalid(index: number) {
-    if (time) return rawInvalid[index] || !!calendar[index]
-      && timeRangeInvalid(calendar[index]!, time, clock, index);
+    if (time) {
+      return rawInvalid[index] || !!calendar[index]
+        && timeRangeInvalid(calendar[index]!, time, clock, index);
+    }
     if (picker === 'date' || picker === 'quarter' || picker === 'week') {
       const typed = quarterInputValues[index];
       const candidate = typed === undefined ? calendar[index] : typed;
@@ -987,7 +1045,9 @@
         (time.onkeydown ?? time.onKeyDown)?.(event);
       }
       else onkeydown?.(event);
-      if (event.defaultPrevented || event.isComposing || blocked[index]) return false;
+      if (event.defaultPrevented || event.isComposing || blocked[index]) {
+        return false;
+      }
       void keyboardAction(event, index, maskKey);
       return true;
     };
@@ -1071,16 +1131,20 @@
     const copy: [Dayjs, Dayjs] = [...pair];
     copy[index] = next;
     if (!pickerValue) panels = copy;
-    if (changed) time?.onPickerValueChange?.(copy, {
-      range: index === 1 ? 'end' : 'start', source, mode: ['time', 'time']
-    });
+    if (changed) {
+      time?.onPickerValueChange?.(copy, {
+        range: index === 1 ? 'end' : 'start', source, mode: ['time', 'time']
+      });
+    }
   }
   function syncTimePanel(index: number, resetDefault: boolean) {
     const defaults = Array.isArray(defaultPickerValue)
       ? defaultPickerValue : [defaultPickerValue, defaultPickerValue];
     let next: Dayjs | null | undefined;
     if (defaults[index]) {
-      if (!resetDefault) return;
+      if (!resetDefault) {
+        return;
+      }
       next = defaults[index];
     }
     else if (focused && timePanelWasOpen && previousTimeActive !== index) {
@@ -1089,7 +1153,9 @@
     else {
       next = calendar[index] || calendar[index ^ 1];
     }
-    if (!next) return;
+    if (!next) {
+      return;
+    }
     if (!defaults[index]) {
       if (minDate && next.isBefore(minDate)) next = minDate;
       if (maxDate && next.isAfter(maxDate)) next = maxDate;
@@ -1103,7 +1169,9 @@
     send(active, 'confirm');
   }
   function timeNowDisabled(date: Dayjs) {
-    if (!time) return false;
+    if (!time) {
+      return false;
+    }
     const other = calendar[active ^ 1];
     return !!(blocked[active ^ 1] && other && !samePickerTime(other, date)
       && (active === 1 ? other.isAfter(date) : date.isAfter(other)))
@@ -1113,27 +1181,35 @@
       });
   }
   function handleTimeRootClick(event: MouseEvent & { currentTarget: HTMLDivElement; }) {
-    if (!time || blocked.every(Boolean)) return;
+    if (!time || blocked.every(Boolean)) {
+      return;
+    }
     if (!rootElement?.contains(event.currentTarget.ownerDocument.activeElement))
       inputs()[blocked.findIndex(value => !value)]?.focus();
     requestOpen(true);
     (time.onclick ?? time.onClick)?.(event);
   }
   function handleTimePanelFocus(event: FocusEvent) {
-    if (!time) return;
+    if (!time) {
+      return;
+    }
     focused = true;
     requestOpen(true);
     (time.onfocus ?? time.onFocus)?.(event, { range: active === 1 ? 'end' : 'start' });
   }
   function handleTimePanelBlur(event: FocusEvent & { currentTarget: HTMLDivElement; }) {
-    if (!time) return;
+    if (!time) {
+      return;
+    }
     if (event.target instanceof Element && event.target.hasAttribute('disabled'))
       event.currentTarget.focus({ preventScroll: true });
     else blurWithin(event);
     (time.onblur ?? time.onBlur)?.(event, { range: active === 1 ? 'end' : 'start' });
   }
   function handleTimeHover(next: Dayjs | null) {
-    if (previewValue !== 'hover') return;
+    if (previewValue !== 'hover') {
+      return;
+    }
     hover = next;
     if (!next) {
       const copy: [string, string] = [...texts];
@@ -1146,11 +1222,12 @@
   ) {
     const input = inputs()[options?.index ?? blocked.findIndex(item => !item)];
     input?.focus(options);
-    if (options?.cursor)
+    if (options?.cursor) {
       input?.setSelectionRange(
         options.cursor === 'end' ? input.value.length : 0,
         options.cursor === 'start' ? 0 : input.value.length
       );
+    }
   }
   export function blur() {
     inputs().forEach(input => input?.blur());

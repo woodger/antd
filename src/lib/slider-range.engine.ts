@@ -17,7 +17,9 @@ export function sliderHandleDisabled(disabled: SliderRangeOptions['disabled'], i
 }
 
 export function sliderDisabledState(disabled: SliderRangeOptions['disabled'], values: number[]) {
-  if (typeof disabled === 'boolean') return [disabled, disabled && values.length > 0] as const;
+  if (typeof disabled === 'boolean') {
+    return [disabled, disabled && values.length > 0] as const;
+  }
   return [
     values.length > 0 && values.every((_, index) => sliderHandleDisabled(disabled, index)),
     values.some((_, index) => sliderHandleDisabled(disabled, index))
@@ -74,7 +76,9 @@ export function sliderClosestHandle(
   let closest = -1;
   let distance = options.max - options.min;
   values.forEach((value, index) => {
-    if (sliderHandleDisabled(options.disabled, index)) return;
+    if (sliderHandleDisabled(options.disabled, index)) {
+      return;
+    }
     const [min, max] = sliderDisabledBoundaries(values, index, options);
     const nextDistance = Math.abs(target - value);
     if (min <= target && target <= max && nextDistance <= distance) {
@@ -89,7 +93,9 @@ export function createSliderRangeOffset(options: SliderRangeOptions) {
   const { min, max, step, marks, allowCross, pushable } = options;
   const clamp = (value: number) => Math.max(min, Math.min(max, value));
   function stepValue(value: number) {
-    if (step === null) return null;
+    if (step === null) {
+      return null;
+    }
     const next = min + Math.round((clamp(value) - min) / step) * step;
     const decimal = (value: number) => (String(value).split('.')[1] || '').length;
     const fixed = Number(next.toFixed(Math.max(decimal(step), decimal(max), decimal(min))));
@@ -118,8 +124,12 @@ export function createSliderRangeOffset(options: SliderRangeOptions) {
     index: number,
     mode: 'unit' | 'dist' = 'unit'
   ): number {
-    if (offset === 'min') return min;
-    if (offset === 'max') return max;
+    if (offset === 'min') {
+      return min;
+    }
+    if (offset === 'max') {
+      return max;
+    }
     const origin = values[index];
     const target = origin + offset;
     const sign = offset > 0 ? 1 : -1;
@@ -139,8 +149,12 @@ export function createSliderRangeOffset(options: SliderRangeOptions) {
         distance = nextDistance;
       }
     }
-    if (next === undefined) return offset < 0 ? min : max;
-    if (mode === 'dist' || Math.abs(offset) <= 1) return next;
+    if (next === undefined) {
+      return offset < 0 ? min : max;
+    }
+    if (mode === 'dist' || Math.abs(offset) <= 1) {
+      return next;
+    }
     const clone = [...values];
     clone[index] = next;
     return offsetValue(clone, offset - sign, index, mode);
@@ -192,12 +206,16 @@ export function createSliderRangeOffset(options: SliderRangeOptions) {
       }
       for (let item = next.length - 1; item > 0; item--) {
         if (sliderHandleDisabled(options.disabled, item)
-          || sliderHandleDisabled(options.disabled, item - 1)) continue;
+          || sliderHandleDisabled(options.disabled, item - 1)) {
+          continue;
+        }
         push(next, item - 1, -1);
       }
       for (let item = 0; item < next.length - 1; item++) {
         if (sliderHandleDisabled(options.disabled, item)
-          || sliderHandleDisabled(options.disabled, item + 1)) continue;
+          || sliderHandleDisabled(options.disabled, item + 1)) {
+          continue;
+        }
         push(next, item + 1, 1);
       }
     }
@@ -230,20 +248,42 @@ export function sliderRangePosition(
   max: number
 ) {
   const offset = (value - min) / (max - min) * 100;
-  if (direction === 'rtl') return `right:${offset}%;transform:translateX(50%)`;
-  if (direction === 'btt') return `bottom:${offset}%;transform:translateY(50%)`;
-  if (direction === 'ttb') return `top:${offset}%;transform:translateY(-50%)`;
+  if (direction === 'rtl') {
+    return `right:${offset}%;transform:translateX(50%)`;
+  }
+  if (direction === 'btt') {
+    return `bottom:${offset}%;transform:translateY(50%)`;
+  }
+  if (direction === 'ttb') {
+    return `top:${offset}%;transform:translateY(-50%)`;
+  }
   return `left:${offset}%;transform:translateX(-50%)`;
 }
 
 export function sliderRangeKey(key: string, direction: SliderDirection) {
-  if (key === 'ArrowLeft') return direction === 'ltr' || direction === 'btt' ? -1 : 1;
-  if (key === 'ArrowRight') return direction === 'ltr' || direction === 'btt' ? 1 : -1;
-  if (key === 'ArrowUp') return direction === 'ttb' ? -1 : 1;
-  if (key === 'ArrowDown') return direction === 'ttb' ? 1 : -1;
-  if (key === 'Home') return 'min';
-  if (key === 'End') return 'max';
-  if (key === 'PageUp') return 2;
-  if (key === 'PageDown') return -2;
+  if (key === 'ArrowLeft') {
+    return direction === 'ltr' || direction === 'btt' ? -1 : 1;
+  }
+  if (key === 'ArrowRight') {
+    return direction === 'ltr' || direction === 'btt' ? 1 : -1;
+  }
+  if (key === 'ArrowUp') {
+    return direction === 'ttb' ? -1 : 1;
+  }
+  if (key === 'ArrowDown') {
+    return direction === 'ttb' ? 1 : -1;
+  }
+  if (key === 'Home') {
+    return 'min';
+  }
+  if (key === 'End') {
+    return 'max';
+  }
+  if (key === 'PageUp') {
+    return 2;
+  }
+  if (key === 'PageDown') {
+    return -2;
+  }
   return undefined;
 }

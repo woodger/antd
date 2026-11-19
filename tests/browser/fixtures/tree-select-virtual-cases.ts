@@ -115,12 +115,14 @@ export function treeSelectVirtualProps(sample: TreeSelectVirtualSample): Virtual
 }
 
 export function treeSelectVirtualData(sample: TreeSelectVirtualSample): TreeSelectNode[] {
-  if (sample.branches) return [
-    { value: 'parent', title: 'Parent', children: [
-      { value: 'branch', title: 'Branch', children: [{ value: 'leaf', title: 'Leaf' }] }
-    ] },
-    { value: 'tail', title: 'Tail' }
-  ];
+  if (sample.branches) {
+    return [
+      { value: 'parent', title: 'Parent', children: [
+        { value: 'branch', title: 'Branch', children: [{ value: 'leaf', title: 'Leaf' }] }
+      ] },
+      { value: 'tail', title: 'Tail' }
+    ];
+  }
   return Array.from({ length: 80 }, (_, value) => ({
     value, title: sample.wide ? `${'A long node title '.repeat(4)}${value}` : `Node ${value}`
   }));

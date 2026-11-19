@@ -39,7 +39,9 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
   const sticky = $derived(listySticky(headers, sizes, top));
 
   function sync(next: number) {
-    if (!holder) return;
+    if (!holder) {
+      return;
+    }
     const maximum = (range.scrollHeight ?? NaN) - (options.height() ?? NaN);
     const value = Math.max(0, Number.isNaN(maximum) ? next : Math.min(next, maximum));
     holder.scrollTop = value;
@@ -51,7 +53,9 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
 
   function measure() {
     collection++;
-    if (!connected) return;
+    if (!connected) {
+      return;
+    }
     const previousHeight = range.scrollHeight;
     const changes: { key: string; previous: number | undefined; height: number; }[] = [];
     for (const [key, element] of nodes) {
@@ -127,7 +131,9 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
     let resolved = align;
     let lastTop: number | null | undefined;
     for (let times = 0; times < 10; times++) {
-      if (generation !== request || !holder) return;
+      if (generation !== request || !holder) {
+        return;
+      }
       measure();
       if (index < 0) index = options.rows().findIndex(row => row.taggedKey === key);
       if (index < 0) {
@@ -138,14 +144,18 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
       const headerHeight = header ? header.bottom - header.top : 0;
       const rawOffset = baseOffset + (Number.isFinite(headerHeight) ? headerHeight : 0);
       const offset = Number.isFinite(rawOffset) ? rawOffset : 0;
-      if (!holder.clientHeight) return;
+      if (!holder.clientHeight) {
+        return;
+      }
       const step = listyScrollStep(
         options.rows(), heights, options.estimate(), index, resolved,
         offset, holder.scrollTop, holder.clientHeight
       );
       if (step.top !== undefined) sync(step.top);
       const target = step.top ?? null;
-      if (!step.unknown && target === lastTop) return;
+      if (!step.unknown && target === lastTop) {
+        return;
+      }
       resolved = step.align;
       lastTop = target;
       await tick();
@@ -153,7 +163,9 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
   }
 
   function scrollTo(config?: ListyScrollToConfig) {
-    if (!holder) return;
+    if (!holder) {
+      return;
+    }
     if (config == null) {
       flash++;
       return;

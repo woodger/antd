@@ -2,7 +2,9 @@ import template from './vendor/space-compact-prefix.css.js';
 
 /** Layout Compact не меняет prefixes собственных controls. */
 export function getSpaceCompactPrefixCss(prefix: string) {
-  if (prefix === 'ant-space-compact') return undefined;
+  if (prefix === 'ant-space-compact') {
+    return undefined;
+  }
 
   const scope = `:where([data-ant-space-compact-prefix=${JSON.stringify(prefix)}])`;
 

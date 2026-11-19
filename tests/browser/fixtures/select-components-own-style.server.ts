@@ -5,9 +5,13 @@ import { selectOwnStyleInitSamples } from '../select-components-own-style-init-c
 
 type Capture = NonNullable<ComponentProps<typeof OwnStyleCase>['capture']>;
 export function renderSelectComponentsOwnStyle(id: string) {
-  if (typeof window !== 'undefined' || typeof document !== 'undefined') throw Error('Own style SSR requires no DOM');
+  if (typeof window !== 'undefined' || typeof document !== 'undefined') {
+    throw Error('Own style SSR requires no DOM');
+  }
   const sample = selectOwnStyleInitSamples.find(sample => sample.id === id);
-  if (!sample) throw Error('Unknown own-style owner');
+  if (!sample) {
+    throw Error('Unknown own-style owner');
+  }
   const capture: Capture = {};
   const rendered = render(
     OwnStyleCase,

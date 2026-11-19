@@ -88,7 +88,9 @@
     return result;
   }) : undefined;
   const customProfiles = initial.presets.filter(profile => profile.customLabel);
-  if (customProfiles.length > 1) throw Error('This bounded caller expects at most the one authored custom label');
+  if (customProfiles.length > 1) {
+    throw Error('This bounded caller expects at most the one authored custom label');
+  }
   const customProfile = customProfiles[0];
   const presets = initial.presets.map(profile => {
     let count = 0;
@@ -124,10 +126,12 @@
     ...(initial.needConfirm === null ? {} : { needConfirm: initial.needConfirm }), ...(initial.prefixCls ? { prefixCls: initial.prefixCls } : {}) });
   let last: { authoredProps: unknown; rawAuthoredProps: unknown } | undefined;
   export function read() {
-    if (alive || !last) last = {
-      authoredProps: recorder.encode(ownerProps),
-      rawAuthoredProps: recorder.raw(ownerProps)
-    };
+    if (alive || !last) {
+      last = {
+        authoredProps: recorder.encode(ownerProps),
+        rawAuthoredProps: recorder.raw(ownerProps)
+      };
+    }
     return { alive, open, preview, value: snapshot(value), events: [...events], rawEvents: [...rawEvents], callbackInvocations: [...callbackInvocations], lazyCalls: [...lazyCalls],
       calls: [...recorder.calls], callbackDates: [...callbackDates], lifecycle: [...lifecycle], bodyActivity: [...bodyActivity], ...last,
       authoredPresets: recorder.encode(presets), rawAuthoredPresets: recorder.raw(presets), authoredSample: recorder.encode(initial),

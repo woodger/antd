@@ -4,7 +4,9 @@ const rootStates = new Set(['', '-small', '-checked', '-disabled', '-loading', '
 
 /** Классы Switch меняются независимо от canonical component token variables. */
 export function getSwitchPrefixCss(prefix: string) {
-  if (prefix === 'ant-switch') return undefined;
+  if (prefix === 'ant-switch') {
+    return undefined;
+  }
 
   const scope = `:where([data-ant-switch-prefix=${JSON.stringify(prefix)}])`;
 

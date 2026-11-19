@@ -201,8 +201,9 @@
 
     if (!calendarSameDate(next, previous, generateConfig)) {
       if (currentPanel === 'date' && !calendarSameMonth(next, previous, generateConfig)
-        || currentPanel === 'month' && !calendarSameYear(next, previous, generateConfig))
+        || currentPanel === 'month' && !calendarSameYear(next, previous, generateConfig)) {
         onPanelChange?.(next, currentMode!);
+      }
 
       onChange?.(next);
     }
@@ -216,7 +217,9 @@
   }
 
   function chooseCell(cell: typeof cells[number]) {
-    if (cell.disabled) return;
+    if (cell.disabled) {
+      return;
+    }
 
     select(cell.date, panelType);
     // PickerPanel меняет отображаемую дату даже при отклонённом controlled value.
@@ -224,7 +227,9 @@
   }
 
   function handleKeydown(event: KeyboardEvent, cell: typeof cells[number]) {
-    if (event.target !== event.currentTarget) return;
+    if (event.target !== event.currentTarget) {
+      return;
+    }
 
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -241,13 +246,17 @@
     let next = event.key === 'Home' ? rowStart
       : event.key === 'End' ? rowStart + columns - 1 : cell.index + delta;
 
-    if (!delta && event.key !== 'Home' && event.key !== 'End') return;
+    if (!delta && event.key !== 'Home' && event.key !== 'End') {
+      return;
+    }
     event.preventDefault();
 
     const step = next < cell.index ? -1 : 1;
 
     while (cells[next]?.disabled) next += delta || step;
-    if (!cells[next]) return;
+    if (!cells[next]) {
+      return;
+    }
 
     focusIndex = next;
     nativeElement?.querySelector<HTMLElement>(`[data-calendar-position="${next}"]`)?.focus();

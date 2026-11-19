@@ -7,7 +7,9 @@ export function readUploadMotionItems(prefix = 'ant') {
       opacity: (node as HTMLElement).style.opacity || null,
       animations: node.getAnimations().map(animation => {
         const effect = animation.effect;
-        if (!(effect instanceof KeyframeEffect)) throw Error('Expected a DOM keyframe effect');
+        if (!(effect instanceof KeyframeEffect)) {
+          throw Error('Expected a DOM keyframe effect');
+        }
 
         return {
           kind: animation.constructor.name,

@@ -1,7 +1,9 @@
 import type { FormFieldMeta, FormInstance } from 'antd-svelte';
 
 export function encodeFormValues(value: unknown): unknown {
-  if (value === undefined) return { $undefined: true };
+  if (value === undefined) {
+    return { $undefined: true };
+  }
   if (Array.isArray(value)) {
     return Array.from({ length: value.length }, (_, index) =>
       Object.hasOwn(value, index) ? encodeFormValues(value[index]) : { $hole: true }

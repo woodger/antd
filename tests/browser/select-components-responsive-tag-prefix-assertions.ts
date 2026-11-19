@@ -17,7 +17,9 @@ const undefinedValue = { $: 'undefined' };
 export interface ResponsiveTagPrefixPointScope { id: string; index: number; path: 'csr'; renderer?: ResponsiveTagPrefixRenderer; applied?: Set<string> }
 export function verifyResponsiveTagPrefixSelection(actual: SelectCustomTagPrefixNode, source: SelectCustomTagPrefixNode,
   label: string, scope?: ResponsiveTagPrefixPointScope) {
-  if (isDeepStrictEqual(actual.selection, source.selection)) return;
+  if (isDeepStrictEqual(actual.selection, source.selection)) {
+    return;
+  }
   assert(scope && scope.path === 'csr' && Number.isInteger(scope.index) && scope.index >= 0 && scope.index <= 3,
     label + ' only the eight measured pre-edit CSR constructor positions qualify');
   assert(['select-responsive-custom-tag-prefix-multiple', 'select-responsive-custom-tag-prefix-tags-fragment'].includes(scope.id));
@@ -27,12 +29,13 @@ export function verifyResponsiveTagPrefixSelection(actual: SelectCustomTagPrefix
     assert.equal(node.focused, false);
     assert.equal(node.value, '');
     assert.equal(node.defaultValue, '');
-    for (const [key, value] of [['id', 'select-icons-field'], ['type', 'text'], ['value', ''], ['data-select-icons-component', 'input:function']])
+    for (const [key, value] of [['id', 'select-icons-field'], ['type', 'text'], ['value', ''], ['data-select-icons-component', 'input:function']]) {
       assert.equal(
         node.attributes.find(([name]) => name === key)?.[1],
         value,
         label + '/' + key + ' exact measured editor'
       );
+    }
   }
   assert.deepEqual(source.selection, [0, 0, 'forward']);
   assert.deepEqual(actual.selection, [0, 0, 'none']);
@@ -65,15 +68,17 @@ function tagInfo(call: SelectSurfaceProducerCall) {
   const descriptors = call.argumentDescriptors as Array<Array<Record<string, unknown>>>;
   assert.equal(descriptors.length, 1);
   assert.deepEqual(descriptors[0].map(p => p.key), keys);
-  for (const descriptor of descriptors[0]) assert.deepEqual({ ...descriptor, valueType: undefined },
-    {
-      key: descriptor.key,
-      enumerable: true,
-      configurable: true,
-      writable: true,
-      kind: 'value',
-      valueType: undefined
-    });
+  for (const descriptor of descriptors[0]) {
+    assert.deepEqual({ ...descriptor, valueType: undefined },
+      {
+        key: descriptor.key,
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        kind: 'value',
+        valueType: undefined
+      });
+  }
   return {
     info: Object.fromEntries(fields.map(p => [p.key, p.value])),
     descriptors: descriptors[0]
@@ -103,16 +108,22 @@ export function verifyResponsiveTagPrefixTagCalls(
     });
     assert(candidate, label + ' every actual complete scalar info belongs to observed Source data');
     const other = readResponsiveTagPrefixSourceInfo(candidate), originalDescriptors = candidate.argumentDescriptors![0];
-    for (let index = 1; index < keys.length; index++) assert.deepEqual(
-      descriptors[index],
-      originalDescriptors[index],
-      label + '/' + keys[index] + ' descriptor'
-    );
-    if (info.isMaxTag) for (const key of ['value', 'index', 'onClose']) assert.deepEqual(
-      info[key],
-      undefinedValue,
-      label + ' own undefined ' + key
-    );
+    for (let index = 1; index < keys.length; index++) {
+      assert.deepEqual(
+        descriptors[index],
+        originalDescriptors[index],
+        label + '/' + keys[index] + ' descriptor'
+      );
+    }
+    if (info.isMaxTag) {
+      for (const key of ['value', 'index', 'onClose']) {
+        assert.deepEqual(
+          info[key],
+          undefinedValue,
+          label + ' own undefined ' + key
+        );
+      }
+    }
     else {
       functionValue(info.onClose);
       functionValue(other.onClose);
@@ -144,15 +155,19 @@ export function verifyResponsiveTagPrefixTagCalls(
 export function verifyResponsiveTagPrefixPhysicalNode(actual: SelectCustomTagPrefixNode | null, source: SelectCustomTagPrefixNode | null, label: string,
   scope?: ResponsiveTagPrefixPointScope) {
   assert.equal(Boolean(actual), Boolean(source), label + ' physical presence');
-  if (!actual || !source) return;
+  if (!actual || !source) {
+    return;
+  }
   assert.equal(actual.tag, source.tag, label + '/tag');
   verifySelectComponentsDOMAttributes(actual, source, actual.attributes, source.attributes, label);
   for (const key of ['connected', 'text', 'styleAttribute', 'cssText', 'inlineProperties', 'css', 'box', 'clientRects', 'metrics',
-    'focused', 'value', 'defaultValue'] as const) assert.deepEqual(
+    'focused', 'value', 'defaultValue'] as const) {
+    assert.deepEqual(
       actual[key],
       source[key],
       label + '/' + key
     );
+  }
   verifyResponsiveTagPrefixSelection(actual, source, label, scope);
   if (source.tag === 'INPUT') {
     for (const node of [actual, source]) {
@@ -173,11 +188,13 @@ export function verifyResponsiveTagPrefixPhysicalNode(actual: SelectCustomTagPre
     // imposing the rejected duplicate serializer-order comparison.
     if (actual.html !== source.html) scope?.applied?.add('existing-input-type-first-and-style-materialization-order');
   }
-  else assert.equal(
-    actual.html,
-    source.html,
-    label + ' literal authored HTML before any new framework boundary review'
-  );
+  else {
+    assert.equal(
+      actual.html,
+      source.html,
+      label + ' literal authored HTML before any new framework boundary review'
+    );
+  }
   const children = (node: SelectCustomTagPrefixNode) => node.childNodes.map(({
     identity: _identity,
     ...child
@@ -234,57 +251,69 @@ export function verifyResponsiveTagPrefixPoint(actual: ResponsiveTagPrefixNative
       source.customTagsPrefix.prefixTopology
     )
   );
-  for (const role of ['editor', 'prefixBody'] as const) check(
-    role,
-    () => verifyResponsiveTagPrefixPhysicalNode(
-      actual.customTagsPrefix[role],
-      source.customTagsPrefix[role],
-      label + '/' + role,
-      scope
-    )
-  );
-  for (const collection of ['customTags', 'customLabels', 'customCloseButtons'] as const) check(collection, () => {
-    assert.equal(
-      actual.customTagsPrefix[collection].length,
-      source.customTagsPrefix[collection].length,
-      label + ' complete ' + collection
+  for (const role of ['editor', 'prefixBody'] as const) {
+    check(
+      role,
+      () => verifyResponsiveTagPrefixPhysicalNode(
+        actual.customTagsPrefix[role],
+        source.customTagsPrefix[role],
+        label + '/' + role,
+        scope
+      )
     );
-    source.customTagsPrefix[collection].forEach((node, index) => {
-      const current = actual.customTagsPrefix[collection][index], path = label + '/' + collection + '/' + index;
-      if (!scope || collection === 'customCloseButtons') {
-        verifyResponsiveTagPrefixPhysicalNode(current, node, path);
-        return;
-      }
-      assert.equal(scope.path, 'csr');
-      assert(Number.isInteger(scope.index) && scope.index >= 0 && scope.index <= 9);
-      assert(['select-responsive-custom-tag-prefix-multiple', 'select-responsive-custom-tag-prefix-tags-fragment'].includes(scope.id));
-      const renderer = scope.renderer ?? 'vite-hmr';
-      if (collection === 'customLabels') verifyResponsiveTagPrefixLabel(
-        current,
-        node,
-        renderer,
-        path
+  }
+  for (const collection of ['customTags', 'customLabels', 'customCloseButtons'] as const) {
+    check(collection, () => {
+      assert.equal(
+        actual.customTagsPrefix[collection].length,
+        source.customTagsPrefix[collection].length,
+        label + ' complete ' + collection
       );
-      else verifyResponsiveTagPrefixSingleTag(current, node, actual.customTagsPrefix.customLabels, source.customTagsPrefix.customLabels,
-        actual.customTagsPrefix.customCloseButtons, source.customTagsPrefix.customCloseButtons, renderer, path);
-      scope.applied?.add('exact-' + renderer + '-custom-tag-snippet-anchors');
+      source.customTagsPrefix[collection].forEach((node, index) => {
+        const current = actual.customTagsPrefix[collection][index], path = label + '/' + collection + '/' + index;
+        if (!scope || collection === 'customCloseButtons') {
+          verifyResponsiveTagPrefixPhysicalNode(current, node, path);
+          return;
+        }
+        assert.equal(scope.path, 'csr');
+        assert(Number.isInteger(scope.index) && scope.index >= 0 && scope.index <= 9);
+        assert(['select-responsive-custom-tag-prefix-multiple', 'select-responsive-custom-tag-prefix-tags-fragment'].includes(scope.id));
+        const renderer = scope.renderer ?? 'vite-hmr';
+        if (collection === 'customLabels') {
+          verifyResponsiveTagPrefixLabel(
+            current,
+            node,
+            renderer,
+            path
+          );
+        }
+        else {
+          verifyResponsiveTagPrefixSingleTag(current, node, actual.customTagsPrefix.customLabels, source.customTagsPrefix.customLabels,
+            actual.customTagsPrefix.customCloseButtons, source.customTagsPrefix.customCloseButtons, renderer, path);
+        }
+        scope.applied?.add('exact-' + renderer + '-custom-tag-snippet-anchors');
+      });
     });
-  });
+  }
   check('whole-overflow-geometry', () => {
     for (const role of ['root', 'content', 'editor', 'suffix', 'adornment'] as const) {
       const a = actual.overflow[role], b = source.overflow[role];
       assert.equal(Boolean(a), Boolean(b), role + ' presence');
       if (!a || !b) continue;
-      for (const key of ['css', 'box', 'clientRects', 'metrics', 'focused', 'value', 'caret'] as const) assert.deepEqual(
-        a[key],
-        b[key],
-        role + '/' + key
+      for (const key of ['css', 'box', 'clientRects', 'metrics', 'focused', 'value', 'caret'] as const) {
+        assert.deepEqual(
+          a[key],
+          b[key],
+          role + '/' + key
+        );
+      }
+    }
+    for (const key of ['suffixContainsEditor', 'editorIsDirectSuffixChild', 'rootHasSamePublicEditor'] as const) {
+      assert.equal(
+        actual.overflow[key],
+        source.overflow[key]
       );
     }
-    for (const key of ['suffixContainsEditor', 'editorIsDirectSuffixChild', 'rootHasSamePublicEditor'] as const) assert.equal(
-      actual.overflow[key],
-      source.overflow[key]
-    );
   });
   return failures;
 }
@@ -330,14 +359,18 @@ export function verifyResponsiveTagPrefixLedger(actual: ResponsiveTagPrefixNativ
         return false;
       }
     };
-    for (const observation of observations) assert(
-      originals.some(call => matches(observation, call)),
-      label + ' every actual complete input context belongs to observed Source'
-    );
-    for (const original of originals) assert(
-      observations.some(observation => matches(observation, original)),
-      label + ' every whole Source input context represented without React count assertion'
-    );
+    for (const observation of observations) {
+      assert(
+        originals.some(call => matches(observation, call)),
+        label + ' every actual complete input context belongs to observed Source'
+      );
+    }
+    for (const original of originals) {
+      assert(
+        observations.some(observation => matches(observation, original)),
+        label + ' every whole Source input context represented without React count assertion'
+      );
+    }
   });
   check('actual-body-context-data', () => {
     const originals = source.ledger.bodyActivity.slice(0, point.owner.bodyActivityCount);
@@ -355,11 +388,13 @@ export function verifyResponsiveTagPrefixLedger(actual: ResponsiveTagPrefixNativ
       );
       verifyIconGraph(current.rawContext, original.rawContext, label + ' body complete raw context');
     }
-    for (const original of originals) assert(actual.bodyActivity.some(entry => isDeepStrictEqual(
-      semantic(entry),
-      semantic(original)
-    )),
-      label + ' each distinct complete Source body argument executes without an invocation-count assertion');
+    for (const original of originals) {
+      assert(actual.bodyActivity.some(entry => isDeepStrictEqual(
+        semantic(entry),
+        semantic(original)
+      )),
+        label + ' each distinct complete Source body argument executes without an invocation-count assertion');
+    }
   });
   check('semantic-style-producers', () => {
     const normalize = (call: SelectSurfaceProducerCall) => {
@@ -398,11 +433,13 @@ export function verifyResponsiveTagPrefixSSRState(
 ) {
   for (const key of ['model', 'open', 'query', 'alive', 'settings', 'context', 'authoredSample', 'authoredProvider', 'events', 'rawEvents', 'lifecycle'] as const)
     assert.deepEqual(actual[key], source.state[key], label + '/' + key);
-  for (const key of ['rawModel', 'rawSettings', 'rawContext', 'rawAuthoredSample', 'rawAuthoredProvider'] as const) verifyIconGraph(
-    actual[key],
-    source.state[key],
-    label + '/' + key
-  );
+  for (const key of ['rawModel', 'rawSettings', 'rawContext', 'rawAuthoredSample', 'rawAuthoredProvider'] as const) {
+    verifyIconGraph(
+      actual[key],
+      source.state[key],
+      label + '/' + key
+    );
+  }
   assert.deepEqual(
     normalizedSelectSurfaceAuthoredProps(actual.authoredProps),
     normalizedSelectSurfaceAuthoredProps(source.state.authoredProps)

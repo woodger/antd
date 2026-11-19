@@ -39,7 +39,9 @@
   }
 
   function hotkey(event: KeyboardEvent) {
-    if (!event.ctrlKey || !event.altKey) return;
+    if (!event.ctrlKey || !event.altKey) {
+      return;
+    }
     if (event.key === 'h') mounted = !mounted;
   }
 </script>

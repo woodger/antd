@@ -59,14 +59,22 @@ export function fixImagePosition(
   top: number,
   viewport: { width: number; height: number; }
 ): Partial<ImageTransform> | null {
-  if (width <= viewport.width && height <= viewport.height) return { x: 0, y: 0 };
+  if (width <= viewport.width && height <= viewport.height) {
+    return { x: 0, y: 0 };
+  }
   function fix(key: 'x' | 'y', start: number, size: number, client: number) {
     const offset = (size - client) / 2;
     if (size > client) {
-      if (start > 0) return { [key]: offset };
-      if (start < 0 && start + size < client) return { [key]: -offset };
+      if (start > 0) {
+        return { [key]: offset };
+      }
+      if (start < 0 && start + size < client) {
+        return { [key]: -offset };
+      }
     }
-    else if (start < 0 || start + size > client) return { [key]: start < 0 ? offset : -offset };
+    else if (start < 0 || start + size > client) {
+      return { [key]: start < 0 ? offset : -offset };
+    }
     return {};
   }
   return { ...fix('x', left, width, viewport.width), ...fix('y', top, height, viewport.height) };

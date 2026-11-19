@@ -19,7 +19,9 @@ interface FlexSourceCase {
 export const flexSourceCases = reference.cases as FlexSourceCase[];
 
 export function flexSourceTheme(sample: FlexSourceCase): ThemeConfig | undefined {
-  if (sample.native) return undefined;
+  if (sample.native) {
+    return undefined;
+  }
   const aliases = sample.theme?.startsWith('aliases');
 
   return {

@@ -15,7 +15,9 @@ export async function settleSelectValue(page: Page) {
     const actual = await page.evaluate(readSelectValue);
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Select value DOM, public owner and complete callback ledger did not settle');
@@ -43,10 +45,12 @@ export function verifySelectValue(actual: ReturnType<typeof readSelectValue>, so
     if (Array.isArray(event[2])) {
       expect(Array.isArray(current[2])).toBe(true);
       expect((current[2] as unknown[]).length).toBe(event[2].length);
-      for (const [item, option] of event[2].entries()) verifySelectValueOption(
-        (current[2] as unknown[])[item],
-        option
-      );
+      for (const [item, option] of event[2].entries()) {
+        verifySelectValueOption(
+          (current[2] as unknown[])[item],
+          option
+        );
+      }
     }
     else verifySelectValueOption(current[2], event[2]);
   }

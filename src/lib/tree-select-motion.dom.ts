@@ -71,16 +71,20 @@ export function createTreeSelectPopupMotion(
     if (step !== 'active') step = undefined;
     publish(true);
     const current = revision;
-    if (step === 'active') frames.next(() => {
-      if (active && current === revision) advance('activated');
-    });
+    if (step === 'active') {
+      frames.next(() => {
+        if (active && current === revision) advance('activated');
+      });
+    }
     queueMicrotask(() => {
       if (active && current === revision && seen) options.visibleChanged(visible);
     });
   }
 
   function process() {
-    if (!active || !status || !step || step === 'activated') return;
+    if (!active || !status || !step || step === 'activated') {
+      return;
+    }
     const current = revision;
     const queue: readonly (MotionStep | 'prepared')[] = supported()
       ? ['prepare', 'start', 'active', 'activated'] : ['prepare', 'prepared'];
@@ -95,7 +99,9 @@ export function createTreeSelectPopupMotion(
     const prepared = step === 'prepare' ? options.prepare() : undefined;
     frames.next(() => {
       void Promise.resolve(prepared).then(() => {
-        if (!active || revision !== current) return;
+        if (!active || revision !== current) {
+          return;
+        }
         if (next === 'prepared') finish();
         else if (next) advance(next);
       });
@@ -110,7 +116,9 @@ export function createTreeSelectPopupMotion(
 
   function complete(current = revision) {
     if (!active || current !== revision || !status
-      || step !== 'active' && step !== 'activated') return;
+      || step !== 'active' && step !== 'activated') {
+      return;
+    }
     finish();
   }
 
@@ -123,7 +131,9 @@ export function createTreeSelectPopupMotion(
   return {
     complete,
     sync(next: boolean, nextName: string, motionEnabled: boolean) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       name = nextName;
       enabled = motionEnabled;
       if (previous === next) {
@@ -141,7 +151,9 @@ export function createTreeSelectPopupMotion(
       publish();
       const current = revision;
       queueMicrotask(() => {
-        if (!active || current !== revision) return;
+        if (!active || current !== revision) {
+          return;
+        }
         if (status) process();
         else if (seen) finish();
       });

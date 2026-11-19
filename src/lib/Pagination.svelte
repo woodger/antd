@@ -179,7 +179,9 @@
     .filter(([name]) => name.startsWith('aria-') || name.startsWith('data-'))));
 
   $effect(() => {
-    if (responsive) return breakpoint.connect(window, mediaQueries);
+    if (responsive) {
+      return breakpoint.connect(window, mediaQueries);
+    }
   });
 
   $effect(() => {
@@ -201,7 +203,9 @@
 
   async function changePage(requested: number, event?: MouseEvent) {
     if (blocked || !Number.isInteger(requested) || requested === pagination.current
-      || pagination.total <= 0) return;
+      || pagination.total <= 0) {
+      return;
+    }
 
     const next = getPaginationState(pagination.total, requested, pagination.pageSize).current;
     const size = pagination.pageSize;
@@ -219,7 +223,9 @@
   }
 
   function chooseSize(value: number, allowSame = false, disabled = sizeDisabled) {
-    if (disabled || !allowSame && value === pagination.pageSize) return;
+    if (disabled || !allowSame && value === pagination.pageSize) {
+      return;
+    }
 
     const previous = pagination.current;
     const next = getPaginationState(pagination.total, previous, value);
@@ -240,8 +246,12 @@
 
   function readSimple(input: HTMLInputElement): string | number {
     const value = input.value;
-    if (value === '') return '';
-    if (Number.isNaN(Number(value))) return simpleText;
+    if (value === '') {
+      return '';
+    }
+    if (Number.isNaN(Number(value))) {
+      return simpleText;
+    }
     return Number(value) >= count ? count : Number(value);
   }
 
@@ -258,7 +268,9 @@
   }
 
   function quickJump() {
-    if (!quickText) return;
+    if (!quickText) {
+      return;
+    }
 
     const value = Number(quickText);
     quickText = '';
@@ -266,7 +278,9 @@
   }
 
   function handleQuickBlur(event: FocusEvent & { currentTarget: HTMLInputElement; }) {
-    if (goButton || !quickText) return;
+    if (goButton || !quickText) {
+      return;
+    }
 
     const value = Number(quickText);
     quickText = '';
@@ -274,7 +288,9 @@
     const view = event.currentTarget.ownerDocument.defaultView;
     if (view && target instanceof view.Element && target.closest(
       `.${prefixCls}-item, .${prefixCls}-prev, .${prefixCls}-next, .${prefixCls}-jump-prev, .${prefixCls}-jump-next`
-    )) return;
+    )) {
+      return;
+    }
 
     void changePage(value);
   }

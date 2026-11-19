@@ -13,7 +13,9 @@
 
   let { sample }: { sample: UploadErrorSample } = $props();
   let error = $derived.by<UploadFile['error']>(() => {
-    if (sample.nativeError) return new Error('Native error message');
+    if (sample.nativeError) {
+      return new Error('Native error message');
+    }
     if (sample.progressEvent) {
       return typeof ProgressEvent === 'undefined' ? undefined : new ProgressEvent('error');
     }

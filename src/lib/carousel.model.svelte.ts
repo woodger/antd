@@ -107,7 +107,9 @@ export function createCarouselModel(
   function commit(patch: Partial<CarouselState>, callback?: () => void) {
     state = { ...state, ...patch };
     void tick().then(() => {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       untrack(() => {
         dom?.scanImages();
         props.onReInit?.();
@@ -119,7 +121,9 @@ export function createCarouselModel(
   }
 
   function loadOnDemand() {
-    if (!props.lazyLoad) return;
+    if (!props.lazyLoad) {
+      return;
+    }
     const slides = carouselOnDemandSlides(spec());
     if (slides.length) {
       commit({ lazyLoadedList: state.lazyLoadedList.concat(slides) });
@@ -128,7 +132,9 @@ export function createCarouselModel(
   }
 
   function measure(setTrackStyle: boolean, initialIndex = false, callback?: () => void) {
-    if (!list || !track) return;
+    if (!list || !track) {
+      return;
+    }
     const measured = carouselMeasure(list, track, props);
     const currentSlide = initialIndex
       ? props.rtl ? state.slideCount - 1 - props.initialSlide : props.initialSlide
@@ -158,7 +164,9 @@ export function createCarouselModel(
   }
 
   function slideHandler(index: number, dontAnimate = false) {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
     const { beforeChange, onLazyLoad, afterChange, asNavFor, speed } = props;
     const previous = state.currentSlide;
     const result = carouselSlideTransition(
@@ -166,7 +174,9 @@ export function createCarouselModel(
       index
     );
     const next = result.state;
-    if (!next) return;
+    if (!next) {
+      return;
+    }
     beforeChange?.(previous, next.currentSlide!);
     const slides = next.lazyLoadedList?.filter(value => !state.lazyLoadedList.includes(value))
       ?? [];
@@ -182,7 +192,9 @@ export function createCarouselModel(
         navIndex = index;
         asNavFor.innerSlider?.slideHandler(index);
       }
-      if (!result.nextState) return;
+      if (!result.nextState) {
+        return;
+      }
       animation = defer(() => {
         const { animating, ...batch } = result.nextState!;
         commit(batch, () => {
@@ -195,9 +207,13 @@ export function createCarouselModel(
   }
 
   function change(options: CarouselChange, dontAnimate = false) {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
     const index = carouselChangeSlide(spec(), options);
-    if (index !== 0 && !index) return;
+    if (index !== 0 && !index) {
+      return;
+    }
     slideHandler(index, dontAnimate);
     if (props.autoplay) autoPlay('update');
     // Slick фокусирует прежний DOM .slick-current до commit нового слайда.
@@ -211,13 +227,21 @@ export function createCarouselModel(
   }
 
   function autoPlay(type?: CarouselPlayType) {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
     clearInterval(autoplay);
     autoplay = undefined;
     const current = state.autoplaying;
-    if (type === 'update' && ['hovered', 'focused', 'paused'].includes(current ?? '')) return;
-    if (type === 'leave' && ['paused', 'focused'].includes(current ?? '')) return;
-    if (type === 'blur' && ['paused', 'hovered'].includes(current ?? '')) return;
+    if (type === 'update' && ['hovered', 'focused', 'paused'].includes(current ?? '')) {
+      return;
+    }
+    if (type === 'leave' && ['paused', 'focused'].includes(current ?? '')) {
+      return;
+    }
+    if (type === 'blur' && ['paused', 'hovered'].includes(current ?? '')) {
+      return;
+    }
     autoplay = setInterval(play, props.autoplaySpeed + 50);
     commit({ autoplaying: 'playing' });
   }
@@ -228,7 +252,9 @@ export function createCarouselModel(
     const current = state.autoplaying;
     if (type === 'paused'
       || type === 'focused' && ['hovered', 'playing'].includes(current ?? '')
-      || type === 'hovered' && current === 'playing') commit({ autoplaying: type });
+      || type === 'hovered' && current === 'playing') {
+      commit({ autoplaying: type });
+    }
   }
 
   function progressiveLoad() {
@@ -259,7 +285,9 @@ export function createCarouselModel(
   function didPropsChange(previous: CarouselSettings, next: CarouselSettings) {
     return Object.keys(next).some(name => {
       const key = name as keyof CarouselSettings;
-      if (!(key in previous)) return true;
+      if (!(key in previous)) {
+        return true;
+      }
       const value = previous[key];
       if (typeof value === 'object' || typeof value === 'function' || Number.isNaN(Number(value))) {
         return false;
@@ -297,22 +325,26 @@ export function createCarouselModel(
       props = next;
       const changed = nextCount !== state.slideCount || didPropsChange(previous, next);
       if (nextCount !== state.slideCount) commit({ slideCount: nextCount });
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       dom?.scanImages();
       props.onReInit?.();
       loadOnDemand();
       dom?.adaptHeight();
-      if (changed) measure(true, false, () => {
-        if (state.currentSlide >= nextCount) {
-          change({ message: 'index', index: nextCount - props.slidesToShow });
-        }
-        if (previous.autoplay !== props.autoplay
-          || previous.autoplaySpeed !== props.autoplaySpeed) {
-          if (!previous.autoplay && props.autoplay) autoPlay('playing');
-          else if (props.autoplay) autoPlay('update');
-          else pause('paused');
-        }
-      });
+      if (changed) {
+        measure(true, false, () => {
+          if (state.currentSlide >= nextCount) {
+            change({ message: 'index', index: nextCount - props.slidesToShow });
+          }
+          if (previous.autoplay !== props.autoplay
+            || previous.autoplaySpeed !== props.autoplaySpeed) {
+            if (!previous.autoplay && props.autoplay) autoPlay('playing');
+            else if (props.autoplay) autoPlay('update');
+            else pause('paused');
+          }
+        });
+      }
     },
     mount(viewport: HTMLDivElement, rail: HTMLDivElement) {
       list = viewport;
@@ -350,7 +382,9 @@ export function createCarouselModel(
     handleKeydown(event: KeyboardEvent) {
       const target = event.target;
       if (!props.accessibility || target instanceof Element
-        && /TEXTAREA|INPUT|SELECT/.test(target.tagName)) return;
+        && /TEXTAREA|INPUT|SELECT/.test(target.tagName)) {
+        return;
+      }
       if (event.key === 'ArrowLeft') change({ message: props.rtl ? 'next' : 'previous' });
       if (event.key === 'ArrowRight') change({ message: props.rtl ? 'previous' : 'next' });
     },
@@ -363,7 +397,9 @@ export function createCarouselModel(
     },
     handleStart(event: MouseEvent | TouchEvent) {
       const touch = 'touches' in event;
-      if (props.unslick || !props.touchMove) return;
+      if (props.unslick || !props.touchMove) {
+        return;
+      }
       if (props.verticalSwiping && list) {
         const view = list.ownerDocument.defaultView!;
         touchLock?.();
@@ -374,19 +410,25 @@ export function createCarouselModel(
       if (!touch && event.target instanceof Element && event.target.tagName === 'IMG') {
         event.preventDefault();
       }
-      if (!props.swipe || !touch && !props.draggable) return;
+      if (!props.swipe || !touch && !props.draggable) {
+        return;
+      }
       const x = touch ? event.touches[0].pageX : event.clientX;
       const y = touch ? event.touches[0].pageY : event.clientY;
       commit({ dragging: true, touchObject: { startX: x, startY: y, curX: x, curY: y } });
     },
     handleMove(event: MouseEvent | TouchEvent) {
-      if (!state.dragging || !props.touchMove || props.unslick) return;
+      if (!state.dragging || !props.touchMove || props.unslick) {
+        return;
+      }
       const touch = 'touches' in event;
       const x = touch ? event.touches[0].pageX : event.clientX;
       const y = touch ? event.touches[0].pageY : event.clientY;
       const result = carouselSwipeMove(swipeSpec(), x, y);
       if (result.preventDefault && !touch) event.preventDefault();
-      if (!result.state) return;
+      if (!result.state) {
+        return;
+      }
       if (result.state.scrolling) {
         state = {
           ...state,
@@ -405,7 +447,9 @@ export function createCarouselModel(
       commit(result.state);
     },
     handleEnd(event: MouseEvent | TouchEvent) {
-      if (!props.touchMove || props.unslick) return;
+      if (!props.touchMove || props.unslick) {
+        return;
+      }
       const result = carouselSwipeEnd(swipeSpec());
       if (result.preventDefault) event.preventDefault();
       if (result.swipe) props.onSwipe?.(result.swipe);

@@ -38,7 +38,9 @@ declare global {
 
 const id = new URL(location.href).searchParams.get('sample');
 const sample = selectValueSamples.find(sample => sample.id === id);
-if (!sample) throw Error(`Unknown Select value sample: ${id}`);
+if (!sample) {
+  throw Error(`Unknown Select value sample: ${id}`);
+}
 const target = document.querySelector<HTMLElement>('[data-select-value-hydration-target]')!;
 const owner = target.querySelector<HTMLElement>('[data-select-value-case]')!;
 const outer = owner.querySelector<HTMLElement>('.select-value-control')!;
@@ -57,7 +59,9 @@ const instance = hydrate(SelectValueCase, {
   target, props: { sample, name: 'value-selection', capture }, recover: false
 });
 await tick();
-if (!capture.read || !capture.readRefs) throw Error('The hydrated Select value fixture must expose its live owner');
+if (!capture.read || !capture.readRefs) {
+  throw Error('The hydrated Select value fixture must expose its live owner');
+}
 const refs = capture.readRefs;
 const sameNodes = (original: Element[], selector: string) => {
   const current = [...outer.querySelectorAll(selector)];

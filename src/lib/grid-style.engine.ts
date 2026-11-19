@@ -11,7 +11,9 @@ type GridMediaTokens = Pick<AliasToken, typeof mediaTokens[number]>;
 /** Порог xs безусловен; отдельный scope не зависит от пользовательских cssVar.key/hashed. */
 export function getGridMediaScope(token: GridMediaTokens): string | undefined {
   const sizes = mediaTokens.map(key => Number(token[key]));
-  if (sizes.every((size, index) => size === defaults[index])) return undefined;
+  if (sizes.every((size, index) => size === defaults[index])) {
+    return undefined;
+  }
 
   return `ant-grid-media-${hashTokenString(sizes.join(','))}`;
 }
@@ -19,7 +21,9 @@ export function getGridMediaScope(token: GridMediaTokens): string | undefined {
 /** Полный source Col CSS заменяет default media, включая base/xs и нулевые reset-классы. */
 export function getGridMediaCss(token: GridMediaTokens): string | undefined {
   const scope = getGridMediaScope(token);
-  if (!scope) return undefined;
+  if (!scope) {
+    return undefined;
+  }
 
   return template.replace(/__ANT_GRID_MEDIA_SCOPE__/g, scope).replace(
     /@media \(min-width: (576|768|992|1200|1600|1920)px\)/g,

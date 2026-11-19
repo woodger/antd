@@ -9,7 +9,9 @@ export function connectSliderRangeDrag(
   const document = node.ownerDocument;
   let active = true;
   function cleanup() {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
     active = false;
     document.removeEventListener('pointermove', handleMove);
     document.removeEventListener('pointerup', handleEnd);
@@ -17,18 +19,24 @@ export function connectSliderRangeDrag(
     if (node.hasPointerCapture(start.pointerId)) node.releasePointerCapture(start.pointerId);
   }
   function handleMove(event: PointerEvent) {
-    if (event.pointerId !== start.pointerId) return;
+    if (event.pointerId !== start.pointerId) {
+      return;
+    }
     event.preventDefault();
     move(event);
   }
   function handleEnd(event: PointerEvent) {
-    if (event.pointerId !== start.pointerId) return;
+    if (event.pointerId !== start.pointerId) {
+      return;
+    }
     event.preventDefault();
     cleanup();
     finish(event);
   }
   function handleCancel(event: PointerEvent) {
-    if (event.pointerId !== start.pointerId) return;
+    if (event.pointerId !== start.pointerId) {
+      return;
+    }
     cleanup();
     cancel();
   }

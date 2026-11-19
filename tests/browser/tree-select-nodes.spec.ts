@@ -49,10 +49,12 @@ for (const entry of reference.cases) {
       await apply(page, step.action as TreeSelectNodesAction, index, sample);
       await expect.poll(read, { message: step.action }).toEqual(step.view);
     }
-    if (sample.lazy) await expect(page.locator('[data-node-load-calls]')).toHaveAttribute(
-      'data-node-load-calls',
-      '1'
-    );
+    if (sample.lazy) {
+      await expect(page.locator('[data-node-load-calls]')).toHaveAttribute(
+        'data-node-load-calls',
+        '1'
+      );
+    }
     if (sample.data || sample.override) await expect(page.locator('[data-ant-tree-select-declarations]')).toHaveCount(0);
   });
 }

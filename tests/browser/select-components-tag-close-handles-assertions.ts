@@ -112,11 +112,13 @@ export function verifyUnusedRestDefinition(source: SourceCSRCase, calls: readonl
       'Unused Source rest has no DOM'
     );
   }
-  for (const call of calls.filter(call => call.kind === 'tagRender')) assert.equal(
-    callInfo(call).isMaxTag,
-    false,
-    'Native unbounded Snippet has no fake rest invocation'
-  );
+  for (const call of calls.filter(call => call.kind === 'tagRender')) {
+    assert.equal(
+      callInfo(call).isMaxTag,
+      false,
+      'Native unbounded Snippet has no fake rest invocation'
+    );
+  }
   assert(body.every(row => decode(row.info).isMaxTag === false), 'Native has no fake rest body');
 }
 export function verifyNormalTagCalls(
@@ -169,10 +171,12 @@ export function verifyNormalTagCalls(
     assert.equal(returned.array, false);
     assert.deepEqual(returned.authoredRole, result.role);
   }
-  for (const original of source) assert(
-    current.some(call => matches(call, original)),
-    label + ' every distinct normal Source invocation class represented'
-  );
+  for (const original of source) {
+    assert(
+      current.some(call => matches(call, original)),
+      label + ' every distinct normal Source invocation class represented'
+    );
+  }
 }
 function handleFields(value: unknown) {
   const handle = record(value);
@@ -209,21 +213,24 @@ export function verifyTagCloseHandleOwner(
 ) {
   for (const key of ['model', 'options', 'disabled', 'open', 'alive', 'actionIndex', 'authoredSample', 'authoredProvider', 'eventCount', 'rawEventCount', 'invocationCount', 'retentionCount'] as const)
     assert.deepEqual(actual[key], source[key], label + '/' + key);
-  for (const key of ['rawModel', 'rawOptions', 'rawAuthoredSample', 'rawAuthoredProvider'] as const) verifyIconGraph(
-    actual[key],
-    source[key],
-    label + '/' + key
-  );
+  for (const key of ['rawModel', 'rawOptions', 'rawAuthoredSample', 'rawAuthoredProvider'] as const) {
+    verifyIconGraph(
+      actual[key],
+      source[key],
+      label + '/' + key
+    );
+  }
   assert.deepEqual(
     normalizedSelectSurfaceAuthoredProps(actual.authoredProps),
     normalizedSelectSurfaceAuthoredProps(source.authoredProps)
   );
-  for (const key of ['lastProducedInvocableHandles', 'retainedHandles'] as const)
+  for (const key of ['lastProducedInvocableHandles', 'retainedHandles'] as const) {
     assert.deepEqual(
       actual[key].map(handleFields),
       source[key].map(handleFields),
       label + '/' + key + ' exact flags/metadata; runtime IDs stay raw'
     );
+  }
 }
 export function verifyTagCloseHandleLedger(
   actual: NativeLedger,
@@ -245,32 +252,38 @@ export function verifyTagCloseHandleLedger(
   verifyNormalTagCalls(actual.producerCalls, calls, label);
   verifyTagCloseHandleBodyAliases(actual.producerCalls, actual.bodyActivity, label);
   verifyUnusedRestDefinition(source, actual.producerCalls, actual.bodyActivity);
-  for (const observation of actual.componentObservations) assert(calls.filter(call => call.kind === 'components.input').some(call => {
-    try {
-      verifySelectComponentsAttributes(observation, call, label);
-      return true;
-    }
-    catch {
-      return false;
-    }
-  }), label + ' every actual complete public input context matches Source');
-  for (const call of calls.filter(call => call.kind === 'components.input')) assert(actual.componentObservations.some(observation => {
-    try {
-      verifySelectComponentsAttributes(observation, call, label);
-      return true;
-    }
-    catch {
-      return false;
-    }
-  }), label + ' every distinct Source input context represented without React render counts');
+  for (const observation of actual.componentObservations) {
+    assert(calls.filter(call => call.kind === 'components.input').some(call => {
+      try {
+        verifySelectComponentsAttributes(observation, call, label);
+        return true;
+      }
+      catch {
+        return false;
+      }
+    }), label + ' every actual complete public input context matches Source');
+  }
+  for (const call of calls.filter(call => call.kind === 'components.input')) {
+    assert(actual.componentObservations.some(observation => {
+      try {
+        verifySelectComponentsAttributes(observation, call, label);
+        return true;
+      }
+      catch {
+        return false;
+      }
+    }), label + ' every distinct Source input context represented without React render counts');
+  }
   assert.equal(actual.invocations.length, point.owner.invocationCount);
   for (const [index, value] of actual.invocations.entries()) {
     const other = original.invocations[index];
-    for (const key of ['actionIndex', 'id', 'reason', 'from', 'slot', 'actualArgumentCount', 'arguments', 'eventCountBefore', 'eventCountAfter', 'result', 'thrown'] as const) assert.deepEqual(
-      value[key],
-      other[key],
-      label + '/invoke' + index + '/' + key
-    );
+    for (const key of ['actionIndex', 'id', 'reason', 'from', 'slot', 'actualArgumentCount', 'arguments', 'eventCountBefore', 'eventCountAfter', 'result', 'thrown'] as const) {
+      assert.deepEqual(
+        value[key],
+        other[key],
+        label + '/invoke' + index + '/' + key
+      );
+    }
     assert.equal(value.actualArgumentCount, 1);
     assert.deepEqual(value.result, { $: 'undefined' });
     assert.equal(value.thrown, null);
@@ -296,10 +309,12 @@ export function verifyTagCloseHandleLedger(
       assert.equal(row.handle.infoIdentity, slot.handle.infoIdentity);
     }
   }
-  for (const row of actual.bodyActivity) assert(calls.filter(call => call.kind === 'tagRender' && !sourceInfo(call).isMaxTag).some(call => {
-    const a = decode(row.info), b = decode(sourceInfo(call));
-    return ['value', 'index', 'disabled', 'closable', 'isMaxTag'].every(key => same(a[key], b[key]));
-  }), label + ' actual body belongs to a normal Source public info');
+  for (const row of actual.bodyActivity) {
+    assert(calls.filter(call => call.kind === 'tagRender' && !sourceInfo(call).isMaxTag).some(call => {
+      const a = decode(row.info), b = decode(sourceInfo(call));
+      return ['value', 'index', 'disabled', 'closable', 'isMaxTag'].every(key => same(a[key], b[key]));
+    }), label + ' actual body belongs to a normal Source public info');
+  }
 }
 export function verifyTagCloseHandleBodyAliases(
   calls: readonly SelectSurfaceProducerCall[],
@@ -339,10 +354,12 @@ export function verifyTagCloseHandleSelection(
     assert.equal(node.focused, false);
     assert.equal(node.value, '');
     assert.equal(node.defaultValue, '');
-    for (const [key, value] of [['id', 'handles-field'], ['type', 'text'], ['value', ''], ['data-handles-editor', '']]) assert.equal(
-      attr(node, key),
-      value
-    );
+    for (const [key, value] of [['id', 'handles-field'], ['type', 'text'], ['value', ''], ['data-handles-editor', '']]) {
+      assert.equal(
+        attr(node, key),
+        value
+      );
+    }
   }
   assert.deepEqual(source.selection, [0, 0, 'forward'], label);
   assert.deepEqual(actual.selection, [0, 0, 'none'], label);
@@ -428,27 +445,37 @@ export function verifyTagCloseHandlePoint(actual: NativePoint, source: TagCloseH
       expected,
       label + '/node' + index
     );
-    if (index !== 0) for (const key of ['styleAttribute', 'cssText', 'inlineProperties'] as const) assert.deepEqual(
-      current[key],
-      node[key]
-    );
-    for (const key of ['connected', 'css', 'box', 'metrics', 'value', 'defaultValue', 'focused', 'textContent'] as const) assert.deepEqual(
-      current[key],
-      node[key],
-      label + '/node' + index + '/' + key
-    );
-    if (node.tag === 'INPUT') {
-      verifyTagCloseHandleSelection(current, node, label);
-      for (const field of [current, node]) assert.deepEqual(
-        readSelectComponentsSSRFields(field.html).fields[0].attributes,
-        field.attributes
+    if (index !== 0) {
+      for (const key of ['styleAttribute', 'cssText', 'inlineProperties'] as const) {
+        assert.deepEqual(
+          current[key],
+          node[key]
+        );
+      }
+    }
+    for (const key of ['connected', 'css', 'box', 'metrics', 'value', 'defaultValue', 'focused', 'textContent'] as const) {
+      assert.deepEqual(
+        current[key],
+        node[key],
+        label + '/node' + index + '/' + key
       );
     }
+    if (node.tag === 'INPUT') {
+      verifyTagCloseHandleSelection(current, node, label);
+      for (const field of [current, node]) {
+        assert.deepEqual(
+          readSelectComponentsSSRFields(field.html).fields[0].attributes,
+          field.attributes
+        );
+      }
+    }
     else assert.deepEqual(current.selection, node.selection);
-    if (local.has(node.parentIdentity!)) assert.equal(
-      current.parentIdentity,
-      local.get(node.parentIdentity!)
-    );
+    if (local.has(node.parentIdentity!)) {
+      assert.equal(
+        current.parentIdentity,
+        local.get(node.parentIdentity!)
+      );
+    }
     assert.deepEqual(
       current.childNodes.filter(child => child.type === 1).map(child => child.identity),
       node.childNodes.filter(child => child.type === 1).map(child => local.get(child.identity))
@@ -458,27 +485,35 @@ export function verifyTagCloseHandlePoint(actual: NativePoint, source: TagCloseH
     const hmr: number = renderer === 'vite-hmr' ? 1 : 0;
     if (index === 0) contour = [comment, e[0], comment, e[1], comment, comment];
     else if (has('ant-select-content')) contour = [comment, ...e.slice(0, -1), comment, comment, e.at(-1)!];
-    else if (node.tag === 'SPAN' && node.attributes.length === 0) contour = [...chars(
-      3 + hmr,
-      comment
-    ), e[0], ...chars(
-      3 + hmr,
-      empty
-    ), comment];
-    else if (has('ant-select-content-item-suffix')) contour = [...chars(3, comment), e[0], ...chars(
-      3,
-      empty
-    ), comment];
+    else if (node.tag === 'SPAN' && node.attributes.length === 0) {
+      contour = [...chars(
+        3 + hmr,
+        comment
+      ), e[0], ...chars(
+        3 + hmr,
+        empty
+      ), comment];
+    }
+    else if (has('ant-select-content-item-suffix')) {
+      contour = [...chars(3, comment), e[0], ...chars(
+        3,
+        empty
+      ), comment];
+    }
     else if (has('ant-select-content-item')) contour = e;
-    else if (has('ant-select-suffix')) contour = [...chars(3 + hmr, comment), e[0], ...chars(
-      3 + hmr,
-      empty
-    ), comment, comment];
-    if (contour) assert.deepEqual(
-      current.childNodes.map(childShape),
-      contour,
-      label + '/node' + index + ' exact compiler role topology'
-    );
+    else if (has('ant-select-suffix')) {
+      contour = [...chars(3 + hmr, comment), e[0], ...chars(
+        3 + hmr,
+        empty
+      ), comment, comment];
+    }
+    if (contour) {
+      assert.deepEqual(
+        current.childNodes.map(childShape),
+        contour,
+        label + '/node' + index + ' exact compiler role topology'
+      );
+    }
     if (attr(node, 'data-handles-tag') !== undefined) {
       const text = node.textContent, comment = { type: 8, name: '#comment', text: null }, empty = {
         type: 3,
@@ -502,10 +537,12 @@ export function verifyTagCloseHandlePoint(actual: NativePoint, source: TagCloseH
         ) + '<!---->' + node.html.slice(last)
       );
     }
-    else if (['svg', 'path'].includes(node.tag.toLowerCase()) || has('anticon')) assert.equal(
-      current.html,
-      node.html
-    );
+    else if (['svg', 'path'].includes(node.tag.toLowerCase()) || has('anticon')) {
+      assert.equal(
+        current.html,
+        node.html
+      );
+    }
     if (contour) {
       const first = current.html.indexOf('>') + 1, last = current.html.lastIndexOf('</');
       assert(first > 0 && last >= first);
@@ -529,10 +566,13 @@ export function verifyTagCloseHandlePoint(actual: NativePoint, source: TagCloseH
     assert.deepEqual(x, y);
     assert.deepEqual(ac.map(({ identity: _id, ...c }) => c), sc.map(({ identity: _id, ...c }) => c));
   });
-  if (identities.previous) for (const key of ['modelIdentity', 'optionsIdentity'] as const)
-    assert.equal(
-      actual.owner[key] === identities.previous.actual.owner[key],
-      source.owner[key] === identities.previous.source.owner[key]
-    );
+  if (identities.previous) {
+    for (const key of ['modelIdentity', 'optionsIdentity'] as const) {
+      assert.equal(
+        actual.owner[key] === identities.previous.actual.owner[key],
+        source.owner[key] === identities.previous.source.owner[key]
+      );
+    }
+  }
   identities.previous = { actual, source };
 }

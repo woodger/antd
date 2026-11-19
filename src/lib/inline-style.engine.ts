@@ -64,7 +64,9 @@ export function* getInlineStyleDeclarations(layers: readonly InlineStyleLayer[])
       const separator = declaration.indexOf(':');
       const name = declaration.slice(0, separator).trim()
         .replace(/\\([\da-f]{1,6}\s?|[^\n\r\f])/gi, (_, escape: string) => {
-          if (!/^[\da-f]/i.test(escape)) return escape;
+          if (!/^[\da-f]/i.test(escape)) {
+            return escape;
+          }
           const code = Number.parseInt(escape, 16);
           return String.fromCodePoint(code > 0 && code <= 0x10ffff ? code : 0xfffd);
         });

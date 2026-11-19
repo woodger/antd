@@ -23,7 +23,9 @@ declare global {
 
 const id = new URL(location.href).searchParams.get('sample');
 const sample = treeSelectAlignSamples.find(sample => sample.id === id);
-if (!sample) throw Error(`Unknown align hydration sample: ${id}`);
+if (!sample) {
+  throw Error(`Unknown align hydration sample: ${id}`);
+}
 const target = document.getElementById('root')!;
 const host = target.querySelector<HTMLElement>('[data-align-case]')!;
 const root = host.querySelector<HTMLElement>('[data-align-root]') ?? host.querySelector<HTMLElement>('.ant-select')!;

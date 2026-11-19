@@ -112,10 +112,12 @@ function verifyProducers(
   }
   // React may execute an identical pure pass more often; every distinct full
   // invocation is still required and both complete ledgers stay in the artifact.
-  for (const call of source) assert(
-    actual.some(item => same(item, call)),
-    label + ' every Source invocation occurred'
-  );
+  for (const call of source) {
+    assert(
+      actual.some(item => same(item, call)),
+      label + ' every Source invocation occurred'
+    );
+  }
 }
 
 /** Same read-only observer as Original; it runs only after external barriers. */
@@ -126,12 +128,16 @@ function readActualPoint() {
   raw.contrastObserver ??= { ids: new WeakMap(), nextId: 0, original: {} };
   const observer = raw.contrastObserver;
   const identity = (node: Node | undefined) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     if (!observer.ids.has(node)) observer.ids.set(node, ++observer.nextId);
     return observer.ids.get(node)!;
   };
   const describe = (node: HTMLElement | undefined | null): AutocompleteCloseNode | null => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const css = getComputedStyle(node), box = node.getBoundingClientRect();
     return { identity: identity(node)!, connected: node.isConnected, tag: node.tagName, text: node.textContent,
       html: node.outerHTML, attributes: [...node.attributes].map(attribute => [attribute.name, attribute.value]), classes: [...node.classList],
@@ -156,8 +162,9 @@ function readActualPoint() {
     list,
     holder: popup?.querySelector<HTMLElement>('.ant-select-dropdown-list-holder')
   };
-  for (const [key, node] of Object.entries(current) as Array<[AutocompleteCloseSlot, HTMLElement | null | undefined]>)
+  for (const [key, node] of Object.entries(current) as Array<[AutocompleteCloseSlot, HTMLElement | null | undefined]>) {
     if (node && !observer.original[key]) observer.original[key] = node;
+  }
   const roleNodes = [...popup?.querySelectorAll<HTMLElement>('[role="listbox"],[role="option"],[role="presentation"]') ?? []];
   const nodes: AutocompleteCloseNodes = { current: Object.fromEntries(Object.entries(current).map(([key, node]) => [key, describe(node)])) as AutocompleteCloseNodes['current'],
     original: Object.fromEntries(Object.entries(observer.original).map(([key, node]) => [key, describe(node)])),
@@ -239,7 +246,9 @@ for (const source of autocompleteCloseReference.cases) test(`AutoComplete preser
       'closecapture',
       { detail }
     ));
-    if (!detail.read || !detail.readRefs || !detail.dispose) throw Error('Public close fixture capture missing');
+    if (!detail.read || !detail.readRefs || !detail.dispose) {
+      throw Error('Public close fixture capture missing');
+    }
     Object.assign(window, { raw: { current: { readRefs: detail.readRefs, read: detail.read } } });
     return detail;
   });
@@ -249,15 +258,17 @@ for (const source of autocompleteCloseReference.cases) test(`AutoComplete preser
       blur: refs.control?.blur, scrollTo: refs.control?.scrollTo };
   });
   const barrier = async () => page.evaluate(async () => {
-    for (let index = 0; index < 4; index++) await new Promise<void>(resolve => {
-      const channel = new MessageChannel();
-      channel.port1.onmessage = () => {
-        channel.port1.close();
-        channel.port2.close();
-        resolve();
-      };
-      channel.port2.postMessage(null);
-    });
+    for (let index = 0; index < 4; index++) {
+      await new Promise<void>(resolve => {
+        const channel = new MessageChannel();
+        channel.port1.onmessage = () => {
+          channel.port1.close();
+          channel.port2.close();
+          resolve();
+        };
+        channel.port2.postMessage(null);
+      });
+    }
     await new Promise(requestAnimationFrame);
     await new Promise(requestAnimationFrame);
     await new Promise(resolve => setTimeout(resolve, 0));
@@ -269,10 +280,12 @@ for (const source of autocompleteCloseReference.cases) test(`AutoComplete preser
     trace.push({ phase: label, actual });
     check(label + '/owner-and-callbacks', () => {
       assert.equal(actual.owner.alive, true);
-      for (const key of ['value', 'query', 'open'] as const) assert.equal(
-        actual.owner[key],
-        point.owner[key]
-      );
+      for (const key of ['value', 'query', 'open'] as const) {
+        assert.equal(
+          actual.owner[key],
+          point.owner[key]
+        );
+      }
       assert.deepEqual(
         normalizedSelectSurfaceAuthoredProps(actual.owner.authoredProps),
         normalizedSelectSurfaceAuthoredProps(point.owner.authoredProps)
@@ -293,11 +306,13 @@ for (const source of autocompleteCloseReference.cases) test(`AutoComplete preser
         source.events.slice(0, point.owner.eventCount).map(selectSurfaceEventValue)
       );
       assert.equal(actual.owner.rawEvents.length, point.owner.rawEventCount);
-      for (const [index, event] of actual.owner.rawEvents.entries()) verifySelectSurfaceEventGraph(
-        event,
-        source.rawEvents[index],
-        label + '/event' + index
-      );
+      for (const [index, event] of actual.owner.rawEvents.entries()) {
+        verifySelectSurfaceEventGraph(
+          event,
+          source.rawEvents[index],
+          label + '/event' + index
+        );
+      }
     });
     check(
       label + '/pure-producer-args-results',
@@ -322,10 +337,12 @@ for (const source of autocompleteCloseReference.cases) test(`AutoComplete preser
       verifyRoles(actual.nodes, point.nodes);
       assert.equal(actual.nodes.popupText, point.nodes.popupText);
       // Retained Native input omits the sentinel -1 id; real active ids stay exact.
-      if (point.owner.open && point.nodes.ariaActiveDescendant === 'close-contrast-field_list_-1') assert.equal(
-        actual.nodes.ariaActiveDescendant,
-        null
-      );
+      if (point.owner.open && point.nodes.ariaActiveDescendant === 'close-contrast-field_list_-1') {
+        assert.equal(
+          actual.nodes.ariaActiveDescendant,
+          null
+        );
+      }
       else assert.equal(actual.nodes.ariaActiveDescendant, point.nodes.ariaActiveDescendant);
       for (const key of Object.keys(point.nodes.current) as AutocompleteCloseSlot[]) {
         assert.equal(Boolean(actual.nodes.current[key]), Boolean(point.nodes.current[key]));
@@ -338,11 +355,13 @@ for (const source of autocompleteCloseReference.cases) test(`AutoComplete preser
       assert.equal(actual.nodes.publicRootMatches, false);
       assert.equal(point.nodes.publicRootMatches, true);
       if (actual.nodes.visualRows.length && !rowIdentities) rowIdentities = new Map(actual.nodes.visualRows.map(node => [node.attributes.find(([key]) => key === 'title')![1], node.identity]));
-      for (const node of actual.nodes.visualRows) assert.equal(
-        node.identity,
-        rowIdentities?.get(node.attributes.find(([key]) => key === 'title')![1]),
-        'Retain every actual row node'
-      );
+      for (const node of actual.nodes.visualRows) {
+        assert.equal(
+          node.identity,
+          rowIdentities?.get(node.attributes.find(([key]) => key === 'title')![1]),
+          'Retain every actual row node'
+        );
+      }
       resources ??= actual.nodes.resources;
       assert.deepEqual(actual.nodes.resources, resources);
     });

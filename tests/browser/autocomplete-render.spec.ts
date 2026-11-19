@@ -28,7 +28,9 @@ for (const source of autocompleteRenderReference.cases) {
         'acrendercapture',
         { detail }
       ));
-      if (!detail.read || !detail.readRefs || !detail.update || !detail.dispose) throw Error('Actual public AutoComplete renderer capture missing');
+      if (!detail.read || !detail.readRefs || !detail.update || !detail.dispose) {
+        throw Error('Actual public AutoComplete renderer capture missing');
+      }
       Object.assign(globalThis, { raw: { current: { readRefs: detail.readRefs } } });
       return {
         read: detail.read,
@@ -80,20 +82,26 @@ for (const source of autocompleteRenderReference.cases) {
           'combobox',
           { name: 'Surface value', exact: true }
         );
-        if (action.type === 'props' || action.type === 'value') await capture.evaluate(
-          (value, action) => value.update(action),
-          action
-        );
+        if (action.type === 'props' || action.type === 'value') {
+          await capture.evaluate(
+            (value, action) => value.update(action),
+            action
+          );
+        }
         else if (action.type === 'click') await editor.click();
         else if (action.type === 'fill') await editor.fill(action.text);
         else if (action.type === 'press') await editor.press(action.key);
         else if (action.type === 'outside') await page.locator('[data-surface-outside]').click();
-        else if (action.type === 'scroll') await page.evaluate(top => {
-          const holder = document.querySelector<HTMLElement>('.ant-select-dropdown-list-holder');
-          if (!holder) throw Error('Actual Native virtual holder absent');
-          holder.scrollTop = top;
-          holder.dispatchEvent(new Event('scroll', { bubbles: true }));
-        }, action.top);
+        else if (action.type === 'scroll') {
+          await page.evaluate(top => {
+            const holder = document.querySelector<HTMLElement>('.ant-select-dropdown-list-holder');
+            if (!holder) {
+              throw Error('Actual Native virtual holder absent');
+            }
+            holder.scrollTop = top;
+            holder.dispatchEvent(new Event('scroll', { bubbles: true }));
+          }, action.top);
+        }
         await page.mouse.move(0, 0);
         await verify(step, index + '/' + JSON.stringify(action));
       }

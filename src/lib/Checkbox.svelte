@@ -91,7 +91,9 @@
 
   $effect(() => {
     const input = inputElement;
-    if (!input || !inGroup || groupValue === undefined) return;
+    if (!input || !inGroup || groupValue === undefined) {
+      return;
+    }
 
     return group?.register(input, groupValue);
   });
@@ -99,7 +101,9 @@
   $effect(() => {
     const input = inputElement;
     const root = nativeElement;
-    if (!input || !root) return;
+    if (!input || !root) {
+      return;
+    }
 
     const handle = {
       input,
@@ -133,7 +137,9 @@
   }
 
   function handleChange(event: Event & { currentTarget: EventTarget & HTMLInputElement; }) {
-    if (resolvedDisabled) return;
+    if (resolvedDisabled) {
+      return;
+    }
 
     const next = event.currentTarget.checked;
     const change: CheckboxChangeEvent = {
@@ -145,21 +151,29 @@
     checked = next;
     indeterminate = false;
     props.onCheckedChange?.(checked);
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     props.onChange?.(change);
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     if (inGroup && groupValue !== undefined) group?.toggle(groupValue, next);
     if (alive) props.onchange?.(event);
   }
 
   function handleBlur(event: FocusEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     const callbacks = blurCallbacks;
     field?.onBlur();
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     callbacks.onBlur?.(event);
     if (alive) callbacks.onblur?.(event);

@@ -33,7 +33,9 @@ export function createSelectComponentInputStyle() {
   let measured: number | undefined;
 
   function enter(next: SelectComponentInputLifetime) {
-    if (next === lifetime) return;
+    if (next === lifetime) {
+      return;
+    }
     lifetime = next;
     previousMeasurement = undefined;
     measured = undefined;
@@ -41,7 +43,9 @@ export function createSelectComponentInputStyle() {
 
   function editorStyle(editor: HTMLElement, frame: SelectStyleFrame, hydrating = false): EditorStyle {
     let state = editors.get(editor);
-    if (state) return state;
+    if (state) {
+      return state;
+    }
     const accepted = editor.ownerDocument.createElement('span').style;
     // При гидратации CSSOM узла сохраняется отдельно от клиентских props.
     const preserveHydration = hydrating && !frame.string;
@@ -90,7 +94,9 @@ export function createSelectComponentInputStyle() {
     commit(editor: Editor | undefined, frame: SelectStyleFrame,
       input: SelectComponentInputMeasurement): number | undefined {
       enter(input.lifetime);
-      if (!input.lifetime || !editor || !editor.isConnected) return measured;
+      if (!input.lifetime || !editor || !editor.isConnected) {
+        return measured;
+      }
 
       const state = apply(editor, frame);
 

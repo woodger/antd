@@ -38,14 +38,30 @@
     observed?.push(component);
     const mode = sample.renderer;
 
-    if (mode === 'undefined') return undefined;
-    if (mode === 'null') return null;
-    if (mode === 'false') return false;
-    if (mode === 'zero') return 0;
-    if (mode === 'empty') return '';
-    if (mode === 'true') return true;
-    if (mode === 'empty-array') return [];
-    if (mode === 'snippet') return globalContent;
+    if (mode === 'undefined') {
+      return undefined;
+    }
+    if (mode === 'null') {
+      return null;
+    }
+    if (mode === 'false') {
+      return false;
+    }
+    if (mode === 'zero') {
+      return 0;
+    }
+    if (mode === 'empty') {
+      return '';
+    }
+    if (mode === 'true') {
+      return true;
+    }
+    if (mode === 'empty-array') {
+      return [];
+    }
+    if (mode === 'snippet') {
+      return globalContent;
+    }
     if (mode === 'array') {
       return component === 'Transfer'
         ? ['Global Transfer left', ['Global Transfer right|', 0, globalContent]]

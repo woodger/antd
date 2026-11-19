@@ -2,7 +2,9 @@ export function snapshotOverlayCorner(component: string) {
   const prefix = component === 'tooltip' || component === 'slider' ? 'ant-tooltip' : 'ant-popover';
   const popup = [...document.querySelectorAll<HTMLElement>(`.${prefix}`)]
     .find(node => getComputedStyle(node).display !== 'none' && node.getClientRects().length);
-  if (!popup) return null;
+  if (!popup) {
+    return null;
+  }
 
   const anchor = document.querySelector<HTMLElement>('[data-corner-anchor]')!;
   const rect = (node: HTMLElement) => {

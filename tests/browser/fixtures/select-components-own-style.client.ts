@@ -9,7 +9,9 @@ type Capture = NonNullable<ComponentProps<typeof OwnStyleCase>['capture']>;
 const query = new URL(location.href).searchParams;
 const sample = selectOwnStyleInitSamples.find(sample => sample.id === query.get('sample'));
 const entryPath = (query.get('entryPath') ?? 'csr') as SelectOwnStyleInitEntryPath;
-if (!sample || !selectOwnStyleInitEntryPaths.includes(entryPath)) throw Error('Unknown own-style owner or entry path');
+if (!sample || !selectOwnStyleInitEntryPaths.includes(entryPath)) {
+  throw Error('Unknown own-style owner or entry path');
+}
 // A hydration driver inserts actual package SSR and applies the frozen optional
 // ordinary pre-hydration CSS edits before loading this client module.
 if (entryPath !== 'csr' && !window.ownStyleProbe) initializeSelectOwnStyleProbe(entryPath);
@@ -26,10 +28,12 @@ const point = () => {
   return { icons, details, owner: window.raw.current.read() };
 };
 capture.onAuthoredRef = readSelectOwnStyleAuthoredRef;
-if (entryPath !== 'csr') capture.onCommit = () => {
-  window.ownStyleProbe.commit = point();
-  window.ownStyleProbe.hydrationCommitted = true;
-};
+if (entryPath !== 'csr') {
+  capture.onCommit = () => {
+    window.ownStyleProbe.commit = point();
+    window.ownStyleProbe.hydrationCommitted = true;
+  };
+}
 window.raw.current = { read: () => capture.read ? capture.read() : fallback.read(),
   readRefs: () => capture.readRefs ? capture.readRefs() : fallback.readRefs(),
   update: (action, index) => capture.update!(action, index) };

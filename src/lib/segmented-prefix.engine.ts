@@ -6,7 +6,9 @@ const rootStates = new Set([
 
 /** Имена variables/marker сохраняются; defaults и root states ограничены своим control. */
 export function getSegmentedPrefixCss(prefix: string) {
-  if (prefix === 'ant-segmented') return undefined;
+  if (prefix === 'ant-segmented') {
+    return undefined;
+  }
 
   return template
     .replace(/\.ant-segmented([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'

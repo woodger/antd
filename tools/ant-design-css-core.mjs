@@ -231,7 +231,9 @@ export function extractCss(css, recipe) {
       if (block.body === null)
         continue;
       if (block.prelude.startsWith('@')
-        && excludeAtRules.some(pattern => pattern.test(block.prelude))) continue;
+        && excludeAtRules.some(pattern => pattern.test(block.prelude))) {
+        continue;
+      }
       const keyframe = /^@(?:-webkit-)?keyframes\s+([\w-]+)$/.exec(block.prelude);
       if (keyframe) {
         if (recipe.keyframes.includes(keyframe[1])) {
@@ -266,7 +268,9 @@ export function extractCss(css, recipe) {
   }
   const rules = [...select(css, true), ...appended];
   for (const name of recipe.keyframes)
-    if (!foundKeyframes.has(name)) throw new Error(`Missing keyframes: ${name}`);
+    if (!foundKeyframes.has(name)) {
+      throw new Error(`Missing keyframes: ${name}`);
+    }
   if (count !== recipe.expectedRules) {
     throw new Error(`Unexpected CSS rule count: expected ${recipe.expectedRules}, received ${count}`);
   }

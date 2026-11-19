@@ -112,22 +112,30 @@ export const treeSelectInertApiSamples: readonly TreeSelectInertApiSample[] = [
   }
 ];
 export function treeSelectInertApiActions(sample: TreeSelectInertApiSample): readonly TreeSelectInertApiAction[] {
-  if (sample.id === 'inert-live-controls') return [
-    { type: 'click' }, { type: 'fill', text: 'Draft' }, { type: 'caret', start: 1, end: 4 },
-    { type: 'props', mode: 'undefined' }, { type: 'props', mode: 'empty' },
-    { type: 'props', mode: 'omitted' }, { type: 'props', mode: 'live' }, { type: 'outside' }
-  ];
-  if (sample.callbackOnly) return [{ type: 'click' }, { type: 'outside' }];
-  if (sample.multiple) return [
-    { type: 'click' }, { type: 'choose', value: 'b' }, { type: 'remove', value: 'a' },
-    { type: 'props', mode: 'empty' }, { type: 'props', mode: 'undefined' }, {
-      type: 'props',
-      mode: 'live'
-    }, { type: 'outside' }
-  ];
-  if (sample.slot === 'input') return [
-    { type: 'click' }, { type: 'fill', text: 'Draft' }, { type: 'caret', start: 1, end: 4 },
-    { type: 'props', mode: 'live' }, { type: 'outside' }
-  ];
+  if (sample.id === 'inert-live-controls') {
+    return [
+      { type: 'click' }, { type: 'fill', text: 'Draft' }, { type: 'caret', start: 1, end: 4 },
+      { type: 'props', mode: 'undefined' }, { type: 'props', mode: 'empty' },
+      { type: 'props', mode: 'omitted' }, { type: 'props', mode: 'live' }, { type: 'outside' }
+    ];
+  }
+  if (sample.callbackOnly) {
+    return [{ type: 'click' }, { type: 'outside' }];
+  }
+  if (sample.multiple) {
+    return [
+      { type: 'click' }, { type: 'choose', value: 'b' }, { type: 'remove', value: 'a' },
+      { type: 'props', mode: 'empty' }, { type: 'props', mode: 'undefined' }, {
+        type: 'props',
+        mode: 'live'
+      }, { type: 'outside' }
+    ];
+  }
+  if (sample.slot === 'input') {
+    return [
+      { type: 'click' }, { type: 'fill', text: 'Draft' }, { type: 'caret', start: 1, end: 4 },
+      { type: 'props', mode: 'live' }, { type: 'outside' }
+    ];
+  }
   return [{ type: 'click' }, { type: 'props', mode: 'live' }, { type: 'outside' }];
 }

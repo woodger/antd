@@ -23,7 +23,9 @@ export async function settleNativeResponsiveTagPrefix(page: Page): Promise<Respo
     });
     const actual = { icons, overflow, customTagsPrefix, owner }, encoded = JSON.stringify(actual);
     stable = previous === encoded ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = encoded;
     prior = latest;
     latest = actual;
@@ -49,18 +51,23 @@ export async function actNativeResponsiveTagPrefix(
   action: SelectCustomTagPrefixAction,
   index: number
 ) {
-  if (action.type === 'caller-width' || action.type === 'caller-prefix-width' || action.type === 'caller-tag-width' || action.type === 'prefix')
+  if (action.type === 'caller-width' || action.type === 'caller-prefix-width' || action.type === 'caller-tag-width' || action.type === 'prefix') {
     await page.evaluate(
       ({ action, index }) => window.customTagPrefixNative.update(action, index),
       { action, index }
     );
+  }
   else if (action.type === 'fill') {
     const handle = await page.evaluateHandle(() => window.customTagPrefixNative.readRefs().editor), editor = handle.asElement();
-    if (!editor) throw Error('Actual bound/custom editor ref required');
+    if (!editor) {
+      throw Error('Actual bound/custom editor ref required');
+    }
     try { await editor.fill(action.text); } finally { await handle.dispose(); }
   }
   else if (action.type === 'custom-tag-close') {
-    if (action.activation !== 'pointer') throw Error('Frozen close action requires an actual pointer');
+    if (action.activation !== 'pointer') {
+      throw Error('Frozen close action requires an actual pointer');
+    }
     await page.locator('[data-surface-case="' + sample.id + '"] [data-custom-tag-close="' + action.value + '"]').click();
   }
   else throw Error('Unknown frozen custom-tag/prefix action');
@@ -106,12 +113,16 @@ export type ResponsiveTagPrefixPhysicalNode = SelectCustomTagPrefixNode;
 export async function installNativeResponsiveTagPrefixFocusoutProbe(page: Page) {
   await page.evaluate(() => {
     const initial = window.customTagPrefixNative.readRefs();
-    if (!initial.root || !initial.editor) throw Error('Readonly focusout probe needs actual initial public bindings');
+    if (!initial.root || !initial.editor) {
+      throw Error('Readonly focusout probe needs actual initial public bindings');
+    }
     const initialRoot = initial.root, initialEditor = initial.editor, events: unknown[] = [];
     const describe = (node: EventTarget | null) => node instanceof Node ? { nodeType: node.nodeType, name: node.nodeName,
       connected: node.isConnected, initialRoot: node === initialRoot, initialEditor: node === initialEditor } : null;
     const listener = (event: FocusEvent) => {
-      if (event.target !== initialEditor && !(event.target instanceof Node && initialRoot.contains(event.target))) return;
+      if (event.target !== initialEditor && !(event.target instanceof Node && initialRoot.contains(event.target))) {
+        return;
+      }
       const refs = window.customTagPrefixNative.readRefs(), owner = window.customTagPrefixNative.read();
       events.push({ type: event.type, target: describe(event.target), observerCurrentTarget: describe(event.currentTarget),
         relatedTarget: describe(event.relatedTarget), activeElement: describe(document.activeElement),

@@ -4,7 +4,9 @@ import type { RenderEmptyContent } from './types';
 
 function colSize(value: ColProps[GridBreakpoint]): ColSize {
   // Source теряет numeric shorthand при выводе offset; сохраняем обычную семантику Col.
-  if (typeof value === 'number') return { span: value };
+  if (typeof value === 'number') {
+    return { span: value };
+  }
 
   return typeof value === 'object' && value !== null ? value : {};
 }

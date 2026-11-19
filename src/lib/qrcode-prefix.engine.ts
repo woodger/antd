@@ -2,7 +2,9 @@ import template from './vendor/qrcode-prefix.css.js';
 
 /** Root/borderless и CSS-variable defaults изолированы от соседних QRCode. */
 export function getQRCodePrefixCss(prefix: string) {
-  if (prefix === 'ant-qrcode') return undefined;
+  if (prefix === 'ant-qrcode') {
+    return undefined;
+  }
 
   return template
     .replace(/\.ant-qrcode([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'

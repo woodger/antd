@@ -47,8 +47,10 @@ for (const original of selectSurfaceContextReference.cases) {
       await verify(original.initial, 'initial');
       for (const [index, step] of original.steps.entries()) {
         await actSelectSurfaceContext(page, step.action);
-        if (step.action.type === 'fill') inside = await page.evaluateHandle(() =>
-          document.querySelector<HTMLInputElement>('[aria-label="Inside context input"]'));
+        if (step.action.type === 'fill') {
+          inside = await page.evaluateHandle(() =>
+            document.querySelector<HTMLInputElement>('[aria-label="Inside context input"]'));
+        }
         await verify(step, `${index}/${JSON.stringify(step.action)}`);
       }
       await page.locator('[data-surface-context-unmount]').click();

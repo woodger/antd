@@ -213,90 +213,107 @@ export const treeSelectAlignSamples: readonly TreeSelectAlignSample[] = [
 ];
 export function treeSelectAlignActions(sample: TreeSelectAlignSample): readonly TreeSelectAlignAction[] {
   const open: TreeSelectAlignAction = { type: 'click' }, outside: TreeSelectAlignAction = { type: 'outside' };
-  if (sample.id === 'cache-provided') return [open, { type: 'fill', text: 'Draft' }, {
-    type: 'caret',
-    start: 1,
-    end: 4
-  },
-    { type: 'props', set: { popupAlign: { offset: [21, 25] } } }, {
-      type: 'viewport',
-      width: 1240,
-      height: 820
+  if (sample.id === 'cache-provided') {
+    return [open, { type: 'fill', text: 'Draft' }, {
+      type: 'caret',
+      start: 1,
+      end: 4
     },
-    {
-      type: 'props',
-      set: {
-        builtinPlacements: { bottomLeft: { points: ['tr', 'br'], offset: [3, 9], dynamicInset: false } },
-        popupAlign: { offset: [15, 19] }
-      }
+      { type: 'props', set: { popupAlign: { offset: [21, 25] } } }, {
+        type: 'viewport',
+        width: 1240,
+        height: 820
+      },
+      {
+        type: 'props',
+        set: {
+          builtinPlacements: { bottomLeft: { points: ['tr', 'br'], offset: [3, 9], dynamicInset: false } },
+          popupAlign: { offset: [15, 19] }
+        }
+      },
+      { type: 'scroll', top: 24, left: 16 }, {
+        type: 'props',
+        set: { popupAlign: { offset: [17, 23] } }
+      },
+      { type: 'props', set: { width: 240 } }, outside];
+  }
+  if (sample.id === 'cache-missing') {
+    return [open,
+      { type: 'props', set: { popupAlign: { offset: [7, 9] } } },
+      {
+        type: 'props',
+        set: { builtinPlacements: { topLeft: { points: ['bl', 'tl'], offset: [0, -4] } } }
+      },
+      { type: 'props', set: { popupAlign: { points: ['tr', 'br'], offset: [11, 15] } } },
+      {
+        type: 'props',
+        set: { builtinPlacements: { bottomLeft: { points: ['tl', 'bl'], offset: [3, 5] } } }
+      },
+      { type: 'props', set: { popupAlign: { offset: [19, 23] } } }, {
+        type: 'viewport',
+        width: 1240,
+        height: 820
+      }, outside];
+  }
+  if (sample.id === 'provider-placement-live') {
+    return [open,
+      { type: 'props', set: { provider: 'rtl' } }, { type: 'props', set: { placement: 'topLeft' } },
+      { type: 'props', set: { provider: 'ltr' } }, { type: 'props', unset: ['placement'] }, outside];
+  }
+  if (sample.id === 'root-composite') {
+    return [open, { type: 'fill', text: 'Root draft' }, {
+      type: 'caret',
+      start: 1,
+      end: 4
     },
-    { type: 'scroll', top: 24, left: 16 }, {
-      type: 'props',
-      set: { popupAlign: { offset: [17, 23] } }
+      { type: 'props', set: { popupAlign: { offset: [17, 21] } } }, {
+        type: 'viewport',
+        width: 1240,
+        height: 820
+      }, outside];
+  }
+  if (sample.slot === 'input-responsive') {
+    return [open, { type: 'fill', text: 'BetaWWW12345' }, {
+      type: 'caret',
+      start: 1,
+      end: 4
     },
-    { type: 'props', set: { width: 240 } }, outside];
-  if (sample.id === 'cache-missing') return [open,
-    { type: 'props', set: { popupAlign: { offset: [7, 9] } } },
-    {
-      type: 'props',
-      set: { builtinPlacements: { topLeft: { points: ['bl', 'tl'], offset: [0, -4] } } }
+      { type: 'props', set: { popupAlign: { offset: [13, 19] } } }, {
+        type: 'viewport',
+        width: 1240,
+        height: 820
+      }, outside];
+  }
+  if (sample.container === 'host') {
+    return [open, { type: 'host', left: 16, top: 20 },
+      { type: 'host', width: 460, height: 180 }, { type: 'viewport', width: 1240, height: 820 }, outside];
+  }
+  if (sample.container === 'shadow') {
+    return [open, { type: 'fill', text: 'Shadow draft' }, {
+      type: 'caret',
+      start: 2,
+      end: 6
     },
-    { type: 'props', set: { popupAlign: { points: ['tr', 'br'], offset: [11, 15] } } },
-    {
-      type: 'props',
-      set: { builtinPlacements: { bottomLeft: { points: ['tl', 'bl'], offset: [3, 5] } } }
-    },
-    { type: 'props', set: { popupAlign: { offset: [19, 23] } } }, {
-      type: 'viewport',
-      width: 1240,
-      height: 820
-    }, outside];
-  if (sample.id === 'provider-placement-live') return [open,
-    { type: 'props', set: { provider: 'rtl' } }, { type: 'props', set: { placement: 'topLeft' } },
-    { type: 'props', set: { provider: 'ltr' } }, { type: 'props', unset: ['placement'] }, outside];
-  if (sample.id === 'root-composite') return [open, { type: 'fill', text: 'Root draft' }, {
-    type: 'caret',
-    start: 1,
-    end: 4
-  },
-    { type: 'props', set: { popupAlign: { offset: [17, 21] } } }, {
-      type: 'viewport',
-      width: 1240,
-      height: 820
-    }, outside];
-  if (sample.slot === 'input-responsive') return [open, { type: 'fill', text: 'BetaWWW12345' }, {
-    type: 'caret',
-    start: 1,
-    end: 4
-  },
-    { type: 'props', set: { popupAlign: { offset: [13, 19] } } }, {
-      type: 'viewport',
-      width: 1240,
-      height: 820
-    }, outside];
-  if (sample.container === 'host') return [open, { type: 'host', left: 16, top: 20 },
-    { type: 'host', width: 460, height: 180 }, { type: 'viewport', width: 1240, height: 820 }, outside];
-  if (sample.container === 'shadow') return [open, { type: 'fill', text: 'Shadow draft' }, {
-    type: 'caret',
-    start: 2,
-    end: 6
-  },
-    { type: 'props', set: { popupAlign: { offset: [15, 17] } } }, {
-      type: 'viewport',
-      width: 1240,
-      height: 820
-    }, outside];
-  if (sample.multiple) return [open, { type: 'props', set: { popupAlign: { offset: [13, 17] } } },
-    { type: 'choose', value: 'b' }, { type: 'remove', value: 'a' }, {
-      type: 'viewport',
-      width: 1240,
-      height: 820
-    }, outside];
-  if (sample.scene === 'viewport-flip' || sample.scene === 'viewport-shift' || sample.scene === 'regions' || sample.scene === 'numeric-overflow')
+      { type: 'props', set: { popupAlign: { offset: [15, 17] } } }, {
+        type: 'viewport',
+        width: 1240,
+        height: 820
+      }, outside];
+  }
+  if (sample.multiple) {
+    return [open, { type: 'props', set: { popupAlign: { offset: [13, 17] } } },
+      { type: 'choose', value: 'b' }, { type: 'remove', value: 'a' }, {
+        type: 'viewport',
+        width: 1240,
+        height: 820
+      }, outside];
+  }
+  if (sample.scene === 'viewport-flip' || sample.scene === 'viewport-shift' || sample.scene === 'regions' || sample.scene === 'numeric-overflow') {
     return [open, { type: 'viewport', width: 1240, height: 780 }, {
       type: 'viewport',
       width: 1200,
       height: 900
     }, outside];
+  }
   return [open, outside];
 }

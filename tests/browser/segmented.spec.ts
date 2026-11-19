@@ -175,7 +175,9 @@ test(
 
     const endpoints = await thumb.evaluate(node => {
       const effect = node.getAnimations()[0].effect;
-      if (!(effect instanceof KeyframeEffect)) throw new Error('Missing thumb keyframes');
+      if (!(effect instanceof KeyframeEffect)) {
+        throw new Error('Missing thumb keyframes');
+      }
 
       return effect.getKeyframes();
     });

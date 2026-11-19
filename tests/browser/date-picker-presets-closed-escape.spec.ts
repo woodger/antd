@@ -17,7 +17,9 @@ test('DatePicker public focus and closed Escape reset a retained rejected preset
   expect(before.value.temporal?.iso).toBe('2024-06-10T00:00:00.000Z');
   await page.evaluate(() => {
     const control = window.datePickerPresetsNative.readRefs().control;
-    if (!control) throw Error('Actual public DatePicker control is required');
+    if (!control) {
+      throw Error('Actual public DatePicker control is required');
+    }
     control.focus();
   });
 

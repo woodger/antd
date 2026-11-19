@@ -49,7 +49,9 @@ async function settle(page: Page) {
         rest: state.root.querySelector('[data-suffix-layout-rest]')?.getAttribute('data-suffix-layout-omitted') };
       const current = JSON.stringify(layout);
       stable = current === previous ? stable + 1 : 0;
-      if (stable >= 3) return layout;
+      if (stable >= 3) {
+        return layout;
+      }
       previous = current;
     }
     throw Error('Hydrated suffix layout did not settle after 30 frames');
@@ -143,7 +145,9 @@ for (const id of ['input-ltr', 'textarea-rtl', 'wrapped-dom-ref-ltr', 'composite
     const editor = page.locator('[data-suffix-layout-editor]');
     await editor.fill('Hydrated suffix query');
     await editor.evaluate(node => {
-      if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) throw Error('Expected native editor');
+      if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) {
+        throw Error('Expected native editor');
+      }
       node.setSelectionRange(2, 8);
     });
     const events = await page.locator('[data-suffix-layout-events]').textContent();
@@ -183,7 +187,9 @@ for (const id of ['input-ltr', 'textarea-rtl', 'wrapped-dom-ref-ltr', 'composite
 
     expect(await identity()).toEqual(expected);
     expect(await page.getByRole('form', { name: 'Suffix layout hydration values', exact: true }).evaluate(node => {
-      if (!(node instanceof HTMLFormElement)) throw Error('Expected native form');
+      if (!(node instanceof HTMLFormElement)) {
+        throw Error('Expected native form');
+      }
       return new FormData(node).getAll('suffix-layout-choice');
     })).toEqual(['a', 'b', 'c', 'd']);
     await page.evaluate(() => window.treeSelectSuffixLayoutHydration!.dispose());

@@ -19,9 +19,13 @@ export function readSelectSurfaceEdgePaint() {
   const measure = node => ({ tag: node.tagName, attributes: [...node.attributes].map(attr => [attr.name, attr.value]),
     css: css(node), box: box(node), outerHTML: node.outerHTML });
   const alpha = color => {
-    if (color === 'transparent') return 0;
+    if (color === 'transparent') {
+      return 0;
+    }
     const match = color.match(/^rgba?\(([^)]+)\)$/);
-    if (!match) return null;
+    if (!match) {
+      return null;
+    }
     const parts = match[1].split(/[,\s/]+/).filter(Boolean);
     return parts.length === 4 ? Number(parts[3]) : 1;
   };
@@ -52,20 +56,26 @@ export function readSelectSurfaceEdgePaint() {
     for (const rule of list) {
       if (rule.selectorText) {
         const matched = [];
-        for (const [node, key] of targets) if (node.matches(rule.selectorText)) matched.push(key);
-        if (matched.length) rules.push({
-          sheetIndex,
-          context,
-          selector: rule.selectorText,
-          cssText: rule.cssText,
-          matched
-        });
+        for (const [node, key] of targets) {
+          if (node.matches(rule.selectorText)) matched.push(key);
+        }
+        if (matched.length) {
+          rules.push({
+            sheetIndex,
+            context,
+            selector: rule.selectorText,
+            cssText: rule.cssText,
+            matched
+          });
+        }
       }
-      if (rule.cssRules) readRules(
-        rule.cssRules,
-        sheetIndex,
-        [...context, rule.conditionText ?? rule.name ?? '']
-      );
+      if (rule.cssRules) {
+        readRules(
+          rule.cssRules,
+          sheetIndex,
+          [...context, rule.conditionText ?? rule.name ?? '']
+        );
+      }
     }
   };
   [...document.styleSheets].forEach((sheet, index) => {

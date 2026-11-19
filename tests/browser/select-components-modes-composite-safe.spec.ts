@@ -21,7 +21,9 @@ for (const mode of ['multiple', 'tags'] as const) test(`Native mode measures the
   const capture = await owner.evaluateHandle(node => {
     const bridge = {} as Bridge;
     node.dispatchEvent(new CustomEvent('modescompositesafecapture', { detail: bridge }));
-    if (!bridge.read || !bridge.readRefs || !bridge.focus) throw Error('Real composite owner required');
+    if (!bridge.read || !bridge.readRefs || !bridge.focus) {
+      throw Error('Real composite owner required');
+    }
     return bridge;
   });
   try {

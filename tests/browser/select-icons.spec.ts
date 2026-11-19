@@ -20,10 +20,12 @@ for (const sample of selectIconSamples) test(`Select icon contracts match comple
       const counterpart = [closeCounterpart.initial, ...closeCounterpart.steps][index];
       expect(counterpart.dom).toEqual(point.dom);
       for (const key of ['settings', 'model', 'open', 'query', 'authoredProps', 'authoredProvider', 'authoredInnerProvider',
-        'eventCount', 'rawEventCount', 'lifecycleCount'] as const) expect(
+        'eventCount', 'rawEventCount', 'lifecycleCount'] as const) {
+        expect(
           counterpart.owner[key],
           key
         ).toEqual(point.owner[key]);
+      }
     }
   }
   const identity = createIconIdentityLedger();
@@ -40,7 +42,9 @@ for (const sample of selectIconSamples) test(`Select icon contracts match comple
       'selecticonscapture',
       { detail }
     ));
-    if (!detail.read || !detail.readRefs || !detail.update || !detail.dispose) throw Error('Actual Native icon capture incomplete');
+    if (!detail.read || !detail.readRefs || !detail.update || !detail.dispose) {
+      throw Error('Actual Native icon capture incomplete');
+    }
     Object.assign(globalThis, { raw: { current: { readRefs: detail.readRefs } } });
     return detail;
   });
@@ -67,8 +71,10 @@ for (const sample of selectIconSamples) test(`Select icon contracts match comple
       }> } };
       const bindings = environment.raw.nativeIconBindings ??= new Map();
       const current = owner.readRefs();
-      if (!bindings.has(phase)) bindings.set(phase, { ...current, focus: current.control?.focus,
-        blur: current.control?.blur, scrollTo: current.control?.scrollTo });
+      if (!bindings.has(phase)) {
+        bindings.set(phase, { ...current, focus: current.control?.focus,
+          blur: current.control?.blur, scrollTo: current.control?.scrollTo });
+      }
       const prior = bindings.get(phase)!;
       return { root: current.root === prior.root, editor: current.editor === prior.editor, control: current.control === prior.control,
         focus: current.control?.focus === prior.focus, blur: current.control?.blur === prior.blur, scrollTo: current.control?.scrollTo === prior.scrollTo };
@@ -86,16 +92,19 @@ for (const sample of selectIconSamples) test(`Select icon contracts match comple
         'combobox',
         { name: 'Icon value', exact: true }
       );
-      if (action.type === 'props' || action.type === 'context' || action.type === 'inner' || action.type === 'model')
+      if (action.type === 'props' || action.type === 'context' || action.type === 'inner' || action.type === 'model') {
         await capture.evaluate(
           (value, input) => value.update(input.action, input.index),
           { action, index }
         );
+      }
       else if (action.type === 'click') await page.locator('[data-surface-case] .surface-control').click();
       else if (action.type === 'outside') await page.locator('[data-surface-outside]').click();
       else if (action.type === 'fill') await editor().fill(action.text);
-      else if (action.type === 'choose') await page.locator('.ant-select-dropdown:visible .ant-select-item-option-content')
-        .filter({ hasText: new RegExp('^' + action.text + '$') }).click();
+      else if (action.type === 'choose') {
+        await page.locator('.ant-select-dropdown:visible .ant-select-item-option-content')
+          .filter({ hasText: new RegExp('^' + action.text + '$') }).click();
+      }
       else if (action.type === 'remove') await page.locator('.ant-select-selection-item').filter({ hasText: action.value }).locator('.ant-select-selection-item-remove').click();
       else if (action.type === 'clear') {
         const clear = page.locator('.ant-select-clear');
@@ -106,7 +115,9 @@ for (const sample of selectIconSamples) test(`Select icon contracts match comple
       }
       else if (action.type === 'suffix-click') {
         const box = await page.locator('.ant-select-suffix').boundingBox();
-        if (!box) throw Error('Actual suffix absent for physical hit test');
+        if (!box) {
+          throw Error('Actual suffix absent for physical hit test');
+        }
         await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
       }
       else throw Error('Unexpected action in the full icon corpus: ' + action.type);

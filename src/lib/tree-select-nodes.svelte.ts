@@ -14,10 +14,16 @@ export function provideTreeSelectNodes() {
     get data() {
       void revision;
       return [...entries].sort((before, after) => {
-        if (!before.element || !after.element) return 0;
+        if (!before.element || !after.element) {
+          return 0;
+        }
         const position = before.element.compareDocumentPosition(after.element);
-        if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
-        if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+        if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
+          return -1;
+        }
+        if (position & Node.DOCUMENT_POSITION_PRECEDING) {
+          return 1;
+        }
         return 0;
       }).map(entry => entry.read());
     },

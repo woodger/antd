@@ -16,10 +16,18 @@
   } = $props();
   const image = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" fill="#1677ff"/></svg>');
   let size = $derived.by(() => {
-    if (mode === 'numeric') return 48;
-    if (mode === 'empty') return {};
-    if (mode === 'new-map') return { xs: 30, md: 55, xxxl: 130 };
-    if (typeof sample.size !== 'object') return sample.size;
+    if (mode === 'numeric') {
+      return 48;
+    }
+    if (mode === 'empty') {
+      return {};
+    }
+    if (mode === 'new-map') {
+      return { xs: 30, md: 55, xxxl: 130 };
+    }
+    if (typeof sample.size !== 'object') {
+      return sample.size;
+    }
     const value = { ...sample.size };
     for (const key of sample.undefinedSize ?? []) value[key] = undefined;
     return value;

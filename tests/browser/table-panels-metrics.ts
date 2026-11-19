@@ -1,9 +1,13 @@
 /** Title/footer соответствуют Source Panel; caption остаётся нативным именем таблицы. */
 export function snapshotTablePanels() {
   const root = document.querySelector('#table-panels-control .ant-table');
-  if (!root) throw new Error('Table panels are missing');
+  if (!root) {
+    throw new Error('Table panels are missing');
+  }
   const css = (node: Element | null) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries([
       'font-family', 'font-size', 'font-weight', 'line-height', 'color', 'background-color',

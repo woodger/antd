@@ -45,15 +45,21 @@ export function createAffixRuntime(
   }
 
   function measure(force: boolean) {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
     const target = syncTarget();
-    if (!target) return;
+    if (!target) {
+      return;
+    }
 
     const placeholder = root.getBoundingClientRect();
     if (placeholder.top === 0
       && placeholder.left === 0
       && placeholder.width === 0
-      && placeholder.height === 0) return;
+      && placeholder.height === 0) {
+      return;
+    }
 
     const bounds = 'getBoundingClientRect' in target
       ? target.getBoundingClientRect()
@@ -69,28 +75,38 @@ export function createAffixRuntime(
       && position
       && next
       && next.edge === position.edge
-      && next.offset === position.offset) return;
+      && next.offset === position.offset) {
+      return;
+    }
     if (Boolean(next) !== Boolean(position))
       getOnChange()?.(Boolean(next));
-    if (!active) return;
+    if (!active) {
+      return;
+    }
 
     if (next?.edge === position?.edge
       && next?.offset === position?.offset
       && next?.width === position?.width
-      && next?.height === position?.height) return;
+      && next?.height === position?.height) {
+      return;
+    }
     position = next;
     notify(next);
   }
 
   function updatePosition() {
-    if (!active || forceFrame !== undefined) return;
+    if (!active || forceFrame !== undefined) {
+      return;
+    }
     forceFrame = view.requestAnimationFrame(() => {
       forceFrame = undefined;
       measure(true);
     });
   }
   function lazyUpdate() {
-    if (!active || lazyFrame !== undefined) return;
+    if (!active || lazyFrame !== undefined) {
+      return;
+    }
     lazyFrame = view.requestAnimationFrame(() => {
       lazyFrame = undefined;
       measure(false);
@@ -124,18 +140,22 @@ export function createAffixRuntime(
       void Promise.resolve().then(updatePosition);
   });
   function observeChildren() {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
     const nodes = new Set<Element>([root, ...content.children]);
-    for (const node of observed.keys())
+    for (const node of observed.keys()) {
       if (!nodes.has(node)) {
         resize.unobserve(node);
         observed.delete(node);
       }
-    for (const node of nodes)
+    }
+    for (const node of nodes) {
       if (!observed.has(node)) {
         observed.set(node, [-1, -1, -1, -1]);
         resize.observe(node);
       }
+    }
   }
   const mutations = new view.MutationObserver(observeChildren);
   mutations.observe(content, { childList: true });
@@ -143,7 +163,9 @@ export function createAffixRuntime(
 
   return {
     configure(next: AffixRuntimeOptions) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       options = next;
       syncTarget();
       updatePosition();
@@ -151,7 +173,9 @@ export function createAffixRuntime(
     updatePosition,
     cancel,
     destroy() {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       active = false;
       cancel();
       if (lazyFrame !== undefined)

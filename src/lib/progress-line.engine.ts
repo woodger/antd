@@ -24,7 +24,9 @@ export function progressGradient(color: ProgressGradient, rtl: boolean) {
 
 export function isProgressColorBright(color: string | string[] | ProgressGradient | undefined) {
   const first = Array.isArray(color) ? color[0] : color;
-  if (!first) return false;
+  if (!first) {
+    return false;
+  }
   const value = new FastColor(typeof first === 'string' ? first : Object.values(first)[0]);
 
   return (value.r * 299 + value.g * 587 + value.b * 114) / 1000 >= 128;

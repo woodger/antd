@@ -11,7 +11,9 @@ const states = {
 /** Generated flat rules сохраняют общий namespace Layout и независимый prefix Sider. */
 export function getLayoutPrefixCss(prefix: string, part: LayoutPrefixPart) {
   const original = part === 'sider' ? 'ant-layout-sider' : 'ant-layout';
-  if (prefix === original) return undefined;
+  if (prefix === original) {
+    return undefined;
+  }
 
   const marker = `[data-ant-layout-prefix="${part}"]`;
   const selector = new RegExp(`\\.${original}([-\\w]*)`, 'g');
@@ -41,7 +43,9 @@ export function getLayoutSectionPrefixCss(
 ) {
   const original = `ant-layout-${part}`;
   const custom = prefix !== original;
-  if (!custom && !standalone) return undefined;
+  if (!custom && !standalone) {
+    return undefined;
+  }
 
   const marker = `[data-ant-layout-prefix="${part}"]`;
   const rules: string[] = [];

@@ -117,7 +117,9 @@
     const modes = current.map((item) => getCollapseTrigger(item, collapsible));
     repairFocus = false;
     retainedFocus = undefined;
-    if (!container) return;
+    if (!container) {
+      return;
+    }
 
     const focused = container.ownerDocument.activeElement;
     if (focused === container) {
@@ -133,7 +135,9 @@
         )
     );
     const previous = panels.find((element) => element.contains(focused));
-    if (!previous || !(focused instanceof HTMLElement)) return;
+    if (!previous || !(focused instanceof HTMLElement)) {
+      return;
+    }
 
     const key = previous.dataset.collapseKey;
     const index = current.findIndex((item) => item.key === key);
@@ -159,8 +163,9 @@
     else if (panels.length !== current.length
       || current.some(
         (item, position) => item.key !== panels[position]?.dataset.collapseKey
-      ))
+      )) {
       retainedFocus = focused;
+    }
   });
 
   $effect(() => {
@@ -168,7 +173,9 @@
     const target = getCollapseFocusKey(items, repairKey, openKeys, collapsible);
     const previous = retainedFocus;
     retainedFocus = undefined;
-    if (!container) return;
+    if (!container) {
+      return;
+    }
 
     if (repairFocus) {
       repairFocus = false;
@@ -179,8 +186,9 @@
       && !previous.matches(
         ':disabled'
       )
-      && container.ownerDocument.activeElement === container.ownerDocument.body)
+      && container.ownerDocument.activeElement === container.ownerDocument.body) {
       untrack(() => previous.focus({ preventScroll: true }));
+    }
   });
 
   onMount(() => {
@@ -238,7 +246,9 @@
     if (!active
       || event?.defaultPrevented
       || !item
-      || getCollapseTrigger(item, collapsible) === 'disabled') return;
+      || getCollapseTrigger(item, collapsible) === 'disabled') {
+      return;
+    }
 
     const next = toggleCollapseKey(activeKey ?? initialDefault, key, accordion);
     activeKey = [...next];

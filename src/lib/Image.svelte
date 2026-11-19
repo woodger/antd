@@ -66,7 +66,9 @@
   });
   $effect(() => {
     const next = src;
-    if (!nativeElement) return;
+    if (!nativeElement) {
+      return;
+    }
     if (previousSource !== next) {
       status = typeof placeholder === 'function' ? 'loading' : 'normal';
       previousSource = next;
@@ -85,8 +87,9 @@
     if (imageElement?.complete
       && (imageElement.naturalWidth
         || imageElement.naturalHeight)
-      && status === 'loading')
+      && status === 'loading') {
       status = 'normal';
+    }
   });
   $effect(() => {
     const data = common;

@@ -76,7 +76,9 @@ export function createVirtualList<Row, Key>(options: {
   }
 
   function sync(next: number) {
-    if (!holder) return;
+    if (!holder) {
+      return;
+    }
     const maximum = (range.scrollHeight ?? NaN) - (options.height() ?? NaN);
     const value = Math.max(0, Number.isNaN(maximum) ? next : Math.min(next, maximum));
     holder.scrollTop = value;
@@ -97,7 +99,9 @@ export function createVirtualList<Row, Key>(options: {
 
   function measure() {
     collection++;
-    if (!connected) return;
+    if (!connected) {
+      return;
+    }
     const previousHeight = range.scrollHeight;
     const changes: { key: Key; previous: number | undefined; height: number; }[] = [];
     for (const [key, element] of nodes) {
@@ -174,7 +178,9 @@ export function createVirtualList<Row, Key>(options: {
   }
 
   function alignRendered(pending: Alignment) {
-    if (pending.generation !== request || !holder) return;
+    if (pending.generation !== request || !holder) {
+      return;
+    }
     const rows = options.rows();
     const estimate = options.estimate();
     const size = renderedGetSize ?? getSize;
@@ -185,7 +191,9 @@ export function createVirtualList<Row, Key>(options: {
     const resolved = pending.targetAlign || pending.originAlign;
     const value = typeof pending.offset === 'function'
       ? pending.offset({ getSize: size, align: resolved }) : pending.offset;
-    if (pending.generation !== request || !holder) return;
+    if (pending.generation !== request || !holder) {
+      return;
+    }
     const offset = Number.isFinite(value) ? value : 0;
     let unknown = index < 0;
     let target: number | null = null;
@@ -200,9 +208,11 @@ export function createVirtualList<Row, Key>(options: {
       targetAlign = step.align;
       unknown = step.unknown || target !== pending.lastTop;
     }
-    if (unknown && pending.generation === request) alignment = {
-      ...pending, times: pending.times + 1, index, targetAlign, lastTop: target
-    };
+    if (unknown && pending.generation === request) {
+      alignment = {
+        ...pending, times: pending.times + 1, index, targetAlign, lastTop: target
+      };
+    }
   }
 
   function align(
@@ -211,9 +221,11 @@ export function createVirtualList<Row, Key>(options: {
     originAlign: VirtualScrollAlign | undefined,
     offset: VirtualScrollOffset<Key>
   ) {
-    if (options.renderSizeCache) alignment = {
-      generation: ++request, times: 0, index, key, originAlign, offset
-    };
+    if (options.renderSizeCache) {
+      alignment = {
+        generation: ++request, times: 0, index, key, originAlign, offset
+      };
+    }
     else void alignTo(index, key, originAlign, offset);
   }
 
@@ -227,7 +239,9 @@ export function createVirtualList<Row, Key>(options: {
     let resolved = align;
     let lastTop: number | null | undefined;
     for (let times = 0; times < 10; times++) {
-      if (generation !== request || !holder) return;
+      if (generation !== request || !holder) {
+        return;
+      }
       measure();
       if (index < 0) index = options.rows().findIndex(row => options.getKey(row) === key);
       const value = typeof rawOffset === 'function'
@@ -237,7 +251,9 @@ export function createVirtualList<Row, Key>(options: {
         await tick();
         continue;
       }
-      if (!holder.clientHeight) return;
+      if (!holder.clientHeight) {
+        return;
+      }
       const step = virtualListScrollStep(
         options.rows(),
         options.getKey,
@@ -251,7 +267,9 @@ export function createVirtualList<Row, Key>(options: {
       );
       if (step.top !== undefined) sync(step.top);
       const target = step.top ?? null;
-      if (!step.unknown && target === lastTop) return;
+      if (!step.unknown && target === lastTop) {
+        return;
+      }
       resolved = step.align;
       lastTop = target;
       await tick();
@@ -259,7 +277,9 @@ export function createVirtualList<Row, Key>(options: {
   }
 
   function scrollTo(config?: VirtualScrollConfig<Key> | null) {
-    if (!holder) return;
+    if (!holder) {
+      return;
+    }
     if (config == null) {
       flash++;
       return;
@@ -310,9 +330,11 @@ export function createVirtualList<Row, Key>(options: {
       for (const node of nodes.values()) observer?.unobserve(node);
       nodes.clear();
       heights = new Map();
-      if (options.renderSizeCache) renderedGetSize = createVirtualListSizeCache(
-        options.rows(), options.getKey, () => heights, options.estimate()
-      );
+      if (options.renderSizeCache) {
+        renderedGetSize = createVirtualListSizeCache(
+          options.rows(), options.getKey, () => heights, options.estimate()
+        );
+      }
       top = 0;
       left = 0;
       innerHeight = 0;

@@ -63,7 +63,9 @@ export function carouselPreClones(spec: Pick<
   CarouselSpec,
   'unslick' | 'infinite' | 'variableWidth' | 'slideCount' | 'slidesToShow' | 'centerMode'
 >) {
-  if (spec.unslick || !spec.infinite) return 0;
+  if (spec.unslick || !spec.infinite) {
+    return 0;
+  }
   return spec.variableWidth ? spec.slideCount : spec.slidesToShow + (spec.centerMode ? 1 : 0);
 }
 
@@ -99,7 +101,9 @@ export function carouselCanGoNext(spec: Pick<
 }
 
 export function carouselTrackLeft(spec: CarouselSpec, slideIndex: number) {
-  if (spec.unslick || spec.fade || spec.slideCount === 1) return 0;
+  if (spec.unslick || spec.fade || spec.slideCount === 1) {
+    return 0;
+  }
   const {
     infinite,
     centerMode,
@@ -181,13 +185,17 @@ export function carouselSlideTransition(spec: CarouselSpec, index: number): {
   state?: Partial<CarouselState>;
   nextState?: Partial<CarouselState>;
 } {
-  if (spec.waitForAnimate && spec.animating) return {};
+  if (spec.waitForAnimate && spec.animating) {
+    return {};
+  }
   const { infinite, slideCount, currentSlide, slidesToScroll, slidesToShow } = spec;
   let animationSlide = index;
   let lazyLoadedList = [...spec.lazyLoadedList];
   const targetSlide = infinite ? index : carouselClamp(index, 0, slideCount - 1);
   if (spec.fade) {
-    if (!infinite && (index < 0 || index >= slideCount)) return {};
+    if (!infinite && (index < 0 || index >= slideCount)) {
+      return {};
+    }
     if (index < 0) animationSlide = index + slideCount;
     else if (index >= slideCount) animationSlide = index - slideCount;
     if (spec.lazyLoad && !lazyLoadedList.includes(animationSlide)) {
@@ -301,8 +309,12 @@ export function carouselChangeSlide(spec: CarouselSpec, options: CarouselChange)
     return infinite ? currentSlide + (offset === 0 ? slidesToScroll : offset)
       : targetSlide + slidesToScroll;
   }
-  if (options.message === 'dots') return options.index * options.slidesToScroll;
-  if (options.message === 'index') return Number(options.index);
+  if (options.message === 'dots') {
+    return options.index * options.slidesToScroll;
+  }
+  if (options.message === 'index') {
+    return Number(options.index);
+  }
   let target = options.index;
   if (infinite) {
     const direction = carouselSiblingDirection(spec, target);

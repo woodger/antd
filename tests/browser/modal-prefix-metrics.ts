@@ -9,7 +9,9 @@ export function snapshotModalPrefix() {
     'border-top-width', 'border-top-color', 'border-bottom-width', 'border-bottom-color',
     'border-radius', 'background-color', 'box-shadow'];
   function css(node: Element | null, keys: string[]) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
 
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));

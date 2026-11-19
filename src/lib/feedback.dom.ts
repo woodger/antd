@@ -49,27 +49,33 @@ export function connectFeedbackFocus(
   }
 
   function recover(candidates: HTMLElement[]) {
-    if (document.activeElement && document.activeElement !== document.body) return;
+    if (document.activeElement && document.activeElement !== document.body) {
+      return;
+    }
 
     if (host.isConnected) {
       const next = [...host.querySelectorAll<HTMLElement>(focusable)].find(available);
       if (next)
         next.focus({ preventScroll: true }); else focusAfterNotice(host, true);
     }
-    else candidates.find(
-      node => available(node)
-        || node instanceof HTMLDialogElement
-        && node.open
-        && node.getClientRects().length > 0
-    )?.focus(
-      { preventScroll: true }
-    );
+    else {
+      candidates.find(
+        node => available(node)
+          || node instanceof HTMLDialogElement
+          && node.open
+          && node.getClientRects().length > 0
+      )?.focus(
+        { preventScroll: true }
+      );
+    }
   }
 
   document.addEventListener('focusin', remember);
   remember();
   const observer = new host.ownerDocument.defaultView!.MutationObserver(() => {
-    if (!target || host.contains(target) || isRelated?.(target) || !host.isConnected) return;
+    if (!target || host.contains(target) || isRelated?.(target) || !host.isConnected) {
+      return;
+    }
 
     const candidates = neighbors;
     target = undefined;

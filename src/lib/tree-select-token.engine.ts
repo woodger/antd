@@ -14,7 +14,9 @@ export function treeSelectTokenWithEnter(separators?: TreeSelectTokenSeparators)
 export function treeSelectPastedSearch(
   text: string, pasted: string | undefined, separators?: TreeSelectTokenSeparators
 ) {
-  if (!pasted || !treeSelectTokenWithEnter(separators) || !/[\r\n]/.test(pasted)) return text;
+  if (!pasted || !treeSelectTokenWithEnter(separators) || !/[\r\n]/.test(pasted)) {
+    return text;
+  }
   const normalized = pasted.replace(/[\r\n]+$/, '').replace(/\r\n/g, ' ').replace(/[\r\n]/g, ' ');
   return text.replace(normalized, pasted);
 }

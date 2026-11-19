@@ -164,12 +164,13 @@ describe('resolveSelectMenuIcon', () => {
   });
 
   it('retains falsy static content on unselected rows without using a fallback', () => {
-    for (const content of [null, false, 0, ''])
+    for (const content of [null, false, 0, '']) {
       expect(resolveSelectMenuIcon(content, undefined, 'default', menuInfo())).toEqual({
         visible: true,
         content,
         fallback: false
       });
+    }
     expect(resolveSelectMenuIcon([], undefined, 'default', menuInfo())).toEqual({
       visible: false,
       content: undefined,
@@ -284,13 +285,14 @@ describe('resolveSelectClear', () => {
   });
 
   it('uses icon truthiness while preserving empty labels and a localized default', () => {
-    for (const clearIcon of [undefined, null, false, 0, ''])
+    for (const clearIcon of [undefined, null, false, 0, '']) {
       expect(resolveSelectClear(
         { allowClear: { clearIcon, label: '' }, displayCount: 1, searchValue: 'a' },
         'unused',
         'Очистить'
       ))
         .toEqual({ visible: true, content: '×', label: '' });
+    }
     const clearIcon: readonly never[] = [];
 
     expect(resolveSelectClear(
@@ -318,12 +320,13 @@ describe('resolveSelectClear', () => {
 
   it('hides disabled, empty and empty-combobox clears but keeps an ordinary search clear', () => {
     for (const state of [{ disabled: true, displayCount: 1, searchValue: 'a' },
-      { displayCount: 0, searchValue: '' }, { combobox: true, displayCount: 1, searchValue: '' }])
+      { displayCount: 0, searchValue: '' }, { combobox: true, displayCount: 1, searchValue: '' }]) {
       expect(resolveSelectClear({ ...state, allowClear: true }, 'icon')).toEqual({
         visible: false,
         content: null,
         label: ''
       });
+    }
     expect(resolveSelectClear({ displayCount: 0, searchValue: 'query', allowClear: true }, 'icon').visible).toBe(true);
   });
 });

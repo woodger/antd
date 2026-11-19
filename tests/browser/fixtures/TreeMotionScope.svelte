@@ -36,9 +36,15 @@
     }];
   }
   let motion = $derived.by<TreeMotionConfig | false | undefined>(() => {
-    if (off || sample.motion === 'off') return false;
-    if (sample.motion === 'empty') return {};
-    if (!sample.motion) return undefined;
+    if (off || sample.motion === 'off') {
+      return false;
+    }
+    if (sample.motion === 'empty') {
+      return {};
+    }
+    if (!sample.motion) {
+      return undefined;
+    }
     const config: TreeMotionConfig = {
       motionName: sample.motion === 'object'
         ? { appear: 'custom-open', appearActive: 'custom-open-active',

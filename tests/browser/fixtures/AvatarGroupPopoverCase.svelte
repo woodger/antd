@@ -46,14 +46,16 @@
     if (values.richTitle) result.title = heading;
     if (values.undefinedContent) result.content = undefined;
     if (values.undefinedTitle) result.title = undefined;
-    if (nativeOptions) Object.assign(result, {
-      'aria-label': 'Owner accessible popup',
-      'aria-describedby': 'group-popup-description',
-      'aria-busy': true,
-      class: 'case-wrapper',
-      style: 'color:rgb(1,2,3)',
-      popupClass: 'case-extra'
-    });
+    if (nativeOptions) {
+      Object.assign(result, {
+        'aria-label': 'Owner accessible popup',
+        'aria-describedby': 'group-popup-description',
+        'aria-busy': true,
+        class: 'case-wrapper',
+        style: 'color:rgb(1,2,3)',
+        popupClass: 'case-extra'
+      });
+    }
     if (values.container === 'local') {
       result.getPopupContainer = trigger => target('local', trigger);
     }

@@ -7,8 +7,12 @@ export function segmentedConfigRecord(
   mode: string | undefined,
   side: 'context' | 'local' | 'nested' | 'sibling'
 ): SegmentedConfig | undefined {
-  if (!mode) return undefined;
-  if (mode === 'empty') return { classNames: {}, styles: {} };
+  if (!mode) {
+    return undefined;
+  }
+  if (mode === 'empty') {
+    return { classNames: {}, styles: {} };
+  }
   const padding = { context: 4, local: 8, nested: 12, sibling: 14 }[side]!;
   const classes: SegmentedSemanticSlots = {
     root: `segcfg-${side}-root`, item: `segcfg-${side}-item`,

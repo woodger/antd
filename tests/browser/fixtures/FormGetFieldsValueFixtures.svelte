@@ -41,7 +41,9 @@
       await form.validateFields([['user', 'name']], { validateOnly });
     }
     catch (error) {
-      if (!(error instanceof FormValidationError)) throw error;
+      if (!(error instanceof FormValidationError)) {
+        throw error;
+      }
     }
     finished.push(id);
   }

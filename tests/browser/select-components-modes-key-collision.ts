@@ -9,11 +9,15 @@ const tagsOwners = new Set(['select-components-modes-tags-intrinsic-input',
 /** Source-only selection: never reads Native output and never creates DOM/CSS
  * values. Both complete independent Source points remain available to traces. */
 export function selectComponentsModesPopupSource(point: ModesPoint, owner: ModesCase) {
-  if (!tagsOwners.has(owner.id)) return undefined;
+  if (!tagsOwners.has(owner.id)) {
+    return undefined;
+  }
   const index = point === owner.initial ? -1 : owner.steps.indexOf(point as ModesCase['steps'][number]);
   assert(index >= -1);
   assert(index >= 0 || point === owner.initial);
-  if (index < 2) return undefined;
+  if (index < 2) {
+    return undefined;
+  }
   assert.deepEqual(owner.steps[2].action, { type: 'component-key', key: 'Enter' });
   const originalRows = point.icons.nodes.filter(node => node.classes.includes('ant-select-item-option'));
   const attribute = (node: SelectComponentsModesNode, key: string) => node.attributes.find(([name]) => name === key)?.[1];
@@ -47,17 +51,19 @@ export function selectComponentsModesPopupSource(point: ModesPoint, owner: Modes
     const rootIds = new Set(dom.layout.map(node => node.identity));
     const root: SelectComponentsModesNode[] = [], popup: SelectComponentsModesNode[] = [];
     let insidePopup = false;
-    for (const node of values) if (rootIds.has(node.identity)) {
-      assert.equal(insidePopup, false, 'the frozen root nodes precede the external Source portal');
-      root.push(node);
-    }
-    else {
-      assert(
-        dom.current.popup.html.includes(node.html),
-        'only actual Source popup descendants use this view'
-      );
-      insidePopup = true;
-      popup.push(node);
+    for (const node of values) {
+      if (rootIds.has(node.identity)) {
+        assert.equal(insidePopup, false, 'the frozen root nodes precede the external Source portal');
+        root.push(node);
+      }
+      else {
+        assert(
+          dom.current.popup.html.includes(node.html),
+          'only actual Source popup descendants use this view'
+        );
+        insidePopup = true;
+        popup.push(node);
+      }
     }
     return { root, popup };
   };

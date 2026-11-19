@@ -2,7 +2,9 @@ import template from './vendor/input-prefix.css.js';
 
 /** Input/TextArea разделяют базовый prefix; token variables и semantic styles сохраняются. */
 export function getInputPrefixCss(prefix: string) {
-  if (prefix === 'ant-input') return undefined;
+  if (prefix === 'ant-input') {
+    return undefined;
+  }
 
   const scope = `:where([data-ant-input-prefix=${JSON.stringify(prefix)}])`;
   const children = new Set([
@@ -15,7 +17,9 @@ export function getInputPrefixCss(prefix: string) {
     /\.ant-input([-\w]*)|"ant-input"|" ant-input"/g,
     (match, suffix: string | undefined) => {
       if (suffix !== undefined) {
-        if (suffix === '-css-var') return `.ant-input-css-var${scope}`;
+        if (suffix === '-css-var') {
+          return `.ant-input-css-var${scope}`;
+        }
         return `.${prefix}${suffix}${children.has(suffix) ? '' : scope}`;
       }
       return match === '"ant-input"' ? `"${prefix}"` : `" ${prefix}"`;

@@ -34,8 +34,10 @@
     void revision;
     const target = alternate ? 'child' : sample.parent ?? 'parent';
     const options: Partial<ConfigProviderProps> = {};
-    if (sample.parent !== 'none') options.getPopupContainer = trigger =>
-      getContainer('parent', target, trigger);
+    if (sample.parent !== 'none') {
+      options.getPopupContainer = trigger =>
+        getContainer('parent', target, trigger);
+    }
     return options;
   });
   let childOptions = $derived.by(() => {
@@ -51,20 +53,24 @@
   let localOptions = $derived.by(() => {
     const options: { getPopupContainer?: (trigger?: HTMLElement) => HTMLElement; } = {};
     if (sample.local === 'undefined') options.getPopupContainer = undefined;
-    else if (sample.local === 'local') options.getPopupContainer = trigger => {
-      record('local', trigger);
-      return document.getElementById('provider-local')!;
-    };
+    else if (sample.local === 'local') {
+      options.getPopupContainer = trigger => {
+        record('local', trigger);
+        return document.getElementById('provider-local')!;
+      };
+    }
     return options;
   });
   let more = $derived.by(() => {
     const options: TabsMoreProps = { trigger: 'click' };
     if (!sample.menu) options.overlay = content;
     if (sample.more === 'undefined') options.getPopupContainer = undefined;
-    else if (sample.more === 'more') options.getPopupContainer = trigger => {
-      record('more', trigger);
-      return document.getElementById('provider-more')!;
-    };
+    else if (sample.more === 'more') {
+      options.getPopupContainer = trigger => {
+        record('more', trigger);
+        return document.getElementById('provider-more')!;
+      };
+    }
     return options;
   });
 
@@ -88,11 +94,15 @@
   }
 
   function overrideBar(bar: TabsTabBarProps): TabsTabBarProps {
-    if (sample.bar === 'undefined') return { ...bar, getPopupContainer: undefined };
-    if (sample.bar === 'local') return { ...bar, getPopupContainer: trigger => {
-      record('bar', trigger);
-      return document.getElementById('provider-local')!;
-    } };
+    if (sample.bar === 'undefined') {
+      return { ...bar, getPopupContainer: undefined };
+    }
+    if (sample.bar === 'local') {
+      return { ...bar, getPopupContainer: trigger => {
+        record('bar', trigger);
+        return document.getElementById('provider-local')!;
+      } };
+    }
     return bar;
   }
 </script>

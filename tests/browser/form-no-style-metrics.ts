@@ -4,7 +4,9 @@ export function formNoStyleMetrics() {
   const child = document.querySelector('.capture-child');
 
   function layout(node: Element | null) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
 
     return {
       errors: [...node.querySelectorAll('.ant-form-item-explain-error')]

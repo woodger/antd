@@ -4,7 +4,9 @@ export function formRootMetrics() {
   const input = item.querySelector('input')!;
 
   function metrics(node: Element | null) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
 
     return {

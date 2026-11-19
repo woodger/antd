@@ -161,9 +161,13 @@ export function verifyWeekSingleEmptyCalendarBoundary(
 }
 function modeArray(call: WeekSourceInvocation) {
   const path = call.name === 'panel' ? [1] : call.name === 'picker-value' ? [1, 'mode'] : null;
-  if (!path) return null;
+  if (!path) {
+    return null;
+  }
   const value = rawAt(call.rawArguments, path);
-  if (!value || typeof value !== 'object' || !('ref' in value)) return null;
+  if (!value || typeof value !== 'object' || !('ref' in value)) {
+    return null;
+  }
   const node = rawNode(call.rawArguments, object(value).ref);
   assert.equal(node.array, true);
   return node;
@@ -268,8 +272,10 @@ function verifyPoint(actual: NativeWeekPoint, source: WeekSourcePoint,
     const aKeys = properties(actual.owner.authoredProps).map(row => row.key);
     const sKeys = properties(source.owner.authoredProps).map(row => row.key);
     assert.equal(aKeys.includes(key), sKeys.includes(key), 'Public prop own-key omission ' + key);
-    if (sKeys.includes(key)) assert.deepEqual(property(actual.owner.authoredProps, key),
-      property(source.owner.authoredProps, key), 'Actual public prop ' + key);
+    if (sKeys.includes(key)) {
+      assert.deepEqual(property(actual.owner.authoredProps, key),
+        property(source.owner.authoredProps, key), 'Actual public prop ' + key);
+    }
   }
   assert.deepEqual(actual.owner.model, source.owner.model);
   sameDates(
@@ -423,7 +429,9 @@ function invocationModelWindow(index: number, previous: WeekSourceOwner | null,
 }
 function sourcePhaseOwners(sample: WeekSample, phase: string,
   variant: WeekSourceVariant): WeekSourceOwner[] {
-  if (phase === 'initial') return [readWeekSourceInitial(sample.id, variant).owner];
+  if (phase === 'initial') {
+    return [readWeekSourceInitial(sample.id, variant).owner];
+  }
   if (phase.startsWith('step-')) {
     const step = readWeekSourceStep(sample.id, Number(phase.slice(5)), variant);
     return [step.before, step.actionEvidence.afterFocusPointer, step.afterCall, step.actual]

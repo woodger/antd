@@ -7,7 +7,9 @@ export function connectButtonText(
 ) {
   let active = true;
   const refresh = () => {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
     const children = [...content.childNodes].filter(
       node => node.nodeType === 1 || node.nodeType === 3 && node.textContent !== ''
     );

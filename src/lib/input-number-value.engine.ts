@@ -23,7 +23,9 @@ export interface InputNumberValueOptions {
 export function inputNumberDecimal(value: DecimalValue, stringMode: boolean) {
   const decimal = getMiniDecimal(value);
 
-  if (stringMode) return decimal;
+  if (stringMode) {
+    return decimal;
+  }
 
   return getMiniDecimal(decimal.isInvalidate() ? null : normalizeInputNumber(decimal.toNumber()));
 }
@@ -32,7 +34,9 @@ export function inputNumberValue(
   decimal: MiniDecimal,
   stringMode: boolean
 ): InputNumberValue | null {
-  if (decimal.isInvalidate()) return null;
+  if (decimal.isInvalidate()) {
+    return null;
+  }
 
   return stringMode ? decimal.toString() : normalizeInputNumber(decimal.toNumber());
 }
@@ -42,7 +46,9 @@ export function parseInputNumberValue(
   options: Pick<InputNumberProps<InputNumberValue>,
     'stringMode' | 'parser' | 'formatter' | 'decimalSeparator'>
 ): MiniDecimal {
-  if (options.parser) return getMiniDecimal(options.parser(text));
+  if (options.parser) {
+    return getMiniDecimal(options.parser(text));
+  }
 
   let parsed = text;
   if (options.decimalSeparator) parsed = parsed.replace(options.decimalSeparator, '.');
@@ -85,8 +91,12 @@ export function resolveInputNumberValueOptions(options: Pick<InputNumberProps<In
 }
 
 export function getInputNumberRangeValue(decimal: MiniDecimal, options: InputNumberValueOptions) {
-  if (options.max && !decimal.lessEquals(options.max)) return options.max;
-  if (options.min && !options.min.lessEquals(decimal)) return options.min;
+  if (options.max && !decimal.lessEquals(options.max)) {
+    return options.max;
+  }
+  if (options.min && !options.min.lessEquals(decimal)) {
+    return options.min;
+  }
 
   return null;
 }
@@ -100,8 +110,12 @@ export function inputNumberPrecision(
   options: Pick<InputNumberValueOptions, 'precision' | 'step'>,
   typing: boolean
 ) {
-  if (typing) return undefined;
-  if (options.precision !== undefined) return options.precision;
+  if (typing) {
+    return undefined;
+  }
+  if (options.precision !== undefined) {
+    return options.precision;
+  }
 
   return Math.max(getNumberPrecision(text), getNumberPrecision(options.step));
 }
@@ -112,9 +126,15 @@ export function commitInputNumberValue(
   options: InputNumberValueOptions,
   typing: boolean
 ): MiniDecimal | undefined {
-  if (decimal.isNaN()) return undefined;
-  if (decimal.isEmpty()) return decimal;
-  if (typing) return isInputNumberValueInRange(decimal, options) ? decimal : undefined;
+  if (decimal.isNaN()) {
+    return undefined;
+  }
+  if (decimal.isEmpty()) {
+    return decimal;
+  }
+  if (typing) {
+    return isInputNumberValueInRange(decimal, options) ? decimal : undefined;
+  }
 
   if (!options.stringMode) {
     const next = commitInputNumber(normalizeInputNumber(decimal.toNumber()), options.native);

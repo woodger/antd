@@ -1,9 +1,13 @@
 /** Сверяет оформление Modal, сохраняя нативное центрирование и резерв места под close. */
 export function snapshotModalTheme() {
   const root = document.querySelector('.ant-modal');
-  if (!root) throw new Error('Modal root is missing');
+  if (!root) {
+    throw new Error('Modal root is missing');
+  }
   const css = (node: Element | null, keys: readonly string[]) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   };
@@ -43,14 +47,18 @@ export function snapshotModalTheme() {
 /** Все объявления component registration rule из официального UMD. */
 export function snapshotModalThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-modal-root');
-  if (!root) throw new Error('Modal source scope is missing');
+  if (!root) {
+    throw new Error('Modal source scope is missing');
+  }
   const declarations: Record<string, string> = {};
 
   for (const sheet of document.styleSheets) {
     for (const rule of sheet.cssRules) {
       if (!(rule instanceof CSSStyleRule)
         || !root.matches(rule.selectorText)
-        || ![...rule.style].some(name => name.startsWith(`--${prefix}-modal-`))) continue;
+        || ![...rule.style].some(name => name.startsWith(`--${prefix}-modal-`))) {
+        continue;
+      }
 
       for (const name of rule.style) {
         if (name.startsWith(`--${prefix}-`)) {
@@ -60,6 +68,8 @@ export function snapshotModalThemeVariables(prefix: string) {
     }
   }
 
-  if (Object.keys(declarations).length === 0) throw new Error('Modal declarations are missing');
+  if (Object.keys(declarations).length === 0) {
+    throw new Error('Modal declarations are missing');
+  }
   return declarations;
 }

@@ -64,7 +64,9 @@
       props.getContainer = () => stagingNode!;
       return props;
     }
-    if (!sample.local) return props;
+    if (!sample.local) {
+      return props;
+    }
 
     const target = alternate ? 'child' : sample.local;
     if (sample.local === 'undefined') props.getContainer = undefined;
@@ -95,8 +97,12 @@
         body: args[0] === document.body
       });
     });
-    if (target === 'empty-result') return undefined;
-    if (nested && args[0] && args[0] !== document.body) return args[0].parentElement ?? document.body;
+    if (target === 'empty-result') {
+      return undefined;
+    }
+    if (nested && args[0] && args[0] !== document.body) {
+      return args[0].parentElement ?? document.body;
+    }
     return target === 'shadow' ? shadow ?? document.body
       : document.getElementById(`panel-${target}`) ?? document.body;
   }

@@ -111,7 +111,9 @@
     return () => { nativeElement = undefined; };
   });
   $effect(() => {
-    if (!host) return;
+    if (!host) {
+      return;
+    }
     const controller = createAnchorRuntime(host, href => {
       activeLink = href;
     });
@@ -143,13 +145,19 @@
     ];
     const root = host;
     const indicator = ink;
-    if (!root || !indicator) return;
+    if (!root || !indicator) {
+      return;
+    }
     let active = true;
 
     void tick().then(() => {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       const link = root.querySelector<HTMLElement>('[data-ant-anchor-title-active]');
-      if (!link) return;
+      if (!link) {
+        return;
+      }
       indicator.style.top = direction === 'horizontal'
         ? ''
         : `${link.offsetTop + link.clientHeight / 2}px`;
@@ -165,7 +173,9 @@
     };
   });
   $effect(() => {
-    if (host) return connectFeedbackFocus(host);
+    if (host) {
+      return connectFeedbackFocus(host);
+    }
   });
 </script>
 

@@ -15,8 +15,10 @@ for (const source of [false, true]) {
         let original: string | null = null;
 
         for (const [index, frame] of sample.frames.entries()) {
-          if (index) await root.getByRole('button', { name: 'Next ref step', exact: true })
-            .evaluate(node => (node as HTMLButtonElement).click());
+          if (index) {
+            await root.getByRole('button', { name: 'Next ref step', exact: true })
+              .evaluate(node => (node as HTMLButtonElement).click());
+          }
           await expect(page.getByLabel('Ref step', { exact: true })).toHaveText(String(index));
           await expect.poll(() => root.evaluate(node => {
             const host = node as PopoverRefFixtureElement;
@@ -54,10 +56,12 @@ for (const source of [false, true]) {
               return api?.popupElement?.isConnected && api.popupElement.tagName === 'DIV'
                 && api.popupElement === document.querySelector('[data-ant-popover]');
             })).toBe(true);
-            if (index) expect(await root.evaluate(node => {
-              const host = node as PopoverRefFixtureElement;
-              return host.popupRef === host.savedPopupRef;
-            })).toBe(true);
+            if (index) {
+              expect(await root.evaluate(node => {
+                const host = node as PopoverRefFixtureElement;
+                return host.popupRef === host.savedPopupRef;
+              })).toBe(true);
+            }
 
             if (index === 1) {
               await page.getByLabel('Lifecycle draft', { exact: true }).fill('Kept ref draft');

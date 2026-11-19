@@ -72,7 +72,9 @@ export function virtualListScrollStep<Row, Key>(
   scrollTop: number,
   height: number
 ) {
-  if (index < 0) return { unknown: true, align };
+  if (index < 0) {
+    return { unknown: true, align };
+  }
   const target = Math.min(rows.length - 1, index);
   let itemTop = 0;
   let itemBottom = 0;
@@ -92,9 +94,17 @@ export function virtualListScrollStep<Row, Key>(
     remaining -= measured;
     if (remaining <= 0) break;
   }
-  if (align === 'top') return { top: itemTop - offset, unknown, align };
-  if (align === 'bottom') return { top: itemBottom - height + offset, unknown, align };
-  if (itemTop < scrollTop) return { unknown, align: 'top' as const };
-  if (itemBottom > scrollTop + height) return { unknown, align: 'bottom' as const };
+  if (align === 'top') {
+    return { top: itemTop - offset, unknown, align };
+  }
+  if (align === 'bottom') {
+    return { top: itemBottom - height + offset, unknown, align };
+  }
+  if (itemTop < scrollTop) {
+    return { unknown, align: 'top' as const };
+  }
+  if (itemBottom > scrollTop + height) {
+    return { unknown, align: 'bottom' as const };
+  }
   return { unknown, align };
 }

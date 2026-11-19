@@ -36,7 +36,9 @@ for (const sample of reference.cases) {
             };
             return Object.fromEntries(Object.entries(metrics).map(([name, fields]) => {
               const target = name === 'root' ? element : element.querySelector(selectors[name]);
-              if (!target) throw new Error(`Missing Pagination metric ${name}`);
+              if (!target) {
+                throw new Error(`Missing Pagination metric ${name}`);
+              }
               const css = getComputedStyle(target);
               return [name, Object.fromEntries(Object.keys(fields).map(key => [key,
                 css[key as keyof CSSStyleDeclaration]

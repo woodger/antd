@@ -21,7 +21,9 @@
   const model = createStatisticTimerModel(() => request, () => ({ onChange, onFinish }));
 
   function formatValue(formatValue: StatisticValue) {
-    if (model.now === undefined) return '-';
+    if (model.now === undefined) {
+      return '-';
+    }
 
     const target = new Date(formatValue).getTime();
     const now = Date.now();

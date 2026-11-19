@@ -13,13 +13,17 @@ for (const owner of readSelectTagCloseHandlesSSR().cases) for (const [serializer
       throw Error('Public SSR attempted ' + name);
     };
     const warn = vi.spyOn(console, 'warn'), error = vi.spyOn(console, 'error');
-    for (const name of ['setTimeout', 'setInterval', 'requestAnimationFrame', 'queueMicrotask', 'getComputedStyle']) vi.stubGlobal(
-      name,
-      resource(name)
-    );
-    for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() {
-      resource(name)();
-    } });
+    for (const name of ['setTimeout', 'setInterval', 'requestAnimationFrame', 'queueMicrotask', 'getComputedStyle']) {
+      vi.stubGlobal(
+        name,
+        resource(name)
+      );
+    }
+    for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) {
+      vi.stubGlobal(name, class { constructor() {
+        resource(name)();
+      } });
+    }
     try {
       expect(typeof window).toBe('undefined');
       expect(typeof document).toBe('undefined');

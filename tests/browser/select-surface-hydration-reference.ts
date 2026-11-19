@@ -36,7 +36,9 @@ interface SourceHeader {
 }
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 function guard(condition: unknown, message: string): asserts condition {
-  if (!condition) throw Error(`Invalid original surface hydration evidence: ${message}`);
+  if (!condition) {
+    throw Error(`Invalid original surface hydration evidence: ${message}`);
+  }
 }
 const bytes = readFileSync(new URL(
   './fixtures/ant-design-select-surface-style-history-hydration-reference.json',

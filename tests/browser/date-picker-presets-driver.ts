@@ -24,7 +24,9 @@ export async function settleDatePickerPresets(page: Page): Promise<DatePickerPre
     const actual = await page.evaluate(readDatePickerPresets);
     const encoded = JSON.stringify(actual);
     stable = encoded === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = encoded;
     prior = latest;
     latest = actual;
@@ -54,7 +56,9 @@ export async function actDatePickerPresets(page: Page, sample: DatePickerPresetS
   }
   else if (action.type === 'clear') {
     return page.locator('.' + prefix + '-clear').evaluate(node => {
-      if (!(node instanceof HTMLButtonElement)) throw Error('Actual Native clear button required');
+      if (!(node instanceof HTMLButtonElement)) {
+        throw Error('Actual Native clear button required');
+      }
       let observed: null | {
         type: string; isTrusted: boolean; actualCurrentTarget: boolean; targetTag: string | null;
       } = null;
@@ -74,7 +78,9 @@ export async function actDatePickerPresets(page: Page, sample: DatePickerPresetS
   }
   else if (action.type === 'preset-hover' || action.type === 'preset-click') {
     const slot = sample.presets.findIndex(preset => preset.id === action.value);
-    if (slot < 0) throw Error('Frozen preset id required');
+    if (slot < 0) {
+      throw Error('Frozen preset id required');
+    }
     const node = page.locator('.' + prefix + '-presets li').nth(slot);
     if (action.type === 'preset-hover') await node.hover();
     else await node.click();

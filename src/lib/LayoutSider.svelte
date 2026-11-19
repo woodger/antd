@@ -98,24 +98,34 @@
   $effect(() => {
     // Внутренний DOM не зависит от обновления публичного ref родителем.
     const node = body?.parentElement;
-    if (node) return connectFeedbackFocus(node);
+    if (node) {
+      return connectFeedbackFocus(node);
+    }
   });
   $effect.pre(() => {
     const element = body;
-    if (!zero || !element?.contains(element.ownerDocument.activeElement)) return;
+    if (!zero || !element?.contains(element.ownerDocument.activeElement)) {
+      return;
+    }
     const host = element.parentElement;
     const document = element.ownerDocument;
     void tick().then(() => {
-      if (!active || !host?.isConnected) return;
+      if (!active || !host?.isConnected) {
+        return;
+      }
       if (document.activeElement !== document.body
-        && !element.contains(document.activeElement)) return;
+        && !element.contains(document.activeElement)) {
+        return;
+      }
       if (button?.getClientRects().length)
         button.focus({ preventScroll: true }); else focusAfterNotice(host, true);
     });
   });
   $effect(() => {
     const key = breakpoint;
-    if (!key) return;
+    if (!key) {
+      return;
+    }
     return untrack(() => connectSiderBreakpoint(window, key, broken => {
       const previous = selected;
       below = broken;
@@ -126,7 +136,9 @@
   });
 
   function collapse(next: boolean, source: LayoutCollapseType) {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
     collapsed = next;
     onCollapse?.(next, source);
   }

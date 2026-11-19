@@ -1,9 +1,13 @@
 /** Сравнивает theme-owned CSS, сохраняя нативные controls и expanded-row viewport. */
 export function snapshotTableTheme() {
   const root = document.querySelector('#table-theme-control .ant-table-wrapper');
-  if (!root) throw new Error('Table theme root is missing');
+  if (!root) {
+    throw new Error('Table theme root is missing');
+  }
   const css = (node: Element | null, keys: readonly string[], pseudo?: string) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node, pseudo);
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   };

@@ -37,9 +37,13 @@
   }
   function find(list: readonly Record<string, unknown>[], value: unknown): Record<string, unknown> | undefined {
     for (const node of list) {
-      if (node[field] === value) return node;
+      if (node[field] === value) {
+        return node;
+      }
       const child = Array.isArray(node[children]) && find(node[children], value);
-      if (child) return child;
+      if (child) {
+        return child;
+      }
     }
   }
   function record(node?: Record<string, unknown>) {

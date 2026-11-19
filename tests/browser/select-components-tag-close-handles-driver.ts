@@ -37,7 +37,9 @@ export async function settleTagCloseHandles(page: Page): Promise<NativePoint> {
     });
     const point = { dom, owner } as unknown as NativePoint, next = JSON.stringify(point);
     stable = previous === next ? stable + 1 : 0;
-    if (stable >= 3) return point;
+    if (stable >= 3) {
+      return point;
+    }
     previous = next;
     prior = latest;
     latest = point;

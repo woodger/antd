@@ -10,10 +10,12 @@ import type { OwnStyleInitSSRState, SelectComponentsOwnStyleSample } from './sel
 function fields(attributes: string[][]) {
   return attributes.flatMap(([name, text]) => {
     if (name === 'class') text = text.split(/\s+/).filter(Boolean).filter(name => !/^(?:svelte-[\w-]+|s-[\w-]+)$/.test(name)).join(' ');
-    if (name === 'style') text = text.split(';').map(part => part.trim()).filter(Boolean).map(part => {
-      const colon = part.indexOf(':');
-      return part.slice(0, colon).trim() + ':' + part.slice(colon + 1).trim();
-    }).join(';');
+    if (name === 'style') {
+      text = text.split(';').map(part => part.trim()).filter(Boolean).map(part => {
+        const colon = part.indexOf(':');
+        return part.slice(0, colon).trim() + ':' + part.slice(colon + 1).trim();
+      }).join(';');
+    }
     return name === 'class' && !text ? [] : [[name, text]];
   });
 }
@@ -110,11 +112,13 @@ export function verifyOwnStyleSSRLayout(actualHTML: string, sourceHTML: string,
     );
     for (const [index, child] of source.children.entries()) {
       const current = actual.children[index];
-      if (typeof current === 'string' || typeof child === 'string') assert.deepEqual(
-        current,
-        child,
-        path + '/' + index + ' exact literal text'
-      );
+      if (typeof current === 'string' || typeof child === 'string') {
+        assert.deepEqual(
+          current,
+          child,
+          path + '/' + index + ' exact literal text'
+        );
+      }
       else compare(current, child, path + '/' + index, itemTitle);
     }
   };
@@ -128,19 +132,21 @@ export function verifyOwnStyleSSRLayout(actualHTML: string, sourceHTML: string,
 export function verifyOwnStyleSSR(html: string, actual: NativeOwnStyleOwner, refs: Record<string, boolean>, source: OwnStyleInitSSRState,
   sample: SelectComponentsOwnStyleSample, label: string) {
   for (const key of ['settings', 'model', 'open', 'query', 'profile', 'phase', 'authoredProvider', 'authoredInnerProvider',
-    'authoredInputProps', 'inputOwnKeys', 'inputOwnDescriptors', 'inputHasOwnStyle'] as const)
+    'authoredInputProps', 'inputOwnKeys', 'inputOwnDescriptors', 'inputHasOwnStyle'] as const) {
     assert.deepEqual(
       actual[key],
       (source.state as unknown as Record<string, unknown>)[key],
       label + '/' + key
     );
-  for (const key of ['rawSettings', 'rawAuthoredInputProps', 'rawAuthoredInputStyle'] as const)
+  }
+  for (const key of ['rawSettings', 'rawAuthoredInputProps', 'rawAuthoredInputStyle'] as const) {
     verifyIconGraph(
       actual[key],
       (source.state as unknown as Record<string, unknown>)[key],
       label + '/' + key,
       []
     );
+  }
   const a = normalizedSelectSurfaceAuthoredProps(actual.authoredProps), b = normalizedSelectSurfaceAuthoredProps(source.state.authoredProps);
   delete a.components;
   delete b.components;
@@ -174,11 +180,13 @@ export function verifyOwnStyleSSR(html: string, actual: NativeOwnStyleOwner, ref
   );
   assert.deepEqual(actual.calls, []);
   assert.deepEqual(actual.componentObservations ?? [], []);
-  for (const key of ['events', 'rawEvents', 'lifecycle', 'bodyActivity'] as const) assert.deepEqual(
-    actual[key],
-    source.state[key] ?? [],
-    label + '/' + key
-  );
+  for (const key of ['events', 'rawEvents', 'lifecycle', 'bodyActivity'] as const) {
+    assert.deepEqual(
+      actual[key],
+      source.state[key] ?? [],
+      label + '/' + key
+    );
+  }
   assert(Object.values(refs).every(Boolean), label + ' SSR has no live DOM refs');
   verifyOwnStyleSSRLayout(html, source.rawHtml, sample.control, label + '/content-layout');
   verifySelectIconSSRNodes(

@@ -35,7 +35,9 @@ export function getTreeDragChildren<Data extends object>(entry: TreeEntity<Data>
 export function resolveTreeDrop<Data extends object>(options: TreeDropOptions<Data>): TreeDropState | null {
   const { index, visible, dragNode, targetKey, clientX, clientY, rect, startX, indent, rtl } = options;
   let target = index.entities.get(String(targetKey));
-  if (!target || !visible.length) return null;
+  if (!target || !visible.length) {
+    return null;
+  }
 
   const rawLevelOffset = ((rtl ? -1 : 1) * (startX - clientX) - 12) / indent;
   const expanded = new Set(options.expandedKeys.filter(

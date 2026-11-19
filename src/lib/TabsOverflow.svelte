@@ -199,7 +199,9 @@
 
   $effect(() => {
     const surface = popup;
-    if (!surface) return;
+    if (!surface) {
+      return;
+    }
 
     const controller = createTabsPaneMotion(surface, (next, commit) => {
       if (commit) flushSync(() => { motionState = next; });
@@ -269,7 +271,9 @@
     const custom = customContainer;
     const cssText = overlayStyle;
     const inherited = themeStyle;
-    if (!surface || !source || !origin || !rendered) return;
+    if (!surface || !source || !origin || !rendered) {
+      return;
+    }
 
     return untrack(() => {
       // До первого открытия markup уже содержит начальные styles; props могли успеть измениться.
@@ -303,7 +307,9 @@
 
       let connected = true;
       const cleanup = () => {
-        if (!connected) return;
+        if (!connected) {
+          return;
+        }
         connected = false;
         for (const name of names) surface.style.removeProperty(name);
         for (const name of inheritedNames) surface.style.removeProperty(name);
@@ -322,7 +328,9 @@
     const surface = popup;
     const cssText = motionState.style;
     const authorStyle = overlayStyle;
-    if (!surface) return;
+    if (!surface) {
+      return;
+    }
 
     const css = surface.ownerDocument.createElement('span').style;
     const author = surface.ownerDocument.createElement('span').style;
@@ -353,7 +361,9 @@
     const requestedPoint = point;
     const authorStyle = overlayStyle;
     const match = matchWidth;
-    if (!surface || !source || !show || !rendered) return;
+    if (!surface || !source || !show || !rendered) {
+      return;
+    }
 
     return untrack(() => {
       const author = surface.ownerDocument.createElement('span').style;
@@ -432,7 +442,9 @@
             position.left, position.top, position.arrowX, position.arrowY,
             right, bottom, result?.right, result?.bottom
           ].join(':');
-          if (applied === key) return;
+          if (applied === key) {
+            return;
+          }
           applied = key;
           const css = surface.ownerDocument.createElement('span').style;
           css.left = right ? 'auto' : `${position.left}px`;
@@ -452,13 +464,19 @@
         },
         onPlacement: () => {},
         onDismiss: reason => {
-          if (!visible) return;
+          if (!visible) {
+            return;
+          }
           if (reason === 'escape') source.focus({ preventScroll: true });
           if (reason === 'escape' || actions.hide.has('click')
-            || actions.hide.has('contextMenu') || actions.hide.has('touch')) requestVisible(false);
+            || actions.hide.has('contextMenu') || actions.hide.has('touch')) {
+            requestVisible(false);
+          }
         },
         onKeydown: event => {
-          if (!visible || event.key !== 'Tab' || dropdownVisible === undefined) return;
+          if (!visible || event.key !== 'Tab' || dropdownVisible === undefined) {
+            return;
+          }
           const overlay = more && Object.hasOwn(more, 'overlay')
             ? popup?.querySelector(':scope > :not([data-ant-tabs-part="dropdown-arrow"])') : list;
           if (!focusAttempted && overlay instanceof HTMLElement) {
@@ -546,7 +564,9 @@
 
   function requestVisible(next: boolean) {
     cancelPending();
-    if (!active || next === visible) return;
+    if (!active || next === visible) {
+      return;
+    }
     triggerOpen = next;
     if (more && 'onVisibleChange' in more) more.onVisibleChange?.(next);
     else open = next;
@@ -554,7 +574,9 @@
 
   function hover(next: boolean, event: PointerEvent) {
     if (event.pointerType === 'touch' || touched || !supports('hover', next)
-      || !available && !visible) return;
+      || !available && !visible) {
+      return;
+    }
     cancelPending();
     if (next && event.currentTarget === button)
       mousePoint = { left: event.clientX, top: event.clientY };
@@ -571,14 +593,18 @@
   }
 
   function focusOption(key: string | undefined) {
-    if (!list || key === undefined) return;
+    if (!list || key === undefined) {
+      return;
+    }
     const option = Array.from(list.querySelectorAll<HTMLButtonElement>('[role="option"]'))
       .find(element => element.dataset.tabsOverflowKey === key && !element.disabled);
     option?.focus();
   }
 
   function handleKeydown(event: KeyboardEvent) {
-    if (event.defaultPrevented || event.isComposing) return;
+    if (event.defaultPrevented || event.isComposing) {
+      return;
+    }
     const fromMore = event.currentTarget === button;
     // Document-delegation Svelte видит ShadowRoot host в event.target.
     const target = event.composedPath()[0] ?? event.target;
@@ -590,10 +616,13 @@
       }
       return;
     }
-    if (target instanceof Element && target.closest('[data-ant-tabs-part="dropdown-menu-item-remove"]'))
+    if (target instanceof Element && target.closest('[data-ant-tabs-part="dropdown-menu-item-remove"]')) {
       return;
+    }
     if (!fromMore && target instanceof Element && target.closest('[role="option"]')
-      && (event.key === 'Enter' || event.key === ' ')) return;
+      && (event.key === 'Enter' || event.key === ' ')) {
+      return;
+    }
 
     if (fromMore && event.key === 'Escape') {
       open = false;
@@ -609,12 +638,13 @@
       event.preventDefault();
     }
     else if (!fromMore && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
-      if (menuKey === undefined)
+      if (menuKey === undefined) {
         focusOption(getTabsNavigationKey(
           items,
           undefined,
           event.key === 'ArrowLeft' ? 'last' : 'first'
         ));
+      }
       event.preventDefault();
     }
     else if (event.key === 'Enter' || event.key === ' ') {
@@ -640,7 +670,9 @@
   }
 
   function select(item: TabsItem, event: MouseEvent) {
-    if (item.disabled || event.defaultPrevented) return;
+    if (item.disabled || event.defaultPrevented) {
+      return;
+    }
     onSelect(item.key, event);
     if (active && !keyboardClick) open = false;
   }

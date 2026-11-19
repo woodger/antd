@@ -34,7 +34,9 @@
   let shown = $state(false);
   let popupPlacement = $state<TooltipPlacement>();
   const placementClass = $derived.by(() => {
-    if (!context.componentTheme.className) return undefined;
+    if (!context.componentTheme.className) {
+      return undefined;
+    }
 
     const horizontal = context.mode === 'horizontal' && !entry.parent;
     const side = popupPlacement ?? (horizontal ? 'bottom'
@@ -81,7 +83,9 @@
   function connectEvents(element: HTMLUListElement) {
     const keyboard = on(element, 'keydown', event => {
       const root = context.nativeElement;
-      if (!root || root.contains(element)) return;
+      if (!root || root.contains(element)) {
+        return;
+      }
 
       // Portal сохраняет currentTarget корневого callback и исходный target события.
       const descriptor = Object.getOwnPropertyDescriptor(event, 'currentTarget');
@@ -106,11 +110,15 @@
       mounted = true;
     if (context.getPopupContainer) containerUsed = true;
     if (context.mode !== 'inline' && (opened || context.forceRender)
-      || context.forceRender && context.getPopupContainer) popupMounted = true;
+      || context.forceRender && context.getPopupContainer) {
+      popupMounted = true;
+    }
   });
   $effect(() => context.registerHover(entry.key, hover));
   $effect(() => {
-    if (!opened || context.mode === 'inline' || !popup || !title) return;
+    if (!opened || context.mode === 'inline' || !popup || !title) {
+      return;
+    }
 
     const horizontal = context.mode === 'horizontal' && !entry.parent;
     return connectPopup(popup, title, {
@@ -147,7 +155,9 @@
   function hover(next: boolean) {
     childrenActive = next;
     cancel();
-    if (blocked || context.mode === 'inline' || context.trigger !== 'hover') return;
+    if (blocked || context.mode === 'inline' || context.trigger !== 'hover') {
+      return;
+    }
 
     timer = setTimeout(() => {
       timer = undefined;

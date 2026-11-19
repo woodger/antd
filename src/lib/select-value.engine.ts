@@ -51,7 +51,9 @@ export function selectValueDrafts(draft: unknown, multiple: boolean): readonly u
   const seen = new Set<SelectDataValue>();
   return values.filter(item => {
     const value = selectValueRaw(item);
-    if (value === undefined || seen.has(value)) return false;
+    if (value === undefined || seen.has(value)) {
+      return false;
+    }
     seen.add(value);
     return true;
   });
@@ -74,11 +76,15 @@ export function convertSelectValues<Value extends SelectDataValue, Data extends 
 }
 
 function sameMap<Key, Value>(before: ReadonlyMap<Key, Value>, next: ReadonlyMap<Key, Value>) {
-  if (before.size !== next.size) return false;
+  if (before.size !== next.size) {
+    return false;
+  }
   const previous = before.entries();
   for (const [key, value] of next) {
     const old = previous.next();
-    if (old.done || !Object.is(old.value[0], key) || !Object.is(old.value[1], value)) return false;
+    if (old.done || !Object.is(old.value[0], key) || !Object.is(old.value[1], value)) {
+      return false;
+    }
   }
   return true;
 }

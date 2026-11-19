@@ -18,13 +18,16 @@ const controlledSelect = new Map(['select-live-global', 'select-live-local'].map
  */
 export function popupWidthNativeView(view: View, id: string, action?: PopupWidthAction) {
   const before = controlledSelect.get(id);
-  if (!before || action?.type !== 'open') return view;
+  if (!before || action?.type !== 'open') {
+    return view;
+  }
   if (before.query !== 'Kept query' || before.editor?.value !== 'Kept query'
     || JSON.stringify(before.editor.caret) !== '[1,5]'
     || view.query !== '' || view.editor?.value !== ''
     || JSON.stringify(view.editor.caret) !== '[0,0]'
-    || JSON.stringify(view.events) !== JSON.stringify([...before.events, ['search', '']]))
+    || JSON.stringify(view.events) !== JSON.stringify([...before.events, ['search', '']])) {
     throw Error('The frozen Source controlled-width-close observation changed');
+  }
   return { ...view, query: 'Kept query', events: before.events,
     editor: { ...view.editor, value: action.value ? 'Kept query' : '',
       caret: action.value ? [10, 10] : [0, 0] } };

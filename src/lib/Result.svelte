@@ -101,7 +101,9 @@
       || typeof subTitle === 'function'
       || Array.isArray(title)
       || Array.isArray(subTitle);
-    if (node && interactive) return connectFeedbackFocus(node);
+    if (node && interactive) {
+      return connectFeedbackFocus(node);
+    }
   });
 </script>
 

@@ -5,7 +5,9 @@ export function breadcrumbConfigProfile(
   local = false,
   nodes: Pick<BreadcrumbConfig, 'separator' | 'dropdownIcon'> = {}
 ): BreadcrumbConfig {
-  if (!name || name === 'empty') return {};
+  if (!name || name === 'empty') {
+    return {};
+  }
   const prefix = local ? 'local' : 'context';
   const classes: BreadcrumbSlots = Object.fromEntries(
     ['root', 'item', 'separator'].map(key => [key, `${prefix}-breadcrumb-${key}`])

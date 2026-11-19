@@ -103,7 +103,9 @@
 
   $effect(() => {
     const node = nativeElement;
-    if (node) return connectFeedbackFocus(node);
+    if (node) {
+      return connectFeedbackFocus(node);
+    }
   });
   onDestroy(() => {
     for (const reset of resets)
@@ -119,13 +121,17 @@
     const currentPrefix = prefix;
     const axis = isVertical ? 'vertical' : config.direction;
     previousValue = next;
-    if (!element || previous === next) return;
+    if (!element || previous === next) {
+      return;
+    }
 
     return untrack(() => {
       const nodes = element.querySelectorAll<HTMLElement>('label[data-ant-segmented-item]');
       const from = nodes[currentItems.findIndex(item => item.value === previous)];
       const to = nodes[currentItems.findIndex(item => item.value === next)];
-      if (!from || !to) return;
+      if (!from || !to) {
+        return;
+      }
 
       return animateSegmentedThumb(element, from, to, axis === 'vertical', () => {
         moving = true;
@@ -139,7 +145,9 @@
     if (disabled
       || next === selected
       || !items.some(item => item.value === next
-        && !item.disabled)) return;
+        && !item.disabled)) {
+      return;
+    }
 
     value = next;
     onChange?.(next);
@@ -150,7 +158,9 @@
       || disabled
       || !['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'].includes(
         event.key
-      )) return;
+      )) {
+      return;
+    }
 
     event.preventDefault();
     const next = offsetSegmentedValue(
@@ -158,27 +168,34 @@
       selected,
       event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1
     );
-    if (next === undefined) return;
+    if (next === undefined) {
+      return;
+    }
 
     const root = nativeElement;
     choose(next);
     await tick();
-    if (root?.isConnected && root === nativeElement)
+    if (root?.isConnected && root === nativeElement) {
       root
         .querySelectorAll<HTMLInputElement>('input')[items.findIndex(
           item => item.value === next
         )]
         ?.focus();
+    }
   }
 
   function handleReset(event: Event) {
     const root = nativeElement;
     if (!root
-      || ![...root.querySelectorAll('input')].some(input => input.form === event.target)) return;
+      || ![...root.querySelectorAll('input')].some(input => input.form === event.target)) {
+      return;
+    }
 
     const reset = setTimeout(() => {
       resets.delete(reset);
-      if (!root.isConnected || root !== nativeElement) return;
+      if (!root.isConnected || root !== nativeElement) {
+        return;
+      }
 
       root.querySelectorAll<HTMLInputElement>('input').forEach((input, index) => {
         input.checked = items[index]?.value === selected;

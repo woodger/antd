@@ -42,7 +42,9 @@ async function settle(page: Page) {
     const projection = await page.evaluate(readPopupOverflow);
     const key = JSON.stringify(projection);
     equal = key === previous ? equal + 1 : 0;
-    if (equal >= 3) return projection;
+    if (equal >= 3) {
+      return projection;
+    }
     previous = key;
   }
   throw Error('Native popupOverflow smoke projection did not settle');

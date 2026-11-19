@@ -18,9 +18,11 @@ for (const sample of reference.cases as TagGroupCase[]) {
     let changed = false;
     for (const [index, step] of (sample.steps ?? []).entries()) {
       if ('patch' in step) {
-        if (changed !== step.patch) await page.getByRole('button', {
-          name: 'Change tag group props'
-        }).click();
+        if (changed !== step.patch) {
+          await page.getByRole('button', {
+            name: 'Change tag group props'
+          }).click();
+        }
         changed = step.patch;
         await page.mouse.move(0, 0);
       }
@@ -29,9 +31,11 @@ for (const sample of reference.cases as TagGroupCase[]) {
           'click' in step ? step.click : step.space
         );
         if ('click' in step) await item.evaluate((node: HTMLButtonElement) => node.click());
-        else await item.evaluate(node => node.dispatchEvent(new KeyboardEvent('keydown', {
-          key: ' ', bubbles: true, cancelable: true
-        })));
+        else {
+          await item.evaluate(node => node.dispatchEvent(new KeyboardEvent('keydown', {
+            key: ' ', bubbles: true, cancelable: true
+          })));
+        }
       }
 
       await expect.poll(snapshot).toEqual(sample.snapshots[index + 1]);

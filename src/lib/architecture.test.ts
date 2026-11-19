@@ -8,7 +8,9 @@ const sourceRoot = fileURLToPath(new URL('.', import.meta.url));
 function sourceFiles(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
     const path = join(directory, entry.name);
-    if (entry.isDirectory()) return sourceFiles(path);
+    if (entry.isDirectory()) {
+      return sourceFiles(path);
+    }
     return /\.(?:ts|svelte)$/.test(entry.name) && !entry.name.endsWith('.test.ts') ? [path] : [];
   });
 }

@@ -76,7 +76,9 @@
 
   $effect(() => {
     const button = nativeElement;
-    if (!button) return;
+    if (!button) {
+      return;
+    }
 
     ref = button;
 
@@ -115,11 +117,15 @@
   }
 
   function handleClick(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
-    if (resolvedDisabled) return;
+    if (resolvedDisabled) {
+      return;
+    }
 
     props.onclick?.(event);
 
-    if (!alive || event.defaultPrevented) return;
+    if (!alive || event.defaultPrevented) {
+      return;
+    }
 
     const next = !resolvedChecked;
     change(next, event);
@@ -140,11 +146,15 @@
   }
 
   function handleBlur(event: FocusEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     const callbacks = blurCallbacks;
     field?.onBlur();
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     callbacks.onBlur?.(event);
     if (alive) callbacks.onblur?.(event);
@@ -153,13 +163,17 @@
   function handleReset(event: Event) {
     const button = control;
 
-    if (!button || event.target !== button.form) return;
+    if (!button || event.target !== button.form) {
+      return;
+    }
 
     // Отмена reset учитывается после всех обработчиков, включая window.
     const reset = setTimeout(() => {
       resets.delete(reset);
 
-      if (event.defaultPrevented || !button.isConnected || button !== control) return;
+      if (event.defaultPrevented || !button.isConnected || button !== control) {
+        return;
+      }
 
       setChecked(initialDefault);
     }, 0);

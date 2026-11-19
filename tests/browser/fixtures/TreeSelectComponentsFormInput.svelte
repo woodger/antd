@@ -24,14 +24,20 @@
   $effect(() => {
     const input = editor, nativeElement = wrapper, instance = control;
     const root = registerRoot, registeredInput = registerInput;
-    if (!nativeElement || !instance) return;
-    if (root) return root({
-      nativeElement,
-      focus: options => instance.focus(options),
-      blur: () => instance.blur()
-    });
-    if (registeredInput && input) return registeredInput({ inputElement: input, nativeElement,
-      focus: options => instance.focus(options), blur: () => instance.blur() });
+    if (!nativeElement || !instance) {
+      return;
+    }
+    if (root) {
+      return root({
+        nativeElement,
+        focus: options => instance.focus(options),
+        blur: () => instance.blur()
+      });
+    }
+    if (registeredInput && input) {
+      return registeredInput({ inputElement: input, nativeElement,
+        focus: options => instance.focus(options), blur: () => instance.blur() });
+    }
   });
 </script>
 

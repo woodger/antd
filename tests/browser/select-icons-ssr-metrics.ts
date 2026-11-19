@@ -42,7 +42,9 @@ export function readSelectIconsSSR(html: string) {
   const feedback = (e: Element) => {
     let parent = parents.get(e);
     while (parent) {
-      if (parent.attributes.some(([key]) => key === 'data-form-feedback-glyph')) return true;
+      if (parent.attributes.some(([key]) => key === 'data-form-feedback-glyph')) {
+        return true;
+      }
       parent = parents.get(parent);
     }
     return false;

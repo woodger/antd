@@ -30,9 +30,11 @@
       values = { ...values, ...patch };
     }
     if (action?.kind === 'unmount') mounted = false;
-    if (action?.kind === 'end') current()?.dispatchEvent(new AnimationEvent('animationend', {
-      bubbles: true, animationName: 'antZoomBadgeOut'
-    }));
+    if (action?.kind === 'end') {
+      current()?.dispatchEvent(new AnimationEvent('animationend', {
+        bubbles: true, animationName: 'antZoomBadgeOut'
+      }));
+    }
     if (action?.kind === 'inner-end') {
       surface?.querySelector('.ant-scroll-number-only')?.dispatchEvent(new TransitionEvent(
         'transitionend', { bubbles: true, propertyName: 'transform' }

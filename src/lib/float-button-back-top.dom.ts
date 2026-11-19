@@ -21,23 +21,31 @@ export function createBackTopRuntime(
   let progress = 0;
   let visible = false;
   function metrics(node: BackTopTarget | null) {
-    if (!node) return { top: 0, height: 0, client: 0 };
-    if ('window' in node) return {
-      top: node.pageYOffset,
-      height: node.document.documentElement.scrollHeight,
-      client: node.document.documentElement.clientHeight
-    };
+    if (!node) {
+      return { top: 0, height: 0, client: 0 };
+    }
+    if ('window' in node) {
+      return {
+        top: node.pageYOffset,
+        height: node.document.documentElement.scrollHeight,
+        client: node.document.documentElement.clientHeight
+      };
+    }
     const element = 'documentElement' in node ? node.documentElement : node;
     return { top: element.scrollTop, height: element.scrollHeight, client: element.clientHeight };
   }
   function publish(nextVisible: boolean, nextProgress: number) {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
     visible = nextVisible;
     progress = nextProgress;
     notify({ visible, progress });
   }
   function sync() {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
     const state = metrics(target);
     publish(
       state.top >= options.visibilityHeight,
@@ -45,20 +53,24 @@ export function createBackTopRuntime(
     );
   }
   function scheduleScroll() {
-    if (active && scrollFrameId === undefined)
+    if (active && scrollFrameId === undefined) {
       scrollFrameId = view.requestAnimationFrame(() => {
         scrollFrameId = undefined;
         sync();
       });
+    }
   }
   function scheduleResize() {
-    if (active && options.showProgress && resizeFrameId === undefined)
+    if (active && options.showProgress && resizeFrameId === undefined) {
       resizeFrameId = view.requestAnimationFrame(() => {
         resizeFrameId = undefined;
-        if (!active) return;
+        if (!active) {
+          return;
+        }
         const state = metrics(options.getTarget());
         publish(visible, backTopProgress(state.top, state.height, state.client));
       });
+    }
   }
   function cancelMeasurement() {
     if (scrollFrameId !== undefined)
@@ -76,7 +88,9 @@ export function createBackTopRuntime(
   }
   return {
     configure(next: BackTopOptions) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       cancelMeasurement();
       target?.removeEventListener('scroll', scheduleScroll);
       view.removeEventListener('resize', scheduleResize);
@@ -88,17 +102,23 @@ export function createBackTopRuntime(
       sync();
     },
     scrollToTop(duration: number) {
-      if (!active || !options) return;
+      if (!active || !options) {
+        return;
+      }
       const container = options.getTarget();
-      if (!container) return;
+      if (!container) {
+        return;
+      }
       cancelAnimation();
       const top = metrics(container).top;
       const scroll = (value: number) => {
         if ('window' in container)
           container.scrollTo(container.pageXOffset, value);
-        else ('documentElement' in container
-          ? container.documentElement
-          : container).scrollTop = value;
+        else {
+          ('documentElement' in container
+            ? container.documentElement
+            : container).scrollTop = value;
+        }
       };
       if (view.matchMedia('(prefers-reduced-motion: reduce)').matches || duration <= 0) {
         scroll(0);
@@ -107,7 +127,9 @@ export function createBackTopRuntime(
       const started = Date.now();
       const revision = generation;
       const frame = () => {
-        if (!active || generation !== revision) return;
+        if (!active || generation !== revision) {
+          return;
+        }
         const elapsed = Date.now() - started;
         scroll(scrollFrame(elapsed, top, 0, duration));
         if (elapsed < duration)

@@ -43,7 +43,9 @@
 
   async function capture() {
     const ref = instance;
-    if (!ref) throw Error('Upload ref is unavailable after mount');
+    if (!ref) {
+      throw Error('Upload ref is unavailable after mount');
+    }
     captured = [];
     const raw = Object.fromEntries(['seed', 'a', 'b', 'c', 'unknown']
       .map(name => [name, makeFile(name)]));

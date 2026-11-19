@@ -49,7 +49,9 @@
   $effect(() => {
     const callback = itemRef;
     const node = nativeElement;
-    if (!callback || !node) return;
+    if (!callback || !node) {
+      return;
+    }
 
     untrack(() => callback(node));
     return () => { untrack(() => callback(null)); };

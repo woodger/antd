@@ -43,21 +43,35 @@ declare global {
 // Decode the frozen public model, never a rendered label. Labels may be snippets,
 // arrays or false; successful native form controls always submit raw values.
 function rawFormValues(model: unknown): string[] {
-  if (!model || typeof model !== 'object') throw Error('Expected an encoded Select model');
+  if (!model || typeof model !== 'object') {
+    throw Error('Expected an encoded Select model');
+  }
   const type = Reflect.get(model, 'type');
-  if (type === 'undefined' || type === 'null') return [];
-  if (type === 'string') return [String(Reflect.get(model, 'value'))];
-  if (type === 'number') return [String(Number(Reflect.get(model, 'value')))];
+  if (type === 'undefined' || type === 'null') {
+    return [];
+  }
+  if (type === 'string') {
+    return [String(Reflect.get(model, 'value'))];
+  }
+  if (type === 'number') {
+    return [String(Number(Reflect.get(model, 'value')))];
+  }
   if (type === 'array') {
     const items: unknown = Reflect.get(model, 'items');
-    if (!Array.isArray(items)) throw Error('Expected an encoded Select model array');
+    if (!Array.isArray(items)) {
+      throw Error('Expected an encoded Select model array');
+    }
     return items.flatMap(rawFormValues);
   }
   if (type === 'object') {
     const entries: unknown = Reflect.get(model, 'entries');
-    if (!Array.isArray(entries)) throw Error('Expected an encoded labeled Select model');
+    if (!Array.isArray(entries)) {
+      throw Error('Expected an encoded labeled Select model');
+    }
     const value: unknown = entries.find(entry => Array.isArray(entry) && entry[0] === 'value');
-    if (!Array.isArray(value)) throw Error('A labeled Select model must contain its raw value');
+    if (!Array.isArray(value)) {
+      throw Error('A labeled Select model must contain its raw value');
+    }
     return rawFormValues(value[1]);
   }
   throw Error(`Unexpected encoded Select model kind: ${String(type)}`);
@@ -154,7 +168,9 @@ for (const id of ids) {
       const schedule = browser.setTimeout.bind(browser);
       const clear = browser.clearTimeout.bind(browser);
       browser.setTimeout = (handler, timeout, ...args) => {
-        if (typeof handler !== 'function') throw Error('Expected a function hydration timer');
+        if (typeof handler !== 'function') {
+          throw Error('Expected a function hydration timer');
+        }
         const timer = schedule(() => {
           timers.delete(timer);
           handler(...args);
@@ -270,7 +286,9 @@ for (const id of ids) {
       const pending = await page.evaluate(async () => {
         const state = window.selectValueHydration!;
         const popup = document.querySelector<HTMLElement>('.ant-select-dropdown')!;
-        if (!popup?.isConnected) throw Error('Disposal must interrupt a connected open popup');
+        if (!popup?.isConnected) {
+          throw Error('Disposal must interrupt a connected open popup');
+        }
         const snapshot = (): DisposeSnapshot => ({ state: JSON.parse(JSON.stringify(state.read())),
           rootConnected: state.root.isConnected, editorConnected: state.editor.isConnected,
           ownerConnected: state.owner.isConnected, popupConnected: popup.isConnected });

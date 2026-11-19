@@ -37,12 +37,16 @@ export async function settleNativeSelectComponents(page: Page, flow: boolean): P
         'selectcomponentscapture',
         { detail }
       ));
-      if (!detail.read) throw Error('Actual mounted component owner missing');
+      if (!detail.read) {
+        throw Error('Actual mounted component owner missing');
+      }
       return detail.read();
     });
     const point = { icons, owner }, key = JSON.stringify(point);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return point;
+    if (stable >= 3) {
+      return point;
+    }
     previous = key;
   }
   throw Error('Native component owner did not settle');
@@ -50,7 +54,9 @@ export async function settleNativeSelectComponents(page: Page, flow: boolean): P
 function compilerClass(name: string) { return /^(?:svelte-[\w-]+|s-[\w-]+)$/.test(name); }
 function attrs(node: SelectIconNode) {
   return node.attributes.flatMap(([key, value]) => {
-    if (key !== 'class') return [[key, value]];
+    if (key !== 'class') {
+      return [[key, value]];
+    }
     const classes = value.split(/\s+/).filter(Boolean).filter(name => !compilerClass(name));
     return classes.length ? [[key, classes.join(' ')]] : [];
   });
@@ -100,28 +106,38 @@ export function verifySelectComponentsNode(
   label: string
 ) {
   assert.equal(Boolean(actual), Boolean(source), label + ' physical presence');
-  if (!actual || !source) return;
+  if (!actual || !source) {
+    return;
+  }
   assert.equal(actual.tag, source.tag, label + ' tag');
   verifySelectComponentsDOMAttributes(actual, source, attrs(actual), attrs(source), label);
   for (const key of ['connected', 'text', 'css', 'box', 'geometryBoundary', 'value', 'caret', 'focused',
-    'styleAttribute', 'cssText', 'inlineProperties'] as const) assert.deepEqual(
+    'styleAttribute', 'cssText', 'inlineProperties'] as const) {
+    assert.deepEqual(
       actual[key],
       source[key],
       label + '/' + key
     );
+  }
 }
 const focusEvents = new Set(['public-focus', 'public-blur', 'origin-root-focus', 'origin-root-blur']);
 /** Native root callbacks use bubbling focusin/out, React exposes focus/blur. */
 function focusEvent(value: unknown) {
   const event = decodeSelectSurface(selectSurfaceEventValue(value));
-  if (!Array.isArray(event) || !focusEvents.has(String(event[0])) || !event[1] || typeof event[1] !== 'object') return event;
+  if (!Array.isArray(event) || !focusEvents.has(String(event[0])) || !event[1] || typeof event[1] !== 'object') {
+    return event;
+  }
   const info = event[1] as Record<string, unknown>;
-  if (info.type !== 'focus' && info.type !== 'blur') return event;
+  if (info.type !== 'focus' && info.type !== 'blur') {
+    return event;
+  }
   return [event[0], { ...info, type: info.type === 'focus' ? 'focusin' : 'focusout' }, ...event.slice(2)];
 }
 function sourceFocusGraph(value: unknown, encodedValue: unknown) {
   const event = decodeSelectSurface(encodedValue);
-  if (!Array.isArray(event) || !focusEvents.has(String(event[0]))) return value;
+  if (!Array.isArray(event) || !focusEvents.has(String(event[0]))) {
+    return value;
+  }
   const graph = structuredClone(value) as {
     root: { ref: number };
     objects: Array<{ id: number; properties: Array<{ key: unknown; value?: unknown }> }>
@@ -145,11 +161,15 @@ const alias: Record<string, string> = { class: 'className', readonly: 'readOnly'
 function fn(value: unknown) { return Boolean(value && typeof value === 'object' && '$' in value
   && (value.$ === 'function' || value.$ === 'authored')); }
 function cssObject(value: unknown) {
-  if (typeof value === 'string') return value.split(';').map(p => p.trim()).filter(Boolean).map(p => {
-    const colon = p.indexOf(':');
-    return [p.slice(0, colon).trim(), p.slice(colon + 1).trim()];
-  });
-  if (!value || typeof value !== 'object') return [];
+  if (typeof value === 'string') {
+    return value.split(';').map(p => p.trim()).filter(Boolean).map(p => {
+      const colon = p.indexOf(':');
+      return [p.slice(0, colon).trim(), p.slice(colon + 1).trim()];
+    });
+  }
+  if (!value || typeof value !== 'object') {
+    return [];
+  }
   return Object.entries(value).filter(([, v]) => v !== undefined && v !== null && v !== '').map(([name, v]) => [
     name.startsWith('--') ? name : name.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase()),
     typeof v === 'number' && !name.startsWith('--') && !['opacity', 'lineHeight', 'zIndex', 'flex'].includes(name) ? v + 'px' : String(v)
@@ -226,7 +246,9 @@ export function verifySelectComponentsObservations(
   const sourceComponent = (call: SelectSurfaceProducerCall) => /^components\.(root|input)$/.test(call.kind);
   const matches = (observation: ComponentsObservation, call: SelectSurfaceProducerCall) => {
     const result = decodeSelectSurface(call.result) as { role?: { node?: string } };
-    if (call.kind !== 'components.' + observation.slot || result.role?.node !== 'component-' + observation.slot + ':' + observation.kind + '-result') return false;
+    if (call.kind !== 'components.' + observation.slot || result.role?.node !== 'component-' + observation.slot + ':' + observation.kind + '-result') {
+      return false;
+    }
     try {
       verifySelectComponentsAttributes(observation, call, label);
       return true;
@@ -235,21 +257,27 @@ export function verifySelectComponentsObservations(
       return false;
     }
   };
-  for (const call of source) if (sourceComponent(call))
-    assert(
-      actual.some(observation => matches(observation, call)),
-      label + ' every whole Source component argument has an actual Snippet context'
-    );
-  for (const observation of actual)
+  for (const call of source) {
+    if (sourceComponent(call)) {
+      assert(
+        actual.some(observation => matches(observation, call)),
+        label + ' every whole Source component argument has an actual Snippet context'
+      );
+    }
+  }
+  for (const observation of actual) {
     assert(
       source.some(call => sourceComponent(call) && matches(observation, call)),
       label + ' every whole Native Snippet context belongs to a Source invocation'
     );
-  if (ssr) assert.equal(
-    actual.length,
-    source.reduce((count, call) => count + Number(sourceComponent(call)), 0),
-    label + ' exact SSR component invocation count'
-  );
+  }
+  if (ssr) {
+    assert.equal(
+      actual.length,
+      source.reduce((count, call) => count + Number(sourceComponent(call)), 0),
+      label + ' exact SSR component invocation count'
+    );
+  }
 }
 /** No source data is altered; every complete actual point stays in the attachment. */
 export function verifySelectComponentsPoint(actual: NativeComponentsPoint, source: ComponentsPoint, owner: ComponentsCase,
@@ -265,11 +293,13 @@ export function verifySelectComponentsPoint(actual: NativeComponentsPoint, sourc
   };
   check('owner', () => {
     assert.equal(actual.owner.alive, true);
-    for (const key of ['model', 'open', 'query', 'settings'] as const) assert.deepEqual(
-      actual.owner[key],
-      source.owner[key],
-      label + '/' + key
-    );
+    for (const key of ['model', 'open', 'query', 'settings'] as const) {
+      assert.deepEqual(
+        actual.owner[key],
+        source.owner[key],
+        label + '/' + key
+      );
+    }
     verifySelectSurfaceEventGraph(
       actual.owner.rawModel,
       source.owner.rawModel,
@@ -313,12 +343,13 @@ export function verifySelectComponentsPoint(actual: NativeComponentsPoint, sourc
     assert.equal(actual.owner.rawEvents.length, source.owner.rawEventCount);
     // Every raw graph retains descriptors/order/aliases. Only the single type
     // scalar in the named root focus payload uses the native bubbling spelling.
-    for (const [index, event] of actual.owner.rawEvents.entries())
+    for (const [index, event] of actual.owner.rawEvents.entries()) {
       verifySelectSurfaceEventGraph(
         event,
         sourceFocusGraph(owner.rawEvents[index], owner.events[index]),
         label + '/raw-event' + index
       );
+    }
   });
   check(
     'editor',
@@ -332,31 +363,39 @@ export function verifySelectComponentsPoint(actual: NativeComponentsPoint, sourc
     slot: string;
     kind: string
   } };
-  if (settings.components.slot === 'root') check(
-    'root',
-    () => verifySelectComponentsNode(
-      actual.icons.current.root,
-      source.icons.current.root,
-      label + '/root'
-    )
-  );
-  else check('retained-default-root-box', () => {
-    assert.equal(actual.icons.current.root?.tag, source.icons.current.root?.tag);
-    assert.deepEqual(actual.icons.current.root?.box, source.icons.current.root?.box);
-  });
-  if (settings.components.kind === 'function' || settings.components.kind.startsWith('composite')) check('mapped-component-props', () => {
-    const call = owner.producerCalls.slice(0, source.owner.producerCount).findLast(call => call.kind === 'components.' + settings.components.slot);
-    assert(call, label + ' actual Original component call exists');
-    const observation = actual.owner.componentObservations.findLast(o => o.slot === settings.components.slot && o.kind === settings.components.kind);
-    assert(observation, label + ' actual Native Snippet context exists');
-    verifySelectComponentsAttributes(observation, call, label);
-  });
-  check('root-editor-identity', () => {
-    for (const key of ['root', 'editor'] as const) assert.equal(
-      actual.icons.sameAsOriginal[key],
-      source.icons.sameAsOriginal[key],
-      label + '/' + key
+  if (settings.components.slot === 'root') {
+    check(
+      'root',
+      () => verifySelectComponentsNode(
+        actual.icons.current.root,
+        source.icons.current.root,
+        label + '/root'
+      )
     );
+  }
+  else {
+    check('retained-default-root-box', () => {
+      assert.equal(actual.icons.current.root?.tag, source.icons.current.root?.tag);
+      assert.deepEqual(actual.icons.current.root?.box, source.icons.current.root?.box);
+    });
+  }
+  if (settings.components.kind === 'function' || settings.components.kind.startsWith('composite')) {
+    check('mapped-component-props', () => {
+      const call = owner.producerCalls.slice(0, source.owner.producerCount).findLast(call => call.kind === 'components.' + settings.components.slot);
+      assert(call, label + ' actual Original component call exists');
+      const observation = actual.owner.componentObservations.findLast(o => o.slot === settings.components.slot && o.kind === settings.components.kind);
+      assert(observation, label + ' actual Native Snippet context exists');
+      verifySelectComponentsAttributes(observation, call, label);
+    });
+  }
+  check('root-editor-identity', () => {
+    for (const key of ['root', 'editor'] as const) {
+      assert.equal(
+        actual.icons.sameAsOriginal[key],
+        source.icons.sameAsOriginal[key],
+        label + '/' + key
+      );
+    }
   });
   check('form-data', () => {
     if ('formData' in source.icons) assert.deepEqual(actual.icons.formData, source.icons.formData);
@@ -367,10 +406,12 @@ export function verifySelectComponentsPoint(actual: NativeComponentsPoint, sourc
       assert.equal(actual.icons.current.clear, null);
       assert.equal(actual.owner.bodyActivity.length, 0);
     }
-    else if ('bodyActivity' in source.owner) assert.equal(
-      actual.owner.bodyActivity.length > 0,
-      Boolean(source.owner.bodyActivity?.length)
-    );
+    else if ('bodyActivity' in source.owner) {
+      assert.equal(
+        actual.owner.bodyActivity.length > 0,
+        Boolean(source.owner.bodyActivity?.length)
+      );
+    }
   });
   return failures;
 }

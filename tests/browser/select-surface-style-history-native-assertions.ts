@@ -44,7 +44,9 @@ export async function settleNativeStyleHistory(page: Page) {
     const point = await readNativeStyleHistory(page);
     const key = JSON.stringify(point);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return point;
+    if (stable >= 3) {
+      return point;
+    }
     previous = key;
   }
   throw Error('Native style history did not settle');

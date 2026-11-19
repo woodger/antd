@@ -23,18 +23,28 @@ export function createSelectSurfaceRecorder() {
   const encode = value => {
     const seen = new Map();
     function walk(item) {
-      if (item === null || !['object', 'function'].includes(typeof item)) return scalar(item);
-      if (roles.has(item)) return { $: 'authored', role: roles.get(item) };
-      if (typeof Node !== 'undefined' && item instanceof Node) return { $: 'dom-node',
-        nodeType: item.nodeType, nodeName: item.nodeName,
-        attributes: item.nodeType === 1 ? [...item.attributes].map(attr => [attr.name, attr.value]) : null };
-      if (seen.has(item)) return { $: 'alias', index: seen.get(item) };
+      if (item === null || !['object', 'function'].includes(typeof item)) {
+        return scalar(item);
+      }
+      if (roles.has(item)) {
+        return { $: 'authored', role: roles.get(item) };
+      }
+      if (typeof Node !== 'undefined' && item instanceof Node) {
+        return { $: 'dom-node',
+          nodeType: item.nodeType, nodeName: item.nodeName,
+          attributes: item.nodeType === 1 ? [...item.attributes].map(attr => [attr.name, attr.value]) : null };
+      }
+      if (seen.has(item)) {
+        return { $: 'alias', index: seen.get(item) };
+      }
       seen.set(item, seen.size);
-      if (typeof item === 'function') return {
-        $: 'function',
-        name: Object.getOwnPropertyDescriptor(item, 'name')?.value ?? '',
-        own: own(item)
-      };
+      if (typeof item === 'function') {
+        return {
+          $: 'function',
+          name: Object.getOwnPropertyDescriptor(item, 'name')?.value ?? '',
+          own: own(item)
+        };
+      }
       const properties = Reflect.ownKeys(item).map(name => {
         const d = Object.getOwnPropertyDescriptor(item, name);
         return { key: key(name), ...('value' in d ? { value: walk(d.value) }
@@ -47,9 +57,13 @@ export function createSelectSurfaceRecorder() {
   const raw = value => {
     const seen = new Set(), objects = [];
     function walk(item, opaqueOwner = false) {
-      if (item === null || !['object', 'function'].includes(typeof item)) return scalar(item);
+      if (item === null || !['object', 'function'].includes(typeof item)) {
+        return scalar(item);
+      }
       const identity = id(item);
-      if (seen.has(item)) return { ref: identity };
+      if (seen.has(item)) {
+        return { ref: identity };
+      }
       seen.add(item);
       const node = { id: identity, type: typeof item, array: Array.isArray(item),
         authoredRole: roles.has(item) ? roles.get(item) : null };

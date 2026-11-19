@@ -108,7 +108,9 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       || entry.duration === 0
       || (entry.pauseOnHover
         && entry.hovered)
-      || entry.focused) return;
+      || entry.focused) {
+      return;
+    }
 
     const currentClock = clock;
     const id = entry.notice.id;
@@ -120,7 +122,9 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       if (entries.get(id) !== entry
         || entry.notice.version !== version
         || entry.timerVersion !== timerVersion
-        || entry.notice.closing) return;
+        || entry.notice.closing) {
+        return;
+      }
 
       entry.cancel = undefined;
       entry.remaining = Math.max(
@@ -134,7 +138,9 @@ export function createNoticeQueue<Config extends NoticeConfig>(
 
   function complete(id: number, version: number) {
     const entry = entries.get(id);
-    if (!entry || !entry.notice.closing || entry.notice.version !== version) return;
+    if (!entry || !entry.notice.closing || entry.notice.version !== version) {
+      return;
+    }
 
     stop(entry);
     entries.delete(id);
@@ -170,7 +176,9 @@ export function createNoticeQueue<Config extends NoticeConfig>(
           complete(entry.notice.id, entry.notice.version);
       }
     }
-    if (errors.length) throw errors[0];
+    if (errors.length) {
+      throw errors[0];
+    }
   }
 
   function handle(entry: Entry<Config>): NoticeHandle {
@@ -255,13 +263,17 @@ export function createNoticeQueue<Config extends NoticeConfig>(
         return visible;
       },
       connect(nextClock: NoticeClock) {
-        if (state === 'mounted') throw new Error(connectionError);
+        if (state === 'mounted') {
+          throw new Error(connectionError);
+        }
 
         state = 'mounted';
         clock = nextClock;
         let connected = true;
         return () => {
-          if (!connected) return;
+          if (!connected) {
+            return;
+          }
 
           connected = false;
           state = 'detached';
@@ -277,7 +289,9 @@ export function createNoticeQueue<Config extends NoticeConfig>(
         };
       },
       setVisible(next: boolean) {
-        if (visible === next) return;
+        if (visible === next) {
+          return;
+        }
 
         visible = next;
         for (const entry of entries.values()) {
@@ -294,7 +308,9 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       },
       hover(id: number, next: boolean) {
         const entry = entries.get(id);
-        if (!entry || entry.notice.closing || entry.hovered === next) return;
+        if (!entry || entry.notice.closing || entry.hovered === next) {
+          return;
+        }
 
         entry.hovered = next;
         if (entry.pauseOnHover && next)
@@ -302,7 +318,9 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       },
       focus(id: number, next: boolean) {
         const entry = entries.get(id);
-        if (!entry || entry.notice.closing || entry.focused === next) return;
+        if (!entry || entry.notice.closing || entry.focused === next) {
+          return;
+        }
 
         entry.focused = next;
         if (next)

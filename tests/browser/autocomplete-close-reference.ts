@@ -97,8 +97,10 @@ assert.equal(
   '8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa'
 );
 assert(header.archives.every(item => item.byteEqual));
-for (const [path, sha] of Object.entries(header.inputPins)) if (path.startsWith('tests/'))
-  assert.equal(hash(readFileSync(new URL('../../' + path, import.meta.url))), sha, path);
+for (const [path, sha] of Object.entries(header.inputPins)) {
+  if (path.startsWith('tests/'))
+    assert.equal(hash(readFileSync(new URL('../../' + path, import.meta.url))), sha, path);
+}
 const expectedIds = [false, true].flatMap(virtual => ['direct-pointer', 'settled-hover-pointer', 'enter']
   .map(method => 'autocomplete-close-low-' + (virtual ? 'virtual' : 'full') + '-' + method));
 assert.deepEqual(autocompleteCloseReference.cases.map(owner => owner.id), expectedIds);

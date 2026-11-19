@@ -121,7 +121,9 @@ function readPinned(name: string, expected: Pin) {
 }
 let metadata: { portable: PortableManifest; protocol: Protocol } | undefined;
 function readMetadata() {
-  if (metadata) return metadata;
+  if (metadata) {
+    return metadata;
+  }
   const portable = JSON.parse(readPinned(prefix + 'source-manifest.json', portablePin)
     .toString('utf8')) as PortableManifest;
   assert.equal(portable.format, 'ant-design-single-date-picker-preset-transitions-source-v1');
@@ -375,7 +377,9 @@ export function verifyDatePickerPresetTransitionsSourceOwner(
   assert(['omitted', 'reject', 'accept'].includes(value.pickerOwner));
   assert.deepEqual(Object.keys(value.authoredDates), authoredDateNames);
   for (const snapshot of [value.value, value.pickerValue, value.minDate,
-    ...Object.values(value.authoredDates)]) verifyDateValue(snapshot, value.authoredDates);
+    ...Object.values(value.authoredDates)]) {
+    verifyDateValue(snapshot, value.authoredDates);
+  }
   assert.equal(value.events.length, value.rawEvents.length);
   assert.equal(value.events.length, value.callbackInvocations.length);
   const roots = new Set<unknown>();
@@ -434,10 +438,12 @@ export function verifyDatePickerPresetTransitionsSourceOwner(
     assert(producerArities[String(call.kind)].includes(call.actualArgumentCount as number));
     assert.equal(args.length, call.actualArgumentCount);
     assert.equal(rawProperty(call.rawArgument, 'length'), args.length);
-    if (call.date) verifyDateValue(
-      call.date as DatePickerPresetTransitionsSourceValue,
-      value.authoredDates
-    );
+    if (call.date) {
+      verifyDateValue(
+        call.date as DatePickerPresetTransitionsSourceValue,
+        value.authoredDates
+      );
+    }
   }
 }
 export function verifyDatePickerPresetTransitionsSourcePoint(

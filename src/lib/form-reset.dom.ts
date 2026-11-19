@@ -1,6 +1,8 @@
 /** Сохраняет native focus связанного контрола при пересоздании Field. */
 export function captureFormResetFocus(host: HTMLElement | undefined, id: string) {
-  if (!host?.isConnected) return;
+  if (!host?.isConnected) {
+    return;
+  }
 
   return captureFormControlResetFocus(() => host.isConnected
     ? [...host.querySelectorAll<HTMLElement>('[id]')].find((node) => node.id === id) : undefined);
@@ -9,14 +11,18 @@ export function captureFormResetFocus(host: HTMLElement | undefined, id: string)
 /** NoStyle ищет новый control через регистрацию, поскольку собственного DOM-контейнера нет. */
 export function captureFormControlResetFocus(control: () => Element | undefined) {
   const previous = control();
-  if (!previous?.isConnected) return;
+  if (!previous?.isConnected) {
+    return;
+  }
 
   const document = previous.ownerDocument;
   const view = document.defaultView;
   const tree = previous.getRootNode();
   const active = () => 'activeElement' in tree ? tree.activeElement : document.activeElement;
   const focused = active();
-  if (!view || !(focused instanceof view.HTMLElement) || !previous.contains(focused)) return;
+  if (!view || !(focused instanceof view.HTMLElement) || !previous.contains(focused)) {
+    return;
+  }
 
   const path: number[] = [];
   let node: Element = focused;

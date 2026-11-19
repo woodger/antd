@@ -19,8 +19,12 @@ export function createTreeLoader<Data extends object = TreeDataNode>(options: {
       || options.loaded().includes(key)
       || getTreeChildren(node, options.fieldNames?.()).length
       || (retries.get(key)
-        ?? 0) >= 10) return;
-    if (pending.has(key)) return pending.get(key);
+        ?? 0) >= 10) {
+      return;
+    }
+    if (pending.has(key)) {
+      return pending.get(key);
+    }
     options.setLoading([...options.loading(), key]);
     const promise = Promise.resolve().then(() => options.load(node)).then(() => {
       if (!disposed) {
@@ -28,7 +32,9 @@ export function createTreeLoader<Data extends object = TreeDataNode>(options: {
         options.setLoading(options.loading().filter(item => item !== key));
       }
     }, () => {
-      if (disposed) return;
+      if (disposed) {
+        return;
+      }
       const retry = (retries.get(key) ?? 0) + 1;
       retries.set(key, retry);
       options.setLoading(options.loading().filter(item => item !== key));

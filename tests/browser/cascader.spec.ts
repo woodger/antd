@@ -843,7 +843,9 @@ test('Cascader preserves native caret and selection arrows while editing a searc
   await input(page).press('Shift+ArrowLeft');
 
   const selection = await input(page).evaluate(element => {
-    if (!(element instanceof HTMLInputElement)) throw new Error('Expected native input');
+    if (!(element instanceof HTMLInputElement)) {
+      throw new Error('Expected native input');
+    }
     return [element.selectionStart, element.selectionEnd];
   });
 

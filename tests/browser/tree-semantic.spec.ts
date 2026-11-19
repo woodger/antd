@@ -43,7 +43,9 @@ test('Tree updates component slots without replacing selection, focus, IDs or re
 
   await page.getByRole('button', { name: 'Update tree semantics', exact: true })
     .evaluate(node => {
-      if (!(node instanceof HTMLButtonElement)) throw Error('Expected semantic update button');
+      if (!(node instanceof HTMLButtonElement)) {
+        throw Error('Expected semantic update button');
+      }
       node.click();
     });
 

@@ -134,7 +134,9 @@
     }
   );
   function request(next: boolean) {
-    if (blocked || opened === next) return;
+    if (blocked || opened === next) {
+      return;
+    }
     if (open === undefined)
       internalOpen = next;
     onOpenChange?.(next);
@@ -145,7 +147,9 @@
       present = false;
   });
   $effect(() => {
-    if (!list || !menu) return;
+    if (!list || !menu) {
+      return;
+    }
     const controller = createFloatButtonMotion(
       list,
       true,
@@ -169,7 +173,9 @@
   });
   $effect(() => {
     const root = nativeElement;
-    if (!root || trigger !== 'click') return;
+    if (!root || trigger !== 'click') {
+      return;
+    }
     const outside = (event: MouseEvent) => {
       if (!(event.target instanceof Node) || !root.contains(event.target))
         request(false);
@@ -178,10 +184,14 @@
     return () => root.ownerDocument.removeEventListener('click', outside, true);
   });
   $effect(() => {
-    if (nativeElement) return connectFeedbackFocus(nativeElement);
+    if (nativeElement) {
+      return connectFeedbackFocus(nativeElement);
+    }
   });
   $effect(() => {
-    if (list) return connectFeedbackFocus(list);
+    if (list) {
+      return connectFeedbackFocus(list);
+    }
   });
 </script>
 <style>

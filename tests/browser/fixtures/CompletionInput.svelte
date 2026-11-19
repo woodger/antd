@@ -7,7 +7,9 @@
   const register = untrack(() => control.register);
 
   $effect(() => {
-    if (element) return register(element).destroy;
+    if (element) {
+      return register(element).destroy;
+    }
   });
 </script>
 

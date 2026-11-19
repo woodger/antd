@@ -7,7 +7,9 @@ const rootStates = new Set(['', '-rtl', '-line', '-circle', '-inline-circle', '-
 
 /** Имена variables/marker/anticon остаются общими; root defaults ограничены своим host. */
 export function getProgressPrefixCss(prefix: string) {
-  if (prefix === 'ant-progress') return undefined;
+  if (prefix === 'ant-progress') {
+    return undefined;
+  }
 
   return template
     .replace(/\.ant-progress([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'

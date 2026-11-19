@@ -64,7 +64,9 @@
     value: number | string | undefined,
     info: { userTyping: boolean; input: string; }
   ) {
-    if (info.userTyping) return info.input;
+    if (info.userTyping) {
+      return info.input;
+    }
 
     return `${value ?? ''}%`;
   }

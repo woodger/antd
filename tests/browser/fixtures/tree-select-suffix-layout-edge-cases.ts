@@ -34,10 +34,12 @@ export const treeSelectSuffixLayoutEdgeSamples: readonly TreeSelectSuffixLayoutE
 ];
 
 export function treeSelectSuffixLayoutEdgeActions(sample: TreeSelectSuffixLayoutEdgeSample): readonly TreeSelectSuffixLayoutEdgeAction[] {
-  if (sample.willChange) return [
-    { type: 'click-editor' }, { type: 'fill', text: 'BetaWWW12345' },
-    { type: 'move-host', top: 20, left: 16 }, { type: 'move-host', top: 35, left: 27 }
-  ];
+  if (sample.willChange) {
+    return [
+      { type: 'click-editor' }, { type: 'fill', text: 'BetaWWW12345' },
+      { type: 'move-host', top: 20, left: 16 }, { type: 'move-host', top: 35, left: 27 }
+    ];
+  }
   const counts = sample.id === 'static-narrow-initial-one' ? [2, 3, 1, 2]
     : sample.id === 'static-narrow-history-two' ? [1, 2, 3, 1, 2] : [3, 4, 2, 3];
   return counts.map(count => ({ type: 'count', count }));

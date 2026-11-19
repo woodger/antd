@@ -46,7 +46,7 @@ async function expectMatchingModules(page: Page) {
       let mismatches = 0;
 
       // Центры модулей не зависят от различий antialias между Canvas paths и crispEdges SVG.
-      for (let y = 0; y < count; y++)
+      for (let y = 0; y < count; y++) {
         for (let x = 0; x < count; x++) {
           const px = Math.floor((x + 0.5) * canvas.width / count);
           const py = Math.floor((y + 0.5) * canvas.height / count);
@@ -54,9 +54,11 @@ async function expectMatchingModules(page: Page) {
 
           if ([0, 1, 2, 3].some(
             channel => Math.abs(actual[index + channel] - expected[index + channel]) > 2
-          ))
+          )) {
             mismatches++;
+          }
         }
+      }
 
       return mismatches;
     } finally {

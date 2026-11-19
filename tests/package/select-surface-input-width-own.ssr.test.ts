@@ -52,7 +52,9 @@ it.each(selectSurfaceInputWidthOwnSSRReference.cases)('renders actual initial wi
       });
     expect([...view.authoredClasses].sort()).toEqual([...entry.view.authoredClasses].sort());
     for (const key of ['widthKind', 'widthOwnKey', 'widthValue', 'inputStyle', 'styleOwnKeys', 'inputStyleDescriptors',
-      'fontSize', 'query', 'open', 'model'] as const) expect(actual[key]).toEqual(entry.state[key]);
+      'fontSize', 'query', 'open', 'model'] as const) {
+      expect(actual[key]).toEqual(entry.state[key]);
+    }
     verifySelectSurfaceEventGraph(
       actual.rawModel,
       entry.state.rawModel,

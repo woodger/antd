@@ -12,7 +12,9 @@ export function descriptionsColumn(
   column: DescriptionsProps['column'],
   screens: GridScreenMap
 ): number {
-  if (typeof column === 'number' && !Number.isNaN(column)) return column;
+  if (typeof column === 'number' && !Number.isNaN(column)) {
+    return column;
+  }
 
   return gridResponsiveValue(typeof column === 'object'
     ? column
@@ -29,7 +31,9 @@ export function descriptionsItems(
   screens: GridScreenMap
 ): ResolvedDescriptionsItem[] {
   return items.map(({ span, ...item }) => {
-    if (span === 'filled') return { ...item, filled: true };
+    if (span === 'filled') {
+      return { ...item, filled: true };
+    }
 
     const resolved = gridResponsiveValue(span, screens);
     return {

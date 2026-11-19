@@ -138,11 +138,15 @@
       publicRoot, publicEditor: isAutoComplete ? autoCompleteEditor : selectEditor };
   }
   export function read() {
-    if (alive) lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
-      authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider),
-      popupOwnKey: Object.hasOwn(ownerProps, 'popupRender'),
-      popupIsSameCallback: Object.hasOwn(ownerProps, 'popupRender') ? ownerProps.popupRender === popupRender : null };
-    if (!lastAuthored) throw Error('Read the actual mounted omission owner before disposal');
+    if (alive) {
+      lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
+        authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider),
+        popupOwnKey: Object.hasOwn(ownerProps, 'popupRender'),
+        popupIsSameCallback: Object.hasOwn(ownerProps, 'popupRender') ? ownerProps.popupRender === popupRender : null };
+    }
+    if (!lastAuthored) {
+      throw Error('Read the actual mounted omission owner before disposal');
+    }
     const { popupOwnKey, popupIsSameCallback, ...authored } = lastAuthored;
     return { ...(isOpenWidth ? {} : { axis: sampleAxis, popup, popupOwnKey, popupIsSameCallback,
       popupCallbackIdentity: recorder.identity(popupRender) }),

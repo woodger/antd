@@ -96,7 +96,9 @@
   });
 
   function command(key: string) {
-    if (section.disabled) return;
+    if (section.disabled) {
+      return;
+    }
 
     if (key === 'all') section.onItemSelectAll(enabledKeys, !all);
     else if (key === 'current') section.onItemSelectAll(currentKeys, true);

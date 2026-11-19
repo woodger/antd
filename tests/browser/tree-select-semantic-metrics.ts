@@ -16,9 +16,13 @@ export function readTreeSelectSemantics() {
   const treePart = (node: Element, name: string) => Array.from(node.querySelectorAll<HTMLElement>(`[class*="-${name}"]`))
     .find(element => Array.from(element.classList).some(className => className.endsWith(`-tree-${name}`)));
   const rows = Array.from(popup?.querySelectorAll<HTMLElement>('[class*="-tree-treenode"]') ?? []).flatMap(row => {
-    if (!Array.from(row.classList).some(name => name.endsWith('-tree-treenode'))) return [];
+    if (!Array.from(row.classList).some(name => name.endsWith('-tree-treenode'))) {
+      return [];
+    }
     const title = treePart(row, 'title');
-    if (!title) return [];
+    if (!title) {
+      return [];
+    }
     const switcher = treePart(row, 'switcher');
     return [{ title: text(title), item: project(row), itemTitle: project(title), itemSwitcher: project(switcher),
       switcher: text(switcher),

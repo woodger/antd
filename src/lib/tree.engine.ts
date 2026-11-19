@@ -27,15 +27,25 @@ export function getTreeNodeTitle<Data extends object>(
 ): TreeTitleContent<Data> {
   const value: unknown = Reflect.get(node, fieldNames?.title || 'title');
   // Source выбирает node renderer до общего; произвольный payload не рендерится как literal.
-  if (typeof value === 'function') return value as Snippet<[Data]>;
-  if (titleRender) return titleRender;
+  if (typeof value === 'function') {
+    return value as Snippet<[Data]>;
+  }
+  if (titleRender) {
+    return titleRender;
+  }
 
   function content(value: unknown): TreeTitleContent<Data> {
     if (value == null || typeof value === 'string' || typeof value === 'number'
-      || typeof value === 'boolean') return value;
+      || typeof value === 'boolean') {
+      return value;
+    }
     // Функциональное содержимое Native API — Svelte snippet с data-аргументом.
-    if (typeof value === 'function') return value as Snippet<[Data]>;
-    if (Array.isArray(value)) return value.map(child => content(child));
+    if (typeof value === 'function') {
+      return value as Snippet<[Data]>;
+    }
+    if (Array.isArray(value)) {
+      return value.map(child => content(child));
+    }
     throw new TypeError('Tree title must be text, a snippet or an array of renderable values');
   }
 
@@ -110,9 +120,13 @@ export function expandTreeParents<Data extends object>(
 ): TreeKey[] {
   const expanded = new Set<TreeKey>();
   function up(key: TreeKey) {
-    if (expanded.has(key)) return;
+    if (expanded.has(key)) {
+      return;
+    }
     const entry = index.entities.get(String(key));
-    if (!entry) return;
+    if (!entry) {
+      return;
+    }
     expanded.add(key);
     if (!Reflect.get(entry.node, 'disabled') && entry.parent)
       up(entry.parent.key);
@@ -127,7 +141,9 @@ export function treeLeaf(
   fieldNames?: TreeFieldNames
 ): boolean {
   const isLeaf: unknown = Reflect.get(node, 'isLeaf');
-  if (isLeaf === false) return false;
+  if (isLeaf === false) {
+    return false;
+  }
   const children = getTreeChildren(node, fieldNames);
   return Boolean(
     isLeaf
@@ -162,19 +178,21 @@ export function conductTreeCheck<Data extends object>(
     levels.set(entry.level, level);
     max = Math.max(max, entry.level);
   }
-  for (let level = 0; level <= max; level++)
+  for (let level = 0; level <= max; level++) {
     for (const entry of levels.get(level) ?? []) {
       if (treeCheckDisabled(entry.node))
         continue;
-      if (clean ? !checked.has(entry.key) && !half.has(entry.key) : checked.has(entry.key))
+      if (clean ? !checked.has(entry.key) && !half.has(entry.key) : checked.has(entry.key)) {
         for (const child of entry.children.filter(child => !treeCheckDisabled(child.node))) {
           if (clean)
             checked.delete(child.key); else checked.add(child.key);
         }
+      }
     }
+  }
   half = new Set();
   const visited = new Set<TreeKey>();
-  for (let level = max; level >= 0; level--)
+  for (let level = max; level >= 0; level--) {
     for (const entry of levels.get(level) ?? []) {
       const parent = entry.parent;
       if (treeCheckDisabled(entry.node) || !parent || visited.has(parent.key))
@@ -194,6 +212,7 @@ export function conductTreeCheck<Data extends object>(
         half.add(parent.key);
       visited.add(parent.key);
     }
+  }
   return { checked: [...checked], halfChecked: [...half].filter(key => !checked.has(key)) };
 }
 export function toggleTreeCheck<Data extends object>(
@@ -215,8 +234,12 @@ export function selectTreeKeys(
 ): TreeKey[] {
   // Selector использует snapshot узла до onExpand/onClick, даже если callbacks обновили keys.
   if (wasSelected !== undefined) {
-    if (!multiple) return wasSelected ? [] : [key];
-    if (wasSelected) return keys.filter(item => item !== key);
+    if (!multiple) {
+      return wasSelected ? [] : [key];
+    }
+    if (wasSelected) {
+      return keys.filter(item => item !== key);
+    }
     return keys.includes(key) ? [...keys] : [...keys, key];
   }
   return keys.includes(key) ? keys.filter(item => item !== key) : multiple ? [...keys, key] : [

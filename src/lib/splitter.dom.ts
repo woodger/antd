@@ -10,13 +10,17 @@ export function observeSplitterSize(
   let active = true;
   let previous: number[] = [-1, -1, -1, -1];
   const observer = new view.ResizeObserver(() => {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
 
     const { width, height } = root.getBoundingClientRect();
     const { offsetWidth, offsetHeight } = root;
     const next = [Math.floor(width), Math.floor(height), offsetWidth, offsetHeight];
 
-    if (next.every((value, index) => value === previous[index])) return;
+    if (next.every((value, index) => value === previous[index])) {
+      return;
+    }
 
     previous = next;
     const measuredWidth = offsetWidth === Math.round(width) ? width : offsetWidth;
@@ -68,7 +72,9 @@ export function connectSplitterDrag(
   let lastClick = 0;
 
   function move(x: number, y: number) {
-    if (!active || !start || !captured) return;
+    if (!active || !start || !captured) {
+      return;
+    }
 
     const dx = x - start[0];
     const dy = y - start[1];
@@ -107,7 +113,9 @@ export function connectSplitterDrag(
   }
 
   function finish() {
-    if (!active || !start || !captured) return;
+    if (!active || !start || !captured) {
+      return;
+    }
 
     if (captured.lazy) {
       const current = getOptions();
@@ -135,7 +143,9 @@ export function connectSplitterDrag(
   function begin(x: number, y: number) {
     const options = getOptions();
 
-    if (!active || !options.resizable) return;
+    if (!active || !options.resizable) {
+      return;
+    }
 
     detach();
     start = [x, y];
@@ -151,7 +161,9 @@ export function connectSplitterDrag(
     const now = Date.now();
     const gap = now - lastClick;
 
-    if (gap > 0 && gap < 300) return;
+    if (gap > 0 && gap < 300) {
+      return;
+    }
 
     lastClick = now;
     begin(event.pageX, event.pageY);

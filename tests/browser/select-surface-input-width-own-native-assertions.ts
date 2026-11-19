@@ -43,7 +43,9 @@ export async function settleNativeInputWidthOwn(page: Page) {
     await drainSelectSurface(page);
     const actual = await readNativeInputWidthOwn(page), key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Native input width owner, CSSOM, complete callbacks and actual DOM did not settle');

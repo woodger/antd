@@ -5,11 +5,12 @@ export function checkImageSource(
 ) {
   let disposed = false;
   const probe = new document.defaultView!.Image();
-  if (!source)
+  if (!source) {
     queueMicrotask(() => {
       if (!disposed)
         onInvalid();
     });
+  }
   else {
     probe.onerror = () => {
       if (!disposed)

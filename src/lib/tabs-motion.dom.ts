@@ -93,8 +93,12 @@ export function createTabsPaneMotion(
   }
 
   function handleEnd(event: TabsMotionEvent) {
-    if (!active || !status || step !== 'active') return;
-    if ('target' in event && event.target !== node) return;
+    if (!active || !status || step !== 'active') {
+      return;
+    }
+    if ('target' in event && event.target !== node) {
+      return;
+    }
     const current = revision;
     const result = handlers().end?.(node, event);
     if (active && current === revision && result !== false) finish(true);
@@ -109,24 +113,36 @@ export function createTabsPaneMotion(
     const current = revision;
     // Сначала commit обоих panel slots и notifications без motion, затем layout start hooks.
     queueMicrotask(() => {
-      if (!active || current !== revision) return;
+      if (!active || current !== revision) {
+        return;
+      }
       queueMicrotask(() => {
-        if (!active || current !== revision) return;
+        if (!active || current !== revision) {
+          return;
+        }
         // React успевает commit prepare даже при пропущенном prepare hook.
         step = 'prepare';
         update(true);
-        if (!active || current !== revision) return;
+        if (!active || current !== revision) {
+          return;
+        }
         step = 'start';
         const result = handlers().start?.(node, null);
-        if (!active || current !== revision) return;
+        if (!active || current !== revision) {
+          return;
+        }
         style = handlers().prepare
           ? ['transition:none', result].filter(Boolean).join(';') : result || undefined;
         update(true);
-        if (!active || current !== revision) return;
+        if (!active || current !== revision) {
+          return;
+        }
         nextFrame(() => {
           step = 'active';
           style = handlers().active?.(node, null) || undefined;
-          if (!active || current !== revision) return;
+          if (!active || current !== revision) {
+            return;
+          }
           update();
           if (config?.motionDeadline && config.motionDeadline > 0) {
             deadline = view.setTimeout(() => {
@@ -149,7 +165,9 @@ export function createTabsPaneMotion(
 
   return {
     sync(next: boolean, options: TabsPaneMotion | undefined, motionEnabled: boolean) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       config = options;
       enabled = motionEnabled;
       seenVisible ||= next;
@@ -177,11 +195,17 @@ export function createTabsPaneMotion(
         update();
         const current = revision;
         queueMicrotask(() => {
-          if (!active || current !== revision) return;
+          if (!active || current !== revision) {
+            return;
+          }
           update(true);
-          if (!active || current !== revision) return;
+          if (!active || current !== revision) {
+            return;
+          }
           const result = prepare(node);
-          if (!active || current !== revision) return;
+          if (!active || current !== revision) {
+            return;
+          }
           nextFrame(() => {
             void Promise.resolve(result).then(() => {
               if (active && current === revision) start();

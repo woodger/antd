@@ -90,10 +90,14 @@ it('loads every UI/producer/US SSR part with raw aliases, append-only callbacks 
         totals.producers += chunk.rows.length;
         expect(chunk.cursor).toBe(cursor);
         expect(chunk.boundaries).toEqual(ref.phase === 'terminal-tail' ? { afterLate: cursor } : boundaries.get(ref.phase));
-        for (const call of chunk.rows) for (const date of call.dates)
-          for (const [name, authored] of Object.entries(initial.owner.authoredDates))
-            expect(date.value.sameAsAuthored[name as keyof typeof initial.owner.authoredDates])
-              .toBe(date.value.identity === authored.identity);
+        for (const call of chunk.rows) {
+          for (const date of call.dates) {
+            for (const [name, authored] of Object.entries(initial.owner.authoredDates)) {
+              expect(date.value.sameAsAuthored[name as keyof typeof initial.owner.authoredDates])
+                .toBe(date.value.identity === authored.identity);
+            }
+          }
+        }
         cursor = chunk.next;
       }
       expect(cursor).toBe(row.producerFinalCount);
@@ -119,27 +123,29 @@ it('loads every UI/producer/US SSR part with raw aliases, append-only callbacks 
 }, 120000);
 
 it('keeps actual date rows, prefix toggles, partial GB labels and authored validation references', () => {
-  for (const variant of ['first', 'repeat'] as const) for (const sample of samples) {
-    const initial = readDateWeekPrefixSourceInitial(sample.id, variant);
-    expect(initial.owner.picker).toBe('date');
-    expect(initial.owner.authoredDates.initialStart.temporal.fields).toEqual([2020, 11, 31, 16, 37, 59, 456]);
-    expect(initial.owner.authoredDates.initialEnd.temporal.fields).toEqual([2021, 0, 15, 9, 12, 34, 567]);
-    const visible = (point: DateWeekPrefixSourcePoint) => point.popups.find(popup => popup.visible)!.tables[0];
-    const opened = visible(readDateWeekPrefixSourceStep(sample.id, 0, variant).actual);
-    expect(opened.headers[0].cells.map(cell => cell.surface.text)).toEqual(['Week', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']);
-    expect(opened.rows.every(row => row.cells.length === 8 && row.cells[0].weekNumber)).toBe(true);
-    const hidden = visible(readDateWeekPrefixSourceStep(sample.id, 2, variant).actual);
-    expect(hidden.headers[0].cells).toHaveLength(7);
-    expect(hidden.rows.every(row => row.cells.length === 7 && row.cells.every(cell => !cell.weekNumber))).toBe(true);
-    const gb = readDateWeekPrefixSourceStep(sample.id, 6, variant).actual;
-    expect(gb.inputs.map(input => input.attributes.find(attribute => attribute[0] === 'placeholder')?.[1]))
-      .toEqual(sample.kind === 'range' ? ['Authored start date', 'Authored end date'] : ['Authored date']);
-    expect(visible(gb).headers[0].cells.map(cell => cell.surface.text)).toEqual(['Week', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']);
-    const closed = readDateWeekPrefixSourceSSR(sample.id, 'us', 'renderToString', variant);
-    for (const [index, call] of closed.state.producers.rows.entries()) {
-      const name = index === 0 ? 'initialStart' : 'initialEnd';
-      expect(call.dates[0].value.identity).toBe(closed.state.owner.authoredDates[name].identity);
-      expect(call.dates[0].value.temporal).toEqual(closed.state.owner.authoredDates[name].temporal);
+  for (const variant of ['first', 'repeat'] as const) {
+    for (const sample of samples) {
+      const initial = readDateWeekPrefixSourceInitial(sample.id, variant);
+      expect(initial.owner.picker).toBe('date');
+      expect(initial.owner.authoredDates.initialStart.temporal.fields).toEqual([2020, 11, 31, 16, 37, 59, 456]);
+      expect(initial.owner.authoredDates.initialEnd.temporal.fields).toEqual([2021, 0, 15, 9, 12, 34, 567]);
+      const visible = (point: DateWeekPrefixSourcePoint) => point.popups.find(popup => popup.visible)!.tables[0];
+      const opened = visible(readDateWeekPrefixSourceStep(sample.id, 0, variant).actual);
+      expect(opened.headers[0].cells.map(cell => cell.surface.text)).toEqual(['Week', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']);
+      expect(opened.rows.every(row => row.cells.length === 8 && row.cells[0].weekNumber)).toBe(true);
+      const hidden = visible(readDateWeekPrefixSourceStep(sample.id, 2, variant).actual);
+      expect(hidden.headers[0].cells).toHaveLength(7);
+      expect(hidden.rows.every(row => row.cells.length === 7 && row.cells.every(cell => !cell.weekNumber))).toBe(true);
+      const gb = readDateWeekPrefixSourceStep(sample.id, 6, variant).actual;
+      expect(gb.inputs.map(input => input.attributes.find(attribute => attribute[0] === 'placeholder')?.[1]))
+        .toEqual(sample.kind === 'range' ? ['Authored start date', 'Authored end date'] : ['Authored date']);
+      expect(visible(gb).headers[0].cells.map(cell => cell.surface.text)).toEqual(['Week', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']);
+      const closed = readDateWeekPrefixSourceSSR(sample.id, 'us', 'renderToString', variant);
+      for (const [index, call] of closed.state.producers.rows.entries()) {
+        const name = index === 0 ? 'initialStart' : 'initialEnd';
+        expect(call.dates[0].value.identity).toBe(closed.state.owner.authoredDates[name].identity);
+        expect(call.dates[0].value.temporal).toEqual(closed.state.owner.authoredDates[name].temporal);
+      }
     }
   }
 });

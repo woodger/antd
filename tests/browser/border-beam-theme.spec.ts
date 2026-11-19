@@ -27,7 +27,9 @@ test('BorderBeam token updates retain target content, layer identity and scoped 
     await input.fill('Preserved beam draft');
     await input.focus();
     await input.evaluate(node => {
-      if (!(node instanceof HTMLInputElement)) throw new Error('Expected native beam input');
+      if (!(node instanceof HTMLInputElement)) {
+        throw new Error('Expected native beam input');
+      }
       node.setSelectionRange(2, 9);
     });
     const oldLayer = await layer.elementHandle();
@@ -43,7 +45,9 @@ test('BorderBeam token updates retain target content, layer identity and scoped 
     await expect(input).toHaveValue('Preserved beam draft');
     await expect(input).toBeFocused();
     expect(await input.evaluate(node => {
-      if (!(node instanceof HTMLInputElement)) throw new Error('Expected native beam input');
+      if (!(node instanceof HTMLInputElement)) {
+        throw new Error('Expected native beam input');
+      }
 
       return [node.selectionStart, node.selectionEnd];
     })).toEqual([2, 9]);

@@ -14,7 +14,9 @@ export function textAreaResizeStyle(style = ''): string {
   let important = false;
   function declaration() {
     const match = /^\s*resize\s*:\s*(.*?)\s*$/i.exec(current);
-    if (!match) return;
+    if (!match) {
+      return;
+    }
     const nextImportant = /!\s*important\s*$/i.test(match[1]);
     if (!important || nextImportant) {
       value = match[1];

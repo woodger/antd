@@ -25,11 +25,13 @@ export function verifyResponsiveTagPrefixDisposal(before: ResponsiveTagPrefixDis
   assert.equal(before.open, false);
   assert.equal(before.query, '');
   const last = source.steps.at(-1)!;
-  for (const key of ['model', 'settings', 'context'] as const) assert.deepEqual(
-    before[key],
-    last.owner[key],
-    label + '/' + key
-  );
+  for (const key of ['model', 'settings', 'context'] as const) {
+    assert.deepEqual(
+      before[key],
+      last.owner[key],
+      label + '/' + key
+    );
+  }
   assert.equal(before.events.length, 9);
   assert.equal(before.rawEvents.length, 9);
   assert.deepEqual(

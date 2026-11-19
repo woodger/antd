@@ -4,7 +4,9 @@ const rootStates = new Set(['', '-element', '-active', '-block', '-round', '-rtl
 
 /** Marker и variables общие; root declarations ограничены своим Skeleton host. */
 export function getSkeletonPrefixCss(prefix: string) {
-  if (prefix === 'ant-skeleton') return undefined;
+  if (prefix === 'ant-skeleton') {
+    return undefined;
+  }
 
   return template
     .replace(/\.ant-skeleton([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'

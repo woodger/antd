@@ -72,7 +72,9 @@
       outcomes.push({ status: 'success' });
     }
     catch (error) {
-      if (!(error instanceof FormValidationError)) throw error;
+      if (!(error instanceof FormValidationError)) {
+        throw error;
+      }
       outcomes.push({
         status: 'invalid',
         outOfDate: error.outOfDate,

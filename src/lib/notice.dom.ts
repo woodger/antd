@@ -1,9 +1,13 @@
 export function focusAfterNotice(root: HTMLElement, ownedFocus: boolean) {
-  if (!ownedFocus) return;
+  if (!ownedFocus) {
+    return;
+  }
 
   const document = root.ownerDocument;
   const focused = document.activeElement;
-  if (focused && focused !== document.body && !root.contains(focused)) return;
+  if (focused && focused !== document.body && !root.contains(focused)) {
+    return;
+  }
 
   const dialog = root.closest<HTMLDialogElement>('dialog[open]');
   const scope = dialog ?? document;
@@ -22,7 +26,9 @@ export function focusAfterNotice(root: HTMLElement, ownedFocus: boolean) {
         || element.closest(
           '[inert]'
         )
-        || !element.getClientRects().length) return false;
+        || !element.getClientRects().length) {
+        return false;
+      }
 
       const visibility = document.defaultView!.getComputedStyle(element).visibility;
       return visibility !== 'hidden' && visibility !== 'collapse';
@@ -51,7 +57,9 @@ export function connectNoticeSurface(
   let shown = false;
 
   function update() {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
 
     const visual = view.visualViewport;
     const modals = [...document.querySelectorAll<HTMLDialogElement>('dialog:modal')];
@@ -99,11 +107,12 @@ export function connectNoticeSurface(
   }
 
   function schedule() {
-    if (!disposed && !frame)
+    if (!disposed && !frame) {
       frame = view.requestAnimationFrame(() => {
         frame = 0;
         update();
       });
+    }
   }
 
   const observer = new view.MutationObserver((records) => {
@@ -113,8 +122,9 @@ export function connectNoticeSurface(
           || target.contains(
             anchor
           ))
-    ))
+    )) {
       schedule();
+    }
   });
   observer.observe(
     document.documentElement,

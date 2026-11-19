@@ -73,7 +73,9 @@ export function createTreeGroupMotion(
   function nextFrame(callback: () => void) {
     const current = revision;
     frame = view.requestAnimationFrame(() => {
-      if (!active || current !== revision) return;
+      if (!active || current !== revision) {
+        return;
+      }
       frame = view.requestAnimationFrame(() => {
         frame = undefined;
         if (active && current === revision) callback();
@@ -81,8 +83,12 @@ export function createTreeGroupMotion(
     });
   }
   function end(event: TreeMotionEvent) {
-    if (!active || !status || step !== 'active') return;
-    if ('target' in event && event.target !== node) return;
+    if (!active || !status || step !== 'active') {
+      return;
+    }
+    if ('target' in event && event.target !== node) {
+      return;
+    }
     const current = revision;
     const result = handlers().end?.(node, event);
     if (active && current === revision && result !== false) finish(true);
@@ -95,23 +101,35 @@ export function createTreeGroupMotion(
     update();
     const current = revision;
     queueMicrotask(() => {
-      if (!active || current !== revision) return;
+      if (!active || current !== revision) {
+        return;
+      }
       queueMicrotask(() => {
-        if (!active || current !== revision) return;
+        if (!active || current !== revision) {
+          return;
+        }
         step = 'prepare';
         update(true);
-        if (!active || current !== revision) return;
+        if (!active || current !== revision) {
+          return;
+        }
         step = 'start';
         const result = handlers().start?.(node, null);
-        if (!active || current !== revision) return;
+        if (!active || current !== revision) {
+          return;
+        }
         style = handlers().prepare ? ['transition:none', result].filter(Boolean).join(';')
           : result || undefined;
         update(true);
-        if (!active || current !== revision) return;
+        if (!active || current !== revision) {
+          return;
+        }
         nextFrame(() => {
           step = 'active';
           style = handlers().active?.(node, null) || undefined;
-          if (!active || current !== revision) return;
+          if (!active || current !== revision) {
+            return;
+          }
           update();
           if (config.motionDeadline && config.motionDeadline > 0) {
             deadline = view.setTimeout(() => {
@@ -131,7 +149,9 @@ export function createTreeGroupMotion(
   reduced.addEventListener('change', reduce);
   return {
     sync(next: boolean, options: TreeMotionConfig, motionEnabled: boolean) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       config = options;
       enabled = motionEnabled;
       if (previous === next) {
@@ -159,11 +179,17 @@ export function createTreeGroupMotion(
         update();
         const current = revision;
         queueMicrotask(() => {
-          if (!active || current !== revision) return;
+          if (!active || current !== revision) {
+            return;
+          }
           update(true);
-          if (!active || current !== revision) return;
+          if (!active || current !== revision) {
+            return;
+          }
           const result = prepare(node);
-          if (!active || current !== revision) return;
+          if (!active || current !== revision) {
+            return;
+          }
           nextFrame(() => {
             void Promise.resolve(result).then(() => {
               if (active && current === revision) start();

@@ -201,8 +201,9 @@ export function getTooltipPosition(
 
   if (autoAdjustOverflow
     && space[placement] < required
-    && space[opposite[placement]] > space[placement])
+    && space[opposite[placement]] > space[placement]) {
     placement = opposite[placement];
+  }
 
   const centerX = anchor.x + anchor.width / 2;
   const centerY = anchor.y + anchor.height / 2;

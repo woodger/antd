@@ -40,7 +40,9 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
 
   function draggable(entry: Entry<Data>) {
     const setting = options.props().draggable;
-    if (!setting) return false;
+    if (!setting) {
+      return false;
+    }
     const predicate = typeof setting === 'function' ? setting
       : typeof setting === 'object' ? setting.nodeDraggable : undefined;
     return Boolean(!predicate || predicate(entry.node));
@@ -67,14 +69,18 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
   }
 
   $effect(() => {
-    if (!source || !active) return;
+    if (!source || !active) {
+      return;
+    }
     const entry = options.index().entities.get(String(source.key));
     const valid = !options.disabled() && entry && !entry.node.disabled && draggable(entry);
     if (!valid) untrack(clean);
   });
 
   function start(event: DragEvent, entry: Entry<Data>) {
-    if (disposed || options.disabled() || entry.node.disabled || !draggable(entry)) return;
+    if (disposed || options.disabled() || entry.node.disabled || !draggable(entry)) {
+      return;
+    }
     event.stopPropagation();
     clean();
     const snapshot = options.node(entry);
@@ -104,9 +110,13 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
   }
 
   function resolve(event: DragEvent, entry: Entry<Data>) {
-    if (!source || !active) return null;
+    if (!source || !active) {
+      return null;
+    }
     const element = event.target instanceof Element ? event.target : event.currentTarget;
-    if (!(element instanceof Element)) return null;
+    if (!(element instanceof Element)) {
+      return null;
+    }
     return resolveTreeDrop({
       index: options.index(),
       visible: options.visible(),
@@ -124,7 +134,9 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
   }
 
   function allowed(candidate: TreeDropState | null) {
-    if (!candidate?.dropAllowed || !source || !active) return false;
+    if (!candidate?.dropAllowed || !source || !active) {
+      return false;
+    }
     const entry = options.index().entities.get(String(source.key));
     return Boolean(entry && !getTreeDragChildren(entry).includes(candidate.dropTargetKey));
   }
@@ -144,7 +156,9 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
   }
 
   function enter(event: DragEvent, entry: Entry<Data>) {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     entered = entry.key;
@@ -161,9 +175,13 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
       const delayed = { data: entry.node, snapshot: { ...node } };
       timer = setTimeout(() => {
         timer = undefined;
-        if (disposed || source !== session || !active) return;
+        if (disposed || source !== session || !active) {
+          return;
+        }
         const current = options.index().entities.get(String(entry.key));
-        if (!current) return;
+        if (!current) {
+          return;
+        }
         const keys = [...options.expanded()];
         if (current.children.length && !keys.includes(current.key)) keys.push(current.key);
         options.setExpanded(keys);
@@ -181,7 +199,9 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
   }
 
   function over(event: DragEvent, entry: Entry<Data>) {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     const candidate = resolve(event, entry);
@@ -196,7 +216,9 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
   }
 
   function leave(event: DragEvent, entry: Entry<Data>) {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     event.stopPropagation();
     const node = options.node(entry);
     const element = event.currentTarget;
@@ -209,7 +231,9 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
   }
 
   function end(event: DragEvent, entry?: Entry<Data>) {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     event.stopPropagation();
     const node = entry ? options.node(entry) : source ? eventSnapshot(source) : undefined;
     clean();
@@ -222,7 +246,9 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
   }
 
   function drop(event: DragEvent, entry: Entry<Data>) {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     if (highlighted === entry.key) highlighted = null;

@@ -116,7 +116,9 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
       const schedule = browser.setTimeout.bind(browser);
       const clear = browser.clearTimeout.bind(browser);
       browser.setTimeout = (handler, timeout, ...args) => {
-        if (typeof handler !== 'function') throw Error('Expected a function hydration timer');
+        if (typeof handler !== 'function') {
+          throw Error('Expected a function hydration timer');
+        }
         const timer = schedule(() => {
           timers.delete(timer);
           handler(...args);
@@ -248,7 +250,9 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
           // Reselect the current raw option and dispose before its queued close can run.
           const row = [...document.querySelectorAll<HTMLButtonElement>('.ant-select-item-option')]
             .find(row => row.dataset.auditOption === state.query());
-          if (!row) throw Error('The current mapped selection must have a physical option');
+          if (!row) {
+            throw Error('The current mapped selection must have a physical option');
+          }
           row.click();
         }
         const queuedPorts = window.selectDataHydrationResources!.ports();

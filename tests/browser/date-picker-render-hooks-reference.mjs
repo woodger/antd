@@ -47,8 +47,12 @@ function rawProperty(graph, identity, key) {
   return property.value;
 }
 function plain(graph, value, seen = new Map()) {
-  if (value === null || typeof value !== 'object' || !Object.hasOwn(value, 'ref')) return value;
-  if (seen.has(value.ref)) return seen.get(value.ref);
+  if (value === null || typeof value !== 'object' || !Object.hasOwn(value, 'ref')) {
+    return value;
+  }
+  if (seen.has(value.ref)) {
+    return seen.get(value.ref);
+  }
   const node = graph.objects.find(node => node.id === value.ref);
   assert(node, 'Original plain-value reference is absent');
   if (node.opaque || node.type === 'function') {
@@ -66,7 +70,9 @@ function elementShape(encoded, depth = 0) {
   const get = (value, key) => value?.properties?.find(property => property.key === key)?.value;
   const type = get(encoded, 'type');
   const props = get(encoded, 'props');
-  if (!props) return encoded;
+  if (!props) {
+    return encoded;
+  }
   const child = get(props, 'children');
   const children = child?.$ === 'array' ? child.properties.filter(property => /^\d+$/.test(property.key))
     .map(property => property.value) : child === undefined ? [] : [child];
@@ -91,10 +97,12 @@ export function deriveRenderHooksSourceFacts(point, tape) {
     const localeID = row.info.localeIdentity;
     const localeNode = row.rawArguments.objects.find(node => node.id === localeID);
     assert(localeNode);
-    if (!locales.has(localeID)) locales.set(localeID, {
-      identity: localeID, ownKeys: localeNode.ownProperties.map(property => property.key),
-      plain: plain(row.rawArguments, { ref: localeID })
-    });
+    if (!locales.has(localeID)) {
+      locales.set(localeID, {
+        identity: localeID, ownKeys: localeNode.ownProperties.map(property => property.key),
+        plain: plain(row.rawArguments, { ref: localeID })
+      });
+    }
     const group = today.get(row.info.today.identity) ?? { identity: row.info.today.identity,
       temporal: row.info.today.temporal, types: [], subTypes: [], callSequences: [] };
     if (!group.types.includes(row.info.type)) group.types.push(row.info.type);
@@ -124,7 +132,9 @@ export function deriveRenderHooksSourceFacts(point, tape) {
   function insidePanel(node) {
     let parent = node.parentIdentity;
     while (byID.has(parent)) {
-      if (panelIDs.has(parent)) return true;
+      if (panelIDs.has(parent)) {
+        return true;
+      }
       parent = byID.get(parent).parentIdentity;
     }
     return false;

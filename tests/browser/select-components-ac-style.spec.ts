@@ -45,7 +45,9 @@ for (const sample of selectComponentsSamples) test(`AutoComplete component style
   testInfo
 ) => {
   const browser = page.context().browser();
-  if (!browser) throw Error('An actual Chromium browser version is required for Source conformance');
+  if (!browser) {
+    throw Error('An actual Chromium browser version is required for Source conformance');
+  }
   const { source, referenceVariant } = readSelectComponentsBrowserReference(
     'ac-style',
     sample.id,
@@ -64,7 +66,9 @@ for (const sample of selectComponentsSamples) test(`AutoComplete component style
       'selectcomponentscapture',
       { detail }
     ));
-    if (!detail.read || !detail.readRefs || !detail.readNativeBlurChecks || !detail.update || !detail.dispose) throw Error('Complete actual component bridge required');
+    if (!detail.read || !detail.readRefs || !detail.readNativeBlurChecks || !detail.update || !detail.dispose) {
+      throw Error('Complete actual component bridge required');
+    }
     Object.assign(globalThis, { raw: { current: { readRefs: detail.readRefs } } });
     return detail;
   });
@@ -76,7 +80,9 @@ for (const sample of selectComponentsSamples) test(`AutoComplete component style
   const editor = async () => {
     const handle = await capture.evaluateHandle(owner => owner.readRefs().editor);
     const element = handle.asElement();
-    if (!element) throw Error('Actual public editor ref absent');
+    if (!element) {
+      throw Error('Actual public editor ref absent');
+    }
     return element;
   };
   try {
@@ -84,21 +90,26 @@ for (const sample of selectComponentsSamples) test(`AutoComplete component style
     for (const [index, step] of source.steps.entries()) {
       const action = sample.actions[index];
       expect(action).toEqual(step.action);
-      if (action.type === 'props' || action.type === 'context' || action.type === 'inner' || action.type === 'model')
+      if (action.type === 'props' || action.type === 'context' || action.type === 'inner' || action.type === 'model') {
         await capture.evaluate(
           (owner, value) => owner.update(value.action, value.index),
           { action, index }
         );
-      else if (action.type === 'focus-method') await capture.evaluate(
-        (owner, options) => owner.readRefs().control!.focus(options),
-        'options' in action ? action.options : undefined
-      );
+      }
+      else if (action.type === 'focus-method') {
+        await capture.evaluate(
+          (owner, options) => owner.readRefs().control!.focus(options),
+          'options' in action ? action.options : undefined
+        );
+      }
       else if (action.type === 'blur-method') await capture.evaluate(owner => owner.readRefs().control!.blur());
       else if (action.type === 'outside') await page.locator('[data-surface-outside]').click();
       else if (action.type === 'root-click') {
         const handle = await capture.evaluateHandle(owner => owner.readRefs().root);
         const element = handle.asElement();
-        if (!element) throw Error('Actual public root ref absent');
+        if (!element) {
+          throw Error('Actual public root ref absent');
+        }
         await element.click();
         await handle.dispose();
       }

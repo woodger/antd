@@ -14,11 +14,14 @@ const preCloseEvents = select.steps[closeIndex - 1].view.events;
  * Only the two owner open actions use this boundary. Source data and every geometry field stay raw.
  */
 export function popupOverflowNativeView(view: View, id: string, action?: PopupOverflowAction) {
-  if (id !== 'select-live-cache' || action?.type !== 'open') return view;
+  if (id !== 'select-live-cache' || action?.type !== 'open') {
+    return view;
+  }
   if (view.query !== '' || view.editor?.value !== ''
     || JSON.stringify(view.editor.caret) !== '[0,0]'
-    || JSON.stringify(view.events) !== JSON.stringify([...preCloseEvents, ['search', '']]))
+    || JSON.stringify(view.events) !== JSON.stringify([...preCloseEvents, ['search', '']])) {
     throw Error('The frozen Source controlled-close observation changed');
+  }
   return { ...view, query: 'Kept query', events: preCloseEvents,
     editor: { ...view.editor, value: action.value ? 'Kept query' : '',
       caret: action.value ? [10, 10] : [0, 0] } };

@@ -65,7 +65,9 @@ export function provideForm(form: FormContext) {
 
 export function useForm(): FormContext | undefined {
   const parent = getContext<FormContext | undefined>(formKey);
-  if (!parent) return;
+  if (!parent) {
+    return;
+  }
 
   const config = useConfig();
   const form: FormContext = Object.create(parent, {

@@ -23,16 +23,20 @@ async function act(page: Page, action: TreeSelectSemanticAction) {
     const name = action === 'load' ? 'Lazy' : 'Parent';
     await popup(page).getByRole('treeitem', { name, exact: true }).locator('[data-ant-tree-switcher]').click();
   }
-  else if (action === 'finish-load') await page.getByRole(
-    'button',
-    { name: 'Finish semantic load' }
-  ).dispatchEvent('click');
+  else if (action === 'finish-load') {
+    await page.getByRole(
+      'button',
+      { name: 'Finish semantic load' }
+    ).dispatchEvent('click');
+  }
   else if (action === 'draft') await draft(page).fill('Keep semantic draft');
   else if (action === 'update') await page.getByRole('button', { name: 'Update semantic styles' }).dispatchEvent('click');
-  else if (action === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside semantic selection' }
-  ).click();
+  else if (action === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside semantic selection' }
+    ).click();
+  }
 }
 
 for (const entry of reference.cases) {
@@ -52,9 +56,11 @@ for (const entry of reference.cases) {
         await expect(draft(page)).toBeFocused();
       }
     }
-    if (entry.id === 'single-empty') await expect(editor(page)).toHaveAttribute(
-      'placeholder',
-      'Choose node'
-    );
+    if (entry.id === 'single-empty') {
+      await expect(editor(page)).toHaveAttribute(
+        'placeholder',
+        'Choose node'
+      );
+    }
   });
 }

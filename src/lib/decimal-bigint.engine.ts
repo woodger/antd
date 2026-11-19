@@ -65,10 +65,14 @@ export class BigIntDecimal implements MiniDecimal {
   }
 
   add(value: DecimalValue): BigIntDecimal {
-    if (this.isInvalidate()) return new BigIntDecimal(value);
+    if (this.isInvalidate()) {
+      return new BigIntDecimal(value);
+    }
 
     const offset = new BigIntDecimal(value);
-    if (offset.isInvalidate()) return this;
+    if (offset.isInvalidate()) {
+      return this;
+    }
 
     const length = Math.max(this.getDecimalStr().length, offset.getDecimalStr().length);
     const number = (this.alignDecimal(length) + offset.alignDecimal(length)).toString();
@@ -103,8 +107,12 @@ export class BigIntDecimal implements MiniDecimal {
   }
 
   toString(safe = true) {
-    if (!safe) return this.origin;
-    if (this.isInvalidate()) return '';
+    if (!safe) {
+      return this.origin;
+    }
+    if (this.isInvalidate()) {
+      return '';
+    }
 
     return trimNumber(`${this.getMark()}${this.getIntegerStr()}.${this.getDecimalStr()}`).fullStr;
   }

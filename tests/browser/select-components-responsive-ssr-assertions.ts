@@ -7,10 +7,12 @@ function attributes(element: Element) {
     if (key === 'class') value = value.split(/\s+/).filter(name => name && !/^(?:svelte-[\w-]+|s-[\w-]+)$/.test(name)).join(' ');
     // Only serializer whitespace is irrelevant; declaration values and order
     // remain exact, including the initial MAX_SAFE_INTEGER order value.
-    if (key === 'style') value = value.split(';').map(part => part.trim()).filter(Boolean).map(part => {
-      const colon = part.indexOf(':');
-      return part.slice(0, colon).trim() + ':' + part.slice(colon + 1).trim();
-    }).join(';');
+    if (key === 'style') {
+      value = value.split(';').map(part => part.trim()).filter(Boolean).map(part => {
+        const colon = part.indexOf(':');
+        return part.slice(0, colon).trim() + ':' + part.slice(colon + 1).trim();
+      }).join(';');
+    }
     return key === 'class' && !value ? [] : [[key, value]];
   });
 }
@@ -101,24 +103,30 @@ export function verifySelectComponentsResponsiveSSRLayout(actualHTML: string, so
     // Pinned Svelte SSR compiler emits attr_style for style directives after
     // ordinary attrs (compiler/phases/3-transform/server/visitors/shared/element.js). This marked
     // hidden wrapper keeps every other attr/order and every declaration/value.
-    if (directiveStyleLast) assert.deepEqual(
-      left,
-      [...right.filter(([key]) => key !== 'style'), style],
-      label + ' exact Svelte SSR directive style-last order'
-    );
-    else assert.deepEqual(
-      left,
-      right,
-      label + ' complete ordered attributes and style declarations'
-    );
+    if (directiveStyleLast) {
+      assert.deepEqual(
+        left,
+        [...right.filter(([key]) => key !== 'style'), style],
+        label + ' exact Svelte SSR directive style-last order'
+      );
+    }
+    else {
+      assert.deepEqual(
+        left,
+        right,
+        label + ' complete ordered attributes and style declarations'
+      );
+    }
     assert.equal(actual.children.length, source.children.length, label + ' complete child topology');
     for (const [index, child] of source.children.entries()) {
       const current = actual.children[index];
-      if (typeof current === 'string' || typeof child === 'string') assert.deepEqual(
-        current,
-        child,
-        label + '/' + index + ' literal text'
-      );
+      if (typeof current === 'string' || typeof child === 'string') {
+        assert.deepEqual(
+          current,
+          child,
+          label + '/' + index + ' literal text'
+        );
+      }
       else compare(current, child, label + '/' + index, { actual, source });
     }
   };

@@ -52,24 +52,34 @@
   onDestroy(() => { alive = false; });
 
   function register(value: unknown) {
-    if (!value || typeof value !== 'object') return;
+    if (!value || typeof value !== 'object') {
+      return;
+    }
     const own = Object.getOwnPropertyDescriptors(value);
-    if (typeof own.auditToken?.value === 'string') originals.set(
-      own.auditToken.value,
-      value as RawOption
-    );
-    for (const descriptor of Object.values(own)) if ('value' in descriptor) register(descriptor.value);
+    if (typeof own.auditToken?.value === 'string') {
+      originals.set(
+        own.auditToken.value,
+        value as RawOption
+      );
+    }
+    for (const descriptor of Object.values(own)) {
+      if ('value' in descriptor) register(descriptor.value);
+    }
   }
   function data(dataset: SelectDataDataset) {
     let records = datasets.get(dataset);
     if (!records) {
       records = selectDataRaw(dataset);
-      if (groupAttributes) for (const record of records) {
-        if (Array.isArray(record.options)) Object.assign(record, {
-          className: 'data-audit-group-class authored-group', title: 'Authored group title',
-          style: { minHeight: 72, backgroundColor: 'rgb(1, 2, 3)' },
-          'data-group-extra': 'Authored group data', 'aria-label': 'Authored group aria', role: 'alert'
-        });
+      if (groupAttributes) {
+        for (const record of records) {
+          if (Array.isArray(record.options)) {
+            Object.assign(record, {
+              className: 'data-audit-group-class authored-group', title: 'Authored group title',
+              style: { minHeight: 72, backgroundColor: 'rgb(1, 2, 3)' },
+              'data-group-extra': 'Authored group data', 'aria-label': 'Authored group aria', role: 'alert'
+            });
+          }
+        }
       }
       register(records);
       datasets.set(dataset, records);
@@ -163,7 +173,9 @@
   }
   function scrollTarget(action: Extract<SelectDataAction, { type: 'ref' }>): SelectScrollConfig {
     const target = action.target;
-    if (target.kind === 'number') return target.index;
+    if (target.kind === 'number') {
+      return target.index;
+    }
     const alignment = { ...('align' in target ? { align: target.align } : {}),
       ...('offset' in target ? { offset: target.offset === 'get-size' ? sizeOffset : target.offset } : {}) };
     return 'index' in target ? { index: target.index, ...alignment }

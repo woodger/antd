@@ -14,6 +14,8 @@ export interface LayoutSectionPrefixSample {
 
 export function layoutSectionPrefix(sample: LayoutSectionPrefixSample,
   part: 'header' | 'content' | 'footer') {
-  if (sample.prefix === undefined || sample.prefix === '') return sample.prefix;
+  if (sample.prefix === undefined || sample.prefix === '') {
+    return sample.prefix;
+  }
   return sample.shared ? sample.prefix : `${sample.prefix}-${part}`;
 }

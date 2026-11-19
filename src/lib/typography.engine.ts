@@ -19,7 +19,9 @@ export function typographyTooltip(
   title: TypographyContent;
   options: Omit<TooltipProps, 'children' | 'title'>;
 } {
-  if (value === true) return { title: fallback, options: {} };
+  if (value === true) {
+    return { title: fallback, options: {} };
+  }
   if (isTooltipConfig(value)) {
     return { title: Object.hasOwn(value, 'title') ? value.title : fallback, options: value };
   }
@@ -31,8 +33,12 @@ export function typographyNodes(value: TypographyContent): Exclude<
   TypographyContent, readonly TypographyContent[] | boolean | null | undefined
 >[] {
   if (typeof value === 'string' || typeof value === 'number'
-    || typeof value === 'bigint' || typeof value === 'function') return [value];
-  if (Array.isArray(value)) return value.flatMap(typographyNodes);
+    || typeof value === 'bigint' || typeof value === 'function') {
+    return [value];
+  }
+  if (Array.isArray(value)) {
+    return value.flatMap(typographyNodes);
+  }
   return [];
 }
 
@@ -47,7 +53,9 @@ export function typographySlice(value: TypographyContent, length: number): Typog
   const output: TypographyContent[] = [];
   let remaining = length;
   for (const node of typographyNodes(value)) {
-    if (remaining === 0) return output;
+    if (remaining === 0) {
+      return output;
+    }
     const text = typeof node === 'string' || typeof node === 'number';
     const size = text ? String(node).length : 1;
     if (size > remaining) {
@@ -62,17 +70,27 @@ export function typographySlice(value: TypographyContent, length: number): Typog
 
 export function typographyCopyFallback(value: TypographyContent): string {
   function stringify(node: TypographyContent): string {
-    if (node == null) return '';
-    if (typeof node === 'function') return '[object Object]';
-    if (Array.isArray(node)) return node.map(stringify).join(',');
+    if (node == null) {
+      return '';
+    }
+    if (typeof node === 'function') {
+      return '[object Object]';
+    }
+    if (Array.isArray(node)) {
+      return node.map(stringify).join(',');
+    }
     return String(node);
   }
-  if (value == null) return '';
+  if (value == null) {
+    return '';
+  }
   return Array.isArray(value) ? value.map(stringify).join('') : stringify(value);
 }
 
 export function typographyCopyNodes(value: TypographyContent): readonly TypographyContent[] {
-  if (value === false) return [false, false];
+  if (value === false) {
+    return [false, false];
+  }
   return Array.isArray(value) ? value : [value];
 }
 
@@ -81,7 +99,9 @@ export function typographyActionNode(
   fallback: TypographyContent,
   icon = false
 ) {
-  if (value === true || value === undefined) return fallback;
+  if (value === true || value === undefined) {
+    return fallback;
+  }
   return value || (icon ? fallback : false);
 }
 
@@ -104,7 +124,9 @@ export function typographyDecorationTags(props: Pick<
 }
 
 export function typographyTextEllipsis(value: TypographyTextProps['ellipsis']) {
-  if (!value || typeof value !== 'object') return value;
+  if (!value || typeof value !== 'object') {
+    return value;
+  }
   const result: TypographyEllipsisConfig = { ...value };
   delete result.rows;
   delete result.expandable;
@@ -131,8 +153,14 @@ export function typographyEditKey(
   composing: boolean
 ) {
   if (previous !== event.keyCode || composing
-    || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) return undefined;
-  if (event.keyCode === 13) return 'save';
-  if (event.keyCode === 27) return 'cancel';
+    || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) {
+    return undefined;
+  }
+  if (event.keyCode === 13) {
+    return 'save';
+  }
+  if (event.keyCode === 27) {
+    return 'cancel';
+  }
   return undefined;
 }

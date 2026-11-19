@@ -67,8 +67,9 @@ describe('Alert server rendering', () => {
       'Retry',
       'ant-alert-filled',
       'ant-alert-with-description'
-    ])
+    ]) {
       expect(body).toContain(value);
+    }
 
     expect(body).not.toContain('<svg');
     expect(body.match(/<button\b/g)).toHaveLength(1);

@@ -27,7 +27,9 @@
       event instanceof KeyboardEvent ? event.key : null, event.defaultPrevented);
   }
   function ownProps() {
-    if (!sample.own) return undefined;
+    if (!sample.own) {
+      return undefined;
+    }
     return {
       'data-input-own': 'true',
       oninput: (event: Event) => ownEvent('change', event),

@@ -2,7 +2,9 @@ import template from './vendor/typography-prefix.css.js';
 
 /** Общий marker сохраняется для aliases и Native compact; local classes охватывают editing/actions. */
 export function getTypographyPrefixCss(prefix: string) {
-  if (prefix === 'ant-typography') return undefined;
+  if (prefix === 'ant-typography') {
+    return undefined;
+  }
 
   const scope = `:where([data-ant-typography-prefix=${JSON.stringify(prefix)}])`;
 

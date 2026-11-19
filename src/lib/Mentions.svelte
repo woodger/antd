@@ -195,7 +195,9 @@
       measuring = false;
   });
   $effect(() => {
-    if (!editor || !mirror) return;
+    if (!editor || !mirror) {
+      return;
+    }
     const element = editor;
     const target = mirror;
     const resize = onResize;
@@ -218,13 +220,17 @@
     });
   });
   $effect(() => {
-    if (!visible) return;
+    if (!visible) {
+      return;
+    }
     mounted = true;
     if (!filtered[active] || filtered[active].disabled)
       active = enabled(0);
   });
   $effect(() => {
-    if (!visible || !popup || !anchor || !root) return;
+    if (!visible || !popup || !anchor || !root) {
+      return;
+    }
     return connectPopup(popup, anchor, {
       trigger: root,
       placement,
@@ -254,7 +260,9 @@
   function enabled(start: number, offset = 1) {
     for (let step = 0; step < filtered.length; step++) {
       const index = ((start + step * offset) % filtered.length + filtered.length) % filtered.length;
-      if (!filtered[index].disabled) return index;
+      if (!filtered[index].disabled) {
+        return index;
+      }
     }
     return -1;
   }
@@ -263,7 +271,9 @@
     onChange?.(next);
   }
   function handleInput(event: Event & { currentTarget: EventTarget & HTMLTextAreaElement; }) {
-    if (blocked || readonly) return;
+    if (blocked || readonly) {
+      return;
+    }
     const element = event.currentTarget;
     change(element.value);
     oninput?.(event);
@@ -273,7 +283,9 @@
     });
   }
   async function choose(option: MentionsOption) {
-    if (blocked || readonly || loading || option.disabled || !editor) return;
+    if (blocked || readonly || loading || option.disabled || !editor) {
+      return;
+    }
     const selectedEditor = editor;
     const result = replaceMention(
       text,
@@ -302,7 +314,9 @@
   ) {
     onKeyDown?.(event);
     onkeydown?.(event);
-    if (event.defaultPrevented || event.isComposing || blocked || readonly) return;
+    if (event.defaultPrevented || event.isComposing || blocked || readonly) {
+      return;
+    }
     if (!visible) {
       if (event.key === 'Enter')
         onPressEnter?.(event);
@@ -324,7 +338,9 @@
     }
     else if (event.key === 'Enter') {
       event.preventDefault();
-      if (loading) return;
+      if (loading) {
+        return;
+      }
       const index = filtered[active] && !filtered[active].disabled ? active : enabled(0);
       if (index < 0)
         measuring = false;
@@ -338,7 +354,9 @@
     onkeyup?.(event);
     if (blocked
       || readonly
-      || ['Escape', 'ArrowUp', 'ArrowDown', 'Enter'].includes(event.key)) return;
+      || ['Escape', 'ArrowUp', 'ArrowDown', 'Enter'].includes(event.key)) {
+      return;
+    }
     const before = event.currentTarget.value.slice(0, event.currentTarget.selectionStart);
     const found = getMentionMeasure(before, prefixes);
     if (found.location < 0) {
@@ -400,7 +418,9 @@
     };
   }
   function clear() {
-    if (blocked || readonly || typeof allowClear === 'object' && allowClear.disabled) return;
+    if (blocked || readonly || typeof allowClear === 'object' && allowClear.disabled) {
+      return;
+    }
     change('');
     measuring = false;
     editor?.focus();

@@ -36,7 +36,9 @@ export function collectValidationMessages<Values extends FormValues>(
 }
 
 function ownValue(value: unknown, key: string): unknown {
-  if (value == null) return;
+  if (value == null) {
+    return;
+  }
   const source = Object(value);
   return Object.hasOwn(source, key) ? source[key] : undefined;
 }
@@ -53,7 +55,9 @@ export async function validateNestedRule<Values extends FormValues>(
 ): Promise<ValidationMessages> {
   const nested = (rule.type === 'object' || rule.type === 'array')
     && (rule.fields || rule.defaultField) && (rule.required || value);
-  if (!nested) return collectValidationMessages(rule, own, []);
+  if (!nested) {
+    return collectValidationMessages(rule, own, []);
+  }
 
   if (rule.required && !value && (rule.fields || rule.type === 'object' && rule.defaultField)) {
     return collectValidationMessages(rule, own.length ? own

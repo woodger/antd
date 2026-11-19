@@ -211,73 +211,108 @@
     return nodes.get(token)!;
   }
   function result(kind: string, slot: string, side: string): RenderEmptyContent {
-    if (kind === 'undefined') return undefined;
-    if (kind === 'null') return null;
-    if (kind === 'false') return false;
-    if (kind === 'zero') return 0;
-    if (kind === 'empty') return '';
-    if (kind === 'empty-array') return [];
-    if (kind === 'array') return [node(side + '-' + slot + '-array-first'), 0, null, false, node(side + '-' + slot + '-array-last')];
+    if (kind === 'undefined') {
+      return undefined;
+    }
+    if (kind === 'null') {
+      return null;
+    }
+    if (kind === 'false') {
+      return false;
+    }
+    if (kind === 'zero') {
+      return 0;
+    }
+    if (kind === 'empty') {
+      return '';
+    }
+    if (kind === 'empty-array') {
+      return [];
+    }
+    if (kind === 'array') {
+      return [node(side + '-' + slot + '-array-first'), 0, null, false, node(side + '-' + slot + '-array-last')];
+    }
     return node(side + '-' + slot + '-function');
   }
   function renderer(slot: string, side: string, kind: string): Producer {
     const key = [slot, side, kind].join(':');
-    if (!renderers.has(key)) renderers.set(key, handler(key, function iconsRenderNode(...args: unknown[]) {
-      const rendered = result(kind, slot, side);
-      return recorder.record(slot, side, args, rendered, { argumentCount: arguments.length,
-        argumentOwnKeys: args.map(arg => arg != null && ['object', 'function'].includes(typeof arg) ? Reflect.ownKeys(arg as object) : null),
-        argumentDescriptors: args.map(arg => arg != null && ['object', 'function'].includes(typeof arg) ? recorder.own(arg as object) : null) });
-    }));
+    if (!renderers.has(key)) {
+      renderers.set(key, handler(key, function iconsRenderNode(...args: unknown[]) {
+        const rendered = result(kind, slot, side);
+        return recorder.record(slot, side, args, rendered, { argumentCount: arguments.length,
+          argumentOwnKeys: args.map(arg => arg != null && ['object', 'function'].includes(typeof arg) ? Reflect.ownKeys(arg as object) : null),
+          argumentDescriptors: args.map(arg => arg != null && ['object', 'function'].includes(typeof arg) ? recorder.own(arg as object) : null) });
+      }));
+    }
     return renderers.get(key)!;
   }
   function resolve(spec: unknown, slot: string, side: string): unknown {
     const item = spec as { kind?: string; token?: string; result?: string } | null | undefined;
-    if (item?.kind === 'undefined') return undefined;
+    if (item?.kind === 'undefined') {
+      return undefined;
+    }
     if (item?.kind === 'node') {
       const token = item.token!, snippet = node(token);
       if (['suffix', 'menuItemSelectedIcon', 'removeIcon'].includes(slot)) {
         // Явный static content сохраняет Source visibility: function-иконка
         // вызывается и у unselected rows, статическая — только у selected.
-        if (!literalNodes.has(token)) literalNodes.set(
-          token,
-          recorder.register([snippet], { node: 'icon-' + token })
-        );
+        if (!literalNodes.has(token)) {
+          literalNodes.set(
+            token,
+            recorder.register([snippet], { node: 'icon-' + token })
+          );
+        }
         return literalNodes.get(token);
       }
       return snippet;
     }
-    if (item?.kind === 'function') return renderer(slot, side, item.result!);
-    if (item?.kind === 'array' || item?.kind === 'empty-array') return result(item.kind, slot, side);
+    if (item?.kind === 'function') {
+      return renderer(slot, side, item.result!);
+    }
+    if (item?.kind === 'array' || item?.kind === 'empty-array') {
+      return result(item.kind, slot, side);
+    }
     return spec;
   }
   function search(spec: unknown, side: string): unknown {
-    if ((spec as { kind?: string } | null)?.kind === 'undefined') return undefined;
+    if ((spec as { kind?: string } | null)?.kind === 'undefined') {
+      return undefined;
+    }
     if (spec && typeof spec === 'object') {
       const config = { ...spec, onSearch } as Record<string, unknown>;
-      if (Object.hasOwn(spec, 'searchIcon')) config.searchIcon = resolve(
-        Reflect.get(spec, 'searchIcon'),
-        'searchIcon',
-        side
-      );
+      if (Object.hasOwn(spec, 'searchIcon')) {
+        config.searchIcon = resolve(
+          Reflect.get(spec, 'searchIcon'),
+          'searchIcon',
+          side
+        );
+      }
       return config;
     }
     return spec;
   }
   function clear(spec: unknown, side: string): unknown {
-    if ((spec as { kind?: string } | null)?.kind === 'undefined') return undefined;
-    if (!spec || typeof spec !== 'object') return spec;
+    if ((spec as { kind?: string } | null)?.kind === 'undefined') {
+      return undefined;
+    }
+    if (!spec || typeof spec !== 'object') {
+      return spec;
+    }
     const config = { ...spec } as Record<string, unknown>;
-    if (Object.hasOwn(spec, 'clearIcon')) config.clearIcon = resolve(
-      Reflect.get(spec, 'clearIcon'),
-      'clearIcon',
-      side
-    );
+    if (Object.hasOwn(spec, 'clearIcon')) {
+      config.clearIcon = resolve(
+        Reflect.get(spec, 'clearIcon'),
+        'clearIcon',
+        side
+      );
+    }
     return config;
   }
   function icons(spec: Record<string, unknown>, side: string) {
     const record: Record<string, unknown> = {};
-    for (const key of ['suffixIcon', 'suffix', 'loadingIcon', 'menuItemSelectedIcon', 'removeIcon'])
+    for (const key of ['suffixIcon', 'suffix', 'loadingIcon', 'menuItemSelectedIcon', 'removeIcon']) {
       if (Object.hasOwn(spec, key)) record[key] = resolve(spec[key], key, side);
+    }
     if (Object.hasOwn(spec, 'showSearch')) record.showSearch = search(spec.showSearch, side);
     if (Object.hasOwn(spec, 'allowClear')) record.allowClear = clear(spec.allowClear, side);
     return record;
@@ -328,11 +363,15 @@
   ): unknown {
     const key = slot + ':' + kind;
     const tag = authoredTag ?? (slot === 'input' ? 'textarea' : 'input');
-    if (kind === 'intrinsic') return tag;
+    if (kind === 'intrinsic') {
+      return tag;
+    }
     if (kind === 'function' || kind === 'composite' || kind === 'composite-native-only') {
-      if (!componentTypes.has(key)) componentTypes.set(key, recorder.register(
-        slot === 'root' ? kind === 'function' ? rootFunction : kind === 'composite' ? rootComposite : rootNativeOnly
-          : kind === 'function' ? inputFunction : tag === 'input' ? inputCompositeInput : inputComposite, { component: key }));
+      if (!componentTypes.has(key)) {
+        componentTypes.set(key, recorder.register(
+          slot === 'root' ? kind === 'function' ? rootFunction : kind === 'composite' ? rootComposite : rootNativeOnly
+            : kind === 'function' ? inputFunction : tag === 'input' ? inputCompositeInput : inputComposite, { component: key }));
+      }
       return componentTypes.get(key);
     }
     const elementKey = key + '/' + JSON.stringify(authoredProps ?? null);
@@ -375,18 +414,24 @@
       style: { width: '100%' }, options, value: model, open, listHeight: 160, virtual: false,
       placeholder: 'Choose icon value', 'aria-label': 'Icon value', onChange, onSelect, onDeselect, onClear,
       onOpenChange, onInputKeyDown, ...icons(settings, 'own') };
-    for (const key of ['mode', 'loading', 'disabled', 'title', 'name']) if (Object.hasOwn(
-      settings,
-      key
-    )) props[key] = settings[key];
+    for (const key of ['mode', 'loading', 'disabled', 'title', 'name']) {
+      if (Object.hasOwn(
+        settings,
+        key
+      )) {
+        props[key] = settings[key];
+      }
+    }
     if (settings.observeFocus) {
       props.onFocus = onPublicFocus;
       props.onBlur = onPublicBlur;
     }
-    if (settings.prefixProbe) props.prefix = recorder.register(
-      prefixBody,
-      { node: 'flow-prefix-element' }
-    );
+    if (settings.prefixProbe) {
+      props.prefix = recorder.register(
+        prefixBody,
+        { node: 'flow-prefix-element' }
+      );
+    }
     if (settings.metadata) {
       props.classNames = semanticClasses;
       props.styles = semanticStyles;
@@ -429,9 +474,11 @@
       authoredRoot: elementRefs.root, authoredInput: elementRefs.input };
   }
   export function read() {
-    if (alive || !lastAuthored) lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
-      authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider),
-      authoredInnerProvider: recorder.encode(inner), rawAuthoredInnerProvider: recorder.raw(inner) };
+    if (alive || !lastAuthored) {
+      lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
+        authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider),
+        authoredInnerProvider: recorder.encode(inner), rawAuthoredInnerProvider: recorder.raw(inner) };
+    }
     return { model: recorder.encode(model), rawModel: recorder.raw(model), open, query, settings: recorder.encode(settings),
       events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], lifecycle: [...lifecycle],
       nativeRemountClosures: [...nativeRemountClosures], componentObservations: [...componentObservations], bodyActivity: [...bodyActivity], alive, ...lastAuthored,

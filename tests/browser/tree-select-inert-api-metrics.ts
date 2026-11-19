@@ -46,7 +46,9 @@ export function readTreeSelectInertApiSSR(html: string) {
     ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&#x27;': "'" })[entity]!);
   const tags = [...html.matchAll(/<[A-Za-z][\w:-]*\b[^>]*>/g)].map(match => match[0]);
   const attr = (tag: string | undefined, name: string) => {
-    if (!tag) return null;
+    if (!tag) {
+      return null;
+    }
     const match = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s/>]))`).exec(tag);
     return match ? decode(match[1] ?? '') : null;
   };

@@ -18,7 +18,9 @@ declare global {
 
 const name = new URL(location.href).searchParams.get('name');
 const sample = treeTagSamples.find(sample => sample.id === name);
-if (!sample) throw new Error(`Unknown TreeSelect hydration case: ${name}`);
+if (!sample) {
+  throw new Error(`Unknown TreeSelect hydration case: ${name}`);
+}
 const root = document.querySelector('[data-ant-tree-choice-control]');
 const input = root?.querySelector<HTMLInputElement>('[role="combobox"]') ?? null;
 const tag = root?.querySelector('[data-ant-tree-choice-selection-item], [data-tree-choice-custom-tag]') ?? null;

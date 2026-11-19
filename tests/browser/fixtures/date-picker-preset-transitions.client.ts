@@ -13,21 +13,31 @@ import type {
 
 const id = new URL(location.href).searchParams.get('sample');
 const sample = datePickerPresetTransitionSamples.find(value => value.id === id);
-if (!sample) throw Error('Unknown bounded DatePicker preset transition sample');
+if (!sample) {
+  throw Error('Unknown bounded DatePicker preset transition sample');
+}
 const target = document.getElementById('root');
-if (!target) throw Error('Ordinary DatePicker transition target is missing');
+if (!target) {
+  throw Error('Ordinary DatePicker transition target is missing');
+}
 const capture: DatePickerPresetTransitionCapture = {};
 const api: DatePickerPresetTransitionOwnerAPI = {
   read() {
-    if (!capture.read) throw Error('Actual DatePicker owner read() is unavailable');
+    if (!capture.read) {
+      throw Error('Actual DatePicker owner read() is unavailable');
+    }
     return capture.read();
   },
   readRefs() {
-    if (!capture.readRefs) throw Error('Actual DatePicker owner readRefs() is unavailable');
+    if (!capture.readRefs) {
+      throw Error('Actual DatePicker owner readRefs() is unavailable');
+    }
     return capture.readRefs();
   },
   setActionIndex(index) {
-    if (!capture.setActionIndex) throw Error('Actual DatePicker owner action index is unavailable');
+    if (!capture.setActionIndex) {
+      throw Error('Actual DatePicker owner action index is unavailable');
+    }
     capture.setActionIndex(index);
   }
 };
@@ -47,7 +57,9 @@ function activateOwnerControl(kind: DatePickerPresetTransitionOwnerControl, valu
   const button = [...document.querySelectorAll('[data-transition-control]')].find(node =>
     node.getAttribute('data-transition-control') === kind
       && node.getAttribute('data-transition-value') === String(value));
-  if (!(button instanceof HTMLButtonElement)) throw Error('Actual authored prop-control button is missing');
+  if (!(button instanceof HTMLButtonElement)) {
+    throw Error('Actual authored prop-control button is missing');
+  }
   flushSync(() => button.click());
 }
 window.datePickerPresetTransitionsNative = {

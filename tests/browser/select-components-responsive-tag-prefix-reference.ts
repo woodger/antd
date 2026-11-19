@@ -237,7 +237,9 @@ function selection(mode: ResponsiveTagPrefixMode, variant: ResponsiveTagPrefixVa
 }
 let manifestCache: ResponsiveTagPrefixManifest | undefined;
 export function readSelectComponentsResponsiveTagPrefixManifest() {
-  if (manifestCache) return manifestCache;
+  if (manifestCache) {
+    return manifestCache;
+  }
   const bytes = readFileSync(fixture(prefix + 'source-manifest.json'));
   assert.equal(bytes.length, 382260);
   assert.equal(hash(bytes), '8341c95e91cfe93baa76715785cf2039f80977864459717720c78a48415ad2e8');
@@ -300,29 +302,31 @@ export function readSelectComponentsResponsiveTagPrefixManifest() {
     manifest.copies.map(copy => [copy.mode, copy.variant]),
     [['csr', 'first'], ['csr', 'repeat'], ['ssr', 'first'], ['ssr', 'repeat']]
   );
-  for (const mode of ['csr', 'ssr'] as const) for (const variant of ['first', 'repeat'] as const) {
-    const copy = manifest.copies.find(copy => copy.mode === mode && copy.variant === variant)!;
-    assert.deepEqual(
-      copy,
-      {
-        mode,
-        variant,
-        ...storedPins[mode][variant],
-        decodedBytes: rawPins[mode][variant].bytes,
-        decodedSha256: rawPins[mode][variant].sha256
-      }
-    );
-    assert.deepEqual(
-      manifest.independentlyCapturedRaw[mode][variant],
-      { path: sourceBase + mode + '-source-' + variant + '.json', ...rawPins[mode][variant] }
-    );
-    const header = manifest.headerByModeAndVariant[mode][variant];
-    assert.equal(header.protocolSha256, protocol);
-    sameLiteral(
-      header.inputPins,
-      manifest.frozenProtocol.inputPins,
-      'Every actual frozen Source input pin/order'
-    );
+  for (const mode of ['csr', 'ssr'] as const) {
+    for (const variant of ['first', 'repeat'] as const) {
+      const copy = manifest.copies.find(copy => copy.mode === mode && copy.variant === variant)!;
+      assert.deepEqual(
+        copy,
+        {
+          mode,
+          variant,
+          ...storedPins[mode][variant],
+          decodedBytes: rawPins[mode][variant].bytes,
+          decodedSha256: rawPins[mode][variant].sha256
+        }
+      );
+      assert.deepEqual(
+        manifest.independentlyCapturedRaw[mode][variant],
+        { path: sourceBase + mode + '-source-' + variant + '.json', ...rawPins[mode][variant] }
+      );
+      const header = manifest.headerByModeAndVariant[mode][variant];
+      assert.equal(header.protocolSha256, protocol);
+      sameLiteral(
+        header.inputPins,
+        manifest.frozenProtocol.inputPins,
+        'Every actual frozen Source input pin/order'
+      );
+    }
   }
   for (const input of manifest.portableInputs) {
     assert.equal(input.byteEqual, true);
@@ -342,7 +346,9 @@ export function readSelectComponentsResponsiveTagPrefixManifest() {
 }
 let proofCache: ResponsiveTagPrefixPairProof | undefined;
 export function readSelectComponentsResponsiveTagPrefixPairProof() {
-  if (proofCache) return proofCache;
+  if (proofCache) {
+    return proofCache;
+  }
   const manifest = readSelectComponentsResponsiveTagPrefixManifest(), bytes = readFileSync(fixture(manifest.repeatProof.path));
   assert.equal(bytes.length, manifest.repeatProof.bytes);
   assert.equal(hash(bytes), manifest.repeatProof.sha256);
@@ -490,7 +496,9 @@ export function validateResponsiveTagPrefixCSR(
     assert.deepEqual(entry.network, { requests: [], requestFailures: [], responses: [] });
     assert.equal(entry.steps.length, 9);
     assert.deepEqual(entry.steps.map(step => step.action), sample.actions);
-    for (const call of entry.ledger.producerCalls) if (call.kind === 'tagRender') readResponsiveTagPrefixSourceInfo(call);
+    for (const call of entry.ledger.producerCalls) {
+      if (call.kind === 'tagRender') readResponsiveTagPrefixSourceInfo(call);
+    }
     const points = [entry.initial, ...entry.steps];
     let previous = { event: 0, rawEvent: 0, producer: 0, lifecycle: 0, body: 0 };
     for (const point of points) {
@@ -516,10 +524,12 @@ export function validateResponsiveTagPrefixCSR(
         assert.equal(point.customTagsPrefix.prefixTopology.leadingPrefixOutsideOverflow, false);
       }
       assert.equal(point.customTagsPrefix.browserOwnedResourceCounters.measured, false);
-      for (const key of ['observers', 'mutations', 'frames', 'timers', 'ports'] as const) assert.equal(
-        point.customTagsPrefix.browserOwnedResourceCounters[key],
-        null
-      );
+      for (const key of ['observers', 'mutations', 'frames', 'timers', 'ports'] as const) {
+        assert.equal(
+          point.customTagsPrefix.browserOwnedResourceCounters[key],
+          null
+        );
+      }
       const counts = {
         event: owner.eventCount,
         rawEvent: owner.rawEventCount,
@@ -648,7 +658,9 @@ function decodedSource(mode: ResponsiveTagPrefixMode, variant: ResponsiveTagPref
 }
 export function readSelectComponentsResponsiveTagPrefixCSR(variant: ResponsiveTagPrefixVariant = 'first') {
   selection('csr', variant);
-  if (csrCache?.variant === variant) return csrCache.source;
+  if (csrCache?.variant === variant) {
+    return csrCache.source;
+  }
   const source = validateResponsiveTagPrefixCSR(
     JSON.parse(decodedSource('csr', variant)) as ResponsiveTagPrefixSource<ResponsiveTagPrefixCSRCase>,
     variant

@@ -59,8 +59,12 @@ export function numberToString(number: number) {
 }
 
 export function validateNumber(number: string | number | null | undefined) {
-  if (typeof number === 'number') return !Number.isNaN(number);
-  if (!number) return false;
+  if (typeof number === 'number') {
+    return !Number.isNaN(number);
+  }
+  if (!number) {
+    return false;
+  }
 
   return /^\s*-?\d+(\.\d+)?\s*$/.test(number)
     || /^\s*-?\d+\.\s*$/.test(number)
@@ -74,7 +78,9 @@ export function isEmptyDecimal(value: string | number | null | undefined) {
 export function getDecupleSteps(step: string | number) {
   const text = typeof step === 'number' ? numberToString(step) : trimNumber(step).fullStr;
 
-  if (!text.includes('.')) return step + '0';
+  if (!text.includes('.')) {
+    return step + '0';
+  }
 
   return trimNumber(text.replace(/(\d)\.(\d)/g, '$1$2.')).fullStr;
 }

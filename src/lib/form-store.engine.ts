@@ -46,7 +46,9 @@ export function containsFormPath(parent: NamePath, child: NamePath): boolean {
 }
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
-  if (value === null || typeof value !== 'object') return false;
+  if (value === null || typeof value !== 'object') {
+    return false;
+  }
 
   const prototype = Object.getPrototypeOf(value);
 
@@ -63,8 +65,12 @@ function defineValue(target: object, key: string | number, value: unknown) {
 
 /** Копирует изменяемые контейнеры, сохраняя Dayjs и другие непрозрачные экземпляры. */
 export function copyFormValue<Value>(value: Value, seen = new WeakMap<object, unknown>()): Value {
-  if (!Array.isArray(value) && !isPlainObject(value)) return value;
-  if (seen.has(value)) return seen.get(value) as Value;
+  if (!Array.isArray(value) && !isPlainObject(value)) {
+    return value;
+  }
+  if (seen.has(value)) {
+    return seen.get(value) as Value;
+  }
 
   const copy = Array.isArray(value) ? [] : {};
   if (Array.isArray(copy) && Array.isArray(value)) copy.length = value.length;
@@ -95,7 +101,9 @@ export function setFormValue(store: unknown, name: NamePath, value: unknown): un
   const path = formNamePath(name);
 
   function set(current: unknown, index: number): unknown {
-    if (index === path.length) return copyFormValue(value);
+    if (index === path.length) {
+      return copyFormValue(value);
+    }
 
     const part = path[index];
     const copy = Array.isArray(current)
@@ -116,8 +124,12 @@ export function mergeFormValues<Values>(store: Values, next: unknown): Values {
   const seen = new WeakMap<object, unknown>();
 
   function merge(current: unknown, value: unknown): unknown {
-    if (!isPlainObject(value)) return copyFormValue(value, seen);
-    if (seen.has(value)) return seen.get(value);
+    if (!isPlainObject(value)) {
+      return copyFormValue(value, seen);
+    }
+    if (seen.has(value)) {
+      return seen.get(value);
+    }
 
     const copy = isPlainObject(current) ? copyFormValue(current) : {};
     seen.set(value, copy);
@@ -137,15 +149,27 @@ export function sameFormValue(left: unknown, right: unknown): boolean {
   const pairs = new WeakMap<object, WeakSet<object>>();
 
   function equal(first: unknown, second: unknown): boolean {
-    if (Object.is(first, second)) return true;
+    if (Object.is(first, second)) {
+      return true;
+    }
     if ((!Array.isArray(first) && !isPlainObject(first))
-      || (!Array.isArray(second) && !isPlainObject(second))) return false;
-    if (Array.isArray(first) !== Array.isArray(second)) return false;
-    if (Array.isArray(first) && Array.isArray(second) && first.length !== second.length) return false;
+      || (!Array.isArray(second) && !isPlainObject(second))) {
+      return false;
+    }
+    if (Array.isArray(first) !== Array.isArray(second)) {
+      return false;
+    }
+    if (Array.isArray(first) && Array.isArray(second) && first.length !== second.length) {
+      return false;
+    }
 
     const keys = Object.keys(first);
-    if (keys.length !== Object.keys(second).length) return false;
-    if (pairs.get(first)?.has(second)) return true;
+    if (keys.length !== Object.keys(second).length) {
+      return false;
+    }
+    if (pairs.get(first)?.has(second)) {
+      return true;
+    }
 
     const matched = pairs.get(first) ?? new WeakSet<object>();
     matched.add(second);

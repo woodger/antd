@@ -8,10 +8,13 @@ import type { MaskCapture } from '../date-picker-mask-native-types';
 const parameters = new URL(location.href).searchParams;
 const sample = samples.find(sample => sample.id === parameters.get('owner'));
 const profile = parameters.get('profile');
-if (!sample || !['string', 'object', 'mask'].includes(profile ?? ''))
+if (!sample || !['string', 'object', 'mask'].includes(profile ?? '')) {
   throw Error('Choose an authored mask owner and initial format profile');
+}
 const target = document.getElementById('root');
-if (!target) throw Error('Mask SSR target missing');
+if (!target) {
+  throw Error('Mask SSR target missing');
+}
 const parsedOwner = target.querySelector('[data-mask-owner]');
 const parsedRoot = target.querySelector('.ant-picker');
 const parsedInputs = [...target.querySelectorAll('input')];

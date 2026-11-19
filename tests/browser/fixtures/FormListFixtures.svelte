@@ -24,7 +24,9 @@
   let pendingCount = $state(0);
 
   function validateName() {
-    if (!hold) return;
+    if (!hold) {
+      return;
+    }
 
     return new Promise<string | void>((resolve) => {
       pending.push(resolve);

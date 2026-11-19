@@ -15,7 +15,9 @@ export function createCssMotionFrame(view: Window) {
       cancel();
       const current = revision;
       frame = view.requestAnimationFrame(() => {
-        if (current !== revision) return;
+        if (current !== revision) {
+          return;
+        }
         frame = view.requestAnimationFrame(() => {
           frame = undefined;
           if (current === revision) callback();

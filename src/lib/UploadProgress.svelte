@@ -32,7 +32,9 @@
     if (visible) present = true;
   });
   $effect(() => {
-    if (!root) return;
+    if (!root) {
+      return;
+    }
     // После скрытого состояния новый DOM получает enter; только первое видимое появление — appear.
     const previous = hadRoot || initiallyHidden ? false : undefined;
     hadRoot = true;

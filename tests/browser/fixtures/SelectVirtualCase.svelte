@@ -90,7 +90,9 @@
   }
   function getPopupContainer() { return shadow!; }
   function copyShadowStyles() {
-    if (!shadow) return;
+    if (!shadow) {
+      return;
+    }
     const originals = [...document.head.querySelectorAll<HTMLStyleElement | HTMLLinkElement>('style,link[rel="stylesheet"]')];
     for (const [original, copy] of shadowStyleCopies) {
       if (originals.includes(original)) continue;
@@ -111,10 +113,12 @@
           if (name !== 'data-select-virtual-copied' && !original.hasAttribute(name)) copy.removeAttribute(name);
         }
         for (const attribute of original.attributes) {
-          if (copy.getAttribute(attribute.name) !== attribute.value) copy.setAttribute(
-            attribute.name,
-            attribute.value
-          );
+          if (copy.getAttribute(attribute.name) !== attribute.value) {
+            copy.setAttribute(
+              attribute.name,
+              attribute.value
+            );
+          }
         }
         if (original instanceof HTMLStyleElement && copy.textContent !== original.textContent)
           copy.textContent = original.textContent;
@@ -140,7 +144,9 @@
   }
   function rendered(flat: SelectFlattenOption<string>, info: { index: number }) {
     const receipt = renderReceipt(flat, info);
-    if (JSON.stringify(renderMap.get(flat.key)) === JSON.stringify(receipt)) return;
+    if (JSON.stringify(renderMap.get(flat.key)) === JSON.stringify(receipt)) {
+      return;
+    }
     renderMap.set(flat.key, receipt);
     renders = [...renderMap.values()];
   }
@@ -152,16 +158,28 @@
     return value;
   }
   function scrollTarget(target: SelectVirtualScrollTarget): SelectScrollConfig | null | undefined {
-    if (target.kind === 'undefined') return undefined;
-    if (target.kind === 'null') return null;
-    if (target.kind === 'number') return target.value;
-    if (target.kind === 'position') return { ...('top' in target ? { top: target.top } : {}),
-      ...('left' in target ? { left: target.left } : {}) };
+    if (target.kind === 'undefined') {
+      return undefined;
+    }
+    if (target.kind === 'null') {
+      return null;
+    }
+    if (target.kind === 'number') {
+      return target.value;
+    }
+    if (target.kind === 'position') {
+      return { ...('top' in target ? { top: target.top } : {}),
+        ...('left' in target ? { left: target.left } : {}) };
+    }
     const alignment = {
       ...('align' in target ? { align: target.align } : {}),
       ...('offset' in target ? { offset: target.offset === 'get-size' ? sizeOffset : target.offset } : {}) };
-    if (target.kind === 'index') return { index: target.index, ...alignment };
-    if (target.kind === 'key') return { key: target.key, ...alignment };
+    if (target.kind === 'index') {
+      return { index: target.index, ...alignment };
+    }
+    if (target.kind === 'key') {
+      return { key: target.key, ...alignment };
+    }
     return undefined;
   }
   export function update(action: SelectVirtualAction) {

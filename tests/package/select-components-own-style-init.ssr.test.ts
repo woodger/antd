@@ -10,13 +10,17 @@ for (const entry of readSelectComponentsOwnStyleInitSSR().cases) for (const [met
   it(`matches own CSS DOM-free SSR ${entry.id}/${method}`, () => {
     vi.useFakeTimers();
     const resource = vi.fn(() => { throw Error('Own-style SSR must stay DOM-free'); });
-    for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(
-      name,
-      resource
-    );
-    for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() {
-      resource();
-    } });
+    for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) {
+      vi.stubGlobal(
+        name,
+        resource
+      );
+    }
+    for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) {
+      vi.stubGlobal(name, class { constructor() {
+        resource();
+      } });
+    }
     const warn = vi.spyOn(console, 'warn'), error = vi.spyOn(console, 'error');
     try {
       expect(typeof window).toBe('undefined');

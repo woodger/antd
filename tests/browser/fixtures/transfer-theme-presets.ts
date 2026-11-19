@@ -25,7 +25,9 @@ export function resolveTransferTheme(input: TransferReferenceTheme): ThemeConfig
     && '$type' in value && value.$type === 'undefined' ? undefined : value;
   const resolved = components && Object.fromEntries(
     Object.entries(components).map(([name, value]) => {
-      if (value === undefined) return [name, undefined];
+      if (value === undefined) {
+        return [name, undefined];
+      }
       const fields = Object.fromEntries(
         Object.entries(value).map(([key, item]) => [key, field(item)])
       );

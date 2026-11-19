@@ -4,7 +4,9 @@ import Case from './SelectComponentsResponsiveTagPrefixCase.svelte';
 import { selectCustomTagPrefixSamples } from '../select-components-responsive-tag-prefix-cases.mjs';
 import type { SelectCustomTagPrefixCapture } from '../select-components-responsive-tag-prefix-metrics.mjs';
 const sample = selectCustomTagPrefixSamples.find(sample => sample.id === new URL(location.href).searchParams.get('sample'));
-if (!sample) throw Error('Unknown frozen custom-tag/prefix sample');
+if (!sample) {
+  throw Error('Unknown frozen custom-tag/prefix sample');
+}
 const capture: SelectCustomTagPrefixCapture = {};
 const api = {
   read: () => capture.read!(),
@@ -18,7 +20,9 @@ const api = {
 // is synthesized on the real public Svelte control.
 Object.assign(window, { raw: { current: api } });
 const target = document.getElementById('root');
-if (!target) throw Error('Ordinary consumer target missing');
+if (!target) {
+  throw Error('Ordinary consumer target missing');
+}
 const app = mount(Case, { target, props: { sample, capture } });
 await tick();
 window.customTagPrefixNative = { ready: true, read: api.read, readRefs: api.readRefs,

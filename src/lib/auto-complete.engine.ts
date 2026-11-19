@@ -16,7 +16,9 @@ export function autoCompleteNext<Value extends SelectDataValue, Data extends obj
 ): number {
   for (let step = 1; step <= entries.length; step++) {
     const index = ((current + offset * step) % entries.length + entries.length) % entries.length;
-    if (!entries[index].group && !entries[index].data.disabled) return index;
+    if (!entries[index].group && !entries[index].data.disabled) {
+      return index;
+    }
   }
   return -1;
 }

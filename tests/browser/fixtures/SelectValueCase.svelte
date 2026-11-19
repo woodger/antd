@@ -74,19 +74,27 @@
   }
   function rich(token: string) {
     const node = nodes.get(token);
-    if (!node) throw Error(`Unknown authored Select label node: ${token}`);
+    if (!node) {
+      throw Error(`Unknown authored Select label node: ${token}`);
+    }
     return node;
   }
   function encode(value: unknown) { return encodeSelectValue(value, nodeTokens); }
   function rawEncode(value: unknown) { return encodeSelectValue(value); }
   function register(value: unknown) {
-    if (!value || typeof value !== 'object' || nodeTokens.has(value)) return;
+    if (!value || typeof value !== 'object' || nodeTokens.has(value)) {
+      return;
+    }
     const descriptors = Object.getOwnPropertyDescriptors(value);
-    if (typeof descriptors.auditToken?.value === 'string') originals.set(
-      descriptors.auditToken.value,
-      value as RawOption
-    );
-    for (const descriptor of Object.values(descriptors)) if ('value' in descriptor) register(descriptor.value);
+    if (typeof descriptors.auditToken?.value === 'string') {
+      originals.set(
+        descriptors.auditToken.value,
+        value as RawOption
+      );
+    }
+    for (const descriptor of Object.values(descriptors)) {
+      if ('value' in descriptor) register(descriptor.value);
+    }
   }
   function data(dataset: SelectValueDataset) {
     let rows = datasets.get(dataset);
@@ -98,16 +106,24 @@
     return rows;
   }
   function item(value: unknown): ValueItem {
-    if (typeof value === 'string' || typeof value === 'number') return value;
+    if (typeof value === 'string' || typeof value === 'number') {
+      return value;
+    }
     if (value && typeof value === 'object') {
       const raw = Reflect.get(value, 'value');
-      if (typeof raw === 'string' || typeof raw === 'number') return value as SelectLabelValue<RawValue>;
+      if (typeof raw === 'string' || typeof raw === 'number') {
+        return value as SelectLabelValue<RawValue>;
+      }
     }
     throw Error('Frozen Select value input must contain a primitive or labeled primitive');
   }
   function owned(value: unknown): OwnedValue {
-    if (value === null || value === undefined) return value;
-    if (!Array.isArray(value)) return item(value);
+    if (value === null || value === undefined) {
+      return value;
+    }
+    if (!Array.isArray(value)) {
+      return item(value);
+    }
     value.forEach(item);
     return value as ValueItem[];
   }
@@ -120,8 +136,10 @@
     const fields = selectValueFieldNames(settings.dataset);
     if (fields !== undefined) props.fieldNames = fields;
     if (settings.labelInValue !== 'omitted') props.labelInValue = settings.labelInValue === 'true';
-    if (settings.optionLabelProp !== 'omitted') props.optionLabelProp = settings.optionLabelProp === 'undefined'
-      ? undefined : settings.optionLabelProp === 'empty' ? '' : settings.optionLabelProp;
+    if (settings.optionLabelProp !== 'omitted') {
+      props.optionLabelProp = settings.optionLabelProp === 'undefined'
+        ? undefined : settings.optionLabelProp === 'empty' ? '' : settings.optionLabelProp;
+    }
     if (settings.renderer !== 'omitted') props.labelRender = renderers.get(settings.renderer);
     return props;
   }

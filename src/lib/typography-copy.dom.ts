@@ -13,7 +13,9 @@ export async function writeTypographyClipboard(
         'text/html': new view.Blob([text], { type: 'text/html' }),
         'text/plain': new view.Blob([text], { type: 'text/plain' })
       })]);
-      if (clipboard) return true;
+      if (clipboard) {
+        return true;
+      }
     }
     else if (clipboard) {
       await clipboard.writeText(text);

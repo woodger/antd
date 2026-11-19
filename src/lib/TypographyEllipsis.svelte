@@ -69,7 +69,9 @@
   $effect(() => {
     const current = range;
     const index = middle;
-    if (phase !== 'need' || !current || current[0] === current[1] || !midpoint) return;
+    if (phase !== 'need' || !current || current[0] === current[1] || !midpoint) {
+      return;
+    }
     const overflow = midpoint.clientHeight > limit;
     const next = current[1] - current[0] === 1
       ? overflow ? current[0] : current[1] : index;

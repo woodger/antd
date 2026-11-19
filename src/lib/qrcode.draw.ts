@@ -18,7 +18,9 @@ export function drawQRCode(
 ) {
   const context = canvas.getContext('2d');
 
-  if (!context) return;
+  if (!context) {
+    return;
+  }
 
   const view = canvas.ownerDocument.defaultView!;
   const { modules, margin, numCells, size, bgColor, color } = settings;

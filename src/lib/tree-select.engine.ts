@@ -55,10 +55,12 @@ export function treeSelectChecks(
   index: TreeSelectIndex<object>
 ) {
   const raw = items.filter(item => !item.halfChecked).map(item => item.value);
-  if (!conduction) return {
-    checked: raw,
-    halfChecked: items.filter(item => item.halfChecked).map(item => item.value)
-  };
+  if (!conduction) {
+    return {
+      checked: raw,
+      halfChecked: items.filter(item => item.halfChecked).map(item => item.value)
+    };
+  }
   const checked = conductTreeCheck(raw, index);
   return {
     checked: [...new Set([...raw
@@ -77,19 +79,25 @@ export function treeSelectStrategy(
   const selected = new Set<TreeKey>(values);
   return values.filter(key => {
     const entry = index.entities.get(String(key));
-    if (!entry) return true;
-    if (strategy === 'SHOW_CHILD') return !entry.children.some(child => selected.has(child.key))
-      || !entry.children.every(
-        child => treeCheckDisabled(child.node) || selected.has(child.key)
-      );
-    if (strategy === 'SHOW_PARENT') return !entry.parent
-      || treeCheckDisabled(entry.node)
-      || treeCheckDisabled(
-        entry.parent.node
-      )
-      || !selected.has(
-        entry.parent.key
-      );
+    if (!entry) {
+      return true;
+    }
+    if (strategy === 'SHOW_CHILD') {
+      return !entry.children.some(child => selected.has(child.key))
+        || !entry.children.every(
+          child => treeCheckDisabled(child.node) || selected.has(child.key)
+        );
+    }
+    if (strategy === 'SHOW_PARENT') {
+      return !entry.parent
+        || treeCheckDisabled(entry.node)
+        || treeCheckDisabled(
+          entry.parent.node
+        )
+        || !selected.has(
+          entry.parent.key
+        );
+    }
     return true;
   });
 }
@@ -118,7 +126,9 @@ export function filterTreeSelect<Data extends object>(
   config: TreeSelectSearchConfig<Data>,
   fieldNames?: TreeSelectFieldNames
 ): readonly Data[] {
-  if (!search || config.filterTreeNode === false) return nodes;
+  if (!search || config.filterTreeNode === false) {
+    return nodes;
+  }
   const filter = typeof config.filterTreeNode === 'function'
     ? config.filterTreeNode
     : (text: string, node: Data) => String(Reflect.get(node, config.treeNodeFilterProp
@@ -146,7 +156,9 @@ export function toggleTreeSelect(
   const raw = selected
     ? [...items.filter(item => !item.halfChecked).map(item => item.value), value]
     : checks.checked.filter(item => item !== value);
-  if (!conduction) return raw;
+  if (!conduction) {
+    return raw;
+  }
   const missing = raw.filter(item => !index.values.has(item));
   const known = raw.filter(item => index.values.has(item));
   const result = selected

@@ -25,7 +25,9 @@
   }
   function apply() {
     const action = sample.actions?.[actionIndex];
-    if (!action) return;
+    if (!action) {
+      return;
+    }
     if ('scroll' in action) instance?.scrollTo(action.scroll);
     if ('props' in action) options = { ...options, ...action.props };
   }

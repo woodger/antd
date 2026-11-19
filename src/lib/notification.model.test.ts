@@ -19,9 +19,10 @@ function setup(options?: NotificationOptions) {
       view.mounted(item.id);
   };
   const finish = () => {
-    for (const item of view.notices)
+    for (const item of view.notices) {
       if (item.closing)
         view.complete(item.id, item.version);
+    }
   };
   return { api, view, disconnect, mount, finish };
 }

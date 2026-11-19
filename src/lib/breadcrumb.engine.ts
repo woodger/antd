@@ -8,8 +8,12 @@ export function breadcrumbName(title:
   | undefined, params: Record<string, unknown>):
   BreadcrumbContent
   | null {
-  if (!breadcrumbHasContent(title)) return null;
-  if (typeof title === 'function') return title;
+  if (!breadcrumbHasContent(title)) {
+    return null;
+  }
+  if (typeof title === 'function') {
+    return title;
+  }
 
   const keys = Object.keys(params).join('|');
   return String(title).replace(

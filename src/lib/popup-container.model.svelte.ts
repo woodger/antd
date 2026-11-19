@@ -38,7 +38,9 @@ export function createPopupContainer(getOptions: () => PopupContainerOptions) {
 
   return (node: HTMLElement) => {
     const target = container;
-    if (!target) return;
+    if (!target) {
+      return;
+    }
 
     return untrack(() => {
       const reference = getOptions().reference!;

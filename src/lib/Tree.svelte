@@ -227,7 +227,9 @@
   $effect(() => {
     const element = holder;
     const content = inner;
-    if (!element || !content) return;
+    if (!element || !content) {
+      return;
+    }
     return untrack(() => viewport.connect(element, content));
   });
   $effect(() => {
@@ -236,7 +238,9 @@
     const inVirtual = range.virtual;
     const width = scrollWidth;
     const rtl = config.direction === 'rtl';
-    if (!element) return;
+    if (!element) {
+      return;
+    }
     return untrack(() => connectListyGestures(element, {
       useVirtual,
       virtual: inVirtual,
@@ -267,10 +271,11 @@
     untrack(() => {
       if (next.expandedKeys !== previous.expandedKeys
         || next.autoExpandParent !== previous.autoExpandParent
-        || autoExpandParent && next.fieldNames !== previous.fieldNames)
+        || autoExpandParent && next.fieldNames !== previous.fieldNames) {
         expanded = autoExpandParent
           ? expandTreeParents(expandedKeys ?? expanded, index)
           : [...expandedKeys ?? expanded];
+      }
       if (next.selectedKeys !== previous.selectedKeys && selectedKeys !== undefined)
         selected = [...(multiple ? selectedKeys : selectedKeys.slice(0, 1))];
       if (checkable
@@ -310,7 +315,9 @@
     transition.dispose();
   });
   $effect(() => {
-    if (!loadData) return;
+    if (!loadData) {
+      return;
+    }
     const pending = renderedNodes.filter(
       entry => expanded.includes(entry.key)
         && !treeLeaf(
@@ -355,26 +362,33 @@
     return treeLeaf(entry.node, Boolean(loadData), actualLoaded.includes(entry.key), fieldNames);
   }
   function setActive(key: TreeKey | null) {
-    if (active === key) return;
+    if (active === key) {
+      return;
+    }
     if (activeKey === undefined)
       current = key;
     onActiveChange?.(key);
     if (key !== null && height) viewport.scrollTo({ key, offset: itemScrollOffset });
     void tick().then(() => {
-      if (key !== null && !height)
+      if (key !== null && !height) {
         focusElement?.ownerDocument.getElementById(nodeId(key))?.scrollIntoView(
           { block: 'nearest', inline: 'nearest' }
         );
+      }
     });
   }
   $effect(() => {
     const key = activeKey;
-    if (key != null) untrack(() => {
-      if (height) viewport.scrollTo({ key, offset: itemScrollOffset });
-    });
+    if (key != null) {
+      untrack(() => {
+        if (height) viewport.scrollTo({ key, offset: itemScrollOffset });
+      });
+    }
   });
   function handleScroll(event: UIEvent & { currentTarget: EventTarget & HTMLDivElement; }) {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     if (event.currentTarget.scrollTop !== viewport.top) viewport.sync(event.currentTarget.scrollTop);
     (onScroll ?? onscroll)?.(event);
   }
@@ -387,7 +401,9 @@
     // Selector rc-tree допускает collapse pending-ветки; switcher по-прежнему ждёт загрузку.
     // Title action сохраняет expanded keys узла без детей до обновления данных.
     if (transition.group || (fromTitle ? entry.node.isLeaf : leaf(entry))
-      || event && !fromTitle && loading.includes(entry.key)) return;
+      || event && !fromTitle && loading.includes(entry.key)) {
+      return;
+    }
     const node = snapshot ?? eventNode(entry);
     const next = node.expanded
       ? expanded.filter(key => key !== entry.key)
@@ -400,7 +416,9 @@
   }
   function select(entry: Entry, event?: MouseEvent, snapshot?: TreeEventNode<Data>) {
     if (blocked || entry.node.disabled || _nodeDisabled?.(entry.node)
-      || !(entry.node.selectable ?? selectable)) return;
+      || !(entry.node.selectable ?? selectable)) {
+      return;
+    }
     const node = snapshot ?? eventNode(entry);
     const next = selectTreeKeys(selected, entry.key, multiple, snapshot?.selected);
     if (selectedKeys === undefined)
@@ -422,7 +440,9 @@
     force?: boolean,
     snapshot?: TreeEventNode<Data>
   ) {
-    if (!checkable || blocked || treeCheckDisabled(entry.node) || _nodeDisabled?.(entry.node)) return;
+    if (!checkable || blocked || treeCheckDisabled(entry.node) || _nodeDisabled?.(entry.node)) {
+      return;
+    }
     const node = snapshot ?? eventNode(entry);
     const target = force ?? !node.checked;
     const next = checkStrictly
@@ -437,11 +457,12 @@
       const entity = index.entities.get(String(key));
       return entity ? [entity] : [];
     });
-    if (checkedKeys === undefined)
+    if (checkedKeys === undefined) {
       checked = {
         checked: next.checked,
         halfChecked: checkStrictly ? checked.halfChecked : next.halfChecked
       };
+    }
     onCheck?.(
       checkStrictly ? next : next.checked,
       {
@@ -476,10 +497,11 @@
   }
   function focusIn(event: FocusEvent & { currentTarget: EventTarget & HTMLDivElement; }) {
     focused = true;
-    if (!pointerFocus && active === null && !blocked)
+    if (!pointerFocus && active === null && !blocked) {
       setActive(
         selected.find(key => visible.some(entry => entry.key === key)) ?? visible[0]?.key ?? null
       );
+    }
     onfocus?.(event);
   }
   function mouseFocus(event: Event, allowDrag = false) {
@@ -491,17 +513,25 @@
     }
   }
   function handleDragClick(event: MouseEvent) {
-    if (disposed || event.defaultPrevented || !(event.target instanceof Element)) return;
+    if (disposed || event.defaultPrevented || !(event.target instanceof Element)) {
+      return;
+    }
     const handle = event.target.closest('[data-ant-tree-drag-handle]');
-    if (!handle) return;
+    if (!handle) {
+      return;
+    }
     const control = event.target.closest(
       'button,input,select,textarea,a[href],[tabindex],[contenteditable]'
     );
-    if (control && control !== event.currentTarget && handle.contains(control)) return;
+    if (control && control !== event.currentTarget && handle.contains(control)) {
+      return;
+    }
     mouseFocus(event, true);
   }
   function keyboard(event: KeyboardEvent & { currentTarget: EventTarget & HTMLDivElement; }) {
-    if (blocked || event.isComposing || event.defaultPrevented) return;
+    if (blocked || event.isComposing || event.defaultPrevented) {
+      return;
+    }
     const position = visible.findIndex(entry => entry.key === active);
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       const offset = event.key === 'ArrowDown' ? 1 : -1;
@@ -562,7 +592,9 @@
     focusElement?.blur();
   }
   export function scrollTo(settings?: TreeScrollConfig | null) {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     if (settings && typeof settings === 'object' && 'key' in settings
       && settings.autoExpand && expandedKeys === undefined && !expanded.includes(settings.key)) {
       expanded = [...expanded, settings.key];

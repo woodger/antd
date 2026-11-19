@@ -33,7 +33,9 @@ export function qrCodePath(modules: boolean[][], margin = 0) {
       }
 
       if (x === row.length - 1) {
-        if (!cell) return;
+        if (!cell) {
+          return;
+        }
 
         if (start === null)
           operations.push(`M${x + margin},${y + margin} h1v1H${x + margin}z`);
@@ -55,7 +57,9 @@ export interface QRCodeExcavation { x: number; y: number; w: number; h: number; 
 
 export function excavateQRCode(modules: boolean[][], excavation: QRCodeExcavation) {
   return modules.slice().map((row, y) => {
-    if (y < excavation.y || y >= excavation.y + excavation.h) return row;
+    if (y < excavation.y || y >= excavation.y + excavation.h) {
+      return row;
+    }
 
     return row.map((cell, x) =>
       x < excavation.x || x >= excavation.x + excavation.w ? cell : false
@@ -69,7 +73,9 @@ export function qrCodeImage(
   margin: number,
   image?: ImageSettings
 ) {
-  if (image == null) return null;
+  if (image == null) {
+    return null;
+  }
 
   const numCells = modules.length + margin * 2;
   const defaultSize = Math.floor(size * 0.1);

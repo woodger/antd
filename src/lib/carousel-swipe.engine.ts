@@ -38,8 +38,12 @@ export function carouselSwipeDirection(
   const y = touch.startY! - touch.curY!;
   let angle = Math.round(Math.atan2(y, x) * 180 / Math.PI);
   if (angle < 0) angle = 360 - Math.abs(angle);
-  if (angle <= 45 && angle >= 0 || angle <= 360 && angle >= 315) return 'left';
-  if (angle >= 135 && angle <= 225) return 'right';
+  if (angle <= 45 && angle >= 0 || angle <= 360 && angle >= 315) {
+    return 'left';
+  }
+  if (angle >= 135 && angle <= 225) {
+    return 'right';
+  }
   return verticalSwiping ? angle >= 35 && angle <= 135 ? 'up' : 'down' : 'vertical';
 }
 
@@ -49,8 +53,12 @@ export function carouselSwipeMove(spec: CarouselSwipeSpec, x: number, y: number)
   edge?: CarouselSwipeDirection;
   swipeEvent?: CarouselSwipeDirection;
 } {
-  if (spec.scrolling) return { preventDefault: false };
-  if (spec.animating) return { preventDefault: true };
+  if (spec.scrolling) {
+    return { preventDefault: false };
+  }
+  if (spec.animating) {
+    return { preventDefault: true };
+  }
   let preventDefault = spec.vertical && spec.swipeToSlide && spec.verticalSwiping;
   const touch = { ...spec.touchObject, curX: x, curY: y };
   touch.swipeLength = Math.round(Math.sqrt((x - touch.startX!) ** 2));
@@ -102,7 +110,9 @@ export function carouselNavigableIndexes(spec: Pick<
   CarouselSpec, 'infinite' | 'slideCount' | 'slidesToShow' | 'slidesToScroll'
 >) {
   const indexes: number[] = [];
-  if (!(spec.slidesToScroll > 0) || !(spec.slidesToShow > 0)) return indexes;
+  if (!(spec.slidesToScroll > 0) || !(spec.slidesToShow > 0)) {
+    return indexes;
+  }
   const max = spec.infinite ? spec.slideCount * 2 : spec.slideCount;
   let breakpoint = spec.infinite ? -spec.slidesToShow : 0;
   let counter = breakpoint;
@@ -116,22 +126,30 @@ export function carouselNavigableIndexes(spec: Pick<
 
 export function carouselCheckNavigable(spec: CarouselSpec, value: number) {
   const navigable = carouselNavigableIndexes(spec);
-  if (value > navigable[navigable.length - 1]) return navigable[navigable.length - 1];
+  if (value > navigable[navigable.length - 1]) {
+    return navigable[navigable.length - 1];
+  }
   let previous = 0;
   for (const index of navigable) {
-    if (value < index) return previous;
+    if (value < index) {
+      return previous;
+    }
     previous = index;
   }
   return value;
 }
 
 export function carouselSlidesTraversed(spec: CarouselSwipeSpec) {
-  if (!spec.swipeToSlide) return spec.slidesToScroll;
+  if (!spec.swipeToSlide) {
+    return spec.slidesToScroll;
+  }
   const center = spec.centerMode ? spec.slideWidth * Math.floor(spec.slidesToShow / 2) : 0;
   const target = spec.trackSlides?.find(slide => spec.vertical
     ? slide.offsetTop + slide.offsetHeight / 2 > -spec.swipeLeft!
     : slide.offsetLeft - center + slide.offsetWidth / 2 > -spec.swipeLeft!);
-  if (!target) return 0;
+  if (!target) {
+    return 0;
+  }
   const current = spec.rtl ? spec.slideCount - spec.currentSlide : spec.currentSlide;
   return Math.abs(target.index - current) || 1;
 }
@@ -142,7 +160,9 @@ export function carouselSwipeEnd(spec: CarouselSwipeSpec): {
   swipe?: CarouselSwipeDirection;
   triggerSlide?: number;
 } {
-  if (!spec.dragging) return { state: {}, preventDefault: spec.swipe };
+  if (!spec.dragging) {
+    return { state: {}, preventDefault: spec.swipe };
+  }
   const minimum = (spec.verticalSwiping ? spec.listHeight : spec.listWidth) / spec.touchThreshold;
   const direction = carouselSwipeDirection(spec.touchObject, spec.verticalSwiping);
   const state: CarouselSwipePatch = {
@@ -154,7 +174,9 @@ export function carouselSwipeEnd(spec: CarouselSwipeSpec): {
     swipeLeft: null,
     touchObject: {}
   };
-  if (spec.scrolling || !spec.touchObject.swipeLength) return { state, preventDefault: false };
+  if (spec.scrolling || !spec.touchObject.swipeLength) {
+    return { state, preventDefault: false };
+  }
   if (spec.touchObject.swipeLength > minimum) {
     const active = spec.infinite ? spec.currentSlide : spec.targetSlide;
     let target = active;

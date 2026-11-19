@@ -122,34 +122,42 @@
     component: 'select' | 'autocomplete') {
     const key = [kind, side, category, component].join(':');
     if (kind === 'function') {
-      if (!semanticCallbacks.has(key)) semanticCallbacks.set(key, handler(key, (info: { props: unknown }) => {
-        const result = selectSurfaceSemantic(
-          kind,
-          side,
-          component,
-          info.props as Record<string, unknown>
-        )[category];
-        return recorder.record(category === 'classes' ? 'classNames' : 'styles', side, info, result);
-      }));
+      if (!semanticCallbacks.has(key)) {
+        semanticCallbacks.set(key, handler(key, (info: { props: unknown }) => {
+          const result = selectSurfaceSemantic(
+            kind,
+            side,
+            component,
+            info.props as Record<string, unknown>
+          )[category];
+          return recorder.record(category === 'classes' ? 'classNames' : 'styles', side, info, result);
+        }));
+      }
       return semanticCallbacks.get(key);
     }
-    if (!semanticObjects.has(key)) semanticObjects.set(
-      key,
-      selectSurfaceSemantic(kind, side, component)[category]
-    );
+    if (!semanticObjects.has(key)) {
+      semanticObjects.set(
+        key,
+        selectSurfaceSemantic(kind, side, component)[category]
+      );
+    }
     return semanticObjects.get(key);
   }
   function data() {
     const key = settings.dataset + ':' + Boolean(settings.rawStyles);
-    if (!datasets.has(key)) datasets.set(
-      key,
-      selectSurfaceData(settings.dataset, Boolean(settings.rawStyles))
-    );
+    if (!datasets.has(key)) {
+      datasets.set(
+        key,
+        selectSurfaceData(settings.dataset, Boolean(settings.rawStyles))
+      );
+    }
     return datasets.get(key)!;
   }
   function rootStyle(kind?: 'context' | 'own' | 'next') {
-    if (!rootStyles.has(kind)) rootStyles.set(kind,
-      recorder.register(selectSurfaceRootStyle(kind), { rootStyle: kind ?? 'base' }));
+    if (!rootStyles.has(kind)) {
+      rootStyles.set(kind,
+        recorder.register(selectSurfaceRootStyle(kind), { rootStyle: kind ?? 'base' }));
+    }
     return rootStyles.get(kind)!;
   }
   function search(kind: SelectSurfaceSample['search'], context = false) {
@@ -175,18 +183,22 @@
     else props.defaultOpen = settings.defaultOpen;
     if (settings.mode) props.mode = settings.mode;
     if (settings.popup !== 'omitted') props.popupRender = popupCallbacks.get(settings.popup + ':' + (settings.footerPolicy ?? 'plain'));
-    if (settings.classes !== 'omitted') props.classNames = semantic(
-      settings.classes,
-      'own',
-      'classes',
-      settings.control
-    );
-    if (settings.styles !== 'omitted') props.styles = semantic(
-      settings.styles,
-      'own',
-      'styles',
-      settings.control
-    );
+    if (settings.classes !== 'omitted') {
+      props.classNames = semantic(
+        settings.classes,
+        'own',
+        'classes',
+        settings.control
+      );
+    }
+    if (settings.styles !== 'omitted') {
+      props.styles = semantic(
+        settings.styles,
+        'own',
+        'styles',
+        settings.control
+      );
+    }
     if (settings.prefix) props.prefix = nodes.get('prefix');
     if (settings.notFound) props.notFoundContent = nodes.get('not-found');
     const ownSettings: SelectSurfaceSample & { virtual?: boolean } = settings;
@@ -201,18 +213,22 @@
     const select: Record<string, unknown> = {};
     if (config.className) select.class = 'surface-context-class';
     if (config.rootStyle) select.style = rootStyle('context');
-    if (config.classes && config.classes !== 'omitted') select.classNames = semantic(
-      config.classes,
-      'context',
-      'classes',
-      'select'
-    );
-    if (config.styles && config.styles !== 'omitted') select.styles = semantic(
-      config.styles,
-      'context',
-      'styles',
-      'select'
-    );
+    if (config.classes && config.classes !== 'omitted') {
+      select.classNames = semantic(
+        config.classes,
+        'context',
+        'classes',
+        'select'
+      );
+    }
+    if (config.styles && config.styles !== 'omitted') {
+      select.styles = semantic(
+        config.styles,
+        'context',
+        'styles',
+        'select'
+      );
+    }
     if (Object.hasOwn(config, 'allowClear')) select.allowClear = config.allowClear;
     if (Object.hasOwn(config, 'variant')) select.variant = config.variant;
     if (config.search) select.showSearch = search(config.search, true);
@@ -243,11 +259,15 @@
     };
   }
   export function read() {
-    if (alive) lastAuthored = {
-      authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
-      authoredProvider: recorder.encode(authoredProvider), rawAuthoredProvider: recorder.raw(authoredProvider)
-    };
-    if (!lastAuthored) throw Error('Read the actual mounted surface owner before disposal');
+    if (alive) {
+      lastAuthored = {
+        authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
+        authoredProvider: recorder.encode(authoredProvider), rawAuthoredProvider: recorder.raw(authoredProvider)
+      };
+    }
+    if (!lastAuthored) {
+      throw Error('Read the actual mounted surface owner before disposal');
+    }
     return { settings: recorder.encode(settings), model: recorder.encode(model), open,
       events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], alive,
       ...lastAuthored };

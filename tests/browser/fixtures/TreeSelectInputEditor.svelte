@@ -19,7 +19,9 @@
   });
   $effect(() => {
     const node = input, nativeElement = wrapper, instance = component;
-    if (!composite || !node || !nativeElement) return;
+    if (!composite || !node || !nativeElement) {
+      return;
+    }
     return register({ inputElement: node, nativeElement,
       focus: options => instance ? instance.focus(options) : node.focus(options),
       blur: () => instance ? instance.blur() : node.blur() });

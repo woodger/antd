@@ -86,7 +86,9 @@ export function connectTourLayout(
   const scrollers = new Set<HTMLElement>();
 
   function align() {
-    if (!active || !options || !popup.isConnected || !placeholder.isConnected) return;
+    if (!active || !options || !popup.isConnected || !placeholder.isConnected) {
+      return;
+    }
     const style = view.getComputedStyle(popup);
     const saved = ['left', 'top', 'right', 'bottom', 'overflow', 'overflow-x', 'overflow-y']
       .map(name => [
@@ -120,7 +122,9 @@ export function connectTourLayout(
       else popup.style.removeProperty(name);
     }
     dummy.remove();
-    if (!scaleX || !scaleY || !placeholder.getClientRects().length) return;
+    if (!scaleX || !scaleY || !placeholder.getClientRects().length) {
+      return;
+    }
 
     const sourceStyle = view.getComputedStyle(popup);
     function token(name: string, fallback: number) {
@@ -146,7 +150,9 @@ export function connectTourLayout(
   }
 
   function updateTarget() {
-    if (!active || !options) return;
+    if (!active || !options) {
+      return;
+    }
     const element = options.target;
     let highlight: TourHighlight | null = null;
     if (element) {
@@ -177,7 +183,9 @@ export function connectTourLayout(
   }
 
   function scheduleAlign() {
-    if (queued) return;
+    if (queued) {
+      return;
+    }
     queued = true;
     queueMicrotask(() => {
       queued = false;
@@ -228,7 +236,9 @@ export function isTourEditableTarget(event: KeyboardEvent) {
 }
 
 export function getTourOffsetStyle(position: TourAlignment | undefined) {
-  if (!position) return 'left:-1000vw;top:-1000vh;right:auto;bottom:auto';
+  if (!position) {
+    return 'left:-1000vw;top:-1000vh;right:auto;bottom:auto';
+  }
   const points = position.align.points?.[0];
   const right = position.align.dynamicInset && points?.[1] === 'r';
   const bottom = position.align.dynamicInset && points?.[0] === 'b';

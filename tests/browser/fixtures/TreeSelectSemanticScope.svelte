@@ -96,7 +96,9 @@
   }
   function appearance(kind: SemanticRecord | undefined, parts: typeof layers.local, owner: string) {
     type Info = { props: Parameters<typeof treeSelectSemanticInfo>[0]; };
-    if (!kind || kind === 'plain') return {};
+    if (!kind || kind === 'plain') {
+      return {};
+    }
     const styles = styleSlots(parts.styles);
     return kind === 'callback' ? {
       classNames: ({ props }: Info) => ({ ...parts.classes,
@@ -106,8 +108,12 @@
     } : { classNames: parts.classes, styles };
   }
   function switcher(value: Switcher | true | undefined, owner: string): TreeSelectSwitcherIcon {
-    if (value === 'render') return owner === 'Local' ? localSwitcher : leafSwitcher;
-    if (value === 'array') return [`${owner} `, iconPart, 0];
+    if (value === 'render') {
+      return owner === 'Local' ? localSwitcher : leafSwitcher;
+    }
+    if (value === 'array') {
+      return [`${owner} `, iconPart, 0];
+    }
     return value;
   }
   function record(kind: string, value: unknown) { events = [...events, [kind, value]]; }

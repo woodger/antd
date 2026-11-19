@@ -39,7 +39,9 @@ function reactNode(node: GraphNode) {
 export function autocompleteSourceChildSpecification(value: unknown): Graph {
   const graph = value as Graph, nodes = new Map(graph.objects.map(n => [n.id, n]));
   const props = nodes.get(reference(graph.root)!)!, child = reference(property(props, 'children'));
-  if (child === undefined) return { root: { $: 'undefined' }, objects: [] };
+  if (child === undefined) {
+    return { root: { $: 'undefined' }, objects: [] };
+  }
   const node = nodes.get(child)!;
   assert(reactNode(node), 'Original child is the public authored React element');
   const childProps = nodes.get(reference(property(node, 'props'))!)!;
@@ -53,16 +55,24 @@ export function autocompleteSourceResult(value: unknown): unknown {
   const graph = value as Graph, nodes = new Map(graph.objects.map(n => [n.id, n]));
   function read(v: unknown): unknown {
     const id = reference(v);
-    if (id === undefined) return v;
+    if (id === undefined) {
+      return v;
+    }
     const n = nodes.get(id)!;
-    if (reactNode(n)) return { node: {
-      type: read(property(n, 'type')),
-      key: read(property(n, 'key')),
-      props: read(property(n, 'props'))
-    } };
-    if (n.authoredRole) return { $: 'authored', role: n.authoredRole };
-    if (n.array) return n.properties.filter(p => typeof p.key === 'string' && /^\d+$/.test(p.key))
-      .sort((a, b) => Number(a.key) - Number(b.key)).map(p => read(p.value));
+    if (reactNode(n)) {
+      return { node: {
+        type: read(property(n, 'type')),
+        key: read(property(n, 'key')),
+        props: read(property(n, 'props'))
+      } };
+    }
+    if (n.authoredRole) {
+      return { $: 'authored', role: n.authoredRole };
+    }
+    if (n.array) {
+      return n.properties.filter(p => typeof p.key === 'string' && /^\d+$/.test(p.key))
+        .sort((a, b) => Number(a.key) - Number(b.key)).map(p => read(p.value));
+    }
     return Object.fromEntries(n.properties.map(p => [String(p.key), read(p.value)]));
   }
   return read(graph.root);
@@ -102,10 +112,14 @@ export function verifyAutocompleteGraph(
     }
     assert.equal(x.type, y.type, label + ' raw type');
     assert.equal(x.array, y.array, label + ' raw array');
-    if (knownRenderer(x.authoredRole)) return; // Source callback vs compiled Svelte Snippet signature.
+    if (knownRenderer(x.authoredRole)) {
+      return;
+    } // Source callback vs compiled Svelte Snippet signature.
     const sourceFields = y.ownProperties.filter(p => !(root && props && p.key === 'ref'));
     const nativeFields = x.ownProperties.map(p => {
-      if (root && props && p.key === 'class') return { ...p, key: 'className' };
+      if (root && props && p.key === 'class') {
+        return { ...p, key: 'className' };
+      }
       if (root && props && p.key === 'children' && p.valueType === 'function') {
         assert.equal(
           sourceFields.find(f => f.key === 'children')?.valueType,
@@ -165,11 +179,13 @@ export function verifyAutocompleteCalls(
   label: string,
   ssr = false
 ) {
-  if (ssr) assert.deepEqual(
-    actual.map(p => [p.kind, p.side]),
-    source.map(p => [p.kind, p.side]),
-    label + ' exact SSR order/count'
-  );
+  if (ssr) {
+    assert.deepEqual(
+      actual.map(p => [p.kind, p.side]),
+      source.map(p => [p.kind, p.side]),
+      label + ' exact SSR order/count'
+    );
+  }
   for (const [index, call] of actual.entries()) {
     assert.equal(call.index, index, label + ' complete actual call ledger');
     const original = ssr ? source[index] : source.find(p => sameCall(call, p));
@@ -198,10 +214,12 @@ export function verifyAutocompleteCalls(
       assert.equal(call.rawOptionIdentity, reference(property(row, 'data')));
     }
   }
-  for (const original of source) assert(
-    actual.some(p => sameCall(p, original)),
-    label + ' every Source invocation executed'
-  );
+  for (const original of source) {
+    assert(
+      actual.some(p => sameCall(p, original)),
+      label + ' every Source invocation executed'
+    );
+  }
   assert.equal(
     actual.filter(p => p.kind === 'tagRender').length,
     0,
@@ -227,7 +245,9 @@ export async function settleNativeAutocompleteRender(page: Page) {
     await drainSelectSurface(page);
     const actual = await readNativeAutocompleteRender(page), key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Actual AutoComplete renderer props, complete ledgers, DOM and CSSOM did not settle');
@@ -249,10 +269,12 @@ export function verifyAutocompleteLifecycle(actual: NativeAutocompleteRenderOwne
     assert.equal(notification.kind, 'child-ref');
     assert.equal(notification.attached, index % 2 === 0);
     if (notification.attached) assert.equal(notification.tag, first.tag);
-    else assert.deepEqual(
-      notification,
-      { kind: 'child-ref', attached: false, tag: null, value: null }
-    );
+    else {
+      assert.deepEqual(
+        notification,
+        { kind: 'child-ref', attached: false, tag: null, value: null }
+      );
+    }
   }
   assert.equal(source.at(-1)?.attached, !disposed, label + ' actual Source ref state');
   const final = { kind: 'child-ref', attached: false, tag: null, value: null };
@@ -284,11 +306,13 @@ function verifyChildAttributes(
   assert.equal(original['aria-haspopup'], 'listbox');
   assert.equal(original['aria-autocomplete'], 'list');
   assert(['true', 'false'].includes(original['aria-expanded']));
-  if (input === 'input') assert.equal(
-    original.value,
-    source.value,
-    label + ' React reflected input value'
-  );
+  if (input === 'input') {
+    assert.equal(
+      original.value,
+      source.value,
+      label + ' React reflected input value'
+    );
+  }
   else assert.equal(original.rows, '2');
   const expanded = original['aria-expanded'] === 'true';
   if (expanded) {
@@ -403,11 +427,13 @@ export function verifyAutocompletePoint(actual: NativeAutocompleteRenderPoint, s
       entry.events.slice(0, source.owner.eventCount).map(selectSurfaceEventValue)
     );
     assert.equal(actual.owner.rawEvents.length, source.owner.rawEventCount);
-    for (const [i, event] of actual.owner.rawEvents.entries()) verifySelectSurfaceEventGraph(
-      event,
-      entry.rawEvents[i],
-      label + '/event' + i
-    );
+    for (const [i, event] of actual.owner.rawEvents.entries()) {
+      verifySelectSurfaceEventGraph(
+        event,
+        entry.rawEvents[i],
+        label + '/event' + i
+      );
+    }
     verifyAutocompleteLifecycle(
       actual.owner.lifecycle,
       entry.lifecycle.slice(0, source.owner.lifecycleCount),
@@ -463,9 +489,11 @@ export function verifyAutocompletePoint(actual: NativeAutocompleteRenderPoint, s
     assert.equal(actual.dom.view.popup.visible, source.dom.view.popup.visible);
     assert.equal(actual.dom.view.popup.present, source.dom.view.popup.present);
     assert.equal(actual.dom.view.popup.extras.length, source.dom.view.popup.extras.length);
-    for (const [i, node] of source.dom.view.popup.extras.entries()) verifySelectSurfaceNode(actual.dom.view.popup.extras[i], node, 'extra',
-      { control: 'autocomplete' }, [], label + '/extra' + i, source.dom.raw.extras[i].attributes.find(([k]) => k === 'style')?.[1] ?? '',
-      { callerLabel: 'Surface value', raw: actual.dom.raw.extras[i] });
+    for (const [i, node] of source.dom.view.popup.extras.entries()) {
+      verifySelectSurfaceNode(actual.dom.view.popup.extras[i], node, 'extra',
+        { control: 'autocomplete' }, [], label + '/extra' + i, source.dom.raw.extras[i].attributes.find(([k]) => k === 'style')?.[1] ?? '',
+        { callerLabel: 'Surface value', raw: actual.dom.raw.extras[i] });
+    }
     assert.equal(actual.dom.view.focus, source.dom.view.focus);
     assert.deepEqual(actual.dom.view.leaks, []);
   });
@@ -476,18 +504,22 @@ export function verifyAutocompletePoint(actual: NativeAutocompleteRenderPoint, s
       // Default Native content is a span inside its retained option button.
       verifyNode(current.content, row.content, label + '/content' + i, true);
       assert.equal(current.authored.length, row.authored.length);
-      for (const [j, node] of row.authored.entries()) verifyNode(
-        current.authored[j],
-        node,
-        label + '/result' + i + '/' + j
-      );
+      for (const [j, node] of row.authored.entries()) {
+        verifyNode(
+          current.authored[j],
+          node,
+          label + '/result' + i + '/' + j
+        );
+      }
     }
     assert.equal(actual.nodes.labels.length, source.nodes.labels.length);
-    for (const [i, node] of source.nodes.labels.entries()) verifyNode(
-      actual.nodes.labels[i],
-      node,
-      label + '/label' + i
-    );
+    for (const [i, node] of source.nodes.labels.entries()) {
+      verifyNode(
+        actual.nodes.labels[i],
+        node,
+        label + '/label' + i
+      );
+    }
     assert.equal(actual.nodes.groups.length, source.nodes.groups.length);
     if (actual.nodes.current.child && source.nodes.current.child) {
       assert(

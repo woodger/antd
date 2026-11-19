@@ -120,7 +120,9 @@ describe('Form rule factories', () => {
   it('clears the validating flag after a factory exception and accepts a later valid request', async () => {
     let broken = true;
     const factory: ValidationRuleFactory<{ field: string }> = () => {
-      if (broken) throw Error('Factory failed');
+      if (broken) {
+        throw Error('Factory failed');
+      }
       return { required: true };
     };
     const form = createForm({ initialValues: { field: 'abc' }, rules: { field: [factory] } });

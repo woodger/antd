@@ -31,11 +31,13 @@ async function tile(mark: Locator, background?: string) {
     for (let index = 0; index < pixels.length; index += 4) {
       if (pixels[index + 3]) painted++;
       if (pixels[index + 3] && pixels[index] > 200 && pixels[index + 1] < 30
-        && pixels[index + 2] < 30)
+        && pixels[index + 2] < 30) {
         red++;
+      }
       if (pixels[index + 3] && pixels[index + 2] > 200 && pixels[index] < 30
-        && pixels[index + 1] < 30)
+        && pixels[index + 1] < 30) {
         blue++;
+      }
     }
 
     return { url, width: image.width, height: image.height, painted, red, blue };

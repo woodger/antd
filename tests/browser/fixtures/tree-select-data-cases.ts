@@ -169,7 +169,9 @@ export function treeSelectData(
   }
   if (sample.labelKind === 'array') alpha[labelField] = ['Alpha', 0, null, false, ' one'];
   if (sample.labelKind === 'missing') delete alpha[labelField];
-  if (!simple) return [{ ...root, [childrenField]: [alpha, beta, locked] }, tail];
+  if (!simple) {
+    return [{ ...root, [childrenField]: [alpha, beta, locked] }, tail];
+  }
   const config = {
     id: 'id',
     pId: 'pId',
@@ -181,10 +183,12 @@ export function treeSelectData(
     node[String(config.id)] = node[valueField];
     node[String(config.pId)] = node === root || node === tail ? config.rootPId : root[valueField];
   }
-  if (sample.existingChildren) root.children = [{
-    value: 'existing',
-    title: 'Existing',
-    payload: { ordinal: 90 }
-  }];
+  if (sample.existingChildren) {
+    root.children = [{
+      value: 'existing',
+      title: 'Existing',
+      payload: { ordinal: 90 }
+    }];
+  }
   return sample.unordered ? [beta, alpha, tail, root, locked] : rows;
 }

@@ -1,7 +1,9 @@
 export function snapshotUploadProgress() {
   const item = document.querySelector('[data-upload-progress-host] .ant-upload-list-item');
   const root = item?.querySelector('.ant-progress');
-  if (!root) return null;
+  if (!root) {
+    return null;
+  }
   const rail = root.querySelector('.ant-progress-rail');
   const indicator = root.querySelector('.ant-progress-indicator');
   const icon = indicator?.querySelector('svg');

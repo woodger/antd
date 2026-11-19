@@ -5,7 +5,9 @@ const loadingTemplate = '.ant-modal .ant-modal-body .ant-modal-body-skeleton{wid
 
 /** Modal/Confirm разделяют local classes и общий Button prefix; token marker остаётся canonical. */
 export function getModalPrefixCss(prefix: string, rootPrefix: string) {
-  if (prefix === 'ant-modal' && rootPrefix === 'ant') return undefined;
+  if (prefix === 'ant-modal' && rootPrefix === 'ant') {
+    return undefined;
+  }
 
   const scope = `:where([data-ant-modal-prefix=${JSON.stringify(prefix)}]`
     + `[data-ant-modal-root-prefix=${JSON.stringify(rootPrefix)}])`;
@@ -22,10 +24,18 @@ export function getModalPrefixCss(prefix: string, rootPrefix: string) {
       button: string | undefined,
       breakpoint: string | undefined
     ) => {
-      if (breakpoint !== undefined) return `--${prefix}-${breakpoint}-width`;
-      if (button !== undefined) return `.${rootPrefix}-btn${button}`;
-      if (suffix === '-css-var') return `.ant-modal-css-var${scope}`;
-      if (suffix !== undefined) return `.${prefix}${suffix}${roots.has(suffix) ? scope : ''}`;
+      if (breakpoint !== undefined) {
+        return `--${prefix}-${breakpoint}-width`;
+      }
+      if (button !== undefined) {
+        return `.${rootPrefix}-btn${button}`;
+      }
+      if (suffix === '-css-var') {
+        return `.ant-modal-css-var${scope}`;
+      }
+      if (suffix !== undefined) {
+        return `.${prefix}${suffix}${roots.has(suffix) ? scope : ''}`;
+      }
 
       return match === '"ant-modal"' ? `"${prefix}"` : `" ${prefix}"`;
     }

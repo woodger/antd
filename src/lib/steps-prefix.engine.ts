@@ -8,7 +8,9 @@ const rootStates = new Set([
 
 /** Root states изолированы; token namespaces и adaptive defaults сохраняют владельца. */
 export function getStepsPrefixCss(prefix: string) {
-  if (prefix === 'ant-steps') return undefined;
+  if (prefix === 'ant-steps') {
+    return undefined;
+  }
 
   return template
     .replace(/\.ant-steps([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'

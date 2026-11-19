@@ -32,13 +32,17 @@ export function flattenSelectData<
 >(options: readonly Data[], fields: SelectDataFields): SelectDataRow<Value, Data>[] {
   const rows: SelectDataRow<Value, Data>[] = [];
   function dig(items: readonly Data[], grouped: boolean) {
-    if (!Array.isArray(items)) return;
+    if (!Array.isArray(items)) {
+      return;
+    }
     for (const item of items) {
       const data = item as Data & Readonly<Record<string, unknown>>;
-      if (grouped || !(fields.options in item)) rows.push({
-        key: optionKey(item, rows.length), groupOption: grouped, data,
-        label: selectOptionLabel(item, fields), value: selectOptionValue<Value>(item, fields)
-      });
+      if (grouped || !(fields.options in item)) {
+        rows.push({
+          key: optionKey(item, rows.length), groupOption: grouped, data,
+          label: selectOptionLabel(item, fields), value: selectOptionValue<Value>(item, fields)
+        });
+      }
       else {
         rows.push({ key: optionKey(item, rows.length), group: true, data,
           label: Reflect.get(item, fields.groupLabel) });
@@ -70,10 +74,12 @@ export function collectSelectData<
       // Lookup использует truthiness; flatten выше намеренно проверяет наличие свойства.
       if (!children || grouped) {
         valueOptions.set(selectOptionValue<Value>(item, fields), item);
-        for (const field of labels) if (field && typeof field === 'string') {
-          const label: unknown = Reflect.get(item, field);
-          labelOptions.set(label, item);
-          if (Object.hasOwn(item, field)) nativeLabelOptions.set(label, item);
+        for (const field of labels) {
+          if (field && typeof field === 'string') {
+            const label: unknown = Reflect.get(item, field);
+            labelOptions.set(label, item);
+            if (Object.hasOwn(item, field)) nativeLabelOptions.set(label, item);
+          }
         }
       }
       else dig(children as readonly Data[], true);
@@ -97,17 +103,25 @@ export function filterSelectData<Data extends object>(
   options: readonly Data[], search: string, fields: SelectDataFields,
   config: SelectDataFilter<Data> = {}
 ): readonly Data[] {
-  if (!search || config.filterOption === false) return options;
+  if (!search || config.filterOption === false) {
+    return options;
+  }
   const properties = filterProperties(config.optionFilterProp);
   const query = search.toUpperCase();
   const custom = config.filterOption;
   const match = (item: Data) => {
-    if (typeof custom === 'function') return custom(search, copySelectData(item));
+    if (typeof custom === 'function') {
+      return custom(search, copySelectData(item));
+    }
     // Прежний Native explicit-field поиск не читает свойства прототипа.
-    if (properties.length) return properties.some(field => Object.hasOwn(item, field)
-      && includes(Reflect.get(item, field), query));
+    if (properties.length) {
+      return properties.some(field => Object.hasOwn(item, field)
+        && includes(Reflect.get(item, field), query));
+    }
     const group = Boolean(Reflect.get(item, fields.options));
-    if (config.defaultMatch) return config.defaultMatch(search, item, fields, group);
+    if (config.defaultMatch) {
+      return config.defaultMatch(search, item, fields, group);
+    }
     return includes(Reflect.get(item, group
       ? fields.label === 'children' ? 'label' : fields.label : fields.value), query);
   };
@@ -130,7 +144,9 @@ export function sortSelectData<Data extends object>(
   options: readonly Data[], search: string,
   comparator?: (left: Data, right: Data, info: { searchValue: string }) => number
 ): readonly Data[] {
-  if (!comparator) return options;
+  if (!comparator) {
+    return options;
+  }
   return [...options].sort((left, right) => comparator(left, right, { searchValue: search })).map(item => {
     const children: unknown = Reflect.get(item, 'options');
     // Source sorter использует literal options, независимо от mapped children field.
@@ -145,12 +161,15 @@ SelectDataCache<Value, Data> {
 }
 
 function sameMap<Key, Value>(left: ReadonlyMap<Key, Value>, right: ReadonlyMap<Key, Value>) {
-  if (left.size !== right.size) return false;
+  if (left.size !== right.size) {
+    return false;
+  }
   const entries = left.entries();
   for (const [key, value] of right) {
     const previous = entries.next();
-    if (previous.done || !Object.is(previous.value[0], key) || !Object.is(previous.value[1], value))
+    if (previous.done || !Object.is(previous.value[0], key) || !Object.is(previous.value[1], value)) {
       return false;
+    }
   }
   return true;
 }
@@ -193,7 +212,9 @@ export function resolveSelectDataCache<Value extends SelectDataValue, Data exten
 }
 
 export function selectDataContent<Value extends SelectDataValue, Data extends object>(row: SelectDataRow<Value, Data>): unknown {
-  if (row.group) return row.label !== undefined ? row.label : Reflect.get(row.data, 'key');
+  if (row.group) {
+    return row.label !== undefined ? row.label : Reflect.get(row.data, 'key');
+  }
   return typeof row.label === 'number' ? row.label : row.label || row.value;
 }
 

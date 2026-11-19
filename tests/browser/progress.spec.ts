@@ -35,8 +35,9 @@ test(
       ['aria-valuemax', '100'],
       ['aria-valuenow', '42.5'],
       ['aria-valuetext', '42.5%']
-    ])
+    ]) {
       await expect(progress(page)).toHaveAttribute(name, value);
+    }
 
     await expect(progress(page).locator('.ant-progress-indicator')).toHaveText('42.5%');
     await expect(progress(page)).not.toHaveAttribute('aria-live');
@@ -76,11 +77,12 @@ for (const type of ['line', 'circle']) {
               .evaluate((node) => (node as HTMLElement).style.width)
           )
             .toBe(`${value}%`);
-        else
+        else {
           await expect(progress(page).locator('.ant-progress-circle-path').first()).toHaveCSS(
             'opacity',
             value === '0' ? '0' : '1'
           );
+        }
       }
       await page.getByRole('spinbutton', { name: 'Progress percent', exact: true }).fill('12.75');
 
@@ -212,12 +214,13 @@ for (const [size, height] of [
 
     if (size === 'pair')
       await expect(progress(page).locator('.ant-progress-body')).toHaveCSS('width', '260px');
-    if (size === 'css')
+    if (size === 'css') {
       expect(
         await progress(page).locator('.ant-progress-body')
           .evaluate((node) => (node as HTMLElement).style.width)
       )
         .toBe('75%');
+    }
   });
 }
 for (const [size, diameter] of [

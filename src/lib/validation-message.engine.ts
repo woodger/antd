@@ -33,7 +33,9 @@ export function resolveValidationMessage<Values extends FormValues>(
   fallback: string,
   args: readonly unknown[] = [context?.name]
 ): string {
-  if (rule.message !== undefined) return rule.message;
+  if (rule.message !== undefined) {
+    return rule.message;
+  }
 
   try {
     let template: unknown = context?.messages;
@@ -45,15 +47,25 @@ export function resolveValidationMessage<Values extends FormValues>(
       const result = Reflect.apply(template, null, args);
       return typeof result === 'string' ? result : fallback;
     }
-    if (typeof template !== 'string') return fallback;
+    if (typeof template !== 'string') {
+      return fallback;
+    }
 
     let index = 0;
     return template.replace(/%[sdj%]/g, placeholder => {
-      if (placeholder === '%%') return '%';
-      if (index >= args.length) return placeholder;
+      if (placeholder === '%%') {
+        return '%';
+      }
+      if (index >= args.length) {
+        return placeholder;
+      }
       const value = args[index++];
-      if (placeholder === '%s') return String(value);
-      if (placeholder === '%d') return String(Number(value));
+      if (placeholder === '%s') {
+        return String(value);
+      }
+      if (placeholder === '%d') {
+        return String(Number(value));
+      }
 
       try {
         return JSON.stringify(value) ?? 'undefined';
@@ -75,7 +87,9 @@ export function formatValidationMessages<Values extends FormValues>(
   rule: ValidationRule<Values>,
   context?: ValidationMessageContext
 ): readonly string[] {
-  if (!messages.some(message => message.includes('${'))) return messages;
+  if (!messages.some(message => message.includes('${'))) {
+    return messages;
+  }
 
   const variables: Record<string, unknown> = {
     ...rule,
@@ -87,7 +101,9 @@ export function formatValidationMessages<Values extends FormValues>(
   };
 
   return messages.map(message => message.replace(/\\?\$\{\w+\}/g, (placeholder) => {
-    if (placeholder.startsWith('\\')) return placeholder.slice(1);
+    if (placeholder.startsWith('\\')) {
+      return placeholder.slice(1);
+    }
 
     const key = placeholder.slice(2, -1);
     // Inherited constructor/toString не являются template variables.

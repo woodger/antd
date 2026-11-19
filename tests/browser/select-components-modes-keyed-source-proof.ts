@@ -11,33 +11,39 @@ function sourceGraph(value: unknown, keyed = false) {
   const graph = structuredClone(value) as Graph;
   if (keyed) {
     const nodes = new Map(graph.objects.map(node => [node.id, node]));
-    for (const dataset of graph.objects) if (isDeepStrictEqual(
-      dataset.authoredRole,
-      { dataset: 'select-icons-values' }
-    )) {
-      for (const [index, optionValue, label, key] of [['1', 1, 'Number one', 'option-number-one'],
-        ['2', '1', 'String one', 'option-string-one']] as const) {
-        const reference = dataset.properties!.find(property => property.key === index)!.value as { ref: number };
-        const option = nodes.get(reference.ref)!;
-        assert.deepEqual(
-          option.properties,
-          [{ key: 'value', value: optionValue }, { key: 'label', value: label }, {
-            key: 'key',
-            value: key
-          }]
-        );
-        assert.deepEqual(option.ownProperties!.at(-1), { key: 'key', enumerable: true, configurable: true,
-          writable: true, kind: 'value', valueType: 'string' });
-        option.properties = option.properties!.slice(0, -1);
-        option.ownProperties = option.ownProperties!.slice(0, -1);
+    for (const dataset of graph.objects) {
+      if (isDeepStrictEqual(
+        dataset.authoredRole,
+        { dataset: 'select-icons-values' }
+      )) {
+        for (const [index, optionValue, label, key] of [['1', 1, 'Number one', 'option-number-one'],
+          ['2', '1', 'String one', 'option-string-one']] as const) {
+          const reference = dataset.properties!.find(property => property.key === index)!.value as { ref: number };
+          const option = nodes.get(reference.ref)!;
+          assert.deepEqual(
+            option.properties,
+            [{ key: 'value', value: optionValue }, { key: 'label', value: label }, {
+              key: 'key',
+              value: key
+            }]
+          );
+          assert.deepEqual(option.ownProperties!.at(-1), { key: 'key', enumerable: true, configurable: true,
+            writable: true, kind: 'value', valueType: 'string' });
+          option.properties = option.properties!.slice(0, -1);
+          option.ownProperties = option.ownProperties!.slice(0, -1);
+        }
       }
     }
   }
   const ids = new Map(graph.objects.map((node, index) => [node.id, index + 1]));
   assert.equal(ids.size, graph.objects.length);
   function rename(value: unknown): unknown {
-    if (!value || typeof value !== 'object') return value;
-    if (Array.isArray(value)) return value.map(rename);
+    if (!value || typeof value !== 'object') {
+      return value;
+    }
+    if (Array.isArray(value)) {
+      return value.map(rename);
+    }
     const object = value as Record<string, unknown>;
     if (Object.keys(object).length === 1 && typeof object.ref === 'number') {
       assert(ids.has(object.ref));
@@ -66,11 +72,13 @@ export function verifySelectComponentsModesKeyedSourcePair(original: ModesCase, 
   const tags = original.id.includes('-tags-'), prefix = tags ? 3 : left.length;
   for (const [index, point] of left.entries()) {
     const counterpart = right[index];
-    if (index < prefix) assert.deepEqual(
-      counterpart.icons,
-      point.icons,
-      'complete Source UI before the collision is exact'
-    );
+    if (index < prefix) {
+      assert.deepEqual(
+        counterpart.icons,
+        point.icons,
+        'complete Source UI before the collision is exact'
+      );
+    }
     for (const key of ['root', 'editor', 'suffix', 'clear'] as const) {
       assert.deepEqual(
         counterpart.icons.current[key],
@@ -80,10 +88,12 @@ export function verifySelectComponentsModesKeyedSourcePair(original: ModesCase, 
       if (point.icons.current[key]) node(point.icons.current[key]!, counterpart.icons.current[key]!);
     }
     assert.equal(point.icons.layout.length, counterpart.icons.layout.length);
-    for (const [ordinal, value] of point.icons.layout.entries()) node(
-      value,
-      counterpart.icons.layout[ordinal]
-    );
+    for (const [ordinal, value] of point.icons.layout.entries()) {
+      node(
+        value,
+        counterpart.icons.layout[ordinal]
+      );
+    }
     for (const key of ['model', 'open', 'query', 'settings', 'authoredProps', 'authoredProvider', 'authoredInnerProvider', 'eventCount', 'rawEventCount'] as const)
       assert.deepEqual(counterpart.owner[key], point.owner[key]);
     assert.deepEqual(
@@ -97,10 +107,12 @@ export function verifySelectComponentsModesKeyedSourcePair(original: ModesCase, 
   }
   assert.deepEqual(keyed.events, original.events);
   assert.equal(keyed.rawEvents.length, original.rawEvents.length);
-  for (const [index, event] of original.rawEvents.entries()) assert.deepEqual(
-    sourceGraph(keyed.rawEvents[index]),
-    sourceGraph(event)
-  );
+  for (const [index, event] of original.rawEvents.entries()) {
+    assert.deepEqual(
+      sourceGraph(keyed.rawEvents[index]),
+      sourceGraph(event)
+    );
+  }
   const call = (value: ModesCase['producerCalls'][number], keyed: boolean) => JSON.stringify(Object.fromEntries(Object.entries(value)
     .filter(([key]) => key !== 'index').map(([key, item]) => [key, key === 'rawArgument' || key === 'rawResult' ? sourceGraph(
       item,

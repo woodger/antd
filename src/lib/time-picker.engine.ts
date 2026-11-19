@@ -50,7 +50,9 @@ export function timePickerFormats(
     | 'showSecond' | 'showMillisecond'>,
   locale: NonNullable<TimePickerProps['locale']>['lang'] = {}
 ): DatePickerFormat[] {
-  if (props.format) return normalizePickerFieldFormat<Dayjs>(props.format, 'HH:mm:ss').formats;
+  if (props.format) {
+    return normalizePickerFieldFormat<Dayjs>(props.format, 'HH:mm:ss').formats;
+  }
 
   return [locale.fieldTimeFormat || timeFormat(props)];
 }
@@ -121,7 +123,9 @@ export function timePickerOptions(
   const increment = step >= 1 ? step | 0 : 1;
 
   // Переполнение битового шага в upstream зацикливает for; не запускаем бесконечный цикл.
-  if (increment <= 0) throw new RangeError('TimePicker step overflows a positive 32-bit integer');
+  if (increment <= 0) {
+    throw new RangeError('TimePicker step overflows a positive 32-bit integer');
+  }
 
   const options: TimePickerOption<number>[] = [];
 
@@ -202,7 +206,9 @@ export function timePickerPanel(
 }
 
 export function timePickerColumnValue(value: Dayjs | null | undefined, type: TimePickerColumnType) {
-  if (!value) return null;
+  if (!value) {
+    return null;
+  }
   return type === 'meridiem' ? value.hour() < 12 ? 'am' : 'pm' : value.get(type);
 }
 
@@ -212,13 +218,19 @@ export function timePickerColumnDate(
   type: TimePickerColumnType,
   next: number | 'am' | 'pm'
 ): Dayjs {
-  if (type !== 'meridiem') return template.set(type as TimePickerUnit, Number(next));
+  if (type !== 'meridiem') {
+    return template.set(type as TimePickerUnit, Number(next));
+  }
 
   // Как getMeridiemTime: null hour участвует в JS-сравнении как 0.
   const hour = value?.hour() ?? 0;
 
-  if (next === 'am' && hour >= 12) return template.hour(hour - 12);
-  if (next === 'pm' && hour < 12) return template.hour(hour + 12);
+  if (next === 'am' && hour >= 12) {
+    return template.hour(hour - 12);
+  }
+  if (next === 'pm' && hour < 12) {
+    return template.hour(hour + 12);
+  }
   return template;
 }
 
@@ -228,7 +240,9 @@ export function timePickerValidTime(value: Dayjs, props: TimePickerProps) {
 
 /** isSameTimestamp rc-picker сравнивает calendar/time fields без UTC-offset или valueOf(). */
 export function timePickerSameValue(a: Dayjs | null, b: Dayjs | null) {
-  if (!a || !b) return a === b;
+  if (!a || !b) {
+    return a === b;
+  }
 
   return a.year() === b.year() && a.month() === b.month() && a.date() === b.date()
     && a.hour() === b.hour() && a.minute() === b.minute() && a.second() === b.second()

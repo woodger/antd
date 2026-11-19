@@ -23,8 +23,12 @@ for (const component of ['date', 'range', 'time', 'time-range', 'calendar', 'col
           .filter(animation => animation.effect?.getComputedTiming().iterations !== Infinity)
           .map(animation => animation.finished.catch(() => {}))));
         const snapshot = async () => {
-          if (component === 'calendar') return page.evaluate(snapshotCalendarPrefix);
-          if (component === 'color-picker') return page.evaluate(snapshotColorPickerPrefix);
+          if (component === 'calendar') {
+            return page.evaluate(snapshotCalendarPrefix);
+          }
+          if (component === 'color-picker') {
+            return page.evaluate(snapshotColorPickerPrefix);
+          }
 
           return page.evaluate(snapshotPickerPrefix);
         };

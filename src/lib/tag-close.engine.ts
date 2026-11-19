@@ -2,9 +2,12 @@ import type { TagCloseConfig, TagConfig, TagProps } from './tag.types';
 import type { AriaAttributes } from 'svelte/elements';
 
 function getCloseConfig({ closable, closeIcon }: Pick<TagProps, 'closable' | 'closeIcon'>) {
-  if (!closable && (closable === false || closeIcon === false || closeIcon === null))
+  if (!closable && (closable === false || closeIcon === false || closeIcon === null)) {
     return false;
-  if (closable == null && closeIcon == null) return null;
+  }
+  if (closable == null && closeIcon == null) {
+    return null;
+  }
 
   const result: TagCloseConfig = {
     closeIcon: typeof closeIcon !== 'boolean' && closeIcon != null ? closeIcon : undefined

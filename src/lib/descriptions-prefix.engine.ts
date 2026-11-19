@@ -2,7 +2,9 @@ import template from './vendor/descriptions-prefix.css.js';
 
 /** Все cells наследуют owner prefix; canonical marker сохраняет component theme variables. */
 export function getDescriptionsPrefixCss(prefix: string, rootPrefix = 'ant') {
-  if (prefix === 'ant-descriptions' && rootPrefix === 'ant') return undefined;
+  if (prefix === 'ant-descriptions' && rootPrefix === 'ant') {
+    return undefined;
+  }
 
   const scope = `:where([data-ant-descriptions-prefix=${JSON.stringify(prefix)}][data-ant-descriptions-global=${JSON.stringify(rootPrefix)}])`;
 
@@ -12,7 +14,9 @@ export function getDescriptionsPrefixCss(prefix: string, rootPrefix = 'ant') {
       if (suffix !== undefined) {
         return suffix === '-css-var' ? `.ant-descriptions-css-var${scope}` : `.${prefix}${suffix}`;
       }
-      if (table) return `.${rootPrefix}-${table}`;
+      if (table) {
+        return `.${rootPrefix}-${table}`;
+      }
       return match === '"ant-descriptions"' ? `"${prefix}"` : `" ${prefix}"`;
     }
   ).replaceAll(

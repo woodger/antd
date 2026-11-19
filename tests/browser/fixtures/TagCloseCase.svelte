@@ -14,7 +14,9 @@
   const record = (entry: string) => events = [...events, entry];
 
   function resolveClosable(value: TagCloseValues): TagClosable | undefined {
-    if (!value.objectSnippet && !value.watchAfterClose) return value.closable;
+    if (!value.objectSnippet && !value.watchAfterClose) {
+      return value.closable;
+    }
     return {
       ...(value.closable && typeof value.closable === 'object' ? value.closable : {}),
       ...(value.objectSnippet ? { closeIcon: customClose } : {}),

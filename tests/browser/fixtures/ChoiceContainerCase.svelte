@@ -80,20 +80,26 @@
     void revision;
     const props: Partial<ConfigProviderProps> = {};
     if (sample.child === 'undefined') props.getPopupContainer = undefined;
-    else if (sample.child === 'child') props.getPopupContainer = trigger => {
-      record('child', trigger);
-      return document.getElementById('choice-child')!;
-    };
+    else if (sample.child === 'child') {
+      props.getPopupContainer = trigger => {
+        record('child', trigger);
+        return document.getElementById('choice-child')!;
+      };
+    }
     if (sample.resetTheme) props.theme = { inherit: false, token: { motion: false } };
     return props;
   });
   let localOptions = $derived.by(() => {
     void revision;
-    if (sample.local === 'undefined') return { getPopupContainer: undefined };
-    if (sample.local === 'local') return { getPopupContainer: (trigger: HTMLElement) => {
-      record('local', trigger);
-      return document.getElementById('choice-local')!;
-    } };
+    if (sample.local === 'undefined') {
+      return { getPopupContainer: undefined };
+    }
+    if (sample.local === 'local') {
+      return { getPopupContainer: (trigger: HTMLElement) => {
+        record('local', trigger);
+        return document.getElementById('choice-local')!;
+      } };
+    }
     return {};
   });
 

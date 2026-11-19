@@ -15,7 +15,9 @@ export function animateSegmentedThumb(
   if (reduced.matches
     || !from.getClientRects().length
     || !to.getClientRects().length
-    || !(duration > 0)) return () => { };
+    || !(duration > 0)) {
+    return () => { };
+  }
 
   function geometry(node: HTMLElement) {
     // MotionThumb эталона измеряет layout, а не масштабированные экранные rect.
@@ -73,7 +75,9 @@ export function animateSegmentedThumb(
   reduced.addEventListener('change', stop);
 
   function stop() {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
 
     active = false;
     observer.disconnect();

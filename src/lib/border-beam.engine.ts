@@ -24,7 +24,9 @@ export function getBorderBeamGradient(color?: BorderBeamColor) {
   const items = typeof color === 'string' ? [{ color, percent: 0 }] : color ?? [];
   const last = items[items.length - 1];
 
-  if (!last) return undefined;
+  if (!last) {
+    return undefined;
+  }
 
   const stops = last.percent === 100 ? items : [...items, { ...last, percent: 100 }];
   const colors = stops.map(item => {

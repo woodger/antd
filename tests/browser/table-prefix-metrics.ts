@@ -2,11 +2,17 @@
 export function snapshotTablePrefix() {
   const host = document.querySelector<HTMLElement>('[data-table-prefix-host]');
   const prefix = host?.dataset.tablePrefix;
-  if (!host || !prefix) throw new Error('Table prefix host is missing');
+  if (!host || !prefix) {
+    throw new Error('Table prefix host is missing');
+  }
   const root = host.querySelector(`.${prefix}-wrapper`);
-  if (!root) throw new Error('Table prefix root is missing');
+  if (!root) {
+    throw new Error('Table prefix root is missing');
+  }
   const css = (node: Element | null, keys: readonly string[], pseudo?: string) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node, pseudo);
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   };

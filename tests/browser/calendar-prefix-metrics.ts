@@ -5,7 +5,9 @@ export function snapshotCalendarPrefix() {
   const calendar = `${prefix}-calendar`;
   const root = host.querySelector('.fixture-calendar-prefix')!;
   const css = (node: Element | null | undefined, names: string[], pseudo?: string) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node, pseudo);
     return Object.fromEntries(names.map(name => [name, style.getPropertyValue(name)]));
   };
@@ -13,7 +15,9 @@ export function snapshotCalendarPrefix() {
   const padding = ['padding-top', 'padding-right', 'padding-bottom', 'padding-left'];
   const control = (name: string) => {
     const outer = root.querySelector(`.${calendar}-${name}-select`);
-    if (!outer) return null;
+    if (!outer) {
+      return null;
+    }
     const node = outer.matches(`.${shared}-select`) ? outer
       : outer.querySelector(`.${shared}-select`);
     return {
@@ -22,7 +26,9 @@ export function snapshotCalendarPrefix() {
     };
   };
   const cell = (node: Element | null) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const inner = node.querySelector(`.${prefix}-cell-inner`);
     return {
       cell: css(node, ['color', ...padding]),

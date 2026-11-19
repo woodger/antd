@@ -132,8 +132,10 @@ function load<Value>(name: string, mode: string, sync = false): Source<Value> {
       hash(readFileSync(new URL('./select-icons-metrics.mjs', import.meta.url))),
       'be5eac174349176ce535c5a1bb164f2c48f5c91e93e11263a20f230d34f92cdb'
     );
-    for (const [path, pin] of Object.entries(h.inputPins)) if (path.startsWith('tests/'))
-      assert.equal(hash(readFileSync(join(repositoryRoot(), path))), pin, path);
+    for (const [path, pin] of Object.entries(h.inputPins)) {
+      if (path.startsWith('tests/'))
+        assert.equal(hash(readFileSync(join(repositoryRoot(), path))), pin, path);
+    }
     inputsVerified = true;
   }
   return result;
@@ -169,11 +171,13 @@ export function readSelectIconPair(id: string, sync = false): [IconCase, IconCas
     return c;
   };
   const a = get(false), b = get(true);
-  if (id !== 'select-icons-item-remove-functions') assert.deepEqual(
-    a,
-    b,
-    'the other fourteen complete Original owner pairs are byte-equivalent'
-  );
+  if (id !== 'select-icons-item-remove-functions') {
+    assert.deepEqual(
+      a,
+      b,
+      'the other fourteen complete Original owner pairs are byte-equivalent'
+    );
+  }
   else {
     assert.deepEqual(
       [a.producerCalls.length, b.producerCalls.length],
@@ -215,7 +219,9 @@ let closeCounterpart: Source<IconCase> | undefined;
 export function readSelectIconCloseCounterpart(id: string): IconCase | undefined {
   const ids = ['select-icons-suffix-function', 'select-icons-item-remove-functions', 'select-icons-metadata',
     'select-icons-ac-explicit-suffix', 'select-icons-ac-item-function'];
-  if (!ids.includes(id)) return;
+  if (!ids.includes(id)) {
+    return;
+  }
   if (!closeCounterpart) {
     const stored = readFileSync(fixture('ant-design-select-icons-close-reference.json.gz'));
     assert.equal(stored.length, 895459);
@@ -267,7 +273,9 @@ export function readSelectIconCloseCounterpart(id: string): IconCase | undefined
 }
 /** A complete public notFoundContent counterpart for the preserved plain Native empty UI. */
 export function readSelectIconEmptyCounterpart(id: string): IconCase | undefined {
-  if (!['select-icons-suffix-local', 'select-icons-suffix-context'].includes(id)) return;
+  if (!['select-icons-suffix-local', 'select-icons-suffix-context'].includes(id)) {
+    return;
+  }
   if (!emptyCounterpart) {
     const stored = readFileSync(fixture('ant-design-select-icons-plain-empty-reference.json.gz'));
     assert.equal(stored.length, 376417);
@@ -333,12 +341,14 @@ export function readSelectIconSSR() {
   );
   assert.deepEqual(ssr.cases.map(c => c.id), selectIconSamples.map(s => s.id));
   assert.equal(ssr.cases.reduce((n, c) => n + c.states.length, 0), 142);
-  for (const c of ssr.cases) for (const s of c.states) {
-    assert.equal(hash(s.rawHtml), s.htmlSha256);
-    assert.deepEqual(s.resources, { timers: 0, frames: 0, microtasks: 0, measurements: 0 });
-    assert.deepEqual(s.state.events, []);
-    assert.deepEqual(s.state.rawEvents, []);
-    assert.deepEqual(s.state.lifecycle, []);
+  for (const c of ssr.cases) {
+    for (const s of c.states) {
+      assert.equal(hash(s.rawHtml), s.htmlSha256);
+      assert.deepEqual(s.resources, { timers: 0, frames: 0, microtasks: 0, measurements: 0 });
+      assert.deepEqual(s.state.events, []);
+      assert.deepEqual(s.state.rawEvents, []);
+      assert.deepEqual(s.state.lifecycle, []);
+    }
   }
   return ssr;
 }

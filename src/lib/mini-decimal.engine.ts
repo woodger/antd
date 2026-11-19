@@ -26,7 +26,9 @@ export function toFixed(
   precision?: number,
   cutOnly = false
 ): string {
-  if (number === '') return '';
+  if (number === '') {
+    return '';
+  }
 
   const { negativeStr, integerStr, decimalStr } = trimNumber(number);
   const decimal = separator + decimalStr;
@@ -40,7 +42,9 @@ export function toFixed(
 
       return toFixed(rounded.toString(), separator, precision, cutOnly);
     }
-    if (precision === 0) return integer;
+    if (precision === 0) {
+      return integer;
+    }
 
     return integer + separator + decimalStr.padEnd(precision, '0').slice(0, precision);
   }

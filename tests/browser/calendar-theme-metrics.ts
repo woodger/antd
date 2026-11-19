@@ -1,6 +1,8 @@
 export function snapshotCalendarTheme() {
   function css(node: Element | null, names: string[], pseudo?: string) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node, pseudo);
     return Object.fromEntries(names.map(name => [name, style.getPropertyValue(name)]));
   }
@@ -8,13 +10,17 @@ export function snapshotCalendarTheme() {
   const padding = ['padding-top', 'padding-right', 'padding-bottom', 'padding-left'];
   function control(root: Element, name: string) {
     const outer = root.querySelector(`.ant-picker-calendar-${name}-select`);
-    if (!outer) return null;
+    if (!outer) {
+      return null;
+    }
     const node = outer.matches('.ant-select') ? outer : outer.querySelector('.ant-select')!;
     return { width: outer.getBoundingClientRect().width,
       style: css(node, [...font, 'height', ...padding, 'border-top-width', 'border-top-color']) };
   }
   function cell(node: Element | null) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const inner = node.querySelector('.ant-picker-cell-inner');
     return {
       cell: css(node, ['color', ...padding]),

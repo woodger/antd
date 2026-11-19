@@ -84,12 +84,16 @@
     return { control, root: publicRoot, editor, publicRoot, publicEditor: editor };
   }
   export function read() {
-    if (alive) lastAuthored = { widthOwnKey: Object.hasOwn(inputStyle, 'width'), widthValue: recorder.encode(inputStyle.width),
-      inputStyle: recorder.encode(inputStyle), rawInputStyle: recorder.raw(inputStyle),
-      styleOwnKeys: Reflect.ownKeys(inputStyle), inputStyleDescriptors: recorder.own(inputStyle),
-      authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
-      authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider) };
-    if (!lastAuthored) throw Error('Read the actual mounted width ownership owner before disposal');
+    if (alive) {
+      lastAuthored = { widthOwnKey: Object.hasOwn(inputStyle, 'width'), widthValue: recorder.encode(inputStyle.width),
+        inputStyle: recorder.encode(inputStyle), rawInputStyle: recorder.raw(inputStyle),
+        styleOwnKeys: Reflect.ownKeys(inputStyle), inputStyleDescriptors: recorder.own(inputStyle),
+        authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
+        authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider) };
+    }
+    if (!lastAuthored) {
+      throw Error('Read the actual mounted width ownership owner before disposal');
+    }
     return { widthKind: widthState.kind, fontSize: 12, query, open, model: recorder.encode(model), rawModel: recorder.raw(model),
       alive, events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], ...lastAuthored };
   }

@@ -347,8 +347,9 @@ test(
       'Dark Skeleton theme',
       'Compact Skeleton theme',
       'Right to left'
-    ])
+    ]) {
       await check(page, name);
+    }
 
     const avatar = preview(page).locator('.ant-skeleton-avatar');
     const section = preview(page).locator('.ant-skeleton-section');

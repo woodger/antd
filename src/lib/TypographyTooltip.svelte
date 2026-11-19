@@ -37,7 +37,9 @@
 
   $effect(() => {
     const element = target;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
     return untrack(() => connect(element));
   });
 
@@ -45,7 +47,9 @@
 
   // Typography уже поддерживает bigint; в Tooltip сохраняется его текстовое представление.
   function toTooltipContent(value: Content): TooltipContent {
-    if (typeof value === 'object' && value !== null) return value.map(toTooltipContent);
+    if (typeof value === 'object' && value !== null) {
+      return value.map(toTooltipContent);
+    }
     return typeof value === 'bigint' ? String(value) : value;
   }
 
@@ -66,7 +70,9 @@
 
     function inPopup(node: EventTarget | null) {
       const view = element.ownerDocument.defaultView!;
-      if (!(node instanceof view.Node)) return false;
+      if (!(node instanceof view.Node)) {
+        return false;
+      }
 
       const source = node instanceof view.Element ? node : node.parentElement;
       const popup = source?.closest('[data-ant-tooltip]');
@@ -90,11 +96,15 @@
       const independentActions = actionOverrides;
       const apply = () => {
         timer = undefined;
-        if (!active || !element.isConnected || target !== element) return;
+        if (!active || !element.isConnected || target !== element) {
+          return;
+        }
         // Как в rc-trigger, отсутствие усечения скрывает popup, сохраняя raw onOpenChange.
         if (!available || !Object.is(owner, options.open)
           || !independentActions && !actionOverrides && next && !wanted()
-          || next === (options.open ?? open)) return;
+          || next === (options.open ?? open)) {
+          return;
+        }
 
         open = next;
         options.onOpenChange?.(next);
@@ -104,14 +114,18 @@
     }
 
     function handleEnter(event: PointerEvent) {
-      if (event.pointerType === 'touch' || sourceTouch && touched) return;
+      if (event.pointerType === 'touch' || sourceTouch && touched) {
+        return;
+      }
       hovered = true;
       dismissed = false;
       if (actions.show.has('hover')) request(true, getTooltipDelay(enterDelay));
     }
 
     function handleLeave() {
-      if (sourceTouch && touched) return;
+      if (sourceTouch && touched) {
+        return;
+      }
 
       hovered = false;
       if (sourceTrigger ? actions.hide.has('hover') : !wanted())
@@ -119,8 +133,12 @@
     }
 
     function handleFocus(event: FocusEvent) {
-      if (!active || !element.isConnected) return;
-      if (sourceTrigger && inPopup(event.target)) return;
+      if (!active || !element.isConnected) {
+        return;
+      }
+      if (sourceTrigger && inPopup(event.target)) {
+        return;
+      }
 
       focused = true;
       dismissed = false;
@@ -128,14 +146,22 @@
     }
 
     function handleBlur(event: FocusEvent) {
-      if (!active || !element.isConnected) return;
+      if (!active || !element.isConnected) {
+        return;
+      }
 
       function closeIfOutside() {
-        if (!active || !element.isConnected) return;
-        if (sourceTrigger && inPopup(event.target)) return;
+        if (!active || !element.isConnected) {
+          return;
+        }
+        if (sourceTrigger && inPopup(event.target)) {
+          return;
+        }
         const Node = element.ownerDocument.defaultView!.Node;
         if (event.relatedTarget instanceof Node && element.contains(event.relatedTarget)
-          && (!sourceTrigger || !inPopup(event.relatedTarget))) return;
+          && (!sourceTrigger || !inPopup(event.relatedTarget))) {
+          return;
+        }
 
         focused = false;
         if (sourceTrigger ? actions.hide.has('focus') : !wanted()) {
@@ -149,7 +175,9 @@
 
     dismiss = reason => {
       if (reason === 'outside' && actionOverrides && !actions.hide.has('click')
-        && !actions.hide.has('contextMenu') && !actions.hide.has('touch')) return;
+        && !actions.hide.has('contextMenu') && !actions.hide.has('touch')) {
+        return;
+      }
 
       dismissed = true;
       clicked = false;
@@ -166,7 +194,9 @@
     function handleClick(event: MouseEvent) {
       const show = actions.show.has('click');
       const hide = actions.hide.has('click') || actions.hide.has('contextMenu');
-      if (inPopup(event.target) || event.defaultPrevented && !actionOverrides || !show && !hide) return;
+      if (inPopup(event.target) || event.defaultPrevented && !actionOverrides || !show && !hide) {
+        return;
+      }
 
       if (visible && hide) dismiss();
       else if (!visible && show) showByClick();
@@ -174,7 +204,9 @@
     }
 
     function handleContextMenu(event: MouseEvent) {
-      if (inPopup(event.target) || !actions.show.has('contextMenu') || !available) return;
+      if (inPopup(event.target) || !actions.show.has('contextMenu') || !available) {
+        return;
+      }
 
       event.preventDefault();
       if (visible && actions.hide.has('contextMenu')) dismiss();
@@ -183,7 +215,9 @@
 
     function handleTouchStart(event: TouchEvent) {
       if (inPopup(event.target) || !sourceTouch
-        || !actions.show.has('touch') && !actions.hide.has('touch')) return;
+        || !actions.show.has('touch') && !actions.hide.has('touch')) {
+        return;
+      }
 
       touched = true;
       if (visible && actions.hide.has('touch')) dismiss();
@@ -191,7 +225,9 @@
     }
 
     hoverPopup = value => {
-      if (!active || !element.isConnected) return;
+      if (!active || !element.isConnected) {
+        return;
+      }
 
       if (actionOverrides) {
         if (value) {
@@ -200,7 +236,9 @@
         else if (actions.hide.has('hover')) request(false, getTooltipDelay(leaveDelay));
         return;
       }
-      if (sourceTrigger && !supports('hover')) return;
+      if (sourceTrigger && !supports('hover')) {
+        return;
+      }
 
       popupHovered = value;
       if (value) cancelPending();

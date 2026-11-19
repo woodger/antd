@@ -280,7 +280,9 @@
   const themeId = $props.id();
   let element = $state<HTMLDivElement>();
   function getPrefixCls(suffix?: string, custom?: string) {
-    if (custom) return custom;
+    if (custom) {
+      return custom;
+    }
     const prefix = prefixCls || parent.getPrefixCls();
     return suffix ? `${prefix}-${suffix}` : prefix;
   }

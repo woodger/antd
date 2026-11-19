@@ -9,13 +9,17 @@ for (const entry of readSelectComponentsHydrationOwnershipSource().cases)
       it(`keeps independent ownership SSR DOM-free for ${entry.id}/${method}/${key}`, () => {
         vi.useFakeTimers();
         const touched = vi.fn(() => { throw Error('Ownership SSR must remain DOM-free'); });
-        for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(
-          name,
-          touched
-        );
-        for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() {
-          touched();
-        } });
+        for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) {
+          vi.stubGlobal(
+            name,
+            touched
+          );
+        }
+        for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) {
+          vi.stubGlobal(name, class { constructor() {
+            touched();
+          } });
+        }
         const warn = vi.spyOn(console, 'warn'), error = vi.spyOn(console, 'error');
         try {
           expect(typeof window).toBe('undefined');

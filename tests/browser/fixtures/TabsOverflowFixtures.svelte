@@ -64,9 +64,11 @@
       autoFocus
     };
     props.onOverlayClick = () => overlayClicks++;
-    if (icon !== 'default') props.icon = icon === 'null' ? null : icon === 'false' ? false
-      : icon === 'true' ? true : icon === 'zero' ? 0 : icon === 'empty' ? ''
-        : icon === 'undefined' ? undefined : 'More tabs';
+    if (icon !== 'default') {
+      props.icon = icon === 'null' ? null : icon === 'false' ? false
+        : icon === 'true' ? true : icon === 'zero' ? 0 : icon === 'empty' ? ''
+          : icon === 'undefined' ? undefined : 'More tabs';
+    }
     if (custom) props.popupRender = customPopup;
     if (controlled) {
       props.visible = controlledVisible;

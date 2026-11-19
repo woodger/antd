@@ -6,13 +6,17 @@ export function readTreeSelectAlignSSR(html: string) {
     ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&#x27;': "'" })[entity]!);
   const tags = [...html.matchAll(/<[A-Za-z][\w:-]*\b[^>]*>/g)].map(match => match[0]);
   const attribute = (tag: string | undefined, name: string) => {
-    if (!tag) return null;
+    if (!tag) {
+      return null;
+    }
     const match = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s/>]))`, 'i').exec(tag);
     return match ? decode(match[1] ?? '') : null;
   };
   const root = tags.find(tag => attribute(tag, 'data-align-root') !== null)
     ?? tags.find(tag => attribute(tag, 'class')?.split(/\s+/).includes('ant-select'));
-  if (!root) throw Error('Missing TreeSelect SSR root');
+  if (!root) {
+    throw Error('Missing TreeSelect SSR root');
+  }
   const editor = tags.find(tag => /^(?:<input|<textarea)\b/i.test(tag)
     && (attribute(tag, 'data-align-editor') !== null || attribute(tag, 'role') === 'combobox'));
   const style = (tag: string | undefined, name: string) => {

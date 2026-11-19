@@ -18,7 +18,9 @@ export function snapshotImageTheme({ id, prefix = 'ant' }: { id: string; prefix?
   ]));
   const metrics = (selector: string) => {
     const element = viewer.querySelector<HTMLElement>(selector);
-    if (!element) return null;
+    if (!element) {
+      return null;
+    }
     const css = getComputedStyle(element);
 
     return {

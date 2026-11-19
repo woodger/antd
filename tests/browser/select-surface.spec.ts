@@ -26,7 +26,9 @@ for (const entry of selectSurfaceReference.cases) {
       } = {};
       document.querySelector('[data-surface-fixture-command]')!
         .dispatchEvent(new CustomEvent('surfacecapture', { detail }));
-      if (!detail.read || !detail.readRefs || !detail.dispose) throw Error('Actual public owner capture is unavailable');
+      if (!detail.read || !detail.readRefs || !detail.dispose) {
+        throw Error('Actual public owner capture is unavailable');
+      }
       return { read: detail.read, readRefs: detail.readRefs, dispose: detail.dispose };
     });
     const retained = await page.evaluateHandle(() => {

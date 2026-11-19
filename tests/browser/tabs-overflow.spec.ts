@@ -21,8 +21,10 @@ test.beforeEach(async ({ page }) => {
 for (const sample of reference.cases) {
   test(`More matches official geometry and hidden tabs for ${sample.name}`, async ({ page }) => {
     if (sample.type) await page.getByLabel('Overflow type', { exact: true }).selectOption(sample.type);
-    if (sample.tabPlacement) await page.getByLabel('Overflow placement', { exact: true })
-      .selectOption(sample.tabPlacement);
+    if (sample.tabPlacement) {
+      await page.getByLabel('Overflow placement', { exact: true })
+        .selectOption(sample.tabPlacement);
+    }
     await check(page, 'RTL overflow', sample.direction === 'rtl');
     if (sample.rootIcon) await check(page, 'Root More icon');
     if (sample.localized) await check(page, 'Localized More popup');
@@ -334,7 +336,9 @@ test('Tabs repairs focus from the More portal when its enclosing panel is hidden
   await expect(menu).toBeFocused();
   await page.getByRole('button', { name: 'Switch outer Tabs', exact: true })
     .evaluate(element => {
-      if (!(element instanceof HTMLButtonElement)) throw new Error('Expected a native button');
+      if (!(element instanceof HTMLButtonElement)) {
+        throw new Error('Expected a native button');
+      }
       element.click();
     });
 

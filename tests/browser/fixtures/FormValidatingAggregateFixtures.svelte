@@ -29,7 +29,9 @@
       await form.validateFields([name], options);
     }
     catch (error) {
-      if (!(error instanceof FormValidationError)) throw error;
+      if (!(error instanceof FormValidationError)) {
+        throw error;
+      }
     }
     finished.push(id);
   }

@@ -90,13 +90,17 @@
   let classes = $derived(semantic.classes);
   let slots = $derived(semantic.styles);
   $effect(() => {
-    if (nativeElement) return connectFeedbackFocus(nativeElement);
+    if (nativeElement) {
+      return connectFeedbackFocus(nativeElement);
+    }
   });
   $effect(() => {
     const node = body;
-    if (node && !loading) return untrack(() => connectCardGrid(node, value => {
-      detectedGrid = value;
-    }));
+    if (node && !loading) {
+      return untrack(() => connectCardGrid(node, value => {
+        detectedGrid = value;
+      }));
+    }
   });
   $effect.pre(() => {
     const node = body;

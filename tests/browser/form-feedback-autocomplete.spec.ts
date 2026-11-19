@@ -17,10 +17,12 @@ async function apply(page: Page, action: FeedbackAction, index: number) {
   if (action === 'focus') await input.focus();
   else if (action === 'open') await input.click();
   else if (action === 'search') await input.fill('Beta');
-  else if (action === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside feedback', exact: true }
-  ).click();
+  else if (action === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside feedback', exact: true }
+    ).click();
+  }
   else if (action === 'clear') await page.locator('[data-feedback-autocomplete-control]').getByRole('button').first().click();
   else {
     await page.getByRole('combobox', { name: 'Feedback action', exact: true }).selectOption(String(index));
@@ -76,8 +78,10 @@ for (const source of clearReference.cases) {
     await apply(page, 'focus', 0);
     await apply(page, 'open', 1);
     if (source.mode.startsWith('pointer')) await apply(page, 'clear', 2);
-    else await page.locator('[data-feedback-autocomplete-control]')
-      .getByRole('button', { name: 'Очистить', exact: true }).dispatchEvent('click');
+    else {
+      await page.locator('[data-feedback-autocomplete-control]')
+        .getByRole('button', { name: 'Очистить', exact: true }).dispatchEvent('click');
+    }
     await expect(page.locator('[data-feedback-completion-events]')).toHaveText(JSON.stringify(source.events));
     const input = page.getByRole('combobox', { name: 'Feedback completion', exact: true });
 

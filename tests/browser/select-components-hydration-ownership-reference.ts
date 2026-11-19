@@ -99,7 +99,9 @@ const frozen = { manifest: {
   } };
 let manifestCache: Manifest | undefined;
 export function readSelectComponentsHydrationOwnershipManifest() {
-  if (manifestCache) return manifestCache;
+  if (manifestCache) {
+    return manifestCache;
+  }
   const bytes = readFileSync(fixture('ant-design-select-components-hydration-ownership-source-manifest.json'));
   assert.equal(bytes.length, frozen.manifest.bytes);
   assert.equal(hash(bytes), frozen.manifest.sha256);
@@ -181,18 +183,22 @@ function phases(scenario: HydrationOwnershipScenario) {
     [key + '-hydrate-return', key + '-first-owner-commit', key + '-settled'])];
   for (const [index, action] of scenario.actions.entries()) {
     if (action.type === 'controlled-query' || action.type === 'intrinsic-tag-replacement') names.push('action-' + index + '-immediate');
-    if (action.type === 'target-dispose') names.push(
-      'target-before-dispose',
-      'target-dispose-immediate'
-    );
+    if (action.type === 'target-dispose') {
+      names.push(
+        'target-before-dispose',
+        'target-dispose-immediate'
+      );
+    }
     names.push('action-' + index + '-settled');
     if (action.type === 'target-dispose') names.push('target-late');
   }
-  if (scenario.environment.owners.includes('A')) names.push(
-    'peer-before-dispose',
-    'peer-disposed',
-    'peer-late'
-  );
+  if (scenario.environment.owners.includes('A')) {
+    names.push(
+      'peer-before-dispose',
+      'peer-disposed',
+      'peer-late'
+    );
+  }
   return names;
 }
 /** Integrity/schema checks only. Browser-specific actual values and every raw
@@ -210,10 +216,12 @@ export function validateHydrationOwnershipSource(
   assert.equal(header.status, 'completed-observation');
   assert.deepEqual(header.errors, []);
   assert.equal(header.browserOwnedResourceCounters.measured, false);
-  for (const name of ['observers', 'mutations', 'frames', 'timers', 'ports'] as const) assert.equal(
-    header.browserOwnedResourceCounters[name],
-    null
-  );
+  for (const name of ['observers', 'mutations', 'frames', 'timers', 'ports'] as const) {
+    assert.equal(
+      header.browserOwnedResourceCounters[name],
+      null
+    );
+  }
   assert.deepEqual(
     source.cases.map(entry => entry.id),
     ownershipScenarios.map(scenario => scenario.id)
@@ -304,7 +312,9 @@ const cache = new Map<'first' | 'repeat', HydrationOwnershipSource>();
 export function readSelectComponentsHydrationOwnershipSource(variant: 'first' | 'repeat' = 'first'): HydrationOwnershipSource {
   assert(variant === 'first' || variant === 'repeat', 'Unknown Source ownership capture variant');
   const old = cache.get(variant);
-  if (old) return old;
+  if (old) {
+    return old;
+  }
   const manifest = readSelectComponentsHydrationOwnershipManifest();
   if (variant === 'repeat') {
     const first = readSelectComponentsHydrationOwnershipSource('first');

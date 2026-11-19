@@ -59,7 +59,9 @@
   }
 
   $effect(() => {
-    if (!dragger) return;
+    if (!dragger) {
+      return;
+    }
 
     const controller = connectSplitterDrag(
       dragger,

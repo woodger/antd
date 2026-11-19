@@ -254,10 +254,14 @@ export function validateRegistry(data) {
 
 // Оценивает обязательный для v1 объём на конкретной ревизии upstream.
 export function coverage(item, revision) {
-  if (!item.exports.length) return 'not-started';
+  if (!item.exports.length) {
+    return 'not-started';
+  }
   const required = item.features.filter(feature => feature.requiredForV1);
   if (item.reviewedRevision !== revision
-    || required.some(feature => feature.state === 'unreviewed')) return 'needs-review';
+    || required.some(feature => feature.state === 'unreviewed')) {
+    return 'needs-review';
+  }
   return required.every(feature => feature.state === 'supported') ? 'v1-ready' : 'partial';
 }
 
@@ -266,7 +270,9 @@ export function coverage(item, revision) {
 export async function inspectRegistry(root, { requireUpstream = false } = {}) {
   const data = await readJson(projectPath(root, registryFile));
   const errors = validateRegistry(data);
-  if (errors.length) return { data, errors, upstream: 'not checked' };
+  if (errors.length) {
+    return { data, errors, upstream: 'not checked' };
+  }
   const index = await readFile(projectPath(root, 'src/lib/index.ts'), 'utf8');
   const exports = publicExports(index);
   const registered = new Set(
@@ -316,8 +322,9 @@ export async function inspectRegistry(root, { requireUpstream = false } = {}) {
           'git',
           ['-C', upstreamRoot, 'status', '--porcelain'],
           { encoding: 'utf8' }
-        ).trim())
+        ).trim()) {
         errors.push('Upstream checkout has local modifications');
+      }
     }
     catch {
       errors.push('Cannot verify upstream Git revision');
@@ -336,8 +343,9 @@ export async function inspectRegistry(root, { requireUpstream = false } = {}) {
           || (featureId !== undefined
             && !item.features.some(
               feature => feature.id === featureId
-            )))
+            ))) {
           errors.push(`${item.id}: invalid integration evidence ${ref}`);
+        }
         else integrationEvidence.add(key);
         continue;
       }

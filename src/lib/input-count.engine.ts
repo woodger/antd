@@ -61,7 +61,9 @@ export function inputExceedValue(
     count?.exceedFormatter &&
     count.max &&
     (count.strategy || ((text: string) => text.length))(value) > count.max
-  ) return count.exceedFormatter(value, { max: count.max });
+  ) {
+    return count.exceedFormatter(value, { max: count.max });
+  }
 
   return value;
 }
@@ -70,7 +72,9 @@ export function resolveInputClear(
   local: boolean | InputAllowClear | undefined,
   context: boolean | InputAllowClear | undefined
 ): InputAllowClear | false {
-  if (!(local ?? context)) return false;
+  if (!(local ?? context)) {
+    return false;
+  }
 
   const own = typeof local === 'object' ? local : undefined;
   const inherited = typeof context === 'object' ? context : undefined;

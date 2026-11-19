@@ -56,7 +56,9 @@
   });
 
   $effect(() => {
-    if (!(target instanceof HTMLElement)) return;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
 
     const controller = createBorderBeamRuntime(target);
     runtime = controller;

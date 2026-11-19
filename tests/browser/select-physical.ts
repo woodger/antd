@@ -7,7 +7,9 @@ export function physicalSelectOption(
 ) {
   const rows = scope.locator('[data-ant-select-item]:visible,[data-ant-auto-complete-item-option]:visible');
   const name = options.name;
-  if (name === undefined) return rows;
+  if (name === undefined) {
+    return rows;
+  }
   const text = typeof name === 'string' && options.exact
     ? new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`) : name;
   return rows.filter({ hasText: text });

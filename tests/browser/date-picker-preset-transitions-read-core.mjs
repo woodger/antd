@@ -23,7 +23,9 @@ export function readDatePickerPresets() {
   };
   const probe = raw.pickerProbe;
   const identity = node => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     if (!probe.ids.has(node)) {
       const id = ++probe.next;
       probe.ids.set(node, id);
@@ -37,7 +39,9 @@ export function readDatePickerPresets() {
     return probe.ids.get(node);
   };
   const describe = (node, deep = true) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const css = getComputedStyle(node), box = node.getBoundingClientRect();
     const properties = ['display', 'position', 'boxSizing', 'width', 'height', 'minWidth', 'maxWidth', 'minHeight', 'maxHeight',
       'fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'color', 'backgroundColor', 'borderColor', 'borderWidth', 'borderStyle',

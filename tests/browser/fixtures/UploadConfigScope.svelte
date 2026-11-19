@@ -76,8 +76,12 @@
   }
 
   let outer = $derived.by<UploadConfig>(() => {
-    if (requestOnly) return { customRequest: request('provider') };
-    if (sample.provider === 'empty') return {};
+    if (requestOnly) {
+      return { customRequest: request('provider') };
+    }
+    if (sample.provider === 'empty') {
+      return {};
+    }
     const upload = settings('config', sample.provider === 'callback');
     if (sample.provider === 'accept-object') upload.accept = { format: '.md', filter: 'native' };
     if (sample.progress) upload.progress = { size: [160, 5], showInfo: true };
@@ -99,9 +103,15 @@
     return value;
   });
   let progress = $derived.by<UploadProps['progress']>(() => {
-    if (sample.progress === 'hidden') return { showInfo: false };
-    if (sample.progress === 'empty') return {};
-    if (sample.progress === 'size') return { size: [160, 9] };
+    if (sample.progress === 'hidden') {
+      return { showInfo: false };
+    }
+    if (sample.progress === 'empty') {
+      return {};
+    }
+    if (sample.progress === 'size') {
+      return { size: [160, 9] };
+    }
     return undefined;
   });
 </script>

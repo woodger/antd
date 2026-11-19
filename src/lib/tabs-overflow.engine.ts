@@ -12,7 +12,9 @@ export function getTabsVisibleRange(
   visibleLength: number,
   scroll: number
 ): [number, number] {
-  if (!offsets.length) return [0, 0];
+  if (!offsets.length) {
+    return [0, 0];
+  }
 
   let end = offsets.length;
   for (let index = 0; index < offsets.length; index++) {
@@ -38,7 +40,9 @@ export function getTabsMoreNavigationKey(
   offset: -1 | 1
 ): string | null {
   const enabled = items.filter(item => !item.disabled);
-  if (!enabled.length) return null;
+  if (!enabled.length) {
+    return null;
+  }
 
   // В OperationNode исходный findIndex=-1 сохраняется; первый ArrowUp выбирает предпоследний.
   const index = enabled.findIndex(item => item.key === key) || 0;

@@ -24,32 +24,34 @@ it('retains all independent Source roots, complete phases and both byte-equal ra
   });
 });
 it('keeps default caller UID diagnostics independent from unique supplied public field IDs', () => {
-  for (const entry of source.cases) for (const state of Object.values(entry.server.serializations)) {
-    expect(state.domFree).toBe(true);
-    expect(state.fatal).toBeNull();
-    expect(state.resources).toEqual({
-      timers: 0,
-      frames: 0,
-      measurements: 0,
-      microtasks: 0,
-      ports: 0
-    });
-    expect(state.messageChannelEnvironment).toEqual({
-      availableDuringUMDLoad: false,
-      forbiddenDuringRender: true
-    });
-    if (entry.scenario.environment.owners.includes('A')) {
-      expect(state.callerUIDs.A).toBe(state.callerUIDs.B);
-      expect(state.documentPairCallerUIDEqual).toBe(true);
-      expect(state.owners.A!.sample.publicId).not.toBe(state.owners.B!.sample.publicId);
-    }
-    for (const key of entry.scenario.environment.owners) {
-      const owner = state.owners[key]!;
-      expect(owner.state.alive).toBe(true);
-      expect(owner.state.callerUID).toBe(state.callerUIDs[key]);
-      expect(Object.values(owner.refs).every(Boolean)).toBe(true);
-      const committed = readHydrationOwnershipSourcePhase(entry, key + '-settled').roots[key]!;
-      expect(committed.ownerState!.callerUID).toBe(owner.state.callerUID);
+  for (const entry of source.cases) {
+    for (const state of Object.values(entry.server.serializations)) {
+      expect(state.domFree).toBe(true);
+      expect(state.fatal).toBeNull();
+      expect(state.resources).toEqual({
+        timers: 0,
+        frames: 0,
+        measurements: 0,
+        microtasks: 0,
+        ports: 0
+      });
+      expect(state.messageChannelEnvironment).toEqual({
+        availableDuringUMDLoad: false,
+        forbiddenDuringRender: true
+      });
+      if (entry.scenario.environment.owners.includes('A')) {
+        expect(state.callerUIDs.A).toBe(state.callerUIDs.B);
+        expect(state.documentPairCallerUIDEqual).toBe(true);
+        expect(state.owners.A!.sample.publicId).not.toBe(state.owners.B!.sample.publicId);
+      }
+      for (const key of entry.scenario.environment.owners) {
+        const owner = state.owners[key]!;
+        expect(owner.state.alive).toBe(true);
+        expect(owner.state.callerUID).toBe(state.callerUIDs[key]);
+        expect(Object.values(owner.refs).every(Boolean)).toBe(true);
+        const committed = readHydrationOwnershipSourcePhase(entry, key + '-settled').roots[key]!;
+        expect(committed.ownerState!.callerUID).toBe(owner.state.callerUID);
+      }
     }
   }
 });

@@ -55,7 +55,9 @@ async function settle(page: Parameters<typeof actPopupOverflow>[0]) {
     const actual = await page.evaluate(readPopupOverflow);
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Hydrated popup overflow state did not settle');
@@ -128,7 +130,9 @@ for (const sample of popupOverflowSamples.filter(sample => sample.live)) {
       const schedule = browser.setTimeout.bind(browser);
       const clear = browser.clearTimeout.bind(browser);
       browser.setTimeout = (handler, timeout, ...args) => {
-        if (typeof handler !== 'function') throw Error('Expected a function hydration timer');
+        if (typeof handler !== 'function') {
+          throw Error('Expected a function hydration timer');
+        }
         const timer = schedule(() => {
           timers.delete(timer);
           handler(...args);

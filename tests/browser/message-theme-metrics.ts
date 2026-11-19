@@ -1,9 +1,13 @@
 /** Сверяет оформление Message, сохраняя native popover и управление viewport в DOM-controller. */
 export function snapshotMessageTheme() {
   const root = document.querySelector('.ant-message');
-  if (!root) throw new Error('Message root is missing');
+  if (!root) {
+    throw new Error('Message root is missing');
+  }
   const css = (node: Element | null, keys: readonly string[]) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   };
@@ -32,14 +36,18 @@ export function snapshotMessageTheme() {
 /** Все объявления component registration rule из официального UMD. */
 export function snapshotMessageThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-message');
-  if (!root) throw new Error('Message source scope is missing');
+  if (!root) {
+    throw new Error('Message source scope is missing');
+  }
   const declarations: Record<string, string> = {};
 
   for (const sheet of document.styleSheets) {
     for (const rule of sheet.cssRules) {
       if (!(rule instanceof CSSStyleRule)
         || !root.matches(rule.selectorText)
-        || ![...rule.style].some(name => name.startsWith(`--${prefix}-message-`))) continue;
+        || ![...rule.style].some(name => name.startsWith(`--${prefix}-message-`))) {
+        continue;
+      }
 
       for (const name of rule.style) {
         if (name.startsWith(`--${prefix}-`)) {

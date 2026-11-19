@@ -87,12 +87,16 @@ export const dayjsGenerateConfig: GenerateConfig<Dayjs> = {
           const first = dayjs(year, 'YYYY').startOf('year').locale(localeName(locale));
           for (let n = 0; n <= 52; n++) {
             const date = first.add(n, 'week');
-            if (date.format('Wo') === week) return date;
+            if (date.format('Wo') === week) {
+              return date;
+            }
           }
           return null;
         }
         const date = dayjs(text, format, true).locale(localeName(locale));
-        if (date.isValid()) return date;
+        if (date.isValid()) {
+          return date;
+        }
       }
       return null;
     }

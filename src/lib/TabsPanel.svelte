@@ -51,16 +51,24 @@
   let hiddenClass = $derived(!visible && !motionState.running
     && (!motion?.eventProps || !forcedHidden) ? leavedClassName : undefined);
   let motionStyle = $derived.by(() => {
-    if (motionState.running) return motionState.style;
+    if (motionState.running) {
+      return motionState.style;
+    }
     const props = motion?.eventProps;
-    if (!props) return undefined;
-    if (forcedHidden) return 'display:none';
+    if (!props) {
+      return undefined;
+    }
+    if (forcedHidden) {
+      return 'display:none';
+    }
     return visible || retainedClass ? props.style : undefined;
   });
 
   $effect(() => {
     const element = root;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
     const controller = createTabsPaneMotion(element, (next, commit) => {
       // Measurement hooks читают DOM после prepare commit, как layout effects CSSMotion.
       if (commit) flushSync(() => { motionState = next; });

@@ -9,7 +9,9 @@ function readPopupThemeVariables(origin: HTMLElement) {
     if (name.startsWith('--')) values.set(name, source.getPropertyValue(name));
   }
   const empty = [...values.keys()].filter(name => values.get(name) === '');
-  if (!empty.length) return values;
+  if (!empty.length) {
+    return values;
+  }
 
   // CSSOM возвращает '' и для пустого списка токенов, и для guaranteed-invalid.
   const typed = origin.computedStyleMap?.();
@@ -63,7 +65,9 @@ export function connectPopupPortal(element: HTMLElement, options: {
   let queued = false;
 
   function move(parent: Element | DocumentFragment, before: ChildNode | null) {
-    if (element.parentNode === parent && element.nextSibling === before) return;
+    if (element.parentNode === parent && element.nextSibling === before) {
+      return;
+    }
     const focused = getPopupActiveElement(element);
     if (typeof parent.moveBefore === 'function' && parent.isConnected && element.isConnected) {
       parent.moveBefore(element, before);
@@ -71,7 +75,9 @@ export function connectPopupPortal(element: HTMLElement, options: {
     else {
       parent.insertBefore(element, before);
       if (focused instanceof view.HTMLElement && element.contains(focused)
-        && document.activeElement === document.body) focused.focus({ preventScroll: true });
+        && document.activeElement === document.body) {
+        focused.focus({ preventScroll: true });
+      }
     }
   }
 
@@ -86,7 +92,9 @@ export function connectPopupPortal(element: HTMLElement, options: {
   }
 
   function syncTheme() {
-    if (!active || inline) return;
+    if (!active || inline) {
+      return;
+    }
     const values = readPopupThemeVariables(origin);
     const preserved = clearManaged();
     // Копируем готовые значения: локальный var() иначе пересчитается после записи соседней переменной.
@@ -98,7 +106,9 @@ export function connectPopupPortal(element: HTMLElement, options: {
   }
 
   function scheduleTheme() {
-    if (queued) return;
+    if (queued) {
+      return;
+    }
     queued = true;
     queueMicrotask(() => {
       queued = false;

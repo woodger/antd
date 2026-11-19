@@ -20,8 +20,12 @@ export function createTreeSelectComponentAnchor(
       const style = view.getComputedStyle(node);
       if (style.position !== 'static' || style.transform !== 'none' || style.perspective !== 'none'
         || style.filter !== 'none' || /layout|paint|strict|content/.test(style.contain)
-        || style.willChange.split(',').some(value => value.trim() === 'transform')) return node;
-      if (node === document.documentElement) return;
+        || style.willChange.split(',').some(value => value.trim() === 'transform')) {
+        return node;
+      }
+      if (node === document.documentElement) {
+        return;
+      }
       node = node.parentElement;
     }
   }
@@ -31,7 +35,9 @@ export function createTreeSelectComponentAnchor(
     while (node) {
       const style = view.getComputedStyle(node);
       if ([style.overflow, style.overflowX, style.overflowY].some(value =>
-        ['auto', 'scroll', 'hidden', 'clip'].includes(value))) scrollers.add(node);
+        ['auto', 'scroll', 'hidden', 'clip'].includes(value))) {
+        scrollers.add(node);
+      }
       node = node.parentElement;
     }
   }
@@ -40,13 +46,17 @@ export function createTreeSelectComponentAnchor(
     const rect = anchor.getBoundingClientRect(), bounds = popup.getBoundingClientRect();
     const next = [Math.floor(rect.width), Math.floor(rect.height), anchor.offsetWidth, anchor.offsetHeight,
       Math.floor(bounds.width), Math.floor(bounds.height), popup.offsetWidth, popup.offsetHeight].join(':');
-    if (next === signature) return;
+    if (next === signature) {
+      return;
+    }
     signature = next;
     // Overflow должен применить свой measured layout до нового чтения target rect.
-    if (!frame) frame = view.requestAnimationFrame(() => {
-      frame = 0;
-      invalidate();
-    });
+    if (!frame) {
+      frame = view.requestAnimationFrame(() => {
+        frame = 0;
+        invalidate();
+      });
+    }
   });
   resize.observe(anchor);
   resize.observe(popup);
@@ -56,7 +66,9 @@ export function createTreeSelectComponentAnchor(
 
   function read(rect: DOMRect) {
     // ShadowRoot остаётся на существующем Native viewport path.
-    if (popup.parentNode instanceof view.ShadowRoot) return rect;
+    if (popup.parentNode instanceof view.ShadowRoot) {
+      return rect;
+    }
     const block = containingBlock(), blockRect = block?.getBoundingClientRect();
     const x = blockRect ? right ? blockRect.right : blockRect.left : -view.scrollX;
     const y = blockRect?.top ?? -view.scrollY;

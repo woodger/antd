@@ -50,11 +50,13 @@ it('checks every remaining event field, key, argument and raw descriptor', () =>
       value.currentTarget = value.target;
       return value;
     }];
-  for (const create of invalid) expect(() => verifyOwnershipCallbacks(
-    owner([['input-keydown', create()]]),
-    source,
-    'negative'
-  )).toThrow();
+  for (const create of invalid) {
+    expect(() => verifyOwnershipCallbacks(
+      owner([['input-keydown', create()]]),
+      source,
+      'negative'
+    )).toThrow();
+  }
   expect(() => verifyOwnershipCallbacks(
     owner([['input-keydown', payload('keydown', null), 'extra']]),
     source,

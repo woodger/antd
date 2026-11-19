@@ -41,7 +41,9 @@
   let drawerOpen = $state(false);
   let drawerSteps = $state(true);
   let items = $derived.by((): StepsItem[] => {
-    if (empty) return [];
+    if (empty) {
+      return [];
+    }
     let result: StepsItem[] = [
       {
         key: 'data',

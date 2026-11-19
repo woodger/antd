@@ -62,7 +62,9 @@
     const origin = anchor;
     const current = runtime;
     if (node
-      && origin) return untrack(() => connectNoticeSurface(node, origin, current.setVisible));
+      && origin) {
+      return untrack(() => connectNoticeSurface(node, origin, current.setVisible));
+    }
   });
 </script>
 

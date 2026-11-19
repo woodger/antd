@@ -6,7 +6,9 @@ export function readNativeEmptyDatetime() {
   const attributes = node => [...node.attributes].map(item => [item.name, item.value]);
   const cssKeys = ['display', 'visibility', 'opacity', 'position', 'overflow', 'overflow-y'];
   const describe = node => {
-    if (node == null) return null;
+    if (node == null) {
+      return null;
+    }
     observation.retainedNodes.add(node);
     const rect = node.getBoundingClientRect(), style = getComputedStyle(node);
     return { identity: id(node), tag: node.tagName, connected: node.isConnected,
@@ -31,7 +33,9 @@ export function readNativeEmptyDatetime() {
       && surface.css.display !== 'none' && surface.css.visibility !== 'hidden';
     const ancestors = [];
     for (let node = popup.parentElement; node && node !== document.body
-      && node !== document.documentElement; node = node.parentElement) ancestors.push(describe(node));
+      && node !== document.documentElement; node = node.parentElement) {
+      ancestors.push(describe(node));
+    }
     return { surface, visible, geometryState: visible ? 'visible-layout' : 'hidden-layout-may-be-zero-or-stale',
       ancestors, panels: [...popup.querySelectorAll('.ant-picker-panel,.ant-picker-date-panel,.ant-picker-time-panel')].map(describe),
       dateCells: [...popup.querySelectorAll('.ant-picker-date-panel td[title]')].map(node => ({

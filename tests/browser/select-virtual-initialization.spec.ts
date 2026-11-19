@@ -37,8 +37,9 @@ const bytes = readFileSync(new URL(
   './fixtures/ant-design-select-virtual-initialization-reference.json',
   import.meta.url
 ));
-if (createHash('sha256').update(bytes).digest('hex') !== 'c98e17f2203792f37c0bb175c3c78f5ab04cb9f6f94e9e778e9875da4a803bfc')
+if (createHash('sha256').update(bytes).digest('hex') !== 'c98e17f2203792f37c0bb175c3c78f5ab04cb9f6f94e9e778e9875da4a803bfc') {
   throw Error('Frozen actual Source initialization capture changed');
+}
 const reference = JSON.parse(bytes.toString('utf8')) as SourceInitialization;
 const variants = ['api-same', 'api-roundtrip', 'manual-untrusted', 'reopen-only'];
 
@@ -71,7 +72,9 @@ test.beforeAll(() => {
 /** Source is still offscreen in this first public frame; physical boxes stay diagnostic. */
 function logicalFrameView(view: ReturnType<typeof readSelectVirtual>['view']) {
   const withoutBox = <T extends { box: unknown }>(node: T | null) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const { box: _box, ...logical } = node;
     return logical;
   };
@@ -94,7 +97,9 @@ async function settle(page: Page) {
     const actual = await page.evaluate(() => window.selectVirtualInitializationProbe!.read());
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Public initialization frame and callback ledger did not settle');
@@ -159,9 +164,11 @@ for (const entry of reference.cases) {
         ));
         expect(actual.callbacks).toEqual(step.callbacks);
         expect(actual.offsets).toEqual(step.offsets);
-        if (index === 0) await page.evaluate(() => {
-          window.selectVirtualInitializationProbe!.holder = document.querySelector('.ant-select-dropdown-list-holder');
-        });
+        if (index === 0) {
+          await page.evaluate(() => {
+            window.selectVirtualInitializationProbe!.holder = document.querySelector('.ant-select-dropdown-list-holder');
+          });
+        }
       }
       const inFrame = await page.evaluate(async variant => {
         const probe = window.selectVirtualInitializationProbe!;
@@ -240,8 +247,10 @@ for (const entry of reference.cases) {
       }
       // The Native conditional Select remount produces a real restoration scroll event.
       // Keep it in the capture; only public callback deltas are compared to the retained Source holder.
-      if (!sameSavedHolder) expect(afterAwait.domScrolls.some(scroll => scroll.phase === 'reopen-public-frame'
-        && scroll.trusted && scroll.connected && !scroll.sameSavedHolder && scroll.top === 572)).toBe(true);
+      if (!sameSavedHolder) {
+        expect(afterAwait.domScrolls.some(scroll => scroll.phase === 'reopen-public-frame'
+          && scroll.trusted && scroll.connected && !scroll.sameSavedHolder && scroll.top === 572)).toBe(true);
+      }
       expect(entry.cleanup.callbacks).toEqual(entry.afterAwait.callbacks);
       const disposedEvents = [...afterAwait.callbacks, ['open', false]];
       const disposed = await page.evaluate(async () => {

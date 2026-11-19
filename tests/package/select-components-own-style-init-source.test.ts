@@ -31,11 +31,13 @@ it('compares full intrinsic style object/null/undefined/omitted raw graphs', () 
     value: { borderTopColor: 'red', border: '2px solid black', paddingInlineStart: undefined }
   },
     { present: true, value: null }, { present: true, value: undefined }, { present: false }];
-  for (const frame of frames) expect(() => verifySelectComponentsGraph(
-    elementGraph(frame, true),
-    elementGraph(frame, false),
-    'same public style graph'
-  )).not.toThrow();
+  for (const frame of frames) {
+    expect(() => verifySelectComponentsGraph(
+      elementGraph(frame, true),
+      elementGraph(frame, false),
+      'same public style graph'
+    )).not.toThrow();
+  }
   expect(() => verifySelectComponentsGraph(
     elementGraph({ present: false }, true),
     elementGraph({ present: true, value: undefined }, false),
@@ -60,7 +62,9 @@ it('preserves own undefined, absent style and restored object identity in the or
     expect(frames.get('style-null').style).toBeNull();
     expect(frames.get('restore-object').style).toBe(frames.get('left-logical').style);
     const initialStyle = frames.get('initial').style!;
-    if (typeof initialStyle !== 'object') throw Error('Frozen ordinary initial style is an object');
+    if (typeof initialStyle !== 'object') {
+      throw Error('Frozen ordinary initial style is an object');
+    }
     expect(Object.keys(initialStyle)).toEqual(['borderTopColor', 'border', 'borderLeftWidth', 'paddingInlineStart', 'padding', 'width', 'fontSize']);
     expect(initialStyle.fontSize).toBe(profile === 'same' ? 17 : 23);
   }
@@ -92,37 +96,39 @@ it('keeps all 8 independently measured paths and complete Source ref/event ledge
   expect(cases).toHaveLength(8);
   expect(cases.reduce((count, value) => count + value.steps.length, 0)).toBe(96);
   expect(selectComponentsOwnStyleInitManifest.counts.clientInitialAndActionPoints).toBe(104);
-  for (const sample of selectOwnStyleInitSamples) for (const path of selectOwnStyleInitEntryPaths) {
-    const entry = cases.find(value => value.id === sample.id && value.entryPath === path)!;
-    expect(entry).toBeTruthy();
-    expect(entry.profile).toBe(selectOwnStyleInitClientProfile(path));
-    expect(entry.prehydrateEdits).toEqual(selectOwnStyleInitPrehydrateSetters(path));
-    expect(entry.steps.map(value => value.action)).toEqual(sample.actions);
-    expect(entry.producerCalls).toEqual([]);
-    expect(entry.lifecycle).toHaveLength(45);
-    expect(entry.cleanup.lifecycle).toEqual([...entry.lifecycle, {
-      slot: 'input',
-      event: 'detach',
-      tag: null,
-      observation: null
-    }]);
-    expect(entry.cleanup.events).toEqual(entry.events);
-    expect(entry.cleanup.rawEvents).toEqual(entry.rawEvents);
-    expect(entry.late).toEqual({ events: entry.cleanup.events, rawEvents: entry.cleanup.rawEvents,
-      producerCalls: entry.cleanup.producerCalls, lifecycle: entry.cleanup.lifecycle, bodyActivity: entry.cleanup.bodyActivity });
-    expect(entry.recoverableErrors).toEqual([]);
-    expect(entry.network).toEqual({ requests: [], requestFailures: [], responses: [] });
-    if (path !== 'csr') {
-      expect(entry.parsed).toBeTruthy();
-      expect(entry.beforeHydration).toBeTruthy();
-      expect(entry.afterCall).toBeTruthy();
-      expect(entry.commit).toBeTruthy();
-      const initial = entry.initial.details.editor!, before = entry.beforeHydration!.details.hydration!.parsedEditor!;
-      expect(initial.css.fontSize).toBe(path === 'hydrate-dirty-mismatch' ? '31px' : '17px');
-      expect(before.css.fontSize).toBe(path === 'hydrate-dirty-mismatch' ? '31px' : '17px');
-      expect(entry.initial.details.hydration!.owner).toBe(true);
-      expect(entry.initial.details.hydration!.root).toBe(true);
-      expect(entry.initial.details.hydration!.editor).toBe(true);
+  for (const sample of selectOwnStyleInitSamples) {
+    for (const path of selectOwnStyleInitEntryPaths) {
+      const entry = cases.find(value => value.id === sample.id && value.entryPath === path)!;
+      expect(entry).toBeTruthy();
+      expect(entry.profile).toBe(selectOwnStyleInitClientProfile(path));
+      expect(entry.prehydrateEdits).toEqual(selectOwnStyleInitPrehydrateSetters(path));
+      expect(entry.steps.map(value => value.action)).toEqual(sample.actions);
+      expect(entry.producerCalls).toEqual([]);
+      expect(entry.lifecycle).toHaveLength(45);
+      expect(entry.cleanup.lifecycle).toEqual([...entry.lifecycle, {
+        slot: 'input',
+        event: 'detach',
+        tag: null,
+        observation: null
+      }]);
+      expect(entry.cleanup.events).toEqual(entry.events);
+      expect(entry.cleanup.rawEvents).toEqual(entry.rawEvents);
+      expect(entry.late).toEqual({ events: entry.cleanup.events, rawEvents: entry.cleanup.rawEvents,
+        producerCalls: entry.cleanup.producerCalls, lifecycle: entry.cleanup.lifecycle, bodyActivity: entry.cleanup.bodyActivity });
+      expect(entry.recoverableErrors).toEqual([]);
+      expect(entry.network).toEqual({ requests: [], requestFailures: [], responses: [] });
+      if (path !== 'csr') {
+        expect(entry.parsed).toBeTruthy();
+        expect(entry.beforeHydration).toBeTruthy();
+        expect(entry.afterCall).toBeTruthy();
+        expect(entry.commit).toBeTruthy();
+        const initial = entry.initial.details.editor!, before = entry.beforeHydration!.details.hydration!.parsedEditor!;
+        expect(initial.css.fontSize).toBe(path === 'hydrate-dirty-mismatch' ? '31px' : '17px');
+        expect(before.css.fontSize).toBe(path === 'hydrate-dirty-mismatch' ? '31px' : '17px');
+        expect(entry.initial.details.hydration!.owner).toBe(true);
+        expect(entry.initial.details.hydration!.root).toBe(true);
+        expect(entry.initial.details.hydration!.editor).toBe(true);
+      }
     }
   }
 });

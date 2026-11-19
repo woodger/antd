@@ -28,13 +28,15 @@ export async function captureHydrationOwnership(page: Page, source: HydrationOwn
     const expected = source.trace.find(row => row.phase === phase);
     // hydrate-return is an actual asynchronous-framework observation, retained
     // raw independently. Commit and settled phases remain strict.
-    if (expected && !phase.endsWith('-hydrate-return')) failures.push(...verifyHydrationOwnershipPoint(
-      actual,
-      expected.actual,
-      source,
-      phase,
-      boundaries
-    ));
+    if (expected && !phase.endsWith('-hydrate-return')) {
+      failures.push(...verifyHydrationOwnershipPoint(
+        actual,
+        expected.actual,
+        source,
+        phase,
+        boundaries
+      ));
+    }
     trace.push({ phase, actual, ...(action ? { action } : {}), boundaries: [...boundaries] });
   };
   const snapshot = async (phase: string, action?: unknown) => record(
@@ -127,10 +129,12 @@ export async function captureHydrationOwnership(page: Page, source: HydrationOwn
     await page.addScriptTag({ content: 'window.describeOwnershipNode=' + describeOwnershipNode.toString() });
     await page.addScriptTag({ content: 'window.readHydrationOwnership=' + readHydrationOwnership.toString() });
     await page.evaluate(records => {
-      for (const value of Object.values(records)) document.head.insertAdjacentHTML(
-        'beforeend',
-        value!.head
-      );
+      for (const value of Object.values(records)) {
+        document.head.insertAdjacentHTML(
+          'beforeend',
+          value!.head
+        );
+      }
     }, servers);
     await page.evaluate(initializeHydrationOwnershipProbe, { scenario,
       htmlByOwner: Object.fromEntries(Object.entries(servers).map(([key, value]) => [key, value.body])),
@@ -138,7 +142,9 @@ export async function captureHydrationOwnership(page: Page, source: HydrationOwn
     await snapshot('parsed');
     await page.evaluate(prehydrate => {
       const editor = window.hydrationOwnershipProbe.roots.B!.parsed.editor;
-      if (!editor) throw Error('Actual parsed target editor missing');
+      if (!editor) {
+        throw Error('Actual parsed target editor missing');
+      }
       if (prehydrate.dirty) editor.value = prehydrate.value!;
       editor.focus();
       if (prehydrate.dirty) editor.setSelectionRange(...prehydrate.selection!);
@@ -166,10 +172,12 @@ export async function captureHydrationOwnership(page: Page, source: HydrationOwn
     }
     for (const [index, action] of scenario.actions.entries()) {
       if (action.type === 'controlled-query' || action.type === 'intrinsic-tag-replacement') {
-        if (action.type === 'intrinsic-tag-replacement') assert.equal(
-          (await page.evaluate(readHydrationOwnership)).roots.B!.focus.editorIsScopeActive,
-          false
-        );
+        if (action.type === 'intrinsic-tag-replacement') {
+          assert.equal(
+            (await page.evaluate(readHydrationOwnership)).roots.B!.focus.editorIsScopeActive,
+            false
+          );
+        }
         await page.evaluate(action => window.hydrationOwnershipNative.update('B', action), action);
         await snapshot('action-' + index + '-immediate', action);
       }

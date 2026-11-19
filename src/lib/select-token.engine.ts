@@ -8,13 +8,17 @@ export function splitSelectTokens(text: string, separators?: SelectTokenSeparato
     return Array.isArray(words) && words.length && !(words.length === 1 && words[0] === text)
       ? words.slice(0, end) : null;
   }
-  if (!separators?.length) return null;
+  if (!separators?.length) {
+    return null;
+  }
   const tokens = separators;
   let matched = false;
 
   function split(value: string, index: number): string[] {
     const token = tokens[index];
-    if (!token) return [value];
+    if (!token) {
+      return [value];
+    }
     const parts = value.split(token);
     if (parts.length > 1) matched = true;
     return parts.flatMap(part => split(part, index + 1)).filter(Boolean);
@@ -33,10 +37,14 @@ export function resolveSelectTokenOptions<Value extends SelectDataValue, Data ex
 ): { value: Value | string; data: Data | undefined }[] {
   return words.flatMap(word => {
     const option = tags ? maps.valueOptions.get(word as Value) : maps.nativeLabelOptions.get(word);
-    if (option && Reflect.get(option, 'disabled')) return [];
+    if (option && Reflect.get(option, 'disabled')) {
+      return [];
+    }
     const value: unknown = tags ? option || word.trim() ? word : undefined
       : option && Reflect.get(option, fields.value);
-    if (typeof value !== 'string' && typeof value !== 'number') return [];
+    if (typeof value !== 'string' && typeof value !== 'number') {
+      return [];
+    }
     return [{ value: value as Value | string, data: maps.valueOptions.get(value as Value) }];
   });
 }

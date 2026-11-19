@@ -55,7 +55,9 @@ export function connectPopoverTrigger(
         element.removeAttribute(attribute);
       else element.setAttribute(attribute, original);
     }
-    if (!owned.size) return;
+    if (!owned.size) {
+      return;
+    }
     const tokens = (element.getAttribute('aria-controls') ?? '').split(/\s+/).filter(
       (token) => token && !owned.has(token)
     );
@@ -75,11 +77,14 @@ export function focusPopover(popup: HTMLElement): void {
     if (element.tabIndex < 0
       || element.matches(':disabled')
       || element.closest('[inert]')
-      || !element.getClientRects().length)
+      || !element.getClientRects().length) {
       continue;
+    }
 
     element.focus({ preventScroll: true });
-    if (getPopupActiveElement(popup) === element) return;
+    if (getPopupActiveElement(popup) === element) {
+      return;
+    }
   }
   popup.focus({ preventScroll: true });
 }

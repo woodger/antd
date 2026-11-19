@@ -162,7 +162,9 @@
     || Boolean(config.popover) || isPopconfirm && Boolean(config.popconfirm)
     || typeof autoAdjustOverflow === 'object' || customPosition);
   let positionPlacements = $derived.by(() => {
-    if (props.builtinPlacements) return props.builtinPlacements;
+    if (props.builtinPlacements) {
+      return props.builtinPlacements;
+    }
 
     const source = getTooltipPlacementConfig(arrowConfig, designTokens.state.token);
     const placements = getPopupPlacements(
@@ -176,7 +178,9 @@
     return placements;
   });
   let classPlacement = $derived.by(() => {
-    if (!customPosition) return shown ? actualPlacement : placement;
+    if (!customPosition) {
+      return shown ? actualPlacement : placement;
+    }
     return actualPosition?.sourceAlign
       ? getPopupPlacement(positionPlacements, actualPosition.sourceAlign) : undefined;
   });
@@ -255,7 +259,9 @@
   $effect(() => {
     const element = host;
 
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     function update() {
       anchor = element!.firstElementChild ?? element;
@@ -269,18 +275,24 @@
   });
 
   $effect(() => {
-    if (anchor && available) return connectPopoverTrigger(anchor, id, shown);
+    if (anchor && available) {
+      return connectPopoverTrigger(anchor, id, shown);
+    }
   });
 
   $effect(() => {
-    if (anchor && visible) return connectTooltipOpenClass(anchor, resolvedOpenClassName);
+    if (anchor && visible) {
+      return connectTooltipOpenClass(anchor, resolvedOpenClassName);
+    }
   });
 
   $effect.pre(() => {
     const source = anchor;
     const surface = popup;
 
-    if (visible) return;
+    if (visible) {
+      return;
+    }
 
     clicked = false;
     focusOnShow = false;
@@ -300,7 +312,9 @@
     const surface = popup;
     const source = anchor;
 
-    if (!surface || !source || !visible) return;
+    if (!surface || !source || !visible) {
+      return;
+    }
 
     // Положение меняется без повторного hide/show, чтобы сохранить ввод и фокус.
     const disconnect = untrack(() => connectPopup(surface, source, {
@@ -336,9 +350,11 @@
       onDismiss: dismiss,
       onVisibilityChange: (next) => {
         shown = next;
-        if (next && customPosition) queueMicrotask(() => {
-          if (visible) realign?.();
-        });
+        if (next && customPosition) {
+          queueMicrotask(() => {
+            if (visible) realign?.();
+          });
+        }
         if (!next) {
           popupFocused = false;
           popupHovered = false;
@@ -415,7 +431,9 @@
           ownerValue
         )
         || !independentActions && !actionOverrides && next
-        && !wanted()) return;
+        && !wanted()) {
+        return;
+      }
 
       if (next !== rawOpen) {
         uncontrolledOpen = next;
@@ -439,7 +457,9 @@
   }
 
   function handleEnter(event: PointerEvent) {
-    if (event.pointerType === 'touch' || sourceTouch && touched) return;
+    if (event.pointerType === 'touch' || sourceTouch && touched) {
+      return;
+    }
 
     hovered = true;
     dismissed = false;
@@ -448,7 +468,9 @@
   }
 
   function handleLeave() {
-    if (sourceTouch && touched) return;
+    if (sourceTouch && touched) {
+      return;
+    }
 
     hovered = false;
     if (sourceTrigger ? actions.hide.has('hover') : !wanted())
@@ -463,7 +485,9 @@
       && event.relatedTarget instanceof Node
       && popup?.contains(
         event.relatedTarget
-      )) return;
+      )) {
+      return;
+    }
 
     dismissed = false;
     if (actions.show.has('focus'))
@@ -473,12 +497,18 @@
   function handleBlur(event: FocusEvent) {
     const target = anchor;
     function closeIfOutside() {
-      if (!active || !target?.isConnected || target !== anchor || closing) return;
-      if (event.relatedTarget instanceof Node && host?.contains(event.relatedTarget)) return;
+      if (!active || !target?.isConnected || target !== anchor || closing) {
+        return;
+      }
+      if (event.relatedTarget instanceof Node && host?.contains(event.relatedTarget)) {
+        return;
+      }
 
       focused = false;
       if (!actionOverrides && event.relatedTarget instanceof Node
-        && popup?.contains(event.relatedTarget)) return;
+        && popup?.contains(event.relatedTarget)) {
+        return;
+      }
 
       clicked = false;
       if (sourceTrigger ? actions.hide.has('focus') : !wanted()) {
@@ -494,7 +524,9 @@
     const show = actions.show.has('click');
     const hide = actions.hide.has('click') || actions.hide.has('contextMenu');
     if (event.defaultPrevented && !actionOverrides || !show && !hide
-      || anchor?.matches(':disabled, [aria-disabled="true"]')) return;
+      || anchor?.matches(':disabled, [aria-disabled="true"]')) {
+      return;
+    }
 
     if (actionOverrides) {
       if (visible && hide) dismiss('trigger');
@@ -518,7 +550,9 @@
 
   function handleContextMenu(event: MouseEvent) {
     if (!actions.show.has('contextMenu')
-      || anchor?.matches(':disabled, [aria-disabled="true"]')) return;
+      || anchor?.matches(':disabled, [aria-disabled="true"]')) {
+      return;
+    }
 
     event.preventDefault();
     if (visible && actions.hide.has('contextMenu')) dismiss('trigger');
@@ -531,7 +565,9 @@
 
   function handleTouchStart() {
     if (!sourceTouch || !actions.show.has('touch') && !actions.hide.has('touch')
-      || anchor?.matches(':disabled, [aria-disabled="true"]')) return;
+      || anchor?.matches(':disabled, [aria-disabled="true"]')) {
+      return;
+    }
 
     touched = true;
     if (visible && actions.hide.has('touch')) dismiss('trigger');
@@ -539,7 +575,9 @@
   }
 
   function handlePopupHover(next: boolean) {
-    if (!active || !popup?.isConnected) return;
+    if (!active || !popup?.isConnected) {
+      return;
+    }
 
     if (actionOverrides) {
       if (next) {
@@ -548,7 +586,9 @@
       else if (actions.hide.has('hover')) request(false, getTooltipDelay(leaveDelay));
       return;
     }
-    if (sourceTrigger && !supports('hover')) return;
+    if (sourceTrigger && !supports('hover')) {
+      return;
+    }
 
     popupHovered = next;
     if (next)
@@ -558,14 +598,18 @@
   }
 
   function handlePopupFocus() {
-    if (!active || !popup?.isConnected || actionOverrides) return;
+    if (!active || !popup?.isConnected || actionOverrides) {
+      return;
+    }
 
     popupFocused = true;
     cancelPending();
   }
 
   function handlePopupBlur(event: FocusEvent) {
-    if (event.relatedTarget instanceof Node && popup?.contains(event.relatedTarget)) return;
+    if (event.relatedTarget instanceof Node && popup?.contains(event.relatedTarget)) {
+      return;
+    }
 
     popupFocused = false;
     function closeIfOutside() {
@@ -577,9 +621,13 @@
         || event.relatedTarget instanceof Node
         && host?.contains(
           event.relatedTarget
-        )) return;
+        )) {
+        return;
+      }
 
-      if (actionOverrides || sourceTrigger && !supports('focus')) return;
+      if (actionOverrides || sourceTrigger && !supports('focus')) {
+        return;
+      }
 
       clicked = false;
       if (!wanted())
@@ -593,7 +641,9 @@
 
   function dismiss(reason: 'escape' | 'outside' | 'trigger') {
     if (reason === 'outside' && actionOverrides && !actions.hide.has('click')
-      && !actions.hide.has('contextMenu') && !actions.hide.has('touch')) return;
+      && !actions.hide.has('contextMenu') && !actions.hide.has('touch')) {
+      return;
+    }
 
     const previous = { clicked, dismissed, focusOnShow };
     clicked = false;

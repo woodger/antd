@@ -47,7 +47,9 @@
       validated = 'success';
     }
     catch (error) {
-      if (!(error instanceof FormValidationError)) throw error;
+      if (!(error instanceof FormValidationError)) {
+        throw error;
+      }
       validated = error.outOfDate ? 'outdated' : 'invalid';
     }
   }

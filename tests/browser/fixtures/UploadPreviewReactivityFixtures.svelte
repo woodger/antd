@@ -17,7 +17,9 @@
   const ids = new WeakMap<object, number>();
   let nextId = 0, actualCalls = 0;
   const identity = (value: object | undefined) => {
-    if (!value) return null;
+    if (!value) {
+      return null;
+    }
     if (!ids.has(value)) ids.set(value, ++nextId);
     return ids.get(value)!;
   };
@@ -48,7 +50,9 @@
   function resolvePreview(newest: boolean) {
     const entry = newest ? pending.findLast(value => !value.resolved)
       : pending.find(value => !value.resolved);
-    if (!entry) return;
+    if (!entry) {
+      return;
+    }
     entry.resolved = true;
     entry.resolve(entry.result);
     resolutions++;

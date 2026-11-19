@@ -118,11 +118,14 @@
       )
       && host.ownerDocument.defaultView!.getComputedStyle(
         focused
-      ).visibility === 'visible')
+      ).visibility === 'visible') {
       focused.focus({ preventScroll: true });
+    }
   });
   $effect(() => {
-    if (nativeElement) return connectFeedbackFocus(nativeElement);
+    if (nativeElement) {
+      return connectFeedbackFocus(nativeElement);
+    }
   });
 </script>
 

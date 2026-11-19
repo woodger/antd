@@ -23,7 +23,9 @@ test('Space aliases update gaps without resetting typography, drafts, selection,
     await draft.fill('Persistent Space draft');
     await draft.focus();
     await draft.evaluate(node => {
-      if (!(node instanceof HTMLInputElement)) throw new Error('Expected native draft input');
+      if (!(node instanceof HTMLInputElement)) {
+        throw new Error('Expected native draft input');
+      }
       node.setSelectionRange(2, 8);
     });
     const originalRoot = await root.elementHandle();
@@ -36,7 +38,9 @@ test('Space aliases update gaps without resetting typography, drafts, selection,
     await expect(draft).toBeFocused();
     await expect(draft).toHaveValue('Persistent Space draft');
     expect(await draft.evaluate(node => {
-      if (!(node instanceof HTMLInputElement)) throw new Error('Expected native draft input');
+      if (!(node instanceof HTMLInputElement)) {
+        throw new Error('Expected native draft input');
+      }
 
       return [node.selectionStart, node.selectionEnd];
     })).toEqual([2, 8]);

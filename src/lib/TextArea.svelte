@@ -222,15 +222,18 @@
       focused = false;
   });
   $effect(() => {
-    if (!nativeElement) return;
+    if (!nativeElement) {
+      return;
+    }
     const element = nativeElement;
     const connection = createTextAreaMeasure(element, bounds => {
       onResize?.(bounds);
       if (element.style.height)
         resized = true;
       if (mouseDown
-        && element.ownerDocument.defaultView!.getComputedStyle(element).resize === 'both')
+        && element.ownerDocument.defaultView!.getComputedStyle(element).resize === 'both') {
         dirty = true;
+      }
     });
     measure = connection;
     return () => {
@@ -261,7 +264,9 @@
 
   function publish(event: Event, raw: string, legacy = false) {
     const element = nativeElement;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
     const next = textAreaExceedValue(raw, count, composing);
     const notifyLegacy = legacy || event.type === 'compositionend' && raw !== next && next !== text;
     const selection = raw !== next ? [element.selectionStart, element.selectionEnd] : undefined;
@@ -271,7 +276,9 @@
       onValueChange?.(next);
     onChange?.(textAreaChangeEvent(event, element, next));
     void tick().then(() => {
-      if (!alive || nativeElement !== element || !element.isConnected) return;
+      if (!alive || nativeElement !== element || !element.isConnected) {
+        return;
+      }
       if (element.value !== text)
         element.value = text;
       if (selection)
@@ -285,7 +292,9 @@
   }
   function handleClear(event: MouseEvent) {
     const element = nativeElement;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
     useDefault = false;
     value = '';
     focus();

@@ -67,10 +67,14 @@ async function observeMotion(page: Page) {
       frames: [],
       observer: new MutationObserver(() => {
         const popup = document.querySelector('.ant-tabs-dropdown');
-        if (!popup) return;
+        if (!popup) {
+          return;
+        }
         const classes = Array.from(popup.classList)
           .filter(name => /-(?:appear|enter|leave)(?:-(?:prepare|start|active))?$/.test(name));
-        if (!classes.length) return;
+        if (!classes.length) {
+          return;
+        }
         const css = getComputedStyle(popup);
         const frame = { classes, duration: css.animationDuration, name: css.animationName };
         if (JSON.stringify(frame) !== JSON.stringify(capture.frames.at(-1)))

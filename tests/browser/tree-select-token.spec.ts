@@ -9,23 +9,31 @@ async function act(page: Page, action: TreeSelectTokenAction) {
   if (action.type === 'open') await input.click();
   else if (action.type === 'focus') await input.focus();
   else if (action.type === 'fill') await input.fill(action.text!);
-  else if (action.type === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside token tree', exact: true }
-  ).click();
-  else if (action.type === 'composition-start') await input.dispatchEvent(
-    'compositionstart',
-    { data: '' }
-  );
-  else if (action.type === 'composition-end') await input.dispatchEvent(
-    'compositionend',
-    { data: '' }
-  );
-  else if (action.type === 'paste') await input.evaluate((node, text) => {
-    const data = new DataTransfer();
-    data.setData('text', text!);
-    node.dispatchEvent(new ClipboardEvent('paste', { clipboardData: data, bubbles: true }));
-  }, action.text);
+  else if (action.type === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside token tree', exact: true }
+    ).click();
+  }
+  else if (action.type === 'composition-start') {
+    await input.dispatchEvent(
+      'compositionstart',
+      { data: '' }
+    );
+  }
+  else if (action.type === 'composition-end') {
+    await input.dispatchEvent(
+      'compositionend',
+      { data: '' }
+    );
+  }
+  else if (action.type === 'paste') {
+    await input.evaluate((node, text) => {
+      const data = new DataTransfer();
+      data.setData('text', text!);
+      node.dispatchEvent(new ClipboardEvent('paste', { clipboardData: data, bubbles: true }));
+    }, action.text);
+  }
 }
 for (const entry of reference.cases) {
   test(`TreeSelect token search follows Source for ${entry.id}`, async ({ page }) => {

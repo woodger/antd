@@ -8,7 +8,9 @@ import reference from './fixtures/ant-design-float-back-top-motion-reference.jso
 async function snapshotFrame(node: Locator, time: number) {
   return node.evaluate((element, currentTime) => {
     const animation = element.getAnimations()[0];
-    if (!(animation?.effect instanceof KeyframeEffect)) throw new Error('Fade is missing');
+    if (!(animation?.effect instanceof KeyframeEffect)) {
+      throw new Error('Fade is missing');
+    }
     animation.currentTime = currentTime;
     const style = getComputedStyle(element);
 

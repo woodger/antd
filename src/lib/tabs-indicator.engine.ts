@@ -24,7 +24,9 @@ export function getTabsIndicatorStyle(
   rtl: boolean,
   indicator: TabsIndicator = {}
 ): TabsIndicatorStyle {
-  if (!offset) return {};
+  if (!offset) {
+    return {};
+  }
 
   const origin = vertical ? offset.height : offset.width;
   const size = typeof indicator.size === 'function' ? indicator.size(origin)

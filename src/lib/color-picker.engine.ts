@@ -20,7 +20,9 @@ export function getColorAlpha(color: AggregationColor): number {
 
 export function genAlphaColor(color: AggregationColor, alpha?: number): AggregationColor {
   const rgba = color.toRgb();
-  if (!rgba.r && !rgba.g && !rgba.b) return generateColor({ ...color.toHsb(), a: alpha || 1 });
+  if (!rgba.r && !rgba.g && !rgba.b) {
+    return generateColor({ ...color.toHsb(), a: alpha || 1 });
+  }
   return generateColor({ ...rgba, a: alpha || 1 });
 }
 
@@ -35,7 +37,9 @@ export function getGradientPercentColor(
     const end = points[index + 1];
     if (start.percent <= percent && percent <= end.percent) {
       const distance = end.percent - start.percent;
-      if (distance === 0) return start.color;
+      if (distance === 0) {
+        return start.color;
+      }
       return new ColorCore(start.color).mix(new ColorCore(end.color),
         (percent - start.percent) / distance * 100).toRgbString();
     }
@@ -72,7 +76,9 @@ export function fillPickerColor(
     }
     else submit = genAlphaColor(submit);
   }
-  if (mode === 'single') return submit;
+  if (mode === 'single') {
+    return submit;
+  }
   const colors = [...getPickerColors(current)];
   colors[active] = { ...colors[active], color: submit };
   return generateColor(colors);
@@ -89,8 +95,12 @@ export function calculatePickerColor(
 }
 
 export function getColorText(color: AggregationColor, format: ColorFormat | undefined): string {
-  if (format === 'rgb') return color.toRgbString();
-  if (format === 'hsb') return color.toHsbString();
+  if (format === 'rgb') {
+    return color.toRgbString();
+  }
+  if (format === 'hsb') {
+    return color.toHsbString();
+  }
   const hex = color.toHexString().toUpperCase();
   const alpha = getColorAlpha(color);
   return alpha < 100 ? `${hex.slice(0, 7)},${alpha}%` : hex;
@@ -98,6 +108,8 @@ export function getColorText(color: AggregationColor, format: ColorFormat | unde
 
 export function isBrightColor(color: AggregationColor, background: string): boolean {
   const { r, g, b, a } = color.toRgb();
-  if (a <= .5) return new ColorCore(color.toRgbString()).onBackground(background).toHsv().v > .5;
+  if (a <= .5) {
+    return new ColorCore(color.toRgbString()).onBackground(background).toHsv().v > .5;
+  }
   return r * .299 + g * .587 + b * .114 > 192;
 }

@@ -1,7 +1,9 @@
 /** Сопоставляет вычисленные стили Upload, сохраняя различия React/Svelte обёрток. */
 export function snapshotUploadPrefix() {
   const root = document.querySelector<HTMLElement>('.fixture-upload-prefix');
-  if (!root) throw new Error('Upload root is missing');
+  if (!root) {
+    throw new Error('Upload root is missing');
+  }
   const prefix = [...root.classList].find(value => value.endsWith('-wrapper'))!.slice(0, -8);
   const selector = (suffix: string) => `[class~="${prefix}${suffix}"]`;
   const part = (suffix: string) => root.querySelector(selector(suffix));
@@ -13,7 +15,9 @@ export function snapshotUploadPrefix() {
     'border-radius', 'background-color', 'box-shadow'
   ];
   const css = (node: Element | null, keys: readonly string[]) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   };

@@ -73,7 +73,9 @@
   onDestroy(() => { active = false; });
 
   function finishHolder(shown: boolean) {
-    if (!active || shown !== visible) return;
+    if (!active || shown !== visible) {
+      return;
+    }
 
     if (!shown) {
       rendered = false;
@@ -84,7 +86,9 @@
   }
 
   function finishMessage(key: string, shown: boolean) {
-    if (!active || shown) return;
+    if (!active || shown) {
+      return;
+    }
 
     entries = entries.filter((entry) => entry.key !== key || entry.visible);
   }

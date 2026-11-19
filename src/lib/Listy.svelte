@@ -92,7 +92,9 @@
     void rowKey;
     void group;
     const root = nativeElement;
-    if (!root) return;
+    if (!root) {
+      return;
+    }
     const restore = untrack(() => captureListyFocus(root));
     let active = true;
     void tick().then(() => {

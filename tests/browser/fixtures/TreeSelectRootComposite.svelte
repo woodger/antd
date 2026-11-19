@@ -19,7 +19,9 @@
   });
   $effect(() => {
     const node = nativeElement, instance = control;
-    if (!node || !instance) return;
+    if (!node || !instance) {
+      return;
+    }
     const ref: TreeSelectRootRegistration<HTMLElement> = {
       nativeElement: node,
       focus: options => instance.focus(options),

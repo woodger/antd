@@ -42,9 +42,13 @@ for (const sample of reference.cases) for (const direction of ['ltr', 'rtl']) {
           add: '.ant-tabs-nav-add'
         };
         return Object.fromEntries(Object.entries(metrics).map(([key, fields]) => {
-          if (!fields) return [key, null];
+          if (!fields) {
+            return [key, null];
+          }
           const target = key === 'root' ? element : element.querySelector(selectors[key]);
-          if (!target) throw new Error(`Missing ${key}`);
+          if (!target) {
+            throw new Error(`Missing ${key}`);
+          }
           const css = getComputedStyle(target);
           return [key, Object.fromEntries(Object.keys(fields).map(name => [name,
             css[name as keyof CSSStyleDeclaration]

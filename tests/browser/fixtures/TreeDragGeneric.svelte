@@ -26,7 +26,9 @@
   let events = $state.raw<unknown[]>([]);
   function checkRaw(node: Record) {
     if (node !== originals.get(String(node.id)) || node.expanded !== 'payload'
-      || node.dragOver !== 'payload' || !node.key.startsWith('payload-')) valid = false;
+      || node.dragOver !== 'payload' || !node.key.startsWith('payload-')) {
+      valid = false;
+    }
   }
   function snapshot(node: TreeEventNode<Record>) {
     const original = originals.get(String(node.id))!;

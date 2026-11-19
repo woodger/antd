@@ -1,6 +1,8 @@
 export function snapshotUploadIconRender() {
   const root = document.querySelector('[data-upload-icon-host]');
-  if (!root) throw new Error('Upload icon root is missing');
+  if (!root) {
+    throw new Error('Upload icon root is missing');
+  }
   const icon = root.querySelector('[data-file-icon]');
   const holder = root.querySelector('.ant-upload-icon, .ant-upload-list-item-thumbnail');
 

@@ -23,7 +23,9 @@ declare global {
 }
 const id = new URL(location.href).searchParams.get('sample');
 const sample = selectVirtualEdgeSamples.find(sample => sample.id === id);
-if (!sample) throw Error(`Unknown AutoComplete virtual edge sample: ${id}`);
+if (!sample) {
+  throw Error(`Unknown AutoComplete virtual edge sample: ${id}`);
+}
 const instance = mount(
   SelectVirtualEdgeCase,
   { target: document.getElementById('root')!, props: { sample } }

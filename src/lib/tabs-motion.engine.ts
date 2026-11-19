@@ -31,8 +31,12 @@ export function getTabsMotionClassName(
   status: 'appear' | 'enter' | 'leave',
   step: 'prepare' | 'start' | 'active'
 ) {
-  if (!name) return undefined;
-  if (typeof name === 'string') return `${name}-${status} ${name}-${status}-${step} ${name}`;
+  if (!name) {
+    return undefined;
+  }
+  if (typeof name === 'string') {
+    return `${name}-${status} ${name}-${status}-${step} ${name}`;
+  }
 
   const suffix = `${status}${step[0].toUpperCase()}${step.slice(1)}` as keyof typeof name;
   return [name[status], name[suffix]].filter(Boolean).join(' ') || undefined;

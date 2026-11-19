@@ -24,15 +24,19 @@
   let rows = $derived(listyRows(items, rowKey, group));
 
   $effect(() => {
-    if (!nativeElement) return;
+    if (!nativeElement) {
+      return;
+    }
     ref = {
       scrollTo(config) {
-        if (nativeElement) scrollRawListy(
-          nativeElement,
-          config,
-          prefixCls,
-          Boolean(sticky && group)
-        );
+        if (nativeElement) {
+          scrollRawListy(
+            nativeElement,
+            config,
+            prefixCls,
+            Boolean(sticky && group)
+          );
+        }
       }
     };
     return () => { ref = undefined; };

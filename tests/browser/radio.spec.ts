@@ -433,8 +433,9 @@ test(
 
     for (const input of await fixture.getByRole('radiogroup', { name: 'Radio roles', exact: true })
       .getByRole('radio')
-      .all())
+      .all()) {
       await expect(input).toBeDisabled();
+    }
 
     await expect(fixture.getByLabel('Radio consent', { exact: true })).toBeDisabled();
     await expect(

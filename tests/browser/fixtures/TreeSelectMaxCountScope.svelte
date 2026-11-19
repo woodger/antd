@@ -23,11 +23,15 @@
 
   function find(value: unknown, list = nodes): Record<string, unknown> | undefined {
     for (const node of list) {
-      if (node[field] === value) return node;
+      if (node[field] === value) {
+        return node;
+      }
       const nested = node[children];
       if (Array.isArray(nested)) {
         const child = find(value, nested);
-        if (child) return child;
+        if (child) {
+          return child;
+        }
       }
     }
   }

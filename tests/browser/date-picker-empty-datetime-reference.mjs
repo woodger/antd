@@ -64,11 +64,13 @@ export function verifyEmptyDatetimeSourcePartBinding(reference, variant = 'first
   assert.deepEqual(Object.keys(reference), ['rawJSONPart']);
   const original = reference.rawJSONPart;
   assert.equal(original.file.startsWith(base + '.parts/'), true, 'Source capture path binding');
-  if (expectedFile !== undefined) assert.equal(
-    original.file,
-    expectedFile,
-    'Source owner/action slot binding'
-  );
+  if (expectedFile !== undefined) {
+    assert.equal(
+      original.file,
+      expectedFile,
+      'Source owner/action slot binding'
+    );
+  }
   assert.equal(original.gzipFile, original.file + '.gz');
   const entry = metadata.parts[original.file];
   assert(entry, 'Missing whole original Source part mapping');

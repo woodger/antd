@@ -31,7 +31,9 @@ for (const [index, entry] of reference.cases.entries()) {
         const node = document.querySelector(
           `.${prefix}-upload-animate-appear-active, .${prefix}-upload-animate-inline-appear-active`
         );
-        if (!node) return false;
+        if (!node) {
+          return false;
+        }
         for (const animation of node.getAnimations()) animation.pause();
         return true;
       }, prefix);
@@ -55,7 +57,9 @@ for (const [index, entry] of reference.cases.entries()) {
         const node = document.querySelector(
           `.${prefix}-upload-animate-leave-active, .${prefix}-upload-animate-inline-leave-active`
         );
-        if (!node) return false;
+        if (!node) {
+          return false;
+        }
         for (const animation of node.getAnimations()) animation.pause();
         return true;
       }, prefix);
@@ -91,7 +95,9 @@ test('Upload reuses a leaving row on return and keeps the input, draft and focus
   await page.clock.runFor(80);
   await page.waitForFunction(() => {
     const node = document.querySelector('.ant-upload-animate-leave-active');
-    if (!node) return false;
+    if (!node) {
+      return false;
+    }
     for (const animation of node.getAnimations()) animation.pause();
     return true;
   });
@@ -165,7 +171,9 @@ test('Upload ignores child end events and finishes only the owned row transition
   await page.getByRole('button', { name: 'Remove alpha', exact: true }).click();
   await page.waitForFunction(() => {
     const node = document.querySelector('.ant-upload-animate-leave-active');
-    if (!node) return false;
+    if (!node) {
+      return false;
+    }
     for (const animation of node.getAnimations()) animation.pause();
     return true;
   });

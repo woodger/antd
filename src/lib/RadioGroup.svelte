@@ -101,13 +101,17 @@
     select(next, event) {
       const option = items.find((item) => item.value === next);
 
-      if ((items.length && !option) || resolvedDisabled || option?.disabled || selected === next) return;
+      if ((items.length && !option) || resolvedDisabled || option?.disabled || selected === next) {
+        return;
+      }
 
       useDefault = false;
       value = next;
       onChange?.(event as RadioChangeEvent<Value>);
       if (alive) onValueChange?.(next);
-      if (!alive) return;
+      if (!alive) {
+        return;
+      }
 
       // Владелец function binding может отклонить выбор после native radio activation.
       // Значения участников хранят тип: 0 и '0' имеют одинаковый DOM value.
@@ -143,12 +147,16 @@
   function handleReset(event: Event) {
     const element = container;
 
-    if (!element || event.target !== element.form) return;
+    if (!element || event.target !== element.form) {
+      return;
+    }
 
     const reset = setTimeout(() => {
       resets.delete(reset);
 
-      if (event.defaultPrevented || !element.isConnected || element !== container) return;
+      if (event.defaultPrevented || !element.isConnected || element !== container) {
+        return;
+      }
 
       useDefault = false;
       value = initialDefault;

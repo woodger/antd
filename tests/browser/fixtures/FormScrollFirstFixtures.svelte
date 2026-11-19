@@ -78,7 +78,9 @@
   }
 
   function validateHeld() {
-    if (!held) return;
+    if (!held) {
+      return;
+    }
 
     return new Promise<string>((resolve) => {
       pending.push(resolve);

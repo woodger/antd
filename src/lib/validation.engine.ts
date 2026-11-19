@@ -61,7 +61,9 @@ export function resolveValidationRules<Values extends FormValues>(
   rules: readonly FormRule<Values>[], form: FormInstance<Values>
 ): readonly ValidationRule<Values>[] {
   // Object-only arrays сохраняют прежнюю identity и capture semantics.
-  if (rules.every(rule => typeof rule !== 'function')) return rules;
+  if (rules.every(rule => typeof rule !== 'function')) {
+    return rules;
+  }
 
   return rules.map(rule => typeof rule === 'function' ? rule(form) : rule);
 }
@@ -108,9 +110,13 @@ async function validateRules<Values extends FormValues>(
   if (validateFirst === true) {
     let warnings: string[] | undefined;
     for (const rule of ordered) {
-      if (rule.warningOnly && warnings) return { errors: [], warnings };
+      if (rule.warningOnly && warnings) {
+        return { errors: [], warnings };
+      }
       const messages = await validateRuleValue(value, values, rule, ancestor, context);
-      if (messages.errors.length) return { errors: messages.errors, warnings: [] };
+      if (messages.errors.length) {
+        return { errors: messages.errors, warnings: [] };
+      }
       if (messages.warnings.length) warnings ??= messages.warnings;
     }
 
@@ -119,7 +125,9 @@ async function validateRules<Values extends FormValues>(
 
   const checks = ordered.map((rule) => validateRuleValue(value, values, rule, ancestor, context));
   if (validateFirst === 'parallel') {
-    if (!checks.length) return { errors: [], warnings: [] };
+    if (!checks.length) {
+      return { errors: [], warnings: [] };
+    }
 
     return new Promise((resolve, reject) => {
       let remaining = checks.length;
@@ -213,7 +221,9 @@ async function validatePrimitiveRule<Values extends FormValues>(
 ): Promise<string[]> {
   const messages: string[] = [];
   const type = rule.type;
-  if (type && rule.validator) return validateCustomRule(transformedValue, values, rule, context);
+  if (type && rule.validator) {
+    return validateCustomRule(transformedValue, values, rule, context);
+  }
 
   const message = (
     path: string | readonly [string, string],
@@ -248,7 +258,9 @@ async function validatePrimitiveRule<Values extends FormValues>(
   }
   const choices = Array.isArray(rule.enum) ? rule.enum : [];
   if (type === 'enum' && choices.indexOf(value) === -1) {
-    if (rule.message !== undefined) return [rule.message];
+    if (rule.message !== undefined) {
+      return [rule.message];
+    }
 
     return [message(
       'enum',
@@ -258,7 +270,9 @@ async function validatePrimitiveRule<Values extends FormValues>(
     )];
   }
   if (type && ['boolean', 'object', 'regexp', 'method', 'any',
-    'enum', 'email', 'url', 'hex', 'tel'].includes(type)) return [];
+    'enum', 'email', 'url', 'hex', 'tel'].includes(type)) {
+    return [];
+  }
 
   const length = type === 'pattern' ? undefined : array
     ? value.length

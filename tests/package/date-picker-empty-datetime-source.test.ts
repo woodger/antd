@@ -60,19 +60,21 @@ it('reads all48 logical points/eight closes/twelve disposal reads one complete p
 });
 
 it('keeps original afterCall/settled hover tails and raw authored reset dates separately', () => {
-  for (const variant of ['first', 'repeat'] as const) for (const id of ['single', 'range'] as const) {
-    const click = readEmptyDatetimeSourceStep(id, 9, variant);
-    expect(click.afterCall.inputs[0].value).toBe('12:12:34.567');
-    expect(click.actual.inputs[0].value).toBe('15:12:34.567');
-    const calendar = click.actual.owner.callbacks.find(row => row.name === 'calendar' && row.actionIndex === 9)!;
-    expect(calendar.dates[0].value.temporal.fields).toEqual([2024, 5, 13, 12, 12, 34, 567]);
-    const reopened = readEmptyDatetimeSourceStep(id, 6, variant);
-    expect(reopened.actual.inputs.every(input => input.value === '')).toBe(true);
-    const reset = reopened.actual.owner.callbacks.find(row => row.name === 'picker-value' && row.actionIndex === 6)!;
-    expect(reset.actualArgumentCount).toBe(2);
-    for (const date of reset.dates) {
-      expect(date.value.sameAsAuthored.panel).toBe(true);
-      expect(date.value.temporal.fields).toEqual([2024, 5, 13, 18, 30, 20, 500]);
+  for (const variant of ['first', 'repeat'] as const) {
+    for (const id of ['single', 'range'] as const) {
+      const click = readEmptyDatetimeSourceStep(id, 9, variant);
+      expect(click.afterCall.inputs[0].value).toBe('12:12:34.567');
+      expect(click.actual.inputs[0].value).toBe('15:12:34.567');
+      const calendar = click.actual.owner.callbacks.find(row => row.name === 'calendar' && row.actionIndex === 9)!;
+      expect(calendar.dates[0].value.temporal.fields).toEqual([2024, 5, 13, 12, 12, 34, 567]);
+      const reopened = readEmptyDatetimeSourceStep(id, 6, variant);
+      expect(reopened.actual.inputs.every(input => input.value === '')).toBe(true);
+      const reset = reopened.actual.owner.callbacks.find(row => row.name === 'picker-value' && row.actionIndex === 6)!;
+      expect(reset.actualArgumentCount).toBe(2);
+      for (const date of reset.dates) {
+        expect(date.value.sameAsAuthored.panel).toBe(true);
+        expect(date.value.temporal.fields).toEqual([2024, 5, 13, 18, 30, 20, 500]);
+      }
     }
   }
 });

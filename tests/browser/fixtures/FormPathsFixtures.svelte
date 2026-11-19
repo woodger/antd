@@ -29,7 +29,9 @@
   let observedError = $state('');
 
   function validateTitle(value: unknown) {
-    if (!asyncValidation) return;
+    if (!asyncValidation) {
+      return;
+    }
 
     return new Promise<string>((resolve) => {
       pending.push(resolve);

@@ -89,7 +89,9 @@
       await form.validateFields(['name']);
     }
     catch (error) {
-      if (!(error instanceof FormValidationError)) throw error;
+      if (!(error instanceof FormValidationError)) {
+        throw error;
+      }
     }
     finished.push(id);
   }

@@ -4,7 +4,9 @@ const rootStates = new Set(['', '-rtl', '-success', '-error', '-info', '-warning
 
 /** Общие variables/marker; reset и status rules ограничены своим Result root. */
 export function getResultPrefixCss(prefix: string) {
-  if (prefix === 'ant-result') return undefined;
+  if (prefix === 'ant-result') {
+    return undefined;
+  }
 
   return template
     .replace(/\.ant-result([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'

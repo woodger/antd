@@ -7,7 +7,9 @@ const rootStates = new Set([
 
 /** Variables/marker общие; reset и state rules принадлежат своему Alert. */
 export function getAlertPrefixCss(prefix: string) {
-  if (prefix === 'ant-alert') return undefined;
+  if (prefix === 'ant-alert') {
+    return undefined;
+  }
 
   return template
     .replace(/\.ant-alert([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'

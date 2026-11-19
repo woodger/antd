@@ -12,10 +12,12 @@
   const roles: DateRole[] = ['value', 'pickerValue', 'nextPickerValue',
     'defaultOpenValue', 'nextDefaultOpenValue'];
   const dates = Object.fromEntries(roles.map(name => [name, dayjs(initial[name])])) as DateMap;
-  for (const [name, value] of Object.entries(dates)) recorder.register(
-    value,
-    { authoredDate: name }
-  );
+  for (const [name, value] of Object.entries(dates)) {
+    recorder.register(
+      value,
+      { authoredDate: name }
+    );
+  }
   const callbacks: unknown[] = [];
   const getters: unknown[] = [];
   const ownerActions: unknown[] = [];
@@ -95,7 +97,9 @@
     record('ok', Array.from(arguments), this, 'onOk');
   });
   function getContainer(name: string, args: unknown[], context: unknown, target?: HTMLElement) {
-    if (!target) throw Error('Actual Native authored portal target is not mounted');
+    if (!target) {
+      throw Error('Actual Native authored portal target is not mounted');
+    }
     recorder.register(target, { authoredPortalTarget: target === targetA ? 'A' : 'B' });
     getters.push({ index: getters.length, actionIndex, name,
       actualArgumentCount: args.length, encodedArguments: recorder.encode(args),

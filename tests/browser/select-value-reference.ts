@@ -45,7 +45,9 @@ interface SourceReference {
   cases: SelectValueSourceCase[];
 }
 function guard(condition: unknown, message: string): asserts condition {
-  if (!condition) throw Error(`Invalid frozen selected-value Source: ${message}`);
+  if (!condition) {
+    throw Error(`Invalid frozen selected-value Source: ${message}`);
+  }
 }
 
 const filename = 'ant-design-select-value-reference.json.gz';

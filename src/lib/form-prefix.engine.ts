@@ -9,7 +9,9 @@ const defaults = [575, 767, 991, 1199] as const;
 export function getFormPrefixScope(prefix: string, rootPrefix: string, token: AliasToken) {
   const sizes = mediaKeys.map(key => Number(token[key]));
   if (prefix === 'ant-form' && rootPrefix === 'ant'
-    && sizes.every((size, index) => size === defaults[index])) return undefined;
+    && sizes.every((size, index) => size === defaults[index])) {
+    return undefined;
+  }
 
   return `ant-form-scope-${hashTokenString([prefix, rootPrefix, ...sizes].join('\0'))}`;
 }
@@ -17,7 +19,9 @@ export function getFormPrefixScope(prefix: string, rootPrefix: string, token: Al
 /** Canonical token names сохранены; Col и private variables используют общий namespace. */
 export function getFormPrefixCss(prefix: string, rootPrefix: string, token: AliasToken) {
   const scope = getFormPrefixScope(prefix, rootPrefix, token);
-  if (!scope) return undefined;
+  if (!scope) {
+    return undefined;
+  }
 
   const owner = `:where([data-ant-form-prefix="${scope}"])`;
   const namespace = rootPrefix.replace(/\./g, '');
@@ -28,9 +32,15 @@ export function getFormPrefixCss(prefix: string, rootPrefix: string, token: Alia
       if (suffix !== undefined) {
         return `${suffix === '-css-var' ? '.ant-form-css-var' : `.${prefix}${suffix}`}${owner}`;
       }
-      if (colSuffix !== undefined) return `.${rootPrefix}-col${colSuffix}`;
-      if (match === '--ant-grid-display') return `--${namespace}-grid-display`;
-      if (match === '--ant-form-item-label-margin') return `--${namespace}-form-item-label-margin`;
+      if (colSuffix !== undefined) {
+        return `.${rootPrefix}-col${colSuffix}`;
+      }
+      if (match === '--ant-grid-display') {
+        return `--${namespace}-grid-display`;
+      }
+      if (match === '--ant-form-item-label-margin') {
+        return `--${namespace}-form-item-label-margin`;
+      }
       return match === '"ant-form"' ? `"${prefix}"` : `" ${prefix}"`;
     }
   ).replace(/(\[class(?:\^|\*)=")([^"]*ant-col[^"]*)("\])/g,

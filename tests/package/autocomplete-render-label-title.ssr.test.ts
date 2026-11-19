@@ -23,13 +23,17 @@ for (const owner of autocompleteLabelTitleSSRReference.cases) for (const state o
     const resource = vi.fn(() => {
       throw Error('Label/title SSR allocated browser resources');
     });
-    for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(
-      name,
-      resource
-    );
-    for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() {
-      resource();
-    } });
+    for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) {
+      vi.stubGlobal(
+        name,
+        resource
+      );
+    }
+    for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) {
+      vi.stubGlobal(name, class { constructor() {
+        resource();
+      } });
+    }
     const warn = vi.spyOn(console, 'warn'), error = vi.spyOn(console, 'error');
     try {
       expect(typeof window).toBe('undefined');

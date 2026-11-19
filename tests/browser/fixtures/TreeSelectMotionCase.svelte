@@ -144,14 +144,18 @@
     return receipt.semantic;
   }
   export function syncShadowStyles() {
-    if (!shadow) return;
+    if (!shadow) {
+      return;
+    }
     for (const style of document.querySelectorAll('style')) {
       if (![...shadow.querySelectorAll('style')].some(node => node.textContent === style.textContent))
         shadow.append(style.cloneNode(true));
     }
     for (const link of document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')) {
       if (![...shadow.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')]
-        .some(node => node.href === link.href)) shadow.append(link.cloneNode(true));
+        .some(node => node.href === link.href)) {
+        shadow.append(link.cloneNode(true));
+      }
     }
   }
 </script>

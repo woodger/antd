@@ -66,7 +66,9 @@ interface OptionReceipt {
 }
 function withoutDeprecatedGetter(receipt: OptionReceipt) {
   const compatibility = receipt.ownProperties.find(property => property.key === 'props');
-  if (!compatibility) return receipt;
+  if (!compatibility) {
+    return receipt;
+  }
   expect(compatibility).toEqual({ key: 'props', enumerable: false, configurable: false,
     kind: 'accessor', get: true, set: false });
   expect(receipt.originalOwnProperties.some(property => property.key === 'props')).toBe(false);

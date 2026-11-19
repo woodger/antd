@@ -72,7 +72,9 @@ export async function settleSelectSurface(page: Page): Promise<NativeSurfaceSnap
     const actual = { dom, owner, topology };
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Select surface DOM, owner and complete callback ledger did not settle');
@@ -149,12 +151,16 @@ export function verifySelectSurfaceEventGraph(
   assert.equal(pairs.size, actual.objects.length, `${label} no unobserved Native graph nodes`);
 }
 export function selectSurfaceEventValue(value: unknown): unknown {
-  if (!value || typeof value !== 'object') return value;
+  if (!value || typeof value !== 'object') {
+    return value;
+  }
   const item = value as { $?: string; properties?: Array<{ key: unknown; accessor?: unknown }> };
   if (item.$ === 'object' && item.properties?.some(property => property.key === 'props' && property.accessor)) {
     value = { ...item, properties: item.properties.filter(property => property.key !== 'props') };
   }
-  if (Array.isArray(value)) return value.map(selectSurfaceEventValue);
+  if (Array.isArray(value)) {
+    return value.map(selectSurfaceEventValue);
+  }
   return Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([key, item]) => [key, selectSurfaceEventValue(item)]));
 }
 export function verifySelectSurfaceEvents(actual: NativeSurfaceOwner, source: SelectSurfaceSourceCase,
@@ -172,7 +178,9 @@ export function verifySelectSurfaceEvents(actual: NativeSurfaceOwner, source: Se
 
 function producerArgument(call: SelectSurfaceProducerCall, sample: SelectSurfaceSample) {
   const argument = decodeSelectSurface(call.argument) as { props?: Record<string, unknown> };
-  if (call.kind === 'popupRender' || !argument.props) return argument;
+  if (call.kind === 'popupRender' || !argument.props) {
+    return argument;
+  }
   const props = { ...argument.props };
   if (Object.hasOwn(props, 'class')) {
     props.className = props.class;
@@ -198,10 +206,14 @@ function settledSingleSelectionCall(original: SelectSurfaceProducerCall,
   actual: readonly SelectSurfaceProducerCall[], prefix: readonly SelectSurfaceProducerCall[],
   sample: SelectSurfaceSample, entry?: SelectSurfaceSourceCase) {
   if (!entry || sample.control !== 'select' || sample.mode || original.side !== 'own'
-    || !['classNames', 'styles'].includes(original.kind)) return false;
+    || !['classNames', 'styles'].includes(original.kind)) {
+    return false;
+  }
   const index = entry.producerCalls.indexOf(original);
   const argument = producerArgument(original, sample) as { props?: Record<string, unknown> };
-  if (index < 0 || argument.props?.open !== true) return false;
+  if (index < 0 || argument.props?.open !== true) {
+    return false;
+  }
   let previous = entry.initial;
   for (const point of entry.steps) {
     if (point.owner.callCount > prefix.length) break;
@@ -217,7 +229,9 @@ function settledSingleSelectionCall(original: SelectSurfaceProducerCall,
         || !isDeepStrictEqual(argument.props.value, value)
         || !isDeepStrictEqual(events.map(event => event[0]), ['change', 'select', 'open'])
         || !isDeepStrictEqual(events[0][1], value) || !isDeepStrictEqual(events[1][1], value)
-        || events[2][1] !== false) return false;
+        || events[2][1] !== false) {
+        return false;
+      }
       const settledArgument = { ...argument, props: { ...argument.props, open: false } };
       const settled = entry.producerCalls.slice(previous.owner.callCount, point.owner.callCount)
         .find(call => call.kind === original.kind && call.side === original.side
@@ -332,7 +346,9 @@ export function verifySelectSurfaceNode(actual: SurfaceNode, source: SurfaceNode
     if (property === 'height' && nativePopover && !hasAuthoredHeight
       && source.css.display === 'none' && actual.css.display === 'none'
       && source.css.height === 'auto' && actual.css.height === 'fit-content'
-      && Object.values(actual.box).every(value => value === 0)) continue;
+      && Object.values(actual.box).every(value => value === 0)) {
+      continue;
+    }
     assert.equal(actual.css[property], source.css[property], `${label}/${slot} ${property}`);
   }
   // Existing Native root/option element defaults differ. An authored declaration

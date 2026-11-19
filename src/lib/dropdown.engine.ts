@@ -4,7 +4,9 @@ export function normalizeDropdownItems(items: readonly DropdownItem[]): Dropdown
   const seen = new Set<string>();
 
   return items.filter((item) => {
-    if (seen.has(item.key)) return false;
+    if (seen.has(item.key)) {
+      return false;
+    }
 
     seen.add(item.key);
     return true;
@@ -32,12 +34,20 @@ export function getDropdownNavigationKey(
   direction: 'next' | 'previous' | 'first' | 'last'
 ): string | null {
   const commands = getDropdownCommands(items);
-  if (!commands.length) return null;
-  if (direction === 'first') return commands[0].key;
-  if (direction === 'last') return commands.at(-1)!.key;
+  if (!commands.length) {
+    return null;
+  }
+  if (direction === 'first') {
+    return commands[0].key;
+  }
+  if (direction === 'last') {
+    return commands.at(-1)!.key;
+  }
 
   const index = commands.findIndex((item) => item.key === current);
-  if (index === -1) return direction === 'next' ? commands[0].key : commands.at(-1)!.key;
+  if (index === -1) {
+    return direction === 'next' ? commands[0].key : commands.at(-1)!.key;
+  }
 
   return commands[(index + (direction === 'next'
     ? 1
@@ -50,14 +60,18 @@ export function getDropdownMatch(
   query: string
 ): string | null {
   const search = query.trim().toLocaleLowerCase();
-  if (!search || !commands.length) return null;
+  if (!search || !commands.length) {
+    return null;
+  }
 
   const currentIndex = commands.findIndex((item) => item.key === current);
   const start = currentIndex < 0 ? 0 : currentIndex + (Array.from(search).length === 1 ? 1 : 0);
 
   for (let offset = 0; offset < commands.length; offset++) {
     const item = commands[(start + offset) % commands.length];
-    if (item.text.trim().toLocaleLowerCase().startsWith(search)) return item.key;
+    if (item.text.trim().toLocaleLowerCase().startsWith(search)) {
+      return item.key;
+    }
   }
   return null;
 }

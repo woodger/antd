@@ -9,7 +9,9 @@ interface PreviewState {
 const state = (page: Page) => page.evaluate(() => {
   const api = (window as Window & { uploadPreviewReactivity?: { read: () => PreviewState } })
     .uploadPreviewReactivity;
-  if (!api) throw Error('Mounted public preview fixture required');
+  if (!api) {
+    throw Error('Mounted public preview fixture required');
+  }
   return api.read();
 });
 const image = (page: Page) => page.locator('#upload-preview-reactivity-fixture .ant-upload-list-item-thumbnail img');

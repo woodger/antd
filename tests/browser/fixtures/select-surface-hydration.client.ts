@@ -31,7 +31,9 @@ export interface SelectSurfaceHydrationState {
 declare global { interface Window { selectSurfaceHydration?: SelectSurfaceHydrationState } }
 const id = new URL(location.href).searchParams.get('sample');
 const sample = selectSurfaceHydrationSamples.find(sample => sample.id === id);
-if (!sample) throw Error(`Unknown Select surface hydration sample: ${id}`);
+if (!sample) {
+  throw Error(`Unknown Select surface hydration sample: ${id}`);
+}
 const target = document.querySelector<HTMLElement>('[data-select-surface-hydration-target]')!;
 const owner = target.querySelector<HTMLElement>('[data-surface-case]')!;
 const outer = owner.querySelector<HTMLElement>('.surface-control')!;
@@ -50,7 +52,9 @@ const instance = hydrate(
   { target, props: { sample, capture }, recover: false }
 );
 await tick();
-if (!capture.read || !capture.readRefs) throw Error('Hydrated surface must expose its actual public owner');
+if (!capture.read || !capture.readRefs) {
+  throw Error('Hydrated surface must expose its actual public owner');
+}
 const current = capture.readRefs();
 let disposed = false;
 const state: SelectSurfaceHydrationState = {
@@ -63,7 +67,9 @@ const state: SelectSurfaceHydrationState = {
       && prefix.length === current.root?.querySelectorAll('[data-surface-node="hydration-prefix"]').length },
   read: capture.read, refs: capture.readRefs,
   async dispose() {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     disposed = true;
     await unmount(instance);
     await tick();

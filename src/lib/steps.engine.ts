@@ -3,7 +3,9 @@ import type { StepsItem, StepsStatus } from './steps.types';
 export function normalizeStepsItems(items: readonly StepsItem[]): StepsItem[] {
   const seen = new Set<string>();
   return items.filter(item => {
-    if (seen.has(item.key)) return false;
+    if (seen.has(item.key)) {
+      return false;
+    }
 
     seen.add(item.key);
     return true;

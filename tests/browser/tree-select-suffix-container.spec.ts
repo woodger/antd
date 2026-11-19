@@ -23,14 +23,18 @@ async function act(page: Page, action: TreeSelectSuffixContainerAction) {
     node.style.setProperty('--source-host-top', `${update.top}px`);
     node.style.setProperty('--source-host-left', `${update.left}px`);
   }, action);
-  else if (action.type === 'window-resize') await page.setViewportSize({
-    width: action.width,
-    height: action.height
-  });
-  else await page.locator('[data-suffix-container-scroller]').evaluate((node, update) => {
-    node.scrollTop = update.top;
-    node.scrollLeft = update.left;
-  }, action);
+  else if (action.type === 'window-resize') {
+    await page.setViewportSize({
+      width: action.width,
+      height: action.height
+    });
+  }
+  else {
+    await page.locator('[data-suffix-container-scroller]').evaluate((node, update) => {
+      node.scrollTop = update.top;
+      node.scrollLeft = update.left;
+    }, action);
+  }
   return null;
 }
 
@@ -74,7 +78,9 @@ for (const entry of reference.cases) {
         });
         // Native top-layer popup сохраняет fixed/null; Source absolute/case-host записан отдельно от общей геометрии.
         expect(await page.locator('.ant-tree-select-dropdown').evaluate(node => {
-          if (!(node instanceof HTMLElement)) throw new TypeError('TreeSelect popup must be an HTML element');
+          if (!(node instanceof HTMLElement)) {
+            throw new TypeError('TreeSelect popup must be an HTML element');
+          }
           return {
             position: getComputedStyle(node).position,
             offsetParent: node.offsetParent === null ? 'none' : 'element'

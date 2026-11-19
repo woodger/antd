@@ -49,7 +49,9 @@
   });
   const record = (event: string) => untrack(() => lifecycle.push(event));
   onMount(() => {
-    if (!sample.overrideDuration) return;
+    if (!sample.overrideDuration) {
+      return;
+    }
     const style = document.createElement('style');
     style.textContent = '.ant-tabs-dropdown { animation-duration: .35s; }';
     document.head.append(style);

@@ -34,15 +34,21 @@ export function dividerConfigStyles({ props }: DividerSemanticInfo) {
 }
 
 export function dividerConfigProvider(sample: DividerConfigCase): DividerConfig | undefined {
-  if (sample.functions === 'empty') return { classNames: () => undefined, styles: () => undefined };
-  if (sample.functions === 'both' || sample.functions === 'provider') return {
-    ...sample.provider, classNames: dividerConfigClasses, styles: dividerConfigStyles
-  };
+  if (sample.functions === 'empty') {
+    return { classNames: () => undefined, styles: () => undefined };
+  }
+  if (sample.functions === 'both' || sample.functions === 'provider') {
+    return {
+      ...sample.provider, classNames: dividerConfigClasses, styles: dividerConfigStyles
+    };
+  }
   return sample.provider;
 }
 
 export function dividerConfigTheme(sample: DividerConfigCase): ThemeConfig | undefined {
-  if (sample.native) return undefined;
+  if (sample.native) {
+    return undefined;
+  }
 
   return {
     cssVar: { key: 'divider-config-scope', ...(sample.theme === 'variables'

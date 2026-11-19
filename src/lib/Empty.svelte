@@ -80,7 +80,9 @@
   $effect(() => {
     const node = host;
     const interactive = typeof children === 'function' || typeof description === 'function';
-    if (node && interactive) return connectFeedbackFocus(node);
+    if (node && interactive) {
+      return connectFeedbackFocus(node);
+    }
   });
 </script>
 

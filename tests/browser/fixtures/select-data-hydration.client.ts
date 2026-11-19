@@ -33,7 +33,9 @@ declare global {
 
 const id = new URL(location.href).searchParams.get('sample');
 const sample = selectDataSamples.find(sample => sample.id === id);
-if (!sample) throw Error(`Unknown Select data sample: ${id}`);
+if (!sample) {
+  throw Error(`Unknown Select data sample: ${id}`);
+}
 const target = document.getElementById('root')!;
 const outer = target.querySelector<HTMLElement>('.select-data-control')!;
 const root = sample.family === 'select'

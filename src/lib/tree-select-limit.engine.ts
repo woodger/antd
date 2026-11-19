@@ -23,7 +23,9 @@ export function treeSelectLimit(
   const changeMaxCount = strategy === 'SHOW_CHILD' || strict || !config.treeCheckable
     ? maxCount : undefined;
   const disabled = new Set<TreeSelectRawValue>();
-  if (maxCount === undefined) return { changeMaxCount, disabled };
+  if (maxCount === undefined) {
+    return { changeMaxCount, disabled };
+  }
 
   const remaining = maxCount - displayCount;
   const selected = new Set(checked);
@@ -34,7 +36,9 @@ export function treeSelectLimit(
     if (remaining <= 0 || leafCountOnly && remaining && entry.children.filter(child =>
       !child.node.disabled && !child.node.disableCheckbox
         && !selected.has(child.key as TreeSelectRawValue)
-    ).length > remaining) disabled.add(value);
+    ).length > remaining) {
+      disabled.add(value);
+    }
   }
   return { changeMaxCount, disabled };
 }

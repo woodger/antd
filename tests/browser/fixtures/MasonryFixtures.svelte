@@ -43,11 +43,12 @@
       label: item.data.label
     }));
 
-    if (feedback)
+    if (feedback) {
       items = items.map(item => ({
         ...item,
         column: value.find(next => next.key === item.key)?.column
       }));
+    }
   }
 
   function remove() {

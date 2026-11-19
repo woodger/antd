@@ -23,7 +23,9 @@ for (const entry of reference.cases.filter(({ sample }) => samples.has(sample.id
       .toHaveText(valid ? 'valid' : 'invalid');
     await expect(page.getByRole('status', { name: 'Format errors', exact: true }))
       .toHaveText(valid ? '[]' : '["Rejected"]');
-    if (!valid) await expect(page.getByLabel('Format field', { exact: true }))
-      .toHaveAccessibleDescription('Rejected');
+    if (!valid) {
+      await expect(page.getByLabel('Format field', { exact: true }))
+        .toHaveAccessibleDescription('Rejected');
+    }
   });
 }

@@ -27,7 +27,9 @@ for (const original of selectSurfaceStyleHistoryNativeReference.cases) {
         'surfacecapture',
         { detail }
       ));
-      if (!detail.read || !detail.readRefs || !detail.dispose) throw Error('Actual style history capture missing');
+      if (!detail.read || !detail.readRefs || !detail.dispose) {
+        throw Error('Actual style history capture missing');
+      }
       return { read: detail.read, readRefs: detail.readRefs, dispose: detail.dispose };
     });
     const retained = await page.evaluateHandle(() => {
@@ -79,8 +81,10 @@ for (const original of selectSurfaceStyleHistoryNativeReference.cases) {
           await clickAndReleaseRoot();
         }
         else if (step.action.type === 'outside') await page.locator('[data-surface-outside]').click();
-        else await page.evaluate(action => document.querySelector('[data-surface-command]')!
-          .dispatchEvent(new CustomEvent('historyupdate', { detail: action })), step.action);
+        else {
+          await page.evaluate(action => document.querySelector('[data-surface-command]')!
+            .dispatchEvent(new CustomEvent('historyupdate', { detail: action })), step.action);
+        }
         await page.mouse.move(0, 0);
         final = await verify(step, `${index}/${JSON.stringify(step.action)}`);
       }

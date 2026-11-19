@@ -14,11 +14,19 @@ export function getCascaderPrefixCss(prefix: string, selectPrefix: string, rootP
   return template.replace(
     /\.ant-cascader([-\w]*)|\.ant-select-dropdown|\.ant-row([-\w]*)|"ant-cascader"|" ant-cascader"/g,
     (match, suffix: string | undefined, row: string | undefined) => {
-      if (row !== undefined) return `.${rootPrefix}-row${row}`;
+      if (row !== undefined) {
+        return `.${rootPrefix}-row${row}`;
+      }
       // Upstream пропускает local Select override; Native сохраняет прежний padding:0.
-      if (match === '.ant-select-dropdown') return `.${selectPrefix}-dropdown${scope}`;
-      if (suffix === '-css-var') return `.ant-cascader-css-var${scope}`;
-      if (suffix !== undefined) return `.${prefix}${suffix}${roots.has(suffix) ? scope : ''}`;
+      if (match === '.ant-select-dropdown') {
+        return `.${selectPrefix}-dropdown${scope}`;
+      }
+      if (suffix === '-css-var') {
+        return `.ant-cascader-css-var${scope}`;
+      }
+      if (suffix !== undefined) {
+        return `.${prefix}${suffix}${roots.has(suffix) ? scope : ''}`;
+      }
 
       return match === '"ant-cascader"' ? `"${prefix}"` : `" ${prefix}"`;
     }

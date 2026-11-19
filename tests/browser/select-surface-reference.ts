@@ -54,7 +54,9 @@ interface SourceHeader {
   domAvailableDuringRender?: boolean;
 }
 function guard(condition: unknown, message: string): asserts condition {
-  if (!condition) throw Error(`Invalid independent Select surface Source: ${message}`);
+  if (!condition) {
+    throw Error(`Invalid independent Select surface Source: ${message}`);
+  }
 }
 function sha256(bytes: Uint8Array) { return createHash('sha256').update(bytes).digest('hex'); }
 const stored = readFileSync(new URL(

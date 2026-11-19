@@ -33,7 +33,9 @@ for (const original of [...selectSurfaceOmissionReference.cases.filter(entry => 
         'surfacecapture',
         { detail }
       ));
-      if (!detail.read || !detail.readRefs || !detail.dispose || !detail.setAction) throw Error('Actual omission capture missing');
+      if (!detail.read || !detail.readRefs || !detail.dispose || !detail.setAction) {
+        throw Error('Actual omission capture missing');
+      }
       // The byte-identical Original reader consumes this read-only adapter. The
       // Native methods object is preserved; separate bound refs are not grafted on.
       Object.assign(globalThis, { raw: { current: { readRefs: detail.readRefs } } });
@@ -95,9 +97,10 @@ for (const original of [...selectSurfaceOmissionReference.cases.filter(entry => 
           { id: sample.id, index, action: step.action }
         );
         const action = step.action;
-        if (['popup-omit', 'popup-restore', 'font', 'unrelated', 'font-query'].includes(action.type))
+        if (['popup-omit', 'popup-restore', 'font', 'unrelated', 'font-query'].includes(action.type)) {
           await page.evaluate(action => document.querySelector('[data-surface-command]')!
             .dispatchEvent(new CustomEvent('omissionupdate', { detail: action })), action);
+        }
         else if (action.type === 'click' || action.type === 'outside' || action.type === 'fill' || action.type === 'footer-fill')
           await actSelectSurface(page, action);
         else throw Error(`Unhandled actual Original action ${JSON.stringify(action)}`);
@@ -141,8 +144,10 @@ for (const original of [...selectSurfaceOmissionReference.cases.filter(entry => 
       const extraRawEvents = disposed.owner.rawEvents.slice(beforeDispose.rawEvents.length);
       expect(extraEvents.map(decodeSelectSurface)).toEqual(focusedWidthUnmount ? [['open', false]] : []);
       expect(extraRawEvents.length).toBe(focusedWidthUnmount ? 1 : 0);
-      if (focusedWidthUnmount) verifySelectSurfaceEventGraph(extraRawEvents[0],
-        createSelectSurfaceRecorder().raw(['open', false]), 'existing focused Native width unmount close');
+      if (focusedWidthUnmount) {
+        verifySelectSurfaceEventGraph(extraRawEvents[0],
+          createSelectSurfaceRecorder().raw(['open', false]), 'existing focused Native width unmount close');
+      }
       expect(disposed.owner.calls).toEqual(beforeDispose.calls);
       // Добавляет отличие в журнале удаления к остальным результатам проверки.
       function recordDisposalComparison() {

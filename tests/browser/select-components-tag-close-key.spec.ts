@@ -29,10 +29,12 @@ for (const original of source.cases) test(`Select pending custom tag close follo
     request => networkFailures.push({ url: request.url(), failure: request.failure() })
   );
   page.on('response', response => {
-    if (response.status() >= 400) networkFailures.push({
-      url: response.url(),
-      status: response.status()
-    });
+    if (response.status() >= 400) {
+      networkFailures.push({
+        url: response.url(),
+        status: response.status()
+      });
+    }
   });
   let disposed = false;
   // Убирает компонент при незавершённом сценарии и фиксирует сбой удаления.
@@ -64,7 +66,9 @@ for (const original of source.cases) test(`Select pending custom tag close follo
     const immediate = await page.evaluate(key => {
       const api = window.customTagPrefixNative, refs = api.readRefs(), editor = refs.editor, root = refs.root;
       const button = root?.querySelector<HTMLButtonElement>('[data-custom-tag-close="a"]');
-      if (!button || !editor) throw Error('Actual authored tag button and public editor are required');
+      if (!button || !editor) {
+        throw Error('Actual authored tag button and public editor are required');
+      }
       window.selectTagClosePorts.mark('key-counter');
       button.dispatchEvent(new MouseEvent(
         'mousedown',

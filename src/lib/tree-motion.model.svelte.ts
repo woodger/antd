@@ -34,7 +34,9 @@ export function createTreeMotion<Data extends object>(options: {
   let disposed = false;
 
   function finish(id?: number) {
-    if (disposed || id !== undefined && group?.id !== id) return;
+    if (disposed || id !== undefined && group?.id !== id) {
+      return;
+    }
     group = null;
     rows = options.rows();
   }

@@ -18,10 +18,18 @@ export function formTransformRules(
     message: 'Rejected',
     transform(value) {
       record(['transform', value]);
-      if (sample.kind === 'throw') throw Error('Transform failed');
-      if (sample.kind === 'empty') return '';
-      if (sample.kind === 'default') return value ?? 'Default';
-      if (sample.kind === 'upper') return String(value).toUpperCase();
+      if (sample.kind === 'throw') {
+        throw Error('Transform failed');
+      }
+      if (sample.kind === 'empty') {
+        return '';
+      }
+      if (sample.kind === 'default') {
+        return value ?? 'Default';
+      }
+      if (sample.kind === 'upper') {
+        return String(value).toUpperCase();
+      }
 
       return typeof value === 'string' ? value.trim() : value;
     }
@@ -33,10 +41,14 @@ export function formTransformRules(
     first.pattern = /^yes$/;
     first.warningOnly = true;
   }
-  else first.validator = async (value) => {
-    record(['first-validator', value]);
-    if (value !== sample.expected) throw Error('First mismatch');
-  };
+  else {
+    first.validator = async (value) => {
+      record(['first-validator', value]);
+      if (value !== sample.expected) {
+        throw Error('First mismatch');
+      }
+    };
+  }
 
   return sample.multiple ? [first, {
     transform(value) {
@@ -45,7 +57,9 @@ export function formTransformRules(
     },
     async validator(value) {
       record(['second-validator', value]);
-      if (value !== sample.value) throw Error('Second mismatch');
+      if (value !== sample.value) {
+        throw Error('Second mismatch');
+      }
     }
   }] : [first];
 }

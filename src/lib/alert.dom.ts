@@ -18,7 +18,9 @@ export function closeAlert(root: HTMLElement, onHidden: () => void) {
   }
 
   function finish() {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
 
     dispose();
     onHidden();

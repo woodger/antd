@@ -10,7 +10,9 @@ export function formSemanticMetrics() {
   const list = host.querySelector('[data-semantic-list] [data-ant-form-error-list]');
 
   function metric(node: Element | null) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
 
     return {

@@ -8,7 +8,9 @@ function sizeOf(element: HTMLElement) {
 }
 
 function move(element: HTMLElement, parent: HTMLElement, before: ChildNode | null) {
-  if (element.parentNode === parent && element.nextSibling === before) return;
+  if (element.parentNode === parent && element.nextSibling === before) {
+    return;
+  }
 
   const focused = element.ownerDocument.activeElement === element;
   if (typeof parent.moveBefore === 'function' && element.isConnected && parent.isConnected) {
@@ -44,7 +46,9 @@ export function connectTabsOverflow(
   let disposed = false;
 
   function positionAdd(overflow: boolean) {
-    if (!add?.isConnected || !marker?.parentElement || !placeholder) return;
+    if (!add?.isConnected || !marker?.parentElement || !placeholder) {
+      return;
+    }
 
     if (overflow && add.parentElement !== operations) {
       const box = sizeOf(add);
@@ -71,7 +75,9 @@ export function connectTabsOverflow(
   }
 
   function update() {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
 
     const vertical = options.vertical;
     const unit = vertical ? 'height' : 'width';

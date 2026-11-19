@@ -9,7 +9,9 @@ export function resolveFormTooltip(
   value: FormItemTooltip,
   context?: FormTooltipProps
 ): FormTooltipProps | undefined {
-  if (value === undefined || value === null || value === false || value === '') return;
+  if (value === undefined || value === null || value === false || value === '') {
+    return;
+  }
 
   return isTooltipOptions(value) ? { ...context, ...value } : { ...context, title: value };
 }

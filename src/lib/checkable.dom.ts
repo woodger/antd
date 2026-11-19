@@ -15,7 +15,9 @@ export function createCheckableClickLock() {
       frame = view?.requestAnimationFrame(() => { frame = undefined; });
     },
     input(event: MouseEvent) {
-      if (frame === undefined) return;
+      if (frame === undefined) {
+        return;
+      }
 
       event.stopPropagation();
       clear();

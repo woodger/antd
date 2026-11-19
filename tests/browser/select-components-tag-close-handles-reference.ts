@@ -207,7 +207,9 @@ const rawPins = {
 const ownedIds = ['select-close-handles-nonclosable', 'select-close-handles-retained'];
 let manifestCache: TagCloseHandleManifest | undefined, protocolCache: Protocol | undefined;
 export function readSelectTagCloseHandlesManifest() {
-  if (manifestCache) return manifestCache;
+  if (manifestCache) {
+    return manifestCache;
+  }
   const bytes = readFileSync(fixture(prefix + 'source-manifest.json'));
   assert.equal(bytes.length, 23525);
   assert.equal(hash(bytes), '10be72298454dad04a9bfbf32e678ffa72331abbced70103341433c471fd3e4d');
@@ -256,8 +258,10 @@ export function readSelectTagCloseHandlesManifest() {
     assert.equal(copy.storageSha256, expected.storageSha256);
     assert.equal(copy.decodedBytes, expected.bytes);
     assert.equal(copy.decodedSha256, expected.sha256);
-    for (const variant of ['first', 'repeat']) assert.deepEqual(copy.provenance[variant as 'first' | 'repeat'], {
-      path: sourceBase + mode + '-source-' + variant + '.json', bytes: expected.bytes, sha256: expected.sha256 });
+    for (const variant of ['first', 'repeat']) {
+      assert.deepEqual(copy.provenance[variant as 'first' | 'repeat'], {
+        path: sourceBase + mode + '-source-' + variant + '.json', bytes: expected.bytes, sha256: expected.sha256 });
+    }
   }
   protocolCache = protocol;
   return manifestCache = manifest;
@@ -383,7 +387,9 @@ export function validateSelectTagCloseHandlesCSR(source: TagCloseHandleSource<So
     }
     else assert.equal(entry.setup, null);
     assert.equal(entry.ledger.rawEvents.length, entry.ledger.events.length);
-    for (const call of entry.ledger.producerCalls) if (call.kind === 'tagRender') readTagCloseHandleSourceInfo(call);
+    for (const call of entry.ledger.producerCalls) {
+      if (call.kind === 'tagRender') readTagCloseHandleSourceInfo(call);
+    }
     for (const invocation of entry.ledger.invocations) {
       const handle = invocation.handle;
       assert(handle.callbackIsInfoOnClose);
@@ -464,7 +470,9 @@ export function validateSelectTagCloseHandlesSSR(source: TagCloseHandleSource<So
         state.messageChannelEnvironment,
         { availableDuringUMDLoad: false, forbiddenDuringRender: true }
       );
-      for (const call of state.state.calls) if (call.kind === 'tagRender') readTagCloseHandleSourceInfo(call);
+      for (const call of state.state.calls) {
+        if (call.kind === 'tagRender') readTagCloseHandleSourceInfo(call);
+      }
     }
   }
   return source;

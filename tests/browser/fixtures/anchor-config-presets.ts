@@ -1,7 +1,9 @@
 import type { AnchorConfig, AnchorSlots } from 'antd-svelte';
 
 export function anchorConfigProfile(name?: string, local = false): AnchorConfig {
-  if (!name || name === 'empty') return {};
+  if (!name || name === 'empty') {
+    return {};
+  }
   const prefix = local ? 'local' : 'context';
   const classes: AnchorSlots = Object.fromEntries(
     ['root', 'item', 'itemTitle', 'indicator'].map(key => [key, `${prefix}-anchor-${key}`])

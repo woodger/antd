@@ -28,7 +28,9 @@ export function mergeThemeConfig(
   id: string,
   prefixCls?: string
 ): ResolvedThemeConfig {
-  if (!local) return parent;
+  if (!local) {
+    return parent;
+  }
 
   const base = local.inherit === false ? {
     ...defaultThemeConfig,

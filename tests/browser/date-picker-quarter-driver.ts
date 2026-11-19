@@ -23,7 +23,9 @@ export async function settleQuarter(page: Page) {
     const actual = await readQuarter(page);
     const encoded = JSON.stringify(actual);
     stable = encoded === previous ? stable + 1 : 0;
-    if (stable >= 4) return actual;
+    if (stable >= 4) {
+      return actual;
+    }
     previous = encoded;
   }
   throw Error('Complete Native quarter observation did not settle');

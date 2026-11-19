@@ -16,10 +16,12 @@ async function mount(page: Page, id: string) {
 async function apply(page: Page, action: FeedbackAction, index: number) {
   if (action === 'focus') await editor(page).focus();
   else if (action === 'open') await editor(page).click();
-  else if (action === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside feedback', exact: true }
-  ).click();
+  else if (action === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside feedback', exact: true }
+    ).click();
+  }
   else if (action === 'hover') await page.locator('[data-feedback-control]').hover();
   else if (action === 'search') await editor(page).fill('Beta');
   else if (action === 'clear') await page.locator('[data-feedback-control] button').click();

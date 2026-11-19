@@ -49,7 +49,9 @@ for (const sample of samples) {
       const sourceParts = new Map<MaskSourceVariant, { key: string; value: MaskSourceSubstep }>();
       const sourceChild = (index: number, substep: number, variant: MaskSourceVariant) => {
         const key = index + '/' + substep, previous = sourceParts.get(variant);
-        if (previous?.key === key) return previous.value;
+        if (previous?.key === key) {
+          return previous.value;
+        }
         const value = readMaskSourceSubstep(sample.id, index, substep, variant);
         sourceParts.set(variant, { key, value });
         return value;
@@ -264,7 +266,7 @@ for (const sample of samples) {
           disposal.trace,
           ['beforeUnmount-read', 'dispose-start', 'dispose-finished', 'cleanup-read', 'late-1000-read']
         );
-        for (const { chunk, owners } of ledgerQueue)
+        for (const { chunk, owners } of ledgerQueue) {
           semanticFailures.push(...compareMaskProducerChunk(
             chunk,
             owners,
@@ -272,6 +274,7 @@ for (const sample of samples) {
             proof,
             chunk.phase
           ));
+        }
         assert.equal(
           producers.cursor,
           captureCursor,

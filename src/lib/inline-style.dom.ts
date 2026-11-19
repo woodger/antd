@@ -13,7 +13,9 @@ export function connectInlineStyle(node: HTMLElement | SVGElement, reconcile = f
       // SSR может разобрать raw CSS-value как declarations; setter принимает одно value.
       for (const { property } of getInlineStyleDeclarations([
         raw.map(([name, value]) => `${name}:${value}`).join(';')
-      ])) node.style.removeProperty(property);
+      ])) {
+        node.style.removeProperty(property);
+      }
     }
 
     const next = new Map<string, { value: string; priority: string; }>();

@@ -8,7 +8,9 @@ export function readTreeSelectAlign() {
   const visible = Boolean(popup && !popup.hidden && getComputedStyle(popup).display !== 'none' && popup.getClientRects().length);
   const round = (n: number) => Math.round(n * 1000) / 1000;
   const rect = (node: Element | null) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const r = node.getBoundingClientRect();
     return { x: round(r.x), y: round(r.y), width: round(r.width), height: round(r.height) };
   };

@@ -9,10 +9,16 @@ const isOwner = (value: string | null): value is MaskOwner => samples.some(sampl
 const isProfile = (value: string): value is MaskFormatProfile => ['string', 'object', 'mask'].includes(value);
 const parameters = new URL(location.href).searchParams;
 const owner = parameters.get('owner'), profile = parameters.get('profile');
-if (!isOwner(owner)) throw Error('Choose one of five authored mask owners');
-if (profile !== null && !isProfile(profile)) throw Error('Choose an authored initial format profile');
+if (!isOwner(owner)) {
+  throw Error('Choose one of five authored mask owners');
+}
+if (profile !== null && !isProfile(profile)) {
+  throw Error('Choose an authored initial format profile');
+}
 const target = document.getElementById('root');
-if (!target) throw Error('Actual ordinary Native mount root missing');
+if (!target) {
+  throw Error('Actual ordinary Native mount root missing');
+}
 const capture: MaskCapture = {};
 window.nativeMaskObservation = { preMountNodes: new Set(document.querySelectorAll('*')),
   retainedNodes: new Set(), events: [] };
@@ -21,7 +27,9 @@ const types = ['pointerdown', 'mousedown', 'mouseup', 'click', 'mouseover', 'mou
   'paste', 'compositionstart', 'compositionupdate', 'compositionend'];
 const listener = (event: Event) => {
   const recorder = capture.recorder;
-  if (!recorder || !capture.read) return;
+  if (!recorder || !capture.read) {
+    return;
+  }
   const state = capture.read();
   const id = (value: object | null) => value == null ? null : recorder.identity(value);
   const mouse = event instanceof MouseEvent ? event : null;
@@ -55,7 +63,9 @@ const app = mount(Case, { target, props: { owner, capture,
   ...(profile === null ? {} : { initialFormatProfile: profile }) } });
 await tick();
 if (!capture.recorder || !capture.read || !capture.readRefs || !capture.setActionIndex || !capture.setSubstepIndex
-  || !capture.readCallbacks || !capture.readProducers) throw Error('Complete authored mask capture unavailable');
+  || !capture.readCallbacks || !capture.readProducers) {
+  throw Error('Complete authored mask capture unavailable');
+}
 let disposed = false;
 window.nativeMask = {
   ready: true, getRecorder: () => capture.recorder!, read: () => capture.read!(), readRefs: () => capture.readRefs!(),
@@ -64,7 +74,9 @@ window.nativeMask = {
   activateControl(value) {
     const button = [...document.querySelectorAll<HTMLButtonElement>('[data-mask-control]')]
       .find(node => node.getAttribute('data-mask-control') === value);
-    if (!button) throw Error('Actual authored owner control missing');
+    if (!button) {
+      throw Error('Actual authored owner control missing');
+    }
     const active = document.activeElement;
     let observed: unknown = null;
     button.addEventListener('click', event => { observed = { type: event.type, isTrusted: event.isTrusted,
@@ -74,7 +86,9 @@ window.nativeMask = {
     return { click: observed, focusIdentityPreserved: active === document.activeElement };
   },
   async dispose() {
-    if (disposed) throw Error('Actual owner is already unmounted');
+    if (disposed) {
+      throw Error('Actual owner is already unmounted');
+    }
     disposed = true;
     await unmount(app);
     await tick();

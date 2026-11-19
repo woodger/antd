@@ -2,7 +2,9 @@ import { compute } from './vendor/compute-scroll-into-view';
 import type { FormScrollOptions } from './form.types';
 
 function isElement(value: unknown): value is Element {
-  if (!value || typeof value !== 'object' || !('ownerDocument' in value)) return false;
+  if (!value || typeof value !== 'object' || !('ownerDocument' in value)) {
+    return false;
+  }
 
   const node = value as Element;
   const view = node.ownerDocument?.defaultView;
@@ -35,7 +37,9 @@ export function focusFormField(instance: unknown, fallback?: () => Element | und
 // Source дважды учитывает scroll-margin и смещает даже видимый control; до отдельного
 // исправления margins не применяются. Raw замеры сохранены в form-dom observation.
 export function scrollFormField(node: Element, options: FormScrollOptions = {}) {
-  if (!node.isConnected) return;
+  if (!node.isConnected) {
+    return;
+  }
 
   const { focus: _focus, behavior, ...settings } = options;
   const actions = compute(node, { scrollMode: 'if-needed', block: 'nearest', ...settings });

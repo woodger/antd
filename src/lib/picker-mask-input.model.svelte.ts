@@ -104,28 +104,36 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
     const [start, end] = pickerMaskSelection(mask, index, options.helped);
     const version = { input, format, focused, text, index, start, end, mark };
     if (selectionVersion && Object.keys(version).every(key =>
-      version[key as keyof SelectionVersion] === selectionVersion![key as keyof SelectionVersion])) return;
+      version[key as keyof SelectionVersion] === selectionVersion![key as keyof SelectionVersion])) {
+      return;
+    }
     selectionVersion = version;
     cancel(selectionFrame);
     selectionFrame = undefined;
-    if (!input || !format || !focused || mouseDown) return;
+    if (!input || !format || !focused || mouseDown) {
+      return;
+    }
     if (!pickerMaskMatches(mask, text)) {
       untrack(() => change(format, options));
       return;
     }
     const node = input, window = node.ownerDocument.defaultView;
     node.setSelectionRange(start, end);
-    if (window) selectionFrame = { window, id: window.requestAnimationFrame(() => {
-      selectionFrame = undefined;
-      if (input === node && node.isConnected) node.setSelectionRange(start, end);
-    }) };
+    if (window) {
+      selectionFrame = { window, id: window.requestAnimationFrame(() => {
+        selectionFrame = undefined;
+        if (input === node && node.isConnected) node.setSelectionRange(start, end);
+      }) };
+    }
   }
   function attach(node: HTMLInputElement) {
     cancelFrames();
     selectionVersion = undefined;
     input = node;
     return () => {
-      if (input !== node) return;
+      if (input !== node) {
+        return;
+      }
       cancelFrames();
       input = undefined;
       selectionVersion = undefined;
@@ -133,7 +141,9 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
   }
   function keydown(event: KeyboardEvent, shared: PickerMaskSharedKeyboard): boolean {
     const options = getOptions(), format = options.mask;
-    if (!format) return false;
+    if (!format) {
+      return false;
+    }
     if (mouseDown) {
       event.preventDefault();
       return true;
@@ -143,7 +153,9 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
     const enterValid = event.key === 'Enter' && options.validateText(before.text);
     // The core owns its one public native key callback and Tab/Escape/Enter paths.
     // Returning false preserves its existing cancellation/composition/blocked gate.
-    if (shared(event, { mask: true, text: before.text, enterValid }) === false) return true;
+    if (shared(event, { mask: true, text: before.text, enterValid }) === false) {
+      return true;
+    }
     const year = new Date().getFullYear();
     const next = editPickerMask(mask, before, event.key, year, options.helped);
     index = next.index;
@@ -153,7 +165,9 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
     return true;
   }
   function focus() {
-    if (!getOptions().mask) return;
+    if (!getOptions().mask) {
+      return;
+    }
     focused = true;
     index = 0;
     cache = '';
@@ -166,7 +180,9 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
   }
   function mouseup(event: MouseEvent, shared?: (event: MouseEvent) => void) {
     const format = getOptions().mask;
-    if (!format) return false;
+    if (!format) {
+      return false;
+    }
     const target = event.target as HTMLInputElement;
     index = pickerMaskIndexAt(getSpec(format), target.selectionStart ?? 0);
     mark++;
@@ -187,7 +203,9 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
   }
   function paste(event: ClipboardEvent) {
     const options = getOptions();
-    if (!options.mask) return false;
+    if (!options.mask) {
+      return false;
+    }
     if (mouseDown) {
       event.preventDefault();
       return true;

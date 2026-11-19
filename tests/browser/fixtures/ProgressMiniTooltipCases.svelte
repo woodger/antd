@@ -32,7 +32,9 @@
       getterCalls++;
       receivedTrigger = trigger;
     });
-    if (!providerTarget) throw new Error('Progress popup target is not mounted');
+    if (!providerTarget) {
+      throw new Error('Progress popup target is not mounted');
+    }
     return providerTarget;
   }
 

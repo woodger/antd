@@ -284,7 +284,9 @@
   });
   $effect(() => {
     const element = root;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
     if (panel || !children) {
       anchor = element;
       return;
@@ -319,7 +321,9 @@
     previousFirst = first;
   });
   $effect(() => {
-    if (!blocked || panel) return;
+    if (!blocked || panel) {
+      return;
+    }
     internalOpen = false;
     focused = false;
   });
@@ -332,7 +336,9 @@
     if (pending.length !== loadingKeys.length) loadingKeys = pending;
   });
   $effect(() => {
-    if (!editor || !isMultiple) return;
+    if (!editor || !isMultiple) {
+      return;
+    }
     void inputValue;
     void resolvedSize;
     void config.theme;
@@ -353,7 +359,9 @@
     }
   });
   $effect(() => {
-    if (panel || !visible || !popup || !anchor) return;
+    if (panel || !visible || !popup || !anchor) {
+      return;
+    }
     const trigger = anchor;
     const surface = popup;
     const requestedPlacement = () => untrack(() => placement ?? (rtl ? 'bottomRight' : 'bottomLeft'));
@@ -401,7 +409,9 @@
     };
   });
   $effect(() => {
-    if (!contentElement || maxTagCount !== 'responsive' || !isMultiple || panel) return;
+    if (!contentElement || maxTagCount !== 'responsive' || !isMultiple || panel) {
+      return;
+    }
     void display;
     void tagRender;
     void maxTagPlaceholder;
@@ -418,7 +428,9 @@
   });
 
   function requestOpen(next: boolean) {
-    if (panel || next && blocked || next === visible && next === rawOpen) return;
+    if (panel || next && blocked || next === visible && next === rawOpen) {
+      return;
+    }
     const changed = next !== visible;
     if (next) mounted = true;
     internalOpen = next;
@@ -436,27 +448,37 @@
     );
   }
   function choose(path: CascaderPath) {
-    if (blocked) return;
+    if (blocked) {
+      return;
+    }
     if (!isMultiple || searchConfig.autoClearSearchValue !== false) internalSearch = '';
     publish(isMultiple ? toggleCascader(path, checks, showCheckedStrategy, index) : [path]);
   }
   function selectRow(row: CascaderRow<OptionType>, keyboard = false) {
-    if (blocked || row.disabled || !(row.leaf || changeOnSelect || isMultiple)) return;
+    if (blocked || row.disabled || !(row.leaf || changeOnSelect || isMultiple)) {
+      return;
+    }
     choose(row.path);
     if (!isMultiple && (row.leaf || changeOnSelect && (expandTrigger === 'hover' || keyboard)))
       requestOpen(false);
   }
   function activate(row: CascaderRow<OptionType>, hover: boolean) {
-    if (blocked || row.disabled) return;
+    if (blocked || row.disabled) {
+      return;
+    }
     const path = hover && row.leaf ? row.path.slice(0, -1) : row.path;
     activatePath(path);
   }
   function activatePath(path: CascaderRawValue[]) {
     active = path;
-    if (!loadData || search || !path.length) return;
+    if (!loadData || search || !path.length) {
+      return;
+    }
     const selected = cascaderPathOptions(path, options, fields);
     const option = selected.at(-1);
-    if (!option || cascaderLeaf(option, fields)) return;
+    if (!option || cascaderLeaf(option, fields)) {
+      return;
+    }
     loadingKeys = [...loadingKeys, cascaderPathKey(path)];
     loadData(selected as OptionType[]);
   }
@@ -466,7 +488,9 @@
     if (notify && changed) searchConfig.onSearch?.(next);
   }
   function handleSearch(next: string) {
-    if (blocked) return;
+    if (blocked) {
+      return;
+    }
     changeSearch(next);
     if (next) requestOpen(true);
     void tick().then(() => {
@@ -474,7 +498,9 @@
     });
   }
   function clear() {
-    if (blocked) return;
+    if (blocked) {
+      return;
+    }
     onClear?.();
     focus();
     publish([]);
@@ -486,15 +512,23 @@
   }
   function blurWithin(event: FocusEvent) {
     const element = root;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
     const target = event.relatedTarget;
-    if (target instanceof Node && (element.contains(target) || popup?.contains(target))) return;
+    if (target instanceof Node && (element.contains(target) || popup?.contains(target))) {
+      return;
+    }
     queueMicrotask(() => {
-      if (root !== element || !element.isConnected) return;
+      if (root !== element || !element.isConnected) {
+        return;
+      }
       const current = getPopupActiveElement(element);
       const popupTarget = popup && getPopupActiveElement(popup);
       if (current && element.contains(current)
-        || popupTarget && popup?.contains(popupTarget)) return;
+        || popupTarget && popup?.contains(popupTarget)) {
+        return;
+      }
       focused = false;
       enterHeld = false;
       field?.onBlur();
@@ -506,7 +540,9 @@
   let clearLock: boolean | null = null;
   let clearLockUntil = 0;
   function handleKeyDown(event: KeyboardEvent) {
-    if (blocked || event.isComposing || event.defaultPrevented) return;
+    if (blocked || event.isComposing || event.defaultPrevented) {
+      return;
+    }
     const key = event.key;
     const now = root?.ownerDocument.defaultView?.performance.now() ?? 0;
     const clearLocked = now < clearLockUntil ? clearLock : null;

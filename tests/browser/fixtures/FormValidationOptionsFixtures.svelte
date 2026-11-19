@@ -28,7 +28,9 @@
     return createForm<{ fresh?: string }>({ initialValues: {}, rules: { fresh: [{
       validator: () => {
         freshCalls.push('Fresh');
-        if (!held) return 'Fresh';
+        if (!held) {
+          return 'Fresh';
+        }
 
         return new Promise<string>((resolve) => {
           pending.push(resolve);
@@ -57,7 +59,9 @@
   });
 
   function failed(error: unknown): Outcome['result'] {
-    if (!(error instanceof FormValidationError)) throw error;
+    if (!(error instanceof FormValidationError)) {
+      throw error;
+    }
 
     return { status: 'invalid', outOfDate: error.outOfDate, errorFields: error.errorFields };
   }

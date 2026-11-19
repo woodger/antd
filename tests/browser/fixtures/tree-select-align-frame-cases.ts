@@ -17,9 +17,11 @@ export const treeSelectAlignFrameSamples: readonly TreeSelectAlignFrameSample[] 
 export function treeSelectAlignFrameActions(
   sample: TreeSelectAlignFrameSample
 ): readonly TreeSelectAlignFrameAction[] {
-  if (sample.id === 'host-rotate-invariant') return [
-    { type: 'transform', value: 'rotate(180deg)' },
-    { type: 'transform', value: 'none' }
-  ];
+  if (sample.id === 'host-rotate-invariant') {
+    return [
+      { type: 'transform', value: 'rotate(180deg)' },
+      { type: 'transform', value: 'none' }
+    ];
+  }
   return [{ type: 'replace-root', kind: 'B', top: 200 }];
 }

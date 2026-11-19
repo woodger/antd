@@ -52,13 +52,18 @@ export function gridResponsiveValue<Value>(
   value: Value | GridResponsive<Value>,
   screens: GridScreenMap | null
 ): Value | undefined {
-  if (typeof value !== 'object' || value === null) return value as Value;
+  if (typeof value !== 'object' || value === null) {
+    return value as Value;
+  }
 
-  for (const key of gridBreakpoints)
+  for (const key of gridBreakpoints) {
     if (screens?.[key]
-      && (value as GridResponsive<Value>)[key] !== undefined) return (value as GridResponsive<
+      && (value as GridResponsive<Value>)[key] !== undefined) {
+      return (value as GridResponsive<
         Value
       >)[key];
+    }
+  }
   return undefined;
 }
 
@@ -73,9 +78,15 @@ export function gridGutters(
 }
 
 export function parseGridFlex(value: string | number): string {
-  if (value === 'auto') return '1 1 auto';
-  if (typeof value === 'number' && !Number.isNaN(value)) return `${value} ${value} auto`;
-  if (/^\d+(\.\d+)?(px|em|rem|%)$/.test(String(value))) return `0 0 ${value}`;
+  if (value === 'auto') {
+    return '1 1 auto';
+  }
+  if (typeof value === 'number' && !Number.isNaN(value)) {
+    return `${value} ${value} auto`;
+  }
+  if (/^\d+(\.\d+)?(px|em|rem|%)$/.test(String(value))) {
+    return `0 0 ${value}`;
+  }
   return String(value);
 }
 
@@ -118,7 +129,9 @@ export function gridColClasses(props: ColProps, prefix = 'ant-col', rootPrefix =
 }
 
 export function gridHalfGutter(value: GridGap, negative = false): string | undefined {
-  if (!value) return undefined;
+  if (!value) {
+    return undefined;
+  }
   return typeof value === 'number' && !Number.isNaN(value)
     ? `${value / (negative ? -2 : 2)}px`
     : `calc(${value} / ${negative ? -2 : 2})`;

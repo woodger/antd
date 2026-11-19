@@ -36,7 +36,9 @@
       const iterable = (entries: TreeSelectCheckableContent[], throws = false) => ({
         [Symbol.iterator]() {
           ignored.iteratorCalls++;
-          if (throws) throw Error('TreeSelect must not consume treeCheckable iterables');
+          if (throws) {
+            throw Error('TreeSelect must not consume treeCheckable iterables');
+          }
           return entries[Symbol.iterator]();
         }
       });

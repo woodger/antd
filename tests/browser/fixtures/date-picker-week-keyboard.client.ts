@@ -7,7 +7,9 @@ import { DatePicker, enUS } from 'antd-svelte';
 const value = dayjs('2020-12-31T16:37:59.456');
 const selectionEvents: string[] = [], navigationEvents: string[] = [];
 const target = document.getElementById('root');
-if (!target) throw Error('Week keyboard owner root missing');
+if (!target) {
+  throw Error('Week keyboard owner root missing');
+}
 mount(DatePicker, { target, props: { picker: 'week', value, defaultPickerValue: value,
   ...(new URLSearchParams(location.search).has('controlled') ? { pickerValue: value } : {}),
   id: 'week-keyboard', allowClear: false,

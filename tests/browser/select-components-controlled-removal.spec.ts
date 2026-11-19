@@ -117,10 +117,12 @@ for (const sample of controlledRemovalSamples) test(`preserves Native controlled
       url: '/select-components-controlled-removal.client.ts'
     });
     await page.waitForFunction(() => window.controlledRemoval?.ready === true);
-    if (rendered?.head) await page.evaluate(
-      head => document.head.insertAdjacentHTML('beforeend', head),
-      rendered.head
-    );
+    if (rendered?.head) {
+      await page.evaluate(
+        head => document.head.insertAdjacentHTML('beforeend', head),
+        rendered.head
+      );
+    }
     trace.push({
       phase: 'parsed',
       actual: await page.evaluate(

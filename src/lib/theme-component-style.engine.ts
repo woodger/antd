@@ -558,7 +558,9 @@ export function inheritedComponentThemeStyle(
 /** Native compact использует исходные метрики controls, сохраняя прежние цвета и остальные стили. */
 export function compactComponentThemeStyle(component: StyledComponent, token: GlobalToken) {
   const metrics = compactMetrics[component];
-  if (!metrics) return undefined;
+  if (!metrics) {
+    return undefined;
+  }
 
   const variables = componentThemeVariables(component, token);
   const selected = Object.fromEntries(metrics.map(key => {

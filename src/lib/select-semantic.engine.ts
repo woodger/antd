@@ -12,7 +12,9 @@ export interface SelectSemanticMaps { classes?: SelectClassNames; styles?: Selec
 
 /** Сохраняет Source String(label).trim(), не вызывая guarded toString у Snippet. */
 export function hasSelectDisplayContent(content: unknown): boolean {
-  if (typeof content === 'function') return true;
+  if (typeof content === 'function') {
+    return true;
+  }
   if (Array.isArray(content)) {
     return content.length > 1 || content.length === 1 && hasSelectDisplayContent(content[0]);
   }
@@ -33,8 +35,12 @@ export function resolveSelectSemanticValue<Slots, Props>(
 }
 
 function cssObject(style: unknown): SelectCSSProperties | undefined {
-  if (style == null) return;
-  if (typeof style !== 'object' || Array.isArray(style)) throw new TypeError('Select style must be a CSS object or string');
+  if (style == null) {
+    return;
+  }
+  if (typeof style !== 'object' || Array.isArray(style)) {
+    throw new TypeError('Select style must be a CSS object or string');
+  }
   const result: Record<string, string | number | null | undefined> = {};
   for (const [key, value] of Object.entries(style)) {
     if (value == null || typeof value === 'string' || typeof value === 'number') result[key] = value;
@@ -47,18 +53,24 @@ function cssObject(style: unknown): SelectCSSProperties | undefined {
 /** CSS keys объединяются до сериализации: поздний own undefined снимает раннее объявление. */
 export function mergeSelectStyle(...layers: readonly unknown[]): SelectStyle | undefined {
   const present = layers.filter(layer => layer != null);
-  if (!present.length) return;
+  if (!present.length) {
+    return;
+  }
   if (present.every(layer => typeof layer !== 'string')) {
     return Object.assign({}, ...present.map(cssObject));
   }
-  if (present.every(layer => typeof layer === 'string')) return present.filter(Boolean).join(';') || undefined;
+  if (present.every(layer => typeof layer === 'string')) {
+    return present.filter(Boolean).join(';') || undefined;
+  }
   const declarations = new Map<string, { value: string; priority: '' | 'important' }>();
   for (const layer of present) {
     if (typeof layer === 'string') {
       for (const { property, value, priority } of getInlineStyleDeclarations([layer])) {
-        if (!declarations.get(property)?.priority || priority) declarations.set(property, {
-          value, priority: priority ? 'important' : ''
-        });
+        if (!declarations.get(property)?.priority || priority) {
+          declarations.set(property, {
+            value, priority: priority ? 'important' : ''
+          });
+        }
       }
     }
     else {
@@ -70,9 +82,11 @@ export function mergeSelectStyle(...layers: readonly unknown[]): SelectStyle | u
           continue;
         }
         for (const declaration of getInlineStyleDeclarations([serializeSelectDataStyle({ [property]: value })])) {
-          if (!declarations.get(name)?.priority) declarations.set(name, {
-            value: declaration.value, priority: declaration.priority ? 'important' : ''
-          });
+          if (!declarations.get(name)?.priority) {
+            declarations.set(name, {
+              value: declaration.value, priority: declaration.priority ? 'important' : ''
+            });
+          }
         }
       }
     }
@@ -103,9 +117,11 @@ export function mergeSelectSemanticMaps(
     styles[slot] = mergeSelectStyle(context.styles?.[slot], slot === 'root' ? contextStyle : undefined,
       local.styles?.[slot], slot === 'root' ? ownStyle : undefined);
   }
-  for (const slot of popupSlots) classes.popup[slot] = join(
-    contextPopup?.[slot],
-    localPopup?.[slot]
-  );
+  for (const slot of popupSlots) {
+    classes.popup[slot] = join(
+      contextPopup?.[slot],
+      localPopup?.[slot]
+    );
+  }
   return { classes, styles };
 }

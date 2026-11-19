@@ -22,14 +22,22 @@ export class NumberDecimal implements MiniDecimal {
   }
 
   add(value: DecimalValue): NumberDecimal {
-    if (this.isInvalidate()) return new NumberDecimal(value);
+    if (this.isInvalidate()) {
+      return new NumberDecimal(value);
+    }
 
     const target = Number(value);
-    if (Number.isNaN(target)) return this;
+    if (Number.isNaN(target)) {
+      return this;
+    }
 
     const number = this.number! + target;
-    if (number > Number.MAX_SAFE_INTEGER) return new NumberDecimal(Number.MAX_SAFE_INTEGER);
-    if (number < Number.MIN_SAFE_INTEGER) return new NumberDecimal(Number.MIN_SAFE_INTEGER);
+    if (number > Number.MAX_SAFE_INTEGER) {
+      return new NumberDecimal(Number.MAX_SAFE_INTEGER);
+    }
+    if (number < Number.MIN_SAFE_INTEGER) {
+      return new NumberDecimal(Number.MIN_SAFE_INTEGER);
+    }
 
     const precision = Math.max(getNumberPrecision(this.number), getNumberPrecision(target));
 
@@ -61,8 +69,12 @@ export class NumberDecimal implements MiniDecimal {
   }
 
   toString(safe = true) {
-    if (!safe) return this.origin;
-    if (this.isInvalidate()) return '';
+    if (!safe) {
+      return this.origin;
+    }
+    if (this.isInvalidate()) {
+      return '';
+    }
 
     return numberToString(this.number!);
   }

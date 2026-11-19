@@ -13,19 +13,25 @@ export async function settleSelectData(page: Page) {
     const actual = await page.evaluate(readSelectData);
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Select data inputs, physical list or complete callback ledger did not settle');
 }
 function rawCopyReceipt(value: unknown) {
-  if (!value || typeof value !== 'object') throw Error('Missing actual raw option receipt');
+  if (!value || typeof value !== 'object') {
+    throw Error('Missing actual raw option receipt');
+  }
   const receipt = value as {
     ownProperties: Array<Record<string, unknown>>;
     originalOwnProperties: Array<Record<string, unknown>>
   };
   const compatibility = receipt.ownProperties.find(property => property.key === 'props');
-  if (!compatibility) return value;
+  if (!compatibility) {
+    return value;
+  }
   expect(compatibility).toEqual({ key: 'props', enumerable: false, configurable: false,
     kind: 'accessor', get: true, set: false });
   expect(receipt.originalOwnProperties.some(property => property.key === 'props')).toBe(false);

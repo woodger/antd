@@ -95,11 +95,13 @@ for (const entry of selectComponentsHydrationReference.cases) test(`${entry.id} 
     }, selectComponentsHydrationSSRMarker);
     trace.push({ phase: phase + '/native-private-SSR-marker', actual: marker });
     expect(marker.count, phase + ' marker count').toBe(expected);
-    for (const owner of marker.owners) expect(owner).toEqual({
-      tag: entry.parsed.root!.tag,
-      value: '',
-      hasControl: true
-    });
+    for (const owner of marker.owners) {
+      expect(owner).toEqual({
+        tag: entry.parsed.root!.tag,
+        value: '',
+        hasControl: true
+      });
+    }
   };
   try {
     await page.addInitScript(trackNativeHydrationChannels);
@@ -121,7 +123,9 @@ for (const entry of selectComponentsHydrationReference.cases) test(`${entry.id} 
     await inspectMarker('parsed-SSR', 1);
     await page.evaluate(settings => {
       const editor = window.componentsHydrationProbe.parsed.editor;
-      if (!editor) throw Error('Real parsed SSR editor is required before hydration');
+      if (!editor) {
+        throw Error('Real parsed SSR editor is required before hydration');
+      }
       editor.value = settings.value;
       if (settings.focused) editor.focus();
       editor.setSelectionRange(...settings.selection);
@@ -142,7 +146,9 @@ for (const entry of selectComponentsHydrationReference.cases) test(`${entry.id} 
     // synchronous work before returning. Keep both actual return snapshots.
     trace.push({ phase: 'framework-hydrate-return', actual: phases.afterCall, source: entry.afterCall,
       boundary: 'react-async-hydrateRoot-return-vs-svelte-synchronous-hydrate-return' });
-    if (!phases.commit) throw Error('Real Native owner mount must expose its commit snapshot');
+    if (!phases.commit) {
+      throw Error('Real Native owner mount must expose its commit snapshot');
+    }
     verify(phases.commit, entry.commit, 'commit', 'owner-commit');
     await inspectMarker('owner-commit', 0);
     verify(
@@ -154,7 +160,9 @@ for (const entry of selectComponentsHydrationReference.cases) test(`${entry.id} 
     for (const [index, step] of entry.steps.entries()) {
       const immediate = await actSelectComponentsHydration(page, step.action);
       if (step.immediate) {
-        if (!immediate) throw Error('close-dispose must capture removal in the same browser task');
+        if (!immediate) {
+          throw Error('close-dispose must capture removal in the same browser task');
+        }
         verify(immediate, step.immediate, 'removed', `${index}/removed-immediate`);
       }
       verify(
@@ -214,7 +222,9 @@ for (const entry of selectComponentsHydrationReference.cases) test(`${entry.id} 
       expect(lateCleanup.owner!.events).toEqual(beforeUnmount.owner!.events);
     }
     expect(refChecks.every(check => !check.markerPresent && !check.contextHasMarker)).toBe(true);
-    for (const check of refChecks) if (check.contextKeys) expect(check.contextKeys).toEqual(['attributes', 'register']);
+    for (const check of refChecks) {
+      if (check.contextKeys) expect(check.contextKeys).toEqual(['attributes', 'register']);
+    }
     expect(failures, 'Complete Original hydration sequence').toEqual([]);
   } finally {
     if (clientLoaded && !disposed) await page.evaluate(() => window.componentsHydrationProbe.dispose?.());

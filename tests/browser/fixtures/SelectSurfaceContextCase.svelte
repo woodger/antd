@@ -51,9 +51,11 @@
   });
   const initialId = untrack(() => sample.id);
   export function update(action: SelectSurfaceContextAction) {
-    if (action.type === 'fields') form.setFields([
-      { name: 'field', errors: ['Authored error'], warnings: ['Authored warning'] }
-    ]);
+    if (action.type === 'fields') {
+      form.setFields([
+        { name: 'field', errors: ['Authored error'], warnings: ['Authored warning'] }
+      ]);
+    }
     if (action.type === 'contexts') {
       disabled = action.disabled;
       variant = action.variant;

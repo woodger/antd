@@ -99,7 +99,9 @@
     const hsb = picker.toHsb();
     const horizontal = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
     const vertical = event.key === 'ArrowUp' ? 1 : event.key === 'ArrowDown' ? -1 : 0;
-    if (!horizontal && !vertical) return;
+    if (!horizontal && !vertical) {
+      return;
+    }
     event.preventDefault();
     const next = calculatePickerColor(picker, hsb.s + horizontal / 100, 1 - hsb.b - vertical / 100);
     changePicker(next);
@@ -137,7 +139,9 @@
   }
 
   function clear() {
-    if (value.cleared || props.disabled) return;
+    if (value.cleared || props.disabled) {
+      return;
+    }
     const next = generateColor({ ...value.toHsb(), a: 0 });
     next.cleared = true;
     onChange(next);

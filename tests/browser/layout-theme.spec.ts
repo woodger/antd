@@ -25,7 +25,9 @@ test('Layout theme updates retain sidebar drafts, selection, DOM, refs and colla
     await draft.fill('Retained sidebar draft');
     await draft.focus();
     await draft.evaluate(node => {
-      if (!(node instanceof HTMLInputElement)) throw new Error('Expected native sidebar input');
+      if (!(node instanceof HTMLInputElement)) {
+        throw new Error('Expected native sidebar input');
+      }
       node.setSelectionRange(3, 12);
     });
     const before = {
@@ -44,7 +46,9 @@ test('Layout theme updates retain sidebar drafts, selection, DOM, refs and colla
     await expect(draft).toHaveValue('Retained sidebar draft');
     await expect(draft).toBeFocused();
     expect(await draft.evaluate(node => {
-      if (!(node instanceof HTMLInputElement)) throw new Error('Expected native sidebar input');
+      if (!(node instanceof HTMLInputElement)) {
+        throw new Error('Expected native sidebar input');
+      }
 
       return [node.selectionStart, node.selectionEnd];
     })).toEqual([3, 12]);

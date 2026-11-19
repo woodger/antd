@@ -129,7 +129,9 @@ test('TreeSelect strictly hydrates inert props and preserves its focused editor 
   await editor.click();
   await editor.fill('Hydrated search');
   await editor.evaluate(node => {
-    if (!(node instanceof HTMLInputElement)) throw Error('Expected native TreeSelect editor');
+    if (!(node instanceof HTMLInputElement)) {
+      throw Error('Expected native TreeSelect editor');
+    }
     node.setSelectionRange(1, 4);
   });
 
@@ -177,7 +179,9 @@ test('TreeSelect strictly hydrates inert props and preserves its focused editor 
     await expect(editor).toBeFocused();
     await expect(editor).toHaveValue('Hydrated search');
     expect(await editor.evaluate(node => {
-      if (!(node instanceof HTMLInputElement)) throw Error('Expected native TreeSelect editor');
+      if (!(node instanceof HTMLInputElement)) {
+        throw Error('Expected native TreeSelect editor');
+      }
       return [node.selectionStart, node.selectionEnd];
     })).toEqual([1, 4]);
     await page.evaluate(async () => {

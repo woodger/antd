@@ -558,7 +558,7 @@ for (const placement of ['top', 'bottom', 'start', 'end']) {
         const ink = root(page).locator('.ant-tabs-ink-bar');
 
         if (type === 'card') await expect(ink).toBeHidden();
-        else
+        else {
           await expect.poll(async () => {
             const line = (await ink.boundingBox())!;
             const button = (await tab(page, 'Beta').boundingBox())!;
@@ -567,6 +567,7 @@ for (const placement of ['top', 'bottom', 'start', 'end']) {
               ? Math.abs(line.y - button.y) < 1 && Math.abs(line.height - button.height) < 1
               : Math.abs(line.x - button.x) < 1 && Math.abs(line.width - button.width) < 1;
           }).toBe(true);
+        }
       }
     );
   }

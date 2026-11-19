@@ -92,7 +92,9 @@
     const requested = open;
     const side = placement;
     const current = runtime;
-    if (!node || !current || !container.connected || !node.isConnected) return;
+    if (!node || !current || !container.connected || !node.isConnected) {
+      return;
+    }
 
     untrack(() => {
       current.sync(requested, side);
@@ -111,7 +113,9 @@
   }
 
   function requestClose(event: Event) {
-    if (!active || !open) return;
+    if (!active || !open) {
+      return;
+    }
 
     backdropPointer = undefined;
     open = false;
@@ -139,7 +143,9 @@
   }
 
   function handleClose(event: Event) {
-    if (!active || event.currentTarget !== dialog || dialog?.open) return;
+    if (!active || event.currentTarget !== dialog || dialog?.open) {
+      return;
+    }
 
     runtime?.nativeClosed();
     open = false;

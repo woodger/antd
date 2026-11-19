@@ -43,10 +43,11 @@ describe('Steps extended rendering', () => {
       expect(body).toContain('aria-valuenow="60"');
       expect(body).toContain('stroke-dasharray="calc(var(--ant-cmp-steps-progress-radius)');
       expect(body).not.toMatch(/aria-hidden="true"[^>]*>\s*<svg class="ant-steps-item-progress/);
-      for (const type of ['inline', 'dot'] as const)
+      for (const type of ['inline', 'dot'] as const) {
         expect(render(Steps, { props: { type, percent: 60, items } }).body).not.toContain(
           'role="progressbar"'
         );
+      }
     }
   );
   it('collapses hidden ranges, preserves original numbers and keeps ellipses disabled', () => {

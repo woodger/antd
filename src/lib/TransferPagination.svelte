@@ -39,7 +39,9 @@
   let options = $derived(getPageSizeOptions([10, 20, 50, 100], pageSize));
 
   function change(page: number, size = pageSize) {
-    if (disabled || !Number.isInteger(page) || total <= 0) return;
+    if (disabled || !Number.isInteger(page) || total <= 0) {
+      return;
+    }
 
     const next = getPaginationState(total, page, size).current;
     input = next;
@@ -50,7 +52,9 @@
   }
 
   function read(input: HTMLInputElement): number | string {
-    if (input.value === '') return '';
+    if (input.value === '') {
+      return '';
+    }
     const parsed = Number(input.value);
     return Number.isNaN(parsed) ? displayed : Math.min(parsed, paginationState.pageCount);
   }

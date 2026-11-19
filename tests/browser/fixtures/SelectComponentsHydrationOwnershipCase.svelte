@@ -83,10 +83,12 @@
     authoredInputProps: unknown; rawAuthoredInputProps: unknown; authoredProvider: unknown; rawAuthoredProvider: unknown };
   let lastAuthored: Authored | undefined;
   function read() {
-    if (alive || !lastAuthored) lastAuthored = { authoredSample: recorder.encode(initial), rawAuthoredSample: recorder.raw(initial),
-      authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
-      authoredInputProps: recorder.encode(ownInputProps), rawAuthoredInputProps: recorder.raw(ownInputProps),
-      authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider) };
+    if (alive || !lastAuthored) {
+      lastAuthored = { authoredSample: recorder.encode(initial), rawAuthoredSample: recorder.raw(initial),
+        authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
+        authoredInputProps: recorder.encode(ownInputProps), rawAuthoredInputProps: recorder.raw(ownInputProps),
+        authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider) };
+    }
     return { ownerKey: initial.ownerKey, controlKey: initial.controlKey, publicId: initial.publicId,
       callerUID, query, model: recorder.encode(model), rawModel: recorder.raw(model), tag, open: false as const, alive,
       events, rawEvents, lifecycle, calls: recorder.calls, ...lastAuthored };

@@ -50,7 +50,9 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
     const motion = panel.animate([{ transform: from }, { transform: to }], options);
     animations = [motion, mask.animate([{ opacity }, { opacity: opening ? '1' : '0' }], options)];
     void motion.finished.then(() => {
-      if (disposed || current !== revision) return;
+      if (disposed || current !== revision) {
+        return;
+      }
 
       if (opening) {
         cancelMotion();
@@ -61,7 +63,9 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
   }
 
   function sync(open: boolean, placement: DrawerPlacement) {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
 
     if (open) {
       if (dialog.open && !dialog.matches(':modal')) dialog.close();
@@ -98,9 +102,10 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
   }
 
   function handleReducedMotion() {
-    if (reducedMotion.matches)
+    if (reducedMotion.matches) {
       for (const animation of animations)
         animation.finish();
+    }
   }
 
   reducedMotion.addEventListener('change', handleReducedMotion);

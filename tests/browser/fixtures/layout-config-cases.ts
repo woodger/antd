@@ -39,7 +39,9 @@ export function layoutSiderLocalProps(sample: LayoutConfigSample): Partial<Layou
 }
 
 export function layoutConfigRecord(descriptor?: LayoutConfigDescriptor): LayoutConfig | undefined {
-  if (!descriptor) return;
+  if (!descriptor) {
+    return;
+  }
 
   return {
     class: descriptor.className,

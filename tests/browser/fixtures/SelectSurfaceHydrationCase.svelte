@@ -111,9 +111,13 @@
       publicRoot, publicEditor: isSelect ? selectEditor : autoCompleteEditor };
   }
   export function read() {
-    if (alive) lastAuthored = { maps: recorder.encode(maps), rawMaps: recorder.raw(maps),
-      authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps) };
-    if (!lastAuthored) throw Error('Read the actual hydration owner before disposal');
+    if (alive) {
+      lastAuthored = { maps: recorder.encode(maps), rawMaps: recorder.raw(maps),
+        authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps) };
+    }
+    if (!lastAuthored) {
+      throw Error('Read the actual hydration owner before disposal');
+    }
     return { phase, open, model: recorder.encode(model), rawModel: recorder.raw(model), alive,
       events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], ...lastAuthored };
   }

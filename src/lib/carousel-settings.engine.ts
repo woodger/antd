@@ -92,7 +92,9 @@ export function getCarouselSettings(
 export type CarouselSettings = ReturnType<typeof getCarouselSettings>;
 
 export function getCarouselItems(props: Pick<CarouselProps, 'items' | 'children'>): CarouselItem[] {
-  if (props.items !== undefined) return [...props.items];
+  if (props.items !== undefined) {
+    return [...props.items];
+  }
   const items: CarouselItem[] = [];
   function visit(value: CarouselContent) {
     if (Array.isArray(value)) {
@@ -108,7 +110,9 @@ export function getCarouselItems(props: Pick<CarouselProps, 'items' | 'children'
 
 export function getCarouselRows(items: readonly CarouselItem[], rows: number, perRow: number) {
   const groups: { rows: CarouselItem[][]; width?: number | string; }[] = [];
-  if (!(rows > 0) || !(perRow > 0)) return groups;
+  if (!(rows > 0) || !(perRow > 0)) {
+    return groups;
+  }
   let width: number | string | undefined;
   for (let index = 0; index < items.length; index += rows * perRow) {
     const group: CarouselItem[][] = [];

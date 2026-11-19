@@ -16,7 +16,9 @@ export function snapshotStatisticPrefix() {
         decimal: Boolean(root.querySelector(`.${prefix}-content-value-decimal`)),
         slots: Object.fromEntries(Object.entries(selectors).map(([key, selector]) => {
           const node = selector ? root.querySelector<HTMLElement>(selector) : root;
-          if (!node) return [key, null];
+          if (!node) {
+            return [key, null];
+          }
           const style = getComputedStyle(node);
 
           return [key, {

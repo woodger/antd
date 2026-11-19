@@ -6,10 +6,14 @@ export function getTabsClickEvent(
   event: MouseEvent | KeyboardEvent,
   root: HTMLElement | undefined
 ): MouseEvent | undefined {
-  if (!('key' in event)) return event;
+  if (!('key' in event)) {
+    return event;
+  }
 
   const view = root?.ownerDocument.defaultView;
-  if (!view) return undefined;
+  if (!view) {
+    return undefined;
+  }
 
   const click = new view.MouseEvent('click', {
     bubbles: event.bubbles,
@@ -140,8 +144,9 @@ export function connectTabsNav(
 
   const attributes = new MutationObserver(records => {
     // Svelte может повторно записать тот же class при переносе фокуса в More.
-    if (!records.some(record => record.oldValue !== root.getAttribute(record.attributeName!)))
+    if (!records.some(record => record.oldValue !== root.getAttribute(record.attributeName!))) {
       return;
+    }
 
     update();
     reveal();
@@ -168,7 +173,9 @@ export function connectTabsScroll(
 
   function handleScroll() {
     const next = vertical ? viewport.scrollTop : viewport.scrollLeft;
-    if (next === previous) return;
+    if (next === previous) {
+      return;
+    }
 
     const direction = vertical ? next > previous ? 'bottom' : 'top'
       : next > previous ? 'right' : 'left';

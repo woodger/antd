@@ -158,9 +158,13 @@ export function verifyQuarterSingleEmptyCalendarBoundary(
 }
 function modeArray(call: QuarterSourceInvocation) {
   const path = call.name === 'panel' ? [1] : call.name === 'picker-value' ? [1, 'mode'] : null;
-  if (!path) return null;
+  if (!path) {
+    return null;
+  }
   const value = rawAt(call.rawArguments, path);
-  if (!value || typeof value !== 'object' || !('ref' in value)) return null;
+  if (!value || typeof value !== 'object' || !('ref' in value)) {
+    return null;
+  }
   const node = rawNode(call.rawArguments, object(value).ref);
   assert.equal(node.array, true);
   return node;

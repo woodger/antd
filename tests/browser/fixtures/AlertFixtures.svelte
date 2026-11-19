@@ -53,7 +53,9 @@
   }
 
   function hotkey(event: KeyboardEvent) {
-    if (!event.ctrlKey || !event.altKey) return;
+    if (!event.ctrlKey || !event.altKey) {
+      return;
+    }
     if (event.key === 'a') {
       event.preventDefault();
       revision++;

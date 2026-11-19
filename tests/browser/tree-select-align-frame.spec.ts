@@ -19,7 +19,9 @@ async function settle(page: Page) {
     const projection = await page.evaluate(readTreeSelectAlignFrame);
     const key = JSON.stringify(projection);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 6) return projection;
+    if (stable >= 6) {
+      return projection;
+    }
     previous = key;
   }
   throw Error('TreeSelect alignment frame did not settle after 150 frames');

@@ -3,7 +3,9 @@ export function snapshotTagStyle(host: HTMLElement) {
   const classes = (node: HTMLElement | null) => node
     ? [...node.classList].filter(name => /^(?:case-|ctx-|local-)/.test(name)).sort() : [];
   const metric = (node: HTMLElement | null, slot = false) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     const common = {
       color: style.color,

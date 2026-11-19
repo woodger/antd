@@ -15,10 +15,14 @@ export function treeSelectNodeLabel(
   fields: ReturnType<typeof treeSelectFields>,
   labelProp?: string
 ): TreeSelectLabel {
-  if (labelProp) return Reflect.get(node, labelProp) as TreeSelectLabel;
+  if (labelProp) {
+    return Reflect.get(node, labelProp) as TreeSelectLabel;
+  }
   for (const field of fields.titles) {
     const value: unknown = Reflect.get(node, field);
-    if (value !== undefined) return value as TreeSelectLabel;
+    if (value !== undefined) {
+      return value as TreeSelectLabel;
+    }
   }
 }
 
@@ -27,7 +31,9 @@ export function treeSelectChildren<Data extends object>(
   fields: ReturnType<typeof treeSelectFields>
 ): readonly Data[] {
   const children: unknown = Reflect.get(node, fields.children);
-  if (children && !Array.isArray(children)) throw new TypeError('Tree data children must be an array');
+  if (children && !Array.isArray(children)) {
+    throw new TypeError('Tree data children must be an array');
+  }
   return (children || []) as readonly Data[];
 }
 
@@ -36,7 +42,9 @@ export function treeSelectData<Data extends object>(
   nodes: readonly Data[],
   mode?: TreeSelectSimpleMode
 ): readonly Data[] {
-  if (!mode) return nodes;
+  if (!mode) {
+    return nodes;
+  }
   const { id, pId, rootPId } = {
     id: 'id', pId: 'pId', rootPId: null, ...(typeof mode === 'object' ? mode : {})
   };
@@ -55,7 +63,9 @@ export function treeSelectData<Data extends object>(
     const parent = map.get(parentKey);
     if (parent) {
       const children: unknown = Reflect.get(parent, 'children') || [];
-      if (!Array.isArray(children)) throw new TypeError('Tree data children must be an array');
+      if (!Array.isArray(children)) {
+        throw new TypeError('Tree data children must be an array');
+      }
       children.push(node);
       Reflect.set(parent, 'children', children);
     }

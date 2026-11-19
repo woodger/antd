@@ -18,7 +18,9 @@ export function offsetSegmentedValue<Value extends SegmentedValue>(
   offset: number
 ): Value | undefined {
   const valid = options.filter(option => option.value === value || !option.disabled);
-  if (!valid.length) return undefined;
+  if (!valid.length) {
+    return undefined;
+  }
 
   const index = valid.findIndex(option => option.value === value);
   return valid[(index + offset + valid.length) % valid.length]?.value;

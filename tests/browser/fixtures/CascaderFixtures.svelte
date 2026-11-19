@@ -127,7 +127,9 @@
     return Promise.resolve().then(() => { events.push('load-promise-resolved'); });
   }
   function finishLazy(empty: boolean, leaf = false) {
-    if (!pending) return;
+    if (!pending) {
+      return;
+    }
     if (leaf) pending.isLeaf = true;
     else pending.children = empty ? [] : [{ value: 'child', label: 'Loaded child' }];
     data = [...data];

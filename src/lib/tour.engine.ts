@@ -39,14 +39,20 @@ export function getTourClosable(
 ): Exclude<TourClosable, boolean> | null {
   function resolve(value: TourClosable | undefined, closeIcon: TourContent) {
     const object = typeof value === 'object' && value !== null;
-    if (value === false || closeIcon === false && (!object || !value.closeIcon)) return null;
+    if (value === false || closeIcon === false && (!object || !value.closeIcon)) {
+      return null;
+    }
     const mergedIcon = typeof closeIcon === 'boolean' ? undefined : closeIcon;
-    if (object) return { ...value, closeIcon: value.closeIcon ?? mergedIcon };
+    if (object) {
+      return { ...value, closeIcon: value.closeIcon ?? mergedIcon };
+    }
     return value || closeIcon ? { closeIcon: mergedIcon } : 'empty';
   }
 
   const step = resolve(stepClosable, stepIcon);
-  if (step !== 'empty') return step;
+  if (step !== 'empty') {
+    return step;
+  }
   const root = resolve(closable, icon);
   return root === 'empty' ? { closeIcon: typeof icon === 'boolean' ? undefined : icon } : root;
 }

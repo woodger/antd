@@ -19,7 +19,9 @@ describe('Avatar responsive SSR', () => {
       const { body } = render(AvatarResponsiveCase, { props: { sample: sample as Sample } });
       const sizes = [...body.matchAll(/<span\b[^>]*>/g)].flatMap(([tag]) => {
         const classes = /\bclass="([^"]*)"/.exec(tag)?.[1].split(/\s+/) ?? [];
-        if (!classes.includes('ant-avatar')) return [];
+        if (!classes.includes('ant-avatar')) {
+          return [];
+        }
         const style = /\bstyle="([^"]*)"/.exec(tag)?.[1] ?? '';
         const properties = new Map([...style.matchAll(/(?:^|;)\s*(width|height|font-size):\s*([^;]+)/g)]
           .map(([, name, value]) => [name, value]));

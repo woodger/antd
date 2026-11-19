@@ -66,7 +66,9 @@
     const slider = inner;
     const initial = initialSlide;
     const rtl = rootRtl;
-    if (!slider) return;
+    if (!slider) {
+      return;
+    }
     if (!didReset || initial !== previousInitial || rtl !== previousRtl) {
       didReset = true;
       previousInitial = initial;

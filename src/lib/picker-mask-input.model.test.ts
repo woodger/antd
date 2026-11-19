@@ -47,7 +47,9 @@ function createField(mask: string | null = 'YYYY-MM-DD') {
     acceptInput(text) {
       // The controller owns strings. The real existing parser owns the core Date.
       const candidate = parsePicker(text, 'en_US', formats);
-      if (!candidate) throw Error('Controller forwarded an invalid calendar string');
+      if (!candidate) {
+        throw Error('Controller forwarded an invalid calendar string');
+      }
       acceptedText.push(text);
       acceptedDates.push(candidate);
       calendar = candidate;

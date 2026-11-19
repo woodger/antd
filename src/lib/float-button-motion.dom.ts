@@ -23,7 +23,9 @@ export function createFloatButtonMotion(
   reduced.addEventListener('change', reduce);
   return {
     sync(visible: boolean) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       if (target === visible) {
         if (!visible && !animation)
           remove();
@@ -64,7 +66,9 @@ export function createFloatButtonMotion(
         }
       ], { duration, easing: menu ? 'ease' : 'linear', fill: 'both' });
       void animation.finished.then(() => {
-        if (!active || revision !== current) return;
+        if (!active || revision !== current) {
+          return;
+        }
         cancel();
         if (!visible)
           remove();

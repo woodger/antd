@@ -39,7 +39,9 @@ const flattened = new WeakMap<object, string>();
 /** Порядок ключей и nested Theme.id участвуют в token key, как в cssinjs. */
 export function flattenToken(token: object): string {
   const cached = flattened.get(token);
-  if (cached) return cached;
+  if (cached) {
+    return cached;
+  }
 
   let value = '';
   for (const [key, item] of Object.entries(token)) {

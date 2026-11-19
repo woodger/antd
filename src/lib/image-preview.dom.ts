@@ -19,7 +19,9 @@ export function connectImagePreview(image: HTMLImageElement, options: {
   let previous: [ImagePoint, ImagePoint] | undefined;
   let touchFrame = 0;
   function down(event: PointerEvent) {
-    if (options.config().movable === false || event.button !== 0) return;
+    if (options.config().movable === false || event.button !== 0) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     const transform = options.transform();
@@ -27,39 +29,50 @@ export function connectImagePreview(image: HTMLImageElement, options: {
     if (points.size > 1) {
       previous = [...points.values()].slice(0, 2) as [ImagePoint, ImagePoint];
     }
-    else start = {
-      x: transform.x,
-      y: transform.y,
-      diffX: event.clientX - transform.x,
-      diffY: event.clientY - transform.y,
-      type: event.pointerType
-    };
+    else {
+      start = {
+        x: transform.x,
+        y: transform.y,
+        diffX: event.clientX - transform.x,
+        diffY: event.clientY - transform.y,
+        type: event.pointerType
+      };
+    }
     image.setPointerCapture(event.pointerId);
     options.moving(true);
   }
   function move(event: PointerEvent) {
-    if (!points.has(event.pointerId)) return;
+    if (!points.has(event.pointerId)) {
+      return;
+    }
     points.set(event.pointerId, { x: event.clientX, y: event.clientY });
     if (points.size > 1 && previous) {
-      if (!touchFrame)
+      if (!touchFrame) {
         touchFrame = view.requestAnimationFrame(() => {
           touchFrame = 0;
-          if (!previous || points.size < 2) return;
+          if (!previous || points.size < 2) {
+            return;
+          }
           const next = [...points.values()].slice(0, 2) as [ImagePoint, ImagePoint];
           const zoom = imageTouchZoom(previous, next);
           options.zoom(zoom.ratio, 'touchZoom', zoom.center, true);
           previous = next;
         });
+      }
     }
     else if (start)
       options.update({ x: event.clientX - start.diffX, y: event.clientY - start.diffY }, 'move');
   }
   function end(event: PointerEvent) {
-    if (!points.has(event.pointerId)) return;
+    if (!points.has(event.pointerId)) {
+      return;
+    }
     points.delete(event.pointerId);
     if (image.hasPointerCapture(event.pointerId))
       image.releasePointerCapture(event.pointerId);
-    if (points.size) return;
+    if (points.size) {
+      return;
+    }
     options.moving(false);
     previous = undefined;
     const transform = options.transform();
@@ -74,7 +87,9 @@ export function connectImagePreview(image: HTMLImageElement, options: {
     if (event.pointerType === 'mouse'
       && old
       && (transform.x === old.x
-        || transform.y === old.y)) return;
+        || transform.y === old.y)) {
+      return;
+    }
     const bounds = image.getBoundingClientRect();
     const rotated = transform.rotate % 180 !== 0;
     const width = image.offsetWidth * transform.scale;
@@ -90,7 +105,9 @@ export function connectImagePreview(image: HTMLImageElement, options: {
       options.update(fixed, 'dragRebound');
   }
   function wheel(event: WheelEvent) {
-    if (options.config().wheel === false || !event.deltaY) return;
+    if (options.config().wheel === false || !event.deltaY) {
+      return;
+    }
     event.preventDefault();
     options.zoom(
       imageWheelRatio(event.deltaY, options.config().scaleStep ?? 0.5),
@@ -102,11 +119,13 @@ export function connectImagePreview(image: HTMLImageElement, options: {
     const transform = options.transform();
     if (transform.scale !== 1)
       options.update({ x: 0, y: 0, scale: 1 }, 'doubleClick');
-    else options.zoom(
-      1 + (options.config().scaleStep ?? 0.5),
-      'doubleClick',
-      { x: event.clientX, y: event.clientY }
-    );
+    else {
+      options.zoom(
+        1 + (options.config().scaleStep ?? 0.5),
+        'doubleClick',
+        { x: event.clientX, y: event.clientY }
+      );
+    }
   }
   image.addEventListener('pointerdown', down);
   image.addEventListener('pointermove', move);

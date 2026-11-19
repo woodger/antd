@@ -145,19 +145,23 @@
   });
   let controlProps = $derived(ownerProps as CallerProps);
   export function update(action: SelectComponentsOwnStyleAction, _index = -1) {
-    if (action.type === 'own-style-phase') settings = {
-      ...settings,
-      phase: action.phase,
-      componentProps: frames.get(action.phase)
-    };
+    if (action.type === 'own-style-phase') {
+      settings = {
+        ...settings,
+        phase: action.phase,
+        componentProps: frames.get(action.phase)
+      };
+    }
   }
   export function readRefs() {
     return { control, root, editor, authoredRoot: undefined, authoredInput };
   }
   export function read() {
-    if (alive || !lastAuthored) lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
-      authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider),
-      authoredInnerProvider: recorder.encode(undefined), rawAuthoredInnerProvider: recorder.raw(undefined) };
+    if (alive || !lastAuthored) {
+      lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
+        authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider),
+        authoredInnerProvider: recorder.encode(undefined), rawAuthoredInnerProvider: recorder.raw(undefined) };
+    }
     return { model: recorder.encode(model), rawModel: recorder.raw(model), open, query,
       settings: recorder.encode(settings), rawSettings: recorder.raw(settings), profile, phase: settings.phase,
       events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], lifecycle: [...lifecycle],

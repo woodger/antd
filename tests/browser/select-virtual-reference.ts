@@ -47,7 +47,9 @@ const observedKeys: ObservedKey[] = ['sameRoot', 'sameAnchor', 'sameEditor', 'sa
   'sameFocus', 'sameBlur', 'sameScrollTo'];
 
 function assert(condition: unknown, message: string): asserts condition {
-  if (!condition) throw Error(`Invalid frozen Select virtual reference: ${message}`);
+  if (!condition) {
+    throw Error(`Invalid frozen Select virtual reference: ${message}`);
+  }
 }
 function load(
   filename: string,

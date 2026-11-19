@@ -22,7 +22,9 @@ declare global {
 }
 const id = new URL(location.href).searchParams.get('sample');
 const sample = treeSelectCheckableSamples.find(sample => sample.id === id);
-if (!sample?.searchable) throw Error(`Unknown searchable checkable hydration sample: ${id}`);
+if (!sample?.searchable) {
+  throw Error(`Unknown searchable checkable hydration sample: ${id}`);
+}
 const target = document.getElementById('root')!;
 const root = target.querySelector<HTMLElement>('.checkable-audit-root')!;
 const editor = root.querySelector<HTMLInputElement>('input[role="combobox"]')!;

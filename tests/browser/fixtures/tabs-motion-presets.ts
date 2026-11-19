@@ -54,8 +54,9 @@ export function tabsMotionSettings(
       style: sample.eventColor ? `color:${sample.eventColor}` : undefined
     };
     for (const key of sample.unsetMotion ?? []) {
-      if (key !== 'visible' && key !== 'forceRender' && key !== 'removeOnLeave')
+      if (key !== 'visible' && key !== 'forceRender' && key !== 'removeOnLeave') {
         throw new Error(`Unknown motion override: ${key}`);
+      }
       motion[key] = undefined;
     }
     if (sample.traceHooks) {

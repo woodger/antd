@@ -18,9 +18,15 @@ export function inputChangeEvent<T extends HTMLInputElement | HTMLTextAreaElemen
   // Native Event getters требуют исходный receiver, в отличие от React SyntheticEvent.
   return new Proxy(event, {
     get(original, key) {
-      if (key === 'target' || key === 'currentTarget') return target;
-      if (key === 'type' && original.type === 'input') return 'change';
-      if (key === 'nativeEvent') return original;
+      if (key === 'target' || key === 'currentTarget') {
+        return target;
+      }
+      if (key === 'type' && original.type === 'input') {
+        return 'change';
+      }
+      if (key === 'nativeEvent') {
+        return original;
+      }
 
       const result = Reflect.get(original, key, original);
 

@@ -46,7 +46,9 @@ async function typeInAuthoredEditor(page: Page, editor: Locator) {
 }
 type SourcePhase = Pick<(typeof sourceFacts.cases)[number]['first']['firstwrap'], 'cells' | 'locales'>;
 function sourceOptional(value: string | { $: string }) {
-  if (typeof value === 'string') return value;
+  if (typeof value === 'string') {
+    return value;
+  }
   expect(value).toEqual({ $: 'undefined' });
   return undefined;
 }
@@ -164,8 +166,10 @@ for (const owner of owners) {
       .toHaveAttribute('data-hook-today', '2024-06-12T10:25:47.890Z');
     await expect(popup(page).locator('td[title="2024-06-12"]'))
       .toHaveClass(/hook-picker-cell-today/);
-    if (datetime) await expect(popup(page).locator('[data-hook-type="time"]').first())
-      .toHaveAttribute('data-hook-today', '2024-06-12T10:25:47.890Z');
+    if (datetime) {
+      await expect(popup(page).locator('[data-hook-type="time"]').first())
+        .toHaveAttribute('data-hook-today', '2024-06-12T10:25:47.890Z');
+    }
     await expect.poll(async () => (await read(page)).cells.at(-1)?.prefixCls).toBe('hook-picker');
   });
 
@@ -290,8 +294,10 @@ for (const owner of owners) {
     await expect(popup(page).getByRole('button', { name: '2024-06-13', exact: true }).first())
       .toHaveText('D13');
     await expect(popup(page).locator('.ant-picker-month-btn').first()).toHaveText('M06');
-    if (datetime) await expect(popup(page).locator('ul[aria-label="meridiem"] button'))
-      .toHaveText(['period AM', 'period PM']);
+    if (datetime) {
+      await expect(popup(page).locator('ul[aria-label="meridiem"] button'))
+        .toHaveText(['period AM', 'period PM']);
+    }
     await popup(page).locator('.ant-picker-month-btn').first().click();
 
     await expect(popup(page).locator('td[title="2024-06"] button')).toHaveText('M06');

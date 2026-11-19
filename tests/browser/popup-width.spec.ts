@@ -16,7 +16,9 @@ async function settle(page: Page) {
     const actual = await page.evaluate(readPopupWidth);
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Popup width did not settle after 100 public animation frames');
@@ -80,18 +82,22 @@ for (const entry of reference.cases) {
           expect(actual.raw.popups.filter(node => node.visible)).toHaveLength(1);
           expect(actual.raw.popups.find(node => node.visible)!.css.position).toBe('fixed');
           expect(actual.raw.popups.find(node => node.visible)!.offsetParent).toBeNull();
-          if (!popup) popup = await page.evaluateHandle(() => {
-            const roots: (Document | ShadowRoot)[] = [document];
-            for (const host of document.querySelectorAll('[data-width-shadow]'))
-              if (host.shadowRoot) roots.push(host.shadowRoot);
-            return roots.flatMap(root => [...root.querySelectorAll<HTMLElement>('.ant-select-dropdown')])
-              .find(node => !node.hidden && getComputedStyle(node).display !== 'none')!;
-          });
+          if (!popup) {
+            popup = await page.evaluateHandle(() => {
+              const roots: (Document | ShadowRoot)[] = [document];
+              for (const host of document.querySelectorAll('[data-width-shadow]')) {
+                if (host.shadowRoot) roots.push(host.shadowRoot);
+              }
+              return roots.flatMap(root => [...root.querySelectorAll<HTMLElement>('.ant-select-dropdown')])
+                .find(node => !node.hidden && getComputedStyle(node).display !== 'none')!;
+            });
+          }
           expect(await popup.evaluate(node => node.isConnected)).toBe(true);
           expect(await popup.evaluate(node => {
             const roots: (Document | ShadowRoot)[] = [document];
-            for (const host of document.querySelectorAll('[data-width-shadow]'))
+            for (const host of document.querySelectorAll('[data-width-shadow]')) {
               if (host.shadowRoot) roots.push(host.shadowRoot);
+            }
             const current = roots.flatMap(root => [...root.querySelectorAll<HTMLElement>('.ant-select-dropdown')])
               .find(element => !element.hidden && getComputedStyle(element).display !== 'none');
             return current === node;

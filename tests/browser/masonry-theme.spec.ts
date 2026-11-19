@@ -29,7 +29,9 @@ test('Masonry font aliases remeasure fresh content while preserving drafts, focu
     await draft.fill('Retained Masonry draft');
     await draft.focus();
     await draft.evaluate(node => {
-      if (!(node instanceof HTMLInputElement)) throw new Error('Expected native draft input');
+      if (!(node instanceof HTMLInputElement)) {
+        throw new Error('Expected native draft input');
+      }
       node.setSelectionRange(2, 9);
     });
     const oldRoot = await root.elementHandle();
@@ -47,7 +49,9 @@ test('Masonry font aliases remeasure fresh content while preserving drafts, focu
     await expect(draft).toHaveValue('Retained Masonry draft');
     await expect(draft).toBeFocused();
     expect(await draft.evaluate(node => {
-      if (!(node instanceof HTMLInputElement)) throw new Error('Expected native draft input');
+      if (!(node instanceof HTMLInputElement)) {
+        throw new Error('Expected native draft input');
+      }
 
       return [node.selectionStart, node.selectionEnd];
     })).toEqual([2, 9]);

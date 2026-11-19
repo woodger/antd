@@ -173,7 +173,9 @@
 
   $effect(() => {
     const element = nativeElement;
-    if (!element || !enabled) return;
+    if (!element || !enabled) {
+      return;
+    }
     function update() {
       const bounds = element!.getBoundingClientRect().width;
       width = element!.offsetWidth === Math.round(bounds) ? bounds : element!.offsetWidth;
@@ -199,7 +201,9 @@
 
   $effect(() => {
     const element = nativeElement;
-    if (!element || !nativeMeasure || !enabled) return;
+    if (!element || !nativeMeasure || !enabled) {
+      return;
+    }
     const Observer = element.ownerDocument.defaultView?.IntersectionObserver;
     const observer = Observer ? new Observer(() => {
       nativeVisible = Boolean(element.offsetParent);
@@ -222,7 +226,9 @@
   }
 
   function save(value: string) {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
     edit.onChange?.(value);
     innerEditing = false;
   }

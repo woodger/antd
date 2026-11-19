@@ -22,14 +22,18 @@ export function getImagePreviewItems(
   items: readonly ImagePreviewGroupItem[] | undefined,
   registered: ReadonlyMap<string, ImageGroupEntry>
 ): ImagePreviewEntry[] {
-  if (items) return items.map(item => {
-    if (typeof item === 'string') return { data: { src: item } };
-    return {
-      data: Object.fromEntries(
-        common.filter(key => item[key] !== undefined).map(key => [key, item[key]])
-      )
-    };
-  });
+  if (items) {
+    return items.map(item => {
+      if (typeof item === 'string') {
+        return { data: { src: item } };
+      }
+      return {
+        data: Object.fromEntries(
+          common.filter(key => item[key] !== undefined).map(key => [key, item[key]])
+        )
+      };
+    });
+  }
   return [...registered].flatMap(
     ([id, item]) => item.canPreview ? [{ id, data: { ...item.data } }] : []
   );

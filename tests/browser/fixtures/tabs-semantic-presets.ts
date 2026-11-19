@@ -49,7 +49,9 @@ function isUndefined(value: unknown): value is UndefinedMarker {
 }
 
 function more(input: SourceMore | undefined): TabsMoreProps | undefined {
-  if (!input) return undefined;
+  if (!input) {
+    return undefined;
+  }
 
   const { icon, overlayClassName, overlayStyle, ...rest } = input;
   const result: TabsMoreProps = { ...rest };
@@ -67,10 +69,13 @@ function more(input: SourceMore | undefined): TabsMoreProps | undefined {
 }
 
 function indicator(input: SourceSettings['indicator']): TabsProps['indicator'] {
-  if (!input) return undefined;
+  if (!input) {
+    return undefined;
+  }
   const align = input.align;
-  if (align !== undefined && align !== 'start' && align !== 'center' && align !== 'end')
+  if (align !== undefined && align !== 'start' && align !== 'center' && align !== 'end') {
     throw new Error(`Unknown indicator alignment: ${align}`);
+  }
 
   return { ...input, align };
 }

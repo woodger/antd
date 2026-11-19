@@ -1,10 +1,14 @@
 export function snapshotOverlayConfig(component: string) {
   const prefix = component === 'tooltip' || component === 'slider' ? 'ant-tooltip' : 'ant-popover';
   const popup = document.querySelector<HTMLElement>(`.${prefix}`);
-  if (!popup || getComputedStyle(popup).display === 'none' || !popup.getClientRects().length) return null;
+  if (!popup || getComputedStyle(popup).display === 'none' || !popup.getClientRects().length) {
+    return null;
+  }
   const rect = popup.getBoundingClientRect();
   const slot = (node: HTMLElement | null) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return {
       classes: [...node.classList].filter(name => /^(ctx-|local-|outer-|inner-|cb-)/.test(name)).sort(),

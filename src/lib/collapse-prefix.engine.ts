@@ -7,7 +7,9 @@ const rootStates = new Set([
 
 /** Общие variables/marker; native heading/button используют тот же prefix через data parts. */
 export function getCollapsePrefixCss(prefix: string) {
-  if (prefix === 'ant-collapse') return undefined;
+  if (prefix === 'ant-collapse') {
+    return undefined;
+  }
 
   return template
     .replace(/\.ant-collapse([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'

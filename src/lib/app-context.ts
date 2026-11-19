@@ -16,6 +16,8 @@ export function useAppOptions(): Readonly<AppOptions> | undefined {
 /** Вызывается при инициализации дочернего компонента под App, в том числе в SSR. */
 export function useApp(): AppInstance {
   const api = getContext<AppInstance | undefined>(appKey);
-  if (!api) throw new Error('useApp must be called inside App.');
+  if (!api) {
+    throw new Error('useApp must be called inside App.');
+  }
   return api;
 }

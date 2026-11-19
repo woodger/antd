@@ -23,10 +23,14 @@ export const selectSurfaceEdgeSamples: readonly SelectSurfaceEdgeSample[] =
     })));
 
 export function selectSurfaceEdgeActions(sample: SelectSurfaceEdgeSample): SelectSurfaceEdgeAction[] {
-  if (sample.axis === 'replacement') return [{ type: 'click' }, { type: 'key', key: 'ArrowDown' },
-    { type: 'key', key: 'Enter' }, { type: 'key', key: 'Escape' }, { type: 'key', key: 'Tab' }, { type: 'outside' }];
-  if (sample.axis === 'prefix') return [{ type: 'prefix' }, { type: 'key', key: 'Escape' },
-    { type: 'prefix' }, { type: 'choose', text: 'Beta' }, { type: 'outside' }];
+  if (sample.axis === 'replacement') {
+    return [{ type: 'click' }, { type: 'key', key: 'ArrowDown' },
+      { type: 'key', key: 'Enter' }, { type: 'key', key: 'Escape' }, { type: 'key', key: 'Tab' }, { type: 'outside' }];
+  }
+  if (sample.axis === 'prefix') {
+    return [{ type: 'prefix' }, { type: 'key', key: 'Escape' },
+      { type: 'prefix' }, { type: 'choose', text: 'Beta' }, { type: 'outside' }];
+  }
   return [{ type: 'click' }, { type: 'fill', text: 'Query' }, { type: 'clear' }, { type: 'outside' }];
 }
 

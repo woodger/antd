@@ -41,7 +41,9 @@ function trackOwnStyleNative() {
   const focusouts: unknown[] = [];
   document.addEventListener('focusout', event => {
     const target = event.target;
-    if (!(target instanceof HTMLElement) || target.getAttribute('data-select-icons-component') !== 'input:element') return;
+    if (!(target instanceof HTMLElement) || target.getAttribute('data-select-icons-component') !== 'input:element') {
+      return;
+    }
     const refs = window.raw?.current.readRefs(), owner = window.raw?.current.read() as NativeOwnStyleOwner | undefined;
     focusouts.push({ type: event.type, target: target.tagName, connected: target.isConnected,
       publicEditor: refs?.editor === target, publicRootConnected: refs?.root?.isConnected ?? false,
@@ -75,25 +77,31 @@ const hash = (value: string) => createHash('sha256').update(value).digest('hex')
 for (const sample of selectOwnStyleInitSamples) for (const entryPath of selectOwnStyleInitEntryPaths)
   test(`own CSS ${sample.id}/${entryPath}`, async ({ page }, testInfo) => {
     const browser = page.context().browser();
-    if (!browser) throw Error('Actual measured Chromium required');
+    if (!browser) {
+      throw Error('Actual measured Chromium required');
+    }
     expect(browser.version(), 'Source was independently measured in this exact browser').toBe('157.0.8103.78');
     const entry = readSelectComponentsOwnStyleInitCase(sample.id, entryPath), trace: unknown[] = [], failures: string[] = [];
     const diagnostics: unknown[] = [], networkFailures: unknown[] = [];
     page.on('console', message => {
-      if (['warning', 'error'].includes(message.type())) diagnostics.push({
-        type: message.type(),
-        text: message.text()
-      });
+      if (['warning', 'error'].includes(message.type())) {
+        diagnostics.push({
+          type: message.type(),
+          text: message.text()
+        });
+      }
     });
     page.on(
       'requestfailed',
       request => networkFailures.push({ url: request.url(), failure: request.failure() })
     );
     page.on('response', response => {
-      if (response.status() >= 400) networkFailures.push({
-        url: response.url(),
-        status: response.status()
-      });
+      if (response.status() >= 400) {
+        networkFailures.push({
+          url: response.url(),
+          status: response.status()
+        });
+      }
     });
     const verify = (
       actual: Parameters<typeof verifyOwnStylePoint>[0],
@@ -171,7 +179,9 @@ for (const sample of selectOwnStyleInitSamples) for (const entryPath of selectOw
         expect(edits).toEqual(entry.prehydrateEdits);
         await page.evaluate(edits => {
           const editor = window.ownStyleProbe.parsed.editor;
-          if (!editor) throw Error('Parsed real editor absent');
+          if (!editor) {
+            throw Error('Parsed real editor absent');
+          }
           for (const edit of edits) editor.style[edit.property as 'fontSize'] = edit.value;
         }, edits);
         const dirty = await physical();

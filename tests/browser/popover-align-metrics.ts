@@ -3,7 +3,9 @@ import type { PopoverAlignmentHost } from './fixtures/popover-align.types';
 export function snapshotPopoverAlignment() {
   const root = document.querySelector<PopoverAlignmentHost>('#popover-align-case');
   const popup = document.querySelector<HTMLElement>('[data-ant-popover]:not([hidden])');
-  if (!root || !popup) return null;
+  if (!root || !popup) {
+    return null;
+  }
   const anchor = root.querySelector<HTMLElement>('[data-alignment-anchor],.ant-avatar-group-more')!;
   const rect = (node: Element) => {
     const value = node.getBoundingClientRect();

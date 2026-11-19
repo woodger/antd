@@ -42,7 +42,9 @@ export function connectTreeSelectComponentOverflow(
     const { offsetWidth, offsetHeight } = node;
     const previous = sizes.get(node);
     if (previous && previous.width === width && previous.height === height
-      && previous.offsetWidth === offsetWidth && previous.offsetHeight === offsetHeight) return previous;
+      && previous.offsetWidth === offsetWidth && previous.offsetHeight === offsetHeight) {
+      return previous;
+    }
     const size = { width, height, offsetWidth, offsetHeight,
       sourceWidth: offsetWidth === Math.round(rect.width) ? rect.width : offsetWidth };
     sizes.set(node, size);
@@ -50,19 +52,25 @@ export function connectTreeSelectComponentOverflow(
   }
   function measure() {
     frame = 0;
-    if (disposed || !host.isConnected) return;
+    if (disposed || !host.isConnected) {
+      return;
+    }
     const tags = [...host.querySelectorAll<HTMLElement>(selectors.tag)];
     const rest = host.querySelector<HTMLElement>(selectors.rest);
     const prefix = host.querySelector<HTMLElement>(selectors.prefix);
     const nodes = new Set([host, suffix, ...tags, ...(rest ? [rest] : []), ...(prefix ? [prefix] : [])]);
-    for (const node of observed) if (!nodes.has(node)) {
-      resize.unobserve(node);
-      observed.delete(node);
-      sizes.delete(node);
+    for (const node of observed) {
+      if (!nodes.has(node)) {
+        resize.unobserve(node);
+        observed.delete(node);
+        sizes.delete(node);
+      }
     }
-    for (const node of nodes) if (!observed.has(node)) {
-      resize.observe(node);
-      observed.add(node);
+    for (const node of nodes) {
+      if (!observed.has(node)) {
+        resize.observe(node);
+        observed.add(node);
+      }
     }
 
     const measurement = rest ? sourceSize(rest) : undefined;

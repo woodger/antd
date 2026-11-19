@@ -28,7 +28,9 @@ export function createTreeSelectLabelCache<Data extends object>() {
     forChange(renderer: Snippet<[Data]>, data: Data, fallback: TreeSelectLabel): Snippet {
       const raw = original(fallback);
       const cached = get(renderer, data, raw);
-      if (cached) return cached;
+      if (cached) {
+        return cached;
+      }
 
       // Только обработчик выбора: пустой компонент создаёт snippet без рендера label.
       let label: Snippet | undefined;
@@ -37,7 +39,9 @@ export function createTreeSelectLabelCache<Data extends object>() {
         props: { renderer, data, capture: value => { label = value; } }
       });
       void unmount(binding);
-      if (!label) throw new Error('Unable to bind TreeSelect label');
+      if (!label) {
+        throw new Error('Unable to bind TreeSelect label');
+      }
       remember(renderer, data, raw, label);
       return label;
     },
@@ -53,17 +57,23 @@ export function createTreeSelectLabelCache<Data extends object>() {
       }[] = [];
       const records = items.map(item => {
         const data = nodes.get(item.value);
-        if (!data) return item;
+        if (!data) {
+          return item;
+        }
         const raw = original(item.label);
         const cached = get(renderer, data, raw);
-        if (cached) return { ...item, label: cached };
+        if (cached) {
+          return { ...item, label: cached };
+        }
 
         const record = { ...item };
         let captured = false;
         pending.push({
           renderer, data,
           capture: label => {
-            if (captured) return;
+            if (captured) {
+              return;
+            }
             captured = true;
             remember(renderer, data, raw, label);
             record.label = label;

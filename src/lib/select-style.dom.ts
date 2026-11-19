@@ -15,11 +15,13 @@ export function copySelectStyle(source: SelectStyleSnapshot, target: SelectStyle
     ? new Set([...declarations.map(({ property }) => property), ...Object.keys(managed).map(selectStyleName)])
     : new Set(target);
   for (const property of removed) target.removeProperty(property);
-  for (const { property, value, priority } of declarations) target.setProperty(
-    property,
-    value,
-    priority
-  );
+  for (const { property, value, priority } of declarations) {
+    target.setProperty(
+      property,
+      value,
+      priority
+    );
+  }
 }
 
 /** История хранит logical props отдельно от принятого браузером CSSOM. */
@@ -29,8 +31,12 @@ export function createSelectStyleWriter(initialTarget: SelectStyleTarget, initia
   let parser: CSSStyleDeclaration | undefined;
   let stringFrame: SelectStyleFrame | undefined;
   function legacy(frame: SelectStyleFrame): SelectStyleFrame {
-    if (!frame.string || !createParser) return frame;
-    if (stringFrame && stringFrame.text === frame.text) return stringFrame;
+    if (!frame.string || !createParser) {
+      return frame;
+    }
+    if (stringFrame && stringFrame.text === frame.text) {
+      return stringFrame;
+    }
     parser ??= createParser();
     parser.cssText = frame.text ?? '';
     // Прежний string API сохраняет parsing/canonicalization cssText; object keys
@@ -41,18 +47,22 @@ export function createSelectStyleWriter(initialTarget: SelectStyleTarget, initia
   let previous = legacy(initial);
 
   function set(property: string, value: string, priority: '' | 'important') {
-    if (property.startsWith('--') || priority) target.setProperty(
-      selectStyleName(property),
-      value,
-      priority
-    );
+    if (property.startsWith('--') || priority) {
+      target.setProperty(
+        selectStyleName(property),
+        value,
+        priority
+      );
+    }
     else Reflect.set(target, property === 'float' ? 'cssFloat' : property, value);
   }
 
   return {
     target(style: SelectStyleTarget) { target = style; },
     initialize() {
-      if (initial.string || !initial.authored.size) return;
+      if (initial.string || !initial.authored.size) {
+        return;
+      }
       // Свежий CSR повторяет порядок CSS setters Source; parsed SSR остаётся как есть.
       // Одного одинакового cssText недостаточно: порядок longhand/shorthand в CSSOM иной.
       for (const property of Object.keys(initial.properties)) set(property, '', '');

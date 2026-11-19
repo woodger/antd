@@ -11,7 +11,9 @@ function readHeight() {
   const popup = [...document.querySelectorAll<HTMLElement>('.ant-select-dropdown')]
     .find(node => !node.hidden && getComputedStyle(node).display !== 'none'
       && getComputedStyle(node).visibility !== 'hidden');
-  if (!popup) return null;
+  if (!popup) {
+    return null;
+  }
   const css = getComputedStyle(popup);
   const box = popup.getBoundingClientRect();
   const holder = popup.querySelector<HTMLElement>('[class$="-list-holder"]');
@@ -39,7 +41,9 @@ async function settle(page: Page) {
     };
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Public popup height did not settle');

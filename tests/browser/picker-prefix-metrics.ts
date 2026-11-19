@@ -9,7 +9,9 @@ export function snapshotPickerPrefix() {
     'background-color', 'border-top-color', 'border-top-width', 'border-radius',
     'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'box-shadow'];
   function css(node: Element | null | undefined, names: string[]) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries(names.map(name => [name, style.getPropertyValue(name)]));
   }

@@ -33,7 +33,9 @@ const parts = ['root', 'item', 'itemWrapper', 'itemIcon', 'itemSection', 'itemHe
   'itemTitle', 'itemContent', 'itemRail'] as const;
 
 function css(style?: Readonly<Record<string, string | number>>) {
-  if (!style) return;
+  if (!style) {
+    return;
+  }
   return Object.entries(style).map(([key, value]) => {
     const property = key.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
     const unit = typeof value === 'number' && key !== 'fontWeight' ? 'px' : '';
@@ -50,14 +52,18 @@ function classes(prefix: string): TimelineSlots {
 }
 
 export function timelineConfigRecord(descriptor?: TimelineConfigDescriptor): TimelineConfig | undefined {
-  if (!descriptor) return;
+  if (!descriptor) {
+    return;
+  }
   return { class: descriptor.className, style: css(descriptor.style),
     classNames: descriptor.classNames, styles: styles(descriptor.styles) };
 }
 
 export function timelineContextConfig(sample: TimelineConfigSample): TimelineConfig {
   const context = timelineConfigRecord(sample.context) ?? {};
-  if (!sample.contextCallback) return context;
+  if (!sample.contextCallback) {
+    return context;
+  }
 
   return {
     ...context,
@@ -79,7 +85,9 @@ export function timelineLocalProps(sample: TimelineConfigSample): Partial<Timeli
     ...timelineConfigRecord(sample.local), rootClassName: sample.local?.rootClassName,
     mode: sample.mode, orientation: sample.orientation, reverse: sample.reverse
   };
-  if (!sample.localCallback) return props;
+  if (!sample.localCallback) {
+    return props;
+  }
 
   return {
     ...props,

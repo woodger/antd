@@ -15,7 +15,9 @@ export function readNativeTimeScroll() {
     'font-size', 'line-height', 'padding-top', 'padding-bottom',
     'border-top-width', 'border-bottom-width', 'scroll-behavior', 'overscroll-behavior-y'];
   const describe = node => {
-    if (node == null) return null;
+    if (node == null) {
+      return null;
+    }
     const computed = getComputedStyle(node);
     raw.retainedNodes.add(node);
     return { identity: id(node), tag: node.tagName, connected: node.isConnected,

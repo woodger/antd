@@ -23,7 +23,9 @@ async function paste(input: Locator, text: string) {
     const event = new ClipboardEvent('paste', {
       clipboardData: data, bubbles: true, cancelable: true
     });
-    if (!node.dispatchEvent(event)) return;
+    if (!node.dispatchEvent(event)) {
+      return;
+    }
     const normalized = text.replace(/[\r\n]+$/, '').replace(/\r\n/g, ' ').replace(/[\r\n]/g, ' ');
     const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!;
     setter.call(node, normalized);

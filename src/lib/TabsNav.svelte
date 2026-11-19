@@ -64,7 +64,9 @@
   $effect(() => {
     const ref = navRef;
     const node = element;
-    if (!ref || !node) return;
+    if (!ref || !node) {
+      return;
+    }
 
     untrack(() => ref(node));
     return () => untrack(() => ref(null));
@@ -77,7 +79,9 @@
     const canAdd = showAdd;
     const layoutChanged = nav?.hasAttribute('data-tabs-nested') !== nestedNavigation;
     retainedFocus = undefined;
-    if (!nav) return;
+    if (!nav) {
+      return;
+    }
 
     const currentKeys = Array.from(
       nav.querySelectorAll<HTMLElement>('[role="tab"]'),
@@ -124,7 +128,9 @@
     const key = getTabsActiveKey(items, focusKey ?? selectedKey);
     const previous = retainedFocus;
     retainedFocus = undefined;
-    if (!nav) return;
+    if (!nav) {
+      return;
+    }
 
     if (repairFocus) {
       repairFocus = false;
@@ -136,14 +142,17 @@
       && !previous.matches(
         ':disabled'
       )
-      && nav.ownerDocument.activeElement === nav.ownerDocument.body)
+      && nav.ownerDocument.activeElement === nav.ownerDocument.body) {
       untrack(() => previous.focus({ preventScroll: true }));
+    }
   });
 
   $effect(() => {
     const scroller = viewport;
     const isVertical = vertical;
-    if (!scroller) return;
+    if (!scroller) {
+      return;
+    }
 
     return untrack(() => connectTabsScroll(scroller, isVertical, info => bar.onTabScroll?.(info)));
   });
@@ -151,7 +160,9 @@
   $effect(() => {
     const view = root?.ownerDocument.defaultView;
     const next = getTabsIndicatorStyle(activeOffset, vertical, rtl, bar.indicator);
-    if (!view) return;
+    if (!view) {
+      return;
+    }
 
     const frame = view.requestAnimationFrame(() => {
       if (!isTabsIndicatorStyleEqual(inkStyle, next)) inkStyle = next;
@@ -169,7 +180,8 @@
 
     if (container
       && scroller
-      && nav) return untrack(
+      && nav) {
+      return untrack(
         () => connectTabsNav(
           container,
           scroller,
@@ -182,6 +194,7 @@
           }
         )
       );
+    }
   });
 
   onDestroy(() => {
@@ -196,7 +209,9 @@
     const keys = items.map(item => item.key);
     const isVertical = vertical;
     const isRTL = rtl;
-    if (!scroller || !nav || !controls) return;
+    if (!scroller || !nav || !controls) {
+      return;
+    }
 
     return untrack(() => connectTabsOverflow(scroller, nav, controls, add, {
       vertical: isVertical,
@@ -210,7 +225,9 @@
   }
 
   function focusTab(key: string | undefined) {
-    if (!list) return;
+    if (!list) {
+      return;
+    }
 
     const tab = Array.from(list.querySelectorAll<HTMLButtonElement>('[role="tab"]')).find(
       (element) => element.dataset.tabsKey === key && !element.disabled
@@ -222,11 +239,17 @@
   }
 
   function handleKeydown(event: KeyboardEvent) {
-    if (event.defaultPrevented || event.isComposing) return;
+    if (event.defaultPrevented || event.isComposing) {
+      return;
+    }
     if (event.target instanceof Element && event.target !== list
-      && !event.target.closest('[role="tab"]')) return;
+      && !event.target.closest('[role="tab"]')) {
+      return;
+    }
     if (event.target instanceof Element
-      && event.target.closest('[data-ant-tabs-part="tab-remove"], [data-ant-tabs-part="nav-add"]')) return;
+      && event.target.closest('[data-ant-tabs-part="tab-remove"], [data-ant-tabs-part="nav-add"]')) {
+      return;
+    }
 
     if (editable && (event.key === 'Delete' || event.key === 'Backspace')) {
       const item = items.find(item => item.key === focusKey);
@@ -236,7 +259,9 @@
 
     if (event.ctrlKey
       || event.metaKey
-      || event.altKey) return;
+      || event.altKey) {
+      return;
+    }
 
     const forward = vertical
       ? 'ArrowDown'
@@ -247,7 +272,9 @@
       : event.key === 'End'
         ? 'last'
         : event.key === forward ? 'next' : event.key === backward ? 'previous' : null;
-    if (!direction) return;
+    if (!direction) {
+      return;
+    }
 
     event.preventDefault();
     focusTab(getTabsNavigationKey(items, tabStop, direction));
@@ -257,8 +284,9 @@
     if (event.relatedTarget instanceof Node && !list?.contains(event.relatedTarget))
       focusKey = undefined;
     else if (event.relatedTarget instanceof Element
-      && !event.relatedTarget.closest('[role="tab"]'))
+      && !event.relatedTarget.closest('[role="tab"]')) {
       focusKey = undefined;
+    }
   }
 
   function handleTabFocus(key: string, element: HTMLElement) {
@@ -268,7 +296,9 @@
   }
 
   async function removeTab(item: TabsItem, event: MouseEvent | KeyboardEvent, moveFocus = false) {
-    if (!isTabsItemRemovable(item, editable)) return;
+    if (!isTabsItemRemovable(item, editable)) {
+      return;
+    }
 
     event.preventDefault();
     event.stopPropagation();
@@ -276,18 +306,26 @@
     const last = enabled.at(-1)?.key === item.key;
     const next = getTabsNavigationKey(items, tabStop, last ? 'previous' : 'next');
     bar.editable?.onEdit('remove', { key: item.key, event });
-    if (!moveFocus) return;
+    if (!moveFocus) {
+      return;
+    }
 
     await tick();
-    if (!active || !root) return;
+    if (!active || !root) {
+      return;
+    }
     const focused = root.ownerDocument.activeElement;
-    if (focused !== root.ownerDocument.body && !root.contains(focused)) return;
+    if (focused !== root.ownerDocument.body && !root.contains(focused)) {
+      return;
+    }
 
     focusTab(getTabsActiveKey(items, next));
   }
 
   function handleCellClick(item: TabsItem, event: MouseEvent) {
-    if (event.target instanceof Element && event.target.closest('button')) return;
+    if (event.target instanceof Element && event.target.closest('button')) {
+      return;
+    }
     bar.onTabClick(item.key, event);
   }
 

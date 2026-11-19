@@ -31,7 +31,9 @@ export function createNestedRuleController(onPending?: (count: number) => void) 
       return new Promise<void>((_, reject) => {
         pending.push(() => reject(Error(message)));
         onPending?.(pending.length);
-        for (const waiter of waiting) if (pending.length >= waiter.count) waiter.ready();
+        for (const waiter of waiting) {
+          if (pending.length >= waiter.count) waiter.ready();
+        }
       });
     },
     waitFor(count: number) {
@@ -62,20 +64,26 @@ export function nestedRule(
 ): ValidationRule {
   const { fields, defaultField, validator, transform, ...rest } = desc;
   const result: ValidationRule = { ...rest, type: desc.type as ValidationRuleType | undefined };
-  if (fields) result.fields = Object.fromEntries(Object.entries(fields).flatMap(([key, rule]) =>
-    rule === undefined ? [] : [[key, Array.isArray(rule) ? rule.map(child => nestedRule(
-      child,
-      controller
-    ))
-      : nestedRule(rule as NestedRuleDescriptor, controller)]]
-  ));
+  if (fields) {
+    result.fields = Object.fromEntries(Object.entries(fields).flatMap(([key, rule]) =>
+      rule === undefined ? [] : [[key, Array.isArray(rule) ? rule.map(child => nestedRule(
+        child,
+        controller
+      ))
+        : nestedRule(rule as NestedRuleDescriptor, controller)]]
+    ));
+  }
   if (defaultField) result.defaultField = nestedRule(defaultField, controller);
-  if (validator) result.validator = async (value) => {
-    if (validator === 'slow' || validator === 'by-value' && value === 'slow') {
-      return controller.hold(desc.message ?? 'Slow');
-    }
-    if (validator !== 'pass') throw Error(desc.message ?? 'Fast');
-  };
+  if (validator) {
+    result.validator = async (value) => {
+      if (validator === 'slow' || validator === 'by-value' && value === 'slow') {
+        return controller.hold(desc.message ?? 'Slow');
+      }
+      if (validator !== 'pass') {
+        throw Error(desc.message ?? 'Fast');
+      }
+    };
+  }
   if (transform === 'shrink') result.transform = value => (value as unknown[]).slice(-1);
   if (transform === 'object-filled') result.transform = () => ({ a: 'ok' });
   if (transform === 'trim') result.transform = value => String(value).trim();

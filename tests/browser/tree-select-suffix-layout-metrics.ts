@@ -30,7 +30,9 @@ export function readTreeSelectSuffixLayout() {
   const base = content.getBoundingClientRect(), rootBox = root.getBoundingClientRect();
   const round = (value: number) => Math.round(value * 1000) / 1000;
   function box(node: HTMLElement | null) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const rect = node.getBoundingClientRect(), style = getComputedStyle(node);
     return { x: round(rect.x - base.x), y: round(rect.y - base.y), width: round(rect.width), height: round(rect.height),
       offsetWidth: node.offsetWidth, offsetHeight: node.offsetHeight,

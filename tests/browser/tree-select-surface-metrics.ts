@@ -9,10 +9,18 @@ export function readTreeSelectSurface() {
   const text = (node: Element) => node.textContent?.replace(/\u00a0/g, ' ') ?? '';
   const icons = (node: Element) => Array.from(node.querySelectorAll('svg'), svg => {
     const icon = svg.getAttribute('data-icon');
-    if (icon) return icon;
-    if (svg.hasAttribute('fill-rule')) return 'close-circle';
-    if (svg.querySelector('circle')) return 'search';
-    if (svg.classList.contains('loading')) return 'loading';
+    if (icon) {
+      return icon;
+    }
+    if (svg.hasAttribute('fill-rule')) {
+      return 'close-circle';
+    }
+    if (svg.querySelector('circle')) {
+      return 'search';
+    }
+    if (svg.classList.contains('loading')) {
+      return 'loading';
+    }
     return svg.querySelector('path')?.getAttribute('d') === 'm6 9 6 6 6-6' ? 'down' : 'close';
   });
   const affix = (node: Element | null) => node && ({ text: text(node), icons: icons(node),

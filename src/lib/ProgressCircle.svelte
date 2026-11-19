@@ -83,7 +83,9 @@
     const element = svg;
     void layout;
     void styles;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     const paths = element.querySelectorAll<SVGCircleElement>('[data-ant-progress-circle-path]');
     const rail = element.querySelector<SVGCircleElement>('[data-ant-progress-circle-rail]');
@@ -116,7 +118,9 @@
     path: typeof layout.rail & { percent?: number; },
     extra?: string
   ): InlineStyleLayer[] {
-    if (!path) return [extra];
+    if (!path) {
+      return [extra];
+    }
 
     return [[
       ['stroke', path.stroke ?? ''],

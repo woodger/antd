@@ -17,7 +17,9 @@
     initialLocale?: 'us' | 'gb'
   } = $props();
   const selected = untrack(() => samples.find(sample => sample.id === owner));
-  if (!selected) throw Error('Choose one authored week owner');
+  if (!selected) {
+    throw Error('Choose one authored week owner');
+  }
   const sample = selected, output = untrack(() => capture), range = sample.kind === 'range';
   const recorder = createDatePickerPresetsRecorder();
   const authoredDate = (name: WeekAuthoredDateName) =>
@@ -56,13 +58,18 @@
         value.minute(), value.second(), value.millisecond()], locale: value.locale() },
     sameAsAuthored: Object.fromEntries(Object.entries(authored).map(([name, date]) => [name, date === value])) });
   function nestedDates(value: unknown, path: Array<string | number> = []): unknown[] {
-    if (dayjs.isDayjs(value)) return [{ path, value: dates(value) }];
-    if (Array.isArray(value)) return value.flatMap((item, index) => nestedDates(
-      item,
-      [...path, index]
-    ));
-    if (value && typeof value === 'object' && Object.getPrototypeOf(value) === Object.prototype)
+    if (dayjs.isDayjs(value)) {
+      return [{ path, value: dates(value) }];
+    }
+    if (Array.isArray(value)) {
+      return value.flatMap((item, index) => nestedDates(
+        item,
+        [...path, index]
+      ));
+    }
+    if (value && typeof value === 'object' && Object.getPrototypeOf(value) === Object.prototype) {
       return Object.entries(value).flatMap(([key, item]) => nestedDates(item, [...path, key]));
+    }
     return [];
   }
   const context = (value: unknown) => ({ type: typeof value, isUndefined: value === undefined,
@@ -129,7 +136,9 @@
   const controls: WeekControlName[] = ['need-confirm-true', 'need-confirm-false', 'limits-on', 'limits-off',
     'locale-gb', 'hide-week-numbers', 'default-week-numbers', ...rangeControls];
   const delta = (rows: WeekInvocation[], cursor = 0) => {
-    if (!Number.isInteger(cursor) || cursor < 0 || cursor > rows.length) throw Error('Invalid observation cursor');
+    if (!Number.isInteger(cursor) || cursor < 0 || cursor > rows.length) {
+      throw Error('Invalid observation cursor');
+    }
     return { cursor, next: rows.length, rows: rows.slice(cursor) };
   };
   output.recorder = recorder;

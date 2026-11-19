@@ -35,7 +35,9 @@
   );
 
   $effect(() => {
-    if (!root || !animated) return;
+    if (!root || !animated) {
+      return;
+    }
     const controller = createUploadMotion(root, next => { motionState = next; }, () => {});
     motion = controller;
     return () => {

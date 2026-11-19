@@ -89,7 +89,9 @@ function instrumentSurfaceResources() {
   const timers = new Set<number>(), browser: Window = window;
   const schedule = browser.setTimeout.bind(browser), clear = browser.clearTimeout.bind(browser);
   browser.setTimeout = (handler, timeout, ...args) => {
-    if (typeof handler !== 'function') throw Error('Expected function surface hydration timer');
+    if (typeof handler !== 'function') {
+      throw Error('Expected function surface hydration timer');
+    }
     const timer = schedule(() => {
       timers.delete(timer);
       handler(...args);
@@ -254,17 +256,21 @@ for (const entry of selectSurfaceHydrationReference.cases) {
       }));
       await verify(entry.initial, 'hydrated-initial');
       for (const [index, step] of entry.steps.entries()) {
-        if (step.action.type === 'click') await identity.evaluateHandle(before => before.root)
-          .then(async handle => {
-            try {
-            await handle.asElement()!.click();
-          } finally {
-            await handle.dispose();
-          }
-          });
+        if (step.action.type === 'click') {
+          await identity.evaluateHandle(before => before.root)
+            .then(async handle => {
+              try {
+              await handle.asElement()!.click();
+            } finally {
+              await handle.dispose();
+            }
+            });
+        }
         else if (step.action.type === 'outside') await page.locator('[data-surface-outside]').click();
-        else await page.evaluate(action => document.querySelector('[data-surface-command]')!
-          .dispatchEvent(new CustomEvent('historyupdate', { detail: action })), step.action);
+        else {
+          await page.evaluate(action => document.querySelector('[data-surface-command]')!
+            .dispatchEvent(new CustomEvent('historyupdate', { detail: action })), step.action);
+        }
         await page.mouse.move(0, 0);
         await verify(step, `${index}/${JSON.stringify(step.action)}`);
       }
@@ -283,7 +289,9 @@ for (const entry of selectSurfaceHydrationReference.cases) {
       expect(await page.evaluate(() => document.activeElement === window.selectSurfaceHydration!.editor)).toBe(true);
       const pending = await page.evaluate(async () => {
         const state = window.selectSurfaceHydration!, popup = document.querySelector<HTMLElement>('.ant-select-dropdown')!;
-        if (!popup?.isConnected) throw Error('Disposal must interrupt an actual connected popup');
+        if (!popup?.isConnected) {
+          throw Error('Disposal must interrupt an actual connected popup');
+        }
         const snapshot = (): DisposalSnapshot => ({ owner: JSON.parse(JSON.stringify(state.read())),
           rootConnected: state.root.isConnected, editorConnected: state.editor.isConnected,
           ownerConnected: state.owner.isConnected, popupConnected: popup.isConnected });

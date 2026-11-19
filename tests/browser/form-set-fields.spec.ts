@@ -14,10 +14,12 @@ test('Form setFields matches source metadata, batch values, typed paths and manu
       await expect(page.getByRole('status', { name: 'Set fields bare done', exact: true }))
         .toHaveText('true');
     }
-    else if (id === 'reset') await page.getByRole(
-      'button',
-      { name: 'Reset set fields', exact: true }
-    ).click();
+    else if (id === 'reset') {
+      await page.getByRole(
+        'button',
+        { name: 'Reset set fields', exact: true }
+      ).click();
+    }
     else if (id === 'pending' || id === 'second-pending') {
       await page.getByRole('button', { name: 'Validate set field', exact: true }).click();
       await expect(page.getByRole('status', { name: 'Set fields pending', exact: true }))

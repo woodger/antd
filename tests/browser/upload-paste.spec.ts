@@ -16,11 +16,15 @@ async function paste(page: Page, sample: ClipboardSample, selector?: string) {
     const event = new ClipboardEvent('paste', {
       clipboardData: data, bubbles: true, cancelable: true
     });
-    if (sample.emptyFileItem) Object.defineProperty(event, 'clipboardData', {
-      value: { files: [], items: [{ kind: 'file' }] }
-    });
+    if (sample.emptyFileItem) {
+      Object.defineProperty(event, 'clipboardData', {
+        value: { files: [], items: [{ kind: 'file' }] }
+      });
+    }
     const target = selector ? document.querySelector(selector) : document;
-    if (!target) throw new Error('Paste target is missing');
+    if (!target) {
+      throw new Error('Paste target is missing');
+    }
 
     target.dispatchEvent(event);
     await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));

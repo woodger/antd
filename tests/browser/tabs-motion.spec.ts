@@ -262,10 +262,12 @@ test('end=false retains the motion until an allowed end from each pane itself', 
 
   await expect(panel).toHaveClass(/tabs-motion-custom-leave-active/);
   await root.locator('[role=tabpanel]').evaluateAll(elements => {
-    for (const element of elements) element.dispatchEvent(new TransitionEvent('transitionend', {
-      bubbles: true,
-      propertyName: 'opacity'
-    }));
+    for (const element of elements) {
+      element.dispatchEvent(new TransitionEvent('transitionend', {
+        bubbles: true,
+        propertyName: 'opacity'
+      }));
+    }
   });
   await stable(page);
 

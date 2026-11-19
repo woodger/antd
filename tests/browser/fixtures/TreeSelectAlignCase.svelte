@@ -72,7 +72,9 @@
   }
   let alignProps = $derived.by<AlignProps>(() => {
     const props: AlignProps = {};
-    if (baselineNoAlignment) return props;
+    if (baselineNoAlignment) {
+      return props;
+    }
     if (Object.hasOwn(settings, 'popupAlign')) props.popupAlign = settings.popupAlign;
     if (Object.hasOwn(settings, 'builtinPlacements')) props.builtinPlacements = settings.builtinPlacements;
     if (Object.hasOwn(settings, 'placement')) props.placement = settings.placement;
@@ -120,7 +122,9 @@
   export function readEvents() { return events; }
   export function readSemantic() { return receipt.semantic; }
   export function syncShadowStyles() {
-    if (!shadow) return;
+    if (!shadow) {
+      return;
+    }
     for (const style of document.querySelectorAll('style')) {
       if (![...shadow.querySelectorAll('style')].some(current => current.textContent === style.textContent))
         shadow.append(style.cloneNode(true));

@@ -32,7 +32,9 @@ test('turning off destruction keeps a destroyed pane lazy and repairs owned focu
   const alpha = page.getByRole('textbox', { name: 'Alpha draft', exact: true });
   await alpha.fill('Removed draft');
   await page.getByRole('button', { name: 'Hide Alpha', exact: true }).evaluate(element => {
-    if (!(element instanceof HTMLButtonElement)) throw new Error('Expected a native button');
+    if (!(element instanceof HTMLButtonElement)) {
+      throw new Error('Expected a native button');
+    }
     element.click();
   });
 

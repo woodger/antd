@@ -64,7 +64,9 @@ function firstDefined<Content>(...values: Content[]): Content | undefined {
 }
 
 function searchIcon(config: SearchIconConfig | undefined): RenderEmptyContent {
-  if (config === false) return null;
+  if (config === false) {
+    return null;
+  }
   return typeof config === 'object' ? config.searchIcon : undefined;
 }
 
@@ -72,7 +74,9 @@ function iconDefinition<Info>(
   own: SelectRenderNode<Info>, context: SelectRenderNode<Info>, fallback: RenderEmptyContent
 ): IconDefinition<Info> {
   const value = own !== undefined ? own : context;
-  if (value === undefined) return { producer: false, value: fallback };
+  if (value === undefined) {
+    return { producer: false, value: fallback };
+  }
   return typeof value === 'function' ? { producer: true, value } : { producer: false, value };
 }
 
@@ -91,22 +95,26 @@ export function resolveSelectSuffix(input: SelectSuffixInput, defaults: SelectSu
 
   const local = input.suffixIcon;
   const appendFeedback = Boolean(input.hasFeedback);
-  if (local === null && !appendFeedback)
+  if (local === null && !appendFeedback) {
     return { content: null, appendFeedback: false, hasSuffix: false, visible: false };
+  }
 
   let content: RenderEmptyContent;
   if (local !== undefined) content = local;
-  else if (input.info.loading) content = firstDefined(
-    input.loadingIcon,
-    input.context?.loadingIcon,
-    defaults.loading
-  );
-  else if (input.info.open && input.info.showSearch)
+  else if (input.info.loading) {
+    content = firstDefined(
+      input.loadingIcon,
+      input.context?.loadingIcon,
+      defaults.loading
+    );
+  }
+  else if (input.info.open && input.info.showSearch) {
     content = firstDefined(
       searchIcon(input.showSearch),
       searchIcon(input.context?.showSearch),
       defaults.search
     );
+  }
   else content = firstDefined(input.context?.suffixIcon, defaults.down);
 
   // Source Fragment сохраняет Affix даже с false/0/пустым содержимым.
@@ -125,8 +133,9 @@ export function resolveSelectMenuIcon<Value extends string | number>(
   info: SelectMenuItemIconInfo<Value>
 ): SelectMenuIconResolution {
   const { producer, value: render } = iconDefinition(own, context, fallbackContent);
-  if (render && !producer && !info.isSelected)
+  if (render && !producer && !info.isSelected) {
     return { visible: false, content: undefined, fallback: false };
+  }
 
   const content = producer ? render({
     value: info.value, disabled: info.disabled, isSelected: info.isSelected
@@ -148,8 +157,9 @@ export function resolveSelectClear(
 ): SelectClearResolution {
   const allowClear = input.allowClear ?? input.contextAllowClear;
   if (!allowClear || input.disabled || !(input.displayCount || input.searchValue)
-    || input.combobox && input.searchValue === '')
+    || input.combobox && input.searchValue === '') {
     return { visible: false, content: null, label: '' };
+  }
 
   const config = typeof allowClear === 'object' ? allowClear : undefined;
   return { visible: true, content: (allowClear === true ? defaultIcon : config?.clearIcon) || '×',

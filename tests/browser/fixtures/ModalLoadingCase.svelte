@@ -44,16 +44,20 @@
     ...(initial.footer === 'custom-node' ? { footer: footerContent } : {}) });
   let last: { props: unknown; rawProps: unknown } | undefined;
   export function read() {
-    if (alive || !last) last = {
-      props: recorder.encode(ownerProps),
-      rawProps: recorder.raw(ownerProps)
-    };
+    if (alive || !last) {
+      last = {
+        props: recorder.encode(ownerProps),
+        rawProps: recorder.raw(ownerProps)
+      };
+    }
     return { alive, open, loading, footer: initial.footer, prefixCls: initial.prefixCls,
       events: [...events], rawEvents: [...rawEvents], lifecycle: [...lifecycle], activity: [...activity], ...last };
   }
   export function readRefs() { return { ...refs }; }
   export function update(action: ModalLoadingUpdate) {
-    if (action.type !== 'loading' || typeof action.value !== 'boolean') throw Error('Unknown ordinary Modal caller update');
+    if (action.type !== 'loading' || typeof action.value !== 'boolean') {
+      throw Error('Unknown ordinary Modal caller update');
+    }
     loading = action.value;
   }
   if (ownerCapture) {

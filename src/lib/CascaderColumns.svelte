@@ -77,7 +77,9 @@
     const root = host;
     let disposed = false;
     void tick().then(() => {
-      if (disposed || !root) return;
+      if (disposed || !root) {
+        return;
+      }
       const items = [...root.querySelectorAll<HTMLElement>('[data-cascader-active="true"]')];
       if (panel && root.contains(root.ownerDocument.activeElement))
         items.at(-1)?.querySelector<HTMLButtonElement>('button')?.focus({ preventScroll: true });

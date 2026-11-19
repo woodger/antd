@@ -32,7 +32,9 @@ export interface StatisticConfigSample {
 const parts = ['root', 'header', 'title', 'content', 'value', 'prefix', 'suffix'] as const;
 
 function css(style?: Readonly<Record<string, string | number>>) {
-  if (!style) return;
+  if (!style) {
+    return;
+  }
 
   return Object.entries(style).map(([key, value]) => {
     const property = key.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
@@ -50,7 +52,9 @@ function classes(prefix: string): StatisticSemanticSlots {
 }
 
 export function statisticConfigRecord(descriptor?: StatisticConfigDescriptor): StatisticConfig | undefined {
-  if (!descriptor) return;
+  if (!descriptor) {
+    return;
+  }
   return {
     class: descriptor.className, style: css(descriptor.style),
     classNames: descriptor.classNames, styles: styles(descriptor.styles)
@@ -59,7 +63,9 @@ export function statisticConfigRecord(descriptor?: StatisticConfigDescriptor): S
 
 export function statisticContextConfig(sample: StatisticConfigSample): StatisticConfig {
   const config = statisticConfigRecord(sample.context) ?? {};
-  if (!sample.contextCallback) return config;
+  if (!sample.contextCallback) {
+    return config;
+  }
 
   return {
     ...config,
@@ -85,7 +91,9 @@ export function statisticConfigProps(sample: StatisticConfigSample): Partial<Sta
     title: 'Statistic title', prefix: '$', suffix: 'USD', loading: sample.loading,
     ...(sample.omitValue ? {} : { value: sample.value ?? 1234.5 })
   };
-  if (!sample.localCallback) return props;
+  if (!sample.localCallback) {
+    return props;
+  }
 
   return {
     ...props,

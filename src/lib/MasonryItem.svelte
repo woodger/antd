@@ -34,13 +34,17 @@
   let column = $derived(entry.position?.column ?? 0);
 
   $effect(() => {
-    if (!element || !runtime) return;
+    if (!element || !runtime) {
+      return;
+    }
 
     return runtime.register(entry.itemKey, element);
   });
 
   $effect(() => {
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     const controller = createMasonryMotion(
       element,

@@ -78,7 +78,9 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   }
 
   function update(manual = false) {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
 
     const rect = anchor.getBoundingClientRect();
     const visual = view.visualViewport;
@@ -161,7 +163,9 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
       }
     );
     flips = position.flips;
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     const signature = `${position
       .left}:${position
         .top}:${position
@@ -210,7 +214,9 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   function handleKeydown(event: KeyboardEvent) {
     const dialog = getPopupActiveElement(popup)?.closest('dialog[open]');
     // Вложенный native dialog получает свои keys раньше содержащего его popup.
-    if (dialog && popup.contains(dialog) && !dialog.contains(anchor)) return;
+    if (dialog && popup.contains(dialog) && !dialog.contains(anchor)) {
+      return;
+    }
 
     const current = shown && options.interactive !== false && !anchor.closest('[inert]')
       && openPopups.get(document)?.findLast(element => !element.inert) === popup;
@@ -243,8 +249,9 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
       && !popup.contains(target)
       && !('host' in popupRoot && popupRoot.host === target)
       && !trigger.contains(target)
-      && !('host' in triggerRoot && triggerRoot.host === target))
+      && !('host' in triggerRoot && triggerRoot.host === target)) {
       options.onDismiss('outside');
+    }
   }
 
   function handlePointerdown(event: PointerEvent) {
@@ -278,7 +285,9 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     view.removeEventListener('contextmenu', handleMousedown, true);
     popup.removeEventListener('pointerdown', preserveFocus);
     const release = () => {
-      if (popupConnections.get(popup) !== owner) return;
+      if (popupConnections.get(popup) !== owner) {
+        return;
+      }
       popupConnections.delete(popup);
       hide();
     };

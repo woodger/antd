@@ -36,7 +36,9 @@
   let strings = $derived({ ...ruRU.avatarGroup, ...config.locale.avatarGroup });
   $effect(() => {
     const node = host;
-    if (!node) return;
+    if (!node) {
+      return;
+    }
 
     return connectFeedbackFocus(node, focused => {
       // Popup может находиться вне группы после getPopupContainer.

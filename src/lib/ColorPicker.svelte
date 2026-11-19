@@ -152,7 +152,9 @@
   $effect(() => {
     mounted = true;
     const element = host;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
     function update() {
       anchor = element!.firstElementChild as HTMLElement ?? element;
     }
@@ -167,7 +169,9 @@
   $effect(() => {
     const surface = popup;
     const source = anchor;
-    if (!open || !surface || !source) return;
+    if (!open || !surface || !source) {
+      return;
+    }
     let flips: PopupFlipCache = {};
     let previousPlacement = '';
     return untrack(() => connectPopup(surface, source, {
@@ -283,15 +287,21 @@
   }
 
   function requestOpen(next: boolean) {
-    if (next && disabled) return;
-    if (next === (props.open ?? innerOpen)) return;
+    if (next && disabled) {
+      return;
+    }
+    if (next === (props.open ?? innerOpen)) {
+      return;
+    }
     innerOpen = next;
     props.onOpenChange?.(next);
   }
 
   function hover(next: boolean) {
     if (timer) clearTimeout(timer);
-    if (props.trigger !== 'hover') return;
+    if (props.trigger !== 'hover') {
+      return;
+    }
     timer = setTimeout(() => {
       timer = undefined;
       if (mounted) requestOpen(next);

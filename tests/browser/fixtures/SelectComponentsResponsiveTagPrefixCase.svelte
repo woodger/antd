@@ -158,8 +158,10 @@
     rawAuthoredProps: unknown
   } | undefined;
   export function read() {
-    if (alive || !last) last = { context: recorder.encode(geometry), rawContext: recorder.raw(geometry),
-      authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps) };
+    if (alive || !last) {
+      last = { context: recorder.encode(geometry), rawContext: recorder.raw(geometry),
+        authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps) };
+    }
     return { model: recorder.encode(model), rawModel: recorder.raw(model), open, query, alive,
       settings: recorder.encode(settings), rawSettings: recorder.raw(settings), ...last,
       events, rawEvents, calls: recorder.calls, lifecycle, bodyActivity, componentObservations,
@@ -176,23 +178,31 @@
     };
   }
   export function update(action: SelectCustomTagPrefixUpdate, _index = -1) {
-    if (action.type === 'caller-width') settings = {
-      ...settings,
-      containerWidth: action.containerWidth
-    };
-    else if (action.type === 'caller-prefix-width') settings = {
-      ...settings,
-      prefixWidth: action.prefixWidth
-    };
-    else if (action.type === 'caller-tag-width') settings = {
-      ...settings,
-      tagWidth: action.tagWidth
-    };
-    else if (action.type === 'prefix') settings = {
-      ...settings,
-      prefixPresent: action.present === true,
-      ...(action.prefixWidth === undefined ? {} : { prefixWidth: action.prefixWidth })
-    };
+    if (action.type === 'caller-width') {
+      settings = {
+        ...settings,
+        containerWidth: action.containerWidth
+      };
+    }
+    else if (action.type === 'caller-prefix-width') {
+      settings = {
+        ...settings,
+        prefixWidth: action.prefixWidth
+      };
+    }
+    else if (action.type === 'caller-tag-width') {
+      settings = {
+        ...settings,
+        tagWidth: action.tagWidth
+      };
+    }
+    else if (action.type === 'prefix') {
+      settings = {
+        ...settings,
+        prefixPresent: action.present === true,
+        ...(action.prefixWidth === undefined ? {} : { prefixWidth: action.prefixWidth })
+      };
+    }
     else throw Error('Unknown ordinary caller update');
   }
   if (ownerCapture) {

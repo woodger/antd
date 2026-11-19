@@ -47,9 +47,10 @@
     for (const request of requests) {
       if (fail)
         request.onError?.(Error('Upload fixture error'), { reason: 'fixture' });
-      else
+      else {
         request
           .onSuccess?.('{"ok":true}');
+      }
     }
     requests = [];
   }

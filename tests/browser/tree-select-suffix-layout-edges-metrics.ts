@@ -13,7 +13,9 @@ export function readTreeSelectSuffixLayoutEdges() {
   const hostBox = host.getBoundingClientRect();
   const precision = (value: number) => Math.round(value * 1000) / 1000;
   const box = (node: HTMLElement | null) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const rect = node.getBoundingClientRect();
     return { x: precision(rect.x - hostBox.x), y: precision(rect.y - hostBox.y),
       width: precision(rect.width), height: precision(rect.height) };

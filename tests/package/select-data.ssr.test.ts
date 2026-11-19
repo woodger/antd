@@ -28,7 +28,9 @@ const reference = JSON.parse(bytes.toString('utf8')) as {
 };
 function output(body: string, name: string) {
   const match = body.match(new RegExp(`<output[^>]*data-select-data-${name}[^>]*>([\\s\\S]*?)<\\/output>`));
-  if (!match) throw Error(`Missing SSR producer output ${name}`);
+  if (!match) {
+    throw Error(`Missing SSR producer output ${name}`);
+  }
   return JSON.parse(match[1].replace(/<!--[^]*?-->/g, '').replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>').replace(/&amp;/g, '&'));
 }

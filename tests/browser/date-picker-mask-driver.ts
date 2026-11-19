@@ -21,7 +21,9 @@ export async function settleMask(page: Page) {
     await drainMask(page);
     const actual = await readMask(page), value = JSON.stringify(actual);
     stable = value === previous ? stable + 1 : 0;
-    if (stable >= 4) return actual;
+    if (stable >= 4) {
+      return actual;
+    }
     previous = value;
   }
   throw Error('Complete Native mask scoped observation did not settle');
@@ -106,7 +108,9 @@ export async function actMask(page: Page, action: MaskAction, index: number, hoo
       const target = page.locator('.ant-picker input:focus');
       assert.equal(await target.count(), 1);
       evidence = { focusedInput: await target.evaluate(node => {
-        if (!(node instanceof HTMLInputElement)) throw Error('Actual focused input required');
+        if (!(node instanceof HTMLInputElement)) {
+          throw Error('Actual focused input required');
+        }
         return { identity: window.nativeMask.getRecorder().identity(node), attributes: [...node.attributes].map(a => [a.name, a.value]),
           value: node.value, selectionStart: node.selectionStart, selectionEnd: node.selectionEnd,
           selectionDirection: node.selectionDirection };

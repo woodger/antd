@@ -19,12 +19,16 @@ export async function settleNativeSelectComponentsResponsive(page: Page): Promis
         'selectcomponentscapture',
         { detail }
       ));
-      if (!detail.read) throw Error('Actual responsive owner absent');
+      if (!detail.read) {
+        throw Error('Actual responsive owner absent');
+      }
       return detail.read();
     });
     const point = { icons, owner, overflow }, key = JSON.stringify(point);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return point;
+    if (stable >= 3) {
+      return point;
+    }
     previous = key;
   }
   throw Error('Complete responsive DOM/overflow/owner did not settle');
@@ -32,7 +36,9 @@ export async function settleNativeSelectComponentsResponsive(page: Page): Promis
 const compilerClass = (name: string) => /^(?:svelte-[\w-]+|s-[\w-]+)$/.test(name);
 function attributes(node: SelectComponentsModesNode) {
   return node.attributes.flatMap(([key, value]) => {
-    if (key !== 'class') return [[key, value]];
+    if (key !== 'class') {
+      return [[key, value]];
+    }
     const classes = value.split(/\s+/).filter(name => name && !compilerClass(name));
     return classes.length ? [[key, classes.join(' ')]] : [];
   });
@@ -65,11 +71,13 @@ function verifyOverflowWrapper(
   }
   assert.deepEqual(current, original, label + ' complete wrapper attribute order');
   for (const key of ['tag', 'connected', 'text', 'styleAttribute', 'cssText', 'inlineProperties', 'css', 'box',
-    'geometryBoundary', 'value', 'caret', 'focused', 'metrics'] as const) assert.deepEqual(
+    'geometryBoundary', 'value', 'caret', 'focused', 'metrics'] as const) {
+    assert.deepEqual(
       actual[key],
       source[key],
       label + '/' + key
     );
+  }
 }
 export function verifySelectComponentsResponsivePoint(actual: NativeResponsivePoint, source: ResponsivePoint, owner: ResponsiveCase,
   sample: SelectComponentsResponsiveSample, label: string): string[] {
@@ -82,7 +90,9 @@ export function verifySelectComponentsResponsivePoint(actual: NativeResponsivePo
         label + ' one physical counterpart per Source node'
       );
       pairs.set(original.identity, current.identity);
-      if (!original.classes.includes('ant-select-content-item')) return false;
+      if (!original.classes.includes('ant-select-content-item')) {
+        return false;
+      }
       verifyOverflowWrapper(current, original, label);
       return true;
     });
@@ -99,7 +109,9 @@ export function verifySelectComponentsResponsivePoint(actual: NativeResponsivePo
     pairs.set(source.icons.current.root.identity, actual.icons.current.root.identity);
     const currentNodes = [actual.overflow.root!, ...actual.overflow.allRootDescendants];
     const inspect = (original: SelectComponentsResponsiveOverflowNode | null) => {
-      if (!original) return null;
+      if (!original) {
+        return null;
+      }
       assert(original.identity !== null);
       const mapped = pairs.get(original.identity);
       assert(mapped, 'every Source overflow node was covered by the full mode comparator');
@@ -113,29 +125,34 @@ export function verifySelectComponentsResponsivePoint(actual: NativeResponsivePo
       assert.deepEqual(current.clientRects, original.clientRects);
       const metrics = { ...current.metrics };
       const svg = source.icons.layout.some(node => node.identity === original.identity && node.geometryBoundary === 'svg-descendant');
-      if (svg) for (const key of ['offsetWidth', 'offsetHeight'] as const) if (!Object.hasOwn(
-        original.metrics,
-        key
-      ) && Object.hasOwn(
-        metrics,
-        key
-      )) {
-        // Playwright retains own undefined; frozen JSON omits it. Only the two
-        // absent SVG offset fields cross this serialization boundary.
-        assert.equal(metrics[key], undefined);
-        delete metrics[key];
+      if (svg) {
+        for (const key of ['offsetWidth', 'offsetHeight'] as const) {
+          if (!Object.hasOwn(
+            original.metrics,
+            key
+          ) && Object.hasOwn(
+            metrics,
+            key
+          )) {
+            // Playwright retains own undefined; frozen JSON omits it. Only the two
+            // absent SVG offset fields cross this serialization boundary.
+            assert.equal(metrics[key], undefined);
+            delete metrics[key];
+          }
+        }
       }
       assert.deepEqual(metrics, original.metrics);
       return current;
     };
     inspect(source.overflow.root);
     for (const node of source.overflow.allRootDescendants) inspect(node);
-    for (const key of ['content', 'editor', 'suffix', 'adornment'] as const)
+    for (const key of ['content', 'editor', 'suffix', 'adornment'] as const) {
       assert.equal(
         actual.overflow[key]?.identity ?? null,
         inspect(source.overflow[key])?.identity ?? null,
         'exact semantic role uses the compared physical node'
       );
+    }
     for (const key of ['contentChildren', 'suffixChildren', 'rests'] as const) {
       assert.equal(
         actual.overflow[key].length,
@@ -176,11 +193,13 @@ export function verifySelectComponentsResponsivePoint(actual: NativeResponsivePo
         ? node.tag === 'FORM' : node.tag === 'DIV' && node.css.position === 'absolute');
       const current = find(actual), original = find(source);
       assert(current && original);
-      for (const key of ['font', 'fontFamily', 'fontSize', 'lineHeight']) assert.equal(
-        current.css[key],
-        original.css[key],
-        role + '/' + key
-      );
+      for (const key of ['font', 'fontFamily', 'fontSize', 'lineHeight']) {
+        assert.equal(
+          current.css[key],
+          original.css[key],
+          role + '/' + key
+        );
+      }
       assert.deepEqual(current.box, original.box, role + ' actual inherited layout box');
     }
   });

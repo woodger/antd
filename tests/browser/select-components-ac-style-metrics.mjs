@@ -3,7 +3,9 @@ export function readSelectIcons() {
   raw.iconsObserver ??= { identities: new WeakMap(), next: 0, retained: new Map(), original: {} };
   const observer = raw.iconsObserver, refs = raw.current.readRefs();
   const identity = node => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     if (!observer.identities.has(node)) {
       observer.identities.set(node, ++observer.next);
       observer.retained.set(observer.next, node);
@@ -11,7 +13,9 @@ export function readSelectIcons() {
     return observer.identities.get(node);
   };
   const describe = (node, geometry = true) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     const infiniteSpin = style.animationName !== 'none' && style.animationIterationCount.split(',').some(value => value.trim() === 'infinite');
     const box = geometry && !infiniteSpin ? node.getBoundingClientRect() : null;
@@ -44,7 +48,9 @@ export function readSelectIcons() {
   const popup = document.querySelector('.ant-select-dropdown');
   const current = { root: refs.root, editor: refs.editor, suffix: refs.root?.querySelector('.ant-select-suffix'),
     clear: refs.root?.querySelector('.ant-select-clear'), popup, list: popup?.querySelector('.ant-select-dropdown-list') };
-  for (const [key, node] of Object.entries(current)) if (node && !observer.original[key]) observer.original[key] = node;
+  for (const [key, node] of Object.entries(current)) {
+    if (node && !observer.original[key]) observer.original[key] = node;
+  }
   const selectors = '.ant-select-selection-item,.ant-select-selection-item-remove,.ant-select-item-option,'
     + '.ant-select-item-option-state,[data-select-icons-node],[data-select-icons-component],span.anticon';
   return { current: Object.fromEntries(Object.entries(current).map(([name, node]) => [name, describe(node)])),

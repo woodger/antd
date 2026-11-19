@@ -8,7 +8,9 @@ export function formatStatisticValue(
 ): { integer: string; decimal: string; } | { text: string; } {
   const text = String(value);
   const cells = text.match(/^(-?)(\d*)(\.(\d+))?$/);
-  if (!cells || text === '-') return { text };
+  if (!cells || text === '-') {
+    return { text };
+  }
 
   const integer = (cells[2] || '0').replace(/\B(?=(\d{3})+(?!\d))/g, groupSeparator);
   let decimal = cells[4] || '';

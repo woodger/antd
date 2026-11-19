@@ -55,7 +55,9 @@ it('retains both complete initial Source SSR rest/suffix trees and zero resource
     expect(view.contents).toHaveLength(1);
     expect(content.children).toHaveLength(2);
     const [rest, suffix] = content.children;
-    if (typeof rest === 'string' || typeof suffix === 'string') throw Error('Source SSR wrappers missing');
+    if (typeof rest === 'string' || typeof suffix === 'string') {
+      throw Error('Source SSR wrappers missing');
+    }
     expect(rest.attributes).toEqual([['class', 'ant-select-content-item ant-select-content-item-rest'],
       ['style', 'opacity:0;height:0;overflow-y:hidden;order:9007199254740991;pointer-events:none;position:absolute'], ['aria-hidden', 'true']]);
     expect(suffix.attributes).toEqual([['class', 'ant-select-content-item ant-select-content-item-suffix'], ['style', 'opacity:1;order:0']]);

@@ -20,9 +20,10 @@ function setup(options?: MessageOptions) {
       view.mounted(notice.id);
   };
   const finish = () => {
-    for (const notice of view.notices)
+    for (const notice of view.notices) {
       if (notice.closing)
         view.complete(notice.id, notice.version);
+    }
   };
   return { api, view, disconnect, mount, finish };
 }

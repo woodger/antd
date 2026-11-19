@@ -79,7 +79,9 @@
   });
 
   $effect(() => {
-    if (!nativeElement) return;
+    if (!nativeElement) {
+      return;
+    }
     const controller = createWatermarkRuntime(nativeElement, () => onRemove);
     runtime = controller;
     return () => {

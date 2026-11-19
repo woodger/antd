@@ -6,7 +6,9 @@ import { DatePicker, enUS } from 'antd-svelte';
 const value = dayjs('2024-05-20T16:37:59.456');
 const selectionEvents: string[] = [], navigationEvents: string[] = [];
 const target = document.getElementById('root');
-if (!target) throw Error('Quarter keyboard owner root missing');
+if (!target) {
+  throw Error('Quarter keyboard owner root missing');
+}
 mount(DatePicker, { target, props: { picker: 'quarter', value, defaultPickerValue: value,
   id: 'quarter-keyboard', locale: enUS.datePicker, allowClear: false,
   onChange: () => { selectionEvents.push('change'); },

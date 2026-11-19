@@ -101,8 +101,12 @@ export function transferSelectAll(
   keys: readonly TransferKey[],
   checked: boolean | 'replace'
 ): TransferKey[] {
-  if (checked === 'replace') return [...keys];
-  if (checked) return [...new Set([...selected, ...keys])];
+  if (checked === 'replace') {
+    return [...keys];
+  }
+  if (checked) {
+    return [...new Set([...selected, ...keys])];
+  }
 
   const removed = new Set(keys);
   return selected.filter(key => !removed.has(key));

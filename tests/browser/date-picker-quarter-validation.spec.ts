@@ -27,8 +27,10 @@ for (const kind of ['single', 'range'] as const) {
       expect(call.rejected).toBe(false);
     }
     await expect(input).not.toHaveAttribute('aria-invalid', 'true');
-    if (kind === 'range') await expect(page.locator('#quarter-validation-end'))
-      .not.toHaveAttribute('aria-invalid', 'true');
+    if (kind === 'range') {
+      await expect(page.locator('#quarter-validation-end'))
+        .not.toHaveAttribute('aria-invalid', 'true');
+    }
     await expect(input).not.toHaveAttribute('readonly');
     const original = await input.elementHandle();
     await input.click();

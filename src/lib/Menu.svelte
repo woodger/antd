@@ -147,14 +147,18 @@
   function setOpen(entry: MenuEntry, next: boolean) {
     const keys = menuOpenKeys(actualOpen, entry, next, actualMode);
     if (keys.length === actualOpen.length
-      && keys.every((key, index) => key === actualOpen[index])) return;
+      && keys.every((key, index) => key === actualOpen[index])) {
+      return;
+    }
 
     opened = keys;
     onOpenChange?.(keys);
   }
 
   function click(entry: MenuEntry, event: MouseEvent | KeyboardEvent) {
-    if (disabled || menuItem(entry).disabled) return;
+    if (disabled || menuItem(entry).disabled) {
+      return;
+    }
 
     const before = [...actualSelected];
     const info: MenuClickInfo = {
@@ -183,7 +187,9 @@
   }
 
   function titleClick(entry: MenuEntry, event: MouseEvent) {
-    if (disabled || menuSubMenu(entry).disabled) return;
+    if (disabled || menuSubMenu(entry).disabled) {
+      return;
+    }
 
     menuSubMenu(entry).onTitleClick?.({ key: entry.key, domEvent: event });
     if (actualMode === 'inline' || triggerSubMenuAction === 'click')
@@ -192,7 +198,9 @@
 
   function focusItem(key: string) {
     const element = elements.get(key);
-    if (!element?.isConnected) return;
+    if (!element?.isConnected) {
+      return;
+    }
 
     const link = element.querySelector<HTMLAnchorElement>('a[href]');
     active = key;
@@ -205,7 +213,9 @@
   }
 
   async function keyboard(entry: MenuEntry | null, event: KeyboardEvent) {
-    if (event.defaultPrevented || event.isComposing || disabled) return;
+    if (event.defaultPrevented || event.isComposing || disabled) {
+      return;
+    }
 
     const action = menuKeyboardAction(
       actualMode,
@@ -214,7 +224,9 @@
       event.key
     );
     const boundary = event.key === 'Home' || event.key === 'End';
-    if (!action && !boundary) return;
+    if (!action && !boundary) {
+      return;
+    }
     if (event.key.startsWith('Arrow') || boundary)
       event.preventDefault();
 
@@ -328,7 +340,9 @@
 
   function keydown(event: KeyboardEvent & { currentTarget: EventTarget & HTMLUListElement; }) {
     // Вложенные portal могут находиться в одном контейнере; событие обрабатывается один раз.
-    if (handledKeys.has(event)) return;
+    if (handledKeys.has(event)) {
+      return;
+    }
     handledKeys.add(event);
     const target = event.composedPath().find((node): node is Element =>
       node instanceof Element && node.hasAttribute('data-menu-id'));

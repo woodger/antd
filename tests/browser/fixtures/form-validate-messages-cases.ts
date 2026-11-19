@@ -26,12 +26,20 @@ export interface FormValidateMessagesSample {
 export function buildValidationMessages(
   descriptor?: FormMessagesDescriptor, calls: string[][] = []
 ): ValidateMessages | undefined {
-  if (!descriptor) return;
+  if (!descriptor) {
+    return;
+  }
 
   return Object.fromEntries(Object.entries(descriptor).map(([key, value]) => {
-    if (typeof value === 'object') return [key, buildValidationMessages(value, calls)];
-    if (value === '@undefined') return [key, undefined];
-    if (value === '@throws') return [key, () => { throw Error('Template exploded'); }];
+    if (typeof value === 'object') {
+      return [key, buildValidationMessages(value, calls)];
+    }
+    if (value === '@undefined') {
+      return [key, undefined];
+    }
+    if (value === '@throws') {
+      return [key, () => { throw Error('Template exploded'); }];
+    }
     if (value === '@function' || value === '@arguments') {
       return [key, (...args: unknown[]) => {
         calls.push(args.map(String));

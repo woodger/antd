@@ -44,7 +44,9 @@ export async function settleSelectSurfaceEdgeNative(page: Page): Promise<NativeS
     const owner = await page.evaluate(readNativeSurfaceEdgeOwner), topology = await page.evaluate(readNativeSurfaceTopology);
     const point = { dom, paint, owner, topology }, key = JSON.stringify(point);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return point;
+    if (stable >= 3) {
+      return point;
+    }
     previous = key;
   }
   throw Error('Native Select surface edge actual DOM/paint/model/callbacks did not settle');

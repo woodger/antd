@@ -17,14 +17,22 @@ for (const entry of reference.cases) {
       await expect(root.getByRole('table')).toBeVisible();
       await page.mouse.move(1300, 1100);
       const mode = 'mode' in entry.sample ? entry.sample.mode : undefined;
-      if (mode === 'header-hover') await root.locator('th[data-ant-table-sortable]')
-        .hover({ position: { x: 4, y: 4 } });
-      if (mode === 'selected-hover') await root.locator('tbody tr').first().locator('td').last()
-        .hover();
-      if (mode === 'expand-hover') await root.locator('button[data-ant-table-part="expand-icon"]')
-        .first().hover();
-      if (mode === 'filter-hover') await root.locator('[data-ant-table-filter-part="trigger"]')
-        .hover();
+      if (mode === 'header-hover') {
+        await root.locator('th[data-ant-table-sortable]')
+          .hover({ position: { x: 4, y: 4 } });
+      }
+      if (mode === 'selected-hover') {
+        await root.locator('tbody tr').first().locator('td').last()
+          .hover();
+      }
+      if (mode === 'expand-hover') {
+        await root.locator('button[data-ant-table-part="expand-icon"]')
+          .first().hover();
+      }
+      if (mode === 'filter-hover') {
+        await root.locator('[data-ant-table-filter-part="trigger"]')
+          .hover();
+      }
       if (mode === 'filter-popup') {
         await root.locator('[data-ant-table-filter-part="trigger"]').click();
         await expect(root.getByRole('dialog')).toBeVisible();

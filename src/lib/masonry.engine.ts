@@ -18,8 +18,12 @@ export interface MasonryEntry<Data = unknown> {
 }
 
 export function getMasonryColumns(columns: MasonryProps['columns'], screens: GridScreenMap) {
-  if (!columns) return 3;
-  if (typeof columns === 'number') return columns;
+  if (!columns) {
+    return 3;
+  }
+  if (typeof columns === 'number') {
+    return columns;
+  }
 
   return gridResponsiveValue(columns, screens) ?? columns.xs ?? 1;
 }
@@ -88,8 +92,12 @@ export function equalMasonryData(left: unknown, right: unknown) {
   const seen = new Set<unknown>();
 
   function equal(a: unknown, b: unknown): boolean {
-    if (seen.has(a)) return false;
-    if (a === b) return true;
+    if (seen.has(a)) {
+      return false;
+    }
+    if (a === b) {
+      return true;
+    }
 
     seen.add(a);
 

@@ -13,13 +13,17 @@ const cases = readSelectIconSSR().cases;
 for (const owner of cases) for (const source of owner.states) it(`matches all public icon SSR ${owner.id}/${source.name}`, () => {
   vi.useFakeTimers();
   const resource = vi.fn(() => { throw Error('Select icon SSR must remain DOM-free'); });
-  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(
-    name,
-    resource
-  );
-  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() {
-    resource();
-  } });
+  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) {
+    vi.stubGlobal(
+      name,
+      resource
+    );
+  }
+  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) {
+    vi.stubGlobal(name, class { constructor() {
+      resource();
+    } });
+  }
   const warn = vi.spyOn(console, 'warn'), error = vi.spyOn(console, 'error');
   try {
     expect(typeof window).toBe('undefined');
@@ -89,10 +93,12 @@ for (const owner of cases) for (const source of owner.states) it(`matches all pu
     for (const [index, editor] of nodes.editors.entries()) {
       const a = Object.fromEntries(editor.attributes), b = Object.fromEntries(original.editors[index].attributes);
       expect(editor.tag).toBe(original.editors[index].tag);
-      for (const key of ['id', 'role', 'aria-label', 'aria-expanded', 'disabled']) expect(
-        a[key],
-        key
-      ).toEqual(b[key]);
+      for (const key of ['id', 'role', 'aria-label', 'aria-expanded', 'disabled']) {
+        expect(
+          a[key],
+          key
+        ).toEqual(b[key]);
+      }
       if (sample.control === 'select' && !authored.settings.mode) {
         expect(b.value, 'Source single SSR search editor').toBe('');
         const props = normalizedSelectSurfaceAuthoredProps(source.state.authoredProps);

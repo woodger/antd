@@ -22,7 +22,9 @@ const rootStates = new Set(['', '-horizontal', '-vertical', '-rtl', '-disabled',
 
 /** ComponentCls и потомки меняются, CSS variables/marker и собственный Tooltip prefix остаются. */
 export function getSliderPrefixCss(prefix: string) {
-  if (prefix === 'ant-slider') return undefined;
+  if (prefix === 'ant-slider') {
+    return undefined;
+  }
 
   return `${template}${native}`
     .replace(/\.ant-slider(?!-css-var\b)([-\w]*)/g, (_, suffix: string) =>

@@ -33,11 +33,13 @@ describe('Steps state', () => {
     expect(getStepsStatus(item, 1, 1, 'finish')).toBe('finish');
   });
   it('preserves explicit per-item status over automatic and current statuses', () => {
-    for (const status of ['wait', 'process', 'finish', 'error'] as const)
-      for (const index of [0, 1, 2])
+    for (const status of ['wait', 'process', 'finish', 'error'] as const) {
+      for (const index of [0, 1, 2]) {
         expect(getStepsStatus({ key: 'custom', title: 'Custom', status }, index, 1, 'error')).toBe(
           status
         );
+      }
+    }
   });
   it('finishes every automatic item when current equals the item count', () => {
     expect(

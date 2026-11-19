@@ -27,7 +27,9 @@ export async function settleNativeSelectComponentsACStyle(page: Page): Promise<N
         'selectcomponentscapture',
         { detail }
       ));
-      if (!detail.read) throw Error('Actual AC style owner absent');
+      if (!detail.read) {
+        throw Error('Actual AC style owner absent');
+      }
       return detail.read();
     });
     const popupTopology = await page.evaluate(() => {
@@ -52,7 +54,9 @@ export async function settleNativeSelectComponentsACStyle(page: Page): Promise<N
     });
     const point = { icons, owner, popupTopology }, next = JSON.stringify(point);
     stable = previous === next ? stable + 1 : 0;
-    if (stable >= 3) return point;
+    if (stable >= 3) {
+      return point;
+    }
     previous = next;
   }
   throw Error('Actual AC style owner/geometry/complete raw ledgers did not settle');
@@ -60,7 +64,9 @@ export async function settleNativeSelectComponentsACStyle(page: Page): Promise<N
 const compilerClass = (value: string) => /^(?:svelte-[\w-]+|s-[\w-]+)$/.test(value);
 function attributes(node: SelectComponentsACStyleNode) {
   return node.attributes.flatMap(([key, value]) => {
-    if (key !== 'class') return [[key, value]];
+    if (key !== 'class') {
+      return [[key, value]];
+    }
     const classes = value.split(/\s+/).filter(Boolean).filter(name => !compilerClass(name));
     return classes.length ? [[key, classes.join(' ')]] : [];
   });
@@ -93,8 +99,9 @@ function verifyLayoutNode(
   }
   else verifySelectComponentsDOMAttributes(actual, source, current, original, label);
   for (const key of ['tag', 'connected', 'text', 'styleAttribute', 'cssText', 'inlineProperties', 'css', 'box',
-    'geometryBoundary', 'value', 'caret', 'focused', 'metrics'] as const)
+    'geometryBoundary', 'value', 'caret', 'focused', 'metrics'] as const) {
     assert.deepEqual(actual[key], source[key], label + '/' + key);
+  }
 }
 function surfaceRoot(node: SelectComponentsACStyleNode) {
   // This is the same public projection as readSelectSurface(). Private default
@@ -116,7 +123,9 @@ function verifiedRootLayout(actual: NativeACStylePoint, source: ACStylePoint) {
     Boolean(popup),
     'topology describes exactly the observed popup'
   );
-  if (!popup) return actual.icons.layout;
+  if (!popup) {
+    return actual.icons.layout;
+  }
   const current = topology.popup!;
   // Existing contract: AutoComplete.svelte renders componentPopup last inside
   // the default root; createPopupContainer preserves that parent unless an own
@@ -151,8 +160,10 @@ function verifiedRootLayout(actual: NativeACStylePoint, source: ACStylePoint) {
   assert.deepEqual(actual.icons.layout.slice(-ids.length).map(node => node.identity), ids,
     'only the complete observed direct last-child popup subtree forms this raw root-layout suffix');
   assert.equal(actual.icons.layout.filter(node => excluded.has(node.identity)).length, ids.length);
-  if (source.icons.current.popup) assert.equal(source.icons.layout.some(node => node.identity === source.icons.current.popup!.identity), false,
-    'the unchanged Original popup is outside its public root layout');
+  if (source.icons.current.popup) {
+    assert.equal(source.icons.layout.some(node => node.identity === source.icons.current.popup!.identity), false,
+      'the unchanged Original popup is outside its public root layout');
+  }
   return actual.icons.layout.filter(node => !excluded.has(node.identity));
 }
 export function verifySelectComponentsACStylePoint(actual: NativeACStylePoint, source: ACStylePoint, owner: ACStyleCase,
@@ -191,11 +202,13 @@ export function verifySelectComponentsACStylePoint(actual: NativeACStylePoint, s
       source.icons.layout.length,
       label + ' every physical control descendant outside the verified Native popup'
     );
-    for (const [index, node] of source.icons.layout.entries()) verifyLayoutNode(
-      layout[index],
-      node,
-      label + '/layout' + index
-    );
+    for (const [index, node] of source.icons.layout.entries()) {
+      verifyLayoutNode(
+        layout[index],
+        node,
+        label + '/layout' + index
+      );
+    }
   });
   check(
     'all-editor-metrics',
@@ -218,11 +231,13 @@ export function verifySelectComponentsACStylePoint(actual: NativeACStylePoint, s
       );
       for (const [index, node] of source.icons[key].entries()) {
         const current = actual.icons[key][index];
-        if (node.identity === source.icons.current.editor?.identity) verifyLayoutNode(
-          current,
-          node,
-          label + '/' + key + index
-        );
+        if (node.identity === source.icons.current.editor?.identity) {
+          verifyLayoutNode(
+            current,
+            node,
+            label + '/' + key + index
+          );
+        }
         else {
           verifyIconNode(current, node, label + '/' + key + index, boundary);
           assert.deepEqual(current.metrics, node.metrics);
@@ -256,9 +271,11 @@ export function verifySelectComponentsACStylePoint(actual: NativeACStylePoint, s
       $set: 'function',
       'Symbol(component)': 'boolean'
     };
-    for (const [key, value] of Object.entries(native)) if (!['focus', 'blur', 'scrollTo'].includes(key)) {
-      assert(Object.hasOwn(framework, key), label + ' only named Svelte public export metadata');
-      assert.equal(value, framework[key]);
+    for (const [key, value] of Object.entries(native)) {
+      if (!['focus', 'blur', 'scrollTo'].includes(key)) {
+        assert(Object.hasOwn(framework, key), label + ' only named Svelte public export metadata');
+        assert.equal(value, framework[key]);
+      }
     }
     assert.equal(source.icons.publicRefs.rootMatches, true);
     assert.equal(actual.icons.publicRefs.rootMatches, false);

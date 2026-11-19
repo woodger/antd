@@ -28,10 +28,12 @@ async function perform(page: Page, sample: TreeSelectExpandActionSample) {
   const options = { modifiers, force: Boolean(sample.disabledNode) };
   if (sample.action === 'click') await content(page).click(options);
   else if (sample.action === 'dblclick') await content(page).dblclick(options);
-  else if (sample.action === 'double-event') await content(page).dispatchEvent('dblclick', {
-    ctrlKey: sample.modifier === 'Control', metaKey: sample.modifier === 'Meta',
-    shiftKey: sample.modifier === 'Shift'
-  });
+  else if (sample.action === 'double-event') {
+    await content(page).dispatchEvent('dblclick', {
+      ctrlKey: sample.modifier === 'Control', metaKey: sample.modifier === 'Meta',
+      shiftKey: sample.modifier === 'Shift'
+    });
+  }
   else if (sample.action === 'switcher') await row(page).locator('[data-ant-tree-switcher]').click();
   else if (sample.action === 'checkbox') await row(page).locator('[data-ant-tree-checkbox]').click();
   else await input(page).press(sample.action);

@@ -5,7 +5,9 @@ function available(node: HTMLElement | undefined): node is HTMLElement {
   if (!node?.isConnected
     || node.matches(':disabled')
     || node.closest('[inert]')
-    || !node.getClientRects().length) return false;
+    || !node.getClientRects().length) {
+    return false;
+  }
 
   return node.ownerDocument.defaultView!.getComputedStyle(node).visibility === 'visible';
 }
@@ -30,10 +32,14 @@ export function createSpinFocus() {
     const current = ++version;
     const previous = target;
     void tick().then(() => {
-      if (!active || current !== version) return;
+      if (!active || current !== version) {
+        return;
+      }
 
       clearTarget();
-      if (!available(host) || host.ownerDocument.activeElement !== host) return;
+      if (!available(host) || host.ownerDocument.activeElement !== host) {
+        return;
+      }
 
       if (content?.contains(previous ?? null) && available(previous))
         previous.focus({ preventScroll: true }); else {
@@ -54,7 +60,9 @@ export function createSpinFocus() {
 
   return {
     update(host: HTMLElement, content: HTMLElement | undefined, busy: boolean) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
 
       if (!content || !busy) {
         if (parked)

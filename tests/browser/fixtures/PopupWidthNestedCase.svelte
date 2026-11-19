@@ -33,14 +33,20 @@
   let positionStyle = $derived(`position:absolute;left:${popupWidthGeometry.plain.left}px;top:${popupWidthGeometry.plain.top}px;width:${anchorWidth}px`);
 
   function getRoot() {
-    if (!host) return undefined;
+    if (!host) {
+      return undefined;
+    }
     if (sample.family === 'calendar') return host.querySelector<HTMLElement>(
       `.ant-picker-calendar-${host.dataset.widthActive ?? 'year'}-select [data-ant-select-control]`
     ) ?? undefined;
-    if (sample.family === 'pagination') return host.querySelector<HTMLElement>('[data-ant-select-control]') ?? undefined;
-    if (sample.family === 'color-picker') return host.ownerDocument.querySelector<HTMLElement>(
-      '.ant-color-picker-format-select [data-ant-select-control]'
-    ) ?? host.querySelector<HTMLElement>('.ant-color-picker-trigger') ?? undefined;
+    if (sample.family === 'pagination') {
+      return host.querySelector<HTMLElement>('[data-ant-select-control]') ?? undefined;
+    }
+    if (sample.family === 'color-picker') {
+      return host.ownerDocument.querySelector<HTMLElement>(
+        '.ant-color-picker-format-select [data-ant-select-control]'
+      ) ?? host.querySelector<HTMLElement>('.ant-color-picker-trigger') ?? undefined;
+    }
     return publicRoot ?? host.querySelector<HTMLElement>('.popup-width-control') ?? undefined;
   }
   function getter(scope: 'global' | 'user', trigger?: HTMLElement) {

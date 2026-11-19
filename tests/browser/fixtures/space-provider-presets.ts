@@ -1,7 +1,9 @@
 import type { SpaceConfig } from 'antd-svelte';
 
 export function sourceSpaceConfig(mode?: string): SpaceConfig | undefined {
-  if (!mode) return undefined;
+  if (!mode) {
+    return undefined;
+  }
   const dynamic = mode === 'functions';
   const empty = mode === 'empty-functions';
 

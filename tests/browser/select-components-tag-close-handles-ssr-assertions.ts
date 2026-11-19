@@ -15,11 +15,13 @@ export function verifyTagCloseHandleSSR(body: string, actual: NativeOwner, refs:
   assert(Object.values(source.resources).every(value => value === 0));
   for (const key of ['model', 'options', 'disabled', 'open', 'alive', 'actionIndex', 'events', 'rawEvents', 'invocations', 'retention', 'lifecycle', 'authoredSample', 'authoredProvider'] as const)
     assert.deepEqual(actual[key], source.state[key], label + '/' + key);
-  for (const key of ['rawModel', 'rawOptions', 'rawAuthoredSample', 'rawAuthoredProvider'] as const) verifyIconGraph(
-    actual[key],
-    source.state[key],
-    label + '/' + key
-  );
+  for (const key of ['rawModel', 'rawOptions', 'rawAuthoredSample', 'rawAuthoredProvider'] as const) {
+    verifyIconGraph(
+      actual[key],
+      source.state[key],
+      label + '/' + key
+    );
+  }
   assert.deepEqual(
     normalizedSelectSurfaceAuthoredProps(actual.authoredProps),
     normalizedSelectSurfaceAuthoredProps(source.state.authoredProps)
@@ -45,10 +47,12 @@ export function verifyTagCloseHandleSSR(body: string, actual: NativeOwner, refs:
   const argumentArray = unused[0].rawArgument.objects.find(node => node.id === (unused[0].rawArgument.root as { ref: number }).ref)!;
   const reference = argumentArray.properties!.find(property => property.key === '0')!.value as { ref: number };
   assert(!bodyInfoIds.has(reference.ref), label + ' unused ReactElement info never mounted');
-  for (const html of [body, source.rawHtml]) assert(
-    !html.includes('data-handles-tag="undefined"'),
-    label + ' no fake rest markup'
-  );
+  for (const html of [body, source.rawHtml]) {
+    assert(
+      !html.includes('data-handles-tag="undefined"'),
+      label + ' no fake rest markup'
+    );
+  }
   verifySelectComponentsResponsiveSSRLayout(
     body,
     source.rawHtml,
@@ -83,22 +87,26 @@ export function verifyTagCloseHandleSSR(body: string, actual: NativeOwner, refs:
   });
   const inputs = source.state.calls.filter(call => call.kind === 'components.input');
   assert(inputs.length && actual.componentObservations.length);
-  for (const observation of actual.componentObservations) assert(inputs.some(call => {
-    try {
-    verifySelectComponentsAttributes(observation, call, label);
-    return true;
+  for (const observation of actual.componentObservations) {
+    assert(inputs.some(call => {
+      try {
+      verifySelectComponentsAttributes(observation, call, label);
+      return true;
+    }
+    catch {
+      return false;
+    }
+    }));
   }
-  catch {
-    return false;
+  for (const call of inputs) {
+    assert(actual.componentObservations.some(observation => {
+      try {
+      verifySelectComponentsAttributes(observation, call, label);
+      return true;
+    }
+    catch {
+      return false;
+    }
+    }));
   }
-  }));
-  for (const call of inputs) assert(actual.componentObservations.some(observation => {
-    try {
-    verifySelectComponentsAttributes(observation, call, label);
-    return true;
-  }
-  catch {
-    return false;
-  }
-  }));
 }

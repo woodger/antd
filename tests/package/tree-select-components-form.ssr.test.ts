@@ -72,7 +72,9 @@ it.each(reference.ssr)('renders $id with inherited feedback and only the Native 
     expect(entry.timers).toBe(0);
     const feedback = [...body.matchAll(/<span\b[^>]*class="[^"]*\bant-form-item-feedback-icon\b[^"]*"[^>]*>/g)];
     expect(feedback).toHaveLength(entry.view.icons.length);
-    for (const icon of entry.view.icons) for (const path of icon.paths) expect(body).toContain(`d="${path}"`);
+    for (const icon of entry.view.icons) {
+      for (const path of icon.paths) expect(body).toContain(`d="${path}"`);
+    }
     expect(body).toContain('ant-form-item-has-error');
     expect(body).toContain('ant-input-status-error');
     const output = (name: string) => new RegExp(`<output[^>]*data-form-components-${name}[^>]*>([\\s\\S]*?)<\\/output>`)

@@ -40,7 +40,9 @@ export function createWatermarkRuntime(
   const pendingImages = new Set<HTMLImageElement>();
 
   function append(holder: HTMLElement) {
-    if (!active || !data || !targets.has(holder)) return;
+    if (!active || !data || !targets.has(holder)) {
+      return;
+    }
     const existing = marks.get(holder);
     const mark = existing ?? document.createElement('div');
     marks.set(holder, mark);
@@ -67,14 +69,18 @@ export function createWatermarkRuntime(
   }
 
   function render() {
-    if (!active || busy) return;
+    if (!active || busy) {
+      return;
+    }
     busy = true;
     frame = view.requestAnimationFrame(() => {
       frame = undefined;
       busy = false;
     });
     const context = document.createElement('canvas').getContext('2d');
-    if (!context) return;
+    if (!context) {
+      return;
+    }
     const current = options;
     const currentLines = lines;
     const ratio = view.devicePixelRatio || 1;
@@ -89,7 +95,9 @@ export function createWatermarkRuntime(
     const rotate = current.rotate ?? -22;
 
     function draw(content: readonly WatermarkContentLine[] | HTMLImageElement) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       // Как useSingletonCache: HTMLElement и top-level NaN исключаются из ключей.
       const keys = [
         Array.isArray(content) ? content : '',
@@ -136,8 +144,9 @@ export function createWatermarkRuntime(
           || record.type === 'attributes'
           && owned(
             record.target
-          ))
+          )) {
           render();
+        }
         else if (record.target === root && record.attributeName === 'style') {
           for (const property of ['position', 'overflow']) {
             const expected = intendedStyle.getPropertyValue(property);
@@ -146,8 +155,9 @@ export function createWatermarkRuntime(
               && (root.style.getPropertyValue(property) !== expected
                 || root.style.getPropertyPriority(
                   property
-                ) !== priority))
+                ) !== priority)) {
               root.style.setProperty(property, expected, priority);
+            }
           }
         }
       }
@@ -157,11 +167,12 @@ export function createWatermarkRuntime(
   function observe() {
     observer?.takeRecords();
     observer?.disconnect();
-    for (const holder of targets)
+    for (const holder of targets) {
       observer?.observe(
         holder,
         { subtree: true, childList: true, attributeFilter: ['style', 'class'] }
       );
+    }
   }
 
   function remove(holder: HTMLElement) {
@@ -175,7 +186,9 @@ export function createWatermarkRuntime(
 
   return {
     configure(next: WatermarkRuntimeOptions, panels: ReadonlySet<HTMLElement>) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       options = next;
       intendedStyle.cssText = next.containerStyle;
       const computed = view.getComputedStyle(root);
@@ -201,8 +214,9 @@ export function createWatermarkRuntime(
             nextFont[key as keyof WatermarkFont],
             font![key as keyof WatermarkFont]
           )
-        ))
+        )) {
         font = nextFont;
+      }
       lines = getWatermarkLines(next.content, font);
       gap = [next.gap?.[0] ?? 100, next.gap?.[1] ?? 100];
       const zIndex = next.zIndex
@@ -215,9 +229,10 @@ export function createWatermarkRuntime(
           holder => !nextTargets.has(holder)
         );
       const added = [...nextTargets].filter(holder => !targets.has(holder));
-      for (const holder of targets)
+      for (const holder of targets) {
         if (!nextTargets.has(holder))
           remove(holder);
+      }
       targets = nextTargets;
       if (changedTargets)
         observe();
@@ -245,7 +260,9 @@ export function createWatermarkRuntime(
         remove(holder);
     },
     destroy() {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       active = false;
       observer?.takeRecords();
       observer?.disconnect();

@@ -104,11 +104,13 @@ export function verifyDatePickerPresetsReturnedDate(native: DatePickerPresetValu
   const previousNative = proof.sourceToNative.get(source.identity);
   const previousSource = proof.nativeToSource.get(native.identity);
   if (previousNative !== undefined) assert.equal(native.identity, previousNative, label + ' alias');
-  if (previousSource !== undefined) assert.equal(
-    source.identity,
-    previousSource,
-    label + ' distinct date'
-  );
+  if (previousSource !== undefined) {
+    assert.equal(
+      source.identity,
+      previousSource,
+      label + ' distinct date'
+    );
+  }
   proof.sourceToNative.set(source.identity, native.identity);
   proof.nativeToSource.set(native.identity, source.identity);
 }
@@ -236,7 +238,9 @@ function compareOwners(native: DatePickerPresetOwner, source: DatePickerPresetOw
 function physicalFocus(point: DatePickerPresetPoint, prefix: string) {
   const node = point.activeElement;
   assert(node && node.connected);
-  if (node.tag === 'BODY') return { kind: 'body', tag: 'BODY' };
+  if (node.tag === 'BODY') {
+    return { kind: 'body', tag: 'BODY' };
+  }
   if (node.tag === 'INPUT' && attribute(node, 'id') === 'preset-field') {
     return { kind: 'input', tag: 'INPUT' };
   }
@@ -341,8 +345,10 @@ function validationOrder(
       > (rawRoot(call.rawArguments).id as number), 'FIRST actual same-Date validation follows calendar');
     const change = owner.callbackInvocations.find(row => row.name === 'change'
       && row.actionIndex === call.actionIndex);
-    if (change) assert((rawRoot(validation.rawArgument).id as number)
-      < (rawRoot(change.rawArguments).id as number), 'Actual validation precedes change');
+    if (change) {
+      assert((rawRoot(validation.rawArgument).id as number)
+        < (rawRoot(change.rawArguments).id as number), 'Actual validation precedes change');
+    }
     results.push({ actionIndex: call.actionIndex, result: validation.result });
   }
   return results;

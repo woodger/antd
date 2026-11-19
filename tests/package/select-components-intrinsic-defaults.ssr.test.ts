@@ -10,13 +10,17 @@ for (const control of ['select', 'autocomplete'] as const)
     it(`preserves public intrinsic SSR defaults ${control}/${kind}`, () => {
       vi.useFakeTimers();
       const resource = vi.fn(() => { throw Error('Intrinsic editor SSR must remain DOM-free'); });
-      for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(
-        name,
-        resource
-      );
-      for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() {
-        resource();
-      } });
+      for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) {
+        vi.stubGlobal(
+          name,
+          resource
+        );
+      }
+      for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) {
+        vi.stubGlobal(name, class { constructor() {
+          resource();
+        } });
+      }
       const warn = vi.spyOn(console, 'warn'), error = vi.spyOn(console, 'error');
       try {
         expect(typeof window).toBe('undefined');

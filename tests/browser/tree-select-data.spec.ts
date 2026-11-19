@@ -27,8 +27,10 @@ for (const sample of reference.cases) test(`TreeSelect data matches Source for $
     else if (action.kind === 'search') {
       await page.getByRole('combobox', { name: 'Data selection' }).fill(action.value);
     }
-    else await page.getByRole('button', { name: action.kind === 'update' ? 'Update data'
-      : action.kind === 'schema' ? 'Update schema' : 'Nested data', exact: true }).dispatchEvent('click');
+    else {
+      await page.getByRole('button', { name: action.kind === 'update' ? 'Update data'
+        : action.kind === 'schema' ? 'Update schema' : 'Nested data', exact: true }).dispatchEvent('click');
+    }
     await expect.poll(read, { message: JSON.stringify(action) }).toEqual({
       view: step.view, events: step.events, inputMutated: step.inputMutated,
       filterClone: step.filterClone, rendererData: step.rendererData

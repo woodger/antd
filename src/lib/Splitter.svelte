@@ -95,7 +95,9 @@
   });
 
   $effect(() => {
-    if (!nativeElement) return;
+    if (!nativeElement) {
+      return;
+    }
 
     return observeSplitterSize(nativeElement, () => isVertical, model.measure);
   });

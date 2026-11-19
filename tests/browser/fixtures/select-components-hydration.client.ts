@@ -5,7 +5,9 @@ import { selectComponentsHydrationSamples } from './select-components-hydration-
 import { initializeSelectComponentsHydrationProbe, readSelectComponentsHydration } from '../select-components-hydration-metrics.mjs';
 
 const sample = selectComponentsHydrationSamples.find(sample => sample.id === new URL(location.href).searchParams.get('sample'));
-if (!sample) throw Error('Unknown components hydration sample');
+if (!sample) {
+  throw Error('Unknown components hydration sample');
+}
 const target = document.getElementById('root')!;
 // The browser driver parses SSR, applies the pre-hydration edit and initializes
 // this read-only identity observer before loading the client.

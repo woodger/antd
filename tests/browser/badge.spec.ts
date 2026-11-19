@@ -80,10 +80,11 @@ test(
       const id = await target(page).getAttribute('aria-describedby');
       if(id)
         await expect(page.locator(`[id="${id}"]`)).toHaveCount(1);
-      else
+      else {
         await expect(host(page)
           .locator('.ant-badge-description'))
           .toHaveCount(0);
+      }
     }
 
     await expect(indicator(page)).toHaveCount(0);

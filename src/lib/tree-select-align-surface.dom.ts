@@ -17,7 +17,9 @@ export function treeSelectAlignScrollers(
   while (parent) {
     const style = view.getComputedStyle(parent);
     if ([style.overflow, style.overflowX, style.overflowY].some(value =>
-      ['hidden', 'scroll', 'clip', 'auto'].includes(value))) nodes.push(parent);
+      ['hidden', 'scroll', 'clip', 'auto'].includes(value))) {
+      nodes.push(parent);
+    }
     parent = parent.parentElement;
   }
   return nodes;
@@ -262,10 +264,14 @@ export function createTreeSelectAlignSurface(
     const values: unknown[] = [getStyle(), popup.parentNode, popup.className,
       motion.signature(), constrainX];
     const measured = getBorderBox?.();
-    if (measured) values.push(measured.size.inlineSize, measured.size.blockSize,
-      measured.width, measured.height, measured.boxSizing, measured.writingMode);
-    if (constrainX) values.push(view.visualViewport?.offsetLeft ?? 0,
-      view.visualViewport?.width ?? view.innerWidth);
+    if (measured) {
+      values.push(measured.size.inlineSize, measured.size.blockSize,
+        measured.width, measured.height, measured.boxSizing, measured.writingMode);
+    }
+    if (constrainX) {
+      values.push(view.visualViewport?.offsetLeft ?? 0,
+        view.visualViewport?.width ?? view.innerWidth);
+    }
     const container = getParent();
     let parent: Element | null = container instanceof view.ShadowRoot ? container.host : container;
     while (parent) {
@@ -284,10 +290,14 @@ export function createTreeSelectAlignSurface(
     values.push(css.width, css.height, css.padding, css.borderWidth,
       css.transitionProperty, css.transitionDuration, css.transitionDelay,
       css.transitionTimingFunction, css.transitionBehavior);
-    for (const name of popup.style) if (name.startsWith('--')) values.push(
-      name,
-      popup.style.getPropertyValue(name)
-    );
+    for (const name of popup.style) {
+      if (name.startsWith('--')) {
+        values.push(
+          name,
+          popup.style.getPropertyValue(name)
+        );
+      }
+    }
     return values.map(value => String(value)).join(':');
   }
 

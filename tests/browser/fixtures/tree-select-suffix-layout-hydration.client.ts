@@ -25,7 +25,9 @@ declare global {
 }
 const id = new URL(location.href).searchParams.get('sample');
 const sample = treeSelectSuffixLayoutSamples.find(sample => sample.id === id);
-if (!sample) throw Error(`Unknown suffix hydration sample: ${id}`);
+if (!sample) {
+  throw Error(`Unknown suffix hydration sample: ${id}`);
+}
 const target = document.getElementById('root')!;
 const root = target.querySelector<HTMLElement>('[data-ant-tree-choice-control]')!;
 const editor = root.querySelector<HTMLInputElement | HTMLTextAreaElement>('[data-suffix-layout-editor]')!;

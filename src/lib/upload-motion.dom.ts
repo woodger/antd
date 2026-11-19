@@ -67,7 +67,9 @@ export function createUploadMotion(
       enabled: boolean;
       appear: boolean;
     }) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       const { visible, motionName, enabled, appear } = options;
       name = motionName;
       collapse = options.collapse;
@@ -92,10 +94,14 @@ export function createUploadMotion(
       update();
       const current = revision;
       frame = view.requestAnimationFrame(() => {
-        if (!active || current !== revision) return;
+        if (!active || current !== revision) {
+          return;
+        }
         frame = view.requestAnimationFrame(() => {
           frame = undefined;
-          if (!active || current !== revision) return;
+          if (!active || current !== revision) {
+            return;
+          }
           step = 'active';
           style = !collapse ? undefined : visible
             ? `height:${node.scrollHeight}px;opacity:1` : 'height:0px;opacity:0';

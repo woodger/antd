@@ -161,7 +161,9 @@
   $effect(() => {
     const current = { picker, open: visible };
     if (!time && current.open && (picker !== previousPickerMode.picker
-      || picker !== 'date' && !previousPickerMode.open)) mode = picker;
+      || picker !== 'date' && !previousPickerMode.open)) {
+      mode = picker;
+    }
     previousPickerMode = current;
   });
   let text = $state(
@@ -249,7 +251,9 @@
   let formattedTimeDraft = $derived(time
     ? formatPicker(draft, actualLocale.locale, formats) : undefined);
   let timeInputSize = $derived.by(() => {
-    if (!time) return undefined;
+    if (!time) {
+      return undefined;
+    }
     const first = formats[0];
     const length = typeof first === 'function' ? first(now).length : first.length;
     return Math.max(8, length) + 2;
@@ -337,7 +341,9 @@
   $effect(() => {
     const formatted = formattedDateValue;
     // Context repaint не сбрасывает draft, пока value и его отображение прежние.
-    if (mergedValue === previousMergedValue && (time || formatted === previousDateText)) return;
+    if (mergedValue === previousMergedValue && (time || formatted === previousDateText)) {
+      return;
+    }
 
     if (!time && mergedValue === previousMergedValue) {
       text = formatPicker(draft, actualLocale.locale, formats);
@@ -359,13 +365,17 @@
     }
   });
   $effect(() => {
-    if (time) return;
+    if (time) {
+      return;
+    }
     const opened = visible, calendar = draft;
     const opening = opened && !datePanelWasOpen;
     const changed = calendar !== previousDateCalendar;
     datePanelWasOpen = opened;
     previousDateCalendar = calendar;
-    if (!opened || !opening && !changed) return;
+    if (!opened || !opening && !changed) {
+      return;
+    }
     untrack(() => syncDatePanel(opening));
   });
   $effect.pre(() => {
@@ -380,10 +390,12 @@
     if (wasVisible && !next) {
       hoverValue = null;
       if (time) untrack(() => timeInteraction.trigger(0, 'popupClose'));
-      else untrack(() => {
-        if (retainedDatePreset) datePresetInteraction.trigger(0, 'popupClose');
-        else datePresetInteraction.reset();
-      });
+      else {
+        untrack(() => {
+          if (retainedDatePreset) datePresetInteraction.trigger(0, 'popupClose');
+          else datePresetInteraction.reset();
+        });
+      }
     }
     wasVisible = next;
   });
@@ -397,7 +409,9 @@
     panelWasOpen = opened;
   });
   $effect(() => {
-    if (!visible || !popup || !rootElement) return;
+    if (!visible || !popup || !rootElement) {
+      return;
+    }
     return connectPopup(popup, rootElement, {
       placement: actualPlacement.startsWith('top') ? 'top' : 'bottom',
       align: actualPlacement.endsWith('Right') ? 'right' : 'left',
@@ -412,11 +426,15 @@
       ),
       matchAnchorWidth: true,
       preserveFocus: event => {
-        if (time || !(cellRender || panelRender || renderExtraFooter)) return true;
+        if (time || !(cellRender || panelRender || renderExtraFooter)) {
+          return true;
+        }
         for (const target of event.composedPath()) {
           if (target === popup) break;
           if (target instanceof HTMLElement
-            && (target.matches('input, textarea, select') || target.isContentEditable)) return false;
+            && (target.matches('input, textarea, select') || target.isContentEditable)) {
+            return false;
+          }
         }
         return true;
       },
@@ -446,9 +464,11 @@
     }
   });
   function valid(next: Dayjs | null) {
-    if (time) return Boolean(next?.isValid()
-      && !timePickerDateDisabled(next, time)
-      && !pickerTimeDisabled(next, { showTime: clock, disabledTime }));
+    if (time) {
+      return Boolean(next?.isValid()
+        && !timePickerDateDisabled(next, time)
+        && !pickerTimeDisabled(next, { showTime: clock, disabledTime }));
+    }
     return Boolean(
       next?.isValid()
       && !pickerDateDisabled(next, { minDate, maxDate, disabledDate }, picker, actualLocale.locale)
@@ -459,7 +479,9 @@
     );
   }
   function requestOpen(next: boolean, preserveDraft = false) {
-    if (blocked || visible === next) return;
+    if (blocked || visible === next) {
+      return;
+    }
     if (next) {
       now = adapter.getNow();
       if (!time && !retainedDatePreset && !preserveDraft) draft = mergedValue;
@@ -485,7 +507,9 @@
   }
   function commit(next: Dayjs | null) {
     if (!time) datePresetInteraction.reset();
-    if (!time && blocked || next && !valid(next)) return false;
+    if (!time && blocked || next && !valid(next)) {
+      return false;
+    }
     const changed = time ? !timePickerSameValue(next, mergedValue)
       : next?.valueOf() !== mergedValue?.valueOf();
     setDraft(next, 'date');
@@ -509,20 +533,28 @@
       return;
     }
     if (confirmed && retainedDatePreset) {
-      if (!valid(draft)) return;
+      if (!valid(draft)) {
+        return;
+      }
       if (draft) onOk?.(draft);
       datePresetInteraction.trigger(0, 'confirm');
       return;
     }
     if (confirmed && picker !== 'date') {
-      if (!valid(draft)) return;
+      if (!valid(draft)) {
+        return;
+      }
       if (draft) onOk?.(draft);
-      if (!commit(draft)) return;
+      if (!commit(draft)) {
+        return;
+      }
       requestOpen(false);
       return;
     }
     if (confirmed) {
-      if (!valid(draft) || !commit(draft)) return;
+      if (!valid(draft) || !commit(draft)) {
+        return;
+      }
       if (draft)
         onOk?.(draft);
     }
@@ -542,7 +574,9 @@
     requestOpen(false);
   }
   function syncDatePanel(opening: boolean) {
-    if (defaultPickerValue && !opening) return;
+    if (defaultPickerValue && !opening) {
+      return;
+    }
     let next = defaultPickerValue ?? draft ?? now;
     if (!defaultPickerValue) {
       if (minDate && minDate.isAfter(next)) next = minDate;
@@ -610,7 +644,9 @@
         disabledTime
       )
       : next;
-    if (pickerDateDisabled(candidate, restrictions, picker, actualLocale.locale)) return;
+    if (pickerDateDisabled(candidate, restrictions, picker, actualLocale.locale)) {
+      return;
+    }
     draftSource = 'panel';
     setDraft(candidate, 'date');
     text = formatPicker(candidate, actualLocale.locale, formats);
@@ -661,7 +697,9 @@
   function keyboard(event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
     const shared = (_event: KeyboardEvent, maskKey?: PickerMaskSharedKey) => {
       onkeydown?.(event);
-      if (event.defaultPrevented || event.isComposing || blocked) return false;
+      if (event.defaultPrevented || event.isComposing || blocked) {
+        return false;
+      }
       void keyboardAction(event, maskKey);
       return true;
     };
@@ -728,10 +766,16 @@
         requestOpen(true);
       }
       else {
-        if (maskKey && !maskKey.enterValid) return;
+        if (maskKey && !maskKey.enterValid) {
+          return;
+        }
         if ((picker === 'date' || picker === 'quarter' || picker === 'week') && dirty
-          && draftSource === 'input' && text !== '' && !quarterInputValue) return;
-        if (picker === 'date' && dirty && draftSource === 'input' && text !== '' && invalid) return;
+          && draftSource === 'input' && text !== '' && !quarterInputValue) {
+          return;
+        }
+        if (picker === 'date' && dirty && draftSource === 'input' && text !== '' && invalid) {
+          return;
+        }
         const next = text ? draft : null;
         if (!text || valid(next)) {
           commit(next);
@@ -759,7 +803,9 @@
       && (rootElement?.contains(event.relatedTarget)
         || popup?.contains(
           event.relatedTarget
-        ))) return;
+        ))) {
+      return;
+    }
     queueMicrotask(() => {
       const active = popup ? getPopupActiveElement(popup) : input?.ownerDocument.activeElement;
       if (!input?.isConnected
@@ -767,7 +813,9 @@
         && (rootElement?.contains(active)
           || popup?.contains(
             active
-          ))) return;
+          ))) {
+        return;
+      }
       focused = false;
       field?.onBlur();
       if (visible || dirty) {
@@ -790,11 +838,14 @@
     const previous = panel;
     if (pickerValue === undefined) internalPanel = next;
     if (previous.hour() !== next.hour() || previous.minute() !== next.minute()
-      || previous.second() !== next.second())
+      || previous.second() !== next.second()) {
       time?.onPickerValueChange?.(next, { source, mode: 'time' });
+    }
   }
   function handleTimeHover(next: Dayjs | null) {
-    if (!time || time.previewValue === false) return;
+    if (!time || time.previewValue === false) {
+      return;
+    }
     hoverValue = next;
     if (!next) text = formatPicker(draft, actualLocale.locale, formats);
   }
@@ -803,7 +854,9 @@
     return typeof candidate === 'function' ? candidate() : candidate;
   }
   function handleDateHover(next: Dayjs | null) {
-    if (previewValue !== 'hover') return;
+    if (previewValue !== 'hover') {
+      return;
+    }
     hoverValue = next;
   }
   function handleDateCellHover(next: Dayjs | null) {
@@ -825,7 +878,9 @@
     }
   }
   function selectDatePreset(preset: DatePickerPreset) {
-    if (blocked) return;
+    if (blocked) {
+      return;
+    }
     datePanelContainer?.focus();
     focused = true;
     const next = datePresetValue(preset);
@@ -840,14 +895,18 @@
     if (!timePickerSameValue(next, draft)) setDraft(next, 'date');
     if (!next.isValid() || disabledDate?.(next, { type: picker })
       || pickerDateDisabled(next, { minDate, maxDate }, picker, actualLocale.locale)
-      || pickerTimeDisabled(next, { showTime, disabledTime })) return false;
+      || pickerTimeDisabled(next, { showTime, disabledTime })) {
+      return false;
+    }
     const changed = !timePickerSameValue(next, mergedValue);
     if (value === undefined) internalValue = next;
     if (changed) onChange?.(next, formatPicker(next, actualLocale.locale, formats));
     return true;
   }
   function handleRootClick(event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement; }) {
-    if (!time || blocked) return;
+    if (!time || blocked) {
+      return;
+    }
     if (!rootElement?.contains(event.currentTarget.ownerDocument.activeElement)) input?.focus();
     requestOpen(true);
     (time.onclick ?? time.onClick)?.(event);

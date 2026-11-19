@@ -136,7 +136,9 @@
   }
 
   function tabIndex(index: number) {
-    if (props.tabIndex !== undefined) return indexed(props.tabIndex, index) ?? -1;
+    if (props.tabIndex !== undefined) {
+      return indexed(props.tabIndex, index) ?? -1;
+    }
     return props.tabindex ?? 0;
   }
 
@@ -164,7 +166,9 @@
 
   function dispatchNative(type: 'input' | 'change', index: number) {
     void tick().then(() => {
-      if (!mounted || !inputs[index]) return;
+      if (!mounted || !inputs[index]) {
+        return;
+      }
       const input = inputs[index];
       const event = new input.ownerDocument.defaultView!.Event(type, { bubbles: true });
       generated.add(event);
@@ -214,7 +218,9 @@
     removeCount = displayed.length
   ) {
     event.stopPropagation();
-    if (sliderHandleDisabled(disabled, index)) return;
+    if (sliderHandleDisabled(disabled, index)) {
+      return;
+    }
     event.preventDefault();
     cancel();
     const origin = [...values];
@@ -232,7 +238,9 @@
       rawValues: origin, draggingIndex: index, draggingValue: origin[index]
     });
     gesture = connectSliderRangeDrag(event.currentTarget as HTMLElement, event, move => {
-      if (!nativeElement) return;
+      if (!nativeElement) {
+        return;
+      }
       const rect = nativeElement.getBoundingClientRect();
       const x = move.pageX - startX;
       const y = move.pageY - startY;
@@ -242,7 +250,9 @@
       draggingDelete = editable && Math.abs(vertical ? x : y) > 130
         && settings.minCount < removeCount;
       if (index === -1) {
-        if (origin.some((_, item) => sliderHandleDisabled(disabled, item))) return;
+        if (origin.some((_, item) => sliderHandleDisabled(disabled, item))) {
+          return;
+        }
         let delta = Math.max(minimum - origin[0], Math.min(maximum - origin[origin.length - 1],
           ratio * (maximum - minimum)));
         delta = offset.format(origin[0] + delta) - origin[0];
@@ -272,9 +282,13 @@
   }
 
   function closest(point: number, event?: PointerEvent) {
-    if (disabledState[0]) return;
+    if (disabledState[0]) {
+      return;
+    }
     const index = raw.length ? sliderClosestHandle(raw, point, options) : 0;
-    if (index === -1) return;
+    if (index === -1) {
+      return;
+    }
     const next = [...raw];
     const removeCount = displayed.length;
     const distance = raw.length ? Math.abs(point - raw[index]) : maximum - minimum;
@@ -298,7 +312,9 @@
   }
 
   function handleRootPointer(event: PointerEvent) {
-    if (event.defaultPrevented) return;
+    if (event.defaultPrevented) {
+      return;
+    }
     event.preventDefault();
     const rect = nativeElement!.getBoundingClientRect();
     const ratio = direction === 'rtl' ? (rect.right - event.clientX) / rect.width
@@ -310,9 +326,13 @@
 
   function handleStart(event: PointerEvent, index: number) {
     props.onpointerdown?.(event as PointerEvent & { currentTarget: HTMLInputElement; });
-    if (event.defaultPrevented) return;
+    if (event.defaultPrevented) {
+      return;
+    }
     event.stopPropagation();
-    if (sliderHandleDisabled(disabled, index)) return;
+    if (sliderHandleDisabled(disabled, index)) {
+      return;
+    }
     start(event, index, [...raw], true);
   }
 
@@ -321,7 +341,9 @@
     index: number
   ) {
     props.onkeydown?.(event);
-    if (event.defaultPrevented || sliderHandleDisabled(disabled, index)) return;
+    if (event.defaultPrevented || sliderHandleDisabled(disabled, index)) {
+      return;
+    }
     if ((event.key === 'Delete' || event.key === 'Backspace') && internal?.onKeyDelete) {
       event.preventDefault();
       internal.onKeyDelete(index);
@@ -355,7 +377,9 @@
   }
 
   function handleInput(event: Event & { currentTarget: HTMLInputElement; }, index: number) {
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
     if (!generated.has(event) && !sliderHandleDisabled(disabled, index)) {
       const next = offset.offset(
         raw, event.currentTarget.valueAsNumber - raw[index], index, 'dist'
@@ -366,13 +390,17 @@
   }
 
   function handleChange(event: Event & { currentTarget: HTMLInputElement; }) {
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
     if (!generated.has(event)) complete();
     props.onchange?.(event);
   }
 
   function handleEnter(event: PointerEvent & { currentTarget: HTMLInputElement; }, index: number) {
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
     hovered = index;
     activeTooltip = index;
     tooltipDismissed = false;
@@ -380,13 +408,17 @@
   }
 
   function handleLeave(event: PointerEvent & { currentTarget: HTMLInputElement; }, index: number) {
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
     if (hovered === index) hovered = -1;
     props.onpointerleave?.(event);
   }
 
   function handleFocus(event: FocusEvent & { currentTarget: HTMLInputElement; }, index: number) {
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
     focused = index;
     activeTooltip = index;
     tooltipDismissed = false;
@@ -397,7 +429,9 @@
 
   function handleBlur(event: FocusEvent & { currentTarget: HTMLInputElement; }, index: number) {
     // Svelte может получить blur от remove() раньше cleanup компонента.
-    if (!mounted || !event.currentTarget.isConnected) return;
+    if (!mounted || !event.currentTarget.isConnected) {
+      return;
+    }
     if (focused === index) focused = -1;
     field?.onBlur();
     blurCallbacks.onBlur?.(event);
@@ -407,11 +441,15 @@
   function handleReset(event: Event) {
     const owner = props.form == null ? nativeElement?.closest('form')
       : nativeElement?.ownerDocument.getElementById(props.form);
-    if (event.target !== owner || owner?.nodeName !== 'FORM') return;
+    if (event.target !== owner || owner?.nodeName !== 'FORM') {
+      return;
+    }
     cancel();
     const timer = setTimeout(() => {
       resetTimers.delete(timer);
-      if (!mounted || event.defaultPrevented) return;
+      if (!mounted || event.defaultPrevented) {
+        return;
+      }
       value = sliderRangeValues(initialDefault, options);
     }, 0);
     resetTimers.add(timer);

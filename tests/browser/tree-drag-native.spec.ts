@@ -312,7 +312,9 @@ test('Tree completes a real drag after scrolling its source out of the virtual w
   await mountTreeDrag(page, 'virtual');
   const handle = await page.getByRole('treeitem', { name: 'Virtual 0', exact: true })
     .locator('.ant-tree-draggable-icon').boundingBox();
-  if (!handle) throw new Error('Source handle has no box');
+  if (!handle) {
+    throw new Error('Source handle has no box');
+  }
   await page.mouse.move(handle.x + 12, handle.y + 12);
   await page.mouse.down();
   try {
@@ -323,7 +325,9 @@ test('Tree completes a real drag after scrolling its source out of the virtual w
     const target = page.getByRole('treeitem', { name: 'Virtual 30', exact: true });
     await expect(target).toBeVisible();
     const box = await target.boundingBox();
-    if (!box) throw new Error('Drop target has no box');
+    if (!box) {
+      throw new Error('Drop target has no box');
+    }
     await page.mouse.move(box.x + 120, box.y + 18, { steps: 5 });
     await page.mouse.up();
   } finally {

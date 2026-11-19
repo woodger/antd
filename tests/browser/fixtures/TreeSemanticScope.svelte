@@ -89,7 +89,9 @@
   }
 
   function semanticClasses(label: string): TreeConfig['classNames'] {
-    if (!sample.functions) return classes(label);
+    if (!sample.functions) {
+      return classes(label);
+    }
     return ({ props }) => {
       const value = classes(label);
       const flags = [

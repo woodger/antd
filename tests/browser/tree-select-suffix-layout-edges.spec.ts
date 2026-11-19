@@ -29,9 +29,11 @@ for (const entry of reference.cases) {
         const action = step.action as TreeSelectSuffixLayoutEdgeAction;
         if (action.type === 'click-editor') await page.locator('[data-suffix-edge-editor]').click();
         else if (action.type === 'fill') await page.locator('[data-suffix-edge-editor]').fill(action.text);
-        else await page.locator('[data-suffix-edge-command]').evaluate((node, detail) => {
-          node.dispatchEvent(new CustomEvent('suffixedgeupdate', { detail }));
-        }, action);
+        else {
+          await page.locator('[data-suffix-edge-command]').evaluate((node, detail) => {
+            node.dispatchEvent(new CustomEvent('suffixedgeupdate', { detail }));
+          }, action);
+        }
         expect(await settleTreeSelectSuffixLayout(page, read), JSON.stringify(action)).toEqual(step.view);
         expect(await previous.evaluate(old => {
           const root = document.querySelector('[data-suffix-edge-host] .ant-select')!;

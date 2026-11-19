@@ -29,7 +29,9 @@ async function apply(page: Page, action: TreeScrollbarAction) {
   else if (action === 'drag') {
     const thumb = page.locator('.ant-tree-list-scrollbar-thumb');
     const rect = await thumb.boundingBox();
-    if (!rect) throw Error('Scrollbar thumb missing');
+    if (!rect) {
+      throw Error('Scrollbar thumb missing');
+    }
     await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2);
     await page.mouse.down();
     await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2 + 24);

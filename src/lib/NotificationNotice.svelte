@@ -67,25 +67,32 @@
     const root = node;
     const closing = notice.closing;
     // Снимок фокуса нужен до inert и до возможного удаления action snippet.
-    if (root)
+    if (root) {
       untrack(() => {
         const ownedFocus = root.contains(root.ownerDocument.activeElement);
         if (closing)
           focusAfterNotice(root, ownedFocus);
-        else void tick().then(() => {
-          if (!active || !root.isConnected) return;
-          if (ownedFocus && !root.contains(root.ownerDocument.activeElement))
-            focusAfterNotice(root, true);
-          runtime.focus(id, root.contains(root.ownerDocument.activeElement));
-        });
+        else {
+          void tick().then(() => {
+            if (!active || !root.isConnected) {
+              return;
+            }
+            if (ownedFocus && !root.contains(root.ownerDocument.activeElement))
+              focusAfterNotice(root, true);
+            runtime.focus(id, root.contains(root.ownerDocument.activeElement));
+          });
+        }
       });
+    }
   });
 
   $effect(() => {
     const root = node;
     const current = notice;
     const visible = runtime.visible;
-    if (!root || !present) return;
+    if (!root || !present) {
+      return;
+    }
 
     untrack(() => {
       const shift = current.placement.endsWith('Left')

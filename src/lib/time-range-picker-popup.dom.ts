@@ -13,7 +13,9 @@ export function connectTimeRangePopup(
   let previous = '';
 
   function update() {
-    if (disposed) return;
+    if (disposed) {
+      return;
+    }
     const input = activeInput();
     if (input) {
       const inputRect = input.parentElement!.getBoundingClientRect();

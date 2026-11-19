@@ -33,7 +33,9 @@ async function snapshot(page: Page, component: PopupContainerCase['component']) 
   return page.evaluate(selector => {
     const shadow = document.getElementById('provider-shadow')!.shadowRoot!;
     const popup = document.querySelector(selector) ?? shadow.querySelector(selector);
-    if (!popup) return null;
+    if (!popup) {
+      return null;
+    }
     const root = popup.getRootNode();
     const calls: { getter: string; trigger: string; }[] = JSON.parse(
       document.querySelector('[aria-label="Container calls"]')!.textContent!

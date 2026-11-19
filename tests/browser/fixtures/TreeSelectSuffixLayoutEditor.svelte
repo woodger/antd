@@ -11,7 +11,9 @@
   let register = $derived(context.register);
   $effect(() => {
     const field = input, nativeElement = wrapper;
-    if (kind !== 'composite-ref' || !field || !nativeElement) return;
+    if (kind !== 'composite-ref' || !field || !nativeElement) {
+      return;
+    }
     return register({
       inputElement: field,
       nativeElement,

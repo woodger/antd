@@ -48,14 +48,18 @@ test('Tree refreshes the estimate without cloning data or losing DOM, selection 
   const editor = page.getByRole('textbox', { name: 'Virtual tree editor', exact: true });
   await editor.fill('Unsaved draft');
   await editor.evaluate(node => {
-    if (!(node instanceof HTMLInputElement)) throw Error('Expected input');
+    if (!(node instanceof HTMLInputElement)) {
+      throw Error('Expected input');
+    }
     node.setSelectionRange(2, 7);
   });
 
   await expect(holder(page).locator(':scope > div')).toHaveCSS('height', '1942px');
 
   await button(page, 'Update virtual tree').evaluate(node => {
-    if (!(node instanceof HTMLButtonElement)) throw Error('Expected button');
+    if (!(node instanceof HTMLButtonElement)) {
+      throw Error('Expected button');
+    }
     node.click();
   });
 
@@ -66,7 +70,9 @@ test('Tree refreshes the estimate without cloning data or losing DOM, selection 
   await expect(editor).toBeFocused();
   await expect(editor).toHaveValue('Unsaved draft');
   expect(await editor.evaluate(node => {
-    if (!(node instanceof HTMLInputElement)) throw Error('Expected input');
+    if (!(node instanceof HTMLInputElement)) {
+      throw Error('Expected input');
+    }
     return [node.selectionStart, node.selectionEnd];
   })).toEqual([2, 7]);
 });
@@ -121,7 +127,9 @@ for (const rtl of [false, true]) {
     await sample(page, rtl ? 'horizontal-rtl-observation' : 'horizontal');
     const thumb = host(page).locator('.ant-tree-list-scrollbar-horizontal .ant-tree-list-scrollbar-thumb');
     const box = await thumb.boundingBox();
-    if (!box) throw Error('Missing horizontal thumb');
+    if (!box) {
+      throw Error('Missing horizontal thumb');
+    }
     const x = box.x + box.width / 2;
     const y = box.y + box.height / 2;
     await page.mouse.move(x, y);
@@ -177,7 +185,9 @@ test('Tree drags its vertical scrollbar and restores the holder after release', 
   await sample(page, 'virtual');
   const thumb = host(page).locator('.ant-tree-list-scrollbar-vertical .ant-tree-list-scrollbar-thumb');
   const box = await thumb.boundingBox();
-  if (!box) throw Error('Missing vertical thumb');
+  if (!box) {
+    throw Error('Missing vertical thumb');
+  }
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2 + 46);

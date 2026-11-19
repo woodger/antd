@@ -11,8 +11,9 @@ const bytes = readFileSync(new URL(
   './fixtures/ant-design-select-value-opacity-reference.json',
   import.meta.url
 ));
-if (createHash('sha256').update(bytes).digest('hex') !== 'e6ada4d37004ee45bef3b7c77cf632765d5b3b3ffd7301671fff5d9b90fd07bd')
+if (createHash('sha256').update(bytes).digest('hex') !== 'e6ada4d37004ee45bef3b7c77cf632765d5b3b3ffd7301671fff5d9b90fd07bd') {
   throw Error('Original selected-label paint reference changed');
+}
 const paint = JSON.parse(bytes.toString('utf8')) as { reference: { revision: string;
   primaryCompleteRawProjectionDeepEqualAtAllSixPoints: boolean; errors: unknown[]; diagnostics: unknown[] };
   cases: Array<{
@@ -41,10 +42,12 @@ test('Selected label paint follows original opacity without double fading', asyn
   await prepareSelectValue(page);
   try {
     for (const [index, snapshot] of [source.initial, ...source.steps].entries()) {
-      if (index) await actSelectValue(
-        page,
-        source.steps[index - 1].action as Parameters<typeof actSelectValue>[1]
-      );
+      if (index) {
+        await actSelectValue(
+          page,
+          source.steps[index - 1].action as Parameters<typeof actSelectValue>[1]
+        );
+      }
       const actual = await settleSelectValue(page);
       verifySelectValue(actual, snapshot, sample, `paint/${index}`);
       const observed = await page.evaluate(readSelectValueOpacity);

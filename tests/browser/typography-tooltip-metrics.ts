@@ -1,6 +1,8 @@
 export function snapshotTypographyTooltip(prefix = 'ant-tooltip') {
   const popup = document.querySelector<HTMLElement>(`.${CSS.escape(prefix)}`);
-  if (!popup || getComputedStyle(popup).display === 'none' || !popup.getClientRects().length) return null;
+  if (!popup || getComputedStyle(popup).display === 'none' || !popup.getClientRects().length) {
+    return null;
+  }
   const container = popup.querySelector<HTMLElement>(`.${CSS.escape(`${prefix}-container`)}`)!;
   const style = getComputedStyle(container);
 

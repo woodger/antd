@@ -514,9 +514,10 @@ for (const mode of ['hidden', 'disabled', 'custom']) {
     await setting(page, 'close mode', mode);
     await button(page, 'Notification info').click();
     if (mode === 'hidden') await expect(notices(page).getByRole('button')).toHaveCount(0);
-    else if (mode === 'disabled')
+    else if (mode === 'disabled') {
       await expect(notices(page).getByRole('button', { name: 'Закрыть', exact: true }))
         .toBeDisabled();
+    }
     else {
       const close = notices(page).getByRole('button', { name: 'Dismiss report', exact: true });
       await expect(close).toHaveText('×');
@@ -551,8 +552,9 @@ test(
       'English locale',
       'Dark Notification theme',
       'Compact Notification theme'
-    ])
+    ]) {
       await page.getByLabel(label, { exact: true }).check();
+    }
     await button(page, 'Notification error').click();
     await settled(page);
 

@@ -10,7 +10,9 @@ export function snapshotStatisticConfig() {
       direction: getComputedStyle(root).direction,
       slots: Object.fromEntries(Object.entries(selectors).map(([key, selector]) => {
         const node = selector ? root.querySelector<HTMLElement>(selector) : root;
-        if (!node) return [key, null];
+        if (!node) {
+          return [key, null];
+        }
         const style = getComputedStyle(node);
 
         return [key, {

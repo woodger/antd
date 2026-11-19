@@ -125,7 +125,9 @@ describe('Form validation options public package', () => {
 });
 
 function summarize(error: unknown) {
-  if (!(error instanceof FormValidationError)) throw error;
+  if (!(error instanceof FormValidationError)) {
+    throw error;
+  }
 
   return { status: 'invalid', outOfDate: error.outOfDate, errorFields: error.errorFields };
 }

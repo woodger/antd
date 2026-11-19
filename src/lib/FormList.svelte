@@ -17,7 +17,9 @@
     }
   });
   const parent = useFormList();
-  if (!form) throw new Error('FormList requires Form');
+  if (!form) {
+    throw new Error('FormList requires Form');
+  }
 
   let prefixName = $derived([...(parent?.prefixName ?? []), ...formNamePath(name)]);
   untrack(() => form.initializeList(prefixName, initialValue));
@@ -77,21 +79,27 @@
   const operation: FormListOperation = {
     add(value, index) {
       const next = changeFormList(readValues(), keys, { type: 'add', value, index });
-      if (!next) return;
+      if (!next) {
+        return;
+      }
 
       keys = next.state;
       form.changeList(prefixName, next.values);
     },
     remove(index) {
       const next = changeFormList(readValues(), keys, { type: 'remove', index });
-      if (!next) return;
+      if (!next) {
+        return;
+      }
 
       keys = next.state;
       form.changeList(prefixName, next.values);
     },
     move(from, to) {
       const next = changeFormList(readValues(), keys, { type: 'move', from, to });
-      if (!next) return;
+      if (!next) {
+        return;
+      }
 
       keys = next.state;
       form.changeList(prefixName, next.values);

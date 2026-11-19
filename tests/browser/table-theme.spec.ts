@@ -25,11 +25,15 @@ for (const sample of reference.cases) {
 
       await expect(root.getByRole('table')).toBeVisible();
       await page.mouse.move(1300, 1100);
-      if (mode === 'header-hover') await root.locator('th.ant-table-column-has-sorters')
-        .hover({ position: { x: 4, y: 4 } });
+      if (mode === 'header-hover') {
+        await root.locator('th.ant-table-column-has-sorters')
+          .hover({ position: { x: 4, y: 4 } });
+      }
       if (mode === 'sorter-hover') await root.locator('.ant-table-column-sorters').hover();
-      if (mode === 'selected-hover') await root.locator('tbody tr.ant-table-row').first()
-        .locator('td').last().hover();
+      if (mode === 'selected-hover') {
+        await root.locator('tbody tr.ant-table-row').first()
+          .locator('td').last().hover();
+      }
       if (mode === 'expand-hover') await root.locator('.ant-table-row-expand-icon').first().hover();
       if (mode === 'filter-hover') await root.locator('.ant-table-filter-trigger').hover();
       if (mode === 'filter-popup') {

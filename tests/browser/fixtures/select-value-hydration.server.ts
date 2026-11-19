@@ -7,7 +7,9 @@ export function renderSelectValue(id: string) {
     throw Error('Select value hydration must start with DOM-free server rendering');
   }
   const sample = selectValueSamples.find(sample => sample.id === id);
-  if (!sample) throw Error(`Unknown Select value sample: ${id}`);
+  if (!sample) {
+    throw Error(`Unknown Select value sample: ${id}`);
+  }
   const rendered = render(SelectValueCase, {
     props: { sample, name: 'value-selection' }, idPrefix: 'select-value-hydration'
   });

@@ -16,7 +16,9 @@ async function open(page: Page, owner: Owner, scenario: Scenario) {
 async function control(page: Page, name: 'reset' | 'plain') {
   // Обычный owner control сохраняет фокус: click вызывает его публичный DOM handler.
   await page.locator('[data-contract-' + name + ']').evaluate(button => {
-    if (!(button instanceof HTMLButtonElement)) throw Error('Owner control is not a button');
+    if (!(button instanceof HTMLButtonElement)) {
+      throw Error('Owner control is not a button');
+    }
     button.click();
   });
 }
@@ -27,7 +29,9 @@ async function clickTextStart(page: Page, input: Locator) {
     const x = rect.x + (parseFloat(css.borderLeftWidth) || 0)
       + (parseFloat(css.paddingLeft) || 0) + Math.max(0, parseFloat(css.textIndent) || 0) + 2;
     const y = rect.y + rect.height / 2;
-    if (document.elementFromPoint(x, y) !== node) throw Error('Input text edge is covered');
+    if (document.elementFromPoint(x, y) !== node) {
+      throw Error('Input text edge is covered');
+    }
     return { x, y };
   });
   await page.mouse.click(geometry.x, geometry.y);
@@ -57,9 +61,13 @@ test('range input focus waits for the completed click before opening', async ({ 
     await open(page, 'range', 'mouse');
     const input = page.locator('#' + id);
     const box = await input.boundingBox();
-    if (!box) throw Error('Range input geometry missing');
+    if (!box) {
+      throw Error('Range input geometry missing');
+    }
     const model = await page.locator('[data-contract-model]').textContent();
-    if (model === null) throw Error('Original range model missing');
+    if (model === null) {
+      throw Error('Original range model missing');
+    }
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
     let held = false;
 
@@ -149,7 +157,9 @@ test('ordinary date Enter does not submit a rejected typed candidate through the
   await input.click();
   const original = await input.elementHandle();
   const originalModel = await page.locator('[data-contract-model]').textContent();
-  if (originalModel === null) throw Error('Original public model output missing');
+  if (originalModel === null) {
+    throw Error('Original public model output missing');
+  }
   await control(page, 'reset');
   await input.press('Control+A');
   await page.keyboard.type('2021-02-03');

@@ -19,16 +19,22 @@ export async function settleSelectComponentsHydration(page: Page): Promise<Compo
     });
     const point = await page.evaluate(readSelectComponentsHydration), key = JSON.stringify(point);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return point;
+    if (stable >= 3) {
+      return point;
+    }
     previous = key;
   }
   throw Error('Native components hydration did not settle');
 }
 function focusEvent(value: unknown) {
   if (!Array.isArray(value) || !['focus', 'blur'].includes(String(value[0]))
-    || !value[1] || typeof value[1] !== 'object') return value;
+    || !value[1] || typeof value[1] !== 'object') {
+    return value;
+  }
   const event = value[1] as Record<string, unknown>;
-  if (event.type !== 'focus' && event.type !== 'blur') return value;
+  if (event.type !== 'focus' && event.type !== 'blur') {
+    return value;
+  }
   return [value[0], { ...event, type: event.type === 'focus' ? 'focusin' : 'focusout' }, ...value.slice(2)];
 }
 function markerAttributes(node: ComponentsHydrationNode, allowed: boolean) {
@@ -43,7 +49,9 @@ function markerAttributes(node: ComponentsHydrationNode, allowed: boolean) {
 function editor(actual: ComponentsHydrationNode | null, source: ComponentsHydrationNode | null,
   timingBoundary: boolean, ssrMarker = false) {
   assert.equal(Boolean(actual), Boolean(source), 'physical editor presence');
-  if (!actual || !source) return;
+  if (!actual || !source) {
+    return;
+  }
   assert.deepEqual(
     markerAttributes(actual, ssrMarker),
     source.attributes,
@@ -59,13 +67,17 @@ function editor(actual: ComponentsHydrationNode | null, source: ComponentsHydrat
 function sourceCallbackEvent(value: unknown) {
   const event = focusEvent(value);
   if (!Array.isArray(event) || event[0] !== 'change' || event.length !== 3
-    || !isDeepStrictEqual(event[2], { props: { $: 'accessor' } })) return event;
+    || !isDeepStrictEqual(event[2], { props: { $: 'accessor' } })) {
+    return event;
+  }
   // Pinned Source injects only its deprecated non-data props getter for a free
   // typed value without a raw option. Preserve value, event order and all raw rows.
   return [event[0], event[1], {}];
 }
 function pendingSourceRemoval(entry: ComponentsHydrationSourceCase, point: ComponentsHydrationPoint) {
-  if (entry.id !== 'select-components-hydration-ac-replace-close' || point.owner?.alive !== false) return undefined;
+  if (entry.id !== 'select-components-hydration-ac-replace-close' || point.owner?.alive !== false) {
+    return undefined;
+  }
   const pending = entry.steps.at(-1)!;
   assert.equal(pending.action.type, 'close-dispose');
   assert(pending.immediate?.owner && pending.settled.owner);
@@ -116,7 +128,9 @@ export function verifySelectComponentsHydrationPoint(actual: ComponentsHydration
   check('public-refs', () => assert.deepEqual(actual.refs, source.refs));
   check('root', () => {
     assert.equal(Boolean(actual.root), Boolean(source.root));
-    if (!actual.root || !source.root) return;
+    if (!actual.root || !source.root) {
+      return;
+    }
     assert.equal(actual.root.identity, source.root.identity);
     assert.equal(actual.root.tag, source.root.tag);
     assert.equal(actual.root.connected, source.root.connected);
@@ -124,20 +138,26 @@ export function verifySelectComponentsHydrationPoint(actual: ComponentsHydration
     // The standard Native Select container retains its documented presentation
     // boundary. New root replacements have the complete Source intrinsic attrs.
     if (source.root.tag === 'INPUT') editor(actual.root, source.root, false, parsedSSR);
-    if (phase !== 'parsed' && phase !== 'dirty' && phase !== 'commit') assert.deepEqual(
-      actual.root.box,
-      source.root.box
-    );
+    if (phase !== 'parsed' && phase !== 'dirty' && phase !== 'commit') {
+      assert.deepEqual(
+        actual.root.box,
+        source.root.box
+      );
+    }
   });
   check('owner', () => {
     assert.equal(Boolean(actual.owner), Boolean(source.owner));
-    if (!actual.owner || !source.owner) return;
+    if (!actual.owner || !source.owner) {
+      return;
+    }
     const removed = pendingSourceRemoval(entry, source);
-    for (const field of ['model', 'slot', 'alive', 'revision'] as const) assert.deepEqual(
-      actual.owner[field],
-      source.owner[field],
-      field
-    );
+    for (const field of ['model', 'slot', 'alive', 'revision'] as const) {
+      assert.deepEqual(
+        actual.owner[field],
+        source.owner[field],
+        field
+      );
+    }
     assert.equal(actual.owner.open, removed?.open ?? source.owner.open);
     const events = (removed?.events ?? source.owner.events).map(sourceCallbackEvent);
     assert.deepEqual(
@@ -154,10 +174,12 @@ export function verifySelectComponentsHydrationPoint(actual: ComponentsHydration
       assert(actual.owner.lifecycle.some(row => row.event === event), 'authored lifecycle ' + event);
     }
   });
-  if (phase !== 'parsed' && phase !== 'dirty') check(
-    'popup-count',
-    () => assert.equal(actual.popupCount, source.popupCount)
-  );
+  if (phase !== 'parsed' && phase !== 'dirty') {
+    check(
+      'popup-count',
+      () => assert.equal(actual.popupCount, source.popupCount)
+    );
+  }
   if (phase === 'cleanup') {
     check('retained-root', () => {
       assert.equal(actual.parsedRoot?.identity, source.parsedRoot?.identity);
@@ -181,26 +203,32 @@ export async function actSelectComponentsHydration(
   page: Page,
   action: SelectComponentsHydrationAction
 ) {
-  if (action.type === 'focus' || action.type === 'blur') await page.evaluate(type => {
-    const control = window.componentsHydrationProbe.api!.readRefs().control;
-    if (!control) throw Error('Missing real hydrated public control');
-    if (type === 'focus') control.focus(); else control.blur();
-  }, action.type);
+  if (action.type === 'focus' || action.type === 'blur') {
+    await page.evaluate(type => {
+      const control = window.componentsHydrationProbe.api!.readRefs().control;
+      if (!control) {
+        throw Error('Missing real hydrated public control');
+      }
+      if (type === 'focus') control.focus(); else control.blur();
+    }, action.type);
+  }
   else if (action.type === 'fill') {
     await page.evaluate(() => window.componentsHydrationProbe.api!.readRefs().editor!.focus());
     await page.keyboard.press('ControlOrMeta+A');
     await page.keyboard.insertText(action.value);
   }
   else if (action.type === 'root-click') await page.locator('[data-hydration-control] .ant-select').click();
-  else if (action.type === 'close-dispose') return page.evaluate(() => {
-    const state = window.componentsHydrationProbe;
-    const editor = state.api!.readRefs().editor!;
-    editor.dispatchEvent(new KeyboardEvent(
-      'keydown',
-      { key: 'Escape', code: 'Escape', which: 27, keyCode: 27, bubbles: true, cancelable: true }
-    ));
-    state.flushUpdate!({ type: 'alive', value: false });
-    return state.observe!();
-  });
+  else if (action.type === 'close-dispose') {
+    return page.evaluate(() => {
+      const state = window.componentsHydrationProbe;
+      const editor = state.api!.readRefs().editor!;
+      editor.dispatchEvent(new KeyboardEvent(
+        'keydown',
+        { key: 'Escape', code: 'Escape', which: 27, keyCode: 27, bubbles: true, cancelable: true }
+      ));
+      state.flushUpdate!({ type: 'alive', value: false });
+      return state.observe!();
+    });
+  }
   else await page.evaluate(action => window.componentsHydrationProbe.flushUpdate!(action), action);
 }

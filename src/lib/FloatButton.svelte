@@ -105,7 +105,9 @@
     !actualIcon && config.button?.autoInsertSpace !== false && badge === undefined
   );
   $effect(() => {
-    if (nativeElement) return connectFeedbackFocus(nativeElement);
+    if (nativeElement) {
+      return connectFeedbackFocus(nativeElement);
+    }
   });
 </script>
 

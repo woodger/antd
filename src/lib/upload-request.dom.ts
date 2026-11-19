@@ -2,13 +2,14 @@ import type { UploadRequestOptions } from './upload.types';
 // XHR-транспорт rc-upload 1.1.1; MIT, vendor/LICENSE.rc-upload.
 export function uploadRequest<T = unknown>(option: UploadRequestOptions<T>) {
   const xhr = new XMLHttpRequest();
-  if (option.onProgress && xhr.upload)
+  if (option.onProgress && xhr.upload) {
     xhr.upload.onprogress = event => {
       const progress = event as ProgressEvent & { percent: number; };
       if (event.total > 0)
         progress.percent = event.loaded / event.total * 100;
       option.onProgress?.(progress);
     };
+  }
   const body = new FormData();
   for (const [key, value] of Object.entries(option.data ?? {})) {
     if (Array.isArray(value))
@@ -42,9 +43,10 @@ export function uploadRequest<T = unknown>(option: UploadRequestOptions<T>) {
     xhr.withCredentials = true;
   if (option.headers?.['X-Requested-With'] !== null)
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  for (const [key, value] of Object.entries(option.headers ?? {}))
+  for (const [key, value] of Object.entries(option.headers ?? {})) {
     if (value !== null)
       xhr.setRequestHeader(key, value);
+  }
   xhr.send(body);
   return { abort: () => xhr.abort() };
 }

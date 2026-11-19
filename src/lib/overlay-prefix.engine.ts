@@ -5,7 +5,9 @@ export function getOverlayPrefixCss(
   template: string
 ) {
   const original = `ant-${kind}`;
-  if (prefix === original) return undefined;
+  if (prefix === original) {
+    return undefined;
+  }
 
   return template
     .replace(new RegExp(`\\.${original}(?!-css-var\\b)`, 'g'), () => `.${prefix}`)

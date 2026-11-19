@@ -4,7 +4,9 @@ const rootStates = new Set(['', '-rtl', '-spinning', '-fullscreen', '-sm', '-lg'
 
 /** Замена только BEM classes; section также бывает дочерним узлом, не root state. */
 export function getSpinPrefixCss(prefix: string) {
-  if (prefix === 'ant-spin') return undefined;
+  if (prefix === 'ant-spin') {
+    return undefined;
+  }
 
   return template
     .replace(/\.ant-spin([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'

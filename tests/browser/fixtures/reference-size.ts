@@ -7,7 +7,11 @@ export function referenceSizeLabel(size: ComponentSize) {
 
 /** Воспроизводит текущий размер по историческим входным данным Source. */
 export function currentReferenceSize(size: unknown): ComponentSize | undefined {
-  if (size === 'small' || size === 'large') return size;
-  if (size === 'medium' || size === 'middle') return 'medium';
+  if (size === 'small' || size === 'large') {
+    return size;
+  }
+  if (size === 'medium' || size === 'middle') {
+    return 'medium';
+  }
   return undefined;
 }

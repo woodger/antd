@@ -89,10 +89,18 @@ export const calendarDateAdapter: CalendarGenerateConfig<Date> = {
     getShortWeekDays: () => weekdays,
     getShortMonths: () => months,
     format: (_locale, value, format) => format.replace(/YYYY|MMM|MM|DD|D/g, part => {
-      if (part === 'YYYY') return String(value.getUTCFullYear());
-      if (part === 'MMM') return months[value.getUTCMonth()];
-      if (part === 'MM') return String(value.getUTCMonth() + 1).padStart(2, '0');
-      if (part === 'DD') return String(value.getUTCDate()).padStart(2, '0');
+      if (part === 'YYYY') {
+        return String(value.getUTCFullYear());
+      }
+      if (part === 'MMM') {
+        return months[value.getUTCMonth()];
+      }
+      if (part === 'MM') {
+        return String(value.getUTCMonth() + 1).padStart(2, '0');
+      }
+      if (part === 'DD') {
+        return String(value.getUTCDate()).padStart(2, '0');
+      }
       return String(value.getUTCDate());
     }),
     parse: (_locale, value) => {

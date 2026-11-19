@@ -195,7 +195,9 @@
   $effect(() => {
     const input = inputElement;
     const root = nativeElement;
-    if (!input || !root) return;
+    if (!input || !root) {
+      return;
+    }
 
     const handle = createInputNumberRef(input, root);
     ref = handle;
@@ -205,7 +207,9 @@
 
   $effect(() => {
     const input = inputElement;
-    if (!input) return;
+    if (!input) {
+      return;
+    }
 
     input.setCustomValidity(!disabled && !readonly && (parsed.isNaN() || outOfRange)
       ? config.locale.inputNumber?.invalidNumber ?? ruRU.inputNumber.invalidNumber : '');
@@ -222,7 +226,9 @@
 
   $effect(() => {
     const input = inputElement;
-    if (!props.changeOnWheel || !focused || !input) return;
+    if (!props.changeOnWheel || !focused || !input) {
+      return;
+    }
 
     function wheel(event: WheelEvent) {
       changeStep(event.deltaY < 0 ? 1 : -1, 'wheel');
@@ -257,14 +263,18 @@
         input: input ?? untrack(() => inputElement?.value ?? '')
       });
     }
-    if (typing) return text;
+    if (typing) {
+      return text;
+    }
     if (!props.stringMode) {
       const number = formatInputNumber(current.isInvalidate() ? null
         : normalizeInputNumber(current.toNumber()), precision);
 
       return props.decimalSeparator ? number.replace('.', props.decimalSeparator) : number;
     }
-    if (!validateNumber(text)) return text;
+    if (!validateNumber(text)) {
+      return text;
+    }
 
     const digits = precision ?? Math.max(getNumberPrecision(text),
       getNumberPrecision(untrack(() => props.step ?? 1)));
@@ -280,7 +290,9 @@
     const currentProps = snapshot?.props ?? props;
     const current = snapshot ? snapshot.resolvedValue : resolvedValue;
     const result = inputNumberValue(next, currentProps.stringMode ?? false) as Value | null;
-    if (result === current) return;
+    if (result === current) {
+      return;
+    }
 
     value = result;
     previousValue = snapshot ? result : value;
@@ -297,7 +309,9 @@
 
       if (next) {
         publish(next);
-        if (!alive) return;
+        if (!alive) {
+          return;
+        }
 
         if (props.formatter
           && inputNumberValue(next, props.stringMode ?? false) === resolvedValue) {
@@ -306,13 +320,19 @@
       }
     }
 
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
     blurState = captureBlurState();
     props.onInput?.(text);
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     const view = inputElement?.ownerDocument.defaultView;
-    if (!view) return;
+    if (!view) {
+      return;
+    }
     if (frame !== undefined) view.cancelAnimationFrame(frame);
 
     frame = view.requestAnimationFrame(() => {
@@ -324,19 +344,25 @@
   function flush(snapshot?: ReturnType<typeof captureBlurState>, input?: HTMLInputElement) {
     const current = snapshot ?? captureBlurState();
     if (!editor.dirty && !current.props.stringMode || composing
-      || current.disabled || current.readonly) return;
+      || current.disabled || current.readonly) {
+      return;
+    }
 
     const next = parseInputNumberValue(editor.text, current.props);
     const committed = commitInputNumberValue(next.isNaN() ? current.decimal : next,
       current.options, false);
 
     if (committed) publish(committed, snapshot);
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     if (snapshot && input) {
       editor = { text: editor.text, dirty: false };
       queueMicrotask(() => {
-        if (!alive || !input.isConnected) return;
+        if (!alive || !input.isConnected) {
+          return;
+        }
 
         previousValue = value;
         editor = { text: formatValue(decimal), dirty: false };
@@ -346,14 +372,20 @@
   }
 
   function changeStep(direction: 1 | -1, emitter: InputNumberStepInfo['emitter']) {
-    if (disabled || readonly || composing) return;
+    if (disabled || readonly || composing) {
+      return;
+    }
 
     const next = stepInputNumberValue(decimal, direction, options, shiftKey);
-    if (!next) return;
+    if (!next) {
+      return;
+    }
 
     userTyping = false;
     publish(next);
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     editor = { text: formatValue(decimal), dirty: false };
     props.onStep?.(inputNumberValue(next, props.stringMode ?? false) as Value, {
@@ -365,7 +397,9 @@
   }
 
   function handleInput(event: Event & { currentTarget: EventTarget & HTMLInputElement; }) {
-    if (disabled || readonly) return;
+    if (disabled || readonly) {
+      return;
+    }
 
     collect(event.currentTarget.value);
     if (alive) props.oninput?.(event);
@@ -375,18 +409,24 @@
     event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }
   ) {
     props.onKeyDown?.(event);
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     props.onkeydown?.(event);
     if (!alive || event.defaultPrevented || event.isComposing
-      || composing || disabled || readonly) return;
+      || composing || disabled || readonly) {
+      return;
+    }
 
     userTyping = true;
     shiftKey = event.shiftKey;
     if (event.key === 'Enter') {
       userTyping = false;
       flush();
-      if (!alive) return;
+      if (!alive) {
+        return;
+      }
 
       props.onPressEnter?.(event);
     }
@@ -404,7 +444,9 @@
   }
 
   function handleFocus(event: FocusEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
-    if (!alive || !event.currentTarget.isConnected) return;
+    if (!alive || !event.currentTarget.isConnected) {
+      return;
+    }
 
     focused = true;
     props.onFocus?.(event);
@@ -412,11 +454,15 @@
   }
 
   function handleBlur(event: FocusEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
-    if (!alive || !event.currentTarget.isConnected) return;
+    if (!alive || !event.currentTarget.isConnected) {
+      return;
+    }
 
     const current = blurState;
     if (current.props.changeOnBlur !== false) flush(current, event.currentTarget);
-    if (!alive) return;
+    if (!alive) {
+      return;
+    }
 
     focused = false;
     userTyping = false;
@@ -427,11 +473,15 @@
 
   function handleReset(event: Event) {
     const input = inputElement;
-    if (!input || event.target !== input.form) return;
+    if (!input || event.target !== input.form) {
+      return;
+    }
 
     const reset = setTimeout(() => {
       resets.delete(reset);
-      if (event.defaultPrevented || !input.isConnected || input !== inputElement) return;
+      if (event.defaultPrevented || !input.isConnected || input !== inputElement) {
+        return;
+      }
 
       composing = false;
       userTyping = false;

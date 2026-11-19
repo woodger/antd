@@ -15,7 +15,9 @@ async function settle(page: Page) {
     const actual = await page.evaluate(readPopupWidth);
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Near-right popup width did not settle');

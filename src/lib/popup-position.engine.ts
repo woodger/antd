@@ -348,7 +348,9 @@ export function getPopupArrowStyle(position: {
   arrowY: number;
 } | undefined) {
   const align = position?.align;
-  if (!align?.points || align.autoArrow === false) return '';
+  if (!align?.points || align.autoArrow === false) {
+    return '';
+  }
   const [source, target] = align.points;
   const y = source[0] === target[0] || !['t', 'b'].includes(source[0])
     ? `top:${position!.arrowY}px` : source[0] === 't' ? 'top:0' : 'bottom:0';

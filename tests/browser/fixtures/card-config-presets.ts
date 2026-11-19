@@ -15,7 +15,9 @@ function profile(kind: 'card' | 'meta', local: boolean) {
 }
 
 export function cardConfigProfile(name: string | undefined, local = false): CardConfig {
-  if (!name || name === 'empty') return {};
+  if (!name || name === 'empty') {
+    return {};
+  }
   const base = profile('card', local);
   const result: CardConfig = { ...base, variant: local ? undefined : 'borderless' };
 
@@ -40,7 +42,9 @@ export function cardConfigProfile(name: string | undefined, local = false): Card
 }
 
 export function cardMetaConfigProfile(name: string | undefined, local = false): CardMetaConfig {
-  if (!name || name === 'empty') return {};
+  if (!name || name === 'empty') {
+    return {};
+  }
   const base = profile('meta', local);
   const result: CardMetaConfig = { ...base };
 

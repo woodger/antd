@@ -68,7 +68,9 @@
       await form.validateFields(['concealed']);
     }
     catch (error) {
-      if (!(error instanceof FormValidationError)) throw error;
+      if (!(error instanceof FormValidationError)) {
+        throw error;
+      }
       outcome = { status: 'invalid', outOfDate: error.outOfDate, errorFields: error.errorFields };
     }
     await inspect('hidden-invalid', outcome);

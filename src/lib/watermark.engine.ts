@@ -18,7 +18,9 @@ export function getWatermarkLines(
   content: WatermarkContent | readonly WatermarkContent[] | undefined,
   font: Required<WatermarkFont>
 ): WatermarkContentLine[] {
-  if (content === undefined || content === null) return [];
+  if (content === undefined || content === null) {
+    return [];
+  }
 
   return (Array.isArray(content) ? content : [content]).map(
     item => typeof item === 'object' && item !== null
@@ -119,14 +121,20 @@ export function getWatermarkClip(
 }
 
 export function equalWatermarkKeys(a: unknown, b: unknown, seen = new Set<unknown>()): boolean {
-  if (seen.has(a)) return false;
-  if (a === b) return true;
+  if (seen.has(a)) {
+    return false;
+  }
+  if (a === b) {
+    return true;
+  }
   seen.add(a);
-  if (Array.isArray(a)) return Array.isArray(b)
-    && a.length === b.length
-    && a.every(
-      (item, index) => equalWatermarkKeys(item, b[index], seen)
-    );
+  if (Array.isArray(a)) {
+    return Array.isArray(b)
+      && a.length === b.length
+      && a.every(
+        (item, index) => equalWatermarkKeys(item, b[index], seen)
+      );
+  }
   if (a && b && typeof a === 'object' && typeof b === 'object') {
     const keys = Object.keys(a);
     return keys.length === Object.keys(b).length

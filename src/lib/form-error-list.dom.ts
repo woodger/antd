@@ -37,7 +37,9 @@ export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
     cancel();
 
     function finish() {
-      if (!active || finished || tokenId !== generation) return;
+      if (!active || finished || tokenId !== generation) {
+        return;
+      }
 
       finished = true;
       cancel();

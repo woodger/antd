@@ -54,7 +54,9 @@
       present = true;
   });
   $effect(() => {
-    if (!nativeElement) return;
+    if (!nativeElement) {
+      return;
+    }
     const controller = createFloatButtonMotion(nativeElement, false, () => {
       present = false;
     }, motionState);

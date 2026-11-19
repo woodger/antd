@@ -77,7 +77,9 @@
     if (file.status !== 'removed') status = file.status;
   });
   $effect(() => {
-    if (!root) return;
+    if (!root) {
+      return;
+    }
     const controller = createUploadMotion(root, next => { motionState = next; },
       () => onMotionEnd?.());
     motion = controller;
@@ -140,7 +142,9 @@
   $effect(() => {
     thumbnail = '';
     const original = file.originFileObj;
-    if (!picture || file.thumbUrl !== undefined || !original) return;
+    if (!picture || file.thumbUrl !== undefined || !original) {
+      return;
+    }
     const preview = previewFile;
     let active = true;
     void Promise.resolve(untrack(() => preview(original))).then(value => {

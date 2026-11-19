@@ -35,7 +35,9 @@
   $effect(() => {
     const host = nativeElement;
     const node = content;
-    if (!host || !node) return;
+    if (!host || !node) {
+      return;
+    }
     const controller = createAffixRuntime(host, node, next => {
       position = next;
     }, () => onChange);
@@ -51,7 +53,9 @@
     runtime?.configure({ target: getTarget, offsetTop, offsetBottom });
   });
   $effect(() => {
-    if (nativeElement) return connectFeedbackFocus(nativeElement);
+    if (nativeElement) {
+      return connectFeedbackFocus(nativeElement);
+    }
   });
 </script>
 

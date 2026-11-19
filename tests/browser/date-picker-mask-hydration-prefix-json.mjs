@@ -40,13 +40,17 @@ export function locateJSONRanges(bytes, pointers) {
       assert(end !== -1, 'Closed JSON string');
       let previous = end - 1;
       while (bytes[previous] === 92) previous--;
-      if ((end - 1 - previous) % 2 === 0) return end + 1;
+      if ((end - 1 - previous) % 2 === 0) {
+        return end + 1;
+      }
     }
   }
   function endValue(start) {
     start = skipWhite(start);
     const first = bytes[start];
-    if (first === 34) return endString(start);
+    if (first === 34) {
+      return endString(start);
+    }
     if (first === 123 || first === 91) {
       let depth = 1, position = start + 1;
       while (depth) {
@@ -97,8 +101,10 @@ export function locateJSONRanges(bytes, pointers) {
       end = position + 1;
     }
     else throw Error('JSON pointer ancestor is not a container');
-    for (const pointer of node.capture) ranges[pointer] = {
-      start, end, bytes: end - start, sha256: digest(bytes.subarray(start, end)) };
+    for (const pointer of node.capture) {
+      ranges[pointer] = {
+        start, end, bytes: end - start, sha256: digest(bytes.subarray(start, end)) };
+    }
     return end;
   }
   const end = visit(0, tree);

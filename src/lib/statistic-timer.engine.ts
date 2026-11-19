@@ -14,7 +14,9 @@ export function formatStatisticTime(duration: number, format: string): string {
   const literals = (format.match(escapeRegex) || []).map(text => text.slice(1, -1));
   const template = format.replace(escapeRegex, '[]');
   const result = timeUnits.reduce((text, [name, unit]) => {
-    if (!text.includes(name)) return text;
+    if (!text.includes(name)) {
+      return text;
+    }
 
     const value = Math.floor(remaining / unit);
     remaining -= value * unit;

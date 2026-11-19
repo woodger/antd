@@ -12,10 +12,12 @@ async function mount(page: Page, id: string) {
 }
 async function apply(page: Page, action: FeedbackPickerAction, index: number) {
   if (action === 'focus') await page.locator('[data-feedback-picker-control] input').first().focus();
-  else if (action === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside feedback', exact: true }
-  ).click();
+  else if (action === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside feedback', exact: true }
+    ).click();
+  }
   else {
     await page.getByRole('combobox', { name: 'Feedback action', exact: true }).selectOption(String(index));
     await page.getByRole('button', { name: 'Apply feedback action', exact: true }).dispatchEvent('click');

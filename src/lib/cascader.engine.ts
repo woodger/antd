@@ -20,7 +20,9 @@ export function cascaderClearIcon(
   allowClear: boolean | { clearIcon?: CascaderContent; },
   context: CascaderContent | undefined
 ): CascaderContent | undefined {
-  if (allowClear && typeof allowClear === 'object') return allowClear.clearIcon || '×';
+  if (allowClear && typeof allowClear === 'object') {
+    return allowClear.clearIcon || '×';
+  }
   return context === undefined ? undefined : context || '×';
 }
 
@@ -39,7 +41,9 @@ export function cascaderPathKey(path: CascaderPath): string {
 export function cascaderRawValues(
   value: CascaderPath | readonly CascaderPath[] | undefined
 ): CascaderPath[] {
-  if (!value?.length) return [];
+  if (!value?.length) {
+    return [];
+  }
   return Array.isArray(value[0]) ? [...value] as CascaderPath[] : [value as CascaderPath];
 }
 
@@ -125,9 +129,12 @@ export function cascaderStrategy(
   const keys = new Set(checked);
   return checked.filter(key => {
     const entry = index.tree.entities.get(key);
-    if (!entry || entry.node.disabled) return true;
-    if (strategy === CASCADER_SHOW_CHILD)
+    if (!entry || entry.node.disabled) {
+      return true;
+    }
+    if (strategy === CASCADER_SHOW_CHILD) {
       return !entry.children.some(child => Boolean(child.key) && keys.has(String(child.key)));
+    }
     return !entry.parent || entry.parent.node.disabled || !keys.has(String(entry.parent.key));
   });
 }
@@ -140,11 +147,12 @@ export function toggleCascader(
 ): CascaderPath[] {
   const key = cascaderPathKey(path);
   const checked = checks.checked.includes(key);
-  if (!checked && checks.missing.some(path => cascaderPathKey(path) === key))
+  if (!checked && checks.missing.some(path => cascaderPathKey(path) === key)) {
     return [
       ...checks.missing.filter(path => cascaderPathKey(path) !== key),
       ...cascaderStrategy(checks.checked, strategy, index).map(key => index.paths.get(key)!.path)
     ];
+  }
 
   const keys = checked ? checks.checked.filter(value => value !== key) : [...checks.checked, key];
   const next = conductTreeCheck(keys, index.tree, checked ? checks.half : undefined);
@@ -199,7 +207,9 @@ export function searchCascader<OptionType extends CascaderOption>(
   config: CascaderSearchConfig<OptionType>,
   includeParents: boolean
 ): CascaderRow<OptionType>[] {
-  if (!search) return [];
+  if (!search) {
+    return [];
+  }
   const limit = config.limit ?? 50;
   const rows: CascaderRow<OptionType>[] = [];
   const filter = config.filter ?? ((text: string, path: OptionType[]) => path.some(
@@ -212,7 +222,9 @@ export function searchCascader<OptionType extends CascaderOption>(
   ));
   function walk(list: readonly OptionType[], parents: OptionType[], parentDisabled: boolean) {
     for (const option of list) {
-      if (!config.sort && limit !== false && limit > 0 && rows.length >= limit) return;
+      if (!config.sort && limit !== false && limit > 0 && rows.length >= limit) {
+        return;
+      }
       const pathOptions = [...parents, option];
       const children = cascaderChildren(option, fields);
       const disabled = parentDisabled || Boolean(option.disabled);
@@ -297,19 +309,23 @@ export function navigateCascader(
     for (let count = 0; count < rows.length; count++) {
       position = (position + offset + rows.length) % rows.length;
       const row = rows[position];
-      if (!row.disabled)
+      if (!row.disabled) {
         return searching ? { searchKey: row.key } : { path: row.path };
+      }
     }
   }
   if (!searching) {
     const previous = key === 'Backspace' || key === (rtl ? 'ArrowRight' : 'ArrowLeft');
-    if (previous)
+    if (previous) {
       return selected && selected.path.length > 1
         ? { path: selected.path.slice(0, -1) }
         : { close: true };
+    }
     if (key === (rtl ? 'ArrowLeft' : 'ArrowRight') && selected) {
       const child = columns[depth + 1]?.find(row => !row.disabled);
-      if (child) return { path: child.path };
+      if (child) {
+        return { path: child.path };
+      }
     }
   }
   return {};
@@ -317,7 +333,9 @@ export function navigateCascader(
 
 export function cascaderHighlight(label: string | number, search: string) {
   const text = String(label);
-  if (!search) return [{ text, match: false }];
+  if (!search) {
+    return [{ text, match: false }];
+  }
   const lower = text.toLowerCase();
   const term = search.toLowerCase();
   const parts: { text: string; match: boolean; }[] = [];

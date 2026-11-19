@@ -134,10 +134,12 @@ export function treeSelectSemanticLayers(sample: TreeSelectSemanticSample) {
   }
   else if (sample.popupWidth) {
     Object.assign(local.styles.popup!.root!, { width: 192, zIndex: 1266 });
-    if (sample.popupWidth === 'number') Object.assign(
-      local.styles.popup!.root!,
-      { minWidth: 120, maxWidth: 270 }
-    );
+    if (sample.popupWidth === 'number') {
+      Object.assign(
+        local.styles.popup!.root!,
+        { minWidth: 120, maxWidth: 270 }
+      );
+    }
     Object.assign(local.styles.root!, { zIndex: 1234 });
   }
   return { provider, local, updated, inner };

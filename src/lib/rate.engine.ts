@@ -21,13 +21,19 @@ export function getRateKeyValue(
   key: string,
   rtl: boolean
 ): number | undefined {
-  if (value === undefined) return;
+  if (value === undefined) {
+    return;
+  }
   const forward = rtl ? 'ArrowLeft' : 'ArrowRight';
   const backward = rtl ? 'ArrowRight' : 'ArrowLeft';
   const step = allowHalf ? 0.5 : 1;
 
-  if (key === forward && value < count) return value + step;
-  if (key === backward && value > 0) return value - step;
+  if (key === forward && value < count) {
+    return value + step;
+  }
+  if (key === backward && value > 0) {
+    return value - step;
+  }
 }
 
 export function getRateStarClass(

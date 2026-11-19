@@ -76,7 +76,9 @@ function nativeTransitions(
     const candidates = property === 'all' ? Array.from(declaration) : [property];
     for (const name of candidates) {
       if (name === 'none' || projected(name) || name.startsWith('transition-')
-        || name.startsWith('animation-')) continue;
+        || name.startsWith('animation-')) {
+        continue;
+      }
       names.push(name);
       timing.forEach((items, part) => values[part].push(items[index % items.length]));
     }
@@ -114,9 +116,13 @@ function createMotionFrame(popup: HTMLElement) {
     const state = getState?.();
     if (!active || clocks.get(key) !== clock || !state?.status
       || state.step !== 'active' && state.step !== 'activated'
-      || clock.animation.playState === 'idle') return;
+      || clock.animation.playState === 'idle') {
+      return;
+    }
     const token = `${state.revision}:${key}`;
-    if (notified.has(token)) return;
+    if (notified.has(token)) {
+      return;
+    }
     notified.add(token);
     const detail = {
       revision: state.revision,
@@ -134,13 +140,17 @@ function createMotionFrame(popup: HTMLElement) {
     const end = timing?.endTime;
     const time = Number(animation.currentTime);
     const reverse = animation.playbackRate < 0;
-    if (time < delay || time === delay && reverse) return 'before';
+    if (time < delay || time === delay && reverse) {
+      return 'before';
+    }
     return typeof end === 'number' && (time > end || time === end && !reverse)
       ? 'after' : 'active';
   }
 
   function inspect(key: string, clock: TransitionClock) {
-    if (clock.animation.playState === 'idle') return;
+    if (clock.animation.playState === 'idle') {
+      return;
+    }
     const previous = clock.phase;
     clock.phase = phase(clock.animation);
     if (clock.phase !== previous && clock.phase !== 'active') complete(key, clock);
@@ -273,11 +283,13 @@ function createMotionFrame(popup: HTMLElement) {
       clock.phase = phase(animation);
       animation.onfinish = () => inspect(key, clock);
     }
-    if (capture) for (const [key, clock] of clocks) {
-      if (retained.has(key)) continue;
-      clock.animation.onfinish = null;
-      clock.animation.cancel();
-      clocks.delete(key);
+    if (capture) {
+      for (const [key, clock] of clocks) {
+        if (retained.has(key)) continue;
+        clock.animation.onfinish = null;
+        clock.animation.cancel();
+        clocks.delete(key);
+      }
     }
 
     const transitioned = new Set(transitions.map(animation => animation.transitionProperty));
@@ -306,7 +318,9 @@ function createMotionFrame(popup: HTMLElement) {
       const end = animation.effect?.getComputedTiming().endTime;
       return typeof end === 'number' && Number(animation.currentTime) < end;
     });
-    if (capture) for (const [key, clock] of clocks) inspect(key, clock);
+    if (capture) {
+      for (const [key, clock] of clocks) inspect(key, clock);
+    }
     if (capture && !transitions.length) history = { base: style, stages: [] };
 
     return {
@@ -341,13 +355,17 @@ function createMotionFrame(popup: HTMLElement) {
       active = true;
     },
     release() {
-      if (--leases) return;
+      if (--leases) {
+        return;
+      }
       active = false;
       const current = ++release;
       // Registering a replacement root recreates the alignment connection for the same popup.
       // A same-commit handoff retains its real clocks and Source transition history.
       Promise.resolve().then(() => {
-        if (leases || current !== release) return;
+        if (leases || current !== release) {
+          return;
+        }
         history = undefined;
         latest = undefined;
         animationTargets = undefined;
@@ -380,7 +398,9 @@ export function createTreeSelectMotionFrame(
     sample: frame.sample,
     signature: frame.signature,
     destroy() {
-      if (released) return;
+      if (released) {
+        return;
+      }
       released = true;
       frame.release();
     }

@@ -6,7 +6,9 @@ export function readTreeTags(prefix: string) {
     for (let current: Element | null = node; current && current !== host; current = current.parentElement) {
       const style = getComputedStyle(current);
       if (current.hasAttribute('inert') || current.getAttribute('aria-hidden') === 'true'
-        || style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) return false;
+        || style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) {
+        return false;
+      }
     }
     return true;
   };

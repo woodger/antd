@@ -13,7 +13,9 @@
 
   $effect(() => {
     const element = textarea ? area : input;
-    if (element) return register(element).destroy;
+    if (element) {
+      return register(element).destroy;
+    }
   });
 </script>
 

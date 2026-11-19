@@ -14,7 +14,9 @@ export function getWaveColor(
   style: Pick<CSSStyleDeclaration, 'color' | 'borderTopColor' | 'borderColor' | 'backgroundColor'>,
   source?: WaveColorSource
 ): string | null {
-  if (source && isValidWaveColor(style[source])) return style[source];
+  if (source && isValidWaveColor(style[source])) {
+    return style[source];
+  }
 
   return [style.borderTopColor, style.borderColor, style.backgroundColor]
     .find(isValidWaveColor) ?? null;

@@ -4,7 +4,9 @@ export function descriptionsConfigProfile(
   name: string | undefined,
   local = false
 ): DescriptionsConfig {
-  if (!name || name === 'empty') return {};
+  if (!name || name === 'empty') {
+    return {};
+  }
   const prefix = local ? 'local' : 'context';
   const keys = ['root', 'header', 'title', 'extra', 'label', 'content'];
   const classes = Object.fromEntries(keys.map(key => [key, `${prefix}-descriptions-${key}`]));

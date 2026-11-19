@@ -85,11 +85,15 @@
 
   $effect(() => {
     const element = textarea;
-    if (!element || initialFocus) return;
+    if (!element || initialFocus) {
+      return;
+    }
     initialFocus = true;
     let active = true;
     void tick().then(() => {
-      if (!active || !element.isConnected) return;
+      if (!active || !element.isConnected) {
+        return;
+      }
       element.focus();
       element.setSelectionRange(element.value.length, element.value.length);
     });
@@ -126,7 +130,9 @@
   }
 
   function handleBlur(event: FocusEvent) {
-    if (confirming) return;
+    if (confirming) {
+      return;
+    }
     const element = textarea;
     const value = current.trim();
     if (event.relatedTarget !== null) {

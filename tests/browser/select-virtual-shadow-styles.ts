@@ -29,10 +29,12 @@ export function installSelectVirtualShadowStyleProbe() {
       .map(attribute => [attribute.name, attribute.value]).sort(),
     text: node instanceof HTMLStyleElement ? node.textContent : null });
   const issue = (stage: string, message: string) => {
-    if (!violations.some(item => item.stage === stage && item.issue === message)) violations.push({
-      stage,
-      issue: message
-    });
+    if (!violations.some(item => item.stage === stage && item.issue === message)) {
+      violations.push({
+        stage,
+        issue: message
+      });
+    }
   };
   function bindPairs() {
     const originals = [...document.head.querySelectorAll<SheetNode>('style,link[rel="stylesheet"]')];
@@ -55,14 +57,18 @@ export function installSelectVirtualShadowStyleProbe() {
     }
   }
   function observe(stage: string) {
-    if (!host.isConnected) return;
+    if (!host.isConnected) {
+      return;
+    }
     bindPairs();
     samples++;
     for (const [original, pair] of pairs) {
-      if (!pair.copy.isConnected || pair.copy.getRootNode() !== root) issue(
-        stage,
-        'Copied node disconnected while its head source remains'
-      );
+      if (!pair.copy.isConnected || pair.copy.getRootNode() !== root) {
+        issue(
+          stage,
+          'Copied node disconnected while its head source remains'
+        );
+      }
       if (original instanceof HTMLLinkElement && pair.copy instanceof HTMLLinkElement) {
         const href = original.getAttribute('href');
         if (pair.loadedHref === href && !pair.copy.sheet) issue(
@@ -93,20 +99,29 @@ export function installSelectVirtualShadowStyleProbe() {
     if (event.target instanceof HTMLLinkElement && event.target.hasAttribute(marker)) linkLoads++;
   };
   const mutations = new MutationObserver(records => {
-    if (!host.isConnected) return;
+    if (!host.isConnected) {
+      return;
+    }
     for (const record of records) {
-      if (record.type === 'childList') for (const removed of record.removedNodes) {
-        for (const [original, pair] of pairs)
-          if (removed === pair.copy && document.head.contains(original)) issue(
-            'mutation',
-            'Copied stylesheet node removed while original remains'
-          );
+      if (record.type === 'childList') {
+        for (const removed of record.removedNodes) {
+          for (const [original, pair] of pairs) {
+            if (removed === pair.copy && document.head.contains(original)) {
+              issue(
+                'mutation',
+                'Copied stylesheet node removed while original remains'
+              );
+            }
+          }
+        }
       }
       if (record.type === 'attributes' && record.attributeName === 'href' && record.target instanceof HTMLLinkElement
-        && record.oldValue === record.target.getAttribute('href')) issue(
+        && record.oldValue === record.target.getAttribute('href')) {
+        issue(
           'mutation',
           'Unchanged stylesheet href was reset'
         );
+      }
     }
   });
   mutations.observe(
@@ -123,7 +138,9 @@ export function installSelectVirtualShadowStyleProbe() {
   command.addEventListener('virtualstyles', after);
   root.addEventListener('load', loaded, true);
   const sample = () => {
-    if (stopped) return;
+    if (stopped) {
+      return;
+    }
     observe('frame');
     frame = requestAnimationFrame(sample);
   };
@@ -133,7 +150,9 @@ export function installSelectVirtualShadowStyleProbe() {
     read() {
       observe('read');
       const links = [...pairs].flatMap(([original, pair]) => {
-        if (!(original instanceof HTMLLinkElement) || !(pair.copy instanceof HTMLLinkElement)) return [];
+        if (!(original instanceof HTMLLinkElement) || !(pair.copy instanceof HTMLLinkElement)) {
+          return [];
+        }
         let rules: number | null = null;
         try {
           rules = pair.copy.sheet?.cssRules.length ?? null;

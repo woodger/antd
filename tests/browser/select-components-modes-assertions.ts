@@ -18,12 +18,16 @@ export async function settleNativeSelectComponentsModes(page: Page): Promise<Nat
         'selectcomponentscapture',
         { detail }
       ));
-      if (!detail.read) throw Error('Actual mode owner absent');
+      if (!detail.read) {
+        throw Error('Actual mode owner absent');
+      }
       return detail.read();
     });
     const point = { icons, owner }, next = JSON.stringify(point);
     stable = previous === next ? stable + 1 : 0;
-    if (stable >= 3) return point;
+    if (stable >= 3) {
+      return point;
+    }
     previous = next;
   }
   throw Error('Actual mode owner/geometry/complete raw ledgers did not settle');
@@ -33,19 +37,28 @@ const classes = (node: SelectComponentsModesNode) => node.classes.filter(name =>
 const has = (node: SelectComponentsModesNode, name: string) => node.classes.includes(name);
 function attributes(node: SelectComponentsModesNode) {
   return node.attributes.flatMap(([key, value]) => {
-    if (key !== 'class') return [[key, value]];
+    if (key !== 'class') {
+      return [[key, value]];
+    }
     const current = value.split(/\s+/).filter(Boolean).filter(name => !compilerClass(name));
     return current.length ? [[key, current.join(' ')]] : [];
   });
 }
 function role(node: SelectComponentsModesNode, dom: SelectComponentsModesDOM) {
-  if (node.identity === dom.current.editor?.identity) return 'editor';
+  if (node.identity === dom.current.editor?.identity) {
+    return 'editor';
+  }
   const authored = node.attributes.find(([key]) => key === 'data-select-icons-node')?.[1];
-  if (authored) return 'authored:' + authored;
+  if (authored) {
+    return 'authored:' + authored;
+  }
   for (const name of ['ant-select-content-item-suffix', 'ant-select-content-item', 'ant-select-selection-item-remove',
     'ant-select-selection-item-content', 'ant-select-selection-item', 'ant-select-content', 'ant-select-placeholder',
-    'ant-select-suffix', 'ant-select-clear', 'ant-select-item-option-state', 'ant-select-item-option', 'anticon-close', 'anticon-down'])
-    if (has(node, name)) return name;
+    'ant-select-suffix', 'ant-select-clear', 'ant-select-item-option-state', 'ant-select-item-option', 'anticon-close', 'anticon-down']) {
+    if (has(node, name)) {
+      return name;
+    }
+  }
   return node.tag.toLowerCase() === 'svg' || node.tag.toLowerCase() === 'path' ? node.tag.toLowerCase()
     : node.tag + ':' + classes(node).join(' ');
 }
@@ -148,11 +161,13 @@ function verifyNode(actual: SelectComponentsModesNode, source: SelectComponentsM
   }
   assert.equal(currentTag, source.tag, label + '/tag');
   assert.equal(currentValue, source.value, label + '/value');
-  if (wrapper) assert.deepEqual(
-    Object.fromEntries(currentAttrs),
-    Object.fromEntries(originalAttrs),
-    label + ' complete existing wrapper attributes'
-  );
+  if (wrapper) {
+    assert.deepEqual(
+      Object.fromEntries(currentAttrs),
+      Object.fromEntries(originalAttrs),
+      label + ' complete existing wrapper attributes'
+    );
+  }
   else verifySelectComponentsDOMAttributes(actual, source, currentAttrs, originalAttrs, label);
   assert.equal(actual.styleAttribute, sourceStyle, label + '/styleAttribute');
   assert.equal(actual.cssText, sourceText, label + '/cssText');
@@ -163,11 +178,13 @@ function verifyNode(actual: SelectComponentsModesNode, source: SelectComponentsM
   );
   for (const key of ['connected', 'text', 'css', 'box', 'geometryBoundary', 'caret', 'focused', 'metrics'] as const)
     assert.deepEqual(actual[key], source[key], label + '/' + key);
-  if (source.tag.toLowerCase() === 'svg') assert.equal(
-    actual.html.replace(/<!--[\s\S]*?-->/g, ''),
-    source.html,
-    label + ' full SVG paths'
-  );
+  if (source.tag.toLowerCase() === 'svg') {
+    assert.equal(
+      actual.html.replace(/<!--[\s\S]*?-->/g, ''),
+      source.html,
+      label + ' full SVG paths'
+    );
+  }
 }
 export function verifySelectComponentsModesPoint(actual: NativeModesPoint, source: ModesPoint, owner: ModesCase,
   sample: SelectComponentsModesSample, label: string,
@@ -214,24 +231,28 @@ export function verifySelectComponentsModesPoint(actual: NativeModesPoint, sourc
         .find(n => has(n, 'ant-select-selection-item')) : undefined;
       const title = tag?.attributes.find(([key]) => key === 'title')?.[1];
       const nodeLabel = label + '/' + name + '/' + key + '/' + ordinal;
-      if (!verifyExtraNode?.(match, node, nodeLabel)) verifyNode(
-        match,
-        node,
-        nodeLabel,
-        disabled,
-        title ? 'Удалить ' + title : undefined
-      );
+      if (!verifyExtraNode?.(match, node, nodeLabel)) {
+        verifyNode(
+          match,
+          node,
+          nodeLabel,
+          disabled,
+          title ? 'Удалить ' + title : undefined
+        );
+      }
     }
-    for (const node of current) if (!used.has(node)) {
-      // An inherited wrapper around the default remove glyph has no Source
-      // element counterpart. Its exact structure is asserted; all Source
-      // ancestors/children/CSS/boxes are still compared above and retained raw.
-      assert.equal(node.tag, 'SPAN');
-      assert.deepEqual(classes(node), ['ant-select-selection-item-remove-icon']);
-      assert.deepEqual(attributes(node), [['class', 'ant-select-selection-item-remove-icon']]);
-      assert.equal(node.styleAttribute, null);
-      assert.equal(node.cssText, '');
-      assert.deepEqual(node.inlineProperties, []);
+    for (const node of current) {
+      if (!used.has(node)) {
+        // An inherited wrapper around the default remove glyph has no Source
+        // element counterpart. Its exact structure is asserted; all Source
+        // ancestors/children/CSS/boxes are still compared above and retained raw.
+        assert.equal(node.tag, 'SPAN');
+        assert.deepEqual(classes(node), ['ant-select-selection-item-remove-icon']);
+        assert.deepEqual(attributes(node), [['class', 'ant-select-selection-item-remove-icon']]);
+        assert.equal(node.styleAttribute, null);
+        assert.equal(node.cssText, '');
+        assert.deepEqual(node.inlineProperties, []);
+      }
     }
   };
   check('whole-root-computed-and-scroll', () => {
@@ -271,7 +292,9 @@ export function verifySelectComponentsModesPoint(actual: NativeModesPoint, sourc
       }
       else nodes.push(node);
     }
-    for (const node of expectedSVG) if (!sourcePopupNode(node, true)) svg.push(node);
+    for (const node of expectedSVG) {
+      if (!sourcePopupNode(node, true)) svg.push(node);
+    }
     compareCollection('nodes', actual.icons.nodes, nodes);
     compareCollection('svg', actual.icons.svg, svg);
   });
@@ -291,22 +314,26 @@ export function verifySelectComponentsModesPoint(actual: NativeModesPoint, sourc
     );
     const native = actual.icons.publicRefs.methods;
     assert(native);
-    for (const key of ['focus', 'blur', 'scrollTo']) assert.equal(
-      native[key],
-      'function',
-      label + ' strict public Native method'
-    );
+    for (const key of ['focus', 'blur', 'scrollTo']) {
+      assert.equal(
+        native[key],
+        'function',
+        label + ' strict public Native method'
+      );
+    }
     const framework: Record<string, string> = {
       $destroy: 'function',
       $on: 'function',
       $set: 'function',
       'Symbol(component)': 'boolean'
     };
-    for (const [key, type] of Object.entries(native)) if (!['focus', 'blur', 'scrollTo'].includes(key)) {
-      // Svelte dev compiler adds legacy_api() throwing stubs, and pop() marks
-      // the returned exports with COMPONENT_SYMBOL=true. Raw metadata remains.
-      assert(Object.hasOwn(framework, key), label + ' only named Svelte export metadata');
-      assert.equal(type, framework[key], label + '/' + key + ' exact framework typeof');
+    for (const [key, type] of Object.entries(native)) {
+      if (!['focus', 'blur', 'scrollTo'].includes(key)) {
+        // Svelte dev compiler adds legacy_api() throwing stubs, and pop() marks
+        // the returned exports with COMPONENT_SYMBOL=true. Raw metadata remains.
+        assert(Object.hasOwn(framework, key), label + ' only named Svelte export metadata');
+        assert.equal(type, framework[key], label + '/' + key + ' exact framework typeof');
+      }
     }
     assert.equal(source.icons.publicRefs.rootMatches, true);
     assert.equal(actual.icons.publicRefs.rootMatches, false);

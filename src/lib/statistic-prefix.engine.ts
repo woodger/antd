@@ -2,7 +2,9 @@ import template from './vendor/statistic-prefix.css.js';
 
 /** Root marker изолирует alias prefixes от соседних Statistic и CSS-variable roots. */
 export function getStatisticPrefixCss(prefix: string) {
-  if (prefix === 'ant-statistic') return undefined;
+  if (prefix === 'ant-statistic') {
+    return undefined;
+  }
 
   const css = template
     .replace(/\.ant-statistic([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'

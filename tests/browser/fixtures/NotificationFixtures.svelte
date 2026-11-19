@@ -74,7 +74,9 @@
   }
 
   function hotkey(event: KeyboardEvent) {
-    if (!event.ctrlKey || !event.altKey) return;
+    if (!event.ctrlKey || !event.altKey) {
+      return;
+    }
     if (event.key === 'v') {
       event.preventDefault();
       post({ title: 'Keyboard notification', duration: 0 });

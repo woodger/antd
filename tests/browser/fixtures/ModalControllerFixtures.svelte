@@ -70,7 +70,9 @@
   }
 
   function hotkey(event: KeyboardEvent) {
-    if (!event.ctrlKey || !event.altKey) return;
+    if (!event.ctrlKey || !event.altKey) {
+      return;
+    }
     event.preventDefault();
     if (event.key === 'd') handle?.destroy();
     if (event.key === 'r') resolve?.();

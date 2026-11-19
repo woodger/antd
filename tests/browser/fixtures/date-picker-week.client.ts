@@ -7,9 +7,13 @@ function isOwner(value: string | null): value is WeekOwner {
   return value === 'single-week' || value === 'range-week';
 }
 const owner = new URL(location.href).searchParams.get('owner');
-if (!isOwner(owner)) throw Error('Choose one of two authored week owners');
+if (!isOwner(owner)) {
+  throw Error('Choose one of two authored week owners');
+}
 const target = document.getElementById('root');
-if (!target) throw Error('Actual ordinary Native mount root missing');
+if (!target) {
+  throw Error('Actual ordinary Native mount root missing');
+}
 const capture: WeekCapture = {};
 window.nativeWeekObservation = { preMountNodes: new Set(document.querySelectorAll('*')),
   retainedNodes: new Set(), events: [] };
@@ -17,7 +21,9 @@ const types = ['pointerdown', 'click', 'mouseover', 'mouseout', 'keydown',
   'input', 'change', 'focusin', 'focusout'];
 const listener = (event: Event) => {
   const recorder = capture.recorder;
-  if (!recorder || !capture.read) return;
+  if (!recorder || !capture.read) {
+    return;
+  }
   const id = (value: object | null) => value == null ? null : recorder.identity(value);
   const mouse = event instanceof MouseEvent ? event : null;
   const keyboard = event instanceof KeyboardEvent ? event : null;
@@ -39,7 +45,9 @@ for (const type of types) document.addEventListener(type, listener, true);
 const app = mount(Case, { target, props: { owner, capture } });
 await tick();
 if (!capture.recorder || !capture.read || !capture.readRefs || !capture.setActionIndex
-  || !capture.readCallbacks || !capture.readProducers) throw Error('Complete authored week capture unavailable');
+  || !capture.readCallbacks || !capture.readProducers) {
+  throw Error('Complete authored week capture unavailable');
+}
 let disposed = false;
 window.nativeWeek = {
   ready: true, getRecorder: () => capture.recorder!, read: () => capture.read!(),
@@ -48,7 +56,9 @@ window.nativeWeek = {
   activateControl(value) {
     const button = [...document.querySelectorAll<HTMLButtonElement>('[data-week-control]')]
       .find(node => node.getAttribute('data-week-control') === value);
-    if (!button) throw Error('Actual authored owner control missing');
+    if (!button) {
+      throw Error('Actual authored owner control missing');
+    }
     const active = document.activeElement;
     let observed: unknown = null;
     button.addEventListener('click', event => { observed = { type: event.type, isTrusted: event.isTrusted,
@@ -58,7 +68,9 @@ window.nativeWeek = {
     return { click: observed, focusIdentityPreserved: active === document.activeElement };
   },
   async dispose() {
-    if (disposed) throw Error('Actual owner is already unmounted');
+    if (disposed) {
+      throw Error('Actual owner is already unmounted');
+    }
     disposed = true;
     await unmount(app);
     await tick();

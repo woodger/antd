@@ -45,7 +45,9 @@ export function createSelectOptionList<Item>(options: {
   // Source кеширует закрытую коллекцию, сохраняя реактивные размеры списка.
   $effect.pre(() => {
     const next = options.items();
-    if (!options.open() || options.lockOptions?.()) return;
+    if (!options.open() || options.lockOptions?.()) {
+      return;
+    }
     untrack(() => {
       items = next;
       if (hadItems && !next.length) {
@@ -58,7 +60,9 @@ export function createSelectOptionList<Item>(options: {
   });
 
   $effect(() => {
-    if (!options.open()) return;
+    if (!options.open()) {
+      return;
+    }
     return untrack(() => {
       let active = true;
       void tick().then(() => {
@@ -72,11 +76,15 @@ export function createSelectOptionList<Item>(options: {
   $effect(() => {
     const open = options.open();
     void options.searchValue();
-    if (!open) return;
+    if (!open) {
+      return;
+    }
     return untrack(() => {
       viewport.flashScrollbar();
       const index = options.selectedIndex();
-      if (index < 0) return;
+      if (index < 0) {
+        return;
+      }
       options.onSelectedActive?.(index);
       const request = ++selectedRequest;
       const timer = setTimeout(() => {
@@ -106,9 +114,13 @@ export function createSelectOptionList<Item>(options: {
   }
 
   function scrollTo(config?: SelectOptionListScrollConfig | null) {
-    if (destroyed) return;
+    if (destroyed) {
+      return;
+    }
     if (!options.open() || !prepare()) {
-      if (!visited) return;
+      if (!visited) {
+        return;
+      }
       if (config == null) viewport.flashScrollbar();
       else if (typeof config === 'object' && ('top' in config || 'left' in config)) {
         // Закрытый positional request применяется к реальному viewport после открытия.
@@ -144,7 +156,9 @@ export function createSelectOptionList<Item>(options: {
 
   function prepare() {
     const holder = holderElement;
-    if (destroyed || !options.open() || !holder?.clientHeight) return false;
+    if (destroyed || !options.open() || !holder?.clientHeight) {
+      return false;
+    }
     if (initializing) {
       initializing = false;
       viewport.measure();
@@ -169,7 +183,9 @@ export function createSelectOptionList<Item>(options: {
   function initializingScroll(event: UIEvent & { currentTarget: HTMLDivElement }) {
     const current = restoration;
     if (!current || event.currentTarget !== current.holder || event.target !== current.holder
-      || !event.isTrusted) return false;
+      || !event.isTrusted) {
+      return false;
+    }
     // Только первый trusted scroll нового holder к сохранённому offset; прочие события публикуются.
     cancelRestoration();
     return event.currentTarget.scrollTop === current.top;

@@ -13,7 +13,9 @@
   });
   $effect(() => {
     const root = nativeElement, editor = inputElement;
-    if (!root || !editor) return;
+    if (!root || !editor) {
+      return;
+    }
     return register({
       nativeElement: root,
       focus: options => editor.focus(options),

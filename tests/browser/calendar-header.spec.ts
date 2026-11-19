@@ -21,7 +21,9 @@ async function expectHeaderToFit(page: Page, mobile: boolean) {
     };
     const controls = Object.fromEntries(Object.entries(selectors).flatMap(([name, selector]) => {
       const node = element.querySelector(selector);
-      if (!node) return [];
+      if (!node) {
+        return [];
+      }
 
       const rect = node.getBoundingClientRect();
       return [[name, { x: rect.x, y: rect.y, width: rect.width, bottom: rect.bottom }]];

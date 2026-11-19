@@ -21,18 +21,24 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
   let frame: number | undefined;
   let generation = 0;
   function offset(node: HTMLElement, target: AnchorContainer) {
-    if (!node.getClientRects().length) return 0;
+    if (!node.getClientRects().length) {
+      return 0;
+    }
     const rect = node.getBoundingClientRect();
     if (rect.width
-      || rect.height) return rect.top - (target === view
+      || rect.height) {
+      return rect.top - (target === view
         ? node.ownerDocument.documentElement.clientTop
         : (target as HTMLElement).getBoundingClientRect().top);
+    }
     return rect.top;
   }
   function setCurrent(href: string, force = false) {
     raw = href;
     const next = options.getCurrentAnchor ? options.getCurrentAnchor(href) : href;
-    if (!active || (next === current && !force)) return;
+    if (!active || (next === current && !force)) {
+      return;
+    }
     if (next !== current) {
       current = next;
       notify(next);
@@ -40,9 +46,13 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
     options.onChange?.(href);
   }
   function handleScroll() {
-    if (!active || animating) return;
+    if (!active || animating) {
+      return;
+    }
     const target = options.getContainer();
-    if (!target) return;
+    if (!target) {
+      return;
+    }
     const sections = options.links.flatMap(link => {
       const id = anchorTargetId(link.href);
       const node = id ? root.ownerDocument.getElementById(id) : null;
@@ -65,7 +75,9 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
   }
   return {
     configure(next: AnchorRuntimeOptions) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       const previousMapping = options?.getCurrentAnchor;
       options = next;
       const target = options.getContainer();
@@ -79,16 +91,24 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
         setCurrent(raw || '');
     },
     scrollTo(href: string, targetOffset?: number) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       const previous = raw;
       setCurrent(href, previous !== href);
       const id = anchorTargetId(href);
       const node = id ? root.ownerDocument.getElementById(id) : null;
-      if (!node || !active) return;
-      if (animating && previous === href) return;
+      if (!node || !active) {
+        return;
+      }
+      if (animating && previous === href) {
+        return;
+      }
       cancel();
       const target = options.getContainer();
-      if (!target) return;
+      if (!target) {
+        return;
+      }
       const start = target === view ? view.pageYOffset : (target as HTMLElement).scrollTop;
       const to = start + offset(node, target) - (targetOffset
         ?? options.targetOffset
@@ -98,7 +118,9 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
       const ownGeneration = generation;
       animating = true;
       const step = () => {
-        if (!active || generation !== ownGeneration) return;
+        if (!active || generation !== ownGeneration) {
+          return;
+        }
         const elapsed = Date.now() - started;
         const top = anchorScrollFrame(elapsed, start, to);
         if (target === view)

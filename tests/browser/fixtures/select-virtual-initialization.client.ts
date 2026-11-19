@@ -21,7 +21,9 @@ declare global {
 }
 const id = new URL(location.href).searchParams.get('sample');
 const sample = selectVirtualSamples.find(sample => sample.id === id);
-if (!sample || sample.scenario !== 'closed') throw Error(`Unknown closed-ref initialization sample: ${id}`);
+if (!sample || sample.scenario !== 'closed') {
+  throw Error(`Unknown closed-ref initialization sample: ${id}`);
+}
 const instance = mount(
   SelectVirtualCase,
   { target: document.getElementById('root')!, props: { sample } }

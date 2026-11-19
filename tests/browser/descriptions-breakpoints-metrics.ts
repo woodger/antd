@@ -1,7 +1,9 @@
 /** Снимает раскладку responsive column/span, не привязываясь к Svelte wrappers. */
 export function snapshotDescriptionsBreakpoints() {
   const root = document.querySelector('[data-descriptions-breakpoints-host] > div');
-  if (!root) throw new Error('Descriptions breakpoint root is missing');
+  if (!root) {
+    throw new Error('Descriptions breakpoint root is missing');
+  }
 
   const text = (cell: Element, part: string) => {
     const selector = `.ant-descriptions-item-${part}`;

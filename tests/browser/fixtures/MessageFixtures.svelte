@@ -61,7 +61,9 @@
   }
 
   function hotkey(event: KeyboardEvent) {
-    if (!event.ctrlKey || !event.altKey) return;
+    if (!event.ctrlKey || !event.altKey) {
+      return;
+    }
     if (event.key === 'n') {
       event.preventDefault();
       track({ content: 'Keyboard notification', duration: 0 });

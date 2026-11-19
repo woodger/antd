@@ -53,7 +53,9 @@
     void signature;
     void value;
     void optionalValue;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     const column = element;
     return untrack(() => connectTimePickerColumn(
@@ -67,13 +69,17 @@
 
   $effect(() => {
     const column = element;
-    if (!column) return;
+    if (!column) {
+      return;
+    }
     const handleBlankClick = (event: MouseEvent) => {
       if (event.target === column && event.detail < 2) firstClickEnabled = false;
     };
     const handleDoubleClick = (event: MouseEvent) => {
       // Скролл между вторыми down/up переносит click/dblclick на общий ul.
-      if (event.target !== column || !firstClickEnabled) return;
+      if (event.target !== column || !firstClickEnabled) {
+        return;
+      }
       firstClickEnabled = false;
       onDblClick?.();
     };
@@ -88,8 +94,12 @@
 
   function handleKeydown(event: KeyboardEvent) {
     if (!(event.target instanceof HTMLButtonElement)
-      || !event.target.hasAttribute('data-picker-time-control')) return;
-    if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
+      || !event.target.hasAttribute('data-picker-time-control')) {
+      return;
+    }
+    if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
+      return;
+    }
 
     const buttons = [...element!.querySelectorAll<HTMLButtonElement>(
       'button[data-picker-time-control]:not(:disabled)'

@@ -410,7 +410,9 @@ test('Listy virtual touch scrolls with momentum after finger release', async ({ 
   await virtual(page);
   await holder(page).scrollIntoViewIfNeeded();
   const bounds = await holder(page).boundingBox();
-  if (!bounds) throw new Error('Missing touch viewport');
+  if (!bounds) {
+    throw new Error('Missing touch viewport');
+  }
   const session = await page.context().newCDPSession(page);
   try {
     await session.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 1 });
@@ -439,7 +441,9 @@ test('Listy scrollbar track clicks and dragging update the virtual viewport', as
   await expect.poll(() => top(holder(page))).toBeGreaterThan(300);
   const previous = await top(holder(page));
   const bounds = await thumb.boundingBox();
-  if (!bounds) throw new Error('Missing scrollbar thumb');
+  if (!bounds) {
+    throw new Error('Missing scrollbar thumb');
+  }
   await page.mouse.move(bounds.x + 4, bounds.y + bounds.height / 2);
   await page.mouse.down();
 
@@ -490,7 +494,9 @@ test('Listy visible scrollbars inherit a hidden ancestor instead of overriding i
 test('Listy virtual mouse selection drag scrolls outside the viewport and stops on release', async ({ page }) => {
   await virtual(page);
   const bounds = await holder(page).boundingBox();
-  if (!bounds) throw new Error('Missing viewport');
+  if (!bounds) {
+    throw new Error('Missing viewport');
+  }
   await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + 100);
   await page.mouse.down();
   await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height + 50);

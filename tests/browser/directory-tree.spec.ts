@@ -18,10 +18,12 @@ for (const [index, entry] of reference.cases.entries()) {
         const modifiers: ('Control' | 'Meta' | 'Shift')[] =
           modifier === 'Control' || modifier === 'Meta' || modifier === 'Shift' ? [modifier] : [];
         const force = Boolean('disabled' in entry.sample && entry.sample.disabled);
-        if ('double' in step.action && step.action.double) await target.dblclick({
-          modifiers,
-          force
-        });
+        if ('double' in step.action && step.action.double) {
+          await target.dblclick({
+            modifiers,
+            force
+          });
+        }
         else await target.click({ modifiers, force });
 
         await expect.poll(() => page.evaluate(readDirectoryTree, prefix)).toEqual(step.result);

@@ -31,8 +31,9 @@ const bytes = readFileSync(new URL(
   import.meta.url
 ));
 if (bytes.length !== 468644 || createHash('sha256').update(bytes).digest('hex')
-  !== 'd24d994e056eca0b2f3901f050f948474c36ce3135caf4d324395c93f984097a')
+  !== 'd24d994e056eca0b2f3901f050f948474c36ce3135caf4d324395c93f984097a') {
   throw Error('Frozen actual Source virtual edge capture changed');
+}
 const reference = JSON.parse(bytes.toString('utf8')) as EdgeReference;
 
 test.use({ viewport: reference.reference.viewport });
@@ -60,7 +61,9 @@ async function settle(page: Page) {
     const actual = { ...projection, getSizeCalls };
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('AutoComplete edge window, callbacks or lazy getSize sequence did not settle');
@@ -89,8 +92,9 @@ for (const entry of reference.cases) {
       const refs = window.selectVirtualEdge!.refs();
       for (const popup of document.querySelectorAll<HTMLElement>('.ant-select-dropdown')) {
         if (!old.popups.includes(popup)) old.popups.push(popup);
-        for (const holder of popup.querySelectorAll<HTMLElement>('[class$="-list-holder"]'))
+        for (const holder of popup.querySelectorAll<HTMLElement>('[class$="-list-holder"]')) {
           if (!old.holders.includes(holder)) old.holders.push(holder);
+        }
       }
       return { root: old.root === refs.root, anchor: old.anchor === refs.anchor, editor: old.editor === refs.editor,
         parent: old.parent === refs.editor!.parentNode, control: old.control === refs.control,
@@ -110,18 +114,20 @@ for (const entry of reference.cases) {
       expect(initial.raw.renders).toEqual(entry.initial.raw.renders);
       expect(await bindings()).toEqual(stableBindings);
       for (const step of entry.steps) {
-        if (step.action.type === 'edge-group-ref') await page.evaluate(() => {
-          const control = window.selectVirtualEdge!.refs().control!;
-          const calls = window.selectVirtualEdge!.getSizeCalls();
-          control.scrollTo({ key: 'g-1', align: 'top', offset(info) {
-            calls.push({
-              align: info.align ?? null,
-              first: info.getSize('g-0'),
-              second: info.getSize('g-1')
-            });
-            return 0;
-          } });
-        });
+        if (step.action.type === 'edge-group-ref') {
+          await page.evaluate(() => {
+            const control = window.selectVirtualEdge!.refs().control!;
+            const calls = window.selectVirtualEdge!.getSizeCalls();
+            control.scrollTo({ key: 'g-1', align: 'top', offset(info) {
+              calls.push({
+                align: info.align ?? null,
+                first: info.getSize('g-0'),
+                second: info.getSize('g-1')
+              });
+              return 0;
+            } });
+          });
+        }
         else await actSelectVirtual(page, step.action);
         const actual = await settle(page);
         trace.push({ action: step.action, actual });
@@ -173,10 +179,12 @@ for (const entry of reference.cases) {
       await page.waitForTimeout(0);
       expect(await disposed()).toEqual(expected);
       await identity.evaluate(old => {
-        for (const holder of old.holders) holder.dispatchEvent(new UIEvent(
-          'scroll',
-          { bubbles: true }
-        ));
+        for (const holder of old.holders) {
+          holder.dispatchEvent(new UIEvent(
+            'scroll',
+            { bubbles: true }
+          ));
+        }
         old.editor!.dispatchEvent(new Event('input', { bubbles: true }));
       });
       await page.waitForTimeout(1000);

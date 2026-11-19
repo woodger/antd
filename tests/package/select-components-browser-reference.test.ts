@@ -40,10 +40,11 @@ for (const sample of selectComponentsACStyleSamples) it(`selects complete measur
   expect(selectComponentsSourceCaseSHA256(canonical)).toBe(before);
 });
 it('rejects unmeasured Chromium versions instead of silently falling back', () => {
-  for (const version of ['', '157', '156.0.8078.80', '157.0.8103.79', '158.0.0.0'])
+  for (const version of ['', '157', '156.0.8078.80', '157.0.8103.79', '158.0.0.0']) {
     expect(() => readSelectComponentsBrowserReference(
       'modes',
       selectComponentsModesSamples[0].id,
       version
     )).toThrow('Unmeasured Chromium Source oracle');
+  }
 });

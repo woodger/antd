@@ -23,13 +23,14 @@ it('rejects wrong role, unknown attrs, wrong tag, or a wrapper outside the measu
     actual.replace('<span data-select-custom-tag', '<div data-select-custom-tag').replace(
       '</span></div></div>',
       '</div></div></div>'
-    )])
+    )]) {
     expect(() => verifySelectComponentsResponsiveSSRLayout(
       changed,
       source,
       'malformed',
       { responsiveCustomTag: true }
     )).toThrow();
+  }
   expect(() => verifySelectComponentsResponsiveSSRLayout(actual.replaceAll(
     'ant-select-content-item-rest',
     'ant-select-content-item-suffix'

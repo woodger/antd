@@ -6,11 +6,15 @@ export function getCheckboxGroupOptions<Value extends CheckboxGroupValue>(
   const seen = new Set<Value>();
 
   return options.flatMap((option) => {
-    if (option === null || option === undefined) return [];
+    if (option === null || option === undefined) {
+      return [];
+    }
 
     const item = typeof option === 'object' ? option : { value: option, label: String(option) };
 
-    if (item.value === null || item.value === undefined || seen.has(item.value)) return [];
+    if (item.value === null || item.value === undefined || seen.has(item.value)) {
+      return [];
+    }
 
     seen.add(item.value);
     return [item];

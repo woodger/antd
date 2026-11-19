@@ -44,7 +44,9 @@
   const tokens = useDesignTokenContext();
   let transformFallback = $derived.by(() => {
     const transform = tokens.enabled ? tokens.state.token.Rate?.starHoverScale : undefined;
-    if (!transform || typeof transform !== 'object') return undefined;
+    if (!transform || typeof transform !== 'object') {
+      return undefined;
+    }
 
     // Source CSS-var registration теряет CSSObject/arrays; прежний native hover сохраняется.
     return tokens.state.prefix === 'ant' ? '--ant-rate-star-hover-scale:scale(1.1)'
@@ -96,7 +98,9 @@
   }
 
   function pointerValue(index: number, event: MouseEvent | KeyboardEvent) {
-    if (!allowHalf) return index + 1;
+    if (!allowHalf) {
+      return index + 1;
+    }
 
     const element = (event.currentTarget as HTMLElement).closest('li')!;
     const box = element.getBoundingClientRect();
@@ -114,7 +118,9 @@
   }
 
   function handleHover(index: number, event: MouseEvent) {
-    if (blocked) return;
+    if (blocked) {
+      return;
+    }
     const next = pointerValue(index, event);
     if (next !== cleanedValue) {
       hoverValue = next;
@@ -124,14 +130,18 @@
   }
 
   function leave() {
-    if (blocked) return;
+    if (blocked) {
+      return;
+    }
     hoverValue = null;
     cleanedValue = null;
     onHoverChange?.(undefined);
   }
 
   function handleClick(index: number, event: MouseEvent | KeyboardEvent) {
-    if (blocked) return;
+    if (blocked) {
+      return;
+    }
     const next = pointerValue(index, event);
     const reset = allowClear && next === actualValue;
     leave();
@@ -140,7 +150,9 @@
   }
 
   function handleKeydown(event: KeyboardEvent) {
-    if (blocked) return;
+    if (blocked) {
+      return;
+    }
     const next = keyboard
       ? getRateKeyValue(actualValue, count, allowHalf, event.key, config.direction === 'rtl')
       : undefined;

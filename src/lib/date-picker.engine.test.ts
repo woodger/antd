@@ -375,7 +375,9 @@ describe('DatePicker date adapter and input', () => {
     expect(observed[0].args[0]).toBe(value);
     expect(observed[0].args[1]).toBe('start');
     const info = observed[0].args[2];
-    if (info === null || typeof info !== 'object') throw Error('Time validation info missing');
+    if (info === null || typeof info !== 'object') {
+      throw Error('Time validation info missing');
+    }
     expect(Object.keys(info)).toEqual(['from']);
     expect(Object.hasOwn(info, 'from')).toBe(true);
     expect(info).toEqual({ from: undefined });

@@ -37,7 +37,9 @@ function readHeader(html: string, prefix: string, single: boolean) {
   }
   const visible = (node: Span) => {
     for (let current: Span | undefined = node; current; current = current.parent) {
-      if (/\sinert(?:\s|>|=)|\saria-hidden="true"/.test(current.attrs)) return false;
+      if (/\sinert(?:\s|>|=)|\saria-hidden="true"/.test(current.attrs)) {
+        return false;
+      }
     }
     return true;
   };
@@ -67,7 +69,9 @@ function readHeader(html: string, prefix: string, single: boolean) {
 }
 
 function expected(entry: typeof reference.cases[number]) {
-  if (entry.id === 'count-nan') return reference.cases.find(entry => entry.id === 'default')!.view;
+  if (entry.id === 'count-nan') {
+    return reference.cases.find(entry => entry.id === 'default')!.view;
+  }
   const replacements: Record<string, string> = {
     'emoji-split': '...',
     'middle-emoji-split': 'A...'

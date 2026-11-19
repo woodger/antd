@@ -26,7 +26,9 @@ function scrollParents(element: HTMLElement) {
   while (current) {
     const style = view.getComputedStyle(current);
     if ([style.overflow, style.overflowX, style.overflowY]
-      .some(value => ['hidden', 'scroll', 'clip', 'auto'].includes(value))) parents.push(current);
+      .some(value => ['hidden', 'scroll', 'clip', 'auto'].includes(value))) {
+      parents.push(current);
+    }
     current = current.parentElement;
   }
   return parents;
@@ -111,7 +113,9 @@ export function getTabsMorePosition(
   }
   const scaleX = Number.isNaN(sx) ? 1 : sx;
   const scaleY = Number.isNaN(sy) ? 1 : sy;
-  if (!scaleX || !scaleY) return;
+  if (!scaleX || !scaleY) {
+    return;
+  }
 
   return getPopupPosition({
     target,

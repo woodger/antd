@@ -1,7 +1,9 @@
 /** Сопоставляет вычисленные стили Upload, сохраняя различия React/Svelte обёрток. */
 export function snapshotUploadTheme() {
   const root = document.querySelector('.ant-upload-wrapper');
-  if (!root) throw new Error('Upload root is missing');
+  if (!root) {
+    throw new Error('Upload root is missing');
+  }
 
   const typography = ['font-family', 'font-size', 'font-weight', 'line-height', 'color'];
   const box = [
@@ -10,7 +12,9 @@ export function snapshotUploadTheme() {
     'border-radius', 'background-color', 'box-shadow'
   ];
   const css = (node: Element | null, keys: readonly string[]) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   };
@@ -67,14 +71,18 @@ export function snapshotUploadTheme() {
 /** Читает defaults и aliases из исходного CSS registration rule Upload. */
 export function snapshotUploadThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-upload-wrapper');
-  if (!root) throw new Error('Upload root is missing');
+  if (!root) {
+    throw new Error('Upload root is missing');
+  }
   const declarations: Record<string, string> = {};
 
   for (const sheet of document.styleSheets) {
     for (const rule of sheet.cssRules) {
       if (!(rule instanceof CSSStyleRule)
         || !root.matches(rule.selectorText)
-        || ![...rule.style].some(name => name.startsWith(`--${prefix}-upload-`))) continue;
+        || ![...rule.style].some(name => name.startsWith(`--${prefix}-upload-`))) {
+        continue;
+      }
 
       for (const name of rule.style) {
         if (name.startsWith(`--${prefix}-`)) {

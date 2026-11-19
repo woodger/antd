@@ -211,7 +211,9 @@ export function selectSurfaceSemantic(
   props: Record<string, unknown> = {}
 ) {
   const classes: Record<string, unknown> = {}, styles: Record<string, unknown> = {};
-  if (kind === 'omitted' || kind === 'empty') return { classes, styles };
+  if (kind === 'omitted' || kind === 'empty') {
+    return { classes, styles };
+  }
   const slots = ['root', 'prefix', ...(control === 'select' ? ['suffix'] : []), 'input', 'placeholder', 'content',
     ...(control === 'select' ? ['item', 'itemContent', 'itemRemove'] : []), 'clear', 'popup.root', 'popup.list', 'popup.listItem'];
   const state = kind === 'function' ? `-${props.size ?? 'unset'}-${props.variant ?? 'unset'}-${props.disabled ? 'disabled' : 'enabled'}-${props.status ?? 'unset'}` : '';
@@ -235,7 +237,9 @@ export function selectSurfaceSemantic(
 }
 
 export function selectSurfaceData(dataset: 'basic' | 'empty', rawStyles: boolean) {
-  if (dataset === 'empty') return [];
+  if (dataset === 'empty') {
+    return [];
+  }
   return [{ label: 'Group', className: 'surface-raw-group', title: 'Authored group', options: [
     { value: 'a', label: 'Alpha', title: 'Authored Alpha', ...(rawStyles ? {
       className: 'surface-raw-alpha', style: {
@@ -247,10 +251,12 @@ export function selectSurfaceData(dataset: 'basic' | 'empty', rawStyles: boolean
 }
 
 export function selectSurfaceRootStyle(kind?: 'context' | 'own' | 'next') {
-  if (kind === 'context') return {
-    color: 'rgb(111, 41, 51)',
-    backgroundColor: 'rgb(221, 231, 241)'
-  };
+  if (kind === 'context') {
+    return {
+      color: 'rgb(111, 41, 51)',
+      backgroundColor: 'rgb(221, 231, 241)'
+    };
+  }
   return { width: '100%', ...(kind === 'own' ? { color: 'rgb(31, 51, 71)' }
     : kind === 'next' ? { color: 'rgb(51, 71, 91)' } : {}) };
 }

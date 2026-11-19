@@ -129,7 +129,9 @@ for (const sample of reference.cases) {
 
 async function toggle(page: Page, label: string) {
   await page.getByLabel(label, { exact: true }).evaluate(element => {
-    if (!(element instanceof HTMLInputElement)) throw new Error('Expected a checkbox');
+    if (!(element instanceof HTMLInputElement)) {
+      throw new Error('Expected a checkbox');
+    }
     element.click();
   });
 }
@@ -169,7 +171,9 @@ test('tab bar updates and keyed sorting keep panel state, native nodes and attac
     await root.getByRole('button', { name: 'Increment alpha render', exact: true }).click();
     await draft.fill('Retained render draft');
     await draft.evaluate(element => {
-      if (!(element instanceof HTMLInputElement)) throw new Error('Expected a native input');
+      if (!(element instanceof HTMLInputElement)) {
+        throw new Error('Expected a native input');
+      }
       element.setSelectionRange(2, 9);
     });
     const initialLifecycle = JSON.parse((await page
@@ -186,7 +190,9 @@ test('tab bar updates and keyed sorting keep panel state, native nodes and attac
     await expect(draft).toHaveValue('Retained render draft');
     await expect(page.getByLabel('alpha render count', { exact: true })).toHaveText('1');
     expect(await draft.evaluate(element => {
-      if (!(element instanceof HTMLInputElement)) throw new Error('Expected a native input');
+      if (!(element instanceof HTMLInputElement)) {
+        throw new Error('Expected a native input');
+      }
       return [element.selectionStart, element.selectionEnd];
     })).toEqual([2, 9]);
     expect(await root.evaluate((element, previous) => element === previous, originalRoot))

@@ -51,13 +51,17 @@ it('keeps every actual seven-key tag producer argument, descriptor and result in
   const keys = ['label', 'value', 'index', 'disabled', 'closable', 'onClose', 'isMaxTag'];
 
   expect(csr.cases.map(entry => entry.ledger.producerCalls.filter(call => call.kind === 'tagRender').length)).toEqual([67, 32]);
-  for (const entry of csr.cases) for (const call of entry.ledger.producerCalls.filter(call => call.kind === 'tagRender')) {
-    const info = readTagCloseHandleSourceInfo(call);
-    expect(Object.keys(info)).toEqual(keys);
-    expect(call.argumentOwnKeys).toEqual([keys]);
-    expect(call.argumentCount).toBe(1);
-    if (info.isMaxTag) for (const key of ['value', 'index', 'onClose']) expect(info[key]).toEqual({ $: 'undefined' });
-    else expect(info.onClose).toMatchObject({ $: 'function', name: 'onClose' });
+  for (const entry of csr.cases) {
+    for (const call of entry.ledger.producerCalls.filter(call => call.kind === 'tagRender')) {
+      const info = readTagCloseHandleSourceInfo(call);
+      expect(Object.keys(info)).toEqual(keys);
+      expect(call.argumentOwnKeys).toEqual([keys]);
+      expect(call.argumentCount).toBe(1);
+      if (info.isMaxTag) {
+        for (const key of ['value', 'index', 'onClose']) expect(info[key]).toEqual({ $: 'undefined' });
+      }
+      else expect(info.onClose).toMatchObject({ $: 'function', name: 'onClose' });
+    }
   }
 });
 
@@ -101,12 +105,14 @@ it('retains the exact stale callback while resolving current deselect options wi
   }
   expect(kinds(entry.ledger.events)).toEqual(['invoke-before', 'deselect', 'invoke-after', 'invoke-before', 'change', 'deselect', 'invoke-after',
     'invoke-before', 'deselect', 'invoke-after', 'invoke-before', 'deselect', 'invoke-after']);
-  for (const owner of csr.cases) for (const invocation of owner.ledger.invocations) {
-    expect(invocation.actualArgumentCount).toBe(1);
-    expect(readTagCloseHandleSourceArray(invocation.arguments)).toEqual([{ $: 'undefined' }]);
-    expect(invocation.handle.callbackIsInfoOnClose).toBe(true);
-    expect(invocation.result).toEqual({ $: 'undefined' });
-    expect(invocation.thrown).toBe(null);
+  for (const owner of csr.cases) {
+    for (const invocation of owner.ledger.invocations) {
+      expect(invocation.actualArgumentCount).toBe(1);
+      expect(readTagCloseHandleSourceArray(invocation.arguments)).toEqual([{ $: 'undefined' }]);
+      expect(invocation.handle.callbackIsInfoOnClose).toBe(true);
+      expect(invocation.result).toEqual({ $: 'undefined' });
+      expect(invocation.thrown).toBe(null);
+    }
   }
 });
 

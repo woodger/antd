@@ -34,9 +34,13 @@
   let sample = $derived(reference.cases.find(({ sample }) => sample.id === selected)!.sample as Sample);
 
   function settings(value?: Options): FormTooltipProps | undefined {
-    if (!value) return;
+    if (!value) {
+      return;
+    }
     const { icon, ...rest } = value;
-    if (!Object.hasOwn(value, 'icon')) return rest;
+    if (!Object.hasOwn(value, 'icon')) {
+      return rest;
+    }
     const icons = { global: globalIcon, local: localIcon, item: itemIcon };
 
     return { ...rest, icon: icon ? icons[icon] : icon };

@@ -31,11 +31,15 @@ function attributes(row: Row, native: boolean, physical: boolean) {
   const values: Record<string, string> = Object.fromEntries(row.attributes);
   // Native keeps button semantics, focus control and private Svelte/attachment markers.
   // Every Source data/ARIA/title attribute and every option-state class stays observable.
-  if (native) for (const name of Object.keys(values)) {
-    if (name.startsWith('data-ant-') || (physical && ['type', 'tabindex', 'disabled'].includes(name))) delete values[name];
+  if (native) {
+    for (const name of Object.keys(values)) {
+      if (name.startsWith('data-ant-') || (physical && ['type', 'tabindex', 'disabled'].includes(name))) delete values[name];
+    }
   }
-  if (values.class !== undefined) values.class = values.class.split(/\s+/)
-    .filter(name => !native || !(/^(?:svelte-|s-[A-Za-z0-9]+$)/).test(name)).sort().join(' ');
+  if (values.class !== undefined) {
+    values.class = values.class.split(/\s+/)
+      .filter(name => !native || !(/^(?:svelte-|s-[A-Za-z0-9]+$)/).test(name)).sort().join(' ');
+  }
   // Compare the actual CSS declarations through their computed effects below.
   delete values.style;
   return values;
@@ -44,7 +48,9 @@ function attributes(row: Row, native: boolean, physical: boolean) {
 function verify(actual: Snapshot, expected: Snapshot, visible: boolean) {
   expect(actual.view).toEqual(expected.view);
   expect(actual.raw.receipts).toEqual(expected.raw.receipts);
-  if (!visible) return; // Retained closed Native markup is a separate existing lifecycle contract.
+  if (!visible) {
+    return;
+  } // Retained closed Native markup is a separate existing lifecycle contract.
   expect(actual.raw.popups.length).toBe(expected.raw.popups.length);
   for (const [index, popup] of expected.raw.popups.entries()) {
     const current = actual.raw.popups[index];

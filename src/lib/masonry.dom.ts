@@ -8,7 +8,9 @@ import type { MasonryItemType, MasonryKey } from './masonry.types';
 export function captureMasonryFocus(root: HTMLDivElement) {
   const focused = root.ownerDocument.activeElement;
 
-  if (!(focused instanceof HTMLElement) || !root.contains(focused)) return undefined;
+  if (!(focused instanceof HTMLElement) || !root.contains(focused)) {
+    return undefined;
+  }
 
   let selection: readonly [number, number, 'forward' | 'backward' | 'none'] | undefined;
   let editableSelection: readonly [Node, number, Node, number] | undefined;
@@ -23,26 +25,36 @@ export function captureMasonryFocus(root: HTMLDivElement) {
     const range = root.ownerDocument.defaultView!.getSelection();
 
     if (range?.anchorNode && range.focusNode && focused.contains(range.anchorNode)
-      && focused.contains(range.focusNode))
+      && focused.contains(range.focusNode)) {
       editableSelection = [
         range.anchorNode,
         range.anchorOffset,
         range.focusNode,
         range.focusOffset
       ];
+    }
   }
 
   return () => {
-    if (!root.isConnected || !focused.isConnected || !root.contains(focused)) return;
-    if (root.ownerDocument.activeElement !== root.ownerDocument.body) return;
-    if (!focused.getClientRects().length || focused.matches(':disabled') || focused.closest('[inert]')) return;
-    if (root.ownerDocument.defaultView!.getComputedStyle(focused).visibility !== 'visible') return;
+    if (!root.isConnected || !focused.isConnected || !root.contains(focused)) {
+      return;
+    }
+    if (root.ownerDocument.activeElement !== root.ownerDocument.body) {
+      return;
+    }
+    if (!focused.getClientRects().length || focused.matches(':disabled') || focused.closest('[inert]')) {
+      return;
+    }
+    if (root.ownerDocument.defaultView!.getComputedStyle(focused).visibility !== 'visible') {
+      return;
+    }
 
     focused.focus({ preventScroll: true });
 
     if (selection && (focused instanceof HTMLInputElement || focused instanceof HTMLTextAreaElement)
-      && focused.selectionStart !== null)
+      && focused.selectionStart !== null) {
       focused.setSelectionRange(...selection);
+    }
 
     if (editableSelection) {
       const [anchor, anchorOffset, end, endOffset] = editableSelection;
@@ -80,7 +92,9 @@ export function createMasonryRuntime<Data>(
   let frame: number | undefined;
 
   function collect() {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
 
     if (frame !== undefined)
       view.cancelAnimationFrame(frame);
@@ -88,7 +102,9 @@ export function createMasonryRuntime<Data>(
     frame = view.requestAnimationFrame(() => {
       frame = undefined;
 
-      if (!active) return;
+      if (!active) {
+        return;
+      }
 
       const next = items.map<MasonryHeight>((item, index) => {
         const key = item.key ?? index;
@@ -126,13 +142,16 @@ export function createMasonryRuntime<Data>(
   });
 
   function observe() {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
 
     const targets = new Set<HTMLElement>([root]);
 
-    if (fresh)
+    if (fresh) {
       for (const element of elements.values())
         targets.add(element);
+    }
 
     for (const target of observed) {
       if (!targets.has(target)) {
@@ -157,7 +176,9 @@ export function createMasonryRuntime<Data>(
   return {
     collect,
     configure(nextItems: MasonryItemType<Data>[], nextFresh: boolean, nextColumns: number) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
 
       const changed = items !== nextItems || columns !== nextColumns;
       items = nextItems;
@@ -169,7 +190,9 @@ export function createMasonryRuntime<Data>(
         collect();
     },
     register(key: MasonryKey, element: HTMLDivElement) {
-      if (!active) return () => {};
+      if (!active) {
+        return () => {};
+      }
 
       elements.set(key, element);
       observe();
@@ -218,7 +241,9 @@ export function createMasonryMotion(
   }
 
   function handleEnd(event?: Event) {
-    if (!active || !status || !activated || event && event.target !== node) return;
+    if (!active || !status || !activated || event && event.target !== node) {
+      return;
+    }
 
     cancel();
     status = undefined;
@@ -233,7 +258,9 @@ export function createMasonryMotion(
 
   return {
     sync(next: boolean, motionEnabled = true) {
-      if (!active || previous === next && (motionEnabled || status === undefined)) return;
+      if (!active || previous === next && (motionEnabled || status === undefined)) {
+        return;
+      }
 
       cancel();
       visible = next;
@@ -251,19 +278,25 @@ export function createMasonryMotion(
       status = next ? first ? 'appear' : 'enter' : 'leave';
       publish(`${name}-${status} ${name}-${status}-start ${name}`);
       frame = view.requestAnimationFrame(() => {
-        if (!active || !status) return;
+        if (!active || !status) {
+          return;
+        }
 
         frame = view.requestAnimationFrame(() => {
           frame = undefined;
 
-          if (!active || !status) return;
+          if (!active || !status) {
+            return;
+          }
 
           activated = true;
           publish(`${name}-${status} ${name}-${status}-active ${name}`);
           // После flush/paint CSS без анимации не пришлёт end event.
           frame = view.requestAnimationFrame(() => {
             frame = undefined;
-            if (!active || !status) return;
+            if (!active || !status) {
+              return;
+            }
 
             const pending = node.getAnimations().some(animation =>
               animation.playState !== 'finished' && animation.playState !== 'idle'

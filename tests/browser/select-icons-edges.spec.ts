@@ -41,7 +41,9 @@ for (const entry of [...reference.cases, ...stopReference.cases, ...menuReferenc
       'iconedgecapture',
       { detail }
     ));
-    if (!detail.read) throw Error('Actual icon edge owner absent');
+    if (!detail.read) {
+      throw Error('Actual icon edge owner absent');
+    }
     return detail.read();
   });
   const verify = async (source: Snapshot, phase: string) => {

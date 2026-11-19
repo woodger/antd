@@ -31,7 +31,9 @@ for (const sample of reference.cases) {
                 : name.startsWith('icon-') ? rows[Number(name.slice(5))]
                   .querySelector('.ant-steps-item-icon')
                 : first.querySelector(`.ant-steps-item-${name === 'verticalRail' ? 'rail' : name}`);
-              if (!target) throw new Error(`Missing Steps metric ${name}`);
+              if (!target) {
+                throw new Error(`Missing Steps metric ${name}`);
+              }
               const css = getComputedStyle(target, name === 'nav' ? '::after' : null);
               return [name, Object.fromEntries(Object.keys(fields).map(key => [key,
                 css[key as keyof CSSStyleDeclaration]

@@ -39,7 +39,9 @@
     const root = node;
     const current = notice;
     const visible = runtime.visible;
-    if (!root || !present) return;
+    if (!root || !present) {
+      return;
+    }
 
     untrack(() => {
       if (current.closing) {

@@ -78,16 +78,19 @@ for (const [r, mode] of [[autocompleteLabelTitleReference, 'csr'], [autocomplete
   );
   assert(h.archives.every(a => a.byteEqual));
   assert.deepEqual(r.cases.map(c => c.id), labelTitleSamples.map(s => s.id));
-  for (const [path, sha] of Object.entries(h.inputPins)) if (path.startsWith('tests/'))
-    assert.equal(hash(readFileSync(new URL('../../' + path, import.meta.url))), sha, path);
+  for (const [path, sha] of Object.entries(h.inputPins)) {
+    if (path.startsWith('tests/'))
+      assert.equal(hash(readFileSync(new URL('../../' + path, import.meta.url))), sha, path);
+  }
 }
 for (const [file, source] of [['autocomplete-render-label-title-cases.mjs', '.upstream/artifacts/autocomplete-render-label-title-cases.mjs'],
-  ['autocomplete-render-label-title-metrics.mjs', '.upstream/artifacts/autocomplete-render-label-title-reader.mjs']])
+  ['autocomplete-render-label-title-metrics.mjs', '.upstream/artifacts/autocomplete-render-label-title-reader.mjs']]) {
   assert.equal(
     hash(readFileSync(new URL('./' + file, import.meta.url))),
     autocompleteLabelTitleReference.reference.inputPins[source],
     file
   );
+}
 for (const c of autocompleteLabelTitleReference.cases) {
   assert.deepEqual(c.steps.map(s => s.action), labelTitleActions);
   assert.deepEqual(c.cleanup, c.late);

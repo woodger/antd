@@ -8,12 +8,14 @@ export function createOverlayStyle(
   getLayers: () => readonly InlineStyleLayer[], sourceWidthVariable?: string,
   getSourceOpen?: () => boolean, objectStyle?: SelectOverlayStyleOptions
 ) {
-  if (objectStyle) return createSelectOverlayStyle(
-    getLayers,
-    sourceWidthVariable,
-    getSourceOpen,
-    objectStyle
-  );
+  if (objectStyle) {
+    return createSelectOverlayStyle(
+      getLayers,
+      sourceWidthVariable,
+      getSourceOpen,
+      objectStyle
+    );
+  }
   let write: ReturnType<typeof connectInlineStyle> | undefined;
   let position: InlineStyleLayer;
   let projection: InlineStyleLayer;
@@ -27,9 +29,13 @@ export function createOverlayStyle(
   let visited = false;
 
   function widthHistory(layers: readonly InlineStyleLayer[]): InlineStyleLayer {
-    if (!sourceWidthVariable || !parser || !css) return;
+    if (!sourceWidthVariable || !parser || !css) {
+      return;
+    }
     if (!visited) {
-      if (!getSourceOpen?.()) return;
+      if (!getSourceOpen?.()) {
+        return;
+      }
       visited = true;
       // Скрытый Native measuring shell появляется раньше Source popup и не должен
       // создавать историю принятой ширины до первого настоящего открытия.
@@ -66,14 +72,16 @@ export function createOverlayStyle(
     return acceptedWidth ? [['width', acceptedWidth.value, acceptedWidth.priority]] : undefined;
   }
 
-  if (sourceWidthVariable) $effect(() => {
-    const node = element;
-    const layers = getLayers();
-    getSourceOpen?.();
-    // Source обновляет стили закрытого popup. Native Select сохраняет условный DOM;
-    // между его узлами остаётся только принятое значение ширины.
-    if (!node) widthHistory(layers);
-  });
+  if (sourceWidthVariable) {
+    $effect(() => {
+      const node = element;
+      const layers = getLayers();
+      getSourceOpen?.();
+      // Source обновляет стили закрытого popup. Native Select сохраняет условный DOM;
+      // между его узлами остаётся только принятое значение ширины.
+      if (!node) widthHistory(layers);
+    });
+  }
 
   function update() {
     if (write) {

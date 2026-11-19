@@ -55,7 +55,9 @@ export async function settleNativeOmission(page: Page) {
     await drainSelectSurface(page);
     const actual = await readNativeOmission(page), key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 3) return actual;
+    if (stable >= 3) {
+      return actual;
+    }
     previous = key;
   }
   throw Error('Native omission owner, lifecycle, callback ledger and actual DOM did not settle');

@@ -14,7 +14,9 @@ export async function snapshotBadgeApi(page: Page, includeText = false, prefixDe
     const text = children.find(node => node.classList.contains(`${prefix}-status-text`)) ?? null;
     const base = root.getBoundingClientRect();
     const metric = (node: HTMLElement | null) => {
-      if (!node) return null;
+      if (!node) {
+        return null;
+      }
       const rect = node.getBoundingClientRect();
       const style = getComputedStyle(node);
       const round = (value: number) => Math.round(value * 1000) / 1000;

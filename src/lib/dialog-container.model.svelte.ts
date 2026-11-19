@@ -28,9 +28,13 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
   onMount(() => { mounted = true; });
 
   $effect.pre(() => {
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
     const options = getOptions();
-    if (options.enabled === false) return;
+    if (options.enabled === false) {
+      return;
+    }
 
     const choice = options.getContainer;
     let next: Element | DocumentFragment | false | undefined;

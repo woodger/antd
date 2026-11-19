@@ -34,7 +34,9 @@
   let pending = $state.raw<UploadRequestOptions>();
   let styled = $derived(priority || scope === 'priority');
   let listType = $derived.by<UploadProps['listType']>(() => {
-    if (mode === 'picture' || mode === 'picture-circle') return mode;
+    if (mode === 'picture' || mode === 'picture-circle') {
+      return mode;
+    }
     return ['picture-card', 'card-hover', 'card-disabled', 'trigger-variables'].includes(mode)
       ? 'picture-card' : 'text';
   });

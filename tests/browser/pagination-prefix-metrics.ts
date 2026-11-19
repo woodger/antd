@@ -5,7 +5,9 @@ export function snapshotPaginationPrefix() {
   const box = ['height', 'min-width', 'padding', 'margin-inline-end', 'background-color',
     'border-color', 'border-width', 'border-radius'];
   function css(node: Element | null, keys: string[]) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
 
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));

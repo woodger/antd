@@ -8,7 +8,9 @@ export async function settleTreeSelectSuffixLayout<View>(page: Page, read: () =>
       requestAnimationFrame(() => requestAnimationFrame(() => resolve())))));
     const view = await read(), key = JSON.stringify(view);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 6) return view;
+    if (stable >= 6) {
+      return view;
+    }
     previous = key;
   }
   throw Error('TreeSelect suffix layout did not settle after 120 frames');

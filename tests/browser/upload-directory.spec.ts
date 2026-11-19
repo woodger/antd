@@ -117,9 +117,11 @@ for (const action of ['disable', 'unmount'] as const) {
     });
 
     await expect(page.getByLabel('Directory observed', { exact: true })).toHaveText('[]');
-    if (action === 'disable') await page.getByRole('checkbox', {
-      name: 'Disable directory Upload', exact: true
-    }).check();
+    if (action === 'disable') {
+      await page.getByRole('checkbox', {
+        name: 'Disable directory Upload', exact: true
+      }).check();
+    }
     else await page.getByRole('checkbox', { name: 'Mount directory Upload', exact: true }).uncheck();
 
     await page.evaluate(async () => {

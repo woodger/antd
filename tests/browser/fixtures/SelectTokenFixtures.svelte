@@ -15,7 +15,9 @@
   function recordNative(this: HTMLInputElement, event: Event) {
     nativeEvents = [...nativeEvents, `${event.type}:${this === event.currentTarget}`];
     if (event.type === 'paste' && cancelPaste
-      || event.type === 'compositionend' && cancelComposition) event.preventDefault();
+      || event.type === 'compositionend' && cancelComposition) {
+      event.preventDefault();
+    }
   }
 </script>
 

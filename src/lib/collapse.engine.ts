@@ -5,7 +5,9 @@ export function normalizeCollapseItems(items: readonly CollapseItem[]) {
 
   return items.flatMap((item, index) => {
     const key = String(item.key ?? index);
-    if (seen.has(key)) return [];
+    if (seen.has(key)) {
+      return [];
+    }
 
     seen.add(key);
     return [{ ...item, key }];
@@ -32,7 +34,9 @@ export function toggleCollapseKey(
   accordion = false
 ): string[] {
   const keys = getCollapseKeys(value, accordion);
-  if (accordion) return keys[0] === key ? [] : [key];
+  if (accordion) {
+    return keys[0] === key ? [] : [key];
+  }
 
   return keys.includes(key) ? keys.filter((item) => item !== key) : [...keys, key];
 }

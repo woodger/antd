@@ -8,7 +8,9 @@ export function getRadioOptions<Value extends RadioValue>(
   return options.flatMap((option) => {
     const item = typeof option === 'object' ? option : { value: option, label: String(option) };
 
-    if (seen.has(item.value)) return [];
+    if (seen.has(item.value)) {
+      return [];
+    }
 
     seen.add(item.value);
     return [item];

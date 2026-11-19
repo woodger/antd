@@ -9,7 +9,9 @@ export function snapshotAutoCompletePrefix() {
   const border = ['border-top-width', 'border-top-style', 'border-top-color', 'border-radius'];
   const padding = ['padding-top', 'padding-right', 'padding-bottom', 'padding-left'];
   function css(node: Element | null, names: string[]) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
 
     return Object.fromEntries(names.map(name => [name, style.getPropertyValue(name)]));

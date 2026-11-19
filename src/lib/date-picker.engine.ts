@@ -14,12 +14,24 @@ export function pickerFormats(
   props: Pick<DatePickerProps, 'format' | 'showTime' | 'picker'>,
   locale: NonNullable<DatePickerProps['locale']>['lang'] = {}
 ): DatePickerFormat[] {
-  if (props.format) return normalizePickerFieldFormat<Dayjs>(props.format, 'YYYY-MM-DD').formats;
-  if (props.picker === 'week') return [locale.fieldWeekFormat || 'gggg-wo'];
-  if (props.picker === 'quarter') return [locale.fieldQuarterFormat ?? 'YYYY-[Q]Q'];
-  if (props.picker === 'month') return [locale.fieldMonthFormat ?? 'YYYY-MM'];
-  if (props.picker === 'year') return [locale.fieldYearFormat ?? 'YYYY'];
-  if (!props.showTime) return [locale.fieldDateFormat ?? 'YYYY-MM-DD'];
+  if (props.format) {
+    return normalizePickerFieldFormat<Dayjs>(props.format, 'YYYY-MM-DD').formats;
+  }
+  if (props.picker === 'week') {
+    return [locale.fieldWeekFormat || 'gggg-wo'];
+  }
+  if (props.picker === 'quarter') {
+    return [locale.fieldQuarterFormat ?? 'YYYY-[Q]Q'];
+  }
+  if (props.picker === 'month') {
+    return [locale.fieldMonthFormat ?? 'YYYY-MM'];
+  }
+  if (props.picker === 'year') {
+    return [locale.fieldYearFormat ?? 'YYYY'];
+  }
+  if (!props.showTime) {
+    return [locale.fieldDateFormat ?? 'YYYY-MM-DD'];
+  }
   const config = typeof props.showTime === 'object' ? props.showTime : {};
   const columns = timeColumns(config, 'HH:mm:ss');
   const units = columns.filter(column => column.unit !== 'millisecond').map(
@@ -39,7 +51,9 @@ export function formatPicker(
   locale: string,
   formats: readonly DatePickerFormat[]
 ): string {
-  if (!value || !value.isValid()) return '';
+  if (!value || !value.isValid()) {
+    return '';
+  }
   return typeof formats[0] === 'function'
     ? formats[0](value)
     : date.locale.format(locale, value, formats[0] ?? 'YYYY-MM-DD');
@@ -69,10 +83,18 @@ export function samePickerWeek(a: Dayjs, b: Dayjs, locale: string): boolean {
 export function samePickerPanelValue(
   a: Dayjs, b: Dayjs, datetime: boolean, picker: DatePickerPicker = 'date', locale = 'en_US'
 ): boolean {
-  if (picker === 'week') return samePickerWeek(a, b, locale);
-  if (picker === 'quarter') return samePickerQuarter(a, b);
-  if (picker === 'year') return a.year() === b.year();
-  if (picker === 'month') return a.year() === b.year() && a.month() === b.month();
+  if (picker === 'week') {
+    return samePickerWeek(a, b, locale);
+  }
+  if (picker === 'quarter') {
+    return samePickerQuarter(a, b);
+  }
+  if (picker === 'year') {
+    return a.year() === b.year();
+  }
+  if (picker === 'month') {
+    return a.year() === b.year() && a.month() === b.month();
+  }
   return a.year() === b.year() && a.month() === b.month() && a.date() === b.date()
     && (!datetime || a.hour() === b.hour() && a.minute() === b.minute()
       && a.second() === b.second() && a.millisecond() === b.millisecond());
@@ -95,7 +117,9 @@ export function calendarCells(panel: Dayjs, mode: DatePickerMode, locale: string
     const first = panel.month(0);
     return Array.from({ length: 4 }, (_, index) => first.add(index * 3, 'month'));
   }
-  if (mode === 'month') return Array.from({ length: 12 }, (_, index) => panel.month(index));
+  if (mode === 'month') {
+    return Array.from({ length: 12 }, (_, index) => panel.month(index));
+  }
   const unit = mode === 'year' ? 1 : 10;
   const base = Math.floor(panel.year() / (unit * 10)) * unit * 10;
   const first = panel.year(base).add(-unit, 'year');
@@ -107,24 +131,28 @@ export function pickerDateDisabled(
   mode: DatePickerMode = 'date',
   locale = 'en_US'
 ): boolean {
-  if (mode === 'week') return Boolean(
-    props.disabledDate?.(value, { type: mode })
-    || props.minDate && props.minDate.isAfter(value) && !samePickerWeek(
-      props.minDate,
-      value,
-      locale
-    )
-    || props.maxDate && value.isAfter(props.maxDate) && !samePickerWeek(
-      props.maxDate,
-      value,
-      locale
-    )
-  );
-  if (mode === 'quarter') return Boolean(
-    props.disabledDate?.(value, { type: mode })
-    || props.minDate && props.minDate.isAfter(value) && !samePickerQuarter(props.minDate, value)
-    || props.maxDate && value.isAfter(props.maxDate) && !samePickerQuarter(props.maxDate, value)
-  );
+  if (mode === 'week') {
+    return Boolean(
+      props.disabledDate?.(value, { type: mode })
+      || props.minDate && props.minDate.isAfter(value) && !samePickerWeek(
+        props.minDate,
+        value,
+        locale
+      )
+      || props.maxDate && value.isAfter(props.maxDate) && !samePickerWeek(
+        props.maxDate,
+        value,
+        locale
+      )
+    );
+  }
+  if (mode === 'quarter') {
+    return Boolean(
+      props.disabledDate?.(value, { type: mode })
+      || props.minDate && props.minDate.isAfter(value) && !samePickerQuarter(props.minDate, value)
+      || props.maxDate && value.isAfter(props.maxDate) && !samePickerQuarter(props.maxDate, value)
+    );
+  }
   const unit = mode === 'date' ? 'day' : mode === 'month' ? 'month' : 'year';
   const period = mode === 'decade' ? value.year(Math.floor(value.year() / 10) * 10) : value;
   const first = period.startOf(unit);
@@ -149,12 +177,14 @@ export function pickerPanelDateDisabled(
   mode: DatePickerMode,
   locale = 'en_US'
 ): boolean {
-  if (mode === 'date' || mode === 'quarter' || mode === 'week') return pickerDateDisabled(
-    value,
-    props,
-    mode,
-    locale
-  );
+  if (mode === 'date' || mode === 'quarter' || mode === 'week') {
+    return pickerDateDisabled(
+      value,
+      props,
+      mode,
+      locale
+    );
+  }
   const start = mode === 'month' ? value.date(1)
     : value.month(0).date(1).year(mode === 'decade'
       ? Math.floor(value.year() / 10) * 10 : value.year());
@@ -166,7 +196,9 @@ export function pickerTimeDisabled(
   value: Dayjs,
   props: Pick<DatePickerProps, 'showTime' | 'disabledTime'>
 ): boolean {
-  if (!props.showTime) return false;
+  if (!props.showTime) {
+    return false;
+  }
   const field: {
     disabledTime?: (
       date: Dayjs,

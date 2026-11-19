@@ -31,7 +31,9 @@ for (const scenario of ownershipScenarios) test(`hydration ownership ${scenario.
   testInfo
 ) => {
   const browser = page.context().browser();
-  if (!browser) throw Error('Actual independently measured browser required');
+  if (!browser) {
+    throw Error('Actual independently measured browser required');
+  }
   expect(browser.version()).toBe(readSelectComponentsHydrationOwnershipSource().reference.chromium);
   const source = readSelectComponentsHydrationOwnershipCase(scenario.id);
   let result: Awaited<ReturnType<typeof captureHydrationOwnership>> | undefined;

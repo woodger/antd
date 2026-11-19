@@ -5,7 +5,9 @@ export function snapshotMenuPrefix() {
   const popup = [...document.querySelectorAll<HTMLElement>(`[class~="${prefix}-submenu-popup"]`)]
     .find(node => node.getClientRects().length && getComputedStyle(node).display !== 'none') ?? null;
   function css(node: Element | null, keys: string[]) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
 
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));

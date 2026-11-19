@@ -35,14 +35,18 @@ export function createModal() {
 
   function complete(id: number) {
     const entry = entries.get(id);
-    if (!entry || entry.view.open) return;
+    if (!entry || entry.view.open) {
+      return;
+    }
     entries.delete(id);
     publish();
     entry.view.config.afterClose?.();
   }
 
   function close(entry: Entry, confirmed: boolean) {
-    if (entries.get(entry.view.id) !== entry || !entry.view.open) return;
+    if (entries.get(entry.view.id) !== entry || !entry.view.open) {
+      return;
+    }
     entry.view = { ...entry.view, open: false, pendingOk: false, pendingCancel: false };
     publish();
     entry.resolve(confirmed);
@@ -51,9 +55,13 @@ export function createModal() {
 
   function act(id: number, confirmed: boolean) {
     const entry = entries.get(id);
-    if (!entry?.view.open) return;
+    if (!entry?.view.open) {
+      return;
+    }
     const field = confirmed ? 'pendingOk' : 'pendingCancel';
-    if (entry.running.has(confirmed)) return;
+    if (entry.running.has(confirmed)) {
+      return;
+    }
     const callback = confirmed ? entry.view.config.onOk : entry.view.config.onCancel;
     const finish = () => close(entry, confirmed);
     if (!callback) {
@@ -82,7 +90,9 @@ export function createModal() {
       publish();
       void Promise.resolve(result).then(finish, () => {
         // Отклонённая async-проверка оставляет окно для повторного действия.
-        if (entries.get(id) !== entry || !entry.view.open) return;
+        if (entries.get(id) !== entry || !entry.view.open) {
+          return;
+        }
         entry.running.delete(confirmed);
         entry.view = { ...entry.view, [field]: false };
         publish();
@@ -98,7 +108,9 @@ export function createModal() {
 
   function dismiss(id: number) {
     const entry = entries.get(id);
-    if (!entry?.view.open) return;
+    if (!entry?.view.open) {
+      return;
+    }
     const callback = entry.view.config.onCancel;
     close(entry, false);
     // Escape/close/mask уже закрыли dialog; callback не задерживает закрытие.
@@ -130,11 +142,15 @@ export function createModal() {
     return {
       destroy: () => close(entry, false),
       update(patch) {
-        if (entries.get(entry.view.id) !== entry || !entry.view.open) return;
+        if (entries.get(entry.view.id) !== entry || !entry.view.open) {
+          return;
+        }
         const current = { ...entry.view.config };
         const changes = typeof patch === 'function' ? patch(current) : patch;
         // update callback может уничтожить окно или отсоединить holder.
-        if (entries.get(entry.view.id) !== entry || !entry.view.open) return;
+        if (entries.get(entry.view.id) !== entry || !entry.view.open) {
+          return;
+        }
         entry.view = { ...entry.view, config: { ...entry.view.config, ...changes } };
         publish();
       },
@@ -144,11 +160,15 @@ export function createModal() {
   }
 
   function connect() {
-    if (state === 'mounted') throw new Error('A modal instance supports one mounted ModalHolder.');
+    if (state === 'mounted') {
+      throw new Error('A modal instance supports one mounted ModalHolder.');
+    }
     state = 'mounted';
     let connected = true;
     return () => {
-      if (!connected) return;
+      if (!connected) {
+        return;
+      }
       connected = false;
       state = 'detached';
       const pending = [...entries.values()];

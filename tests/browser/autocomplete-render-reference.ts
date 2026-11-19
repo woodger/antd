@@ -87,16 +87,19 @@ for (const [reference, mode] of [[autocompleteRenderReference, 'csr'], [autocomp
   );
   assert(h.archives.every(a => a.byteEqual));
   assert.deepEqual(reference.cases.map(c => c.id), autocompleteRenderSamples.map(s => s.id));
-  for (const [path, sha] of Object.entries(h.inputPins)) if (path.startsWith('tests/'))
-    assert.equal(hash(readFileSync(new URL('../../' + path, import.meta.url))), sha, path);
+  for (const [path, sha] of Object.entries(h.inputPins)) {
+    if (path.startsWith('tests/'))
+      assert.equal(hash(readFileSync(new URL('../../' + path, import.meta.url))), sha, path);
+  }
 }
 for (const [path, source] of [['autocomplete-render-cases.mjs', '.upstream/artifacts/autocomplete-render-cases.mjs'],
-  ['autocomplete-render-metrics.mjs', '.upstream/artifacts/autocomplete-render-reader.mjs']])
+  ['autocomplete-render-metrics.mjs', '.upstream/artifacts/autocomplete-render-reader.mjs']]) {
   assert.equal(
     hash(readFileSync(new URL('./' + path, import.meta.url))),
     autocompleteRenderReference.reference.inputPins[source],
     path
   );
+}
 assert.equal(autocompleteRenderReference.cases.reduce((n, c) => n + c.steps.length, 0), 60);
 assert.equal(autocompleteRenderReference.cases.reduce((n, c) => n + c.producerCalls.length, 0), 484);
 for (const c of autocompleteRenderReference.cases) {

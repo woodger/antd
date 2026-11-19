@@ -20,7 +20,9 @@
   let count = $state(0);
 
   onMount(() => {
-    if (!interactive) return;
+    if (!interactive) {
+      return;
+    }
     const name = `${context}:${value}`;
     onLife(`mount:${name}`);
     return () => onLife(`destroy:${name}`);

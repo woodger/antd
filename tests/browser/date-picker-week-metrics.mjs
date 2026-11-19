@@ -7,7 +7,9 @@ export function readNativeWeek() {
   const cssKeys = ['display', 'visibility', 'opacity', 'position', 'overflow', 'overflow-y',
     'color', 'background-color', 'border-color', 'font-size', 'line-height', 'text-align'];
   const describe = node => {
-    if (node == null) return null;
+    if (node == null) {
+      return null;
+    }
     observation.retainedNodes.add(node);
     const rect = node.getBoundingClientRect(), style = getComputedStyle(node);
     return { identity: id(node), tag: node.tagName, connected: node.isConnected,
@@ -32,7 +34,9 @@ export function readNativeWeek() {
       && surface.css.display !== 'none' && surface.css.visibility !== 'hidden';
     const ancestors = [];
     for (let node = popup.parentElement; node && node !== document.body
-      && node !== document.documentElement; node = node.parentElement) ancestors.push(describe(node));
+      && node !== document.documentElement; node = node.parentElement) {
+      ancestors.push(describe(node));
+    }
     return { surface, visible, geometryState: visible ? 'visible-layout' : 'hidden-layout-may-be-zero-or-stale',
       ancestors, panels: [...popup.querySelectorAll('.ant-picker-panel')].map(describe),
       headers: [...popup.querySelectorAll('.ant-picker-header')].map(describe),

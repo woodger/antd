@@ -86,7 +86,9 @@
   });
   $effect(() => {
     const source = originalSource;
-    if (!dialog) return;
+    if (!dialog) {
+      return;
+    }
     failed = false;
     return checkImageSource(source, dialog.ownerDocument, () => {
       failed = true;
@@ -96,7 +98,9 @@
     const next = open;
     const root = dialog;
     const trap = focusTrap;
-    if (!root) return;
+    if (!root) {
+      return;
+    }
     untrack(() => {
       if (next && !root.open) {
         const focused = root.ownerDocument.activeElement;
@@ -131,7 +135,9 @@
     });
   });
   $effect(() => {
-    if (!open || !element) return;
+    if (!open || !element) {
+      return;
+    }
     const target = element;
     return connectImagePreview(target, {
       config: () => preview,
@@ -144,12 +150,18 @@
     });
   });
   $effect(() => {
-    if (!open || !dialog) return;
+    if (!open || !dialog) {
+      return;
+    }
     const view = dialog.ownerDocument.defaultView!;
     function keydown(event: KeyboardEvent) {
-      if (event.defaultPrevented || !dialog?.open || !isTopImagePreview(dialog)) return;
+      if (event.defaultPrevented || !dialog?.open || !isTopImagePreview(dialog)) {
+        return;
+      }
       const active = dialog.ownerDocument.activeElement;
-      if (focusTrap && active && !dialog.contains(active)) return;
+      if (focusTrap && active && !dialog.contains(active)) {
+        return;
+      }
       if (group && count > 1 && (event.key === 'ArrowLeft' || event.key === 'ArrowRight'))
         activate(event.key === 'ArrowLeft' ? -1 : 1);
       else if (event.key === 'Escape' && !focusTrap) {
@@ -180,7 +192,7 @@
   }
   function update(patch: Partial<ImageTransform>, action: ImageTransformAction) {
     queue.push({ ...transform, ...patch });
-    if (!frame)
+    if (!frame) {
       frame = requestAnimationFrame(() => {
         frame = 0;
         if (!alive || !open) {
@@ -191,6 +203,7 @@
         queue = [];
         preview.onTransform?.({ transform: { ...transform }, action });
       });
+    }
   }
   function reset(action: ImageTransformAction) {
     const initial = initialImageTransform();
@@ -202,7 +215,9 @@
     }
   }
   function zoom(ratio: number, action: ImageTransformAction, center?: ImagePoint, touch = false) {
-    if (!element) return;
+    if (!element) {
+      return;
+    }
     const viewport = {
       width: element.ownerDocument.documentElement.clientWidth,
       height: element.ownerDocument.defaultView!.innerHeight
@@ -219,7 +234,9 @@
   function activate(offset: number) {
     const before = current;
     const next = before + offset;
-    if (next < 0 || next >= count) return;
+    if (next < 0 || next >= count) {
+      return;
+    }
     stopSwitch();
     switching = true;
     const id = switchId;
@@ -227,9 +244,13 @@
     reset(offset < 0 ? 'prev' : 'next');
     onChange?.(next, before);
     void tick().then(() => {
-      if (!alive || !open || id !== switchId) return;
+      if (!alive || !open || id !== switchId) {
+        return;
+      }
       switchFrame = requestAnimationFrame(() => {
-        if (!alive || id !== switchId) return;
+        if (!alive || id !== switchId) {
+          return;
+        }
         switchFrame = requestAnimationFrame(() => {
           switchFrame = 0;
           if (alive && id === switchId)

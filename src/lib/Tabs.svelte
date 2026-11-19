@@ -214,7 +214,9 @@
     const key = selectedKey;
     const current = items;
     retainedFocus = undefined;
-    if (!panels) return;
+    if (!panels) {
+      return;
+    }
 
     const focused = panels.ownerDocument.activeElement;
     const popupOwner = focused instanceof Element
@@ -222,7 +224,9 @@
     const ownedRoot = popupOwner ? panels.ownerDocument.getElementById(popupOwner) : null;
     const panel = Array.from(panels.children).find(element =>
       element.contains(focused) || element.contains(ownedRoot));
-    if (!(panel instanceof HTMLElement)) return;
+    if (!(panel instanceof HTMLElement)) {
+      return;
+    }
 
     if (panel.dataset.tabsKey !== key) repairFocus = true;
     else if (focused instanceof HTMLElement) {
@@ -236,7 +240,9 @@
     const key = getTabsActiveKey(items, selectedKey);
     const previous = retainedFocus;
     retainedFocus = undefined;
-    if (!body) return;
+    if (!body) {
+      return;
+    }
 
     if (repairFocus) {
       repairFocus = false;
@@ -244,8 +250,9 @@
     }
     else if (previous?.isConnected && previous.getClientRects().length
       && !previous.matches(':disabled')
-      && body.ownerDocument.activeElement === body.ownerDocument.body)
+      && body.ownerDocument.activeElement === body.ownerDocument.body) {
       untrack(() => previous.focus({ preventScroll: true }));
+    }
   });
 
   onDestroy(() => { active = false; });
@@ -265,8 +272,12 @@
 
   function activate(key: string, sourceEvent: MouseEvent | KeyboardEvent) {
     const event = getTabsClickEvent(sourceEvent, root);
-    if (!event) return;
-    if (event.defaultPrevented || !items.some((item) => item.key === key && !item.disabled)) return;
+    if (!event) {
+      return;
+    }
+    if (event.defaultPrevented || !items.some((item) => item.key === key && !item.disabled)) {
+      return;
+    }
 
     onTabClick?.(key, event);
     if (!active
@@ -274,7 +285,9 @@
       || !items.some(
         (item) => item.key === key && !item.disabled
       )
-      || key === selectedKey) return;
+      || key === selectedKey) {
+      return;
+    }
 
     activeKey = key;
     onChange?.(key);

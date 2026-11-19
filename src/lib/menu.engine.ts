@@ -15,7 +15,9 @@ export function buildMenuEntries(items: readonly MenuItemType[]) {
 
   function build(list: readonly MenuItemType[], parent?: MenuEntry): MenuEntry[] {
     return list.flatMap((item, index) => {
-      if (!item) return [];
+      if (!item) {
+        return [];
+      }
 
       const kind = item.type === 'group'
         ? 'group'
@@ -72,7 +74,9 @@ export function menuOpenKeys(
   const next = keys.filter(key => key !== entry.key);
   if (open)
     next.push(entry.key);
-  else if (mode !== 'inline') return next.filter(key => !isMenuDescendant(key, entry));
+  else if (mode !== 'inline') {
+    return next.filter(key => !isMenuDescendant(key, entry));
+  }
   return next;
 }
 
@@ -97,13 +101,17 @@ export function menuKeyboardAction(mode: MenuMode, root: boolean, rtl: boolean, 
   | 'parent'
   | 'toggle'
   | null {
-  if (mode === 'inline') return key === 'ArrowUp'
-    ? 'previous'
-    : key === 'ArrowDown' ? 'next' : key === 'Enter' ? 'toggle' : null;
-  if (mode === 'horizontal' && root) return key === 'ArrowLeft' ? (rtl ? 'next' : 'previous')
-    : key === 'ArrowRight'
-      ? (rtl ? 'previous' : 'next')
-      : key === 'ArrowDown' || key === 'Enter' ? 'children' : null;
+  if (mode === 'inline') {
+    return key === 'ArrowUp'
+      ? 'previous'
+      : key === 'ArrowDown' ? 'next' : key === 'Enter' ? 'toggle' : null;
+  }
+  if (mode === 'horizontal' && root) {
+    return key === 'ArrowLeft' ? (rtl ? 'next' : 'previous')
+      : key === 'ArrowRight'
+        ? (rtl ? 'previous' : 'next')
+        : key === 'ArrowDown' || key === 'Enter' ? 'children' : null;
+  }
   return key === 'ArrowUp'
     ? 'previous'
     : key === 'ArrowDown' ? 'next' : key === 'ArrowLeft' ? (rtl ? 'children' : 'parent')

@@ -12,8 +12,12 @@ export function normalizeInputNumber(value: number | null | undefined): number |
 export function parseInputNumber(text: string): number | null | undefined {
   const trimmed = text.trim();
 
-  if (!trimmed) return null;
-  if (!/^[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?$/.test(trimmed)) return undefined;
+  if (!trimmed) {
+    return null;
+  }
+  if (!/^[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?$/.test(trimmed)) {
+    return undefined;
+  }
 
   const value = Number(trimmed);
 
@@ -54,15 +58,23 @@ function quantize(value: number, precision: number, rounding:
   | 'ceil' = 'round'): bigint {
   const { integer, scale } = getDecimal(value);
 
-  if (scale <= precision) return integer * 10n ** BigInt(precision - scale);
+  if (scale <= precision) {
+    return integer * 10n ** BigInt(precision - scale);
+  }
 
   const divisor = 10n ** BigInt(scale - precision);
   const quotient = integer / divisor;
   const remainder = integer < 0n ? -(integer % divisor) : integer % divisor;
 
-  if (!remainder) return quotient;
-  if (rounding === 'floor') return integer < 0n ? quotient - 1n : quotient;
-  if (rounding === 'ceil') return integer > 0n ? quotient + 1n : quotient;
+  if (!remainder) {
+    return quotient;
+  }
+  if (rounding === 'floor') {
+    return integer < 0n ? quotient - 1n : quotient;
+  }
+  if (rounding === 'ceil') {
+    return integer > 0n ? quotient + 1n : quotient;
+  }
 
   return remainder * 2n >= divisor ? quotient + (integer < 0n ? -1n : 1n) : quotient;
 }
@@ -72,8 +84,12 @@ function decimalToNumber(integer: bigint, scale: number): number {
 }
 
 export function formatInputNumber(value: number | null, precision?: number): string {
-  if (value === null) return '';
-  if (precision === undefined) return String(value);
+  if (value === null) {
+    return '';
+  }
+  if (precision === undefined) {
+    return String(value);
+  }
 
   const integer = quantize(value, precision);
   const digits = String(integer < 0n ? -integer : integer).padStart(precision + 1, '0');
@@ -90,13 +106,19 @@ export function commitInputNumber(value:
   number
   | null
   | undefined {
-  if (value === null) return null;
-  if (options.min > options.max || !Number.isFinite(value)) return undefined;
+  if (value === null) {
+    return null;
+  }
+  if (options.min > options.max || !Number.isFinite(value)) {
+    return undefined;
+  }
 
   const clamped = Math.max(options.min, Math.min(options.max, value));
   const precision = options.precision;
 
-  if (precision === undefined) return clamped;
+  if (precision === undefined) {
+    return clamped;
+  }
 
   let rounded = decimalToNumber(quantize(clamped, precision), precision);
 
@@ -119,7 +141,9 @@ export function stepInputNumber(value:
     || value !== null
     && (direction > 0
       ? value >= options.max
-      : value <= options.min)) return null;
+      : value <= options.min)) {
+    return null;
+  }
 
   const current = getDecimal(value ?? 0);
   const step = getDecimal(options.step);

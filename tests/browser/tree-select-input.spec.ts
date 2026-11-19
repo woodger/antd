@@ -15,32 +15,42 @@ async function act(page: Page, action: TreeSelectInputAction) {
   else if (action.type === 'ref-focus') await page.locator('[data-input-ref-focus]').dispatchEvent('click');
   else if (action.type === 'ref-blur') await page.locator('[data-input-ref-blur]').dispatchEvent('click');
   else if (action.type === 'prefix-click') await page.locator('[data-input-prefix]').click();
-  else if (action.type === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside input tree', exact: true }
-  ).click();
-  else if (action.type === 'composition-start') await field.dispatchEvent(
-    'compositionstart',
-    { data: '' }
-  );
-  else if (action.type === 'composition-end') await field.dispatchEvent(
-    'compositionend',
-    { data: '' }
-  );
-  else if (action.type === 'paste') await field.evaluate((node, text) => {
-    const data = new DataTransfer();
-    data.setData('text', text!);
-    node.dispatchEvent(new ClipboardEvent(
-      'paste',
-      { clipboardData: data, bubbles: true, cancelable: true }
-    ));
-  }, action.text);
-  else if (action.type === 'update') await page.locator('[data-input-update]').evaluate((
-    node,
-    patch
-  ) => {
-    node.dispatchEvent(new CustomEvent('fixtureupdate', { detail: patch }));
-  }, action.update);
+  else if (action.type === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside input tree', exact: true }
+    ).click();
+  }
+  else if (action.type === 'composition-start') {
+    await field.dispatchEvent(
+      'compositionstart',
+      { data: '' }
+    );
+  }
+  else if (action.type === 'composition-end') {
+    await field.dispatchEvent(
+      'compositionend',
+      { data: '' }
+    );
+  }
+  else if (action.type === 'paste') {
+    await field.evaluate((node, text) => {
+      const data = new DataTransfer();
+      data.setData('text', text!);
+      node.dispatchEvent(new ClipboardEvent(
+        'paste',
+        { clipboardData: data, bubbles: true, cancelable: true }
+      ));
+    }, action.text);
+  }
+  else if (action.type === 'update') {
+    await page.locator('[data-input-update]').evaluate((
+      node,
+      patch
+    ) => {
+      node.dispatchEvent(new CustomEvent('fixtureupdate', { detail: patch }));
+    }, action.update);
+  }
 }
 for (const entry of reference.cases) {
   test(`TreeSelect components.input follows Source for ${entry.id}`, async ({ page }) => {
@@ -89,8 +99,9 @@ for (const id of ['multiple-input', 'multiple-textarea']) {
     ) === 'Beta')!;
     const initialWidth = Reflect.get(source.initial.props!.style, '--select-input-width');
     const filledWidth = Reflect.get(filled.props!.style, '--select-input-width');
-    if (typeof initialWidth !== 'number' || typeof filledWidth !== 'number')
+    if (typeof initialWidth !== 'number' || typeof filledWidth !== 'number') {
       throw new TypeError(`Source width metadata must be numeric for ${id}`);
+    }
     expect(initialWidth).toBeGreaterThanOrEqual(4);
     expect(filledWidth).toBeGreaterThan(initialWidth);
     await page.goto('/?fixture=tree-select-input');

@@ -61,21 +61,27 @@ async function open(page: Page, sample: TabsMorePositionCase) {
       clientX: box.left + 11,
       clientY: box.top + 7
     };
-    if (sample.open === 'keyboard') element.dispatchEvent(new KeyboardEvent('keydown', {
-      key: 'ArrowDown',
-      keyCode: 40,
-      which: 40,
-      bubbles: true,
-      cancelable: true
-    }));
-    else if (sample.open === 'hover') element.dispatchEvent(new PointerEvent('pointerenter', {
-      ...options,
-      pointerType: 'mouse'
-    }));
-    else element.dispatchEvent(new MouseEvent(
-      sample.open === 'context' ? 'contextmenu' : 'click',
-      options
-    ));
+    if (sample.open === 'keyboard') {
+      element.dispatchEvent(new KeyboardEvent('keydown', {
+        key: 'ArrowDown',
+        keyCode: 40,
+        which: 40,
+        bubbles: true,
+        cancelable: true
+      }));
+    }
+    else if (sample.open === 'hover') {
+      element.dispatchEvent(new PointerEvent('pointerenter', {
+        ...options,
+        pointerType: 'mouse'
+      }));
+    }
+    else {
+      element.dispatchEvent(new MouseEvent(
+        sample.open === 'context' ? 'contextmenu' : 'click',
+        options
+      ));
+    }
   }, sample);
 }
 

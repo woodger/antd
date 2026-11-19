@@ -222,7 +222,9 @@
     const current = runtime();
     const next = resolvedValue;
 
-    if (!input) return;
+    if (!input) {
+      return;
+    }
 
     // Нативный reset хранит defaults отдельно от текущего value; смена владельца отменяет захват.
     input.defaultValue = String(formatValue(initialDefault));
@@ -261,7 +263,9 @@
   function cancelInteraction(keepPointer = false) {
     const active = interaction;
 
-    if (!active) return;
+    if (!active) {
+      return;
+    }
 
     active.canceled = true;
     if (!keepPointer || active.kind !== 'pointer')
@@ -284,7 +288,9 @@
   }
 
   function publish(next: number) {
-    if (next === resolvedValue) return;
+    if (next === resolvedValue) {
+      return;
+    }
 
     if (interaction) {
       interaction.changed = true;
@@ -309,7 +315,9 @@
   }
 
   function handleChange(event: Event & { currentTarget: EventTarget & HTMLInputElement; }) {
-    if (resolvedDisabled || interaction?.canceled) return;
+    if (resolvedDisabled || interaction?.canceled) {
+      return;
+    }
 
     if (interaction?.kind === 'native')
       finish();
@@ -321,7 +329,9 @@
   ) {
     onpointerdown?.(event);
 
-    if (event.defaultPrevented || resolvedDisabled) return;
+    if (event.defaultPrevented || resolvedDisabled) {
+      return;
+    }
     if (event.button !== 0 || !event.isPrimary) {
       event.preventDefault();
       return;
@@ -371,18 +381,24 @@
   ) {
     onkeydown?.(event);
 
-    if (event.defaultPrevented || event.isComposing || resolvedDisabled) return;
+    if (event.defaultPrevented || event.isComposing || resolvedDisabled) {
+      return;
+    }
 
     const change = sliderRangeKey(event.key, direction);
     const next = sourceAlignment && change !== undefined
       ? offset.offset([resolvedValue], change, 0).value
       : getSliderKeyValue(event.key, resolvedValue, options, direction);
 
-    if (next === undefined) return;
+    if (next === undefined) {
+      return;
+    }
 
     event.preventDefault();
 
-    if (!keyboard || interaction?.kind === 'pointer') return;
+    if (!keyboard || interaction?.kind === 'pointer') {
+      return;
+    }
 
     const active = interaction?.kind === 'key' ? interaction : begin('key');
     active.keys.add(event.key);
@@ -392,7 +408,9 @@
   function handleKeyup(event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
     onkeyup?.(event);
 
-    if (interaction?.kind !== 'key' || !interaction.keys.delete(event.key)) return;
+    if (interaction?.kind !== 'key' || !interaction.keys.delete(event.key)) {
+      return;
+    }
     if (!interaction.keys.size)
       finish(event.defaultPrevented);
   }
@@ -420,14 +438,18 @@
   function handleReset(event: Event) {
     const input = control;
 
-    if (!input || event.target !== input.form) return;
+    if (!input || event.target !== input.form) {
+      return;
+    }
 
     cancelInteraction(true);
 
     const reset = setTimeout(() => {
       resets.delete(reset);
 
-      if (event.defaultPrevented || !input.isConnected || input !== control) return;
+      if (event.defaultPrevented || !input.isConnected || input !== control) {
+        return;
+      }
 
       value = formatValue(input.valueAsNumber);
     }, 0);
@@ -439,7 +461,9 @@
   }
 
   function formatValue(next: number | undefined) {
-    if (!sourceAlignment) return normalizeSliderValue(next, options);
+    if (!sourceAlignment) {
+      return normalizeSliderValue(next, options);
+    }
     return offset.format(typeof next === 'number' && Number.isFinite(next) ? next : options.min);
   }
 
@@ -457,7 +481,9 @@
   }
 
   function handleMark(point: number) {
-    if (resolvedDisabled) return;
+    if (resolvedDisabled) {
+      return;
+    }
     begin('native');
     publish(formatValue(point));
     finish();

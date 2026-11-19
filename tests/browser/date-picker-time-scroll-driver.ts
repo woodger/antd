@@ -19,7 +19,9 @@ export async function settleTimeScroll(page: Page) {
     const actual = await readTimeScroll(page);
     const encoded = JSON.stringify(actual);
     stable = encoded === previous ? stable + 1 : 0;
-    if (stable >= 4) return actual;
+    if (stable >= 4) {
+      return actual;
+    }
     previous = encoded;
   }
   throw Error('Actual compact Native scroll owner did not settle');
@@ -41,7 +43,9 @@ export async function actTimeScroll(page: Page, action: ScrollAction, index: num
   }
   if (action.type !== 'wheel-to-top') {
     return page.evaluate(action => {
-      if (!('value' in action)) throw Error('Authored owner action value is absent');
+      if (!('value' in action)) {
+        throw Error('Authored owner action value is absent');
+      }
       return window.nativeTimeScroll.activateOwnerControl(
         action.type.replace('owner-', ''), action.value
       );
@@ -58,8 +62,9 @@ export async function actTimeScroll(page: Page, action: ScrollAction, index: num
   await column.evaluate(node => {
     node.addEventListener('wheel', event => {
       const wheel = event as WheelEvent;
-      if (wheel.target === null || wheel.currentTarget === null)
+      if (wheel.target === null || wheel.currentTarget === null) {
         throw Error('Actual wheel targets are unavailable');
+      }
       window.nativeTimeScrollObservation.wheels.push({
         actionIndex: window.nativeTimeScroll.read().actionIndex,
         type: wheel.type,

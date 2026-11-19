@@ -18,7 +18,9 @@ export function getAvatarScale(textWidth: number, containerWidth: number, gap = 
   if (!Number.isFinite(textWidth)
     || !Number.isFinite(containerWidth)
     || textWidth <= 0
-    || containerWidth <= 0) return 1;
+    || containerWidth <= 0) {
+    return 1;
+  }
 
   const available = containerWidth - normalizeAvatarGap(gap) * 2;
   return available > 0 ? Math.min(1, available / textWidth) : 1;

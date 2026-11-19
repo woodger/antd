@@ -187,7 +187,9 @@ test('responsive Avatar releases media listeners after remounts and unmount', as
     const original = window.matchMedia.bind(window);
     window.matchMedia = query => {
       const media = original(query);
-      if (!query.includes('width')) return media;
+      if (!query.includes('width')) {
+        return media;
+      }
       // Proxy сохраняет receiver нативного EventTarget.
       media.addEventListener = new Proxy(media.addEventListener, {
         apply(target, receiver, args) {

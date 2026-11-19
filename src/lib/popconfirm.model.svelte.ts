@@ -10,7 +10,9 @@ export function createPopconfirmAction(getSession: () => object | null, handlers
   }
 
   function finish(task: NonNullable<typeof active>, success: boolean, error?: unknown) {
-    if (!isCurrent(task)) return;
+    if (!isCurrent(task)) {
+      return;
+    }
 
     active = undefined;
     if (success)
@@ -25,7 +27,9 @@ export function createPopconfirmAction(getSession: () => object | null, handlers
     run(action: () => void | PromiseLike<unknown>): void | Promise<void> {
       const session = getSession();
 
-      if (disposed || !session || active && isCurrent(active)) return;
+      if (disposed || !session || active && isCurrent(active)) {
+        return;
+      }
 
       const task = { session };
       active = task;

@@ -27,7 +27,9 @@
   }
 
   function hotkey(event: KeyboardEvent) {
-    if (!event.ctrlKey || !event.altKey || !event.shiftKey) return;
+    if (!event.ctrlKey || !event.altKey || !event.shiftKey) {
+      return;
+    }
     if (event.key === 'E') {
       event.preventDefault();
       mounted = !mounted;

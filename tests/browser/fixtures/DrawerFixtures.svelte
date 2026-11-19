@@ -41,7 +41,9 @@
   let submissions = $state(0);
 
   function hotkey(event: KeyboardEvent) {
-    if (!event.ctrlKey || !event.altKey) return;
+    if (!event.ctrlKey || !event.altKey) {
+      return;
+    }
 
     if (event.key === 'o') {
       event.preventDefault();

@@ -49,14 +49,20 @@ export class AggregationColor {
   }
 
   toCssString(): string {
-    if (!this.colors) return this.metaColor.toRgbString();
+    if (!this.colors) {
+      return this.metaColor.toRgbString();
+    }
     const colors = this.colors.map(entry => `${entry.color.toRgbString()} ${entry.percent}%`);
     return `linear-gradient(90deg, ${colors.join(', ')})`;
   }
 
   equals(color: AggregationColor | null): boolean {
-    if (!color || this.isGradient() !== color.isGradient()) return false;
-    if (!this.isGradient()) return this.toHexString() === color.toHexString();
+    if (!color || this.isGradient() !== color.isGradient()) {
+      return false;
+    }
+    if (!this.isGradient()) {
+      return this.toHexString() === color.toHexString();
+    }
     return this.colors!.length === color.colors!.length
       && this.colors!.every((entry, index) => entry.percent === color.colors![index].percent
         && entry.color.equals(color.colors![index].color));

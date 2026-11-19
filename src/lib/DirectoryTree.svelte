@@ -40,7 +40,9 @@
     const index = buildTreeEntities(treeData, fieldNames);
     const keys = expandedKeys ?? defaultExpandedKeys;
 
-    if (defaultExpandAll) return index.ordered.map(entry => entry.key);
+    if (defaultExpandAll) {
+      return index.ordered.map(entry => entry.key);
+    }
     return defaultExpandParent ? expandTreeParents(keys, index) : [...keys];
   }));
   let actualSelected = $derived(selectedKeys ?? internalSelected);

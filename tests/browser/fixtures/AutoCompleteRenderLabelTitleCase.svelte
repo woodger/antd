@@ -46,11 +46,13 @@
     (value: string, option: unknown) => event('select', value, option)
   );
   const renderers = new Map<string, (info: SelectLabelRenderInfo<string>) => string | number | null | undefined>();
-  for (const kind of ['string', 'zero', 'null', 'undefined']) renderers.set(kind, callback('renderer-' + kind, info => {
-    const result = kind === 'string' ? 'Display ' + info.value : kind === 'zero' ? 0 : kind === 'null' ? null : undefined;
-    return recorder.record('labelRender', 'own', info, result, { renderer: kind,
-      resultDescription: result === undefined ? { $: 'undefined' } : result });
-  }));
+  for (const kind of ['string', 'zero', 'null', 'undefined']) {
+    renderers.set(kind, callback('renderer-' + kind, info => {
+      const result = kind === 'string' ? 'Display ' + info.value : kind === 'zero' ? 0 : kind === 'null' ? null : undefined;
+      return recorder.record('labelRender', 'own', info, result, { renderer: kind,
+        resultDescription: result === undefined ? { $: 'undefined' } : result });
+    }));
+  }
   recorder.register(child, { node: 'label-title-custom-input' });
   function registerChild(node: HTMLInputElement, register: AutoCompleteInput['register']) {
     const registration = register(node);
@@ -79,9 +81,13 @@
   }
   export function readRefs() { return { control, root, editor, child: childNode }; }
   export function read() {
-    if (alive) lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
-      authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider) };
-    if (!lastAuthored) throw Error('Read the actual live label/title owner before disposing it');
+    if (alive) {
+      lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
+        authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider) };
+    }
+    if (!lastAuthored) {
+      throw Error('Read the actual live label/title owner before disposing it');
+    }
     return { renderer, open, model: 'a', alive, events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls],
       optionTitleOwnKey: Object.hasOwn(options[0], 'title'), optionOwnKeys: Reflect.ownKeys(options[0]), ...lastAuthored };
   }

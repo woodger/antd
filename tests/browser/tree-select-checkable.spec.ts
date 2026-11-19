@@ -20,7 +20,9 @@ async function settle(page: Page) {
     const projection = await page.evaluate(readTreeSelectCheckable);
     const key = JSON.stringify(projection);
     stable = key === previous ? stable + 1 : 0;
-    if (stable >= 2) return projection;
+    if (stable >= 2) {
+      return projection;
+    }
     previous = key;
   }
   throw Error('TreeSelect checkable DOM did not settle');
@@ -48,8 +50,10 @@ test('pins independent Source content, diagnostics and public focus-owner eviden
     ['ant-design-tree-select-checkable-reference.json', 'dce396087d3bf67fd35e33470eef6f856e810557ad8cc8d003588a3a3b7c542a'],
     ['ant-design-tree-select-checkable-diagnostic-reference.json', 'e89a80123c4fa24d8760ca76a48181ff478d638c0986f9cc385c3545f3e0dc09'],
     ['ant-design-tree-select-checkable-native-reference.json', 'a88b6a68569cc20aebc9d3626892ff64521fb1ce62c3060ced56cba32e847b72']
-  ]) expect(createHash('sha256').update(readFileSync(new URL('./fixtures/' + file, import.meta.url)))
-    .digest('hex')).toBe(sha256);
+  ]) {
+    expect(createHash('sha256').update(readFileSync(new URL('./fixtures/' + file, import.meta.url)))
+      .digest('hex')).toBe(sha256);
+  }
   expect(reference.cases).toHaveLength(37);
   expect(reference.cases.reduce((sum, entry) => sum + entry.steps.length, 0)).toBe(194);
   expect(diagnostic.cases).toHaveLength(1);

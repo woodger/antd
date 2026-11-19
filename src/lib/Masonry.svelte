@@ -127,18 +127,21 @@
     const restore = host ? captureMasonryFocus(host) : undefined;
     entries = next;
 
-    if (restore)
+    if (restore) {
       void tick().then(() => {
         if (nativeElement === host)
           restore();
       });
+    }
   }
 
   $effect(() => { mergedItems = items ?? []; });
   $effect(() => breakpoint.connect(window, mediaQueries));
 
   $effect(() => {
-    if (!nativeElement) return;
+    if (!nativeElement) {
+      return;
+    }
 
     const controller = createMasonryRuntime<Data>(nativeElement, value => { heights = value; });
     runtime = controller;
@@ -168,7 +171,9 @@
     const next = positioned;
 
     untrack(() => {
-      if (!onLayoutChange || !next.every(entry => entry.position)) return;
+      if (!onLayoutChange || !next.every(entry => entry.position)) {
+        return;
+      }
 
       const pairs = next.map(entry => [entry.item, entry.position!.column] as const);
 

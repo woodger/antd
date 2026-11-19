@@ -131,8 +131,9 @@ test(
       'Escape closes Drawer',
       'Backdrop closes Drawer',
       'Show Drawer close button'
-    ])
+    ]) {
       await page.getByLabel(label, { exact: true }).uncheck();
+    }
     await open(page);
 
     await expect(dialog(page).getByRole('button', { name: 'Закрыть', exact: true })).toHaveCount(0);

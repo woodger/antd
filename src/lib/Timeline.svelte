@@ -135,8 +135,9 @@
       )
       && root.ownerDocument.defaultView!.getComputedStyle(
         focused
-      ).visibility === 'visible')
+      ).visibility === 'visible') {
       focused.focus({ preventScroll: true });
+    }
   });
 </script>
 

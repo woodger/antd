@@ -4,7 +4,9 @@ import type { TreeMotionConfig, TreeMotionEvent, TreeMotionName } from './tree-m
 
 /** Единственный изменившийся expanded key; несколько изменений обновляются без motion. */
 export function findTreeMotionKey(previous: readonly TreeKey[], next: readonly TreeKey[]) {
-  if (Math.abs(previous.length - next.length) !== 1) return null;
+  if (Math.abs(previous.length - next.length) !== 1) {
+    return null;
+  }
   const show = previous.length < next.length;
   const smaller = new Set(show ? previous : next);
   const difference = (show ? next : previous).filter(key => !smaller.has(key));
@@ -53,8 +55,12 @@ export function getTreeMotionClassName(
   status: 'appear' | 'enter' | 'leave',
   step: 'prepare' | 'start' | 'active'
 ) {
-  if (!name) return undefined;
-  if (typeof name === 'string') return `${name}-${status} ${name}-${status}-${step} ${name}`;
+  if (!name) {
+    return undefined;
+  }
+  if (typeof name === 'string') {
+    return `${name}-${status} ${name}-${status}-${step} ${name}`;
+  }
   const suffix = `${status}${step[0].toUpperCase()}${step.slice(1)}` as keyof typeof name;
   return [name[status], name[suffix]].filter(Boolean).join(' ') || undefined;
 }

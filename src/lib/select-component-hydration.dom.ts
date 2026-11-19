@@ -10,15 +10,23 @@ const booleanAttributes = new Set(['autofocus', 'disabled', 'formnovalidate', 'h
 const controlled = new Set(['value', 'defaultvalue', 'checked', 'defaultchecked']);
 
 function classValue(value: unknown): unknown {
-  if (typeof value !== 'object') return value;
-  if (!value) return '';
+  if (typeof value !== 'object') {
+    return value;
+  }
+  if (!value) {
+    return '';
+  }
   const output: string[] = [];
   const append = (item: unknown) => {
-    if (!item) return;
+    if (!item) {
+      return;
+    }
     if (typeof item === 'string' || typeof item === 'number') output.push(String(item));
     else if (Array.isArray(item)) item.forEach(append);
     else if (typeof item === 'object') {
-      for (const key in item) if (Reflect.get(item, key)) output.push(key);
+      for (const key in item) {
+        if (Reflect.get(item, key)) output.push(key);
+      }
     }
   };
   append(value);
@@ -26,7 +34,9 @@ function classValue(value: unknown): unknown {
 }
 
 function eventName(name: string) {
-  if (!name.startsWith('on') || name.length < 3) return;
+  if (!name.startsWith('on') || name.length < 3) {
+    return;
+  }
   let type = name.slice(2);
   const capture = type.endsWith('capture') && type !== 'gotpointercapture' && type !== 'lostpointercapture';
   if (capture) type = type.slice(0, -7);
@@ -44,7 +54,9 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
 
   function event(name: string, value: unknown) {
     const descriptor = eventName(name);
-    if (!descriptor) return;
+    if (!descriptor) {
+      return;
+    }
     const current = listeners.get(name);
     if (typeof value !== 'function') {
       if (current) element.removeEventListener(current.type, current.listener, current.capture);
@@ -65,7 +77,9 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
 
   function attribute(name: string, value: unknown) {
     const normalized = name.toLowerCase();
-    if (normalized === 'style' || controlled.has(normalized)) return;
+    if (normalized === 'style' || controlled.has(normalized)) {
+      return;
+    }
     if (eventName(name)) {
       event(name, value);
       return;
@@ -79,11 +93,15 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       }
       return;
     }
-    if (typeof value === 'function') return;
+    if (typeof value === 'function') {
+      return;
+    }
     const boolean = booleanAttributes.has(normalized) && !(normalized === 'hidden' && value === 'until-found');
     if (value == null || boolean && !value && value !== '') element.removeAttribute(normalized);
-    else element.setAttribute(normalized, boolean ? '' : normalized === 'translate' && typeof value === 'boolean'
-      ? value ? 'yes' : 'no' : String(value));
+    else {
+      element.setAttribute(normalized, boolean ? '' : normalized === 'translate' && typeof value === 'boolean'
+        ? value ? 'yes' : 'no' : String(value));
+    }
   }
 
   // CSS/обычные SSR attrs сохраняются; class сохраняет прежнюю Svelte-нормализацию.
@@ -98,8 +116,9 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       if (Object.hasOwn(attributes, 'value') || Object.hasOwn(attributes, 'defaultValue') || Object.hasOwn(
         attributes,
         'defaultvalue'
-      ))
+      )) {
         input.defaultValue = String(initialValue(attributes));
+      }
       // React postMountWrapper сохраняет dirty value; checked синхронизирует отдельно.
       const name = input.name;
       if (name) input.name = '';
@@ -149,7 +168,9 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
     /** Вызывается только после initial pass; первый reactive replay пропускает renderer. */
     update(next: Attributes, syncTextareaBody = next.value != null) {
       const changes = { ...next };
-      for (const name of Object.keys(previous)) if (!Object.hasOwn(next, name)) changes[name] = null;
+      for (const name of Object.keys(previous)) {
+        if (!Object.hasOwn(next, name)) changes[name] = null;
+      }
       // Как DOM input spread, type меняется до value и остальных attrs.
       if (!Object.is(previous.type, changes.type)) attribute('type', changes.type);
       if (!Object.is(previous.class, changes.class)) attribute('class', changes.class);
@@ -168,11 +189,13 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       previous = { ...changes };
     },
     destroy() {
-      for (const record of listeners.values()) element.removeEventListener(
-        record.type,
-        record.listener,
-        record.capture
-      );
+      for (const record of listeners.values()) {
+        element.removeEventListener(
+          record.type,
+          record.listener,
+          record.capture
+        );
+      }
       listeners.clear();
     }
   };

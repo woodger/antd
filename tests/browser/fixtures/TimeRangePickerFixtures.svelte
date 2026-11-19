@@ -79,7 +79,9 @@
   const refIdentities = new WeakMap<object, number>();
   let nextRefIdentity = 0;
   function refIdentity(value: object | undefined) {
-    if (!value) return 'none';
+    if (!value) {
+      return 'none';
+    }
     if (!refIdentities.has(value)) refIdentities.set(value, ++nextRefIdentity);
     return refIdentities.get(value)!;
   }

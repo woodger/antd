@@ -20,7 +20,9 @@ export function snapshotStepsPrefix() {
         slots: Object.fromEntries(Object.entries(selectors).map(([key, selector]) => {
           const node = key === 'root' ? root
             : key === 'item' ? item : item.querySelector(selector!);
-          if (!node) return [key, null];
+          if (!node) {
+            return [key, null];
+          }
           const css = getComputedStyle(node);
 
           return [key, {

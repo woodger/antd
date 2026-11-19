@@ -47,11 +47,15 @@
 
   $effect(() => {
     const node = nativeElement;
-    if (node) return connectFeedbackFocus(node);
+    if (node) {
+      return connectFeedbackFocus(node);
+    }
   });
 
   function handleClick(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
-    if (blocked || event.defaultPrevented) return;
+    if (blocked || event.defaultPrevented) {
+      return;
+    }
 
     // Callback может синхронно удалить владельца вместе с его props.
     const click = onclick ?? onClick;
@@ -66,7 +70,9 @@
     const nextChecked = !checked;
     const change = onChange;
     (onkeydown ?? onKeyDown)?.(event);
-    if (disabled || event.defaultPrevented) return;
+    if (disabled || event.defaultPrevented) {
+      return;
+    }
 
     if (event.key === ' ') {
       event.preventDefault();

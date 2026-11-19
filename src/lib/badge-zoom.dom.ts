@@ -40,7 +40,9 @@ export function createBadgeZoom(
   function nextFrame(callback: () => void) {
     const current = revision;
     frame = view.requestAnimationFrame(() => {
-      if (!alive || current !== revision) return;
+      if (!alive || current !== revision) {
+        return;
+      }
 
       frame = view.requestAnimationFrame(() => {
         frame = undefined;
@@ -66,7 +68,9 @@ export function createBadgeZoom(
 
   function handleEnd(event: Event) {
     if (!alive || !status || !step || step === 'start' || ending
-      || event.target !== getElement()) return;
+      || event.target !== getElement()) {
+      return;
+    }
 
     if (step === 'activated') {
       finish();
@@ -87,7 +91,9 @@ export function createBadgeZoom(
 
   return {
     sync(next: boolean, enabled: boolean, normal = true) {
-      if (!alive) return;
+      if (!alive) {
+        return;
+      }
       visible = next;
       if (!normal) {
         cancelFrame();
@@ -102,7 +108,9 @@ export function createBadgeZoom(
         update();
         return;
       }
-      if (previous === next) return;
+      if (previous === next) {
+        return;
+      }
 
       const initial = previous === undefined;
       previous = next;

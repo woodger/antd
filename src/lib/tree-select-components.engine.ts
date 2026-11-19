@@ -24,7 +24,9 @@ export function mergeTreeSelectComponentAttributes<Attributes extends object>(
     Reflect.set(target, key, (...args: unknown[]) => {
       const event = args[0];
       const node = event && typeof event === 'object' && 'currentTarget' in event ? event.currentTarget : undefined;
-      if (node && typeof node === 'object' && 'isConnected' in node && node.isConnected === false) return;
+      if (node && typeof node === 'object' && 'isConnected' in node && node.isConnected === false) {
+        return;
+      }
       callback(...args);
     });
   }
@@ -35,7 +37,9 @@ export function mergeTreeSelectComponentAttributes<Attributes extends object>(
 export function treeSelectNativeKeyCancelled<EventType extends Event>(
   event: EventType, callback: ((event: EventType) => void) | null | undefined
 ) {
-  if (!callback) return false;
+  if (!callback) {
+    return false;
+  }
   if (!event.defaultPrevented) {
     callback(event);
     return event.defaultPrevented;

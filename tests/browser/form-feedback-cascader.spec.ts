@@ -12,19 +12,23 @@ async function mount(page: Page, id: string) {
   await page.goto('/?fixture=form-feedback-cascader');
   await page.getByRole('combobox', { name: 'Cascader feedback sample', exact: true }).selectOption(id);
   await expect(page.locator('[data-feedback-case]')).toHaveAttribute('data-feedback-case', id);
-  if (id !== 'custom-trigger' && id !== 'standalone-panel') await expect(page.locator('[data-feedback-ref]')).toHaveAttribute(
-    'data-feedback-ref',
-    'true'
-  );
+  if (id !== 'custom-trigger' && id !== 'standalone-panel') {
+    await expect(page.locator('[data-feedback-ref]')).toHaveAttribute(
+      'data-feedback-ref',
+      'true'
+    );
+  }
   await page.mouse.move(0, 0);
 }
 async function apply(page: Page, action: FeedbackAction, index: number) {
   if (action === 'focus') await editor(page).focus();
   else if (action === 'open') await editor(page).click();
-  else if (action === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside feedback', exact: true }
-  ).click();
+  else if (action === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside feedback', exact: true }
+    ).click();
+  }
   else if (action === 'hover') await page.locator('[data-feedback-control]').hover();
   else if (action === 'search') await editor(page).fill('Beta');
   else if (action === 'clear') await page.locator('[data-feedback-control] button').click();

@@ -26,7 +26,9 @@ export function readUploadTriggerMotion(prefix: string) {
     buttons: [...node.querySelectorAll('button')].map(button => button.textContent),
     animations: node.getAnimations().map(animation => {
       const effect = animation.effect;
-      if (!(effect instanceof KeyframeEffect)) throw Error('Expected a DOM keyframe effect');
+      if (!(effect instanceof KeyframeEffect)) {
+        throw Error('Expected a DOM keyframe effect');
+      }
 
       return {
         kind: animation.constructor.name,

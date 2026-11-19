@@ -20,10 +20,12 @@ assert.deepEqual(metadata.factProjection.leaves, factLeaves);
 assert.deepEqual(metadata.factProjection.pointPaths, pointPaths);
 assert.equal(metadata.serialization.originalStoredGzipBytesCopiedExactly, true);
 assert.equal(metadata.serialization.IDsRenumbered, false);
-for (const field of ['rawFieldsDropped', 'rawFieldsRewritten', 'normalizedFields']) assert.deepEqual(
-  metadata.serialization[field],
-  []
-);
+for (const field of ['rawFieldsDropped', 'rawFieldsRewritten', 'normalizedFields']) {
+  assert.deepEqual(
+    metadata.serialization[field],
+    []
+  );
+}
 export function readMaskHydrationPrefixSourceManifest() { return structuredClone(metadata); }
 export function readMaskHydrationPrefixSourceEvidence(name) {
   const entry = metadata.documents[name];
@@ -93,7 +95,9 @@ function rawProfile(entry) {
 }
 function verifyFacts(entry) {
   const key = entry.variant + '/' + entry.id;
-  if (verified.has(key)) return verified.get(key);
+  if (verified.has(key)) {
+    return verified.get(key);
+  }
   const raw = rawProfile(entry), authored = protocol.proposal.profiles.find(row => row.id === entry.id);
   assert.equal(authored.formatProfile, 'string');
   const facts = index.profiles.find(row => row.id === entry.id && row.variant === entry.variant);
@@ -150,10 +154,12 @@ export function verifyMaskHydrationPrefixSourceIntegrity() {
     assert.deepEqual(manifest.errors, []);
     assert.deepEqual(manifest.captureIssues, []);
     assert.equal(manifest.fatal, null);
-    for (const reference of manifest.cases) assert.deepEqual(
-      reference.rawJSONPart,
-      entryFor(reference.id, variant).original
-    );
+    for (const reference of manifest.cases) {
+      assert.deepEqual(
+        reference.rawJSONPart,
+        entryFor(reference.id, variant).original
+      );
+    }
   }
   for (const entry of metadata.profiles) verifyFacts(entry);
   return { sourceOnly: true, profiles: 4, labelsPerProfile: 10, verifiedFacts: 40,

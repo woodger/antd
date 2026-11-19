@@ -1,6 +1,8 @@
 export function readTreeSemantics(prefix: string) {
   function metric(node: Element | null) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const css = getComputedStyle(node);
     return {
       classes: [...node.classList].filter(name =>

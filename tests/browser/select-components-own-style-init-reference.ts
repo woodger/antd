@@ -181,25 +181,31 @@ function readCanonical<Value>(mode: OwnStyleInitMode): OwnStyleInitSource<Value>
 let csr: OwnStyleInitSource<OwnStyleInitCase> | undefined, hydrate: OwnStyleInitSource<OwnStyleInitCase> | undefined;
 let ssr: OwnStyleInitSource<OwnStyleInitSSRCase> | undefined;
 export function readSelectComponentsOwnStyleInitSSR(): OwnStyleInitSource<OwnStyleInitSSRCase> {
-  if (ssr) return ssr;
+  if (ssr) {
+    return ssr;
+  }
   const source = readCanonical<OwnStyleInitSSRCase>('ssr');
   assert.deepEqual(
     source.cases.map(value => value.id),
     selectOwnStyleInitSamples.map(sample => sample.id)
   );
-  for (const value of source.cases) for (const state of Object.values(value.server)) {
-    assert.equal(state.htmlSha256, hash(Buffer.from(state.rawHtml)));
-    assert(Object.values(state.refs).every(Boolean));
-    assert.deepEqual(state.resources, { timers: 0, frames: 0, measurements: 0, microtasks: 0 });
-    assert.deepEqual(state.state.events, []);
-    assert.deepEqual(state.state.rawEvents, []);
-    assert.deepEqual(state.state.lifecycle, []);
+  for (const value of source.cases) {
+    for (const state of Object.values(value.server)) {
+      assert.equal(state.htmlSha256, hash(Buffer.from(state.rawHtml)));
+      assert(Object.values(state.refs).every(Boolean));
+      assert.deepEqual(state.resources, { timers: 0, frames: 0, measurements: 0, microtasks: 0 });
+      assert.deepEqual(state.state.events, []);
+      assert.deepEqual(state.state.rawEvents, []);
+      assert.deepEqual(state.state.lifecycle, []);
+    }
   }
   return ssr = source;
 }
 export function readSelectComponentsOwnStyleInitSource(mode: 'csr' | 'hydrate'): OwnStyleInitSource<OwnStyleInitCase> {
   const cached = mode === 'csr' ? csr : hydrate;
-  if (cached) return cached;
+  if (cached) {
+    return cached;
+  }
   const source = readCanonical<OwnStyleInitCase>(mode), paths = mode === 'csr' ? ['csr'] : selectOwnStyleInitEntryPaths.filter(value => value !== 'csr');
   assert.deepEqual(
     source.cases.map(value => [value.id, value.entryPath]),

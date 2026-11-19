@@ -20,17 +20,23 @@ async function act(page: Page, action: TreeSelectSuffixLayoutAction) {
   }
   else if (action.type === 'fill') await field.fill(action.text);
   else if (action.type === 'focus') await field.focus();
-  else if (action.type === 'caret') await field.evaluate((node, range) => {
-    if (node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement) node.setSelectionRange(
-      range.start,
-      range.end
-    );
-    else throw new TypeError('Suffix layout editor must be an input or textarea');
-  }, action);
-  else if (action.type === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside suffix layout', exact: true }
-  ).click();
+  else if (action.type === 'caret') {
+    await field.evaluate((node, range) => {
+      if (node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement) {
+        node.setSelectionRange(
+          range.start,
+          range.end
+        );
+      }
+      else throw new TypeError('Suffix layout editor must be an input or textarea');
+    }, action);
+  }
+  else if (action.type === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside suffix layout', exact: true }
+    ).click();
+  }
   else if (action.type === 'click') {
     const point = await page.evaluate(treeSelectSuffixLayoutPoint, action.point);
     await page.mouse.click(point.x, point.y);

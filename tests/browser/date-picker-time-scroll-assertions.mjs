@@ -28,8 +28,10 @@ function sameDate(actual, source) {
   const s = source.raw.objects.find(node => node.id === source.raw.root.ref);
   const extras = a.ownProperties.filter(row => !s.ownProperties.some(other => other.key === row.key));
   assert(extras.every(row => row.key === '$u' && row.valueType === 'undefined'));
-  if (extras.length) assert.deepEqual(a.properties.find(row => row.key === '$u').value,
-    { $: 'undefined' }, 'Actual UTC plugin own field stays undefined');
+  if (extras.length) {
+    assert.deepEqual(a.properties.find(row => row.key === '$u').value,
+      { $: 'undefined' }, 'Actual UTC plugin own field stays undefined');
+  }
   assert(s.ownProperties.every(row => a.ownProperties.some(other => other.key === row.key)));
 }
 function verifyCallbacks(actual, source) {

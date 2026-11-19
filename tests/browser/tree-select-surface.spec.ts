@@ -30,10 +30,12 @@ async function act(page: Page, action: TreeSelectSurfaceAction) {
     { exact: true }
   ).click();
   else if (action === 'draft') await draft(page).fill('Keep popup draft');
-  else if (action === 'popup-background') await page.locator('[data-surface-popup]').click({ position: {
-    x: 3,
-    y: 3
-  } });
+  else if (action === 'popup-background') {
+    await page.locator('[data-surface-popup]').click({ position: {
+      x: 3,
+      y: 3
+    } });
+  }
   else if (action === 'enter' || action === 'escape') await editor(page).press(action === 'enter' ? 'Enter' : 'Escape');
   else if (action === 'toggle-menu') await page.getByRole('button', { name: 'Toggle menu' }).click();
 }

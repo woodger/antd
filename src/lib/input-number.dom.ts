@@ -4,10 +4,14 @@ export function focusInputNumber(
   input: HTMLInputElement | undefined,
   options?: InputNumberFocusOptions
 ) {
-  if (!input) return;
+  if (!input) {
+    return;
+  }
 
   input.focus(options);
-  if (input.selectionStart === null) return;
+  if (input.selectionStart === null) {
+    return;
+  }
 
   const length = input.value.length;
   if (options?.cursor === 'start') input.setSelectionRange(0, 0);
@@ -20,8 +24,12 @@ export function createInputNumberRef(input: HTMLInputElement, root: HTMLElement)
 
   return new Proxy(input, {
     get(target, property) {
-      if (property === 'nativeElement') return root;
-      if (property === 'focus') return focus;
+      if (property === 'nativeElement') {
+        return root;
+      }
+      if (property === 'focus') {
+        return focus;
+      }
 
       const value = Reflect.get(target, property, target);
 
@@ -35,7 +43,9 @@ export function createInputNumberRef(input: HTMLInputElement, root: HTMLElement)
 }
 
 export function recordInputNumberCursor(input: HTMLInputElement | undefined) {
-  if (!input || input.selectionStart === null || input.selectionEnd === null) return;
+  if (!input || input.selectionStart === null || input.selectionEnd === null) {
+    return;
+  }
 
   return {
     before: input.value.substring(0, input.selectionStart),
@@ -48,7 +58,9 @@ export function restoreInputNumberCursor(
   input: HTMLInputElement | undefined,
   cursor: ReturnType<typeof recordInputNumberCursor>
 ) {
-  if (!input || !cursor || input.selectionStart === null) return;
+  if (!input || !cursor || input.selectionStart === null) {
+    return;
+  }
 
   const value = input.value;
   let start = value.length;
@@ -83,7 +95,9 @@ export function connectInputNumberStep(element: HTMLButtonElement, onStep: () =>
   }
 
   function delayedStop() {
-    if (!active) return;
+    if (!active) {
+      return;
+    }
 
     const frame = view.requestAnimationFrame(() => {
       frames.delete(frame);
@@ -98,7 +112,9 @@ export function connectInputNumberStep(element: HTMLButtonElement, onStep: () =>
   }
 
   function down(event: MouseEvent, pointerId?: number) {
-    if (event.button !== 0 || element.disabled) return;
+    if (event.button !== 0 || element.disabled) {
+      return;
+    }
 
     event.preventDefault();
     stop();

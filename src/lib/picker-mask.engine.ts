@@ -46,14 +46,18 @@ export function pickerMaskSelection(spec: PickerMaskSpec, index: number | null,
 /** Source checks literal positions, not digits or exact total length. */
 export function pickerMaskMatches(spec: PickerMaskSpec, text: string): boolean {
   for (let index = 0; index < spec.pattern.length; index++) {
-    if (!text[index] || spec.pattern[index] !== '顧' && spec.pattern[index] !== text[index]) return false;
+    if (!text[index] || spec.pattern[index] !== '顧' && spec.pattern[index] !== text[index]) {
+      return false;
+    }
   }
   return true;
 }
 export function pickerMaskIndexAt(spec: PickerMaskSpec, anchor: number): number {
   let distance = Number.MAX_SAFE_INTEGER, selected = 0;
   for (const [index, cell] of spec.segments.entries()) {
-    if (anchor >= cell.start && anchor <= cell.end) return index;
+    if (anchor >= cell.start && anchor <= cell.end) {
+      return index;
+    }
     const next = Math.min(Math.abs(anchor - cell.start), Math.abs(anchor - cell.end));
     if (next < distance) {
       distance = next;
@@ -81,10 +85,14 @@ export function editPickerMask(spec: PickerMaskSpec, state: PickerMaskState,
   };
   const offset = (amount: number) => {
     const range = pickerMaskRange(token, year);
-    if (!range) throw TypeError('Unsupported Source mask segment range');
+    if (!range) {
+      throw TypeError('Unsupported Source mask segment range');
+    }
     const [first, last, fallback] = range;
     const current = Number(text.slice(start, end));
-    if (Number.isNaN(current)) return String(fallback ? fallback : amount > 0 ? first : last);
+    if (Number.isNaN(current)) {
+      return String(fallback ? fallback : amount > 0 ? first : last);
+    }
     return String(first + (last - first + 1 + current + amount - first) % (last - first + 1));
   };
   switch (key) {
@@ -121,7 +129,9 @@ export function editPickerMask(spec: PickerMaskSpec, state: PickerMaskState,
       cache = '';
     }
   }
-  if (fill !== null) text = (text.slice(0, start) + fill.padStart(size, '0') + text.slice(end))
-    .slice(0, spec.format.length);
+  if (fill !== null) {
+    text = (text.slice(0, start) + fill.padStart(size, '0') + text.slice(end))
+      .slice(0, spec.format.length);
+  }
   return { text, index, cache, filled: fill !== null, syncSelection: true };
 }

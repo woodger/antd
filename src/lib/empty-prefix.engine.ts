@@ -4,7 +4,9 @@ const rootStates = new Set(['', '-normal', '-small', '-rtl']);
 
 /** Variables/marker общие; reset и state rules ограничены своим Empty root. */
 export function getEmptyPrefixCss(prefix: string) {
-  if (prefix === 'ant-empty') return undefined;
+  if (prefix === 'ant-empty') {
+    return undefined;
+  }
 
   return template
     .replace(/\.ant-empty([-\w]*)/g, (_, suffix: string) => suffix === '-css-var'

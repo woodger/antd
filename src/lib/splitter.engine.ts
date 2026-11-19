@@ -50,12 +50,16 @@ function fitSplitterPercentages(sizes: number[], minimums: number[], maximums: n
   const totalMin = mins.reduce((sum, value) => sum + value, 0);
   const totalMax = maxs.reduce((sum, value) => sum + value, 0);
 
-  if (invalid || totalMin > 1 || totalMax < 1) return sizes;
+  if (invalid || totalMin > 1 || totalMax < 1) {
+    return sizes;
+  }
 
   const result = sizes.map((size, index) => Math.min(maxs[index], Math.max(mins[index], size)));
   const total = result.reduce((sum, value) => sum + value, 0);
 
-  if (total === 1) return result;
+  if (total === 1) {
+    return result;
+  }
 
   const spaces = result.map((size, index) => total < 1 ? maxs[index] - size : size - mins[index]);
   const space = spaces.reduce((sum, value) => sum + value, 0);
@@ -81,7 +85,9 @@ export function autoSplitterPercentages(
   const rest = 1 - total;
 
   if (sizes.length && !empty.length && total !== 1) {
-    if (total === 0) return sizes.map(() => 1 / sizes.length);
+    if (total === 0) {
+      return sizes.map(() => 1 / sizes.length);
+    }
 
     const scale = 1 / total;
 
@@ -108,13 +114,15 @@ export function autoSplitterPercentages(
     limitMax = Math.min(limitMax, max);
   }
 
-  if (sumMin > 1 && sumMax < 1)
+  if (sumMin > 1 && sumMax < 1) {
     return sizes.map(size => size === undefined ? 1 / empty.length : size);
+  }
 
   const average = rest / empty.length;
 
-  if (limitMin <= average && average <= limitMax)
+  if (limitMin <= average && average <= limitMax) {
     return sizes.map(size => size === undefined ? average : size);
+  }
 
   const result = [...sizes] as number[];
   let remain = rest - sumMin;
@@ -185,14 +193,22 @@ function getVisibility(
   next: { collapsible: boolean; mode: SplitterIconVisibility; }
 ): SplitterIconVisibility {
   if (previous.collapsible && next.collapsible) {
-    if (previous.mode === true || next.mode === true) return true;
-    if (previous.mode === 'auto' || next.mode === 'auto') return 'auto';
+    if (previous.mode === true || next.mode === true) {
+      return true;
+    }
+    if (previous.mode === 'auto' || next.mode === 'auto') {
+      return 'auto';
+    }
 
     return false;
   }
 
-  if (previous.collapsible) return previous.mode;
-  if (next.collapsible) return next.mode;
+  if (previous.collapsible) {
+    return previous.mode;
+  }
+  if (next.collapsible) {
+    return next.mode;
+  }
 
   return false;
 }

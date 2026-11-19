@@ -69,7 +69,9 @@ export function connectCarouselDOM(
 
   function adaptHeight() {
     const { props, state } = read();
-    if (!props.adaptiveHeight) return;
+    if (!props.adaptiveHeight) {
+      return;
+    }
     const slide = list.querySelector<HTMLElement>(`[data-index="${state.currentSlide}"]`);
     list.style.height = `${slide?.offsetHeight ?? 0}px`;
   }
@@ -81,13 +83,17 @@ export function connectCarouselDOM(
   function handleFocus(event: FocusEvent) {
     const target = event.target;
     if (read().props.pauseOnFocus && target instanceof HTMLElement
-      && target.classList.contains('slick-slide')) callbacks.focus();
+      && target.classList.contains('slick-slide')) {
+      callbacks.focus();
+    }
   }
 
   function handleBlur(event: FocusEvent) {
     const target = event.target;
     if (read().props.pauseOnFocus && target instanceof HTMLElement
-      && target.classList.contains('slick-slide')) callbacks.blur();
+      && target.classList.contains('slick-slide')) {
+      callbacks.blur();
+    }
   }
 
   const observer = typeof view.ResizeObserver === 'function' ? new view.ResizeObserver(() => {

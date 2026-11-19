@@ -2,7 +2,9 @@ export function snapshotOverlayColors(component: string) {
   const prefix = component === 'tooltip' || component === 'slider' ? 'ant-tooltip' : 'ant-popover';
   const roots = [...document.querySelectorAll<HTMLElement>(`.${prefix}`)]
     .filter(node => getComputedStyle(node).display !== 'none' && node.getClientRects().length);
-  if (!roots.length) return null;
+  if (!roots.length) {
+    return null;
+  }
 
   const paint = (node: HTMLElement, pseudo?: string) => {
     const style = getComputedStyle(node, pseudo);

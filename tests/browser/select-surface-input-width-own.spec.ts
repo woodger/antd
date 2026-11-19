@@ -35,7 +35,9 @@ for (const original of selectSurfaceInputWidthOwnReference.cases) {
         'surfacecapture',
         { detail }
       ));
-      if (!detail.read || !detail.readRefs || !detail.dispose) throw Error('Actual width ownership capture missing');
+      if (!detail.read || !detail.readRefs || !detail.dispose) {
+        throw Error('Actual width ownership capture missing');
+      }
       Object.assign(globalThis, { raw: { current: { readRefs: detail.readRefs } } });
       return { read: detail.read, readRefs: detail.readRefs, dispose: detail.dispose };
     });
@@ -84,8 +86,10 @@ for (const original of selectSurfaceInputWidthOwnReference.cases) {
     try {
       await verify(original.initial, 'initial');
       for (const [index, step] of original.steps.entries()) {
-        if (step.action.type === 'width-own') await page.evaluate(action => document.querySelector('[data-surface-command]')!
-          .dispatchEvent(new CustomEvent('inputwidthownupdate', { detail: action })), step.action);
+        if (step.action.type === 'width-own') {
+          await page.evaluate(action => document.querySelector('[data-surface-command]')!
+            .dispatchEvent(new CustomEvent('inputwidthownupdate', { detail: action })), step.action);
+        }
         else await actSelectSurface(page, step.action);
         await page.mouse.move(0, 0);
         await verify(step, `${index}/${JSON.stringify(step.action)}`);
@@ -124,8 +128,10 @@ for (const original of selectSurfaceInputWidthOwnReference.cases) {
       const extraRawEvents = disposed.owner.rawEvents.slice(beforeDispose.rawEvents.length);
       expect(extraEvents.map(decodeSelectSurface)).toEqual(focusedWidthUnmount ? [['open', false]] : []);
       expect(extraRawEvents.length).toBe(focusedWidthUnmount ? 1 : 0);
-      if (focusedWidthUnmount) verifySelectSurfaceEventGraph(extraRawEvents[0],
-        createSelectSurfaceRecorder().raw(['open', false]), 'existing connected Native width input unmount close');
+      if (focusedWidthUnmount) {
+        verifySelectSurfaceEventGraph(extraRawEvents[0],
+          createSelectSurfaceRecorder().raw(['open', false]), 'existing connected Native width input unmount close');
+      }
       expect(disposed.owner.calls).toEqual(beforeDispose.calls);
       for (const [name, value] of Object.entries(disposed.refs)) expect(
         value == null,
@@ -173,7 +179,9 @@ test('Select semantic input keeps the Source minimum without an explicit theme',
       'surfacecapture',
       { detail }
     ));
-    if (!detail.read || !detail.readRefs || !detail.dispose) throw Error('Actual minimum width capture missing');
+    if (!detail.read || !detail.readRefs || !detail.dispose) {
+      throw Error('Actual minimum width capture missing');
+    }
     Object.assign(globalThis, { raw: { current: { readRefs: detail.readRefs } } });
     return { read: detail.read, readRefs: detail.readRefs, dispose: detail.dispose };
   });

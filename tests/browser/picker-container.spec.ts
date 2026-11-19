@@ -135,11 +135,13 @@ for (const sample of reference.cases) {
 for (const fallback of [false, true]) {
   test(`picker portals retain empty and invalid variables with CSSOM fallback=${fallback}`,
     async ({ page }) => {
-      if (fallback) await page.evaluate(() => {
-        Object.defineProperty(Element.prototype, 'computedStyleMap', {
-          configurable: true, writable: true, value: undefined
+      if (fallback) {
+        await page.evaluate(() => {
+          Object.defineProperty(Element.prototype, 'computedStyleMap', {
+            configurable: true, writable: true, value: undefined
+          });
         });
-      });
+      }
       await page.getByLabel('Picker reference', { exact: true }).selectOption('date-local-shadow');
       await page.locator('#picker-shadow').evaluate(node => {
         const style = node.ownerDocument.createElement('style');

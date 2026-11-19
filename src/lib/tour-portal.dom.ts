@@ -16,7 +16,9 @@ export function connectTourEscape(view: Window, callback: (event: KeyboardEvent)
       compositionEnded: 0,
       keydown(event) {
         if (event.key !== 'Escape' || event.isComposing
-          || Date.now() - state.compositionEnded < 200) return;
+          || Date.now() - state.compositionEnded < 200) {
+          return;
+        }
         for (const handler of [...state.callbacks].reverse()) handler(event);
       },
       compositionend() {

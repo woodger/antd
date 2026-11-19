@@ -11,26 +11,38 @@ async function act(page: Page, action: TreeSelectInertApiAction, slot: string) {
   const field = page.locator(slot === 'root' ? '[data-inert-api-root]' : '#inert-api-field');
   if (action.type === 'click') await field.click();
   else if (action.type === 'fill') await field.fill(action.text);
-  else if (action.type === 'caret') await field.evaluate((node, range) => {
-    if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) throw Error('Expected native editor');
-    node.setSelectionRange(range.start, range.end);
-  }, action);
-  else if (action.type === 'props') await page.locator('[data-inert-api-command]').evaluate((
-    node,
-    mode
-  ) => {
-    node.dispatchEvent(new CustomEvent('inertapiupdate', { detail: mode }));
-  }, action.mode);
-  else if (action.type === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside inert API', exact: true }
-  ).click();
-  else if (action.type === 'choose') await page.getByText(
-    action.value === 'a' ? 'Alpha' : 'Beta',
-    { exact: true }
-  ).last().click();
-  else if (action.type === 'remove') await page.locator('.ant-select-selection-item').filter({ hasText: action.value === 'a' ? 'Alpha' : 'Beta' })
-    .locator('.ant-select-selection-item-remove').click();
+  else if (action.type === 'caret') {
+    await field.evaluate((node, range) => {
+      if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) {
+        throw Error('Expected native editor');
+      }
+      node.setSelectionRange(range.start, range.end);
+    }, action);
+  }
+  else if (action.type === 'props') {
+    await page.locator('[data-inert-api-command]').evaluate((
+      node,
+      mode
+    ) => {
+      node.dispatchEvent(new CustomEvent('inertapiupdate', { detail: mode }));
+    }, action.mode);
+  }
+  else if (action.type === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside inert API', exact: true }
+    ).click();
+  }
+  else if (action.type === 'choose') {
+    await page.getByText(
+      action.value === 'a' ? 'Alpha' : 'Beta',
+      { exact: true }
+    ).last().click();
+  }
+  else if (action.type === 'remove') {
+    await page.locator('.ant-select-selection-item').filter({ hasText: action.value === 'a' ? 'Alpha' : 'Beta' })
+      .locator('.ant-select-selection-item-remove').click();
+  }
   else throw Error(`Unsupported inherited API action: ${action.type}`);
 }
 

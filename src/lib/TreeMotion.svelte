@@ -23,7 +23,9 @@
 
   $effect(() => {
     const node = root;
-    if (!node) return;
+    if (!node) {
+      return;
+    }
     const controller = createTreeGroupMotion(node, (next, commit) => {
       if (commit) flushSync(() => { motionState = next; });
       else motionState = next;

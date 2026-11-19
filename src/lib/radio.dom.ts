@@ -8,7 +8,9 @@ function sameGroup(input: HTMLInputElement, peer: HTMLInputElement): boolean {
 }
 
 export function syncRadioPeers(input: HTMLInputElement) {
-  if (!input.checked) return;
+  if (!input.checked) {
+    return;
+  }
 
   for (const [peer, update] of radios) {
     if (peer !== input && sameGroup(input, peer))

@@ -92,7 +92,9 @@
     };
   }
   function rememberColumn(column: HTMLUListElement) {
-    if (!scrollMemory || !column.isConnected || column.clientHeight === 0) return;
+    if (!scrollMemory || !column.isConnected || column.clientHeight === 0) {
+      return;
+    }
     const unit = column.getAttribute('aria-label')!, signature = scrollValues.get(column);
     if (signature && signature === readColumn(column).signature)
       scrollMemory.set(unit, { signature, top: column.scrollTop });
@@ -113,7 +115,9 @@
     void columns;
     const host = root;
     const view = host?.ownerDocument.defaultView;
-    if (!view) return;
+    if (!view) {
+      return;
+    }
     const frame = view.requestAnimationFrame(() => {
       const units = new Set<string>();
       for (const column of host.querySelectorAll<HTMLUListElement>(':scope > div > ul')) {
@@ -141,8 +145,9 @@
         scrollValues.set(column, signature);
         rememberColumn(column);
       }
-      for (const unit of scrollMemory?.keys() ?? [])
+      for (const unit of scrollMemory?.keys() ?? []) {
         if (!units.has(unit)) scrollMemory?.delete(unit);
+      }
     });
     return () => view.cancelAnimationFrame(frame);
   });
@@ -156,7 +161,9 @@
       );
   }
   function keyboard(event: KeyboardEvent, target = event.currentTarget as HTMLButtonElement) {
-    if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
+    if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
+      return;
+    }
     const column = cellRender ? (event.currentTarget as HTMLLIElement).parentElement!
       : target.closest('ul')!;
     const buttons = [
@@ -185,17 +192,23 @@
     }
   );
   function blocked(unit: 'hour' | 'minute' | 'second' | 'millisecond', item: number) {
-    if (unit === 'hour') return restrictions.disabledHours?.().includes(item) ?? false;
-    if (unit === 'minute') return restrictions.disabledMinutes?.(value.hour()).includes(item)
-      ?? false;
-    if (unit === 'second') return restrictions
-      .disabledSeconds?.(value
-        .hour(), value
-          .minute())
-      .includes(
-        item
-      )
-      ?? false;
+    if (unit === 'hour') {
+      return restrictions.disabledHours?.().includes(item) ?? false;
+    }
+    if (unit === 'minute') {
+      return restrictions.disabledMinutes?.(value.hour()).includes(item)
+        ?? false;
+    }
+    if (unit === 'second') {
+      return restrictions
+        .disabledSeconds?.(value
+          .hour(), value
+            .minute())
+        .includes(
+          item
+        )
+        ?? false;
+    }
     return restrictions
       .disabledMilliseconds?.(value
         .hour(), value

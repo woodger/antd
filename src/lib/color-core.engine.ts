@@ -6,12 +6,16 @@ export type ColorGenInput<T = ColorCore> = string | number | ColorChannels<'r' |
   | ColorChannels<'h' | 's' | 'b'> | T;
 
 function convertHsb(color: ColorGenInput | FastColor | null | undefined): FastColorInput {
-  if (color instanceof FastColor) return color;
+  if (color instanceof FastColor) {
+    return color;
+  }
   if (color && typeof color === 'object' && 'h' in color && 'b' in color) {
     const { b, ...rest } = color;
     return { ...rest, v: b } as FastColorInput;
   }
-  if (typeof color === 'string' && /hsb/.test(color)) return color.replace(/hsb/, 'hsv');
+  if (typeof color === 'string' && /hsb/.test(color)) {
+    return color.replace(/hsb/, 'hsv');
+  }
   return color as FastColorInput;
 }
 

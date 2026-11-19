@@ -43,7 +43,9 @@ export const selectDataSourceDiagnostic = {
   message: 'Warning: `value` of Option should not use number type when `mode` is `tags` or `combobox`.'
 };
 function guard(condition: unknown, message: string): asserts condition {
-  if (!condition) throw Error(`Invalid frozen Select data reference: ${message}`);
+  if (!condition) {
+    throw Error(`Invalid frozen Select data reference: ${message}`);
+  }
 }
 function load(filename: string, sha256: string, ids: string[], diagnostics: unknown[]) {
   const stored = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));

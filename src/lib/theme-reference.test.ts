@@ -32,8 +32,12 @@ const reference: ThemeReference = JSON.parse(readFileSync(
 
 // JSON не сохраняет undefined, NaN и -0; encoding эталона восстанавливает их без нормализации.
 function decode(value: unknown): unknown {
-  if (!value || typeof value !== 'object') return value;
-  if (Array.isArray(value)) return value.map(decode);
+  if (!value || typeof value !== 'object') {
+    return value;
+  }
+  if (Array.isArray(value)) {
+    return value.map(decode);
+  }
   if ('$type' in value) {
     switch (value.$type) {
       case 'undefined': return undefined;

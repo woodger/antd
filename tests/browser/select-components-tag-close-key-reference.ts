@@ -65,7 +65,9 @@ let cache: Projection | undefined;
  * pure render-call chronology is not claimed to be byte equal or normalized.
  */
 export function readSelectTagCloseKeyCounter(): Projection {
-  if (cache) return cache;
+  if (cache) {
+    return cache;
+  }
   const manifestBytes = readFileSync(fixture(prefix + 'source-manifest.json'));
   assert.equal(manifestBytes.length, 5493);
   assert.equal(

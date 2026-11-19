@@ -56,7 +56,9 @@ export function normalizeSliderValue(value: number | undefined, options: SliderO
 }
 
 export function getSliderRatio(value: number, options: SliderOptions): number {
-  if (options.min === options.max) return 0;
+  if (options.min === options.max) {
+    return 0;
+  }
 
   const span = options.max - options.min;
   const ratio = Number.isFinite(span)

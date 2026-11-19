@@ -44,10 +44,12 @@ for (const mode of ['normal-close', 'cancel-with-escape', 'immediate-unmount'] a
       request => networkFailures.push({ url: request.url(), failure: request.failure() })
     );
     page.on('response', response => {
-      if (response.status() >= 400) networkFailures.push({
-        url: response.url(),
-        status: response.status()
-      });
+      if (response.status() >= 400) {
+        networkFailures.push({
+          url: response.url(),
+          status: response.status()
+        });
+      }
     });
     try {
       await page.addInitScript(installSelectTagClosePortTracker);
@@ -80,7 +82,9 @@ for (const mode of ['normal-close', 'cancel-with-escape', 'immediate-unmount'] a
         const pending = await page.evaluate(async mode => {
           window.selectTagClosePorts.mark(mode);
           const button = document.querySelector<HTMLButtonElement>('[data-custom-tag-close="a"]');
-          if (!button) throw Error('Actual authored close button is required');
+          if (!button) {
+            throw Error('Actual authored close button is required');
+          }
           button.dispatchEvent(new MouseEvent(
             'mousedown',
             { bubbles: true, cancelable: true, view: window }
@@ -89,7 +93,9 @@ for (const mode of ['normal-close', 'cancel-with-escape', 'immediate-unmount'] a
           if (mode === 'immediate-unmount') await window.customTagPrefixNative.dispose();
           else {
             const editor = window.customTagPrefixNative.readRefs().editor;
-            if (!editor) throw Error('Actual public editor is required');
+            if (!editor) {
+              throw Error('Actual public editor is required');
+            }
             editor.dispatchEvent(new KeyboardEvent(
               'keydown',
               { key: 'Escape', code: 'Escape', bubbles: true, cancelable: true }

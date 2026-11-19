@@ -14,15 +14,19 @@ async function mount(page: Page, id: string) {
 async function apply(page: Page, action: TreeSelectTriggerAction, index = 0) {
   if (action === 'focus') await input(page).focus();
   else if (action === 'focus-clear') await page.locator('[data-trigger-control] button').focus();
-  else if (action === 'outside') await page.getByRole(
-    'button',
-    { name: 'Outside trigger', exact: true }
-  ).click();
+  else if (action === 'outside') {
+    await page.getByRole(
+      'button',
+      { name: 'Outside trigger', exact: true }
+    ).click();
+  }
   else if (action === 'click-input') await input(page).click();
-  else if (action === 'click-root') await page.locator('[data-trigger-control] .ant-select').click({ position: {
-    x: 1,
-    y: 1
-  } });
+  else if (action === 'click-root') {
+    await page.locator('[data-trigger-control] .ant-select').click({ position: {
+      x: 1,
+      y: 1
+    } });
+  }
   else if (action === 'mouse-enter') await page.locator('[data-trigger-control] .ant-select').hover();
   else if (action === 'mouse-leave') await page.mouse.move(0, 0);
   else if (action.startsWith('down:')) await page.keyboard.down(action.slice(5));

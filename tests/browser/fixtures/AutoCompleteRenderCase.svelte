@@ -115,7 +115,9 @@
   function describe(value: unknown): unknown {
     if (typeof value === 'function') {
       const description = descriptions.get(value as Snippet);
-      if (!description) throw Error('Every actual returned snippet has an authored public node specification');
+      if (!description) {
+        throw Error('Every actual returned snippet has an authored public node specification');
+      }
       return description;
     }
     return Array.isArray(value) ? value.map(describe) : value === undefined ? { $: 'undefined' } : value;
@@ -137,15 +139,17 @@
             ...(!falsyArray ? { 'data-ac-render-index': info.index } : {}),
             children: text
           } } });
-        if (!falsyArray) recorder.register(
-          node,
-          {
-            node: 'autocomplete-render-option',
-            renderer: kind,
-            index: info.index,
-            value: option.value
-          }
-        );
+        if (!falsyArray) {
+          recorder.register(
+            node,
+            {
+              node: 'autocomplete-render-option',
+              renderer: kind,
+              index: info.index,
+              value: option.value
+            }
+          );
+        }
         nodes.set(token, node);
       }
       const node = nodes.get(token)!;
@@ -182,10 +186,12 @@
     );
   }
   const labelRenderers = new Map<AutocompleteLabelKind, LabelRenderer>();
-  for (const kind of ['rich', 'zero', 'null'] as const) labelRenderers.set(
-    kind,
-    callback('label-' + kind, info => labelValue(kind, info))
-  );
+  for (const kind of ['rich', 'zero', 'null'] as const) {
+    labelRenderers.set(
+      kind,
+      callback('label-' + kind, info => labelValue(kind, info))
+    );
+  }
   const optionRenderers = new Map<AutocompleteRenderKind, OptionRenderer>();
   for (const [kind, renderer] of [['rich', rich], ['array', array], ['null', empty], ['scalar', scalar], ['falsy', falsy]] as const)
     optionRenderers.set(kind, callback('option-' + kind, renderer));
@@ -201,55 +207,65 @@
     if (!datasets.has(key)) {
       const label = (text: string) => revision ? text + ' revised' : text;
       let result: Data[];
-      if (kind === 'mapped') result = [
-        { key: 'group-key', heading: label('Mapped group'), children: [
-          {
-            code: 'Alpha-key',
-            text: label('Alpha raw'),
-            title: 'Alpha title',
-            extra: { role: 'alpha-extra' }
-          },
-          {
-            code: 'Disabled-key',
-            text: label('Disabled raw'),
-            disabled: true,
-            title: 'Disabled title'
-          },
-          {
-            code: 'Beta-key',
-            text: label('Beta raw'),
-            title: 'Beta title',
-            extra: { role: 'beta-extra' }
-          }
-        ] }, { code: 'Gamma-key', text: label('Gamma raw'), title: 'Gamma title' }
-      ];
-      else if (kind === 'falsy') result = [{ value: 'zero', label: 0 }, {
-        value: 'false',
-        label: false
-      }, {
-        value: 'null',
-        label: null
-      },
-        { value: 'undefined', label: undefined }, { value: 'empty', label: '' }, {
-          value: 'array',
-          label: 'Array raw'
-        }];
-      else if (kind === 'virtual') result = Array.from({ length: 120 }, (_, index) => ({ value: 'item-' + index,
-        label: label('Item ' + index), key: 'virtual-key-' + index, title: 'Title ' + index, extra: { index } }));
-      else result = [{
-        value: 'a',
-        label: label('Alpha raw'),
-        title: 'Alpha title',
-        extra: { role: 'alpha-extra' }
-      },
-        { value: 'disabled', label: label('Disabled raw'), disabled: true, title: 'Disabled title' },
-        { value: 'b', label: label('Beta raw'), title: 'Beta title', extra: { role: 'beta-extra' } }];
+      if (kind === 'mapped') {
+        result = [
+          { key: 'group-key', heading: label('Mapped group'), children: [
+            {
+              code: 'Alpha-key',
+              text: label('Alpha raw'),
+              title: 'Alpha title',
+              extra: { role: 'alpha-extra' }
+            },
+            {
+              code: 'Disabled-key',
+              text: label('Disabled raw'),
+              disabled: true,
+              title: 'Disabled title'
+            },
+            {
+              code: 'Beta-key',
+              text: label('Beta raw'),
+              title: 'Beta title',
+              extra: { role: 'beta-extra' }
+            }
+          ] }, { code: 'Gamma-key', text: label('Gamma raw'), title: 'Gamma title' }
+        ];
+      }
+      else if (kind === 'falsy') {
+        result = [{ value: 'zero', label: 0 }, {
+          value: 'false',
+          label: false
+        }, {
+          value: 'null',
+          label: null
+        },
+          { value: 'undefined', label: undefined }, { value: 'empty', label: '' }, {
+            value: 'array',
+            label: 'Array raw'
+          }];
+      }
+      else if (kind === 'virtual') {
+        result = Array.from({ length: 120 }, (_, index) => ({ value: 'item-' + index,
+          label: label('Item ' + index), key: 'virtual-key-' + index, title: 'Title ' + index, extra: { index } }));
+      }
+      else {
+        result = [{
+          value: 'a',
+          label: label('Alpha raw'),
+          title: 'Alpha title',
+          extra: { role: 'alpha-extra' }
+        },
+          { value: 'disabled', label: label('Disabled raw'), disabled: true, title: 'Disabled title' },
+          { value: 'b', label: label('Beta raw'), title: 'Beta title', extra: { role: 'beta-extra' } }];
+      }
       for (const item of result) {
         recorder.register(item, { data: kind, revision, key: item.key ?? item.value ?? item.code });
-        for (const nested of item.children as Data[] | undefined ?? []) recorder.register(
-          nested,
-          { data: kind, revision, key: nested.code }
-        );
+        for (const nested of item.children as Data[] | undefined ?? []) {
+          recorder.register(
+            nested,
+            { data: kind, revision, key: nested.code }
+          );
+        }
       }
       datasets.set(key, result);
     }
@@ -271,12 +287,14 @@
       'aria-label': 'Surface value', placeholder: 'AutoComplete render placeholder', listHeight: 140,
       showSearch: { filterOption: settings.filter, onSearch }, tagRender: tag, onChange, onSelect, onDeselect, onOpenChange, onClear,
       ...(settings.virtual ? { virtual: true, listItemHeight: 32 } : { virtual: false }) };
-    if (settings.dataset === 'mapped') props.fieldNames = {
-      value: 'code',
-      label: 'text',
-      options: 'children',
-      groupLabel: 'heading'
-    };
+    if (settings.dataset === 'mapped') {
+      props.fieldNames = {
+        value: 'code',
+        label: 'text',
+        options: 'children',
+        groupLabel: 'heading'
+      };
+    }
     if (settings.renderer !== 'omitted') props.optionRender = optionRenderers.get(settings.renderer);
     if (settings.labelRenderer !== 'omitted') props.labelRender = labelRenderers.get(settings.labelRenderer);
     if (settings.componentInput) props.components = { input: settings.componentInput };
@@ -290,9 +308,13 @@
   }
   export function readRefs() { return { control, root: publicRoot, editor, child: childNode }; }
   export function read() {
-    if (alive) lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
-      authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider), rawChildSpecification: recorder.raw(childSpecification) };
-    if (!lastAuthored) throw Error('Read the actual live owner before disposal');
+    if (alive) {
+      lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
+        authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider), rawChildSpecification: recorder.raw(childSpecification) };
+    }
+    if (!lastAuthored) {
+      throw Error('Read the actual live owner before disposal');
+    }
     return { settings: recorder.encode(settings), model: recorder.encode(model), open, alive,
       events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], lifecycle: [...lifecycle], ...lastAuthored };
   }

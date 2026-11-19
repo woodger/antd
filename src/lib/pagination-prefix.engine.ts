@@ -2,7 +2,9 @@ import template from './vendor/pagination-prefix.css.js';
 
 /** Native Select сохраняет собственный namespace; приватные actual metrics следуют общему prefix. */
 export function getPaginationPrefixCss(prefix: string, rootPrefix: string) {
-  if (prefix === 'ant-pagination' && rootPrefix === 'ant') return undefined;
+  if (prefix === 'ant-pagination' && rootPrefix === 'ant') {
+    return undefined;
+  }
 
   const scope = `:where([data-ant-pagination-prefix=${JSON.stringify(prefix)}]`
     + `[data-ant-pagination-root-prefix=${JSON.stringify(rootPrefix)}])`;
@@ -12,9 +14,15 @@ export function getPaginationPrefixCss(prefix: string, rootPrefix: string) {
   return template.replace(/--ant-pagination-(item-size-actual|item-spacing-actual)|\.ant-pagination([-\w]*)|\[class([\^*])="( ?)ant-pagination/g,
     (_match, metric: string | undefined, suffix: string | undefined,
       operator: string | undefined, space: string | undefined) => {
-      if (metric !== undefined) return `--${rootPrefix.replaceAll('.', '')}-pagination-${metric}`;
-      if (operator !== undefined) return `[class${operator}="${space}${prefix}`;
-      if (suffix === '-css-var') return `.ant-pagination-css-var${scope}`;
+      if (metric !== undefined) {
+        return `--${rootPrefix.replaceAll('.', '')}-pagination-${metric}`;
+      }
+      if (operator !== undefined) {
+        return `[class${operator}="${space}${prefix}`;
+      }
+      if (suffix === '-css-var') {
+        return `.ant-pagination-css-var${scope}`;
+      }
       const part = suffix ?? '';
 
       return `.${prefix}${part}${roots.has(part) ? scope : ''}`;

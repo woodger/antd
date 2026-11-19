@@ -42,8 +42,12 @@
     trigger: 'color:#357913;background-color:#f0f2f4;padding-top:5px'
   };
   let classNames = $derived.by<UploadProps['classNames']>(() => {
-    if (sample.mode === 'default') return undefined;
-    if (sample.mode === 'empty') return {};
+    if (sample.mode === 'default') {
+      return undefined;
+    }
+    if (sample.mode === 'empty') {
+      return {};
+    }
     if (sample.mode === 'callback') {
       return ({ props }: UploadSemanticInfo) => ({
         ...names,
@@ -53,8 +57,12 @@
     return names;
   });
   let styles = $derived.by<UploadProps['styles']>(() => {
-    if (sample.mode === 'default') return undefined;
-    if (sample.mode === 'empty') return {};
+    if (sample.mode === 'default') {
+      return undefined;
+    }
+    if (sample.mode === 'empty') {
+      return {};
+    }
     if (sample.mode === 'callback') {
       return ({ props }: UploadSemanticInfo) => ({
         ...slots,

@@ -111,7 +111,9 @@ export function listySticky<T, K extends ListyKey>(
   sizes: ReadonlyMap<string, { top: number; bottom: number; }>,
   scrollTop: number
 ) {
-  if (!headers.length) return undefined;
+  if (!headers.length) {
+    return undefined;
+  }
   let left = 0;
   let right = headers.length - 1;
   let active = 0;
@@ -161,7 +163,9 @@ export function listyScrollbarOffset(
   size: number,
   range: number
 ) {
-  if (range - size <= 0 || size - thumbSize <= 0) return 0;
+  if (range - size <= 0 || size - thumbSize <= 0) {
+    return 0;
+  }
   const percentage = Math.min(1, Math.max(0, thumbTop / (size - thumbSize)));
   return Math.ceil(percentage * (range - size));
 }

@@ -58,7 +58,9 @@ interface SourceHeader {
 }
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 function guard(condition: unknown, message: string): asserts condition {
-  if (!condition) throw Error(`Invalid frozen style history Source: ${message}`);
+  if (!condition) {
+    throw Error(`Invalid frozen style history Source: ${message}`);
+  }
 }
 function reference<Value>(filename: string, sha256: string): Value {
   const bytes = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));

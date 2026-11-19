@@ -82,12 +82,14 @@ test('Divider preserves logical and physical placements in both directions', asy
       const physicalLeft = logical === 'start' ? !rtl : logical === 'end' ? rtl : undefined;
       if (physicalLeft === true)
         expect(content.x + content.width / 2).toBeLessThan(bounds.x + bounds.width / 2);
-      if (physicalLeft === false)
+      if (physicalLeft === false) {
         expect(content.x + content.width / 2)
           .toBeGreaterThan(bounds.x + bounds.width / 2);
-      if (logical === 'center')
+      }
+      if (logical === 'center') {
         expect(Math.abs(content.x + content.width / 2 - bounds.x - bounds.width / 2))
           .toBeLessThan(1);
+      }
     }
   }
 });

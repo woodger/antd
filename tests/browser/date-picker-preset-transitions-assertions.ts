@@ -143,16 +143,20 @@ export function verifyDatePickerPresetTransitionDate(
   }
   const mappedNative = proof.sourceToNativeDate.get(source.identity);
   const mappedSource = proof.nativeToSourceDate.get(native.identity);
-  if (mappedNative !== undefined) assert.equal(
-    native.identity,
-    mappedNative,
-    label + ' stable date alias'
-  );
-  if (mappedSource !== undefined) assert.equal(
-    source.identity,
-    mappedSource,
-    label + ' distinct date identity'
-  );
+  if (mappedNative !== undefined) {
+    assert.equal(
+      native.identity,
+      mappedNative,
+      label + ' stable date alias'
+    );
+  }
+  if (mappedSource !== undefined) {
+    assert.equal(
+      source.identity,
+      mappedSource,
+      label + ' distinct date identity'
+    );
+  }
   proof.sourceToNativeDate.set(source.identity, native.identity);
   proof.nativeToSourceDate.set(native.identity, source.identity);
 }
@@ -374,9 +378,10 @@ function compareOwnerActions(
     const before = record(original.before);
     for (const key of ['open', 'format', 'preview'] as const)
       assert.deepEqual(actual.before[key], before[key]);
-    for (const key of ['value', 'pickerValue', 'minDate'] as const)
+    for (const key of ['value', 'pickerValue', 'minDate'] as const) {
       verifyDatePickerPresetTransitionDate(actual.before[key], before[key] as SourceDate, proof,
         label + '/owner action/' + index + '/' + key);
+    }
     const mouse = actual.nativeMouse;
     assert.equal(
       mouse.actualArgumentCount,
@@ -403,9 +408,10 @@ export function verifyDatePickerPresetTransitionOwner(
   assert.deepEqual(native.lifecycle, source.lifecycle, label + '/actual owner lifecycle');
   assert.deepEqual(native.authoredSample, source.authoredSample, label + '/authored sample');
   assert.deepEqual(native.authoredPresets, source.authoredPresets, label + '/authored presets');
-  for (const name of authoredNames)
+  for (const name of authoredNames) {
     verifyDatePickerPresetTransitionDate(native.authoredDates[name], source.authoredDates[name], proof,
       label + '/authored/' + name);
+  }
   for (const name of ['value', 'pickerValue', 'minDate'] as const)
     verifyDatePickerPresetTransitionDate(native[name], source[name], proof, label + '/' + name);
   const calls = native.callbackInvocations.filter(call => !focusNames.has(call.name));
@@ -449,8 +455,10 @@ export function verifyDatePickerPresetTransitionOwner(
     }
   }
   compareOwnerActions(native, source, proof, label);
-  if (compareFocus) assert.deepEqual(inputHooks(native, true, sample),
-    inputHooks(source, false, sample), label + '/actual input hooks and position');
+  if (compareFocus) {
+    assert.deepEqual(inputHooks(native, true, sample),
+      inputHooks(source, false, sample), label + '/actual input hooks and position');
+  }
 }
 function visibleElements(point: NativePoint | SourcePoint): AnyNode[] {
   return point.popups.filter(popup => popup.visible).flatMap(popup => popup.allElements);
@@ -544,7 +552,9 @@ function timeRows(point: NativePoint | SourcePoint, prefix: string, native: bool
 function physicalFocus(point: NativePoint | SourcePoint, prefix: string) {
   const node = point.activeElement;
   assert(node && node.connected);
-  if (node.tag === 'BODY') return { kind: 'body' };
+  if (node.tag === 'BODY') {
+    return { kind: 'body' };
+  }
   if (node.tag === 'INPUT') {
     assert.equal(attr(node, 'id'), 'preset-field');
     return { kind: 'input' };

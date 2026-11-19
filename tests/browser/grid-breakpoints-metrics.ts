@@ -1,6 +1,8 @@
 export function snapshotGridBreakpoints() {
   const root = document.querySelector('#grid-breakpoints-control');
-  if (!root) throw new Error('Grid breakpoint control is missing');
+  if (!root) {
+    throw new Error('Grid breakpoint control is missing');
+  }
   const css = (node: Element) => {
     const style = getComputedStyle(node);
     return Object.fromEntries([

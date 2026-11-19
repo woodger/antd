@@ -115,9 +115,13 @@ export function verifyOwnershipCallbacks(actual: Pick<HydrationOwnershipOwnerSta
 }
 function exactCommitTuple(actual: HydrationOwnershipNode, source: HydrationOwnershipNode,
   entry: HydrationOwnershipSourceCase, key: string, phase: string, boundaries?: Set<string>) {
-  if (actual.value === source.value && isDeepStrictEqual(actual.selection, source.selection)) return false;
+  if (actual.value === source.value && isDeepStrictEqual(actual.selection, source.selection)) {
+    return false;
+  }
   if (phase !== 'B-first-owner-commit' || key !== 'B' || entry.scenario.control.id !== 'select-multiple-input'
-    || entry.scenario.prehydrate.id !== 'dirty-focused-backward') return false;
+    || entry.scenario.prehydrate.id !== 'dirty-focused-backward') {
+    return false;
+  }
   const commit = entry.trace.find(row => row.phase === 'B-first-owner-commit')!.actual.roots.B!;
   const first = (commit.ownerState!.lifecycle as Array<{
     event: string;
@@ -155,11 +159,13 @@ export function verifyHydrationOwnershipPoint(actual: HydrationOwnershipPoint, s
     const a = actual.roots[key], b = source.roots[key];
     check(key + '/actual-target-and-scope', () => {
       assert(a && b);
-      for (const field of ['nodeType', 'name', 'shadowMode', 'hostExposesSavedRoot'] as const) assert.deepEqual(
-        a.target[field],
-        b.target[field],
-        field
-      );
+      for (const field of ['nodeType', 'name', 'shadowMode', 'hostExposesSavedRoot'] as const) {
+        assert.deepEqual(
+          a.target[field],
+          b.target[field],
+          field
+        );
+      }
       assert.deepEqual(a.identity, b.identity, 'all parsed-node retention flags');
       assert.deepEqual(
         a.focus.editorIsScopeActive,
@@ -174,8 +180,10 @@ export function verifyHydrationOwnershipPoint(actual: HydrationOwnershipPoint, s
       for (const role of ['owner', 'root', 'outside'] as const) {
         const current: HydrationOwnershipNode | null = a.physical[role], original: HydrationOwnershipNode | null = b.physical[role];
         assert.equal(Boolean(current), Boolean(original), role + ' presence');
-        if (current && original) for (const field of ['name', 'connected', 'ownerKey', 'namespaceURI'] as const)
-          assert.deepEqual(current[field], original[field], role + '/' + field);
+        if (current && original) {
+          for (const field of ['name', 'connected', 'ownerKey', 'namespaceURI'] as const)
+            assert.deepEqual(current[field], original[field], role + '/' + field);
+        }
       }
     });
     check(key + '/real-public-bound-refs', () => {
@@ -195,14 +203,19 @@ export function verifyHydrationOwnershipPoint(actual: HydrationOwnershipPoint, s
     check(key + '/physical-editor', () => {
       const current = a.physical.editor, original = b.physical.editor;
       assert.equal(Boolean(current), Boolean(original));
-      if (!current || !original) return;
+      if (!current || !original) {
+        return;
+      }
       const commitTuple = exactCommitTuple(current, original, entry, key, phase, boundaries);
-      for (const field of ['name', 'connected', 'ownerKey', 'namespaceURI', 'value', 'defaultValue', 'selection', 'documentFocused', 'scopeFocused', 'cssText', 'inlineProperties', 'styleAttribute'] as const)
-        if (!commitTuple || field !== 'value' && field !== 'selection') assert.deepEqual(
-          current[field],
-          original[field],
-          field
-        );
+      for (const field of ['name', 'connected', 'ownerKey', 'namespaceURI', 'value', 'defaultValue', 'selection', 'documentFocused', 'scopeFocused', 'cssText', 'inlineProperties', 'styleAttribute'] as const) {
+        if (!commitTuple || field !== 'value' && field !== 'selection') {
+          assert.deepEqual(
+            current[field],
+            original[field],
+            field
+          );
+        }
+      }
       assert(current.attributes && original.attributes);
       const replacementTypeOrder = entry.scenario.control.id === 'ac-textarea' && key === 'B'
         && ['action-3-immediate', 'action-3-settled', 'target-before-dispose'].includes(phase);
@@ -220,17 +233,21 @@ export function verifyHydrationOwnershipPoint(actual: HydrationOwnershipPoint, s
         );
         boundaries?.add(ownershipInputTypeBoundary);
       }
-      else assert.deepEqual(
-        current.attributes,
-        original.attributes,
-        'complete own editor attrs and order'
-      );
+      else {
+        assert.deepEqual(
+          current.attributes,
+          original.attributes,
+          'complete own editor attrs and order'
+        );
+      }
       assert.equal(current.localRoot.nodeType, original.localRoot.nodeType);
       assert.equal(current.localRoot.mode, original.localRoot.mode);
     });
     check(key + '/owner-state-and-callbacks', () => {
       assert.equal(Boolean(a.ownerState), Boolean(b.ownerState));
-      if (!a.ownerState || !b.ownerState) return;
+      if (!a.ownerState || !b.ownerState) {
+        return;
+      }
       for (const field of ['ownerKey', 'controlKey', 'publicId', 'query', 'model', 'tag', 'open', 'alive', 'calls'] as const)
         assert.deepEqual(a.ownerState[field], b.ownerState[field], field);
       verifyOwnershipCallbacks(
@@ -243,7 +260,9 @@ export function verifyHydrationOwnershipPoint(actual: HydrationOwnershipPoint, s
       assert(a.ownerState.callerUID.length > 0);
     });
     check(key + '/quiet-disposal', () => {
-      if (!b.ownerState || b.ownerState.alive) return;
+      if (!b.ownerState || b.ownerState.alive) {
+        return;
+      }
       assert(a.ownerState);
       assert.equal(a.ownerState.alive, false);
       assert.equal(
@@ -260,7 +279,9 @@ export function verifyHydrationOwnershipPoint(actual: HydrationOwnershipPoint, s
       const first = (point: typeof a) => (point.ownerState?.lifecycle as Row[] | undefined)?.find(row => row.event === 'attach')?.observation;
       const current = first(a), original = first(b);
       assert.equal(Boolean(current), Boolean(original));
-      if (!current || !original) return;
+      if (!current || !original) {
+        return;
+      }
       for (const field of ['name', 'connected', 'ownerKey', 'value', 'defaultValue', 'selection', 'documentFocused', 'scopeFocused', 'cssText', 'inlineProperties', 'styleAttribute', 'attributes'] as const)
         assert.deepEqual(current[field], original[field], field);
       assert.equal(current.identity, a.parsed.editor?.identity);

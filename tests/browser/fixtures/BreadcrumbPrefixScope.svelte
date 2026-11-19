@@ -34,11 +34,13 @@
     ];
 
     if (sample.menuLast) values.splice(2);
-    if (sample.explicit) values.splice(
-      1,
-      0,
-      { key: 'separator', type: 'separator', separator: '>' }
-    );
+    if (sample.explicit) {
+      values.splice(
+        1,
+        0,
+        { key: 'separator', type: 'separator', separator: '>' }
+      );
+    }
     return values;
   });
 </script>

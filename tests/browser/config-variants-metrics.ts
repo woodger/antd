@@ -19,8 +19,10 @@ export function snapshotConfigVariants(kinds: readonly {
         'border-bottom-width', 'border-bottom-color'].map(name => [name, css.getPropertyValue(name)]))
     };
     if (id === 'card') metrics.bordered = node.classList.contains('ant-card-bordered');
-    if (id === 'search') metrics.buttonVariants = [...host.querySelector('button')!.classList]
-      .filter(name => /^ant-input-search-btn-(outlined|filled|borderless|underlined)$/.test(name));
+    if (id === 'search') {
+      metrics.buttonVariants = [...host.querySelector('button')!.classList]
+        .filter(name => /^ant-input-search-btn-(outlined|filled|borderless|underlined)$/.test(name));
+    }
 
     return [id, metrics];
   }));

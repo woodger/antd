@@ -94,20 +94,28 @@
   });
 
   function scrollConfig(value: unknown): TreeScrollConfig | null | undefined {
-    if (value == null || typeof value === 'number') return value;
-    if (typeof value !== 'object') throw Error('Expected scroll config');
+    if (value == null || typeof value === 'number') {
+      return value;
+    }
+    if (typeof value !== 'object') {
+      throw Error('Expected scroll config');
+    }
     const top: unknown = Reflect.get(value, 'top');
     const left: unknown = Reflect.get(value, 'left');
-    if ('top' in value || 'left' in value) return {
-      ...(typeof top === 'number' ? { top } : {}), ...(typeof left === 'number' ? { left } : {})
-    };
+    if ('top' in value || 'left' in value) {
+      return {
+        ...(typeof top === 'number' ? { top } : {}), ...(typeof left === 'number' ? { left } : {})
+      };
+    }
     const rawAlign: unknown = Reflect.get(value, 'align');
     const align: TreeScrollAlign | undefined = rawAlign === 'top' || rawAlign === 'bottom'
       || rawAlign === 'auto' ? rawAlign : undefined;
     const rawOffset: unknown = Reflect.get(value, 'offset');
     const offset = typeof rawOffset === 'number' ? rawOffset : 0;
     const index: unknown = Reflect.get(value, 'index');
-    if (typeof index === 'number') return { index, align, offset };
+    if (typeof index === 'number') {
+      return { index, align, offset };
+    }
     const key: unknown = Reflect.get(value, 'key');
     if (typeof key === 'string' || typeof key === 'number' || typeof key === 'bigint') {
       return { key, align, offset, autoExpand: Reflect.get(value, 'autoExpand') === true };
@@ -117,7 +125,9 @@
 
   function runScroll() {
     const action = sample.actions?.[actionIndex];
-    if (!action) throw Error('Unknown scroll action');
+    if (!action) {
+      throw Error('Unknown scroll action');
+    }
     let request = scrollConfig(action.config);
     if (action.offsetKind && request && typeof request === 'object'
       && ('key' in request || 'index' in request)) request = {

@@ -93,11 +93,13 @@ export function verifyQuarterSourcePartBinding(reference, kind, variant = 'first
   const capture = scope(kind, variant);
   assert.equal(original.file.startsWith(capture + '.parts/'), true, 'Original capture binding');
   assert.equal(original.gzipFile, original.file + '.gz');
-  if (expectedFile !== undefined) assert.equal(
-    original.file,
-    expectedFile,
-    'Owner/action slot binding'
-  );
+  if (expectedFile !== undefined) {
+    assert.equal(
+      original.file,
+      expectedFile,
+      'Owner/action slot binding'
+    );
+  }
   const entry = metadata.parts[original.file];
   assert(entry, 'Missing complete original Source part');
   assert.deepEqual(entry.original, original, 'Exact original raw/stored metadata');
@@ -105,8 +107,12 @@ export function verifyQuarterSourcePartBinding(reference, kind, variant = 'first
 }
 function partScope(reference) {
   const original = reference.rawJSONPart ?? reference;
-  for (const kind of ['csr', 'ssr']) for (const variant of ['first', 'repeat']) {
-    if (original.file.startsWith(scope(kind, variant) + '.parts/')) return { kind, variant };
+  for (const kind of ['csr', 'ssr']) {
+    for (const variant of ['first', 'repeat']) {
+      if (original.file.startsWith(scope(kind, variant) + '.parts/')) {
+        return { kind, variant };
+      }
+    }
   }
   throw Error('Part does not belong to this independent Source corpus');
 }
@@ -336,10 +342,12 @@ export function verifyQuarterSourceProducerChunk(value, envelope) {
       'Actual UI boundaries lie in the original monotonic producer interval');
     previous = count;
   }
-  if (value.phase === 'terminal-tail') assert.deepEqual(
-    value.boundaries,
-    { afterLate: value.cursor }
-  );
+  if (value.phase === 'terminal-tail') {
+    assert.deepEqual(
+      value.boundaries,
+      { afterLate: value.cursor }
+    );
+  }
   for (const [index, call] of value.rows.entries()) {
     assert.equal(call.name, 'disabledDate');
     assert(['first', 'last'].includes(call.boundary), 'Actual authored disabledDate function label');

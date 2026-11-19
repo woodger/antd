@@ -21,8 +21,10 @@ async function apply(page: Page, action: TreeSelectComponentsFormAction) {
   if (action === 'field-focus') await page.locator('[data-form-components-focus]').dispatchEvent('click');
   else if (action === 'type-query') await editor.fill('Draft query');
   else if (action === 'open') await editor.click();
-  else if (action === 'select-beta') await page.locator('[popover]:popover-open .ant-tree-title')
-    .filter({ hasText: /^Beta$/ }).click();
+  else if (action === 'select-beta') {
+    await page.locator('[popover]:popover-open .ant-tree-title')
+      .filter({ hasText: /^Beta$/ }).click();
+  }
   else await page.locator('[data-form-components-unmount]').dispatchEvent('click');
 }
 
@@ -37,7 +39,9 @@ for (const entry of reference.cases) {
     );
     const read = () => page.evaluate(readTreeSelectComponentsForm);
     const values = () => page.locator('[data-form-components-native]').evaluate(form => {
-      if (!(form instanceof HTMLFormElement)) throw Error('Expected native Form wrapper');
+      if (!(form instanceof HTMLFormElement)) {
+        throw Error('Expected native Form wrapper');
+      }
       return new FormData(form).getAll('choice');
     });
     const editor = page.getByLabel('Form component editor', { exact: true });
@@ -64,10 +68,12 @@ for (const entry of reference.cases) {
       expect(step.observed.nativeFormData).toEqual([]);
       expect(step.observed.fieldErrors).toEqual([]);
       expect(await values()).toEqual(step.view.mounted ? [step.view.model] : []);
-      if (step.sameEditor) expect(await editor.evaluate(
-        (node, previous) => node === previous,
-        original
-      )).toBe(true);
+      if (step.sameEditor) {
+        expect(await editor.evaluate(
+          (node, previous) => node === previous,
+          original
+        )).toBe(true);
+      }
       if (step.action === 'type-query') {
         expect(step.view.model).toBe('a');
         expect(await values()).toEqual(['a']);

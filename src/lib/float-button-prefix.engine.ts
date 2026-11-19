@@ -8,7 +8,9 @@ const rootStates = new Set([
 
 /** Служебные переменные и Button selectors используют общий prefix, parts — local. */
 export function getFloatButtonPrefixCss(prefix: string, rootPrefix = 'ant') {
-  if (prefix === 'ant-float-btn' && rootPrefix === 'ant') return undefined;
+  if (prefix === 'ant-float-btn' && rootPrefix === 'ant') {
+    return undefined;
+  }
 
   const scope = `:where([data-ant-float-prefix=${JSON.stringify(prefix)}][data-ant-float-global=${JSON.stringify(rootPrefix)}])`;
   const namespace = rootPrefix.replace(/\./g, '');
@@ -27,11 +29,17 @@ export function getFloatButtonPrefixCss(prefix: string, rootPrefix = 'ant') {
         if (suffix === '-css-var') {
           return `.ant-float-btn-css-var:is([data-ant-float-root],[data-ant-float-group])${scope}`;
         }
-        if (suffix === '') return `.${prefix}${scope}`;
+        if (suffix === '') {
+          return `.${prefix}${scope}`;
+        }
         return `.${prefix}${suffix}${rootStates.has(suffix) ? scope : ''}`;
       }
-      if (button !== undefined) return `.${rootPrefix}-btn${button}`;
-      if (variable) return `--${namespace}-${variable}-`;
+      if (button !== undefined) {
+        return `.${rootPrefix}-btn${button}`;
+      }
+      if (variable) {
+        return `--${namespace}-${variable}-`;
+      }
       return match === '"ant-float-btn"' ? `"${prefix}"` : `" ${prefix}"`;
     }
   ).replace(/<\/style/gi, '<\\/style');

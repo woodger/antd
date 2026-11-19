@@ -5,7 +5,9 @@ export function snapshotDropdownPrefix() {
   const prefix = [...menu.classList].find(value => value.endsWith('-menu'))!;
   const items = [...menu.querySelectorAll<HTMLElement>('[role="menuitem"]')];
   function css(node: Element | null, keys: string[], pseudo?: string) {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node, pseudo);
 
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));

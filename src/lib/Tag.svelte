@@ -154,11 +154,15 @@
   });
   $effect(() => {
     const node = host;
-    if (node && showClose) return connectFeedbackFocus(node);
+    if (node && showClose) {
+      return connectFeedbackFocus(node);
+    }
   });
   $effect(() => {
     const node = host;
-    if (node) return connectWaveLink(node, value => { waveLink = value; });
+    if (node) {
+      return connectWaveLink(node, value => { waveLink = value; });
+    }
   });
 
   function handleClick(
@@ -169,7 +173,9 @@
 
   function handleClose(event: MouseEvent) {
     event.stopPropagation();
-    if (!active || closed || closing || blocked || !showClose || event.defaultPrevented) return;
+    if (!active || closed || closing || blocked || !showClose || event.defaultPrevented) {
+      return;
+    }
 
     const linked = Boolean(href);
     closing = true;
@@ -186,7 +192,9 @@
 
   function connectClose(node: HTMLButtonElement) {
     function handleCloseKeyDown(event: KeyboardEvent) {
-      if (event.defaultPrevented || event.key !== 'Enter' && event.key !== ' ') return;
+      if (event.defaultPrevented || event.key !== 'Enter' && event.key !== ' ') {
+        return;
+      }
 
       event.preventDefault();
       if (!event.repeat) node.click();

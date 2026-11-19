@@ -3,8 +3,9 @@ export function resolveFixtureRoute<Entry extends { id: string }>(
   catalog: readonly Entry[]
 ) {
   const requested = new URLSearchParams(search).getAll('fixture');
-  if (!requested.length || requested.length === 1 && requested[0] === 'all')
+  if (!requested.length || requested.length === 1 && requested[0] === 'all') {
     return { mode: 'all' } as const;
+  }
 
   const entry = requested.length === 1 ? catalog.find(item => item.id === requested[0]) : undefined;
 

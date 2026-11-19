@@ -21,7 +21,9 @@
   let contextSize = $state<'small' | 'medium' | 'large'>('medium');
 
   function hotkey(event: KeyboardEvent) {
-    if (!event.ctrlKey || !event.altKey) return;
+    if (!event.ctrlKey || !event.altKey) {
+      return;
+    }
     if (event.key === 'z') {
       event.preventDefault();
       spinning = !spinning;

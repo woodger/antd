@@ -26,7 +26,9 @@
   });
   function click(event: MouseEvent) {
     context?.click(event, href, title, targetOffset);
-    if (event.defaultPrevented) return;
+    if (event.defaultPrevented) {
+      return;
+    }
     if (href.startsWith('http://') || href.startsWith('https://')) {
       if (replace) {
         event.preventDefault();

@@ -17,10 +17,12 @@ const aliases: Record<string, string> = { class: 'className', onmousedown: 'onMo
   oninput: 'onChange', onfocusin: 'onFocus', onfocusout: 'onBlur', onclick: 'onClick' };
 const ownKeys = (node: Node) => node.ownProperties?.map(p => p.key);
 function css(value: unknown): Array<[string, string]> {
-  if (typeof value === 'string') return value.split(';').map(part => part.trim()).filter(Boolean).map(part => {
-    const colon = part.indexOf(':');
-    return [part.slice(0, colon).trim(), part.slice(colon + 1).trim()];
-  });
+  if (typeof value === 'string') {
+    return value.split(';').map(part => part.trim()).filter(Boolean).map(part => {
+      const colon = part.indexOf(':');
+      return [part.slice(0, colon).trim(), part.slice(colon + 1).trim()];
+    });
+  }
   assert(
     value && typeof value === 'object',
     'authored component style is an object or native CSS string'
@@ -33,11 +35,17 @@ function css(value: unknown): Array<[string, string]> {
 }
 function rawValue(graph: Graph, value: unknown, seen = new Map<number, unknown>()): unknown {
   const id = reference(value);
-  if (id === undefined) return decodeSelectSurface(value);
-  if (seen.has(id)) return seen.get(id);
+  if (id === undefined) {
+    return decodeSelectSurface(value);
+  }
+  if (seen.has(id)) {
+    return seen.get(id);
+  }
   const node = graph.objects.find(n => n.id === id);
   assert(node, 'complete component graph');
-  if (node.authoredRole) return { $: 'authored', role: node.authoredRole };
+  if (node.authoredRole) {
+    return { $: 'authored', role: node.authoredRole };
+  }
   const result: Record<string, unknown> = {};
   seen.set(id, result);
   for (const p of node.properties ?? []) result[String(p.key)] = rawValue(graph, p.value, seen);
@@ -45,8 +53,12 @@ function rawValue(graph: Graph, value: unknown, seen = new Map<number, unknown>(
 }
 function definition(node: Node) {
   const role = node.authoredRole;
-  if (typeof role?.component === 'string' && /^(root|input):(function|composite|composite-native-only)$/.test(role.component)) return 'function';
-  if (typeof role?.node === 'string' && /^component-(root|input):element$/.test(role.node)) return 'element';
+  if (typeof role?.component === 'string' && /^(root|input):(function|composite|composite-native-only)$/.test(role.component)) {
+    return 'function';
+  }
+  if (typeof role?.node === 'string' && /^component-(root|input):element$/.test(role.node)) {
+    return 'element';
+  }
   return role?.node === 'flow-prefix-element' ? 'prefix' : undefined;
 }
 /**
@@ -158,10 +170,14 @@ export function verifySelectComponentsGraph(actualValue: unknown, sourceValue: u
         node.ownProperties = [];
         node.properties = [];
       }
-      else for (const p of node.properties ?? []) if (ids.has(reference(p.value)!)) {
-        const descriptor = node.ownProperties?.find(d => isDeepStrictEqual(d.key, p.key));
-        assert(descriptor);
-        descriptor.valueType = 'object';
+      else {
+        for (const p of node.properties ?? []) {
+          if (ids.has(reference(p.value)!)) {
+            const descriptor = node.ownProperties?.find(d => isDeepStrictEqual(d.key, p.key));
+            assert(descriptor);
+            descriptor.valueType = 'object';
+          }
+        }
       }
     }
   };
@@ -171,7 +187,9 @@ export function verifySelectComponentsGraph(actualValue: unknown, sourceValue: u
 }
 function argument(call: SelectSurfaceProducerCall) {
   const value = decodeSelectSurface(call.argument) as { props?: Record<string, unknown> };
-  if (!value?.props) return value;
+  if (!value?.props) {
+    return value;
+  }
   const props = { ...value.props };
   if (Object.hasOwn(props, 'class')) {
     props.className = props.class;
@@ -198,7 +216,9 @@ export function verifySelectComponentsProducers(actual: readonly SelectSurfacePr
   label: string, specs: readonly IconNodeSpecification[] = [], ssr = false) {
   const kinds = new Set(['classNames', 'styles', 'suffix']);
   const completeInvocation = (actual: SelectSurfaceProducerCall, source: SelectSurfaceProducerCall) => {
-    if (!invocation(actual, source)) return false;
+    if (!invocation(actual, source)) {
+      return false;
+    }
     try {
       verifySelectComponentsGraph(
         actual.rawArgument,
@@ -239,15 +259,19 @@ export function verifySelectComponentsProducers(actual: readonly SelectSurfacePr
       kinds.has(call.kind) || /^components\.(root|input)$/.test(call.kind),
       label + ' every Source kind has a named verifier'
     );
-    if (kinds.has(call.kind)) assert(
-      actual.some(p => completeInvocation(p, call)),
-      label + ' every complete Source pure invocation executes'
-    );
+    if (kinds.has(call.kind)) {
+      assert(
+        actual.some(p => completeInvocation(p, call)),
+        label + ' every complete Source pure invocation executes'
+      );
+    }
   }
   if (ssr) {
     const expected: Array<[string, string]> = [];
     // Component calls are represented by context observations, compared separately.
-    for (const call of source) if (kinds.has(call.kind)) expected.push([call.kind, call.side]);
+    for (const call of source) {
+      if (kinds.has(call.kind)) expected.push([call.kind, call.side]);
+    }
     assert.deepEqual(
       actual.map(call => [call.kind, call.side]),
       expected,

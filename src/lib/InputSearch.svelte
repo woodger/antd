@@ -163,12 +163,16 @@
         ...props,
         disabled: unavailable,
         onmousedown: event => {
-          if (unavailable) return;
+          if (unavailable) {
+            return;
+          }
           props.onmousedown?.(event);
           handleMouseDown(event);
         },
         onclick: event => {
-          if (unavailable) return;
+          if (unavailable) {
+            return;
+          }
           props.onclick?.(event);
           handleSearch(event);
         }
@@ -205,7 +209,9 @@
   }
 
   const handlePressEnter: NonNullable<InputSearchProps['onPressEnter']> = event => {
-    if (composing || loading) return;
+    if (composing || loading) {
+      return;
+    }
     onPressEnter?.(event);
     handleSearch(event);
   };

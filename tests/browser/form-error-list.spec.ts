@@ -127,7 +127,9 @@ test('FormErrorList cancels a pending hide callback when unmounted', async ({ pa
     const holder = document.querySelector<HTMLElement>('[data-ant-form-error-list]')!;
     const fixture = document.getElementById('form-error-list-fixture')!;
     const observer = new MutationObserver(() => {
-      if (holder.dataset.visible !== 'false') return;
+      if (holder.dataset.visible !== 'false') {
+        return;
+      }
 
       observer.disconnect();
       fixture.dataset.controlledUnmount = 'true';

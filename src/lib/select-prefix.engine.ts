@@ -2,7 +2,9 @@ import template from './vendor/select-prefix.css.js';
 
 /** Select owner classes, private variables и вложенные Input/Typography namespaces независимы. */
 export function getSelectPrefixCss(prefix: string, rootPrefix: string) {
-  if (prefix === 'ant-select' && rootPrefix === 'ant') return undefined;
+  if (prefix === 'ant-select' && rootPrefix === 'ant') {
+    return undefined;
+  }
 
   const scope = `:where([data-ant-select-prefix=${JSON.stringify(prefix)}]`
     + `[data-ant-select-root-prefix=${JSON.stringify(rootPrefix)}])`;
@@ -22,10 +24,18 @@ export function getSelectPrefixCss(prefix: string, rootPrefix: string) {
       if (variable !== undefined) {
         return privateNames.has(variable) ? `--${namespace}-select-${variable}` : match;
       }
-      if (input !== undefined) return `.${rootPrefix}-input${input}`;
-      if (match === '.ant-typography') return `.${rootPrefix}-typography`;
-      if (suffix === '-css-var') return `.ant-select-css-var${scope}`;
-      if (suffix !== undefined) return `.${prefix}${suffix}${roots.has(suffix) ? scope : ''}`;
+      if (input !== undefined) {
+        return `.${rootPrefix}-input${input}`;
+      }
+      if (match === '.ant-typography') {
+        return `.${rootPrefix}-typography`;
+      }
+      if (suffix === '-css-var') {
+        return `.ant-select-css-var${scope}`;
+      }
+      if (suffix !== undefined) {
+        return `.${prefix}${suffix}${roots.has(suffix) ? scope : ''}`;
+      }
 
       return match === '"ant-select"' ? `"${prefix}"` : `" ${prefix}"`;
     }

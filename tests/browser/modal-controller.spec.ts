@@ -28,9 +28,11 @@ for (const entry of reference.cases) {
 
     if ('action' in entry.sample) {
       if (entry.sample.action === 'destroy') await page.keyboard.press('Control+Alt+d');
-      else await dialog.getByRole('button', {
-        name: entry.sample.action === 'ok' ? 'OK' : 'Cancel', exact: true
-      }).click();
+      else {
+        await dialog.getByRole('button', {
+          name: entry.sample.action === 'ok' ? 'OK' : 'Cancel', exact: true
+        }).click();
+      }
     }
     if (entry.pending) {
       await expect(dialog).toBeVisible();

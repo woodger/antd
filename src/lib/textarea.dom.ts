@@ -46,7 +46,9 @@ export function createTextAreaMeasure(
   }
 
   function sync() {
-    if (!active || !element.isConnected) return;
+    if (!active || !element.isConnected) {
+      return;
+    }
     if (autoSize && shadow) {
       const style = view.getComputedStyle(element);
       const node = shadow.node;
@@ -105,18 +107,21 @@ export function createTextAreaMeasure(
   }
 
   function schedule() {
-    if (active && !frame)
+    if (active && !frame) {
       frame = view.requestAnimationFrame(() => {
         frame = 0;
         sync();
       });
+    }
   }
   const observer = new view.ResizeObserver(schedule);
   observer.observe(element);
 
   return {
     configure(next: TextAreaProps['autoSize'], style: string) {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
       // Сбрасываем только собственные autoSize-поля к authored styles перед новым измерением.
       if (autoSize || next)
         element.style.cssText = style;

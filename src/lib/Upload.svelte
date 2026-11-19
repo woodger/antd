@@ -168,7 +168,9 @@
   });
   onDestroy(controller.dispose);
   $effect(() => {
-    if (!pastable || blocked || !nativeElement) return;
+    if (!pastable || blocked || !nativeElement) {
+      return;
+    }
 
     const owner = nativeElement.ownerDocument;
     owner.addEventListener('paste', handlePaste);
@@ -185,9 +187,13 @@
   let uploaderRef = $derived(nativeElement ? uploader : null);
   export { files as fileList, uploaderRef as upload, nativeElement, inputElement };
   function openDialog(event: MouseEvent | KeyboardEvent) {
-    if (blocked || !openFileDialogOnClick || !children || event.defaultPrevented) return;
+    if (blocked || !openFileDialogOnClick || !children || event.defaultPrevented) {
+      return;
+    }
     if (event instanceof KeyboardEvent) {
-      if (event.target !== event.currentTarget || !['Enter', ' '].includes(event.key)) return;
+      if (event.target !== event.currentTarget || !['Enter', ' '].includes(event.key)) {
+        return;
+      }
       event.preventDefault();
     }
     inputElement?.click();
@@ -211,17 +217,23 @@
         file => filterUploadFile(file, accept, directory)
       )
       : transferFiles(transfer);
-    if (blocked || !nativeElement) return;
+    if (blocked || !nativeElement) {
+      return;
+    }
 
     await controller.upload(selected);
   }
   function handlePaste(event: ClipboardEvent) {
-    if (!pastable || blocked) return;
+    if (!pastable || blocked) {
+      return;
+    }
 
     const transfer = event.clipboardData;
     const hasFiles = Boolean(transfer?.files.length)
       || [...transfer?.items ?? []].some(item => item.kind === 'file');
-    if (!hasFiles) return;
+    if (!hasFiles) {
+      return;
+    }
 
     event.preventDefault();
     void uploadTransfer(transfer);
@@ -229,9 +241,13 @@
   function drag(event: DragEvent) {
     event.preventDefault();
     dragState = !blocked && event.type === 'dragover';
-    if (event.type !== 'drop') return;
+    if (event.type !== 'drop') {
+      return;
+    }
     onDrop?.(event);
-    if (blocked) return;
+    if (blocked) {
+      return;
+    }
     void uploadTransfer(event.dataTransfer);
   }
 </script>

@@ -4,7 +4,9 @@ import type { WatermarkContentLine } from './watermark.types';
 function prepareCanvas(document: Document, width: number, height: number, ratio = 1) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
-  if (!context) return;
+  if (!context) {
+    return;
+  }
 
   const realWidth = width * ratio;
   const realHeight = height * ratio;
@@ -51,7 +53,9 @@ export function drawWatermark(
   gapY: number
 ): readonly [string, number, number] | undefined {
   const original = prepareCanvas(document, width, height, ratio);
-  if (!original) return;
+  if (!original) {
+    return;
+  }
   const { context, canvas, realWidth, realHeight } = original;
 
   if (!Array.isArray(content))
@@ -75,14 +79,18 @@ export function drawWatermark(
     Math.max(width, height),
     ratio
   );
-  if (!rotated) return;
+  if (!rotated) {
+    return;
+  }
   rotated.context.translate(clip.max / 2, clip.max / 2);
   rotated.context.rotate(clip.angle);
   if (realWidth > 0 && realHeight > 0)
     rotated.context.drawImage(canvas, -realWidth / 2, -realHeight / 2);
 
   const filled = prepareCanvas(document, clip.width, clip.height);
-  if (!filled) return;
+  if (!filled) {
+    return;
+  }
   if (clip.cutWidth > 0 && clip.cutHeight > 0) {
     for (const [x, y] of [
       [0, 0],

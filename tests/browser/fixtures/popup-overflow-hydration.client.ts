@@ -27,7 +27,9 @@ declare global {
 
 const id = new URL(location.href).searchParams.get('sample');
 const sample = popupOverflowSamples.find(sample => sample.id === id);
-if (!sample?.live) throw Error(`Unknown live popup overflow sample: ${id}`);
+if (!sample?.live) {
+  throw Error(`Unknown live popup overflow sample: ${id}`);
+}
 const target = document.getElementById('root')!;
 const root = target.querySelector<HTMLElement>('[data-ant-select-control]')
   ?? target.querySelector<HTMLElement>('.popup-overflow-control')!;

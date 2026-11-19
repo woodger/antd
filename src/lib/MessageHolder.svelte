@@ -61,7 +61,9 @@
     const origin = anchor;
     const current = runtime;
     if (node
-      && origin) return untrack(() => connectMessageSurface(node, origin, current.setVisible));
+      && origin) {
+      return untrack(() => connectMessageSurface(node, origin, current.setVisible));
+    }
   });
 </script>
 

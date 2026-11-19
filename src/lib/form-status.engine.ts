@@ -13,9 +13,19 @@ interface FormStatusOptions {
 export function resolveFormStatus({
   validateStatus, validating, touched, hasFeedback, validated, errors, warnings
 }: FormStatusOptions): FormValidateStatus | undefined {
-  if (validateStatus !== undefined) return validateStatus;
-  if (validating) return 'validating';
-  if (errors.length) return 'error';
-  if (warnings.length) return 'warning';
-  if (touched || hasFeedback && validated) return 'success';
+  if (validateStatus !== undefined) {
+    return validateStatus;
+  }
+  if (validating) {
+    return 'validating';
+  }
+  if (errors.length) {
+    return 'error';
+  }
+  if (warnings.length) {
+    return 'warning';
+  }
+  if (touched || hasFeedback && validated) {
+    return 'success';
+  }
 }

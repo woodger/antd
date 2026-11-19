@@ -85,8 +85,10 @@ for (const sample of reference.cases) {
         : control(page, sample.component as ChoiceContainerCase['component']);
       await input.fill('alp');
       await input.evaluate(node => (node as HTMLInputElement).setSelectionRange(1, 2));
-      if (custom) await page.locator('[data-choice-count]')
-        .evaluate(node => (node as HTMLElement).click());
+      if (custom) {
+        await page.locator('[data-choice-count]')
+          .evaluate(node => (node as HTMLElement).click());
+      }
       const original = await input.elementHandle();
       const popup = await page.locator(surface).elementHandle();
       const active = await input.getAttribute('aria-activedescendant');

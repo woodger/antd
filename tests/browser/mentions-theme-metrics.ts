@@ -1,10 +1,14 @@
 /** Сравнивает CSS control и popup, не привязываясь к React/Svelte DOM-обёрткам. */
 export function snapshotMentionsTheme() {
   const root = document.querySelector<HTMLElement>('.ant-mentions');
-  if (!root) throw new Error('Mentions root is missing');
+  if (!root) {
+    throw new Error('Mentions root is missing');
+  }
 
   const css = (node: Element | null, keys: readonly string[]) => {
-    if (!node) return null;
+    if (!node) {
+      return null;
+    }
     const style = getComputedStyle(node);
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   };
@@ -40,14 +44,18 @@ export function snapshotMentionsTheme() {
 /** Читает все переменные из исходного registration rule, включая alias overrides. */
 export function snapshotMentionsThemeVariables(prefix: string) {
   const root = document.querySelector('.ant-mentions');
-  if (!root) throw new Error('Mentions root is missing');
+  if (!root) {
+    throw new Error('Mentions root is missing');
+  }
   const declarations: Record<string, string> = {};
 
   for (const sheet of document.styleSheets) {
     for (const rule of sheet.cssRules) {
       if (!(rule instanceof CSSStyleRule)
         || !root.matches(rule.selectorText)
-        || ![...rule.style].some(name => name.startsWith(`--${prefix}-mentions-`))) continue;
+        || ![...rule.style].some(name => name.startsWith(`--${prefix}-mentions-`))) {
+        continue;
+      }
 
       for (const name of rule.style) {
         if (name.startsWith(`--${prefix}-`)) {
