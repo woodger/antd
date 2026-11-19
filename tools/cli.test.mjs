@@ -279,7 +279,11 @@ describe('Developer CLI', () => {
       expect(missing.fetch).not.toHaveBeenCalled();
       const bad = output(root);
       bad.fetch.mockResolvedValue(
-        { ok: true, arrayBuffer: async () => Buffer.from('tampered archive') }
+        {
+          ok: true,
+          // Изменённые байты заставляют CLI отвергнуть архив после успешного HTTP-ответа.
+          arrayBuffer: async () => Buffer.from('tampered archive')
+        }
       );
 
       await expect(runCommands(['css', 'avatar', '--fetch', '--write'], bad
@@ -291,7 +295,11 @@ describe('Developer CLI', () => {
       await expect(readFile(join(root, '.upstream/artifacts/antd-6.6.8.tgz'))).rejects.toThrow();
       expect(await readFile(join(root, recipe.output), 'utf8')).toBe(expectedCss);
       const good = output(root);
-      good.fetch.mockResolvedValue({ ok: true, arrayBuffer: async () => archive });
+      good.fetch.mockResolvedValue({
+        ok: true,
+        // Возвращает именно тот архив, хеш которого записан в provenance fixture.
+        arrayBuffer: async () => archive
+      });
       await runCommands(['css', 'avatar', '--fetch', '--check'], good.context);
 
       expect(good.fetch).toHaveBeenCalledOnce();
