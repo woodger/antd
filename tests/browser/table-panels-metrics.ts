@@ -4,6 +4,7 @@ export function snapshotTablePanels() {
   if (!root) {
     throw new Error('Table panels are missing');
   }
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   const css = (node: Element | null) => {
     if (!node) {
       return null;

@@ -5,6 +5,7 @@ export function snapshotMentionsTheme() {
     throw new Error('Mentions root is missing');
   }
 
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   const css = (node: Element | null, keys: readonly string[]) => {
     if (!node) {
       return null;

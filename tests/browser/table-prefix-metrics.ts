@@ -9,6 +9,7 @@ export function snapshotTablePrefix() {
   if (!root) {
     throw new Error('Table prefix root is missing');
   }
+  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
   const css = (node: Element | null, keys: readonly string[], pseudo?: string) => {
     if (!node) {
       return null;

@@ -7,6 +7,7 @@ export function snapshotOverlayCorner(component: string) {
   }
 
   const anchor = document.querySelector<HTMLElement>('[data-corner-anchor]')!;
+  // Сохраняет измеренный box в простых числах для передачи из browser realm.
   const rect = (node: HTMLElement) => {
     const value = node.getBoundingClientRect();
     return { x: value.x, y: value.y, width: value.width, height: value.height };

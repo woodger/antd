@@ -3,11 +3,13 @@ export function snapshotSelectPrefix() {
   const root = host.querySelector<HTMLElement>('[data-ant-select-control]') ?? host;
   const prefix = root.dataset.antSelectPrefix ?? [...root.classList]
     .find(value => !/^(?:css-|svelte-|s-|fixture-)/.test(value))!;
+  // Выбирает часть по полному CSS-классу текущего prefix, независимо от соседних классов.
   const part = (suffix: string) => root.querySelector(`[class~="${prefix}${suffix}"]`);
   const popup = document.querySelector(`[class~="${prefix}-dropdown"]`);
   const font = ['font-size', 'line-height', 'font-family', 'color'];
   const border = ['border-top-width', 'border-top-style', 'border-top-color', 'border-radius'];
   const padding = ['padding-top', 'padding-right', 'padding-bottom', 'padding-left'];
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   function css(node: Element | null, names: string[]) {
     if (!node) {
       return null;

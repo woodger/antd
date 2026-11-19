@@ -4,6 +4,7 @@ export function snapshotBeamGlobal() {
       scope.dataset.beamGlobalScope,
       [...scope.querySelectorAll<HTMLElement>('[data-beam-global-target] > [aria-hidden="true"]')]
         .map(layer => {
+          // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
           const fields = (pseudo: string | null, keys: string[]) => {
             const css = getComputedStyle(layer, pseudo);
             return Object.fromEntries(keys.map(key => [key, css.getPropertyValue(key)]));

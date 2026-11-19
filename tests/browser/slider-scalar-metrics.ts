@@ -1,6 +1,8 @@
 export function snapshotSliderScalar() {
   const root = document.querySelector<HTMLElement>('[data-scalar-case] .ant-slider')!;
   const control = root.querySelector<HTMLElement>('[role="slider"], input[type="range"]')!;
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   const css = (node: Element, fields: string[]) => {
     const style = getComputedStyle(node);
     return Object.fromEntries(fields.map(field => [field, style.getPropertyValue(field)]));

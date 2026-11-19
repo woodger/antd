@@ -1,4 +1,6 @@
 export function snapshotMasonryTheme() {
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   const css = (node: Element, properties: string[]) => {
     const style = getComputedStyle(node);
 

@@ -1,4 +1,6 @@
 export function snapshotInputOTPPrefix() {
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   const style = (node: Element, properties: string[]) => {
     const computed = getComputedStyle(node);
 

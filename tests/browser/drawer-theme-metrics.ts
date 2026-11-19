@@ -4,6 +4,7 @@ export function snapshotDrawerTheme() {
   if (!root) {
     throw new Error('Drawer root is missing');
   }
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   const css = (node: Element | null, keys: readonly string[]) => {
     if (!node) {
       return null;

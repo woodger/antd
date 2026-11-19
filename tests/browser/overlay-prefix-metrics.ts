@@ -20,6 +20,7 @@ export function snapshotOverlayPrefix(sample: { component: string; prefixCls?: s
     return null;
   }
 
+  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
   const classes = (node: HTMLElement | null) => node ? [...node.classList]
     .filter(name => (name === prefix || name.startsWith(`${prefix}-`)
       || sample.component === 'popconfirm' && (name === confirm || name.startsWith(`${confirm}-`)))
@@ -35,6 +36,7 @@ export function snapshotOverlayPrefix(sample: { component: string; prefixCls?: s
       radius: style.borderTopLeftRadius, direction: style.direction
     };
   };
+  // Сохраняет измеренный box в простых числах для передачи из browser realm.
   const rect = (node: HTMLElement) => {
     const value = node.getBoundingClientRect();
     return { x: value.x, y: value.y, width: value.width, height: value.height };

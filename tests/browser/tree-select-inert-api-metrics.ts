@@ -5,6 +5,7 @@ export function readTreeSelectInertApi() {
   const editor = root.querySelector<HTMLInputElement | HTMLTextAreaElement>('input[role="combobox"],textarea[role="combobox"]');
   const popup = document.querySelector<HTMLElement>('.ant-tree-select-dropdown');
   const visible = Boolean(popup && !popup.hidden && getComputedStyle(popup).display !== 'none' && popup.getClientRects().length);
+  // Читает сериализованное состояние fixture. Отсутствующий output остаётся null.
   const output = (name: string) => {
     const node = host.querySelector(`[data-inert-api-${name}]`);
     return node ? JSON.parse(node.textContent || 'null') : null;
@@ -15,6 +16,7 @@ export function readTreeSelectInertApi() {
     ownProperties: names.filter(name => Object.hasOwn(node, name))
   } : null;
   const rootBox = root.getBoundingClientRect(), popupBox = visible ? popup!.getBoundingClientRect() : null;
+  // Округляет дробное измерение до тысячных для сравнения снимков.
   const round = (value: number) => Math.round(value * 1000) / 1000;
   const style = getComputedStyle(root);
   return {

@@ -1,7 +1,10 @@
 export function snapshotTypographyPrefix() {
+  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !name.startsWith('css-') && !/^s-[\w-]{12}$/.test(name)
       && !name.endsWith('-css-var') && !name.endsWith('-source-theme')).sort();
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   const style = (node: Element, properties: string[]) => {
     const computed = getComputedStyle(node);
 

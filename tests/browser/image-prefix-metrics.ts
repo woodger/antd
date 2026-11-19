@@ -5,6 +5,7 @@ export function snapshotImagePrefix(override?: string) {
     .find(node => node.querySelector('img') && node.getClientRects().length) ?? null;
   const previewPrefix = override ?? (viewer
     ? [...viewer.classList].find(value => value.endsWith('-preview')) : '');
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   function css(node: Element | null, keys: string[]) {
     if (!node) {
       return null;

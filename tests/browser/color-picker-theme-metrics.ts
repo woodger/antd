@@ -1,4 +1,5 @@
 export function snapshotColorPickerThemeTriggers() {
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   function colorThemeCSS(node: Element | null, names: string[]) {
     if (!node) {
       return null;
@@ -26,6 +27,7 @@ export function snapshotColorPickerThemeTriggers() {
     )]));
 }
 export function snapshotColorPickerThemePopup() {
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   function colorThemeCSS(node: Element | null, names: string[]) {
     if (!node) {
       return null;

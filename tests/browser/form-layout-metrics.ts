@@ -2,6 +2,7 @@ export function formLayoutMetrics() {
   const form = document.querySelector<HTMLElement>('[data-layout-root] form')!;
   const origin = form.getBoundingClientRect();
 
+  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
   function properties(node: Element, names: string[], pseudo?: string) {
     const style = getComputedStyle(node, pseudo);
     return Object.fromEntries(names.map((name) => [name, style.getPropertyValue(name)]));

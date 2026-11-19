@@ -4,7 +4,9 @@ export function readTreeSelectAlignFrame() {
   const root = host.querySelector<HTMLElement>('[data-align-frame-root]')
     ?? host.querySelector<HTMLElement>('.ant-select')!;
   const popup = document.querySelector<HTMLElement>('.ant-tree-select-dropdown');
+  // Округляет дробное измерение до тысячных для сравнения снимков.
   const round = (value: number) => Math.round(value * 1000) / 1000;
+  // Сохраняет измеренный box в простых числах для передачи из browser realm.
   const rect = (node: Element) => {
     const box = node.getBoundingClientRect();
     return {

@@ -8,6 +8,7 @@ export function snapshotMentionsPrefix() {
     }
 
     const prefix = root.classList[0];
+    // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
     const css = (node: Element | null, keys: readonly string[]) => {
       if (!node) {
         return null;

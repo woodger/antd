@@ -28,7 +28,9 @@ export function readTreeSelectSuffixLayout() {
   const restLabel = content.querySelector<HTMLElement>('[data-suffix-layout-rest]');
   const rest = restLabel?.closest<HTMLElement>('.ant-select-content-item-rest,[data-tree-choice-rest]') ?? null;
   const base = content.getBoundingClientRect(), rootBox = root.getBoundingClientRect();
+  // Округляет дробное измерение до тысячных для сравнения снимков.
   const round = (value: number) => Math.round(value * 1000) / 1000;
+  // Сохраняет измеренный box в простых числах для передачи из browser realm.
   function box(node: HTMLElement | null) {
     if (!node) {
       return null;

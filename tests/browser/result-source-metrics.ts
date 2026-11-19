@@ -1,9 +1,12 @@
 export function snapshotResultSource(prefix = 'ant-result') {
   const frame = document.querySelector('[data-result-source-frame]')!;
   const root = frame.querySelector<HTMLElement>(`.${prefix}`);
+  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !/^svelte-|^s-[\w-]{12}$|^css-|^ant-result-css-var$|^result-source-scope$/.test(name)
   ).sort();
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   const style = (node: Element, keys: string[]) => Object.fromEntries(keys.map(key =>
     [key, getComputedStyle(node).getPropertyValue(key)]
   ));

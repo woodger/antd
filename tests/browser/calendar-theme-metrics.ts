@@ -1,4 +1,5 @@
 export function snapshotCalendarTheme() {
+  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
   function css(node: Element | null, names: string[], pseudo?: string) {
     if (!node) {
       return null;

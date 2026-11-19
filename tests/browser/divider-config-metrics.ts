@@ -1,10 +1,13 @@
 export function snapshotDividerConfig(prefix: string) {
   const frame = document.querySelector('[data-divider-config-case]')!;
   const root = frame.firstElementChild!;
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   const css = (node: Element, keys: string[]) => {
     const style = getComputedStyle(node);
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   };
+  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !/^css-(?:dev-only-do-not-override-)?[a-z0-9]+$/.test(name)
       && !name.startsWith('css-var-') && name !== 'divider-config-scope'

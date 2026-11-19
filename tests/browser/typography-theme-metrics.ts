@@ -1,4 +1,6 @@
 export function snapshotTypographyTheme() {
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   function properties(node: Element) {
     const style = getComputedStyle(node);
     return Object.fromEntries([

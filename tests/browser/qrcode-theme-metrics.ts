@@ -7,6 +7,8 @@ export function snapshotQRCodeTheme() {
       const drawing = (canvas ?? svg)!;
       const cover = root.querySelector('.ant-qrcode-cover');
       const text = root.querySelector('.ant-qrcode-expired, .ant-qrcode-scanned');
+      // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+      // свойств.
       const style = (node: Element, fields: string[]) => {
         const css = getComputedStyle(node);
         return Object.fromEntries(fields.map(field => [field, css.getPropertyValue(field)]));

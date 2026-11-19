@@ -1,4 +1,6 @@
 export function snapshotDividerTheme() {
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   const css = (node: Element, fields: string[]) => {
     const style = getComputedStyle(node);
     return Object.fromEntries(fields.map(field => [field, style.getPropertyValue(field)]));

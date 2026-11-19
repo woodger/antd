@@ -1,4 +1,5 @@
 export function snapshotListyPrefix() {
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   function properties(node: Element | null, names: string[]) {
     if (!node) {
       return null;

@@ -3,6 +3,7 @@ export function readFormFeedbackAutoComplete() {
   const prefix = host.dataset.feedbackPrefix!;
   const root = host.querySelector<HTMLElement>('[data-feedback-autocomplete-control] > div')!;
   const editor = root.querySelector<HTMLInputElement | HTMLTextAreaElement>('input:not([type="hidden"]), textarea')!;
+  // Сортирует выбранные CSS-классы, чтобы сравнение не зависело от порядка токенов.
   const classes = (node: Element, start: string) => [...node.classList].filter(name => name.startsWith(start)).map(name => name.slice(start.length)).sort();
   const item = host.querySelector<HTMLElement>('.feedback-item')!;
   const suffix = [...root.children].find(node => node.classList.contains(prefix+'-suffix'));

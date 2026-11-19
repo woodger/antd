@@ -1,6 +1,7 @@
 export function snapshotTagGroup(host: HTMLElement) {
   const root = host.querySelector<HTMLElement>('[data-tag-group-root]')!;
   const style = getComputedStyle(root);
+  // Сортирует выбранные CSS-классы, чтобы сравнение не зависело от порядка токенов.
   const classes = (node: Element) => [...node.classList].filter(name =>
     name.startsWith('case-') || name.startsWith('ant-tag-checkable-group')
   ).sort();

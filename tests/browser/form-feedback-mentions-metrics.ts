@@ -4,6 +4,7 @@ export function readFormFeedbackMentions() {
   const kind = host.dataset.feedbackKind!;
   const root = host.querySelector<HTMLElement>('[data-feedback-control] > :first-child')!;
   const editor = root.querySelector<HTMLTextAreaElement | HTMLInputElement>('textarea, input:not([type="checkbox"]):not([type="hidden"])');
+  // Сортирует выбранные CSS-классы, чтобы сравнение не зависело от порядка токенов.
   const classes = (node: Element, start: string) => [...node.classList].filter(name => name.startsWith(start)).map(name => name.slice(start.length)).sort();
   const icons = [...root.querySelectorAll<HTMLElement>('[class*="-item-feedback-icon"]')].map(icon => {
     const custom = icon.querySelector<HTMLElement>('[data-feedback-info]');

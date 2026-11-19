@@ -4,6 +4,7 @@ export function snapshotSpaceTheme() {
 
     return Object.fromEntries(names.map(name => [name, css.getPropertyValue(name)]));
   };
+  // Сортирует выбранные CSS-классы, чтобы сравнение не зависело от порядка токенов.
   const classes = (node: Element) => [...node.classList].filter(
     name => /^(context-|local-|ctx-)/.test(name)
   ).sort();

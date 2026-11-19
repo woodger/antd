@@ -5,6 +5,7 @@ export function snapshotSplitterTheme() {
       const dragger = root.querySelector<HTMLElement>('.ant-splitter-bar-dragger')!;
       const preview = root.querySelector('.ant-splitter-bar-preview');
       const icon = root.querySelector('.ant-splitter-bar-dragger-icon');
+      // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
       const style = (node: Element, properties: string[], pseudo?: string) => {
         const computed = getComputedStyle(node, pseudo);
         return Object.fromEntries(properties.map(property => [

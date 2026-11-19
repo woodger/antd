@@ -3,6 +3,7 @@ export function snapshotTagPrefix(host: HTMLElement, sample: {
 }) {
   const root = host.querySelector<HTMLElement>('[data-tag-prefix-root]')!;
   const prefix = sample.prefixCls || 'ant-tag';
+  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
   const classes = (node: HTMLElement, value = prefix, checkable = false) => [...node.classList]
     .filter(name => name === value || name.startsWith(`${value}-`))
     .filter(name => name !== 'ant-tag-css-var' && name !== 'ant-tag-dark'

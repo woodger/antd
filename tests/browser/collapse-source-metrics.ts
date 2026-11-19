@@ -1,9 +1,12 @@
 export function snapshotCollapseSource(prefix = 'ant-collapse') {
   const root = document.querySelector('[data-collapse-source-frame]')!
     .querySelector<HTMLElement>(`.${prefix}`)!;
+  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
   const classes = (node: Element, all = false) => [...node.classList].filter(name => all
     ? !/^svelte-|^s-[\w-]{12}$|^css-|^ant-collapse-css-var$|^collapse-source-scope$/.test(name)
     : /^(provider-|local-|item-|flag-)/.test(name)).sort();
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   const style = (node: Element, keys: string[]) => Object.fromEntries(keys.map(key =>
     [key, getComputedStyle(node).getPropertyValue(key)]
   ));

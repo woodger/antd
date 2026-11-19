@@ -7,6 +7,7 @@ export function formTooltipMetrics() {
   const labelBox = label?.getBoundingClientRect();
   const popup = document.querySelector('[data-ant-tooltip]:popover-open');
   const content = popup?.querySelector('.ant-tooltip-container');
+  // Округляет дробное измерение до сотых для сравнения снимков.
   const round = (value: number) => Math.round(value * 100) / 100;
 
   return {

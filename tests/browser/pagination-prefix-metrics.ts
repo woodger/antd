@@ -4,6 +4,7 @@ export function snapshotPaginationPrefix() {
   const font = ['font-family', 'font-size', 'line-height', 'color'];
   const box = ['height', 'min-width', 'padding', 'margin-inline-end', 'background-color',
     'border-color', 'border-width', 'border-radius'];
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   function css(node: Element | null, keys: string[]) {
     if (!node) {
       return null;
@@ -12,6 +13,7 @@ export function snapshotPaginationPrefix() {
 
     return Object.fromEntries(keys.map(key => [key, style.getPropertyValue(key)]));
   }
+  // Выбирает часть по полному CSS-классу текущего prefix, независимо от соседних классов.
   const part = (suffix: string) => root.querySelector(`[class~="${prefix}${suffix}"]`);
   const control = (node: Element | null) => node?.querySelector('button,a') ?? null;
   const select = root.querySelector('[role="combobox"]');

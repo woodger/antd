@@ -1,4 +1,6 @@
 export function snapshotFloatButtonTheme() {
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   function properties(node: Element, names: readonly string[]) {
     const style = getComputedStyle(node);
     return Object.fromEntries(names.map(name => [name, style.getPropertyValue(name)]));

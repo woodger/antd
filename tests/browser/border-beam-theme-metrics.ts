@@ -1,4 +1,5 @@
 export function snapshotBorderBeamTheme(prefix = 'ant-border-beam') {
+  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
   const properties = (node: Element, names: string[], pseudo?: string) => {
     const style = getComputedStyle(node, pseudo);
 

@@ -5,9 +5,12 @@ export function snapshotProgressCircle(prefix = 'ant-progress') {
   const svg = body.querySelector('svg')!;
   const indicator = body.querySelector(`.${prefix}-indicator`);
   const icon = indicator?.querySelector('svg');
+  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !/^svelte-|^s-[\w-]{12}$|^css-|^ant-progress-css-var$|^progress-circle-source-scope$/.test(name)
   ).sort();
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   const css = (node: Element, keys: string[]) => Object.fromEntries(keys.map(key => {
     const value = getComputedStyle(node).getPropertyValue(key);
     return [key, value.startsWith('url(') ? 'url(#gradient)' : value];

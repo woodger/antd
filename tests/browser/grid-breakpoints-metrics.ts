@@ -3,6 +3,8 @@ export function snapshotGridBreakpoints() {
   if (!root) {
     throw new Error('Grid breakpoint control is missing');
   }
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   const css = (node: Element) => {
     const style = getComputedStyle(node);
     return Object.fromEntries([

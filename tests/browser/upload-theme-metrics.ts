@@ -11,6 +11,7 @@ export function snapshotUploadTheme() {
     'padding-left', 'border-top-width', 'border-top-color', 'border-top-style',
     'border-radius', 'background-color', 'box-shadow'
   ];
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   const css = (node: Element | null, keys: readonly string[]) => {
     if (!node) {
       return null;

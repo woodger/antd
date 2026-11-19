@@ -1,7 +1,9 @@
 export function snapshotDescriptionsPrefix() {
+  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !name.startsWith('css-') && !/^s-[\w-]{12}$/.test(name)
       && !name.endsWith('-css-var') && !name.endsWith('-source-theme')).sort();
+  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
   const style = (node: Element, properties: string[], pseudo?: string) => {
     const computed = getComputedStyle(node, pseudo);
 

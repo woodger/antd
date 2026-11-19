@@ -1,4 +1,6 @@
 export function snapshotCorePrefix() {
+  // Сохраняет отдельные computed declarations. Сериализованный снимок сравнивается по именам
+  // свойств.
   const style = (node: Element) => {
     const css = getComputedStyle(node);
     return Object.fromEntries([
@@ -16,6 +18,7 @@ export function snapshotCorePrefix() {
       'margin-block-end'
     ].map(key => [key, css.getPropertyValue(key)]));
   };
+  // Убирает служебные классы рантайма и сортирует оставшиеся для сравнения.
   const classes = (node: Element) => [...node.classList].filter(name =>
     !/^(css-|s-[\w-]{12}$)/.test(name)
       && !name.endsWith('-css-var') && !name.endsWith('-source-theme')).sort();

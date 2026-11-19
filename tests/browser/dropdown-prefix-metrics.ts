@@ -4,6 +4,7 @@ export function snapshotDropdownPrefix() {
   const menu = popup.querySelector<HTMLElement>('[role="menu"]')!;
   const prefix = [...menu.classList].find(value => value.endsWith('-menu'))!;
   const items = [...menu.querySelectorAll<HTMLElement>('[role="menuitem"]')];
+  // Читает computed declarations узла или псевдоэлемента по списку измеряемых свойств.
   function css(node: Element | null, keys: string[], pseudo?: string) {
     if (!node) {
       return null;
@@ -16,6 +17,7 @@ export function snapshotDropdownPrefix() {
   const box = ['padding-top', 'padding-right', 'padding-bottom', 'padding-left',
     'background-color', 'border-radius'];
   const arrow = popup.querySelector(`[class~="${prefix.slice(0, -5)}-arrow"]`);
+  // Выбирает часть по полному CSS-классу текущего prefix, независимо от соседних классов.
   const part = (suffix: string) => menu.querySelector(`[class~="${prefix}${suffix}"]`);
 
   return {

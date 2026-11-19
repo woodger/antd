@@ -1,5 +1,6 @@
 export function snapshotTourTheme() {
   const root = document.querySelector('.ant-tour')!;
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   function css(node: Element | null, names: string[]) {
     if (!node) {
       return null;

@@ -1,5 +1,6 @@
 /** DOM-free reader for the actual replacement field; complete raw HTML stays separate. */
 export function readSelectComponentsSSRFields(html: string) {
+  // Разбирает числовые и перечисленные именованные HTML-сущности в захваченном SSR-тексте.
   const decode = (value: string) => value.replace(/&#(?:x([\da-f]+)|(\d+));|&(amp|lt|gt|quot|apos);/gi,
     (_all, hex, decimal, named) => hex || decimal ? String.fromCodePoint(parseInt(
       hex ?? decimal,

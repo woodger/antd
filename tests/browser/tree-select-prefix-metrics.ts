@@ -2,6 +2,7 @@ export function snapshotTreeSelectPrefix() {
   const root = document.querySelector<HTMLElement>('.fixture-tree-select-prefix')!;
   const prefix = root.dataset.antSelectPrefix ?? [...root.classList]
     .find(value => !/^(?:css-|svelte-|s-|fixture-)/.test(value))!;
+  // Выбирает часть по полному CSS-классу текущего prefix, независимо от соседних классов.
   const part = (suffix: string) => root.querySelector(`[class~="${prefix}${suffix}"]`);
   const popup = document.querySelector<HTMLElement>(`[class~="${prefix}-dropdown"]`);
   const surface = popup?.querySelector<HTMLElement>('[role="tree"]');
@@ -10,6 +11,7 @@ export function snapshotTreeSelectPrefix() {
   const font = ['font-size', 'line-height', 'font-family', 'color'];
   const padding = ['padding-top', 'padding-right', 'padding-bottom', 'padding-left'];
   const border = ['border-top-width', 'border-top-color', 'border-radius'];
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   function css(node: Element | null | undefined, names: string[]) {
     if (!node) {
       return null;

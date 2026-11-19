@@ -12,6 +12,7 @@ export function readTreeSelectSuffixLayoutEdges() {
       && !['ant-select-content-item-rest', 'ant-select-content-item-suffix', 'ant-select-content-item-prefix'].some(name => node.classList.contains(name))));
   const hostBox = host.getBoundingClientRect();
   const precision = (value: number) => Math.round(value * 1000) / 1000;
+  // Сохраняет измеренный box в простых числах для передачи из browser realm.
   const box = (node: HTMLElement | null) => {
     if (!node) {
       return null;

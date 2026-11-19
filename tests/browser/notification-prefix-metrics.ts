@@ -3,7 +3,9 @@ export function snapshotNotificationPrefix() {
   const notice = document.querySelector<HTMLElement>('.fixture-notification-prefix')!;
   const prefix = [...notice.classList].find(value => value.endsWith('-notice'))!.slice(0, -7);
   const root = notice.closest(`[class~="${prefix}-list"]`)!;
+  // Выбирает часть по полному CSS-классу текущего prefix, независимо от соседних классов.
   const part = (suffix: string) => root.querySelector(`[class~="${prefix}${suffix}"]`);
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   const css = (node: Element | null, keys: readonly string[]) => {
     if (!node) {
       return null;

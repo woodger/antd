@@ -1,4 +1,5 @@
 export function snapshotTransferTheme() {
+  // Фиксирует computed declarations. Отсутствующий узел остаётся null в снимке.
   function css(node: Element | null, names: string[]) {
     if (!node) {
       return null;
