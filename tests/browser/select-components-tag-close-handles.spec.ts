@@ -47,6 +47,21 @@ for (const sample of [...selectTagCloseHandleSamples, ...cachedOptionSamples]) t
   let ledger = null as Awaited<ReturnType<typeof readTagCloseHandleLedger>> | null, cleanup = null as Awaited<ReturnType<typeof readTagCloseHandleCleanup>> | null,
     late = null as Awaited<ReturnType<typeof readTagCloseHandleCleanup>> | null, disposed = false;
   const identities = createTagCloseIdentityProof();
+  // Читает журнал и удаляет оставшийся компонент при прерванном сценарии.
+  async function captureRemainingCleanup() {
+    try {
+      ledger = await readTagCloseHandleLedger(page);
+      if (!disposed) {
+      await page.evaluate(() => window.tagCloseHandlesNative.dispose());
+      await drainSelectSurface(page);
+      cleanup = await readTagCloseHandleCleanup(page);
+      await page.waitForTimeout(1000);
+      late = await readTagCloseHandleCleanup(page);
+    }
+    }
+    catch (error) { errors.push({ phase: 'finally', message: String(error) }); }
+  }
+
   try {
     await openTagCloseHandles(page, sample);
     if (sample.retentionSetup) {
@@ -80,17 +95,7 @@ for (const sample of [...selectTagCloseHandleSamples, ...cachedOptionSamples]) t
     expect(requestFailures).toEqual([]);
     expect(responses.filter(row => (row as { status: number }).status >= 400)).toEqual([]);
   } finally {
-    try {
-      ledger = await readTagCloseHandleLedger(page);
-      if (!disposed) {
-      await page.evaluate(() => window.tagCloseHandlesNative.dispose());
-      await drainSelectSurface(page);
-      cleanup = await readTagCloseHandleCleanup(page);
-      await page.waitForTimeout(1000);
-      late = await readTagCloseHandleCleanup(page);
-    }
-    }
-    catch (error) { errors.push({ phase: 'finally', message: String(error) }); }
+    await captureRemainingCleanup();
     await testInfo.attach('tag-close-handles-complete-raw.json.gz', { contentType: 'application/gzip', body: gzipSync(Buffer.from(JSON.stringify({ sample, source, trace, ledger, cleanup, late,
       errors, diagnostics, network: { requests, responses, requestFailures }, renderer: 'vite-hmr' }, null, 2))) });
   }

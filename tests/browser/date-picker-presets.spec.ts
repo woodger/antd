@@ -49,6 +49,20 @@ for (const sample of datePickerPresetSamples) {
       contentType: 'application/gzip', body: gzipSync(Buffer.from(JSON.stringify(value, null, 2)))
     });
     let disposed = false;
+    // Сохраняет результат запасного удаления и добавляет ошибку к диагностике теста.
+    async function attachFallbackDisposal() {
+      try {
+        const before = await settleDatePickerPresets(page);
+        await attach(
+          'finally-disposal-complete-raw',
+          await disposeDatePickerPresets(page, before)
+        );
+      }
+      catch (error) {
+        errors.push({ phase: 'finally', message: String(error) });
+      }
+    }
+
     try {
       await openDatePickerPresets(page, sample);
       let actual = await settleDatePickerPresets(page);
@@ -105,16 +119,7 @@ for (const sample of datePickerPresetSamples) {
       expect(diagnostics.filter(message => ['warning', 'error'].includes(message.type))).toEqual([]);
     } finally {
       if (!disposed) {
-        try {
-          const before = await settleDatePickerPresets(page);
-          await attach(
-            'finally-disposal-complete-raw',
-            await disposeDatePickerPresets(page, before)
-          );
-        }
-        catch (error) {
-          errors.push({ phase: 'finally', message: String(error) });
-        }
+        await attachFallbackDisposal();
       }
       await attach('complete-diagnostics', {
         sample, renderer: 'vite-hmr', errors, diagnostics, requests, responses, failedRequests

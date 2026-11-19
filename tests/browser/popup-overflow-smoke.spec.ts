@@ -167,26 +167,31 @@ for (const family of families) {
           return { root: refs.root, anchor: refs.anchor, editor: refs.editor,
             parent: refs.editor?.parentNode ?? null };
         });
-        try {
-          for (const action of popupOverflowActions(sample)) {
-            await actPopupOverflow(page, action);
-            states.push(await settle(page));
-            expect(await identity.evaluate(old => {
-              const refs: { root?: HTMLElement; anchor?: HTMLElement; editor?: HTMLElement } = {};
-              document.querySelector('[data-overflow-command]')!
-                .dispatchEvent(new CustomEvent('overflowrefs', { detail: refs }));
-              return { root: old.root === refs.root, anchor: old.anchor === refs.anchor,
-                editor: old.editor === refs.editor, parent: old.parent === (refs.editor?.parentNode ?? null) };
-            }), `${sample.id}/stable DOM bindings`).toEqual({
-              root: true,
-              anchor: true,
-              editor: true,
-              parent: true
-            });
+        // Записывает состояния после действий и освобождает ссылки на исходные узлы.
+        async function readStatesAndVerifyBindings() {
+          try {
+            for (const action of popupOverflowActions(sample)) {
+              await actPopupOverflow(page, action);
+              states.push(await settle(page));
+              expect(await identity.evaluate(old => {
+                const refs: { root?: HTMLElement; anchor?: HTMLElement; editor?: HTMLElement } = {};
+                document.querySelector('[data-overflow-command]')!
+                  .dispatchEvent(new CustomEvent('overflowrefs', { detail: refs }));
+                return { root: old.root === refs.root, anchor: old.anchor === refs.anchor,
+                  editor: old.editor === refs.editor, parent: old.parent === (refs.editor?.parentNode ?? null) };
+              }), `${sample.id}/stable DOM bindings`).toEqual({
+                root: true,
+                anchor: true,
+                editor: true,
+                parent: true
+              });
+            }
+          } finally {
+            await identity.dispose();
           }
-        } finally {
-          await identity.dispose();
         }
+
+        await readStatesAndVerifyBindings();
         for (const [index, state] of states.entries()) {
           expect(state.view.context, `${sample.id}/${index}/provider receipt`).toEqual(sourceStates[index].view.context);
           expect(state.view.leaks, sample.id).toEqual([]);

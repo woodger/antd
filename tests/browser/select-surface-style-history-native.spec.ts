@@ -71,7 +71,12 @@ for (const original of selectSurfaceStyleHistoryNativeReference.cases) {
       for (const [index, step] of original.steps.entries()) {
         if (step.action.type === 'click') {
           const root = await retained.evaluateHandle(value => value.root!);
-          try { await root.asElement()!.click(); } finally { await root.dispose(); }
+          // Нажимает на удержанный корень и освобождает DOM handle при любом исходе.
+          async function clickAndReleaseRoot() {
+            try { await root.asElement()!.click(); } finally { await root.dispose(); }
+          }
+
+          await clickAndReleaseRoot();
         }
         else if (step.action.type === 'outside') await page.locator('[data-surface-outside]').click();
         else await page.evaluate(action => document.querySelector('[data-surface-command]')!

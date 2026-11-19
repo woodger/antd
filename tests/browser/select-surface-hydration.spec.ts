@@ -272,7 +272,12 @@ for (const entry of selectSurfaceHydrationReference.cases) {
       // Полная Source последовательность закончена; ниже отдельная проверка Native connected-blur disposal.
       await page.evaluate(() => window.selectSurfaceHydration!.refs().control!.focus({ preventScroll: true }));
       const root = await identity.evaluateHandle(before => before.root);
-      try { await root.asElement()!.click(); } finally { await root.dispose(); }
+      // Проверяет клик по исходному узлу и освобождает удержанный DOM handle.
+      async function clickAndReleaseRoot() {
+        try { await root.asElement()!.click(); } finally { await root.dispose(); }
+      }
+
+      await clickAndReleaseRoot();
       await settleSelectSurfaceHydration(page);
       expect(await bindings()).toEqual(expectedBindings);
       expect(await page.evaluate(() => document.activeElement === window.selectSurfaceHydration!.editor)).toBe(true);

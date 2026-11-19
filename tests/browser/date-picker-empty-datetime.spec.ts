@@ -51,6 +51,16 @@ for (const sample of samples) {
         }
       };
       let disposed = false;
+      // Сохраняет результат запасного удаления и добавляет ошибку к диагностике теста.
+      async function attachFallbackDisposal() {
+        try {
+          await attach('finally-actual-disposal', await disposeEmptyDatetime(page));
+        }
+        catch (error) {
+          errors.push({ phase: 'finally', message: String(error) });
+        }
+      }
+
       try {
         assert.deepEqual(source.sample, sample);
         await openEmptyDatetime(page, sample);
@@ -103,12 +113,7 @@ for (const sample of samples) {
           .toEqual([]);
       } finally {
         if (!disposed) {
-          try {
-            await attach('finally-actual-disposal', await disposeEmptyDatetime(page));
-          }
-          catch (error) {
-            errors.push({ phase: 'finally', message: String(error) });
-          }
+          await attachFallbackDisposal();
         }
         await attach('complete-diagnostics-and-comparison-scope', {
           sample, proof, errors, diagnostics, requests, responses, failedRequests

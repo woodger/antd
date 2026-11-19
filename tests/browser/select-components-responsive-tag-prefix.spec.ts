@@ -61,6 +61,39 @@ for (const sample of selectCustomTagPrefixSamples) test(`Select responsive custo
       ...verifyResponsiveTagPrefixLedger(observed, source, point, label, applied));
     trace.push({ label, actual, appliedBoundaries: [...applied] });
   };
+  // Сохраняет последний журнал даже после прерванного сценария.
+  async function readFinalLedger() {
+    try {
+      ledger = await readNativeResponsiveTagPrefixLedger(page);
+    }
+    catch (error) {
+      errors.push({ phase: 'finally-ledger', error: String(error) });
+    }
+  }
+
+  // Удаляет оставшийся компонент и читает очистку и отложенное состояние.
+  async function disposeRemainingOwner() {
+    try { if (!disposed) {
+      await page.evaluate(() => window.customTagPrefixNative.dispose());
+      await drainSelectSurface(page);
+      cleanup = await readNativeResponsiveTagPrefixCleanup(page);
+      await page.waitForTimeout(1000);
+      late = await readNativeResponsiveTagPrefixCleanup(page);
+    } }
+    catch (error) { errors.push({ phase: 'finally-cleanup', error: String(error) }); }
+  }
+
+  // Снимает отложенное состояние, если очистка прошла и повторного замера ещё нет.
+  async function readMissingLateState() {
+    try {
+      if (cleanup && !late) {
+      await page.waitForTimeout(1000);
+      late = await readNativeResponsiveTagPrefixCleanup(page);
+    }
+    }
+    catch (error) { errors.push({ phase: 'finally-late', error: String(error) }); }
+  }
+
   try {
     await openNativeResponsiveTagPrefix(page, sample);
     await installNativeResponsiveTagPrefixFocusoutProbe(page);
@@ -95,27 +128,9 @@ for (const sample of selectCustomTagPrefixSamples) test(`Select responsive custo
     expect(errors).toEqual([]);
     expect(failures).toEqual([]);
   } finally {
-    try {
-      ledger = await readNativeResponsiveTagPrefixLedger(page);
-    }
-    catch (error) {
-      errors.push({ phase: 'finally-ledger', error: String(error) });
-    }
-    try { if (!disposed) {
-      await page.evaluate(() => window.customTagPrefixNative.dispose());
-      await drainSelectSurface(page);
-      cleanup = await readNativeResponsiveTagPrefixCleanup(page);
-      await page.waitForTimeout(1000);
-      late = await readNativeResponsiveTagPrefixCleanup(page);
-    } }
-    catch (error) { errors.push({ phase: 'finally-cleanup', error: String(error) }); }
-    try {
-      if (cleanup && !late) {
-      await page.waitForTimeout(1000);
-      late = await readNativeResponsiveTagPrefixCleanup(page);
-    }
-    }
-    catch (error) { errors.push({ phase: 'finally-late', error: String(error) }); }
+    await readFinalLedger();
+    await disposeRemainingOwner();
+    await readMissingLateState();
     const focusoutProbe = await readNativeResponsiveTagPrefixFocusoutProbe(page);
     await testInfo.attach('responsive-custom-tag-prefix-complete-raw.json.gz', { body: gzipSync(Buffer.from(JSON.stringify({ sample, source, trace, ledger,
       before, cleanup, late, focusoutProbe, failures, diagnostics, errors, network: {

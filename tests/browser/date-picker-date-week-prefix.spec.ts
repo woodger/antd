@@ -92,6 +92,12 @@ for (const sample of samples) {
       };
       let disposed = false;
       let closedIndex = 0, actions = 0;
+      // Сохраняет результат запасного удаления и добавляет ошибку к диагностике теста.
+      async function attachFallbackDisposal() {
+        try { await attach('finally-whole-actual-disposal', await disposeDateWeekPrefix(page)); }
+        catch (error) { errors.push({ phase: 'finally-dispose', message: String(error) }); }
+      }
+
       try {
         assert.deepEqual(sourceCase.sample, sample);
         await openDateWeekPrefix(page, sample);
@@ -124,13 +130,18 @@ for (const sample of samples) {
               verifyPhase(afterFocus, original.actionEvidence.afterFocusPointer, variant,
                 'step-' + index + ':afterFocusPointer');
             }
-            try {
-              verifyDateWeekPrefixPoint(actual, original.actual, proof, variant, 'step-' + index);
+            // Записывает расхождение установившегося состояния с конкретным эталоном.
+            function recordSettledComparison() {
+              try {
+                verifyDateWeekPrefixPoint(actual, original.actual, proof, variant, 'step-' + index);
+              }
+              catch (error) {
+                semanticFailures.push({ label: 'step-' + index, variant, message: String(error),
+                  stack: error instanceof Error ? error.stack : null });
+              }
             }
-            catch (error) {
-              semanticFailures.push({ label: 'step-' + index, variant, message: String(error),
-                stack: error instanceof Error ? error.stack : null });
-            }
+
+            recordSettledComparison();
           }
           await verifyAccessibleToday(
             readDateWeekPrefixSourceStep(sample.id, index).actual,
@@ -213,8 +224,7 @@ for (const sample of samples) {
           .toEqual([]);
       } finally {
         if (!disposed) {
-          try { await attach('finally-whole-actual-disposal', await disposeDateWeekPrefix(page)); }
-          catch (error) { errors.push({ phase: 'finally-dispose', message: String(error) }); }
+          await attachFallbackDisposal();
         }
         await attach('diagnostics-and-comparison-scope', {
           sample, proof: { ...proof, variants: [...proof.variants].map(([variant, mappings]) => ({

@@ -144,14 +144,19 @@ for (const original of [...selectSurfaceOmissionReference.cases.filter(entry => 
       if (focusedWidthUnmount) verifySelectSurfaceEventGraph(extraRawEvents[0],
         createSelectSurfaceRecorder().raw(['open', false]), 'existing focused Native width unmount close');
       expect(disposed.owner.calls).toEqual(beforeDispose.calls);
-      try {
-        verifyOmissionLifecycle(
-          disposed.owner.lifecycle,
-          original.cleanup.lifecycle ?? [],
-          'disposed'
-        );
+      // Добавляет отличие в журнале удаления к остальным результатам проверки.
+      function recordDisposalComparison() {
+        try {
+          verifyOmissionLifecycle(
+            disposed.owner.lifecycle,
+            original.cleanup.lifecycle ?? [],
+            'disposed'
+          );
+        }
+        catch (error) { failures.push(String(error)); }
       }
-      catch (error) { failures.push(String(error)); }
+
+      recordDisposalComparison();
       for (const [name, value] of Object.entries(disposed.refs)) expect(
         value == null,
         `${name} cleared`

@@ -35,6 +35,16 @@ for (const original of source.cases) test(`Select pending custom tag close follo
     });
   });
   let disposed = false;
+  // Убирает компонент при незавершённом сценарии и фиксирует сбой удаления.
+  async function disposeAfterFailure() {
+    try {
+    await page.evaluate(() => window.customTagPrefixNative.dispose());
+    }
+    catch (error) {
+    errors.push(String(error));
+    }
+  }
+
   try {
     await page.addInitScript(installSelectTagClosePortTracker);
     await page.goto('/select-components-responsive-tag-prefix.html?sample=' + encodeURIComponent(sample.id));
@@ -108,12 +118,7 @@ for (const original of source.cases) test(`Select pending custom tag close follo
     expect(networkFailures).toEqual([]);
   } finally {
     if (!disposed) {
-      try {
-      await page.evaluate(() => window.customTagPrefixNative.dispose());
-    }
-    catch (error) {
-      errors.push(String(error));
-    }
+      await disposeAfterFailure();
     }
     await testInfo.attach('select-custom-tag-close-key-counter.json', { contentType: 'application/json',
       body: JSON.stringify({ id: original.id, source: original, trace, errors, networkFailures,

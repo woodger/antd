@@ -78,6 +78,26 @@ export async function captureHydrationOwnership(page: Page, source: HydrationOwn
       statusText: response.statusText()
     })
   );
+  // Пытается прочитать состояние после ошибки, фиксируя сбой самого замера.
+  async function observeFailedAction() {
+    try {
+      await snapshot('failure-observation');
+    }
+    catch (observationError) {
+      failures.push('failure-observation: ' + String(observationError));
+    }
+  }
+
+  // Удаляет все оставшиеся экземпляры и сохраняет диагностику очистки.
+  async function disposeLiveOwners() {
+    try {
+      await page.evaluate(async () => { for (const key of window.hydrationOwnershipProbe?.scenario.environment.owners ?? [])
+        if (window.hydrationOwnershipProbe.roots[key]?.app) await window.hydrationOwnershipNative.dispose(key); });
+      if (fatal) await snapshot('failure-cleanup');
+    }
+    catch (cleanupError) { failures.push('failure-cleanup: ' + String(cleanupError)); }
+  }
+
   try {
     await page.goto('/select-components-hydration-ownership.html');
     await page.addScriptTag({
@@ -88,14 +108,21 @@ export async function captureHydrationOwnership(page: Page, source: HydrationOwn
     for (const key of scenario.environment.owners) {
       const rendered = await renderOwner(key);
       servers[key] = rendered;
-      for (const [method, state] of Object.entries(source.server.serializations)) try {
-        verifyHydrationOwnershipSSR(
-          rendered,
-          state.owners[key]!,
-          scenario.id + '/' + method + '/' + key
-        );
+      for (const [method, state] of Object.entries(source.server.serializations)) {
+        // Добавляет расхождение конкретного SSR-сериализатора в журнал.
+        function verifyServerSerialization() {
+          try {
+            verifyHydrationOwnershipSSR(
+              rendered,
+              state.owners[key]!,
+              scenario.id + '/' + method + '/' + key
+            );
+          }
+          catch (error) { failures.push('public-SSR/' + method + '/' + key + ': ' + String(error)); }
+        }
+
+        verifyServerSerialization();
       }
-      catch (error) { failures.push('public-SSR/' + method + '/' + key + ': ' + String(error)); }
     }
     await page.addScriptTag({ content: 'window.describeOwnershipNode=' + describeOwnershipNode.toString() });
     await page.addScriptTag({ content: 'window.readHydrationOwnership=' + readHydrationOwnership.toString() });
@@ -148,24 +175,34 @@ export async function captureHydrationOwnership(page: Page, source: HydrationOwn
       }
       else if (action.type === 'real-keyboard-replace') {
         const handle = await page.evaluateHandle(() => window.hydrationOwnershipProbe.roots.B!.raw.current!.readRefs().editor);
-        try {
-          const editor = handle.asElement();
-          assert(editor);
-          await editor.focus();
-          await editor.press('ControlOrMeta+A');
-          await page.keyboard.insertText(action.text);
-        }
-        finally { await handle.dispose(); }
+        // Вводит текст через удержанный редактор и освобождает ссылку на него.
+        const replaceThroughEditor = async () => {
+          try {
+            const editor = handle.asElement();
+            assert(editor);
+            await editor.focus();
+            await editor.press('ControlOrMeta+A');
+            await page.keyboard.insertText(action.text);
+          }
+          finally { await handle.dispose(); }
+        };
+
+        await replaceThroughEditor();
       }
       else if (action.type === 'outside-focus') {
         const handle = await page.evaluateHandle(() => window.hydrationOwnershipProbe.roots.B!.raw.current!.readRefs().outside);
-        try {
-          const button = handle.asElement();
-          assert(button);
-          await button.click();
-        } finally {
-          await handle.dispose();
+        // Нажимает на внешнюю кнопку и освобождает её DOM handle.
+        async function clickOutsideControl() {
+          try {
+            const button = handle.asElement();
+            assert(button);
+            await button.click();
+          } finally {
+            await handle.dispose();
+          }
         }
+
+        await clickOutsideControl();
       }
       else if (action.type === 'target-dispose') {
         await snapshot('target-before-dispose');
@@ -193,19 +230,9 @@ export async function captureHydrationOwnership(page: Page, source: HydrationOwn
   catch (error) {
     const value = error as Error;
     fatal = { name: value.name, message: value.message, stack: value.stack };
-    try {
-      await snapshot('failure-observation');
-    }
-    catch (observationError) {
-      failures.push('failure-observation: ' + String(observationError));
-    }
+    await observeFailedAction();
   } finally {
-    try {
-      await page.evaluate(async () => { for (const key of window.hydrationOwnershipProbe?.scenario.environment.owners ?? [])
-        if (window.hydrationOwnershipProbe.roots[key]?.app) await window.hydrationOwnershipNative.dispose(key); });
-      if (fatal) await snapshot('failure-cleanup');
-    }
-    catch (cleanupError) { failures.push('failure-cleanup: ' + String(cleanupError)); }
+    await disposeLiveOwners();
   }
   return {
     id: scenario.id,

@@ -46,6 +46,19 @@ for (const sample of datePickerPresetTransitionSamples) {
       contentType: 'application/gzip', body: gzipSync(Buffer.from(JSON.stringify(value, null, 2)))
     });
     let disposalStarted = false;
+    // Сохраняет результат запасного удаления и добавляет ошибку к диагностике теста.
+    async function attachFallbackDisposal() {
+      try {
+        const before = await settleDatePickerPresetTransitions(page);
+        disposalStarted = true;
+        await attach(
+          'finally-disposal-complete-raw',
+          await disposeDatePickerPresetTransitions(page, before)
+        );
+      }
+      catch (error) { errors.push({ phase: 'finally', message: String(error) }); }
+    }
+
     try {
       await openDatePickerPresetTransitions(page, sample);
       let actual = await settleDatePickerPresetTransitions(page);
@@ -114,15 +127,7 @@ for (const sample of datePickerPresetTransitionSamples) {
       expect(diagnostics.filter(message => ['warning', 'error'].includes(message.type))).toEqual([]);
     } finally {
       if (!disposalStarted) {
-        try {
-          const before = await settleDatePickerPresetTransitions(page);
-          disposalStarted = true;
-          await attach(
-            'finally-disposal-complete-raw',
-            await disposeDatePickerPresetTransitions(page, before)
-          );
-        }
-        catch (error) { errors.push({ phase: 'finally', message: String(error) }); }
+        await attachFallbackDisposal();
       }
       await attach(
         'complete-diagnostics',

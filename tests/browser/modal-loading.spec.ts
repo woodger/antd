@@ -52,6 +52,36 @@ for (const sample of modalLoadingSamples) test(`Modal loading follows full Sourc
     trace.push({ label, actual, appliedBoundaries: [...applied] });
     previous = actual;
   };
+  // Дочитывает состояние модального окна, если сценарий прервался до удаления.
+  async function readBeforeUnmount() {
+    try { if (!beforeUnmount) beforeUnmount = await page.evaluate(readModalLoading); }
+    catch (error) { errors.push({ phase: 'finally-read', error: String(error) }); }
+  }
+
+  // Удаляет оставшееся окно и читает состояние после очистки.
+  async function disposeAfterFailure() {
+    try {
+      if (!disposed) {
+      await page.evaluate(() => window.modalLoadingNative.dispose());
+      disposed = true;
+      await drainSelectSurface(page);
+      cleanup = await readNativeModalLoadingCleanup(page);
+    }
+    }
+    catch (error) { errors.push({ phase: 'finally-dispose', error: String(error) }); }
+  }
+
+  // Измеряет состояние через секунду после очистки, если основной замер не выполнен.
+  async function readLateCleanup() {
+    try {
+      if (!late) {
+      await page.waitForTimeout(1000);
+      late = await readNativeModalLoadingCleanup(page);
+    }
+    }
+    catch (error) { errors.push({ phase: 'finally-late1000', error: String(error) }); }
+  }
+
   try {
     await openNativeModalLoading(page, sample);
     await observe(source.initial, 'initial');
@@ -78,24 +108,9 @@ for (const sample of modalLoadingSamples) test(`Modal loading follows full Sourc
     trace.push({ label: 'disposal', cleanup, late, appliedBoundaries: [...applied] });
     failures.push(...verifyModalLoadingDiagnostics(errors, diagnostics, requestFailures, sample.id));
   } finally {
-    try { if (!beforeUnmount) beforeUnmount = await page.evaluate(readModalLoading); }
-    catch (error) { errors.push({ phase: 'finally-read', error: String(error) }); }
-    try {
-      if (!disposed) {
-      await page.evaluate(() => window.modalLoadingNative.dispose());
-      disposed = true;
-      await drainSelectSurface(page);
-      cleanup = await readNativeModalLoadingCleanup(page);
-    }
-    }
-    catch (error) { errors.push({ phase: 'finally-dispose', error: String(error) }); }
-    try {
-      if (!late) {
-      await page.waitForTimeout(1000);
-      late = await readNativeModalLoadingCleanup(page);
-    }
-    }
-    catch (error) { errors.push({ phase: 'finally-late1000', error: String(error) }); }
+    await readBeforeUnmount();
+    await disposeAfterFailure();
+    await readLateCleanup();
     await testInfo.attach('modal-loading-complete-source-native-raw.json.gz', { body: gzipSync(Buffer.from(JSON.stringify({ sample, source, trace,
       beforeUnmount, cleanup, late, failures, errors, diagnostics, network: {
         requests,

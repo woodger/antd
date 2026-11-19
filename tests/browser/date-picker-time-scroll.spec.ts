@@ -43,6 +43,16 @@ for (const sample of samples) {
     const source = readTimeScrollSourceCase(sample.id);
     const proof = createTimeScrollProof();
     let disposed = false;
+    // Сохраняет результат запасного удаления и добавляет ошибку к диагностике теста.
+    async function attachFallbackDisposal() {
+      try {
+        await attach('finally-actual-disposal', await disposeTimeScroll(page));
+      }
+      catch (error) {
+        errors.push({ phase: 'finally', message: String(error) });
+      }
+    }
+
     try {
       await openTimeScroll(page, sample);
       const initial = await settleTimeScroll(page);
@@ -89,12 +99,7 @@ for (const sample of samples) {
         .toEqual([]);
     } finally {
       if (!disposed) {
-        try {
-          await attach('finally-actual-disposal', await disposeTimeScroll(page));
-        }
-        catch (error) {
-          errors.push({ phase: 'finally', message: String(error) });
-        }
+        await attachFallbackDisposal();
       }
       await attach('complete-diagnostics-and-boundaries', {
         sample, proof, errors, diagnostics, requests, responses, failedRequests
