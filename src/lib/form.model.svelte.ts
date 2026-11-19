@@ -1,3 +1,5 @@
+// Владеет значениями, регистрацией полей, метаданными и submit одной Form.
+// Ревизия значений и номера проверок раздельно защищают от устаревших ответов.
 import { tick, untrack } from 'svelte';
 import { FormValidationError } from './FormValidationError';
 import { setFormHooks, type FormFieldRegistration } from './form-internal';
@@ -159,9 +161,9 @@ export function createForm<Values extends FormValues>({
   rules?: FormRules<Values>;
 }): FormInstance<Values> {
   const defaults = copyFormValue(initialValues);
-  let revision = $state(0);
-  let request = 0;
-  let lastValidation = 0;
+  let valuesRevision = $state(0);
+  let validationSequence = 0;
+  let latestValidationRun = 0;
   let registrationOrder = 0;
   let initialValueOrder = 0;
   let values = $state<Values>(copyFormValue(defaults));
@@ -174,14 +176,17 @@ export function createForm<Values extends FormValues>({
   let isSubmitting = $state(false);
   let submissionError = $state.raw<unknown>();
 
+  // Имя из регистрации может меняться при перестановке строк FormList.
   function fieldPath(field: StoredField): (string | number)[] {
     return formNamePath(field.registration?.name ?? field.path);
   }
 
+  // Сопоставляет полный путь, сохраняя различие строкового ключа и индекса.
   function findField(name: NamePath): StoredField | undefined {
     return fields.find((field) => sameFormPath(fieldPath(field), name));
   }
 
+  // Копирует массивы, чтобы слушатель не менял метаданные в хранилище.
   function fieldMeta(field: StoredField): FormFieldMeta {
     return {
       name: [...fieldPath(field)], touched: field.touched, validating: field.validating,
@@ -190,6 +195,7 @@ export function createForm<Values extends FormValues>({
     };
   }
 
+  // Публикует только новое состояние или сигнал об удалении регистрации.
   function notifyFieldMeta(field: StoredField, destroy = false) {
     // UI callbacks не становятся dependencies эффекта, вызвавшего model setter.
     untrack(() => {
@@ -211,6 +217,7 @@ export function createForm<Values extends FormValues>({
     });
   }
 
+  // При совпадении имён выбирает последнюю регистрацию control без учёта списков.
   function controlRegistration(name: NamePath): FormFieldRegistration | undefined {
     let found: StoredField | undefined;
     for (const field of fieldRegistry) {
@@ -224,6 +231,7 @@ export function createForm<Values extends FormValues>({
     return found?.registration;
   }
 
+  // Даёт модели место для значения и ошибок до регистрации DOM-поля.
   function ensureField(name: NamePath): StoredField {
     const existing = findField(name);
     if (existing) {
@@ -233,6 +241,7 @@ export function createForm<Values extends FormValues>({
     return addField(name);
   }
 
+  // Добавляет поле в живой реестр и публикует новый реактивный список.
   function addField(name: NamePath): StoredField {
     const field = $state<StoredField>({
       path: formNamePath(name), touched: false, dirty: false, validating: false,
@@ -310,7 +319,7 @@ export function createForm<Values extends FormValues>({
     namesOrConfig?: readonly NamePath[] | true | FormGetFieldsValueConfig,
     filter?: FormFilterFunc
   ): Values {
-    void revision;
+    void valuesRevision;
     if (namesOrConfig === true && !filter) {
       return values;
     }
@@ -371,6 +380,7 @@ export function createForm<Values extends FormValues>({
     return result;
   }
 
+  // Подтверждает, что для поля существовало и было отменено ожидание debounce.
   function cancelValidationDelay(field: StoredField): boolean {
     const cancel = validationDelays.get(field);
     if (!cancel) {
@@ -382,6 +392,7 @@ export function createForm<Values extends FormValues>({
     return true;
   }
 
+  // Завершает ожидание как после таймера, так и после явной отмены.
   function delayValidation(field: StoredField, delay: number): Promise<boolean> {
     return new Promise((resolve) => {
       const timer = setTimeout(() => {
@@ -396,8 +407,11 @@ export function createForm<Values extends FormValues>({
     });
   }
 
+  // Запускает выбранные проверки одновременно и отвергает устаревший снимок.
   async function validate(
-    selected: readonly StoredField[], validateOnly = false, triggered = false
+    selected: readonly StoredField[],
+    validateOnly = false,
+    triggered = false
   ): Promise<Values> {
     if (!validateOnly) {
       for (const field of selected) {
@@ -409,12 +423,15 @@ export function createForm<Values extends FormValues>({
     }
 
     const snapshot = copyFormValue(values);
-    const startRevision = revision;
-    const token = ++request;
+    const snapshotRevision = valuesRevision;
+    const validationRun = ++validationSequence;
     // Свежесть Promise общая; validateOnly не меняет field.run видимой проверки.
-    lastValidation = token;
+    latestValidationRun = validationRun;
     const entries = selected.map((field) => ({
-      field, path: fieldPath(field), run: field.run, hasRules: fieldRules(field).length > 0,
+      field,
+      path: fieldPath(field),
+      run: field.run,
+      hasRules: fieldRules(field).length > 0,
       delay: triggered ? field.registration?.validateDebounce : undefined
     }));
 
@@ -427,7 +444,7 @@ export function createForm<Values extends FormValues>({
           continue;
         }
 
-        field.run = token;
+        field.run = validationRun;
         field.validating = true;
         field.warnings = [];
         field.dirty = true;
@@ -436,7 +453,26 @@ export function createForm<Values extends FormValues>({
       }
     }
 
-    const results = await Promise.all(entries.map(async ({ field, path, hasRules, delay }) => {
+    const results = await Promise.all(entries.map(validateEntry));
+
+    const nextErrors = results.filter((field) => field.errors.length);
+
+    const outOfDate = latestValidationRun !== validationRun || valuesRevision !== snapshotRevision
+      || results.some((result) => result.cancelled)
+      || entries.some(({ field, path, run, hasRules }) =>
+        field.run !== (validateOnly || !hasRules ? run : validationRun) || !fields.includes(field)
+          || !sameFormPath(path, fieldPath(field))
+      );
+
+    if (outOfDate || nextErrors.length) {
+      throw new FormValidationError(snapshot, rootErrors(nextErrors), outOfDate, nextErrors);
+    }
+
+    return snapshot;
+
+    // Правила и сообщения читаются при запуске конкретного поля. После await
+    // только владелец текущей проверки может опубликовать её результат.
+    async function validateEntry({ field, path, hasRules, delay }: (typeof entries)[number]) {
       if (!hasRules) {
         return { name: path, errors: [], warnings: [] };
       }
@@ -446,12 +482,13 @@ export function createForm<Values extends FormValues>({
         rules = resolveValidationRules(fieldRules(field), form);
       }
       catch (error) {
-        if (!validateOnly && field.run === token) {
+        if (!validateOnly && field.run === validationRun) {
           field.validating = false;
           notifyFieldMeta(field);
         }
         throw error;
       }
+
       const messageContext = {
         name: path.map(String).join('.'),
         variables: { label: path.map(String).join('.'), ...field.registration?.messageVariables },
@@ -460,9 +497,9 @@ export function createForm<Values extends FormValues>({
       const validateFirst = field.registration?.validateFirst;
       if (delay) {
         const elapsed = await delayValidation(field, delay);
-        if (!elapsed || field.run !== token || revision !== startRevision
+        if (!elapsed || field.run !== validationRun || valuesRevision !== snapshotRevision
           || !fields.includes(field) || !sameFormPath(path, fieldPath(field))) {
-          if (field.run === token) {
+          if (field.run === validationRun) {
             field.validating = false;
             notifyFieldMeta(field);
           }
@@ -471,18 +508,13 @@ export function createForm<Values extends FormValues>({
         }
       }
 
-      const messages = await validateFieldValue(
-        getFormValue(snapshot, path),
-        snapshot,
-        rules,
-        validateFirst,
-        messageContext
-      );
+      const value = getFormValue(snapshot, path);
+      const messages = await validateFieldValue(value, snapshot, rules, validateFirst, messageContext);
 
-      if (!validateOnly && field.run === token) {
+      if (!validateOnly && field.run === validationRun) {
         field.validating = false;
 
-        if (revision === startRevision && sameFormPath(path, fieldPath(field))) {
+        if (valuesRevision === snapshotRevision && sameFormPath(path, fieldPath(field))) {
           field.errors = messages.errors;
           field.warnings = messages.warnings;
           field.validated = true;
@@ -491,24 +523,10 @@ export function createForm<Values extends FormValues>({
       }
 
       return { name: path, ...messages };
-    }));
-
-    const nextErrors = results.filter((field) => field.errors.length);
-
-    const outOfDate = lastValidation !== token || revision !== startRevision
-      || results.some((result) => result.cancelled)
-      || entries.some(({ field, path, run, hasRules }) =>
-        field.run !== (validateOnly || !hasRules ? run : token) || !fields.includes(field)
-          || !sameFormPath(path, fieldPath(field))
-      );
-
-    if (outOfDate || nextErrors.length) {
-      throw new FormValidationError(snapshot, rootErrors(nextErrors), outOfDate, nextErrors);
     }
-
-    return snapshot;
   }
 
+  // Выбирает зарегистрированные поля, потомков префикса или явные пути.
   function validateFields(
     namesOrOptions?: readonly NamePath[] | FormValidateOptions,
     options?: FormValidateOptions
@@ -542,6 +560,7 @@ export function createForm<Values extends FormValues>({
     return validate(selected, settings?.validateOnly);
   }
 
+  // После изменения списка проверяет touched-поля, если не идёт submit.
   function revalidateTouched() {
     if (isSubmitting) {
       return;
@@ -558,6 +577,7 @@ export function createForm<Values extends FormValues>({
     }
   }
 
+  // Обновляет ключи текущего proxy, сохраняя ссылки читателей модели.
   function updateValues(next: Values) {
     // Svelte перечисляет inherited names лишь при наличии own property в исходном target.
     if (Object.keys(next).some((name) => !Object.hasOwn(values, name)
@@ -576,18 +596,19 @@ export function createForm<Values extends FormValues>({
     }
   }
 
+  // Очищает результат поля и лишает прежнюю проверку права на публикацию.
   function clearField(field: StoredField) {
     cancelValidationDelay(field);
     field.errors = [];
     field.warnings = [];
     field.validating = false;
-    field.run = ++request;
+    field.run = ++validationSequence;
     notifyFieldMeta(field);
   }
 
   const form: FormInstance<Values> = {
     get values() {
-      void revision;
+      void valuesRevision;
 
       return values;
     },
@@ -602,16 +623,25 @@ export function createForm<Values extends FormValues>({
       return submissionError;
     },
     getFieldValue(name) {
-      void revision;
+      void valuesRevision;
 
       return getFormValue(values, name) as NamePathValue<Values, typeof name>;
     },
     getFieldsValue,
     getFieldsError,
-    getFieldError: (name) => findField(name)?.errors ?? [],
-    getFieldWarning: (name) => findField(name)?.warnings ?? [],
+    // Неизвестный путь возвращает пустой список, как поле без ошибок.
+    getFieldError(name) {
+      const field = findField(name);
+      return field?.errors ?? [];
+    },
+    // Предупреждения читаются отдельно от ошибок, блокирующих submit.
+    getFieldWarning(name) {
+      const field = findField(name);
+      return field?.warnings ?? [];
+    },
     getFieldInstance<Instance = unknown>(name: NamePath) {
-      return controlRegistration(name)?.getInstance?.() as Instance | undefined;
+      const registration = controlRegistration(name);
+      return registration?.getInstance?.() as Instance | undefined;
     },
     focusField(name) {
       const field = controlRegistration(name);
@@ -655,7 +685,7 @@ export function createForm<Values extends FormValues>({
         if (child !== field && containsFormPath(name, fieldPath(child))) clearField(child);
       }
 
-      revision++;
+      valuesRevision++;
       submissionError = undefined;
       revalidateTouched();
     },
@@ -680,7 +710,7 @@ export function createForm<Values extends FormValues>({
       }
 
       updateValues(merged);
-      revision++;
+      valuesRevision++;
       submissionError = undefined;
       revalidateTouched();
     },
@@ -694,13 +724,13 @@ export function createForm<Values extends FormValues>({
           updateValues(next);
 
           if (changed) {
-            revision++;
+            valuesRevision++;
             submissionError = undefined;
 
             for (const field of fields) {
               if (containsFormPath(name, fieldPath(field))) {
                 cancelValidationDelay(field);
-                field.run = ++request;
+                field.run = ++validationSequence;
                 const wasValidating = field.validating;
                 field.validating = false;
                 if (wasValidating) notifyFieldMeta(field);
@@ -718,7 +748,7 @@ export function createForm<Values extends FormValues>({
           if ('touched' in update) field.touched = !!update.touched;
           if ('validating' in update) {
             cancelValidationDelay(field);
-            field.run = ++request;
+            field.run = ++validationSequence;
             field.validating = !!update.validating;
             field.validated = !field.validating;
           }
@@ -773,11 +803,11 @@ export function createForm<Values extends FormValues>({
       }
 
       if (names) {
-        if (!sameFormValue(values, next)) revision++;
+        if (!sameFormValue(values, next)) valuesRevision++;
         updateValues(next);
       }
       else {
-        revision++;
+        valuesRevision++;
         values = next;
         resetKey = {};
       }
@@ -790,7 +820,7 @@ export function createForm<Values extends FormValues>({
         field.dirty = false;
         field.validating = false;
         field.validated = false;
-        field.run = ++request;
+        field.run = ++validationSequence;
         notifyFieldMeta(field);
       }
 
@@ -835,11 +865,12 @@ export function createForm<Values extends FormValues>({
     }
   };
 
+  // Применяет initialValue только к отсутствующему значению, без подписки на store.
   function initializeFieldValue(name: NamePath, initialValue?: unknown) {
     untrack(() => {
       if (initialValue !== undefined && getFormValue(values, name) === undefined) {
         updateValues(setFormValue(values, name, initialValue) as Values);
-        revision++;
+        valuesRevision++;
       }
     });
   }
@@ -865,7 +896,7 @@ export function createForm<Values extends FormValues>({
     },
     changeList(name, next) {
       updateValues(setFormValue(values, name, next) as Values);
-      revision++;
+      valuesRevision++;
       submissionError = undefined;
       const list = ensureField(name);
       clearField(list);
@@ -875,7 +906,7 @@ export function createForm<Values extends FormValues>({
       for (const field of fields) {
         if (field !== list && containsFormPath(name, fieldPath(field))) {
           cancelValidationDelay(field);
-          field.run = ++request;
+          field.run = ++validationSequence;
           field.validating = false;
           notifyFieldMeta(field);
         }
@@ -905,13 +936,13 @@ export function createForm<Values extends FormValues>({
         return () => {
           notifyFieldMeta(registered, true);
           if (cancelValidationDelay(registered)) {
-            registered.run = ++request;
+            registered.run = ++validationSequence;
             registered.validating = false;
           }
 
           if (registered.persistent) {
             if (registration.rules !== undefined) {
-              registered.run = ++request;
+              registered.run = ++validationSequence;
               registered.errors = undefined;
               registered.warnings = undefined;
               registered.touched = false;
@@ -923,7 +954,7 @@ export function createForm<Values extends FormValues>({
             registered.registration = undefined;
           }
           else {
-            registered.run = ++request;
+            registered.run = ++validationSequence;
             fieldRegistry.delete(registered);
             fields = [...fieldRegistry];
           }
