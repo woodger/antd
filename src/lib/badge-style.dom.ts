@@ -1,3 +1,5 @@
+// Применяет стили Badge слоями и сохраняет порядок shorthand/longhand.
+// Явные overrides и вычисленный inset border приходят после входных деклараций.
 import {
   getBadgeStyleDeclarations,
   getBadgeStyleValue,
@@ -11,11 +13,14 @@ export function connectBadgeStyle(node: HTMLElement) {
   let previous = new Map<string, { value: string; priority: string; }>();
   let initialized = false;
 
-  return (
+  return applyLayers;
+
+  // При первом вызове убирает декларации, которые HTML разобрал иначе, чем DOM setter.
+  function applyLayers(
     layers: readonly BadgeStyleLayer[],
     overrides: readonly (readonly [string, string])[] = [],
     insetBorder = false
-  ) => {
+  ) {
     if (!initialized) {
       initialized = true;
       const raw = layers.filter(layer => typeof layer !== 'string');
@@ -31,7 +36,8 @@ export function connectBadgeStyle(node: HTMLElement) {
       if (typeof layer === 'string') parser.cssText = layer;
       const resolved = typeof layer === 'string' ? parser.cssText : layer;
       for (const { property, value, priority } of getBadgeStyleDeclarations([resolved])) {
-        if (!next.get(property)?.priority || priority) {
+        const previousDeclaration = next.get(property);
+        if (!previousDeclaration?.priority || priority) {
           next.set(property, { value, priority });
         }
       }
@@ -51,5 +57,5 @@ export function connectBadgeStyle(node: HTMLElement) {
       }
     }
     previous = next;
-  };
+  }
 }

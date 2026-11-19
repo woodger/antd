@@ -1,3 +1,5 @@
+// Применяет слои inline CSS через DOM diff. Состояние соединения хранит
+// только предыдущие управляемые свойства, оставляя прочие стили узлу.
 import { getInlineStyleDeclarations, type InlineStyleLayer } from './inline-style.engine';
 
 /** React style diff по declaration keys; reconcile восстанавливает слой после DOM-controller. */
@@ -6,7 +8,10 @@ export function connectInlineStyle(node: HTMLElement | SVGElement, reconcile = f
   let previous = new Map<string, { value: string; priority: string; }>();
   let initialized = false;
 
-  return (layers: readonly InlineStyleLayer[]) => {
+  return applyLayers;
+
+  // Заменяет декларации управляемого слоя с учётом каскада !important.
+  function applyLayers(layers: readonly InlineStyleLayer[]) {
     if (!initialized) {
       initialized = true;
       const raw = layers.flatMap(layer => typeof layer === 'string' ? [] : layer ?? []);
@@ -23,7 +28,8 @@ export function connectInlineStyle(node: HTMLElement | SVGElement, reconcile = f
       if (typeof layer === 'string') parser.cssText = layer;
       const resolved = typeof layer === 'string' ? parser.cssText : layer;
       for (const { property, value, priority } of getInlineStyleDeclarations([resolved])) {
-        if (!next.get(property)?.priority || priority) {
+        const previousDeclaration = next.get(property);
+        if (!previousDeclaration?.priority || priority) {
           next.set(property, { value, priority });
         }
       }
@@ -41,5 +47,5 @@ export function connectInlineStyle(node: HTMLElement | SVGElement, reconcile = f
       }
     }
     previous = next;
-  };
+  }
 }

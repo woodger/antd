@@ -1368,7 +1368,12 @@
   }
 
   function remove(item: RawValue, focusEditor = true) {
-    if (resolvedDisabled || selectionOptions.get(item)?.disabled) {
+    if (resolvedDisabled) {
+      return;
+    }
+
+    const selectedItem = selectionOptions.get(item);
+    if (selectedItem?.disabled) {
       return;
     }
 
@@ -1379,7 +1384,14 @@
       changeMultiple([...next], 'display');
       notifySelect(item, data, false);
     }
-    if (focusEditor) { if (rootSlot || inputSlot) focus(); else control?.focus(); }
+    if (focusEditor) {
+      if (rootSlot || inputSlot) {
+        focus();
+      }
+      else {
+        control?.focus();
+      }
+    }
   }
 
   function componentTagClose(item: { value: RawValue }) {

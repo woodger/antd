@@ -1,3 +1,5 @@
+// Объединяет настройки semantic slots Select. Приоритет inline-слоёв зависит
+// от порядка, явного удаления свойства и CSS !important.
 import { getInlineStyleDeclarations } from './inline-style.engine';
 import { serializeSelectDataStyle } from './select-data-style.engine';
 import type {
@@ -27,6 +29,7 @@ export function hasSelectControlSemantics(...maps: readonly SelectSemanticMaps[]
     Boolean(classes?.[slot]) || styles?.[slot] != null));
 }
 
+// Вычисляет semantic map для текущих props, оставляя возвращённый объект владельцу.
 export function resolveSelectSemanticValue<Slots, Props>(
   value: SelectSemanticValue<Slots, Props> | undefined,
   info: { props: Props }
@@ -35,6 +38,7 @@ export function resolveSelectSemanticValue<Slots, Props>(
     ? (value as (info: { props: Props }) => Slots | undefined)(info) : value;
 }
 
+// Принимает только плоские CSS-свойства. Boolean считается отсутствующим значением.
 function cssObject(style: unknown): SelectCSSProperties | undefined {
   if (style == null) {
     return;
@@ -69,37 +73,54 @@ export function mergeSelectStyle(...layers: readonly unknown[]): SelectStyle | u
   if (present.every(layer => typeof layer === 'string')) {
     return present.filter(Boolean).join(';') || undefined;
   }
+
   const declarations = new Map<string, { value: string; priority: '' | 'important' }>();
   for (const layer of present) {
     if (typeof layer === 'string') {
-      for (const { property, value, priority } of getInlineStyleDeclarations([layer])) {
-        if (!declarations.get(property)?.priority || priority) {
-          declarations.set(property, {
-            value, priority: priority ? 'important' : ''
+      mergeCssText(layer);
+    }
+    else {
+      mergeCssObject(layer);
+    }
+  }
+
+  return [...declarations].map(([property, { value, priority }]) =>
+    `${property}:${value}${priority ? ' !important' : ''}`).join(';') || undefined;
+
+  // Поздний !important может заменить ранее заданный !important в строковом CSS.
+  function mergeCssText(layer: string) {
+    for (const { property, value, priority } of getInlineStyleDeclarations([layer])) {
+      const previous = declarations.get(property);
+      if (!previous?.priority || priority) {
+        declarations.set(property, { value, priority: priority ? 'important' : '' });
+      }
+    }
+  }
+
+  // Значение объекта переопределяет обычный CSS. Явное пустое значение удаляет запись.
+  function mergeCssObject(layer: NonNullable<unknown>) {
+    // Правило 2: present уже исключил null и undefined, остальные формы проверяет cssObject.
+    const style = cssObject(layer)!;
+    for (const [property, value] of Object.entries(style)) {
+      const name = property.startsWith('--') ? property : property.replace(/[A-Z]/g, '-$&')
+        .toLowerCase().replace(/^ms-/, '-ms-');
+      if (value == null || value === '') {
+        declarations.delete(name);
+        continue;
+      }
+
+      const serialized = serializeSelectDataStyle({ [property]: value });
+      for (const declaration of getInlineStyleDeclarations([serialized])) {
+        const previous = declarations.get(name);
+        if (!previous?.priority) {
+          declarations.set(name, {
+            value: declaration.value,
+            priority: declaration.priority ? 'important' : ''
           });
         }
       }
     }
-    else {
-      for (const [property, value] of Object.entries(cssObject(layer)!)) {
-        const name = property.startsWith('--') ? property : property.replace(/[A-Z]/g, '-$&')
-          .toLowerCase().replace(/^ms-/, '-ms-');
-        if (value == null || value === '') {
-          declarations.delete(name);
-          continue;
-        }
-        for (const declaration of getInlineStyleDeclarations([serializeSelectDataStyle({ [property]: value })])) {
-          if (!declarations.get(name)?.priority) {
-            declarations.set(name, {
-              value: declaration.value, priority: declaration.priority ? 'important' : ''
-            });
-          }
-        }
-      }
-    }
   }
-  return [...declarations].map(([property, { value, priority }]) =>
-    `${property}:${value}${priority ? ' !important' : ''}`).join(';') || undefined;
 }
 
 export function serializeSelectStyle(style: SelectStyle | undefined): string | undefined {
