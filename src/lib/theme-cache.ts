@@ -46,10 +46,9 @@ function deletePath(
 function evictOldestTheme() {
   const oldest = keys.reduce((oldestKey, candidateKey) => {
     const candidate = getEntry(candidateKey);
-    // Правило 2: исходный LRU ожидает записи для сохранённых ключей. Если
-    // цепочка уже вытеснена записью общего префикса, сохраняется прежняя ошибка.
-    const candidateUsage = candidate![1];
     const oldestEntry = getEntry(oldestKey);
+    // Правило 2. Каждый ключ описывает сохранённый узел со значением.
+    const candidateUsage = candidate![1];
     return candidateUsage < oldestEntry![1] ? candidateKey : oldestKey;
   });
   keys = keys.filter(key => key.length !== oldest.length
@@ -57,7 +56,7 @@ function evictOldestTheme() {
   deletePath(cache, oldest);
 }
 
-/** Кэш cssinjs 2.1.2 по цепочке функций; после 25 записей удаляет самую давнюю по использованию. */
+/** Кэш цепочек cssinjs 2.1.2. Новая запись сверх 25 вытесняет самую давнюю по использованию. */
 export function createDerivativeTheme(
   derivatives: MappingAlgorithm | readonly MappingAlgorithm[]
 ): DerivativeTheme | undefined {
@@ -65,29 +64,33 @@ export function createDerivativeTheme(
   let entry = getEntry(algorithms);
   if (!entry) {
     const theme = new DerivativeTheme(algorithms);
+    // Сам объект темы хранит исходный массив, а индекс вытеснения хранит снимок пути.
+    const path = algorithms.slice();
+    if (!path.length) {
+      return undefined;
+    }
     if (keys.length + 1 > 25) {
       evictOldestTheme();
     }
 
-    keys.push(algorithms);
     let current = cache;
-    algorithms.forEach((algorithm, index) => {
-      if (index === algorithms.length - 1) {
-        current.set(algorithm, { value: [theme, callCount++] });
+    path.forEach((algorithm, index) => {
+      let node = current.get(algorithm);
+      if (!node) {
+        node = {};
+        current.set(algorithm, node);
       }
-      else {
-        const node = current.get(algorithm);
-        if (!node) {
-          const childMap = new Map<MappingAlgorithm, ThemeCacheNode>();
-          current.set(algorithm, { map: childMap });
-          current = childMap;
-        }
-        else {
-          current = node.map ??= new Map();
-        }
+
+      if (index === path.length - 1) {
+        // Префикс и продолжения одной цепочки используют общий узел.
+        node.value = [theme, callCount++];
+        return;
       }
+      current = node.map ??= new Map();
     });
-    entry = getEntry(algorithms);
+
+    keys.push(path);
+    entry = getEntry(path);
   }
 
   if (entry) entry[1] = callCount++;

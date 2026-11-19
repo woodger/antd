@@ -112,6 +112,25 @@ describe('ConfigProvider design-token state', () => {
     expect(second.token.fontSize).toBe(12);
   });
 
+  it('retains an extended theme when its prefix is added and later evicted', () => {
+    const first: MappingAlgorithm = seed => defaultAlgorithm(seed);
+    const second: MappingAlgorithm = (seed, map) => map ?? defaultAlgorithm(seed);
+    const chain = [first, second];
+    const extended = createDesignTokenState({ ...defaultThemeConfig, algorithm: chain }).theme;
+    const prefix = createDesignTokenState({ ...defaultThemeConfig, algorithm: first }).theme;
+
+    expect(createDesignTokenState({ ...defaultThemeConfig, algorithm: chain }).theme)
+      .toBe(extended);
+
+    for (let index = 0; index < 25; index++) {
+      createDerivativeTheme(seed => defaultAlgorithm(seed));
+      createDerivativeTheme(chain);
+    }
+
+    expect(createDerivativeTheme(first)).not.toBe(prefix);
+    expect(createDerivativeTheme(chain)).toBe(extended);
+  });
+
   it('passes the original seed and previous map through a custom runtime chain', () => {
     let captured: unknown;
     const first: MappingAlgorithm = seed => {
@@ -144,6 +163,29 @@ describe('ConfigProvider design-token state', () => {
     expect(createDerivativeTheme([first])).toBe(theme);
     expect(theme.getDerivativeToken({ ...defaultThemeConfig.token!,
       ...createDesignTokenState(defaultThemeConfig).token }).controlHeight).toBe(41);
+
+    for (let index = 0; index < 25; index++) {
+      createDerivativeTheme(seed => defaultAlgorithm(seed));
+    }
+
+    expect(createDerivativeTheme(first)).not.toBe(theme);
+  });
+
+  it('keeps eviction available after an empty component algorithm', () => {
+    const config = {
+      ...defaultThemeConfig,
+      components: { Button: { algorithm: [], fontWeight: 500 } }
+    };
+    const before = createDesignTokenState(config);
+
+    for (let index = 0; index < 25; index++) {
+      createDerivativeTheme(seed => defaultAlgorithm(seed));
+    }
+
+    const after = createDesignTokenState(config);
+
+    expect(after.token.Button).toEqual(before.token.Button);
+    expect(after.token.Button).toMatchObject({ fontWeight: 500 });
   });
 
   it('keeps per-component algorithm output isolated from root and sibling tokens', () => {
