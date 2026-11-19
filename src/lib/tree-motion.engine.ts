@@ -1,3 +1,5 @@
+// Определяет диапазон ветви для Tree motion и стандартные CSS-фазы. Пользовательская конфигурация
+// передаётся DOM-адаптеру без объединения.
 // @rc-component/tree 1.4.0 и Ant Design 6.6.8; MIT, vendor/LICENSE.rc-tree и LICENSE.ant-design.
 import type { TreeKey } from './tree.types';
 import type { TreeMotionConfig, TreeMotionEvent, TreeMotionName } from './tree-motion.types';
@@ -29,11 +31,14 @@ export function getTreeMotionRange<Row extends { key: TreeKey; }>(
   return virtual === false || !height ? range : range.slice(0, Math.ceil(height / itemHeight) + 1);
 }
 
+// Считает завершением переход высоты или deadline, чтобы opacity не скрывала группу раньше.
 function endHeight(_: HTMLDivElement, event: TreeMotionEvent) {
   return 'deadline' in event && event.deadline === true
     || 'propertyName' in event && event.propertyName === 'height';
 }
+// Использует нулевую высоту и прозрачность для закрытого края анимации.
 const collapsed = () => 'height:0px;opacity:0';
+// Читает полную высоту содержимого для открытого края анимации.
 const real = (node: HTMLDivElement) => `height:${node.scrollHeight}px;opacity:1`;
 
 /** Ant wrapper подставляет collapse object только для null/undefined, сохраняя custom object. */
@@ -45,11 +50,14 @@ export function getTreeMotionConfig(
     motionName: `${prefix}-motion-collapse`, motionAppear: false, motionDeadline: 500,
     onAppearStart: collapsed, onEnterStart: collapsed,
     onAppearActive: real, onEnterActive: real,
-    onLeaveStart: node => `height:${node.offsetHeight}px`, onLeaveActive: collapsed,
+    // Перед уходом переход начинается с текущей layout-высоты раскрытой группы.
+    onLeaveStart: node => `height:${node.offsetHeight}px`,
+    onLeaveActive: collapsed,
     onAppearEnd: endHeight, onEnterEnd: endHeight, onLeaveEnd: endHeight
   };
 }
 
+// Разрешает классы статуса и шага из строкового имени или пользовательской карты.
 export function getTreeMotionClassName(
   name: TreeMotionName | undefined,
   status: 'appear' | 'enter' | 'leave',

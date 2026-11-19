@@ -32,6 +32,7 @@ export function getTabsAnimation(
   return result;
 }
 
+// Поддерживает базовое имя motion и карту классов для отдельных фаз панели.
 export function getTabsMotionClassName(
   name: TabsMotionName | undefined,
   status: 'appear' | 'enter' | 'leave',

@@ -1,3 +1,6 @@
+// Создаёт контроллер одного DOM-узла, выбирая fade или смещение меню.
+// Анимирует видимость FloatButton или раскрывающегося списка. Ревизия защищает удаление DOM от
+// завершения отменённого ухода.
 export function createFloatButtonMotion(
   node: Element,
   menu: boolean,
@@ -11,17 +14,20 @@ export function createFloatButtonMotion(
   let target = initialTarget;
   let animation: Animation | undefined;
   let revision = 0;
+  // Отменяет удержание стилей текущей анимации и инвалидирует её завершение.
   function cancel() {
     revision++;
     animation?.cancel();
     animation = undefined;
   }
+  // Заканчивает текущее движение при включении reduced motion.
   function reduce() {
     if (reduced.matches)
       animation?.finish();
   }
   reduced.addEventListener('change', reduce);
   return {
+    // При смене направления сохраняет текущие вычисленные стили, а после ухода вызывает remove.
     sync(visible: boolean) {
       if (!active) {
         return;
@@ -74,6 +80,7 @@ export function createFloatButtonMotion(
           remove();
       }, () => { });
     },
+    // Снимает media listener и отменяет движение при уничтожении узла.
     destroy() {
       active = false;
       cancel();

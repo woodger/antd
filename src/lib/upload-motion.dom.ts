@@ -1,3 +1,5 @@
+// Управляет появлением и удалением одного пункта Upload. Finish снимает временные стили до
+// уведомления списка об уходе.
 export interface UploadItemMotionState {
   className?: string;
   style?: string;
@@ -23,6 +25,7 @@ export function createUploadMotion(
   let deadline: number | undefined;
   let revision = 0;
 
+  // Останавливает запланированный кадр и deadline, инвалидируя callbacks предыдущего движения.
   function cancel() {
     revision++;
     if (frame !== undefined) view.cancelAnimationFrame(frame);
@@ -31,6 +34,7 @@ export function createUploadMotion(
     deadline = undefined;
   }
 
+  // Публикует класс CSSMotion и измеренный inline style для текущей фазы.
   function update() {
     publish({
       className: status ? `${name}-${status} ${name}-${status}-${step} ${name}` : undefined,
@@ -38,6 +42,7 @@ export function createUploadMotion(
     });
   }
 
+  // Сбрасывает фазу. При завершённом уходе отдаёт управление удалением строки вызывающему списку.
   function finish() {
     cancel();
     status = undefined;
@@ -47,10 +52,12 @@ export function createUploadMotion(
     if (previous === false) onLeaveEnd();
   }
 
+  // Завершает активную фазу только по событию собственного узла.
   function handleEnd(event: Event) {
     if (active && status && step === 'active' && event.target === node) finish();
   }
 
+  // Прерывает текущую анимацию при переключении на reduced motion.
   function reduce() {
     if (reduced.matches && status) finish();
   }
@@ -60,6 +67,7 @@ export function createUploadMotion(
   reduced.addEventListener('change', reduce);
 
   return {
+    // Согласует классы с новой видимостью и измеряет высоты только для режима collapse.
     sync(options: {
       visible: boolean;
       motionName: string;
@@ -115,6 +123,7 @@ export function createUploadMotion(
         });
       });
     },
+    // Отменяет оставшуюся работу и снимает listeners без уведомления списка об уходе.
     destroy() {
       active = false;
       cancel();

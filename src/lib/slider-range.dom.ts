@@ -1,3 +1,5 @@
+// Связывает нативный range с drag Slider. Pointer capture и слушатели принадлежат одной активной
+// операции, touch события передаются общей геометрии контрола.
 /** Pointer listeners экземпляра; отмена и уничтожение не вызывают завершение действия. */
 export function connectSliderRangeDrag(
   node: HTMLElement,
@@ -8,6 +10,7 @@ export function connectSliderRangeDrag(
 ) {
   const document = node.ownerDocument;
   let active = true;
+  // Снимает слушатели документа и освобождает захват исходного pointer, если он ещё действует.
   function cleanup() {
     if (!active) {
       return;
@@ -18,6 +21,7 @@ export function connectSliderRangeDrag(
     document.removeEventListener('pointercancel', handleCancel);
     if (node.hasPointerCapture(start.pointerId)) node.releasePointerCapture(start.pointerId);
   }
+  // Доставляет движение только указателю, начавшему drag, и подавляет нативное действие.
   function handleMove(event: PointerEvent) {
     if (event.pointerId !== start.pointerId) {
       return;
@@ -25,6 +29,7 @@ export function connectSliderRangeDrag(
     event.preventDefault();
     move(event);
   }
+  // Завершает drag для исходного pointer после освобождения захвата и подписок.
   function handleEnd(event: PointerEvent) {
     if (event.pointerId !== start.pointerId) {
       return;
@@ -33,6 +38,7 @@ export function connectSliderRangeDrag(
     cleanup();
     finish(event);
   }
+  // Прерывает drag при отмене исходного pointer, передавая результат в cancel.
   function handleCancel(event: PointerEvent) {
     if (event.pointerId !== start.pointerId) {
       return;
@@ -56,16 +62,19 @@ export function connectSliderRangeInput(
     move: (event: TouchEvent & { currentTarget: HTMLInputElement; }) => void;
   }
 ) {
+  // Передаёт touch start в общую модель и подавляет нативное изменение range.
   function handleStart(event: TouchEvent) {
     handlers.start(event as TouchEvent & { currentTarget: HTMLInputElement; });
     event.preventDefault();
   }
+  // Передаёт touch move с текущим range общему drag и отменяет нативное движение ползунка.
   function handleMove(event: TouchEvent) {
     handlers.move(event as TouchEvent & { currentTarget: HTMLInputElement; });
     event.preventDefault();
   }
   node.addEventListener('touchstart', handleStart, { passive: false });
   node.addEventListener('touchmove', handleMove, { passive: false });
+  // Снимает touch listeners со старого input при размонтировании или перепривязке.
   return () => {
     node.removeEventListener('touchstart', handleStart);
     node.removeEventListener('touchmove', handleMove);

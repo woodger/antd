@@ -1,3 +1,5 @@
+// Анимирует holder или отдельное сообщение Form. При смене направления новое движение берёт
+// начальные значения из текущего DOM.
 interface FormErrorMotion {
   visible: boolean;
   kind: 'holder' | 'message';
@@ -14,6 +16,7 @@ export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
   let active = true;
   let generation = 0;
 
+  // Очищает animation и fallback timer прежнего перехода.
   function cancel() {
     view.clearTimeout(deadline);
     deadline = undefined;
@@ -21,6 +24,8 @@ export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
     animation = undefined;
   }
 
+  // Снимает начальную геометрию до отмены старого перехода. Holder использует только
+  // прозрачность.
   function run(appearing: boolean) {
     const current = view.getComputedStyle(node);
     const fromOpacity = appearing ? 0 : current.opacity;
@@ -36,6 +41,7 @@ export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
     let finished = false;
     cancel();
 
+    // Освобождает ресурсы перед onFinish и подавляет повторное событие или устаревший deadline.
     function finish() {
       if (!active || finished || tokenId !== generation) {
         return;
@@ -70,6 +76,7 @@ export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
     deadline = view.setTimeout(finish, 500);
   }
 
+  // Доводит активную анимацию до конца при включении reduced motion.
   function handleReducedMotion() {
     if (reduced.matches) animation?.finish();
   }
@@ -78,11 +85,13 @@ export function formErrorMotion(node: HTMLElement, initial: FormErrorMotion) {
   run(initial.visible);
 
   return {
+    // Сохраняет текущие callbacks. Запускает движение заново только при изменении видимости.
     update(next: FormErrorMotion) {
       const changed = parameters.visible !== next.visible;
       parameters = next;
       if (changed) run(false);
     },
+    // Инвалидирует callbacks анимации и снимает подписку на настройки движения.
     destroy() {
       active = false;
       generation++;

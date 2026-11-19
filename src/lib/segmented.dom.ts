@@ -1,3 +1,7 @@
+// Создаёт временный aria-hidden thumb и возвращает функцию завершения. Без валидных измерений или
+// длительности DOM остаётся прежним.
+// Перемещает временный индикатор Segmented между измеренными пунктами. Изменение геометрии или
+// настройки движения завершает переход.
 export function animateSegmentedThumb(
   group: HTMLElement,
   from: HTMLElement,
@@ -16,9 +20,11 @@ export function animateSegmentedThumb(
     || !from.getClientRects().length
     || !to.getClientRects().length
     || !(duration > 0)) {
+    // В этой ветке временный индикатор и подписки ещё не созданы.
     return () => { };
   }
 
+  // Считывает локальные layout-координаты пункта, чтобы масштаб родителя не попадал в расчёт.
   function geometry(node: HTMLElement) {
     // MotionThumb эталона измеряет layout, а не масштабированные экранные rect.
     return {
@@ -30,6 +36,7 @@ export function animateSegmentedThumb(
   }
   const first = geometry(from);
   const last = geometry(to);
+  // Сравнивает группу и оба конца перехода одним ключом геометрии для ResizeObserver.
   function signature() {
     return JSON.stringify([group.clientWidth, group.clientHeight, geometry(from), geometry(to)]);
   }
@@ -74,6 +81,7 @@ export function animateSegmentedThumb(
   observer.observe(to);
   reduced.addEventListener('change', stop);
 
+  // Освобождает индикатор и подписки один раз до вызова finish.
   function stop() {
     if (!active) {
       return;

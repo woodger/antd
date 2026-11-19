@@ -1,3 +1,5 @@
+// Управляет CSSMotion группы Tree. DOM, callbacks и состояние видимости используют одну ревизию
+// текущего перехода.
 // CSSMotion @rc-component/motion 1.3.3; MIT, vendor/LICENSE.rc-motion.
 import { getTreeMotionClassName } from './tree-motion.engine';
 import type { TreeMotionConfig, TreeMotionEvent } from './tree-motion.types';
@@ -32,9 +34,12 @@ export function createTreeGroupMotion(
   let revision = 0;
   let active = true;
 
+  // Проверяет наличие класса motion и разрешение движения для текущей группы.
   const supported = () => !!config.motionName && enabled && !reduced.matches;
+  // Читает флаг выбранной фазы. Неявный флаг сохраняет возможность анимации.
   const allowed = () => config[status === 'appear' ? 'motionAppear'
     : status === 'enter' ? 'motionEnter' : 'motionLeave'] !== false;
+  // Собирает callbacks текущего статуса из последней конфигурации дерева.
   const handlers = () => {
     const prefix = status === 'appear' ? 'Appear' : status === 'enter' ? 'Enter' : 'Leave';
     return {
@@ -42,6 +47,7 @@ export function createTreeGroupMotion(
       active: config[`on${prefix}Active`], end: config[`on${prefix}End`]
     };
   };
+  // Инвалидирует callbacks предыдущего перехода и снимает его кадр и таймеры.
   function cancel() {
     revision++;
     if (frame !== undefined) view.cancelAnimationFrame(frame);
@@ -49,11 +55,14 @@ export function createTreeGroupMotion(
     if (notification !== undefined) view.clearTimeout(notification);
     frame = deadline = notification = undefined;
   }
+  // Публикует классы, inline style и running для текущей группы. Commit доступен перед layout
+  // hooks.
   function update(commit = false) {
     publish({ running: status !== undefined,
       className: status && step ? getTreeMotionClassName(config.motionName, status, step) : undefined,
       style }, commit);
   }
+  // Очищает состояние фазы и публикует видимость после обновления DOM.
   function finish(passive = false) {
     cancel();
     status = step = undefined;
@@ -61,6 +70,7 @@ export function createTreeGroupMotion(
     update();
     if (seen || visible) {
       const current = revision;
+      // Сообщает о видимости, только если завершённый переход остаётся актуальным.
       const notify = () => {
         notification = undefined;
         if (active && current === revision) onVisible(visible);
@@ -74,6 +84,7 @@ export function createTreeGroupMotion(
     }
     seen = true;
   }
+  // Даёт DOM два кадра для смены CSS-перехода с проверкой текущей ревизии.
   function nextFrame(callback: () => void) {
     const current = revision;
     frame = view.requestAnimationFrame(() => {
@@ -86,6 +97,7 @@ export function createTreeGroupMotion(
       });
     });
   }
+  // Фильтрует события потомков и даёт end hook право оставить переход активным.
   function end(event: TreeMotionEvent) {
     if (!active || !status || step !== 'active') {
       return;
@@ -97,6 +109,7 @@ export function createTreeGroupMotion(
     const result = handlers().end?.(node, event);
     if (active && current === revision && result !== false) finish(true);
   }
+  // Планирует commit prepare и start, затем активирует motion и его deadline.
   function start() {
     if (!supported()) {
       finish();
@@ -145,6 +158,7 @@ export function createTreeGroupMotion(
       });
     });
   }
+  // При включении reduced motion завершает начатый переход, если prepare уже пройден.
   function reduce() {
     if (reduced.matches && status && step !== 'prepare') finish();
   }
@@ -152,6 +166,8 @@ export function createTreeGroupMotion(
   node.addEventListener('animationend', end);
   reduced.addEventListener('change', reduce);
   return {
+    // Обновляет конфигурацию группы и запускает обработку новой видимости. Prepare Promise связан
+    // с ревизией.
     sync(next: boolean, options: TreeMotionConfig, motionEnabled: boolean) {
       if (!active) {
         return;
@@ -206,6 +222,7 @@ export function createTreeGroupMotion(
         });
       }
     },
+    // Снимает собственные end и media listeners и отменяет все ожидающие кадры и таймеры.
     destroy() {
       active = false;
       cancel();
