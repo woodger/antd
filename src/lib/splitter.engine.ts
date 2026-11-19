@@ -1,3 +1,5 @@
+// Распределяет размеры Splitter и ограничения соседних панелей. Пиксели, доли и значения ARIA
+// вычисляются отдельно.
 import type {
   SplitterClassSlots,
   SplitterIconVisibility,
@@ -26,6 +28,7 @@ export interface SplitterMovingIndex {
   confirmed: boolean;
 }
 
+// Заполняет настройки collapse и режим показа иконки для каждой панели.
 export function normalizeSplitterPanels(items: readonly SplitterPanelProps[]) {
   return items.map<SplitterPanel>(item => ({
     ...item,
@@ -43,6 +46,8 @@ export function normalizeSplitterPanels(items: readonly SplitterPanelProps[]) {
   }));
 }
 
+// Распределяет остаток пропорционально свободному месту. Сохраняет исходный набор при
+// несовместимых bounds.
 function fitSplitterPercentages(sizes: number[], minimums: number[], maximums: number[]) {
   const mins = sizes.map((size, index) => size === 0 ? 0 : minimums[index] ?? 0);
   const maxs = sizes.map((size, index) => size === 0 ? 0 : maximums[index] ?? 1);
@@ -67,6 +72,7 @@ function fitSplitterPercentages(sizes: number[], minimums: number[], maximums: n
   return result.map((size, index) => size + (1 - total) * (spaces[index] / space));
 }
 
+// Распределяет незаданные доли по свободному месту с учётом min и max.
 export function autoSplitterPercentages(
   sizes: (number | undefined)[],
   minimums: number[],
@@ -140,13 +146,16 @@ export function autoSplitterPercentages(
   return result;
 }
 
+// Переводит процентную строку в долю без округления.
 export function getSplitterPercentage(value: string) {
   return Number(value.slice(0, -1)) / 100;
 }
 
+// Отличает размеры в процентах от пикселей перед нормализацией.
 const isPercentage = (value: SplitterSize | undefined): value is string =>
   typeof value === 'string' && value.endsWith('%');
 
+// Приводит размеры к долям и пикселям, сохраняя исходные props до измерения контейнера.
 export function getSplitterSizes(
   items: readonly SplitterPanelProps[],
   inner: (SplitterSize | undefined)[],
@@ -190,6 +199,7 @@ export function getSplitterSizes(
   };
 }
 
+// Объединяет режимы соседних панелей. Явный показ имеет приоритет над auto.
 function getVisibility(
   previous: { collapsible: boolean; mode: SplitterIconVisibility; },
   next: { collapsible: boolean; mode: SplitterIconVisibility; }
@@ -215,6 +225,7 @@ function getVisibility(
   return false;
 }
 
+// Определяет возможность drag и collapse от каждой границы с учётом reverse.
 export function getSplitterResizable(items: SplitterPanel[], pixels: number[], reverse: boolean) {
   return items.slice(0, -1).map<SplitterResizable>((previous, index) => {
     const next = items[index + 1];
@@ -244,10 +255,12 @@ export function getSplitterResizable(items: SplitterPanel[], pixels: number[], r
   });
 }
 
+// Переводит границу в пиксели и сохраняет явное нулевое значение.
 function getLimit(value: SplitterSize | undefined, fallback: number, container: number) {
   return typeof value === 'string' ? getSplitterPercentage(value) * container : value ?? fallback;
 }
 
+// Выбирает рабочую границу drag и ограничивает перенос размера min и max обеих панелей.
 export function resizeSplitterPanels(
   items: SplitterPanel[],
   infos: SplitterResizable[],
@@ -296,6 +309,7 @@ export function resizeSplitterPanels(
   };
 }
 
+// Запоминает прежний размер при collapse и восстанавливает его, пока допускают текущие границы.
 export function collapseSplitterPanels(
   items: SplitterPanel[],
   current: number[],
@@ -345,6 +359,7 @@ export function collapseSplitterPanels(
   return { sizes, cache: nextCache };
 }
 
+// Определяет позицию и границы разделителя по накопленным процентам.
 export function getSplitterAria(sizes: ReturnType<typeof getSplitterSizes>, index: number) {
   const stacks: number[] = [];
   let total = 0;
@@ -364,6 +379,7 @@ export function getSplitterAria(sizes: ReturnType<typeof getSplitterSizes>, inde
   };
 }
 
+// Ограничивает визуальную позицию lazy drag до публикации итогового размера.
 export function getSplitterPreviewOffset(
   container: number,
   now: number,
@@ -379,14 +395,17 @@ export function getSplitterPreviewOffset(
   ) - current;
 }
 
+// Округляет доступное значение ARIA, используя 0 для нечисловой позиции.
 export function splitterAriaNumber(value: number) {
   return Number.isFinite(value) ? Math.round(value) : 0;
 }
 
+// Нулевой размер скрывает панель и в числовом, и в строковом представлении.
 export function splitterPanelHidden(size: SplitterSize | undefined) {
   return size === 0 || typeof size === 'string' && Number.parseFloat(size) === 0;
 }
 
+// Преобразует строковый className в class слота default для dragger.
 export function splitterDraggerClasses(value: SplitterClassSlots['dragger']) {
   return typeof value === 'string' ? { default: value } : value ?? {};
 }

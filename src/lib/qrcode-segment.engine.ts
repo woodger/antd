@@ -1,3 +1,5 @@
+// Кодирует входные данные в битовые сегменты QR. Режим задаёт формат данных и ширину счётчика для
+// версии символа.
 // Алгоритм Project Nayuki из @rc-component/qrcode 2.0.0, MIT.
 // См. vendor/LICENSE.qrcodegen и vendor/LICENSE.rc-qrcode.
 import { Mode } from './qrcode-mode.engine';
@@ -5,6 +7,7 @@ import { appendBits } from './qrcode-bits.engine';
 
 export class QrSegment {
 
+  // Записывает каждый элемент входа как один байт сегмента BYTE.
   public static makeBytes(data: Readonly<number[]>): QrSegment {
     const bb: number[] = [];
     for (const b of data) {
@@ -13,6 +16,7 @@ export class QrSegment {
     return new QrSegment(Mode.BYTE, data.length, bb);
   }
 
+  // Кодирует группы до трёх цифр с шириной, соответствующей числу цифр.
   public static makeNumeric(digits: string): QrSegment {
     if (!QrSegment.isNumeric(digits)) {
       throw new RangeError('String contains non-numeric characters');
@@ -26,6 +30,7 @@ export class QrSegment {
     return new QrSegment(Mode.NUMERIC, digits.length, bb);
   }
 
+  // Кодирует пары символов из алфавита QR и дописывает одиночный хвост.
   public static makeAlphanumeric(text: string): QrSegment {
     if (!QrSegment.isAlphanumeric(text)) {
       throw new RangeError('String contains unencodable characters in alphanumeric mode');
@@ -43,6 +48,7 @@ export class QrSegment {
     return new QrSegment(Mode.ALPHANUMERIC, text.length, bb);
   }
 
+  // Выбирает режим для всей строки. Пустая строка не добавляет сегментов.
   public static makeSegments(text: string): QrSegment[] {
     if (text == '') {
       return [];
@@ -58,6 +64,7 @@ export class QrSegment {
     }
   }
 
+  // Записывает идентификатор ECI с шириной, соответствующей его диапазону.
   public static makeEci(assignVal: number): QrSegment {
     const bb: number[] = [];
     if (assignVal < 0) {
@@ -80,10 +87,12 @@ export class QrSegment {
     return new QrSegment(Mode.ECI, 0, bb);
   }
 
+  // Проверяет допустимость цифрового режима для строки целиком.
   public static isNumeric(text: string): boolean {
     return QrSegment.NUMERIC_REGEX.test(text);
   }
 
+  // Проверяет строку по алфавиту режима ALPHANUMERIC.
   public static isAlphanumeric(text: string): boolean {
     return QrSegment.ALPHANUMERIC_REGEX.test(text);
   }
@@ -91,6 +100,7 @@ export class QrSegment {
   public numChars: number;
   private bitData: number[];
 
+  // Сохраняет счётчик и битовые данные отдельной копией.
   public constructor(mode: Mode, numChars: number, bitData: number[]) {
     this.mode = mode;
     this.numChars = numChars;
@@ -101,10 +111,12 @@ export class QrSegment {
     this.bitData = bitData.slice();
   }
 
+  // Возвращает копию битов, чтобы вызывающий код не изменил сегмент.
   public getData(): number[] {
     return this.bitData.slice();
   }
 
+  // Считает заголовки и данные для версии. Возвращает Infinity при переполнении счётчика.
   public static getTotalBits(segs: Readonly<QrSegment[]>, version: number): number {
     let result: number = 0;
     for (const seg of segs) {
@@ -116,6 +128,7 @@ export class QrSegment {
     }
     return result;
   }
+  // Кодирует строку в UTF-8 для режима BYTE.
   private static toUtf8ByteArray(input: string): number[] {
     const str = encodeURI(input);
     const result: number[] = [];

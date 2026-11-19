@@ -1,6 +1,9 @@
+// Связывает фазы Drawer с native dialog и анимациями panel и mask. Ревизия motion исключает
+// применение завершения старого кадра.
 import { getDrawerMotionDuration, getDrawerTransform } from './drawer.engine';
 import type { DrawerPlacement } from './drawer.types';
 
+// Создаёт DOM-контроллер для шаблона с panel и mask.
 export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
   closing: boolean
 ) => void) {
@@ -14,6 +17,7 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
   let side: DrawerPlacement = 'right';
   let disposed = false;
 
+  // Повышает ревизию и отменяет текущую пару анимаций.
   function cancelMotion() {
     revision++;
     for (const animation of animations)
@@ -21,6 +25,7 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
     animations = [];
   }
 
+  // Закрывает native dialog после завершения motion и сообщает владельцу о завершении.
   function finishClose() {
     cancelMotion();
     phase = 'closed';
@@ -29,6 +34,7 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
     onClosing(false);
   }
 
+  // Запускает анимации panel и mask либо сразу применяет итог при reduced motion.
   function animate(from: string, to: string, opacity: string, opening: boolean) {
     const duration = reducedMotion.matches
       ? 0
@@ -68,6 +74,7 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
     }, () => { });
   }
 
+  // Сверяет состояние dialog с open и placement. При повторном открытии берёт текущий кадр.
   function sync(open: boolean, placement: DrawerPlacement) {
     if (disposed) {
       return;
@@ -107,6 +114,7 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
     }
   }
 
+  // Завершает текущие анимации при включении reduced motion.
   function handleReducedMotion() {
     if (reducedMotion.matches) {
       for (const animation of animations)
@@ -118,11 +126,13 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
 
   return {
     sync,
+    // Синхронизирует lifecycle после закрытия dialog браузером.
     nativeClosed() {
       cancelMotion();
       phase = 'closed';
       onClosing(false);
     },
+    // Отключает слушатель, отменяет motion и освобождает открытый dialog.
     destroy() {
       disposed = true;
       reducedMotion.removeEventListener('change', handleReducedMotion);
