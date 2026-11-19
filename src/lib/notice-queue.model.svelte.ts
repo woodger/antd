@@ -131,8 +131,12 @@ export function createNoticeQueue<Config extends NoticeConfig>(
         0,
         entry.remaining - Math.max(0, currentClock.now() - entry.started)
       );
-      if (entry.remaining > 0)
-        arm(entry); else closeEntries([entry]);
+      if (entry.remaining > 0) {
+        arm(entry);
+      }
+      else {
+        closeEntries([entry]);
+      }
     }, Math.min(entry.remaining, 2_147_483_647));
   }
 
@@ -203,8 +207,9 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       : undefined;
     const { duration: configuredDuration, pauseOnHover, onClose, ...content } = config;
     const duration = durationOf(configuredDuration, defaults.duration);
-    if (entry)
+    if (entry) {
       stop(entry);
+    }
     else {
       let resolve!: (closed: boolean) => void;
       const completion = new Promise<boolean>((done) => {
@@ -295,8 +300,12 @@ export function createNoticeQueue<Config extends NoticeConfig>(
 
         visible = next;
         for (const entry of entries.values()) {
-          if (next)
-            arm(entry); else stop(entry);
+          if (next) {
+            arm(entry);
+          }
+          else {
+            stop(entry);
+          }
         }
       },
       mounted(id: number) {
@@ -313,8 +322,12 @@ export function createNoticeQueue<Config extends NoticeConfig>(
         }
 
         entry.hovered = next;
-        if (entry.pauseOnHover && next)
-          stop(entry); else arm(entry);
+        if (entry.pauseOnHover && next) {
+          stop(entry);
+        }
+        else {
+          arm(entry);
+        }
       },
       focus(id: number, next: boolean) {
         const entry = entries.get(id);
@@ -323,8 +336,12 @@ export function createNoticeQueue<Config extends NoticeConfig>(
         }
 
         entry.focused = next;
-        if (next)
-          stop(entry); else arm(entry);
+        if (next) {
+          stop(entry);
+        }
+        else {
+          arm(entry);
+        }
       },
       close(id: number) {
         const entry = entries.get(id);

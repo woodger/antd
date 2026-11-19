@@ -11,7 +11,9 @@ async function mount(page: Page, id: string) {
   await page.mouse.move(0, 0);
 }
 async function apply(page: Page, action: FeedbackPickerAction, index: number) {
-  if (action === 'focus') await page.locator('[data-feedback-picker-control] input').first().focus();
+  if (action === 'focus') {
+    await page.locator('[data-feedback-picker-control] input').first().focus();
+  }
   else if (action === 'outside') {
     await page.getByRole(
       'button',

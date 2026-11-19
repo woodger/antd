@@ -59,7 +59,9 @@ export async function actDateWeekPrefix(page: Page, action: DateWeekPrefixAction
       has: page.locator('td[title="' + action.contains + '"]')
     }).locator('td.ant-picker-cell-week');
   }
-  else throw Error('Unknown declared date week-prefix action');
+  else {
+    throw Error('Unknown declared date week-prefix action');
+  }
   assert.equal(await target.count(), 1, 'Exactly one actual public action target');
   const actionEvidence: { targetBefore: unknown; afterFocusPointer?: NativeDateWeekPrefixPoint;
     ownerClick?: unknown; actualCoordinates?: { x: number; y: number }; hitBefore?: unknown } = {
@@ -80,7 +82,9 @@ export async function actDateWeekPrefix(page: Page, action: DateWeekPrefixAction
     actionEvidence.afterFocusPointer = await readDateWeekPrefix(page);
     await page.keyboard.press('Escape');
   }
-  else if (action.type === 'week-number-hover') await target.hover();
+  else if (action.type === 'week-number-hover') {
+    await target.hover();
+  }
   else if (action.type === 'cell-click' || action.type === 'week-number-click') {
     const box = await target.boundingBox();
     assert(box && box.width > 0 && box.height > 0, 'Real visible target geometry required');
@@ -94,7 +98,9 @@ export async function actDateWeekPrefix(page: Page, action: DateWeekPrefixAction
     }, point);
     await page.mouse.click(point.x, point.y);
   }
-  else await target.click();
+  else {
+    await target.click();
+  }
   return { index, action, before, actionEvidence, afterCall: await readDateWeekPrefix(page) };
 }
 export async function disposeDateWeekPrefix(page: Page, hooks?: {

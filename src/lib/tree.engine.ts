@@ -184,8 +184,12 @@ export function conductTreeCheck<Data extends object>(
         continue;
       if (clean ? !checked.has(entry.key) && !half.has(entry.key) : checked.has(entry.key)) {
         for (const child of entry.children.filter(child => !treeCheckDisabled(child.node))) {
-          if (clean)
-            checked.delete(child.key); else checked.add(child.key);
+          if (clean) {
+            checked.delete(child.key);
+          }
+          else {
+            checked.add(child.key);
+          }
         }
       }
     }

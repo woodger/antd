@@ -122,7 +122,9 @@
 
   function handleDragChange(info: SliderDragInfo) {
     const next = [...dragColors];
-    if (info.deleteIndex !== undefined && info.deleteIndex !== -1) next.splice(info.deleteIndex, 1);
+    if (info.deleteIndex !== undefined && info.deleteIndex !== -1) {
+      next.splice(info.deleteIndex, 1);
+    }
     else {
       next[info.draggingIndex] = { ...next[info.draggingIndex], percent: info.draggingValue };
       next.sort((a, b) => a.percent - b.percent);

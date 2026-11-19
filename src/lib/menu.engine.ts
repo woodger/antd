@@ -72,8 +72,9 @@ export function menuOpenKeys(
   mode: MenuMode
 ): string[] {
   const next = keys.filter(key => key !== entry.key);
-  if (open)
+  if (open) {
     next.push(entry.key);
+  }
   else if (mode !== 'inline') {
     return next.filter(key => !isMenuDescendant(key, entry));
   }
@@ -94,7 +95,12 @@ export function menuSelection(keys: readonly string[], key: string, multiple: bo
   };
 }
 
-export function menuKeyboardAction(mode: MenuMode, root: boolean, rtl: boolean, key: string):
+export function menuKeyboardAction(
+  mode: MenuMode,
+  root: boolean,
+  rtl: boolean,
+  key: string
+):
   'previous'
   | 'next'
   | 'children'

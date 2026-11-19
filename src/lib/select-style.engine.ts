@@ -33,15 +33,24 @@ export function snapshotSelectStyle(style: unknown): SelectStyleProperties {
     throw new TypeError('Select style must be a CSS object');
   }
   for (const [property, value] of Object.entries(style)) {
-    if (value == null || typeof value === 'string' || typeof value === 'number') result[property] = value;
-    else if (typeof value === 'boolean') result[property] = undefined;
-    else throw new TypeError('Select CSS property must be a string or number');
+    if (value == null || typeof value === 'string' || typeof value === 'number') {
+      result[property] = value;
+    }
+    else if (typeof value === 'boolean') {
+      result[property] = undefined;
+    }
+    else {
+      throw new TypeError('Select CSS property must be a string or number');
+    }
   }
   return result;
 }
 
 /** Source сначала удаляет исчезнувшие keys, затем записывает изменённые в порядке next props. */
-export function diffSelectStyle(previous: SelectStyleProperties, next: SelectStyleProperties): SelectStylePatch[] {
+export function diffSelectStyle(
+  previous: SelectStyleProperties,
+  next: SelectStyleProperties
+): SelectStylePatch[] {
   const patches: SelectStylePatch[] = [];
   for (const property of Object.keys(previous)) {
     if (!Object.hasOwn(next, property)) patches.push({ property, value: undefined });
@@ -63,8 +72,11 @@ function logicalName(property: string): string {
 }
 
 /** Framework layers объединяются с исходным object до setter diff, включая own undefined. */
-export function resolveSelectStyleFrame(style: SelectStyle | undefined,
-  before: readonly InlineStyleLayer[] = [], after: readonly InlineStyleLayer[] = []): SelectStyleFrame {
+export function resolveSelectStyleFrame(
+  style: SelectStyle | undefined,
+  before: readonly InlineStyleLayer[] = [],
+  after: readonly InlineStyleLayer[] = []
+): SelectStyleFrame {
   const properties: Record<string, SelectStyleValue> = {};
   const priorities: Record<string, '' | 'important'> = {};
   const authored = new Set<string>();
@@ -74,11 +86,18 @@ export function resolveSelectStyleFrame(style: SelectStyle | undefined,
       if (priorities[key] && !priority) continue;
       properties[key] = value;
       priorities[key] = priority ? 'important' : '';
-      if (owner) authored.add(key); else authored.delete(key);
+      if (owner) {
+        authored.add(key);
+      }
+      else {
+        authored.delete(key);
+      }
     }
   }
   append(before, false);
-  if (typeof style === 'string') append([style], true);
+  if (typeof style === 'string') {
+    append([style], true);
+  }
   else {
     for (const [property, value] of Object.entries(snapshotSelectStyle(style))) {
       properties[property] = value;

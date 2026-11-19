@@ -18,25 +18,43 @@ async function mount(page: Page, id: string) {
 async function act(page: Page, action: TreeSelectSurfaceAction) {
   const prefix = await page.locator('[data-tree-select-surface]').getAttribute('data-surface-prefix');
   const clear = page.locator(`[class~="${prefix}-clear"]`);
-  if (action === 'focus') await editor(page).focus();
-  else if (action === 'open') await editor(page).click();
-  else if (action === 'outside') await page.getByRole('button', { name: 'Outside selection' }).click();
-  else if (action === 'search' || action === 'reset-search') await editor(page).fill(action === 'search' ? 'b' : '');
-  else if (action === 'remove') await page.locator('.ant-select-selection-item-remove').first().click();
-  else if (action === 'clear') await clear.click();
-  else if (action === 'clear-key') await clear.press('Enter');
+  if (action === 'focus') {
+    await editor(page).focus();
+  }
+  else if (action === 'open') {
+    await editor(page).click();
+  }
+  else if (action === 'outside') {
+    await page.getByRole('button', { name: 'Outside selection' }).click();
+  }
+  else if (action === 'search' || action === 'reset-search') {
+    await editor(page).fill(action === 'search' ? 'b' : '');
+  }
+  else if (action === 'remove') {
+    await page.locator('.ant-select-selection-item-remove').first().click();
+  }
+  else if (action === 'clear') {
+    await clear.click();
+  }
+  else if (action === 'clear-key') {
+    await clear.press('Enter');
+  }
   else if (action === 'choose') await page.locator(`[class~="${prefix}-dropdown"]`).getByText(
     'Beta',
     { exact: true }
   ).click();
-  else if (action === 'draft') await draft(page).fill('Keep popup draft');
+  else if (action === 'draft') {
+    await draft(page).fill('Keep popup draft');
+  }
   else if (action === 'popup-background') {
     await page.locator('[data-surface-popup]').click({ position: {
       x: 3,
       y: 3
     } });
   }
-  else if (action === 'enter' || action === 'escape') await editor(page).press(action === 'enter' ? 'Enter' : 'Escape');
+  else if (action === 'enter' || action === 'escape') {
+    await editor(page).press(action === 'enter' ? 'Enter' : 'Escape');
+  }
   else if (action === 'toggle-menu') await page.getByRole('button', { name: 'Toggle menu' }).click();
 }
 

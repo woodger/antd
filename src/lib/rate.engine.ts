@@ -46,8 +46,9 @@ export function getRateStarClass(
   const star = index + 1;
   const classes = [`${prefix}-star`];
 
-  if (value === 0 && index === 0 && focused)
+  if (value === 0 && index === 0 && focused) {
     classes.push(`${prefix}-star-focused`);
+  }
   else if (allowHalf && value !== undefined && value + 0.5 >= star && value < star) {
     classes.push(`${prefix}-star-half`, `${prefix}-star-active`);
     if (focused)

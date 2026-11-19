@@ -63,8 +63,12 @@
   }
   function setThumb(mode: string) {
     thumbMode = mode;
-    if (mode === 'generated') delete file.thumbUrl;
-    else file.thumbUrl = mode === 'empty' ? '' : explicit;
+    if (mode === 'generated') {
+      delete file.thumbUrl;
+    }
+    else {
+      file.thumbUrl = mode === 'empty' ? '' : explicit;
+    }
   }
   onMount(() => {
     origins = ['alpha.png', 'beta.png', 'gamma.png'].map(name =>

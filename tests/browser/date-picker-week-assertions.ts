@@ -85,8 +85,13 @@ export function createWeekProof() {
     variants: new Map<WeekSourceVariant, IdentityProof>(), points: 0,
     boundaries: weekBoundaries, observations: [] as unknown[] };
 }
-function bindIdentity(actual: number, source: number, forward: Map<number, number>,
-  reverse: Map<number, number>, label: string) {
+function bindIdentity(
+  actual: number,
+  source: number,
+  forward: Map<number, number>,
+  reverse: Map<number, number>,
+  label: string
+) {
   if (forward.has(source)) assert.equal(actual, forward.get(source), label + ' shared identity');
   if (reverse.has(actual)) assert.equal(source, reverse.get(actual), label + ' distinct identity');
   forward.set(source, actual);
@@ -106,8 +111,12 @@ function validateDate(value: WeekSourceDate, owner: WeekSourceOwner) {
       'Actual authored date alias ' + role);
   }
 }
-function sameDate(actual: WeekSourceDate, source: WeekSourceDate,
-  owner: WeekSourceOwner, proof: IdentityProof) {
+function sameDate(
+  actual: WeekSourceDate,
+  source: WeekSourceDate,
+  owner: WeekSourceOwner,
+  proof: IdentityProof
+) {
   validateDate(actual, owner);
   assert.deepEqual(Object.keys(actual.temporal), Object.keys(source.temporal));
   for (const key of ['valid', 'epoch', 'iso', 'fields', 'locale'] as const) {
@@ -119,8 +128,13 @@ function sameDate(actual: WeekSourceDate, source: WeekSourceDate,
   assert.deepEqual(actual.encoded, source.encoded);
   bindIdentity(actual.identity, source.identity, proof.dates, proof.nativeDates, 'Dayjs');
 }
-function sameDates(actual: WeekSourceDatePath[], source: WeekSourceDatePath[],
-  raw: unknown, owner: WeekSourceOwner, proof: IdentityProof) {
+function sameDates(
+  actual: WeekSourceDatePath[],
+  source: WeekSourceDatePath[],
+  raw: unknown,
+  owner: WeekSourceOwner,
+  proof: IdentityProof
+) {
   assert.equal(actual.length, source.length);
   for (const [index, date] of actual.entries()) {
     assert.deepEqual(date.path, source[index].path);
@@ -129,7 +143,8 @@ function sameDates(actual: WeekSourceDatePath[], source: WeekSourceDatePath[],
   }
 }
 export function verifyWeekReceiverBoundary(
-  actual: WeekSourceInvocation, source: WeekSourceInvocation
+  actual: WeekSourceInvocation,
+  source: WeekSourceInvocation
 ) {
   assert.deepEqual(source.receiver, {
     type: 'undefined', isUndefined: true, isNull: false, identity: null
@@ -140,7 +155,8 @@ export function verifyWeekReceiverBoundary(
   assert(Number.isSafeInteger(actual.receiver.identity) && actual.receiver.identity! > 0);
 }
 export function verifyWeekSingleCalendarInfoBoundary(
-  actual: WeekSourceInvocation, source: WeekSourceInvocation
+  actual: WeekSourceInvocation,
+  source: WeekSourceInvocation
 ) {
   assert.deepEqual(property(source.encodedArguments, '2'), { $: 'object', properties: [] });
   assert.deepEqual(property(actual.encodedArguments, '2'), {
@@ -148,7 +164,8 @@ export function verifyWeekSingleCalendarInfoBoundary(
   });
 }
 export function verifyWeekSingleEmptyCalendarBoundary(
-  actual: WeekSourceInvocation, source: WeekSourceInvocation
+  actual: WeekSourceInvocation,
+  source: WeekSourceInvocation
 ) {
   assert.equal(actual.dates.length, 0);
   assert.equal(source.dates.length, 0);
@@ -187,7 +204,9 @@ function sameCallbacks(actual: NativeWeekPoint, source: WeekSourcePoint, proof: 
     const single = actual.owner.id.startsWith('single-') && call.name === 'calendar';
     const empty = single && expected.dates.length === 0
       && object(property(expected.encodedArguments, '0')).$ === 'undefined';
-    if (empty) verifyWeekSingleEmptyCalendarBoundary(call, expected);
+    if (empty) {
+      verifyWeekSingleEmptyCalendarBoundary(call, expected);
+    }
     else if (single) verifyWeekSingleCalendarInfoBoundary(call, expected);
     for (const key of keys) {
       assert(typeof key === 'string');
@@ -253,9 +272,14 @@ function panelMode(className: string) {
   assert.equal(modes.length, 1, 'One actual calendar mode class token');
   return modes[0];
 }
-function verifyPoint(actual: NativeWeekPoint, source: WeekSourcePoint,
-  proof: ReturnType<typeof createWeekProof>, variant: WeekSourceVariant, label: string,
-  settled: boolean) {
+function verifyPoint(
+  actual: NativeWeekPoint,
+  source: WeekSourcePoint,
+  proof: ReturnType<typeof createWeekProof>,
+  variant: WeekSourceVariant,
+  label: string,
+  settled: boolean
+) {
   const existing = proof.variants.get(variant);
   const next: IdentityProof = existing ? { dates: new Map(existing.dates),
     nativeDates: new Map(existing.nativeDates), modes: new Map(existing.modes),
@@ -348,12 +372,22 @@ function verifyPoint(actual: NativeWeekPoint, source: WeekSourcePoint,
     sourceCaret: source.inputs.map(input => [input.selectionStart, input.selectionEnd, input.selectionDirection]),
     nativeCaret: actual.inputs.map(input => [input.selectionStart, input.selectionEnd, input.selectionDirection]) });
 }
-export function verifyWeekPoint(actual: NativeWeekPoint, source: WeekSourcePoint,
-  proof: ReturnType<typeof createWeekProof>, variant: WeekSourceVariant, label: string) {
+export function verifyWeekPoint(
+  actual: NativeWeekPoint,
+  source: WeekSourcePoint,
+  proof: ReturnType<typeof createWeekProof>,
+  variant: WeekSourceVariant,
+  label: string
+) {
   verifyPoint(actual, source, proof, variant, label, true);
 }
-export function verifyWeekInputPhase(actual: NativeWeekPoint, source: WeekSourcePoint,
-  proof: ReturnType<typeof createWeekProof>, variant: WeekSourceVariant, label: string) {
+export function verifyWeekInputPhase(
+  actual: NativeWeekPoint,
+  source: WeekSourcePoint,
+  proof: ReturnType<typeof createWeekProof>,
+  variant: WeekSourceVariant,
+  label: string
+) {
   verifyPoint(actual, source, proof, variant, label, false);
 }
 export interface WeekProducerProof {
@@ -413,8 +447,11 @@ function changedModels(before: WeekSourceOwner | null, after: WeekSourceOwner): 
     modelDates: call.dates.filter(date => date.path[0] === 0)
       .map(date => ({ path: date.path.slice(1), value: date.value })) }));
 }
-function invocationModelWindow(index: number, previous: WeekSourceOwner | null,
-  points: readonly WeekSourceOwner[]): WeekSourceOwner[] {
+function invocationModelWindow(
+  index: number,
+  previous: WeekSourceOwner | null,
+  points: readonly WeekSourceOwner[]
+): WeekSourceOwner[] {
   assert(points.length > 0);
   let before = previous;
   for (const after of points) {
@@ -427,8 +464,11 @@ function invocationModelWindow(index: number, previous: WeekSourceOwner | null,
   // public model. The original tail is retained; no unobserved model is invented.
   return [points.at(-1)!];
 }
-function sourcePhaseOwners(sample: WeekSample, phase: string,
-  variant: WeekSourceVariant): WeekSourceOwner[] {
+function sourcePhaseOwners(
+  sample: WeekSample,
+  phase: string,
+  variant: WeekSourceVariant
+): WeekSourceOwner[] {
   if (phase === 'initial') {
     return [readWeekSourceInitial(sample.id, variant).owner];
   }
@@ -476,9 +516,14 @@ export function createWeekProducerProof(sample: WeekSample): WeekProducerProof {
   }
   return { cursor: 0, boundary: 0, chunks: 0, witnesses, matchedInvocations: 0, lastOwner: null };
 }
-export function verifyWeekProducerChunk(value: unknown, proof: WeekProducerProof,
-  owner: WeekSourceOwner, boundaries: Record<string, number>, sample: WeekSample,
-  phaseOwners: readonly WeekSourceOwner[] = [owner]) {
+export function verifyWeekProducerChunk(
+  value: unknown,
+  proof: WeekProducerProof,
+  owner: WeekSourceOwner,
+  boundaries: Record<string, number>,
+  sample: WeekSample,
+  phaseOwners: readonly WeekSourceOwner[] = [owner]
+) {
   const chunk = object(value);
   assert.equal(chunk.cursor, proof.cursor);
   assert(Number.isSafeInteger(chunk.next) && Number(chunk.next) >= proof.cursor);

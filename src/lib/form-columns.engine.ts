@@ -31,8 +31,12 @@ export function resolveFormWrapperCol({
     const labelSize = size ? colSize(formLabelCol[size]) : formLabelCol;
     const wrapperSize = size ? colSize(merged[size]) : merged;
     if ('span' in labelSize && !('offset' in wrapperSize) && Number(labelSize.span) < 24) {
-      if (size) merged[size] = { ...wrapperSize, offset: labelSize.span };
-      else merged.offset = labelSize.span;
+      if (size) {
+        merged[size] = { ...wrapperSize, offset: labelSize.span };
+      }
+      else {
+        merged.offset = labelSize.span;
+      }
     }
   }
 

@@ -241,7 +241,12 @@ export function readSelectComponentsOwnStyleInitSource(mode: 'csr' | 'hydrate'):
       assert(value.parsed && value.beforeHydration && value.afterCall && value.commit);
     }
   }
-  if (mode === 'csr') csr = source; else hydrate = source;
+  if (mode === 'csr') {
+    csr = source;
+  }
+  else {
+    hydrate = source;
+  }
   return source;
 }
 export function readSelectComponentsOwnStyleInitCase(

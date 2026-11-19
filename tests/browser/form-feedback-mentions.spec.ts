@@ -5,14 +5,22 @@ import type { MentionsFeedbackAction } from './fixtures/form-feedback-mentions-c
 import { readFormFeedbackMentions } from './form-feedback-mentions-metrics';
 const editor = (page: Page) => page.locator('[data-feedback-control] textarea, [data-feedback-control] input:not([type="checkbox"]):not([type="hidden"])').first();
 async function apply(page: Page, action: MentionsFeedbackAction, index: number) {
-  if (action === 'focus') await editor(page).focus();
-  else if (action === 'clear') await page.locator('[data-ant-mentions-clear]').click();
+  if (action === 'focus') {
+    await editor(page).focus();
+  }
+  else if (action === 'clear') {
+    await page.locator('[data-ant-mentions-clear]').click();
+  }
   else if (action === 'type-mention') {
     await editor(page).press('End');
     await editor(page).pressSequentially('@a');
   }
-  else if (action === 'choose-mention') await editor(page).press('Enter');
-  else if (action === 'search-transfer') await editor(page).fill('Alpha');
+  else if (action === 'choose-mention') {
+    await editor(page).press('Enter');
+  }
+  else if (action === 'search-transfer') {
+    await editor(page).fill('Alpha');
+  }
   else if (action === 'move-transfer') {
     const root = page.locator('[data-feedback-control]');
     await root.getByText('Alpha', { exact: true }).click();

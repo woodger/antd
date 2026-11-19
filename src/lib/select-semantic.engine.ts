@@ -28,7 +28,8 @@ export function hasSelectControlSemantics(...maps: readonly SelectSemanticMaps[]
 }
 
 export function resolveSelectSemanticValue<Slots, Props>(
-  value: SelectSemanticValue<Slots, Props> | undefined, info: { props: Props }
+  value: SelectSemanticValue<Slots, Props> | undefined,
+  info: { props: Props }
 ): Slots | undefined {
   return typeof value === 'function'
     ? (value as (info: { props: Props }) => Slots | undefined)(info) : value;
@@ -43,9 +44,15 @@ function cssObject(style: unknown): SelectCSSProperties | undefined {
   }
   const result: Record<string, string | number | null | undefined> = {};
   for (const [key, value] of Object.entries(style)) {
-    if (value == null || typeof value === 'string' || typeof value === 'number') result[key] = value;
-    else if (typeof value === 'boolean') result[key] = undefined;
-    else throw new TypeError('Select CSS property must be a string or number');
+    if (value == null || typeof value === 'string' || typeof value === 'number') {
+      result[key] = value;
+    }
+    else if (typeof value === 'boolean') {
+      result[key] = undefined;
+    }
+    else {
+      throw new TypeError('Select CSS property must be a string or number');
+    }
   }
   return result;
 }
@@ -100,7 +107,10 @@ export function serializeSelectStyle(style: SelectStyle | undefined): string | u
 }
 
 export function mergeSelectSemanticMaps(
-  context: SelectSemanticMaps, local: SelectSemanticMaps, contextStyle?: SelectStyle, ownStyle?: SelectStyle
+  context: SelectSemanticMaps,
+  local: SelectSemanticMaps,
+  contextStyle?: SelectStyle,
+  ownStyle?: SelectStyle
 ) {
   const join = (before: string | undefined, after: string | undefined) =>
     [before, after].filter(Boolean).join(' ') || undefined;

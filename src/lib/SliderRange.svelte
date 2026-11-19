@@ -300,7 +300,9 @@
       next.splice(before + 1, 0, point);
       focus = before + 1;
     }
-    else next[index] = point;
+    else {
+      next[index] = point;
+    }
     if (!raw.length) next.push(point);
     publish(next, focus);
     if (event) {
@@ -308,7 +310,9 @@
       focusIndex(focus);
       start(event, focus, next, false, removeCount);
     }
-    else complete(focus);
+    else {
+      complete(focus);
+    }
   }
 
   function handleRootPointer(event: PointerEvent) {

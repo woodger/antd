@@ -687,8 +687,12 @@
       anchorWidthVariable,
       preserveFocus: customPopup ? false : preserveEditorFocus,
       applyPosition: value => untrack(() => {
-        if (sourceMode()) source.commitFrame(() => popupStyle.position(value, source.style));
-        else popupStyle.position(value);
+        if (sourceMode()) {
+          source.commitFrame(() => popupStyle.position(value, source.style));
+        }
+        else {
+          popupStyle.position(value);
+        }
       }),
       onAlign: value => {
         if (sourceMode()) cachedPopupAlignment = value.sourceAlign;
@@ -839,16 +843,24 @@
     blurWithin(event);
   }
   function customRootClick(event: MouseEvent & { currentTarget: EventTarget & RootElement; }) {
-    if (visible) scheduleClose();
-    else requestOpen(true, true);
+    if (visible) {
+      scheduleClose();
+    }
+    else {
+      requestOpen(true, true);
+    }
     onClick?.(event);
   }
   function customRootKeyboard(event: KeyboardEvent & { currentTarget: EventTarget & RootElement; }) {
     const wasOpen = visible;
     if (event.key === 'Enter' || event.key === ' ') {
       if (event.key === 'Enter' || !suffixSearch) event.preventDefault();
-      if (!wasOpen) requestOpen(true, true);
-      else handleKeyboard(event, true);
+      if (!wasOpen) {
+        requestOpen(true, true);
+      }
+      else {
+        handleKeyboard(event, true);
+      }
     }
     else if (event.key === 'Backspace' && isMultiple && !search) {
       const last = [...display].reverse().find(item => !item.disabled);
@@ -967,7 +979,9 @@
           const value = inputContext.attributes.value;
           if (value != null) input.value = String(value);
         }
-        else input.value = inputValue;
+        else {
+          input.value = inputValue;
+        }
       });
     }
   }
@@ -1045,16 +1059,24 @@
       );
     }
     if (!isMultiple) {
-      if (deferClose) scheduleClose();
-      else requestOpen(false);
+      if (deferClose) {
+        scheduleClose();
+      }
+      else {
+        requestOpen(false);
+      }
     }
     if (focusInput) editor?.focus();
   }
   function customTagMouseDown(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
-    if (visible) scheduleClose();
-    else requestOpen(true);
+    if (visible) {
+      scheduleClose();
+    }
+    else {
+      requestOpen(true);
+    }
   }
   function clearMouseDown(event: MouseEvent) {
     event.preventDefault();
@@ -1081,12 +1103,20 @@
     if (editorContainer && !onInput) event.preventDefault();
     const preserveOpen = wasOpen && (!isMultiple && canSearch || isMultiple && onInput);
     focus();
-    if (preserveOpen) cancelClose();
+    if (preserveOpen) {
+      cancelClose();
+    }
     else {
-      if (wasOpen) scheduleClose();
+      if (wasOpen) {
+        scheduleClose();
+      }
       // Source batches focus-open and pointer-open as separate requests.
-      else if (visible) onOpenChange?.(true);
-      else requestOpen(true);
+      else if (visible) {
+        onOpenChange?.(true);
+      }
+      else {
+        requestOpen(true);
+      }
     }
   }
   function scheduleClose() {
@@ -1296,15 +1326,27 @@
   }
   export function focus(options?: FocusOptions) {
     const ref = rootSlot ? customRoot?.registration : inputSlot ? customInput?.registration : undefined;
-    if (ref && 'nativeElement' in ref && ref.focus) ref.focus(options);
-    else if (ref && 'inputElement' in ref && ref.focus) ref.focus(options);
-    else (rootSlot ? root : editor)?.focus(options);
+    if (ref && 'nativeElement' in ref && ref.focus) {
+      ref.focus(options);
+    }
+    else if (ref && 'inputElement' in ref && ref.focus) {
+      ref.focus(options);
+    }
+    else {
+      (rootSlot ? root : editor)?.focus(options);
+    }
   }
   export function blur() {
     const ref = rootSlot ? customRoot?.registration : inputSlot ? customInput?.registration : undefined;
-    if (ref && 'nativeElement' in ref && ref.blur) ref.blur();
-    else if (ref && 'inputElement' in ref && ref.blur) ref.blur();
-    else (rootSlot ? root : editor)?.blur();
+    if (ref && 'nativeElement' in ref && ref.blur) {
+      ref.blur();
+    }
+    else if (ref && 'inputElement' in ref && ref.blur) {
+      ref.blur();
+    }
+    else {
+      (rootSlot ? root : editor)?.blur();
+    }
   }
   export function scrollTo(settings?: TreeScrollConfig | null) {
     if (!tree) {

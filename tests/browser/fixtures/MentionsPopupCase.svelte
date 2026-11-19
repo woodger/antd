@@ -67,7 +67,9 @@
   let localOptions = $derived.by(() => {
     void revision;
     const props: Pick<MentionsProps, 'getPopupContainer'> = {};
-    if (sample.local === 'undefined') props.getPopupContainer = undefined;
+    if (sample.local === 'undefined') {
+      props.getPopupContainer = undefined;
+    }
     else if (sample.local) {
       const target = alternate ? 'child' : sample.local;
       props.getPopupContainer = sample.parameter

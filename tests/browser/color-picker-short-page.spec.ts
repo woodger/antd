@@ -18,8 +18,12 @@ for (const source of reference.cases) {
 
     await expect(trigger).toBeVisible();
     const initialRange = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
-    if (short) expect(initialRange).toBe(0);
-    else expect(initialRange).toBeGreaterThan(0);
+    if (short) {
+      expect(initialRange).toBe(0);
+    }
+    else {
+      expect(initialRange).toBeGreaterThan(0);
+    }
     await trigger.click();
 
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollHeight - innerHeight))

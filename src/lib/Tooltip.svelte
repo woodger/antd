@@ -151,9 +151,12 @@
       onOpenChange?.(next);
     }
 
-    if (delay !== 0)
+    if (delay !== 0) {
       pending = setTimeout(apply, delay);
-    else apply();
+    }
+    else {
+      apply();
+    }
   }
 
   function handleEnter(event: PointerEvent) {
@@ -200,8 +203,12 @@
       }
     }
     // Native blur без relatedTarget также приходит во время удаления focused DOM.
-    if (event.relatedTarget === null) queueMicrotask(closeIfOutside);
-    else closeIfOutside();
+    if (event.relatedTarget === null) {
+      queueMicrotask(closeIfOutside);
+    }
+    else {
+      closeIfOutside();
+    }
   }
 
   function handlePopupHover(next: boolean) {
@@ -217,8 +224,9 @@
     }
 
     popupHovered = next;
-    if (next)
+    if (next) {
       cancelPending();
+    }
     else if (sourceTrigger ? supports('hover') : !wanted())
       request(false, getTooltipDelay(leaveDelay));
   }
@@ -241,7 +249,9 @@
       return;
     }
 
-    if (visible && hide) dismiss();
+    if (visible && hide) {
+      dismiss();
+    }
     else if (!visible && show) showByClick();
     if (sourceTouch) touched = false;
   }
@@ -252,8 +262,12 @@
     }
 
     event.preventDefault();
-    if (visible && actions.hide.has('contextMenu')) dismiss();
-    else showByClick();
+    if (visible && actions.hide.has('contextMenu')) {
+      dismiss();
+    }
+    else {
+      showByClick();
+    }
   }
 
   function handleTouchStart() {
@@ -262,7 +276,9 @@
     }
 
     touched = true;
-    if (visible && actions.hide.has('touch')) dismiss();
+    if (visible && actions.hide.has('touch')) {
+      dismiss();
+    }
     else if (!visible && actions.show.has('touch')) showByClick();
   }
 

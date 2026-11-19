@@ -80,8 +80,14 @@ export const treeSelectNodesSamples: readonly TreeSelectNodesSample[] = [
   { id: 'node-flags', checkable: true, flags: true }
 ];
 
-export function treeSelectNodeSpecs(sample: TreeSelectNodesSample, revision = 0, reversed = false,
-  removed = false, added = false, loaded = false): TreeSelectNodeSpec[] {
+export function treeSelectNodeSpecs(
+  sample: TreeSelectNodesSample,
+  revision = 0,
+  reversed = false,
+  removed = false,
+  added = false,
+  loaded = false
+): TreeSelectNodeSpec[] {
   if (sample.long) return Array.from({ length: 80 }, (_, value) => ({
     value, title: `Node ${value}`, payload: `item-${value}`, icon: 'text'
   }));

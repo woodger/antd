@@ -46,9 +46,15 @@ export function flattenToken(token: object): string {
   let value = '';
   for (const [key, item] of Object.entries(token)) {
     value += key;
-    if (item instanceof DerivativeTheme) value += item.id;
-    else if (item && typeof item === 'object') value += flattenToken(item);
-    else value += item;
+    if (item instanceof DerivativeTheme) {
+      value += item.id;
+    }
+    else if (item && typeof item === 'object') {
+      value += flattenToken(item);
+    }
+    else {
+      value += item;
+    }
   }
 
   const result = hashTokenString(value);

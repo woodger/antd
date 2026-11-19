@@ -30,7 +30,9 @@ async function perform(
   action: TreeSelectMaxCountAction,
   sample: TreeSelectMaxCountSample
 ) {
-  if (action.kind === 'open') await input(page).click();
+  if (action.kind === 'open') {
+    await input(page).click();
+  }
   else if (action.kind === 'choose' || action.kind === 'title') {
     const row = page.locator(`.ant-select-dropdown [role="treeitem"][id$="-${action.value}"]`);
     const selector = action.kind !== 'title' && (sample.checkable || sample.strict)
@@ -38,8 +40,12 @@ async function perform(
     // Оба controls проверяют запрет; физический клик по disabled строке не выбирает её.
     await row.locator(selector).click({ force: true });
   }
-  else if (action.kind === 'search') await input(page).fill(action.value);
-  else if (action.kind === 'key') await input(page).press(action.value);
+  else if (action.kind === 'search') {
+    await input(page).fill(action.value);
+  }
+  else if (action.kind === 'key') {
+    await input(page).press(action.value);
+  }
   else if (action.kind === 'remove') {
     await page.getByRole('button', { name: `Удалить ${action.label}`, exact: true }).click();
   }

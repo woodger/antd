@@ -7,8 +7,14 @@ import { normalizedSelectSurfaceAuthoredProps } from './select-surface-assertion
 import { verifySelectComponentsAttributes } from './select-components-assertions';
 import { readTagCloseHandleSourceInfo, type TagCloseHandleSSRSerialization, type TagCloseHandleSample } from './select-components-tag-close-handles-reference';
 import { verifyNormalTagCalls, verifyTagCloseHandleBodyAliases, type NativeOwner } from './select-components-tag-close-handles-assertions';
-export function verifyTagCloseHandleSSR(body: string, actual: NativeOwner, refs: Record<string, boolean>,
-  source: TagCloseHandleSSRSerialization, sample: Pick<TagCloseHandleSample, 'id'>, label: string) {
+export function verifyTagCloseHandleSSR(
+  body: string,
+  actual: NativeOwner,
+  refs: Record<string, boolean>,
+  source: TagCloseHandleSSRSerialization,
+  sample: Pick<TagCloseHandleSample, 'id'>,
+  label: string
+) {
   assert(['select-close-handles-nonclosable', 'select-close-handles-retained'].includes(sample.id));
   assert.equal(source.fatal, null);
   assert.equal(source.domFree, true);

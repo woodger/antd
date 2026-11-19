@@ -18,7 +18,8 @@ export function getResponsiveTagCount(widths: readonly number[], available: numb
 
 /** Source numeric slice сохраняет порядок. NaN не должен скрывать весь выбранный список. */
 export function getSelectTagOverflow<Value extends string | number, Label = string>(
-  tags: readonly { value: Value; label: Label; disabled?: boolean; title?: unknown }[], maxCount?: number
+  tags: readonly { value: Value; label: Label; disabled?: boolean; title?: unknown }[],
+  maxCount?: number
 ) {
   const visible = typeof maxCount === 'number' && !Number.isNaN(maxCount)
     ? tags.slice(0, maxCount) : tags;

@@ -60,7 +60,9 @@ it('keeps every actual seven-key tag producer argument, descriptor and result in
       if (info.isMaxTag) {
         for (const key of ['value', 'index', 'onClose']) expect(info[key]).toEqual({ $: 'undefined' });
       }
-      else expect(info.onClose).toMatchObject({ $: 'function', name: 'onClose' });
+      else {
+        expect(info.onClose).toMatchObject({ $: 'function', name: 'onClose' });
+      }
     }
   }
 });

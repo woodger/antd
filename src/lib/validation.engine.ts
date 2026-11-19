@@ -58,7 +58,8 @@ export type FormRules<Values extends FormValues> = Partial<
 >;
 
 export function resolveValidationRules<Values extends FormValues>(
-  rules: readonly FormRule<Values>[], form: FormInstance<Values>
+  rules: readonly FormRule<Values>[],
+  form: FormInstance<Values>
 ): readonly ValidationRule<Values>[] {
   // Object-only arrays сохраняют прежнюю identity и capture semantics.
   if (rules.every(rule => typeof rule !== 'function')) {
@@ -147,7 +148,9 @@ async function validateRules<Values extends FormValues>(
           if (messages.warnings.length) warning ??= messages.warnings;
 
           // Source выбирает и ранний warning, теряя позднюю ошибку; блокирующие правила ждём.
-          if (!blocking && warning) resolve({ errors: [], warnings: warning });
+          if (!blocking && warning) {
+            resolve({ errors: [], warnings: warning });
+          }
           else if (!remaining) resolve({ errors: [], warnings: [] });
         }, reject);
       });

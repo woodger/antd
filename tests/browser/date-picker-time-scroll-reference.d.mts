@@ -33,6 +33,9 @@ export function readTimeScrollSourceCapture(variant?: 'first' | 'repeat'): {
   cases: SourceScrollCase[];
   actualCounts: Record<string, number>;
 };
-export function readTimeScrollSourceCase(id: string, variant?: 'first' | 'repeat'): SourceScrollCase;
+export function readTimeScrollSourceCase(
+  id: string,
+  variant?: 'first' | 'repeat'
+): SourceScrollCase;
 export function readTimeScrollSourcePart<T = unknown>(part: SourcePart): T;
 export function verifyAllTimeScrollSource(): { parts: number; blobs: number; sourceOnly: true; };

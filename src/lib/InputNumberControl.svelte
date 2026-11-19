@@ -368,7 +368,9 @@
         editor = { text: formatValue(decimal), dirty: false };
       });
     }
-    else editor = { text: formatValue(decimal), dirty: false };
+    else {
+      editor = { text: formatValue(decimal), dirty: false };
+    }
   }
 
   function changeStep(direction: 1 | -1, emitter: InputNumberStepInfo['emitter']) {

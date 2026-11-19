@@ -13,7 +13,8 @@ export interface FormRuleFactoriesSample {
 }
 
 export function formRuleFactoriesRules(
-  sample: FormRuleFactoriesSample, observe?: (form: FormInstance<FormValues>) => void
+  sample: FormRuleFactoriesSample,
+  observe?: (form: FormInstance<FormValues>) => void
 ): FormRule[] {
   const factory: ValidationRuleFactory = form => {
     observe?.(form);

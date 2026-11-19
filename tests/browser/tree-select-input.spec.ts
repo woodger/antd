@@ -8,13 +8,27 @@ import { nativeTreeSelectInputView } from './tree-select-input-native';
 
 async function act(page: Page, action: TreeSelectInputAction) {
   const field = page.locator('[data-tree-select-input-case] input,[data-tree-select-input-case] textarea');
-  if (action.type === 'click') await field.click();
-  else if (action.type === 'focus') await field.focus();
-  else if (action.type === 'fill') await field.fill(action.text!);
-  else if (action.type === 'key') await field.press(action.text!);
-  else if (action.type === 'ref-focus') await page.locator('[data-input-ref-focus]').dispatchEvent('click');
-  else if (action.type === 'ref-blur') await page.locator('[data-input-ref-blur]').dispatchEvent('click');
-  else if (action.type === 'prefix-click') await page.locator('[data-input-prefix]').click();
+  if (action.type === 'click') {
+    await field.click();
+  }
+  else if (action.type === 'focus') {
+    await field.focus();
+  }
+  else if (action.type === 'fill') {
+    await field.fill(action.text!);
+  }
+  else if (action.type === 'key') {
+    await field.press(action.text!);
+  }
+  else if (action.type === 'ref-focus') {
+    await page.locator('[data-input-ref-focus]').dispatchEvent('click');
+  }
+  else if (action.type === 'ref-blur') {
+    await page.locator('[data-input-ref-blur]').dispatchEvent('click');
+  }
+  else if (action.type === 'prefix-click') {
+    await page.locator('[data-input-prefix]').click();
+  }
   else if (action.type === 'outside') {
     await page.getByRole(
       'button',

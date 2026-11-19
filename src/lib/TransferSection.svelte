@@ -100,19 +100,29 @@
       return;
     }
 
-    if (key === 'all') section.onItemSelectAll(enabledKeys, !all);
-    else if (key === 'current') section.onItemSelectAll(currentKeys, true);
+    if (key === 'all') {
+      section.onItemSelectAll(enabledKeys, !all);
+    }
+    else if (key === 'current') {
+      section.onItemSelectAll(currentKeys, true);
+    }
     else if (key === 'invert') {
       const next = new Set(section.checkedKeys);
 
       for (const item of currentKeys) {
-        if (next.has(item)) next.delete(item);
-        else next.add(item);
+        if (next.has(item)) {
+          next.delete(item);
+        }
+        else {
+          next.add(item);
+        }
       }
 
       section.onItemSelectAll([...next], 'replace');
     }
-    else section.onItemRemove?.(key === 'remove-current' ? currentKeys : enabledKeys);
+    else {
+      section.onItemRemove?.(key === 'remove-current' ? currentKeys : enabledKeys);
+    }
   }
 
   function changeSearch(value: string) {

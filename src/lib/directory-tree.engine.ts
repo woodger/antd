@@ -45,7 +45,9 @@ export function getDirectoryRangeKeys<Data extends object>(
     }
     if (key === startKey || key === endKey) {
       keys.push(key);
-      if (record === 'none') record = 'start';
+      if (record === 'none') {
+        record = 'start';
+      }
       else {
         record = 'end';
         return false;

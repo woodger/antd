@@ -42,7 +42,9 @@
   });
   let childOptions = $derived.by(() => {
     const options: Partial<ConfigProviderProps> = {};
-    if (sample.child === 'undefined') options.getPopupContainer = undefined;
+    if (sample.child === 'undefined') {
+      options.getPopupContainer = undefined;
+    }
     else if (sample.child && sample.child !== 'absent') {
       const target = sample.child;
       options.getPopupContainer = trigger => getContainer('child', target, trigger);
@@ -52,7 +54,9 @@
   });
   let localOptions = $derived.by(() => {
     const options: { getPopupContainer?: (trigger?: HTMLElement) => HTMLElement; } = {};
-    if (sample.local === 'undefined') options.getPopupContainer = undefined;
+    if (sample.local === 'undefined') {
+      options.getPopupContainer = undefined;
+    }
     else if (sample.local === 'local') {
       options.getPopupContainer = trigger => {
         record('local', trigger);
@@ -64,7 +68,9 @@
   let more = $derived.by(() => {
     const options: TabsMoreProps = { trigger: 'click' };
     if (!sample.menu) options.overlay = content;
-    if (sample.more === 'undefined') options.getPopupContainer = undefined;
+    if (sample.more === 'undefined') {
+      options.getPopupContainer = undefined;
+    }
     else if (sample.more === 'more') {
       options.getPopupContainer = trigger => {
         record('more', trigger);

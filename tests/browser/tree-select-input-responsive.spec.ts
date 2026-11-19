@@ -10,7 +10,9 @@ async function act(page: Page, action: TreeSelectInputResponsiveAction) {
       node.dispatchEvent(new CustomEvent('fixtureupdate', { detail }));
     }, action);
   }
-  else await page.locator('[data-input-responsive-editor]').fill(action.type === 'clear' ? '' : action.text!);
+  else {
+    await page.locator('[data-input-responsive-editor]').fill(action.type === 'clear' ? '' : action.text!);
+  }
 }
 for (const entry of reference.cases) {
   // Source absolute suffix может shrink-to-fit до136px у fragment; Native

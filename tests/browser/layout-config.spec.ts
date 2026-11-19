@@ -2,8 +2,11 @@ import { test, expect } from './test';
 import reference from './fixtures/ant-design-layout-config-reference.json' with { type: 'json' };
 import { snapshotLayoutConfig } from './layout-config-metrics';
 
-function nativeStandaloneDefaults(metrics: typeof reference.cases[number]['metrics'],
-  direction: string, step?: string) {
+function nativeStandaloneDefaults(
+  metrics: typeof reference.cases[number]['metrics'],
+  direction: string,
+  step?: string
+) {
   const expected = structuredClone(metrics);
 
   for (const scope of ['normal', 'nested', 'sibling'] as const) {

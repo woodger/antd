@@ -28,8 +28,12 @@ function parts(node: SelectCustomTagPrefixNode) {
     close: node.html.slice(last)
   };
 }
-export function verifyResponsiveTagPrefixLabel(actual: SelectCustomTagPrefixNode, source: SelectCustomTagPrefixNode,
-  renderer: ResponsiveTagPrefixRenderer, label: string) {
+export function verifyResponsiveTagPrefixLabel(
+  actual: SelectCustomTagPrefixNode,
+  source: SelectCustomTagPrefixNode,
+  renderer: ResponsiveTagPrefixRenderer,
+  label: string
+) {
   assert(
     renderer === 'vite-hmr' || renderer === 'no-hmr',
     label + ' explicit expected renderer, never inferred from DOM'
@@ -58,9 +62,16 @@ export function verifyResponsiveTagPrefixLabel(actual: SelectCustomTagPrefixNode
   assert.equal(actual.html, original.open + '<!---->'.repeat(hmr ? 2 : 1) + original.inner + '<!---->' + original.close,
     label + ' complete original markup with only the exact proven anchor positions');
 }
-export function verifyResponsiveTagPrefixSingleTag(actual: SelectCustomTagPrefixNode, source: SelectCustomTagPrefixNode,
-  actualLabels: SelectCustomTagPrefixNode[], sourceLabels: SelectCustomTagPrefixNode[], actualButtons: SelectCustomTagPrefixNode[],
-  sourceButtons: SelectCustomTagPrefixNode[], renderer: ResponsiveTagPrefixRenderer, label: string) {
+export function verifyResponsiveTagPrefixSingleTag(
+  actual: SelectCustomTagPrefixNode,
+  source: SelectCustomTagPrefixNode,
+  actualLabels: SelectCustomTagPrefixNode[],
+  sourceLabels: SelectCustomTagPrefixNode[],
+  actualButtons: SelectCustomTagPrefixNode[],
+  sourceButtons: SelectCustomTagPrefixNode[],
+  renderer: ResponsiveTagPrefixRenderer,
+  label: string
+) {
   const key = source.attributes.find(([name]) => name === 'data-custom-tag')?.[1];
   assert.equal(typeof key, 'string');
   const rest = key === 'rest';

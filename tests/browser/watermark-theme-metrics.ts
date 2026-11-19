@@ -4,8 +4,12 @@ export function traceWatermarkTheme() {
   const draw = CanvasRenderingContext2D.prototype.fillText;
   CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
     trace.text.push({ text, font: this.font, color: String(this.fillStyle), align: this.textAlign });
-    if (maxWidth === undefined) draw.call(this, text, x, y);
-    else draw.call(this, text, x, y, maxWidth);
+    if (maxWidth === undefined) {
+      draw.call(this, text, x, y);
+    }
+    else {
+      draw.call(this, text, x, y, maxWidth);
+    }
   };
 }
 

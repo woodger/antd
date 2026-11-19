@@ -106,9 +106,12 @@ describe('Flex server rendering', () => {
       const body = render(Flex, { props: { children, wrap } }).body;
 
       expect(body).not.toContain('ant-flex-wrap-wrap ');
-      if (wrap)
+      if (wrap) {
         expect(body).toContain(`ant-flex-wrap-${wrap}`);
-      else expect(body).not.toContain('ant-flex-wrap-');
+      }
+      else {
+        expect(body).not.toContain('ant-flex-wrap-');
+      }
     }
   );
 });

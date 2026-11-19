@@ -23,7 +23,9 @@ it.each(reference.ssr)('renders $id feedback without browser globals or timers',
       for (const path of entry.view.icon.path ?? []) expect(body).toContain(`d="${path}"`);
       expect(body.replace(/<!--[\s\S]*?-->/g, '').replace(/<[^>]*>/g, '')).toContain(entry.view.icon.text!);
     }
-    else expect(body).not.toMatch(/class="[^"]*-item-feedback-icon(?:[ "-])/);
+    else {
+      expect(body).not.toMatch(/class="[^"]*-item-feedback-icon(?:[ "-])/);
+    }
     expect(body).toContain(`data-form-status-read="control">${JSON.stringify(entry.view.status)}`);
     expect(entry.timers).toBe(0);
     expect(vi.getTimerCount()).toBe(0);

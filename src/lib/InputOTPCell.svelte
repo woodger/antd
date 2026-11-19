@@ -70,9 +70,15 @@
   }
 
   function handleKeyDown(event: KeyboardEvent) {
-    if (event.key === 'ArrowLeft') onActiveChange(index - 1);
-    else if (event.key === 'ArrowRight') onActiveChange(index + 1);
-    else if (event.key === 'z' && (event.ctrlKey || event.metaKey)) event.preventDefault();
+    if (event.key === 'ArrowLeft') {
+      onActiveChange(index - 1);
+    }
+    else if (event.key === 'ArrowRight') {
+      onActiveChange(index + 1);
+    }
+    else if (event.key === 'z' && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault();
+    }
     else if (event.key === 'Backspace' && !value) onActiveChange(index - 1);
 
     syncSelection();

@@ -4,7 +4,9 @@ import type { readTreeSelectInput } from './tree-select-input-metrics';
 // Native сохраняет Tree popup и его существующие ARIA связи. Own descriptor
 // перекрывает generated attrs; Source golden и общий projector остаются сырыми.
 export function nativeTreeSelectInputView(
-  view: ReturnType<typeof readTreeSelectInput>, sample: TreeSelectInputSample, treeDescendant: string | null
+  view: ReturnType<typeof readTreeSelectInput>,
+  sample: TreeSelectInputSample,
+  treeDescendant: string | null
 ) {
   const ownAria = sample.own === 'attrs';
   // React SyntheticEvent помечает preventDefault даже у noncancelable input,

@@ -66,8 +66,9 @@ export function createSkeletonFocus() {
       const host = parked;
       const candidates = neighbors;
       clear();
-      if (host?.isConnected)
+      if (host?.isConnected) {
         focusAfterNotice(host, host.ownerDocument.activeElement === host);
+      }
       else if (host && host.ownerDocument.activeElement === host.ownerDocument.body)
         candidates.find(available)?.focus({ preventScroll: true });
     }

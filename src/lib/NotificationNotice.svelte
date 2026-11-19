@@ -70,8 +70,9 @@
     if (root) {
       untrack(() => {
         const ownedFocus = root.contains(root.ownerDocument.activeElement);
-        if (closing)
+        if (closing) {
           focusAfterNotice(root, ownedFocus);
+        }
         else {
           void tick().then(() => {
             if (!active || !root.isConnected) {
@@ -111,8 +112,12 @@
               runtime.complete(id, current.version);
           });
         };
-        if (!visible)
-          finish(); else disposeMotion = animateNotice(root, true, from, finish, shift);
+        if (!visible) {
+          finish();
+        }
+        else {
+          disposeMotion = animateNotice(root, true, from, finish, shift);
+        }
       }
       else if (visible && !entered) {
         entered = true;

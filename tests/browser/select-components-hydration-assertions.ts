@@ -46,8 +46,12 @@ function markerAttributes(node: ComponentsHydrationNode, allowed: boolean) {
   );
   return allowed ? node.attributes.filter(([name]) => name !== selectComponentsHydrationSSRMarker) : node.attributes;
 }
-function editor(actual: ComponentsHydrationNode | null, source: ComponentsHydrationNode | null,
-  timingBoundary: boolean, ssrMarker = false) {
+function editor(
+  actual: ComponentsHydrationNode | null,
+  source: ComponentsHydrationNode | null,
+  timingBoundary: boolean,
+  ssrMarker = false
+) {
   assert.equal(Boolean(actual), Boolean(source), 'physical editor presence');
   if (!actual || !source) {
     return;
@@ -74,7 +78,10 @@ function sourceCallbackEvent(value: unknown) {
   // typed value without a raw option. Preserve value, event order and all raw rows.
   return [event[0], event[1], {}];
 }
-function pendingSourceRemoval(entry: ComponentsHydrationSourceCase, point: ComponentsHydrationPoint) {
+function pendingSourceRemoval(
+  entry: ComponentsHydrationSourceCase,
+  point: ComponentsHydrationPoint
+) {
   if (entry.id !== 'select-components-hydration-ac-replace-close' || point.owner?.alive !== false) {
     return undefined;
   }
@@ -100,8 +107,13 @@ function pendingSourceRemoval(entry: ComponentsHydrationSourceCase, point: Compo
 }
 /** All raw snapshots remain in the trace. Only captured framework timing and
  * the existing removed-control quiescence contract use the named boundaries. */
-export function verifySelectComponentsHydrationPoint(actual: ComponentsHydrationPoint, source: ComponentsHydrationPoint,
-  entry: ComponentsHydrationSourceCase, phase: 'parsed' | 'dirty' | 'commit' | 'settled' | 'removed' | 'cleanup', label: string) {
+export function verifySelectComponentsHydrationPoint(
+  actual: ComponentsHydrationPoint,
+  source: ComponentsHydrationPoint,
+  entry: ComponentsHydrationSourceCase,
+  phase: 'parsed' | 'dirty' | 'commit' | 'settled' | 'removed' | 'cleanup',
+  label: string
+) {
   const failures: string[] = [];
   const check = (name: string, fn: () => void) => {
     try {
@@ -209,7 +221,12 @@ export async function actSelectComponentsHydration(
       if (!control) {
         throw Error('Missing real hydrated public control');
       }
-      if (type === 'focus') control.focus(); else control.blur();
+      if (type === 'focus') {
+        control.focus();
+      }
+      else {
+        control.blur();
+      }
     }, action.type);
   }
   else if (action.type === 'fill') {
@@ -217,7 +234,9 @@ export async function actSelectComponentsHydration(
     await page.keyboard.press('ControlOrMeta+A');
     await page.keyboard.insertText(action.value);
   }
-  else if (action.type === 'root-click') await page.locator('[data-hydration-control] .ant-select').click();
+  else if (action.type === 'root-click') {
+    await page.locator('[data-hydration-control] .ant-select').click();
+  }
   else if (action.type === 'close-dispose') {
     return page.evaluate(() => {
       const state = window.componentsHydrationProbe;
@@ -230,5 +249,7 @@ export async function actSelectComponentsHydration(
       return state.observe!();
     });
   }
-  else await page.evaluate(action => window.componentsHydrationProbe.flushUpdate!(action), action);
+  else {
+    await page.evaluate(action => window.componentsHydrationProbe.flushUpdate!(action), action);
+  }
 }

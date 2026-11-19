@@ -55,12 +55,24 @@ for (const sample of reference.interactions as OverlayConfigInteraction[]) {
     const anchor = page.locator('[data-config-anchor]');
 
     for (const step of sample.steps) {
-      if (typeof step.action === 'number') await page.clock.runFor(step.action);
-      else if (step.action === 'hover') await anchor.hover();
-      else if (step.action === 'leave') await page.mouse.move(0, 0);
-      else if (step.action === 'focus') await anchor.focus();
-      else if (step.action === 'blur') await anchor.evaluate(node => node.blur());
-      else if (step.action === 'click') await anchor.dispatchEvent('click');
+      if (typeof step.action === 'number') {
+        await page.clock.runFor(step.action);
+      }
+      else if (step.action === 'hover') {
+        await anchor.hover();
+      }
+      else if (step.action === 'leave') {
+        await page.mouse.move(0, 0);
+      }
+      else if (step.action === 'focus') {
+        await anchor.focus();
+      }
+      else if (step.action === 'blur') {
+        await anchor.evaluate(node => node.blur());
+      }
+      else if (step.action === 'click') {
+        await anchor.dispatchEvent('click');
+      }
       else {
         const canceled = await anchor.evaluate(node => !node.dispatchEvent(new MouseEvent('contextmenu', {
           bubbles: true, cancelable: true, clientX: 220, clientY: 190
@@ -182,7 +194,9 @@ for (const name of ['provider-focus', 'js-focus']) {
     await page.locator('[data-config-anchor]').focus();
 
     await expect(page.getByLabel('Config changes', { exact: true })).toHaveText('[true]');
-    if (name === 'js-focus') await expect(page.getByRole('tooltip')).toBeVisible();
+    if (name === 'js-focus') {
+      await expect(page.getByRole('tooltip')).toBeVisible();
+    }
     else {
       await expect(page.getByRole('tooltip')).toHaveCount(0);
 
@@ -254,7 +268,9 @@ for (const action of ['Copy text', 'Edit text']) {
       else if (trigger === 'focus') {
         await page.getByRole('button', { name: 'After Typography tooltip', exact: true }).focus();
       }
-      else await button.dispatchEvent('contextmenu', { bubbles: true, cancelable: true });
+      else {
+        await button.dispatchEvent('contextmenu', { bubbles: true, cancelable: true });
+      }
 
       await expect(popup).toBeHidden();
       await expect(page.getByLabel('Typography action events', { exact: true })).toBeEmpty();

@@ -183,8 +183,12 @@
     return undefined;
   }
   export function update(action: SelectVirtualAction) {
-    if (action.type === 'props') settings = { ...settings, ...action.set };
-    else if (action.type === 'open') open = action.value;
+    if (action.type === 'props') {
+      settings = { ...settings, ...action.set };
+    }
+    else if (action.type === 'open') {
+      open = action.value;
+    }
     else if (action.type === 'value') {
       model = action.value;
       if (sample.family === 'auto-complete') query = typeof action.value === 'string' ? action.value : '';
@@ -194,9 +198,15 @@
       if (sample.family === 'auto-complete') model = action.text;
     }
     else if (action.type === 'ref') {
-      if (action.method === 'scrollTo') control?.scrollTo(scrollTarget(action.target));
-      else if (action.method === 'focus') control?.focus(action.options);
-      else control?.blur();
+      if (action.method === 'scrollTo') {
+        control?.scrollTo(scrollTarget(action.target));
+      }
+      else if (action.method === 'focus') {
+        control?.focus(action.options);
+      }
+      else {
+        control?.blur();
+      }
     }
   }
   export function readRefs() {

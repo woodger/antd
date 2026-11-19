@@ -12,7 +12,8 @@ export interface FormTransformSample {
 export type FormTransformCall = [string, unknown];
 
 export function formTransformRules(
-  sample: FormTransformSample, record: (call: FormTransformCall) => void
+  sample: FormTransformSample,
+  record: (call: FormTransformCall) => void
 ): ValidationRule[] {
   const first: ValidationRule = {
     message: 'Rejected',
@@ -34,9 +35,15 @@ export function formTransformRules(
       return typeof value === 'string' ? value.trim() : value;
     }
   };
-  if (['required', 'empty', 'default'].includes(sample.kind)) first.required = true;
-  else if (sample.kind === 'min') first.min = 3;
-  else if (sample.kind === 'upper') first.pattern = /^ABC$/;
+  if (['required', 'empty', 'default'].includes(sample.kind)) {
+    first.required = true;
+  }
+  else if (sample.kind === 'min') {
+    first.min = 3;
+  }
+  else if (sample.kind === 'upper') {
+    first.pattern = /^ABC$/;
+  }
   else if (sample.kind === 'warning') {
     first.pattern = /^yes$/;
     first.warningOnly = true;

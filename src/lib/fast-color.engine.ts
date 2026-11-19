@@ -43,7 +43,9 @@ export class FastColor {
     }
     if (typeof input === 'string') {
       const text = input.trim();
-      if (/^#?[A-F\d]{3,8}$/i.test(text)) this.fromHex(text);
+      if (/^#?[A-F\d]{3,8}$/i.test(text)) {
+        this.fromHex(text);
+      }
       else if (text.startsWith('rgb')) {
         const [r, g, b, a] = splitColor(text, (number, part) =>
           part.includes('%') ? Math.round(number / 100 * 255) : number);
@@ -52,8 +54,12 @@ export class FastColor {
       else if (text.startsWith('hsl') || text.startsWith('hsv') || text.startsWith('hsb')) {
         const [h, s, third, a] = splitColor(text, (number, _, index) =>
           index === 0 ? number : number / 100);
-        if (text.startsWith('hsl')) this.fromHsl({ h, s, l: third, a });
-        else this.fromHsv({ h, s, v: third, a });
+        if (text.startsWith('hsl')) {
+          this.fromHsl({ h, s, l: third, a });
+        }
+        else {
+          this.fromHsv({ h, s, v: third, a });
+        }
       }
       else {
         const named = colorNames[text.toLowerCase()];
@@ -77,9 +83,15 @@ export class FastColor {
       this.b = limit(input.b);
       this.a = typeof input.a === 'number' ? limit(input.a, 1) : 1;
     }
-    else if ('h' in input && 's' in input && 'l' in input) this.fromHsl(input);
-    else if ('h' in input && 's' in input && 'v' in input) this.fromHsv(input);
-    else throw new Error('@ant-design/fast-color: unsupported input ' + JSON.stringify(input));
+    else if ('h' in input && 's' in input && 'l' in input) {
+      this.fromHsl(input);
+    }
+    else if ('h' in input && 's' in input && 'v' in input) {
+      this.fromHsv(input);
+    }
+    else {
+      throw new Error('@ant-design/fast-color: unsupported input ' + JSON.stringify(input));
+    }
   }
 
   clone(): this {

@@ -13,7 +13,9 @@ async function select(page: Page, name: string) {
     await expect(page.locator('[data-config-anchor]')).toBeVisible();
     await page.locator('[data-config-anchor]').hover();
   }
-  else await expect(page.locator('#config-case')).toBeVisible();
+  else {
+    await expect(page.locator('#config-case')).toBeVisible();
+  }
 }
 
 const next = (page: Page) => page.getByRole('button', { name: 'Next prefix frame', exact: true })

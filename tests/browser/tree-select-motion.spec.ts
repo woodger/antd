@@ -29,7 +29,10 @@ async function drain(page: Page) {
   await page.evaluate(advanceTreeSelectMotionFrames, 0);
 }
 function verify(
-  actual: Projection, expected: SourceSnapshot, sample: TreeSelectMotionSample, action: string
+  actual: Projection,
+  expected: SourceSnapshot,
+  sample: TreeSelectMotionSample,
+  action: string
 ) {
   expect(actual.view, action).toEqual(treeSelectMotionNativeView(expected.view, sample.id));
   expect(actual.raw.document).toEqual(expected.raw.document);
@@ -49,7 +52,9 @@ function verify(
           && animation.timing?.duration === transition.timing?.duration)).toBe(true);
     }
   }
-  else expect(actual.raw.popup).toBeNull();
+  else {
+    expect(actual.raw.popup).toBeNull();
+  }
 }
 
 test.use({ viewport: reference.reference.viewport });

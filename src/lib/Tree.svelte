@@ -487,8 +487,12 @@
       expand(entry, event, node, true);
     onClick?.(event, node);
     const snapshot = expandAction ? node : undefined;
-    if (entry.node.selectable ?? selectable)
-      select(entry, event, snapshot); else check(entry, event, undefined, snapshot);
+    if (entry.node.selectable ?? selectable) {
+      select(entry, event, snapshot);
+    }
+    else {
+      check(entry, event, undefined, snapshot);
+    }
   }
   function doubleClick(entry: Entry, event: MouseEvent, node: TreeEventNode<Data>) {
     if (expandAction === 'doubleClick' && !event.ctrlKey && !event.metaKey && !event.shiftKey)
@@ -548,14 +552,18 @@
     const entry = visible.find(item => item.key === active);
     if (entry) {
       if (event.key === 'ArrowLeft') {
-        if (!leaf(entry) && expanded.includes(entry.key))
-          expand(entry); else if (entry.parent)
+        if (!leaf(entry) && expanded.includes(entry.key)) {
+          expand(entry);
+        }
+        else if (entry.parent)
           setActive(entry.parent.key);
         event.preventDefault();
       }
       else if (event.key === 'ArrowRight') {
-        if (!leaf(entry) && !expanded.includes(entry.key))
-          expand(entry); else if (entry.children.length)
+        if (!leaf(entry) && !expanded.includes(entry.key)) {
+          expand(entry);
+        }
+        else if (entry.children.length)
           setActive(entry.children[0].key);
         event.preventDefault();
       }

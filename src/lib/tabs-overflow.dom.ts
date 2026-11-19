@@ -69,8 +69,12 @@ export function connectTabsOverflow(
     else if (overflow) {
       const box = sizeOf(add);
       // Поперечная ось растягивается в list; размеры operations не должны расширять заглушку.
-      if (options.vertical) placeholder.style.height = `${box.height}px`;
-      else placeholder.style.width = `${box.width}px`;
+      if (options.vertical) {
+        placeholder.style.height = `${box.height}px`;
+      }
+      else {
+        placeholder.style.width = `${box.width}px`;
+      }
     }
   }
 
@@ -94,8 +98,12 @@ export function connectTabsOverflow(
     const current = vertical ? viewport.scrollTop : Math.abs(viewport.scrollLeft);
     const scroll = Math.max(0, Math.min(current, contentLength - visibleLength));
     if (scroll !== current) {
-      if (vertical) viewport.scrollTop = scroll;
-      else viewport.scrollLeft = rtl ? -scroll : scroll;
+      if (vertical) {
+        viewport.scrollTop = scroll;
+      }
+      else {
+        viewport.scrollLeft = rtl ? -scroll : scroll;
+      }
     }
     const listBox = list.getBoundingClientRect();
     const right = cells[0]?.getBoundingClientRect().right ?? listBox.right;

@@ -462,9 +462,12 @@ for (const search of ['', 'Alpha']) {
         .toHaveText(JSON.stringify(search ? ['Alpha', 'Beta'] : ['Alpha']));
       await expect(row(page, 'Alpha')).toBeVisible();
 
-      if (search) await expect(row(page, 'Beta')).toHaveCount(0);
-      else
+      if (search) {
+        await expect(row(page, 'Beta')).toHaveCount(0);
+      }
+      else {
         await expect(row(page, 'Beta')).toBeVisible();
+      }
 
       await page.getByLabel('Accept tree select search', { exact: true })
         .evaluate(node => (node as HTMLInputElement).click());

@@ -128,50 +128,76 @@ export interface MonthYearSourceSSR {
 }
 export function readMonthYearSourceEvidence(name: string): Uint8Array;
 export function readMonthYearSourceManifest(
-  kind?: 'csr', variant?: MonthYearSourceVariant
+  kind?: 'csr',
+  variant?: MonthYearSourceVariant
 ): MonthYearSourceCSRManifest;
 export function readMonthYearSourceManifest(
-  kind: 'ssr', variant?: MonthYearSourceVariant
+  kind: 'ssr',
+  variant?: MonthYearSourceVariant
 ): MonthYearSourceSSRManifest;
 export function readMonthYearSourceManifest(
-  kind: MonthYearSourceCaptureKind, variant?: MonthYearSourceVariant
+  kind: MonthYearSourceCaptureKind,
+  variant?: MonthYearSourceVariant
 ): MonthYearSourceCSRManifest | MonthYearSourceSSRManifest;
-export function readMonthYearSourceCase(id: MonthYearOwner, variant?: MonthYearSourceVariant): MonthYearSourceCase;
+export function readMonthYearSourceCase(
+  id: MonthYearOwner,
+  variant?: MonthYearSourceVariant
+): MonthYearSourceCase;
 export function readMonthYearSourcePart<Value = unknown>(
   reference: MonthYearSourceReference | MonthYearSourceRawPart
 ): Value;
-export function readMonthYearSourceInitial(id: MonthYearOwner, variant?: MonthYearSourceVariant): MonthYearSourcePoint;
+export function readMonthYearSourceInitial(
+  id: MonthYearOwner,
+  variant?: MonthYearSourceVariant
+): MonthYearSourcePoint;
 export function readMonthYearSourceStep(
-  id: MonthYearOwner, index: number, variant?: MonthYearSourceVariant
+  id: MonthYearOwner,
+  index: number,
+  variant?: MonthYearSourceVariant
 ): MonthYearSourceStep;
 export function readMonthYearSourceClosed(
-  id: MonthYearOwner, index: number, variant?: MonthYearSourceVariant
+  id: MonthYearOwner,
+  index: number,
+  variant?: MonthYearSourceVariant
 ): MonthYearSourceClosed;
 export function readMonthYearSourceCleanup(
-  id: MonthYearOwner, phase?: 'beforeUnmount' | 'cleanup' | 'late', variant?: MonthYearSourceVariant
+  id: MonthYearOwner,
+  phase?: 'beforeUnmount' | 'cleanup' | 'late',
+  variant?: MonthYearSourceVariant
 ): MonthYearSourcePoint;
 export function readMonthYearSourceProducerChunks(
-  id: MonthYearOwner, variant?: MonthYearSourceVariant
+  id: MonthYearOwner,
+  variant?: MonthYearSourceVariant
 ): MonthYearSourceProducerReference[];
 export function readMonthYearSourceProducerChunk(
-  id: MonthYearOwner, index: number, variant?: MonthYearSourceVariant
+  id: MonthYearOwner,
+  index: number,
+  variant?: MonthYearSourceVariant
 ): MonthYearSourceProducerChunk;
 export function readMonthYearSourceSSR(
-  id: MonthYearOwner, method: MonthYearSourceSerializer, variant?: MonthYearSourceVariant
+  id: MonthYearOwner,
+  method: MonthYearSourceSerializer,
+  variant?: MonthYearSourceVariant
 ): MonthYearSourceSSR;
 export function verifyMonthYearSourceManifest(
-  value: unknown, kind?: MonthYearSourceCaptureKind, variant?: MonthYearSourceVariant
+  value: unknown,
+  kind?: MonthYearSourceCaptureKind,
+  variant?: MonthYearSourceVariant
 ): void;
 export function verifyMonthYearSourcePoint(value: unknown): void;
 export function verifyMonthYearSourceProducerChunk(
-  value: unknown, envelope?: Pick<MonthYearSourceProducerReference, 'phase' | 'cursor' | 'next'>
+  value: unknown,
+  envelope?: Pick<MonthYearSourceProducerReference, 'phase' | 'cursor' | 'next'>
 ): void;
 export function verifyMonthYearSourcePartBinding(
   reference: MonthYearSourceReference | MonthYearSourceRawPart,
-  kind: MonthYearSourceCaptureKind, variant?: MonthYearSourceVariant, expectedFile?: string
+  kind: MonthYearSourceCaptureKind,
+  variant?: MonthYearSourceVariant,
+  expectedFile?: string
 ): unknown;
 export function verifyMonthYearSourceStoredBytes(
-  reference: MonthYearSourceReference | MonthYearSourceRawPart, stored: Uint8Array
+  reference: MonthYearSourceReference | MonthYearSourceRawPart,
+  stored: Uint8Array
 ): Uint8Array;
 export function verifyMonthYearSourceStoredParts(): {
   sourceOnly: true; captures: 4; originalParts: 816; wholeBlobs: number;

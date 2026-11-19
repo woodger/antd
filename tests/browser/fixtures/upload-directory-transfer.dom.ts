@@ -37,7 +37,9 @@ export function createDirectoryTransfer(nodes: DirectoryFixtureNode[]) {
                     'NotReadableError'
                   ));
                 }
-                else success(page.map(entry));
+                else {
+                  success(page.map(entry));
+                }
               });
             }
           };
@@ -55,8 +57,12 @@ export function createDirectoryTransfer(nodes: DirectoryFixtureNode[]) {
       file: (success: (file: File) => void, failure?: (error: DOMException) => void) => {
         calls.push({ path: fullPath, operation: 'file', errorHandler: Boolean(failure) });
         queueMicrotask(() => {
-          if (node.readError) failure?.(new DOMException('Unreadable file', 'NotReadableError'));
-          else success(file);
+          if (node.readError) {
+            failure?.(new DOMException('Unreadable file', 'NotReadableError'));
+          }
+          else {
+            success(file);
+          }
         });
       }
     };

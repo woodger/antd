@@ -23,7 +23,9 @@ function getHue(hsv: ColorHsv, index: number, light = false) {
     hue = light ? Math.round(hsv.h) + 2 * index : Math.round(hsv.h) - 2 * index;
   }
 
-  if (hue < 0) hue += 360;
+  if (hue < 0) {
+    hue += 360;
+  }
   else if (hue >= 360) hue -= 360;
 
   return hue;
@@ -35,9 +37,15 @@ function getSaturation(hsv: ColorHsv, index: number, light = false) {
   }
 
   let saturation: number;
-  if (light) saturation = hsv.s - 0.16 * index;
-  else if (index === 4) saturation = hsv.s + 0.16;
-  else saturation = hsv.s + 0.05 * index;
+  if (light) {
+    saturation = hsv.s - 0.16 * index;
+  }
+  else if (index === 4) {
+    saturation = hsv.s + 0.16;
+  }
+  else {
+    saturation = hsv.s + 0.05 * index;
+  }
 
   if (saturation > 1) saturation = 1;
   if (light && index === 5 && saturation > 0.1) saturation = 0.1;

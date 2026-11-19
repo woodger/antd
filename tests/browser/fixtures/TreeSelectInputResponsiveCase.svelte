@@ -10,7 +10,9 @@
   let textarea = $state<HTMLInputElement | HTMLTextAreaElement>();
   let editor = $derived(sample.tag === 'textarea' ? textarea : input);
   function update(action: TreeSelectInputResponsiveAction) {
-    if (action.type === 'prefix-resize') prefixWidth = action.width!;
+    if (action.type === 'prefix-resize') {
+      prefixWidth = action.width!;
+    }
     else if (action.type === 'resize' && root) {
       const content = root.querySelector<HTMLElement>('.ant-select-content')!;
       width = action.width! + root.getBoundingClientRect().width - content.clientWidth;

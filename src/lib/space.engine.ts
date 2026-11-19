@@ -35,7 +35,10 @@ export function spaceEntries(
       : { key: `index:${index}`, children: item }
   );
 }
-export function spaceGap(size: SpaceProps['size'] = 'small', prefix = 'ant-space'): {
+export function spaceGap(
+  size: SpaceProps['size'] = 'small',
+  prefix = 'ant-space'
+): {
   classes: string[];
   style: string;
 } {
@@ -43,8 +46,9 @@ export function spaceGap(size: SpaceProps['size'] = 'small', prefix = 'ant-space
   const classes: string[] = [];
   const styles: string[] = [];
   function axis(value: SpaceSize, direction: 'row' | 'col') {
-    if (['small', 'medium', 'large'].includes(String(value)))
+    if (['small', 'medium', 'large'].includes(String(value))) {
       classes.push(`${prefix}-gap-${direction}-${value}`);
+    }
     else if (typeof value === 'number' && value && !Number.isNaN(value))
       styles.push(`${direction === 'col' ? 'column' : 'row'}-gap:${value}px`);
   }

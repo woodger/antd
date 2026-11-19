@@ -63,15 +63,25 @@ function role(node: SelectComponentsModesNode, dom: SelectComponentsModesDOM) {
     : node.tag + ':' + classes(node).join(' ');
 }
 /** Existing default Native buttons/annotations remain explicit. CSS and geometry are never rewritten. */
-function verifyNode(actual: SelectComponentsModesNode, source: SelectComponentsModesNode, label: string,
-  rootDisabled: boolean, removeLabel?: string) {
+function verifyNode(
+  actual: SelectComponentsModesNode,
+  source: SelectComponentsModesNode,
+  label: string,
+  rootDisabled: boolean,
+  removeLabel?: string
+) {
   let currentAttrs = attributes(actual), originalAttrs = attributes(source), currentTag = actual.tag, currentValue = actual.value;
   let sourceStyle = source.styleAttribute, sourceText = source.cssText, sourceInline = source.inlineProperties;
   const get = (values: string[][], key: string) => values.find(([name]) => name === key)?.[1];
   const drop = (key: string, value: string | undefined, original = false) => {
     const values = original ? originalAttrs : currentAttrs;
     assert.equal(get(values, key), value, label + '/' + key + ' exact existing wrapper');
-    if (original) originalAttrs = values.filter(([name]) => name !== key); else currentAttrs = values.filter(([name]) => name !== key);
+    if (original) {
+      originalAttrs = values.filter(([name]) => name !== key);
+    }
+    else {
+      currentAttrs = values.filter(([name]) => name !== key);
+    }
   };
   const privateClass = (name: string) => {
     assert(actual.classes.includes(name), label + ' exact existing Native class');
@@ -168,7 +178,9 @@ function verifyNode(actual: SelectComponentsModesNode, source: SelectComponentsM
       label + ' complete existing wrapper attributes'
     );
   }
-  else verifySelectComponentsDOMAttributes(actual, source, currentAttrs, originalAttrs, label);
+  else {
+    verifySelectComponentsDOMAttributes(actual, source, currentAttrs, originalAttrs, label);
+  }
   assert.equal(actual.styleAttribute, sourceStyle, label + '/styleAttribute');
   assert.equal(actual.cssText, sourceText, label + '/cssText');
   assert.deepEqual(
@@ -186,13 +198,18 @@ function verifyNode(actual: SelectComponentsModesNode, source: SelectComponentsM
     );
   }
 }
-export function verifySelectComponentsModesPoint(actual: NativeModesPoint, source: ModesPoint, owner: ModesCase,
-  sample: SelectComponentsModesSample, label: string,
+export function verifySelectComponentsModesPoint(
+  actual: NativeModesPoint,
+  source: ModesPoint,
+  owner: ModesCase,
+  sample: SelectComponentsModesSample,
+  label: string,
   verifyExtraNode?: (
     actual: SelectComponentsModesNode,
     source: SelectComponentsModesNode,
     label: string
-  ) => boolean): string[] {
+  ) => boolean
+): string[] {
   // Existing shared helper owns complete caller/provider/model/event graphs,
   // public focus spelling and component definition/context representation.
   const failures = verifySelectComponentsPoint(
@@ -290,7 +307,9 @@ export function verifySelectComponentsModesPoint(actual: NativeModesPoint, sourc
       if (sourcePopupNode(node)) {
         assert(node.box && Object.values(node.box).every(value => value === 0));
       }
-      else nodes.push(node);
+      else {
+        nodes.push(node);
+      }
     }
     for (const node of expectedSVG) {
       if (!sourcePopupNode(node, true)) svg.push(node);
@@ -344,7 +363,9 @@ export function verifySelectComponentsModesPoint(actual: NativeModesPoint, sourc
         actual.icons.current.editor?.identity
       );
     }
-    else assert.equal(actual.icons.publicRefs.authoredInput, null);
+    else {
+      assert.equal(actual.icons.publicRefs.authoredInput, null);
+    }
   });
   return failures;
 }

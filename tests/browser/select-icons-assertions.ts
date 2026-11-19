@@ -81,8 +81,13 @@ function publicReactNode(graph: Graph, node: GraphNode): Graph {
     properties: keys.map(key => node.properties!.find(p => p.key === key)!) }, ...graph.objects] };
 }
 /** Raw graphs stay intact. Only the documented public React node/Svelte producer boundary is projected for comparison. */
-export function verifyIconGraph(actualValue: unknown, sourceValue: unknown, label: string,
-  nodeSpecs: readonly IconNodeSpecification[] = [], authoredProps = false) {
+export function verifyIconGraph(
+  actualValue: unknown,
+  sourceValue: unknown,
+  label: string,
+  nodeSpecs: readonly IconNodeSpecification[] = [],
+  authoredProps = false
+) {
   const a = actualValue as Graph, b = sourceValue as Graph;
   const actual = new Map(a.objects.map(n => [n.id, n])), source = new Map(b.objects.map(n => [n.id, n]));
   const pairs = new Map<number, number>(), reverse = new Map<number, number>();
@@ -113,7 +118,9 @@ export function verifyIconGraph(actualValue: unknown, sourceValue: unknown, labe
         assert(snippet && snippet.type === 'function' && !snippet.array);
         assert.deepEqual(snippet.authoredRole, y.authoredRole);
       }
-      else assert.equal(x.array, false);
+      else {
+        assert.equal(x.array, false);
+      }
       const specification = nodeSpecs.find(s => isDeepStrictEqual(s.role, y.authoredRole));
       assert(
         specification,
@@ -200,7 +207,10 @@ export function verifyIconGraph(actualValue: unknown, sourceValue: unknown, labe
     for (const [index, p] of xs.entries()) {
       const q = ys[index];
       assert.equal(Object.hasOwn(p, 'value'), Object.hasOwn(q, 'value'), label + ' data/accessor');
-      if (Object.hasOwn(p, 'value')) walk(p.value, q.value); else {
+      if (Object.hasOwn(p, 'value')) {
+        walk(p.value, q.value);
+      }
+      else {
         walk(p.get, q.get);
         walk(p.set, q.set);
       }
@@ -233,8 +243,13 @@ function sameInvocation(a: SelectSurfaceProducerCall, b: SelectSurfaceProducerCa
     );
 }
 /** Both complete repetitions remain authoritative; pure duplicate passes do not set a React render-count requirement. */
-export function verifyIconCalls(actual: readonly SelectSurfaceProducerCall[], sources: readonly (readonly SelectSurfaceProducerCall[])[],
-  label: string, specs: readonly IconNodeSpecification[], ssr = false) {
+export function verifyIconCalls(
+  actual: readonly SelectSurfaceProducerCall[],
+  sources: readonly (readonly SelectSurfaceProducerCall[])[],
+  label: string,
+  specs: readonly IconNodeSpecification[],
+  ssr = false
+) {
   const all = sources.flat();
   if (ssr) {
     assert.deepEqual(
@@ -350,8 +365,12 @@ export function verifyIconNode(
       value,
       label + '/' + key + ' exact physical-wrapper boundary'
     );
-    if (original) originalAttrs = values.filter(([name]) => name !== key);
-    else currentAttrs = values.filter(([name]) => name !== key);
+    if (original) {
+      originalAttrs = values.filter(([name]) => name !== key);
+    }
+    else {
+      currentAttrs = values.filter(([name]) => name !== key);
+    }
   };
   const removePrivateClass = (name: string) => {
     assert.equal(
@@ -434,7 +453,9 @@ export function verifyIconNode(
     assert.equal(source.tag, 'DIV');
     removeAttribute('type', 'button');
     removeAttribute('tabindex', '-1');
-    if (boundary.control === 'select') removeAttribute('data-ant-select-item', 'true');
+    if (boundary.control === 'select') {
+      removeAttribute('data-ant-select-item', 'true');
+    }
     else {
       removeAttribute('data-ant-auto-complete-item', 'true');
       removeAttribute('data-ant-auto-complete-item-option', 'true');
@@ -502,7 +523,9 @@ export function verifyIconNode(
       label + ' all physical-wrapper attributes'
     );
   }
-  else assert.deepEqual(currentAttrs, originalAttrs, label + ' all attributes/order');
+  else {
+    assert.deepEqual(currentAttrs, originalAttrs, label + ' all attributes/order');
+  }
   const classes = (values: string[][]) => attribute(values, 'class')?.split(/\s+/).filter(Boolean) ?? [];
   assert.deepEqual(classes(currentAttrs), classes(originalAttrs), label + ' all classes/order');
   if (source.tag.toLowerCase() === 'svg') {
@@ -526,8 +549,13 @@ export function verifyIconNode(
 }
 interface SSRIconElement { tag: string; attributes: string[][]; children?: Array<SSRIconElement | string>; text?: string }
 /** Whole HTML stays raw; these fixed templates differ only at named framework boundaries. */
-export function verifySelectIconSSRNodes(actual: ReturnType<typeof readSelectIconsSSR>, source: ReturnType<typeof readSelectIconsSSR>,
-  owner: IconOwner, sample: SelectIconSample, label: string) {
+export function verifySelectIconSSRNodes(
+  actual: ReturnType<typeof readSelectIconsSSR>,
+  source: ReturnType<typeof readSelectIconsSSR>,
+  owner: IconOwner,
+  sample: SelectIconSample,
+  label: string
+) {
   const legacyClear = usesLegacyClear(owner, sample);
   const metadata = (decodeSelectSurface(owner.settings) as { metadata?: boolean }).metadata === true;
   const declarations = (style: string) => style.split(';').filter(part => part.trim()).map(part => {
@@ -551,7 +579,12 @@ export function verifySelectIconSSRNodes(actual: ReturnType<typeof readSelectIco
     const drop = (key: string, value: string | undefined, original = false) => {
       const attrs = original ? y : x;
       assert.equal(get(attrs, key), value, point + '/' + key);
-      if (original) y = attrs.filter(([name]) => name !== key); else x = attrs.filter(([name]) => name !== key);
+      if (original) {
+        y = attrs.filter(([name]) => name !== key);
+      }
+      else {
+        x = attrs.filter(([name]) => name !== key);
+      }
     };
     const privateClass = (name: string) => {
       assert(get(x, 'class')?.split(/\s+/).includes(name), point + ' known Native wrapper class');
@@ -641,7 +674,9 @@ export function verifySelectIconSSRNodes(actual: ReturnType<typeof readSelectIco
         point + ' complete physical-wrapper attributes'
       );
     }
-    else assert.deepEqual(x, y, point + ' complete attributes and order');
+    else {
+      assert.deepEqual(x, y, point + ' complete attributes and order');
+    }
     if (Object.hasOwn(b, 'text')) assert.equal(a.text, b.text, point + ' complete text');
     assert.equal(
       Object.hasOwn(a, 'children'),
@@ -659,7 +694,9 @@ export function verifySelectIconSSRNodes(actual: ReturnType<typeof readSelectIco
             point + '/' + index + ' text'
           );
         }
-        else compare(other, child, point + '/' + index, hasFeedback);
+        else {
+          compare(other, child, point + '/' + index, hasFeedback);
+        }
       }
     }
   };
@@ -699,10 +736,17 @@ export async function settleNativeSelectIcons(page: Page) {
   }
   throw Error('Actual Native public icon owner, all raw ledgers and UI did not settle');
 }
-export function verifySelectIconPoint(actual: NativeIconPoint, source: IconPoint, repeat: IconPoint,
-  entries: readonly [IconCase, IconCase], sample: SelectIconSample, label: string,
-  identity = createIconIdentityLedger(), emptyCounterpart?: IconPoint,
-  controlledCloseCalls?: readonly SelectSurfaceProducerCall[]) {
+export function verifySelectIconPoint(
+  actual: NativeIconPoint,
+  source: IconPoint,
+  repeat: IconPoint,
+  entries: readonly [IconCase, IconCase],
+  sample: SelectIconSample,
+  label: string,
+  identity = createIconIdentityLedger(),
+  emptyCounterpart?: IconPoint,
+  controlledCloseCalls?: readonly SelectSurfaceProducerCall[]
+) {
   const failures: string[] = [];
   const check = (name: string, run: () => void) => {
     try {

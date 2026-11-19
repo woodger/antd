@@ -32,7 +32,9 @@
   }
 
   function update(action: TreeSelectAlignFrameAction) {
-    if (action.type === 'transform') transform = action.value;
+    if (action.type === 'transform') {
+      transform = action.value;
+    }
     else {
       rootKind = action.kind;
       hostTop = action.top;

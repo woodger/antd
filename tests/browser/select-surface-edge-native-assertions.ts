@@ -59,8 +59,14 @@ function sameCall(left: SelectSurfaceProducerCall, right: SelectSurfaceProducerC
     )
     && left.sameResultAsArgument === right.sameResultAsArgument;
 }
-export function verifySelectSurfaceEdgeNative(actual: NativeSurfaceEdgePoint, source: SelectSurfaceEdgePoint,
-  entry: SelectSurfaceEdgeSourceCase, sample: SelectSurfaceEdgeSample, label: string, _initial: boolean) {
+export function verifySelectSurfaceEdgeNative(
+  actual: NativeSurfaceEdgePoint,
+  source: SelectSurfaceEdgePoint,
+  entry: SelectSurfaceEdgeSourceCase,
+  sample: SelectSurfaceEdgeSample,
+  label: string,
+  _initial: boolean
+) {
   assert.equal(actual.owner.alive, true, `${label} mounted owner`);
   assert.deepEqual(actual.owner.model, source.owner.model, `${label} actual public owner model`);
   verifySelectSurfaceEventGraph(

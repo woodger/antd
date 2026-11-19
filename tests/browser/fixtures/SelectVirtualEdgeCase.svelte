@@ -55,7 +55,9 @@
           align: action.target.align
         });
       }
-      else control?.scrollTo({ index: action.target.index });
+      else {
+        control?.scrollTo({ index: action.target.index });
+      }
     }
   }
   export function readRefs() {

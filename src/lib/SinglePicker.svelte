@@ -327,7 +327,9 @@
       dateTimeTarget = target;
       dateTimeScroll.clear();
     }
-    else if (visible && (!showTime || mode !== 'date')) dateTimeScroll.clear();
+    else if (visible && (!showTime || mode !== 'date')) {
+      dateTimeScroll.clear();
+    }
     else if (!visible) untrack(() => dateTimePanel?.captureScroll());
   });
   $effect(() => {
@@ -389,11 +391,17 @@
     const next = visible;
     if (wasVisible && !next) {
       hoverValue = null;
-      if (time) untrack(() => timeInteraction.trigger(0, 'popupClose'));
+      if (time) {
+        untrack(() => timeInteraction.trigger(0, 'popupClose'));
+      }
       else {
         untrack(() => {
-          if (retainedDatePreset) datePresetInteraction.trigger(0, 'popupClose');
-          else datePresetInteraction.reset();
+          if (retainedDatePreset) {
+            datePresetInteraction.trigger(0, 'popupClose');
+          }
+          else {
+            datePresetInteraction.reset();
+          }
         });
       }
     }
@@ -450,8 +458,12 @@
           if (reason === 'escape') timeInteraction.trigger(0, 'esc');
           requestOpen(false);
         }
-        else if (keepPreset) closeDatePreset();
-        else finish(false);
+        else if (keepPreset) {
+          closeDatePreset();
+        }
+        else {
+          finish(false);
+        }
         if (reason === 'escape' && !keepPreset)
           input?.focus();
       }
@@ -529,7 +541,9 @@
         if (draft) onOk?.(draft);
         timeInteraction.trigger(0, 'confirm');
       }
-      else requestOpen(false);
+      else {
+        requestOpen(false);
+      }
       return;
     }
     if (confirmed && retainedDatePreset) {
@@ -559,8 +573,9 @@
         onOk?.(draft);
     }
     else if (!confirm && dirty) {
-      if (!text)
+      if (!text) {
         commit(null);
+      }
       else {
         const parsed = draftSource === 'panel'
           ? draft
@@ -584,8 +599,11 @@
     }
     setDatePanel(next, 'reset');
   }
-  function setDatePanel(next: Dayjs, source: 'reset' | 'panel',
-    event?: { previous: Dayjs; mode: DatePickerMode }) {
+  function setDatePanel(
+    next: Dayjs,
+    source: 'reset' | 'panel',
+    event?: { previous: Dayjs; mode: DatePickerMode }
+  ) {
     const previous = event?.previous ?? panel;
     if (pickerValue === undefined) internalPanel = next;
     if (!samePickerPanelValue(previous, next, Boolean(showTime), picker, actualLocale.locale))
@@ -609,8 +627,11 @@
     mode = next;
     onPanelChange?.(picker === 'date' ? panel : viewDate ?? datePanelValue, mode);
   }
-  function selectPanelMode(next: DatePickerMode, date: Dayjs,
-    event: { previous: Dayjs; mode: DatePickerMode }) {
+  function selectPanelMode(
+    next: DatePickerMode,
+    date: Dayjs,
+    event: { previous: Dayjs; mode: DatePickerMode }
+  ) {
     // PickerPanel.triggerModeChange(viewDate) повторно задаёт view до события mode.
     setDatePanel(date, 'panel', event);
     changeMode(next, date);
@@ -746,10 +767,14 @@
         datePresetInteraction.trigger(0, 'esc');
         requestOpen(false);
       }
-      else datePresetInteraction.reset();
+      else {
+        datePresetInteraction.reset();
+      }
     }
     else if (event.key === 'Tab') {
-      if (retainedDatePreset) datePresetInteraction.trigger(0, 'keyboard-submit-weak');
+      if (retainedDatePreset) {
+        datePresetInteraction.trigger(0, 'keyboard-submit-weak');
+      }
       else if (draft) datePresetInteraction.reset();
     }
     else if (event.key === 'Enter' && retainedDatePreset) {
@@ -819,8 +844,12 @@
       focused = false;
       field?.onBlur();
       if (visible || dirty) {
-        if (!time && retainedDatePreset) closeDatePreset();
-        else finish(false);
+        if (!time && retainedDatePreset) {
+          closeDatePreset();
+        }
+        else {
+          finish(false);
+        }
       }
       if (time && !preserveInvalidOnBlur) {
         text = formatPicker(draft, actualLocale.locale, formats);

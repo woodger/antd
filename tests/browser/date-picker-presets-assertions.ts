@@ -76,8 +76,12 @@ function dateSnapshot(value: DatePickerPresetValue) {
   assert.equal(value.temporal.fields.length, 7);
   assert.equal(rawRoot(value.raw).id, value.identity);
 }
-export function verifyDatePickerPresetsReturnedDate(native: DatePickerPresetValue, source: DatePickerPresetValue,
-  proof: DatePickerPresetsIdentityProof, label: string) {
+export function verifyDatePickerPresetsReturnedDate(
+  native: DatePickerPresetValue,
+  source: DatePickerPresetValue,
+  proof: DatePickerPresetsIdentityProof,
+  label: string
+) {
   dateSnapshot(native);
   dateSnapshot(source);
   if (native.temporal && source.temporal) {
@@ -184,8 +188,13 @@ function nativeInputHooks(owner: Pick<DatePickerPresetOwner, 'callbackInvocation
     return { name: call.name, actionIndex: call.actionIndex };
   });
 }
-function compareOwners(native: DatePickerPresetOwner, source: DatePickerPresetOwner,
-  proof: DatePickerPresetsIdentityProof, label: string, compareFocus = true) {
+function compareOwners(
+  native: DatePickerPresetOwner,
+  source: DatePickerPresetOwner,
+  proof: DatePickerPresetsIdentityProof,
+  label: string,
+  compareFocus = true
+) {
   validateNativeOwner(native);
   verifyDatePickerPresetsSourceOwner(source);
   assert.equal(native.alive, source.alive);
@@ -270,9 +279,12 @@ export interface DatePickerPresetsPhysical {
   presets: DatePickerPresetNode[]; authoredLabels: DatePickerPresetNode[];
   popups: Array<{ allElements: DatePickerPresetNode[] }>;
 }
-export function verifyDatePickerPresetsPhysical(native: DatePickerPresetsPhysical,
-  source: DatePickerPresetsPhysical, label: string,
-  renderer: DatePickerPresetsRenderer) {
+export function verifyDatePickerPresetsPhysical(
+  native: DatePickerPresetsPhysical,
+  source: DatePickerPresetsPhysical,
+  label: string,
+  renderer: DatePickerPresetsRenderer
+) {
   const scopeClass = scopes[renderer];
   assert.equal(native.presets.length, source.presets.length);
   const elements = native.popups.flatMap(popup => popup.allElements);
@@ -356,14 +368,20 @@ function validationOrder(
 export function verifyDatePickerPresetsValidationOrder(
   native: Pick<DatePickerPresetOwner, 'calls' | 'callbackInvocations'>,
   source: Pick<DatePickerPresetOwner, 'calls' | 'callbackInvocations'>,
-  sample: DatePickerPresetSample) {
+  sample: DatePickerPresetSample
+) {
   assert.equal(sample.id, 'static-validity');
   assert.deepEqual(validationOrder(native, sample), validationOrder(source, sample));
 }
 /** Полные raw остаются отдельно; здесь проверяются измеренные callbacks, данные и видимые presets. */
-export function verifyDatePickerPresetsPoint(native: DatePickerPresetPoint,
-  source: DatePickerPresetPoint, sample: DatePickerPresetSample, label: string,
-  proof: DatePickerPresetsIdentityProof, renderer: DatePickerPresetsRenderer) {
+export function verifyDatePickerPresetsPoint(
+  native: DatePickerPresetPoint,
+  source: DatePickerPresetPoint,
+  sample: DatePickerPresetSample,
+  label: string,
+  proof: DatePickerPresetsIdentityProof,
+  renderer: DatePickerPresetsRenderer
+) {
   compareOwners(native.owner, source.owner, proof, label);
   assert.equal(native.environment.timezone, 'UTC');
   assert(native.root?.connected && native.input?.connected);
@@ -412,9 +430,14 @@ function removed(value: Cleanup) {
   assert.deepEqual(value.browserOwnedResourceCounters, counters);
 }
 /** Допускается только фактически измеренный connected blur внутри явного public-unmount интервала. */
-export function verifyDatePickerPresetsDisposal(native: DatePickerPresetsDisposal,
-  source: Omit<DatePickerPresetsDisposal, 'trace'>, sample: DatePickerPresetSample,
-  label: string, proof: DatePickerPresetsIdentityProof, renderer: DatePickerPresetsRenderer) {
+export function verifyDatePickerPresetsDisposal(
+  native: DatePickerPresetsDisposal,
+  source: Omit<DatePickerPresetsDisposal, 'trace'>,
+  sample: DatePickerPresetSample,
+  label: string,
+  proof: DatePickerPresetsIdentityProof,
+  renderer: DatePickerPresetsRenderer
+) {
   verifyDatePickerPresetsPoint(native.beforeUnmount, source.beforeUnmount, sample,
     label + '/beforeUnmount', proof, renderer);
   assert.deepEqual(native.trace.operations.map(row => row.operation), [
@@ -440,11 +463,14 @@ export interface DatePickerPresetsRemovalBefore {
 }
 ;
 /** Prefix и фактические поля Native FocusEvent запрещают общий disposal-blur waiver. */
-export function verifyDatePickerPresetsRemovalBlur(nativeBefore: DatePickerPresetsRemovalBefore,
+export function verifyDatePickerPresetsRemovalBlur(
+  nativeBefore: DatePickerPresetsRemovalBefore,
   nativeAfter: Pick<DatePickerPresetOwner, 'alive' | 'callbackInvocations'>,
   sourceBefore: DatePickerPresetsRemovalBefore,
   sourceAfter: Pick<DatePickerPresetOwner, 'alive' | 'callbackInvocations'>,
-  sample: DatePickerPresetSample, label: string) {
+  sample: DatePickerPresetSample,
+  label: string
+) {
   assert.equal(nativeBefore.owner.alive, true);
   assert.equal(sourceBefore.owner.alive, true);
   assert.equal(nativeAfter.alive, false);

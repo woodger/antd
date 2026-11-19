@@ -229,7 +229,9 @@
   $effect.pre(() => {
     // Первый force render получает текущие props; opaque Snippet captures остаются Svelte-owned.
     if (visible || fresh || forceRender && !initialized) cached = payload;
-    if (visible || forceRender) initialized = true;
+    if (visible || forceRender) {
+      initialized = true;
+    }
     else if (destroy) initialized = false;
   });
 
@@ -451,9 +453,12 @@
       }
     }
 
-    if (delay !== 0)
+    if (delay !== 0) {
       pending = setTimeout(apply, delay);
-    else apply();
+    }
+    else {
+      apply();
+    }
   }
 
   function handleEnter(event: PointerEvent) {
@@ -516,8 +521,12 @@
       }
     }
     // Native blur без relatedTarget также приходит во время удаления focused DOM.
-    if (event.relatedTarget === null) queueMicrotask(closeIfOutside);
-    else closeIfOutside();
+    if (event.relatedTarget === null) {
+      queueMicrotask(closeIfOutside);
+    }
+    else {
+      closeIfOutside();
+    }
   }
 
   function handleClick(event: MouseEvent) {
@@ -529,14 +538,17 @@
     }
 
     if (actionOverrides) {
-      if (visible && hide) dismiss('trigger');
+      if (visible && hide) {
+        dismiss('trigger');
+      }
       else if (!visible && show) showByClick();
       if (sourceTouch) touched = false;
       return;
     }
 
-    if (clicked || visible && (sourceTrigger || !wanted()))
+    if (clicked || visible && (sourceTrigger || !wanted())) {
       dismiss('trigger');
+    }
     else if (show) showByClick();
     if (sourceTouch) touched = false;
   }
@@ -555,7 +567,9 @@
     }
 
     event.preventDefault();
-    if (visible && actions.hide.has('contextMenu')) dismiss('trigger');
+    if (visible && actions.hide.has('contextMenu')) {
+      dismiss('trigger');
+    }
     else {
       clicked = true;
       dismissed = false;
@@ -570,7 +584,9 @@
     }
 
     touched = true;
-    if (visible && actions.hide.has('touch')) dismiss('trigger');
+    if (visible && actions.hide.has('touch')) {
+      dismiss('trigger');
+    }
     else if (!visible && actions.show.has('touch')) showByClick();
   }
 
@@ -591,8 +607,9 @@
     }
 
     popupHovered = next;
-    if (next)
+    if (next) {
       cancelPending();
+    }
     else if (sourceTrigger ? supports('hover') : !wanted())
       request(false, getTooltipDelay(leaveDelay));
   }
@@ -634,9 +651,12 @@
         request(false);
     }
     // При remove() браузер отправляет blur до отсоединения DOM и cleanup Svelte.
-    if (event.relatedTarget === null)
+    if (event.relatedTarget === null) {
       queueMicrotask(closeIfOutside);
-    else closeIfOutside();
+    }
+    else {
+      closeIfOutside();
+    }
   }
 
   function dismiss(reason: 'escape' | 'outside' | 'trigger') {

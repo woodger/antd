@@ -79,7 +79,9 @@
   let childOptions = $derived.by(() => {
     void revision;
     const props: Partial<ConfigProviderProps> = {};
-    if (sample.child === 'undefined') props.getPopupContainer = undefined;
+    if (sample.child === 'undefined') {
+      props.getPopupContainer = undefined;
+    }
     else if (sample.child === 'child') {
       props.getPopupContainer = trigger => {
         record('child', trigger);

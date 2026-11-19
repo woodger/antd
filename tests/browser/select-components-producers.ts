@@ -67,8 +67,13 @@ function definition(node: Node) {
  * -> {element,props,ref}, and the zero-prop PrefixProbe element -> prefix Snippet.
  * The element's complete authored props/ref are checked before that boundary.
  */
-export function verifySelectComponentsGraph(actualValue: unknown, sourceValue: unknown, label: string,
-  specs: readonly IconNodeSpecification[] = [], authoredProps = false) {
+export function verifySelectComponentsGraph(
+  actualValue: unknown,
+  sourceValue: unknown,
+  label: string,
+  specs: readonly IconNodeSpecification[] = [],
+  authoredProps = false
+) {
   const actual = structuredClone(actualValue) as Graph, source = structuredClone(sourceValue) as Graph;
   const originals = new Map(actual.objects.map(n => [n.id, n])), sourceOriginals = new Map(source.objects.map(n => [n.id, n]));
   const replacements = new Set<number>(), sourceReplacements = new Set<number>();
@@ -212,8 +217,13 @@ function invocation(actual: SelectSurfaceProducerCall, source: SelectSurfaceProd
     ));
 }
 /** Source component invocations use the separately recorded Native Snippet context. No Source ledger row is deleted. */
-export function verifySelectComponentsProducers(actual: readonly SelectSurfaceProducerCall[], source: readonly SelectSurfaceProducerCall[],
-  label: string, specs: readonly IconNodeSpecification[] = [], ssr = false) {
+export function verifySelectComponentsProducers(
+  actual: readonly SelectSurfaceProducerCall[],
+  source: readonly SelectSurfaceProducerCall[],
+  label: string,
+  specs: readonly IconNodeSpecification[] = [],
+  ssr = false
+) {
   const kinds = new Set(['classNames', 'styles', 'suffix']);
   const completeInvocation = (actual: SelectSurfaceProducerCall, source: SelectSurfaceProducerCall) => {
     if (!invocation(actual, source)) {

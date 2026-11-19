@@ -147,13 +147,16 @@ export interface DateWeekPrefixSourceSSR {
 }
 export function readDateWeekPrefixSourceEvidence(name: string): Uint8Array;
 export function readDateWeekPrefixSourceManifest(
-  kind?: 'csr', variant?: DateWeekPrefixSourceVariant
+  kind?: 'csr',
+  variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourceCSRManifest;
 export function readDateWeekPrefixSourceManifest(
-  kind: 'ssr', variant?: DateWeekPrefixSourceVariant
+  kind: 'ssr',
+  variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourceSSRManifest;
 export function readDateWeekPrefixSourceManifest(
-  kind: DateWeekPrefixSourceCaptureKind, variant?: DateWeekPrefixSourceVariant
+  kind: DateWeekPrefixSourceCaptureKind,
+  variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourceCSRManifest | DateWeekPrefixSourceSSRManifest;
 export function readDateWeekPrefixSourceCase(
   id: DateWeekPrefixOwner,
@@ -167,40 +170,61 @@ export function readDateWeekPrefixSourceInitial(
   variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourcePoint;
 export function readDateWeekPrefixSourceStep(
-  id: DateWeekPrefixOwner, index: number, variant?: DateWeekPrefixSourceVariant
+  id: DateWeekPrefixOwner,
+  index: number,
+  variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourceStep;
 export function readDateWeekPrefixSourceClosed(
-  id: DateWeekPrefixOwner, index: number, variant?: DateWeekPrefixSourceVariant
+  id: DateWeekPrefixOwner,
+  index: number,
+  variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourceClosed;
 export function readDateWeekPrefixSourceCleanup(
-  id: DateWeekPrefixOwner, phase?: 'beforeUnmount' | 'cleanup' | 'late', variant?: DateWeekPrefixSourceVariant
+  id: DateWeekPrefixOwner,
+  phase?: 'beforeUnmount' | 'cleanup' | 'late',
+  variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourcePoint;
 export function readDateWeekPrefixSourceProducerChunks(
-  id: DateWeekPrefixOwner, variant?: DateWeekPrefixSourceVariant
+  id: DateWeekPrefixOwner,
+  variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourceProducerReference[];
 export function readDateWeekPrefixSourceProducerChunk(
-  id: DateWeekPrefixOwner, index: number, variant?: DateWeekPrefixSourceVariant
+  id: DateWeekPrefixOwner,
+  index: number,
+  variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourceProducerChunk;
 export function readDateWeekPrefixSourceSSR(
-  id: DateWeekPrefixOwner, locale: DateWeekPrefixSourceSSRLocale, method: DateWeekPrefixSourceSerializer, variant?: DateWeekPrefixSourceVariant
+  id: DateWeekPrefixOwner,
+  locale: DateWeekPrefixSourceSSRLocale,
+  method: DateWeekPrefixSourceSerializer,
+  variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourceSSR;
 export function verifyDateWeekPrefixSourceSSR(
-  value: unknown, id: DateWeekPrefixOwner, locale: DateWeekPrefixSourceSSRLocale, method: DateWeekPrefixSourceSerializer
+  value: unknown,
+  id: DateWeekPrefixOwner,
+  locale: DateWeekPrefixSourceSSRLocale,
+  method: DateWeekPrefixSourceSerializer
 ): void;
 export function verifyDateWeekPrefixSourceManifest(
-  value: unknown, kind?: DateWeekPrefixSourceCaptureKind, variant?: DateWeekPrefixSourceVariant
+  value: unknown,
+  kind?: DateWeekPrefixSourceCaptureKind,
+  variant?: DateWeekPrefixSourceVariant
 ): void;
 export function verifyDateWeekPrefixSourcePoint(value: unknown): void;
 export function verifyDateWeekPrefixSourceRows(value: unknown): void;
 export function verifyDateWeekPrefixSourceProducerChunk(
-  value: unknown, envelope?: Pick<DateWeekPrefixSourceProducerReference, 'phase' | 'cursor' | 'next'>
+  value: unknown,
+  envelope?: Pick<DateWeekPrefixSourceProducerReference, 'phase' | 'cursor' | 'next'>
 ): void;
 export function verifyDateWeekPrefixSourcePartBinding(
   reference: DateWeekPrefixSourceReference | DateWeekPrefixSourceRawPart,
-  kind: DateWeekPrefixSourceCaptureKind, variant?: DateWeekPrefixSourceVariant, expectedFile?: string
+  kind: DateWeekPrefixSourceCaptureKind,
+  variant?: DateWeekPrefixSourceVariant,
+  expectedFile?: string
 ): unknown;
 export function verifyDateWeekPrefixSourceStoredBytes(
-  reference: DateWeekPrefixSourceReference | DateWeekPrefixSourceRawPart, stored: Uint8Array
+  reference: DateWeekPrefixSourceReference | DateWeekPrefixSourceRawPart,
+  stored: Uint8Array
 ): Uint8Array;
 export function verifyDateWeekPrefixSourceStoredParts(): {
   sourceOnly: true; captures: 4; originalParts: 132; wholeBlobs: number;

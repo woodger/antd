@@ -70,8 +70,12 @@ function callInfo(call: SelectSurfaceProducerCall) {
 }
 /** Source creates unused ReactElements; an unmounted public Snippet is never
  * invoked with a fabricated private anchor. Every Source record remains raw. */
-export function verifyUnusedRestDefinition(source: SourceCSRCase, calls: readonly SelectSurfaceProducerCall[],
-  body: readonly { info: unknown; rawInfo: TagCloseHandleRawGraph }[], points = [source.initial, ...source.steps]) {
+export function verifyUnusedRestDefinition(
+  source: SourceCSRCase,
+  calls: readonly SelectSurfaceProducerCall[],
+  body: readonly { info: unknown; rawInfo: TagCloseHandleRawGraph }[],
+  points = [source.initial, ...source.steps]
+) {
   assert(['select-close-handles-nonclosable', 'select-close-handles-retained', 'select-close-handles-cached-option'].includes(source.id));
   assert.equal(
     Object.hasOwn(
@@ -150,7 +154,9 @@ export function verifyNormalTagCalls(
         const { valueType: _a, ...a } = own[0][index], { valueType: _b, ...b } = legacy[0][index];
         assert.deepEqual(a, b);
       }
-      else assert.deepEqual(own[0][index], legacy[0][index]);
+      else {
+        assert.deepEqual(own[0][index], legacy[0][index]);
+      }
     }
     const graph = call.rawArgument as TagCloseHandleRawGraph, infoRef = rawProperty(
       graph,
@@ -372,8 +378,13 @@ export const createTagCloseIdentityProof = (): IdentityProof => ({
   pairs: new Map(),
   reverse: new Map()
 });
-export function verifyTagCloseHandlePoint(actual: NativePoint, source: TagCloseHandleSourcePoint, label: string, renderer: Renderer,
-  identities: IdentityProof) {
+export function verifyTagCloseHandlePoint(
+  actual: NativePoint,
+  source: TagCloseHandleSourcePoint,
+  label: string,
+  renderer: Renderer,
+  identities: IdentityProof
+) {
   const privateRootStyles = nativeBoundary.rootStyles;
   assert(renderer === 'vite-hmr' || renderer === 'no-hmr');
   verifyTagCloseHandleOwner(actual.owner, source.owner, label);
@@ -434,9 +445,15 @@ export function verifyTagCloseHandlePoint(actual: NativePoint, source: TagCloseH
       expected = [['data-ant-select-control', 'true'], ['data-ant-select-prefix', 'ant-select'], ['data-ant-select-root-prefix', 'ant'], ['data-ant-select-source-theme', 'true'], ['data-ant-select-multiple', 'true'], ['role', 'presentation'],
         ['class', ['ant-select', 'ant-select-css-var', 'ant-select-outlined', 'ant-select-show-arrow', 'ant-select-source-theme', 'ant-select-show-search', 'ant-select-multiple', disabled && 'ant-select-disabled', scope].filter(Boolean).join(' ')], ['style', style]];
     }
-    else if (node.tag === 'SPAN' && node.attributes.length === 0) expected = [['class', scope], ['data-select-custom-tag', ''], ['role', 'presentation']];
-    else if (has('ant-select-content')) expected = [['data-ant-select-content', 'true'], ['class', 'ant-select-content ' + scope]];
-    else if (has('ant-select-content-item')) expected = node.attributes.map(([key, value]) => [key, key === 'class' ? value + ' ' + scope : value]);
+    else if (node.tag === 'SPAN' && node.attributes.length === 0) {
+      expected = [['class', scope], ['data-select-custom-tag', ''], ['role', 'presentation']];
+    }
+    else if (has('ant-select-content')) {
+      expected = [['data-ant-select-content', 'true'], ['class', 'ant-select-content ' + scope]];
+    }
+    else if (has('ant-select-content-item')) {
+      expected = node.attributes.map(([key, value]) => [key, key === 'class' ? value + ' ' + scope : value]);
+    }
     else if (has('ant-select-suffix')) expected = [['class', 'suffix ant-select-suffix ' + scope]];
     verifySelectComponentsDOMAttributes(
       current,
@@ -469,7 +486,9 @@ export function verifyTagCloseHandlePoint(actual: NativePoint, source: TagCloseH
         );
       }
     }
-    else assert.deepEqual(current.selection, node.selection);
+    else {
+      assert.deepEqual(current.selection, node.selection);
+    }
     if (local.has(node.parentIdentity!)) {
       assert.equal(
         current.parentIdentity,
@@ -483,8 +502,12 @@ export function verifyTagCloseHandlePoint(actual: NativePoint, source: TagCloseH
     let contour: ReturnType<typeof childShape>[] | undefined;
     const e = elements(current);
     const hmr: number = renderer === 'vite-hmr' ? 1 : 0;
-    if (index === 0) contour = [comment, e[0], comment, e[1], comment, comment];
-    else if (has('ant-select-content')) contour = [comment, ...e.slice(0, -1), comment, comment, e.at(-1)!];
+    if (index === 0) {
+      contour = [comment, e[0], comment, e[1], comment, comment];
+    }
+    else if (has('ant-select-content')) {
+      contour = [comment, ...e.slice(0, -1), comment, comment, e.at(-1)!];
+    }
     else if (node.tag === 'SPAN' && node.attributes.length === 0) {
       contour = [...chars(
         3 + hmr,
@@ -500,7 +523,9 @@ export function verifyTagCloseHandlePoint(actual: NativePoint, source: TagCloseH
         empty
       ), comment];
     }
-    else if (has('ant-select-content-item')) contour = e;
+    else if (has('ant-select-content-item')) {
+      contour = e;
+    }
     else if (has('ant-select-suffix')) {
       contour = [...chars(3 + hmr, comment), e[0], ...chars(
         3 + hmr,

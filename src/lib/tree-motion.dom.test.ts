@@ -143,8 +143,12 @@ describe('Tree group motion lifecycle', () => {
       await commit();
       state.frame();
       state.frame();
-      if (cancel === 'replace') state.motion.sync(false, { motionLeave: false }, false);
-      else state.motion.destroy();
+      if (cancel === 'replace') {
+        state.motion.sync(false, { motionLeave: false }, false);
+      }
+      else {
+        state.motion.destroy();
+      }
       const count = state.states.length;
       resolve!();
       await commit();

@@ -77,8 +77,12 @@ async function assertSourceCells(page: Page, source: SourcePhase) {
       // JSON preserves the numeric offset, but cannot preserve negative zero.
       expect(cell.currentTemporal?.utcOffset === temporal.utcOffset).toBe(true);
     }
-    else if ('value' in original.current) expect(cell.current).toBe(original.current.value);
-    else throw Error('Source cell must contain a temporal or scalar snapshot');
+    else if ('value' in original.current) {
+      expect(cell.current).toBe(original.current.value);
+    }
+    else {
+      throw Error('Source cell must contain a temporal or scalar snapshot');
+    }
     const locale = source.locales.find(item => item.identity === original.localeIdentity)!;
     expect(Object.keys(cell.locale)).toEqual(locale.ownKeys);
     expect(cell.locale).toEqual(locale.plain);

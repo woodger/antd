@@ -65,8 +65,12 @@ export function restoreInputNumberCursor(
   const value = input.value;
   let start = value.length;
 
-  if (value.startsWith(cursor.before)) start = cursor.before.length;
-  else if (value.endsWith(cursor.after)) start = value.length - cursor.after.length;
+  if (value.startsWith(cursor.before)) {
+    start = cursor.before.length;
+  }
+  else if (value.endsWith(cursor.after)) {
+    start = value.length - cursor.after.length;
+  }
   else {
     const last = cursor.before[cursor.start - 1];
     const index = value.indexOf(last, cursor.start - 1);

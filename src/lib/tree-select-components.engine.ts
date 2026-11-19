@@ -1,6 +1,9 @@
 /** Ant Design 6.6.8 / rc-select 1.10.1; MIT, vendor/LICENSE.rc-select. */
 export function mergeTreeSelectComponentAttributes<Attributes extends object>(
-  target: Attributes, generated: object, own: object | undefined, slot: 'root' | 'input'
+  target: Attributes,
+  generated: object,
+  own: object | undefined,
+  slot: 'root' | 'input'
 ): Attributes {
   Object.assign(target, slot === 'root' ? own : generated, slot === 'root' ? generated : own);
   for (const [key, callback] of Object.entries(own ?? {})) {
@@ -35,7 +38,8 @@ export function mergeTreeSelectComponentAttributes<Attributes extends object>(
 
 /** Собственный slot handler уже мог отменить событие; Native hook отменяет отдельно. */
 export function treeSelectNativeKeyCancelled<EventType extends Event>(
-  event: EventType, callback: ((event: EventType) => void) | null | undefined
+  event: EventType,
+  callback: ((event: EventType) => void) | null | undefined
 ) {
   if (!callback) {
     return false;
@@ -54,8 +58,12 @@ export function treeSelectNativeKeyCancelled<EventType extends Event>(
     } });
   try { callback(event); }
   finally {
-    if (descriptor) Object.defineProperty(event, 'preventDefault', descriptor);
-    else Reflect.deleteProperty(event, 'preventDefault');
+    if (descriptor) {
+      Object.defineProperty(event, 'preventDefault', descriptor);
+    }
+    else {
+      Reflect.deleteProperty(event, 'preventDefault');
+    }
   }
   return cancelled;
 }

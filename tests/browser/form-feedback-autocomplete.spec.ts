@@ -14,16 +14,24 @@ async function mount(page: Page, id: string) {
 }
 async function apply(page: Page, action: FeedbackAction, index: number) {
   const input = page.getByRole('combobox', { name: 'Feedback completion', exact: true });
-  if (action === 'focus') await input.focus();
-  else if (action === 'open') await input.click();
-  else if (action === 'search') await input.fill('Beta');
+  if (action === 'focus') {
+    await input.focus();
+  }
+  else if (action === 'open') {
+    await input.click();
+  }
+  else if (action === 'search') {
+    await input.fill('Beta');
+  }
   else if (action === 'outside') {
     await page.getByRole(
       'button',
       { name: 'Outside feedback', exact: true }
     ).click();
   }
-  else if (action === 'clear') await page.locator('[data-feedback-autocomplete-control]').getByRole('button').first().click();
+  else if (action === 'clear') {
+    await page.locator('[data-feedback-autocomplete-control]').getByRole('button').first().click();
+  }
   else {
     await page.getByRole('combobox', { name: 'Feedback action', exact: true }).selectOption(String(index));
     await page.getByRole('button', { name: 'Apply feedback action', exact: true }).dispatchEvent('click');
@@ -77,7 +85,9 @@ for (const source of clearReference.cases) {
     await mount(page, source.mode === 'pointer-controlled' ? 'clear-controlled' : 'clear');
     await apply(page, 'focus', 0);
     await apply(page, 'open', 1);
-    if (source.mode.startsWith('pointer')) await apply(page, 'clear', 2);
+    if (source.mode.startsWith('pointer')) {
+      await apply(page, 'clear', 2);
+    }
     else {
       await page.locator('[data-feedback-autocomplete-control]')
         .getByRole('button', { name: 'Очистить', exact: true }).dispatchEvent('click');

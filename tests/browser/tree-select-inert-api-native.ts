@@ -4,7 +4,10 @@ import type { TreeSelectInertApiSample } from './fixtures/tree-select-inert-api-
 export function treeSelectInertApiNativeExpected<View extends {
   root: { dir: string | null; direction?: string };
   editor: { dir: string | null } | null;
-}>(source: View, sample: TreeSelectInertApiSample): View {
+}>(
+  source: View,
+  sample: TreeSelectInertApiSample
+): View {
   const expected = structuredClone(source);
   if (sample.slot !== 'root') {
     expected.root.dir = sample.provider;

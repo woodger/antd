@@ -97,7 +97,8 @@ export const treeSelectCheckableProvider: TreeSelectConfig = {
 };
 
 export function treeSelectCheckableNegativeContent(
-  requiresArgument: Snippet<[string]>, nestedPromise: Promise<Promise<null>>
+  requiresArgument: Snippet<[string]>,
+  nestedPromise: Promise<Promise<null>>
 ) {
   // @ts-expect-error Content does not accept arbitrary records.
   const object: TreeSelectProps = { treeCheckable: { checked: true } };

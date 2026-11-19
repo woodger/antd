@@ -58,8 +58,12 @@ export function createTextAreaMeasure(
           ';'
         ) + ';min-height:0!important;max-height:none!important;height:0!important;visibility:hidden!important;overflow:hidden!important;position:absolute!important;z-index:-1000!important;top:0!important;right:0!important;pointer-events:none!important';
       const wrap = element.getAttribute('wrap');
-      if (wrap)
-        node.setAttribute('wrap', wrap); else node.removeAttribute('wrap');
+      if (wrap) {
+        node.setAttribute('wrap', wrap);
+      }
+      else {
+        node.removeAttribute('wrap');
+      }
       node.value = element.value || element.placeholder || '';
       const padding = parseFloat(style.paddingBottom) + parseFloat(style.paddingTop);
       const border = parseFloat(style.borderBottomWidth) + parseFloat(style.borderTopWidth);
@@ -127,8 +131,9 @@ export function createTextAreaMeasure(
         element.style.cssText = style;
       authored = style;
       autoSize = next;
-      if (!next)
+      if (!next) {
         release();
+      }
       else if (!shadow) {
         shadow = shadows.get(document);
         if (!shadow) {

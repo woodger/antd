@@ -153,7 +153,9 @@ for (const original of autocompleteLabelTitleReference.cases) test(`AutoComplete
           { name: 'Label title value', exact: true }
         ).click();
       }
-      else await page.locator('[data-surface-outside]').click();
+      else {
+        await page.locator('[data-surface-outside]').click();
+      }
       await verify(step, i + '/' + JSON.stringify(step.action));
     }
     const before = await capture.evaluate(value => value.read());

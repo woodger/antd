@@ -48,16 +48,25 @@ export async function settleDatePickerPresetTransitions(page: Page): Promise<Poi
   });
 }
 export async function actDatePickerPresetTransitions(
-  page: Page, sample: Sample, action: Action, index: number
+  page: Page,
+  sample: Sample,
+  action: Action,
+  index: number
 ) {
   await page.evaluate(
     value => window.datePickerPresetTransitionsNative.setActionIndex(value),
     index
   );
   const prefix = sample.prefixCls ?? 'ant-picker';
-  if (action.type === 'open') await page.locator('#preset-field').click();
-  else if (action.type === 'preset-click') await page.locator('.' + prefix + '-presets li').click();
-  else if (action.type === 'leave') await page.mouse.move(1000, 750);
+  if (action.type === 'open') {
+    await page.locator('#preset-field').click();
+  }
+  else if (action.type === 'preset-click') {
+    await page.locator('.' + prefix + '-presets li').click();
+  }
+  else if (action.type === 'leave') {
+    await page.mouse.move(1000, 750);
+  }
   else if (action.type === 'cell-hover') {
     await page.locator('.' + prefix + '-dropdown td[title="' + action.value + '"]').hover();
   }
@@ -69,7 +78,9 @@ export async function actDatePickerPresetTransitions(
     // Hover the real LI, including when its actual child button is disabled.
     await button.locator('..').hover();
   }
-  else if (action.type === 'input-focus') await page.locator('#preset-field').focus();
+  else if (action.type === 'input-focus') {
+    await page.locator('#preset-field').focus();
+  }
   else if (action.type === 'input-escape') {
     const input = page.locator('#preset-field');
     if (!await input.evaluate(node => node.ownerDocument.activeElement === node)) {
@@ -105,11 +116,14 @@ export async function actDatePickerPresetTransitions(
       return observed;
     }, action);
   }
-  else throw Error('Unknown frozen DatePicker transition action');
+  else {
+    throw Error('Unknown frozen DatePicker transition action');
+  }
   return null;
 }
 export async function disposeDatePickerPresetTransitions(
-  page: Page, beforeUnmount: Point,
+  page: Page,
+  beforeUnmount: Point,
   hooks?: { afterCleanup?: () => Promise<void>; afterLate?: () => Promise<void> }
 ): Promise<DatePickerPresetTransitionDisposal> {
   const operations: DatePickerPresetTransitionDisposal['trace']['operations'] = [

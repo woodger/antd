@@ -42,8 +42,12 @@ for (const entry of reference.cases) {
       .selectOption(entry.sample.id);
     const input = page.getByRole('combobox', { name: 'Tags', exact: true });
     if ('compose' in entry.sample) await input.dispatchEvent('compositionstart');
-    if ('paste' in entry.sample) await paste(input, entry.sample.text);
-    else await input.fill(entry.sample.text);
+    if ('paste' in entry.sample) {
+      await paste(input, entry.sample.text);
+    }
+    else {
+      await input.fill(entry.sample.text);
+    }
     if ('intermediate' in entry) {
       await expect.poll(() => readSelection(page)).toEqual(entry.intermediate);
       // Enter во время IME не должен выбирать option до compositionend.

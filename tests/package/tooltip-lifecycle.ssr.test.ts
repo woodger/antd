@@ -46,8 +46,12 @@ describe('Tooltip lifecycle public package SSR', () => {
         expect(markup).toContain('aria-label="Lifecycle ref">empty</output>');
         expect(markup).toContain('aria-label="Lifecycle events">[]</output>');
         expect(content).toBe(options.destroyOnHidden ? '' : options.title);
-        if (options.id) expect(markup).toContain(`id="${options.id}"`);
-        else expect(markup).toMatch(/id="ant-tooltip-[^"]+"/);
+        if (options.id) {
+          expect(markup).toContain(`id="${options.id}"`);
+        }
+        else {
+          expect(markup).toMatch(/id="ant-tooltip-[^"]+"/);
+        }
         if (options.zIndex !== undefined) {
           expect(markup).toContain(`z-index:${options.zIndex}`);
         }

@@ -460,8 +460,12 @@
         shown = next;
       },
       onDismiss: () => {
-        if (Boolean(rootSlot) || Boolean(inputSlot)) scheduleClose();
-        else requestOpen(false);
+        if (Boolean(rootSlot) || Boolean(inputSlot)) {
+          scheduleClose();
+        }
+        else {
+          requestOpen(false);
+        }
       }
     }));
     source.connect(disconnect.forceAlign);
@@ -668,8 +672,12 @@
     const before = actualValue;
     const beforeText = text;
     onClear?.();
-    if (overridden) focus();
-    else editor?.focus({ preventScroll: true });
+    if (overridden) {
+      focus();
+    }
+    else {
+      editor?.focus({ preventScroll: true });
+    }
     change(undefined, before);
     // Rc-select вызывает отдельный search-путь после очистки display values.
     if (beforeText) {
@@ -716,7 +724,9 @@
         event.preventDefault();
         choose(option);
       }
-      else requestOpen(false);
+      else {
+        requestOpen(false);
+      }
     }
     else if (event.key === 'Escape' && visible) {
       event.preventDefault();
@@ -724,8 +734,9 @@
       preview = undefined;
       requestOpen(false);
     }
-    else if ((event.key === 'Enter' || event.key === ' ') && !visible)
+    else if ((event.key === 'Enter' || event.key === ' ') && !visible) {
       requestOpen(true);
+    }
     else if (!event.ctrlKey && !event.altKey && !event.metaKey && event.keyCode
       && event.code !== 'Semicolon' && event.code !== 'Equal' && !/^F(?:[1-9]|1[0-2])$/.test(event.key)
       && !['Escape', 'Shift', 'Backspace', 'Tab', 'Meta', 'OS', 'Alt', 'Control', 'CapsLock',
@@ -946,7 +957,9 @@
           event.preventDefault();
           choose(option);
         }
-        else requestComponentOpen(false, state.visible);
+        else {
+          requestComponentOpen(false, state.visible);
+        }
       }
       else if (event.key === 'Escape') {
         event.stopPropagation();

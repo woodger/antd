@@ -169,26 +169,46 @@ export interface MaskSourceSSR {
   messageChannelEnvironment: { availableDuringUMDLoad: boolean; forbiddenDuringRender: boolean; };
 }
 export function readMaskSourceEvidence(name: string): Uint8Array;
-export function readMaskSourceManifest(kind?: 'csr', variant?: MaskSourceVariant): MaskSourceCSRManifest;
-export function readMaskSourceManifest(kind: 'ssr', variant?: MaskSourceVariant): MaskSourceSSRManifest;
-export function readMaskSourceManifest(kind: MaskSourceCaptureKind, variant?: MaskSourceVariant): MaskSourceCSRManifest | MaskSourceSSRManifest;
+export function readMaskSourceManifest(
+  kind?: 'csr',
+  variant?: MaskSourceVariant
+): MaskSourceCSRManifest;
+export function readMaskSourceManifest(
+  kind: 'ssr',
+  variant?: MaskSourceVariant
+): MaskSourceSSRManifest;
+export function readMaskSourceManifest(
+  kind: MaskSourceCaptureKind,
+  variant?: MaskSourceVariant
+): MaskSourceCSRManifest | MaskSourceSSRManifest;
 export function readMaskSourceCase(id: MaskOwner, variant?: MaskSourceVariant): MaskSourceCase;
 export function readMaskSourcePart<Value = unknown>(reference: MaskSourceReference | MaskSourceRawPart): Value;
 export function readMaskSourceInitial(id: MaskOwner, variant?: MaskSourceVariant): MaskSourcePoint;
-export function readMaskSourceStep(id: MaskOwner, index: number, variant?: MaskSourceVariant): MaskSourceStep;
+export function readMaskSourceStep(
+  id: MaskOwner,
+  index: number,
+  variant?: MaskSourceVariant
+): MaskSourceStep;
 export function readMaskSourceSubstep(
   id: MaskOwner,
   index: number,
   substepIndex: number,
   variant?: MaskSourceVariant
 ): MaskSourceSubstep;
-export function readMaskSourceClosed(id: MaskOwner, index: number, variant?: MaskSourceVariant): MaskSourceClosed;
+export function readMaskSourceClosed(
+  id: MaskOwner,
+  index: number,
+  variant?: MaskSourceVariant
+): MaskSourceClosed;
 export function readMaskSourceCleanup(
   id: MaskOwner,
   phase?: 'beforeUnmount' | 'cleanup' | 'late',
   variant?: MaskSourceVariant
 ): MaskSourcePoint;
-export function readMaskSourceProducerChunks(id: MaskOwner, variant?: MaskSourceVariant): MaskSourceProducerReference[];
+export function readMaskSourceProducerChunks(
+  id: MaskOwner,
+  variant?: MaskSourceVariant
+): MaskSourceProducerReference[];
 export function readMaskSourceProducerChunk(
   id: MaskOwner,
   index: number,

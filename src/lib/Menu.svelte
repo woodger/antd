@@ -102,8 +102,9 @@
       if (next.openKeys !== previous.openKeys)
         opened = [...next.openKeys ?? []];
       if (next.mode !== previous.mode || next.collapsed !== previous.collapsed) {
-        if (next.mode === 'inline')
+        if (next.mode === 'inline') {
           opened = [...inlineCache];
+        }
         else {
           opened = [];
           onOpenChange?.([]);
@@ -176,9 +177,12 @@
       const next = menuSelection(before, entry.key, multiple);
       selected = next.keys;
       const detail = { ...info, selectedKeys: [...next.keys] };
-      if (next.deselect)
+      if (next.deselect) {
         onDeselect?.(detail);
-      else onSelect?.(detail);
+      }
+      else {
+        onSelect?.(detail);
+      }
     }
     if (!multiple && actualMode !== 'inline' && actualOpen.length) {
       opened = [];

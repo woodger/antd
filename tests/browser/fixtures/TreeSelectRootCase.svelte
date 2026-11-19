@@ -42,8 +42,12 @@
   });
   function refAction(kind: 'focus' | 'blur') {
     events.push([`ref:${kind}:before`]);
-    if (kind === 'focus') control?.focus({ preventScroll: true });
-    else control?.blur();
+    if (kind === 'focus') {
+      control?.focus({ preventScroll: true });
+    }
+    else {
+      control?.blur();
+    }
     events.push([`ref:${kind}:after`]);
   }
 </script>

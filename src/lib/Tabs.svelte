@@ -228,7 +228,9 @@
       return;
     }
 
-    if (panel.dataset.tabsKey !== key) repairFocus = true;
+    if (panel.dataset.tabsKey !== key) {
+      repairFocus = true;
+    }
     else if (focused instanceof HTMLElement) {
       const keys = Array.from(panels.children, element => (element as HTMLElement).dataset.tabsKey);
       if (current.length !== keys.length || current.some((item, index) => item.key !== keys[index]))

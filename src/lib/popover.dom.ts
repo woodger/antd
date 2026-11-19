@@ -51,9 +51,12 @@ export function connectPopoverTrigger(
 
       const original = previous.get(attribute);
 
-      if (original === null || original === undefined)
+      if (original === null || original === undefined) {
         element.removeAttribute(attribute);
-      else element.setAttribute(attribute, original);
+      }
+      else {
+        element.setAttribute(attribute, original);
+      }
     }
     if (!owned.size) {
       return;
@@ -62,9 +65,12 @@ export function connectPopoverTrigger(
       (token) => token && !owned.has(token)
     );
 
-    if (tokens.length)
+    if (tokens.length) {
       element.setAttribute('aria-controls', tokens.join(' '));
-    else element.removeAttribute('aria-controls');
+    }
+    else {
+      element.removeAttribute('aria-controls');
+    }
   };
 }
 

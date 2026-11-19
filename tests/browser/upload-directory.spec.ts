@@ -42,7 +42,9 @@ for (const [index, entry] of reference.cases.entries()) {
           node.dispatchEvent(new Event('change', { bubbles: true }));
         }, entry.sample.files);
       }
-      else await transfer(page, entry.sample);
+      else {
+        await transfer(page, entry.sample);
+      }
 
       const expected = entry.readableCounterpart ?? entry;
       // Source пропускает error callback файла; Native продолжает оставшимися читаемыми файлами.
@@ -122,7 +124,9 @@ for (const action of ['disable', 'unmount'] as const) {
         name: 'Disable directory Upload', exact: true
       }).check();
     }
-    else await page.getByRole('checkbox', { name: 'Mount directory Upload', exact: true }).uncheck();
+    else {
+      await page.getByRole('checkbox', { name: 'Mount directory Upload', exact: true }).uncheck();
+    }
 
     await page.evaluate(async () => {
       (window as unknown as { completeDirectoryRead: () => void }).completeDirectoryRead();

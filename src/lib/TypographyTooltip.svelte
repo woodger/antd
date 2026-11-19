@@ -109,8 +109,12 @@
         open = next;
         options.onOpenChange?.(next);
       };
-      if (delay !== 0) timer = setTimeout(apply, delay);
-      else apply();
+      if (delay !== 0) {
+        timer = setTimeout(apply, delay);
+      }
+      else {
+        apply();
+      }
     }
 
     function handleEnter(event: PointerEvent) {
@@ -169,8 +173,12 @@
         }
       }
       // Удаление focused DOM может отправить blur до cleanup родительских props.
-      if (event.relatedTarget === null) queueMicrotask(closeIfOutside);
-      else closeIfOutside();
+      if (event.relatedTarget === null) {
+        queueMicrotask(closeIfOutside);
+      }
+      else {
+        closeIfOutside();
+      }
     }
 
     dismiss = reason => {
@@ -198,7 +206,9 @@
         return;
       }
 
-      if (visible && hide) dismiss();
+      if (visible && hide) {
+        dismiss();
+      }
       else if (!visible && show) showByClick();
       if (sourceTouch) touched = false;
     }
@@ -209,8 +219,12 @@
       }
 
       event.preventDefault();
-      if (visible && actions.hide.has('contextMenu')) dismiss();
-      else showByClick();
+      if (visible && actions.hide.has('contextMenu')) {
+        dismiss();
+      }
+      else {
+        showByClick();
+      }
     }
 
     function handleTouchStart(event: TouchEvent) {
@@ -220,7 +234,9 @@
       }
 
       touched = true;
-      if (visible && actions.hide.has('touch')) dismiss();
+      if (visible && actions.hide.has('touch')) {
+        dismiss();
+      }
       else if (!visible && actions.show.has('touch')) showByClick();
     }
 
@@ -241,7 +257,9 @@
       }
 
       popupHovered = value;
-      if (value) cancelPending();
+      if (value) {
+        cancelPending();
+      }
       else if (sourceTrigger ? supports('hover') : !wanted())
         request(false, getTooltipDelay(leaveDelay));
     };

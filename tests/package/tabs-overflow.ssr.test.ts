@@ -40,8 +40,12 @@ describe('Ant Design 6.6.8 official UMD Tabs More SSR conformance', () => {
       const control = /id="overflow-ssr-more"[^>]*>([\s\S]*?)<\/button>/.exec(body)![1];
 
       for (const path of sample.icon.paths) expect(control).toContain(path);
-      if (sample.icon.text) expect(control).toContain(sample.icon.text);
-      else expect(control.replace(/<[^>]+>/g, '').trim()).toBe('');
+      if (sample.icon.text) {
+        expect(control).toContain(sample.icon.text);
+      }
+      else {
+        expect(control.replace(/<[^>]+>/g, '').trim()).toBe('');
+      }
       expect(body).toContain('aria-haspopup="listbox"');
       expect(body).toContain('aria-controls="overflow-ssr-more-popup"');
       expect(body).toContain('ant-tabs-nav-operations-hidden');

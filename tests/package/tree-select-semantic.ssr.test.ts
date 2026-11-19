@@ -70,7 +70,9 @@ describe('TreeSelect semantics on the server', () => {
         expect({ ...project(placeholder), text: decode(body.replace(/<!--[^]*?-->|<[^>]*>/g, '')).trim(),
           visible: !attr(placeholder, 'style').includes('visibility:hidden') }).toEqual(expected.placeholder);
       }
-      else expect(placeholder).toBeUndefined();
+      else {
+        expect(placeholder).toBeUndefined();
+      }
       const [popup] = parts('dropdown');
       expect(expected.open).toBe(false);
       expect(expected.popup).toBeNull();
@@ -78,7 +80,9 @@ describe('TreeSelect semantics on the server', () => {
         expect(popup).toContain('popover="manual" hidden');
         expect(project(popup)).toEqual(browser.cases.find(item => item.id === entry.id)!.initial.popup);
       }
-      else expect(popup).toBeUndefined();
+      else {
+        expect(popup).toBeUndefined();
+      }
       expect(html).toMatch(/data-semantic-events[^>]*>\[\]<\/output>/);
       expect(entry.timers).toBe(0);
       expect(entry.mutated).toBe(false);

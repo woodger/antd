@@ -154,8 +154,12 @@ export function createCarouselModel(
 
   function resize(setTrackStyle: boolean) {
     measure(setTrackStyle, false, () => {
-      if (props.autoplay) autoPlay('update');
-      else pause('paused');
+      if (props.autoplay) {
+        autoPlay('update');
+      }
+      else {
+        pause('paused');
+      }
     });
     commit({ animating: false });
     clearTimeout(animation);
@@ -222,7 +226,9 @@ export function createCarouselModel(
 
   function play() {
     const current = spec();
-    if (props.rtl) slideHandler(state.currentSlide - props.slidesToScroll);
+    if (props.rtl) {
+      slideHandler(state.currentSlide - props.slidesToScroll);
+    }
     else if (carouselCanGoNext(current)) slideHandler(state.currentSlide + props.slidesToScroll);
   }
 
@@ -339,9 +345,15 @@ export function createCarouselModel(
           }
           if (previous.autoplay !== props.autoplay
             || previous.autoplaySpeed !== props.autoplaySpeed) {
-            if (!previous.autoplay && props.autoplay) autoPlay('playing');
-            else if (props.autoplay) autoPlay('update');
-            else pause('paused');
+            if (!previous.autoplay && props.autoplay) {
+              autoPlay('playing');
+            }
+            else if (props.autoplay) {
+              autoPlay('update');
+            }
+            else {
+              pause('paused');
+            }
           }
         });
       }

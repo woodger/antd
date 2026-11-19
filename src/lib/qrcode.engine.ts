@@ -37,10 +37,12 @@ export function qrCodePath(modules: boolean[][], margin = 0) {
           return;
         }
 
-        if (start === null)
+        if (start === null) {
           operations.push(`M${x + margin},${y + margin} h1v1H${x + margin}z`);
-        else
+        }
+        else {
           operations.push(`M${start + margin},${y + margin} h${x + 1 - start}v1H${start + margin}z`);
+        }
 
         return;
       }
@@ -146,7 +148,9 @@ export function qrCodeDimensions(style?: string) {
     if (quote) {
       declaration += char;
 
-      if (char === '\\') declaration += source[++index] ?? '';
+      if (char === '\\') {
+        declaration += source[++index] ?? '';
+      }
       else if (char === quote) quote = '';
     }
     else if (char === '/' && source[index + 1] === '*') {

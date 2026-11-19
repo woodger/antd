@@ -167,8 +167,12 @@ describe('createForm aggregate metadata', () => {
     });
     const validation = form.validateFields().catch((error: unknown) => error);
 
-    if (action === 'reset') form.resetFields();
-    else remove();
+    if (action === 'reset') {
+      form.resetFields();
+    }
+    else {
+      remove();
+    }
 
     expect(form.isFieldsValidating()).toBe(false);
     expect(form.isFieldsTouched()).toBe(false);

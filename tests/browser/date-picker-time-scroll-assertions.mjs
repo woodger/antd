@@ -204,7 +204,12 @@ export function verifyTimeScrollActionEvidence(actual, action) {
   }
 }
 export function verifyTimeScrollRemovalInterval(
-  beforeUnmount, cleanup, late, sourceBefore, sourceCleanup, sourceLate
+  beforeUnmount,
+  cleanup,
+  late,
+  sourceBefore,
+  sourceCleanup,
+  sourceLate
 ) {
   assert.equal(beforeUnmount.input.focused, true);
   assert.equal(beforeUnmount.focus.identity, beforeUnmount.input.identity);

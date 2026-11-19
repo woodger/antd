@@ -195,9 +195,12 @@
         if (enabled && offset !== undefined) {
           element.style.setProperty(property, `${offset}px`);
 
-          if (fixed[index] === 'end')
+          if (fixed[index] === 'end') {
             endWidth += widths[index];
-          else startWidth += widths[index];
+          }
+          else {
+            startWidth += widths[index];
+          }
         }
         else {
           element.style.removeProperty(property);
@@ -318,9 +321,12 @@
     const next = new Set(expandedKeys);
     const expanded = !next.has(key);
 
-    if (expanded)
+    if (expanded) {
       next.add(key);
-    else next.delete(key);
+    }
+    else {
+      next.delete(key);
+    }
 
     internalExpansion = [...next];
     const { onExpand, onExpandedRowsChange } = expandable;

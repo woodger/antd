@@ -55,8 +55,12 @@
               runtime.complete(id, current.version);
           });
         };
-        if (!visible)
-          finish(); else disposeMotion = animateMessageNotice(root, true, from, finish);
+        if (!visible) {
+          finish();
+        }
+        else {
+          disposeMotion = animateMessageNotice(root, true, from, finish);
+        }
       }
       else if (visible && !entered) {
         entered = true;

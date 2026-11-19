@@ -27,7 +27,9 @@ for (const entry of reference.cases.filter(({ sample }) => samples.has(sample.id
     await expect(page.getByRole('status', { name: 'Typed errors', exact: true }))
       .toHaveText(valid ? '[]' : '["Rejected"]');
     const input = page.getByLabel('Typed field', { exact: true });
-    if (valid) await expect(input).not.toHaveAttribute('aria-invalid');
+    if (valid) {
+      await expect(input).not.toHaveAttribute('aria-invalid');
+    }
     else {
       await expect(input).toHaveAttribute('aria-invalid', 'true');
       await expect(input).toHaveAccessibleDescription('Rejected');

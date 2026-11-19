@@ -130,8 +130,12 @@
     if (!pending) {
       return;
     }
-    if (leaf) pending.isLeaf = true;
-    else pending.children = empty ? [] : [{ value: 'child', label: 'Loaded child' }];
+    if (leaf) {
+      pending.isLeaf = true;
+    }
+    else {
+      pending.children = empty ? [] : [{ value: 'child', label: 'Loaded child' }];
+    }
     data = [...data];
     pending = undefined;
   }

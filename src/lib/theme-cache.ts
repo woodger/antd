@@ -25,8 +25,12 @@ function deletePath(
 ) {
   const node = current.get(path[0])!;
   if (path.length === 1) {
-    if (!node.map) current.delete(path[0]);
-    else current.set(path[0], { map: node.map });
+    if (!node.map) {
+      current.delete(path[0]);
+    }
+    else {
+      current.set(path[0], { map: node.map });
+    }
     return;
   }
 
@@ -59,8 +63,12 @@ export function createDerivativeTheme(
       }
       else {
         const node = current.get(algorithm);
-        if (!node) current.set(algorithm, { map: new Map() });
-        else node.map ??= new Map();
+        if (!node) {
+          current.set(algorithm, { map: new Map() });
+        }
+        else {
+          node.map ??= new Map();
+        }
         current = current.get(algorithm)!.map!;
       }
     });

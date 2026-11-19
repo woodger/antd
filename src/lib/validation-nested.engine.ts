@@ -22,7 +22,9 @@ type ValidateChildren<Values extends FormValues> = (
 ) => Promise<ValidationMessages>;
 
 export function collectValidationMessages<Values extends FormValues>(
-  rule: ValidationRule<Values>, own: readonly string[], children: readonly ValidationMessages[]
+  rule: ValidationRule<Values>,
+  own: readonly string[],
+  children: readonly ValidationMessages[]
 ): ValidationMessages {
   if (rule.warningOnly) {
     return { errors: [], warnings: [...own, ...children.flatMap(child =>

@@ -11,8 +11,12 @@ export function patchOTPCells(
     if (!next[before]) next[before] = '';
   }
 
-  if (text.length <= 1) next[index] = text;
-  else next = next.slice(0, index).concat(text.split(''));
+  if (text.length <= 1) {
+    next[index] = text;
+  }
+  else {
+    next = next.slice(0, index).concat(text.split(''));
+  }
 
   while (next.length && !next[next.length - 1]) next.pop();
 

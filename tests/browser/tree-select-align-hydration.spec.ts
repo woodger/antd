@@ -59,8 +59,12 @@ async function settle(page: Page) {
 
 async function act(page: Page, action: TreeSelectAlignAction) {
   const editor = page.locator('[data-align-case] [data-align-editor], [data-align-case] input[role="combobox"]');
-  if (action.type === 'click') await editor.click();
-  else if (action.type === 'fill') await editor.fill(action.text);
+  if (action.type === 'click') {
+    await editor.click();
+  }
+  else if (action.type === 'fill') {
+    await editor.fill(action.text);
+  }
   else if (action.type === 'caret') {
     await editor.evaluate((node, range) => {
       if (!(node instanceof HTMLInputElement)) {
@@ -88,7 +92,9 @@ async function act(page: Page, action: TreeSelectAlignAction) {
       node.scrollLeft = action.left;
     }, action);
   }
-  else throw Error(`Unexpected strict hydration action: ${action.type}`);
+  else {
+    throw Error(`Unexpected strict hydration action: ${action.type}`);
+  }
 }
 
 for (const { id, events } of [

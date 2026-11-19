@@ -3,7 +3,9 @@ import { treeSelectComponentOverflow, type TreeSelectComponentOverflowLayout } f
 
 /** Source Overflow: измерение suffix после absolute/shrink-to-fit участвует в следующем проходе. */
 export function connectTreeSelectComponentOverflow(
-  host: HTMLElement, suffix: HTMLElement, getCount: () => number,
+  host: HTMLElement,
+  suffix: HTMLElement,
+  getCount: () => number,
   update: (layout: TreeSelectComponentOverflowLayout) => void,
   selectors: { tag: string; rest: string; prefix: string } = {
     tag: ':scope > [data-tree-choice-tag]', rest: ':scope > [data-tree-choice-rest]',

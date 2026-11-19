@@ -203,7 +203,9 @@
         ...(action.prefixWidth === undefined ? {} : { prefixWidth: action.prefixWidth })
       };
     }
-    else throw Error('Unknown ordinary caller update');
+    else {
+      throw Error('Unknown ordinary caller update');
+    }
   }
   if (ownerCapture) {
     ownerCapture.read = read;

@@ -58,8 +58,9 @@ export function drawWatermark(
   }
   const { context, canvas, realWidth, realHeight } = original;
 
-  if (!Array.isArray(content))
+  if (!Array.isArray(content)) {
     context.drawImage(content as HTMLImageElement, 0, 0, realWidth, realHeight);
+  }
   else {
     context.textBaseline = 'top';
     let top = 0;

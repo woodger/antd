@@ -145,7 +145,9 @@ for (const reduced of [false, true]) {
       await page.getByRole('button', { name: 'Complete upload', exact: true }).click();
       await page.clock.runFor(80);
 
-      if (reduced) await page.emulateMedia({ reducedMotion: 'reduce' });
+      if (reduced) {
+        await page.emulateMedia({ reducedMotion: 'reduce' });
+      }
       else {
         await page.getByRole('checkbox', { name: 'Disable progress motion', exact: true }).check();
       }

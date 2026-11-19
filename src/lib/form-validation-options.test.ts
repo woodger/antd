@@ -274,9 +274,15 @@ describe('createForm validateFields options', () => {
       });
       const validation = form.validateFields({ validateOnly: true }).catch((error: unknown) => error);
 
-      if (operation === 'write') form.setFieldValue('name', 'Bob');
-      else if (operation === 'reset') form.resetFields();
-      else unregister();
+      if (operation === 'write') {
+        form.setFieldValue('name', 'Bob');
+      }
+      else if (operation === 'reset') {
+        form.resetFields();
+      }
+      else {
+        unregister();
+      }
 
       pending.resolve('Stale error');
 

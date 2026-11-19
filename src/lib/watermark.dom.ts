@@ -133,7 +133,9 @@ export function createWatermarkRuntime(
       image.referrerPolicy = 'no-referrer';
       image.src = current.image;
     }
-    else draw(currentLines);
+    else {
+      draw(currentLines);
+    }
   }
 
   const observer = typeof view.MutationObserver === 'function'

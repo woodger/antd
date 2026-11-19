@@ -59,8 +59,12 @@
   }
   export function update(action: PopupOverflowAction) {
     if (action.type === 'context') {
-      if (action.layer === 'outer') outer = action.value;
-      else inner = action.value;
+      if (action.layer === 'outer') {
+        outer = action.value;
+      }
+      else {
+        inner = action.value;
+      }
     }
   }
   export function readRefs() {

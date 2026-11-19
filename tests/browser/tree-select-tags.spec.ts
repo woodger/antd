@@ -16,9 +16,15 @@ for (const entry of reference.cases) {
     for (const step of entry.steps) {
       const action = step.action as TreeTagAction;
       const input = page.getByRole('combobox', { name: 'Tree tag values', exact: true });
-      if (action.kind === 'open') await input.click();
-      else if (action.kind === 'key') await input.press(action.value);
-      else if (action.kind === 'search') await input.fill(action.value);
+      if (action.kind === 'open') {
+        await input.click();
+      }
+      else if (action.kind === 'key') {
+        await input.press(action.value);
+      }
+      else if (action.kind === 'search') {
+        await input.fill(action.value);
+      }
       else if (action.kind === 'remove') {
         await page.getByRole('button', { name: 'Удалить Tail', exact: true }).click();
       }

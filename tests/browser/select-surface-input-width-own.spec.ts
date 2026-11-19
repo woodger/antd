@@ -90,7 +90,9 @@ for (const original of selectSurfaceInputWidthOwnReference.cases) {
           await page.evaluate(action => document.querySelector('[data-surface-command]')!
             .dispatchEvent(new CustomEvent('inputwidthownupdate', { detail: action })), step.action);
         }
-        else await actSelectSurface(page, step.action);
+        else {
+          await actSelectSurface(page, step.action);
+        }
         await page.mouse.move(0, 0);
         await verify(step, `${index}/${JSON.stringify(step.action)}`);
       }
@@ -235,7 +237,12 @@ test('Select semantic input keeps the Source minimum without an explicit theme',
         const before = snapshot();
         style.setProperty('width', '0px');
         const scrollWidth = input.scrollWidth;
-        if (present) style.setProperty('width', width, priority); else style.removeProperty('width');
+        if (present) {
+          style.setProperty('width', width, priority);
+        }
+        else {
+          style.removeProperty('width');
+        }
         return { before, after: snapshot(), scrollWidth };
       });
       trace.push({ label: `${label}/physical-width0`, actual: scratch });

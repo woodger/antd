@@ -8,7 +8,10 @@ export function treeSelectMotionNativeObserved<
 /** Hydration retains Native's existing SSR panel and its parsed input caret, rather than mounting a new draft. */
 export function treeSelectMotionNativeHydrationExpected<
   View extends { popup: { draft: { selection: (number | null)[] } | null } | null }
->(source: View, initialPanel: boolean): View {
+>(
+  source: View,
+  initialPanel: boolean
+): View {
   if (!initialPanel || !source.popup?.draft) {
     return source;
   }
@@ -24,7 +27,10 @@ export function treeSelectMotionNativeView<
     model: unknown;
     editor: { value: string; selection: (number | null)[]; expanded: string | null } | null;
   }
->(source: View, id: string): View {
+>(
+  source: View,
+  id: string
+): View {
   if (id !== 'outside-escape-choice' || source.model !== 'b'
     || source.editor?.expanded !== 'false') {
     return source;

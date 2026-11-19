@@ -49,7 +49,9 @@ export async function actMonthYear(page: Page, action: MonthYearAction, index: n
     || action.type === 'input-escape') {
     target = page.locator(action.index === 1 ? '#month-year-end' : '#month-year-input');
   }
-  else if (action.type === 'input-key') target = page.locator('.ant-picker input:focus');
+  else if (action.type === 'input-key') {
+    target = page.locator('.ant-picker input:focus');
+  }
   else if (action.type === 'owner-control') {
     target = page.locator('[data-month-year-control="' + action.value + '"]');
   }
@@ -67,11 +69,15 @@ export async function actMonthYear(page: Page, action: MonthYearAction, index: n
   else if (action.type === 'cell-click') {
     target = popup.locator('td[title="' + action.title + '"] button');
   }
-  else if (action.type === 'confirm-click') target = popup.locator('.ant-picker-ok button');
+  else if (action.type === 'confirm-click') {
+    target = popup.locator('.ant-picker-ok button');
+  }
   else if (action.type === 'preset-click') {
     target = popup.locator('.ant-picker-presets button').filter({ hasText: exactText(action.label) });
   }
-  else throw Error('Unknown declared month/year action');
+  else {
+    throw Error('Unknown declared month/year action');
+  }
   assert.equal(await target.count(), 1, 'Exactly one actual public action target');
   const actionEvidence: { targetBefore: unknown; afterFocusPointer?: NativeMonthYearPoint;
     ownerClick?: unknown; actualCoordinates?: { x: number; y: number }; hitBefore?: unknown } = {
@@ -97,7 +103,9 @@ export async function actMonthYear(page: Page, action: MonthYearAction, index: n
     await page.keyboard.press('Control+A');
     await page.keyboard.type(action.value);
   }
-  else if (action.type === 'input-key') await page.keyboard.press(action.value);
+  else if (action.type === 'input-key') {
+    await page.keyboard.press(action.value);
+  }
   else if (action.type !== 'input-open') {
     const box = await target.boundingBox();
     assert(box && box.width > 0 && box.height > 0, 'Real visible target geometry required');
@@ -112,7 +120,9 @@ export async function actMonthYear(page: Page, action: MonthYearAction, index: n
     // Настоящий mouse click допускает disabled target; force/снятие disabled не используются.
     await page.mouse.click(point.x, point.y);
   }
-  else await target.click();
+  else {
+    await target.click();
+  }
   return { index, action, before, actionEvidence, afterCall: await readMonthYear(page) };
 }
 export async function disposeMonthYear(page: Page, hooks?: {

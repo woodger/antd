@@ -24,16 +24,24 @@ function nativeRootView<View extends { events: readonly unknown[][] }>(
 async function apply(page: Page, action: TreeSelectRootAction) {
   const field = page.locator('[data-tree-select-root-host] [data-root-probe]');
   const child = page.locator('[data-root-child]');
-  if (action === 'click') await field.click();
-  else if (action === 'click-only') await field.evaluate(node => (node as HTMLElement).click());
+  if (action === 'click') {
+    await field.click();
+  }
+  else if (action === 'click-only') {
+    await field.evaluate(node => (node as HTMLElement).click());
+  }
   else if (action === 'outside') {
     await page.getByRole(
       'button',
       { name: 'Outside root', exact: true }
     ).click();
   }
-  else if (action === 'focus' || action === 'child-focus') await (action === 'focus' ? field : child).focus();
-  else if (action === 'blur') await field.evaluate(node => (node as HTMLElement).blur());
+  else if (action === 'focus' || action === 'child-focus') {
+    await (action === 'focus' ? field : child).focus();
+  }
+  else if (action === 'blur') {
+    await field.evaluate(node => (node as HTMLElement).blur());
+  }
   else if (action === 'ref-focus' || action === 'ref-blur') {
     await page.getByRole('button', {
       name: action === 'ref-focus' ? 'Root ref focus' : 'Root ref blur', exact: true
@@ -45,7 +53,9 @@ async function apply(page: Page, action: TreeSelectRootAction) {
       { name: 'Unmount root', exact: true }
     ).dispatchEvent('click');
   }
-  else if (action === 'type' || action === 'child-type') await (action === 'type' ? field : child).fill('Draft query');
+  else if (action === 'type' || action === 'child-type') {
+    await (action === 'type' ? field : child).fill('Draft query');
+  }
   else {
     const key = action === 'enter' || action === 'child-enter' ? 'Enter' : action === 'space' ? 'Space' : 'ArrowDown';
     await (action === 'child-enter' ? child : field).focus();

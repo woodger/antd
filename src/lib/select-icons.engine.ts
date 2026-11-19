@@ -71,7 +71,9 @@ function searchIcon(config: SearchIconConfig | undefined): RenderEmptyContent {
 }
 
 function iconDefinition<Info>(
-  own: SelectRenderNode<Info>, context: SelectRenderNode<Info>, fallback: RenderEmptyContent
+  own: SelectRenderNode<Info>,
+  context: SelectRenderNode<Info>,
+  fallback: RenderEmptyContent
 ): IconDefinition<Info> {
   const value = own !== undefined ? own : context;
   if (value === undefined) {
@@ -80,7 +82,10 @@ function iconDefinition<Info>(
   return typeof value === 'function' ? { producer: true, value } : { producer: false, value };
 }
 
-export function resolveSelectSuffix(input: SelectSuffixInput, defaults: SelectSuffixDefaults): SelectSuffixResolution {
+export function resolveSelectSuffix(
+  input: SelectSuffixInput,
+  defaults: SelectSuffixDefaults
+): SelectSuffixResolution {
   const raw = input.suffix;
   if (raw !== null && raw !== undefined) {
     const render = raw;
@@ -100,7 +105,9 @@ export function resolveSelectSuffix(input: SelectSuffixInput, defaults: SelectSu
   }
 
   let content: RenderEmptyContent;
-  if (local !== undefined) content = local;
+  if (local !== undefined) {
+    content = local;
+  }
   else if (input.info.loading) {
     content = firstDefined(
       input.loadingIcon,
@@ -115,7 +122,9 @@ export function resolveSelectSuffix(input: SelectSuffixInput, defaults: SelectSu
       defaults.search
     );
   }
-  else content = firstDefined(input.context?.suffixIcon, defaults.down);
+  else {
+    content = firstDefined(input.context?.suffixIcon, defaults.down);
+  }
 
   // Source Fragment сохраняет Affix даже с false/0/пустым содержимым.
   return {
@@ -145,7 +154,9 @@ export function resolveSelectMenuIcon<Value extends string | number>(
 }
 
 export function resolveSelectRemoveIcon(
-  own: SelectRenderNode<undefined>, context: SelectRenderNode<undefined>, fallbackContent: RenderEmptyContent
+  own: SelectRenderNode<undefined>,
+  context: SelectRenderNode<undefined>,
+  fallbackContent: RenderEmptyContent
 ): SelectIconResolution {
   const { producer, value: render } = iconDefinition(own, context, fallbackContent);
   const content = producer ? render(undefined) : render ?? '×';
@@ -153,7 +164,9 @@ export function resolveSelectRemoveIcon(
 }
 
 export function resolveSelectClear(
-  input: SelectClearInput, defaultIcon: RenderEmptyContent, defaultLabel = 'Clear'
+  input: SelectClearInput,
+  defaultIcon: RenderEmptyContent,
+  defaultLabel = 'Clear'
 ): SelectClearResolution {
   const allowClear = input.allowClear ?? input.contextAllowClear;
   if (!allowClear || input.disabled || !(input.displayCount || input.searchValue)

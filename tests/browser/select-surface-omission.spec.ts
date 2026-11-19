@@ -101,9 +101,12 @@ for (const original of [...selectSurfaceOmissionReference.cases.filter(entry => 
           await page.evaluate(action => document.querySelector('[data-surface-command]')!
             .dispatchEvent(new CustomEvent('omissionupdate', { detail: action })), action);
         }
-        else if (action.type === 'click' || action.type === 'outside' || action.type === 'fill' || action.type === 'footer-fill')
+        else if (action.type === 'click' || action.type === 'outside' || action.type === 'fill' || action.type === 'footer-fill') {
           await actSelectSurface(page, action);
-        else throw Error(`Unhandled actual Original action ${JSON.stringify(action)}`);
+        }
+        else {
+          throw Error(`Unhandled actual Original action ${JSON.stringify(action)}`);
+        }
         await page.mouse.move(0, 0);
         await verify(step, `${index}/${JSON.stringify(action)}`);
       }

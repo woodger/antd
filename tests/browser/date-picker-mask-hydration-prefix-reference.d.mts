@@ -21,12 +21,20 @@ export interface MaskHydrationPrefixSourceProfile {
 export function readMaskHydrationPrefixSourceManifest(): Record<string, unknown>;
 export function readMaskHydrationPrefixSourceEvidence(name: string): Uint8Array;
 /** Explicit projection: only /html and /source/producers are omitted; whole originals remain retained. */
-export function readMaskHydrationPrefixSourceFact(id: MaskHydrationPrefixSourceOwner, label: string,
-  variant?: MaskHydrationPrefixSourceVariant): MaskHydrationPrefixSourceFact;
-export function readMaskHydrationPrefixSourcePoint(id: MaskHydrationPrefixSourceOwner, label: string,
-  variant?: MaskHydrationPrefixSourceVariant): MaskHydrationPrefixSourcePoint;
+export function readMaskHydrationPrefixSourceFact(
+  id: MaskHydrationPrefixSourceOwner,
+  label: string,
+  variant?: MaskHydrationPrefixSourceVariant
+): MaskHydrationPrefixSourceFact;
+export function readMaskHydrationPrefixSourcePoint(
+  id: MaskHydrationPrefixSourceOwner,
+  label: string,
+  variant?: MaskHydrationPrefixSourceVariant
+): MaskHydrationPrefixSourcePoint;
 /** Exact complete JSON bytes, with gzip/raw hashes checked; no whole-string JSON.parse. */
-export function readMaskHydrationPrefixSourceRawProfile(id: MaskHydrationPrefixSourceOwner,
-  variant?: MaskHydrationPrefixSourceVariant): Uint8Array;
+export function readMaskHydrationPrefixSourceRawProfile(
+  id: MaskHydrationPrefixSourceOwner,
+  variant?: MaskHydrationPrefixSourceVariant
+): Uint8Array;
 export function verifyMaskHydrationPrefixSourceIntegrity(): { sourceOnly: true; profiles: number; labelsPerProfile: number;
   verifiedFacts: number; originalWholeParts: number; completeRetainedPhasePositions: number; distinctFullReads: number; cachedData: string; };

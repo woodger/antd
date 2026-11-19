@@ -114,7 +114,9 @@
       'aria-label': isOpenWidth ? 'Surface width value' : 'Surface omission value', 'data-parent-revision': unrelated,
       showSearch: search, onOpenChange, onChange, onSelect, onDeselect, onClear,
     };
-    if (isWidth) props.mode = 'multiple';
+    if (isWidth) {
+      props.mode = 'multiple';
+    }
     else if (popup === 'wrapped') props.popupRender = popupRender;
     // Omitted mode has no own popupRender key; it is never assigned undefined.
     return props;
@@ -122,10 +124,18 @@
   let selectProps = $derived(ownerProps as SelectProps<string, 'multiple' | undefined, RawOption>);
   let autoCompleteProps = $derived(ownerProps as AutoCompleteProps<RawOption>);
   export function update(next: SelectSurfaceOmissionAction) {
-    if (next.type === 'popup-omit') popup = 'omitted';
-    else if (next.type === 'popup-restore') popup = 'wrapped';
-    else if (next.type === 'font') fontSize = next.fontSize;
-    else if (next.type === 'unrelated') unrelated = next.value;
+    if (next.type === 'popup-omit') {
+      popup = 'omitted';
+    }
+    else if (next.type === 'popup-restore') {
+      popup = 'wrapped';
+    }
+    else if (next.type === 'font') {
+      fontSize = next.fontSize;
+    }
+    else if (next.type === 'unrelated') {
+      unrelated = next.value;
+    }
     else if (next.type === 'font-query') {
       fontSize = next.fontSize;
       query = next.query;

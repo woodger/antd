@@ -6,9 +6,15 @@ export function getTabsAnimation(
   prefixCls = 'ant-tabs'
 ) {
   let result: TabsAnimatedConfig;
-  if (animated === false) result = { inkBar: false, tabPane: false };
-  else if (animated === true) result = { inkBar: true, tabPane: true };
-  else result = { inkBar: true, ...(animated ?? { tabPane: false }) };
+  if (animated === false) {
+    result = { inkBar: false, tabPane: false };
+  }
+  else if (animated === true) {
+    result = { inkBar: true, tabPane: true };
+  }
+  else {
+    result = { inkBar: true, ...(animated ?? { tabPane: false }) };
+  }
 
   if (result.tabPane) {
     result.tabPaneMotion = {

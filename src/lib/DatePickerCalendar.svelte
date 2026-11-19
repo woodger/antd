@@ -200,8 +200,9 @@
         unit
       );
     }
-    else if (event.key === 'ArrowUp' || event.key === 'ArrowDown')
+    else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       next = date.add((event.key === 'ArrowUp' ? -1 : 1) * width * step, unit);
+    }
     else if (event.key === 'PageUp' || event.key === 'PageDown') {
       next = datePanel
         ? date.add(event.key === 'PageUp' ? -1 : 1, event.shiftKey ? 'year' : 'month')
@@ -225,7 +226,9 @@
                   : mode === 'year' ? 9 : 90)
           );
     }
-    else return;
+    else {
+      return;
+    }
     event.preventDefault();
     const sign = next.isBefore(date) ? -1 : 1;
     for (let n = 0; n < 3660 && unavailable(next); n++) {

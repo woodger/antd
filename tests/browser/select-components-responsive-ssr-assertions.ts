@@ -16,8 +16,12 @@ function attributes(element: Element) {
     return key === 'class' && !value ? [] : [[key, value]];
   });
 }
-export function verifySelectComponentsResponsiveSSRLayout(actualHTML: string, sourceHTML: string, label: string,
-  options?: { responsiveCustomTag?: true; unboundedCustomTag?: true }) {
+export function verifySelectComponentsResponsiveSSRLayout(
+  actualHTML: string,
+  sourceHTML: string,
+  label: string,
+  options?: { responsiveCustomTag?: true; unboundedCustomTag?: true }
+) {
   const actual = readSelectComponentsResponsiveSSR(actualHTML), source = readSelectComponentsResponsiveSSR(sourceHTML);
   assert.equal(
     actual.contents.length,
@@ -127,7 +131,9 @@ export function verifySelectComponentsResponsiveSSRLayout(actualHTML: string, so
           label + '/' + index + ' literal text'
         );
       }
-      else compare(current, child, label + '/' + index, { actual, source });
+      else {
+        compare(current, child, label + '/' + index, { actual, source });
+      }
     }
   };
   source.contents.forEach((element, index) => compare(

@@ -25,8 +25,12 @@ type ContentElement = ReturnType<typeof readSelectComponentsResponsiveSSR>['cont
  * Only their inherited, explicitly proven Native annotations cross representation.
  * Every other attr, inline declaration, child/text position and SVG path stays exact.
  */
-export function verifyOwnStyleSSRLayout(actualHTML: string, sourceHTML: string,
-  control: SelectComponentsOwnStyleSample['control'], label: string) {
+export function verifyOwnStyleSSRLayout(
+  actualHTML: string,
+  sourceHTML: string,
+  control: SelectComponentsOwnStyleSample['control'],
+  label: string
+) {
   const actual = readSelectComponentsResponsiveSSR(actualHTML), source = readSelectComponentsResponsiveSSR(sourceHTML);
   assert.equal(source.contents.length, 1, label + ' one measured Source content subtree');
   assert.equal(
@@ -119,7 +123,9 @@ export function verifyOwnStyleSSRLayout(actualHTML: string, sourceHTML: string,
           path + '/' + index + ' exact literal text'
         );
       }
-      else compare(current, child, path + '/' + index, itemTitle);
+      else {
+        compare(current, child, path + '/' + index, itemTitle);
+      }
     }
   };
   source.contents.forEach((element, index) => compare(
@@ -129,8 +135,14 @@ export function verifyOwnStyleSSRLayout(actualHTML: string, sourceHTML: string,
   ));
 }
 
-export function verifyOwnStyleSSR(html: string, actual: NativeOwnStyleOwner, refs: Record<string, boolean>, source: OwnStyleInitSSRState,
-  sample: SelectComponentsOwnStyleSample, label: string) {
+export function verifyOwnStyleSSR(
+  html: string,
+  actual: NativeOwnStyleOwner,
+  refs: Record<string, boolean>,
+  source: OwnStyleInitSSRState,
+  sample: SelectComponentsOwnStyleSample,
+  label: string
+) {
   for (const key of ['settings', 'model', 'open', 'query', 'profile', 'phase', 'authoredProvider', 'authoredInnerProvider',
     'authoredInputProps', 'inputOwnKeys', 'inputOwnDescriptors', 'inputHasOwnStyle'] as const) {
     assert.deepEqual(

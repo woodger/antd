@@ -69,8 +69,11 @@ function lifecycleSummary(entries: readonly SelectSurfaceOmissionLifecycle[]) {
       ...(entry.attached === undefined ? {} : { attached: entry.attached }), action: entry.action }))];
   }));
 }
-export function verifyOmissionLifecycle(actual: readonly SelectSurfaceOmissionLifecycle[],
-  source: readonly SelectSurfaceOmissionLifecycle[], label: string) {
+export function verifyOmissionLifecycle(
+  actual: readonly SelectSurfaceOmissionLifecycle[],
+  source: readonly SelectSurfaceOmissionLifecycle[],
+  label: string
+) {
   // React ref commits can precede portal connection; Svelte attachments run on the
   // connected public node. Keep both raw order/connection ledgers, compare actual
   // component instances and attach/detach actions independently of framework order.
@@ -87,8 +90,12 @@ function producerMeaning(call: SelectSurfaceProducerCall) {
   return { kind: call.kind, side: call.side, argument: decodeSelectSurface(call.argument),
     result: decodeSelectSurface(call.result), renderer: call.renderer, sameResultAsArgument: call.sameResultAsArgument };
 }
-export function verifyOmissionProducers(actual: readonly SelectSurfaceProducerCall[], source: readonly SelectSurfaceProducerCall[],
-  owner: NativeSelectSurfaceOmissionOwner, label: string) {
+export function verifyOmissionProducers(
+  actual: readonly SelectSurfaceProducerCall[],
+  source: readonly SelectSurfaceProducerCall[],
+  owner: NativeSelectSurfaceOmissionOwner,
+  label: string
+) {
   const meanings = (calls: readonly SelectSurfaceProducerCall[]) => [...new Set(calls.map(call => JSON.stringify(producerMeaning(call))))].sort();
   // CSR may repeat pure callbacks. Each complete public argument/result invocation
   // must occur on both sides; full repeated raw prefixes remain attached.
@@ -115,9 +122,14 @@ export function verifyOmissionProducers(actual: readonly SelectSurfaceProducerCa
     );
   }
 }
-export function verifyNativeOmissionPoint(actual: NativeSelectSurfaceOmissionPoint, source: SelectSurfaceOmissionPoint,
-  entry: SelectSurfaceOmissionSourceCase, sample: NativeSelectSurfaceOmissionSample, label: string,
-  previous?: { actual: NativeSelectSurfaceOmissionPoint; source: SelectSurfaceOmissionPoint }) {
+export function verifyNativeOmissionPoint(
+  actual: NativeSelectSurfaceOmissionPoint,
+  source: SelectSurfaceOmissionPoint,
+  entry: SelectSurfaceOmissionSourceCase,
+  sample: NativeSelectSurfaceOmissionSample,
+  label: string,
+  previous?: { actual: NativeSelectSurfaceOmissionPoint; source: SelectSurfaceOmissionPoint }
+) {
   const failures: string[] = [];
   const check = (name: string, operation: () => void) => {
     try { operation(); }

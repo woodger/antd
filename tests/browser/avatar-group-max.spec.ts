@@ -35,9 +35,15 @@ for (const sample of reference.cases as AvatarGroupMaxCase[]) {
 
     await page.clock.install();
     if (await button(page).count()) {
-      if (sample.probe === 'hover') await button(page).hover();
-      else if (sample.probe === 'focus') await button(page).focus();
-      else await button(page).click();
+      if (sample.probe === 'hover') {
+        await button(page).hover();
+      }
+      else if (sample.probe === 'focus') {
+        await button(page).focus();
+      }
+      else {
+        await button(page).click();
+      }
     }
     await page.clock.runFor(1000);
 

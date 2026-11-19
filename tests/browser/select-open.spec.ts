@@ -32,7 +32,9 @@ for (const entry of reference.cases) {
       await expect(page.locator('.ant-select-item-empty')).toHaveText('0');
     }
     if ('action' in entry.sample) {
-      if (entry.sample.action === 'click') await input.click();
+      if (entry.sample.action === 'click') {
+        await input.click();
+      }
       else {
         await input.focus();
         await input.press('Escape');

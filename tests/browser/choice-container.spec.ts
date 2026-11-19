@@ -280,8 +280,12 @@ for (const component of ['tree-select', 'cascader'] as const) {
     const popup = page.locator(surface);
     const original = await popup.elementHandle();
     const input = control(page, component);
-    if (component === 'tree-select') await input.press('ArrowRight');
-    else await page.getByRole('menuitemcheckbox', { name: 'Lazy', exact: true }).click();
+    if (component === 'tree-select') {
+      await input.press('ArrowRight');
+    }
+    else {
+      await page.getByRole('menuitemcheckbox', { name: 'Lazy', exact: true }).click();
+    }
     await expect(page.getByLabel('Choice loads', { exact: true })).toHaveText('1/0');
 
     await page.getByRole('button', { name: 'Resolve choice children', exact: true })

@@ -40,8 +40,12 @@ export async function actNativeModalLoading(
     }
     try { await editor.fill(action.text); } finally { await handle.dispose(); }
   }
-  else if (action.type === 'cancel-close') await page.locator('[data-modal-loading-owner="' + sample.id + '"] button.' + sample.prefixCls + '-close').click();
-  else throw Error('Unknown frozen Modal.loading action');
+  else if (action.type === 'cancel-close') {
+    await page.locator('[data-modal-loading-owner="' + sample.id + '"] button.' + sample.prefixCls + '-close').click();
+  }
+  else {
+    throw Error('Unknown frozen Modal.loading action');
+  }
   await page.mouse.move(0, 0);
 }
 export const readNativeModalLoadingCleanup = (page: Page) => page.evaluate(readModalLoadingCleanup);

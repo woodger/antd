@@ -50,8 +50,12 @@ function list(value: string) {
   let start = 0;
   for (let index = 0; index < value.length; index++) {
     const character = value[index];
-    if (character === '(') depth++;
-    else if (character === ')') depth--;
+    if (character === '(') {
+      depth++;
+    }
+    else if (character === ')') {
+      depth--;
+    }
     else if (character === ',' && !depth) {
       result.push(value.slice(start, index).trim());
       start = index + 1;
@@ -63,7 +67,9 @@ function list(value: string) {
 
 /** Keep projection writes out of real CSS transitions; other properties retain native clocks/events. */
 function nativeTransitions(
-  style: SourceStyle, declaration: CSSStyleDeclaration, excluded?: ReadonlySet<string>
+  style: SourceStyle,
+  declaration: CSSStyleDeclaration,
+  excluded?: ReadonlySet<string>
 ) {
   const source = list(style.transition['transition-property']);
   const timing = transitionProperties.slice(1).map(name => list(style.transition[name]));
@@ -207,11 +213,15 @@ function createMotionFrame(popup: HTMLElement) {
       if (capture) animationTargets = target;
       Object.assign(style.values, target.values);
     }
-    else Object.assign(style.values, animationTargets.values);
+    else {
+      Object.assign(style.values, animationTargets.values);
+    }
     const nativeStyle = nativeTransitions(style, underlying);
     const time = now();
     if (capture) {
-      if (!history) history = { base: style, stages: [] };
+      if (!history) {
+        history = { base: style, stages: [] };
+      }
       else if (JSON.stringify(latest) !== JSON.stringify(style)) {
         history.stages.push({ id: ++sequence, style, time,
           previous: Object.fromEntries([...clocks].map(([key, clock]) => {
@@ -304,14 +314,22 @@ function createMotionFrame(popup: HTMLElement) {
       // delay this would advance the sampled value twice. Only CSS-animation properties need
       // their original cascade back; transitions keep the reconstructed target declarations.
       if (!restore.has(property)) continue;
-      if (value.value) proxy.style.setProperty(property, value.value, value.priority);
-      else proxy.style.removeProperty(property);
+      if (value.value) {
+        proxy.style.setProperty(property, value.value, value.priority);
+      }
+      else {
+        proxy.style.removeProperty(property);
+      }
     }
     void proxy.offsetWidth;
     for (const name of transitionProperties) {
       const value = declarations.get(name)!;
-      if (value.value) proxy.style.setProperty(name, value.value, value.priority);
-      else proxy.style.removeProperty(name);
+      if (value.value) {
+        proxy.style.setProperty(name, value.value, value.priority);
+      }
+      else {
+        proxy.style.removeProperty(name);
+      }
     }
 
     progressing = transitions.some(animation => {

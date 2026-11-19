@@ -5,8 +5,13 @@ import { verifySelectComponentsAttributes, type ComponentsObservation } from './
 import { verifyResponsiveTagPrefixSSRState, verifyResponsiveTagPrefixTagCalls } from './select-components-responsive-tag-prefix-assertions';
 import type { SelectCustomTagPrefixOwner } from './select-components-responsive-tag-prefix-metrics.mjs';
 import type { ResponsiveTagPrefixSSRSerialization } from './select-components-responsive-tag-prefix-reference';
-export function verifyResponsiveTagPrefixSSR(body: string, actual: SelectCustomTagPrefixOwner, refs: Record<string, boolean>,
-  source: ResponsiveTagPrefixSSRSerialization, label: string) {
+export function verifyResponsiveTagPrefixSSR(
+  body: string,
+  actual: SelectCustomTagPrefixOwner,
+  refs: Record<string, boolean>,
+  source: ResponsiveTagPrefixSSRSerialization,
+  label: string
+) {
   verifyResponsiveTagPrefixSSRState(actual, source, label);
   assert.deepEqual(refs, source.refs);
   assert(Object.values(refs).every(Boolean));

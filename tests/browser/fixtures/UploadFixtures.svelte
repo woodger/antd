@@ -45,8 +45,9 @@
 
   function finish(fail = false) {
     for (const request of requests) {
-      if (fail)
+      if (fail) {
         request.onError?.(Error('Upload fixture error'), { reason: 'fixture' });
+      }
       else {
         request
           .onSuccess?.('{"ok":true}');

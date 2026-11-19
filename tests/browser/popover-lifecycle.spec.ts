@@ -33,8 +33,12 @@ for (const source of [false, true]) {
           await page.clock.runFor(100);
           const expected = frame.snapshot;
 
-          if (expected.visible) await expect(popup).toBeVisible();
-          else await expect(popup).toBeHidden();
+          if (expected.visible) {
+            await expect(popup).toBeVisible();
+          }
+          else {
+            await expect(popup).toBeHidden();
+          }
           if (expected.contentMounted) {
             const expectedId = expected.id === '<generated>'
               ? generatedId ??= (await popup.getAttribute('id'))! : expected.id;

@@ -75,7 +75,12 @@
   const context = (value: unknown) => ({ type: typeof value, isUndefined: value === undefined,
     isNull: value === null, identity: value !== null && (typeof value === 'object' || typeof value === 'function')
       ? recorder.identity(value) : null });
-  function invocation(name: string, args: unknown[], receiver: unknown, index: number): WeekInvocation {
+  function invocation(
+    name: string,
+    args: unknown[],
+    receiver: unknown,
+    index: number
+  ): WeekInvocation {
     return { index, actionIndex, name, actualArgumentCount: args.length,
       encodedArguments: recorder.encode(args), rawArguments: recorder.raw(args),
       dates: nestedDates(args), receiver: context(receiver) };

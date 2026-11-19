@@ -125,7 +125,9 @@ export async function actMask(page: Page, action: MaskAction, index: number, hoo
         command.value
       );
     }
-    else throw Error('Undeclared physical command');
+    else {
+      throw Error('Undeclared physical command');
+    }
     const immediate = await readMask(page), actual = await settleMask(page);
     const child = {
       index,

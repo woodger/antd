@@ -98,8 +98,9 @@
       repairFocus = true;
     }
     if (nav.contains(focused)) {
-      if (focused === nav)
+      if (focused === nav) {
         repairFocus = key !== undefined;
+      }
       else if (focused instanceof HTMLElement) {
         const focusedKey = focused.dataset.tabsKey
           ?? focused.closest<HTMLElement>('[data-tabs-cell]')?.dataset.tabsCell;
@@ -281,8 +282,9 @@
   }
 
   function handleFocusout(event: FocusEvent) {
-    if (event.relatedTarget instanceof Node && !list?.contains(event.relatedTarget))
+    if (event.relatedTarget instanceof Node && !list?.contains(event.relatedTarget)) {
       focusKey = undefined;
+    }
     else if (event.relatedTarget instanceof Element
       && !event.relatedTarget.closest('[role="tab"]')) {
       focusKey = undefined;

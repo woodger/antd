@@ -62,8 +62,12 @@ export function listyRows<T, K extends ListyKey>(
     items.forEach((item, index) => {
       const key = group.key(item);
       const segment = groups.get(key);
-      if (segment) segment.push({ item, index });
-      else groups.set(key, [{ item, index }]);
+      if (segment) {
+        segment.push({ item, index });
+      }
+      else {
+        groups.set(key, [{ item, index }]);
+      }
     });
 
     for (const [groupKey, segment] of groups) {
@@ -80,7 +84,9 @@ export function listyRows<T, K extends ListyKey>(
       segment.forEach(entry => header.children.push(append(entry.item, entry.index)));
     }
   }
-  else items.forEach(append);
+  else {
+    items.forEach(append);
+  }
 
   return rows;
 }
@@ -123,7 +129,9 @@ export function listySticky<T, K extends ListyKey>(
       active = middle;
       left = middle + 1;
     }
-    else right = middle - 1;
+    else {
+      right = middle - 1;
+    }
   }
 
   const row = headers[active];

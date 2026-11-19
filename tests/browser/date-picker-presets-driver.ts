@@ -35,8 +35,12 @@ export async function settleDatePickerPresets(page: Page): Promise<DatePickerPre
     observation: { prior, latest }
   });
 }
-export async function actDatePickerPresets(page: Page, sample: DatePickerPresetSample,
-  action: DatePickerPresetAction, index: number) {
+export async function actDatePickerPresets(
+  page: Page,
+  sample: DatePickerPresetSample,
+  action: DatePickerPresetAction,
+  index: number
+) {
   await page.evaluate(index => window.datePickerPresetsNative.setActionIndex(index), index);
   const prefix = sample.prefixCls ?? 'ant-picker';
   if (action.type === 'open') {
@@ -82,8 +86,12 @@ export async function actDatePickerPresets(page: Page, sample: DatePickerPresetS
       throw Error('Frozen preset id required');
     }
     const node = page.locator('.' + prefix + '-presets li').nth(slot);
-    if (action.type === 'preset-hover') await node.hover();
-    else await node.click();
+    if (action.type === 'preset-hover') {
+      await node.hover();
+    }
+    else {
+      await node.click();
+    }
   }
   else {
     throw Error('Unknown frozen DatePicker action');

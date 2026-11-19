@@ -118,10 +118,16 @@ export function connectPopupPortal(element: HTMLElement, options: {
 
   // Native dialog делает body inert; стандартный portal остаётся в его top layer.
   element.style.pointerEvents = !getter && modal ? 'auto' : '';
-  if (inline) origin.insertBefore(element, options.marker.nextSibling);
+  if (inline) {
+    origin.insertBefore(element, options.marker.nextSibling);
+  }
   else if (container !== element && !element.contains(container)) {
-    if (options.restoreOnDestroy) move(container, null);
-    else container.append(element);
+    if (options.restoreOnDestroy) {
+      move(container, null);
+    }
+    else {
+      container.append(element);
+    }
   }
   syncTheme();
   const observer = new view.MutationObserver(scheduleTheme);
@@ -156,9 +162,12 @@ export function connectPopupPortal(element: HTMLElement, options: {
     clearManaged();
     if (!inline) {
       const parent = options.marker.parentNode;
-      if (options.restoreOnDestroy && options.marker.isConnected && parent)
+      if (options.restoreOnDestroy && options.marker.isConnected && parent) {
         move(parent as Element | DocumentFragment, options.marker.nextSibling);
-      else element.remove();
+      }
+      else {
+        element.remove();
+      }
     }
   };
   return Object.assign(disconnect, { syncTheme });

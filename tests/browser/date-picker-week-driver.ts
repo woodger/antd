@@ -50,7 +50,9 @@ export async function actWeek(page: Page, action: WeekAction, index: number) {
     || action.type === 'input-escape') {
     target = page.locator(action.index === 1 ? '#week-end' : '#week-input');
   }
-  else if (action.type === 'input-key') target = page.locator('.ant-picker input:focus');
+  else if (action.type === 'input-key') {
+    target = page.locator('.ant-picker input:focus');
+  }
   else if (action.type === 'owner-control') {
     target = page.locator('[data-week-control="' + action.value + '"]');
   }
@@ -74,11 +76,15 @@ export async function actWeek(page: Page, action: WeekAction, index: number) {
   else if (action.type === 'pointer-leave') {
     target = page.locator('[data-week-owner]');
   }
-  else if (action.type === 'confirm-click') target = popup.locator('.ant-picker-ok button');
+  else if (action.type === 'confirm-click') {
+    target = popup.locator('.ant-picker-ok button');
+  }
   else if (action.type === 'preset-click') {
     target = popup.locator('.ant-picker-presets button').filter({ hasText: exactText(action.label) });
   }
-  else throw Error('Unknown declared week action');
+  else {
+    throw Error('Unknown declared week action');
+  }
   assert.equal(await target.count(), 1, 'Exactly one actual public action target');
   const actionEvidence: { targetBefore: unknown; afterFocusPointer?: NativeWeekPoint;
     ownerClick?: unknown; actualCoordinates?: { x: number; y: number }; hitBefore?: unknown } = {
@@ -104,8 +110,12 @@ export async function actWeek(page: Page, action: WeekAction, index: number) {
     await page.keyboard.press('Control+A');
     await page.keyboard.type(action.value);
   }
-  else if (action.type === 'input-key') await page.keyboard.press(action.value);
-  else if (action.type === 'cell-hover') await target.hover();
+  else if (action.type === 'input-key') {
+    await page.keyboard.press(action.value);
+  }
+  else if (action.type === 'cell-hover') {
+    await target.hover();
+  }
   else if (action.type === 'pointer-leave') {
     actionEvidence.actualCoordinates = { x: 1200, y: 800 };
     await page.mouse.move(1200, 800);
@@ -124,7 +134,9 @@ export async function actWeek(page: Page, action: WeekAction, index: number) {
     // Настоящий mouse click допускает disabled target; force/снятие disabled не используются.
     await page.mouse.click(point.x, point.y);
   }
-  else await target.click();
+  else {
+    await target.click();
+  }
   return { index, action, before, actionEvidence, afterCall: await readWeek(page) };
 }
 export async function disposeWeek(page: Page, hooks?: {

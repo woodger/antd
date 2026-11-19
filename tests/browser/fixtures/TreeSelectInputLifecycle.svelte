@@ -18,7 +18,9 @@
       deferred.push(cleanup);
       deferredCount = deferred.length;
     }
-    else cleanup();
+    else {
+      cleanup();
+    }
   }
   function releaseDeferred() {
     for (const cleanup of deferred.splice(0)) cleanup();

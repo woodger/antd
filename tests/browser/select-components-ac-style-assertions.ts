@@ -97,7 +97,9 @@ function verifyLayoutNode(
       { control: 'autocomplete', legacyClear: false, rootDisabled: false, hiddenPopup: false }
     );
   }
-  else verifySelectComponentsDOMAttributes(actual, source, current, original, label);
+  else {
+    verifySelectComponentsDOMAttributes(actual, source, current, original, label);
+  }
   for (const key of ['tag', 'connected', 'text', 'styleAttribute', 'cssText', 'inlineProperties', 'css', 'box',
     'geometryBoundary', 'value', 'caret', 'focused', 'metrics'] as const) {
     assert.deepEqual(actual[key], source[key], label + '/' + key);
@@ -166,8 +168,13 @@ function verifiedRootLayout(actual: NativeACStylePoint, source: ACStylePoint) {
   }
   return actual.icons.layout.filter(node => !excluded.has(node.identity));
 }
-export function verifySelectComponentsACStylePoint(actual: NativeACStylePoint, source: ACStylePoint, owner: ACStyleCase,
-  sample: SelectComponentsACStyleSample, label: string): string[] {
+export function verifySelectComponentsACStylePoint(
+  actual: NativeACStylePoint,
+  source: ACStylePoint,
+  owner: ACStyleCase,
+  sample: SelectComponentsACStyleSample,
+  label: string
+): string[] {
   const failures = verifySelectComponentsPoint(
     actual,
     source,

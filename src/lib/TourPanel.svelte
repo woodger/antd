@@ -45,8 +45,12 @@
 
   function handleNext(event: MouseEvent & { currentTarget: HTMLButtonElement; }) {
     const callback = nextButtonProps?.onClick;
-    if (last) info.onFinish?.();
-    else info.onNext?.();
+    if (last) {
+      info.onFinish?.();
+    }
+    else {
+      info.onNext?.();
+    }
     callback?.(event);
   }
 </script>

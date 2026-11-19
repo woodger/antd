@@ -175,10 +175,18 @@
       event: { type: event.type, isTrusted: event.isTrusted,
         actualTargetIdentity: event.target === null ? null : recorder.identity(event.target),
         actualCurrentTargetIdentity: event.currentTarget === null ? null : recorder.identity(event.currentTarget) } }));
-    if (kind === 'open') open = Boolean(next);
-    else if (kind === 'template') template = dates[next as DateRole];
-    else if (kind === 'picker') picker = dates.nextPickerValue;
-    else getterMode = String(next);
+    if (kind === 'open') {
+      open = Boolean(next);
+    }
+    else if (kind === 'template') {
+      template = dates[next as DateRole];
+    }
+    else if (kind === 'picker') {
+      picker = dates.nextPickerValue;
+    }
+    else {
+      getterMode = String(next);
+    }
   }
 </script>
 

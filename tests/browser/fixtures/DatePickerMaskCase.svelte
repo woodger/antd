@@ -109,7 +109,12 @@
   const onClear = handler('clear', function (this: unknown) {
     record('clear', Array.from(arguments), this);
   });
-  function produce<Value>(name: string, args: unknown[], receiver: unknown, returned: Value): Value {
+  function produce<Value>(
+    name: string,
+    args: unknown[],
+    receiver: unknown,
+    returned: Value
+  ): Value {
     producers.push({ ...invocation(name, args, receiver, producers.length),
       returned: recorder.encode(returned), rawReturned: recorder.raw(returned),
       returnedIdentity: returned !== null && (typeof returned === 'object' || typeof returned === 'function')

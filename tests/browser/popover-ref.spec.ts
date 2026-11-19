@@ -40,7 +40,9 @@ for (const source of [false, true]) {
 
           if (!frame.unmounted) {
             const popup = page.locator('[data-ant-popover]');
-            if (frame.open) await expect(popup).toBeVisible();
+            if (frame.open) {
+              await expect(popup).toBeVisible();
+            }
             else {
               await expect(popup).toBeHidden();
               const style = await popup.getAttribute('style');

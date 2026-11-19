@@ -65,8 +65,12 @@ export function createTreeGroupMotion(
         notification = undefined;
         if (active && current === revision) onVisible(visible);
       };
-      if (passive) notification = view.setTimeout(notify, 0);
-      else queueMicrotask(notify);
+      if (passive) {
+        notification = view.setTimeout(notify, 0);
+      }
+      else {
+        queueMicrotask(notify);
+      }
     }
     seen = true;
   }
@@ -155,7 +159,9 @@ export function createTreeGroupMotion(
       config = options;
       enabled = motionEnabled;
       if (previous === next) {
-        if (status && (!allowed() || !supported() && step !== 'prepare')) finish();
+        if (status && (!allowed() || !supported() && step !== 'prepare')) {
+          finish();
+        }
         else if (status) update();
         return;
       }
@@ -173,7 +179,9 @@ export function createTreeGroupMotion(
         return;
       }
       const prepare = handlers().prepare;
-      if (!prepare) start();
+      if (!prepare) {
+        start();
+      }
       else {
         step = 'prepare';
         update();

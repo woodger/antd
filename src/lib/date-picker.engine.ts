@@ -58,7 +58,11 @@ export function formatPicker(
     ? formats[0](value)
     : date.locale.format(locale, value, formats[0] ?? 'YYYY-MM-DD');
 }
-export function parsePicker(text: string, locale: string, formats: readonly DatePickerFormat[]):
+export function parsePicker(
+  text: string,
+  locale: string,
+  formats: readonly DatePickerFormat[]
+):
   Dayjs
   | null {
   return date.locale.parse(
@@ -81,7 +85,11 @@ export function samePickerWeek(a: Dayjs, b: Dayjs, locale: string): boolean {
 }
 // rc-picker compares date panels by Y/M/D and datetime panels by all wall fields.
 export function samePickerPanelValue(
-  a: Dayjs, b: Dayjs, datetime: boolean, picker: DatePickerPicker = 'date', locale = 'en_US'
+  a: Dayjs,
+  b: Dayjs,
+  datetime: boolean,
+  picker: DatePickerPicker = 'date',
+  locale = 'en_US'
 ): boolean {
   if (picker === 'week') {
     return samePickerWeek(a, b, locale);

@@ -26,7 +26,10 @@ export interface NativeComponentsPoint {
   icons: SelectIconsDOM & { formData?: Array<[string, FormDataEntryValue]> | null };
   owner: NativeComponentsOwner;
 }
-export async function settleNativeSelectComponents(page: Page, flow: boolean): Promise<NativeComponentsPoint> {
+export async function settleNativeSelectComponents(
+  page: Page,
+  flow: boolean
+): Promise<NativeComponentsPoint> {
   let previous = '', stable = 0;
   for (let index = 0; index < 90; index++) {
     await drainSelectSurface(page);
@@ -62,8 +65,13 @@ function attrs(node: SelectIconNode) {
   });
 }
 /** Svelte sets INPUT type before the spread's remaining attributes when value is present. */
-export function verifySelectComponentsDOMAttributes(actual: Pick<SelectIconNode, 'tag'>, source: Pick<SelectIconNode, 'tag'>,
-  current: string[][], original: string[][], label: string) {
+export function verifySelectComponentsDOMAttributes(
+  actual: Pick<SelectIconNode, 'tag'>,
+  source: Pick<SelectIconNode, 'tag'>,
+  current: string[][],
+  original: string[][],
+  label: string
+) {
   let expected = original;
   const get = (values: string[][], key: string) => values.find(([name]) => name === key)?.[1];
   const sourceStyle = original.find(([key]) => key === 'style');
@@ -97,7 +105,9 @@ export function verifySelectComponentsDOMAttributes(actual: Pick<SelectIconNode,
       label + ' exact Svelte INPUT type-first setter order'
     );
   }
-  else assert.deepEqual(current, expected, label + ' complete intrinsic attribute order');
+  else {
+    assert.deepEqual(current, expected, label + ' complete intrinsic attribute order');
+  }
 }
 /** New custom editor/root DOM has no historical Native presentation boundary. */
 export function verifySelectComponentsNode(
@@ -280,8 +290,13 @@ export function verifySelectComponentsObservations(
   }
 }
 /** No source data is altered; every complete actual point stays in the attachment. */
-export function verifySelectComponentsPoint(actual: NativeComponentsPoint, source: ComponentsPoint, owner: ComponentsCase,
-  _sample: SelectComponentsSample, label: string): string[] {
+export function verifySelectComponentsPoint(
+  actual: NativeComponentsPoint,
+  source: ComponentsPoint,
+  owner: ComponentsCase,
+  _sample: SelectComponentsSample,
+  label: string
+): string[] {
   const failures: string[] = [];
   const check = (name: string, work: () => void) => {
     try {

@@ -12,7 +12,9 @@ export function treeSelectTokenWithEnter(separators?: TreeSelectTokenSeparators)
 
 /** Restores the browser-normalized pasted substring for newline tokenization. */
 export function treeSelectPastedSearch(
-  text: string, pasted: string | undefined, separators?: TreeSelectTokenSeparators
+  text: string,
+  pasted: string | undefined,
+  separators?: TreeSelectTokenSeparators
 ) {
   if (!pasted || !treeSelectTokenWithEnter(separators) || !/[\r\n]/.test(pasted)) {
     return text;

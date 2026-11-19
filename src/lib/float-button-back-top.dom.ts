@@ -112,8 +112,9 @@ export function createBackTopRuntime(
       cancelAnimation();
       const top = metrics(container).top;
       const scroll = (value: number) => {
-        if ('window' in container)
+        if ('window' in container) {
           container.scrollTo(container.pageXOffset, value);
+        }
         else {
           ('documentElement' in container
             ? container.documentElement
@@ -132,8 +133,12 @@ export function createBackTopRuntime(
         }
         const elapsed = Date.now() - started;
         scroll(scrollFrame(elapsed, top, 0, duration));
-        if (elapsed < duration)
-          animationFrame = view.requestAnimationFrame(frame); else animationFrame = undefined;
+        if (elapsed < duration) {
+          animationFrame = view.requestAnimationFrame(frame);
+        }
+        else {
+          animationFrame = undefined;
+        }
       };
       animationFrame = view.requestAnimationFrame(frame);
     },

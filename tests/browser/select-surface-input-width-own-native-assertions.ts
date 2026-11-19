@@ -50,8 +50,12 @@ export async function settleNativeInputWidthOwn(page: Page) {
   }
   throw Error('Native input width owner, CSSOM, complete callbacks and actual DOM did not settle');
 }
-export function verifyNativeInputWidthOwn(actual: NativeInputWidthOwnPoint, source: SelectSurfaceInputWidthOwnPoint,
-  entry: SelectSurfaceInputWidthOwnSourceCase, label: string) {
+export function verifyNativeInputWidthOwn(
+  actual: NativeInputWidthOwnPoint,
+  source: SelectSurfaceInputWidthOwnPoint,
+  entry: SelectSurfaceInputWidthOwnSourceCase,
+  label: string
+) {
   const failures: string[] = [];
   const check = (name: string, action: () => void) => {
     try { action(); }

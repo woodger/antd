@@ -77,7 +77,9 @@ for (const entry of [...reference.cases, ...stopReference.cases, ...menuReferenc
         await page.getByRole('combobox', { name: 'Icon edge value', exact: true }).focus();
       await page.locator('[data-icon-edge-menu=b]').click();
     }
-    else if ('clear' in entry.sample && entry.sample.clear) await page.locator('.ant-select-clear').click();
+    else if ('clear' in entry.sample && entry.sample.clear) {
+      await page.locator('.ant-select-clear').click();
+    }
     else if ('key' in entry.sample && entry.sample.key) {
       const editor = page.getByRole('combobox', { name: 'Icon edge value', exact: true });
       await editor.focus();

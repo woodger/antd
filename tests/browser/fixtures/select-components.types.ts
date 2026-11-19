@@ -138,8 +138,11 @@ export function selectComponentInference(
 }
 
 export function selectComponentRegistrations(
-  root: SelectRootContext<HTMLButtonElement>, input: SelectInputContext<HTMLTextAreaElement>,
-  button: HTMLButtonElement, textarea: HTMLTextAreaElement, wrapper: HTMLSpanElement
+  root: SelectRootContext<HTMLButtonElement>,
+  input: SelectInputContext<HTMLTextAreaElement>,
+  button: HTMLButtonElement,
+  textarea: HTMLTextAreaElement,
+  wrapper: HTMLSpanElement
 ) {
   const rootAttachment: Attachment<HTMLButtonElement> = root.register;
   const inputAttachment: Attachment<HTMLTextAreaElement> = input.register;
@@ -177,7 +180,8 @@ export const intrinsicComponents = [
 ] satisfies readonly SelectComponents<HTMLButtonElement, HTMLTextAreaElement>[];
 
 export function selectComponentNegativeTypes(
-  root: SelectRootContext<HTMLButtonElement>, input: SelectInputContext<HTMLTextAreaElement>,
+  root: SelectRootContext<HTMLButtonElement>,
+  input: SelectInputContext<HTMLTextAreaElement>,
   wrongInputSnippet: Snippet<[SelectInputContext<HTMLInputElement>]>
 ) {
   // @ts-expect-error A native input editor does not accept textarea-only attributes.

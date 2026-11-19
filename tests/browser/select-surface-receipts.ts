@@ -55,8 +55,11 @@ function semanticArgument(call: SelectSurfaceProducerCall, sample: SelectSurface
   return { ...argument, props };
 }
 
-export function verifySelectSurfaceProducerCalls(actual: readonly SelectSurfaceProducerCall[],
-  original: readonly SelectSurfaceProducerCall[], sample: SelectSurfaceSample) {
+export function verifySelectSurfaceProducerCalls(
+  actual: readonly SelectSurfaceProducerCall[],
+  original: readonly SelectSurfaceProducerCall[],
+  sample: SelectSurfaceSample
+) {
   assert.deepEqual(actual.map(call => [call.kind, call.side]), original.map(call => [call.kind, call.side]),
     `${sample.id} actual pure callback order/count`);
   for (const [index, call] of actual.entries()) {

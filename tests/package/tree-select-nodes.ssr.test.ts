@@ -54,7 +54,9 @@ it.each(reference.ssr)('renders the Source selected label for $id in the closed 
     expect(entry.timers).toBe(0);
     expect(entry.calls).toEqual({ load: 0, globalIcon: 0 });
     expect(entry.view.open).toBe(false);
-    if (sample.rich || sample.checkable) expect(body).toContain(entry.view.selected!);
+    if (sample.rich || sample.checkable) {
+      expect(body).toContain(entry.view.selected!);
+    }
     else expect(/<input[^>]*role="combobox"[^>]*>/.exec(body)?.[0])
       .toContain(`value="${entry.view.selected}"`);
     expect(body).not.toContain('popover="manual"');
@@ -74,8 +76,12 @@ it.each([
     const sample = treeSelectNodesSamples.find(item => item.id === id)!;
     const { body } = render(TreeSelectNodesCase, { props: { sample } });
     expect([...body.matchAll(/role="treeitem"/g)]).toHaveLength(count);
-    if (sample.override) expect(body).not.toContain('data-ant-tree-select-declarations');
-    else expect(body).toContain('data-ant-tree-select-declarations');
+    if (sample.override) {
+      expect(body).not.toContain('data-ant-tree-select-declarations');
+    }
+    else {
+      expect(body).toContain('data-ant-tree-select-declarations');
+    }
     expect(body).toContain('popover="manual" hidden');
     expect(body).toContain('data-node-load-calls="0"');
     expect(vi.getTimerCount()).toBe(0);

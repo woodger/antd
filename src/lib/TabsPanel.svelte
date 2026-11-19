@@ -71,8 +71,12 @@
     }
     const controller = createTabsPaneMotion(element, (next, commit) => {
       // Measurement hooks читают DOM после prepare commit, как layout effects CSSMotion.
-      if (commit) flushSync(() => { motionState = next; });
-      else motionState = next;
+      if (commit) {
+        flushSync(() => { motionState = next; });
+      }
+      else {
+        motionState = next;
+      }
     });
     runtime = controller;
     return () => {

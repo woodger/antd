@@ -106,8 +106,12 @@
   }
 
   function setChecked(next: boolean) {
-    if (checked !== undefined || value === undefined) checked = next;
-    else value = next;
+    if (checked !== undefined || value === undefined) {
+      checked = next;
+    }
+    else {
+      value = next;
+    }
   }
 
   function change(next: boolean, event: SwitchEvent) {

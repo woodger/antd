@@ -79,8 +79,13 @@ export function createMonthYearProof() {
     variants: new Map<MonthYearSourceVariant, IdentityProof>(), points: 0,
     boundaries: monthYearBoundaries, observations: [] as unknown[] };
 }
-function bindIdentity(actual: number, source: number, forward: Map<number, number>,
-  reverse: Map<number, number>, label: string) {
+function bindIdentity(
+  actual: number,
+  source: number,
+  forward: Map<number, number>,
+  reverse: Map<number, number>,
+  label: string
+) {
   if (forward.has(source)) assert.equal(actual, forward.get(source), label + ' shared identity');
   if (reverse.has(actual)) assert.equal(source, reverse.get(actual), label + ' distinct identity');
   forward.set(source, actual);
@@ -96,8 +101,12 @@ function validateDate(value: MonthYearSourceDate, owner: MonthYearSourceOwner) {
       'Actual authored date alias ' + role);
   }
 }
-function sameDate(actual: MonthYearSourceDate, source: MonthYearSourceDate,
-  owner: MonthYearSourceOwner, proof: IdentityProof) {
+function sameDate(
+  actual: MonthYearSourceDate,
+  source: MonthYearSourceDate,
+  owner: MonthYearSourceOwner,
+  proof: IdentityProof
+) {
   validateDate(actual, owner);
   assert.deepEqual(Object.keys(actual.temporal), Object.keys(source.temporal));
   for (const key of ['valid', 'epoch', 'iso', 'fields', 'locale'] as const) {
@@ -109,8 +118,13 @@ function sameDate(actual: MonthYearSourceDate, source: MonthYearSourceDate,
   assert.deepEqual(actual.encoded, source.encoded);
   bindIdentity(actual.identity, source.identity, proof.dates, proof.nativeDates, 'Dayjs');
 }
-function sameDates(actual: MonthYearSourceDatePath[], source: MonthYearSourceDatePath[],
-  raw: unknown, owner: MonthYearSourceOwner, proof: IdentityProof) {
+function sameDates(
+  actual: MonthYearSourceDatePath[],
+  source: MonthYearSourceDatePath[],
+  raw: unknown,
+  owner: MonthYearSourceOwner,
+  proof: IdentityProof
+) {
   assert.equal(actual.length, source.length);
   for (const [index, date] of actual.entries()) {
     assert.deepEqual(date.path, source[index].path);
@@ -119,7 +133,8 @@ function sameDates(actual: MonthYearSourceDatePath[], source: MonthYearSourceDat
   }
 }
 export function verifyMonthYearReceiverBoundary(
-  actual: MonthYearSourceInvocation, source: MonthYearSourceInvocation
+  actual: MonthYearSourceInvocation,
+  source: MonthYearSourceInvocation
 ) {
   assert.deepEqual(source.receiver, {
     type: 'undefined', isUndefined: true, isNull: false, identity: null
@@ -130,7 +145,8 @@ export function verifyMonthYearReceiverBoundary(
   assert(Number.isSafeInteger(actual.receiver.identity) && actual.receiver.identity! > 0);
 }
 export function verifyMonthYearSingleCalendarInfoBoundary(
-  actual: MonthYearSourceInvocation, source: MonthYearSourceInvocation
+  actual: MonthYearSourceInvocation,
+  source: MonthYearSourceInvocation
 ) {
   assert.deepEqual(property(source.encodedArguments, '2'), { $: 'object', properties: [] });
   assert.deepEqual(property(actual.encodedArguments, '2'), {
@@ -138,7 +154,8 @@ export function verifyMonthYearSingleCalendarInfoBoundary(
   });
 }
 export function verifyMonthYearSingleEmptyCalendarBoundary(
-  actual: MonthYearSourceInvocation, source: MonthYearSourceInvocation
+  actual: MonthYearSourceInvocation,
+  source: MonthYearSourceInvocation
 ) {
   assert.equal(actual.dates.length, 0);
   assert.equal(source.dates.length, 0);
@@ -162,8 +179,11 @@ function modeArray(call: MonthYearSourceInvocation) {
   assert.equal(node.array, true);
   return node;
 }
-function sameCallbacks(actual: NativeMonthYearPoint, source: MonthYearSourcePoint,
-  proof: IdentityProof) {
+function sameCallbacks(
+  actual: NativeMonthYearPoint,
+  source: MonthYearSourcePoint,
+  proof: IdentityProof
+) {
   const originals = source.owner.callbacks;
   assert.equal(actual.owner.callbacks.length, originals.length, 'Complete public callback count');
   for (const [index, call] of actual.owner.callbacks.entries()) {
@@ -178,7 +198,9 @@ function sameCallbacks(actual: NativeMonthYearPoint, source: MonthYearSourcePoin
     const single = actual.owner.id.startsWith('single-') && call.name === 'calendar';
     const empty = single && expected.dates.length === 0
       && object(property(expected.encodedArguments, '0')).$ === 'undefined';
-    if (empty) verifyMonthYearSingleEmptyCalendarBoundary(call, expected);
+    if (empty) {
+      verifyMonthYearSingleEmptyCalendarBoundary(call, expected);
+    }
     else if (single) verifyMonthYearSingleCalendarInfoBoundary(call, expected);
     for (const key of keys) {
       assert(typeof key === 'string');
@@ -225,9 +247,14 @@ function panelMode(className: string) {
   assert.equal(modes.length, 1, 'One actual calendar mode class token');
   return modes[0];
 }
-function verifyPoint(actual: NativeMonthYearPoint, source: MonthYearSourcePoint,
-  proof: ReturnType<typeof createMonthYearProof>, variant: MonthYearSourceVariant, label: string,
-  settled: boolean) {
+function verifyPoint(
+  actual: NativeMonthYearPoint,
+  source: MonthYearSourcePoint,
+  proof: ReturnType<typeof createMonthYearProof>,
+  variant: MonthYearSourceVariant,
+  label: string,
+  settled: boolean
+) {
   const existing = proof.variants.get(variant);
   const next: IdentityProof = existing ? { dates: new Map(existing.dates),
     nativeDates: new Map(existing.nativeDates), modes: new Map(existing.modes),
@@ -299,20 +326,35 @@ function verifyPoint(actual: NativeMonthYearPoint, source: MonthYearSourcePoint,
     sourceCaret: source.inputs.map(input => [input.selectionStart, input.selectionEnd, input.selectionDirection]),
     nativeCaret: actual.inputs.map(input => [input.selectionStart, input.selectionEnd, input.selectionDirection]) });
 }
-export function verifyMonthYearPoint(actual: NativeMonthYearPoint, source: MonthYearSourcePoint,
-  proof: ReturnType<typeof createMonthYearProof>, variant: MonthYearSourceVariant, label: string) {
+export function verifyMonthYearPoint(
+  actual: NativeMonthYearPoint,
+  source: MonthYearSourcePoint,
+  proof: ReturnType<typeof createMonthYearProof>,
+  variant: MonthYearSourceVariant,
+  label: string
+) {
   verifyPoint(actual, source, proof, variant, label, true);
 }
-export function verifyMonthYearInputPhase(actual: NativeMonthYearPoint, source: MonthYearSourcePoint,
-  proof: ReturnType<typeof createMonthYearProof>, variant: MonthYearSourceVariant, label: string) {
+export function verifyMonthYearInputPhase(
+  actual: NativeMonthYearPoint,
+  source: MonthYearSourcePoint,
+  proof: ReturnType<typeof createMonthYearProof>,
+  variant: MonthYearSourceVariant,
+  label: string
+) {
   verifyPoint(actual, source, proof, variant, label, false);
 }
 export interface MonthYearProducerProof { cursor: number; boundary: number; chunks: number; }
 export function createMonthYearProducerProof(): MonthYearProducerProof {
   return { cursor: 0, boundary: 0, chunks: 0 };
 }
-export function verifyMonthYearProducerChunk(value: unknown, proof: MonthYearProducerProof,
-  owner: MonthYearSourceOwner, boundaries: Record<string, number>, sample: MonthYearSample) {
+export function verifyMonthYearProducerChunk(
+  value: unknown,
+  proof: MonthYearProducerProof,
+  owner: MonthYearSourceOwner,
+  boundaries: Record<string, number>,
+  sample: MonthYearSample
+) {
   const chunk = object(value);
   assert.equal(chunk.cursor, proof.cursor);
   assert(Number.isSafeInteger(chunk.next) && Number(chunk.next) >= proof.cursor);

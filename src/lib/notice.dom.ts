@@ -190,8 +190,9 @@ export function animateNotice(
       motion?.finish();
   }
 
-  if (reducedMotion.matches || duration === 0)
+  if (reducedMotion.matches || duration === 0) {
     finish();
+  }
   else {
     reducedMotion.addEventListener('change', reduce);
     motion = node.animate([

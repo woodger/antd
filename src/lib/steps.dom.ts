@@ -57,8 +57,12 @@ export function connectStepsFocus(root: HTMLElement) {
       ?? candidates[0];
     focused = undefined;
     keys = [];
-    if (next)
-      next.focus({ preventScroll: true }); else focusAfterNotice(root, true);
+    if (next) {
+      next.focus({ preventScroll: true });
+    }
+    else {
+      focusAfterNotice(root, true);
+    }
   });
   observer.observe(
     root,

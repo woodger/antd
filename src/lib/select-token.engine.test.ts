@@ -11,7 +11,9 @@ const options: readonly SelectOption<string | number>[] = [
 ];
 const names = selectFields();
 function resolve<Data extends object>(
-  input: readonly Data[], words: readonly string[], tags: boolean,
+  input: readonly Data[],
+  words: readonly string[],
+  tags: boolean,
   properties?: string | readonly string[]
 ) {
   return resolveSelectTokenOptions(collectSelectData(input, names, properties), words, tags, names);

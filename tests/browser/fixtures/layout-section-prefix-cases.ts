@@ -12,8 +12,10 @@ export interface LayoutSectionPrefixSample {
   algorithms?: ('defaultAlgorithm' | 'darkAlgorithm' | 'compactAlgorithm')[];
 }
 
-export function layoutSectionPrefix(sample: LayoutSectionPrefixSample,
-  part: 'header' | 'content' | 'footer') {
+export function layoutSectionPrefix(
+  sample: LayoutSectionPrefixSample,
+  part: 'header' | 'content' | 'footer'
+) {
   if (sample.prefix === undefined || sample.prefix === '') {
     return sample.prefix;
   }

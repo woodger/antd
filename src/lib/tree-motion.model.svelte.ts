@@ -53,14 +53,18 @@ export function createTreeMotion<Data extends object>(options: {
     const estimate = options.itemHeight();
     untrack(() => {
       const changed = findTreeMotionKey(previous.expanded, next.expanded);
-      if (!motion || previous.dragging && !next.dragging) finish();
+      if (!motion || previous.dragging && !next.dragging) {
+        finish();
+      }
       else if (changed) {
         const shorter = changed.show ? previous.rows : next.rows;
         const longer = changed.show ? next.rows : previous.rows;
         const position = shorter.findIndex(entry => entry.key === changed.key);
         const nodes = getTreeMotionRange(shorter, longer, changed.key, virtual, height, estimate);
         // Скрытый expanded key не должен подменять диапазон другого корня.
-        if (position < 0 || !nodes.length) finish();
+        if (position < 0 || !nodes.length) {
+          finish();
+        }
         else {
           group = { key, motionNodes: nodes, show: changed.show, id: ++revision };
           rows = [...shorter.slice(0, position + 1), group, ...shorter.slice(position + 1)];

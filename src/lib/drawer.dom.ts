@@ -36,8 +36,12 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
         view.getComputedStyle(dialog).getPropertyValue('--ant-motion-duration-slow')
       );
     if (!duration) {
-      if (opening)
-        phase = 'open'; else finishClose();
+      if (opening) {
+        phase = 'open';
+      }
+      else {
+        finishClose();
+      }
       return;
     }
 
@@ -58,7 +62,9 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
         cancelMotion();
         phase = 'open';
       }
-      else finishClose();
+      else {
+        finishClose();
+      }
     }, () => { });
   }
 

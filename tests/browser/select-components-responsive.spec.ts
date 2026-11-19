@@ -61,8 +61,12 @@ for (const sample of selectComponentsSamples) test(`Select component responsive 
           'options' in action ? action.options : undefined
         );
       }
-      else if (action.type === 'blur-method') await capture.evaluate(owner => owner.readRefs().control!.blur());
-      else if (action.type === 'outside') await page.locator('[data-surface-outside]').click();
+      else if (action.type === 'blur-method') {
+        await capture.evaluate(owner => owner.readRefs().control!.blur());
+      }
+      else if (action.type === 'outside') {
+        await page.locator('[data-surface-outside]').click();
+      }
       else if (action.type === 'root-click') {
         const handle = await capture.evaluateHandle(owner => owner.readRefs().root);
         const element = handle.asElement();
@@ -74,7 +78,12 @@ for (const sample of selectComponentsSamples) test(`Select component responsive 
       }
       else if (action.type === 'fill' || action.type === 'component-key') {
         const element = await editor();
-        if (action.type === 'fill') await element.fill(action.text); else await element.press(action.key);
+        if (action.type === 'fill') {
+          await element.fill(action.text);
+        }
+        else {
+          await element.press(action.key);
+        }
         await element.dispose();
       }
       else if (action.type === 'remove') {
@@ -82,12 +91,17 @@ for (const sample of selectComponentsSamples) test(`Select component responsive 
       }
       else if (action.type === 'clear') {
         const button = page.locator('.ant-select-clear');
-        if (action.activation === 'pointer') await button.click(); else {
+        if (action.activation === 'pointer') {
+          await button.click();
+        }
+        else {
           await button.focus();
           await button.press(action.activation);
         }
       }
-      else throw Error('Unknown frozen component mode action ' + action.type);
+      else {
+        throw Error('Unknown frozen component mode action ' + action.type);
+      }
       await page.mouse.move(0, 0);
       await verify(step, index + '/' + JSON.stringify(action));
     }

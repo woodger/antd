@@ -32,7 +32,9 @@
   $effect.pre(() => {
     const attrs = context.attributes as { defaultValue?: InputValue; defaultvalue?: InputValue };
     const value = attrs.defaultValue ?? attrs.defaultvalue;
-    if (tag !== 'input') retainedInputDefaultValue = undefined;
+    if (tag !== 'input') {
+      retainedInputDefaultValue = undefined;
+    }
     else if (value != null) retainedInputDefaultValue = value;
   });
   let input = $derived.by(() => {

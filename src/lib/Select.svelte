@@ -463,7 +463,9 @@
             tag: ':scope > [data-select-tag]', rest: ':scope > [data-select-rest]', input
           });
         }
-        else disconnect = connectSelectTagOverflow(host, update);
+        else {
+          disconnect = connectSelectTagOverflow(host, update);
+        }
       }
     });
     return () => {
@@ -580,8 +582,12 @@
   onMount(() => {
     clearSelectComponentHydration(defaultReference);
     // Source сначала публикует измеренный закрытый Input, затем открывает список.
-    if (componentResponsive) void tick().then(() => { if (!componentDestroyed) hydrated = true; });
-    else hydrated = true;
+    if (componentResponsive) {
+      void tick().then(() => { if (!componentDestroyed) hydrated = true; });
+    }
+    else {
+      hydrated = true;
+    }
     if (providedOpen === undefined) open = internalOpen;
   });
 
@@ -591,7 +597,12 @@
       previousOwnerOpen = next;
       internalOpen = next ?? false;
       if (!next && !multiple) {
-        if (inputSlot) clearComponentSearchAfterClose(); else internalSearch = '';
+        if (inputSlot) {
+          clearComponentSearchAfterClose();
+        }
+        else {
+          internalSearch = '';
+        }
       }
     }
     if (resolvedDisabled) {
@@ -829,7 +840,9 @@
     pastedText = undefined;
     const state = committedBlurState;
     const disabled = state.componentInput ? componentInputBlurDisabled : state.disabled;
-    if (state.tagMode) submitTag(state.search);
+    if (state.tagMode) {
+      submitTag(state.search);
+    }
     else if (state.multiple) internalSearch = '';
     if (state.expanded && !disabled && !(event.relatedTarget instanceof Node && list?.contains(event.relatedTarget)))
       scheduleComponentClose(true);
@@ -915,7 +928,9 @@
       if (event.key === 'Enter' || !canSearch) event.preventDefault();
       if (!wasOpen) setOpen(true);
     }
-    if (wasOpen && event.key !== ' ') handleKeyboardNavigation(event);
+    if (wasOpen && event.key !== ' ') {
+      handleKeyboardNavigation(event);
+    }
     else if (event.key === 'Backspace' && multiple && !search) {
       const last = [...tags].reverse().find(tag => !tag.disabled);
       if (last) remove(last.value, false);
@@ -1046,7 +1061,12 @@
       open = next;
       if (state.expanded !== next) committedOpenChange?.(next);
       if (!next && state.clearInternalSearch) {
-        if (state.componentInput) clearComponentSearchAfterClose(); else internalSearch = '';
+        if (state.componentInput) {
+          clearComponentSearchAfterClose();
+        }
+        else {
+          internalSearch = '';
+        }
       }
       if (!next && state.expanded !== next) state.clearSearch?.('');
       return;
@@ -1068,23 +1088,42 @@
     if (!fromBlur && providedOpen === next) previousOwnerOpen = next;
 
     if (clearInternalSearch) {
-      if (inputSlot) clearComponentSearchAfterClose(); else internalSearch = '';
+      if (inputSlot) {
+        clearComponentSearchAfterClose();
+      }
+      else {
+        internalSearch = '';
+      }
     }
     clearContextSearch?.('');
   }
 
   export function focus(options?: FocusOptions) {
     if (customRoot) {
-      if (arguments.length) focusSelectComponent(customRoot.registration, options);
-      else focusSelectComponent(customRoot.registration);
+      if (arguments.length) {
+        focusSelectComponent(customRoot.registration, options);
+      }
+      else {
+        focusSelectComponent(customRoot.registration);
+      }
     }
-    else if (customInput) focusSelectComponent(customInput.registration, options);
-    else defaultControl?.focus(options);
+    else if (customInput) {
+      focusSelectComponent(customInput.registration, options);
+    }
+    else {
+      defaultControl?.focus(options);
+    }
   }
   export function blur() {
-    if (customRoot) blurSelectComponent(customRoot.registration);
-    else if (customInput) blurSelectComponent(customInput.registration);
-    else defaultControl?.blur();
+    if (customRoot) {
+      blurSelectComponent(customRoot.registration);
+    }
+    else if (customInput) {
+      blurSelectComponent(customInput.registration);
+    }
+    else {
+      defaultControl?.blur();
+    }
   }
   export function scrollTo(config?: SelectScrollConfig | null) {
     if (customPopup && !menuElement) {
@@ -1176,7 +1215,12 @@
     const blockedSearch = countReached;
     const preserveSearch = !multiple && controlledSearch !== undefined && Boolean(selected);
     onClear?.();
-    if (rootSlot || inputSlot) focus(); else control?.focus({ preventScroll: true });
+    if (rootSlot || inputSlot) {
+      focus();
+    }
+    else {
+      control?.focus({ preventScroll: true });
+    }
     if (multiple) {
       if (selectedValues.length) changeMultiple([], 'display');
     }
@@ -1248,9 +1292,12 @@
       const removing = chosenValue !== undefined && next.has(chosenValue);
 
       if (chosenValue !== undefined) {
-        if (removing)
+        if (removing) {
           next.delete(chosenValue);
-        else next.add(chosenValue);
+        }
+        else {
+          next.add(chosenValue);
+        }
       }
       else {
         if (!next.size && !clearQuery) {
@@ -1293,7 +1340,12 @@
     // Keep the public producer's search-clear pass before the popup closes.
     if (componentPath) void semantics;
     void resolvedSuffix;
-    if (componentPath) scheduleComponentClose(); else setOpen(false);
+    if (componentPath) {
+      scheduleComponentClose();
+    }
+    else {
+      setOpen(false);
+    }
     if (!componentPath) control?.focus();
   }
 
@@ -1331,8 +1383,12 @@
     event.preventDefault();
     event.stopPropagation();
     // Source useOpen откладывает false; legacy default tag path сохраняется.
-    if (inputSlot && expanded) scheduleComponentClose(false, true);
-    else setOpen(!expanded);
+    if (inputSlot && expanded) {
+      scheduleComponentClose(false, true);
+    }
+    else {
+      setOpen(!expanded);
+    }
   }
 
   function connectTagElement(node: HTMLElement, value: RawValue) {
@@ -1635,8 +1691,15 @@
       return;
     }
     mouseActivated = true;
-    if (rootSlot || inputSlot) focus(); else control?.focus();
-    if (!expanded) openList();
+    if (rootSlot || inputSlot) {
+      focus();
+    }
+    else {
+      control?.focus();
+    }
+    if (!expanded) {
+      openList();
+    }
     else if (!multiple && !canSearch) setOpen(false);
   }
 
@@ -1648,7 +1711,9 @@
     const state = committedBlurState;
 
     if (!(next instanceof Node && list?.contains(next))) {
-      if (state.tagMode) submitTag(state.search);
+      if (state.tagMode) {
+        submitTag(state.search);
+      }
       else if (state.multiple) internalSearch = '';
       setOpen(false, true);
     }
@@ -1665,7 +1730,9 @@
 
     focused = false;
     const state = committedBlurState;
-    if (state.tagMode) submitTag(state.search);
+    if (state.tagMode) {
+      submitTag(state.search);
+    }
     else if (state.multiple) internalSearch = '';
     setOpen(false, true);
   }
@@ -1693,14 +1760,24 @@
       && !target.closest('button, input')
       && !resolvedDisabled) {
       event.preventDefault();
-      if (rootSlot || inputSlot) focus(); else control?.focus();
+      if (rootSlot || inputSlot) {
+        focus();
+      }
+      else {
+        control?.focus();
+      }
       openList();
     }
     else if ((target === event.currentTarget || leading && event.composedPath().some(node =>
       node instanceof Element && node.classList.contains(`${prefix}-prefix`)
         && node.parentElement === event.currentTarget)) && !resolvedDisabled) {
       event.preventDefault();
-      if (rootSlot || inputSlot) focus(); else control?.focus();
+      if (rootSlot || inputSlot) {
+        focus();
+      }
+      else {
+        control?.focus();
+      }
       control?.click();
     }
   }

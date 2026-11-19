@@ -39,8 +39,11 @@ const clipping = new WeakMap<HTMLElement, { parent: ParentNode | null; nodes: HT
 
 /** Pending props affect numeric alignment only after a Source trigger. */
 export function createTreeSelectAlign(
-  anchor: Element, popup: HTMLElement, getOptions: () => TreeSelectAlignOptions,
-  initialFlips?: PopupFlipCache, initial?: TreeSelectAlignSnapshot
+  anchor: Element,
+  popup: HTMLElement,
+  getOptions: () => TreeSelectAlignOptions,
+  initialFlips?: PopupFlipCache,
+  initial?: TreeSelectAlignSnapshot
 ) {
   const document = popup.ownerDocument;
   const view = document.defaultView!;

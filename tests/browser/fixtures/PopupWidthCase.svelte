@@ -76,11 +76,19 @@
   }
   export function update(action: PopupWidthAction) {
     if (action.type === 'width') {
-      if (action.layer === 'outer') outer = action.value;
-      else if (action.layer === 'inner') inner = action.value;
-      else local = action.value;
+      if (action.layer === 'outer') {
+        outer = action.value;
+      }
+      else if (action.layer === 'inner') {
+        inner = action.value;
+      }
+      else {
+        local = action.value;
+      }
     }
-    else if (action.type === 'anchor') anchorWidth = action.width;
+    else if (action.type === 'anchor') {
+      anchorWidth = action.width;
+    }
     else if (action.type === 'open') open = action.value;
   }
   export function readRefs() {

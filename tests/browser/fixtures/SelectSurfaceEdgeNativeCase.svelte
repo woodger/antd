@@ -75,7 +75,9 @@
       value: model, open, options, listHeight: 140, allowClear: true, 'aria-label': 'Surface edge value',
       showSearch: { filterOption: false, onSearch }, onChange, onSelect, onDeselect, onClear, onOpenChange
     };
-    if (sample.placeholder === 'text') props.placeholder = 'Edge value';
+    if (sample.placeholder === 'text') {
+      props.placeholder = 'Edge value';
+    }
     else if (sample.placeholder === 'empty') props.placeholder = '';
     if (sample.axis === 'replacement') props.popupRender = popupRender;
     if (sample.axis === 'prefix') props.prefix = prefix;

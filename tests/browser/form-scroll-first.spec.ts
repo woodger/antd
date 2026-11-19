@@ -82,8 +82,12 @@ for (const action of ['Reset scroll fields', 'Replace scroll model', 'Unmount sc
     ).textContent())!);
 
     expect(state.calls).toEqual([]);
-    if (action === 'Reset scroll fields') expect(state.failed?.outOfDate).toBe(true);
-    else expect(state.failed).toBeNull();
+    if (action === 'Reset scroll fields') {
+      expect(state.failed?.outOfDate).toBe(true);
+    }
+    else {
+      expect(state.failed).toBeNull();
+    }
     await expect(page.getByRole('button', { name: 'Release scroll validation', exact: true })).toBeFocused();
   });
 }

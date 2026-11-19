@@ -128,7 +128,9 @@ for (const entry of reference.cases) {
             } });
           });
         }
-        else await actSelectVirtual(page, step.action);
+        else {
+          await actSelectVirtual(page, step.action);
+        }
         const actual = await settle(page);
         trace.push({ action: step.action, actual });
         // These new IDs can use only the existing unassigned-index ARIA boundary.

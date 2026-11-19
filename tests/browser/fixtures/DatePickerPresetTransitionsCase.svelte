@@ -269,9 +269,15 @@
         nativeEventWrapperPresent: 'nativeEvent' in mouse
       }
     });
-    if (kind === 'open') open = next as boolean;
-    else if (kind === 'format') format = next as string;
-    else if (kind === 'preview') preview = next as false | 'hover';
+    if (kind === 'open') {
+      open = next as boolean;
+    }
+    else if (kind === 'format') {
+      format = next as string;
+    }
+    else if (kind === 'preview') {
+      preview = next as false | 'hover';
+    }
     else if (kind === 'min-date') minDate = updatedMinDate;
   }
   const box = datePickerPresetGeometry.root;

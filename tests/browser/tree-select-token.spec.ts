@@ -6,9 +6,15 @@ import { readTreeSelectTokens } from './tree-select-token-metrics';
 
 async function act(page: Page, action: TreeSelectTokenAction) {
   const input = page.getByRole('combobox', { name: 'Token tree', exact: true });
-  if (action.type === 'open') await input.click();
-  else if (action.type === 'focus') await input.focus();
-  else if (action.type === 'fill') await input.fill(action.text!);
+  if (action.type === 'open') {
+    await input.click();
+  }
+  else if (action.type === 'focus') {
+    await input.focus();
+  }
+  else if (action.type === 'fill') {
+    await input.fill(action.text!);
+  }
   else if (action.type === 'outside') {
     await page.getByRole(
       'button',

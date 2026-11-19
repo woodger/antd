@@ -71,7 +71,11 @@ export function serializeThemeVariables(variables: Record<string, string>, prefi
 }
 
 /** Снимок provider CSS сохраняет его inline overrides при сбросе aliases на дочерних roots. */
-export function themeVariableScopes(variables: Record<string, string>, prefix: string, key: string) {
+export function themeVariableScopes(
+  variables: Record<string, string>,
+  prefix: string,
+  key: string
+) {
   const snapshots: string[] = [];
   const resets: Record<string, string> = {};
   for (const name of Object.keys(variables)) {

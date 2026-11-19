@@ -132,7 +132,9 @@ for (const sample of reference.cases) {
         return { ...actual, trace: byPane(actual.trace) };
       }).toEqual({ ...expected, trace: byPane(expected.trace) });
     }
-    else await expect.poll(capture).toEqual(expected);
+    else {
+      await expect.poll(capture).toEqual(expected);
+    }
     await page.evaluate(() => {
       (Reflect.get(window, 'tabsMotionCapture') as MotionCapture).observer?.disconnect();
     });

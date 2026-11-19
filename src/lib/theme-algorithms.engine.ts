@@ -29,9 +29,15 @@ function getPresetTokens(seed: SeedToken, dark = false): ColorPalettes {
   for (const name of Object.keys(defaultPresetColors) as PresetColorKey[]) {
     const color = name === 'pink' ? defaultPresetColors.pink : seed[name];
     let colors: readonly string[];
-    if (dark) colors = generatePalette(color, { theme: 'dark' });
-    else if (color === presetPrimaryColors[name]) colors = presetPalettes[name];
-    else colors = generatePalette(color);
+    if (dark) {
+      colors = generatePalette(color, { theme: 'dark' });
+    }
+    else if (color === presetPrimaryColors[name]) {
+      colors = presetPalettes[name];
+    }
+    else {
+      colors = generatePalette(color);
+    }
 
     for (let index = 0; index < 10; index++) {
       palettes[`${name}${index + 1}`] = colors[index];

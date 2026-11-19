@@ -197,7 +197,12 @@ export function readSelectIconPair(id: string, sync = false): [IconCase, IconCas
     let index = 0;
     const extra: SelectSurfaceProducerCall[] = [];
     for (const call of longer) {
-      if (index < shorter.length && iconCallSignature(call) === iconCallSignature(shorter[index])) index++; else extra.push(call);
+      if (index < shorter.length && iconCallSignature(call) === iconCallSignature(shorter[index])) {
+        index++;
+      }
+      else {
+        extra.push(call);
+      }
     }
     assert.equal(index, shorter.length);
     assert.equal(extra.length, 4);
@@ -365,8 +370,12 @@ export function selectIconStaticStates(sample: SelectIconSample) {
       for (const key of action.drop ?? []) delete config[key];
       settings = { ...settings, config };
     }
-    else if (action.type === 'inner') settings = { ...settings, inner: action.value };
-    else return;
+    else if (action.type === 'inner') {
+      settings = { ...settings, inner: action.value };
+    }
+    else {
+      return;
+    }
     states.push({ name: 'authored-props-' + index, settings });
   });
   return states;

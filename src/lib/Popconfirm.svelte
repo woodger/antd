@@ -131,7 +131,9 @@
   $effect.pre(() => {
     // Содержимое принадлежит этому Snippet; внешний Popover не может заморозить его props.
     if (visible || refresh || force && !initialized) cached = payload;
-    if (visible || force) initialized = true;
+    if (visible || force) {
+      initialized = true;
+    }
     else if (destroy) initialized = false;
   });
 

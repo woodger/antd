@@ -135,7 +135,9 @@
   $effect.pre(() => {
     const open = visible;
     // Как rc-trigger: getter с параметром ждёт prefix ref; нулевая арность разрешает undefined.
-    if (!getPopupContainer) popupContainer = undefined;
+    if (!getPopupContainer) {
+      popupContainer = undefined;
+    }
     else if (open && !containerOpen && !getPopupContainer.length) resolvePopupContainer(undefined);
     containerOpen = open;
   });
@@ -342,9 +344,12 @@
         return;
       }
       const index = filtered[active] && !filtered[active].disabled ? active : enabled(0);
-      if (index < 0)
+      if (index < 0) {
         measuring = false;
-      else void choose(filtered[index]);
+      }
+      else {
+        void choose(filtered[index]);
+      }
     }
   }
   function handleKeyup(
@@ -383,7 +388,9 @@
       }
       onSearch?.(next, found.prefix);
     }
-    else measuring = false;
+    else {
+      measuring = false;
+    }
   }
   function handleFocus(event: FocusEvent) {
     if (blurTimer !== undefined)

@@ -117,8 +117,12 @@
         && !element.contains(document.activeElement)) {
         return;
       }
-      if (button?.getClientRects().length)
-        button.focus({ preventScroll: true }); else focusAfterNotice(host, true);
+      if (button?.getClientRects().length) {
+        button.focus({ preventScroll: true });
+      }
+      else {
+        focusAfterNotice(host, true);
+      }
     });
   });
   $effect(() => {

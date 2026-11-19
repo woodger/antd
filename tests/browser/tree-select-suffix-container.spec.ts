@@ -15,7 +15,9 @@ async function act(page: Page, action: TreeSelectSuffixContainerAction) {
     await page.mouse.click(point.x, point.y);
     return { point: action.point, hit: point.hit };
   }
-  if (action.type === 'fill') await page.locator('[data-suffix-layout-editor]').fill(action.text);
+  if (action.type === 'fill') {
+    await page.locator('[data-suffix-layout-editor]').fill(action.text);
+  }
   else if (action.type === 'move-host') await page.locator('[data-suffix-layout-case]').evaluate((
     node,
     update

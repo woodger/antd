@@ -27,8 +27,12 @@ for (const entry of reference.cases) {
     try {
       for (const step of entry.steps) {
         const action = step.action as TreeSelectSuffixLayoutEdgeAction;
-        if (action.type === 'click-editor') await page.locator('[data-suffix-edge-editor]').click();
-        else if (action.type === 'fill') await page.locator('[data-suffix-edge-editor]').fill(action.text);
+        if (action.type === 'click-editor') {
+          await page.locator('[data-suffix-edge-editor]').click();
+        }
+        else if (action.type === 'fill') {
+          await page.locator('[data-suffix-edge-editor]').fill(action.text);
+        }
         else {
           await page.locator('[data-suffix-edge-command]').evaluate((node, detail) => {
             node.dispatchEvent(new CustomEvent('suffixedgeupdate', { detail }));

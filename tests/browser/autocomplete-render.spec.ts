@@ -88,10 +88,18 @@ for (const source of autocompleteRenderReference.cases) {
             action
           );
         }
-        else if (action.type === 'click') await editor.click();
-        else if (action.type === 'fill') await editor.fill(action.text);
-        else if (action.type === 'press') await editor.press(action.key);
-        else if (action.type === 'outside') await page.locator('[data-surface-outside]').click();
+        else if (action.type === 'click') {
+          await editor.click();
+        }
+        else if (action.type === 'fill') {
+          await editor.fill(action.text);
+        }
+        else if (action.type === 'press') {
+          await editor.press(action.key);
+        }
+        else if (action.type === 'outside') {
+          await page.locator('[data-surface-outside]').click();
+        }
         else if (action.type === 'scroll') {
           await page.evaluate(top => {
             const holder = document.querySelector<HTMLElement>('.ant-select-dropdown-list-holder');

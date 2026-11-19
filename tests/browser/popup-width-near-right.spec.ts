@@ -43,7 +43,9 @@ for (const entry of reference.cases) {
     const captures: Awaited<ReturnType<typeof settle>>[] = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('console', message => {
-      if (message.type() === 'error') errors.push(message.text());
+      if (message.type() === 'error') {
+        errors.push(message.text());
+      }
       else if (message.type() === 'warning') warnings.push(message.text());
     });
     try {

@@ -29,8 +29,11 @@ async function settle(page: Page) {
 }
 
 function verify(
-  actual: ReturnType<typeof readTreeSelectCheckable>, expected: Snapshot, id: string,
-  phase: 'initial' | 'step', label: string
+  actual: ReturnType<typeof readTreeSelectCheckable>,
+  expected: Snapshot,
+  id: string,
+  phase: 'initial' | 'step',
+  label: string
 ) {
   expect(actual.view, label).toEqual(treeSelectCheckableNativeView(expected.view, id, phase));
   expect(actual.view.ignored).toEqual({ renderCalls: 0, iteratorCalls: 0, thenReads: 0 });

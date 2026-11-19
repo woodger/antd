@@ -189,7 +189,9 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
       if (options.sticky() && config.align !== 'bottom') {
         let current: string | undefined;
         for (const row of options.rows()) {
-          if (row.type === 'group') current = row.taggedKey;
+          if (row.type === 'group') {
+            current = row.taggedKey;
+          }
           else if (row.taggedKey === key) {
             stickyKey = current;
             break;

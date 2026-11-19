@@ -69,16 +69,28 @@
     }
 
     const target = alternate ? 'child' : sample.local;
-    if (sample.local === 'undefined') props.getContainer = undefined;
-    else if (sample.local === 'inline') props.getContainer = false;
+    if (sample.local === 'undefined') {
+      props.getContainer = undefined;
+    }
+    else if (sample.local === 'inline') {
+      props.getContainer = false;
+    }
     else if (sample.local === 'element') {
       // Не читается при SSR: исходные DOM-узлы доступны после mount fixture.
       props.getContainer = alternate ? childElement : localElement;
     }
-    else if (sample.local === 'selector') props.getContainer = `#panel-${alternate ? 'child' : 'local'}`;
-    else if (sample.local === 'empty-selector') props.getContainer = '';
-    else if (sample.local === 'missing-selector') props.getContainer = '#panel-never';
-    else props.getContainer = () => get('local', target, [])!;
+    else if (sample.local === 'selector') {
+      props.getContainer = `#panel-${alternate ? 'child' : 'local'}`;
+    }
+    else if (sample.local === 'empty-selector') {
+      props.getContainer = '';
+    }
+    else if (sample.local === 'missing-selector') {
+      props.getContainer = '#panel-never';
+    }
+    else {
+      props.getContainer = () => get('local', target, [])!;
+    }
     return props;
   });
   let localElement = $state<HTMLDivElement>();

@@ -49,7 +49,9 @@
   });
   let childOptions = $derived.by(() => {
     const options: Partial<ConfigProviderProps> = {};
-    if (sample.child === 'undefined') options.getPopupContainer = undefined;
+    if (sample.child === 'undefined') {
+      options.getPopupContainer = undefined;
+    }
     else if (sample.child === 'child') {
       options.getPopupContainer = trigger => {
         record('child', trigger);
@@ -61,7 +63,9 @@
   });
   let localOptions = $derived.by(() => {
     const options: Pick<TooltipProps, 'getPopupContainer'> = {};
-    if (sample.local === 'undefined') options.getPopupContainer = undefined;
+    if (sample.local === 'undefined') {
+      options.getPopupContainer = undefined;
+    }
     else if (sample.local === 'local') {
       options.getPopupContainer = trigger => {
         record('local', trigger);
@@ -72,7 +76,9 @@
   });
   let tooltipOptions = $derived.by(() => {
     const options: SliderTooltipConfig = { open: opened };
-    if (sample.tooltip === 'undefined') options.getPopupContainer = undefined;
+    if (sample.tooltip === 'undefined') {
+      options.getPopupContainer = undefined;
+    }
     else if (sample.tooltip === 'tooltip') {
       options.getPopupContainer = trigger => {
         record('tooltip', trigger);

@@ -25,13 +25,27 @@ for (const sample of reference.cases) {
         await page.getByRole('button', { name: 'Toggle lifecycle component', exact: true })
           .dispatchEvent('click');
       }
-      else if (step.action === 'leave') await page.mouse.move(0, 0);
-      else if (step.action === 'focus') await anchor.focus();
-      else if (step.action === 'blur') await anchor.evaluate(node => node.blur());
-      else if (step.action === 'popupHover') await input.hover();
-      else if (step.action === 'popupFocus') await input.focus();
-      else if (step.action === 'popupBlur') await input.evaluate(node => node.blur());
-      else if (step.action === 'click') await anchor.dispatchEvent('click');
+      else if (step.action === 'leave') {
+        await page.mouse.move(0, 0);
+      }
+      else if (step.action === 'focus') {
+        await anchor.focus();
+      }
+      else if (step.action === 'blur') {
+        await anchor.evaluate(node => node.blur());
+      }
+      else if (step.action === 'popupHover') {
+        await input.hover();
+      }
+      else if (step.action === 'popupFocus') {
+        await input.focus();
+      }
+      else if (step.action === 'popupBlur') {
+        await input.evaluate(node => node.blur());
+      }
+      else if (step.action === 'click') {
+        await anchor.dispatchEvent('click');
+      }
       else if (step.action === 'contextMenu') {
         const canceled = await anchor.evaluate(node => !node.dispatchEvent(new MouseEvent('contextmenu', {
           bubbles: true, cancelable: true
@@ -60,8 +74,12 @@ for (const component of ['tooltip', 'popover', 'popconfirm', 'typography', 'avat
 
       await expect(page.getByLabel('Lifecycle events', { exact: true })).toHaveText('[]');
 
-      if (action === 'escape') await page.keyboard.press('Escape');
-      else await page.getByRole('button', { name: 'After lifecycle popup', exact: true }).click();
+      if (action === 'escape') {
+        await page.keyboard.press('Escape');
+      }
+      else {
+        await page.getByRole('button', { name: 'After lifecycle popup', exact: true }).click();
+      }
       await page.clock.runFor(1000);
 
       await expect.poll(async () => (await page.evaluate(snapshotOverlayLifecycle)).visible).toBe(0);

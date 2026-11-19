@@ -116,7 +116,11 @@ export interface TreeSelectSemanticInfo<
   EditorElement extends TreeSelectEditorElement = HTMLInputElement
 > {
   props: Omit<TreeSelectProps<ValueType, Data, RootElement, EditorElement>, 'disabled' | 'status' | 'variant' | 'onChange'> & {
-    onChange?(value: ValueType, labels: TreeSelectLabel[] | null, extra: TreeSelectChangeInfo): void;
+    onChange?(
+      value: ValueType,
+      labels: TreeSelectLabel[] | null,
+      extra: TreeSelectChangeInfo
+    ): void;
     disabled: boolean;
     status?: FormValidateStatus;
     variant: Variant;

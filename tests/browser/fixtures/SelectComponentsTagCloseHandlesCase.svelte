@@ -165,14 +165,28 @@
     finally { observation.eventCountAfter = events.length; }
   }
   function activate(action: SelectTagCloseHandleAction | SelectTagCloseHandleRetain) {
-    if (action.type === 'retain') retain(action); else if (action.type === 'invoke') invoke(action);
-    else if (action.type === 'model') model = [...action.value]; else if (action.type === 'options') options = replacementOptions;
-    else if (action.type === 'disabled') disabled = action.value;
+    if (action.type === 'retain') {
+      retain(action);
+    }
+    else if (action.type === 'invoke') {
+      invoke(action);
+    }
+    else if (action.type === 'model') {
+      model = [...action.value];
+    }
+    else if (action.type === 'options') {
+      options = replacementOptions;
+    }
+    else if (action.type === 'disabled') {
+      disabled = action.value;
+    }
     else if (action.type === 'enable-reset') {
       disabled = false;
       model = [...action.value];
     }
-    else throw Error('Unknown ordinary caller action');
+    else {
+      throw Error('Unknown ordinary caller action');
+    }
   }
   const inputRenderer = recorder.register(inputFunction, { component: 'handles-input-function' });
   const tagRenderer = recorder.register(renderTag, { callback: 'handles-tagRender' });

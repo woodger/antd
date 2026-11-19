@@ -634,8 +634,13 @@
     }
     return disabledTime?.(date, active === 1 ? 'end' : 'start', { from: from() }) ?? {};
   }
-  function invalid(date: Dayjs, index: number, reference?: Dayjs, type: DatePickerMode = picker,
-    typeOnlyInfo = false) {
+  function invalid(
+    date: Dayjs,
+    index: number,
+    reference?: Dayjs,
+    type: DatePickerMode = picker,
+    typeOnlyInfo = false
+  ) {
     if (time) {
       return timeRangeInvalid(date, time, clock, index,
         reference === undefined ? undefined : { from: reference });
@@ -824,8 +829,12 @@
       onPanelChange?.(values, panelModes());
     }
   }
-  function setDatePanel(index: number, next: Dayjs, source: 'reset' | 'panel',
-    event?: { previous: [Dayjs, Dayjs]; modes: [DatePickerMode, DatePickerMode] }) {
+  function setDatePanel(
+    index: number,
+    next: Dayjs,
+    source: 'reset' | 'panel',
+    event?: { previous: [Dayjs, Dayjs]; modes: [DatePickerMode, DatePickerMode] }
+  ) {
     const previous = event?.previous ?? panelValues();
     const pair: [Dayjs, Dayjs] = [...previous];
     pair[index] = next;
@@ -881,8 +890,12 @@
         rawInvalid = errors;
       }
     }
-    if (time) (time.onblur ?? time.onBlur)?.(event, { range: index === 1 ? 'end' : 'start' });
-    else onblur?.(event);
+    if (time) {
+      (time.onblur ?? time.onBlur)?.(event, { range: index === 1 ? 'end' : 'start' });
+    }
+    else {
+      onblur?.(event);
+    }
     blurWithin(event);
   }
   function blurWithin(event: FocusEvent) {
@@ -909,8 +922,12 @@
       requestOpen(false);
     });
   }
-  function selectPanelMode(next: DatePickerMode, date: Dayjs, index: number,
-    event: { previous: [Dayjs, Dayjs]; modes: [DatePickerMode, DatePickerMode] }) {
+  function selectPanelMode(
+    next: DatePickerMode,
+    date: Dayjs,
+    index: number,
+    event: { previous: [Dayjs, Dayjs]; modes: [DatePickerMode, DatePickerMode] }
+  ) {
     // Второй PickerPanel setter сохраняет прежние mode/pickerValue внутри события.
     setDatePanel(index, date, 'panel', event);
     setMode(next, index, date);
@@ -958,8 +975,12 @@
     const next = time ? date : validPickerTime(date, clock, timeRestriction);
     const index = active;
     send(index, 'panel-intermediate', next);
-    if (time) setTimePanel(active, date, 'panel');
-    else setDatePanel(index, next, 'panel');
+    if (time) {
+      setTimePanel(active, date, 'panel');
+    }
+    else {
+      setDatePanel(index, next, 'panel');
+    }
   }
   function inputChange(index: number, text: string, masked = false) {
     focusField(index, masked);
@@ -994,13 +1015,17 @@
         if (!defaultPanel) syncPanel(index, 'reset', false, next);
       }
     }
-    else send(index, 'input');
+    else {
+      send(index, 'input');
+    }
   }
   function resetQuarterInput(index?: number) {
     if (time || picker !== 'date' && picker !== 'quarter' && picker !== 'week') {
       return;
     }
-    if (index === undefined) quarterInputValues = [undefined, undefined];
+    if (index === undefined) {
+      quarterInputValues = [undefined, undefined];
+    }
     else {
       const values: typeof quarterInputValues = [...quarterInputValues];
       values[index] = undefined;
@@ -1035,7 +1060,9 @@
   ) {
     const shared = (_event: KeyboardEvent, maskKey?: PickerMaskSharedKey) => {
       if (time) {
-        if (event.key === 'Tab') send(active, 'keyboard-submit-weak');
+        if (event.key === 'Tab') {
+          send(active, 'keyboard-submit-weak');
+        }
         else if (event.key === 'Escape') {
           event.preventDefault();
           event.stopPropagation();
@@ -1044,7 +1071,9 @@
         }
         (time.onkeydown ?? time.onKeyDown)?.(event);
       }
-      else onkeydown?.(event);
+      else {
+        onkeydown?.(event);
+      }
       if (event.defaultPrevented || event.isComposing || blocked[index]) {
         return false;
       }
@@ -1201,9 +1230,12 @@
     if (!time) {
       return;
     }
-    if (event.target instanceof Element && event.target.hasAttribute('disabled'))
+    if (event.target instanceof Element && event.target.hasAttribute('disabled')) {
       event.currentTarget.focus({ preventScroll: true });
-    else blurWithin(event);
+    }
+    else {
+      blurWithin(event);
+    }
     (time.onblur ?? time.onBlur)?.(event, { range: active === 1 ? 'end' : 'start' });
   }
   function handleTimeHover(next: Dayjs | null) {

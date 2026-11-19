@@ -142,7 +142,9 @@
     onClear: () => record('clear'), onFocus: () => record('focus'), onBlur: () => record('blur')
   });
   export function update(action: TreeSelectCheckableAction) {
-    if (action.type === 'value') settings = { ...settings, value: action.value };
+    if (action.type === 'value') {
+      settings = { ...settings, value: action.value };
+    }
     else if (action.type === 'props') {
       const next = { ...settings, ...action.set };
       for (const name of action.unset ?? []) delete next[name];

@@ -226,7 +226,9 @@ export function createVirtualList<Row, Key>(options: {
         generation: ++request, times: 0, index, key, originAlign, offset
       };
     }
-    else void alignTo(index, key, originAlign, offset);
+    else {
+      void alignTo(index, key, originAlign, offset);
+    }
   }
 
   async function alignTo(

@@ -25,8 +25,12 @@ test('Form hidden fields match source values, refs, local state, reset and valid
       expect(await input.evaluate((element, old) => element === old, previous!)).toBe(sample.retained);
     }
     previous = (await input.elementHandle())!;
-    if (sample.hidden) await expect(input).toBeHidden();
-    else await expect(input).toBeVisible();
+    if (sample.hidden) {
+      await expect(input).toBeHidden();
+    }
+    else {
+      await expect(input).toBeVisible();
+    }
   }
 });
 

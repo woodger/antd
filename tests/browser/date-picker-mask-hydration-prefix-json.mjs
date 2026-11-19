@@ -56,9 +56,13 @@ export function locateJSONRanges(bytes, pointers) {
       while (depth) {
         const code = bytes[position];
         assert(position < bytes.length);
-        if (code === 34) position = endString(position);
+        if (code === 34) {
+          position = endString(position);
+        }
         else {
-          if (code === 123 || code === 91) depth++;
+          if (code === 123 || code === 91) {
+            depth++;
+          }
           else if (code === 125 || code === 93) depth--;
           position++;
         }
@@ -73,7 +77,9 @@ export function locateJSONRanges(bytes, pointers) {
   function visit(start, node) {
     start = skipWhite(start);
     let end;
-    if (!node.children.size) end = endValue(start);
+    if (!node.children.size) {
+      end = endValue(start);
+    }
     else if (bytes[start] === 123) {
       let position = skipWhite(start + 1);
       while (bytes[position] !== 125) {
@@ -84,8 +90,12 @@ export function locateJSONRanges(bytes, pointers) {
         const child = node.children.get(key);
         position = child ? visit(position, child) : endValue(position);
         position = skipWhite(position);
-        if (bytes[position] === 44) position = skipWhite(position + 1);
-        else assert.equal(bytes[position], 125);
+        if (bytes[position] === 44) {
+          position = skipWhite(position + 1);
+        }
+        else {
+          assert.equal(bytes[position], 125);
+        }
       }
       end = position + 1;
     }
@@ -95,12 +105,18 @@ export function locateJSONRanges(bytes, pointers) {
         const child = node.children.get(String(index++));
         position = child ? visit(position, child) : endValue(position);
         position = skipWhite(position);
-        if (bytes[position] === 44) position = skipWhite(position + 1);
-        else assert.equal(bytes[position], 93);
+        if (bytes[position] === 44) {
+          position = skipWhite(position + 1);
+        }
+        else {
+          assert.equal(bytes[position], 93);
+        }
       }
       end = position + 1;
     }
-    else throw Error('JSON pointer ancestor is not a container');
+    else {
+      throw Error('JSON pointer ancestor is not a container');
+    }
     for (const pointer of node.capture) {
       ranges[pointer] = {
         start, end, bytes: end - start, sha256: digest(bytes.subarray(start, end)) };

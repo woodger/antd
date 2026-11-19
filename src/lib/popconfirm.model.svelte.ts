@@ -15,9 +15,12 @@ export function createPopconfirmAction(getSession: () => object | null, handlers
     }
 
     active = undefined;
-    if (success)
+    if (success) {
       handlers.onSuccess();
-    else handlers.onError(error);
+    }
+    else {
+      handlers.onError(error);
+    }
   }
 
   return {

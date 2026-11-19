@@ -140,7 +140,9 @@ export function verifySelectSurfaceEventGraph(
         Object.hasOwn(property, 'value'),
         `${label} data/accessor property`
       );
-      if (Object.hasOwn(property, 'value')) walk(other.value, property.value);
+      if (Object.hasOwn(property, 'value')) {
+        walk(other.value, property.value);
+      }
       else {
         walk(other.get, property.get);
         walk(other.set, property.set);
@@ -163,8 +165,12 @@ export function selectSurfaceEventValue(value: unknown): unknown {
   }
   return Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([key, item]) => [key, selectSurfaceEventValue(item)]));
 }
-export function verifySelectSurfaceEvents(actual: NativeSurfaceOwner, source: SelectSurfaceSourceCase,
-  point: SelectSurfaceSnapshot, label: string) {
+export function verifySelectSurfaceEvents(
+  actual: NativeSurfaceOwner,
+  source: SelectSurfaceSourceCase,
+  point: SelectSurfaceSnapshot,
+  label: string
+) {
   const events = source.events.slice(0, point.owner.eventCount);
   assert.deepEqual(
     actual.events.map(selectSurfaceEventValue),
@@ -202,9 +208,13 @@ function sameInvocation(
     && isDeepStrictEqual(decodeSelectSurface(actual.result), decodeSelectSurface(original.result))
     && (actual.kind !== 'popupRender' || actual.sameResultAsArgument === original.sameResultAsArgument);
 }
-function settledSingleSelectionCall(original: SelectSurfaceProducerCall,
-  actual: readonly SelectSurfaceProducerCall[], prefix: readonly SelectSurfaceProducerCall[],
-  sample: SelectSurfaceSample, entry?: SelectSurfaceSourceCase) {
+function settledSingleSelectionCall(
+  original: SelectSurfaceProducerCall,
+  actual: readonly SelectSurfaceProducerCall[],
+  prefix: readonly SelectSurfaceProducerCall[],
+  sample: SelectSurfaceSample,
+  entry?: SelectSurfaceSourceCase
+) {
   if (!entry || sample.control !== 'select' || sample.mode || original.side !== 'own'
     || !['classNames', 'styles'].includes(original.kind)) {
     return false;
@@ -249,9 +259,13 @@ function settledSingleSelectionCall(original: SelectSurfaceProducerCall,
   return false;
 }
 /** CSR schedules may repeat pure passes; compare both complete semantic invocation sets. */
-export function verifySelectSurfaceCSRCalls(actual: readonly SelectSurfaceProducerCall[],
-  source: readonly SelectSurfaceProducerCall[], sample: SelectSurfaceSample, label: string,
-  entry?: SelectSurfaceSourceCase) {
+export function verifySelectSurfaceCSRCalls(
+  actual: readonly SelectSurfaceProducerCall[],
+  source: readonly SelectSurfaceProducerCall[],
+  sample: SelectSurfaceSample,
+  label: string,
+  entry?: SelectSurfaceSourceCase
+) {
   for (const call of actual) {
     const original = source.find(candidate => sameInvocation(call, candidate, sample));
     assert(
@@ -273,11 +287,17 @@ const paintProperties = ['color', 'backgroundColor', 'fontSize', 'fontStyle', 'f
   'visibility', 'opacity', 'height', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
   'borderTopColor', 'borderTopStyle', 'borderTopWidth', 'outlineStyle'] as const;
 function attributes(node: SurfaceNode) { return Object.fromEntries(node.attributes); }
-export function verifySelectSurfaceNode(actual: SurfaceNode, source: SurfaceNode, slot: string,
+export function verifySelectSurfaceNode(
+  actual: SurfaceNode,
+  source: SurfaceNode,
+  slot: string,
   sample: Pick<SelectSurfaceSample, 'control'> & Partial<Pick<SelectSurfaceSample, 'mode'>>,
-  legacyClasses: readonly string[], label: string, authoredStyle: string,
+  legacyClasses: readonly string[],
+  label: string,
+  authoredStyle: string,
   native?: { callerLabel?: unknown; inputLayout?: ReturnType<typeof readNativeSurfaceTopology>['editorLayout'];
-    raw?: SelectSurfaceSnapshot['raw']['slots'][string][number] }) {
+    raw?: SelectSurfaceSnapshot['raw']['slots'][string][number] }
+) {
   const mapped = legacyTags[slot];
   assert.equal(
     actual.tag,
@@ -413,8 +433,12 @@ export function verifySelectSurfaceNode(actual: SurfaceNode, source: SurfaceNode
   );
 }
 /** Existing default Select removes its hidden popup; custom popupRender retains its DOM. */
-export function nativeSelectPopupUnmounted(actual: ReturnType<typeof readSelectSurface>, source: ReturnType<typeof readSelectSurface>,
-  control: 'select' | 'autocomplete', authored: Record<string, unknown>) {
+export function nativeSelectPopupUnmounted(
+  actual: ReturnType<typeof readSelectSurface>,
+  source: ReturnType<typeof readSelectSurface>,
+  control: 'select' | 'autocomplete',
+  authored: Record<string, unknown>
+) {
   const unmounted = control === 'select' && authored.popupRender === undefined
     && source.view.popup.present && !actual.view.popup.present;
   if (unmounted) {
@@ -451,8 +475,14 @@ function normalizedProvider(value: unknown) {
   return provider;
 }
 
-export function verifySelectSurfacePoint(actual: NativeSurfaceSnapshot, source: SelectSurfaceSnapshot & { action?: SelectSurfaceAction },
-  entry: SelectSurfaceSourceCase, sample: SelectSurfaceSample, label: string, _initial: boolean) {
+export function verifySelectSurfacePoint(
+  actual: NativeSurfaceSnapshot,
+  source: SelectSurfaceSnapshot & { action?: SelectSurfaceAction },
+  entry: SelectSurfaceSourceCase,
+  sample: SelectSurfaceSample,
+  label: string,
+  _initial: boolean
+) {
   assert.equal(actual.owner.alive, true, `${label} mounted owner`);
   assert.deepEqual(
     decodeSelectSurface(actual.owner.settings),
@@ -544,7 +574,9 @@ export function verifySelectSurfacePoint(actual: NativeSurfaceSnapshot, source: 
     assert.equal(actual.owner.open, false, `${label} Tab closes the owner`);
     assert.equal(actual.dom.view.focus, 'outside', `${label} natural Native Tab exit`);
   }
-  else assert.equal(actual.dom.view.focus, source.view.focus, `${label} real focus target`);
+  else {
+    assert.equal(actual.dom.view.focus, source.view.focus, `${label} real focus target`);
+  }
   let editor = source.view.editor;
   if (sample.control === 'select' && !sample.mode && (editor.expanded === 'false' || editor.readonly)) {
     assert.equal(editor.value, '', `${label} original empty single search editor`);

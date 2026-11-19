@@ -79,8 +79,12 @@ export function createTabsPaneMotion(
         if (active && current === revision) config?.onVisibleChanged?.(visible);
       };
       // CSS end callbacks завершаются до passive notification; без motion хватит DOM commit.
-      if (passive) visibleTimer = view.setTimeout(notify, 0);
-      else queueMicrotask(notify);
+      if (passive) {
+        visibleTimer = view.setTimeout(notify, 0);
+      }
+      else {
+        queueMicrotask(notify);
+      }
     }
     notified = true;
   }
@@ -173,7 +177,9 @@ export function createTabsPaneMotion(
       seenVisible ||= next;
 
       if (previous === next) {
-        if (status && (!allowed() || !supported() && step !== 'prepare')) finish();
+        if (status && (!allowed() || !supported() && step !== 'prepare')) {
+          finish();
+        }
         else if (status) update();
         return;
       }
@@ -213,7 +219,9 @@ export function createTabsPaneMotion(
           });
         });
       }
-      else start();
+      else {
+        start();
+      }
     },
     destroy() {
       active = false;

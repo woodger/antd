@@ -25,9 +25,12 @@ export async function settleSelectSurfaceHydration(page: Page): Promise<NativeSt
   }
   throw Error('Hydrated surface styles and public owner did not settle');
 }
-export function verifySelectSurfaceHydrationPoint(actual: NativeStyleHistoryPoint,
+export function verifySelectSurfaceHydrationPoint(
+  actual: NativeStyleHistoryPoint,
   original: SelectSurfaceHydrationSourceCase['initial'] | SelectSurfaceHydrationSourceCase['steps'][number],
-  entry: SelectSurfaceHydrationSourceCase, label: string) {
+  entry: SelectSurfaceHydrationSourceCase,
+  label: string
+) {
   assert.deepEqual({ phase: actual.owner.phase, open: actual.owner.open, model: actual.owner.model,
     rawModel: actual.owner.rawModel, maps: actual.owner.maps },
   { phase: original.owner.phase, open: original.owner.open, model: original.owner.model,

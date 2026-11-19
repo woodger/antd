@@ -47,7 +47,11 @@ export function carouselSwipeDirection(
   return verticalSwiping ? angle >= 35 && angle <= 135 ? 'up' : 'down' : 'vertical';
 }
 
-export function carouselSwipeMove(spec: CarouselSwipeSpec, x: number, y: number): {
+export function carouselSwipeMove(
+  spec: CarouselSwipeSpec,
+  x: number,
+  y: number
+): {
   state?: CarouselSwipePatch;
   preventDefault: boolean;
   edge?: CarouselSwipeDirection;

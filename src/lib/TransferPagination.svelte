@@ -68,8 +68,12 @@
   function handleKeyUp(event: KeyboardEvent & { currentTarget: HTMLInputElement; }) {
     const value = read(event.currentTarget);
 
-    if (event.key === 'Enter') change(Number(value));
-    else if (event.key === 'ArrowUp') change(Number(value) - 1);
+    if (event.key === 'Enter') {
+      change(Number(value));
+    }
+    else if (event.key === 'ArrowUp') {
+      change(Number(value) - 1);
+    }
     else if (event.key === 'ArrowDown') change(Number(value) + 1);
   }
 </script>

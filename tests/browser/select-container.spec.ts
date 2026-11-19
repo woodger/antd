@@ -107,7 +107,9 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
       expect(await page.locator('#select-container-form').evaluate(node =>
         new FormData(node as HTMLFormElement).getAll('selected'))).toEqual(['alpha', 'beta']);
     }
-    else await expect(input).toHaveValue(component === 'select' ? 'Alpha' : 'alpha');
+    else {
+      await expect(input).toHaveValue(component === 'select' ? 'Alpha' : 'alpha');
+    }
   });
 
   test(`portal ${component} keeps keyboard selection, Escape and outside dismissal`, async ({ page }) => {

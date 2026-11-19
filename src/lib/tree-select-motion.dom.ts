@@ -91,8 +91,12 @@ export function createTreeSelectPopupMotion(
     const next = queue[queue.indexOf(step) + 1];
 
     if (step === 'prepare' && !preparing()) {
-      if (next === 'prepared' || !next) finish();
-      else advance(next);
+      if (next === 'prepared' || !next) {
+        finish();
+      }
+      else {
+        advance(next);
+      }
       return;
     }
 
@@ -102,7 +106,9 @@ export function createTreeSelectPopupMotion(
         if (!active || revision !== current) {
           return;
         }
-        if (next === 'prepared') finish();
+        if (next === 'prepared') {
+          finish();
+        }
         else if (next) advance(next);
       });
     });
@@ -154,7 +160,9 @@ export function createTreeSelectPopupMotion(
         if (!active || current !== revision) {
           return;
         }
-        if (status) process();
+        if (status) {
+          process();
+        }
         else if (seen) finish();
       });
     },

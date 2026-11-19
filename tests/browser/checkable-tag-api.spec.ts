@@ -36,10 +36,12 @@ for (const sample of reference.cases as CheckableTagApiCase[]) {
     await expect(page.getByRole('status', { name: 'Checkable API checked' }))
       .toHaveText(String(sample.final.checked));
     await expect(tag).toHaveCount(sample.final.mounted ? 1 : 0);
-    if (sample.final.mounted)
+    if (sample.final.mounted) {
       await expect(tag).toHaveAttribute('aria-pressed', String(sample.final.checked));
-    else
+    }
+    else {
       await expect(page.getByRole('status', { name: 'Checkable API ref' })).toHaveText('empty');
+    }
   });
 }
 

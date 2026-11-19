@@ -38,8 +38,12 @@ export async function actSelectSurfaceContext(page: Page, action: SelectSurfaceC
     });
     try { await root.asElement()!.click(); } finally { await root.dispose(); }
   }
-  else if (action.type === 'fill') await page.getByLabel('Inside context input', { exact: true }).fill(action.text);
-  else if (action.type === 'outside') await page.locator('[data-surface-context-outside]').click();
+  else if (action.type === 'fill') {
+    await page.getByLabel('Inside context input', { exact: true }).fill(action.text);
+  }
+  else if (action.type === 'outside') {
+    await page.locator('[data-surface-context-outside]').click();
+  }
   else {
     await page.evaluate(action => document.querySelector('[data-surface-context-command]')!
       .dispatchEvent(new CustomEvent('contextupdate', { detail: action })), action);

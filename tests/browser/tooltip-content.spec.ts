@@ -48,8 +48,12 @@ for (const source of [false, true]) {
               .evaluate(node => (node as HTMLButtonElement).click());
           }
           await expect(page.getByLabel('Cache step', { exact: true })).toHaveText(frame.step);
-          if (frame.open) await expect(popup).toBeVisible();
-          else await expect(popup).toBeHidden();
+          if (frame.open) {
+            await expect(popup).toBeVisible();
+          }
+          else {
+            await expect(popup).toBeHidden();
+          }
 
           if (frame.step !== 'initial') {
             await expect(content).toHaveText(frame.snapshot.text ?? '');

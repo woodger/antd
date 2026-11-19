@@ -133,7 +133,9 @@ export function createModal() {
       running: new Set(),
       resolve
     };
-    if (state === 'detached') resolve(false);
+    if (state === 'detached') {
+      resolve(false);
+    }
     else {
       entries.set(entry.view.id, entry);
       publish();

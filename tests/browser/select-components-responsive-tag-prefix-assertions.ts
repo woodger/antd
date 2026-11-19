@@ -15,8 +15,12 @@ import { verifyResponsiveTagPrefixLabel, verifyResponsiveTagPrefixSingleTag, typ
 const keys = ['label', 'value', 'index', 'disabled', 'closable', 'onClose', 'isMaxTag'];
 const undefinedValue = { $: 'undefined' };
 export interface ResponsiveTagPrefixPointScope { id: string; index: number; path: 'csr'; renderer?: ResponsiveTagPrefixRenderer; applied?: Set<string> }
-export function verifyResponsiveTagPrefixSelection(actual: SelectCustomTagPrefixNode, source: SelectCustomTagPrefixNode,
-  label: string, scope?: ResponsiveTagPrefixPointScope) {
+export function verifyResponsiveTagPrefixSelection(
+  actual: SelectCustomTagPrefixNode,
+  source: SelectCustomTagPrefixNode,
+  label: string,
+  scope?: ResponsiveTagPrefixPointScope
+) {
   if (isDeepStrictEqual(actual.selection, source.selection)) {
     return;
   }
@@ -152,8 +156,12 @@ export function verifyResponsiveTagPrefixTagCalls(
 /** This is deliberately strict before the paired Native geometry/anchor review.
  * Any compiler DOM/markup difference remains a reported failure and full raw.
  */
-export function verifyResponsiveTagPrefixPhysicalNode(actual: SelectCustomTagPrefixNode | null, source: SelectCustomTagPrefixNode | null, label: string,
-  scope?: ResponsiveTagPrefixPointScope) {
+export function verifyResponsiveTagPrefixPhysicalNode(
+  actual: SelectCustomTagPrefixNode | null,
+  source: SelectCustomTagPrefixNode | null,
+  label: string,
+  scope?: ResponsiveTagPrefixPointScope
+) {
   assert.equal(Boolean(actual), Boolean(source), label + ' physical presence');
   if (!actual || !source) {
     return;
@@ -205,8 +213,12 @@ export function verifyResponsiveTagPrefixPhysicalNode(actual: SelectCustomTagPre
     label + ' every physical child type/tag/text including anchors'
   );
 }
-export function verifyResponsiveTagPrefixPoint(actual: ResponsiveTagPrefixNativePoint | ResponsiveTagPrefixSourcePoint,
-  source: ResponsiveTagPrefixSourcePoint, label: string, scope?: ResponsiveTagPrefixPointScope): string[] {
+export function verifyResponsiveTagPrefixPoint(
+  actual: ResponsiveTagPrefixNativePoint | ResponsiveTagPrefixSourcePoint,
+  source: ResponsiveTagPrefixSourcePoint,
+  label: string,
+  scope?: ResponsiveTagPrefixPointScope
+): string[] {
   const failures: string[] = [], check = (name: string, work: () => void) => {
     try {
     work();
@@ -317,8 +329,13 @@ export function verifyResponsiveTagPrefixPoint(actual: ResponsiveTagPrefixNative
   });
   return failures;
 }
-export function verifyResponsiveTagPrefixLedger(actual: ResponsiveTagPrefixNativeLedger, source: ResponsiveTagPrefixCSRCase,
-  point: ResponsiveTagPrefixSourcePoint, label: string, applied?: Set<string>): string[] {
+export function verifyResponsiveTagPrefixLedger(
+  actual: ResponsiveTagPrefixNativeLedger,
+  source: ResponsiveTagPrefixCSRCase,
+  point: ResponsiveTagPrefixSourcePoint,
+  label: string,
+  applied?: Set<string>
+): string[] {
   const failures: string[] = [], check = (name: string, work: () => void) => {
     try {
     work();

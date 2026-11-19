@@ -38,8 +38,12 @@
   function request(name: string): NonNullable<UploadProps['customRequest']> {
     return options => {
       record(`request:${name}:${options.file.name}`);
-      if (hold) pending.push({ name, options });
-      else options.onSuccess?.({ ok: name });
+      if (hold) {
+        pending.push({ name, options });
+      }
+      else {
+        options.onSuccess?.({ ok: name });
+      }
 
       return { abort: () => record(`abort:${name}`) };
     };

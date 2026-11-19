@@ -62,7 +62,9 @@
   }
   $effect.pre(() => {
     const getter = context.getPopupContainer;
-    if (!getter) popupContainer = undefined;
+    if (!getter) {
+      popupContainer = undefined;
+    }
     // Обычное Menu открывает Trigger после RAF; forceRender допускает первый undefined.
     else if (context.forceRender && !title && !getter.length) resolveContainer(undefined);
   });
@@ -93,8 +95,12 @@
       try {
         context.keydown(event as KeyboardEvent & { currentTarget: HTMLUListElement; });
       } finally {
-        if (descriptor) Object.defineProperty(event, 'currentTarget', descriptor);
-        else Reflect.deleteProperty(event, 'currentTarget');
+        if (descriptor) {
+          Object.defineProperty(event, 'currentTarget', descriptor);
+        }
+        else {
+          Reflect.deleteProperty(event, 'currentTarget');
+        }
       }
     });
     // Svelte сначала вызывает delegated child handlers внутри ShadowRoot, сохраняя domEvent.target.

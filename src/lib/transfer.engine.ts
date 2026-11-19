@@ -28,8 +28,12 @@ export function transferData<RecordType extends object>(
   for (const record of all) {
     const index = targets.get(transferKey(record));
 
-    if (index === undefined) left.push(record);
-    else right[index] = record;
+    if (index === undefined) {
+      left.push(record);
+    }
+    else {
+      right[index] = record;
+    }
   }
 
   return { all, left, right: right.filter((record): record is RecordType => record !== undefined) };
@@ -126,8 +130,12 @@ export function transferSelectRange(
   const add = range.some(key => !next.has(key));
 
   for (const key of range) {
-    if (add) next.add(key);
-    else next.delete(key);
+    if (add) {
+      next.add(key);
+    }
+    else {
+      next.delete(key);
+    }
   }
 
   return { selected: [...next], anchor: add ? end : null };

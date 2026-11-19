@@ -51,8 +51,12 @@ it.each(reference.ssr)('renders $id with inherited feedback and only the Native 
     const editor = inputs.find(tag => /\bdata-form-components-editor(?:[=\s>])/.test(tag))!;
     expect(editor).toBeDefined();
     expect(editor).not.toMatch(/\sname=/);
-    if (entry.view.id) expect(editor).toContain(`id="${entry.view.id}"`);
-    else expect(editor).not.toMatch(/\sid=/);
+    if (entry.view.id) {
+      expect(editor).toContain(`id="${entry.view.id}"`);
+    }
+    else {
+      expect(editor).not.toMatch(/\sid=/);
+    }
     expect(editor).toContain(`aria-required="${entry.view.aria.required}"`);
     expect(entry.view.aria.describedBy).toBe('choice_help');
     expect(editor).toContain('aria-describedby="choice-help"');

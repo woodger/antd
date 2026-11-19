@@ -25,7 +25,9 @@ for (const sample of reference.cases) {
       await page.locator('#table-row-scope-control tbody tr.ant-table-row').first()
         .locator('.user-row-header').hover();
     }
-    else await page.mouse.move(1200, 700);
+    else {
+      await page.mouse.move(1200, 700);
+    }
 
     const layered = sample.name.startsWith('fixed');
     // Scope сверяется у всех ячеек, оформление — у переносимой колонки.

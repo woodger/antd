@@ -69,8 +69,12 @@ function sameRaw(actual: unknown, source: unknown, proof: Bindings, boundary?: C
   const a = object(actual), s = object(source), seen = new Set<number>(), original = new Set<number>();
   function value(left: unknown, right: unknown) {
     if (left === null || right === null || typeof left !== 'object' || typeof right !== 'object') {
-      if (typeof left === 'number' && typeof right === 'number') assert(left === right);
-      else assert.deepEqual(left, right);
+      if (typeof left === 'number' && typeof right === 'number') {
+        assert(left === right);
+      }
+      else {
+        assert.deepEqual(left, right);
+      }
       return;
     }
     assert.equal(Array.isArray(left), Array.isArray(right));
@@ -108,10 +112,14 @@ function sameRaw(actual: unknown, source: unknown, proof: Bindings, boundary?: C
             assert.deepEqual(other.value, { $: 'undefined' });
             assert.equal(row.value, row.key === '0' ? null : '');
           }
-          else value(row, other);
+          else {
+            value(row, other);
+          }
         }
       }
-      else value(l[key], r[key]);
+      else {
+        value(l[key], r[key]);
+      }
     }
   }
   value(a.root, s.root);
@@ -141,7 +149,9 @@ function validateDate(date: MaskSourceDate, owner: MaskSourceOwner) {
         'Original JSON nonfinite field and strict raw numeric codec'
       );
     }
-    else assert.deepEqual(field, raw, 'Full raw Date field ' + key);
+    else {
+      assert.deepEqual(field, raw, 'Full raw Date field ' + key);
+    }
   }
   assert.equal(rawAt(date.raw, ['$L']), date.temporal.locale);
   if (date.temporal.valid) {
@@ -150,7 +160,9 @@ function validateDate(date: MaskSourceDate, owner: MaskSourceOwner) {
       date.temporal.iso
     );
   }
-  else assert.equal(date.temporal.iso, null);
+  else {
+    assert.equal(date.temporal.iso, null);
+  }
   assert.deepEqual(Object.keys(date.sameAsAuthored), [...roles]);
   for (const role of roles) {
     assert.equal(
@@ -231,8 +243,12 @@ function receiver(actual: MaskSourceInvocation, source: MaskSourceInvocation) {
 }
 function producerReceiver(actual: MaskSourceProducer, source: MaskSourceProducer) {
   if (source.name === 'disabledDate') {
-    if (actual.receiver.type === 'undefined') assert.deepEqual(actual.receiver, source.receiver);
-    else receiver(actual, source);
+    if (actual.receiver.type === 'undefined') {
+      assert.deepEqual(actual.receiver, source.receiver);
+    }
+    else {
+      receiver(actual, source);
+    }
     return;
   }
   assert.equal(source.name, 'disabledTime');
@@ -241,8 +257,12 @@ function producerReceiver(actual: MaskSourceProducer, source: MaskSourceProducer
       source.receiver,
       { type: 'undefined', isUndefined: true, isNull: false, identity: null }
     );
-    if (actual.receiver.type === 'undefined') assert.deepEqual(actual.receiver, source.receiver);
-    else receiver(actual, source);
+    if (actual.receiver.type === 'undefined') {
+      assert.deepEqual(actual.receiver, source.receiver);
+    }
+    else {
+      receiver(actual, source);
+    }
     return;
   }
   for (const call of [actual, source]) {
@@ -252,8 +272,11 @@ function producerReceiver(actual: MaskSourceProducer, source: MaskSourceProducer
     assert(Number.isSafeInteger(call.receiver.identity) && call.receiver.identity! > 0);
   }
 }
-function calendarBoundary(actual: MaskSourceInvocation, source: MaskSourceInvocation,
-  owner: MaskSourceOwner): CalendarBoundary | undefined {
+function calendarBoundary(
+  actual: MaskSourceInvocation,
+  source: MaskSourceInvocation,
+  owner: MaskSourceOwner
+): CalendarBoundary | undefined {
   if (owner.kind !== 'single' || owner.family === 'time' || actual.name !== 'calendar') {
     return;
   }
@@ -371,8 +394,13 @@ export function observeMaskHydrationConstruction(point: NativeMaskPoint, proof: 
     }
   });
 }
-export function maskHydrationConstructionCaret(actual: NativeMaskPoint, source: MaskSourcePoint,
-  proof: MaskProof, variant: MaskSourceVariant, index: number) {
+export function maskHydrationConstructionCaret(
+  actual: NativeMaskPoint,
+  source: MaskSourcePoint,
+  proof: MaskProof,
+  variant: MaskSourceVariant,
+  index: number
+) {
   if (!actual.hydrationConstruction || proof.hydrationOrigin !== hydrationOriginKey(actual.hydrationConstruction)
     || proof.hydrationPristine.get(actual.inputs[index]?.identity) !== true
     || !nativeHydrationPristine(actual, index)) {
@@ -409,8 +437,14 @@ const hydrationFocusedLabels: Record<string, [number, number]> = {
   'step-3:before': [3, -1], 'step-3-substep-0:before': [3, 0],
   'step-3-substep-0:settled': [3, 0], 'step-3-substep-1:before': [3, 1]
 };
-function inheritedRangeFocusEvents(events: readonly Data[], start: unknown, end: unknown,
-  text: string, direction: unknown, native: boolean) {
+function inheritedRangeFocusEvents(
+  events: readonly Data[],
+  start: unknown,
+  end: unknown,
+  text: string,
+  direction: unknown,
+  native: boolean
+) {
   const signature: string[] = [];
   for (const event of events) {
     const target = native ? event.targetIdentity : event.target;
@@ -468,8 +502,14 @@ function inheritedRangeFocusEvents(events: readonly Data[], start: unknown, end:
   ] : ['start-enter-keydown,start-to-end-focusout,focusin-from-start-enter,source-inherited-enter-beforeinput,inherited-enter-keyup'];
   return expected.includes(signature.join(',')) ? ['start-enter-to-end-focus'] : null;
 }
-export function maskHydrationFocusedPrefixCaret(actual: NativeMaskPoint, source: MaskSourcePoint,
-  proof: MaskProof, variant: MaskSourceVariant, index: number, label: string) {
+export function maskHydrationFocusedPrefixCaret(
+  actual: NativeMaskPoint,
+  source: MaskSourcePoint,
+  proof: MaskProof,
+  variant: MaskSourceVariant,
+  index: number,
+  label: string
+) {
   const stage = hydrationFocusedLabels[label], origin = actual.hydrationConstruction;
   const input = actual.inputs[index], expected = source.inputs[index];
   if (!stage || index !== 1 || !actual.owner.alive || !source.owner.alive || !origin || origin.initialFormatProfile !== 'string'
@@ -562,7 +602,9 @@ export function verifyMaskLocalPoint(point: NativeMaskPoint, proof?: MaskProof) 
     assert.deepEqual(rawNode(owner.formatValue.raw, owner.formatValue.identity).authoredRole,
       { authoredFormat: owner.formatProfile });
   }
-  else assert.equal(owner.formatValue.identity, null);
+  else {
+    assert.equal(owner.formatValue.identity, null);
+  }
   const observedEvents = new Set(['pointerdown', 'mousedown', 'mouseup', 'click', 'mouseover', 'mouseout',
     'keydown', 'keyup', 'beforeinput', 'input', 'change', 'selectionchange', 'focusin', 'focusout', 'paste',
     'compositionstart', 'compositionupdate', 'compositionend']);
@@ -650,7 +692,9 @@ export function verifyMaskLocalPoint(point: NativeMaskPoint, proof?: MaskProof) 
       'Stable authored format object'
     );
   }
-  else proof.formats.set(owner.formatProfile, owner.formatValue.identity);
+  else {
+    proof.formats.set(owner.formatProfile, owner.formatValue.identity);
+  }
 }
 function focusKind(point: Pick<MaskSourcePoint, 'inputs' | 'focus'>) {
   if (!point.focus) {
@@ -746,8 +790,13 @@ function rawView(graph: unknown, path: Array<string | number>) {
   rawViews.add(value);
   return value;
 }
-export function compareMaskPoint(actual: NativeMaskPoint, source: MaskSourcePoint, proof: MaskProof,
-  variant: MaskSourceVariant, label: string): MaskDifference[] {
+export function compareMaskPoint(
+  actual: NativeMaskPoint,
+  source: MaskSourcePoint,
+  proof: MaskProof,
+  variant: MaskSourceVariant,
+  label: string
+): MaskDifference[] {
   const differences: MaskDifference[] = [];
   const check = (field: string, operation: () => void) => {
     try {
@@ -907,8 +956,13 @@ export function compareMaskPoint(actual: NativeMaskPoint, source: MaskSourcePoin
   proof.points++;
   return differences;
 }
-export function verifyMaskPoint(actual: NativeMaskPoint, source: MaskSourcePoint, proof: MaskProof,
-  variant: MaskSourceVariant, label: string) {
+export function verifyMaskPoint(
+  actual: NativeMaskPoint,
+  source: MaskSourcePoint,
+  proof: MaskProof,
+  variant: MaskSourceVariant,
+  label: string
+) {
   const differences = compareMaskPoint(actual, source, proof, variant, label);
   assert.deepEqual(differences, [], 'Mask public before/settled Source comparison');
 }
@@ -951,7 +1005,11 @@ function modelWindow(
   }
   return [points.at(-1)!];
 }
-function phasePoints(sample: MaskSample, phase: string, variant: MaskSourceVariant): MaskSourceOwner[] {
+function phasePoints(
+  sample: MaskSample,
+  phase: string,
+  variant: MaskSourceVariant
+): MaskSourceOwner[] {
   if (phase === 'initial') {
     return [readMaskSourceInitial(sample.id, variant).owner];
   }
@@ -993,8 +1051,12 @@ function producerSignature(call: MaskSourceProducer) {
       temporal: row.value.temporal, aliases: row.value.sameAsAuthored })),
     sharing: call.dates.map(a => call.dates.map(b => a.value.identity === b.value.identity)) });
 }
-function sourceFrame(sample: MaskSample, ordinal: number, variant: MaskSourceVariant,
-  pool: SourceWitnessPool): ProducerFrame {
+function sourceFrame(
+  sample: MaskSample,
+  ordinal: number,
+  variant: MaskSourceVariant,
+  pool: SourceWitnessPool
+): ProducerFrame {
   const existing = pool.frames.get(ordinal);
   if (existing) {
     return existing;
@@ -1022,8 +1084,12 @@ function compactModel(owner: MaskSourceOwner): MaskSourceOwner {
     authoredProps: null
   };
 }
-function sourceWitnesses(sample: MaskSample, phase: string, variant: MaskSourceVariant,
-  proof: MaskProducerProof): SourceWitnessPool {
+function sourceWitnesses(
+  sample: MaskSample,
+  phase: string,
+  variant: MaskSourceVariant,
+  proof: MaskProducerProof
+): SourceWitnessPool {
   let pool = proof.sourcePools.get(variant);
   if (!pool) {
     pool = { frontier: -1, limit: -1, refs: readMaskSourceProducerChunks(sample.id, variant),
@@ -1066,8 +1132,15 @@ function sourceWitnesses(sample: MaskSample, phase: string, variant: MaskSourceV
   }
   return pool;
 }
-function promotedCurrentModel(call: MaskSourceProducer, owner: MaskSourceOwner, witness: SourceWitness,
-  pool: SourceWitnessPool, proof: MaskProducerProof, publicProof: MaskProof, variant: MaskSourceVariant): MaskSourceOwner | null {
+function promotedCurrentModel(
+  call: MaskSourceProducer,
+  owner: MaskSourceOwner,
+  witness: SourceWitness,
+  pool: SourceWitnessPool,
+  proof: MaskProducerProof,
+  publicProof: MaskProof,
+  variant: MaskSourceVariant
+): MaskSourceOwner | null {
   if (call.name !== 'disabledTime' || call.actualArgumentCount !== 1 || owner.kind !== 'single'
     || !['datetime', 'time'].includes(owner.family) || witness.ordinal === 0 || pool.limit === 0) {
     return null;
@@ -1131,8 +1204,12 @@ export function createMaskProducerProof(sample: MaskSample) {
       actual: MaskSourceProducer; source: MaskSourceProducer; publicSourceIDs: Set<number> }> };
 }
 export type MaskProducerProof = ReturnType<typeof createMaskProducerProof>;
-function producerLocal(call: MaskSourceProducer, index: number, owner: MaskSourceOwner,
-  proof: MaskProducerProof) {
+function producerLocal(
+  call: MaskSourceProducer,
+  index: number,
+  owner: MaskSourceOwner,
+  proof: MaskProducerProof
+) {
   validateInvocation(call, index, owner);
   assert(call.name === 'disabledDate' || call.name === 'disabledTime');
   if (call.receiver.type === 'undefined') {
@@ -1168,9 +1245,14 @@ function producerLocal(call: MaskSourceProducer, index: number, owner: MaskSourc
     );
   }
 }
-export function compareMaskProducerChunk(chunk: MaskSourceProducerChunk, phaseOwners: readonly MaskSourceOwner[],
-  proof: MaskProducerProof, publicProof: MaskProof, label: string,
-  compareSource = true): MaskDifference[] {
+export function compareMaskProducerChunk(
+  chunk: MaskSourceProducerChunk,
+  phaseOwners: readonly MaskSourceOwner[],
+  proof: MaskProducerProof,
+  publicProof: MaskProof,
+  label: string,
+  compareSource = true
+): MaskDifference[] {
   const differences: MaskDifference[] = [];
   const check = (field: string, operation: () => void, variant?: MaskSourceVariant) => {
     try {
@@ -1323,7 +1405,10 @@ export function compareMaskProducerChunk(chunk: MaskSourceProducerChunk, phaseOw
   proof.chunks++;
   return differences;
 }
-export function verifyMaskProducerPublicAliases(proof: MaskProducerProof, publicProof: MaskProof): MaskDifference[] {
+export function verifyMaskProducerPublicAliases(
+  proof: MaskProducerProof,
+  publicProof: MaskProof
+): MaskDifference[] {
   const differences: MaskDifference[] = [];
   for (const pair of proof.pendingAliases) {
     try {

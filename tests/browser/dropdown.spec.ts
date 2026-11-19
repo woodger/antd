@@ -605,11 +605,15 @@ for (const placement of ['top', 'topLeft', 'topRight', 'bottom', 'bottomLeft', '
 
       expect(bounds.width).toBeGreaterThanOrEqual(anchor.width - 1);
 
-      if (placement.startsWith('top'))
+      if (placement.startsWith('top')) {
         expect(bounds.y + bounds.height).toBeLessThanOrEqual(anchor.y - 7);
-      else
+      }
+      else {
         expect(bounds.y).toBeGreaterThanOrEqual(anchor.y + anchor.height + 7);
-      if (placement.endsWith('Left')) expect(Math.abs(bounds.x - anchor.x)).toBeLessThan(1);
+      }
+      if (placement.endsWith('Left')) {
+        expect(Math.abs(bounds.x - anchor.x)).toBeLessThan(1);
+      }
       else if (placement.endsWith('Right')) {
         expect(Math.abs(bounds.x + bounds.width - anchor.x - anchor.width))
           .toBeLessThan(1);

@@ -55,8 +55,12 @@ export function connectFeedbackFocus(
 
     if (host.isConnected) {
       const next = [...host.querySelectorAll<HTMLElement>(focusable)].find(available);
-      if (next)
-        next.focus({ preventScroll: true }); else focusAfterNotice(host, true);
+      if (next) {
+        next.focus({ preventScroll: true });
+      }
+      else {
+        focusAfterNotice(host, true);
+      }
     }
     else {
       candidates.find(

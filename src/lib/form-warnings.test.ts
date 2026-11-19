@@ -144,9 +144,15 @@ describe('createForm warningOnly', () => {
       });
       const validation = form.validateFields().catch((error: unknown) => error);
 
-      if (operation === 'write') form.setFieldValue('name', 'Bob');
-      else if (operation === 'reset') form.resetFields();
-      else unregister();
+      if (operation === 'write') {
+        form.setFieldValue('name', 'Bob');
+      }
+      else if (operation === 'reset') {
+        form.resetFields();
+      }
+      else {
+        unregister();
+      }
 
       pending.resolve('Stale warning');
       const error = await validation;

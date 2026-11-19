@@ -18,8 +18,12 @@ async function act(page: Page, action: TreeSelectSuffixLayoutAction) {
   if (action.type === 'resize' || action.type === 'prefix-resize' || action.type === 'rest-resize' || action.type === 'value') {
     await command(page, action);
   }
-  else if (action.type === 'fill') await field.fill(action.text);
-  else if (action.type === 'focus') await field.focus();
+  else if (action.type === 'fill') {
+    await field.fill(action.text);
+  }
+  else if (action.type === 'focus') {
+    await field.focus();
+  }
   else if (action.type === 'caret') {
     await field.evaluate((node, range) => {
       if (node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement) {
@@ -28,7 +32,9 @@ async function act(page: Page, action: TreeSelectSuffixLayoutAction) {
           range.end
         );
       }
-      else throw new TypeError('Suffix layout editor must be an input or textarea');
+      else {
+        throw new TypeError('Suffix layout editor must be an input or textarea');
+      }
     }, action);
   }
   else if (action.type === 'outside') {

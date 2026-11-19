@@ -28,7 +28,8 @@ export function genAlphaColor(color: AggregationColor, alpha?: number): Aggregat
 
 /** Интерполяция повторяет rc-color: RGB integer и alpha с двумя десятичными знаками. */
 export function getGradientPercentColor(
-  colors: readonly { percent: number; color: string; }[], percent: number
+  colors: readonly { percent: number; color: string; }[],
+  percent: number
 ): string {
   const points = [{ percent: 0, color: colors[0].color }, ...colors,
     { percent: 100, color: colors[colors.length - 1].color }];
@@ -74,7 +75,9 @@ export function fillPickerColor(
       submit = generateColor({ h: info.type === 'hue' ? info.value ?? 0 : 0,
         s: 1, b: 1, a: info.type === 'alpha' ? (info.value ?? 0) / 100 : 1 });
     }
-    else submit = genAlphaColor(submit);
+    else {
+      submit = genAlphaColor(submit);
+    }
   }
   if (mode === 'single') {
     return submit;

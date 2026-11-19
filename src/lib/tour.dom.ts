@@ -118,8 +118,12 @@ export function connectTourLayout(
     popup.style.bottom = '0';
     const mirror = popup.getBoundingClientRect();
     for (const [name, value, priority] of saved) {
-      if (value) popup.style.setProperty(name, value, priority);
-      else popup.style.removeProperty(name);
+      if (value) {
+        popup.style.setProperty(name, value, priority);
+      }
+      else {
+        popup.style.removeProperty(name);
+      }
     }
     dummy.remove();
     if (!scaleX || !scaleY || !placeholder.getClientRects().length) {

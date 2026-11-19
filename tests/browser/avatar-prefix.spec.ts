@@ -40,8 +40,12 @@ for (const name of ['reactive-text', 'reactive-snippet']) {
     const root = page.locator('#avatar-api-surface > span');
     const target = name === 'reactive-snippet'
       ? root.getByRole('textbox', { name: 'Caller Avatar draft' }) : root;
-    if (name === 'reactive-snippet') await target.fill('Owner draft');
-    else await target.focus();
+    if (name === 'reactive-snippet') {
+      await target.fill('Owner draft');
+    }
+    else {
+      await target.focus();
+    }
     const original = await target.elementHandle();
     await page.getByRole('button', { name: 'Change Avatar prefix props' }).dispatchEvent('click');
 

@@ -2,7 +2,10 @@ import type { SelectDataFields, SelectDataRow, SelectDataValue } from './select-
 
 /** Native Snippet group label не участвует в поиске; остальные поля следуют Source matching. */
 export function autoCompleteMatchesData(
-  search: string, option: object, fields: SelectDataFields, group: boolean
+  search: string,
+  option: object,
+  fields: SelectDataFields,
+  group: boolean
 ) {
   const field = group ? fields.label === 'children' ? 'label' : fields.label : fields.value;
   const value: unknown = Reflect.get(option, field);
@@ -12,7 +15,9 @@ export function autoCompleteMatchesData(
 }
 
 export function autoCompleteNext<Value extends SelectDataValue, Data extends object>(
-  entries: readonly SelectDataRow<Value, Data>[], current: number, offset: number
+  entries: readonly SelectDataRow<Value, Data>[],
+  current: number,
+  offset: number
 ): number {
   for (let step = 1; step <= entries.length; step++) {
     const index = ((current + offset * step) % entries.length + entries.length) % entries.length;

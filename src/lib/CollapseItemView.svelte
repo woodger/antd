@@ -62,7 +62,9 @@
   }
 
   function handleToggle(event: MouseEvent) {
-    if (parent) parent.toggle(item.key, event, item);
+    if (parent) {
+      parent.toggle(item.key, event, item);
+    }
     else if (!event.defaultPrevented && mode !== 'disabled') item.onItemClick?.(item.key);
   }
 </script>

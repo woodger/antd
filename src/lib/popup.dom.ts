@@ -135,7 +135,9 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     }
     const stack = openPopups.get(document) ?? [];
     const index = stack.indexOf(popup);
-    if (options.interactive === false && index !== -1) stack.splice(index, 1);
+    if (options.interactive === false && index !== -1) {
+      stack.splice(index, 1);
+    }
     else if (options.interactive !== false && index === -1) stack.push(popup);
     openPopups.set(document, stack);
 
@@ -292,7 +294,11 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
       hide();
     };
     // Custom trigger registrations can be briefly empty during a same-flush retarget.
-    if (retainSurface) queueMicrotask(release);
-    else release();
+    if (retainSurface) {
+      queueMicrotask(release);
+    }
+    else {
+      release();
+    }
   }, { forceAlign });
 }

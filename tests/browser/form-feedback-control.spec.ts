@@ -15,14 +15,18 @@ async function mount(page: Page, id: string) {
   await page.mouse.move(0, 0);
 }
 async function apply(page: Page, action: FeedbackAction, index: number) {
-  if (action === 'focus') await page.getByLabel('Feedback field', { exact: true }).focus();
+  if (action === 'focus') {
+    await page.getByLabel('Feedback field', { exact: true }).focus();
+  }
   else if (action === 'outside') {
     await page.getByRole(
       'button',
       { name: 'Outside feedback', exact: true }
     ).click();
   }
-  else if (action === 'clear') await page.locator('[data-feedback-control]').getByRole('button').first().click();
+  else if (action === 'clear') {
+    await page.locator('[data-feedback-control]').getByRole('button').first().click();
+  }
   else {
     await page.getByRole('combobox', { name: 'Feedback action', exact: true }).selectOption(String(index));
     await page.getByRole('button', { name: 'Apply feedback action', exact: true }).dispatchEvent('click');

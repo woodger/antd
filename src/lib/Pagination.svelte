@@ -262,8 +262,12 @@
 
   function handleSimpleKey(event: KeyboardEvent & { currentTarget: HTMLInputElement; }) {
     const value = Number(readSimple(event.currentTarget));
-    if (event.key === 'Enter') void changePage(value);
-    else if (event.key === 'ArrowUp') void changePage(value - 1);
+    if (event.key === 'Enter') {
+      void changePage(value);
+    }
+    else if (event.key === 'ArrowUp') {
+      void changePage(value - 1);
+    }
     else if (event.key === 'ArrowDown') void changePage(value + 1);
   }
 

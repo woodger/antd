@@ -129,8 +129,12 @@
   }
   function propsFor(): PassedProps {
     const props: PassedProps = {};
-    if (sample.owner === 'value') props.value = owned(model);
-    else props.defaultValue = owned(initial);
+    if (sample.owner === 'value') {
+      props.value = owned(model);
+    }
+    else {
+      props.defaultValue = owned(initial);
+    }
     if (sample.mode) props.mode = sample.mode;
     if (sample.tokens) props.tokenSeparators = [','];
     const fields = selectValueFieldNames(settings.dataset);
@@ -210,9 +214,15 @@
       searchOwner: { whileOpenCallback: true, whileClosedOwnUndefined: true } };
   }
   export function update(action: SelectValueAction) {
-    if (action.type === 'props') settings = { ...settings, ...action.set };
-    else if (action.type === 'value') model = materializeSelectValue(action.value, rich);
-    else if (action.type === 'query') query = action.text;
+    if (action.type === 'props') {
+      settings = { ...settings, ...action.set };
+    }
+    else if (action.type === 'value') {
+      model = materializeSelectValue(action.value, rich);
+    }
+    else if (action.type === 'query') {
+      query = action.text;
+    }
     else if (action.type === 'open') open = action.value;
   }
   export function readRefs() {

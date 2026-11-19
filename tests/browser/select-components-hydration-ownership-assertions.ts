@@ -33,8 +33,12 @@ const graphNode = (graph: Graph, value: unknown) => {
 };
 /** Exact actual 216 keydown /96 blur /54 free-option snapshot positions.
  * Only private comparison clones change; every original encoded/raw graph stays intact. */
-export function verifyOwnershipCallbacks(actual: Pick<HydrationOwnershipOwnerState, 'events' | 'rawEvents' | 'controlKey'>, source: Pick<HydrationOwnershipOwnerState, 'events' | 'rawEvents' | 'controlKey'>,
-  label: string, boundaries?: Set<string>) {
+export function verifyOwnershipCallbacks(
+  actual: Pick<HydrationOwnershipOwnerState, 'events' | 'rawEvents' | 'controlKey'>,
+  source: Pick<HydrationOwnershipOwnerState, 'events' | 'rawEvents' | 'controlKey'>,
+  label: string,
+  boundaries?: Set<string>
+) {
   assert.equal(actual.events.length, source.events.length);
   assert.equal(actual.rawEvents.length, source.rawEvents.length);
   assert.equal(actual.events.length, actual.rawEvents.length);
@@ -113,8 +117,14 @@ export function verifyOwnershipCallbacks(actual: Pick<HydrationOwnershipOwnerSta
     verifySelectSurfaceEventGraph(nativeRaw, graph, label + '/raw/' + index);
   }
 }
-function exactCommitTuple(actual: HydrationOwnershipNode, source: HydrationOwnershipNode,
-  entry: HydrationOwnershipSourceCase, key: string, phase: string, boundaries?: Set<string>) {
+function exactCommitTuple(
+  actual: HydrationOwnershipNode,
+  source: HydrationOwnershipNode,
+  entry: HydrationOwnershipSourceCase,
+  key: string,
+  phase: string,
+  boundaries?: Set<string>
+) {
   if (actual.value === source.value && isDeepStrictEqual(actual.selection, source.selection)) {
     return false;
   }
@@ -140,8 +150,13 @@ function exactCommitTuple(actual: HydrationOwnershipNode, source: HydrationOwner
   return true;
 }
 
-export function verifyHydrationOwnershipPoint(actual: HydrationOwnershipPoint, source: HydrationOwnershipPoint,
-  entry: HydrationOwnershipSourceCase, phase: string, boundaries?: Set<string>) {
+export function verifyHydrationOwnershipPoint(
+  actual: HydrationOwnershipPoint,
+  source: HydrationOwnershipPoint,
+  entry: HydrationOwnershipSourceCase,
+  phase: string,
+  boundaries?: Set<string>
+) {
   const failures: string[] = [];
   const check = (name: string, work: () => void) => {
     try {

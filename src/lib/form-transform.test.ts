@@ -22,7 +22,9 @@ describe('Form validation rule transform', () => {
         expect(entry.valid).toBe(true);
         expect(result).toEqual({ errors: ['Rejected'], warnings: [] });
       }
-      else expect(result).toEqual({ errors: entry.errors, warnings: entry.warnings });
+      else {
+        expect(result).toEqual({ errors: entry.errors, warnings: entry.warnings });
+      }
       expect(JSON.parse(JSON.stringify(calls))).toEqual(entry.calls);
     });
   }

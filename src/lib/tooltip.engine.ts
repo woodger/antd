@@ -26,7 +26,10 @@ export function getTooltipActions(
 }
 
 /** Ant Design memoOverlay: 0 в title приоритетнее даже truthy legacy overlay. */
-export function getTooltipContent(title?: TooltipContent, overlay?: TooltipContent): TooltipContent {
+export function getTooltipContent(
+  title?: TooltipContent,
+  overlay?: TooltipContent
+): TooltipContent {
   return title === 0 ? title : overlay || title || '';
 }
 

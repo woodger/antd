@@ -270,8 +270,12 @@ for (const mode of ['reduced motion', 'theme motion'] as const) {
     await expect(popup).toHaveClass(/ant-slide-up-leave-active/);
     await popup.evaluate(node => node.getAnimations().forEach(animation => animation.pause()));
 
-    if (mode === 'reduced motion') await page.emulateMedia({ reducedMotion: 'reduce' });
-    else await check(page, 'Runtime motion', false);
+    if (mode === 'reduced motion') {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+    }
+    else {
+      await check(page, 'Runtime motion', false);
+    }
 
     await expect(popup).toHaveCount(0);
     await expect(page.getByLabel('Runtime More lifecycle', { exact: true }))

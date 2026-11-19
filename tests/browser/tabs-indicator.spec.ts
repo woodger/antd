@@ -43,9 +43,12 @@ for (const expected of reference.cases) {
       const fields = ['width', 'height', 'left', 'right', 'top', 'transform'] as const;
       return Object.fromEntries(fields.map(field => [field, element.style[field]]));
     })).toEqual(expected.style);
-    if (expected.bounds.width === 0 || expected.bounds.height === 0)
+    if (expected.bounds.width === 0 || expected.bounds.height === 0) {
       await expect(ink(page)).toBeHidden();
-    else await expect(ink(page)).toBeVisible();
+    }
+    else {
+      await expect(ink(page)).toBeVisible();
+    }
     await expect.poll(() => ink(page).evaluate(async element => {
       await Promise.all(element.getAnimations().map(animation => animation.finished.catch(error => {
         if (!(error instanceof DOMException) || error.name !== 'AbortError') {

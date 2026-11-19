@@ -193,7 +193,9 @@ export function verifyEmptyDatetimeCallbacks(
       array(object(original.encodedArguments).properties).map(row => object(row).key));
     const singleCalendar = actual.owner.owner === 'single' && call.name === 'calendar';
     const emptyCalendar = singleCalendar && original.dates.length === 0;
-    if (emptyCalendar) verifyEmptyDatetimeSingleEmptyCalendarBoundary(call, original);
+    if (emptyCalendar) {
+      verifyEmptyDatetimeSingleEmptyCalendarBoundary(call, original);
+    }
     else if (singleCalendar) verifyEmptyDatetimeSingleCalendarInfoBoundary(call, original);
     for (const key of keys) {
       assert.equal(typeof key, 'string');

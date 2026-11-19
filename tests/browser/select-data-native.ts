@@ -94,7 +94,10 @@ export function selectDataMappedAriaFields(view: SelectDataView, sample: SelectD
   return changes;
 }
 /** Узкие доказанные Native поля; все Source events/model/query остаются целиком. */
-export function selectDataNativeView(view: SelectDataView, sample: SelectDataSample): SelectDataView {
+export function selectDataNativeView(
+  view: SelectDataView,
+  sample: SelectDataSample
+): SelectDataView {
   let result = view;
   const editor = view.editor;
   if (editor?.expanded === 'true' && editor.controls && editor.activeDescendant === `${editor.controls}_-1`) {

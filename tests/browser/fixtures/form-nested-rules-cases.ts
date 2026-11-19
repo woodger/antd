@@ -60,7 +60,8 @@ export function nestedRuleValue(sample: NestedRuleSample): unknown {
 }
 
 export function nestedRule(
-  desc: NestedRuleDescriptor, controller: ReturnType<typeof createNestedRuleController>
+  desc: NestedRuleDescriptor,
+  controller: ReturnType<typeof createNestedRuleController>
 ): ValidationRule {
   const { fields, defaultField, validator, transform, ...rest } = desc;
   const result: ValidationRule = { ...rest, type: desc.type as ValidationRuleType | undefined };

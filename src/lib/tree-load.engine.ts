@@ -38,9 +38,12 @@ export function createTreeLoader<Data extends object = TreeDataNode>(options: {
       const retry = (retries.get(key) ?? 0) + 1;
       retries.set(key, retry);
       options.setLoading(options.loading().filter(item => item !== key));
-      if (retry >= 10)
+      if (retry >= 10) {
         options.finish([...new Set([...options.loaded(), key])], node, false);
-      else options.fail(key);
+      }
+      else {
+        options.fail(key);
+      }
     }).finally(() => {
       pending.delete(key);
     });

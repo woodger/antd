@@ -73,7 +73,8 @@ export function treeSelectAlignNativeSSRExpected<View extends { root: {
   dir: string | null;
   role: string | null
 } }>(
-  source: View, sample: TreeSelectAlignSample
+  source: View,
+  sample: TreeSelectAlignSample
 ): View {
   const expected = structuredClone(source);
   if (!sample.slot?.startsWith('root-')) {

@@ -271,9 +271,12 @@ for (const [key, outcome] of [
       await expect(page.getByRole('status', { name: 'Slider completed', exact: true }))
         .toHaveText('[]');
 
-      if (key === 'F6') await expect(input).toHaveCount(0);
-      else
+      if (key === 'F6') {
+        await expect(input).toHaveCount(0);
+      }
+      else {
         await expect(input).toHaveValue(key === 'F4' ? '60' : key === 'F5' ? '50' : '80');
+      }
     }
   );
 }

@@ -123,10 +123,15 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
         }
         const elapsed = Date.now() - started;
         const top = anchorScrollFrame(elapsed, start, to);
-        if (target === view)
-          view.scrollTo(view.pageXOffset, top); else (target as HTMLElement).scrollTop = top;
-        if (elapsed < 450)
+        if (target === view) {
+          view.scrollTo(view.pageXOffset, top);
+        }
+        else {
+          (target as HTMLElement).scrollTop = top;
+        }
+        if (elapsed < 450) {
           frame = view.requestAnimationFrame(step);
+        }
         else {
           frame = undefined;
           animating = false;

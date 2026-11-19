@@ -8,8 +8,15 @@ import type { ResponsiveTagPrefixNativeCleanup } from './select-components-respo
 export type ResponsiveTagPrefixDisposalOwner = Pick<SelectCustomTagPrefixOwner, 'alive' | 'open' | 'query' | 'model' | 'settings' | 'context'
   | 'events' | 'rawEvents' | 'calls' | 'bodyActivity' | 'lifecycle'>;
 export type ResponsiveTagPrefixDisposalCleanup = Omit<ResponsiveTagPrefixNativeCleanup, 'owner'> & { owner: ResponsiveTagPrefixDisposalOwner };
-export function verifyResponsiveTagPrefixDisposal(before: ResponsiveTagPrefixDisposalOwner, cleanup: ResponsiveTagPrefixDisposalCleanup,
-  late: ResponsiveTagPrefixDisposalCleanup, focusoutProbe: unknown[], source: ResponsiveTagPrefixCSRCase, label: string, applied?: Set<string>) {
+export function verifyResponsiveTagPrefixDisposal(
+  before: ResponsiveTagPrefixDisposalOwner,
+  cleanup: ResponsiveTagPrefixDisposalCleanup,
+  late: ResponsiveTagPrefixDisposalCleanup,
+  focusoutProbe: unknown[],
+  source: ResponsiveTagPrefixCSRCase,
+  label: string,
+  applied?: Set<string>
+) {
   assert(['select-responsive-custom-tag-prefix-multiple', 'select-responsive-custom-tag-prefix-tags-fragment'].includes(source.id));
   assert.equal(source.steps.length, 9);
   assert.equal(source.ledger.events.length, 9);

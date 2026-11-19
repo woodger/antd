@@ -8,22 +8,30 @@ test.use({ viewport: reference.reference.viewport, hasTouch: true });
 async function apply(page: Page, sample: TreeSelectPointerSample, action: TreeSelectPointerAction) {
   const root = page.locator('[data-pointer-control] .ant-select').first();
   const input = page.getByRole('combobox', { name: 'Pointer selection', exact: true });
-  if (action === 'focus') await input.focus();
+  if (action === 'focus') {
+    await input.focus();
+  }
   else if (action === 'outside') {
     await page.getByRole(
       'button',
       { name: 'Outside pointer', exact: true }
     ).click();
   }
-  else if (action === 'query') await input.fill('Al');
+  else if (action === 'query') {
+    await input.fill('Al');
+  }
   else if (action === 'caret') {
     await input.evaluate(node => (node as HTMLInputElement).setSelectionRange(
       1,
       1
     ));
   }
-  else if (action === 'clear-click') await root.locator('.ant-select-clear').dispatchEvent('click');
-  else if (action === 'node-mousedown') await root.locator('.ant-select-dropdown [class*="-node-content-wrapper"]').filter({ hasText: 'Alpha' }).first().dispatchEvent('mousedown');
+  else if (action === 'clear-click') {
+    await root.locator('.ant-select-clear').dispatchEvent('click');
+  }
+  else if (action === 'node-mousedown') {
+    await root.locator('.ant-select-dropdown [class*="-node-content-wrapper"]').filter({ hasText: 'Alpha' }).first().dispatchEvent('mousedown');
+  }
   else if (action === 'draft') {
     await page.getByRole(
       'textbox',
@@ -61,8 +69,12 @@ async function apply(page: Page, sample: TreeSelectPointerSample, action: TreeSe
     const point = action === 'root' ? { x: box.x + 1, y: box.y + box.height / 2 }
       : action === 'content' || action === 'input' ? { x: box.x + 1, y: box.y + 1 }
         : { x: box.x + box.width / 2, y: box.y + box.height / 2 };
-    if (sample.touch) await page.touchscreen.tap(point.x, point.y);
-    else await page.mouse.click(point.x, point.y);
+    if (sample.touch) {
+      await page.touchscreen.tap(point.x, point.y);
+    }
+    else {
+      await page.mouse.click(point.x, point.y);
+    }
   }
 }
 for (const entry of reference.cases) {

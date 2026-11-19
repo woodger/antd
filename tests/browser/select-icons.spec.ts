@@ -98,17 +98,28 @@ for (const sample of selectIconSamples) test(`Select icon contracts match comple
           { action, index }
         );
       }
-      else if (action.type === 'click') await page.locator('[data-surface-case] .surface-control').click();
-      else if (action.type === 'outside') await page.locator('[data-surface-outside]').click();
-      else if (action.type === 'fill') await editor().fill(action.text);
+      else if (action.type === 'click') {
+        await page.locator('[data-surface-case] .surface-control').click();
+      }
+      else if (action.type === 'outside') {
+        await page.locator('[data-surface-outside]').click();
+      }
+      else if (action.type === 'fill') {
+        await editor().fill(action.text);
+      }
       else if (action.type === 'choose') {
         await page.locator('.ant-select-dropdown:visible .ant-select-item-option-content')
           .filter({ hasText: new RegExp('^' + action.text + '$') }).click();
       }
-      else if (action.type === 'remove') await page.locator('.ant-select-selection-item').filter({ hasText: action.value }).locator('.ant-select-selection-item-remove').click();
+      else if (action.type === 'remove') {
+        await page.locator('.ant-select-selection-item').filter({ hasText: action.value }).locator('.ant-select-selection-item-remove').click();
+      }
       else if (action.type === 'clear') {
         const clear = page.locator('.ant-select-clear');
-        if (action.activation === 'pointer') await clear.click(); else {
+        if (action.activation === 'pointer') {
+          await clear.click();
+        }
+        else {
           await clear.focus();
           await clear.press(action.activation);
         }
@@ -120,7 +131,9 @@ for (const sample of selectIconSamples) test(`Select icon contracts match comple
         }
         await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
       }
-      else throw Error('Unexpected action in the full icon corpus: ' + action.type);
+      else {
+        throw Error('Unexpected action in the full icon corpus: ' + action.type);
+      }
       await page.mouse.move(0, 0);
       await verify(step, repeat.steps[index], index + '/' + JSON.stringify(action));
     }

@@ -16,7 +16,8 @@ export function selectFields(fields?: SelectFieldNames): SelectDataFields {
 
 // Читает значение по настройке поля. Тип Value задаёт потребитель options.
 export function selectOptionValue<Value extends SelectDataValue = SelectDataValue>(
-  data: object, fields: SelectDataFields
+  data: object,
+  fields: SelectDataFields
 ) {
   return Reflect.get(data, fields.value) as Value | undefined;
 }
@@ -36,7 +37,10 @@ function optionKey(data: object, index: number): SelectScrollKey {
 // Сохраняет порядок строк и исходный объект для callbacks и пользовательского render.
 export function flattenSelectData<
   Value extends SelectDataValue = SelectDataValue, Data extends object = object
->(options: readonly Data[], fields: SelectDataFields): SelectDataRow<Value, Data>[] {
+>(
+  options: readonly Data[],
+  fields: SelectDataFields
+): SelectDataRow<Value, Data>[] {
   const rows: SelectDataRow<Value, Data>[] = [];
 
   // Заголовки групп создаются только на верхнем уровне, как в исходном списке.
@@ -85,8 +89,11 @@ function filterProperties(properties?: string | readonly string[]): readonly str
 // Разделяет обычный lookup по подписям и lookup только по собственным полям.
 export function collectSelectData<
   Value extends SelectDataValue = SelectDataValue, Data extends object = object
->(options: readonly Data[], fields: SelectDataFields,
-  optionFilterProp?: string | readonly string[], optionLabelProp?: string
+>(
+  options: readonly Data[],
+  fields: SelectDataFields,
+  optionFilterProp?: string | readonly string[],
+  optionLabelProp?: string
 ): SelectDataMaps<Value, Data> {
   const valueOptions = new Map<Value | undefined, Data>();
   const labelOptions = new Map<unknown, Data>();
@@ -134,7 +141,9 @@ function includes(value: unknown, query: string) {
 
 // Фильтрует группы целиком при совпадении заголовка или оставляет подходящих потомков.
 export function filterSelectData<Data extends object>(
-  options: readonly Data[], search: string, fields: SelectDataFields,
+  options: readonly Data[],
+  search: string,
+  fields: SelectDataFields,
   config: SelectDataFilter<Data> = {}
 ): readonly Data[] {
   if (!search || config.filterOption === false) {
@@ -172,7 +181,9 @@ export function filterSelectData<Data extends object>(
   for (const item of options) {
     const children = Reflect.get(item, fields.options) as readonly Data[] | undefined;
     if (children) {
-      if (match(item)) result.push(item);
+      if (match(item)) {
+        result.push(item);
+      }
       else {
         const filtered = children.filter(child => match(child));
         if (filtered.length) result.push({ ...item, [fields.options]: filtered });
@@ -185,7 +196,8 @@ export function filterSelectData<Data extends object>(
 
 // Сортирует копию options и оставляет вложенные группы в той же структуре.
 export function sortSelectData<Data extends object>(
-  options: readonly Data[], search: string,
+  options: readonly Data[],
+  search: string,
   comparator?: (left: Data, right: Data, info: { searchValue: string }) => number
 ): readonly Data[] {
   if (!comparator) {

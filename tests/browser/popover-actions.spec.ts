@@ -13,13 +13,21 @@ async function pauseClock(page: Page) {
 async function send(page: Page, event: string) {
   return page.locator('#popover-action-case').evaluate((host, event) => {
     const trigger = host.querySelector<HTMLElement>('#action-trigger,.ant-avatar-group-more')!;
-    if (event === 'focus') trigger.focus();
-    else if (event === 'blur') trigger.blur();
-    else if (event === 'focusOutside') host.querySelector<HTMLElement>('#action-outside')!.focus();
+    if (event === 'focus') {
+      trigger.focus();
+    }
+    else if (event === 'blur') {
+      trigger.blur();
+    }
+    else if (event === 'focusOutside') {
+      host.querySelector<HTMLElement>('#action-outside')!.focus();
+    }
     else if (event === 'popupFocus') {
       document.getElementById('action-popup-input')?.focus();
     }
-    else if (event === 'click') trigger.click();
+    else if (event === 'click') {
+      trigger.click();
+    }
     else if (event === 'touch') {
       trigger.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, cancelable: true }));
     }
@@ -92,8 +100,12 @@ for (const source of [false, true]) {
           }
           await page.clock.runFor(100);
 
-          if (frame.snapshot.visible) await expect(popup).toBeVisible();
-          else await expect(popup).toBeHidden();
+          if (frame.snapshot.visible) {
+            await expect(popup).toBeVisible();
+          }
+          else {
+            await expect(popup).toBeHidden();
+          }
           await expect(page.getByLabel('Popover action events', { exact: true }))
             .toHaveText(JSON.stringify(frame.snapshot.events));
           await expect(page.getByLabel('Popover action commands', { exact: true }))

@@ -69,7 +69,9 @@ function verifyPropsGraph(actualValue: unknown, sourceValue: unknown, label: str
     assert.deepEqual(xs.map(item => item.key), ys.map(item => item.key), label + ' raw keys/order');
     for (const [index, item] of xs.entries()) {
       assert.equal(Object.hasOwn(item, 'value'), Object.hasOwn(ys[index], 'value'));
-      if (Object.hasOwn(item, 'value')) walk(item.value, ys[index].value);
+      if (Object.hasOwn(item, 'value')) {
+        walk(item.value, ys[index].value);
+      }
       else {
         walk(item.get, ys[index].get);
         walk(item.set, ys[index].set);
@@ -209,7 +211,9 @@ function verifyRoles(actual: AutocompleteCloseNodes, source: AutocompleteCloseNo
       assert.equal(row.label, 'Close contrast value');
       assert.deepEqual({ ...row, label: undefined }, original);
     }
-    else assert.deepEqual(row, original);
+    else {
+      assert.deepEqual(row, original);
+    }
   }
 }
 function rowState(nodes: AutocompleteCloseNodes) {
@@ -343,7 +347,9 @@ for (const source of autocompleteCloseReference.cases) test(`AutoComplete preser
           null
         );
       }
-      else assert.equal(actual.nodes.ariaActiveDescendant, point.nodes.ariaActiveDescendant);
+      else {
+        assert.equal(actual.nodes.ariaActiveDescendant, point.nodes.ariaActiveDescendant);
+      }
       for (const key of Object.keys(point.nodes.current) as AutocompleteCloseSlot[]) {
         assert.equal(Boolean(actual.nodes.current[key]), Boolean(point.nodes.current[key]));
         assert.equal(
@@ -387,15 +393,24 @@ for (const source of autocompleteCloseReference.cases) test(`AutoComplete preser
     await page.mouse.move(0, 0);
     await barrier();
     await verify(source.typed);
-    if (source.sample.method === 'direct-pointer') await beta.scrollIntoViewIfNeeded();
-    else if (source.sample.method === 'settled-hover-pointer') await beta.hover();
+    if (source.sample.method === 'direct-pointer') {
+      await beta.scrollIntoViewIfNeeded();
+    }
+    else if (source.sample.method === 'settled-hover-pointer') {
+      await beta.hover();
+    }
     else {
       await editor.press('ArrowDown');
       await editor.press('ArrowDown');
     }
     await drainSelectSurface(page);
     await verify(source.prepared);
-    if (source.sample.method === 'enter') await editor.press('Enter'); else await beta.click();
+    if (source.sample.method === 'enter') {
+      await editor.press('Enter');
+    }
+    else {
+      await beta.click();
+    }
     await page.mouse.move(0, 0);
     // No read, flush or retry between the trusted gesture and this fixed barrier.
     await barrier();

@@ -117,8 +117,9 @@ export function connectImagePreview(image: HTMLImageElement, options: {
   }
   function doubleClick(event: MouseEvent) {
     const transform = options.transform();
-    if (transform.scale !== 1)
+    if (transform.scale !== 1) {
       options.update({ x: 0, y: 0, scale: 1 }, 'doubleClick');
+    }
     else {
       options.zoom(
         1 + (options.config().scaleStep ?? 0.5),

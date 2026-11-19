@@ -115,7 +115,9 @@ for (const sample of cases) test(`AutoComplete custom textarea preserves ${sampl
         prevented: sample.prevented,
         mounted: true
       } });
-    if (sample.id !== 'uncontrolled') expect(reset.caret).toEqual(edited.caret);
+    if (sample.id !== 'uncontrolled') {
+      expect(reset.caret).toEqual(edited.caret);
+    }
     else {
       expect(reset.caret[0]).toBeGreaterThanOrEqual(0);
       expect(reset.caret[1]).toBeLessThanOrEqual(sample.resetValue.length);

@@ -27,7 +27,9 @@ for (const entry of reference.cases) {
     await expect(dialog.getByRole('button', { name: 'OK', exact: true })).toBeFocused();
 
     if ('action' in entry.sample) {
-      if (entry.sample.action === 'destroy') await page.keyboard.press('Control+Alt+d');
+      if (entry.sample.action === 'destroy') {
+        await page.keyboard.press('Control+Alt+d');
+      }
       else {
         await dialog.getByRole('button', {
           name: entry.sample.action === 'ok' ? 'OK' : 'Cancel', exact: true

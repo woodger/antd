@@ -24,7 +24,8 @@ export interface FormValidateMessagesSample {
 }
 
 export function buildValidationMessages(
-  descriptor?: FormMessagesDescriptor, calls: string[][] = []
+  descriptor?: FormMessagesDescriptor,
+  calls: string[][] = []
 ): ValidateMessages | undefined {
   if (!descriptor) {
     return;

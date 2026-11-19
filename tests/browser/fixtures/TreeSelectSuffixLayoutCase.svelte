@@ -32,9 +32,15 @@
     rootWidth = width + root.getBoundingClientRect().width - content.clientWidth;
   }
   function command(action: TreeSelectSuffixLayoutAction) {
-    if (action.type === 'resize') resize(action.width);
-    else if (action.type === 'prefix-resize') prefixWidth = action.width;
-    else if (action.type === 'rest-resize') restWidth = action.width;
+    if (action.type === 'resize') {
+      resize(action.width);
+    }
+    else if (action.type === 'prefix-resize') {
+      prefixWidth = action.width;
+    }
+    else if (action.type === 'rest-resize') {
+      restWidth = action.width;
+    }
     else if (action.type === 'value') values = keys.slice(0, action.count);
   }
   function update(patch: { width?: number; rootWidth?: number; prefixWidth?: number; restWidth?: number;

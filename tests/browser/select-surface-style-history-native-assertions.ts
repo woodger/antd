@@ -77,8 +77,13 @@ export function verifyBorder(
   }
   assert.deepEqual(actual.box, original.box, `${label} actual control geometry`);
 }
-export function verifyNativeStyleHistory(actual: NativeStyleHistoryPoint, original: SelectSurfaceStyleHistoryPoint,
-  sourceCase: SelectSurfaceStyleHistorySourceCase, control: 'select' | 'autocomplete', label: string) {
+export function verifyNativeStyleHistory(
+  actual: NativeStyleHistoryPoint,
+  original: SelectSurfaceStyleHistoryPoint,
+  sourceCase: SelectSurfaceStyleHistorySourceCase,
+  control: 'select' | 'autocomplete',
+  label: string
+) {
   assert.deepEqual({ phase: actual.owner.phase, open: actual.owner.open, model: actual.owner.model,
     rawModel: actual.owner.rawModel, maps: actual.owner.maps },
   { phase: original.owner.phase, open: original.owner.open, model: original.owner.model,

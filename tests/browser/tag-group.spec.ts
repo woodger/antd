@@ -30,7 +30,9 @@ for (const sample of reference.cases as TagGroupCase[]) {
         const item = page.locator('[data-tag-group-root] .ant-tag-checkable').nth(
           'click' in step ? step.click : step.space
         );
-        if ('click' in step) await item.evaluate((node: HTMLButtonElement) => node.click());
+        if ('click' in step) {
+          await item.evaluate((node: HTMLButtonElement) => node.click());
+        }
         else {
           await item.evaluate(node => node.dispatchEvent(new KeyboardEvent('keydown', {
             key: ' ', bubbles: true, cancelable: true

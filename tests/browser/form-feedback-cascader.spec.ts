@@ -21,18 +21,30 @@ async function mount(page: Page, id: string) {
   await page.mouse.move(0, 0);
 }
 async function apply(page: Page, action: FeedbackAction, index: number) {
-  if (action === 'focus') await editor(page).focus();
-  else if (action === 'open') await editor(page).click();
+  if (action === 'focus') {
+    await editor(page).focus();
+  }
+  else if (action === 'open') {
+    await editor(page).click();
+  }
   else if (action === 'outside') {
     await page.getByRole(
       'button',
       { name: 'Outside feedback', exact: true }
     ).click();
   }
-  else if (action === 'hover') await page.locator('[data-feedback-control]').hover();
-  else if (action === 'search') await editor(page).fill('Beta');
-  else if (action === 'clear') await page.locator('[data-feedback-control] button').click();
-  else if (action === 'choose-beta') await page.getByText('Beta', { exact: true }).last().click();
+  else if (action === 'hover') {
+    await page.locator('[data-feedback-control]').hover();
+  }
+  else if (action === 'search') {
+    await editor(page).fill('Beta');
+  }
+  else if (action === 'clear') {
+    await page.locator('[data-feedback-control] button').click();
+  }
+  else if (action === 'choose-beta') {
+    await page.getByText('Beta', { exact: true }).last().click();
+  }
   else {
     await page.getByRole('combobox', { name: 'Feedback action', exact: true }).selectOption(String(index));
     await page.getByRole('button', { name: 'Apply feedback action', exact: true }).dispatchEvent('click');

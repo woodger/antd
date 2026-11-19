@@ -191,8 +191,11 @@ export function verifyDatePickerPresetsSourceHeader(
     : { owners: 6, actions: 0, closedTransitions: 0, closedSSRSerializations: 12 });
 }
 /** Mapping обязан указывать на тот же целый raw, который записан в Source manifest. */
-export function verifyDatePickerPresetsSourcePartBinding(reference: DatePickerPresetsSourcePart,
-  mode: DatePickerPresetsSourceMode, variant: DatePickerPresetsSourceVariant) {
+export function verifyDatePickerPresetsSourcePartBinding(
+  reference: DatePickerPresetsSourcePart,
+  mode: DatePickerPresetsSourceMode,
+  variant: DatePickerPresetsSourceVariant
+) {
   const { portable } = readMetadata(), part = reference.rawJSONPart;
   assert(part && typeof part === 'object');
   assert(
@@ -210,8 +213,11 @@ export function verifyDatePickerPresetsSourcePartBinding(reference: DatePickerPr
   );
   return mapping;
 }
-export function verifyDatePickerPresetsSourceManifest(value: DatePickerPresetsSourceManifest,
-  mode: DatePickerPresetsSourceMode, variant: DatePickerPresetsSourceVariant) {
+export function verifyDatePickerPresetsSourceManifest(
+  value: DatePickerPresetsSourceManifest,
+  mode: DatePickerPresetsSourceMode,
+  variant: DatePickerPresetsSourceVariant
+) {
   const { protocol } = readMetadata();
   scope(mode, variant);
   verifyDatePickerPresetsSourceHeader(value.reference, mode);
@@ -260,8 +266,10 @@ export function verifyDatePickerPresetsSourceManifest(value: DatePickerPresetsSo
   assert.equal(closed, mode === 'csr' ? 14 : 0);
 }
 /** Загружает только небольшой manifest; snapshots никогда не кэшируются или склеиваются. */
-export function readDatePickerPresetsManifest(mode: DatePickerPresetsSourceMode = 'csr',
-  variant: DatePickerPresetsSourceVariant = 'first'): DatePickerPresetsSourceManifest {
+export function readDatePickerPresetsManifest(
+  mode: DatePickerPresetsSourceMode = 'csr',
+  variant: DatePickerPresetsSourceVariant = 'first'
+): DatePickerPresetsSourceManifest {
   const { portable } = readMetadata(), original = scope(mode, variant), capture = portable.captures[mode][variant];
   assert.equal(capture.source.file, original);
   assert.equal(capture.gzip.file, original + '.gz');
@@ -273,15 +281,21 @@ export function readDatePickerPresetsManifest(mode: DatePickerPresetsSourceMode 
   verifyDatePickerPresetsSourceManifest(value, mode, variant);
   return value;
 }
-export function readDatePickerPresetsCaseMetadata(id: string, mode: DatePickerPresetsSourceMode = 'csr',
-  variant: DatePickerPresetsSourceVariant = 'first') {
+export function readDatePickerPresetsCaseMetadata(
+  id: string,
+  mode: DatePickerPresetsSourceMode = 'csr',
+  variant: DatePickerPresetsSourceVariant = 'first'
+) {
   const value = readDatePickerPresetsManifest(mode, variant).cases.find(item => item.id === id);
   assert(value, 'Unknown measured DatePicker preset owner: ' + id);
   return value;
 }
 /** Читает полный raw одной части: все DOM/CSSOM, графы, descriptors и ledgers остаются исходными. */
-export function readDatePickerPresetsPart(reference: DatePickerPresetsSourcePart,
-  mode: DatePickerPresetsSourceMode = 'csr', variant: DatePickerPresetsSourceVariant = 'first'): unknown {
+export function readDatePickerPresetsPart(
+  reference: DatePickerPresetsSourcePart,
+  mode: DatePickerPresetsSourceMode = 'csr',
+  variant: DatePickerPresetsSourceVariant = 'first'
+): unknown {
   const mapping = verifyDatePickerPresetsSourcePartBinding(reference, mode, variant), part = reference.rawJSONPart;
   const decoded = gunzipSync(readPinned(
     mapping.fixture,

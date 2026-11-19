@@ -98,7 +98,9 @@ export function createDesignTokenState(
   for (const [name, component] of Object.entries(config.components ?? {})) {
     const parsed: ParsedComponent = { ...component };
     if ('algorithm' in parsed) {
-      if (parsed.algorithm === true) parsed.theme = theme;
+      if (parsed.algorithm === true) {
+        parsed.theme = theme;
+      }
       else if (Array.isArray(parsed.algorithm) || typeof parsed.algorithm === 'function') {
         parsed.theme = createDerivativeTheme(
           parsed.algorithm as MappingAlgorithm | readonly MappingAlgorithm[]

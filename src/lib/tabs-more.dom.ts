@@ -108,8 +108,12 @@ export function getTabsMorePosition(
   popup.style.bottom = '0';
   const mirror = popup.getBoundingClientRect();
   for (const [name, value, priority] of saved) {
-    if (value) popup.style.setProperty(name, value, priority);
-    else popup.style.removeProperty(name);
+    if (value) {
+      popup.style.setProperty(name, value, priority);
+    }
+    else {
+      popup.style.removeProperty(name);
+    }
   }
   const scaleX = Number.isNaN(sx) ? 1 : sx;
   const scaleY = Number.isNaN(sy) ? 1 : sy;

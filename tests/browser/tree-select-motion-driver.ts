@@ -11,11 +11,21 @@ async function field(page: Page) {
 
 /** The Source and Native captures run the same public DOM actions and explicit phase steps. */
 export async function actTreeSelectMotion(page: Page, action: TreeSelectMotionRootSwapAction) {
-  if (action.type === 'click') await (await field(page)).click();
-  else if (action.type === 'focus') await (await field(page)).focus();
-  else if (action.type === 'outside') await page.locator('[data-motion-outside]').click();
-  else if (action.type === 'escape') await (await field(page)).press('Escape');
-  else if (action.type === 'fill') await (await field(page)).fill(action.text);
+  if (action.type === 'click') {
+    await (await field(page)).click();
+  }
+  else if (action.type === 'focus') {
+    await (await field(page)).focus();
+  }
+  else if (action.type === 'outside') {
+    await page.locator('[data-motion-outside]').click();
+  }
+  else if (action.type === 'escape') {
+    await (await field(page)).press('Escape');
+  }
+  else if (action.type === 'fill') {
+    await (await field(page)).fill(action.text);
+  }
   else if (action.type === 'caret') {
     await (await field(page)).evaluate((node, range) => {
       if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) {
@@ -48,8 +58,12 @@ export async function actTreeSelectMotion(page: Page, action: TreeSelectMotionRo
     await page
       .setViewportSize({ width: action.width, height: action.height });
   }
-  else if (action.type === 'frame') await page.evaluate(advanceTreeSelectMotionFrames, action.count);
-  else if (action.type === 'clock') await page.evaluate(setTreeSelectMotionTime, action.time);
+  else if (action.type === 'frame') {
+    await page.evaluate(advanceTreeSelectMotionFrames, action.count);
+  }
+  else if (action.type === 'clock') {
+    await page.evaluate(setTreeSelectMotionTime, action.time);
+  }
   else if (action.type === 'end') {
     await page.locator('.motion-audit-popup').evaluate((popup, end) => {
       const node = end.target === 'child' ? popup.querySelector('[data-motion-panel]') : popup;
@@ -68,5 +82,7 @@ export async function actTreeSelectMotion(page: Page, action: TreeSelectMotionRo
       node.dispatchEvent(event);
     }, action);
   }
-  else throw Error(`Unexpected TreeSelect motion action: ${JSON.stringify(action)}`);
+  else {
+    throw Error(`Unexpected TreeSelect motion action: ${JSON.stringify(action)}`);
+  }
 }

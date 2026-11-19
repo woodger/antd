@@ -31,8 +31,9 @@ export function closeAlert(root: HTMLElement, onHidden: () => void) {
       motion?.finish();
   }
 
-  if (reducedMotion.matches || duration === 0)
+  if (reducedMotion.matches || duration === 0) {
     finish();
+  }
   else {
     reducedMotion.addEventListener('change', handleReducedMotion);
     motion = root.animate([

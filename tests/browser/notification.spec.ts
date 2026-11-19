@@ -109,14 +109,21 @@ for (const placement of ['top', 'topLeft', 'topRight', 'bottom', 'bottomLeft', '
       const first = (await notices(page).boundingBox())!;
       const viewport = page.viewportSize()!;
 
-      if (placement.endsWith('Left')) expect(first.x).toBeCloseTo(24, 0);
-      else if (placement.endsWith('Right'))
+      if (placement.endsWith('Left')) {
+        expect(first.x).toBeCloseTo(24, 0);
+      }
+      else if (placement.endsWith('Right')) {
         expect(first.x + first.width).toBeCloseTo(viewport.width - 24, 0);
-      else
+      }
+      else {
         expect(first.x + first.width / 2).toBeCloseTo(viewport.width / 2, 0);
-      if (placement.startsWith('top')) expect(first.y).toBeCloseTo(24, 0);
-      else
+      }
+      if (placement.startsWith('top')) {
+        expect(first.y).toBeCloseTo(24, 0);
+      }
+      else {
         expect(first.y + first.height).toBeCloseTo(viewport.height - 24, 0);
+      }
       await button(page, 'Add unique Notification').click();
 
       await expect(notices(page)).toHaveCount(2);
@@ -126,9 +133,12 @@ for (const placement of ['top', 'topLeft', 'topRight', 'bottom', 'bottomLeft', '
 
       const added = (await notices(page).last().boundingBox())!;
 
-      if (placement.startsWith('top')) expect(added.y).toBeGreaterThan(first.y + first.height);
-      else
+      if (placement.startsWith('top')) {
+        expect(added.y).toBeGreaterThan(first.y + first.height);
+      }
+      else {
         expect(added.y + added.height).toBeLessThan(first.y);
+      }
     }
   );
 }
@@ -513,7 +523,9 @@ for (const mode of ['hidden', 'disabled', 'custom']) {
   test(`Notification supports ${mode} close controls`, async ({ page }) => {
     await setting(page, 'close mode', mode);
     await button(page, 'Notification info').click();
-    if (mode === 'hidden') await expect(notices(page).getByRole('button')).toHaveCount(0);
+    if (mode === 'hidden') {
+      await expect(notices(page).getByRole('button')).toHaveCount(0);
+    }
     else if (mode === 'disabled') {
       await expect(notices(page).getByRole('button', { name: 'Закрыть', exact: true }))
         .toBeDisabled();

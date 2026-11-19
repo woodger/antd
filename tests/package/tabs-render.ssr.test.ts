@@ -42,8 +42,12 @@ describe('Tabs renderTabBar SSR', () => {
       expect(body).toContain('aria-label="Render Tabs trace">[]');
       expect(body).toContain('aria-label="Render Tabs native root">none');
       expect(body.includes('ant-tabs-body-animated')).toBe(sample.initial.bodyAnimated);
-      if (sample.initial.header) expect(body).toContain('ant-tabs-nav');
-      else expect(body).not.toContain('ant-tabs-nav');
+      if (sample.initial.header) {
+        expect(body).toContain('ant-tabs-nav');
+      }
+      else {
+        expect(body).not.toContain('ant-tabs-nav');
+      }
     });
   }
 

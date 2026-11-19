@@ -13,12 +13,18 @@ async function pauseClock(page: Page) {
 async function send(page: Page, mode: TooltipActionCase['mode'], event: string) {
   return page.locator('#tooltip-lifecycle-case').evaluate((host, { mode, event }) => {
     const trigger = host.querySelector<HTMLElement>('#lifecycle-trigger')!;
-    if (event === 'focus') trigger.focus();
+    if (event === 'focus') {
+      trigger.focus();
+    }
     else if (event === 'focusOutside') {
       host.querySelector<HTMLButtonElement>('button')!.focus();
     }
-    else if (event === 'blur') trigger.blur();
-    else if (event === 'click') trigger.click();
+    else if (event === 'blur') {
+      trigger.blur();
+    }
+    else if (event === 'click') {
+      trigger.click();
+    }
     else if (event === 'touch') {
       trigger.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, cancelable: true }));
     }
@@ -90,8 +96,12 @@ for (const source of [false, true]) {
           }
           await page.clock.runFor(100);
 
-          if (frame.snapshot.visible) await expect(popup).toBeVisible();
-          else await expect(popup).toBeHidden();
+          if (frame.snapshot.visible) {
+            await expect(popup).toBeVisible();
+          }
+          else {
+            await expect(popup).toBeHidden();
+          }
           await expect(page.getByLabel('Lifecycle events', { exact: true }))
             .toHaveText(JSON.stringify(frame.snapshot.events));
           expect(await trigger.evaluate(node => node.classList.contains('ant-tooltip-open')))

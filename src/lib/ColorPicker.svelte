@@ -105,8 +105,11 @@
     .filter(([key]) => !owned.has(key))));
 
   function mergeSlots(
-    a?: ColorPickerSlots, b?: ColorPickerSlots, c?: ColorPickerSlots,
-    d?: ColorPickerSlots, separator = ' '
+    a?: ColorPickerSlots,
+    b?: ColorPickerSlots,
+    c?: ColorPickerSlots,
+    d?: ColorPickerSlots,
+    separator = ' '
   ): ColorPickerStyles {
     const result: ColorPickerStyles = {};
     for (const slots of [a, b, c, d]) {

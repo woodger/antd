@@ -18,8 +18,11 @@ function takeSSRStyle(node: HTMLElement | SVGElement) {
 }
 
 /** Initial attr нужен SSR; последующие object updates не проходят через cssText Svelte. */
-export function createSelectStyle(getStyle: () => SelectStyle | undefined,
-  getBefore?: () => readonly InlineStyleLayer[], getAfter?: () => readonly InlineStyleLayer[]) {
+export function createSelectStyle(
+  getStyle: () => SelectStyle | undefined,
+  getBefore?: () => readonly InlineStyleLayer[],
+  getAfter?: () => readonly InlineStyleLayer[]
+) {
   let initial: SelectStyleFrame | undefined;
   const read = () => resolveSelectStyleFrame(getStyle(), getBefore?.(), getAfter?.());
   return {
@@ -37,8 +40,11 @@ export function createSelectStyle(getStyle: () => SelectStyle | undefined,
 }
 
 /** Каждый физический tag/row получает собственную историю, без общего mutable snapshot. */
-export function selectStyle(getStyle: () => SelectStyle | undefined,
-  getBefore?: () => readonly InlineStyleLayer[], getAfter?: () => readonly InlineStyleLayer[]) {
+export function selectStyle(
+  getStyle: () => SelectStyle | undefined,
+  getBefore?: () => readonly InlineStyleLayer[],
+  getAfter?: () => readonly InlineStyleLayer[]
+) {
   return createSelectStyle(getStyle, getBefore, getAfter).attach;
 }
 
@@ -48,9 +54,12 @@ export interface SelectOverlayStyleOptions {
 }
 
 /** Один writer объединяет owner styles с координатами и projection контроллера. */
-export function createSelectOverlayStyle(getLayers: () => readonly InlineStyleLayer[],
-  sourceWidthVariable: string | undefined, getSourceOpen: (() => boolean) | undefined,
-  options: SelectOverlayStyleOptions) {
+export function createSelectOverlayStyle(
+  getLayers: () => readonly InlineStyleLayer[],
+  sourceWidthVariable: string | undefined,
+  getSourceOpen: (() => boolean) | undefined,
+  options: SelectOverlayStyleOptions
+) {
   let element = $state.raw<HTMLElement>();
   let accepted: CSSStyleDeclaration | undefined;
   let writer: ReturnType<typeof createSelectStyleWriter> | undefined;

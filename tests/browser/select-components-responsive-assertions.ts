@@ -79,8 +79,13 @@ function verifyOverflowWrapper(
     );
   }
 }
-export function verifySelectComponentsResponsivePoint(actual: NativeResponsivePoint, source: ResponsivePoint, owner: ResponsiveCase,
-  sample: SelectComponentsResponsiveSample, label: string): string[] {
+export function verifySelectComponentsResponsivePoint(
+  actual: NativeResponsivePoint,
+  source: ResponsivePoint,
+  owner: ResponsiveCase,
+  sample: SelectComponentsResponsiveSample,
+  label: string
+): string[] {
   const pairs = new Map<number, number>();
   const failures = verifySelectComponentsModesPoint(actual, source as ModesPoint, owner as unknown as ModesCase, sample as never, label,
     (current, original, label) => {

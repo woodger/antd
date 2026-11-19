@@ -142,8 +142,10 @@
     onOpenChange?.(next);
   }
   $effect(() => {
-    if (!menu || opened)
-      present = true; else if (!list)
+    if (!menu || opened) {
+      present = true;
+    }
+    else if (!list)
       present = false;
   });
   $effect(() => {

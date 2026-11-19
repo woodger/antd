@@ -110,10 +110,12 @@ export function cascaderChecks(
   const missing: CascaderPath[] = [];
   const existing: string[] = [];
   for (const path of paths) {
-    if (cascaderPathOptions(path, options, fields).every(Boolean))
+    if (cascaderPathOptions(path, options, fields).every(Boolean)) {
       existing.push(cascaderPathKey(path));
-    else
+    }
+    else {
       missing.push(path);
+    }
   }
   const checks = multiple && paths.length
     ? conductTreeCheck(existing, index.tree)

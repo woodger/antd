@@ -61,8 +61,12 @@ for (const sample of selectComponentsSamples) test(`Select components complete O
           'options' in action ? action.options : undefined
         );
       }
-      else if (action.type === 'blur-method') await capture.evaluate(owner => owner.readRefs().control!.blur());
-      else if (action.type === 'outside') await page.locator('[data-surface-outside]').click();
+      else if (action.type === 'blur-method') {
+        await capture.evaluate(owner => owner.readRefs().control!.blur());
+      }
+      else if (action.type === 'outside') {
+        await page.locator('[data-surface-outside]').click();
+      }
       else if (action.type === 'root-click') {
         const handle = await capture.evaluateHandle(owner => owner.readRefs().root);
         const element = handle.asElement();
@@ -74,10 +78,17 @@ for (const sample of selectComponentsSamples) test(`Select components complete O
       }
       else if (action.type === 'fill' || action.type === 'component-key') {
         const element = await editor();
-        if (action.type === 'fill') await element.fill(action.text); else await element.press(action.key);
+        if (action.type === 'fill') {
+          await element.fill(action.text);
+        }
+        else {
+          await element.press(action.key);
+        }
         await element.dispose();
       }
-      else throw Error('Unknown frozen component action ' + action.type);
+      else {
+        throw Error('Unknown frozen component action ' + action.type);
+      }
       await page.mouse.move(0, 0);
       await verify(step, index + '/' + JSON.stringify(action));
     }

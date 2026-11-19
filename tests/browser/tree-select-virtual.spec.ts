@@ -31,8 +31,12 @@ for (const entry of reference.cases) {
     await expect.poll(read).toEqual(entry.initial);
     for (const [index, result] of entry.steps.entries()) {
       const action = sample.actions![index];
-      if ('key' in action) await input(page).press(action.key);
-      else await apply(page, index);
+      if ('key' in action) {
+        await input(page).press(action.key);
+      }
+      else {
+        await apply(page, index);
+      }
       await expect.poll(read, { message: `action ${index}: ${JSON.stringify(action)}` }).toEqual(result);
     }
     await expect(output(page)).toHaveAttribute('data-virtual-expansions', '0');

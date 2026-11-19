@@ -27,8 +27,12 @@
       return;
     }
     const controller = createTreeGroupMotion(node, (next, commit) => {
-      if (commit) flushSync(() => { motionState = next; });
-      else motionState = next;
+      if (commit) {
+        flushSync(() => { motionState = next; });
+      }
+      else {
+        motionState = next;
+      }
     }, next => { if (next === show) onEnd(); }, show ? undefined : true);
     runtime = controller;
     return () => {

@@ -90,7 +90,11 @@ export function parseGridFlex(value: string | number): string {
   return String(value);
 }
 
-export function gridColClasses(props: ColProps, prefix = 'ant-col', rootPrefix = 'ant'): {
+export function gridColClasses(
+  props: ColProps,
+  prefix = 'ant-col',
+  rootPrefix = 'ant'
+): {
   classes: string[];
   variables: string;
   attributes: Record<string, string>;

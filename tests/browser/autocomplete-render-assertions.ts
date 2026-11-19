@@ -159,7 +159,9 @@ export function verifyAutocompleteGraph(
         Object.hasOwn(ys[index], 'value'),
         label + ' data/accessor'
       );
-      if (Object.hasOwn(xs[index], 'value')) walk(xs[index].value, ys[index].value);
+      if (Object.hasOwn(xs[index], 'value')) {
+        walk(xs[index].value, ys[index].value);
+      }
       else {
         walk(xs[index].get, ys[index].get);
         walk(xs[index].set, ys[index].set);
@@ -252,8 +254,13 @@ export async function settleNativeAutocompleteRender(page: Page) {
   }
   throw Error('Actual AutoComplete renderer props, complete ledgers, DOM and CSSOM did not settle');
 }
-export function verifyAutocompleteLifecycle(actual: NativeAutocompleteRenderOwner['lifecycle'], source: NativeAutocompleteRenderOwner['lifecycle'],
-  entry: AutocompleteRenderCase, label: string, disposed = false) {
+export function verifyAutocompleteLifecycle(
+  actual: NativeAutocompleteRenderOwner['lifecycle'],
+  source: NativeAutocompleteRenderOwner['lifecycle'],
+  entry: AutocompleteRenderCase,
+  label: string,
+  disposed = false
+) {
   if (!entry.id.endsWith('child-input') && !entry.id.endsWith('child-textarea')) {
     assert.deepEqual(actual, source, label + ' no custom ref notifications');
     return;
@@ -268,7 +275,9 @@ export function verifyAutocompleteLifecycle(actual: NativeAutocompleteRenderOwne
   for (const [index, notification] of source.entries()) {
     assert.equal(notification.kind, 'child-ref');
     assert.equal(notification.attached, index % 2 === 0);
-    if (notification.attached) assert.equal(notification.tag, first.tag);
+    if (notification.attached) {
+      assert.equal(notification.tag, first.tag);
+    }
     else {
       assert.deepEqual(
         notification,
@@ -313,7 +322,9 @@ function verifyChildAttributes(
       label + ' React reflected input value'
     );
   }
-  else assert.equal(original.rows, '2');
+  else {
+    assert.equal(original.rows, '2');
+  }
   const expanded = original['aria-expanded'] === 'true';
   if (expanded) {
     assert.equal(original['aria-owns'], original.id + '_list');
@@ -383,8 +394,12 @@ function verifyNode(
   }
   assert.deepEqual(nativeAttrs, sourceAttrs, label + ' authored DOM attributes');
 }
-export function verifyAutocompletePoint(actual: NativeAutocompleteRenderPoint, source: AutocompleteRenderPoint,
-  entry: AutocompleteRenderCase, label: string) {
+export function verifyAutocompletePoint(
+  actual: NativeAutocompleteRenderPoint,
+  source: AutocompleteRenderPoint,
+  entry: AutocompleteRenderCase,
+  label: string
+) {
   const failures: string[] = [];
   const check = (name: string, fn: () => void) => {
     try {

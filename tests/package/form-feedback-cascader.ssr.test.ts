@@ -34,7 +34,9 @@ it.each(reference.ssr)('renders $id feedback and status without browser globals 
         expect(text).toContain(icon.text!);
       }
     }
-    else expect(body).not.toMatch(/class="[^"]*-item-feedback-icon(?:[ "-])/);
+    else {
+      expect(body).not.toMatch(/class="[^"]*-item-feedback-icon(?:[ "-])/);
+    }
     expect(body).toContain(`data-form-status-read="control">${JSON.stringify(entry.view.status)}`);
     expect(body).toContain('data-feedback-ref="false"');
     expect(body).not.toContain('popover="manual"');

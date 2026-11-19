@@ -30,8 +30,12 @@ export function toggleCheckboxGroupChildren<Value extends CheckboxGroupValue>(
   const next = [...current];
   const index = next.indexOf(value);
 
-  if (index === -1) next.push(value);
-  else next.splice(index, 1);
+  if (index === -1) {
+    next.push(value);
+  }
+  else {
+    next.splice(index, 1);
+  }
 
   return { value: next, callbackValue: next.filter(item => registered.includes(item)) };
 }

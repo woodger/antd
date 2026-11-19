@@ -108,9 +108,12 @@ describe('Popconfirm action model', () => {
       setSession(null);
 
       expect(model.loading).toBe(false);
-      if (completion === 'resolve')
+      if (completion === 'resolve') {
         requests[0].resolve();
-      else requests[0].reject(new Error('Late failure'));
+      }
+      else {
+        requests[0].reject(new Error('Late failure'));
+      }
       await task;
 
       expect(results).toEqual([]);
@@ -125,9 +128,12 @@ describe('Popconfirm action model', () => {
       setSession({});
       const current = model.run(action);
 
-      if (completion === 'resolve')
+      if (completion === 'resolve') {
         requests[0].resolve();
-      else requests[0].reject(new Error('Stale failure'));
+      }
+      else {
+        requests[0].reject(new Error('Stale failure'));
+      }
       await old;
 
       expect(model.loading).toBe(true);
@@ -147,9 +153,12 @@ describe('Popconfirm action model', () => {
       const task = model.run(action);
       model.dispose();
 
-      if (completion === 'resolve')
+      if (completion === 'resolve') {
         requests[0].resolve();
-      else requests[0].reject(new Error('Late failure'));
+      }
+      else {
+        requests[0].reject(new Error('Late failure'));
+      }
       await task;
       model.run(action);
 

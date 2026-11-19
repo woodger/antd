@@ -95,7 +95,9 @@
   $effect(() => {
     const controlled = props.selectedKeys;
 
-    if (controlled !== undefined) localSelected = [...controlled];
+    if (controlled !== undefined) {
+      localSelected = [...controlled];
+    }
     else if (wasControlled) localSelected = [];
 
     wasControlled = controlled !== undefined;

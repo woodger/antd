@@ -181,7 +181,10 @@ export function carouselTrackStyle(spec: CarouselSpec, left: number, animate = f
   return style;
 }
 
-export function carouselSlideTransition(spec: CarouselSpec, index: number): {
+export function carouselSlideTransition(
+  spec: CarouselSpec,
+  index: number
+): {
   state?: Partial<CarouselState>;
   nextState?: Partial<CarouselState>;
 } {
@@ -196,7 +199,9 @@ export function carouselSlideTransition(spec: CarouselSpec, index: number): {
     if (!infinite && (index < 0 || index >= slideCount)) {
       return {};
     }
-    if (index < 0) animationSlide = index + slideCount;
+    if (index < 0) {
+      animationSlide = index + slideCount;
+    }
     else if (index >= slideCount) animationSlide = index - slideCount;
     if (spec.lazyLoad && !lazyLoadedList.includes(animationSlide)) {
       lazyLoadedList.push(animationSlide);
@@ -215,7 +220,9 @@ export function carouselSlideTransition(spec: CarouselSpec, index: number): {
   let finalSlide = animationSlide;
   if (animationSlide < 0) {
     finalSlide = animationSlide + slideCount;
-    if (!infinite) finalSlide = 0;
+    if (!infinite) {
+      finalSlide = 0;
+    }
     else if (slideCount % slidesToScroll !== 0) {
       finalSlide = slideCount - slideCount % slidesToScroll;
     }
@@ -229,7 +236,9 @@ export function carouselSlideTransition(spec: CarouselSpec, index: number): {
   }
   else if (animationSlide >= slideCount) {
     finalSlide = animationSlide - slideCount;
-    if (!infinite) finalSlide = slideCount - slidesToShow;
+    if (!infinite) {
+      finalSlide = slideCount - slidesToShow;
+    }
     else if (slideCount % slidesToScroll !== 0) finalSlide = 0;
   }
   if (!infinite && animationSlide + slidesToShow >= slideCount) {
@@ -287,8 +296,12 @@ function carouselSiblingDirection(spec: CarouselSpec, target: number) {
       left++;
     }
     if (spec.slidesToShow % 2 === 0) {
-      if (spec.rtl) right++;
-      else left++;
+      if (spec.rtl) {
+        right++;
+      }
+      else {
+        left++;
+      }
     }
   }
   return target > spec.currentSlide
@@ -318,7 +331,9 @@ export function carouselChangeSlide(spec: CarouselSpec, options: CarouselChange)
   let target = options.index;
   if (infinite) {
     const direction = carouselSiblingDirection(spec, target);
-    if (target > options.currentSlide && direction === 'left') target -= slideCount;
+    if (target > options.currentSlide && direction === 'left') {
+      target -= slideCount;
+    }
     else if (target < options.currentSlide && direction === 'right') target += slideCount;
   }
   return target;

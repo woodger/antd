@@ -34,7 +34,12 @@
     defaultPrevented: input.defaultPrevented, propagationStopped: input.cancelBubble,
     target: target(input.target), currentTarget: target(input.currentTarget), relatedTarget: target((input as FocusEvent).relatedTarget), nativeType: null });
   const onChange = handler('change', (value: string | string[] | undefined, option: unknown) => {
-    if (initial.control === 'autocomplete') query = value as string; else model = value as string[];
+    if (initial.control === 'autocomplete') {
+      query = value as string;
+    }
+    else {
+      model = value as string[];
+    }
     record('change', value, option);
   });
   const onSearch = handler('search', (value: string, info?: unknown) => {
@@ -102,9 +107,15 @@
     outside: outside ?? null
   });
   ownerCapture.update = (action: HydrationOwnershipUpdate) => {
-    if (action.type === 'controlled-query') query = action.value;
-    else if (action.type === 'intrinsic-tag-replacement') tag = initial.replacementTag;
-    else throw Error('Unknown public owner update');
+    if (action.type === 'controlled-query') {
+      query = action.value;
+    }
+    else if (action.type === 'intrinsic-tag-replacement') {
+      tag = initial.replacementTag;
+    }
+    else {
+      throw Error('Unknown public owner update');
+    }
   };
   onMount(() => {
     ownerCapture.onCommit?.();

@@ -9,7 +9,8 @@ import {
 } from './tree-select-motion-frame.dom';
 
 export function treeSelectAlignScrollers(
-  element: Element, from: HTMLElement | null = element.parentElement
+  element: Element,
+  from: HTMLElement | null = element.parentElement
 ) {
   const view = element.ownerDocument.defaultView!;
   const nodes: HTMLElement[] = [];
@@ -132,8 +133,12 @@ export function createTreeSelectAlignSurface(
     proxy.style.setProperty('pointer-events', 'none', 'important');
     proxy.style.overflow = 'hidden';
     const parent = getParent();
-    if (popup.parentNode === parent) parent.insertBefore(proxy, popup);
-    else parent.append(proxy);
+    if (popup.parentNode === parent) {
+      parent.insertBefore(proxy, popup);
+    }
+    else {
+      parent.append(proxy);
+    }
     return { width, height };
   }
 
@@ -325,8 +330,12 @@ export function createTreeSelectAlignSurface(
       transitionParser.cssText = getStyle() ?? '';
       for (const name of transitionNames) {
         const value = transitionParser.getPropertyValue(name);
-        if (value) popup.style.setProperty(name, value, transitionParser.getPropertyPriority(name));
-        else popup.style.removeProperty(name);
+        if (value) {
+          popup.style.setProperty(name, value, transitionParser.getPropertyPriority(name));
+        }
+        else {
+          popup.style.removeProperty(name);
+        }
       }
     }
   }

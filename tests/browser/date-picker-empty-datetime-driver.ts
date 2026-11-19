@@ -58,7 +58,9 @@ export async function actEmptyDatetime(page: Page, action: EmptyDatetimeAction, 
       attributes: [...node.attributes].map(item => [item.name, item.value]), html: node.outerHTML,
       focused: node === document.activeElement
     })) };
-  if (action.type.endsWith('-hover')) await target.hover();
+  if (action.type.endsWith('-hover')) {
+    await target.hover();
+  }
   else if (action.type === 'input-escape') {
     await target.click();
     evidence.afterFocusPointer = await readEmptyDatetime(page);
@@ -67,7 +69,9 @@ export async function actEmptyDatetime(page: Page, action: EmptyDatetimeAction, 
   else if (action.type === 'template-button') {
     evidence.ownerClick = await page.evaluate(() => window.nativeEmptyDatetime.activateTemplate());
   }
-  else await target.click();
+  else {
+    await target.click();
+  }
   // Не перемещаем указатель: реальный scroll колонки меняет settled hover после hour12.
   return { action, before, evidence, afterCall: await readEmptyDatetime(page) };
 }

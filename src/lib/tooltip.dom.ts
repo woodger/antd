@@ -58,8 +58,11 @@ export function connectTooltipDescription(element: Element, id: string): () => v
       (token) => token && !owned.has(token)
     );
 
-    if (tokens.length)
+    if (tokens.length) {
       element.setAttribute('aria-describedby', tokens.join(' '));
-    else element.removeAttribute('aria-describedby');
+    }
+    else {
+      element.removeAttribute('aria-describedby');
+    }
   };
 }

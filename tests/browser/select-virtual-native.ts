@@ -83,8 +83,12 @@ function retainedQueryView(
 }
 
 /** Frozen Source views with proven Native editor, operative ARIA and connected-blur contracts. */
-export function selectVirtualNativeView(view: SelectVirtualView, id: string,
-  phase: 'initial' | 'step' | 'hydrated-initial' = 'step', action?: SelectVirtualAction): SelectVirtualView {
+export function selectVirtualNativeView(
+  view: SelectVirtualView,
+  id: string,
+  phase: 'initial' | 'step' | 'hydrated-initial' = 'step',
+  action?: SelectVirtualAction
+): SelectVirtualView {
   if (phase === 'step') {
     const events = connectedBlurEvents(view, id, action);
     if (events) {

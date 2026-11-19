@@ -90,7 +90,9 @@ for (const mode of ['normal-close', 'cancel-with-escape', 'immediate-unmount'] a
             { bubbles: true, cancelable: true, view: window }
           ));
           const pending = window.selectTagClosePorts.snapshot();
-          if (mode === 'immediate-unmount') await window.customTagPrefixNative.dispose();
+          if (mode === 'immediate-unmount') {
+            await window.customTagPrefixNative.dispose();
+          }
           else {
             const editor = window.customTagPrefixNative.readRefs().editor;
             if (!editor) {

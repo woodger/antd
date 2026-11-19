@@ -76,10 +76,12 @@ export function autoSplitterPercentages(
   const empty: number[] = [];
 
   sizes.forEach((size, index) => {
-    if (size === undefined)
+    if (size === undefined) {
       empty.push(index);
-    else
+    }
+    else {
       total += size;
+    }
   });
 
   const rest = 1 - total;

@@ -86,8 +86,9 @@
       for (const item of items) {
         const menu = item.parentElement!;
         const top = item.offsetTop - menu.offsetTop;
-        if (top < menu.scrollTop)
+        if (top < menu.scrollTop) {
           menu.scrollTop = top;
+        }
         else if (top + item.offsetHeight > menu.scrollTop + menu.clientHeight)
           menu.scrollTop = top + item.offsetHeight - menu.clientHeight;
       }

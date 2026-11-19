@@ -23,9 +23,15 @@ async function apply(page: Page, action: TreeScrollbarAction) {
     await page.mouse.move(0, 0);
     await page.clock.runFor(3200);
   }
-  else if (action === 'hover') await holder.hover();
-  else if (action === 'wheel') await holder.dispatchEvent('wheel', { deltaY: 120 });
-  else if (action === 'keyboard') await field(page).press('ArrowDown');
+  else if (action === 'hover') {
+    await holder.hover();
+  }
+  else if (action === 'wheel') {
+    await holder.dispatchEvent('wheel', { deltaY: 120 });
+  }
+  else if (action === 'keyboard') {
+    await field(page).press('ArrowDown');
+  }
   else if (action === 'drag') {
     const thumb = page.locator('.ant-tree-list-scrollbar-thumb');
     const rect = await thumb.boundingBox();

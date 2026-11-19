@@ -3,7 +3,10 @@ import type { SelectInputRegistration, SelectRootRegistration } from './select-c
 import { mergeTreeSelectComponentAttributes } from './tree-select-components.engine';
 
 export function mergeSelectComponentAttributes<Attributes extends object>(
-  target: Attributes, generated: object, own: object | undefined, slot: 'root' | 'input'
+  target: Attributes,
+  generated: object,
+  own: object | undefined,
+  slot: 'root' | 'input'
 ): Attributes {
   // cloneElement сохраняет позиции own keys и затем заменяет их значения.
   if (slot === 'input') Object.assign(target, own);

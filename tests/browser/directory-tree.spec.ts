@@ -24,7 +24,9 @@ for (const [index, entry] of reference.cases.entries()) {
             force
           });
         }
-        else await target.click({ modifiers, force });
+        else {
+          await target.click({ modifiers, force });
+        }
 
         await expect.poll(() => page.evaluate(readDirectoryTree, prefix)).toEqual(step.result);
       }

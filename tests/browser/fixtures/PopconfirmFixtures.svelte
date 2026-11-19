@@ -64,9 +64,12 @@
     }
 
     request.settled = true;
-    if (success) request.resolve();
-    else
+    if (success) {
+      request.resolve();
+    }
+    else {
       request.reject(new Error('Private backend details'));
+    }
   }
 
   function hotkey(event: KeyboardEvent) {

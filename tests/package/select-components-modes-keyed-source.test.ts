@@ -43,7 +43,12 @@ it('gates only27 captured stale-popup points and retains direct canonical/keyed 
       if (!tags || index < 3) {
         expect(view).toBeUndefined();
         untouched++;
-        if (tags) tagsPrefix++; else multiple++;
+        if (tags) {
+          tagsPrefix++;
+        }
+        else {
+          multiple++;
+        }
         continue;
       }
       expect(view).toBeTruthy();

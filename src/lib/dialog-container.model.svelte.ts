@@ -44,11 +44,15 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
         ? (options.component === 'drawer' ? getter(document.body) : getter()) ?? document.body
         : undefined;
     }
-    else if (choice === false) next = false;
+    else if (choice === false) {
+      next = false;
+    }
     else if (typeof choice === 'string') {
       next = (choice ? document.querySelector(choice) : null) ?? document.body;
     }
-    else next = (typeof choice === 'function' ? choice() : choice) ?? document.body;
+    else {
+      next = (typeof choice === 'function' ? choice() : choice) ?? document.body;
+    }
 
     if (initialized && next !== target) revision = ++currentRevision;
     initialized = true;

@@ -35,7 +35,10 @@ export async function settleNativeResponsiveTagPrefix(page: Page): Promise<Respo
     { observation: { prior, latest } }
   );
 }
-export async function openNativeResponsiveTagPrefix(page: Page, sample: SelectCustomTagPrefixSample) {
+export async function openNativeResponsiveTagPrefix(
+  page: Page,
+  sample: SelectCustomTagPrefixSample
+) {
   await page.goto('/select-components-responsive-tag-prefix.html?sample=' + encodeURIComponent(sample.id));
   await page.addScriptTag({
     type: 'module',
@@ -70,7 +73,9 @@ export async function actNativeResponsiveTagPrefix(
     }
     await page.locator('[data-surface-case="' + sample.id + '"] [data-custom-tag-close="' + action.value + '"]').click();
   }
-  else throw Error('Unknown frozen custom-tag/prefix action');
+  else {
+    throw Error('Unknown frozen custom-tag/prefix action');
+  }
   await page.mouse.move(0, 0);
 }
 export function readNativeResponsiveTagPrefixLedger(page: Page) {

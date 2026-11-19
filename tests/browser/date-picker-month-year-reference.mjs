@@ -218,7 +218,9 @@ function invocation(call, index, authored) {
   assert.equal(property(call.rawArguments, call.rawArguments.root.ref, 'length'), length);
   for (const annotation of call.dates) {
     const date = annotation.value;
-    if (authored) dateSnapshot(date, authored);
+    if (authored) {
+      dateSnapshot(date, authored);
+    }
     else {
       assert.equal(date.raw.root.ref, date.identity);
       assert.deepEqual(['$y', '$M', '$D', '$H', '$m', '$s', '$ms']

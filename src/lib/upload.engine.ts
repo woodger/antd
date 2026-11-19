@@ -50,8 +50,12 @@ export function updateUploadList<T = unknown>(
 >[] {
   const next = [...list];
   const index = next.findIndex(item => item.uid === file.uid);
-  if (index < 0)
-    next.push(file); else next[index] = file;
+  if (index < 0) {
+    next.push(file);
+  }
+  else {
+    next[index] = file;
+  }
   return next;
 }
 export function limitUploadList<T = unknown>(

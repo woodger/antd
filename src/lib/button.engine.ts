@@ -22,19 +22,25 @@ export function buttonAppearance(
   context?: Pick<ButtonConfig, 'color' | 'variant'>
 ): { color: ButtonColor | 'link'; variant: ButtonVariant; } {
   let parsed: readonly [ButtonColor | 'link', ButtonVariant];
-  if (color && variant)
+  if (color && variant) {
     parsed = [color, variant];
+  }
   else if (type || danger) {
     const pair = types[type || 'default'];
     parsed = danger ? ['danger', pair[1]] : pair;
   }
-  else if (variant === 'solid')
+  else if (variant === 'solid') {
     parsed = ['primary', 'solid'];
-  else if (context?.color && context.variant)
+  }
+  else if (context?.color && context.variant) {
     parsed = [context.color, context.variant];
-  else if (context?.variant === 'solid')
+  }
+  else if (context?.variant === 'solid') {
     parsed = ['primary', 'solid'];
-  else parsed = ['default', 'outlined'];
+  }
+  else {
+    parsed = ['default', 'outlined'];
+  }
   return { color: parsed[0], variant: ghost && parsed[1] === 'solid' ? 'outlined' : parsed[1] };
 }
 export function buttonLoading(loading: ButtonLoading): { loading: boolean; delay: number; } {

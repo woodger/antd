@@ -41,8 +41,10 @@ export function createSpinFocus() {
         return;
       }
 
-      if (content?.contains(previous ?? null) && available(previous))
-        previous.focus({ preventScroll: true }); else {
+      if (content?.contains(previous ?? null) && available(previous)) {
+        previous.focus({ preventScroll: true });
+      }
+      else {
         const next = content
           ? [
             ...content.querySelectorAll<HTMLElement>(
@@ -52,8 +54,12 @@ export function createSpinFocus() {
             (node) => node.tabIndex >= 0 && available(node)
           )
           : undefined;
-        if (next)
-          next.focus({ preventScroll: true }); else focusAfterNotice(host, true);
+        if (next) {
+          next.focus({ preventScroll: true });
+        }
+        else {
+          focusAfterNotice(host, true);
+        }
       }
     });
   }
@@ -119,8 +125,9 @@ export function createSpinFocus() {
       const host = parked;
       const candidates = neighbors;
       clearTarget();
-      if (host?.isConnected)
+      if (host?.isConnected) {
         focusAfterNotice(host, host.ownerDocument.activeElement === host);
+      }
       else if (host && host.ownerDocument.activeElement === host.ownerDocument.body)
         candidates.find(available)?.focus({ preventScroll: true });
     }

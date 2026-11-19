@@ -55,8 +55,11 @@ function selected(value: unknown): boolean {
 }
 
 /** Preserve the measured Native scalar editor/caret and closed-query display contract. */
-export function selectValueNativeView(view: SelectValueView, sample: SelectValueSample,
-  options: { hydratedInitial?: boolean } = {}): SelectValueView {
+export function selectValueNativeView(
+  view: SelectValueView,
+  sample: SelectValueSample,
+  options: { hydratedInitial?: boolean } = {}
+): SelectValueView {
   const model = view.model as {
     type: string;
     entries?: Array<[string, { type: string; value?: string }]>

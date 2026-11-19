@@ -19,7 +19,11 @@ export function rangeFlags(value:
 export function sameRange(a: RangePickerValue, b: RangePickerValue): boolean {
   return a.every((date, index) => date?.valueOf() === b[index]?.valueOf());
 }
-export function rangeFrom(values: RangePickerValue, triggered: readonly number[], active: number):
+export function rangeFrom(
+  values: RangePickerValue,
+  triggered: readonly number[],
+  active: number
+):
   Dayjs
   | undefined {
   const first = triggered.find(index => values[index]);

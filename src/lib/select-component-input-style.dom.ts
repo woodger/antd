@@ -41,7 +41,11 @@ export function createSelectComponentInputStyle() {
     measured = undefined;
   }
 
-  function editorStyle(editor: HTMLElement, frame: SelectStyleFrame, hydrating = false): EditorStyle {
+  function editorStyle(
+    editor: HTMLElement,
+    frame: SelectStyleFrame,
+    hydrating = false
+  ): EditorStyle {
     let state = editors.get(editor);
     if (state) {
       return state;
@@ -49,8 +53,12 @@ export function createSelectComponentInputStyle() {
     const accepted = editor.ownerDocument.createElement('span').style;
     // При гидратации CSSOM узла сохраняется отдельно от клиентских props.
     const preserveHydration = hydrating && !frame.string;
-    if (preserveHydration) copySelectStyle(editor.style, accepted);
-    else accepted.cssText = frame.text ?? '';
+    if (preserveHydration) {
+      copySelectStyle(editor.style, accepted);
+    }
+    else {
+      accepted.cssText = frame.text ?? '';
+    }
     const writer = createSelectStyleWriter(accepted, frame,
       () => editor.ownerDocument.createElement('span').style);
     if (!hydrating) writer.initialize();
@@ -91,8 +99,11 @@ export function createSelectComponentInputStyle() {
     },
 
     /** Call after the normal snippet/intrinsic attributes and value have committed. */
-    commit(editor: Editor | undefined, frame: SelectStyleFrame,
-      input: SelectComponentInputMeasurement): number | undefined {
+    commit(
+      editor: Editor | undefined,
+      frame: SelectStyleFrame,
+      input: SelectComponentInputMeasurement
+    ): number | undefined {
       enter(input.lifetime);
       if (!input.lifetime || !editor || !editor.isConnected) {
         return measured;

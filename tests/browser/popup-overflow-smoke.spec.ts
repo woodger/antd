@@ -131,7 +131,9 @@ for (const family of families) {
     const warnings: string[] = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('console', message => {
-      if (message.type() === 'error') errors.push(message.text());
+      if (message.type() === 'error') {
+        errors.push(message.text());
+      }
       else if (message.type() === 'warning') warnings.push(message.text());
     });
     const captures: {

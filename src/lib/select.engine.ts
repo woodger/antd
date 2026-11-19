@@ -5,7 +5,11 @@ export function isSelectCountReached(count: number, maxCount?: number) {
 }
 
 /** Лимит блокирует добавление; выбранный доступный пункт остаётся доступным для удаления. */
-export function isSelectOptionDisabled(disabled: unknown, selected: boolean, countReached: boolean) {
+export function isSelectOptionDisabled(
+  disabled: unknown,
+  selected: boolean,
+  countReached: boolean
+) {
   return Boolean(disabled || countReached && !selected);
 }
 

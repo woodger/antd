@@ -38,8 +38,11 @@ export function createPickerMask(format: string): PickerMaskSpec {
   });
   return { format, pattern, cells, segments: cells.filter(cell => cell.mask) };
 }
-export function pickerMaskSelection(spec: PickerMaskSpec, index: number | null,
-  helped = false): [number, number] {
+export function pickerMaskSelection(
+  spec: PickerMaskSpec,
+  index: number | null,
+  helped = false
+): [number, number] {
   const cell = index === null ? undefined : spec.segments[index];
   return helped ? [0, 0] : [cell?.start || 0, cell?.end || 0];
 }
@@ -74,8 +77,13 @@ export function pickerMaskRange(key: string, year: number): [number, number, num
   return ranges[key as PickerMaskToken];
 }
 /** Mouse lock, parse/submit gates and browser default events belong to the DOM controller. */
-export function editPickerMask(spec: PickerMaskSpec, state: PickerMaskState,
-  key: string, year: number, helped = false): PickerMaskEdit {
+export function editPickerMask(
+  spec: PickerMaskSpec,
+  state: PickerMaskState,
+  key: string,
+  year: number,
+  helped = false
+): PickerMaskEdit {
   const [start, end] = pickerMaskSelection(spec, state.index, helped);
   const size = end - start, token = spec.format.slice(start, end);
   let index = state.index, cache = state.cache, text = state.text;

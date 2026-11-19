@@ -38,8 +38,11 @@ export function footerCompatibility(legacy: Snippet):
   ];
 }
 
-export function rejectedHookContracts(date: Snippet<[DatePickerMode]>, time: Snippet<['time']>,
-  timeCell: NonNullable<TimeProps['cellRender']>) {
+export function rejectedHookContracts(
+  date: Snippet<[DatePickerMode]>,
+  time: Snippet<['time']>,
+  timeCell: NonNullable<TimeProps['cellRender']>
+) {
   // @ts-expect-error Date footer receives date-panel modes, not time.
   const wrongDate: DateProps['renderExtraFooter'] = time;
   // @ts-expect-error Single TimePicker keeps its existing noarg footer.

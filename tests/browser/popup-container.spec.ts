@@ -14,7 +14,9 @@ function selector(component: PopupContainerCase['component']) {
 
 async function open(page: Page, sample: PopupContainerCase) {
   await page.getByLabel('Container reference', { exact: true }).selectOption(sample.name);
-  if (sample.component === 'tabs') await page.locator('.ant-tabs-nav-more').click();
+  if (sample.component === 'tabs') {
+    await page.locator('.ant-tabs-nav-more').click();
+  }
   else if (sample.component === 'color-picker') {
     const trigger = page.getByRole('button', { name: 'Container color picker', exact: true });
     await expect(trigger).toBeVisible();

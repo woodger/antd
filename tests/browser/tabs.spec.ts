@@ -544,9 +544,12 @@ for (const placement of ['top', 'bottom', 'start', 'end']) {
           const content = (await panel(page, 'Beta').boundingBox())!;
           const alpha = (await tab(page, 'Alpha').boundingBox())!;
           const beta = (await tab(page, 'Beta').boundingBox())!;
-          if (vertical) expect(beta.y).toBeGreaterThanOrEqual(alpha.y + alpha.height - 1);
-          else
+          if (vertical) {
+            expect(beta.y).toBeGreaterThanOrEqual(alpha.y + alpha.height - 1);
+          }
+          else {
             expect(beta.x).toBeGreaterThanOrEqual(alpha.x + alpha.width - 1);
+          }
           if (placement === 'top') expect(nav.y + nav.height).toBeLessThanOrEqual(content.y + 1);
           if (placement === 'bottom')
             expect(nav.y).toBeGreaterThanOrEqual(content.y + content.height - 1);
@@ -557,7 +560,9 @@ for (const placement of ['top', 'bottom', 'start', 'end']) {
 
         const ink = root(page).locator('.ant-tabs-ink-bar');
 
-        if (type === 'card') await expect(ink).toBeHidden();
+        if (type === 'card') {
+          await expect(ink).toBeHidden();
+        }
         else {
           await expect.poll(async () => {
             const line = (await ink.boundingBox())!;

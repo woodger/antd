@@ -147,13 +147,16 @@ export interface WeekSourceSSR {
 }
 export function readWeekSourceEvidence(name: string): Uint8Array;
 export function readWeekSourceManifest(
-  kind?: 'csr', variant?: WeekSourceVariant
+  kind?: 'csr',
+  variant?: WeekSourceVariant
 ): WeekSourceCSRManifest;
 export function readWeekSourceManifest(
-  kind: 'ssr', variant?: WeekSourceVariant
+  kind: 'ssr',
+  variant?: WeekSourceVariant
 ): WeekSourceSSRManifest;
 export function readWeekSourceManifest(
-  kind: WeekSourceCaptureKind, variant?: WeekSourceVariant
+  kind: WeekSourceCaptureKind,
+  variant?: WeekSourceVariant
 ): WeekSourceCSRManifest | WeekSourceSSRManifest;
 export function readWeekSourceCase(id: WeekOwner, variant?: WeekSourceVariant): WeekSourceCase;
 export function readWeekSourcePart<Value = unknown>(
@@ -161,40 +164,61 @@ export function readWeekSourcePart<Value = unknown>(
 ): Value;
 export function readWeekSourceInitial(id: WeekOwner, variant?: WeekSourceVariant): WeekSourcePoint;
 export function readWeekSourceStep(
-  id: WeekOwner, index: number, variant?: WeekSourceVariant
+  id: WeekOwner,
+  index: number,
+  variant?: WeekSourceVariant
 ): WeekSourceStep;
 export function readWeekSourceClosed(
-  id: WeekOwner, index: number, variant?: WeekSourceVariant
+  id: WeekOwner,
+  index: number,
+  variant?: WeekSourceVariant
 ): WeekSourceClosed;
 export function readWeekSourceCleanup(
-  id: WeekOwner, phase?: 'beforeUnmount' | 'cleanup' | 'late', variant?: WeekSourceVariant
+  id: WeekOwner,
+  phase?: 'beforeUnmount' | 'cleanup' | 'late',
+  variant?: WeekSourceVariant
 ): WeekSourcePoint;
 export function readWeekSourceProducerChunks(
-  id: WeekOwner, variant?: WeekSourceVariant
+  id: WeekOwner,
+  variant?: WeekSourceVariant
 ): WeekSourceProducerReference[];
 export function readWeekSourceProducerChunk(
-  id: WeekOwner, index: number, variant?: WeekSourceVariant
+  id: WeekOwner,
+  index: number,
+  variant?: WeekSourceVariant
 ): WeekSourceProducerChunk;
 export function readWeekSourceSSR(
-  id: WeekOwner, locale: WeekSourceLocale, method: WeekSourceSerializer, variant?: WeekSourceVariant
+  id: WeekOwner,
+  locale: WeekSourceLocale,
+  method: WeekSourceSerializer,
+  variant?: WeekSourceVariant
 ): WeekSourceSSR;
 export function verifyWeekSourceSSR(
-  value: unknown, id: WeekOwner, locale: WeekSourceLocale, method: WeekSourceSerializer
+  value: unknown,
+  id: WeekOwner,
+  locale: WeekSourceLocale,
+  method: WeekSourceSerializer
 ): void;
 export function verifyWeekSourceManifest(
-  value: unknown, kind?: WeekSourceCaptureKind, variant?: WeekSourceVariant
+  value: unknown,
+  kind?: WeekSourceCaptureKind,
+  variant?: WeekSourceVariant
 ): void;
 export function verifyWeekSourcePoint(value: unknown): void;
 export function verifyWeekSourceRows(value: unknown): void;
 export function verifyWeekSourceProducerChunk(
-  value: unknown, envelope?: Pick<WeekSourceProducerReference, 'phase' | 'cursor' | 'next'>
+  value: unknown,
+  envelope?: Pick<WeekSourceProducerReference, 'phase' | 'cursor' | 'next'>
 ): void;
 export function verifyWeekSourcePartBinding(
   reference: WeekSourceReference | WeekSourceRawPart,
-  kind: WeekSourceCaptureKind, variant?: WeekSourceVariant, expectedFile?: string
+  kind: WeekSourceCaptureKind,
+  variant?: WeekSourceVariant,
+  expectedFile?: string
 ): unknown;
 export function verifyWeekSourceStoredBytes(
-  reference: WeekSourceReference | WeekSourceRawPart, stored: Uint8Array
+  reference: WeekSourceReference | WeekSourceRawPart,
+  stored: Uint8Array
 ): Uint8Array;
 export function verifyWeekSourceStoredParts(): {
   sourceOnly: true; captures: 4; originalParts: 620; wholeBlobs: number;

@@ -38,7 +38,9 @@ for (const sample of reference.cases) test(`Tree motion matches Source for ${sam
     else if (action.kind === 'keys') {
       await page.getByRole('button', { name: 'Expand both', exact: true }).dispatchEvent('click');
     }
-    else await page.getByRole('button', { name: 'Resolve prepare', exact: true }).dispatchEvent('click');
+    else {
+      await page.getByRole('button', { name: 'Resolve prepare', exact: true }).dispatchEvent('click');
+    }
     expect(await read(), JSON.stringify(action)).toEqual({ view: step.view, events: step.events });
   }
 });

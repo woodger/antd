@@ -253,10 +253,12 @@ for (const variant of ['filled', 'outlined', 'solid'])
 
       await expect(host(page)).toHaveClass(new RegExp(`ant-tag-${variant}`));
 
-      if (variant === 'solid')
+      if (variant === 'solid') {
         await expect(host(page)).toHaveCSS('background-color', 'rgb(82, 196, 26)');
-      else
+      }
+      else {
         await expect(host(page)).toHaveCSS('background-color', 'rgb(246, 255, 237)');
+      }
       await setting(page, 'disabled mode', 'on');
 
       await expect(host(page)).toHaveCSS('color', 'rgba(0, 0, 0, 0.25)');

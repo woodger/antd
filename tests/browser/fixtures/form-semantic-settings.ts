@@ -35,7 +35,8 @@ const styles: FormSemantic = ({ props }) => Object.fromEntries(keys.map((key, in
 ]));
 
 export function formSemanticSettings(
-  input: FormSemanticSettings | undefined, side: string
+  input: FormSemanticSettings | undefined,
+  side: string
 ): (FormConfig & Pick<FormProps<FormValues>, 'component' | 'disabled'>) | undefined {
   if (!input) {
     return;

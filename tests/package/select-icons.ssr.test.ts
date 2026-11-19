@@ -107,7 +107,9 @@ for (const owner of cases) for (const source of owner.states) it(`matches all pu
         const value = typeof rawValue === 'string' || typeof rawValue === 'number' ? original.displayValues[0] ?? '' : '';
         expect(a.value, 'retained scalar Native SSR editor').toBe(value);
       }
-      else expect(a.value, 'unchanged multiple/combobox SSR value').toEqual(b.value);
+      else {
+        expect(a.value, 'unchanged multiple/combobox SSR value').toEqual(b.value);
+      }
     }
     expect(resource).not.toHaveBeenCalled();
     expect(vi.getTimerCount()).toBe(0);

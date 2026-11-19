@@ -152,15 +152,23 @@ export function connectListyGestures(holder: HTMLDivElement, options: ListyGestu
     let deltaX = touchX - currentX;
     let deltaY = touchY - currentY;
     const horizontal = Math.abs(deltaX) > Math.abs(deltaY);
-    if (horizontal) touchX = currentX;
-    else touchY = currentY;
+    if (horizontal) {
+      touchX = currentX;
+    }
+    else {
+      touchY = currentY;
+    }
     const handled = moveTouch(horizontal, horizontal ? deltaX : deltaY, false, event);
     if (handled) event.preventDefault();
     view!.clearInterval(interval);
     if (handled) {
       interval = view!.setInterval(() => {
-        if (horizontal) deltaX *= 14 / 15;
-        else deltaY *= 14 / 15;
+        if (horizontal) {
+          deltaX *= 14 / 15;
+        }
+        else {
+          deltaY *= 14 / 15;
+        }
         const delta = Math.floor(horizontal ? deltaX : deltaY);
         if (!moveTouch(horizontal, delta, true) || Math.abs(delta) <= 0.1) {
           view!.clearInterval(interval);
@@ -234,7 +242,9 @@ export function connectListyGestures(holder: HTMLDivElement, options: ListyGestu
       dragOffset = Math.floor(Math.sqrt(y - rect.bottom));
       continueDrag();
     }
-    else view!.cancelAnimationFrame(dragFrame);
+    else {
+      view!.cancelAnimationFrame(dragFrame);
+    }
   }
 
   holder.addEventListener('mousedown', handleMouseDown);

@@ -105,8 +105,12 @@
       if (next && !root.open) {
         const focused = root.ownerDocument.activeElement;
         opener = focused instanceof HTMLElement ? focused : undefined;
-        if (trap)
-          root.showModal(); else root.show();
+        if (trap) {
+          root.showModal();
+        }
+        else {
+          root.show();
+        }
         root.focus({ preventScroll: true });
         releaseLayer = registerImagePreview(root);
         previousOpen = true;
@@ -114,8 +118,12 @@
       }
       else if (next && root.open && root.matches(':modal') !== trap) {
         root.close();
-        if (trap)
-          root.showModal(); else root.show();
+        if (trap) {
+          root.showModal();
+        }
+        else {
+          root.show();
+        }
         root.focus({ preventScroll: true });
       }
       else if (!next && root.open) {
@@ -162,8 +170,9 @@
       if (focusTrap && active && !dialog.contains(active)) {
         return;
       }
-      if (group && count > 1 && (event.key === 'ArrowLeft' || event.key === 'ArrowRight'))
+      if (group && count > 1 && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
         activate(event.key === 'ArrowLeft' ? -1 : 1);
+      }
       else if (event.key === 'Escape' && !focusTrap) {
         event.preventDefault();
         event.stopPropagation();

@@ -18,8 +18,10 @@ export interface CollapseContext {
   itemId(key: string, kind: 'header' | 'panel' | 'label'): string;
   toggle(key: string, event?: MouseEvent, item?: CollapseItem): void;
   iconInfo(
-    item: CollapseItem & { key: string }, open: boolean,
-    classes: CollapseSemanticSlots, styles: CollapseSemanticSlots
+    item: CollapseItem & { key: string },
+    open: boolean,
+    classes: CollapseSemanticSlots,
+    styles: CollapseSemanticSlots
   ): CollapseExpandIconInfo;
 }
 

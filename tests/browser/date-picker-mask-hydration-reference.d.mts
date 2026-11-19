@@ -68,11 +68,21 @@ export interface MaskHydrationSourceMetadata {
 }
 export function readMaskHydrationSourceManifest(): MaskHydrationSourceMetadata;
 export function readMaskHydrationSourceEvidence(name: string): Uint8Array;
-export function readMaskHydrationSourceProfile(id: MaskOwner, formatProfile: MaskFormatProfile,
-  variant?: MaskHydrationSourceVariant): MaskHydrationSourceProfile;
-export function readMaskHydrationSourcePoint(id: MaskOwner, formatProfile: MaskFormatProfile,
-  phase: MaskHydrationSourcePhase, variant?: MaskHydrationSourceVariant): MaskHydrationSourcePoint;
+export function readMaskHydrationSourceProfile(
+  id: MaskOwner,
+  formatProfile: MaskFormatProfile,
+  variant?: MaskHydrationSourceVariant
+): MaskHydrationSourceProfile;
+export function readMaskHydrationSourcePoint(
+  id: MaskOwner,
+  formatProfile: MaskFormatProfile,
+  phase: MaskHydrationSourcePhase,
+  variant?: MaskHydrationSourceVariant
+): MaskHydrationSourcePoint;
 export function readMaskHydrationSourceCapture(variant?: MaskHydrationSourceVariant): Record<string, unknown>;
-export function verifyMaskHydrationSourcePoint(value: unknown, phase?: MaskHydrationSourcePhase): void;
+export function verifyMaskHydrationSourcePoint(
+  value: unknown,
+  phase?: MaskHydrationSourcePhase
+): void;
 export function verifyMaskHydrationSourceIntegrity(): { sourceOnly: true; profiles: number; snapshots: number;
   originalWholeParts: number; wholeGzipBlobs: number; };

@@ -18,14 +18,22 @@ function nativeCompositeView(view: ReturnType<typeof readTreeSelectComponentsFor
 
 async function apply(page: Page, action: TreeSelectComponentsFormAction) {
   const editor = page.getByLabel('Form component editor', { exact: true });
-  if (action === 'field-focus') await page.locator('[data-form-components-focus]').dispatchEvent('click');
-  else if (action === 'type-query') await editor.fill('Draft query');
-  else if (action === 'open') await editor.click();
+  if (action === 'field-focus') {
+    await page.locator('[data-form-components-focus]').dispatchEvent('click');
+  }
+  else if (action === 'type-query') {
+    await editor.fill('Draft query');
+  }
+  else if (action === 'open') {
+    await editor.click();
+  }
   else if (action === 'select-beta') {
     await page.locator('[popover]:popover-open .ant-tree-title')
       .filter({ hasText: /^Beta$/ }).click();
   }
-  else await page.locator('[data-form-components-unmount]').dispatchEvent('click');
+  else {
+    await page.locator('[data-form-components-unmount]').dispatchEvent('click');
+  }
 }
 
 for (const entry of reference.cases) {

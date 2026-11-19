@@ -64,7 +64,10 @@ export function treeSelectMotionNativeSSRExpected<
     editor: { expanded: string | null } | null;
     popupPresent: boolean;
   }
->(source: View, sample: { slot?: string; defaultOpen?: boolean; initialOpen?: boolean }): View {
+>(
+  source: View,
+  sample: { slot?: string; defaultOpen?: boolean; initialOpen?: boolean }
+): View {
   const expected = structuredClone(source);
   if (!sample.slot?.startsWith('root-')) {
     expected.root.dir = 'ltr';

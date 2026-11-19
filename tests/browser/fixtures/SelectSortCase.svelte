@@ -28,7 +28,9 @@
   });
 
   function compare(
-    a: SelectOption<string | number>, b: SelectOption<string | number>, info: { searchValue: string }
+    a: SelectOption<string | number>,
+    b: SelectOption<string | number>,
+    info: { searchValue: string }
   ) {
     // plain diagnostics не становятся зависимостями сортировки.
     untrack(() => {

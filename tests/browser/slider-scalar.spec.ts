@@ -26,7 +26,9 @@ for (const sample of reference.cases) {
       const input = page.locator('[data-scalar-case]').getByRole('slider');
       if (sample.keys.length) await input.focus();
       for (const step of sample.keys) {
-        if (sample.keysTransport === 'physical') await input.press(step.key);
+        if (sample.keysTransport === 'physical') {
+          await input.press(step.key);
+        }
         else {
           const keyCode = keyCodes[step.key];
           await input.dispatchEvent('keydown', { key: step.key, keyCode, bubbles: true });

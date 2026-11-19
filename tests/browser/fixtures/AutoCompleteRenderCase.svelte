@@ -124,9 +124,15 @@
   }
   function optionValue(kind: AutocompleteRenderKind, option: Option, info: { index: number }) {
     let result: string | number | boolean | null | undefined | Snippet | readonly unknown[];
-    if (kind === 'null') result = null;
-    else if (kind === 'scalar') result = 'Scalar ' + info.index;
-    else if (kind === 'falsy' && info.index < 5) result = [0, null, false, undefined, ''][info.index];
+    if (kind === 'null') {
+      result = null;
+    }
+    else if (kind === 'scalar') {
+      result = 'Scalar ' + info.index;
+    }
+    else if (kind === 'falsy' && info.index < 5) {
+      result = [0, null, false, undefined, ''][info.index];
+    }
     else {
       const falsyArray = kind === 'falsy', token = falsyArray ? 'falsy-array' : kind + ':' + info.index + ':' + option.value;
       if (!nodes.has(token)) {
@@ -303,7 +309,9 @@
   });
   let completionProps = $derived(ownerProps as CompatibleProps);
   export function update(action: AutocompleteRenderAction) {
-    if (action.type === 'props') settings = { ...settings, ...action.set };
+    if (action.type === 'props') {
+      settings = { ...settings, ...action.set };
+    }
     else if (action.type === 'value') model = action.value;
   }
   export function readRefs() { return { control, root: publicRoot, editor, child: childNode }; }

@@ -40,8 +40,10 @@
     void now;
     return adapter.getNow();
   });
-  function cellInfo(originNode: Snippet,
-    subType: NonNullable<DatePickerCellRenderInfo['subType']>): DatePickerCellRenderInfo {
+  function cellInfo(
+    originNode: Snippet,
+    subType: NonNullable<DatePickerCellRenderInfo['subType']>
+  ): DatePickerCellRenderInfo {
     return { prefixCls, originNode, today: renderToday, type: 'time', subType,
       locale, range: cellRange };
   }
@@ -96,9 +98,12 @@
       return;
     }
     const unit = column.getAttribute('aria-label')!, signature = scrollValues.get(column);
-    if (signature && signature === readColumn(column).signature)
+    if (signature && signature === readColumn(column).signature) {
       scrollMemory.set(unit, { signature, top: column.scrollTop });
-    else scrollMemory.delete(unit);
+    }
+    else {
+      scrollMemory.delete(unit);
+    }
   }
   // Родитель снимает scroll до удаления popup; память не сохраняет DOM.
   export function captureScroll() {
@@ -140,7 +145,9 @@
         if (scrollValues.get(column) === signature)
           continue;
         const saved = scrollMemory?.get(unit);
-        if (saved && (saved.signature === signature || !selected)) column.scrollTop = saved.top;
+        if (saved && (saved.signature === signature || !selected)) {
+          column.scrollTop = saved.top;
+        }
         else if (selected) column.scrollTop = selected.offsetTop - first.offsetTop;
         scrollValues.set(column, signature);
         rememberColumn(column);

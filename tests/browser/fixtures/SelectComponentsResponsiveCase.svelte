@@ -436,7 +436,9 @@
   let inner = $derived(settings.inner === 'omitted' || settings.inner === undefined ? undefined
     : { select: icons(settings.inner, 'inner') as SelectConfig });
   export function update(action: SelectComponentsAction, actionIndex = -1) {
-    if (action.type === 'model') model = action.value;
+    if (action.type === 'model') {
+      model = action.value;
+    }
     else if (action.type === 'props') {
       const next: SelectIconSettings = { ...settings, ...action.set };
       for (const key of action.drop ?? []) delete next[key];

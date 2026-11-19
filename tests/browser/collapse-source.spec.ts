@@ -62,7 +62,9 @@ for (const sample of reference.cases.filter(item => 'eventTrace' in item)) {
       await item.hover();
       await page.mouse.move(reference.viewport.width - 1, reference.viewport.height - 1);
     }
-    else await item.locator('[data-collapse-trigger]').click();
+    else {
+      await item.locator('[data-collapse-trigger]').click();
+    }
 
     await expect(page.getByLabel('Collapse source events', { exact: true }))
       .toHaveText('eventTrace' in sample ? sample.eventTrace!.join(',') : '');

@@ -77,10 +77,12 @@ test.beforeEach(async ({ page }) => {
           y
         }
       );
-      if (maxWidth === undefined)
+      if (maxWidth === undefined) {
         write.call(this, text, x, y);
-      else
+      }
+      else {
         write.call(this, text, x, y, maxWidth);
+      }
     };
   });
   await page.goto('/?fixture=watermark');

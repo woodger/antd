@@ -80,7 +80,11 @@ interface SourceHeader {
 interface SourceReference<Case> { reference: SourceHeader; cases: Case[] }
 type SSRCase = { id: string; states: SelectSurfaceOmissionSSRState[] };
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
-function reference<Case>(filename: string, sha256: string, byteLength: number): SourceReference<Case> {
+function reference<Case>(
+  filename: string,
+  sha256: string,
+  byteLength: number
+): SourceReference<Case> {
   const bytes = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));
   assert.equal(bytes.length, byteLength, filename);
   assert.equal(hash(bytes), sha256, filename);

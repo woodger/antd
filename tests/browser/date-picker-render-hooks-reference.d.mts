@@ -127,15 +127,26 @@ export interface SourceFacts extends SourceDerivedFacts {
   pointPart: SourceReference;
   hooksPart: SourceReference;
 }
-export function readRenderHooksSourceManifest(kind: 'csr', variant?: SourceVariant): SourceCSRManifest;
-export function readRenderHooksSourceManifest(kind: 'ssr', variant?: SourceVariant): SourceSSRManifest;
 export function readRenderHooksSourceManifest(
-  kind: SourceCaptureKind, variant?: SourceVariant
+  kind: 'csr',
+  variant?: SourceVariant
+): SourceCSRManifest;
+export function readRenderHooksSourceManifest(
+  kind: 'ssr',
+  variant?: SourceVariant
+): SourceSSRManifest;
+export function readRenderHooksSourceManifest(
+  kind: SourceCaptureKind,
+  variant?: SourceVariant
 ): SourceCSRManifest | SourceSSRManifest;
 export function readRenderHooksSourceCase(id: string, variant?: SourceVariant): SourceCSRCase;
 export function readRenderHooksSourcePart<T = unknown>(reference: SourceReference | SourcePart): T;
 export function deriveRenderHooksSourceFacts(point: unknown, tape: unknown): SourceDerivedFacts;
-export function readRenderHooksSourceFacts(id: string, phase?: string, variant?: SourceVariant): SourceFacts;
+export function readRenderHooksSourceFacts(
+  id: string,
+  phase?: string,
+  variant?: SourceVariant
+): SourceFacts;
 export function verifyRenderHooksSourceStoredParts(): {
   sourceOnly: true; captures: number; originalParts: number; blobs: number;
 };

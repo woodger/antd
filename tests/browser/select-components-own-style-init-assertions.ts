@@ -199,7 +199,9 @@ export async function actNativeOwnStyle(page: Page, action: SelectComponentsOwnS
     assert(editor, 'Actual public editor ref');
     try { await editor.fill(action.text); } finally { await handle.dispose(); }
   }
-  else throw Error('Unknown frozen own-style action ' + JSON.stringify(action));
+  else {
+    throw Error('Unknown frozen own-style action ' + JSON.stringify(action));
+  }
   await page.mouse.move(0, 0);
 }
 const compilerClass = (value: string) => /^(?:svelte-[\w-]+|s-[\w-]+)$/.test(value);
@@ -584,7 +586,9 @@ export function verifyOwnStyleRecordedPopupContour(
       assert.equal(match.tag, 'SPAN');
       assert.deepEqual(expected, [['class', 'ant-select-item-option-content']]);
     }
-    else assert.equal(match.tag, node.tag, path + ' physical tag');
+    else {
+      assert.equal(match.tag, node.tag, path + ' physical tag');
+    }
     assert.deepEqual(left, expected, path + ' all complete ordered attrs');
     for (const field of ['styleAttribute', 'cssText', 'inlineProperties', 'text', 'defaultValue', 'selection', 'focused'] as const)
       assert.deepEqual(match[field], node[field], path + '/' + field);

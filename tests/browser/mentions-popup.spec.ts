@@ -152,8 +152,12 @@ for (const name of [
 ]) {
   test(`pointer and keyboard choices keep native text and caret for ${name}`, async ({ page }) => {
     const sample = await open(page, name);
-    if ('replace' in sample && sample.replace) await input(page).press('Enter');
-    else await page.getByRole('option', { name: 'Alpha', exact: true }).click();
+    if ('replace' in sample && sample.replace) {
+      await input(page).press('Enter');
+    }
+    else {
+      await page.getByRole('option', { name: 'Alpha', exact: true }).click();
+    }
 
     await expect(input(page)).toHaveValue('@alpha ');
     await expect(input(page)).toBeFocused();

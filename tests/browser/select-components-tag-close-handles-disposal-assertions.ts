@@ -26,7 +26,9 @@ export function verifyTagCloseHandleDisposal(
         source.cleanup.owner[key]
       );
     }
-    else assert.equal(cleanup.owner[key].length, source.cleanup.owner[key].length);
+    else {
+      assert.equal(cleanup.owner[key].length, source.cleanup.owner[key].length);
+    }
   }
   assert.deepEqual(
     cleanup.owner.events.map(selectSurfaceEventValue),

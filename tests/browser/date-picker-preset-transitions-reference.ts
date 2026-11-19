@@ -172,14 +172,17 @@ function readMetadata() {
   }
   return metadata = { portable, protocol };
 }
-function scope(mode: DatePickerPresetTransitionsSourceMode,
-  variant: DatePickerPresetTransitionsSourceVariant) {
+function scope(
+  mode: DatePickerPresetTransitionsSourceMode,
+  variant: DatePickerPresetTransitionsSourceVariant
+) {
   assert(['csr', 'ssr'].includes(mode), 'Unknown measured Source mode');
   assert(['first', 'repeat'].includes(variant), 'Unknown independent Source capture');
   return sourceBase + mode + '-source-' + variant + '.json';
 }
 export function verifyDatePickerPresetTransitionsSourceHeader(
-  header: DatePickerPresetTransitionsSourceHeader, mode: DatePickerPresetTransitionsSourceMode
+  header: DatePickerPresetTransitionsSourceHeader,
+  mode: DatePickerPresetTransitionsSourceMode
 ) {
   const { portable, protocol } = readMetadata();
   assert(['csr', 'ssr'].includes(mode));
@@ -198,7 +201,8 @@ export function verifyDatePickerPresetTransitionsSourceHeader(
   assert.deepEqual(header.actual, portable.captures[mode].first.header.actual);
 }
 export function verifyDatePickerPresetTransitionsSourcePartBinding(
-  reference: DatePickerPresetTransitionsSourcePart, mode: DatePickerPresetTransitionsSourceMode,
+  reference: DatePickerPresetTransitionsSourcePart,
+  mode: DatePickerPresetTransitionsSourceMode,
   variant: DatePickerPresetTransitionsSourceVariant
 ) {
   const { portable } = readMetadata();
@@ -220,7 +224,8 @@ export function verifyDatePickerPresetTransitionsSourcePartBinding(
   return mapping;
 }
 export function verifyDatePickerPresetTransitionsSourceManifest(
-  value: DatePickerPresetTransitionsSourceManifest, mode: DatePickerPresetTransitionsSourceMode,
+  value: DatePickerPresetTransitionsSourceManifest,
+  mode: DatePickerPresetTransitionsSourceMode,
   variant: DatePickerPresetTransitionsSourceVariant
 ) {
   const { portable, protocol } = readMetadata();
@@ -289,7 +294,8 @@ export function readDatePickerPresetTransitionsManifest(
   verifyDatePickerPresetTransitionsSourceManifest(value, mode, variant);
   return value;
 }
-export function readDatePickerPresetTransitionsCaseMetadata(id: string,
+export function readDatePickerPresetTransitionsCaseMetadata(
+  id: string,
   mode: DatePickerPresetTransitionsSourceMode = 'csr',
   variant: DatePickerPresetTransitionsSourceVariant = 'first'
 ) {
@@ -298,7 +304,8 @@ export function readDatePickerPresetTransitionsCaseMetadata(id: string,
   return row;
 }
 /** Decode exactly one original full raw part, retaining graphs, descriptors and physical DOM. */
-export function readDatePickerPresetTransitionsPart(reference: DatePickerPresetTransitionsSourcePart,
+export function readDatePickerPresetTransitionsPart(
+  reference: DatePickerPresetTransitionsSourcePart,
   mode: DatePickerPresetTransitionsSourceMode = 'csr',
   variant: DatePickerPresetTransitionsSourceVariant = 'first'
 ): unknown {
@@ -331,7 +338,8 @@ function rawProperty(graph: unknown, name: string) {
   return array(datePickerPresetTransitionsRawRoot(graph).properties).map(record)
     .find(row => row.key === name)?.value;
 }
-function verifyDateValue(value: DatePickerPresetTransitionsSourceValue,
+function verifyDateValue(
+  value: DatePickerPresetTransitionsSourceValue,
   authored: DatePickerPresetTransitionsSourceOwner['authoredDates']
 ) {
   assert.deepEqual(
@@ -486,7 +494,8 @@ export function verifyDatePickerPresetTransitionsSourceCleanup(
   assert.deepEqual(value.browserOwnedResourceCounters, counters);
   assert.deepEqual(value.resourceTiming, []);
 }
-export function readDatePickerPresetTransitionsInitial(id: string,
+export function readDatePickerPresetTransitionsInitial(
+  id: string,
   variant: DatePickerPresetTransitionsSourceVariant = 'first'
 ) {
   const part = readDatePickerPresetTransitionsCaseMetadata(id, 'csr', variant).initial;
@@ -496,7 +505,9 @@ export function readDatePickerPresetTransitionsInitial(id: string,
   verifyDatePickerPresetTransitionsSourcePoint(value);
   return value;
 }
-export function readDatePickerPresetTransitionsStep(id: string, index: number,
+export function readDatePickerPresetTransitionsStep(
+  id: string,
+  index: number,
   variant: DatePickerPresetTransitionsSourceVariant = 'first'
 ) {
   const entry = readDatePickerPresetTransitionsCaseMetadata(id, 'csr', variant);
@@ -509,7 +520,9 @@ export function readDatePickerPresetTransitionsStep(id: string, index: number,
   verifyDatePickerPresetTransitionsSourcePoint(value.actual);
   return value;
 }
-export function readDatePickerPresetTransitionsClosed(id: string, index: number,
+export function readDatePickerPresetTransitionsClosed(
+  id: string,
+  index: number,
   variant: DatePickerPresetTransitionsSourceVariant = 'first'
 ) {
   const entry = readDatePickerPresetTransitionsCaseMetadata(id, 'csr', variant);
@@ -526,8 +539,10 @@ export function readDatePickerPresetTransitionsClosed(id: string, index: number,
   assert.equal(value.after1000.owner.open, false);
   return value;
 }
-export function readDatePickerPresetTransitionsCleanup(id: string,
-  phase: 'cleanup' | 'late' = 'cleanup', variant: DatePickerPresetTransitionsSourceVariant = 'first'
+export function readDatePickerPresetTransitionsCleanup(
+  id: string,
+  phase: 'cleanup' | 'late' = 'cleanup',
+  variant: DatePickerPresetTransitionsSourceVariant = 'first'
 ) {
   assert(phase === 'cleanup' || phase === 'late');
   const part = readDatePickerPresetTransitionsCaseMetadata(id, 'csr', variant)[phase];
@@ -537,7 +552,8 @@ export function readDatePickerPresetTransitionsCleanup(id: string,
   verifyDatePickerPresetTransitionsSourceCleanup(value);
   return value;
 }
-export function readDatePickerPresetTransitionsSSR(id: string,
+export function readDatePickerPresetTransitionsSSR(
+  id: string,
   variant: DatePickerPresetTransitionsSourceVariant = 'first'
 ) {
   const part = readDatePickerPresetTransitionsCaseMetadata(id, 'ssr', variant).server;

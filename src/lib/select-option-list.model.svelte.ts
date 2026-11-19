@@ -121,7 +121,9 @@ export function createSelectOptionList<Item>(options: {
       if (!visited) {
         return;
       }
-      if (config == null) viewport.flashScrollbar();
+      if (config == null) {
+        viewport.flashScrollbar();
+      }
       else if (typeof config === 'object' && ('top' in config || 'left' in config)) {
         // Закрытый positional request применяется к реальному viewport после открытия.
         const { left, top } = config;

@@ -37,8 +37,11 @@ export function keepSelectSuppliedValue(
 
 /** Новый label API включает Source snapshot; обычные primitive labels сохраняют Native refresh. */
 export function hasSelectLabelFeatures(
-  labelInValue: boolean | undefined, optionLabelProp: string | undefined, labelRender: unknown,
-  drafts: readonly unknown[], items?: readonly { label: unknown }[]
+  labelInValue: boolean | undefined,
+  optionLabelProp: string | undefined,
+  labelRender: unknown,
+  drafts: readonly unknown[],
+  items?: readonly { label: unknown }[]
 ) {
   return labelInValue !== undefined || optionLabelProp !== undefined || labelRender !== undefined
     || drafts.some(item => item !== null && typeof item === 'object')
@@ -61,7 +64,9 @@ export function selectValueDrafts(draft: unknown, multiple: boolean): readonly u
 
 /** Callback conversion не подставляет cached label: cache применяется к display отдельно. */
 export function convertSelectValues<Value extends SelectDataValue, Data extends object>(
-  drafts: readonly unknown[], maps: SelectDataMaps<Value, Data>, fields: SelectDataFields,
+  drafts: readonly unknown[],
+  maps: SelectDataMaps<Value, Data>,
+  fields: SelectDataFields,
   optionLabelProp?: string
 ): SelectValueItem<Value>[] {
   return drafts.map(draft => {
@@ -98,8 +103,11 @@ function sameItem<Value extends SelectDataValue>(
 }
 
 export function resolveSelectValueCache<Value extends SelectDataValue, Data extends object>(
-  drafts: readonly unknown[], maps: SelectDataMaps<Value, Data>, fields: SelectDataFields,
-  previous: SelectValueCache<Value, Data>, optionLabelProp?: string
+  drafts: readonly unknown[],
+  maps: SelectDataMaps<Value, Data>,
+  fields: SelectDataFields,
+  previous: SelectValueCache<Value, Data>,
+  optionLabelProp?: string
 ): SelectValueCache<Value, Data> {
   const labels = new Map<Value, unknown>();
   const options = new Map<Value, Data | undefined>();
@@ -138,13 +146,18 @@ export function resolveSelectValueCache<Value extends SelectDataValue, Data exte
 
 /** Метаданные dropdown select/deselect читают mapped label, а не optionLabelProp. */
 export function selectValueEvent<Value extends SelectDataValue>(
-  value: Value, data: object | undefined, fields: SelectDataFields, labelInValue: boolean
+  value: Value,
+  data: object | undefined,
+  fields: SelectDataFields,
+  labelInValue: boolean
 ) {
   return labelInValue ? { label: data ? Reflect.get(data, fields.label) : undefined, value } : value;
 }
 
 export function selectValueOutput<Value extends SelectDataValue>(
-  values: readonly SelectValueItem<Value>[], multiple: boolean, labelInValue: boolean
+  values: readonly SelectValueItem<Value>[],
+  multiple: boolean,
+  labelInValue: boolean
 ) {
   const result = values.map(item => labelInValue ? { label: item.label, value: item.value } : item.value);
   return multiple ? result : result[0];

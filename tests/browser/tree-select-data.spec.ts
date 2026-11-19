@@ -15,7 +15,9 @@ for (const sample of reference.cases) test(`TreeSelect data matches Source for $
   await expect.poll(read).toEqual(sample.initial);
   for (const step of sample.steps) {
     const action = step.action as TreeSelectDataAction;
-    if (action.kind === 'open') await page.getByRole('combobox', { name: 'Data selection' }).click();
+    if (action.kind === 'open') {
+      await page.getByRole('combobox', { name: 'Data selection' }).click();
+    }
     else if (action.kind === 'choose') {
       const row = page.locator(`.ant-select-dropdown [role="treeitem"][id$="-${action.value}"]`);
       await row.locator(/^(check-|strict)/.test(sample.id)

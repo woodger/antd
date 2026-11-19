@@ -131,50 +131,76 @@ export interface QuarterSourceSSR {
 }
 export function readQuarterSourceEvidence(name: string): Uint8Array;
 export function readQuarterSourceManifest(
-  kind?: 'csr', variant?: QuarterSourceVariant
+  kind?: 'csr',
+  variant?: QuarterSourceVariant
 ): QuarterSourceCSRManifest;
 export function readQuarterSourceManifest(
-  kind: 'ssr', variant?: QuarterSourceVariant
+  kind: 'ssr',
+  variant?: QuarterSourceVariant
 ): QuarterSourceSSRManifest;
 export function readQuarterSourceManifest(
-  kind: QuarterSourceCaptureKind, variant?: QuarterSourceVariant
+  kind: QuarterSourceCaptureKind,
+  variant?: QuarterSourceVariant
 ): QuarterSourceCSRManifest | QuarterSourceSSRManifest;
-export function readQuarterSourceCase(id: QuarterOwner, variant?: QuarterSourceVariant): QuarterSourceCase;
+export function readQuarterSourceCase(
+  id: QuarterOwner,
+  variant?: QuarterSourceVariant
+): QuarterSourceCase;
 export function readQuarterSourcePart<Value = unknown>(
   reference: QuarterSourceReference | QuarterSourceRawPart
 ): Value;
-export function readQuarterSourceInitial(id: QuarterOwner, variant?: QuarterSourceVariant): QuarterSourcePoint;
+export function readQuarterSourceInitial(
+  id: QuarterOwner,
+  variant?: QuarterSourceVariant
+): QuarterSourcePoint;
 export function readQuarterSourceStep(
-  id: QuarterOwner, index: number, variant?: QuarterSourceVariant
+  id: QuarterOwner,
+  index: number,
+  variant?: QuarterSourceVariant
 ): QuarterSourceStep;
 export function readQuarterSourceClosed(
-  id: QuarterOwner, index: number, variant?: QuarterSourceVariant
+  id: QuarterOwner,
+  index: number,
+  variant?: QuarterSourceVariant
 ): QuarterSourceClosed;
 export function readQuarterSourceCleanup(
-  id: QuarterOwner, phase?: 'beforeUnmount' | 'cleanup' | 'late', variant?: QuarterSourceVariant
+  id: QuarterOwner,
+  phase?: 'beforeUnmount' | 'cleanup' | 'late',
+  variant?: QuarterSourceVariant
 ): QuarterSourcePoint;
 export function readQuarterSourceProducerChunks(
-  id: QuarterOwner, variant?: QuarterSourceVariant
+  id: QuarterOwner,
+  variant?: QuarterSourceVariant
 ): QuarterSourceProducerReference[];
 export function readQuarterSourceProducerChunk(
-  id: QuarterOwner, index: number, variant?: QuarterSourceVariant
+  id: QuarterOwner,
+  index: number,
+  variant?: QuarterSourceVariant
 ): QuarterSourceProducerChunk;
 export function readQuarterSourceSSR(
-  id: QuarterOwner, method: QuarterSourceSerializer, variant?: QuarterSourceVariant
+  id: QuarterOwner,
+  method: QuarterSourceSerializer,
+  variant?: QuarterSourceVariant
 ): QuarterSourceSSR;
 export function verifyQuarterSourceManifest(
-  value: unknown, kind?: QuarterSourceCaptureKind, variant?: QuarterSourceVariant
+  value: unknown,
+  kind?: QuarterSourceCaptureKind,
+  variant?: QuarterSourceVariant
 ): void;
 export function verifyQuarterSourcePoint(value: unknown): void;
 export function verifyQuarterSourceProducerChunk(
-  value: unknown, envelope?: Pick<QuarterSourceProducerReference, 'phase' | 'cursor' | 'next'>
+  value: unknown,
+  envelope?: Pick<QuarterSourceProducerReference, 'phase' | 'cursor' | 'next'>
 ): void;
 export function verifyQuarterSourcePartBinding(
   reference: QuarterSourceReference | QuarterSourceRawPart,
-  kind: QuarterSourceCaptureKind, variant?: QuarterSourceVariant, expectedFile?: string
+  kind: QuarterSourceCaptureKind,
+  variant?: QuarterSourceVariant,
+  expectedFile?: string
 ): unknown;
 export function verifyQuarterSourceStoredBytes(
-  reference: QuarterSourceReference | QuarterSourceRawPart, stored: Uint8Array
+  reference: QuarterSourceReference | QuarterSourceRawPart,
+  stored: Uint8Array
 ): Uint8Array;
 export function verifyQuarterSourceStoredParts(): {
   sourceOnly: true; captures: 4; originalParts: 456; wholeBlobs: number;

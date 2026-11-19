@@ -22,7 +22,11 @@ export function treeSelectCheckableNativeView<View extends {
   standardCheckboxCount: number;
   nodes: readonly { checkbox: boolean }[];
   editor: { value: string | null; caret: (number | null)[] | null } | null;
-}>(source: View, id: string, phase: 'initial' | 'step' | 'hydrated-initial' = 'step'): View {
+}>(
+  source: View,
+  id: string,
+  phase: 'initial' | 'step' | 'hydrated-initial' = 'step'
+): View {
   let view = source;
   if (id === 'strict-only-falsy') {
     view = {

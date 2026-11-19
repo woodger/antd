@@ -346,8 +346,12 @@
     const previous = input.style.getPropertyValue('--select-input-width');
     input.style.setProperty('--select-input-width', `${measureCascaderInput(input)}px`);
     return () => {
-      if (previous) input.style.setProperty('--select-input-width', previous);
-      else input.style.removeProperty('--select-input-width');
+      if (previous) {
+        input.style.setProperty('--select-input-width', previous);
+      }
+      else {
+        input.style.removeProperty('--select-input-width');
+      }
     };
   });
   $effect.pre(() => {
@@ -559,7 +563,9 @@
     }
     if (key === 'Enter' || key === ' ' && !canSearch) {
       event.preventDefault();
-      if (!visible) requestOpen(true);
+      if (!visible) {
+        requestOpen(true);
+      }
       else if ((key === 'Enter' || panel) && !enterHeld) {
         const row = search ? rows.find(row => row.key === searchKey)
           : columns.flat().find(row => row.key === cascaderPathKey(active));
@@ -570,7 +576,9 @@
     else if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Backspace'].includes(key)) {
       const editingSearch = Boolean(search) && (key === 'ArrowLeft' || key === 'ArrowRight');
       if (key !== 'Backspace' && !editingSearch) event.preventDefault();
-      if (!visible && key !== 'Backspace' && !editingSearch) requestOpen(true);
+      if (!visible && key !== 'Backspace' && !editingSearch) {
+        requestOpen(true);
+      }
       else if (visible) {
         const next = navigateCascader(columns, active, key, rtl, search ? searchKey : undefined);
         if (next.path) activatePath(next.path);

@@ -53,8 +53,12 @@ function createWaveEffect(target: HTMLElement, info: WaveEffectInfo, onEnd: () =
         style.borderBottomRightRadius, style.borderBottomLeftRadius]
         .map(value => `${number(value)}px`).join(' ')
     });
-    if (color) wave.style.setProperty('--ant-wave-color', color);
-    else wave.style.removeProperty('--ant-wave-color');
+    if (color) {
+      wave.style.setProperty('--ant-wave-color', color);
+    }
+    else {
+      wave.style.removeProperty('--ant-wave-color');
+    }
   }
 
   function destroy() {
@@ -142,7 +146,9 @@ export function connectWave(
       const target = node.querySelector<HTMLElement>('.ant-wave-target') ?? node;
       const details: WaveEffectInfo = { ...info, event: event as MouseEvent };
       const showEffect = config?.showEffect;
-      if (showEffect) showEffect(target, details);
+      if (showEffect) {
+        showEffect(target, details);
+      }
       else {
         const cleanup = createWaveEffect(target, details, () => {
           if (cleanup) effects.delete(cleanup);

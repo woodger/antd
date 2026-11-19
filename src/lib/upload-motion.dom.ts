@@ -74,7 +74,9 @@ export function createUploadMotion(
       name = motionName;
       collapse = options.collapse;
       if (previous === visible) {
-        if (status && (!enabled || reduced.matches)) finish();
+        if (status && (!enabled || reduced.matches)) {
+          finish();
+        }
         else if (status) update();
         return;
       }

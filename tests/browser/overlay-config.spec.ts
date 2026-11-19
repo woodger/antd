@@ -101,12 +101,24 @@ for (const sample of reference.interactions as OverlayConfigInteraction[]) {
     const anchor = page.locator('[data-config-anchor]');
 
     for (const step of sample.steps) {
-      if (typeof step.action === 'number') await page.clock.runFor(step.action);
-      else if (step.action === 'hover') await anchor.hover();
-      else if (step.action === 'leave') await page.mouse.move(0, 0);
-      else if (step.action === 'focus') await anchor.focus();
-      else if (step.action === 'blur') await anchor.evaluate(node => node.blur());
-      else if (step.action === 'click') await anchor.dispatchEvent('click');
+      if (typeof step.action === 'number') {
+        await page.clock.runFor(step.action);
+      }
+      else if (step.action === 'hover') {
+        await anchor.hover();
+      }
+      else if (step.action === 'leave') {
+        await page.mouse.move(0, 0);
+      }
+      else if (step.action === 'focus') {
+        await anchor.focus();
+      }
+      else if (step.action === 'blur') {
+        await anchor.evaluate(node => node.blur());
+      }
+      else if (step.action === 'click') {
+        await anchor.dispatchEvent('click');
+      }
       else {
         const canceled = await anchor.evaluate(node => !node.dispatchEvent(new MouseEvent('contextmenu', {
           bubbles: true, cancelable: true, clientX: 220, clientY: 190

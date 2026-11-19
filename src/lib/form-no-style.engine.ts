@@ -7,7 +7,9 @@ export interface FormItemMessages {
 }
 
 export function mergeFormItemMessages(
-  errors: readonly string[], warnings: readonly string[], fields: readonly FormItemMessages[]
+  errors: readonly string[],
+  warnings: readonly string[],
+  fields: readonly FormItemMessages[]
 ) {
   const unique = new Map<string | symbol, FormItemMessages>();
   for (const field of fields) {

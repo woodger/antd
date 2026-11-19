@@ -281,9 +281,12 @@
       }
     }
 
-    if (delay)
+    if (delay) {
       pending = setTimeout(apply, delay);
-    else apply();
+    }
+    else {
+      apply();
+    }
   }
 
   function focusItem(key: string | null) {
@@ -302,8 +305,9 @@
     if (element) {
       const bounds = element.getBoundingClientRect();
       const menuBounds = list.getBoundingClientRect();
-      if (bounds.top < menuBounds.top + 4)
+      if (bounds.top < menuBounds.top + 4) {
         list.scrollTop -= menuBounds.top + 4 - bounds.top;
+      }
       else if (bounds.bottom > menuBounds.bottom - 4)
         list.scrollTop += bounds.bottom - menuBounds.bottom + 4;
     }
@@ -371,8 +375,9 @@
       return;
     }
 
-    if (clicked || visible && !wanted())
+    if (clicked || visible && !wanted()) {
       close('trigger');
+    }
     else {
       clicked = true;
       dismissed = false;
@@ -408,8 +413,9 @@
 
   function handlePopupHover(next: boolean) {
     popupHovered = next;
-    if (next)
+    if (next) {
       cancelPending();
+    }
     else if (supports('hover') && !wanted())
       request(false, getTooltipDelay(mouseLeaveDelay));
   }

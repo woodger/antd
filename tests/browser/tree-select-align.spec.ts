@@ -35,9 +35,15 @@ async function settle(page: Page) {
   throw Error('TreeSelect alignment did not settle after 150 frames');
 }
 async function act(page: Page, action: TreeSelectAlignAction) {
-  if (action.type === 'click') await (await field(page)).click();
-  else if (action.type === 'focus') await (await field(page)).focus();
-  else if (action.type === 'fill') await (await field(page)).fill(action.text);
+  if (action.type === 'click') {
+    await (await field(page)).click();
+  }
+  else if (action.type === 'focus') {
+    await (await field(page)).focus();
+  }
+  else if (action.type === 'fill') {
+    await (await field(page)).fill(action.text);
+  }
   else if (action.type === 'caret') {
     await (await field(page)).evaluate((node, range) => {
       if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) {
@@ -103,7 +109,9 @@ function verify(projection: Projection, expected: Projection, sample: TreeSelect
     expect(projection.raw.popup?.offsetParent).toBeNull();
     expect(projection.raw.popup?.container).toBe(sample.container ?? 'host');
   }
-  else expect(projection.raw.popup).toBeNull();
+  else {
+    expect(projection.raw.popup).toBeNull();
+  }
 }
 
 test.use({ viewport: reference.reference.viewport });

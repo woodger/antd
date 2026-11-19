@@ -46,7 +46,9 @@ function computed(
       assert.equal(observed, 'ant-skeleton-loading', label + ' exact canonical Native keyframe');
       applied?.add('existing-skeleton-source-hashed-native-canonical-keyframe-name');
     }
-    else assert.equal(observed, value, label + '/' + name);
+    else {
+      assert.equal(observed, value, label + '/' + name);
+    }
   });
 }
 /** All captured CSS fields and local boxes stay strict; screen placement remains
@@ -171,8 +173,15 @@ function lifecycle(
   }
   assert(actual.activity.every(row => ['body-render', 'footer-render'].includes(row.kind)));
 }
-export function verifyModalLoadingPoint(actual: ModalLoadingPoint, source: ModalLoadingPoint, initial: ModalLoadingPoint,
-  label: string, previous?: ModalLoadingPoint, applied?: Set<string>, mode: Mode = 'native'): string[] {
+export function verifyModalLoadingPoint(
+  actual: ModalLoadingPoint,
+  source: ModalLoadingPoint,
+  initial: ModalLoadingPoint,
+  label: string,
+  previous?: ModalLoadingPoint,
+  applied?: Set<string>,
+  mode: Mode = 'native'
+): string[] {
   const failures: string[] = [];
   const check = (part: string, fn: () => void) => {
     try {
@@ -280,8 +289,13 @@ export function verifyModalLoadingPoint(actual: ModalLoadingPoint, source: Modal
   check('skeleton', () => verifyModalLoadingSkeleton(actual, source, label, applied, mode));
   return failures;
 }
-export function verifyModalLoadingCleanup(actual: ModalLoadingCleanup, late: ModalLoadingCleanup, source: ModalLoadingSourceCase,
-  label: string, applied?: Set<string>): string[] {
+export function verifyModalLoadingCleanup(
+  actual: ModalLoadingCleanup,
+  late: ModalLoadingCleanup,
+  source: ModalLoadingSourceCase,
+  label: string,
+  applied?: Set<string>
+): string[] {
   try {
     assert.deepEqual(actual, late, label + ' full actual cleanup-to-late quiescence');
     assert.equal(actual.owner.alive, false);

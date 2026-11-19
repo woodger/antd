@@ -17,8 +17,12 @@ async function mount(page: Page, id: string) {
 }
 
 async function act(page: Page, action: TreeSelectSemanticAction) {
-  if (action === 'open') await editor(page).click();
-  else if (action === 'search' || action === 'reset-search') await editor(page).fill(action === 'search' ? 'alpha' : '');
+  if (action === 'open') {
+    await editor(page).click();
+  }
+  else if (action === 'search' || action === 'reset-search') {
+    await editor(page).fill(action === 'search' ? 'alpha' : '');
+  }
   else if (action === 'expand' || action === 'collapse' || action === 'load') {
     const name = action === 'load' ? 'Lazy' : 'Parent';
     await popup(page).getByRole('treeitem', { name, exact: true }).locator('[data-ant-tree-switcher]').click();
@@ -29,8 +33,12 @@ async function act(page: Page, action: TreeSelectSemanticAction) {
       { name: 'Finish semantic load' }
     ).dispatchEvent('click');
   }
-  else if (action === 'draft') await draft(page).fill('Keep semantic draft');
-  else if (action === 'update') await page.getByRole('button', { name: 'Update semantic styles' }).dispatchEvent('click');
+  else if (action === 'draft') {
+    await draft(page).fill('Keep semantic draft');
+  }
+  else if (action === 'update') {
+    await page.getByRole('button', { name: 'Update semantic styles' }).dispatchEvent('click');
+  }
   else if (action === 'outside') {
     await page.getByRole(
       'button',

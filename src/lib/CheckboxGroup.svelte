@@ -117,8 +117,12 @@
       }
 
       const next = new Set(selected);
-      if (checked) next.add(optionValue);
-      else next.delete(optionValue);
+      if (checked) {
+        next.add(optionValue);
+      }
+      else {
+        next.delete(optionValue);
+      }
 
       values = getCheckboxGroupValue(items, [...next]);
       nextValue = values;

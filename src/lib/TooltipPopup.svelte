@@ -216,7 +216,9 @@
     if (open || refresh || force && !initialized) {
       cached = { ...payload, title: captureContent(title) };
     }
-    if (open || force) initialized = true;
+    if (open || force) {
+      initialized = true;
+    }
     else if (destroy) initialized = false;
   });
 

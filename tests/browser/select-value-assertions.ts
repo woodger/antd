@@ -23,8 +23,13 @@ export async function settleSelectValue(page: Page) {
   throw Error('Select value DOM, public owner and complete callback ledger did not settle');
 }
 
-export function verifySelectValue(actual: ReturnType<typeof readSelectValue>, source: SelectValueSnapshot,
-  sample: SelectValueSample, label: string, options: { hydratedInitial?: boolean } = {}) {
+export function verifySelectValue(
+  actual: ReturnType<typeof readSelectValue>,
+  source: SelectValueSnapshot,
+  sample: SelectValueSample,
+  label: string,
+  options: { hydratedInitial?: boolean } = {}
+) {
   verifySelectValueReceipts(actual.view.receipts, source.view.receipts);
   expect(actual.raw.methods).toEqual({ focus: true, blur: true, scrollTo: true });
   expect(actual.raw.publicRoot).toEqual({ tag: 'DIV', sameRoot: true });
@@ -52,7 +57,9 @@ export function verifySelectValue(actual: ReturnType<typeof readSelectValue>, so
         );
       }
     }
-    else verifySelectValueOption(current[2], event[2]);
+    else {
+      verifySelectValueOption(current[2], event[2]);
+    }
   }
   // Client render scheduling differs between React and Svelte. Every invocation remains
   // in raw evidence; compare all semantic invocations and every raw argument/result.

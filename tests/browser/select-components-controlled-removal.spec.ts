@@ -80,7 +80,9 @@ function current(
   expect(owner.valueKind).toBe(removed ? phase : value);
   expect(owner.checkedKind).toBe(textarea ? 'undefined' : sample.axis === 'value-checked' && removed ? phase : 'true');
   expect(Object.values(owner.refs)).toEqual([true, true, true, true]);
-  if (removed) expect(node.selection).toEqual(textarea && sample.defaultValuePresent ? [8, 8, 'forward'] : [0, 0, 'forward']);
+  if (removed) {
+    expect(node.selection).toEqual(textarea && sample.defaultValuePresent ? [8, 8, 'forward'] : [0, 0, 'forward']);
+  }
   else if (phase === 'next') expect(node.selection).toEqual([4, 4, 'forward']);
 }
 for (const sample of controlledRemovalSamples) test(`preserves Native controlled removal ${sample.id}`, async (

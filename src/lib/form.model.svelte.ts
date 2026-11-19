@@ -336,8 +336,12 @@ export function createForm<Values extends FormValues>({
     if (names) {
       for (const field of bindings) {
         const index = unique.findIndex((entry) => sameFormPath(fieldPath(entry), fieldPath(field)));
-        if (index < 0) unique.push(field);
-        else unique[index] = field;
+        if (index < 0) {
+          unique.push(field);
+        }
+        else {
+          unique[index] = field;
+        }
       }
     }
     const selected: { path: (string | number)[]; field?: StoredField }[] = names

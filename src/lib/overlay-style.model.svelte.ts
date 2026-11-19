@@ -5,8 +5,10 @@ import { createSelectOverlayStyle, type SelectOverlayStyleOptions } from './sele
 
 /** Root styles следуют после координат rc-trigger, не сбрасывая variables темы и portal. */
 export function createOverlayStyle(
-  getLayers: () => readonly InlineStyleLayer[], sourceWidthVariable?: string,
-  getSourceOpen?: () => boolean, objectStyle?: SelectOverlayStyleOptions
+  getLayers: () => readonly InlineStyleLayer[],
+  sourceWidthVariable?: string,
+  getSourceOpen?: () => boolean,
+  objectStyle?: SelectOverlayStyleOptions
 ) {
   if (objectStyle) {
     return createSelectOverlayStyle(

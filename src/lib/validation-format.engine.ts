@@ -39,7 +39,11 @@ export function matchesValidationFormat(value: unknown, type: string) {
   }
 }
 
-export function matchesValidationPattern(value: unknown, pattern: RegExp | string, coerce: boolean) {
+export function matchesValidationPattern(
+  value: unknown,
+  pattern: RegExp | string,
+  coerce: boolean
+) {
   if (!pattern) {
     return true;
   }

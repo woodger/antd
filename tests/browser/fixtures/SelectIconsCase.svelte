@@ -99,7 +99,9 @@
         wasFocused: true, connected: retiring.editor.isConnected });
       retiringProvider = undefined;
     }
-    else open = value;
+    else {
+      open = value;
+    }
     event('open', value);
   });
   const onInputKeyDown = handler(
@@ -278,7 +280,9 @@
   let inner = $derived(settings.inner === 'omitted' || settings.inner === undefined ? undefined
     : { select: icons(settings.inner, 'inner') as SelectConfig });
   export function update(action: SelectIconAction, actionIndex = -1) {
-    if (action.type === 'model') model = action.value;
+    if (action.type === 'model') {
+      model = action.value;
+    }
     else if (action.type === 'props') {
       const next = { ...settings, ...action.set };
       for (const key of action.drop ?? []) delete next[key];

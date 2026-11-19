@@ -7,8 +7,11 @@ type SelectStyleTarget = Pick<CSSStyleDeclaration, 'setProperty' | 'getPropertyV
 type SelectStyleSnapshot = SelectStyleTarget & Pick<CSSStyleDeclaration, 'removeProperty'> & Iterable<string>;
 
 /** cssText склеивает shorthand и меняет порядок longhand; переносим принятые declarations напрямую. */
-export function copySelectStyle(source: SelectStyleSnapshot, target: SelectStyleSnapshot,
-  managed?: SelectStyleProperties) {
+export function copySelectStyle(
+  source: SelectStyleSnapshot,
+  target: SelectStyleSnapshot,
+  managed?: SelectStyleProperties
+) {
   const declarations = [...source].map(property => ({ property,
     value: source.getPropertyValue(property), priority: source.getPropertyPriority(property) }));
   const removed = managed
@@ -25,8 +28,11 @@ export function copySelectStyle(source: SelectStyleSnapshot, target: SelectStyle
 }
 
 /** История хранит logical props отдельно от принятого браузером CSSOM. */
-export function createSelectStyleWriter(initialTarget: SelectStyleTarget, initial: SelectStyleFrame,
-  createParser?: () => CSSStyleDeclaration) {
+export function createSelectStyleWriter(
+  initialTarget: SelectStyleTarget,
+  initial: SelectStyleFrame,
+  createParser?: () => CSSStyleDeclaration
+) {
   let target = initialTarget;
   let parser: CSSStyleDeclaration | undefined;
   let stringFrame: SelectStyleFrame | undefined;
@@ -54,7 +60,9 @@ export function createSelectStyleWriter(initialTarget: SelectStyleTarget, initia
         priority
       );
     }
-    else Reflect.set(target, property === 'float' ? 'cssFloat' : property, value);
+    else {
+      Reflect.set(target, property === 'float' ? 'cssFloat' : property, value);
+    }
   }
 
   return {

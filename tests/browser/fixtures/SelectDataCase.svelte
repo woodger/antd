@@ -193,13 +193,19 @@
     searchOwner: { whileOpenCallback: true, whileClosedOwnUndefined: true } };
   }
   export function update(action: SelectDataAction) {
-    if (action.type === 'props') settings = { ...settings, ...action.set };
-    else if (action.type === 'open') open = action.value;
+    if (action.type === 'props') {
+      settings = { ...settings, ...action.set };
+    }
+    else if (action.type === 'open') {
+      open = action.value;
+    }
     else if (action.type === 'value') {
       model = action.value;
       if (sample.family === 'auto-complete') query = String(action.value ?? '');
     }
-    else if (action.type === 'query') query = action.text;
+    else if (action.type === 'query') {
+      query = action.text;
+    }
     else if (action.type === 'ref') control?.scrollTo(scrollTarget(action));
   }
   export function readRefs() {

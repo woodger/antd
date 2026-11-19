@@ -72,8 +72,12 @@
     const checked = fresh;
     let result: Outcome['result'];
     try {
-      if (undefinedNames) await checked.validateFields(undefined, options);
-      else await checked.validateFields(options);
+      if (undefinedNames) {
+        await checked.validateFields(undefined, options);
+      }
+      else {
+        await checked.validateFields(options);
+      }
       result = { status: 'success' };
     }
     catch (error) {

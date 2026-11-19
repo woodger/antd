@@ -69,13 +69,23 @@ export function resolveTreeDrop<Data extends object>(options: TreeDropOptions<Da
     allowed = allow(0);
   }
   else if (levelOffset === 0 && !(rawLevelOffset > -1.5)) {
-    if (allow(0)) position = 0;
-    else if (allow(1)) position = 1;
-    else allowed = false;
+    if (allow(0)) {
+      position = 0;
+    }
+    else if (allow(1)) {
+      position = 1;
+    }
+    else {
+      allowed = false;
+    }
   }
   else {
-    if (allow(1)) position = 1;
-    else allowed = false;
+    if (allow(1)) {
+      position = 1;
+    }
+    else {
+      allowed = false;
+    }
   }
 
   return {

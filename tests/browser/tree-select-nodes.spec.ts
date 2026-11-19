@@ -22,7 +22,9 @@ async function apply(
   index: number,
   sample: TreeSelectNodesSample
 ) {
-  if (action === 'open') await input(page).click();
+  if (action === 'open') {
+    await input(page).click();
+  }
   else if (action === 'choose-zero' || action === 'choose-beta') {
     const marker = action === 'choose-zero' ? 'zero' : 'beta';
     await page.locator(`[popover]:popover-open [data-node-marker="${marker}"]`)
@@ -31,7 +33,9 @@ async function apply(
   else if (action === 'expand' || action === 'collapse') {
     await page.locator('[popover]:popover-open [data-node-marker="parent"] [data-ant-tree-switcher]').click();
   }
-  else if (action === 'search' || action === 'reset-search') await input(page).fill(action === 'search' ? 'b' : '');
+  else if (action === 'search' || action === 'reset-search') {
+    await input(page).fill(action === 'search' ? 'b' : '');
+  }
   else {
     await page.getByRole('combobox', { name: 'TreeSelect node action', exact: true }).selectOption(String(index));
     await page.getByRole('button', { name: 'Apply TreeSelect node action' }).dispatchEvent('click');

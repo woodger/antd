@@ -8,8 +8,11 @@ import { verifyHydrationOwnershipPoint } from './select-components-hydration-own
 import { verifyHydrationOwnershipSSR, type HydrationOwnershipNativeSSR } from './select-components-hydration-ownership-ssr-assertions';
 import { drainSelectSurface } from './select-surface-driver';
 
-export async function captureHydrationOwnership(page: Page, source: HydrationOwnershipSourceCase,
-  renderOwner: (key: HydrationOwnershipOwnerKey) => Promise<HydrationOwnershipNativeSSR>) {
+export async function captureHydrationOwnership(
+  page: Page,
+  source: HydrationOwnershipSourceCase,
+  renderOwner: (key: HydrationOwnershipOwnerKey) => Promise<HydrationOwnershipNativeSSR>
+) {
   const scenario = source.scenario, trace: Array<{
     phase: string;
     actual: HydrationOwnershipPoint;
@@ -217,7 +220,9 @@ export async function captureHydrationOwnership(page: Page, source: HydrationOwn
         await page.evaluate(() => window.hydrationOwnershipNative.dispose('B'));
         await snapshot('target-dispose-immediate');
       }
-      else throw Error('Unknown frozen ownership action');
+      else {
+        throw Error('Unknown frozen ownership action');
+      }
       completedActions++;
       await page.mouse.move(0, 0);
       await settled('action-' + index + '-settled', action);

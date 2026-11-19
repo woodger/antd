@@ -204,8 +204,12 @@
     }
 
     const controller = createTabsPaneMotion(surface, (next, commit) => {
-      if (commit) flushSync(() => { motionState = next; });
-      else motionState = next;
+      if (commit) {
+        flushSync(() => { motionState = next; });
+      }
+      else {
+        motionState = next;
+      }
     });
     runtime = controller;
     return () => {
@@ -544,7 +548,9 @@
         focusFrame = 0;
         return;
       }
-      if (--frames) focusFrame = view.requestAnimationFrame(focus);
+      if (--frames) {
+        focusFrame = view.requestAnimationFrame(focus);
+      }
       else if (active && visible) {
         focusFrame = 0;
         const overlay = more && Object.hasOwn(more, 'overlay')
@@ -568,8 +574,12 @@
       return;
     }
     triggerOpen = next;
-    if (more && 'onVisibleChange' in more) more.onVisibleChange?.(next);
-    else open = next;
+    if (more && 'onVisibleChange' in more) {
+      more.onVisibleChange?.(next);
+    }
+    else {
+      open = next;
+    }
   }
 
   function hover(next: boolean, event: PointerEvent) {
@@ -629,8 +639,12 @@
     }
     else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       const offset = event.key === 'ArrowDown' ? 1 : -1;
-      if (fromMore) selectedKey = getTabsMoreNavigationKey(items, selectedKey, offset);
-      else focusOption(getTabsNavigationKey(items, menuKey, offset === 1 ? 'next' : 'previous'));
+      if (fromMore) {
+        selectedKey = getTabsMoreNavigationKey(items, selectedKey, offset);
+      }
+      else {
+        focusOption(getTabsNavigationKey(items, menuKey, offset === 1 ? 'next' : 'previous'));
+      }
       event.preventDefault();
     }
     else if (!fromMore && (event.key === 'Home' || event.key === 'End')) {

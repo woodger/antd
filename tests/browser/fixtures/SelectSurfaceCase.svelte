@@ -102,24 +102,48 @@
       const callback: SelectPopupRender = origin => {
         recorder.register(origin, { node: 'origin-menu' });
         let result: SelectPopupContent;
-        if (kind === 'origin') result = origin;
-        else if (kind === 'null') result = null;
-        else if (kind === 'undefined') result = undefined;
-        else if (kind === 'false') result = false;
-        else if (kind === 'empty') result = '';
-        else if (kind === 'zero') result = 0;
-        else if (kind === 'replace') result = nodes.get('replacement');
-        else if (kind === 'rich') result = nodes.get('rich');
-        else if (kind === 'array') result = [nodes.get('array-header'), origin];
-        else result = policy === 'prevent' ? wrappedPrevent : wrappedPlain;
+        if (kind === 'origin') {
+          result = origin;
+        }
+        else if (kind === 'null') {
+          result = null;
+        }
+        else if (kind === 'undefined') {
+          result = undefined;
+        }
+        else if (kind === 'false') {
+          result = false;
+        }
+        else if (kind === 'empty') {
+          result = '';
+        }
+        else if (kind === 'zero') {
+          result = 0;
+        }
+        else if (kind === 'replace') {
+          result = nodes.get('replacement');
+        }
+        else if (kind === 'rich') {
+          result = nodes.get('rich');
+        }
+        else if (kind === 'array') {
+          result = [nodes.get('array-header'), origin];
+        }
+        else {
+          result = policy === 'prevent' ? wrappedPrevent : wrappedPlain;
+        }
         return recorder.record('popupRender', 'own', origin, result, { renderer: kind,
           sameResultAsArgument: result === origin, originIdentity: recorder.identity(origin) });
       };
       popupCallbacks.set(kind + ':' + policy, handler('popup-' + kind + '-' + policy, callback));
     }
   }
-  function semantic(kind: SelectSurfaceSemantic, side: 'own' | 'context', category: 'classes' | 'styles',
-    component: 'select' | 'autocomplete') {
+  function semantic(
+    kind: SelectSurfaceSemantic,
+    side: 'own' | 'context',
+    category: 'classes' | 'styles',
+    component: 'select' | 'autocomplete'
+  ) {
     const key = [kind, side, category, component].join(':');
     if (kind === 'function') {
       if (!semanticCallbacks.has(key)) {
@@ -177,10 +201,18 @@
       listHeight: 140, placeholder: 'Choose surface', 'aria-label': 'Surface value',
       onChange: changed, onSelect: selected, onDeselect: deselected, onClear: cleared, onOpenChange: opening
     };
-    if (settings.valueOwner === 'controlled') props.value = model;
-    else props.defaultValue = sample.value;
-    if (settings.openOwner === 'controlled') props.open = open;
-    else props.defaultOpen = settings.defaultOpen;
+    if (settings.valueOwner === 'controlled') {
+      props.value = model;
+    }
+    else {
+      props.defaultValue = sample.value;
+    }
+    if (settings.openOwner === 'controlled') {
+      props.open = open;
+    }
+    else {
+      props.defaultOpen = settings.defaultOpen;
+    }
     if (settings.mode) props.mode = settings.mode;
     if (settings.popup !== 'omitted') props.popupRender = popupCallbacks.get(settings.popup + ':' + (settings.footerPolicy ?? 'plain'));
     if (settings.classes !== 'omitted') {

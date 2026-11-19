@@ -127,8 +127,12 @@ export function selectComponentsStaticStates(sample: SelectComponentsSample) {
       for (const key of action.drop ?? []) delete config[key];
       settings = { ...settings, config };
     }
-    else if (action.type === 'inner') settings = { ...settings, inner: action.value };
-    else return;
+    else if (action.type === 'inner') {
+      settings = { ...settings, inner: action.value };
+    }
+    else {
+      return;
+    }
     states.push({ name: 'authored-props-' + index, settings });
   });
   return states;

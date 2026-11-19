@@ -58,8 +58,12 @@ it.each(reference.ssr)('renders $id root replacement without default content or 
     expect(field).toBeDefined();
     expect(field.startsWith(`<${entry.view.fieldTag!.toLowerCase()}`)).toBe(true);
     for (const [key, value] of Object.entries(entry.view.fieldAttrs!)) {
-      if (value !== null) expect(field).toContain(`${key}="${value}"`);
-      else expect(field).not.toMatch(new RegExp(`\\s${key}(?:=|\\s|>)`));
+      if (value !== null) {
+        expect(field).toContain(`${key}="${value}"`);
+      }
+      else {
+        expect(field).not.toMatch(new RegExp(`\\s${key}(?:=|\\s|>)`));
+      }
     }
     expect(/\sdisabled(?:=|\s|>)/.test(field)).toBe(entry.view.disabled === true);
     expect(/\sreadonly(?:=|\s|>)/.test(field)).toBe(entry.view.readonly === true);

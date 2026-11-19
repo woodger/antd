@@ -263,7 +263,9 @@ function dateSnapshot(value, authored) {
         null
       );
     }
-    else assert.deepEqual(value.temporal.fields[index], field);
+    else {
+      assert.deepEqual(value.temporal.fields[index], field);
+    }
   }
   assert.equal(property(value.raw, value.identity, '$L'), value.temporal.locale);
   if (value.temporal.valid) {
@@ -272,7 +274,9 @@ function dateSnapshot(value, authored) {
       value.temporal.iso
     );
   }
-  else assert.equal(value.temporal.iso, null);
+  else {
+    assert.equal(value.temporal.iso, null);
+  }
   assert.deepEqual(Object.keys(value.sameAsAuthored), authoredNames);
   for (const name of authoredNames) {
     assert.equal(value.sameAsAuthored[name], authored

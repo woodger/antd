@@ -22,7 +22,9 @@ export function createPickerPopup(getOptions: () => PickerPopupContainerOptions)
 
   $effect.pre(() => {
     const { open, reference, getPopupContainer } = getOptions();
-    if (!getPopupContainer) target = undefined;
+    if (!getPopupContainer) {
+      target = undefined;
+    }
     else if (open && !reference && !getPopupContainer.length) resolve(undefined);
   });
 

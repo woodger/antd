@@ -56,10 +56,12 @@ export function createSplitterModel(getOptions: () => Options, getReverse: () =>
       moving = next.moving;
       innerSizes = next.sizes;
 
-      if (lazyEnd)
+      if (lazyEnd) {
         callbacks.onResizeEnd?.(next.sizes);
-      else
+      }
+      else {
         callbacks.onResize?.(next.sizes);
+      }
     },
     end(lazyEnd = false) {
       const callbacks = getOptions();

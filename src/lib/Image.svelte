@@ -103,8 +103,12 @@
     config.onOpenChange?.(next);
   }
   function activate() {
-    if (group)
-      group.preview(id, previewSource); else requestOpen(true);
+    if (group) {
+      group.preview(id, previewSource);
+    }
+    else {
+      requestOpen(true);
+    }
   }
   function click(event: MouseEvent) {
     if (canPreview)

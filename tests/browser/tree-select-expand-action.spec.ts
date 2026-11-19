@@ -26,17 +26,27 @@ async function perform(page: Page, sample: TreeSelectExpandActionSample) {
   const modifiers = sample.modifier ? [sample.modifier] as ('Control' | 'Meta' | 'Shift')[] : [];
   // Native ARIA disabled сохраняется; физический клик Source всё ещё раскрывает ветку.
   const options = { modifiers, force: Boolean(sample.disabledNode) };
-  if (sample.action === 'click') await content(page).click(options);
-  else if (sample.action === 'dblclick') await content(page).dblclick(options);
+  if (sample.action === 'click') {
+    await content(page).click(options);
+  }
+  else if (sample.action === 'dblclick') {
+    await content(page).dblclick(options);
+  }
   else if (sample.action === 'double-event') {
     await content(page).dispatchEvent('dblclick', {
       ctrlKey: sample.modifier === 'Control', metaKey: sample.modifier === 'Meta',
       shiftKey: sample.modifier === 'Shift'
     });
   }
-  else if (sample.action === 'switcher') await row(page).locator('[data-ant-tree-switcher]').click();
-  else if (sample.action === 'checkbox') await row(page).locator('[data-ant-tree-checkbox]').click();
-  else await input(page).press(sample.action);
+  else if (sample.action === 'switcher') {
+    await row(page).locator('[data-ant-tree-switcher]').click();
+  }
+  else if (sample.action === 'checkbox') {
+    await row(page).locator('[data-ant-tree-checkbox]').click();
+  }
+  else {
+    await input(page).press(sample.action);
+  }
 }
 
 for (const entry of reference.cases) {
@@ -45,8 +55,12 @@ for (const entry of reference.cases) {
 
     await expect.poll(() => read(page)).toEqual(entry.initial);
     for (const step of entry.steps) {
-      if (step.action === 'open') await input(page).click();
-      else if (step.action === 'search') await input(page).fill(entry.sample.search!);
+      if (step.action === 'open') {
+        await input(page).click();
+      }
+      else if (step.action === 'search') {
+        await input(page).fill(entry.sample.search!);
+      }
       else if (step.action === 'update') {
         await page.getByRole('button', { name: 'Enable title expansion', exact: true })
           .dispatchEvent('click');
@@ -55,7 +69,9 @@ for (const entry of reference.cases) {
         await page.getByRole('button', { name: 'Resolve title load', exact: true })
           .dispatchEvent('click');
       }
-      else await perform(page, entry.sample);
+      else {
+        await perform(page, entry.sample);
+      }
       await expect.poll(() => read(page), { message: step.action })
         .toEqual({ view: step.view, events: step.events });
     }

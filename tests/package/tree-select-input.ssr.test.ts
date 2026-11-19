@@ -64,8 +64,12 @@ it.each(reference.ssr)('renders custom $id with native attributes and no registr
     expect(opening[0]).toContain(`aria-label="${entry.view.attrs['aria-label']}"`);
     expect(opening[0]).toContain(`autocomplete="${entry.view.attrs.autocomplete}"`);
     if (entry.view.fieldTag === 'INPUT') {
-      if (entry.id === 'own-input-value-undefined') expect(opening[0]).not.toMatch(/\svalue=/);
-      else expect(opening[0]).toContain(`value="${entry.view.value}"`);
+      if (entry.id === 'own-input-value-undefined') {
+        expect(opening[0]).not.toMatch(/\svalue=/);
+      }
+      else {
+        expect(opening[0]).toContain(`value="${entry.view.value}"`);
+      }
     }
     expect(/\sreadonly(?:[\s=>]|$)/.test(opening[0])).toBe(entry.view.readonly);
     expect(/\sdisabled(?:[\s=>]|$)/.test(opening[0])).toBe(entry.view.disabled);

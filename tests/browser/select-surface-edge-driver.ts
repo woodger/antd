@@ -7,5 +7,7 @@ export async function actSelectSurfaceEdge(page: Page, action: SelectSurfaceEdge
     await page.locator('[data-surface-case] strong[data-surface-node="edge-prefix"]').click();
     await page.mouse.move(0, 0);
   }
-  else await actSelectSurface(page, action);
+  else {
+    await actSelectSurface(page, action);
+  }
 }

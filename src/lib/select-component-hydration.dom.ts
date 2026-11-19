@@ -21,8 +21,12 @@ function classValue(value: unknown): unknown {
     if (!item) {
       return;
     }
-    if (typeof item === 'string' || typeof item === 'number') output.push(String(item));
-    else if (Array.isArray(item)) item.forEach(append);
+    if (typeof item === 'string' || typeof item === 'number') {
+      output.push(String(item));
+    }
+    else if (Array.isArray(item)) {
+      item.forEach(append);
+    }
     else if (typeof item === 'object') {
       for (const key in item) {
         if (Reflect.get(item, key)) output.push(key);
@@ -88,8 +92,12 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       const classes = classValue(value);
       const text = classes == null || classes === '' ? null : String(classes);
       if (element.getAttribute('class') !== text) {
-        if (text === null) element.removeAttribute('class');
-        else element.setAttribute('class', text);
+        if (text === null) {
+          element.removeAttribute('class');
+        }
+        else {
+          element.setAttribute('class', text);
+        }
       }
       return;
     }
@@ -97,7 +105,9 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       return;
     }
     const boolean = booleanAttributes.has(normalized) && !(normalized === 'hidden' && value === 'until-found');
-    if (value == null || boolean && !value && value !== '') element.removeAttribute(normalized);
+    if (value == null || boolean && !value && value !== '') {
+      element.removeAttribute(normalized);
+    }
     else {
       element.setAttribute(normalized, boolean ? '' : normalized === 'translate' && typeof value === 'boolean'
         ? value ? 'yes' : 'no' : String(value));
@@ -106,7 +116,9 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
 
   // CSS/обычные SSR attrs сохраняются; class сохраняет прежнюю Svelte-нормализацию.
   for (const [name, value] of Object.entries(attributes)) {
-    if (eventName(name)) event(name, value);
+    if (eventName(name)) {
+      event(name, value);
+    }
     else if (name === 'class') attribute(name, value);
   }
   if (element.localName === 'input') {
@@ -143,7 +155,9 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
         element.defaultValue = initial;
         element.value = '';
       }
-      else Reflect.set(element, 'value', value);
+      else {
+        Reflect.set(element, 'value', value);
+      }
     }
     else if (normalized === 'defaultvalue') {
       // Web IDL setter сохраняет в том числе прежний synthetic null -> "null".
@@ -158,9 +172,13 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
           input.defaultChecked = initial;
           input.checked = false;
         }
-        else Reflect.set(input, 'checked', value);
+        else {
+          Reflect.set(input, 'checked', value);
+        }
       }
-      else Reflect.set(input, 'defaultChecked', value);
+      else {
+        Reflect.set(input, 'defaultChecked', value);
+      }
     }
   }
 
@@ -178,8 +196,12 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
         if (name === 'type' || name === 'class') continue;
         const controlledValue = controlled.has(name.toLowerCase());
         if (Object.is(previous[name], value) && !(controlledValue && value === undefined && element.hasAttribute(name))) continue;
-        if (controlledValue) controlledAttribute(name, value);
-        else attribute(name, value);
+        if (controlledValue) {
+          controlledAttribute(name, value);
+        }
+        else {
+          attribute(name, value);
+        }
       }
       // Старый hydrated textarea обновляет body только от raw controlled value.
       if (element.localName === 'textarea' && syncTextareaBody && next.value != null) {

@@ -118,7 +118,10 @@ function dateSnapshot(value: NativeDate | SourceDate) {
   assert(Number.isSafeInteger(value.identity) && value.identity! > 0);
 }
 export function verifyDatePickerPresetTransitionDate(
-  native: NativeDate, source: SourceDate, proof: DatePickerPresetTransitionProof, label: string
+  native: NativeDate,
+  source: SourceDate,
+  proof: DatePickerPresetTransitionProof,
+  label: string
 ) {
   dateSnapshot(native);
   dateSnapshot(source);
@@ -136,7 +139,9 @@ export function verifyDatePickerPresetTransitionDate(
     assert.deepEqual(rawRoot(native.raw).authoredRole, rawRoot(source.raw).authoredRole,
       label + ' complete raw authored role');
   }
-  else assert.equal(native.temporal, source.temporal, label + ' nullable temporal value');
+  else {
+    assert.equal(native.temporal, source.temporal, label + ' nullable temporal value');
+  }
   if (native.identity === null || source.identity === null) {
     assert.equal(native.identity, source.identity, label + ' nullable identity');
     return;
@@ -212,7 +217,9 @@ function validateNativeOwner(owner: NativeOwner) {
       assert.equal(focus.currentTargetTag, 'INPUT');
       assert.equal(focus.currentTargetMatchesTarget, true);
     }
-    else assert.equal(call.nativeFocus, undefined);
+    else {
+      assert.equal(call.nativeFocus, undefined);
+    }
   }
   const invocations = owner.callbackInvocations.filter(call => dateNames.has(call.name));
   assert.equal(owner.callbackDates.length, invocations.length);
@@ -398,8 +405,12 @@ function compareOwnerActions(
   }
 }
 export function verifyDatePickerPresetTransitionOwner(
-  native: NativeOwner, source: SourceOwner, sample: Sample,
-  proof: DatePickerPresetTransitionProof, label: string, compareFocus = true
+  native: NativeOwner,
+  source: SourceOwner,
+  sample: Sample,
+  proof: DatePickerPresetTransitionProof,
+  label: string,
+  compareFocus = true
 ) {
   validateNativeOwner(native);
   verifyDatePickerPresetTransitionsSourceOwner(source);
@@ -431,7 +442,9 @@ export function verifyDatePickerPresetTransitionOwner(
         label + '/calendar complete date/text payload'
       );
     }
-    else assert.deepEqual(args, expected, label + '/callback complete payload/' + index);
+    else {
+      assert.deepEqual(args, expected, label + '/callback complete payload/' + index);
+    }
   }
   assert.equal(native.callbackDates.length, source.callbackDates.length);
   for (const [index, callback] of native.callbackDates.entries()) {
@@ -574,7 +587,8 @@ function physicalFocus(point: NativePoint | SourcePoint, prefix: string) {
 }
 export function verifyDatePickerPresetTransitionCaret(
   native: Pick<NativePoint, 'owner' | 'input' | 'activeElement'>,
-  source: Pick<SourcePoint, 'owner' | 'input' | 'activeElement'>, label: string
+  source: Pick<SourcePoint, 'owner' | 'input' | 'activeElement'>,
+  label: string
 ) {
   const actual = native.input, original = source.input;
   assert(actual && original && actual.selection && original.selection);
@@ -603,11 +617,16 @@ export function verifyDatePickerPresetTransitionCaret(
       label + '/measured Source initial HTML construction'
     );
   }
-  else assert.deepEqual(actual.selection, original.selection, label + '/complete actual caret');
+  else {
+    assert.deepEqual(actual.selection, original.selection, label + '/complete actual caret');
+  }
 }
 export function verifyDatePickerPresetTransitionPoint(
-  native: NativePoint, source: SourcePoint, sample: Sample,
-  proof: DatePickerPresetTransitionProof, label: string
+  native: NativePoint,
+  source: SourcePoint,
+  sample: Sample,
+  proof: DatePickerPresetTransitionProof,
+  label: string
 ) {
   verifyDatePickerPresetTransitionsSourcePoint(source);
   verifyDatePickerPresetTransitionOwner(native.owner, source.owner, sample, proof, label);
@@ -705,9 +724,15 @@ function removed(value: NativeCleanup | SourceCleanup) {
   assert.deepEqual(value.browserOwnedResourceCounters, counters);
 }
 export function verifyDatePickerPresetTransitionRemoval(
-  nativeBefore: NativePoint, native: NativeCleanup, nativeLate: NativeCleanup,
-  sourceBefore: SourcePoint, source: SourceCleanup, sourceLate: SourceCleanup,
-  sample: Sample, proof: DatePickerPresetTransitionProof, label: string
+  nativeBefore: NativePoint,
+  native: NativeCleanup,
+  nativeLate: NativeCleanup,
+  sourceBefore: SourcePoint,
+  source: SourceCleanup,
+  sourceLate: SourceCleanup,
+  sample: Sample,
+  proof: DatePickerPresetTransitionProof,
+  label: string
 ) {
   verifyDatePickerPresetTransitionPoint(
     nativeBefore,
@@ -791,8 +816,11 @@ function oneSSRInput(body: string) {
   return { html, attributes, attribute };
 }
 export function verifyDatePickerPresetTransitionClosedSSR(
-  native: DatePickerPresetTransitionSSRRendered, source: SourceSSR, sample: Sample,
-  proof: DatePickerPresetTransitionProof, label: string
+  native: DatePickerPresetTransitionSSRRendered,
+  source: SourceSSR,
+  sample: Sample,
+  proof: DatePickerPresetTransitionProof,
+  label: string
 ) {
   assert.equal(typeof native.head, 'string');
   assert.equal(typeof native.body, 'string');
@@ -854,7 +882,9 @@ export function verifyDatePickerPresetTransitionDisposal(
     trace: DatePickerPresetTransitionDisposalTrace
   },
   source: { beforeUnmount: SourcePoint; cleanup: SourceCleanup; late: SourceCleanup },
-  sample: Sample, proof: DatePickerPresetTransitionProof, label: string
+  sample: Sample,
+  proof: DatePickerPresetTransitionProof,
+  label: string
 ) {
   verifyDatePickerPresetTransitionDisposalTrace(native.trace);
   verifyDatePickerPresetTransitionRemoval(

@@ -266,7 +266,9 @@ for (const entry of selectSurfaceHydrationReference.cases) {
             }
             });
         }
-        else if (step.action.type === 'outside') await page.locator('[data-surface-outside]').click();
+        else if (step.action.type === 'outside') {
+          await page.locator('[data-surface-outside]').click();
+        }
         else {
           await page.evaluate(action => document.querySelector('[data-surface-command]')!
             .dispatchEvent(new CustomEvent('historyupdate', { detail: action })), step.action);

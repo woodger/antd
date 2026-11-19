@@ -385,7 +385,9 @@ export function validateSelectTagCloseHandlesCSR(source: TagCloseHandleSource<So
       assert.equal(entry.setup.actualButtonInvocations, 1);
       equalLiteral(entry.setup.after, entry.initial, 'Real post-setup initial point');
     }
-    else assert.equal(entry.setup, null);
+    else {
+      assert.equal(entry.setup, null);
+    }
     assert.equal(entry.ledger.rawEvents.length, entry.ledger.events.length);
     for (const call of entry.ledger.producerCalls) {
       if (call.kind === 'tagRender') readTagCloseHandleSourceInfo(call);
@@ -477,7 +479,10 @@ export function validateSelectTagCloseHandlesSSR(source: TagCloseHandleSource<So
   }
   return source;
 }
-export function verifySelectTagCloseHandlesDecodedBytes(bytes: Uint8Array, mode: TagCloseHandleMode) {
+export function verifySelectTagCloseHandlesDecodedBytes(
+  bytes: Uint8Array,
+  mode: TagCloseHandleMode
+) {
   assert(mode === 'csr' || mode === 'ssr', 'Unknown measured Source mode');
   const pin = rawPins[mode];
   assert.equal(bytes.length, pin.bytes, 'Decoded complete Source bytes');

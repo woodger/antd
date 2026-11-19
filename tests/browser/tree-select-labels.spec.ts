@@ -17,8 +17,12 @@ async function act(
   sample: Pick<TreeLabelSample, 'id' | 'checkable' | 'strict'>,
   action: TreeLabelAction
 ) {
-  if (action.kind === 'open') await input(page).click();
-  else if (action.kind === 'key') await input(page).press(action.value);
+  if (action.kind === 'open') {
+    await input(page).click();
+  }
+  else if (action.kind === 'key') {
+    await input(page).press(action.value);
+  }
   else if (action.kind === 'choose') {
     await page.locator(`.ant-select-dropdown [role="treeitem"][id$="-${action.value}"]`)
       .locator(sample.checkable || sample.strict ? '[data-ant-tree-checkbox]' : '[data-ant-tree-content]')

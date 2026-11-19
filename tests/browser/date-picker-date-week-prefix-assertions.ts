@@ -85,8 +85,13 @@ export function createDateWeekPrefixProof() {
     variants: new Map<DateWeekPrefixSourceVariant, IdentityProof>(), points: 0,
     boundaries: dateWeekPrefixBoundaries, observations: [] as unknown[] };
 }
-function bindIdentity(actual: number, source: number, forward: Map<number, number>,
-  reverse: Map<number, number>, label: string) {
+function bindIdentity(
+  actual: number,
+  source: number,
+  forward: Map<number, number>,
+  reverse: Map<number, number>,
+  label: string
+) {
   if (forward.has(source)) assert.equal(actual, forward.get(source), label + ' shared identity');
   if (reverse.has(actual)) assert.equal(source, reverse.get(actual), label + ' distinct identity');
   forward.set(source, actual);
@@ -106,8 +111,12 @@ function validateDate(value: DateWeekPrefixSourceDate, owner: DateWeekPrefixSour
       'Actual authored date alias ' + role);
   }
 }
-function sameDate(actual: DateWeekPrefixSourceDate, source: DateWeekPrefixSourceDate,
-  owner: DateWeekPrefixSourceOwner, proof: IdentityProof) {
+function sameDate(
+  actual: DateWeekPrefixSourceDate,
+  source: DateWeekPrefixSourceDate,
+  owner: DateWeekPrefixSourceOwner,
+  proof: IdentityProof
+) {
   validateDate(actual, owner);
   assert.deepEqual(Object.keys(actual.temporal), Object.keys(source.temporal));
   for (const key of ['valid', 'epoch', 'iso', 'fields', 'locale'] as const) {
@@ -119,8 +128,13 @@ function sameDate(actual: DateWeekPrefixSourceDate, source: DateWeekPrefixSource
   assert.deepEqual(actual.encoded, source.encoded);
   bindIdentity(actual.identity, source.identity, proof.dates, proof.nativeDates, 'Dayjs');
 }
-function sameDates(actual: DateWeekPrefixSourceDatePath[], source: DateWeekPrefixSourceDatePath[],
-  raw: unknown, owner: DateWeekPrefixSourceOwner, proof: IdentityProof) {
+function sameDates(
+  actual: DateWeekPrefixSourceDatePath[],
+  source: DateWeekPrefixSourceDatePath[],
+  raw: unknown,
+  owner: DateWeekPrefixSourceOwner,
+  proof: IdentityProof
+) {
   assert.equal(actual.length, source.length);
   for (const [index, date] of actual.entries()) {
     assert.deepEqual(date.path, source[index].path);
@@ -129,7 +143,8 @@ function sameDates(actual: DateWeekPrefixSourceDatePath[], source: DateWeekPrefi
   }
 }
 export function verifyDateWeekPrefixReceiverBoundary(
-  actual: DateWeekPrefixSourceInvocation, source: DateWeekPrefixSourceInvocation
+  actual: DateWeekPrefixSourceInvocation,
+  source: DateWeekPrefixSourceInvocation
 ) {
   assert.deepEqual(source.receiver, {
     type: 'undefined', isUndefined: true, isNull: false, identity: null
@@ -140,7 +155,8 @@ export function verifyDateWeekPrefixReceiverBoundary(
   assert(Number.isSafeInteger(actual.receiver.identity) && actual.receiver.identity! > 0);
 }
 export function verifyDateWeekPrefixSingleCalendarInfoBoundary(
-  actual: DateWeekPrefixSourceInvocation, source: DateWeekPrefixSourceInvocation
+  actual: DateWeekPrefixSourceInvocation,
+  source: DateWeekPrefixSourceInvocation
 ) {
   assert.deepEqual(property(source.encodedArguments, '2'), { $: 'object', properties: [] });
   assert.deepEqual(property(actual.encodedArguments, '2'), {
@@ -148,7 +164,8 @@ export function verifyDateWeekPrefixSingleCalendarInfoBoundary(
   });
 }
 export function verifyDateWeekPrefixSingleEmptyCalendarBoundary(
-  actual: DateWeekPrefixSourceInvocation, source: DateWeekPrefixSourceInvocation
+  actual: DateWeekPrefixSourceInvocation,
+  source: DateWeekPrefixSourceInvocation
 ) {
   assert.equal(actual.dates.length, 0);
   assert.equal(source.dates.length, 0);
@@ -172,8 +189,11 @@ function modeArray(call: DateWeekPrefixSourceInvocation) {
   assert.equal(node.array, true);
   return node;
 }
-function sameCallbacks(actual: NativeDateWeekPrefixPoint, source: DateWeekPrefixSourcePoint,
-  proof: IdentityProof) {
+function sameCallbacks(
+  actual: NativeDateWeekPrefixPoint,
+  source: DateWeekPrefixSourcePoint,
+  proof: IdentityProof
+) {
   const originals = source.owner.callbacks;
   assert.equal(actual.owner.callbacks.length, originals.length, 'Complete public callback count');
   for (const [index, call] of actual.owner.callbacks.entries()) {
@@ -188,7 +208,9 @@ function sameCallbacks(actual: NativeDateWeekPrefixPoint, source: DateWeekPrefix
     const single = actual.owner.id.startsWith('single-') && call.name === 'calendar';
     const empty = single && expected.dates.length === 0
       && object(property(expected.encodedArguments, '0')).$ === 'undefined';
-    if (empty) verifyDateWeekPrefixSingleEmptyCalendarBoundary(call, expected);
+    if (empty) {
+      verifyDateWeekPrefixSingleEmptyCalendarBoundary(call, expected);
+    }
     else if (single) verifyDateWeekPrefixSingleCalendarInfoBoundary(call, expected);
     for (const key of keys) {
       assert(typeof key === 'string');
@@ -244,8 +266,10 @@ function visiblePanels(point: Pick<DateWeekPrefixSourcePoint, 'popups'>) {
     timeColumns: popup.columns
   }));
 }
-export function verifyDateWeekPrefixFooterBoundary(actual: NativeDateWeekPrefixPoint,
-  source: DateWeekPrefixSourcePoint) {
+export function verifyDateWeekPrefixFooterBoundary(
+  actual: NativeDateWeekPrefixPoint,
+  source: DateWeekPrefixSourcePoint
+) {
   const native = actual.popups.filter(popup => popup.visible);
   const original = source.popups.filter(popup => popup.visible);
   assert.equal(native.length, original.length);
@@ -288,9 +312,14 @@ function panelMode(className: string) {
   assert.equal(modes.length, 1, 'One actual calendar mode class token');
   return modes[0];
 }
-function verifyPoint(actual: NativeDateWeekPrefixPoint, source: DateWeekPrefixSourcePoint,
-  proof: ReturnType<typeof createDateWeekPrefixProof>, variant: DateWeekPrefixSourceVariant, label: string,
-  settled: boolean) {
+function verifyPoint(
+  actual: NativeDateWeekPrefixPoint,
+  source: DateWeekPrefixSourcePoint,
+  proof: ReturnType<typeof createDateWeekPrefixProof>,
+  variant: DateWeekPrefixSourceVariant,
+  label: string,
+  settled: boolean
+) {
   const existing = proof.variants.get(variant);
   const next: IdentityProof = existing ? { dates: new Map(existing.dates),
     nativeDates: new Map(existing.nativeDates), modes: new Map(existing.modes),
@@ -386,12 +415,22 @@ function verifyPoint(actual: NativeDateWeekPrefixPoint, source: DateWeekPrefixSo
     sourceCaret: source.inputs.map(input => [input.selectionStart, input.selectionEnd, input.selectionDirection]),
     nativeCaret: actual.inputs.map(input => [input.selectionStart, input.selectionEnd, input.selectionDirection]) });
 }
-export function verifyDateWeekPrefixPoint(actual: NativeDateWeekPrefixPoint, source: DateWeekPrefixSourcePoint,
-  proof: ReturnType<typeof createDateWeekPrefixProof>, variant: DateWeekPrefixSourceVariant, label: string) {
+export function verifyDateWeekPrefixPoint(
+  actual: NativeDateWeekPrefixPoint,
+  source: DateWeekPrefixSourcePoint,
+  proof: ReturnType<typeof createDateWeekPrefixProof>,
+  variant: DateWeekPrefixSourceVariant,
+  label: string
+) {
   verifyPoint(actual, source, proof, variant, label, true);
 }
-export function verifyDateWeekPrefixInputPhase(actual: NativeDateWeekPrefixPoint, source: DateWeekPrefixSourcePoint,
-  proof: ReturnType<typeof createDateWeekPrefixProof>, variant: DateWeekPrefixSourceVariant, label: string) {
+export function verifyDateWeekPrefixInputPhase(
+  actual: NativeDateWeekPrefixPoint,
+  source: DateWeekPrefixSourcePoint,
+  proof: ReturnType<typeof createDateWeekPrefixProof>,
+  variant: DateWeekPrefixSourceVariant,
+  label: string
+) {
   verifyPoint(actual, source, proof, variant, label, false);
 }
 interface DateWeekPrefixProducerWitness {
@@ -450,7 +489,10 @@ function producerSignature(call: Record<string, unknown>, model: DateWeekPrefixS
       : { own: fromOwn, encoded: fromValue },
     returned: call.returned });
 }
-function changedModels(before: DateWeekPrefixSourceOwner | null, after: DateWeekPrefixSourceOwner): DateWeekPrefixSourceOwner[] {
+function changedModels(
+  before: DateWeekPrefixSourceOwner | null,
+  after: DateWeekPrefixSourceOwner
+): DateWeekPrefixSourceOwner[] {
   const changes = after.callbacks.slice(before?.callbacks.length ?? 0)
     .filter(call => call.name === 'change');
   return changes.map(call => ({ ...after,
@@ -460,8 +502,11 @@ function changedModels(before: DateWeekPrefixSourceOwner | null, after: DateWeek
     modelDates: call.dates.filter(date => date.path[0] === 0)
       .map(date => ({ path: date.path.slice(1), value: date.value })) }));
 }
-function invocationModelWindow(index: number, previous: DateWeekPrefixSourceOwner | null,
-  points: readonly DateWeekPrefixSourceOwner[]): DateWeekPrefixSourceOwner[] {
+function invocationModelWindow(
+  index: number,
+  previous: DateWeekPrefixSourceOwner | null,
+  points: readonly DateWeekPrefixSourceOwner[]
+): DateWeekPrefixSourceOwner[] {
   assert(points.length > 0);
   let before = previous;
   for (const after of points) {
@@ -474,8 +519,11 @@ function invocationModelWindow(index: number, previous: DateWeekPrefixSourceOwne
   // public model. The original tail is retained; no unobserved model is invented.
   return [points.at(-1)!];
 }
-function sourcePhaseOwners(sample: DateWeekPrefixSample, phase: string,
-  variant: DateWeekPrefixSourceVariant): DateWeekPrefixSourceOwner[] {
+function sourcePhaseOwners(
+  sample: DateWeekPrefixSample,
+  phase: string,
+  variant: DateWeekPrefixSourceVariant
+): DateWeekPrefixSourceOwner[] {
   if (phase === 'initial') {
     return [readDateWeekPrefixSourceInitial(sample.id, variant).owner];
   }
@@ -539,9 +587,14 @@ export function createDateWeekPrefixProducerProof(sample: DateWeekPrefixSample):
   return { cursor: 0, boundary: 0, chunks: 0, witnesses, publicSourceDates,
     pendingPublicAliases: [], publicAliasInvocations: 0, matchedInvocations: 0, lastOwner: null };
 }
-export function verifyDateWeekPrefixProducerChunk(value: unknown, proof: DateWeekPrefixProducerProof,
-  owner: DateWeekPrefixSourceOwner, boundaries: Record<string, number>, sample: DateWeekPrefixSample,
-  phaseOwners: readonly DateWeekPrefixSourceOwner[] = [owner]) {
+export function verifyDateWeekPrefixProducerChunk(
+  value: unknown,
+  proof: DateWeekPrefixProducerProof,
+  owner: DateWeekPrefixSourceOwner,
+  boundaries: Record<string, number>,
+  sample: DateWeekPrefixSample,
+  phaseOwners: readonly DateWeekPrefixSourceOwner[] = [owner]
+) {
   const chunk = object(value);
   assert.equal(chunk.cursor, proof.cursor);
   assert(Number.isSafeInteger(chunk.next) && Number(chunk.next) >= proof.cursor);
@@ -609,8 +662,10 @@ export function verifyDateWeekPrefixProducerChunk(value: unknown, proof: DateWee
 /** Check producer candidate/from references against the complete observed public Date graph.
  * Pure generated candidates never receive a cross-renderer identity bijection.
  */
-export function verifyDateWeekPrefixProducerPublicAliases(proof: DateWeekPrefixProducerProof,
-  publicProof: ReturnType<typeof createDateWeekPrefixProof>) {
+export function verifyDateWeekPrefixProducerPublicAliases(
+  proof: DateWeekPrefixProducerProof,
+  publicProof: ReturnType<typeof createDateWeekPrefixProof>
+) {
   for (const call of proof.pendingPublicAliases) {
     for (const variant of ['first', 'repeat'] as const) {
       const bindings = publicProof.variants.get(variant);

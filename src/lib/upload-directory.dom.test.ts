@@ -71,8 +71,12 @@ describe('collectUploadDirectoryFiles', () => {
     let cursor = 0;
     const directory = { isFile: false, isDirectory: true, fullPath: '/folder',
       createReader: () => ({ readEntries: (success: FileSystemEntriesCallback, fail: ErrorCallback) => {
-        if (cursor++ === 0) success([fileEntry(good, '/folder/good.txt')]);
-        else fail(new DOMException('No access'));
+        if (cursor++ === 0) {
+          success([fileEntry(good, '/folder/good.txt')]);
+        }
+        else {
+          fail(new DOMException('No access'));
+        }
       } })
     } as FileSystemDirectoryEntry;
 

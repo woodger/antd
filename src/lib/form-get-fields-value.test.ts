@@ -180,8 +180,12 @@ describe('createForm getFieldsValue', () => {
         name: 'name', rules: [{ validator: () => pending.promise }]
       });
       const validation = form.validateFields().catch(() => {});
-      if (action === 'reset') form.resetFields();
-      else remove();
+      if (action === 'reset') {
+        form.resetFields();
+      }
+      else {
+        remove();
+      }
 
       expect(form.getFieldsValue(true, (meta) => !!meta?.validating)).toEqual({});
       pending.resolve('Rejected');

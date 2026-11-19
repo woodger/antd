@@ -35,7 +35,10 @@
     return Array.isArray(value) ? value.map(eventValue) : value && typeof value === 'object'
       ? { ...value, label: literal(Reflect.get(value, 'label')) } : value;
   }
-  function find(list: readonly Record<string, unknown>[], value: unknown): Record<string, unknown> | undefined {
+  function find(
+    list: readonly Record<string, unknown>[],
+    value: unknown
+  ): Record<string, unknown> | undefined {
     for (const node of list) {
       if (node[field] === value) {
         return node;

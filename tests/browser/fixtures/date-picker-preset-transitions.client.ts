@@ -53,7 +53,10 @@ if (!capture.read || !capture.readRefs || !capture.setActionIndex) {
   throw Error('Actual DatePicker transition caller capture is incomplete');
 }
 
-function activateOwnerControl(kind: DatePickerPresetTransitionOwnerControl, value: string | boolean) {
+function activateOwnerControl(
+  kind: DatePickerPresetTransitionOwnerControl,
+  value: string | boolean
+) {
   const button = [...document.querySelectorAll('[data-transition-control]')].find(node =>
     node.getAttribute('data-transition-control') === kind
       && node.getAttribute('data-transition-value') === String(value));

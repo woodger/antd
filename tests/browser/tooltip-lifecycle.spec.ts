@@ -6,9 +6,15 @@ import type { TooltipLifecycleCase } from './fixtures/tooltip-lifecycle.types';
 const cases = reference.cases as readonly TooltipLifecycleCase[];
 
 async function sendEvent(trigger: Locator, name: string) {
-  if (name === 'focus') await trigger.focus();
-  else if (name === 'blur') await trigger.evaluate(node => (node as HTMLElement).blur());
-  else if (name === 'click') await trigger.evaluate(node => (node as HTMLElement).click());
+  if (name === 'focus') {
+    await trigger.focus();
+  }
+  else if (name === 'blur') {
+    await trigger.evaluate(node => (node as HTMLElement).blur());
+  }
+  else if (name === 'click') {
+    await trigger.evaluate(node => (node as HTMLElement).click());
+  }
   else if (name === 'contextMenu') {
     await trigger.dispatchEvent('contextmenu', { bubbles: true, cancelable: true });
   }
@@ -43,9 +49,15 @@ for (const source of [false, true]) {
           await page.clock.runFor(100);
           const expected = frame.snapshot;
 
-          if (expected.visible) await expect(popup).toBeVisible();
-          else await expect(popup).toBeHidden();
-          if (expected.contentMounted) await expect(content).toHaveText(expected.text ?? '');
+          if (expected.visible) {
+            await expect(popup).toBeVisible();
+          }
+          else {
+            await expect(popup).toBeHidden();
+          }
+          if (expected.contentMounted) {
+            await expect(content).toHaveText(expected.text ?? '');
+          }
           else if (frame.props.destroyOnHidden) await expect(content).toBeEmpty();
           await expect(page.getByLabel('Lifecycle events', { exact: true }))
             .toHaveText(JSON.stringify(expected.events));
@@ -132,8 +144,12 @@ for (const source of [false, true]) {
                 await trigger.dispatchEvent(frame.action.event === 'show'
                   ? 'pointerenter' : 'pointerleave', { pointerType: 'mouse' });
               }
-              else if (frame.action.event === 'show') await trigger.focus();
-              else await trigger.evaluate(node => (node as HTMLElement).blur());
+              else if (frame.action.event === 'show') {
+                await trigger.focus();
+              }
+              else {
+                await trigger.evaluate(node => (node as HTMLElement).blur());
+              }
             }
           }
           await page.clock.runFor(200);

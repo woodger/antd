@@ -198,9 +198,15 @@ describe('createForm validateFirst bindings', () => {
       name: 'name', validateFirst: 'parallel', rules: [{ validator: () => pending.promise }]
     });
     const result = form.validateFields(['name']).catch((error: unknown) => error);
-    if (action === 'write') form.setFieldValue('name', 'New');
-    else if (action === 'reset') form.resetFields(['name']);
-    else remove();
+    if (action === 'write') {
+      form.setFieldValue('name', 'New');
+    }
+    else if (action === 'reset') {
+      form.resetFields(['name']);
+    }
+    else {
+      remove();
+    }
     pending.resolve('Old');
 
     expect(await result).toMatchObject({ outOfDate: true });

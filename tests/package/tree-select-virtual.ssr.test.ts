@@ -43,8 +43,12 @@ it.each([
     expect(body).toContain('data-virtual-ref="false"');
     expect(body).toContain('data-virtual-scrolls="0"');
     expect(body).not.toContain('aria-activedescendant=');
-    if (count) expect(body).toMatch(/popover="manual" hidden(?: |>|=)/);
-    else expect(body).not.toContain('popover="manual"');
+    if (count) {
+      expect(body).toMatch(/popover="manual" hidden(?: |>|=)/);
+    }
+    else {
+      expect(body).not.toContain('popover="manual"');
+    }
     expect(vi.getTimerCount()).toBe(0);
   } finally {
     vi.useRealTimers();

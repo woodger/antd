@@ -12,7 +12,8 @@ import type { SelectOption } from './types';
 
 const fields = selectFields();
 function filterOptions<Data extends object>(
-  options: readonly Data[], search: string,
+  options: readonly Data[],
+  search: string,
   filterOption: SelectDataFilter<Data>['filterOption'] = true,
   optionFilterProp?: string | readonly string[]
 ) {

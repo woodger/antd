@@ -9,8 +9,12 @@ test.use({ viewport: reference.reference.viewport });
 
 async function act(page: Page, action: TreeSelectInertApiAction, slot: string) {
   const field = page.locator(slot === 'root' ? '[data-inert-api-root]' : '#inert-api-field');
-  if (action.type === 'click') await field.click();
-  else if (action.type === 'fill') await field.fill(action.text);
+  if (action.type === 'click') {
+    await field.click();
+  }
+  else if (action.type === 'fill') {
+    await field.fill(action.text);
+  }
   else if (action.type === 'caret') {
     await field.evaluate((node, range) => {
       if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) {
@@ -43,7 +47,9 @@ async function act(page: Page, action: TreeSelectInertApiAction, slot: string) {
     await page.locator('.ant-select-selection-item').filter({ hasText: action.value === 'a' ? 'Alpha' : 'Beta' })
       .locator('.ant-select-selection-item-remove').click();
   }
-  else throw Error(`Unsupported inherited API action: ${action.type}`);
+  else {
+    throw Error(`Unsupported inherited API action: ${action.type}`);
+  }
 }
 
 for (const entry of reference.cases) {

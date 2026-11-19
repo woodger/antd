@@ -53,7 +53,9 @@ export function textAreaResizeStyle(style = ''): string {
       declaration();
       current = '';
     }
-    else current += char;
+    else {
+      current += char;
+    }
   }
   return value ? `resize:${value}` : '';
 }

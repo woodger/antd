@@ -346,7 +346,9 @@ export async function inspectRegistry(root, { requireUpstream = false } = {}) {
             ))) {
           errors.push(`${item.id}: invalid integration evidence ${ref}`);
         }
-        else integrationEvidence.add(key);
+        else {
+          integrationEvidence.add(key);
+        }
         continue;
       }
       try {
