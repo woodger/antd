@@ -1,3 +1,5 @@
+// Готовит строки и активные настройки Table. В режиме server проверяет ключи
+// и нормализует настройки, оставляя обработку данных вызывающему коду.
 import type {
   TableColumn,
   TableFilters,
@@ -32,39 +34,10 @@ export function getTableData<Row extends object>(
   sorter: TableSorter | null;
   filters: TableFilters;
 } {
-  if (!columns.length) {
-    throw new Error('Table requires at least one column');
-  }
-
-  const columnKeys = new Set<string>();
-
-  for (const column of columns) {
-    if (columnKeys.has(column.key)) {
-      throw new Error(`Table column key "${column.key}" is not unique`);
-    }
-
-    columnKeys.add(column.key);
-  }
-
-  const keys = new Set<TableKey>();
-  const allRows = dataSource.map((record, sourceIndex) => {
-    const key: unknown = typeof rowKey === 'function'
-      ? rowKey(record)
-      : Reflect.get(record, rowKey ?? 'key');
-
-    if (typeof key !== 'string' && (typeof key !== 'number' || !Number.isFinite(key))) {
-      throw new Error('Table rowKey must resolve to a string or finite number for every record');
-    }
-
-    if (keys.has(key)) {
-      throw new Error(`Table row key "${key}" is not unique`);
-    }
-
-    keys.add(key);
-
-    return { key, record, sourceIndex };
-  });
+  assertTableColumnKeys(columns);
+  const allRows = indexTableRows(dataSource, rowKey);
   const activeFilters = getTableFilters(columns, filters, mode);
+
   const column = columns.find(
     (item) => item.key === sorter?.columnKey
       && (typeof item.sorter === 'function'
@@ -100,6 +73,49 @@ export function getTableData<Row extends object>(
   return { rows, allRows, sorter: activeSorter, filters: activeFilters };
 }
 
+// Проверяет обязательные столбцы до обращений к rowKey и фильтрам потребителя.
+function assertTableColumnKeys<Row extends object>(columns: readonly TableColumn<Row>[]) {
+  if (!columns.length) {
+    throw new Error('Table requires at least one column');
+  }
+
+  const columnKeys = new Set<string>();
+  for (const column of columns) {
+    if (columnKeys.has(column.key)) {
+      throw new Error(`Table column key "${column.key}" is not unique`);
+    }
+
+    columnKeys.add(column.key);
+  }
+}
+
+// Сохраняет исходный индекс строки для стабильной сортировки.
+function indexTableRows<Row extends object>(
+  dataSource: readonly Row[],
+  rowKey?: TableRowKey<Row>
+): TableRow<Row>[] {
+  const keys = new Set<TableKey>();
+  return dataSource.map(createRow);
+
+  // Проверяет ключ перед добавлением строки. Дубли запрещены и в server mode.
+  function createRow(record: Row, sourceIndex: number): TableRow<Row> {
+    const key: unknown = typeof rowKey === 'function'
+      ? rowKey(record)
+      : Reflect.get(record, rowKey ?? 'key');
+
+    if (typeof key !== 'string' && (typeof key !== 'number' || !Number.isFinite(key))) {
+      throw new Error('Table rowKey must resolve to a string or finite number for every record');
+    }
+    if (keys.has(key)) {
+      throw new Error(`Table row key "${key}" is not unique`);
+    }
+
+    keys.add(key);
+    return { key, record, sourceIndex };
+  }
+}
+
+// Оставляет допустимые значения фильтров и соблюдает filterMultiple для каждого столбца.
 export function getTableFilters<Row extends object>(
   columns: readonly TableColumn<Row>[],
   filters: Readonly<Record<string, readonly TableFilterValue[]>> = {},
@@ -125,6 +141,7 @@ export function getTableFilters<Row extends object>(
   return Object.fromEntries(entries);
 }
 
+// Сравнивает наборы значений фильтра без учёта порядка и повторов.
 export function areTableFiltersEqual(left: TableFilters, right: TableFilters): boolean {
   const keys = Object.keys(left);
 
@@ -140,11 +157,11 @@ export function areTableFiltersEqual(left: TableFilters, right: TableFilters): b
   });
 }
 
-export function getNextTableSorter(columnKey: string, sorter:
-  TableSorter
-  | null):
-  TableSorter
-  | null {
+// Цикл сортировки начинается с ascend при выборе другого столбца.
+export function getNextTableSorter(
+  columnKey: string,
+  sorter: TableSorter | null
+): TableSorter | null {
   if (sorter?.columnKey !== columnKey) {
     return { columnKey, order: 'ascend' };
   }
@@ -152,6 +169,7 @@ export function getNextTableSorter(columnKey: string, sorter:
   return sorter.order === 'ascend' ? { columnKey, order: 'descend' } : null;
 }
 
+// Заголовок агрегирует выбор только для переданных строк страницы.
 export function getTableSelection(
   pageKeys: readonly TableKey[],
   selectedKeys: readonly TableKey[]
@@ -166,6 +184,7 @@ export function getTableSelection(
   };
 }
 
+// Обновляет переданные ключи, сохраняя выбор на остальных страницах.
 export function changeTableSelection(
   selectedKeys: readonly TableKey[],
   changedKeys: readonly TableKey[],

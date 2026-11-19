@@ -1,5 +1,8 @@
+// Определяет доступные команды, порядок клавиатуры и текстовый поиск Dropdown.
+// Источник порядка — входные items. Разделители и disabled исключаются из навигации.
 import type { DropdownItem, DropdownMenuItem } from './dropdown.types';
 
+// Первый пункт с данным ключом остаётся в списке рендеринга.
 export function normalizeDropdownItems(items: readonly DropdownItem[]): DropdownItem[] {
   const seen = new Set<string>();
 
@@ -13,21 +16,21 @@ export function normalizeDropdownItems(items: readonly DropdownItem[]): Dropdown
   });
 }
 
+// Отбирает пункты, к которым можно перевести фокус и применить действие.
 export function getDropdownCommands(items: readonly DropdownItem[]): DropdownMenuItem[] {
   return items.filter((item): item is DropdownMenuItem => item.type !== 'divider'
     && !item.disabled);
 }
 
-export function getDropdownActiveKey(items: readonly DropdownItem[], key:
-  string
-  | null):
-  string
-  | null {
+// При удалении активной команды начинает с первой доступной.
+export function getDropdownActiveKey(items: readonly DropdownItem[], key: string | null): string | null {
   const commands = getDropdownCommands(items);
+  const current = commands.find((item) => item.key === key);
 
-  return commands.find((item) => item.key === key)?.key ?? commands[0]?.key ?? null;
+  return current?.key ?? commands[0]?.key ?? null;
 }
 
+// Навигация стрелками циклична. Без текущей команды направление выбирает край списка.
 export function getDropdownNavigationKey(
   items: readonly DropdownItem[],
   current: string | null,
@@ -41,19 +44,21 @@ export function getDropdownNavigationKey(
     return commands[0].key;
   }
   if (direction === 'last') {
-    return commands.at(-1)!.key;
+    return commands[commands.length - 1].key;
   }
 
   const index = commands.findIndex((item) => item.key === current);
   if (index === -1) {
-    return direction === 'next' ? commands[0].key : commands.at(-1)!.key;
+    const edge = direction === 'next' ? 0 : commands.length - 1;
+    return commands[edge].key;
   }
 
-  return commands[(index + (direction === 'next'
-    ? 1
-    : -1) + commands.length) % commands.length].key;
+  const step = direction === 'next' ? 1 : -1;
+  const nextIndex = (index + step + commands.length) % commands.length;
+  return commands[nextIndex].key;
 }
 
+// Одиночная буква ищет после текущего пункта, чтобы повторный ввод перебирал совпадения.
 export function getDropdownMatch(
   commands: readonly { key: string; text: string; }[],
   current: string | null,

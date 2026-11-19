@@ -1,3 +1,5 @@
+// Готовит настройки и группы слайдов Carousel. Настройки корня берутся из
+// основного режима, параметры трека дополнительно учитывают responsive override.
 import type { CarouselContent, CarouselItem, CarouselProps } from './carousel.types';
 
 export const carouselDefaults = {
@@ -41,6 +43,7 @@ export const carouselDefaults = {
   unslick: false
 };
 
+// Применяет настройки breakpoint, а затем ограничения center, fade и variableWidth.
 export function getCarouselSettings(
   props: CarouselProps,
   direction: 'ltr' | 'rtl',
@@ -68,8 +71,9 @@ export function getCarouselSettings(
     ].filter(Boolean).join(' '),
     ...(props.effect === 'fade' ? { fade: true } : {})
   };
-  const responsive = breakpoint
-    ? props.responsive?.find(item => item.breakpoint === breakpoint)?.settings : undefined;
+  const breakpointConfig = breakpoint
+    ? props.responsive?.find(item => item.breakpoint === breakpoint) : undefined;
+  const responsive = breakpointConfig?.settings;
   const resolved = { ...settings, ...(typeof responsive === 'object' ? responsive : {}) };
 
   if (resolved.centerMode) resolved.slidesToScroll = 1;
@@ -91,11 +95,13 @@ export function getCarouselSettings(
 
 export type CarouselSettings = ReturnType<typeof getCarouselSettings>;
 
+// Явный items, включая пустой массив, имеет приоритет над children.
 export function getCarouselItems(props: Pick<CarouselProps, 'items' | 'children'>): CarouselItem[] {
   if (props.items !== undefined) {
     return [...props.items];
   }
   const items: CarouselItem[] = [];
+  // Разворачивает вложенные children с сохранением порядка визуальных элементов.
   function visit(value: CarouselContent) {
     if (Array.isArray(value)) {
       for (const child of value) visit(child);
@@ -108,6 +114,7 @@ export function getCarouselItems(props: Pick<CarouselProps, 'items' | 'children'
   return items;
 }
 
+// Собирает группы rows × perRow. Ширина учитывает последний подходящий элемент по обходу.
 export function getCarouselRows(items: readonly CarouselItem[], rows: number, perRow: number) {
   const groups: { rows: CarouselItem[][]; width?: number | string; }[] = [];
   if (!(rows > 0) || !(perRow > 0)) {
