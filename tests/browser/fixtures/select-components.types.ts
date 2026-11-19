@@ -188,9 +188,9 @@ export function selectComponentNegativeTypes(
   const invalidValue: SelectInputAttributes<HTMLTextAreaElement> = { value: 1 };
   // @ts-expect-error Forwarded context style remains a DOM string.
   input.attributes.style = { width: 83 };
-  // @ts-expect-error Input own style widening does not apply to root own props.
   const invalidRootStyle: SelectRootComponent<HTMLButtonElement> = {
     element: 'button',
+    // @ts-expect-error Расширенный style для input не действует на корневой элемент.
     props: { style: { width: 83 } }
   };
   // @ts-expect-error A textarea context cannot register a native input.
@@ -201,9 +201,9 @@ export function selectComponentNegativeTypes(
   root.register({ nativeElement: document.createElement('textarea') });
   // @ts-expect-error Typed snippets cannot exchange input and textarea contexts.
   const invalidSnippet: SelectInputComponent<HTMLTextAreaElement> = wrongInputSnippet;
-  // @ts-expect-error Descriptor refs receive the declared root type.
   const invalidRef: SelectRootComponent<HTMLButtonElement> = {
     element: 'button',
+    // @ts-expect-error Тип ref соответствует объявленному корневому элементу.
     ref: (_node: HTMLInputElement | null) => {}
   };
   // @ts-expect-error Additional component generics do not widen primitive values.
