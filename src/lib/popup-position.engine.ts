@@ -1,4 +1,6 @@
-// Числовая часть Ant Design placements и rc-trigger 3.10.1 useAlign; MIT, LICENSE.rc-trigger.
+// Рассчитывает placements и числовую позицию popup без доступа к DOM. Flip,
+// ограничение области и положение стрелки используют измерения вызывающего кода.
+// Ant Design placements и rc-trigger 3.10.1 useAlign; MIT, LICENSE.rc-trigger.
 export type PopupPlacement = 'center' | 'top' | 'bottom' | 'left' | 'right'
   | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
   | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
@@ -59,6 +61,7 @@ const points: Record<Exclude<PopupPlacement, 'center'>, readonly [string, string
   leftBottom: ['br', 'bl']
 };
 
+// Строит набор встроенных placements и правила overflow для каждой стороны.
 export function getPopupPlacements(
   pointAtCenter: boolean,
   arrowWidth = 16,
@@ -71,6 +74,13 @@ export function getPopupPlacements(
   const map: Record<string, PopupAlign> = {};
 
   for (const [name, pair] of Object.entries(points)) {
+    map[name] = createPlacement(name, pair);
+  }
+
+  return map;
+
+  // Смещения углов и допустимые flip/shift зависят от направления стрелки.
+  function createPlacement(name: string, pair: readonly [string, string]): PopupAlign {
     const corner = name.length > 6;
     let aligned = pair;
     const shift: [number, number] = [0, 0];
@@ -99,7 +109,7 @@ export function getPopupPlacements(
       if (!overflow.shiftX) overflow.adjustX = true;
       if (!overflow.shiftY) overflow.adjustY = true;
     }
-    map[name] = {
+    return {
       points: aligned,
       offset: shift,
       dynamicInset: true,
@@ -107,9 +117,9 @@ export function getPopupPlacements(
       overflow
     };
   }
-  return map;
 }
 
+// Переводит код точки в координаты прямоугольника. Пустой код означает центр.
 function getPoint(rect: PopupRect, point = '') {
   return {
     x: rect.left + (point[1] === 'l' ? 0 : point[1] === 'r' ? rect.width : rect.width / 2),
@@ -117,6 +127,7 @@ function getPoint(rect: PopupRect, point = '') {
   };
 }
 
+// Отражает точку по одной оси после принятого flip.
 function reverse(point: string, axis: 0 | 1) {
   const opposites: Record<string, string> = { t: 'b', b: 't', l: 'r', r: 'l' };
   const letters = [...point];
@@ -134,6 +145,7 @@ interface PopupAlignmentGeometry {
   flips?: PopupFlipCache;
 }
 
+// Подготавливает встроенную схему placement перед числовым расчётом.
 export function getPopupAlignment(input: PopupAlignmentGeometry & {
   placement: PopupPlacement;
   pointAtCenter: boolean;
@@ -163,6 +175,7 @@ export function getPopupAlignment(input: PopupAlignmentGeometry & {
   return { ...position, align: { ...initial, points: position.align.points } };
 }
 
+// Разрешает процентное смещение относительно ширины или высоты элемента.
 function getOffset(size: number, value: PopupOffset = 0) {
   return typeof value === 'string' && value.endsWith('%')
     ? size * Number.parseFloat(value) / 100 : Number.parseFloat(String(value));
@@ -199,6 +212,7 @@ export function getPopupPosition(input: PopupAlignmentGeometry & {
   let y = targetPoint.y - sourcePoint.y + offsetY;
   const flips = { ...input.flips };
 
+  // Оценивает попадание позиции в область, используемую текущей стратегией overflow.
   function area(left: number, top: number, region = visible) {
     const l = Math.max(popup.left + left, region.left);
     const t = Math.max(popup.top + top, region.top);
@@ -209,6 +223,7 @@ export function getPopupPosition(input: PopupAlignmentGeometry & {
 
   const originalArea = area(x, y);
   const originalRecommend = area(x, y, visibleRegion);
+  // При одинаковой площади visibleFirst сравнивает оставшуюся видимую область.
   const prefer = (left: number, top: number) => {
     const next = area(left, top);
     return next > originalArea || next === originalArea
@@ -221,6 +236,7 @@ export function getPopupPosition(input: PopupAlignmentGeometry & {
   const originalX = popup.left + x;
   const originalY = popup.top + y;
   const overflow = initial.overflow ?? {};
+  // Сохраняет числовые ограничения, включая допустимое нулевое значение.
   const supports = (value: boolean | number | undefined) =>
     typeof value === 'boolean' ? value : value !== undefined && value >= 0;
 
@@ -332,6 +348,7 @@ export function getPopupPosition(input: PopupAlignmentGeometry & {
   };
 }
 
+// Восстанавливает имя placement по точкам, учитывая режим привязки к координате.
 export function getPopupPlacement(
   placements: Readonly<Record<string, PopupSourceAlign>>,
   align: PopupSourceAlign,
@@ -344,19 +361,24 @@ export function getPopupPlacement(
   return matchingPlacement?.[0];
 }
 
+// Привязывает стрелку к краю или использует измеренное смещение по каждой оси.
 export function getPopupArrowStyle(position: {
   align?: PopupSourceAlign;
   arrowX: number;
   arrowY: number;
 } | undefined) {
-  const align = position?.align;
+  if (!position) {
+    return '';
+  }
+
+  const align = position.align;
   if (!align?.points || align.autoArrow === false) {
     return '';
   }
   const [source, target] = align.points;
   const y = source[0] === target[0] || !['t', 'b'].includes(source[0])
-    ? `top:${position!.arrowY}px` : source[0] === 't' ? 'top:0' : 'bottom:0';
+    ? `top:${position.arrowY}px` : source[0] === 't' ? 'top:0' : 'bottom:0';
   const x = source[1] === target[1] || !['l', 'r'].includes(source[1])
-    ? `left:${position!.arrowX}px` : source[1] === 'l' ? 'left:0' : 'right:0';
+    ? `left:${position.arrowX}px` : source[1] === 'l' ? 'left:0' : 'right:0';
   return `${x};${y}`;
 }
