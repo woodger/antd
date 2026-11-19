@@ -17,8 +17,9 @@ export interface TimePickerOption<Value extends number | 'am' | 'pm' = number | 
 }
 
 // Заполняет неявные флаги показа, учитывая явные true и false в props.
-function fillShow(config: Pick<DatePickerTimeConfig,
-  'showHour' | 'showMinute' | 'showSecond' | 'showMillisecond'>) {
+function fillShow(
+  config: Pick<DatePickerTimeConfig, 'showHour' | 'showMinute' | 'showSecond' | 'showMillisecond'>
+) {
   const explicit = [config.showHour, config.showMinute, config.showSecond, config.showMillisecond]
     .some(value => value !== undefined);
   const hasFalse = [config.showHour, config.showMinute, config.showSecond]
@@ -273,10 +274,10 @@ export function timePickerSameValue(a: Dayjs | null, b: Dayjs | null) {
     && a.millisecond() === b.millisecond();
 }
 
-export function timePickerDateDisabled(value: Dayjs, props: Pick<
-  TimePickerProps,
-  'disabledDate' | 'minDate' | 'maxDate'
->) {
+export function timePickerDateDisabled(
+  value: Dayjs,
+  props: Pick<TimePickerProps, 'disabledDate' | 'minDate' | 'maxDate'>
+) {
   const sameTime = (other: Dayjs) => value.hour() === other.hour()
     && value.minute() === other.minute() && value.second() === other.second();
 

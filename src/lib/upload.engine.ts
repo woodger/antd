@@ -50,9 +50,7 @@ export function uploadFileObject<T = unknown>(file: UploadRcFile): UploadFile<T>
 export function updateUploadList<T = unknown>(
   file: UploadFile<T>,
   list: readonly UploadFile<T>[]
-): UploadFile<
-  T
->[] {
+): UploadFile<T>[] {
   const next = [...list];
   const index = next.findIndex(item => item.uid === file.uid);
   if (index < 0) {

@@ -30,8 +30,9 @@ export type DatePickerRenderHookContracts = [
   }>>
 ];
 
-export function footerCompatibility(legacy: Snippet):
-  [DateProps, RangeProps, TimeProps, TimeRangeProps] {
+export function footerCompatibility(
+  legacy: Snippet
+): [DateProps, RangeProps, TimeProps, TimeRangeProps] {
   return [
     { renderExtraFooter: legacy }, { renderExtraFooter: legacy },
     { renderExtraFooter: legacy }, { renderExtraFooter: legacy }

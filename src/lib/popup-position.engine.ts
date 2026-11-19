@@ -362,11 +362,9 @@ export function getPopupPlacement(
 }
 
 // Привязывает стрелку к краю или использует измеренное смещение по каждой оси.
-export function getPopupArrowStyle(position: {
-  align?: PopupSourceAlign;
-  arrowX: number;
-  arrowY: number;
-} | undefined) {
+export function getPopupArrowStyle(
+  position: { align?: PopupSourceAlign; arrowX: number; arrowY: number; } | undefined
+) {
   if (!position) {
     return '';
   }

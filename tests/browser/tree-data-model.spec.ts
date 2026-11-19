@@ -1,11 +1,9 @@
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-tree-data-model-reference.json' with { type: 'json' };
 
-function pathKeys(path: {
-  key: { type: string; value: string | null; };
-  pos: string;
-  level: number;
-}[]) {
+function pathKeys(
+  path: { key: { type: string; value: string | null; }; pos: string; level: number; }[]
+) {
   return path.map(entity => ({ key: entity.key, pos: entity.pos, level: entity.level }));
 }
 

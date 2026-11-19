@@ -107,12 +107,16 @@ function inferSelectProps<Value extends string | number = string,
   Mode extends 'multiple' | 'tags' | undefined = undefined,
   Option extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>,
   Label extends boolean = false, Root extends HTMLElement = HTMLDivElement,
-  Editor extends HTMLElement = HTMLInputElement>(props: SelectProps<Value, Mode, Option, Label, Root, Editor>) {
+  Editor extends HTMLElement = HTMLInputElement>(
+  props: SelectProps<Value, Mode, Option, Label, Root, Editor>
+) {
   return props;
 }
 
 function inferCompletionProps<Option extends object, Root extends HTMLElement = HTMLDivElement,
-  Editor extends HTMLElement = HTMLInputElement | HTMLTextAreaElement>(props: AutoCompleteProps<Option, Root, Editor>) {
+  Editor extends HTMLElement = HTMLInputElement | HTMLTextAreaElement>(
+  props: AutoCompleteProps<Option, Root, Editor>
+) {
   return props;
 }
 

@@ -7,11 +7,10 @@ export function breadcrumbHasContent(value: BreadcrumbContent | undefined): bool
   return value !== undefined && value !== null && value !== false && value !== '';
 }
 // Сохраняет snippet заголовка и подставляет параметры только в строковом представлении.
-export function breadcrumbName(title:
-  BreadcrumbContent
-  | undefined, params: Record<string, unknown>):
-  BreadcrumbContent
-  | null {
+export function breadcrumbName(
+  title: BreadcrumbContent | undefined,
+  params: Record<string, unknown>
+): BreadcrumbContent | null {
   if (!breadcrumbHasContent(title)) {
     return null;
   }

@@ -114,10 +114,7 @@ function createWaveEffect(target: HTMLElement, info: WaveEffectInfo, onEnd: () =
 /** Capture listener и один отложенный эффект; destroy отменяет RAF, timers и observers. */
 export function connectWave(
   node: HTMLElement,
-  getOptions: () => {
-    config?: WaveConfig;
-    info: Omit<WaveEffectInfo, 'event'>;
-  }
+  getOptions: () => { config?: WaveConfig; info: Omit<WaveEffectInfo, 'event'>; }
 ) {
   let frame: number | undefined;
   let destroyed = false;

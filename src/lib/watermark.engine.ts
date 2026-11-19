@@ -5,9 +5,7 @@ export const watermarkFontGap = 3;
 export function mergeWatermarkFont(
   base: Required<WatermarkFont>,
   override: WatermarkFont = {}
-): Required<
-  WatermarkFont
-> {
+): Required<WatermarkFont> {
   return {
     ...base,
     ...Object.fromEntries(Object.entries(override).filter(([, value]) => value !== undefined))

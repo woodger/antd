@@ -114,9 +114,9 @@ export function carouselSwipeMove(
 }
 
 // Строит последовательность индексов для заданного шага, включая возможные клоны.
-export function carouselNavigableIndexes(spec: Pick<
-  CarouselSpec, 'infinite' | 'slideCount' | 'slidesToShow' | 'slidesToScroll'
->) {
+export function carouselNavigableIndexes(
+  spec: Pick<CarouselSpec, 'infinite' | 'slideCount' | 'slidesToShow' | 'slidesToScroll'>
+) {
   const indexes: number[] = [];
   if (!(spec.slidesToScroll > 0) || !(spec.slidesToShow > 0)) {
     return indexes;

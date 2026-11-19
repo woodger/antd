@@ -17,7 +17,9 @@ type CustomInfo = TreeSelectSemanticInfo<number, Entry, HTMLButtonElement, HTMLT
 
 function inferTreeSelectProps<Value extends TreeSelectValue = TreeSelectValue,
   Data extends object = TreeSelectNode, Root extends HTMLElement = HTMLDivElement,
-  Editor extends TreeSelectEditorElement = HTMLInputElement>(props: TreeSelectProps<Value, Data, Root, Editor>) {
+  Editor extends TreeSelectEditorElement = HTMLInputElement>(
+  props: TreeSelectProps<Value, Data, Root, Editor>
+) {
   return props;
 }
 

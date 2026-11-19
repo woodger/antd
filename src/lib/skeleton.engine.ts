@@ -1,10 +1,9 @@
 import type { SkeletonProps, SkeletonWidth } from './skeleton.types';
 
-export function normalizeSkeletonWidth(value:
-  SkeletonWidth
-  | undefined, fallback?: string):
-  string
-  | undefined {
+export function normalizeSkeletonWidth(
+  value: SkeletonWidth | undefined,
+  fallback?: string
+): string | undefined {
   if (typeof value === 'number') return Number.isFinite(value) && value >= 0
     ? `${value}px`
     : fallback;

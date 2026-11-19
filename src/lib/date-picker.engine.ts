@@ -62,9 +62,7 @@ export function parsePicker(
   text: string,
   locale: string,
   formats: readonly DatePickerFormat[]
-):
-  Dayjs
-  | null {
+): Dayjs | null {
   return date.locale.parse(
     locale,
     text,

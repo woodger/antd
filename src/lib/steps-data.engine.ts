@@ -42,11 +42,9 @@ export interface NormalizedStepsDataItem extends Omit<StepsDataItem, 'key'> {
   originalKey?: string | number;
 }
 
-export function stepsDataItems(items: readonly (
-  StepsDataItem
-  | false
-  | null
-  | undefined)[]): NormalizedStepsDataItem[] {
+export function stepsDataItems(
+  items: readonly (StepsDataItem | false | null | undefined)[]
+): NormalizedStepsDataItem[] {
   const explicitKeys = items.flatMap(item => item && typeof item.key === 'string'
     ? [item.key]
     : []);

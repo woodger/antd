@@ -5,13 +5,10 @@ import { samePickerQuarter, samePickerWeek } from './date-picker.engine';
 export function rangePair(value: RangePickerInputValue | null | undefined): RangePickerValue {
   return [value?.[0] ?? null, value?.[1] ?? null];
 }
-export function rangeFlags(value:
-  boolean
-  | readonly boolean[]
-  | undefined, fallback = false): [
-    boolean,
-    boolean
-  ] {
+export function rangeFlags(
+  value: boolean | readonly boolean[] | undefined,
+  fallback = false
+): [boolean, boolean] {
   return Array.isArray(value)
     ? [Boolean(value[0]), Boolean(value[1])]
     : [value ?? fallback, value ?? fallback] as [boolean, boolean];
@@ -23,9 +20,7 @@ export function rangeFrom(
   values: RangePickerValue,
   triggered: readonly number[],
   active: number
-):
-  Dayjs
-  | undefined {
+): Dayjs | undefined {
   const first = triggered.find(index => values[index]);
   return first !== undefined && first !== active ? values[first] ?? undefined : undefined;
 }

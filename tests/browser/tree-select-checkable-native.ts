@@ -8,7 +8,9 @@ export function treeSelectCheckableNativeObserved<Observed extends {
   sameFocus: boolean;
   sameBlur: boolean;
   sameScrollTo: boolean;
-}>(source: Observed): Observed {
+}>(
+  source: Observed
+): Observed {
   return { ...source, sameRoot: true, sameEditor: true, sameEditorParent: true,
     sameFocus: true, sameBlur: true, sameScrollTo: true };
 }

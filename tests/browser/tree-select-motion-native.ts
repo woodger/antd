@@ -1,7 +1,9 @@
 /** Svelte's established public methods retain identity while React recreates its ref wrappers. */
 export function treeSelectMotionNativeObserved<
   Observed extends { sameFocus: boolean; sameBlur: boolean; sameScrollTo: boolean }
->(source: Observed): Observed {
+>(
+  source: Observed
+): Observed {
   return { ...source, sameFocus: true, sameBlur: true, sameScrollTo: true };
 }
 

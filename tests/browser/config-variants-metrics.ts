@@ -1,8 +1,6 @@
-export function snapshotConfigVariants(kinds: readonly {
-  id: string;
-  prefix: string;
-  selector: string;
-}[]) {
+export function snapshotConfigVariants(
+  kinds: readonly { id: string; prefix: string; selector: string; }[]
+) {
   return Object.fromEntries(kinds.map(({ id, prefix, selector }) => {
     const host = document.querySelector(`[data-variant-kind="${id}"]`)!;
     const node = host.querySelector(selector)!;

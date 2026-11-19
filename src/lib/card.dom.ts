@@ -1,9 +1,10 @@
 // Инициализирует флаг наличия сетки и наблюдает изменения состава дочерних узлов.
 // Выявляет прямые Card.Grid внутри body для режима раскладки Card. Изменения глубже первого
 // уровня не наблюдаются.
-export function connectCardGrid(body: HTMLElement, update: (
-  containsGrid: boolean
-) => void): () => void {
+export function connectCardGrid(
+  body: HTMLElement,
+  update: (containsGrid: boolean) => void
+): () => void {
   let active = true;
   // Поддерживает как data-маркер, так и исходный класс ant-card-grid.
   const publish = () => {

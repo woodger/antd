@@ -18,9 +18,10 @@ export function syncRadioPeers(input: HTMLInputElement) {
   }
 }
 
-export function connectRadio(input: HTMLInputElement, update: (
-  checked: boolean
-) => void): () => void {
+export function connectRadio(
+  input: HTMLInputElement,
+  update: (checked: boolean) => void
+): () => void {
   const root = input.getRootNode();
 
   function handleChange(event: Event) {

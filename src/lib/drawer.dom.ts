@@ -4,9 +4,10 @@ import { getDrawerMotionDuration, getDrawerTransform } from './drawer.engine';
 import type { DrawerPlacement } from './drawer.types';
 
 // Создаёт DOM-контроллер для шаблона с panel и mask.
-export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
-  closing: boolean
-) => void) {
+export function createDrawerDialog(
+  dialog: HTMLDialogElement,
+  onClosing: (closing: boolean) => void
+) {
   const panel = dialog.querySelector<HTMLElement>('[data-ant-drawer-content-wrapper]')!;
   const mask = dialog.querySelector<HTMLElement>('[data-ant-drawer-mask]')!;
   const view = dialog.ownerDocument.defaultView!;

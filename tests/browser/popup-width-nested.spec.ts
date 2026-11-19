@@ -121,9 +121,12 @@ async function settle(page: Page) {
   throw Error('Native nested popup width projection did not settle');
 }
 
-async function capture(page: Page, sample: PopupWidthNestedSample, source: SourceCase, captures: {
-  id: string; states: Projection[]; bindings: unknown[]
-}[]) {
+async function capture(
+  page: Page,
+  sample: PopupWidthNestedSample,
+  source: SourceCase,
+  captures: { id: string; states: Projection[]; bindings: unknown[] }[]
+) {
   await page.setViewportSize(reference.reference.viewport);
   await page.goto('/?fixture=popup-width-nested');
   await page.getByRole('combobox', { name: 'Popup width nested sample', exact: true }).selectOption(sample.id);

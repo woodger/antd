@@ -3,9 +3,10 @@ import type { AvatarSize } from './avatar.types';
 import type { ComponentSize } from './types';
 
 // Выбирает локальный размер. Неположительное или неконечное число уступает размеру из контекста.
-export function resolveAvatarSize(size:
-  AvatarSize
-  | undefined, context: ComponentSize = 'medium'): AvatarSize {
+export function resolveAvatarSize(
+  size: AvatarSize | undefined,
+  context: ComponentSize = 'medium'
+): AvatarSize {
   const inherited = context;
   return typeof size === 'number'
     ? Number.isFinite(size) && size > 0 ? size : inherited

@@ -52,10 +52,11 @@ function getDecimal(value: number): { integer: bigint; scale: number; } {
   return scale >= 0 ? { integer, scale } : { integer: integer * 10n ** BigInt(-scale), scale: 0 };
 }
 
-function quantize(value: number, precision: number, rounding:
-  'round'
-  | 'floor'
-  | 'ceil' = 'round'): bigint {
+function quantize(
+  value: number,
+  precision: number,
+  rounding: 'round' | 'floor' | 'ceil' = 'round'
+): bigint {
   const { integer, scale } = getDecimal(value);
 
   if (scale <= precision) {
@@ -100,12 +101,10 @@ export function formatInputNumber(value: number | null, precision?: number): str
     : `${sign}${digits}`;
 }
 
-export function commitInputNumber(value:
-  number
-  | null, options: InputNumberOptions):
-  number
-  | null
-  | undefined {
+export function commitInputNumber(
+  value: number | null,
+  options: InputNumberOptions
+): number | null | undefined {
   if (value === null) {
     return null;
   }
@@ -130,13 +129,11 @@ export function commitInputNumber(value:
   return isInputNumberInRange(rounded, options) ? rounded : undefined;
 }
 
-export function stepInputNumber(value:
-  number
-  | null, direction:
-    1
-    | -1, options: InputNumberOptions):
-  number
-  | null {
+export function stepInputNumber(
+  value: number | null,
+  direction: 1 | -1,
+  options: InputNumberOptions
+): number | null {
   if (options.min > options.max
     || value !== null
     && (direction > 0

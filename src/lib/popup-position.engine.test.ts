@@ -69,9 +69,10 @@ describe('getPopupAlignment', () => {
   });
 });
 
-function position(align: PopupSourceAlign, target: PopupRect = {
-  left: 100, top: 100, width: 80, height: 40
-}) {
+function position(
+  align: PopupSourceAlign,
+  target: PopupRect = { left: 100, top: 100, width: 80, height: 40 }
+) {
   return getPopupPosition({
     target,
     popup: { left: 0, top: 0, width: 200, height: 100 },

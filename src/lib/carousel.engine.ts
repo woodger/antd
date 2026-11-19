@@ -76,9 +76,9 @@ export function carouselPreClones(spec: Pick<
 export const carouselPostClones = carouselPreClones;
 
 // Расширяет окно загрузки из-за centerPadding, когда видны соседние слайды.
-export function carouselLazyRange(spec: Pick<
-  CarouselSpec, 'currentSlide' | 'centerMode' | 'slidesToShow' | 'centerPadding'
->) {
+export function carouselLazyRange(
+  spec: Pick<CarouselSpec, 'currentSlide' | 'centerMode' | 'slidesToShow' | 'centerPadding'>
+) {
   const padding = Number.parseInt(spec.centerPadding) > 0 ? 1 : 0;
   const left = spec.centerMode ? Math.floor(spec.slidesToShow / 2) + padding : 0;
   const right = spec.centerMode
