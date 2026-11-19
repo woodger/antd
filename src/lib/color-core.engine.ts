@@ -5,6 +5,7 @@ type ColorChannels<Channels extends string> = Record<Channels, number | string> 
 export type ColorGenInput<T = ColorCore> = string | number | ColorChannels<'r' | 'g' | 'b'>
   | ColorChannels<'h' | 's' | 'b'> | T;
 
+// Преобразует HSB в HSV для FastColor, сохраняя переданный экземпляр FastColor и alpha.
 function convertHsb(color: ColorGenInput | FastColor | null | undefined): FastColorInput {
   if (color instanceof FastColor) {
     return color;
@@ -21,15 +22,18 @@ function convertHsb(color: ColorGenInput | FastColor | null | undefined): FastCo
 
 /** RcColor 3.1.1: HSB alias поверх исходной арифметики FastColor. */
 export class ColorCore extends FastColor {
+  // Приводит вход к форме FastColor до расчёта каналов базовым классом.
   constructor(color: ColorGenInput | FastColor | null | undefined) {
     super(convertHsb(color));
   }
 
+  // Возвращает brightness как b вместо поля v из HSV, дополняя результат alpha.
   toHsb(): ColorHsb {
     const { v, ...rest } = this.toHsv();
     return { ...rest, b: v, a: this.a };
   }
 
+  // Сериализует округлённые каналы. При полной непрозрачности alpha не включается в строку.
   toHsbString(): string {
     const hsb = this.toHsb();
     const h = Math.round(Number(hsb.h || 0));

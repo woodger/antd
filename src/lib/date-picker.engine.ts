@@ -1,3 +1,5 @@
+// Готовит форматы, календарные периоды и правила выбора времени DatePicker. Следует локали
+// адаптера Dayjs и сохраняет порядок вызовов disabledDate и disabledTime.
 import type { Dayjs } from 'dayjs';
 import { dayjsGenerateConfig as date } from './date-picker-dayjs.engine';
 import { normalizePickerFieldFormat } from './picker-mask.engine';
@@ -10,6 +12,8 @@ import type {
   DatePickerDisabledTime
 } from './date-picker.types';
 
+// Определяет формат по явным настройкам, затем локали и типу выбора. Для даты со временем
+// учитывает видимые столбцы.
 export function pickerFormats(
   props: Pick<DatePickerProps, 'format' | 'showTime' | 'picker'>,
   locale: NonNullable<DatePickerProps['locale']>['lang'] = {}
@@ -46,6 +50,7 @@ export function pickerFormats(
       : '');
   return [locale.fieldDateTimeFormat ?? `YYYY-MM-DD ${time}`];
 }
+// Форматирует валидную дату первым настроенным форматом, включая пользовательскую функцию.
 export function formatPicker(
   value: Dayjs | null | undefined,
   locale: string,
@@ -58,6 +63,8 @@ export function formatPicker(
     ? formats[0](value)
     : date.locale.format(locale, value, formats[0] ?? 'YYYY-MM-DD');
 }
+// Передаёт парсеру только строковые форматы. Пользовательская функция форматирования обратного
+// преобразования не задаёт.
 export function parsePicker(
   text: string,
   locale: string,
@@ -74,9 +81,11 @@ export function pickerCalendarValue(value: Dayjs, template?: Dayjs): Dayjs {
   return value.hour(template?.hour() ?? 0).minute(template?.minute() ?? 0)
     .second(template?.second() ?? 0).millisecond(template?.millisecond() ?? 0);
 }
+// Сравнивает год и порядковый номер календарного квартала.
 export function samePickerQuarter(a: Dayjs, b: Dayjs): boolean {
   return a.year() === b.year() && Math.floor(a.month() / 3) === Math.floor(b.month() / 3);
 }
+// Сравнивает номер недели и год её первого дня по границам текущей локали.
 export function samePickerWeek(a: Dayjs, b: Dayjs, locale: string): boolean {
   return date.locale.getWeekFirstDate(locale, a).year() === date.locale.getWeekFirstDate(locale, b).year()
     && date.locale.getWeek(locale, a) === date.locale.getWeek(locale, b);
@@ -105,14 +114,18 @@ export function samePickerPanelValue(
     && (!datetime || a.hour() === b.hour() && a.minute() === b.minute()
       && a.second() === b.second() && a.millisecond() === b.millisecond());
 }
+// Сдвигает панель на месяц, год или десятилетие согласно текущему уровню выбора.
 export function offsetPickerPanel(value: Dayjs, picker: DatePickerPicker, amount: number): Dayjs {
   return picker === 'date' || picker === 'week' ? value.add(amount, 'month')
     : value.add(amount * (picker === 'year' ? 10 : 1), 'year');
 }
+// Сравнивает период видимой панели, включая десятилетие для year picker.
 export function samePickerPanel(a: Dayjs, b: Dayjs, picker: DatePickerPicker): boolean {
   return picker === 'year' ? Math.floor(a.year() / 10) === Math.floor(b.year() / 10)
     : a.isSame(b, picker === 'date' || picker === 'week' ? 'month' : 'year');
 }
+// Формирует ячейки календаря для уровня выбора. Для дней захватывает соседние месяцы, для годов и
+// десятилетий крайние ячейки выходят за период.
 export function calendarCells(panel: Dayjs, mode: DatePickerMode, locale: string): Dayjs[] {
   if (mode === 'date' || mode === 'week') {
     const first = panel.date(1);
@@ -131,6 +144,8 @@ export function calendarCells(panel: Dayjs, mode: DatePickerMode, locale: string
   const first = panel.year(base).add(-unit, 'year');
   return Array.from({ length: 12 }, (_, index) => first.add(index * unit, 'year'));
 }
+// Проверяет границы периода и disabledDate. Для недели и квартала сохраняет отдельный порядок
+// проверки callback.
 export function pickerDateDisabled(
   value: Dayjs,
   props: Pick<DatePickerProps, 'minDate' | 'maxDate' | 'disabledDate'>,
@@ -177,6 +192,8 @@ export function pickerDateDisabled(
     )
   );
 }
+// Для крупных периодов проверяет обе крайние даты, останавливаясь после первой разрешённой
+// границы.
 export function pickerPanelDateDisabled(
   value: Dayjs,
   props: Pick<DatePickerProps, 'minDate' | 'maxDate' | 'disabledDate'>,
@@ -198,6 +215,8 @@ export function pickerPanelDateDisabled(
     : start.add(mode === 'decade' ? 10 : 1, 'year').add(-1, 'day');
   return pickerDateDisabled(start, props, mode) && pickerDateDisabled(end, props, mode);
 }
+// Проверяет единицы времени от часов до миллисекунд. После первого запрета зависимые callbacks не
+// вызываются.
 export function pickerTimeDisabled(
   value: Dayjs,
   props: Pick<DatePickerProps, 'showTime' | 'disabledTime'>
@@ -231,6 +250,8 @@ export function pickerTimeDisabled(
   ).includes(value.millisecond());
   return Boolean(disabledMillisecond);
 }
+// Разрешает явные флаги столбцов до разбора формата без экранированных литералов. Нормализует
+// шаги видимых колонок.
 export function timeColumns(config: DatePickerTimeConfig, format: string) {
   const explicit = [
     config.showHour,
@@ -300,18 +321,21 @@ export function validPickerTime(
       unit: 'hour' as const,
       count: 24,
       step: config.hourStep ?? 1,
+      // Читает запреты для часов до обновления зависимых единиц времени.
       disabled: () => dynamic.disabledHours?.() ?? []
     },
     {
       unit: 'minute' as const,
       count: 60,
       step: config.minuteStep ?? 1,
+      // Читает запреты для минут по уже выбранному часу.
       disabled: () => dynamic.disabledMinutes?.(next.hour()) ?? []
     },
     {
       unit: 'second' as const,
       count: 60,
       step: config.secondStep ?? 1,
+      // Читает запреты для секунд по уже выровненным часу и минуте.
       disabled: () => dynamic.disabledSeconds?.(
         next.hour(),
         next.minute()
@@ -322,6 +346,7 @@ export function validPickerTime(
       unit: 'millisecond' as const,
       count: 1000,
       step: config.millisecondStep ?? 100,
+      // Читает запреты для миллисекунд по уже выровненным старшим единицам.
       disabled: () => dynamic.disabledMilliseconds?.(next.hour(), next.minute(), next.second())
         ?? []
     }

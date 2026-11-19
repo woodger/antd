@@ -28,6 +28,7 @@ export function cascaderClearIcon(
   return context === undefined ? undefined : context || '×';
 }
 
+// Разрешает имена полей отдельно. Отсутствующее или пустое имя получает стандартное значение.
 export function cascaderFields(fields?: CascaderFieldNames): Required<CascaderFieldNames> {
   return {
     label: fields?.label || 'label',
@@ -36,10 +37,12 @@ export function cascaderFields(fields?: CascaderFieldNames): Required<CascaderFi
   };
 }
 
+// Сериализует полный путь в ключ дерева проверки, используя разделитель rc-cascader.
 export function cascaderPathKey(path: CascaderPath): string {
   return path.join('__RC_CASCADER_SPLIT__');
 }
 
+// Унифицирует один путь и список путей для обхода. Пустой выбор даёт пустой список.
 export function cascaderRawValues(
   value: CascaderPath | readonly CascaderPath[] | undefined
 ): CascaderPath[] {
@@ -49,6 +52,7 @@ export function cascaderRawValues(
   return Array.isArray(value[0]) ? [...value] as CascaderPath[] : [value as CascaderPath];
 }
 
+// Читает дочерние варианты из поля, которое настроил вызывающий компонент.
 export function cascaderChildren<OptionType extends CascaderOption>(
   option: OptionType,
   fields: Required<CascaderFieldNames>
@@ -56,6 +60,7 @@ export function cascaderChildren<OptionType extends CascaderOption>(
   return option[fields.children] as readonly OptionType[] | undefined;
 }
 
+// Даёт явному isLeaf приоритет над наличием дочерних вариантов, включая отложенную загрузку.
 export function cascaderLeaf(
   option: CascaderOption,
   fields: Required<CascaderFieldNames>
@@ -63,6 +68,8 @@ export function cascaderLeaf(
   return option.isLeaf ?? !cascaderChildren(option, fields)?.length;
 }
 
+// Разрешает узлы на каждом уровне пути. После отсутствующей ветви оставляет undefined на
+// следующих уровнях.
 export function cascaderPathOptions<OptionType extends CascaderOption>(
   path: CascaderPath,
   options: readonly OptionType[],
@@ -76,11 +83,14 @@ export function cascaderPathOptions<OptionType extends CascaderOption>(
   });
 }
 
+// Строит индекс путей и дерево проверок из одного обхода, с одинаковыми ключами в обеих
+// структурах.
 export function cascaderIndex<OptionType extends CascaderOption>(
   options: readonly OptionType[],
   fields: Required<CascaderFieldNames>
 ) {
   const paths = new Map<string, { path: CascaderRawValue[]; options: OptionType[]; }>();
+  // Регистрирует путь перед обработкой потомков и переносит флаги выбора узла в дерево проверок.
   function walk(list: readonly OptionType[], parents: OptionType[]): TreeDataNode[] {
     return list.map(option => {
       const nodes = [...parents, option];
@@ -102,6 +112,7 @@ export function cascaderIndex<OptionType extends CascaderOption>(
 
 export type CascaderIndex = ReturnType<typeof cascaderIndex>;
 
+// Отделяет недоступные в options пути и запускает conduction только для множественного выбора.
 export function cascaderChecks(
   paths: readonly CascaderPath[],
   multiple: boolean,
@@ -125,6 +136,7 @@ export function cascaderChecks(
   return { checked: checks.checked.map(String), half: checks.halfChecked.map(String), missing };
 }
 
+// Фильтрует список checked по родству, учитывая режим SHOW_CHILD и границы disabled.
 export function cascaderStrategy(
   checked: readonly string[],
   strategy: CascaderStrategy,
@@ -182,6 +194,8 @@ export function toggleCascader(
   return [...checks.missing, ...cascaderCheckedPaths(checkedKeys, strategy, index)];
 }
 
+// Готовит подписи выбранных путей. Для отсутствующих узлов использует исходное значение, а
+// snippet сохраняет как есть.
 export function cascaderDisplay<OptionType extends CascaderOption>(
   paths: readonly CascaderPath[],
   options: readonly OptionType[],
@@ -218,6 +232,7 @@ export interface CascaderRow<OptionType extends CascaderOption = CascaderOption>
   leaf: boolean;
 }
 
+// Строит строки поиска исходным обходом options. При sort применяет ограничение после сортировки.
 export function searchCascader<OptionType extends CascaderOption>(
   search: string,
   options: readonly OptionType[],
@@ -230,6 +245,7 @@ export function searchCascader<OptionType extends CascaderOption>(
   }
   const limit = config.limit ?? 50;
   const rows: CascaderRow<OptionType>[] = [];
+  // Фильтр по умолчанию сопоставляет подписи без учёта регистра.
   const filter = config.filter ?? ((text: string, path: OptionType[]) => path.some(
     option => {
       const label = option[fields.label];
@@ -238,6 +254,8 @@ export function searchCascader<OptionType extends CascaderOption>(
       return value.toLowerCase().includes(text.toLowerCase());
     }
   ));
+  // Обходит ветви с наследованным disabled. Без сортировки может остановиться на лимите ещё во
+  // время обхода.
   function walk(list: readonly OptionType[], parents: OptionType[], parentDisabled: boolean) {
     for (const option of list) {
       if (!config.sort && limit !== false && limit > 0 && rows.length >= limit) {
@@ -262,11 +280,14 @@ export function searchCascader<OptionType extends CascaderOption>(
     }
   }
   walk(options, [], false);
-  if (config.sort)
+  if (config.sort) {
+    // Правило 2: при каждом сравнении сохраняется чтение sort из исходного config.
     rows.sort((first, second) => config.sort!(first.options, second.options, search, fields));
+  }
   return limit !== false && limit > 0 ? rows.slice(0, limit) : rows;
 }
 
+// Строит очередные колонки вдоль активного пути до конца существующей ветви.
 export function cascaderColumns<OptionType extends CascaderOption>(
   options: readonly OptionType[],
   active: CascaderPath,
@@ -349,6 +370,7 @@ export function navigateCascader(
   return {};
 }
 
+// Размечает непересекающиеся совпадения с сохранением регистра и текста исходной подписи.
 export function cascaderHighlight(label: string | number, search: string) {
   const text = String(label);
   if (!search) {
@@ -369,12 +391,15 @@ export function cascaderHighlight(label: string | number, search: string) {
   return parts;
 }
 
+// Объединяет слои классов или стилей по отдельным частям контрола и popup.
 export function mergeCascaderSlots(
   values: (CascaderSlots<string> | undefined)[],
   separator: string
 ) {
+  // Склеивает непустые слои в порядке передачи и опускает пустой результат.
   const join = (parts: (string | undefined)[]) =>
     parts.filter(Boolean).join(separator) || undefined;
+  // Нормализует короткую строковую запись popup в значение слота root.
   const popup = (value: CascaderSlots<string> | undefined) =>
     typeof value?.popup === 'string' ? { root: value.popup } : value?.popup;
   return {

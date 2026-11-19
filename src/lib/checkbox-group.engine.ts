@@ -1,5 +1,8 @@
+// Нормализует варианты CheckboxGroup и строит значения для управляемого выбора. Порядок options
+// сохраняется отдельно от порядка регистрации children.
 import type { CheckboxGroupOption, CheckboxGroupValue } from './checkbox-group.types';
 
+// Нормализует примитивы в объекты и оставляет первый вариант для каждого заданного value.
 export function getCheckboxGroupOptions<Value extends CheckboxGroupValue>(
   options: readonly (Value | CheckboxGroupOption<Value> | null | undefined)[]
 ): CheckboxGroupOption<Value>[] {
@@ -40,6 +43,7 @@ export function toggleCheckboxGroupChildren<Value extends CheckboxGroupValue>(
   return { value: next, callbackValue: next.filter(item => registered.includes(item)) };
 }
 
+// Оставляет выбранные варианты в порядке options.
 export function getCheckboxGroupValue<Value extends CheckboxGroupValue>(
   options: readonly CheckboxGroupOption<Value>[],
   value: readonly Value[]

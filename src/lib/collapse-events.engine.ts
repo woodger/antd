@@ -1,3 +1,5 @@
+// Переводит алиасы событий Collapse в имена атрибутов Svelte. Зарезервированные props остаются у
+// компонента.
 import type { HTMLAttributes } from 'svelte/elements';
 
 const events = {
@@ -75,6 +77,7 @@ const componentProps = new Set([
   'prefixCls', 'nativeElement', 'ref'
 ]);
 
+// Выделяет нативные атрибуты строки и сохраняет capture-семантику при переводе имён событий.
 export function collapseItemAttributes(item: object) {
   const attributes: Record<string, unknown> = {};
   for (const [name, value] of Object.entries(item)) {
