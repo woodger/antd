@@ -20,7 +20,10 @@ export function createVirtualListSizeCache<Row, Key>(
       for (let index = bottoms.length; index < rows.length; index++) {
         const key = getKey(rows[index]);
         key2Index.set(key, index);
-        bottoms[index] = (bottoms[index - 1] || 0) + (getHeights().get(key) ?? estimate);
+        const previousBottom = bottoms[index - 1] || 0;
+        const heights = getHeights();
+        const measured = heights.get(key);
+        bottoms[index] = previousBottom + (measured ?? estimate);
         if (key === startKey) startIndex = index;
         if (key === endKey) endIndex = index;
         if (startIndex !== undefined && endIndex !== undefined) break;

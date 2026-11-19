@@ -29,7 +29,9 @@ export function virtualListWindow<Row, Key>(
   let end: number | undefined;
   let offset: number | undefined;
   rows.forEach((row, index) => {
-    const next = total + (heights.get(getKey(row)) ?? estimate);
+    const rowKey = getKey(row);
+    const measured = heights.get(rowKey);
+    const next = total + (measured ?? estimate);
     if (next >= scrollTop && start === undefined) {
       start = index;
       offset = total;
@@ -58,8 +60,13 @@ export function virtualListSizes<Row, Key>(
   const sizes = new Map<Key, { top: number; bottom: number; }>();
   let top = 0;
   for (const row of rows) {
-    const bottom = top + (heights.get(getKey(row)) ?? estimate);
-    sizes.set(getKey(row), { top, bottom });
+    const measurementKey = getKey(row);
+    const measured = heights.get(measurementKey);
+    const bottom = top + (measured ?? estimate);
+
+    // getKey вызывается при чтении высоты и публикации границ в исходном порядке.
+    const sizeKey = getKey(row);
+    sizes.set(sizeKey, { top, bottom });
     top = bottom;
   }
   return sizes;
@@ -85,13 +92,16 @@ export function virtualListScrollStep<Row, Key>(
   let itemBottom = 0;
   for (let cursor = 0; cursor <= target; cursor++) {
     itemTop = itemBottom;
-    itemBottom += heights.get(getKey(rows[cursor])) ?? estimate;
+    const rowKey = getKey(rows[cursor]);
+    const measured = heights.get(rowKey);
+    itemBottom += measured ?? estimate;
   }
 
   let remaining = align === 'top' ? offset : height - offset;
   let unknown = false;
   for (let cursor = target; cursor >= 0; cursor--) {
-    const measured = heights.get(getKey(rows[cursor]));
+    const rowKey = getKey(rows[cursor]);
+    const measured = heights.get(rowKey);
     if (measured === undefined) {
       unknown = true;
       break;
