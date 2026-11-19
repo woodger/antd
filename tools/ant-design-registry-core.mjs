@@ -265,42 +265,77 @@ export function coverage(item, revision) {
   return required.every(feature => feature.state === 'supported') ? 'v1-ready' : 'partial';
 }
 
-// Сверяет метаданные с локальными файлами. При отсутствии checkout доступны
-// локальные проверки, если вызывающий код не потребовал upstream явно.
+// Проверяет расхождения в обоих направлениях, сохраняя порядок имён в диагностике.
+function checkRegisteredExports(data, exports, errors) {
+  const registered = new Set(data.supportingExports);
+  for (const component of data.components) {
+    for (const entry of component.exports) {
+      for (const name of entry.local) registered.add(name);
+    }
+  }
+
+  for (const name of registered) {
+    if (!exports.has(name)) {
+      errors.push(`Missing local export: ${name}`);
+    }
+  }
+  for (const name of exports.keys()) {
+    if (!registered.has(name)) {
+      errors.push(`Unregistered local export: ${name}`);
+    }
+  }
+}
+
+// Подбирает исходные TypeScript и Svelte-модули по пути из index.ts.
+function exportCandidates(source) {
+  const base = `src/lib/${source.slice(2)}`;
+  const candidates = ['', '.ts', '.svelte.ts', '/index.ts'].map(suffix => base + suffix);
+  if (base.endsWith('.js')) {
+    candidates.push(base.slice(0, -3) + '.ts');
+  }
+
+  return candidates;
+}
+
+// Проверяет принадлежность integration-ссылки компоненту или его feature.
+function registerIntegrationEvidence(item, ref, integrationEvidence, errors) {
+  const key = ref.slice(integrationPrefix.length);
+  const [componentId, featureId, extra] = key.split('/');
+  if (componentId !== item.id
+    || extra !== undefined
+    || (featureId !== undefined && !item.features.some(feature => feature.id === featureId))) {
+    errors.push(`${item.id}: invalid integration evidence ${ref}`);
+    return;
+  }
+
+  integrationEvidence.add(key);
+}
+
+// Сверяет метаданные с локальными файлами. Отсутствующий checkout допускается
+// для локальной проверки, пока вызывающий код явно не потребовал upstream.
 export async function inspectRegistry(root, { requireUpstream = false } = {}) {
   const data = await readJson(projectPath(root, registryFile));
   const errors = validateRegistry(data);
   if (errors.length) {
     return { data, errors, upstream: 'not checked' };
   }
+
   const index = await readFile(projectPath(root, 'src/lib/index.ts'), 'utf8');
   const exports = publicExports(index);
-  const registered = new Set(
-    [
-      ...data.supportingExports,
-      ...data.components.flatMap(item => item.exports.flatMap(entry => entry.local))
-    ]
-  );
-  for (const name of registered)
-    if (!exports.has(name))
-      errors.push(`Missing local export: ${name}`);
-  for (const name of exports.keys())
-    if (!registered.has(name))
-      errors.push(`Unregistered local export: ${name}`);
+  checkRegisteredExports(data, exports, errors);
+
   for (const [name, source] of exports) {
     if (!source?.startsWith('./')) {
       errors.push(`Export source must be local: ${name}`);
       continue;
     }
-    const base = `src/lib/${source.slice(2)}`;
-    const candidates = ['', '.ts', '.svelte.ts', '/index.ts'].map(suffix => base + suffix);
-    if (base.endsWith('.js'))
-      candidates.push(base.slice(0, -3) + '.ts');
+    const candidates = exportCandidates(source);
     const present = await Promise.all(candidates.map(path => exists(projectPath(root, path))));
     if (!present.some(Boolean)) {
       errors.push(`Missing source for export: ${name}`);
     }
   }
+
   const integrationEvidence = new Set();
   const upstreamRoot = projectPath(root, '.upstream/ant-design');
   let upstream = 'absent (offline local checks only)';
@@ -332,28 +367,20 @@ export async function inspectRegistry(root, { requireUpstream = false } = {}) {
   }
   else if (requireUpstream)
     errors.push('Pinned upstream checkout is required but absent');
+
   for (const item of data.components) {
     const refs = [...item.evidence, ...item.features.flatMap(feature => feature.evidence)];
     for (const ref of new Set(refs)) {
       if (ref.startsWith(integrationPrefix)) {
-        const key = ref.slice(integrationPrefix.length);
-        const [componentId, featureId, extra] = key.split('/');
-        if (componentId !== item.id
-          || extra !== undefined
-          || (featureId !== undefined
-            && !item.features.some(
-              feature => feature.id === featureId
-            ))) {
-          errors.push(`${item.id}: invalid integration evidence ${ref}`);
-        }
-        else {
-          integrationEvidence.add(key);
-        }
+        registerIntegrationEvidence(item, ref, integrationEvidence, errors);
         continue;
       }
       try {
-        if (!await exists(projectPath(root, ref.split('#')[0])))
+        const [referenceFile] = ref.split('#');
+        const evidencePath = projectPath(root, referenceFile);
+        if (!await exists(evidencePath)) {
           errors.push(`${item.id}: missing evidence ${ref}`);
+        }
       }
       catch (error) {
         errors.push(`${item.id}: ${error.message}`);
