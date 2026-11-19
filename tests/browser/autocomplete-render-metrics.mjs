@@ -4,25 +4,17 @@ export function readAutocompleteRender() {
   raw.acRenderObserver ??= { ids: new WeakMap(), nextId: 0, original: {} };
   const observer = raw.acRenderObserver;
   const identity = value => {
-    if (!value || !['function', 'object'].includes(typeof value)) {
-      return null;
-    }
+    if (!value || !['function', 'object'].includes(typeof value)) return null;
     if (!observer.ids.has(value)) observer.ids.set(value, ++observer.nextId);
     return observer.ids.get(value);
   };
   const measure = node => {
-    if (!node) {
-      return null;
-    }
+    if (!node) return null;
     const css = getComputedStyle(node), box = node.getBoundingClientRect();
     return { identity: identity(node), tag: node.tagName, connected: node.isConnected,
       text: node.textContent, innerHTML: node.innerHTML, outerHTML: node.outerHTML,
       attributes: [...node.attributes].map(attr => [attr.name, attr.value]), classes: [...node.classList],
-      cssText: node.style.cssText, inlineStyle: [...node.style].map(name => ({
-        name,
-        value: node.style.getPropertyValue(name),
-        priority: node.style.getPropertyPriority(name)
-      })),
+      cssText: node.style.cssText, inlineStyle: [...node.style].map(name => ({ name, value: node.style.getPropertyValue(name), priority: node.style.getPropertyPriority(name) })),
       css: Object.fromEntries(['display', 'position', 'visibility', 'opacity', 'width', 'height', 'minWidth', 'minHeight',
         'maxWidth', 'boxSizing', 'font', 'fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'color', 'backgroundColor',
         'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
@@ -34,9 +26,7 @@ export function readAutocompleteRender() {
   };
   const current = { root: refs.root, editor: refs.editor, child: refs.child,
     popup: document.querySelector('.ant-select-dropdown'), list: document.querySelector('.ant-select-dropdown-list') };
-  for (const [key, node] of Object.entries(current)) {
-    if (node && !observer.original[key]) observer.original[key] = node;
-  }
+  for (const [key, node] of Object.entries(current)) if (node && !observer.original[key]) observer.original[key] = node;
   const options = [...document.querySelectorAll('.ant-select-item-option')];
   return { current: Object.fromEntries(Object.entries(current).map(([key, node]) => [key, measure(node)])),
     original: Object.fromEntries(Object.keys(current).map(key => [key, measure(observer.original[key])])),
@@ -51,8 +41,5 @@ export function readAutocompleteRender() {
     focus: { tag: document.activeElement?.tagName, id: document.activeElement?.id, role: document.activeElement?.getAttribute('role'),
       isEditor: document.activeElement === refs.editor, isRoot: document.activeElement === refs.root },
     popupCount: document.querySelectorAll('.ant-select-dropdown').length,
-    resources: performance.getEntriesByType('resource').map(entry => ({
-      name: entry.name,
-      initiatorType: entry.initiatorType
-    })) };
+    resources: performance.getEntriesByType('resource').map(entry => ({ name: entry.name, initiatorType: entry.initiatorType })) };
 }

@@ -2,10 +2,7 @@
 export function readSelectSurfaceContext() {
   const owner = document.querySelector('[data-surface-context-case]');
   const refs = {};
-  owner.querySelector('[data-surface-context-command]').dispatchEvent(new CustomEvent(
-    'contextrefs',
-    { detail: refs }
-  ));
+  owner.querySelector('[data-surface-context-command]').dispatchEvent(new CustomEvent('contextrefs', { detail: refs }));
   const measure = node => {
     const style = getComputedStyle(node), rect = node.getBoundingClientRect();
     return { tag: node.tagName, text: node.textContent, attributes: [...node.attributes].map(attr => [attr.name, attr.value]),
