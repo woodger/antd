@@ -188,9 +188,17 @@ export function createUploadController<T = unknown>(
     const transport = props.customRequest
       ? props.customRequest(requestOptions, { defaultRequest: options.defaultRequest })
       : options.defaultRequest(requestOptions);
-    if (!completed) {
-      requests.set(file.uid, transport);
+    if (completed) {
+      return;
     }
+
+    if (disposed) {
+      // customRequest мог размонтировать Upload до возврата обработчика отмены.
+      transport?.abort?.();
+      return;
+    }
+
+    requests.set(file.uid, transport);
   }
 
   // Ждёт разрешения на удаление до отмены транспорта и публикации списка.

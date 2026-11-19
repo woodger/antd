@@ -354,4 +354,35 @@ describe('Upload lifecycle', () => {
       h.controller.dispose();
     }
   );
+
+  it.each([false, true])('handles a custom request returned after disposal (completed = %s)',
+    async completed => {
+      const aborted: string[] = [];
+      const h = setup([], {
+        customRequest: option => {
+          if (completed) {
+            option.onSuccess?.({ custom: true });
+          }
+          h.controller.dispose();
+          return {
+            abort() {
+              aborted.push(option.file.name);
+              option.onError?.(Error('aborted'));
+            }
+          };
+        }
+      });
+
+      await h.controller.upload([file()]);
+
+      const expectedAborts = completed ? [] : ['a.txt'];
+      expect(aborted).toEqual(expectedAborts);
+      expect(h.events.map(event => event.file.status))
+        .toEqual(completed ? ['uploading', 'done'] : ['uploading']);
+
+      h.controller.dispose();
+
+      expect(aborted).toEqual(expectedAborts);
+    }
+  );
 });

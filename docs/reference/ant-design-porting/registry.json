@@ -14304,7 +14304,7 @@
             "src/lib/upload-request.dom.test.ts",
             "tests/browser/upload.spec.ts"
           ],
-          "note": "Async action/data, method/headers/withCredentials, progress/success/error; customRequest(options,{defaultRequest}). beforeUpload=false оставляет ручную отправку потребителю как upstream. MaxCount ограничивает список, не транспорт. Удаление/unmount abort активных запросов; browser/file APIs только в lifecycle."
+          "note": "Async action/data, method/headers/withCredentials, progress/success/error; customRequest(options,{defaultRequest}). beforeUpload=false оставляет ручную отправку потребителю как upstream. MaxCount ограничивает список, не транспорт. Удаление/unmount abort активных запросов; browser/file APIs только в lifecycle. В Ant Design React 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d) синхронный unmount внутри customRequest оставляет возвращённый транспорт без отмены. Svelte вызывает abort для незавершённого транспорта, как только фабрика возвращает его после unmount."
         },
         {
           "id": "presentation",
