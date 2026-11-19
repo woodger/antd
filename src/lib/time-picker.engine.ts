@@ -1,3 +1,5 @@
+// Вычисляет форматы и колонки времени Picker. Ограничения каждой следующей
+// колонки получают значения предыдущих единиц в порядке часы, минуты, секунды.
 // TimePanelBody/useTimeInfo из rc-picker 1.12.2; MIT, vendor/LICENSE.rc-picker.
 import type { Dayjs } from 'dayjs';
 import type { DatePickerFormat, DatePickerProps, DatePickerTimeConfig } from './date-picker.types';
@@ -14,6 +16,7 @@ export interface TimePickerOption<Value extends number | 'am' | 'pm' = number | 
   disabled: boolean;
 }
 
+// Заполняет неявные флаги показа, учитывая явные true и false в props.
 function fillShow(config: Pick<DatePickerTimeConfig,
   'showHour' | 'showMinute' | 'showSecond' | 'showMillisecond'>) {
   const explicit = [config.showHour, config.showMinute, config.showSecond, config.showMillisecond]
@@ -32,6 +35,7 @@ function fillShow(config: Pick<DatePickerTimeConfig,
   };
 }
 
+// Строит формат времени из видимых единиц и режима 12 часов.
 export function timeFormat(config: Pick<DatePickerTimeConfig,
   'showHour' | 'showMinute' | 'showSecond' | 'showMillisecond' | 'use12Hours'>) {
   const show = fillShow(config);
@@ -45,6 +49,7 @@ export function timeFormat(config: Pick<DatePickerTimeConfig,
     + (config.use12Hours ? ' A' : '');
 }
 
+// Явный format имеет приоритет над форматом locale и настройками колонок.
 export function timePickerFormats(
   props: Pick<TimePickerProps, 'format' | 'use12Hours' | 'showHour' | 'showMinute'
     | 'showSecond' | 'showMillisecond'>,
@@ -57,6 +62,7 @@ export function timePickerFormats(
   return [locale.fieldTimeFormat || timeFormat(props)];
 }
 
+// Добавляет недостающие форматы в locale для временного редактора.
 export function timePickerLang(
   props: Pick<TimePickerProps,
     'showHour' | 'showMinute' | 'showSecond' | 'showMillisecond' | 'use12Hours' | 'format'>,
@@ -65,11 +71,13 @@ export function timePickerLang(
   return fillPickerLocale(locale, timeFormat(props));
 }
 
+// Определяет видимость колонок из формата, пока её не задают явные show-флаги.
 export function timePickerClock(
   props: Pick<TimePickerProps, keyof DatePickerTimeConfig | 'changeOnScroll'>,
   locale: NonNullable<TimePickerProps['locale']>['lang'] = {}
 ): DatePickerTimeConfig {
-  const format = timePickerFormats(props, locale)[0];
+  const formats = timePickerFormats(props, locale);
+  const format = formats[0];
   const baseline = typeof format === 'string'
     ? format : locale.fieldTimeFormat || timeFormat(props);
   const explicit = [props.showHour, props.showMinute, props.showSecond, props.showMillisecond]
@@ -97,6 +105,7 @@ export function timePickerClock(
   return { ...config, ...show };
 }
 
+// Читает настройки времени DatePicker отдельно от даты и литералов в формате.
 export function datePickerClock(
   props: Pick<DatePickerProps, 'format' | 'showTime'>,
   locale: NonNullable<DatePickerProps['locale']>['lang'] = {}
@@ -113,6 +122,7 @@ export function datePickerClock(
   return { ...filled, format: config.format || timeFormat(filled) };
 }
 
+// Строит доступные единицы с заданным шагом. При hideDisabled убирает заблокированные.
 export function timePickerOptions(
   count: number,
   step = 1,
@@ -139,6 +149,7 @@ export function timePickerOptions(
   return options;
 }
 
+// Собирает состояние колонок и шаблон времени для выбора новой единицы.
 export function timePickerPanel(
   value: Dayjs | null,
   pickerValue: Dayjs | null | undefined,
@@ -158,18 +169,18 @@ export function timePickerPanel(
       label: config.use12Hours
         ? String(Number(option.value) % 12 || 12).padStart(2, '0') : option.label
     }));
-  const enabled = (options: TimePickerOption<number>[], current: number | undefined) =>
-    current ?? options.find(option => !option.disabled)?.value;
-  const hour = enabled(hours, value?.hour());
+  const hour = selectedTimeUnit(hours, value?.hour());
+  // Правило 2: при пустой колонке ограничения получают прежний undefined.
+  // Типы disabledTime объявляют number, явный fallback меняет наблюдаемые аргументы.
   const minutes = timePickerOptions(60, config.minuteStep, disabledMinutes?.(hour!),
     config.hideDisabledOptions);
-  const minute = enabled(minutes, value?.minute());
+  const minute = selectedTimeUnit(minutes, value?.minute());
   const seconds = timePickerOptions(60, config.secondStep, disabledSeconds?.(hour!, minute!),
     config.hideDisabledOptions);
-  const second = enabled(seconds, value?.second());
+  const second = selectedTimeUnit(seconds, value?.second());
   const milliseconds = timePickerOptions(1000, config.millisecondStep ?? 100,
     dynamic.disabledMilliseconds?.(hour!, minute!, second!), config.hideDisabledOptions, 3);
-  const millisecond = enabled(milliseconds, value?.millisecond());
+  const millisecond = selectedTimeUnit(milliseconds, value?.millisecond());
   const am = value ? value.hour() < 12 : true;
   const meridiem: TimePickerOption<'am' | 'pm'>[] = config.use12Hours ? [
     { value: 'am', label: locale.cellMeridiemFormat
@@ -180,10 +191,10 @@ export function timePickerPanel(
       : 'PM',
     disabled: hours.every(option => option.disabled || Number(option.value) < 12) }
   ] : [];
-  let template = value || pickerValue || now;
+  const source = value || pickerValue;
+  let template = source || now;
 
-  if (value || pickerValue) {
-    const source = value || pickerValue!;
+  if (source) {
     template = template.hour(source.hour()).minute(source.minute())
       .second(source.second()).millisecond(source.millisecond());
   }
@@ -205,6 +216,17 @@ export function timePickerPanel(
   };
 }
 
+// Сохраняет текущее значение, включая 0. До выбора берёт первую доступную строку.
+function selectedTimeUnit(options: TimePickerOption<number>[], current: number | undefined) {
+  if (current != null) {
+    return current;
+  }
+
+  const firstEnabled = options.find(option => !option.disabled);
+  return firstEnabled?.value;
+}
+
+// Преобразует выбранное время в ключ колонки. Для meridiem он всегда am или pm.
 export function timePickerColumnValue(value: Dayjs | null | undefined, type: TimePickerColumnType) {
   if (!value) {
     return null;
@@ -212,6 +234,7 @@ export function timePickerColumnValue(value: Dayjs | null | undefined, type: Tim
   return type === 'meridiem' ? value.hour() < 12 ? 'am' : 'pm' : value.get(type);
 }
 
+// Заменяет одну единицу шаблона. Изменение meridiem сохраняет час внутри половины дня.
 export function timePickerColumnDate(
   template: Dayjs,
   value: Dayjs | null,
@@ -234,6 +257,7 @@ export function timePickerColumnDate(
   return template;
 }
 
+// Проверяет disabledTime и шаги независимо от отображаемого формата.
 export function timePickerValidTime(value: Dayjs, props: TimePickerProps) {
   return validPickerTime(value, { ...props, format: undefined }, props.disabledTime);
 }
