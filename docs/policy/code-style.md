@@ -203,8 +203,8 @@ storage/URL keys и dynamic references.
 Комментарий уместен для SSR/browser boundary, timezone или serialization
 contract, stale-request protection, Canvas/Worker invariant, accessibility или
 browser workaround, compatibility fallback и намеренно отсутствующего side
-effect. Очевидные handlers, guards, присваивания state, markup и CSS
-declarations не комментируются.
+effect. Вне утилитарных модулей очевидные handlers не требуют комментария.
+Не комментируйте очевидные guards, присваивания state, markup и CSS declarations.
 
 В начале нетривиального production-модуля опишите его ответственность,
 границы и существенные инварианты. Простым реэкспортам, очевидным типам и
