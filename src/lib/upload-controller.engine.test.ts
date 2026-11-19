@@ -376,9 +376,9 @@ describe('Upload lifecycle', () => {
       await h.controller.upload([file()]);
 
       const expectedAborts = completed ? [] : ['a.txt'];
+      const statuses = h.events.map(({ file }) => 'status' in file ? file.status : undefined);
       expect(aborted).toEqual(expectedAborts);
-      expect(h.events.map(event => event.file.status))
-        .toEqual(completed ? ['uploading', 'done'] : ['uploading']);
+      expect(statuses).toEqual(completed ? ['uploading', 'done'] : ['uploading']);
 
       h.controller.dispose();
 
