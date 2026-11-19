@@ -47,6 +47,7 @@ export interface DatePickerTimeConfig {
   secondStep?: number;
   millisecondStep?: number;
   hideDisabledOptions?: boolean;
+  /** В showTime задаёт только время пустого выбора; дата остаётся датой панели. */
   defaultOpenValue?: Dayjs;
 }
 /** Общие настройки DatePicker/RangePicker; local props имеют приоритет. */

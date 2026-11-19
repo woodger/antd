@@ -2,7 +2,7 @@
   import type { Dayjs } from 'dayjs';
   import { tick, type Snippet } from 'svelte';
   import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
-  import { calendarCells, pickerDateDisabled } from './date-picker.engine';
+  import { calendarCells, pickerCalendarValue, pickerDateDisabled } from './date-picker.engine';
   import type { DatePickerMode, DatePickerProps, DatePickerCellRenderInfo } from './date-picker.types';
   import type { PickerLocale } from './picker-locale.types';
   let {
@@ -68,9 +68,7 @@
   });
   let root: HTMLDivElement;
   // rc-picker нормализует только время calendar pickerValue, отдельно от выбранного value.
-  let cellPanel = $derived(panel.hour(timeTemplate?.hour() ?? 0)
-    .minute(timeTemplate?.minute() ?? 0).second(timeTemplate?.second() ?? 0)
-    .millisecond(timeTemplate?.millisecond() ?? 0));
+  let cellPanel = $derived(pickerCalendarValue(panel, timeTemplate));
   let cells = $derived.by(() => {
     void renderToday;
     return calendarCells(cellPanel, mode, locale.locale);

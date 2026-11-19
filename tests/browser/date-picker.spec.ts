@@ -316,7 +316,7 @@ test(
     await page.getByRole('button', { name: 'Submit picker form', exact: true }).click();
 
     await expect(page.getByLabel('Form submitted date', { exact: true }))
-      .toHaveText('2026-10-20 08:30:00.000');
+      .toHaveText('2026-10-20 00:00:00.000');
     await expect(input).not.toHaveAttribute('aria-invalid');
 
     await page.getByRole('button', { name: 'Reset picker form', exact: true }).click();

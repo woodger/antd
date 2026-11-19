@@ -17,6 +17,7 @@
   } from './range-picker.engine';
   import {
     pickerFormats,
+    pickerCalendarValue,
     formatPicker,
     parsePicker,
     pickerDateDisabled,
@@ -240,6 +241,7 @@
     return [base, initialPanel(1)];
   }));
   let view = $derived(panelValues()[active]);
+  let datePanelValue = $derived(pickerCalendarValue(view, clock.defaultOpenValue));
   let mode = $state<DatePickerMode>('date');
   let showCurrent = $derived((showNow ?? false) && mode === 'date');
   let hover = $state.raw<Dayjs | null>(null);
@@ -729,7 +731,7 @@
       onPanelChange?.([...calendar], [mode, mode]);
       return;
     }
-    const base = calendar[active] ?? clock.defaultOpenValue ?? view;
+    const base = calendar[active] ?? datePanelValue;
     const next = showTime
       ? validPickerTime(
         base.year(date.year()).month(date.month()).date(date.date()),
@@ -741,7 +743,7 @@
   }
   function handleDateHover(date: Dayjs | null) {
     if (date && showTime) {
-      const base = calendar[active] ?? clock.defaultOpenValue ?? view;
+      const base = calendar[active] ?? datePanelValue;
       date = base.year(date.year()).month(date.month()).date(date.date());
     }
     hover = date;
@@ -987,7 +989,7 @@
                   mode = next;
                   onPanelChange?.([...calendar], [next, next]);
                 }} />
-            {#if showTime && mode === 'date'}<DatePickerTimePanel prefixCls={prefix} value={calendar[active] ?? clock.defaultOpenValue ?? view} selectedValue={calendar[active]} config={clock} format={timeFormat} locale={panelLocale} {now} {cellRender} {cellRange} disabledTime={timeRestriction} onSelect={selectTime} />{/if}
+            {#if showTime && mode === 'date'}<DatePickerTimePanel prefixCls={prefix} value={calendar[active] ?? datePanelValue} selectedValue={calendar[active]} config={clock} format={timeFormat} locale={panelLocale} {now} {cellRender} {cellRange} disabledTime={timeRestriction} onSelect={selectTime} onHover={handleTimeHover} />{/if}
           </div></div>
           {#if !showTime && mode === 'date'}<div class={`${prefix}-panel`} tabindex="-1"><DatePickerCalendar prefixCls={prefix} panel={view.add(1, 'month')} selected={calendar[active]} range={displayRange} onHover={handleDateHover} {mode} locale={secondPanelLocale} {cellRender} {cellRange} restrictions={{ minDate, maxDate, disabledDate: panelDisabled }} {now} direction={config.direction} showPrevious={false} onSelect={selectDate} onNavigate={next => syncPanel(
                 active,

@@ -5,6 +5,7 @@
   import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
   import {
     pickerFormats,
+    pickerCalendarValue,
     formatPicker,
     parsePicker,
     pickerDateDisabled,
@@ -183,6 +184,7 @@
     clock.format ?? (typeof formats[0] === 'string' ? formats[0] : 'HH:mm:ss')
   );
   let panelLocale = $derived(timePickerLang(typeof showTime === 'object' ? showTime : {}, actualLocale));
+  let datePanelValue = $derived(pickerCalendarValue(panel, clock.defaultOpenValue));
   let restrictions = $derived({ minDate, maxDate, disabledDate });
   let hoverValue = $state.raw<Dayjs | null>(null);
   let timeLocale = $derived(time ? timePickerLang(time, actualLocale) : undefined);
@@ -535,7 +537,7 @@
       changeMode(mode === 'decade' ? 'year' : mode === 'year' ? 'month' : 'date');
       return;
     }
-    const base = draft ?? clock.defaultOpenValue ?? panel;
+    const base = draft ?? datePanelValue;
     const candidate = showTime
       ? validPickerTime(
         base.year(next.year()).month(next.month()).date(next.date()),
@@ -703,7 +705,7 @@
   }
   function handleDateCellHover(next: Dayjs | null) {
     if (next && showTime) {
-      const base = draft ?? clock.defaultOpenValue ?? panel;
+      const base = draft ?? datePanelValue;
       next = base.year(next.year()).month(next.month()).date(next.date());
     } else if (next) {
       next = next.hour(0).minute(0).second(0).millisecond(0);
@@ -785,7 +787,7 @@
             ? `${prefix}-datetime-panel`
             : undefined}>
           <DatePickerCalendar prefixCls={prefix} {panel} timeTemplate={clock.defaultOpenValue} selected={draft} hovered={hoverValue ?? draft} onHover={handleDateCellHover} preserveDisabledHover direction={config.direction} {mode} locale={panelLocale} {cellRender} {restrictions} {now} onSelect={selectDate} onNavigate={navigate} onModeChange={changeMode} />
-          {#if showTime && mode === 'date'}<DatePickerTimePanel bind:this={dateTimePanel} scrollMemory={dateTimeScroll} prefixCls={prefix} value={draft ?? clock.defaultOpenValue ?? panel} selectedValue={draft} config={clock} format={timeFormat} locale={panelLocale} {now} {cellRender} {disabledTime} onSelect={selectTime} onHover={handleDateHover} />{/if}
+          {#if showTime && mode === 'date'}<DatePickerTimePanel bind:this={dateTimePanel} scrollMemory={dateTimeScroll} prefixCls={prefix} value={draft ?? datePanelValue} selectedValue={draft} config={clock} format={timeFormat} locale={panelLocale} {now} {cellRender} {disabledTime} onSelect={selectTime} onHover={handleDateHover} />{/if}
         </div></div>
         {#if renderExtraFooter || confirm || mode === 'date' && showNow}<div class={`${prefix}-footer`}>
           {#if renderExtraFooter}<div class={`${prefix}-footer-extra`}>{@render renderExtraFooter(mode)}</div>{/if}

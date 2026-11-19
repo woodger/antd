@@ -14,6 +14,7 @@ export interface RangePickerInfo {
 }
 /** Настройки времени диапазона; начальные значения панели задаются для обеих границ. */
 export interface RangePickerTimeConfig extends Omit<DatePickerTimeConfig, 'defaultOpenValue'> {
+  /** В showTime задаёт время пустых границ, сохраняя текущую дату каждой панели. */
   defaultOpenValue?: [Dayjs, Dayjs];
 }
 export interface RangePickerPreset {

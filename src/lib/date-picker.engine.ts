@@ -46,6 +46,11 @@ export function parsePicker(text: string, locale: string, formats: readonly Date
     formats.filter((format): format is string => typeof format === 'string')
   );
 }
+// useRangePickerValue/fillTime rc-picker: UI time belongs to the viewed calendar date.
+export function pickerCalendarValue(value: Dayjs, template?: Dayjs): Dayjs {
+  return value.hour(template?.hour() ?? 0).minute(template?.minute() ?? 0)
+    .second(template?.second() ?? 0).millisecond(template?.millisecond() ?? 0);
+}
 export function calendarCells(panel: Dayjs, mode: DatePickerMode, locale: string): Dayjs[] {
   if (mode === 'date') {
     const first = panel.date(1);

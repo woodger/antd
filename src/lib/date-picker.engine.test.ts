@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
 import {
   calendarCells,
+  pickerCalendarValue,
   pickerFormats,
   parsePicker,
   formatPicker,
@@ -34,6 +35,20 @@ describe('DatePicker date adapter and input', () => {
     expect(adapter.setMinute(moved, 45).millisecond()).toBe(123);
     expect(formatPicker(value, 'en_US', ['YYYY-MM-DD HH:mm:ss'])).toBe('2026-10-29 10:20:30');
     expect(value.millisecond()).toBe(123);
+  });
+  it('fills only the viewed calendar time while preserving its date and UTC mode', () => {
+    const value = dayjs.utc('2024-06-13T18:30:20.500Z');
+    const template = dayjs('2000-01-01T09:12:34.567');
+    const empty = pickerCalendarValue(value);
+    const filled = pickerCalendarValue(value, template);
+
+    expect(empty.toISOString()).toBe('2024-06-13T00:00:00.000Z');
+    expect(filled.toISOString()).toBe('2024-06-13T09:12:34.567Z');
+    expect(filled.isUTC()).toBe(true);
+    expect(value.toISOString()).toBe('2024-06-13T18:30:20.500Z');
+    expect(template.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2000-01-01 09:12:34.567');
+    expect(filled).not.toBe(value);
+    expect(filled).not.toBe(template);
   });
   it('builds 42-day grids using locale week starts and navigates month/year panels', () => {
     const date = dayjs('2026-11-15');
