@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { actions } from './date-picker-empty-datetime-cases.mjs';
 import type {
   EmptyDatetimeSourceCallback,
   EmptyDatetimeSourceDate,
@@ -91,51 +92,116 @@ function timeColumns(point: { popups: unknown[] }, side: 'native' | 'source') {
   );
 }
 
-function verifyCalendarAndResetDates(
+export const emptyDatetimeCallbackBoundaries = Object.freeze({
+  receiver: 'Source receiver is undefined; actual Native props-function receiver is a non-null object.',
+  singleCalendarInfo: 'Source Single calendar info is {}; Native preserves the exact {source} payload.',
+  singleEmptyCalendar: 'Source Single cancellation passes undefined/undefined/{}; Native preserves null/empty-string/{source:"date"}.'
+});
+
+export function verifyEmptyDatetimeCallbackReceiverBoundary(
+  actual: EmptyDatetimeSourceCallback,
+  source: EmptyDatetimeSourceCallback
+) {
+  assert.deepEqual(source.receiver, {
+    type: 'undefined', isUndefined: true, isNull: false, identity: null
+  });
+  assert.equal(actual.receiver.type, 'object');
+  assert.equal(actual.receiver.isUndefined, false);
+  assert.equal(actual.receiver.isNull, false);
+  assert(Number.isSafeInteger(actual.receiver.identity) && actual.receiver.identity! > 0);
+}
+
+export function verifyEmptyDatetimeSingleCalendarInfoBoundary(
+  actual: EmptyDatetimeSourceCallback,
+  source: EmptyDatetimeSourceCallback
+) {
+  assert.equal(actual.name, 'calendar');
+  assert.equal(source.name, 'calendar');
+  assert.deepEqual(encodedProperty(source.encodedArguments, '2'), { $: 'object', properties: [] });
+  const type = actions[source.actionIndex]?.type;
+  assert(type === 'date-click' || type === 'hour-click' || type === 'input-escape');
+  assert.deepEqual(encodedProperty(actual.encodedArguments, '2'), {
+    $: 'object', properties: [{ key: 'source', value: type === 'hour-click' ? 'time' : 'date' }]
+  });
+}
+
+export function verifyEmptyDatetimeSingleEmptyCalendarBoundary(
+  actual: EmptyDatetimeSourceCallback,
+  source: EmptyDatetimeSourceCallback
+) {
+  assert.equal(actions[source.actionIndex]?.type, 'input-escape');
+  assert.equal(source.dates.length, 0);
+  assert.equal(actual.dates.length, 0);
+  assert.deepEqual(encodedProperty(source.encodedArguments, '0'), { $: 'undefined' });
+  assert.deepEqual(encodedProperty(source.encodedArguments, '1'), { $: 'undefined' });
+  assert.equal(encodedProperty(actual.encodedArguments, '0'), null);
+  assert.equal(encodedProperty(actual.encodedArguments, '1'), '');
+  verifyEmptyDatetimeSingleCalendarInfoBoundary(actual, source);
+}
+
+function rawArgumentDateIdentity(call: EmptyDatetimeSourceCallback, path: number[]) {
+  const graph = object(call.rawArguments);
+  let value = object(graph.root);
+  for (const part of path) {
+    const node = array(graph.objects).map(object).find(node => node.id === value.ref);
+    assert(node, 'Actual callback raw argument node');
+    const property = array(node.properties).map(object).find(row => row.key === String(part));
+    assert(property, 'Actual callback raw date path');
+    value = object(property.value);
+  }
+  return value.ref;
+}
+
+export function verifyEmptyDatetimeCallbacks(
   actual: NativeEmptyDatetimePoint,
   source: EmptyDatetimeSourcePoint
 ) {
   const actualCalls = actual.owner.callbacks;
-  const arities: Record<string, number> = { open: 1, calendar: 3, 'picker-value': 2 };
+  const originalCalls = source.owner.callbacks;
+  assert.equal(actualCalls.length, originalCalls.length, 'Full public callback ledger length');
+  const sourceToNative = new Map<number, number>();
+  const nativeToSource = new Map<number, number>();
+  const bindDate = (date: EmptyDatetimeSourceDate, original: EmptyDatetimeSourceDate) => {
+    if (sourceToNative.has(original.identity)) {
+      assert.equal(date.identity, sourceToNative.get(original.identity),
+        'Actual shared Dayjs matches Source identity relation');
+    }
+    if (nativeToSource.has(date.identity)) {
+      assert.equal(original.identity, nativeToSource.get(date.identity),
+        'Distinct Source Dayjs remain distinct actual Native arguments');
+    }
+    sourceToNative.set(original.identity, date.identity);
+    nativeToSource.set(date.identity, original.identity);
+  };
+  for (const role of ['panel', 'template'] as const) {
+    bindDate(actual.owner.authoredDates[role], source.owner.authoredDates[role]);
+  }
   for (const [index, call] of actualCalls.entries()) {
+    const original = originalCalls[index];
     assert.equal(call.index, index);
-    assert.equal(call.actualArgumentCount, arities[call.name], 'Actual public callback arity');
-    assert.equal(call.receiver.type, 'object');
-    assert.equal(call.receiver.isUndefined, false);
-    assert.equal(call.receiver.isNull, false);
-    assert.equal(typeof call.receiver.identity, 'number');
-    for (const date of call.dates) {
-      const authored = actual.owner.authoredDates;
-      if (date.value.sameAsAuthored.panel) assert.equal(date.value.identity, authored.panel.identity);
-      if (date.value.sameAsAuthored.template) {
-        assert.equal(date.value.identity, authored.template.identity);
-      }
+    assert.equal(call.index, original.index);
+    assert.equal(call.name, original.name, 'Full public callback order');
+    assert.equal(call.actionIndex, original.actionIndex, 'Actual callback action binding');
+    verifyEmptyDatetimeCallbackReceiverBoundary(call, original);
+    sameDates(call, original);
+    for (const [dateIndex, date] of call.dates.entries()) {
+      bindDate(date.value, original.dates[dateIndex].value);
+      assert.equal(rawArgumentDateIdentity(call, date.path), date.value.identity);
     }
-  }
-  for (const actionIndex of [3, 9]) {
-    if (actual.owner.actionIndex < actionIndex) continue;
-    const calls = actualCalls.filter(call => call.name === 'calendar'
-      && call.actionIndex === actionIndex);
-    const original = source.owner.callbacks.find(call => call.name === 'calendar'
-      && call.actionIndex === actionIndex);
-    assert.equal(calls.length, 1, 'One Source-observed calendar selection');
-    assert(original);
-    sameDates(calls[0], original);
-    for (const key of ['0', '1']) {
-      assert.deepEqual(encodedProperty(calls[0].encodedArguments, key),
-        encodedProperty(original.encodedArguments, key));
+    const keys = array(object(call.encodedArguments).properties).map(row => object(row).key);
+    assert.deepEqual(keys,
+      array(object(original.encodedArguments).properties).map(row => object(row).key));
+    const singleCalendar = actual.owner.owner === 'single' && call.name === 'calendar';
+    const emptyCalendar = singleCalendar && original.dates.length === 0;
+    if (emptyCalendar) verifyEmptyDatetimeSingleEmptyCalendarBoundary(call, original);
+    else if (singleCalendar) verifyEmptyDatetimeSingleCalendarInfoBoundary(call, original);
+    for (const key of keys) {
+      assert.equal(typeof key, 'string');
+      if (singleCalendar && key === '2') continue;
+      if (emptyCalendar && (key === '0' || key === '1')) continue;
+      assert.deepEqual(encodedProperty(call.encodedArguments, key as string),
+        encodedProperty(original.encodedArguments, key as string), 'Whole actual callback argument');
     }
-  }
-  if (actual.owner.actionIndex >= 6) {
-    const resets = actualCalls.filter(call => call.name === 'picker-value'
-      && call.actionIndex === 6);
-    const original = source.owner.callbacks.find(call => call.name === 'picker-value'
-      && call.actionIndex === 6);
-    assert.equal(resets.length, 1, 'One Source-observed reopen reset');
-    assert(original);
-    sameDates(resets[0], original);
-    assert.deepEqual(encodedProperty(resets[0].encodedArguments, '0'),
-      encodedProperty(original.encodedArguments, '0'));
   }
 }
 
@@ -163,15 +229,17 @@ export function verifyEmptyDatetimePoint(
   assert.equal(actual.sameRootAsInitial, true);
   assert.deepEqual(actual.inputs.map(input => input.identity), proof.inputs);
   assert(actual.refs.control);
-  verifyCalendarAndResetDates(actual, source);
-  proof.callbackBoundaries.push({ label, fullStreamCompared: false,
+  verifyEmptyDatetimeCallbacks(actual, source);
+  proof.callbackBoundaries.push({ label, fullStreamCompared: true,
+    acceptedBoundaries: emptyDatetimeCallbackBoundaries,
     source: source.owner.callbacks.map(call => ({ name: call.name,
       actionIndex: call.actionIndex, arity: call.actualArgumentCount, receiver: call.receiver })),
     native: actual.owner.callbacks.map(call => ({ name: call.name,
       actionIndex: call.actionIndex, arity: call.actualArgumentCount, receiver: call.receiver })),
-    scope: 'Selection calendar dates/strings and reopen-reset dates/aliases/arity. '
-      + 'Callback presence/order, calendar info, caret/defaultValue, date-cell classes and '
-      + 'framework DOM/ref shapes are retained raw without parity claims. '
+    scope: 'Full callback names/order/action binding/arity and encoded argument payloads, '
+      + 'including picker info own-key order and all temporal/alias/Dayjs sharing relations. '
+      + 'Receiver, Single calendar info and Single empty reset have named boundary assertions. '
+      + 'Caret/defaultValue, date-cell classes and framework DOM/ref shapes remain raw. '
       + 'Time rows compare actual Native nativeValueAttribute with actual Source value.' });
   proof.points++;
 }
@@ -184,7 +252,9 @@ export function verifyEmptyDatetimeDisposal(
 ) {
   assert.deepEqual(disposal.trace, ['beforeUnmount-read', 'dispose-start', 'dispose-finished',
     'cleanup-read', 'late-1000-read']);
-  for (const [actual, source] of [[disposal.cleanup, sourceCleanup], [disposal.late, sourceLate]]) {
+  for (const [actual, source] of [
+    [disposal.cleanup, sourceCleanup], [disposal.late, sourceLate]
+  ] as const) {
     assert.equal(actual.owner.alive, source.owner.alive);
     assert.equal(actual.owner.alive, false);
     assert.deepEqual(actual.refs, { owner: null, root: null, control: null });
@@ -194,5 +264,6 @@ export function verifyEmptyDatetimeDisposal(
     assert.deepEqual(actual.owner.lifecycle, source.owner.lifecycle);
     assert.deepEqual(actual.owner.callbacks, disposal.beforeUnmount.owner.callbacks);
     assert.deepEqual(actual.owner.ownerActions, disposal.beforeUnmount.owner.ownerActions);
+    verifyEmptyDatetimeCallbacks(actual, source);
   }
 }

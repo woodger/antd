@@ -18,6 +18,7 @@
   import {
     pickerFormats,
     pickerCalendarValue,
+    samePickerPanelValue,
     formatPicker,
     parsePicker,
     pickerDateDisabled,
@@ -310,6 +311,10 @@
   let timeEndText = $derived(time ? formatPicker(calendar[1], lang.locale, formats) : undefined);
   let timePanelWasOpen = false;
   let previousTimeActive = -1;
+  let previousDatePanel = untrack(() => ({
+    opened: false, index: active, calendar: calendar[active], focused
+  }));
+  let dateFocusIndex: number | null = null;
   const popupThemeStyle = $derived(
     [componentTheme.style, semantic?.styles.popup.root].filter(Boolean).join(';') || undefined
   );
@@ -379,6 +384,31 @@
       !timePanelWasOpen || previousTimeActive !== index));
     timePanelWasOpen = opened;
     previousTimeActive = index;
+  });
+  $effect(() => {
+    if (time) return;
+    const opened = visible;
+    const index = active;
+    const current = calendar[index];
+    const preserve = focused;
+    const previous = previousDatePanel;
+    const priorFocusIndex = dateFocusIndex;
+    previousDatePanel = { opened, index, calendar: current, focused: preserve };
+    dateFocusIndex = opened && preserve ? index : null;
+    if (!opened) return;
+    const opening = !previous.opened;
+    const switched = previous.index !== index;
+    untrack(() => {
+      const defaults = Array.isArray(defaultPickerValue)
+        ? defaultPickerValue : [defaultPickerValue, defaultPickerValue];
+      if (defaults[index]) {
+        if (opening || switched) syncPanel(index, 'reset', false);
+      } else if (opening || switched || current !== previous.calendar
+        || preserve !== previous.focused) {
+        syncPanel(index, 'reset', preserve && priorFocusIndex !== null
+          && priorFocusIndex !== index);
+      }
+    });
   });
   $effect(() => {
     void revision;
@@ -604,7 +634,6 @@
     if (next && blocked.every(Boolean) || next === visible) return;
     if (next) {
       now = adapter.getNow();
-      if (!time) syncPanel(active, 'reset', false);
     }
     else {
       hover = null;
@@ -645,17 +674,19 @@
       next = minDate;
     if (maxDate && (showTime ? next : next.add(1, 'month')).isAfter(maxDate))
       next = showTime ? maxDate : maxDate.add(-1, 'month');
-    const pair: [Dayjs, Dayjs] = [...panelValues()];
+    setDatePanel(index, next, source);
+  }
+  function setDatePanel(index: number, next: Dayjs, source: 'reset' | 'panel') {
+    const previous = panelValues();
+    const pair: [Dayjs, Dayjs] = [...previous];
     pair[index] = next;
-    if (!pickerValue)
-      panels = pair;
-    onPickerValueChange?.(pair, {
-      range: index === 1
-        ? 'end'
-        : 'start',
-      source,
-      mode: [mode, mode]
-    });
+    if (!pickerValue) panels = pair;
+    if (pair.some((date, part) =>
+      !samePickerPanelValue(previous[part], date, Boolean(showTime)))) {
+      onPickerValueChange?.(pair, {
+        source, range: index === 1 ? 'end' : 'start', mode: [mode, mode]
+      });
+    }
   }
   function send(index: number, source: RangeInteractionSource, next?: Dayjs | null) {
     const previous = interaction.activeIndex;
@@ -664,7 +695,7 @@
     if (interaction.activeIndex !== previous) {
       hover = null;
       mode = 'date';
-      syncPanel(interaction.activeIndex, 'reset', true);
+      if (time) syncPanel(interaction.activeIndex, 'reset', true);
     }
     const target = interaction.currentIndex;
     if (!time && target !== null && interaction.forceFocus) {
@@ -739,7 +770,9 @@
         timeRestriction
       )
       : date;
-    send(active, showTime ? 'panel-intermediate' : 'panel-final', next);
+    const index = active;
+    send(index, showTime ? 'panel-intermediate' : 'panel-final', next);
+    setDatePanel(index, next, 'panel');
   }
   function handleDateHover(date: Dayjs | null) {
     if (date && showTime) {
@@ -749,8 +782,11 @@
     hover = date;
   }
   function selectTime(date: Dayjs) {
-    send(active, 'panel-intermediate', time ? date : validPickerTime(date, clock, timeRestriction));
+    const next = time ? date : validPickerTime(date, clock, timeRestriction);
+    const index = active;
+    send(index, 'panel-intermediate', next);
     if (time) setTimePanel(active, date, 'panel');
+    else setDatePanel(index, next, 'panel');
   }
   function inputChange(index: number, text: string) {
     focusField(index);

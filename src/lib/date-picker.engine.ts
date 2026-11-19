@@ -51,6 +51,12 @@ export function pickerCalendarValue(value: Dayjs, template?: Dayjs): Dayjs {
   return value.hour(template?.hour() ?? 0).minute(template?.minute() ?? 0)
     .second(template?.second() ?? 0).millisecond(template?.millisecond() ?? 0);
 }
+// rc-picker compares date panels by Y/M/D and datetime panels by all wall fields.
+export function samePickerPanelValue(a: Dayjs, b: Dayjs, datetime: boolean): boolean {
+  return a.year() === b.year() && a.month() === b.month() && a.date() === b.date()
+    && (!datetime || a.hour() === b.hour() && a.minute() === b.minute()
+      && a.second() === b.second() && a.millisecond() === b.millisecond());
+}
 export function calendarCells(panel: Dayjs, mode: DatePickerMode, locale: string): Dayjs[] {
   if (mode === 'date') {
     const first = panel.date(1);

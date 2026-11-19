@@ -6,6 +6,7 @@
   import {
     pickerFormats,
     pickerCalendarValue,
+    samePickerPanelValue,
     formatPicker,
     parsePicker,
     pickerDateDisabled,
@@ -268,7 +269,7 @@
       }
     },
     resetValue: () => {
-      if (retainedDatePreset && !timePickerSameValue(mergedValue, draft)) {
+      if (!timePickerSameValue(mergedValue, draft)) {
         setDraft(mergedValue, 'date');
         if (visible) syncDatePanel(false);
       }
@@ -506,14 +507,13 @@
       if (minDate && minDate.isAfter(next)) next = minDate;
       if (maxDate && next.isAfter(maxDate)) next = maxDate;
     }
+    setDatePanel(next, 'reset');
+  }
+  function setDatePanel(next: Dayjs, source: 'reset' | 'panel') {
     const previous = panel;
     if (pickerValue === undefined) internalPanel = next;
-    if (previous.year() !== next.year() || previous.month() !== next.month()
-      || previous.date() !== next.date()
-      || showTime && (previous.hour() !== next.hour() || previous.minute() !== next.minute()
-        || previous.second() !== next.second() || previous.millisecond() !== next.millisecond())) {
-      onPickerValueChange?.(next, { source: 'reset', mode });
-    }
+    if (!samePickerPanelValue(previous, next, Boolean(showTime)))
+      onPickerValueChange?.(next, { source, mode });
   }
   function navigate(next: Dayjs) {
     const target = minDate && next.endOf('month').isBefore(minDate)
@@ -548,13 +548,13 @@
     if (pickerDateDisabled(candidate, restrictions)) return;
     draftSource = 'panel';
     setDraft(candidate, 'date');
-    internalPanel = candidate;
     text = formatPicker(candidate, actualLocale.locale, formats);
     dirty = true;
     if (!confirm && !showTime && commit(candidate)) {
       requestOpen(false);
       input?.focus();
     }
+    setDatePanel(candidate, 'panel');
   }
   function selectTime(value: Dayjs) {
     if (time) {
@@ -569,6 +569,7 @@
     const next = validPickerTime(value, clock, disabledTime);
     draftSource = 'panel';
     setDraft(next, 'time');
+    setDatePanel(next, 'panel');
     text = formatPicker(next, actualLocale.locale, formats);
     dirty = true;
   }

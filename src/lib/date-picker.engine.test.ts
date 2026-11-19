@@ -5,6 +5,7 @@ import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
 import {
   calendarCells,
   pickerCalendarValue,
+  samePickerPanelValue,
   pickerFormats,
   parsePicker,
   formatPicker,
@@ -49,6 +50,18 @@ describe('DatePicker date adapter and input', () => {
     expect(template.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2000-01-01 09:12:34.567');
     expect(filled).not.toBe(value);
     expect(filled).not.toBe(template);
+  });
+  it('compares panel dates and datetime wall fields independently of offset', () => {
+    const value = dayjs.utc('2024-06-13T18:30:20.500Z');
+    const otherTime = value.hour(9);
+    const otherOffset = value.utcOffset(60, true);
+
+    expect(samePickerPanelValue(value, otherTime, false)).toBe(true);
+    expect(samePickerPanelValue(value, value.add(1, 'day'), false)).toBe(false);
+    expect(samePickerPanelValue(value, otherTime, true)).toBe(false);
+    expect(samePickerPanelValue(value, value.add(1, 'millisecond'), true)).toBe(false);
+    expect(otherOffset.valueOf()).not.toBe(value.valueOf());
+    expect(samePickerPanelValue(value, otherOffset, true)).toBe(true);
   });
   it('builds 42-day grids using locale week starts and navigates month/year panels', () => {
     const date = dayjs('2026-11-15');

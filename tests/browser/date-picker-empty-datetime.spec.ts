@@ -7,8 +7,11 @@ import {
   readEmptyDatetimeSourceClosed, readEmptyDatetimeSourceCleanup
 } from './date-picker-empty-datetime-reference.mjs';
 import {
-  createEmptyDatetimeProof, verifyEmptyDatetimePoint, verifyEmptyDatetimeDisposal
+  createEmptyDatetimeProof, verifyEmptyDatetimePoint, verifyEmptyDatetimeDisposal,
+  type NativeEmptyDatetimePoint
 } from './date-picker-empty-datetime-assertions';
+import type { EmptyDatetimeSourcePoint, EmptyDatetimeSourceVariant }
+  from './date-picker-empty-datetime-reference.mjs';
 import {
   openEmptyDatetime, readEmptyDatetime, settleEmptyDatetime, actEmptyDatetime, disposeEmptyDatetime
 } from './date-picker-empty-datetime-driver';
@@ -35,13 +38,19 @@ for (const sample of samples) {
       });
       const source = readEmptyDatetimeSourceCase(sample.id);
       const proof = createEmptyDatetimeProof();
+      const verifyPoint = (actual: NativeEmptyDatetimePoint,
+        original: (variant: EmptyDatetimeSourceVariant) => EmptyDatetimeSourcePoint, label: string) => {
+        for (const variant of ['first', 'repeat'] as const) {
+          verifyEmptyDatetimePoint(actual, original(variant), proof, label + ':' + variant);
+        }
+      };
       let disposed = false;
       try {
         assert.deepEqual(source.sample, sample);
         await openEmptyDatetime(page, sample);
         const initial = await settleEmptyDatetime(page);
         await attach('initial-complete-scoped-raw', initial);
-        verifyEmptyDatetimePoint(initial, readEmptyDatetimeSourceInitial(sample.id), proof, 'initial');
+        verifyPoint(initial, variant => readEmptyDatetimeSourceInitial(sample.id, variant), 'initial');
         let closedIndex = 0;
         for (const [index, action] of sample.actions.entries()) {
           const original = readEmptyDatetimeSourceStep(sample.id, index);
@@ -50,7 +59,8 @@ for (const sample of samples) {
           await attach('action-' + index + '-after-call', actionRead);
           const actual = await settleEmptyDatetime(page);
           await attach('action-' + index + '-complete-scoped-raw', actual);
-          verifyEmptyDatetimePoint(actual, original.actual, proof, 'action-' + index);
+          verifyPoint(actual, variant => readEmptyDatetimeSourceStep(sample.id, index, variant).actual,
+            'action-' + index);
           if (action.type === 'input-escape') {
             assert.equal(actual.owner.open, false, 'Real input Escape closes the owner');
             const closed = readEmptyDatetimeSourceClosed(sample.id, closedIndex++);
@@ -58,19 +68,24 @@ for (const sample of samples) {
             await page.waitForTimeout(1000);
             const after1000 = await settleEmptyDatetime(page);
             await attach('action-' + index + '-closed-1000', after1000);
-            verifyEmptyDatetimePoint(after1000, closed.after1000, proof, 'closed-' + index);
+            verifyPoint(after1000, variant =>
+              readEmptyDatetimeSourceClosed(sample.id, closedIndex - 1, variant).after1000,
+            'closed-' + index);
           }
         }
         assert.equal(closedIndex, source.closed.length);
         const beforeUnmount = await readEmptyDatetime(page);
-        verifyEmptyDatetimePoint(beforeUnmount,
-          readEmptyDatetimeSourceCleanup(sample.id, 'beforeUnmount'), proof, 'beforeUnmount');
+        verifyPoint(beforeUnmount,
+          variant => readEmptyDatetimeSourceCleanup(sample.id, 'beforeUnmount', variant),
+          'beforeUnmount');
         const disposal = await disposeEmptyDatetime(page);
         disposed = true;
         await attach('whole-actual-disposal', disposal);
-        verifyEmptyDatetimeDisposal(disposal,
-          readEmptyDatetimeSourceCleanup(sample.id, 'cleanup'),
-          readEmptyDatetimeSourceCleanup(sample.id, 'late'));
+        for (const variant of ['first', 'repeat'] as const) {
+          verifyEmptyDatetimeDisposal(disposal,
+            readEmptyDatetimeSourceCleanup(sample.id, 'cleanup', variant),
+            readEmptyDatetimeSourceCleanup(sample.id, 'late', variant));
+        }
         expect(errors).toEqual([]);
         expect(failedRequests).toEqual([]);
         expect(responses.filter(response => response.status >= 400)).toEqual([]);
