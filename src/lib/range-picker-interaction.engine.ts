@@ -89,55 +89,23 @@ export function createRangeInteraction<Value>(options: {
     if (currentIndex === null) {
       return source === 'popupClose' ? 'resetAll' : 'abort';
     }
-    const currentValue = value === undefined ? getCalendarValue()[currentIndex] : value;
+    let currentValue = value;
+    if (currentValue === undefined) {
+      const calendarValue = getCalendarValue();
+      currentValue = calendarValue[currentIndex];
+    }
+
     const currentEmpty = currentValue === null || currentValue === undefined;
     const canSwitch = !currentEmpty || options.allowEmpty()[currentIndex];
     const canSubmit = source === 'remove' || canSwitch;
     if (source === 'field-switch') {
-      if (index === currentIndex) {
-        return 'abort';
-      }
-      const nextIndex = (currentIndex + 1) % options.fieldCount();
-      if (index !== nextIndex) {
-        return 'abort';
-      }
-      const nextFieldTriggered = triggeredFields.some(field => field.index === nextIndex);
-      if (options.needConfirm()) {
-        if (confirmedIndex === currentIndex) {
-          return 'switchNext';
-        }
-        return options.allowEmpty()[currentIndex] ? 'resetCurrentAndSwitchNext' : 'abort';
-      }
-      if (canSwitch) {
-        return 'switchNext';
-      }
-      return nextFieldTriggered ? 'resetCurrentAndSwitchNext' : 'resetCurrent';
+      return fieldSwitchAction(currentIndex, index, canSwitch);
     }
     if (index !== currentIndex) {
       return 'abort';
     }
     if (source === 'popupClose') {
-      const interactionModified = triggeredFields.some(field => field.modified);
-      if (!interactionModified) {
-        return 'finish';
-      }
-      if (options.needConfirm()) {
-        const currentModified = triggeredFields.some(
-          field => field.index === currentIndex && field.modified
-        );
-        const allFieldsTriggered = triggeredFields.length >= options.fieldCount();
-        if (!allFieldsTriggered || !canSwitch) {
-          return 'resetAll';
-        }
-        if (currentModified) {
-          return options.allowEmpty()[currentIndex] ? 'resetCurrentAndSwitchNext' : 'resetAll';
-        }
-        return 'switchNext';
-      }
-      if (!canSubmit) {
-        return 'resetAll';
-      }
-      return 'switchNext';
+      return closeAction(currentIndex, canSwitch, canSubmit);
     }
     if (source === 'input' || source === 'panel-intermediate') {
       return 'modify';
@@ -153,6 +121,54 @@ export function createRangeInteraction<Value>(options: {
     }
     return 'abort';
   };
+
+  // Переход в другое поле разрешён только по циклическому порядку полей.
+  function fieldSwitchAction(currentIndex: number, index: number, canSwitch: boolean) {
+    if (index === currentIndex) {
+      return 'abort';
+    }
+    const nextIndex = (currentIndex + 1) % options.fieldCount();
+    if (index !== nextIndex) {
+      return 'abort';
+    }
+
+    const nextFieldTriggered = triggeredFields.some(field => field.index === nextIndex);
+    if (options.needConfirm()) {
+      if (confirmedIndex === currentIndex) {
+        return 'switchNext';
+      }
+      return options.allowEmpty()[currentIndex] ? 'resetCurrentAndSwitchNext' : 'abort';
+    }
+    if (canSwitch) {
+      return 'switchNext';
+    }
+
+    return nextFieldTriggered ? 'resetCurrentAndSwitchNext' : 'resetCurrent';
+  }
+
+  // При закрытии учитывает изменения draft, полноту ввода и требование подтверждения.
+  function closeAction(currentIndex: number, canSwitch: boolean, canSubmit: boolean) {
+    const interactionModified = triggeredFields.some(field => field.modified);
+    if (!interactionModified) {
+      return 'finish';
+    }
+    if (options.needConfirm()) {
+      const currentModified = triggeredFields.some(
+        field => field.index === currentIndex && field.modified
+      );
+      const allFieldsTriggered = triggeredFields.length >= options.fieldCount();
+      if (!allFieldsTriggered || !canSwitch) {
+        return 'resetAll';
+      }
+      if (currentModified) {
+        return options.allowEmpty()[currentIndex] ? 'resetCurrentAndSwitchNext' : 'resetAll';
+      }
+      return 'switchNext';
+    }
+
+    return canSubmit ? 'switchNext' : 'resetAll';
+  }
+
   // Применяет команду к текущему взаимодействию, публикуя draft до перехода фокуса.
   const triggerChange = (index: number, source: RangeInteractionSource, value?: Value | null) => {
     let currentIndex = getCurrentIndex();
@@ -184,36 +200,8 @@ export function createRangeInteraction<Value>(options: {
         submitField(actionIndex);
         break;
       case 'switchNext':
-        {
-          if (source === 'panel-final' || value !== undefined) {
-            recordTriggeredField(actionIndex, true);
-          }
-          if (value !== undefined) {
-            triggerCalendarChange(actionIndex, value);
-          }
-          if (options.needConfirm() && (source === 'keyboard-submit' || source === 'confirm')) {
-            confirmedIndex = actionIndex;
-          }
-          const forceFocus = source === 'confirm'
-            || source === 'keyboard-submit'
-            || source === 'panel-final'
-            || source === 'popupClose'
-            && !isLastInput;
-          const allFieldsTriggered = submitField(actionIndex);
-          if (allFieldsTriggered && source === 'field-switch') {
-            setCurrentIndex(index);
-            setForceFocus(false);
-          }
-          else if (!allFieldsTriggered) {
-            const nextIndex = (actionIndex + 1) % options.fieldCount();
-            setCurrentIndex(nextIndex);
-            setForceFocus(forceFocus);
-          }
-          if (source === 'field-switch') {
-            recordTriggeredField(index, false);
-          }
-          break;
-        }
+        submitAndSwitch(actionIndex, index, source, value);
+        break;
       case 'finish':
         reset();
         break;
@@ -225,25 +213,8 @@ export function createRangeInteraction<Value>(options: {
         triggeredFields = triggeredFields.filter(field => field.index !== actionIndex);
         break;
       case 'resetCurrentAndSwitchNext':
-        {
-          resetValue(actionIndex);
-          if (confirmedIndex === actionIndex) {
-            confirmedIndex = null;
-          }
-          if (source === 'field-switch') {
-            const nextFieldTriggered = triggeredFields.some(field => field.index === index);
-            if (nextFieldTriggered) {
-              triggeredFields = [];
-            }
-            setCurrentIndex(index);
-            setForceFocus(false);
-            recordTriggeredField(index, false);
-          }
-          else {
-            reset();
-          }
-          break;
-        }
+        resetAndSwitch(actionIndex, index, source);
+        break;
       case 'resetAll':
         resetValue();
         reset();
@@ -255,6 +226,60 @@ export function createRangeInteraction<Value>(options: {
         break;
     }
   };
+
+  // Публикует draft и submit перед выбором следующего поля и его фокуса.
+  function submitAndSwitch(
+    actionIndex: number,
+    requestedIndex: number,
+    source: RangeInteractionSource,
+    value: Value | null | undefined
+  ) {
+    if (source === 'panel-final' || value !== undefined) {
+      recordTriggeredField(actionIndex, true);
+    }
+    if (value !== undefined) {
+      triggerCalendarChange(actionIndex, value);
+    }
+    if (options.needConfirm() && (source === 'keyboard-submit' || source === 'confirm')) {
+      confirmedIndex = actionIndex;
+    }
+
+    const shouldFocusNext = source === 'confirm' || source === 'keyboard-submit'
+      || source === 'panel-final' || source === 'popupClose' && !isLastInput;
+    const allFieldsTriggered = submitField(actionIndex);
+    if (allFieldsTriggered && source === 'field-switch') {
+      setCurrentIndex(requestedIndex);
+      setForceFocus(false);
+    }
+    else if (!allFieldsTriggered) {
+      const nextIndex = (actionIndex + 1) % options.fieldCount();
+      setCurrentIndex(nextIndex);
+      setForceFocus(shouldFocusNext);
+    }
+    if (source === 'field-switch') {
+      recordTriggeredField(requestedIndex, false);
+    }
+  }
+
+  // Снимает неподтверждённый draft. Явный переход начинает состояние указанного поля.
+  function resetAndSwitch(actionIndex: number, requestedIndex: number, source: RangeInteractionSource) {
+    resetValue(actionIndex);
+    if (confirmedIndex === actionIndex) {
+      confirmedIndex = null;
+    }
+    if (source !== 'field-switch') {
+      reset();
+      return;
+    }
+
+    const nextFieldTriggered = triggeredFields.some(field => field.index === requestedIndex);
+    if (nextFieldTriggered) {
+      triggeredFields = [];
+    }
+    setCurrentIndex(requestedIndex);
+    setForceFocus(false);
+    recordTriggeredField(requestedIndex, false);
+  }
 
   return {
     // Сообщает текущее поле, пока идёт взаимодействие.
