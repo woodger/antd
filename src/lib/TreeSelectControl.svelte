@@ -1,4 +1,6 @@
 <script lang="ts" generics="ValueType extends TreeSelectValue = TreeSelectValue, Data extends object = TreeSelectNode, RootElement extends HTMLElement = HTMLDivElement, EditorElement extends TreeSelectEditorElement = HTMLInputElement">
+  // Управляет выбором дерева, редактором поиска и popup TreeSelect. Состояние
+  // checked и набор видимых тегов вычисляются раздельно для каждой стратегии.
   import { flushSync, onMount, tick, untrack } from 'svelte';
   import type {
     TreeSelectProps,
@@ -217,21 +219,19 @@
   let conduction = $derived(Boolean(treeCheckable && !treeCheckStrictly));
   let strategy = $derived(!treeCheckable ? 'SHOW_ALL' : showCheckedStrategy ?? 'SHOW_CHILD');
   let checks = $derived(treeSelectChecks(items, conduction, index));
-  let display = $derived(
-    treeSelectLabels(
-      treeSelectStrategy(checks.checked, strategy, index).map(
-        raw => ({
-          value: raw,
-          label: labelInValue ? items.find(item => item.value === raw)?.label : undefined
-        })
-      ),
-      index,
-      treeNodeLabelProp,
-      items
-    ).map(
-      item => ({ ...item, label: item.label ?? item.value })
-    )
-  );
+  let display = $derived.by(() => {
+    const visibleValues = treeSelectStrategy(checks.checked, strategy, index);
+    const visibleItems = visibleValues.map(createVisibleItem);
+    const labeledItems = treeSelectLabels(visibleItems, index, treeNodeLabelProp, items);
+    return labeledItems.map(item => ({ ...item, label: item.label ?? item.value }));
+  });
+
+  // Подпись выбранного объекта имеет приоритет, когда включён labelInValue.
+  function createVisibleItem(raw: TreeSelectRawValue) {
+    const suppliedItem = labelInValue ? items.find(item => item.value === raw) : undefined;
+    return { value: raw, label: suppliedItem?.label };
+  }
+
   let searchConfig = $derived<TreeSelectSearchConfig<Data>>(
     { ...(typeof showSearch === 'object' ? showSearch : {}) }
   );

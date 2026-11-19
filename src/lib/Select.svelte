@@ -1,4 +1,6 @@
 <script lang="ts" generics="Value extends string | number = string, Mode extends 'multiple' | 'tags' | undefined = undefined, OptionType extends object = SelectOption<Mode extends 'tags' ? Value | string : Value>, LabelInValue extends boolean = false, RootElement extends HTMLElement = HTMLDivElement, EditorElement extends HTMLElement = HTMLInputElement">
+  // Связывает выбор, поиск и открытие списка с редактором и popup Select.
+  // Кэш подписей живёт отдельно от options, а события публикуются из обработчиков.
   import { onMount, onDestroy, tick, untrack, type Snippet } from 'svelte';
   import { useConfig } from './config-context';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
@@ -330,10 +332,7 @@
   let selectionData = $derived(resolveSelectValueCache(
     labeledDrafts, dataMaps, fields, cachedData, optionLabelProp
   ));
-  let displayValues = $derived(selectionData.values.map(item => ({ ...item,
-    label: (labelRender ? labelRender(item as SelectLabelRenderInfo<Mode extends 'tags' ? Value | string : Value>) : item.label) ?? item.value,
-    disabled: selectionData.display.find(display => display.value === item.value)?.disabled
-  })));
+  let displayValues = $derived(selectionData.values.map(createDisplayValue));
   let selectionOptions = $derived(new Map(displayValues.map(item => [item.value, item])));
   let selected = $derived(selectedRaw === undefined ? undefined : selectionOptions.get(selectedRaw));
   let tags = $derived(selectedValues.map(item => selectionOptions.get(item)!));
@@ -369,8 +368,14 @@
     filteredOptions, search, searchConfig.filterSort
   ));
   let filtered = $derived(flattenSelectData<RawValue, OptionType>(orderedOptions, fields));
-  let selectedOption = $derived(!multiple && selectedRaw !== undefined
-    ? filtered.find(row => !row.group && row.value === selectedRaw)?.data : undefined);
+  let selectedOption = $derived.by(() => {
+    if (multiple || selectedRaw === undefined) {
+      return undefined;
+    }
+
+    const selectedRow = filtered.find(row => !row.group && row.value === selectedRaw);
+    return selectedRow?.data;
+  });
   let selectedClass = $derived(typeof selectedOption?.className === 'string' ? selectedOption.className : undefined);
   let selectedStyle = $derived(selectedOption?.style);
   let hasSelectedStyle = $derived(Boolean(selectedClass || selectedStyle));
@@ -386,6 +391,19 @@
   let renderOption = $derived(optionRender as Snippet<[
     SelectFlattenOption<RawValue, OptionType>, { index: number }
   ]> | undefined);
+
+  // Вызывает labelRender при вычислении displayValues, до чтения disabled из кэша.
+  function createDisplayValue(item: SelectValueItem<RawValue>) {
+    const displayValue = { ...item };
+    const renderedLabel = labelRender
+      ? labelRender(item as SelectLabelRenderInfo<Mode extends 'tags' ? Value | string : Value>)
+      : item.label;
+    displayValue.label = renderedLabel ?? item.value;
+
+    const row = selectionData.display.find(display => display.value === item.value);
+    displayValue.disabled = row?.disabled;
+    return displayValue;
+  }
 
   function nativeTitle(title: unknown) {
     return typeof title === 'string' || typeof title === 'number' ? String(title) : undefined;
