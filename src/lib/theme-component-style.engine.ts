@@ -1,3 +1,5 @@
+// Преобразует токены компонентов в CSS-переменные. Учитывает общий и локальный слои, namespace
+// компонента, безразмерные значения и наследование vendor defaults.
 import {
   prepareButtonTokens,
   prepareInputTokens,
@@ -42,9 +44,14 @@ export type StyledComponent = 'Button' | 'Input' | 'InputNumber' | 'Addon'
   | 'App';
 
 const factories = {
+  // Регистрирует App без дополнительных значений по умолчанию. Разрешение общих токенов остаётся
+  // в текущей теме.
   App: () => ({}),
+  // Оставляет Grid общие токены темы без отдельного набора компонентных defaults.
   Grid: () => ({}),
   Table: prepareTableTokens,
+  // Задаёт слой, ширину и цвет прогресса. Статусные фоны остаются неопределёнными до
+  // переопределения.
   Notification: (token: GlobalToken) => ({
     zIndexPopup: token.zIndexPopupBase + 1050,
     width: 384,
@@ -54,12 +61,14 @@ const factories = {
     colorInfoBg: undefined,
     colorWarningBg: undefined
   }),
+  // Выбирает фон приподнятого слоя и центрирует строку сообщения в высоте большого контрола.
   Message: (token: GlobalToken) => ({
     zIndexPopup: token.zIndexPopupBase + 1010,
     contentBg: token.colorBgElevated,
     contentPadding:
       `${(token.controlHeightLG - token.fontSize * token.lineHeight) / 2}px ${token.paddingSM}px`
   }),
+  // Определяет размеры секций и отступы confirm. В wireframe возвращает границы header и footer.
   Modal: (token: GlobalToken) => ({
     footerBg: 'transparent',
     headerBg: 'transparent',
@@ -85,16 +94,19 @@ const factories = {
     confirmBtnsMarginTop: token.wireframe ? token.marginLG : token.marginSM,
     mask: true
   }),
+  // Передаёт базовый слой открывающейся панели и метрики footer и dragger.
   Drawer: (token: GlobalToken) => ({
     zIndexPopup: token.zIndexPopupBase,
     footerPaddingBlock: token.paddingXS,
     footerPaddingInline: token.padding,
     draggerSize: 4
   }),
+  // Задаёт цвет действий и масштабирует карточку изображения от высоты большого контрола.
   Upload: (token: GlobalToken) => ({
     actionsColor: token.colorIcon,
     pictureCardSize: token.controlHeightLG * 2.55
   }),
+  // Готовит метрики стрелки с цветами навигации поверх подложки и отдельным слоем popup.
   Tour: (token: GlobalToken) => ({
     zIndexPopup: token.zIndexPopupBase + 70,
     closeBtnSize: token.fontSize * token.lineHeight,
@@ -104,6 +116,7 @@ const factories = {
     ...prepareArrowOffsets(token.borderRadiusLG),
     ...prepareArrowTokens(token)
   }),
+  // Берёт токены из Input и добавляет высоту списка и вертикальный отступ пункта.
   Mentions: (token: GlobalToken) => ({
     ...prepareInputTokens(token),
     dropdownHeight: 250,
@@ -111,7 +124,9 @@ const factories = {
     zIndexPopup: token.zIndexPopupBase + 50,
     itemPaddingVertical: (token.controlHeight - token.fontHeight) / 2
   }),
+  // Оставляет ColorPicker общие токены до применения переопределений экземпляра темы.
   ColorPicker: () => ({}),
+  // Собирает общие токены поля, календарной панели и стрелки, дополняя их метриками presets.
   DatePicker: (token: GlobalToken) => ({
     ...prepareInputTokens(token),
     ...preparePickerPanelTokens(token),
@@ -120,6 +135,7 @@ const factories = {
     presetsMaxWidth: 200,
     zIndexPopup: token.zIndexPopupBase + 50
   }),
+  // Переиспользует метрики календарной панели и задаёт размеры полноэкранных и мини-элементов.
   Calendar: (token: GlobalToken) => ({
     fullBg: token.colorBgContainer,
     fullPanelBg: token.colorBgContainer,
@@ -129,6 +145,7 @@ const factories = {
     miniContentHeight: 256,
     ...preparePickerPanelTokens(token)
   }),
+  // Считает вертикальные отступы строки и заголовка от общей высоты текста и контролов.
   Transfer: (token: GlobalToken) => {
     const fontHeight = Math.round(token.fontSize * token.lineHeight);
 
@@ -144,11 +161,15 @@ const factories = {
     };
   },
   Tree: prepareTreeTokens,
+  // Передаёт логические отступы строки из общих размеров темы.
   Listy: (token: GlobalToken) => ({
     itemPaddingBlock: token.paddingSM,
     itemPaddingInline: token.padding
   }),
+  // Возвращает отступы заголовка в em, чтобы они зависели от размера его шрифта.
   Typography: () => ({ titleMarginTop: '1.2em', titleMarginBottom: '0.5em' }),
+  // Задаёт параметры подписи и промежутков. В вертикальном режиме высота зависит от явного
+  // labelHeight.
   Form: (token: GlobalToken & Partial<FormComponentToken>) => ({
     labelRequiredMarkColor: token.colorError,
     labelColor: token.colorTextHeading,
@@ -162,11 +183,18 @@ const factories = {
     verticalLabelMargin: 0,
     inlineItemMarginBottom: 0
   }),
+  // Оставляет общую тему для FloatButton без дополнительных локальных defaults.
   FloatButton: () => ({}),
+  // Задаёт слой закреплённого элемента относительно zIndexBase.
   Affix: (token: GlobalToken) => ({ zIndexPopup: token.zIndexBase + 10 }),
+  // Оставляет общие токены для BorderBeam, дополнительные параметры приходят из CSS и настроек
+  // экземпляра.
   BorderBeam: () => ({}),
+  // Регистрирует Masonry без собственных значений темы по умолчанию.
   Masonry: () => ({}),
+  // Оставляет Space общую шкалу отступов темы без компонентных defaults.
   Space: () => ({}),
+  // Определяет размеры секций, общие и отдельные цвета тёмного и светлого Sider.
   Layout: (token: GlobalToken) => {
     const paddingInline = token.controlHeightLG * 1.25;
 
@@ -189,6 +217,7 @@ const factories = {
       lightTriggerColor: token.colorText
     };
   },
+  // Задаёт слой preview и три уровня прозрачности иконок действий.
   Image: (token: GlobalToken) => ({
     zIndexPopup: token.zIndexPopupBase + 80,
     previewOperationColor: new FastColor(token.colorTextLightSolid).setA(0.65).toRgbString(),
@@ -197,9 +226,11 @@ const factories = {
     previewOperationSize: token.fontSizeIcon * 1.5,
     progressAnimationDuration: '3s'
   }),
+  // Использует фон контейнера с фиксированной прозрачностью для покрытия QRCode.
   QRCode: (token: GlobalToken) => ({
     QRCodeCoverBackgroundColor: new FastColor(token.colorBgContainer).setA(0.96).toRgbString()
   }),
+  // Измеряет звёзды от высот контролов трёх размеров. Нулевая ширина focus остаётся нулевой.
   Rate: (token: GlobalToken) => ({
     lineWidthFocus: token.lineWidthFocus === 0 ? 0 : token.lineWidth,
     starColor: token.yellow6,
@@ -209,6 +240,8 @@ const factories = {
     starHoverScale: 'scale(1.1)',
     starBg: token.colorFillContent
   }),
+  // Задаёт размеры разделителя и области захвата. Для drag-области явно заданный ноль
+  // сохраняется.
   Splitter: (token: GlobalToken & Partial<SplitterComponentToken>) => {
     return {
       splitBarSize: token.splitBarSize || 2,
@@ -216,6 +249,7 @@ const factories = {
       splitBarDraggableSize: token.splitBarDraggableSize ?? 20
     };
   },
+  // Определяет фон трека и цвета пунктов для обычного, hover, active и selected состояния.
   Segmented: (token: GlobalToken) => ({
     trackPadding: token.lineWidthBold,
     trackBg: token.colorBgLayout,
@@ -226,10 +260,12 @@ const factories = {
     itemActiveBg: token.colorFill,
     itemSelectedColor: token.colorText
   }),
+  // Разделяет размеры текста заголовка и числового содержимого.
   Statistic: (token: GlobalToken) => ({
     titleFontSize: token.fontSize,
     contentFontSize: token.fontSizeHeading3
   }),
+  // Задаёт цвета подписи, заголовка и значения, а также отступы строк и двоеточия.
   Descriptions: (token: GlobalToken) => ({
     labelBg: token.colorFillAlter,
     labelColor: token.colorTextTertiary,
@@ -242,6 +278,8 @@ const factories = {
     contentColor: token.colorText,
     extraColor: token.colorText
   }),
+  // Определяет размеры стрелок, маркеров и активной точки. Тема задаёт расстояние до стрелки и
+  // gap.
   Carousel: (token: GlobalToken) => ({
     arrowSize: 16,
     arrowOffset: token.marginXS,
@@ -251,6 +289,7 @@ const factories = {
     dotOffset: 12,
     dotActiveWidth: 24
   }),
+  // Считает высоту заголовка из текста и отступов и сохраняет явные bodyPadding и headerPadding.
   Card: (token: GlobalToken & Partial<CardComponentToken>) => ({
     headerBg: 'transparent',
     headerFontSize: token.fontSizeLG,
@@ -266,6 +305,8 @@ const factories = {
     bodyPadding: token.bodyPadding ?? token.paddingLG,
     headerPadding: token.headerPadding ?? token.paddingLG
   }),
+  // Разрешает размеры заголовка и тела для трёх размеров. Borderless использует отдельные фон и
+  // отступ.
   Collapse: (token: GlobalToken) => ({
     headerPadding: `${token.paddingSM}px ${token.padding}px`,
     headerPaddingSM: `${token.paddingXS}px ${token.paddingSM}px ${token.paddingXS}px ${token.paddingXS}px`,
@@ -278,12 +319,14 @@ const factories = {
     borderlessContentPadding: `${token.paddingXXS}px 16px ${token.padding}px`,
     borderlessContentBg: 'transparent'
   }),
+  // Выбирает метрики для простого сообщения и варианта с описанием.
   Alert: (token: GlobalToken) => ({
     borderRadius: token.borderRadiusLG,
     withDescriptionIconSize: token.fontSizeHeading3,
     defaultPadding: `${token.paddingContentVerticalSM}px 12px`,
     withDescriptionPadding: `${token.paddingMD}px ${token.paddingContentHorizontalLG}px`
   }),
+  // Масштабирует иконку от размера заголовка, сохраняя CSS-выражение для строкового размера.
   Result: (token: GlobalToken) => ({
     titleFontSize: token.fontSizeHeading3,
     subtitleFontSize: token.fontSize,
@@ -291,7 +334,9 @@ const factories = {
       ? token.fontSizeHeading3 * 3 : `calc(${token.fontSizeHeading3} * 3)`,
     extraMargin: `${token.paddingLG}px 0 0 0`
   }),
+  // Оставляет Empty общие токены без дополнительных компонентных defaults.
   Empty: () => ({}),
+  // Определяет цвета градиента и высоты заголовка и строк от размера контрола.
   Skeleton: (token: GlobalToken) => ({
     gradientFromColor: token.colorFillContent,
     gradientToColor: token.colorFill,
@@ -300,6 +345,7 @@ const factories = {
     paragraphMarginTop: token.marginLG + token.marginXXS,
     paragraphLiHeight: token.controlHeight / 2
   }),
+  // Выбирает цвета линии, остатка и текста круга. Размер иконки выражает отношением шрифтов темы.
   Progress: (token: GlobalToken) => ({
     circleTextColor: token.colorText,
     defaultColor: token.colorInfo,
@@ -308,6 +354,7 @@ const factories = {
     circleTextFontSize: '1em',
     circleIconFontSize: `${token.fontSize / token.fontSizeSM}em`
   }),
+  // Задаёт высоту контейнера и три размера индикатора относительно высоты контролов.
   Spin: (token: GlobalToken) => ({
     contentHeight: 400,
     dotSize: token.controlHeightLG / 2,
@@ -316,7 +363,9 @@ const factories = {
   }),
   Tabs: prepareTabsTokens,
   Slider: prepareSliderTokens,
+  // Регистрирует Flex без дополнительных значений темы по умолчанию.
   Flex: () => ({}),
+  // Передаёт отступ текста в em и безразмерное положение подписи.
   Divider: (token: GlobalToken) => ({
     textPaddingInline: '1em',
     orientationMargin: 0.05,
@@ -325,8 +374,10 @@ const factories = {
   Button: prepareButtonTokens,
   Input: prepareInputTokens,
   InputNumber: prepareInputNumberTokens,
+  // Оставляет Addon общие токены до применения локальных значений темы.
   Addon: () => ({}),
   Radio: prepareRadioTokens,
+  // Оставляет Checkbox общие токены контрола без отдельного набора defaults.
   Checkbox: () => ({}),
   Switch: prepareSwitchTokens,
   Avatar: prepareAvatarTokens,
@@ -338,12 +389,14 @@ const factories = {
   Select: prepareSelectTokens,
   TreeSelect: prepareTreeSelectTokens,
   Cascader: prepareCascaderTokens,
+  // Считает логические отступы ссылки по шкале padding темы.
   Anchor: (token: GlobalToken) => ({
     linkPaddingBlock: token.paddingXXS,
     linkPaddingInlineStart: token.padding
   }),
   Menu: prepareMenuTokens,
   Dropdown: prepareDropdownTokens,
+  // Разделяет цвета ссылки, последнего пункта и разделителя, учитывая отдельный hover.
   Breadcrumb: (token: GlobalToken) => ({
     itemColor: token.colorTextDescription,
     lastItemColor: token.colorText,
@@ -353,6 +406,7 @@ const factories = {
     separatorColor: token.colorTextDescription,
     separatorMargin: token.marginXS
   }),
+  // Готовит размеры точек и иконок и цвета ожидания и завершения с учётом wireframe.
   Steps: (token: GlobalToken) => ({
     customIconSize: token.controlHeight,
     customIconTop: 0,
@@ -371,6 +425,7 @@ const factories = {
     finishIconBgColor: token.wireframe ? token.colorBgContainer : token.controlItemBgActive,
     finishIconBorderColor: token.wireframe ? token.colorPrimary : token.controlItemBgActive
   }),
+  // Определяет цвет и толщину линии. Размер и фон точки могут наследоваться из остального стиля.
   Timeline: (token: GlobalToken) => ({
     tailColor: token.colorSplit,
     tailWidth: token.lineWidthBold,
@@ -379,6 +434,7 @@ const factories = {
     dotSize: undefined,
     itemPaddingBottom: token.padding * 1.25
   }),
+  // Привязывает размеры пунктов к высотам контролов и добавляет токены поля размера страницы.
   Pagination: (token: GlobalToken) => ({
     itemBg: token.colorBgContainer,
     itemSize: token.controlHeight,
@@ -496,6 +552,7 @@ function resolveComponentVariables(
     if (merged[key] === global[key] && !explicitComponentToken) delete merged[key];
   }
 
+  // Добавляет имя компонента к локальному ключу перед сериализацией CSS-имени.
   const qualify = (key: string) => `${component}${key[0].toUpperCase()}${key.slice(1)}`;
   for (const key of Object.keys(defaults)) {
     merged[qualify(key)] = merged[key];
@@ -516,6 +573,7 @@ function resolveComponentVariables(
     .map(key => tokenToCSSVariable(qualify(key), prefix)) };
 }
 
+// Возвращает только вычисленные значения без добавления inherit для отсутствующих defaults.
 export function componentThemeVariables(
   component: StyledComponent,
   token: GlobalToken,
@@ -525,6 +583,7 @@ export function componentThemeVariables(
   return resolveComponentVariables(component, token, prefix, explicitKeys).variables;
 }
 
+// Заполняет отсутствующие переменные defaults значением inherit до сериализации CSS.
 export function componentThemeStyle(
   component: StyledComponent,
   token: GlobalToken,
