@@ -1,3 +1,5 @@
+// Переиспользует DerivativeTheme по упорядоченной цепочке алгоритмов.
+// Ветви индексируются identity функций, а счётчик обновляется при каждом чтении.
 import { DerivativeTheme } from './theme-derivative';
 import type { MappingAlgorithm } from './theme-token.types';
 
@@ -10,6 +12,7 @@ const cache = new Map<MappingAlgorithm, ThemeCacheNode>();
 let keys: (readonly MappingAlgorithm[])[] = [];
 let callCount = 0;
 
+// Проходит вложенные карты до записи полной цепочки.
 function getEntry(algorithms: readonly MappingAlgorithm[]) {
   let node: ThemeCacheNode | undefined = { map: cache };
   algorithms.forEach(algorithm => {
@@ -19,6 +22,7 @@ function getEntry(algorithms: readonly MappingAlgorithm[]) {
   return node?.value;
 }
 
+// Удаляет запись цепочки и освобождает пустые ветви, пока возвращается рекурсия.
 function deletePath(
   current: Map<MappingAlgorithm, ThemeCacheNode>,
   path: readonly MappingAlgorithm[]
@@ -38,6 +42,21 @@ function deletePath(
   if ((!node.map || node.map.size === 0) && !node.value) current.delete(path[0]);
 }
 
+// Удаляет цепочку с наименьшим номером использования, сохраняя остальные ключи.
+function evictOldestTheme() {
+  const oldest = keys.reduce((oldestKey, candidateKey) => {
+    const candidate = getEntry(candidateKey);
+    // Правило 2: исходный LRU ожидает записи для сохранённых ключей. Если
+    // цепочка уже вытеснена записью общего префикса, сохраняется прежняя ошибка.
+    const candidateUsage = candidate![1];
+    const oldestEntry = getEntry(oldestKey);
+    return candidateUsage < oldestEntry![1] ? candidateKey : oldestKey;
+  });
+  keys = keys.filter(key => key.length !== oldest.length
+    || key.some((algorithm, index) => algorithm !== oldest[index]));
+  deletePath(cache, oldest);
+}
+
 /** Кэш cssinjs 2.1.2 по цепочке функций; после 25 записей удаляет самую давнюю по использованию. */
 export function createDerivativeTheme(
   derivatives: MappingAlgorithm | readonly MappingAlgorithm[]
@@ -47,12 +66,7 @@ export function createDerivativeTheme(
   if (!entry) {
     const theme = new DerivativeTheme(algorithms);
     if (keys.length + 1 > 25) {
-      const oldest = keys.reduce((result, key) =>
-        getEntry(key)![1] < getEntry(result)![1] ? key : result
-      );
-      keys = keys.filter(key => key.length !== oldest.length
-        || key.some((algorithm, index) => algorithm !== oldest[index]));
-      deletePath(cache, oldest);
+      evictOldestTheme();
     }
 
     keys.push(algorithms);
@@ -64,12 +78,13 @@ export function createDerivativeTheme(
       else {
         const node = current.get(algorithm);
         if (!node) {
-          current.set(algorithm, { map: new Map() });
+          const childMap = new Map<MappingAlgorithm, ThemeCacheNode>();
+          current.set(algorithm, { map: childMap });
+          current = childMap;
         }
         else {
-          node.map ??= new Map();
+          current = node.map ??= new Map();
         }
-        current = current.get(algorithm)!.map!;
       }
     });
     entry = getEntry(algorithms);
