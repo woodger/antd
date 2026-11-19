@@ -110,7 +110,11 @@
     const reading = (event: Event) => Object.assign((event as CustomEvent).detail, read());
     const refs = (event: Event) => Object.assign((event as CustomEvent).detail, readRefs());
     node.addEventListener('labeltitleupdate', updating); node.addEventListener('labeltitleread', reading); node.addEventListener('surfacerefs', refs);
-    return () => { node.removeEventListener('labeltitleupdate', updating); node.removeEventListener('labeltitleread', reading); node.removeEventListener('surfacerefs', refs); };
+    return () => {
+      node.removeEventListener('labeltitleupdate', updating);
+      node.removeEventListener('labeltitleread', reading);
+      node.removeEventListener('surfacerefs', refs);
+    };
   }}></div>
 </section>
 <style>:global(body) { margin:0;min-width:2200px;min-height:1800px; }</style>

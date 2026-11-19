@@ -56,7 +56,10 @@
     badge={{ count: '5', dot: sample.dot, class: 'fixture-float-badge' }} />
   <FloatButtonGroup prefixCls={local ? sample.local : undefined} shape={sample.shape}
     placement={sample.placement} trigger={sample.menu ? 'click' : undefined} {open}
-    onOpenChange={value => { open = value; events.push(`open:${value}`); }}
+    onOpenChange={value => {
+      open = value;
+      events.push(`open:${value}`);
+    }}
     bind:nativeElement={groupElement} aria-label={`${scope} floating menu`}
     icon={icon} closeIcon={icon} class={`${prefix}-pure fixture-float-group`}
     items={sample.opaque ? undefined : [{ key: 'first', children: first },

@@ -56,7 +56,9 @@
     closable: info.closable, isMaxTag: info.isMaxTag, onCloseType: typeof info.onClose })}>
     <span data-tree-tag-label>{@render info.label()}</span>
     {#if info.closable}<button type="button" data-tree-tag-close={String(info.value)} aria-label={`Close ${info.value}`}
-      onmousedown={event => { if (sample.stopClose) { event.preventDefault(); event.stopPropagation(); } }}
+      onmousedown={event => {
+        if (sample.stopClose) { event.preventDefault(); event.stopPropagation(); }
+      }}
       onclick={event => {
         events = [...events, { kind: 'close', value: info.value }];
         info.onClose(event);
@@ -77,7 +79,10 @@
           treeDefaultExpandAll disabled={sample.disabled}
           value={sample.controlled ? value : undefined}
           defaultValue={sample.controlled ? undefined : treeTagValues(sample)}
-          open={opened} onOpenChange={open => { events = [...events, { kind: 'open', open }]; opened = open; }}
+          open={opened} onOpenChange={open => {
+            events = [...events, { kind: 'open', open }];
+            opened = open;
+          }}
           maxTagTextLength={length} maxTagCount={count} maxTagPlaceholder={customPlaceholder}
           tagRender={sample.renderer ? renderTag : undefined}
           treeTitleRender={sample.titleRenderer ? title : undefined}
@@ -88,8 +93,12 @@
               labels: labels === null ? null : labels.map(literal), triggerValue: extra.triggerValue }];
             if (sample.controlled === 'accept') value = next;
           }}
-          onSelect={(value, node) => { events = [...events, { kind: 'select', value, node: record(node) }]; }}
-          onDeselect={(value, node) => { events = [...events, { kind: 'deselect', value, node: record(node) }]; }}
+          onSelect={(value, node) => {
+            events = [...events, { kind: 'select', value, node: record(node) }];
+          }}
+          onDeselect={(value, node) => {
+            events = [...events, { kind: 'deselect', value, node: record(node) }];
+          }}
           onClear={() => { events = [...events, { kind: 'clear' }]; }} />{/if}
       </div>
     </form>

@@ -83,7 +83,9 @@
       const detail = (event as CustomEvent).detail;
       const field = fields.find(field => field.id === detail.id);
       if (!field) throw Error('Unknown textarea reset case');
-      Object.assign(detail, { read: () => read(field), readRefs: () => refs(field), dispose: () => { field.mounted = false; } });
+      Object.assign(detail, { read: () => read(field), readRefs: () => refs(field), dispose: () => {
+        field.mounted = false;
+      } });
     };
     node.addEventListener('textarearesetcapture', capture);
     return () => node.removeEventListener('textarearesetcapture', capture);

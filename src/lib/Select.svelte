@@ -2078,8 +2078,14 @@
                     style={initialRemoveStyle} {...selectStyleAttributes(semantics.styles.itemRemove)}
                     {@attach selectStyle(() => semantics.styles.itemRemove)}
                     aria-label={`${config.locale.removeText ?? ruRU.removeText} ${selectValueText(tag.label) || tag.value}`}
-                    onmousedown={event => { event.preventDefault(); event.stopPropagation(); }}
-                    onclick={event => { event.stopPropagation(); remove(tag.value, false); }}>{#if tagIcon.fallback}<span class={[`${prefix}-selection-item-remove`, semantics.classes.itemRemove].filter(Boolean).join(' ').split(/\s+/).map(name => name + '-icon').join(' ')}><RenderContent value={tagIcon.content} /></span>{:else}<RenderContent value={tagIcon.content} />{/if}</button>{/if}{/if}</span></div>{/each}{#if tagOverflow.omitted.length || responsiveTags && tags.length}{@const hidden = componentResponsive
+                    onmousedown={event => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                    }}
+                    onclick={event => {
+                      event.stopPropagation();
+                      remove(tag.value, false);
+                    }}>{#if tagIcon.fallback}<span class={[`${prefix}-selection-item-remove`, semantics.classes.itemRemove].filter(Boolean).join(' ').split(/\s+/).map(name => name + '-icon').join(' ')}><RenderContent value={tagIcon.content} /></span>{:else}<RenderContent value={tagIcon.content} />{/if}</button>{/if}{/if}</span></div>{/each}{#if tagOverflow.omitted.length || responsiveTags && tags.length}{@const hidden = componentResponsive
             ? !componentOverflow?.restReady || !tagOverflow.omitted.length : responsiveTags && !tagOverflow.omitted.length}{@const initialRestStyle = untrack(() => !renderTag ? serializeSelectStyle(semantics.styles.item) : undefined)}<div class={[`${prefix}-content-item`, `${prefix}-content-item-rest`]}
             style:opacity={hidden ? 0 : 1} style:height={hidden ? 0 : undefined}
             style:overflow-y={hidden ? 'hidden' : undefined}

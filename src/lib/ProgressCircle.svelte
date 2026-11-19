@@ -206,7 +206,9 @@
 {#if diameter <= 20}
   <Tooltip title={indicator ? tooltipTitle : undefined}
     getPopupContainer={config.getPopupContainer ? undefined : defaultTooltipContainer}
-    onOpenChange={(next) => { if (next) tooltipRendered = true; }}>
+    onOpenChange={(next) => {
+      if (next) tooltipRendered = true;
+    }}>
     {@render body()}
   </Tooltip>
 {:else}

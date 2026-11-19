@@ -91,7 +91,10 @@
   <div class="custom-calendar-full" data-type={info.type} data-prefix={info.prefixCls}>
     {@render info.originNode()}
     <small>{info.locale.cellDateFormat ?? 'raw'}</small>
-    <button type="button" onclick={event => { event.stopPropagation(); embedded++; }}>Cell action {value.format('YYYY-MM-DD')}</button>
+    <button type="button" onclick={event => {
+      event.stopPropagation();
+      embedded++;
+    }}>Cell action {value.format('YYYY-MM-DD')}</button>
     <input aria-label={`Cell note ${value.format('YYYY-MM-DD')}`} style="width:100%;min-width:0" />
   </div>
 {/snippet}
@@ -191,7 +194,9 @@
   <div class="custom-holder">
     <label><input type="checkbox" bind:checked={generatedMounted} /> Mount generated Calendar</label>
     <button type="button" onclick={() => { generatedValue = new Date('2025-01-31T23:45:12.345Z'); }}>Set generated Calendar date</button>
-    <button type="button" onclick={() => { generatedMode = generatedMode === 'month' ? 'year' : 'month'; }}>Set generated Calendar mode</button>
+    <button type="button" onclick={() => {
+      generatedMode = generatedMode === 'month' ? 'year' : 'month';
+    }}>Set generated Calendar mode</button>
     {#if generatedMounted}<CustomCalendar
       value={generatedValue}
       mode={generatedMode}

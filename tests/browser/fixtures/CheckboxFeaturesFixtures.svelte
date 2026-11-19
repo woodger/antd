@@ -118,7 +118,9 @@
       onchange={() => { changeBubbles++; }} onclick={() => { clickBubbles++; }}>
       {#if mounted}
         <div class="form-block">
-          <CheckboxGroup bind:value={() => owner, next => { if (!freeze) owner = next; }}
+          <CheckboxGroup bind:value={() => owner, next => {
+            if (!freeze) owner = next;
+          }}
             bind:nativeElement={groupElement} name="choices" aria-label="Source child checkboxes"
             {disabled} options={useOptions ? [
               {
@@ -155,7 +157,9 @@
           styles={styled ? { root: 'color:green', label: 'font-weight:bold' } : undefined}
           style={styled ? 'color:orange' : undefined}
           onCheckedChange={next => { soloEvents.push(`checked:${next}`); }}
-          onChange={event => { soloEvents.push(`source:${typeof event.target.value}:${event.target.value}:${event.target.checked}`); }}
+          onChange={event => {
+            soloEvents.push(`source:${typeof event.target.value}:${event.target.value}:${event.target.checked}`);
+          }}
           onchange={event => { soloEvents.push(`native:${event.currentTarget.value}`); }}
           onClick={() => { soloEvents.push('click'); }}
           onFocus={() => { inputEvents.push('source-focus'); }}

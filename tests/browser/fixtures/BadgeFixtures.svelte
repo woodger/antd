@@ -95,7 +95,9 @@
   <label>Badge overflow<input
     type="number"
     step="any"
-    bind:value={() => Number.isFinite(overflow) ? overflow : undefined, value => { overflow = value; }}
+    bind:value={() => Number.isFinite(overflow) ? overflow : undefined, value => {
+      overflow = value;
+    }}
   /></label>
   <label>Badge status<select bind:value={status}><option>none</option>{#each statuses as value}<option>{value}</option>{/each}</select></label>
   <label>Badge color<select bind:value={color}><option>none</option>{#each colors as value}<option>{value}</option>{/each}</select></label>

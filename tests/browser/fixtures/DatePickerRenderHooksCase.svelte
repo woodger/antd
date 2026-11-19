@@ -151,11 +151,17 @@
     <div style="margin-top:16px">
       <button type="button" data-control="enable" onclick={() => { enabled = true; }}>Enable hooks</button>
       {#each ['wrap', 'replace', 'empty-fragment', 'editable'] as strategy}
-        <button type="button" data-control={`cell-${strategy}`} onclick={() => { cellStrategy = strategy; }}>Cell {strategy}</button>
-        <button type="button" data-control={`panel-${strategy}`} onclick={() => { panelStrategy = strategy; }}>Panel {strategy}</button>
+        <button type="button" data-control={`cell-${strategy}`} onclick={() => {
+          cellStrategy = strategy;
+        }}>Cell {strategy}</button>
+        <button type="button" data-control={`panel-${strategy}`} onclick={() => {
+          panelStrategy = strategy;
+        }}>Panel {strategy}</button>
       {/each}
       {#each ['element', 'empty-fragment', 'absent'] as strategy}
-        <button type="button" data-control={`footer-${strategy}`} onclick={() => { footerStrategy = strategy; }}>Footer {strategy}</button>
+        <button type="button" data-control={`footer-${strategy}`} onclick={() => {
+          footerStrategy = strategy;
+        }}>Footer {strategy}</button>
       {/each}
       <button type="button" data-control="close" onclick={() => { open = false; }}>Close picker</button>
       <button type="button" data-control="reopen" onclick={() => { open = true; }}>Reopen picker</button>

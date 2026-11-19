@@ -87,7 +87,9 @@
       submits++;
     }}>
       {#if mounted}
-        <Switch bind:checked={() => checked, next => { if (!freeze) checked = next; }}
+        <Switch bind:checked={() => checked, next => {
+          if (!freeze) checked = next;
+        }}
           bind:ref bind:nativeElement bind:this={instance} {size} {loading} {disabled}
           name="enabled" aria-label="Source switch" autoFocus={autoFocus} tabIndex={2}
           checkedChildren={rich} unCheckedChildren={0}

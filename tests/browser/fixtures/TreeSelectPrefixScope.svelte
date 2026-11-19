@@ -67,7 +67,10 @@
     aria-label="Prefix choices" bind:nativeElement={root} bind:inputElement={editor}
     getPopupContainer={sample.portal ? () => target! : undefined}
     showSearch={{ filterTreeNode: false, onSearch: text => events.push(`search:${text}`) }}
-    onChange={next => { value = next; events.push(`change:${JSON.stringify(next)}`); }}
+    onChange={next => {
+      value = next;
+      events.push(`change:${JSON.stringify(next)}`);
+    }}
     onSelect={next => events.push(`select:${next}`)} />
 </form>
 <div bind:this={target} data-tree-select-prefix-portal></div>

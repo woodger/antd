@@ -537,12 +537,24 @@
       event.preventDefault();
     }
     if (alive) props.onMouseDown?.(event);
-  }} onclick={event => { if (alive) props.onClick?.(event); }}
-  onmouseup={event => { if (alive) props.onMouseUp?.(event); }}
-  onmouseleave={event => { if (alive) props.onMouseLeave?.(event); }}
-  onmousemove={event => { if (alive) props.onMouseMove?.(event); }}
-  onmouseenter={event => { if (alive) props.onMouseEnter?.(event); }}
-  onmouseout={event => { if (alive) props.onMouseOut?.(event); }}>
+  }} onclick={event => {
+    if (alive) props.onClick?.(event);
+  }}
+  onmouseup={event => {
+    if (alive) props.onMouseUp?.(event);
+  }}
+  onmouseleave={event => {
+    if (alive) props.onMouseLeave?.(event);
+  }}
+  onmousemove={event => {
+    if (alive) props.onMouseMove?.(event);
+  }}
+  onmouseenter={event => {
+    if (alive) props.onMouseEnter?.(event);
+  }}
+  onmouseout={event => {
+    if (alive) props.onMouseOut?.(event);
+  }}>
   {#if mode === 'spinner' && controls}{@render action('down')}{/if}
   {#if props.prefix !== undefined}
     <div class={[`${prefixCls}-prefix`, classes.prefix]} style={styles.prefix}>

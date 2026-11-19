@@ -458,7 +458,9 @@
               oninput={event => {
                 if (/^\d*$/.test(event.currentTarget.value)) quickText = event.currentTarget.value;
                 else event.currentTarget.value = quickText;
-              }} onkeyup={event => { if (event.key === 'Enter') quickJump(); }}
+              }} onkeyup={event => {
+                if (event.key === 'Enter') quickJump();
+              }}
               onblur={handleQuickBlur} />
             {strings.suffix}{#if goButton}
               {#if simple}

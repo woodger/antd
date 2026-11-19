@@ -179,7 +179,9 @@
         onValueChange={next => { events.push(`value:${next}`); }}
         onChange={event => { events.push(`change:${event.type}:${event.target.value}`); }}
         oninput={() => { events.push('input'); }}
-        onSearch={(next, event, info) => { events.push(`search:${info?.source}:${event?.type}:${next}`); }}
+        onSearch={(next, event, info) => {
+          events.push(`search:${info?.source}:${event?.type}:${next}`);
+        }}
         onPressEnter={() => { events.push('enter'); }}
         onClear={() => { events.push('clear'); }}
       />{/if}

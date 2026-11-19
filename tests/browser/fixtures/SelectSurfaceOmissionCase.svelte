@@ -172,7 +172,10 @@
 </script>
 
 {#snippet wrapped(origin: Snippet)}<div data-surface-popup="wrap" data-surface-omission-wrap
-  {@attach node => { wrapRef(node); return () => wrapRef(null); }}><header data-surface-header>Authored header</header>{@render origin()}<SelectSurfaceOmissionFooter
+  {@attach node => {
+    wrapRef(node);
+    return () => wrapRef(null);
+  }}><header data-surface-header>Authored header</header>{@render origin()}<SelectSurfaceOmissionFooter
     nextInstance={() => ++footerInstance} {trace} inputRef={footerRef} onInput={onFooterInput} /></div>{/snippet}
 
 <section data-surface-case={sample.id} data-parent-revision={unrelated} data-surface-bound={Boolean(control)}

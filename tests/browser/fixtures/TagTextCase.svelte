@@ -27,7 +27,10 @@
           name="tag-text" onValueChange={() => { changes += 1; }} />
       {:else}
         <Cascader {...componentProps} multiple value={paths}
-          onChange={next => { paths = next; changes += 1; }} />
+          onChange={next => {
+            paths = next;
+            changes += 1;
+          }} />
       {/if}
     </div>
   </form>

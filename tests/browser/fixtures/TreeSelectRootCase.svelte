@@ -84,7 +84,10 @@
       allowClear showSearch={{ onSearch: value => events.push(['search', value]) }} {prefix} {suffix}
       disabled={sample.disabled} defaultOpen={sample.defaultOpen} open={sample.controlled ? open : undefined}
       showAction={sample.showAction}
-      onOpenChange={next => { events.push(['open', next]); if (sample.controlled?.startsWith('accept-')) open = next; }}
+      onOpenChange={next => {
+        events.push(['open', next]);
+        if (sample.controlled?.startsWith('accept-')) open = next;
+      }}
       onChange={value => events.push(['change', value ?? null])}
       onFocus={event => record('generated', 'focus', event)} onBlur={event => record('generated', 'blur', event)}
       onMouseDown={event => record('generated', 'mouse-down', event)} onClick={event => record('generated', 'click', event)}

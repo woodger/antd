@@ -67,7 +67,10 @@
   <label><input type="checkbox" bind:checked={dark} /> Dark indicator Tabs</label>
   <label><input type="checkbox" bind:checked={compact} /> Compact indicator Tabs</label>
   <label><input type="checkbox" bind:checked={alternate} /> Replace scroll callback</label>
-  <button type="button" onclick={() => { scrolls = []; owners = []; }}>Clear indicator events</button>
+  <button type="button" onclick={() => {
+    scrolls = [];
+    owners = [];
+  }}>Clear indicator events</button>
   <input aria-label="Indicator outside" />
   <ConfigProvider direction={selected.direction === 'rtl' ? 'rtl' : 'ltr'}
     theme={{ mode: dark ? 'dark' : 'light', compact }}>

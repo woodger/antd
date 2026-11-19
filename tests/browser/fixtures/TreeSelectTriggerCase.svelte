@@ -54,14 +54,19 @@
       record('input-key', event);
       if (event.key === sample.inputPrevent) event.preventDefault();
       if (event.key === sample.inputStop) event.stopPropagation();
-    }} onKeyDown={event => { record('root-key', event); if (event.key === sample.rootPrevent) event.preventDefault(); }}
+    }} onKeyDown={event => {
+      record('root-key', event);
+      if (event.key === sample.rootPrevent) event.preventDefault();
+    }}
     onKeyUp={event => record('root-key-up', event)}
     onFocus={event => record('focus', event)} onBlur={event => record('blur', event)}
     onMouseDown={event => record('mouse-down', event)} onClick={event => record('click', event)}
     onMouseEnter={event => record('mouse-enter', event)} onMouseLeave={event => record('mouse-leave', event)}
     onkeydown={event => { nativeEvents = [...nativeEvents, `down:${event.key}:${event.currentTarget.tagName}`];
       if (event.key === sample.nativePrevent) event.preventDefault(); }}
-    onkeyup={event => { nativeEvents = [...nativeEvents, `up:${event.key}:${event.currentTarget.tagName}`]; }}
+    onkeyup={event => {
+      nativeEvents = [...nativeEvents, `up:${event.key}:${event.currentTarget.tagName}`];
+    }}
     onfocus={event => { nativeEvents = [...nativeEvents, `focus:${event.currentTarget.tagName}`]; }}
     onblur={event => { nativeEvents = [...nativeEvents, `blur:${event.currentTarget.tagName}`]; }}
   />{/if}

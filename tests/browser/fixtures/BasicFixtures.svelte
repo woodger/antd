@@ -24,7 +24,9 @@
 </style>
 
 <svelte:window
-  onkeydown={event => { if (kind === 'select' && event.key === 'F2') controls.toggleSelectDisabled(); }}
+  onkeydown={event => {
+    if (kind === 'select' && event.key === 'F2') controls.toggleSelectDisabled();
+  }}
 />
 
 {#if kind === 'input'}

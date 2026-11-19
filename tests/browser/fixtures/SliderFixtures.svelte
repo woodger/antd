@@ -113,7 +113,9 @@
       id="slider-native-form"
       bind:this={nativeForm}
       onsubmit={read}
-      onreset={(event) => { if (cancelReset) event.preventDefault(); }}
+      onreset={(event) => {
+        if (cancelReset) event.preventDefault();
+      }}
     >
       <label for="bound-slider">Bound Slider</label>
       <div class="slider-zone" class:vertical>
@@ -131,8 +133,12 @@
           style={vertical ? 'height: 180px' : undefined}
           onValueChange={(next) => changes.push(next)}
           onChangeComplete={(next) => completed.push(next)}
-          onkeydown={(event) => { if (cancelKeys) event.preventDefault(); }}
-          onpointerdown={(event) => { if (cancelPointer) event.preventDefault(); }}
+          onkeydown={(event) => {
+            if (cancelKeys) event.preventDefault();
+          }}
+          onpointerdown={(event) => {
+            if (cancelPointer) event.preventDefault();
+          }}
         />{/if}
       </div>
       <label for="default-slider">Default Slider</label>

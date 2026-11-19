@@ -34,7 +34,10 @@
     >A long line that should be truncated</TypographyText></div>
   <div data-prefix-part="actions"><TypographyParagraph {prefixCls} children={value}
     editable={{ tooltip: 'Edit', autoSize: false, maxLength: 30, enterIcon: null,
-      onChange: next => { value = next; events.push(`save:${next}`); },
+      onChange: next => {
+        value = next;
+        events.push(`save:${next}`);
+      },
       onCancel: () => events.push('cancel') }}
     copyable={{ text: 'Copied draft', tooltips: ['Copy', 'Copied'],
       onCopy: () => events.push('copy') }} /></div>

@@ -349,6 +349,9 @@
     const updated = (event: Event) => update((event as CustomEvent<SelectIconAction>).detail);
     const refs = (event: Event) => Object.assign((event as CustomEvent).detail, readRefs());
     element.addEventListener('selecticonsupdate', updated); element.addEventListener('surfacerefs', refs);
-    return () => { element.removeEventListener('selecticonsupdate', updated); element.removeEventListener('surfacerefs', refs); };
+    return () => {
+      element.removeEventListener('selecticonsupdate', updated);
+      element.removeEventListener('surfacerefs', refs);
+    };
   }}></div>
 </section>

@@ -35,7 +35,10 @@
           treeData={[{ value: 'a', title: 'Alpha' }, { value: 'b', title: 'Beta' }]}
           tokenSeparators={alternate ? alternateSplitter : originalSplitter}
           showSearch={{ searchValue: search, filterTreeNode: false,
-            onSearch: text => { search = text; record('search', text); } }}
+            onSearch: text => {
+              search = text;
+              record('search', text);
+            } }}
           onOpenChange={open => record('open', open)}
           onpaste={event => native('paste', event)}
           oncompositionstart={event => native('compositionstart', event)}
@@ -47,7 +50,10 @@
   <button type="button" onclick={() => { multiple = !multiple; }}>Toggle token mode</button>
   <button type="button" onclick={() => { alternate = !alternate; }}>Replace token splitter</button>
   <button type="button" onclick={() => model.setFieldValue('selected', 'a')}>Set token selection</button>
-  <button type="button" data-token-reset onclick={() => { search = ''; model.resetFields(); }}>Reset token field</button>
+  <button type="button" data-token-reset onclick={() => {
+    search = '';
+    model.resetFields();
+  }}>Reset token field</button>
   <button type="button" data-token-unmount onclick={() => { active = false; }}>Unmount token field</button>
   <button type="button" style="display:block;margin-top:320px">Outside token lifecycle</button>
   <output data-token-native-events>{JSON.stringify(nativeEvents)}</output>

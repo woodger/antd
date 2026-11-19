@@ -116,7 +116,10 @@
       const refs = (event: Event) => Object.assign((event as CustomEvent).detail, readRefs());
       node.addEventListener('inertapiupdate', change);
       node.addEventListener('inertapirefs', refs);
-      return () => { node.removeEventListener('inertapiupdate', change); node.removeEventListener('inertapirefs', refs); };
+      return () => {
+        node.removeEventListener('inertapiupdate', change);
+        node.removeEventListener('inertapirefs', refs);
+      };
     }}></div>
     <button type="button" style="display:block;margin-top:320px">Outside inert API</button>
   </div>

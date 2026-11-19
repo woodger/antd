@@ -66,23 +66,39 @@
   {#if initial === 'default-blur'}
     <Form {form}><FormItem name="choice" rules={[{ validator(value) { validatorCalls.push(value); } }]}>
       <Select {options} value={form.values.choice} aria-label="Regression value" allowClear={clear} showSearch={search}
-        onChange={value => { changes.push(value); form.setFieldValue('choice', value ?? ''); }}
+        onChange={value => {
+          changes.push(value);
+          form.setFieldValue('choice', value ?? '');
+        }}
         onClear={() => { clears++; }} {onBlur} />
     </FormItem></Form>
   {:else if autocomplete}
     <AutoComplete {options} value={completion} {open} onOpenChange={value => { open = value; }} bind:this={control}
       components={slot === 'root' ? { root } : { input }} aria-label="Regression value"
       allowClear={clear} suffix={() => suffix} showSearch={search} {onFocus}
-      onChange={value => { completion = value ?? ''; changes.push(value); }} onClear={() => { clears++; }} {onBlur} />
+      onChange={value => {
+        completion = value ?? '';
+        changes.push(value);
+      }} onClear={() => {
+        clears++;
+      }} {onBlur} />
   {:else if multiple}
     <Select {options} mode="multiple" value={values} bind:open bind:this={control}
       components={slot === 'root' ? { root } : { input }} aria-label="Regression value" showSearch={search}
-      onChange={value => { values = value; changes.push(value); }} onDeselect={value => { deselections.push(value); }} {onBlur} />
+      onChange={value => {
+        values = value;
+        changes.push(value);
+      }} onDeselect={value => {
+        deselections.push(value);
+      }} {onBlur} />
   {:else}
     <Select {options} value={single} bind:open bind:this={control}
       components={slot === 'root' ? { root } : { input }} aria-label="Regression value"
       allowClear={clear} suffix={() => suffix} showSearch={search} {onFocus}
-      onChange={value => { single = value; changes.push(value); }} onClear={() => { clears++; }} {onBlur} />
+      onChange={value => {
+        single = value;
+        changes.push(value);
+      }} onClear={() => { clears++; }} {onBlur} />
   {/if}
   <button type="button" data-component-regression-outside>Outside</button>
 </section>

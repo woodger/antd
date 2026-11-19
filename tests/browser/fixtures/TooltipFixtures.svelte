@@ -100,7 +100,9 @@
       title="Moving description"
       placement="bottom"
     ><Button>Scrolling Tooltip trigger</Button></Tooltip></div></div>
-    <button onclick={() => { if (scroller) scroller.scrollTop += 30; }}>Scroll Tooltip container</button>
+    <button onclick={() => {
+      if (scroller) scroller.scrollTop += 30;
+    }}>Scroll Tooltip container</button>
     <label>Slider Tooltip mode <select bind:value={sliderMode}><option value="auto">Auto</option><option
       value="forced"
     >Forced</option><option

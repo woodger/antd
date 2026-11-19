@@ -110,7 +110,10 @@
   <button onclick={() => { off = !off; }}>Toggle motion</button>
   <button onclick={() => { motionEnabled = !motionEnabled; }}>Toggle theme motion</button>
   <button onclick={() => { data = treeMotionData(sample.children); }}>Replace data</button>
-  <button onclick={() => { prefix = 'updated'; localPrefix = 'fresh-tree'; }}>Update prefix</button>
+  <button onclick={() => {
+    prefix = 'updated';
+    localPrefix = 'fresh-tree';
+  }}>Update prefix</button>
   <button onclick={() => { rtl = !rtl; }}>Toggle direction</button>
   <button onclick={() => tree?.focus()}>Focus tree</button>
   <output data-tree-motion-events>{JSON.stringify(events)}</output>

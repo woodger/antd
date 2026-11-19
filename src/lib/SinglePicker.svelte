@@ -1189,7 +1189,9 @@
       onpaste={event => {
         if (!maskInput.paste(event)) attributes.onpaste?.call(event.currentTarget, event);
       }}
-      onclick={() => { if (!time) requestOpen(true); }} onkeydown={keyboard} onfocus={event => {
+      onclick={() => {
+        if (!time) requestOpen(true);
+      }} onkeydown={keyboard} onfocus={event => {
           maskInput.focus();
           focused = true;
           if (time) timeInteraction.trigger(0, 'field-switch');

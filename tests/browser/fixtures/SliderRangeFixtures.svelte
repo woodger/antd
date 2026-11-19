@@ -84,8 +84,12 @@
             pushable={push || false} disabled={disableMiddle ? [false, true, false] : undefined}
             marks={marks ? { 0: 'Cold', 25: { label: 'Warm', style: 'color:red' }, 100: 'Hot' } : undefined}
             {dots} tooltip={tooltip ? { open: true, formatter: point => `${point}%` } : false}
-            {keyboard} onkeydown={event => { if (cancelKeys) event.preventDefault(); }}
-            onpointerdown={event => { if (cancelPointer) event.preventDefault(); }}
+            {keyboard} onkeydown={event => {
+              if (cancelKeys) event.preventDefault();
+            }}
+            onpointerdown={event => {
+              if (cancelPointer) event.preventDefault();
+            }}
             ariaLabelForHandle={['Range start', 'Range middle', 'Range end']}
             onChange={next => record('change', next)}
             onChangeComplete={next => record('complete', next)} />

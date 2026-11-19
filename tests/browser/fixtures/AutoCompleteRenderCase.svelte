@@ -345,12 +345,24 @@
 {#snippet child(context: AutoCompleteInput)}
   {#if initial.input === 'textarea'}<textarea {...context.attributes} data-ac-render-child="textarea" aria-label="Surface value"
     class="ac-render-child" style="color:rgb(9,31,57);font-size:15px" rows="2" use:childRegistration={context.register}
-    oninput={input => { childChange(input); context.attributes.oninput(input); }}
-    onkeydown={input => { childKey(input); context.attributes.onkeydown(input); }}></textarea>
+    oninput={input => {
+      childChange(input);
+      context.attributes.oninput(input);
+    }}
+    onkeydown={input => {
+      childKey(input);
+      context.attributes.onkeydown(input);
+    }}></textarea>
   {:else}<input {...context.attributes} data-ac-render-child="input" aria-label="Surface value"
     class="ac-render-child" style="color:rgb(9,31,57);font-size:15px" use:childRegistration={context.register}
-    oninput={input => { childChange(input); context.attributes.oninput(input); }}
-    onkeydown={input => { childKey(input); context.attributes.onkeydown(input); }} />{/if}
+    oninput={input => {
+      childChange(input);
+      context.attributes.oninput(input);
+    }}
+    onkeydown={input => {
+      childKey(input);
+      context.attributes.onkeydown(input);
+    }} />{/if}
 {/snippet}
 
 <section data-surface-case={initial.id} data-surface-bound={Boolean(control)} style="font-family:initial;font-size:16px;line-height:normal">
@@ -364,7 +376,11 @@
     const reading = (event: Event) => Object.assign((event as CustomEvent).detail, read());
     const refs = (event: Event) => Object.assign((event as CustomEvent).detail, readRefs());
     node.addEventListener('acrenderupdate', updating); node.addEventListener('acrenderread', reading); node.addEventListener('surfacerefs', refs);
-    return () => { node.removeEventListener('acrenderupdate', updating); node.removeEventListener('acrenderread', reading); node.removeEventListener('surfacerefs', refs); };
+    return () => {
+      node.removeEventListener('acrenderupdate', updating);
+      node.removeEventListener('acrenderread', reading);
+      node.removeEventListener('surfacerefs', refs);
+    };
   }}></div>
 </section>
 

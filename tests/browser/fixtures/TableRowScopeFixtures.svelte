@@ -61,7 +61,9 @@
         <Table {columns} dataSource={rows} size="medium" rowSelection pagination={false}
           rowHoverable={!current.name.includes('no-hover')} showHeader={current.name !== 'no-header'}
           scroll={current.name.startsWith('fixed') ? { x: 600 } : undefined}
-          expandable={expandable ? { expandedRowRender: details, expandedRowKeys: expandedKeys, onExpandedRowsChange: keys => { expandedKeys = keys; } } : undefined}
+          expandable={expandable ? { expandedRowRender: details, expandedRowKeys: expandedKeys, onExpandedRowsChange: keys => {
+            expandedKeys = keys;
+          } } : undefined}
           bind:selectedRowKeys={() => selection, value => { selectedKeys = value; }}
           bind:sorter={() => sorter, value => { sorterState = value; }}
           onChange={change => events.push(change.action)}

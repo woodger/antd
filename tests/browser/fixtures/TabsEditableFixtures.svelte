@@ -125,7 +125,10 @@
   </ConfigProvider>
   <ConfigProvider theme={{ mode: dark ? 'dark' : 'light', compact }}
     componentDisabled={disabled} direction={rtl ? 'rtl' : 'ltr'}>
-    <form onsubmit={event => { event.preventDefault(); submissions += 1; }}>
+    <form onsubmit={event => {
+      event.preventDefault();
+      submissions += 1;
+    }}>
       <div class="stage">
         {#if mounted}
           <Tabs id="tabs-editable-main" aria-label="Owned editable Tabs" {items} {type}

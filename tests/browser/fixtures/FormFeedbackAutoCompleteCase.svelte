@@ -75,7 +75,10 @@
       disabled={sample.disabled} size={sample.size} allowClear={sample.clear} style="width:320px"
       open={sample.controlledOpen ? true : undefined}
       options={[{ value: 'Alpha' }, { value: 'Beta' }]} value={model.values.node}
-      onChange={value => { events.push(['change', value === undefined ? 'undefined' : value]); model.setFieldValue('node', value ?? ''); }}
+      onChange={value => {
+        events.push(['change', value === undefined ? 'undefined' : value]);
+        model.setFieldValue('node', value ?? '');
+      }}
       onOpenChange={value => events.push(['open', value])} onClear={() => events.push(['clear'])}
       showSearch={{ onSearch: value => events.push(['search', value]) }}
       children={sample.input ? customInput : undefined} />

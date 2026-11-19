@@ -92,7 +92,10 @@
     form.resetFields(['concealed']);
     void inspect('reset-hidden');
   }}>Reset hidden field</button>
-  <button type="button" onclick={() => { hidden = false; void inspect('shown'); }}>Show hidden field</button>
+  <button type="button" onclick={() => {
+    hidden = false;
+    void inspect('shown');
+  }}>Show hidden field</button>
   <button type="button" onclick={validateHidden}>Validate hidden field</button>
   <button type="button" onclick={revealInvalid}>Reveal invalid field</button>
   <label>Hidden layout

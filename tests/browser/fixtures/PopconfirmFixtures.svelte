@@ -143,8 +143,12 @@
             onCancel={() => { cancelled++; }}
             onError={() => { errors++; }}
             onOpenChange={(next) => changes.push(next)}
-            okButtonProps={{ danger, onclick: (event) => { if (cancelClicks) event.preventDefault(); } }}
-            cancelButtonProps={{ onclick: (event) => { if (cancelClicks) event.preventDefault(); } }}
+            okButtonProps={{ danger, onclick: (event) => {
+              if (cancelClicks) event.preventDefault();
+            } }}
+            cancelButtonProps={{ onclick: (event) => {
+              if (cancelClicks) event.preventDefault();
+            } }}
           >
             {#if replaced}<Button>Replacement Popconfirm trigger</Button>{:else}<Button
               aria-describedby="popconfirm-owner-help"

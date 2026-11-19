@@ -176,7 +176,9 @@
     <button type="button" onclick={() => {
       value = [dayjs.utc('2025-02-28T18:45:56.789Z'), dayjs.utc('2025-03-01T19:20:30.123Z')];
     }}>Set external interval</button>
-    <button type="button" onclick={() => { if (value) value = [...value]; }}>Replace interval array</button>
+    <button type="button" onclick={() => {
+      if (value) value = [...value];
+    }}>Replace interval array</button>
     <button type="button" onclick={() => {
       localPrefix = localPrefix === 'project-picker' ? 'suite-picker' : 'project-picker';
     }}>Toggle interval prefix</button>

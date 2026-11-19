@@ -16,4 +16,7 @@
 <div data-surface-omission-footer data-footer-instance={instance}><label for="surface-omission-footer-note">Footer note</label><input
   id="surface-omission-footer-note" data-surface-footer-input aria-label="Footer note" defaultValue=""
   oninput={event => onInput(event.currentTarget.value)}
-  {@attach node => { inputRef(node); return () => inputRef(null); }} /></div>
+  {@attach node => {
+    inputRef(node);
+    return () => inputRef(null);
+  }} /></div>

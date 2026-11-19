@@ -105,7 +105,10 @@
     const onRefs = (event: Event) => Object.assign((event as CustomEvent).detail, readRefs());
     node.addEventListener('virtualupdate', onUpdate);
     node.addEventListener('virtualrefs', onRefs);
-    return () => { node.removeEventListener('virtualupdate', onUpdate); node.removeEventListener('virtualrefs', onRefs); };
+    return () => {
+      node.removeEventListener('virtualupdate', onUpdate);
+      node.removeEventListener('virtualrefs', onRefs);
+    };
   }}></div>
 </section>
 

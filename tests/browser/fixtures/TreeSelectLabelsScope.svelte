@@ -109,10 +109,17 @@
         maxTagCount={sample.count ?? 0} maxTagTextLength={1} maxTagPlaceholder={placeholder}
         tagRender={sample.customTag ? tag : undefined} treeTitleRender={titleRenderer}
         bind:nativeElement={root} bind:inputElement={editor}
-        onOpenChange={open => { events = [...events, { kind: 'open', open }]; opened = open; }}
+        onOpenChange={open => {
+          events = [...events, { kind: 'open', open }];
+          opened = open;
+        }}
         onChange={(next, labels, extra) => change(next, labels, extra.triggerValue)}
-        onSelect={(value, node) => { events = [...events, { kind: 'select', value, node: record(node) }]; }}
-        onDeselect={(value, node) => { events = [...events, { kind: 'deselect', value, node: record(node) }]; }}
+        onSelect={(value, node) => {
+          events = [...events, { kind: 'select', value, node: record(node) }];
+        }}
+        onDeselect={(value, node) => {
+          events = [...events, { kind: 'deselect', value, node: record(node) }];
+        }}
         onClear={() => { events = [...events, { kind: 'clear' }]; }} />{/if}
     </div>
   </form>
@@ -127,7 +134,10 @@
 <button onclick={() => { data = treeLabelData(sample, false, true); }}>Remove renderer data</button>
 <button onclick={() => { version = 'New'; }}>Update title renderer</button>
 <button onclick={() => { enabled = false; }}>Remove title renderer</button>
-<button onclick={() => { data = treeLabelData(sample, true); version = 'New'; }}>Update renderer and data</button>
+<button onclick={() => {
+  data = treeLabelData(sample, true);
+  version = 'New';
+}}>Update renderer and data</button>
 <button onclick={() => { mounted = false; }}>Unmount renderer selection</button>
 <button onclick={() => { showHistory = !showHistory; }}>Toggle returned labels</button>
 <input aria-label="Outside renderer draft" />

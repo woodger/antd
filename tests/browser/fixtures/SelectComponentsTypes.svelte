@@ -51,7 +51,9 @@
     const owner: string | undefined = records[0]?.audit.owner;
     void [payload, owner];
   }} />
-<CustomCompletion options={completions} value={completionValue} onChange={value => { completionValue = value ?? ''; }}
+<CustomCompletion options={completions} value={completionValue} onChange={value => {
+  completionValue = value ?? '';
+}}
   components={{ root: { render: buttonRoot, props: { type: 'button' } },
     input: { render: textareaInput, props: editorProps } }}
   bind:nativeElement={completionRoot} bind:inputElement={completionEditor}
@@ -63,7 +65,10 @@
 <Select {options} components={{ root: inputRootSnippet }} bind:nativeElement={inputRoot} />
 <AutoComplete options={completions} components={{ input: textareaInput }} bind:inputElement={completionEditor} />
 <TextareaSelect {options} components={{ input: { element: 'textarea', props: editorProps,
-  ref: node => { const textarea: HTMLTextAreaElement | null = node; void textarea; } } }} />
+  ref: node => {
+    const textarea: HTMLTextAreaElement | null = node;
+    void textarea;
+  } } }} />
 <AutoComplete options={completions} components={{ root: 'button', input: 'textarea' }} />
 <Select {options} bind:nativeElement={defaultRoot} bind:inputElement={defaultInput} />
 <AutoComplete options={completions} bind:nativeElement={defaultRoot} bind:inputElement={defaultCompletionInput} />

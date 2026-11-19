@@ -152,7 +152,9 @@
   `${prefixCls}-${component}`, className, classNames.root, 'ant-typography-css-var',
   config.theme.compact && 'ant-typography-compact']}
   style={[componentTheme.style, styles.root, style].filter(Boolean).join(';')}>
-  <TextArea value={current} onChange={event => { current = typographyEditValue(event.target.value); }}
+  <TextArea value={current} onChange={event => {
+    current = typographyEditValue(event.target.value);
+  }}
     onKeyDown={handleKeyDown} onkeyup={handleKeyUp} onBlur={handleBlur}
     onCompositionStart={() => { composing = true; }} onCompositionEnd={() => { composing = false; }}
     {maxLength} {autoSize} rows={1} dir={direction} class={classNames.textarea} style={styles.textarea}

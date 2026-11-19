@@ -123,7 +123,10 @@
     const reading = (event: Event) => Object.assign((event as CustomEvent).detail, read());
     const refs = (event: Event) => Object.assign((event as CustomEvent).detail, readRefs());
     node.addEventListener('surfaceread', reading); node.addEventListener('surfacerefs', refs);
-    return () => { node.removeEventListener('surfaceread', reading); node.removeEventListener('surfacerefs', refs); };
+    return () => {
+      node.removeEventListener('surfaceread', reading);
+      node.removeEventListener('surfacerefs', refs);
+    };
   }}></div>
 </section>
 

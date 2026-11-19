@@ -252,7 +252,9 @@
             <li role={cellRender ? 'presentation' : undefined}
               data-picker-time-value={item} data-picker-time-label={label}
               data-picker-time-disabled={unavailable}
-              onclick={cellRender ? () => { if (!unavailable) onSelect(value.set(column.unit, item)); } : undefined}
+              onclick={cellRender ? () => {
+                if (!unavailable) onSelect(value.set(column.unit, item));
+              } : undefined}
               onkeydown={cellRender ? cellKeyboard : undefined}
               onmouseenter={onHover && (() => onHover?.(timePickerColumnDate(value, selectedValue, column.unit, item)))} onmouseleave={onHover && (() => onHover?.(null))} data-picker-time-cell-selected={selectedValue?.get(column.unit) === item || undefined} class={[
                 `${prefixCls}-time-panel-cell`,
@@ -283,7 +285,9 @@
           <li role={cellRender ? 'presentation' : undefined}
             data-picker-time-value={hour ? 'pm' : 'am'} data-picker-time-label={meridiemLabel(hour)}
             data-picker-time-disabled={unavailable}
-            onclick={cellRender ? () => { if (!unavailable) onSelect(value.hour(value.hour() % 12 + hour)); } : undefined}
+            onclick={cellRender ? () => {
+              if (!unavailable) onSelect(value.hour(value.hour() % 12 + hour));
+            } : undefined}
             onkeydown={cellRender ? cellKeyboard : undefined}
             onmouseenter={onHover && (() => onHover?.(timePickerColumnDate(value, selectedValue, 'meridiem', hour === 0 ? 'am' : 'pm')))} onmouseleave={onHover && (() => onHover?.(null))} data-picker-time-cell-selected={!!selectedValue && (selectedValue.hour() < 12) === (hour === 0) || undefined} class={[
               `${prefixCls}-time-panel-cell`,

@@ -56,8 +56,14 @@
     <!-- Owner commands remain reachable while the multiple popup is open. -->
     <div style="position:fixed;right:16px;top:120px;display:grid;gap:8px">
       <button type="button" onclick={() => revision += 1}>Unrelated revision</button>
-      <button type="button" onclick={() => { relabeled = true; revision += 1; }}>Relabel options</button>
-      <button type="button" onclick={() => { controlledValue = undefined; revision += 1; }}>Clear controlled owner</button>
+      <button type="button" onclick={() => {
+        relabeled = true;
+        revision += 1;
+      }}>Relabel options</button>
+      <button type="button" onclick={() => {
+        controlledValue = undefined;
+        revision += 1;
+      }}>Clear controlled owner</button>
     </div>
     <output aria-label="Single changes">{JSON.stringify(singleChanges)}</output>
     <output aria-label="Multiple changes">{JSON.stringify(multipleChanges)}</output>

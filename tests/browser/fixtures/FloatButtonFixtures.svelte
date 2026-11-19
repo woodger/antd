@@ -161,7 +161,9 @@
     ><div
       style="height:700px"
     >Scroll target</div></div>
-    <button type="button" onclick={() => { if (scrollArea) scrollArea.scrollTop = 280; }}>Scroll floating target</button>
+    <button type="button" onclick={() => {
+      if (scrollArea) scrollArea.scrollTop = 280;
+    }}>Scroll floating target</button>
     <FloatButtonBackTop
       id="fixture-back-top"
       aria-label="Back to top"

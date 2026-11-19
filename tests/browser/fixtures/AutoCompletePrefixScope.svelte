@@ -51,7 +51,10 @@
     bind:nativeElement={root} bind:inputElement={editor}
     getPopupContainer={sample.portal ? () => target! : undefined}
     showSearch={{ filterOption: false, onSearch: text => events.push(`search:${text}`) }}
-    onChange={next => { value = next; events.push(`change:${next ?? ''}`); }}
+    onChange={next => {
+      value = next;
+      events.push(`change:${next ?? ''}`);
+    }}
     onSelect={next => events.push(`select:${next}`)} />
 </form>
 <div bind:this={target} data-auto-complete-prefix-portal></div>

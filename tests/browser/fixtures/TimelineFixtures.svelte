@@ -25,7 +25,9 @@
     ...(waiting ? [{ key: 'waiting', content: 'Waiting', loading: true }] : [])
   ]);
 </script>
-<svelte:window onkeydown={event => { if (event.key === 'F4') reverse = !reverse; }} />
+<svelte:window onkeydown={event => {
+  if (event.key === 'F4') reverse = !reverse;
+}} />
 {#snippet draft()}<label>Timeline draft <input
   aria-label="Timeline draft"
   name="timeline-draft"

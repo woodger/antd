@@ -121,7 +121,10 @@
     const onUpdate = (event: Event) => update((event as CustomEvent<Parameters<typeof update>[0]>).detail);
     node.addEventListener('fixtureupdate', onCommand);
     node.addEventListener('suffixlayoutupdate', onUpdate);
-    return () => { node.removeEventListener('fixtureupdate', onCommand); node.removeEventListener('suffixlayoutupdate', onUpdate); };
+    return () => {
+      node.removeEventListener('fixtureupdate', onCommand);
+      node.removeEventListener('suffixlayoutupdate', onUpdate);
+    };
   }}></div>
   <button type="button" style="display:block;margin-top:320px">Outside suffix layout</button>
 </div>

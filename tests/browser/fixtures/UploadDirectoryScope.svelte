@@ -46,7 +46,10 @@
     <button type="button">Upload directory</button>
   </Upload>
 {/if}
-<button type="button" onclick={() => { before = []; changes = []; }}>Clear directory events</button>
+<button type="button" onclick={() => {
+  before = [];
+  changes = [];
+}}>Clear directory events</button>
 <output aria-label="Directory before">{JSON.stringify(before)}</output>
 <output aria-label="Directory changes">{JSON.stringify(changes)}</output>
 <output aria-label="Directory refs">{Boolean(root && input)}</output>

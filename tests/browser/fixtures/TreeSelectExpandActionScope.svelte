@@ -90,7 +90,10 @@
     </div>
   </ConfigProvider>
   <button onclick={() => { action = 'click'; }}>Enable title expansion</button>
-  <button onclick={() => { loaded = true; resolve?.(); }}>Resolve title load</button>
+  <button onclick={() => {
+    loaded = true;
+    resolve?.();
+  }}>Resolve title load</button>
   <button onclick={() => { mounted = false; }}>Unmount title control</button>
   <input aria-label="Title expansion outside draft" />
   <output data-tree-select-expand-events>{JSON.stringify(events)}</output>

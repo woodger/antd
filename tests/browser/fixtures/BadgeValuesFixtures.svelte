@@ -12,7 +12,10 @@
 <section id="badge-values-fixture">
   <h2>Badge scalar text, CSS offsets and size alias</h2>
   <label>Badge values reference <select aria-label="Badge values reference" bind:value={name}
-    onchange={() => { changed = false; mounted = true; }}>
+    onchange={() => {
+      changed = false;
+      mounted = true;
+    }}>
     {#each reference.cases as sample}<option value={sample.name}>{sample.name}</option>{/each}
   </select></label>
   <button type="button" onclick={() => changed = !changed}>Change badge value props</button>

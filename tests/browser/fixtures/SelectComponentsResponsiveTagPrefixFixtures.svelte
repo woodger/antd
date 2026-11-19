@@ -11,13 +11,17 @@
   });
 </script>
 <section id="select-components-responsive-tag-prefix-fixture">
-  <label style="position:fixed;left:0;top:0;z-index:1">Responsive custom tag/prefix sample<select bind:value={selected} onchange={() => { mounted = true; }}>
+  <label style="position:fixed;left:0;top:0;z-index:1">Responsive custom tag/prefix sample<select bind:value={selected} onchange={() => {
+    mounted = true;
+  }}>
     {#each selectCustomTagPrefixSamples as sample}<option value={sample.id}>{sample.id}</option>{/each}
   </select></label>
   {#if mounted}{#key selected}{@const current = sample}<Case sample={untrack(() => current)} {capture} />{/key}{/if}
   <div hidden data-select-components-fixture-command {@attach element => {
     const captured = (event: Event) => Object.assign((event as CustomEvent).detail,
-      { read: capture.read, readRefs: capture.readRefs, update: capture.update, dispose: () => { mounted = false; } });
+      { read: capture.read, readRefs: capture.readRefs, update: capture.update, dispose: () => {
+        mounted = false;
+      } });
     element.addEventListener('selectcomponentscapture', captured);
     return () => element.removeEventListener('selectcomponentscapture', captured);
   }}></div>

@@ -144,7 +144,9 @@
         firstClickEnabled = !option.disabled;
         if (firstClickEnabled) onChange(option.value);
       }}
-      ondblclick={() => { if (!option.disabled) onDblClick?.(); }}
+      ondblclick={() => {
+        if (!option.disabled) onDblClick?.();
+      }}
       onmouseenter={() => onHover?.(option.value)}
       onmouseleave={() => onHover?.(null)}
       onkeydown={handleKeydown}

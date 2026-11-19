@@ -92,9 +92,14 @@
   } : undefined}>
     <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions (Фикстура считает всплывающие clicks, не добавляя интерактивность форме.) -->
     <form id="source-radio-form" onchange={() => { changeEvents++; }}
-      onclick={() => { clickEvents++; }} onsubmit={event => { event.preventDefault(); submits++; }}>
+      onclick={() => { clickEvents++; }} onsubmit={event => {
+        event.preventDefault();
+        submits++;
+      }}>
       {#if mounted}
-        <RadioGroup bind:value={() => value, next => { if (!freeze) value = next; }}
+        <RadioGroup bind:value={() => value, next => {
+          if (!freeze) value = next;
+        }}
           bind:nativeElement={groupElement} name="source" aria-label="Source radio options"
           {vertical} orientation={orientation === 'inherit' ? undefined : orientation}
           {optionType} {disabled} options={[
@@ -109,7 +114,9 @@
             if (removeOnChange) flushSync(() => { mounted = false; });
           }}
           onValueChange={next => { events.push(`value:${typeof next}:${next}`); }}
-          onFocus={event => { focusEvents.push(`focus:${event.target instanceof HTMLInputElement}`); }}
+          onFocus={event => {
+            focusEvents.push(`focus:${event.target instanceof HTMLInputElement}`);
+          }}
           onBlur={event => { focusEvents.push(`blur:${event.target instanceof HTMLInputElement}`); }} />
         <RadioButton bind:this={instance} bind:checked bind:ref bind:nativeElement bind:inputElement
           value={false} name="standalone" autoFocus={autofocus} tabIndex={2}
@@ -117,7 +124,9 @@
           styles={styled ? { root: 'color:green', label: 'font-weight:bold' } : undefined}
           style={styled ? 'color:orange' : undefined}
           onCheckedChange={next => { standaloneEvents.push(`checked:${next}`); }}
-          onChange={event => { standaloneEvents.push(`change:${typeof event.target.value}:${event.target.value}`); }}
+          onChange={event => {
+            standaloneEvents.push(`change:${typeof event.target.value}:${event.target.value}`);
+          }}
           onchange={event => { standaloneEvents.push(`native:${event.currentTarget.value}`); }}
           onClick={() => { standaloneEvents.push('click'); }}
           onKeyDown={event => { keyEvents.push(`source-key:${event.key}`); }}

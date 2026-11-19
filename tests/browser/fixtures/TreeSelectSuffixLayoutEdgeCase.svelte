@@ -41,7 +41,10 @@
       treeData={[{ value: 'a', title: 'One' }, { value: 'b', title: 'Two' }, { value: 'c', title: 'Three' }, { value: 'd', title: 'Four' }]}
       showSearch={{ filterTreeNode: false, onSearch: text => record('search', text) }}
       onOpenChange={open => record('open', open)} onFocus={() => record('focus')} onBlur={() => record('blur')}
-      onChange={next => { values = next; record('change', next); }}
+      onChange={next => {
+        values = next;
+        record('change', next);
+      }}
       bind:nativeElement={root} bind:inputElement={editor} />
   </ConfigProvider>
   <output hidden data-suffix-edge-model>{JSON.stringify(values)}</output>

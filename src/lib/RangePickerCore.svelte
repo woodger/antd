@@ -1464,7 +1464,9 @@
       {@attach maskInputs[0].attach}
       class={semantic?.classes.input} style={semantic?.styles.input} size={timeInputSize}
       data-range={time ? 'start' : undefined}
-      oninput={event => { if (!maskInputs[0].nativeInput(event)) inputChange(0, event.currentTarget.value); }}
+      oninput={event => {
+        if (!maskInputs[0].nativeInput(event)) inputChange(0, event.currentTarget.value);
+      }}
       onmousedown={event => {
         maskInputs[0].mousedown();
         attributes.onmousedown?.call(event.currentTarget, event);
@@ -1483,7 +1485,10 @@
             focusField(0, true);
             if (time) (time.onfocus ?? time.onFocus)?.(event, { range: 'start' });
             else onfocus?.(event);
-          }} onblur={event => { maskInputs[0].blur(); blurInput(0, event); }} onkeydown={event => keyboard(event, 0)} />
+          }} onblur={event => {
+            maskInputs[0].blur();
+            blurInput(0, event);
+          }} onkeydown={event => keyboard(event, 0)} />
   </div>
   <div class={`${prefix}-range-separator`}>{#if !time && typeof resolvedSeparator === 'function'}{@render resolvedSeparator()}{:else}<span class={`${prefix}-separator`} aria-hidden={time && resolvedSeparator !== undefined ? undefined : 'true'}>{#if typeof resolvedSeparator === 'function'}{@render resolvedSeparator()}{:else if resolvedSeparator !== undefined}{resolvedSeparator}{:else}<PickerRangeSeparator />{/if}</span>{/if}</div>
   <div class={[
@@ -1506,7 +1511,9 @@
       {@attach maskInputs[1].attach}
       class={semantic?.classes.input} style={semantic?.styles.input} size={timeInputSize}
       data-range={time ? 'end' : undefined}
-      oninput={event => { if (!maskInputs[1].nativeInput(event)) inputChange(1, event.currentTarget.value); }}
+      oninput={event => {
+        if (!maskInputs[1].nativeInput(event)) inputChange(1, event.currentTarget.value);
+      }}
       onmousedown={event => {
         maskInputs[1].mousedown();
         attributes.onmousedown?.call(event.currentTarget, event);
@@ -1525,7 +1532,10 @@
             focusField(1, true);
             if (time) (time.onfocus ?? time.onFocus)?.(event, { range: 'end' });
             else onfocus?.(event);
-          }} onblur={event => { maskInputs[1].blur(); blurInput(1, event); }} onkeydown={event => keyboard(event, 1)} />
+          }} onblur={event => {
+            maskInputs[1].blur();
+            blurInput(1, event);
+          }} onkeydown={event => keyboard(event, 1)} />
   </div>
   <div class={`${prefix}-active-bar`} style={`position:absolute;left:${bar.left}px;width:${bar.width}px`}></div>
   {#if suffixContent !== false && suffixContent !== null && suffixContent !== ''}

@@ -106,7 +106,9 @@
     onclick={() => { options = []; }}
   >Empty mentions options</button><button
     type="button"
-    onclick={() => { options = [{ value: 'alice', label: 'Alice' }, { value: 'bob', label: rich }]; }}
+    onclick={() => {
+      options = [{ value: 'alice', label: 'Alice' }, { value: 'bob', label: rich }];
+    }}
   >Restore mentions options</button><button
     type="button"
     onclick={() => instance?.focus()}

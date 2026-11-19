@@ -15,7 +15,10 @@
 <section id="badge-api-fixture">
   <h2>Badge component configuration</h2>
   <label>Badge API reference <select aria-label="Badge API reference" bind:value={name}
-    onchange={() => { changed = false; mounted = true; }}>
+    onchange={() => {
+      changed = false;
+      mounted = true;
+    }}>
     {#each reference.cases as sample}<option value={sample.name}>{sample.name}</option>{/each}
   </select></label>
   <label><input type="checkbox" bind:checked={interactive} /> Interactive API count</label>

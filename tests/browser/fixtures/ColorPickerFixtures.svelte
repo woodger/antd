@@ -96,7 +96,10 @@
   <button type="button" onclick={() => { value = '#ff000080'; }}>Set alpha owner</button>
   <ConfigProvider theme={{ mode: dark ? 'dark' : 'light', compact }}
     colorPicker={{ class: 'configured-color', classNames: { body: 'configured-color-body' } }}>
-    <form class="frame" onsubmit={event => { event.preventDefault(); submits++; }}>
+    <form class="frame" onsubmit={event => {
+      event.preventDefault();
+      submits++;
+    }}>
       {#if mounted}
         <ColorPicker value={controlled ? value : undefined} defaultValue="#1677ff"
           open={controlOpen ? openOwner : undefined}
@@ -111,7 +114,9 @@
             { key: 'gradients', label: 'Gradients', defaultOpen: false,
               colors: [[{ percent: 0, color: '#000' }, { percent: 100, color: '#fff' }]] },
             { key: 'empty', label: 'Empty colors', colors: [] }] : undefined}
-          onChange={change} onChangeComplete={complete} onClear={() => { events = [...events, 'clear']; }}
+          onChange={change} onChangeComplete={complete} onClear={() => {
+            events = [...events, 'clear'];
+          }}
           onOpenChange={open => {
             events = [...events, `open:${open}`];
             if (!freezeOpen) openOwner = open;

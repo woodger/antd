@@ -136,7 +136,9 @@
       <div class="numbers">
         {#if mounted}
           <InputNumber bind:this={instance} bind:ref bind:inputElement={input} bind:nativeElement={root}
-            bind:value={() => number, next => { if (!freeze) number = next; }}
+            bind:value={() => number, next => {
+              if (!freeze) number = next;
+            }}
             aria-label="Source number" name="amount" defaultValue={1.2} min={-10} max={maximum}
             step={.1} {precision} {keyboard} {readOnly} disabled={disabled || undefined}
             mode={spinner ? 'spinner' : 'input'} changeOnWheel={wheel} changeOnBlur={blurChange}
@@ -154,9 +156,15 @@
             onValueChange={value => { events = [...events, `value:${value}`]; }}
             onInput={text => { events = [...events, `input:${text}`]; }}
             onPressEnter={() => { events = [...events, 'enter']; }}
-            onMouseDown={event => { mouseEvents = [...mouseEvents, `down:${event.currentTarget === root}`]; }}
-            onMouseUp={event => { mouseEvents = [...mouseEvents, `up:${event.currentTarget === root}`]; }}
-            onClick={event => { mouseEvents = [...mouseEvents, `click:${event.currentTarget === root}`]; }}
+            onMouseDown={event => {
+              mouseEvents = [...mouseEvents, `down:${event.currentTarget === root}`];
+            }}
+            onMouseUp={event => {
+              mouseEvents = [...mouseEvents, `up:${event.currentTarget === root}`];
+            }}
+            onClick={event => {
+              mouseEvents = [...mouseEvents, `click:${event.currentTarget === root}`];
+            }}
             onStep={(_, info) => {
               step = info;
               events = [...events, `step:${info.emitter}`];

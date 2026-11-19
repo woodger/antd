@@ -296,18 +296,26 @@
           <tr class={weekRowClasses(rowDate)}>{#if weekPrefix}
               {@const prefixDisabled = pickerDateDisabled(rowDate, restrictions, 'week', locale.locale)}
               <td class={[`${prefixCls}-cell`, `${prefixCls}-cell-week`, prefixDisabled && `${prefixCls}-cell-disabled`]}
-                aria-disabled={prefixDisabled || undefined} onclick={() => { if (!prefixDisabled) onSelect(rowDate); }}
+                aria-disabled={prefixDisabled || undefined} onclick={() => {
+                  if (!prefixDisabled) onSelect(rowDate);
+                }}
                 onkeydown={event => {
                   if (event.target instanceof HTMLButtonElement && event.target.hasAttribute('data-picker-week'))
                     key(event, rowDate);
-                }} onpointerenter={event => { if (!prefixDisabled && event.pointerType !== 'touch') onHover?.(rowDate); }}
-                onpointerleave={() => { if (!prefixDisabled) onHover?.(null); }}>
+                }} onpointerenter={event => {
+                  if (!prefixDisabled && event.pointerType !== 'touch') onHover?.(rowDate);
+                }}
+                onpointerleave={() => {
+                  if (!prefixDisabled) onHover?.(null);
+                }}>
                 <button type="button" data-picker-week={label(rowDate)} class={`${prefixCls}-cell-inner date-cell`}
                   aria-label={`${locale.week} ${adapter.locale.getWeek(locale.locale, rowDate)}`} disabled={prefixDisabled} tabindex="-1">{adapter.locale.getWeek(locale.locale, rowDate)}</button>
               </td>{/if}{#each cells.slice(row * width, (row + 1) * width) as date (label(date))}
             {@const disabled = unavailable(date)}
             {@const inView = datePanel ? date.month() === panel.month() : mode === 'month' || mode === 'quarter' ? true : date.year() >= Math.floor(panel.year() / (mode === 'year' ? 10 : 100)) * (mode === 'year' ? 10 : 100) && date.year() < Math.floor(panel.year() / (mode === 'year' ? 10 : 100)) * (mode === 'year' ? 10 : 100) + (mode === 'year' ? 10 : 100)}
-            <td onclick={cellRender ? () => { if (!disabled) onSelect(date); } : undefined}
+            <td onclick={cellRender ? () => {
+              if (!disabled) onSelect(date);
+            } : undefined}
               onkeydown={cellRender ? event => {
                 const target = event.target;
                 if (target instanceof HTMLButtonElement && target.hasAttribute('data-picker-date'))

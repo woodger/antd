@@ -776,7 +776,9 @@
                   event.preventDefault();
                   event.stopPropagation();
                   requestOpen(!visible);
-                }} onclick={event => { if (tagRender) event.stopPropagation(); }}>
+                }} onclick={event => {
+                  if (tagRender) event.stopPropagation();
+                }}>
                 {#if tagRender}
                   {@render tagRender({
                     label, value: item.key, disabled: item.disabled, closable: !blocked && !item.disabled,
@@ -794,7 +796,10 @@
                       style={css.itemRemove} tabindex="-1"
                       aria-label={`${config.locale.removeText ?? 'Remove'} ${item.text ?? item.key}`}
                       onmousedown={event => event.preventDefault()}
-                      onclick={event => { event.stopPropagation(); removeTag(item.path); }}>
+                      onclick={event => {
+                        event.stopPropagation();
+                        removeTag(item.path);
+                      }}>
                       {#if remove === undefined}<Icon name="close" />
                       {:else}{@render content(remove)}{/if}
                     </button>
@@ -816,7 +821,9 @@
                   event.preventDefault();
                   event.stopPropagation();
                   requestOpen(!visible);
-                }} onclick={event => { if (tagRender) event.stopPropagation(); }}>
+                }} onclick={event => {
+                  if (tagRender) event.stopPropagation();
+                }}>
                 {#snippet restLabel()}
                   {#if typeof maxTagPlaceholder === 'function'}
                     {@render (maxTagPlaceholder as Snippet<[CascaderOmittedTag<OptionType>[]]>)(
@@ -862,7 +869,10 @@
             tabindex={tabIndex ?? attributes.tabindex} inputmode={attributes.inputmode} value={inputValue}
             oninput={event => handleSearch(event.currentTarget.value)}
             oncompositionend={event => handleSearch(event.currentTarget.value)}
-            onkeydown={event => { onInputKeyDown?.(event); handleKeyDown(event); }} onkeyup={handleKeyUp}
+            onkeydown={event => {
+              onInputKeyDown?.(event);
+              handleKeyDown(event);
+            }} onkeyup={handleKeyUp}
             onfocus={event => {
               if (blocked) return;
               if (showAction.includes('focus')) requestOpen(true);
@@ -877,7 +887,10 @@
       </div>
       {#if hasClear}<button type="button" class={`clear ${selectPrefix}-clear`}
         aria-label={config.locale.clearText} onmousedown={event => event.preventDefault()}
-        onclick={event => { event.stopPropagation(); clear(); }}>
+        onclick={event => {
+          event.stopPropagation();
+          clear();
+        }}>
         {#if clearIcon === undefined}<Icon name="close-circle-filled" />
         {:else}{@render content(clearIcon)}{/if}
       </button>{/if}

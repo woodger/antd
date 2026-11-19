@@ -121,7 +121,9 @@
     <div hidden data-surface-command></div>
   </section>
 {:else}
-  <label id="autocomplete-close-fixture" style="position:fixed;left:0;top:0;z-index:1">AutoComplete close sample<select bind:value={selected} onchange={() => { mounted = true; }}>
+  <label id="autocomplete-close-fixture" style="position:fixed;left:0;top:0;z-index:1">AutoComplete close sample<select bind:value={selected} onchange={() => {
+    mounted = true;
+  }}>
     {#each samples as item}<option value={item.id}>{item.id}</option>{/each}
   </select></label>
   {#if mounted}{#key selected}<AutoCompleteCloseFixtures sample={selectedSample} capture={childCapture} />{/key}{/if}

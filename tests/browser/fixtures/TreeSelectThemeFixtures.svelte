@@ -80,7 +80,10 @@
               search = next;
               searches++;
             } }}
-            onChange={next => { value = next; changes++; }}
+            onChange={next => {
+              value = next;
+              changes++;
+            }}
             onSelect={() => selections++}
             onfocus={() => focusEvents++}
             onOpenChange={next => { openings = [...openings, next]; }} />

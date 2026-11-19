@@ -756,8 +756,12 @@
       || typeof icon === 'boolean' || icon === ''
       ? 'ellipsis' : undefined}
     onpointerenter={event => hover(true, event)} onpointerleave={event => hover(false, event)}
-    onfocus={() => { if (supports('focus', true)) requestVisible(true); }}
-    onblur={() => { if (supports('focus', false)) requestVisible(false); }} onclick={event => {
+    onfocus={() => {
+      if (supports('focus', true)) requestVisible(true);
+    }}
+    onblur={() => {
+      if (supports('focus', false)) requestVisible(false);
+    }} onclick={event => {
       if (!visible && supports('click', true))
         mousePoint = { left: event.clientX, top: event.clientY };
       if (visible ? supports('click', false) || supports('contextMenu', false)

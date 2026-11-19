@@ -42,7 +42,10 @@
   <button type="button" onclick={() => title = 'Updated title'}>Update boundary title</button>
   <button type="button" onclick={() => mounted = !mounted}>Toggle boundary mount</button>
   <button type="button" onclick={() => configured = !configured}>Configure boundary Alert</button>
-  <button type="button" onclick={() => { nested = true; badFallback = true; }}>
+  <button type="button" onclick={() => {
+    nested = true;
+    badFallback = true;
+  }}>
     Fail nested boundary fallback
   </button>
   {#key selected}<AlertBoundaryCase {sample} {mounted} {configured} {nested} {badFallback} />{/key}

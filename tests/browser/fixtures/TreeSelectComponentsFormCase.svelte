@@ -45,7 +45,10 @@
       {#if active}<FormItem name="choice" initialValue="a" htmlFor="choice" validateStatus="error" hasFeedback
         rules={[{ required: true }]} help="Choice help">
         <TreeSelect style="width:360px" bind:nativeElement={root} bind:inputElement={input}
-          value={model.values.choice} onChange={value => { record('change', value); model.setFieldValue('choice', value); }}
+          value={model.values.choice} onChange={value => {
+            record('change', value);
+            model.setFieldValue('choice', value);
+          }}
           treeData={[{ value: 'a', title: 'Alpha' }, { value: 'b', title: 'Beta' }]}
           showSearch={{ filterTreeNode: false, onSearch: text => record('search', text) }}
           components={sample.slot === 'input' ? { input: customInput } : { root: customRoot }} />

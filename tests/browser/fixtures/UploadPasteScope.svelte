@@ -55,7 +55,11 @@
     </Upload>
   {/if}
 </ConfigProvider>
-<button type="button" onclick={() => { before = []; changes = []; requests = []; }}>
+<button type="button" onclick={() => {
+  before = [];
+  changes = [];
+  requests = [];
+}}>
   Clear paste events
 </button>
 <output aria-label="Paste before">{JSON.stringify(before)}</output>

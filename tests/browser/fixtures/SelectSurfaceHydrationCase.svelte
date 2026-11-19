@@ -149,7 +149,11 @@
     const reading = (event: Event) => Object.assign((event as CustomEvent).detail, read());
     const refs = (event: Event) => Object.assign((event as CustomEvent).detail, readRefs());
     node.addEventListener('historyupdate', updating); node.addEventListener('historyread', reading); node.addEventListener('surfacerefs', refs);
-    return () => { node.removeEventListener('historyupdate', updating); node.removeEventListener('historyread', reading); node.removeEventListener('surfacerefs', refs); };
+    return () => {
+      node.removeEventListener('historyupdate', updating);
+      node.removeEventListener('historyread', reading);
+      node.removeEventListener('surfacerefs', refs);
+    };
   }}></div>
 </section>
 

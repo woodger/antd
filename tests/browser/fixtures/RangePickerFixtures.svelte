@@ -88,7 +88,9 @@
     defaultPickerValue={[dayjs.utc('2026-10-01T08:30:40Z'), dayjs.utc('2026-10-01T18:20:30Z')]}
     disabledTime={(_date, part, info) =>
       ({ disabledHours: () => restricted && part === 'end' && info.from ? [11] : [] })}
-    onChange={next => { if (accept) datetime = next; }}
+    onChange={next => {
+      if (accept) datetime = next;
+    }}
     onOk={() => { oks++; }}
   />
   <label><input type="checkbox" bind:checked={accept} /> Accept range changes</label>

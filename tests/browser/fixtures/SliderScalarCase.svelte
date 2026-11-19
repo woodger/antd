@@ -47,7 +47,9 @@
           }} onChangeComplete={next => completed = [...completed, next]}
           onFocus={() => focusEvents = [...focusEvents, 'focus']}
           onBlur={() => focusEvents = [...focusEvents, 'blur']}
-          onkeydown={event => { if (cancelKeys) event.preventDefault(); }} />
+          onkeydown={event => {
+            if (cancelKeys) event.preventDefault();
+          }} />
       {/if}
     </div>
     <button type="reset">Reset scalar form</button>

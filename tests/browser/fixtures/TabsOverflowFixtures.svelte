@@ -168,7 +168,10 @@
   <input id="tabs-more-outside" aria-label="Overflow outside" />
   <div id="tabs-more-container"></div>
   <ConfigProvider direction={rtl ? 'rtl' : 'ltr'} theme={{ mode: dark ? 'dark' : 'light', compact }}>
-    <form onsubmit={event => { event.preventDefault(); submissions++; }}>
+    <form onsubmit={event => {
+      event.preventDefault();
+      submissions++;
+    }}>
       <div class="stage" style={`width:${width}px`}>
         {#if mounted}
           {#if nested}

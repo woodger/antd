@@ -45,7 +45,10 @@
 {#snippet first()}{@render compactButton('First')}{/snippet}
 {#snippet last()}{@render compactButton('Last')}{/snippet}
 <form data-button-prefix-scope={scope} style="width:480px;padding:12px"
-  onsubmit={event => { event.preventDefault(); submissions++; }}>
+  onsubmit={event => {
+    event.preventDefault();
+    submissions++;
+  }}>
   <Button prefixCls={local ? sample.local : undefined} bind:nativeElement
     type={sample.type} color={sample.color} variant={sample.variant} size={sample.size}
     shape={sample.shape} loading={sample.loading} disabled={sample.disabled} ghost={sample.ghost}

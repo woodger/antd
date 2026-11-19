@@ -37,7 +37,10 @@
 
 <section id="form-layout-fixture" aria-label="Form layouts">
   <label>Form layout sample
-    <select bind:value={selected} onchange={() => { layoutMode = 'sample'; itemMode = 'sample'; }}>
+    <select bind:value={selected} onchange={() => {
+      layoutMode = 'sample';
+      itemMode = 'sample';
+    }}>
       {#each reference.cases as entry}<option value={entry.sample.id}>{entry.sample.id}</option>{/each}
     </select>
   </label>

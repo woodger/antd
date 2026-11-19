@@ -62,8 +62,12 @@
       needConfirm={confirm}
       inputReadOnly={readOnly}
       preserveInvalidOnBlur={invalid}
-      onChange={next => { if (accept) timeValue = next; }}
-      onCalendarChange={(_date, text, info) => { calendars = [...calendars, `${info.source}:${text}`]; }}
+      onChange={next => {
+        if (accept) timeValue = next;
+      }}
+      onCalendarChange={(_date, text, info) => {
+        calendars = [...calendars, `${info.source}:${text}`];
+      }}
       disabledTime={() =>
       ({
         disabledHours: () => bounds ? [11] : [],

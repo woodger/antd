@@ -42,7 +42,10 @@
           value={model.values.selected} onChange={value => model.setFieldValue('selected', value)}
           treeData={[{ value: 'a', title: 'Alpha' }, { value: 'b', title: 'Beta' }]}
           showSearch={{ searchValue: search, filterTreeNode: false,
-            onSearch: text => { search = text; record('search', text); } }}
+            onSearch: text => {
+              search = text;
+              record('search', text);
+            } }}
           onOpenChange={open => record('open', open)} />{/if}
       </FormItem>
     </Form>
@@ -53,8 +56,14 @@
   <button type="button" data-input-remove onclick={() => { custom = false; }}>Remove custom editor</button>
   <button type="button" data-input-focus onclick={() => control?.focus()}>Focus lifecycle ref</button>
   <button type="button" data-input-set onclick={() => model.setFieldValue('selected', 'b')}>Set input selection</button>
-  <button type="button" data-input-reset onclick={() => { search = ''; model.resetFields(); }}>Reset input field</button>
-  <button type="button" data-input-unmount onclick={() => { active = false; releaseDeferred(); }}>Unmount input field</button>
+  <button type="button" data-input-reset onclick={() => {
+    search = '';
+    model.resetFields();
+  }}>Reset input field</button>
+  <button type="button" data-input-unmount onclick={() => {
+    active = false;
+    releaseDeferred();
+  }}>Unmount input field</button>
   </div>
   <output data-input-lifecycle-editor>{input?.id ?? null}</output>
   <output data-input-lifecycle-root>{root?.tagName ?? null}</output>

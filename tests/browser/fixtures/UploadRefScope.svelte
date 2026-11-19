@@ -106,7 +106,10 @@
   <button type="button" onclick={() => { request?.onProgress?.({ percent: 55 }); }}>
     Progress Upload transport
   </button>
-  <button type="button" onclick={() => { held = instance; mounted = false; }}>Unmount ref Upload</button>
+  <button type="button" onclick={() => {
+    held = instance;
+    mounted = false;
+  }}>Unmount ref Upload</button>
   <button type="button" onclick={() => {
     const file = makeFile('late');
     held?.onBatchStart([{ file, parsedFile: file }]);
@@ -133,7 +136,10 @@
         multiple={unmountFirst}
         fileList={sample.mode.startsWith('controlled') ? files : undefined}
         maxCount={sample.maxCount} id="ref-picker"
-        beforeUpload={() => { beforeCount++; return true; }}
+        beforeUpload={() => {
+          beforeCount++;
+          return true;
+        }}
         customRequest={options => {
           request = options;
           requestCount++;

@@ -45,7 +45,10 @@
       itemContent: 'color:#eb2f96'
     } : undefined}
     aria-label="Prefix calendar"
-    onChange={next => { value = next; events.push(`change:${next.toISOString()}`); }}
+    onChange={next => {
+      value = next;
+      events.push(`change:${next.toISOString()}`);
+    }}
     onPanelChange={(date, next) => {
       mode = next;
       events.push(`panel:${date.toISOString()}:${next}`);

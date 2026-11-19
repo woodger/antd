@@ -161,9 +161,13 @@
           classes.listItem
         ]} style={styles.listItem}
           data-cascader-active={current} data-path-key={row.key}
-          onmouseenter={() => { if (hover && !blocked) onActivate(row, true); }}
+          onmouseenter={() => {
+            if (hover && !blocked) onActivate(row, true);
+          }}
           ondblclick={onClose}
-          onmousedown={event => { if (!panel) event.preventDefault(); }}
+          onmousedown={event => {
+            if (!panel) event.preventDefault();
+          }}
           onclick={event => {
             if (event.target !== event.currentTarget) return;
             const button = event.currentTarget.querySelector('button');

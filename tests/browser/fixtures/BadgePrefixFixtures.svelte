@@ -13,7 +13,10 @@
 <section id="badge-prefix-fixture">
   <h2>Badge local prefixes</h2>
   <label>Badge prefix reference <select aria-label="Badge prefix reference" bind:value={name}
-    onchange={() => { changed = false; mounted = true; }}>
+    onchange={() => {
+      changed = false;
+      mounted = true;
+    }}>
     {#each reference.cases as sample}<option value={sample.name}>{sample.name}</option>{/each}
   </select></label>
   <label><input type="checkbox" bind:checked={interactive} /> Interactive prefix count</label>

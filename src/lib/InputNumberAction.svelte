@@ -44,7 +44,9 @@
   class={[`${prefixCls}-action`, `${prefixCls}-action-${action}`,
     disabled && `${prefixCls}-action-${action}-disabled`, className]}
   {style} {@attach element => connectInputNumberStep(element, () => onStep())}
-  onclick={event => { if (event.detail === 0) onStep(); }}>
+  onclick={event => {
+    if (event.detail === 0) onStep();
+  }}>
   {#if typeof content === 'function'}{@render content()}
   {:else if content}{content}
   {:else}

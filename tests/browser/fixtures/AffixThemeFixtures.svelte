@@ -19,6 +19,9 @@
   <label><input type="checkbox" bind:checked={mounted} /> Mount themed Affix controls</label>
   <label><input type="checkbox" bind:checked={enabled} /> Apply source Affix theme</label>
   <label><input type="checkbox" bind:checked={inherit} /> Inherit Affix theme</label>
-  <button type="button" onclick={() => { popup = 333; fontSize = 24; }}>Update Affix tokens</button>
+  <button type="button" onclick={() => {
+    popup = 333;
+    fontSize = 24;
+  }}>Update Affix tokens</button>
   {#key preset}<AffixThemeCase {sample} {mounted} {enabled} {inherit} {popup} {fontSize} />{/key}
 </section>

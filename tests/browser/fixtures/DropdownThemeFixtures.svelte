@@ -57,7 +57,9 @@
     <ConfigProvider theme={enabled ? config : { compact }}>
       <div class="stage" style={parentAliases ? '--ant-font-size:30px;--ant-color-text:red' : undefined}>
         <Dropdown bind:open {arrow} {placement} autoAdjustOverflow={false} trigger="click"
-          aria-label="Themed Dropdown commands" onOpenChange={next => { changes = [...changes, next]; }}
+          aria-label="Themed Dropdown commands" onOpenChange={next => {
+            changes = [...changes, next];
+          }}
           menu={{
             items: [
               { key: 'normal', label: 'Normal', icon },

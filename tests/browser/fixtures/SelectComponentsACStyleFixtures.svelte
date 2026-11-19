@@ -12,7 +12,9 @@
   });
 </script>
 <section id="select-components-ac-style-fixture">
-  <label style="position:fixed;left:0;top:0;z-index:1">Select component AC style sample<select bind:value={selected} onchange={() => { mounted = true; }}>
+  <label style="position:fixed;left:0;top:0;z-index:1">Select component AC style sample<select bind:value={selected} onchange={() => {
+    mounted = true;
+  }}>
     {#each samples as sample}<option value={sample.id}>{sample.id}</option>{/each}
   </select></label>
   {#if mounted}{#key selected}{@const current = sample}<SelectComponentsACStyleCase sample={untrack(() => current)} {capture} />{/key}{/if}

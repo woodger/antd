@@ -33,9 +33,15 @@
           if (sample.reentrant && text === '') { control?.blur(); control?.focus(); }
           if (sample.closeOnSearch && text === '') ownedOpen = false;
         } }}
-      onChange={next => { value = next; record('change', next); }}
+      onChange={next => {
+        value = next;
+        record('change', next);
+      }}
       onSelect={next => record('select', next)} onDeselect={next => record('deselect', next)}
-      onOpenChange={next => { record('open', next); if (sample.closeOnSearch) ownedOpen = next; }} />
+      onOpenChange={next => {
+        record('open', next);
+        if (sample.closeOnSearch) ownedOpen = next;
+      }} />
   </ConfigProvider>
   <output data-token-events>{JSON.stringify(events)}</output>
   <output data-token-values>{JSON.stringify(value ?? null)}</output>

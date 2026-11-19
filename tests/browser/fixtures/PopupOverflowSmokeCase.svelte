@@ -136,7 +136,9 @@
     const root = node.shadowRoot ?? node.attachShadow({ mode: 'open' });
     shadow = root;
     copyShadowStyles();
-    return () => { if (shadow === root) shadow = undefined; };
+    return () => {
+      if (shadow === root) shadow = undefined;
+    };
   })}></div>
   <button type="button" data-overflow-outside style="position:fixed;left:16px;top:80px">Outside overflow</button>
   <output data-overflow-context hidden>{JSON.stringify(readContext())}</output>

@@ -343,11 +343,16 @@
             && transform.scale === max}
         onclick={() => {
             if (action === 'flipY')
-              info.actions.onFlipY(); else if (action === 'flipX')
-              info.actions.onFlipX(); else if (action === 'rotateLeft')
-              info.actions.onRotateLeft(); else if (action === 'rotateRight')
-              info.actions.onRotateRight(); else if (action === 'zoomOut')
-              info.actions.onZoomOut(); else info.actions.onZoomIn();
+              info.actions.onFlipY();
+            else if (action === 'flipX')
+              info.actions.onFlipX();
+              else if (action === 'rotateLeft')
+              info.actions.onRotateLeft();
+              else if (action === 'rotateRight')
+              info.actions.onRotateRight();
+              else if (action === 'zoomOut')
+              info.actions.onZoomOut();
+              else info.actions.onZoomIn();
           }}>
         <ImagePreviewIcon name={action as
             'flipY'

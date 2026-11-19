@@ -169,9 +169,13 @@
     onclick={settings.unslick ? undefined : model.handleClick}
     onkeydown={settings.unslick ? undefined : model.handleKeydown}
     onmousedown={model.handleStart} onmousemove={model.handleMove} onmouseup={model.handleEnd}
-    onmouseleave={event => { if (model.state.dragging) model.handleEnd(event); }}
+    onmouseleave={event => {
+      if (model.state.dragging) model.handleEnd(event);
+    }}
     ontouchstart={model.handleStart} ontouchmove={model.handleMove} ontouchend={model.handleEnd}
-    ontouchcancel={event => { if (model.state.dragging) model.handleEnd(event); }}>
+    ontouchcancel={event => {
+      if (model.state.dragging) model.handleEnd(event);
+    }}>
     <!-- svelte-ignore a11y_mouse_events_have_key_events (Hover pause не заменяет отдельный pauseOnFocus.) -->
     <div bind:this={track} class="slick-track" style={carouselStyle(model.state.trackStyle)}
       onmouseenter={settings.pauseOnHover ? model.handleHover : undefined}

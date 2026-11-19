@@ -62,8 +62,14 @@
     } : undefined}
     children={sample.custom ? trigger : undefined}
     aria-label="Prefix color"
-    onOpenChange={next => { open = next; events.push(`open:${next}`); }}
-    onChange={next => { color = next.toCssString(); events.push(`change:${color}`); }}
+    onOpenChange={next => {
+      open = next;
+      events.push(`open:${next}`);
+    }}
+    onChange={next => {
+      color = next.toCssString();
+      events.push(`change:${color}`);
+    }}
     onChangeComplete={next => events.push(`complete:${next.toCssString()}`)}>
   </ColorPicker>
   <output aria-label="ColorPicker prefix events">{events.join('|')}</output>

@@ -86,7 +86,9 @@
     <form
       id="input-number-native-form"
       onsubmit={read}
-      onreset={(event) => { if (cancelReset) event.preventDefault(); }}
+      onreset={(event) => {
+        if (cancelReset) event.preventDefault();
+      }}
     >
       <label for="bound-number">Bound number</label>
       {#if mounted}<InputNumber
@@ -103,7 +105,9 @@
         {readonly}
         onValueChange={(next) => changes.push(next)}
         oninput={() => { nativeChanges++; }}
-        onkeydown={(event) => { if (cancelKey) event.preventDefault(); }}
+        onkeydown={(event) => {
+          if (cancelKey) event.preventDefault();
+        }}
       />{/if}
       <label for="default-number">Default number</label>
       <InputNumber id="default-number" name="defaultAmount" {defaultValue} />

@@ -173,7 +173,10 @@
     {@render info.label()}
     {#if info.closable}<button type="button" aria-label="Remove custom path"
       onmousedown={event => event.preventDefault()}
-      onclick={event => { event.stopPropagation(); info.onClose?.(event); }}>×</button>{/if}
+      onclick={event => {
+        event.stopPropagation();
+        info.onClose?.(event);
+      }}>×</button>{/if}
   </span>
 {/snippet}
 {#snippet rest(omitted: CascaderOmittedTag[])}
@@ -259,8 +262,12 @@
     <label>Path popup width<select bind:value={popupWidth}><option>default</option><option>true</option><option>240</option></select></label>
     <label>Path clear icon<select aria-label="Path clear icon" bind:value={clearMode}><option>default</option><option>object</option><option>false</option></select></label>
     <button type="button" onclick={reset}>Reset cascader</button>
-    <button type="button" onclick={() => { value = multiple ? [['missing', 0], ['asia']] : ['asia', 'missing']; }}>Set missing path</button>
-    <button type="button" onclick={() => { value = multiple ? [['asia']] : ['asia', 'china', 'hangzhou']; }}>Set owner path</button>
+    <button type="button" onclick={() => {
+      value = multiple ? [['missing', 0], ['asia']] : ['asia', 'missing'];
+    }}>Set missing path</button>
+    <button type="button" onclick={() => {
+      value = multiple ? [['asia']] : ['asia', 'china', 'hangzhou'];
+    }}>Set owner path</button>
     <button type="button" onclick={() => { defaultValue = multiple ? [[0]] : [0]; }}>Change path default</button>
     <button type="button" onclick={() => { instance++; }}>Remount cascader</button>
     <button type="button" onclick={() => {
@@ -279,7 +286,10 @@
       styles: { root: 'border-color:rgb(1, 2, 3)', popup: { listItem: 'color:rgb(70, 80, 90)' } },
       expandIcon: icon, loadingIcon: icon, suffixIcon: icon, clearIcon: icon, removeIcon: icon
     } : undefined}>
-    <form onsubmit={event => { event.preventDefault(); submitCount++; }}>
+    <form onsubmit={event => {
+      event.preventDefault();
+      submitCount++;
+    }}>
       <div class="holder">
         {#if mounted}{#key instance}
           <Cascader bind:this={picker} bind:nativeElement bind:inputElement options={source}
@@ -335,7 +345,10 @@
     <label><input type="checkbox" bind:checked={panelMounted} /> Mount path panel</label>
     {#if panelMounted}<div class="panel">
       <CascaderPanel options={initialOptions()} value={panelValue} multiple={panelMultiple}
-        onChange={next => { panelValue = next ?? []; panelEvents = JSON.stringify(next) ?? 'undefined'; }}
+        onChange={next => {
+          panelValue = next ?? [];
+          panelEvents = JSON.stringify(next) ?? 'undefined';
+        }}
         class="fixture-cascader-panel" aria-label="Path panel" />
     </div>{/if}
     <Form {form}><FormItem label="Associated path" name="path" htmlFor="associated-path" help="Choose a region">

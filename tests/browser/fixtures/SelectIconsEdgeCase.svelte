@@ -54,8 +54,16 @@
   }
 </script>
 
-{#snippet menuA()}<span data-icon-edge-menu="a" {...{ onmousedown: (event: MouseEvent) => { events.push(['menu-mousedown', event.defaultPrevented]); }, onclick: (event: MouseEvent) => { events.push(['menu-click', event.defaultPrevented]); } }}>M</span>{/snippet}
-{#snippet menuB()}<span data-icon-edge-menu="b" {...{ onmousedown: (event: MouseEvent) => { events.push(['menu-mousedown', event.defaultPrevented]); }, onclick: (event: MouseEvent) => { events.push(['menu-click', event.defaultPrevented]); } }}>M</span>{/snippet}
+{#snippet menuA()}<span data-icon-edge-menu="a" {...{ onmousedown: (event: MouseEvent) => {
+  events.push(['menu-mousedown', event.defaultPrevented]);
+}, onclick: (event: MouseEvent) => {
+  events.push(['menu-click', event.defaultPrevented]);
+} }}>M</span>{/snippet}
+{#snippet menuB()}<span data-icon-edge-menu="b" {...{ onmousedown: (event: MouseEvent) => {
+  events.push(['menu-mousedown', event.defaultPrevented]);
+}, onclick: (event: MouseEvent) => {
+  events.push(['menu-click', event.defaultPrevented]);
+} }}>M</span>{/snippet}
 
 <ConfigProvider theme={{ token: { motion: false }, cssVar: { key: 'icon-edges' } }}>
   <div data-icon-edge bind:this={root} style="width:300px" {@attach connect}>

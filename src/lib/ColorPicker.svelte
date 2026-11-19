@@ -328,7 +328,9 @@
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`color-picker-prefix:${prefixCls}:${rootPrefix}`} />{/if}{#if popoverCss}<ThemeScopeStyle css={popoverCss} scope={`popover-prefix:${popoverPrefix}`} />{/if}<span bind:this={host} class="ant-popover-trigger" role="presentation"
-  onpointerenter={event => { if (event.pointerType !== 'touch') hover(true); }}
+  onpointerenter={event => {
+    if (event.pointerType !== 'touch') hover(true);
+  }}
   onpointerleave={() => hover(false)} onclick={event => {
     if (!event.defaultPrevented && (props.trigger ?? 'click') === 'click') requestOpen(!open);
   }}>
@@ -412,7 +414,9 @@
       props.rootClassName, classes.popup?.root]} style={initialPopupStyle}
     {@attach node => connectComponentTheme(node, popupThemeStyle)}
     data-ant-color-theme={config.theme.mode} data-ant-color-primary={config.theme.primary}
-    onpointerenter={() => { if (timer) clearTimeout(timer); }} onpointerleave={() => hover(false)}>
+    onpointerenter={() => {
+      if (timer) clearTimeout(timer);
+    }} onpointerleave={() => hover(false)}>
     {#if arrow}<div class={`${popoverPrefix}-arrow`} style={arrowStyle} aria-hidden="true"></div>{/if}
     <div class={[`${popoverPrefix}-container`, 'color-picker-surface']} style={localStyles?.popupOverlayInner}>
       {#if rendered}

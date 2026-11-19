@@ -49,7 +49,10 @@
       primary: info.token.colorPrimary, className: target.className
     })
   }}>
-    <form onsubmit={event => { event.preventDefault(); submits++; }}>
+    <form onsubmit={event => {
+      event.preventDefault();
+      submits++;
+    }}>
       <SpaceCompact size="large">
         {#key kind}
           {#if kind === 'date' || kind === 'time'}

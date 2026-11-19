@@ -281,8 +281,12 @@
   {#if canEllipsis && clip.expandable || editable && triggers.includes('icon') || copyable}
     <span class={[`${prefixCls}-actions`, placement === 'start' && `${prefixCls}-actions-start`,
       semantic.classNames.actions]} style={semantic.styles.actions} role="presentation"
-      onmouseenter={() => { if (!measuring) operationsHover(true); }}
-      onmouseleave={() => { if (!measuring) operationsHover(false); }}>{#if canEllipsis && clip.expandable}
+      onmouseenter={() => {
+        if (!measuring) operationsHover(true);
+      }}
+      onmouseleave={() => {
+        if (!measuring) operationsHover(false);
+      }}>{#if canEllipsis && clip.expandable}
         <button type="button" onclick={handleExpand}
           class={[`${prefixCls}-${expanded ? 'collapse' : 'expand'}`, semantic.classNames.action]}
           style={semantic.styles.action} aria-label={expanded ? strings.collapse : strings.expand}><TypographyContent value={typeof clip.symbol === 'function' ? clip.symbol(expanded)
@@ -293,7 +297,9 @@
           tabindex={edit.tabIndex} {@attach element => {
             if (measuring) return;
             editButton = element;
-            return () => { if (editButton === element) editButton = undefined; };
+            return () => {
+              if (editButton === element) editButton = undefined;
+            };
           }}>{#if edit.icon}<TypographyContent value={edit.icon} />{:else}<TypographyIcon name="edit" />{/if}</button>
       {/if}{#if copyable}
         <button type="button" onclick={event => copier.copy(event)}
@@ -304,7 +310,9 @@
           {@attach element => {
             if (measuring) return;
             copyButton = element;
-            return () => { if (copyButton === element) copyButton = undefined; };
+            return () => {
+              if (copyButton === element) copyButton = undefined;
+            };
           }}>{#if copyIcon}<TypographyContent value={copyIcon} />{:else}<TypographyIcon name={copier.copied ? 'check' : copier.loading ? 'loading' : 'copy'} />{/if}</button>
       {/if}</span>
   {/if}

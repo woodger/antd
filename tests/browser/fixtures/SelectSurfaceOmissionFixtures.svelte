@@ -38,7 +38,9 @@
     const reading = (event: Event) => {
       const active = 'initialWidthKind' in sample ? widthCapture : capture;
       Object.assign((event as CustomEvent).detail, { read: active.read, readRefs: active.readRefs,
-        setAction: 'initialWidthKind' in sample ? undefined : capture.setAction, dispose: () => { mounted = false; } });
+        setAction: 'initialWidthKind' in sample ? undefined : capture.setAction, dispose: () => {
+          mounted = false;
+        } });
     };
     node.addEventListener('surfacecapture', reading);
     return () => node.removeEventListener('surfacecapture', reading);

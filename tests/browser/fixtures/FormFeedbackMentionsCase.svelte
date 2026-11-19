@@ -83,7 +83,9 @@
     {#if mounted}<Form form={model} component={false} prefixCls={sample.formPrefix}
       feedbackIcons={sample.formIcons ? icons('form', 'custom') : undefined}>
       <FormItem name="node" validateStatus={status} {hasFeedback} prefixCls={sample.itemPrefix} class="feedback-item"
-        rules={sample.async ? [{ validator: () => new Promise<void>((resolve, reject) => { pending = { resolve, reject }; }) }]
+        rules={sample.async ? [{ validator: () => new Promise<void>((resolve, reject) => {
+          pending = { resolve, reject };
+        }) }]
           : [{ type: sample.component === 'transfer' ? 'array' : 'string' }]}>
         {@render child()}
       </FormItem>
