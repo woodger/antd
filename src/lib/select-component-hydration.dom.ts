@@ -1,3 +1,5 @@
+// Подключает редактор Select к гидратированному DOM. Начальная синхронизация учитывает dirty value
+// и атрибуты SSR, последующие обновления применяют различия между наборами props.
 // React DOM 18.3.1 hydration semantics; MIT, vendor/LICENSE.react-dom.
 import { untrack } from 'svelte';
 
@@ -9,6 +11,7 @@ const booleanAttributes = new Set(['autofocus', 'disabled', 'formnovalidate', 'h
   'itemscope', 'multiple', 'readonly', 'required']);
 const controlled = new Set(['value', 'defaultvalue', 'checked', 'defaultchecked']);
 
+// Нормализует class для SSR-редактора из строки, списка или карты включённых классов.
 function classValue(value: unknown): unknown {
   if (typeof value !== 'object') {
     return value;
@@ -17,6 +20,7 @@ function classValue(value: unknown): unknown {
     return '';
   }
   const output: string[] = [];
+  // Добавляет непустые классы, сохраняя порядок вложенного массива и перечисляемых ключей.
   const append = (item: unknown) => {
     if (!item) {
       return;
@@ -37,6 +41,8 @@ function classValue(value: unknown): unknown {
   return output.join(' ');
 }
 
+// Выделяет DOM event и capture. Имена gotpointercapture и lostpointercapture уже содержат capture
+// в типе события.
 function eventName(name: string) {
   if (!name.startsWith('on') || name.length < 3) {
     return;
@@ -47,6 +53,7 @@ function eventName(name: string) {
   return { type, capture };
 }
 
+// Даёт приоритет value перед defaultValue, сохраняя пустую строку и число 0.
 function initialValue(attributes: Attributes) {
   return attributes.value ?? attributes.defaultValue ?? attributes.defaultvalue ?? '';
 }
@@ -56,6 +63,7 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
   const listeners = new Map<string, Listener>();
   let previous = { ...attributes };
 
+  // Синхронизирует DOM-подписку по имени атрибута. При замене функции переиспользует listener.
   function event(name: string, value: unknown) {
     const descriptor = eventName(name);
     if (!descriptor) {
@@ -71,14 +79,21 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       current.handler = value as Handler;
       return;
     }
-    const record: Listener = { ...descriptor, handler: value as Handler, listener(input) {
-      untrack(() => record.handler.call(element, input));
-    } };
+    const record: Listener = {
+      ...descriptor,
+      handler: value as Handler,
+      // Вызывает актуальный обработчик с редактором как receiver и вне реактивного чтения.
+      listener(input) {
+        untrack(() => record.handler.call(element, input));
+      }
+    };
     listeners.set(name, record);
     element.addEventListener(record.type, record.listener, { capture: record.capture,
       passive: record.type === 'touchstart' || record.type === 'touchmove' });
   }
 
+  // Обновляет нативные атрибуты и делегирует события. Значение, checked и стиль обслуживаются
+  // отдельными владельцами.
   function attribute(name: string, value: unknown) {
     const normalized = name.toLowerCase();
     if (normalized === 'style' || controlled.has(normalized)) {
@@ -146,6 +161,8 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
     if (text !== '' && text !== null && text === String(initialValue(attributes))) textarea.value = text;
   }
 
+  // Применяет live и default свойства по контракту Web IDL. При удалении live сохраняет прежнее
+  // default.
   function controlledAttribute(name: string, value: unknown) {
     const normalized = name.toLowerCase();
     if (normalized === 'value') {
@@ -210,6 +227,7 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       }
       previous = { ...changes };
     },
+    // Отсоединяет все listeners, принадлежащие этому проходу гидратации.
     destroy() {
       for (const record of listeners.values()) {
         element.removeEventListener(

@@ -1,5 +1,9 @@
+// Переносит popup между origin и целевым контейнером. Отвечает за перенос токенов темы,
+// восстановление фокуса и освобождение scroll lock при закрытии.
 import { getPopupActiveElement } from './popup.dom';
 
+// Снимает вычисленные CSS-переменные. Для пустого CSSOM различает пустое значение и
+// guaranteed-invalid.
 function readPopupThemeVariables(origin: HTMLElement) {
   const document = origin.ownerDocument;
   const view = document.defaultView!;
@@ -64,6 +68,8 @@ export function connectPopupPortal(element: HTMLElement, options: {
   let active = true;
   let queued = false;
 
+  // Переносит существующий узел. При fallback вставке восстанавливает фокус внутри него, если
+  // фокус ушёл на body.
   function move(parent: Element | DocumentFragment, before: ChildNode | null) {
     if (element.parentNode === parent && element.nextSibling === before) {
       return;
@@ -81,6 +87,7 @@ export function connectPopupPortal(element: HTMLElement, options: {
     }
   }
 
+  // Снимает CSS-переменные прошлой синхронизации, кроме уже принадлежащих другим владельцам.
   function clearManaged() {
     const preserved = new Set(options.preserveVariables);
     // После прошлого sync переменная могла перейти component-theme attachment.
@@ -91,6 +98,8 @@ export function connectPopupPortal(element: HTMLElement, options: {
     return preserved;
   }
 
+  // Переносит вычисленные значения из origin после удаления прежнего слоя. Inline popup
+  // пользуется наследованием.
   function syncTheme() {
     if (!active || inline) {
       return;
@@ -105,6 +114,7 @@ export function connectPopupPortal(element: HTMLElement, options: {
     }
   }
 
+  // Объединяет уведомления MutationObserver и resize в одно обновление темы на микрозадачу.
   function scheduleTheme() {
     if (queued) {
       return;
@@ -154,6 +164,8 @@ export function connectPopupPortal(element: HTMLElement, options: {
     document.head.append(lock);
   }
 
+  // Освобождает подписки, scroll lock и CSS. При наличии действующего marker может вернуть popup
+  // на исходное место.
   const disconnect = () => {
     active = false;
     observer.disconnect();

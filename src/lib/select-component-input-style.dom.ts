@@ -1,3 +1,5 @@
+// Ведёт отдельные CSSOM-слои редакторов Select и размеры активной ветви Input. История inline
+// style привязана к физическому узлу, измерение к логическому lifetime.
 // rc-select 1.10.1; MIT, vendor/LICENSE.rc-select.
 import { copySelectStyle, createSelectStyleWriter } from './select-style.dom';
 import type { SelectStyleFrame, SelectStyleProperties } from './select-style.engine';
@@ -32,6 +34,7 @@ export function createSelectComponentInputStyle() {
   let previousMeasurement: { syncWidth: boolean; value: string } | undefined;
   let measured: number | undefined;
 
+  // Сбрасывает размеры только при смене ветви редактора.
   function enter(next: SelectComponentInputLifetime) {
     if (next === lifetime) {
       return;
@@ -41,6 +44,8 @@ export function createSelectComponentInputStyle() {
     measured = undefined;
   }
 
+  // Создаёт или находит принятую историю CSSOM узла. При первой гидратации может взять начальное
+  // состояние из DOM.
   function editorStyle(
     editor: HTMLElement,
     frame: SelectStyleFrame,
@@ -67,6 +72,8 @@ export function createSelectComponentInputStyle() {
     return state;
   }
 
+  // Обновляет принадлежащие Input CSS-свойства. Сохраняет исходный SSR CSSOM до первого реального
+  // изменения.
   function apply(editor: HTMLElement, frame: SelectStyleFrame, hydrating = false) {
     const state = editorStyle(editor, frame, hydrating);
     const managed: SelectStyleProperties = { ...state.previous.properties, ...frame.properties };
