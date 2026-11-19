@@ -36,7 +36,8 @@ function rawNode(graph: TagCloseHandleRawGraph, reference: unknown) {
   return node;
 }
 function rawProperty(graph: TagCloseHandleRawGraph, reference: unknown, key: string) {
-  return rawNode(graph, reference).properties?.find(property => property.key === key)?.value;
+  const matchingProperty = rawNode(graph, reference).properties?.find(property => property.key === key);
+  return matchingProperty?.value;
 }
 export function verifyHandleFunction(
   graph: TagCloseHandleRawGraph,

@@ -335,8 +335,9 @@ export function datePickerPresetTransitionsRawRoot(value: unknown): Record<strin
   return node;
 }
 function rawProperty(graph: unknown, name: string) {
-  return array(datePickerPresetTransitionsRawRoot(graph).properties).map(record)
-    .find(row => row.key === name)?.value;
+  const matchingEntry = array(datePickerPresetTransitionsRawRoot(graph).properties).map(record)
+    .find(row => row.key === name);
+  return matchingEntry?.value;
 }
 function verifyDateValue(
   value: DatePickerPresetTransitionsSourceValue,

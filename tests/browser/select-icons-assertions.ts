@@ -315,7 +315,8 @@ function usesLegacyClear(owner: IconOwner, sample: SelectIconSample) {
 function sourceRemoveLabel(node: SelectIconNode, nodes: readonly SelectIconNode[]) {
   const index = nodes.indexOf(node);
   const parent = nodes.slice(0, index).reverse().find(n => n.classes.includes('ant-select-selection-item'));
-  const title = parent?.attributes.find(([key]) => key === 'title')?.[1];
+  const matchingAttribute = parent?.attributes.find(([key]) => key === 'title');
+  const title = matchingAttribute?.[1];
   assert.equal(typeof title, 'string', 'Source remove span belongs to the preceding titled tag');
   return `Удалить ${title}`;
 }
@@ -340,7 +341,8 @@ function withoutSourceUserSelect(node: SelectIconNode, label: string) {
 function verifyFeedbackSVGAttributes(actual: string[][], source: string[][], label: string) {
   assert.deepEqual(Object.fromEntries(actual.filter(([key]) => key !== 'class')),
     { 'aria-hidden': 'true', focusable: 'false', viewBox: '64 64 896 896' }, label + ' fixed Native feedback SVG attributes');
-  const classes = actual.find(([key]) => key === 'class')?.[1] ?? '';
+  const matchingEntry = actual.find(([key]) => key === 'class');
+  const classes = matchingEntry?.[1] ?? '';
   assert.equal(classes, '', label + ' feedback SVG has only compiler classes');
   assert.deepEqual(source, [['fill-rule', 'evenodd'], ['viewBox', '64 64 896 896'], ['focusable', 'false'],
     ['data-icon', 'close-circle'], ['width', '1em'], ['height', '1em'], ['fill', 'currentColor'], ['aria-hidden', 'true']],

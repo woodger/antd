@@ -17,7 +17,8 @@
   })));
   let selected = $state(untrack(() => {
     const requested = typeof window === 'undefined' ? null : new URL(window.location.href).searchParams.get('sample');
-    return samples.find(item => item.id === requested)?.id ?? samples[0].id;
+    const matchingSample = samples.find(item => item.id === requested);
+    return matchingSample?.id ?? samples[0].id;
   }));
   let selectedSample = $derived(samples.find(item => item.id === selected)!);
   let mounted = $state(true);

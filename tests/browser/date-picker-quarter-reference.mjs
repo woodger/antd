@@ -234,7 +234,8 @@ function dateSnapshot(value, authored) {
 }
 function invocation(call, index, authored) {
   assert.equal(call.index, index, 'Monotonic invocation index');
-  const length = call.encodedArguments.properties.find(row => row.key === 'length')?.value;
+  const matchingProperty = call.encodedArguments.properties.find(row => row.key === 'length');
+  const length = matchingProperty?.value;
   assert(Number.isInteger(length) && length >= 0);
   assert.equal(call.actualArgumentCount, length);
   assert.equal(property(call.rawArguments, call.rawArguments.root.ref, 'length'), length);

@@ -33,7 +33,8 @@ function field(value: unknown, key: string): unknown {
   if (tagged.type !== 'object' || !Array.isArray(tagged.entries)) {
     return undefined;
   }
-  return tagged.entries.find((entry: unknown) => Array.isArray(entry) && entry[0] === key)?.[1];
+  const match = tagged.entries.find((entry: unknown) => Array.isArray(entry) && entry[0] === key);
+  return match?.[1];
 }
 function names(view: SelectDataView) {
   const map = view.receipts.fieldNames.value;

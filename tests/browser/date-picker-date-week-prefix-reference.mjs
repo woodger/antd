@@ -237,7 +237,8 @@ function dateSnapshot(value, authored) {
 }
 function invocation(call, index, authored) {
   assert.equal(call.index, index, 'Monotonic invocation index');
-  const length = call.encodedArguments.properties.find(row => row.key === 'length')?.value;
+  const matchingProperty = call.encodedArguments.properties.find(row => row.key === 'length');
+  const length = matchingProperty?.value;
   assert(Number.isInteger(length) && length >= 0);
   assert.equal(call.actualArgumentCount, length);
   assert.equal(property(call.rawArguments, call.rawArguments.root.ref, 'length'), length);
@@ -289,7 +290,8 @@ function verifyOwner(owner) {
 const surfaceClass = (surface, name) => (surface.attributes.find(row => row[0] === 'class')?.[1] ?? '')
   .split(/\s+/).includes(name);
 function title(surface) {
-  return surface.attributes.find(row => row[0] === 'title')?.[1] ?? null;
+  const matchingAttribute = surface.attributes.find(row => row[0] === 'title');
+  return matchingAttribute?.[1] ?? null;
 }
 export function verifyDateWeekPrefixSourceRows(point) {
   for (const popup of point.popups) {

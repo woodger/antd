@@ -10,8 +10,10 @@ type Encoded = {
   items?: Encoded[];
 };
 
+// Различает отсутствующую запись и сохранённое значение поля квитанции.
 function field(value: Encoded, name: string) {
-  return value.entries?.find(([key]) => key === name)?.[1];
+  const encodedEntry = value.entries?.find(([key]) => key === name);
+  return encodedEntry?.[1];
 }
 
 /** Known authored React elements and Svelte Snippets retain separate raw representations. */

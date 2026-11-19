@@ -41,7 +41,8 @@ export function verifyResponsiveTagPrefixLabel(
   assert.equal(source.tag, 'SPAN');
   assert.equal(actual.tag, 'SPAN');
   assert.equal(typeof source.text, 'string');
-  const role = source.attributes.find(([key]) => key === 'data-custom-tag-label')?.[1];
+  const matchingAttribute = source.attributes.find(([key]) => key === 'data-custom-tag-label');
+  const role = matchingAttribute?.[1];
   assert.equal(typeof role, 'string');
   assert.deepEqual(
     source.childNodes,
@@ -72,7 +73,8 @@ export function verifyResponsiveTagPrefixSingleTag(
   renderer: ResponsiveTagPrefixRenderer,
   label: string
 ) {
-  const key = source.attributes.find(([name]) => name === 'data-custom-tag')?.[1];
+  const matchingEntry = source.attributes.find(([name]) => name === 'data-custom-tag');
+  const key = matchingEntry?.[1];
   assert.equal(typeof key, 'string');
   const rest = key === 'rest';
   const find = (nodes: SelectCustomTagPrefixNode[], marker: string) => nodes.filter(node => node.attributes.some(([name, value]) => name === marker && value === key));

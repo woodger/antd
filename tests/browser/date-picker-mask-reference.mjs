@@ -287,7 +287,8 @@ function invocation(call, index, authored, producer = false) {
   assert.equal(call.index, index);
   assert(Number.isInteger(call.actionIndex) && call.actionIndex >= -1);
   assert(Number.isInteger(call.substepIndex) && call.substepIndex >= -1);
-  const length = call.encodedArguments.properties.find(row => row.key === 'length')?.value;
+  const matchingProperty = call.encodedArguments.properties.find(row => row.key === 'length');
+  const length = matchingProperty?.value;
   assert(Number.isInteger(length) && length >= 0);
   assert.equal(call.actualArgumentCount, length);
   assert.equal(rawAt(call.rawArguments, ['length']), length);

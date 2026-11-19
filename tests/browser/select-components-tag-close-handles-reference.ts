@@ -293,8 +293,11 @@ function rawNode(graph: RawGraph, reference: unknown) {
   assert(node, 'Recorded Source node must exist');
   return node;
 }
+// Разрешает ссылку на запись и ищет поле в её собственных закодированных свойствах.
 function rawProperty(graph: RawGraph, reference: unknown, key: string) {
-  return rawNode(graph, reference).properties?.find(property => property.key === key)?.value;
+  const node = rawNode(graph, reference);
+  const matchingProperty = node.properties?.find(property => property.key === key);
+  return matchingProperty?.value;
 }
 function verifyCallback(graph: RawGraph, reference: unknown) {
   const node = rawNode(graph, reference);

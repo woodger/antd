@@ -402,7 +402,8 @@ function rawProperty(graph: ResponsiveTagPrefixRawGraph, reference: unknown, key
   assert.equal(typeof ref.ref, 'number');
   const node = graph.objects.find(node => node.id === ref.ref);
   assert(node);
-  return node.properties?.find(property => property.key === key)?.value;
+  const matchingProperty = node.properties?.find(property => property.key === key);
+  return matchingProperty?.value;
 }
 export function readResponsiveTagPrefixSourceInfo(call: ResponsiveTagPrefixProducerCall): Record<string, unknown> {
   assert.equal(call.kind, 'tagRender');

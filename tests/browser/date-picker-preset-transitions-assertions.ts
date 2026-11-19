@@ -77,14 +77,26 @@ function array(value: unknown): unknown[] {
   assert(Array.isArray(value));
   return value;
 }
+// Находит поле в записи корня графа, сохраняя undefined для отсутствующего свойства.
 function rawProperty(graph: unknown, name: string) {
-  return array(rawRoot(graph).properties).map(record).find(row => row.key === name)?.value;
+  const root = rawRoot(graph);
+  const properties = array(root.properties).map(record);
+  const property = properties.find(row => row.key === name);
+  return property?.value;
 }
+
+// Считывает значение из уже закодированной записи, где поля хранятся по порядку.
 function encodedProperty(value: unknown, name: string) {
-  return array(record(value).properties).map(record).find(row => row.key === name)?.value;
+  const encoded = record(value);
+  const properties = array(encoded.properties).map(record);
+  const property = properties.find(row => row.key === name);
+  return property?.value;
 }
+
+// Возвращает null, когда в измеренном DOM нет узла или атрибута.
 function attr(node: Pick<AnyNode, 'attributes'> | null, name: string) {
-  return node?.attributes.find(([key]) => key === name)?.[1] ?? null;
+  const matchingAttribute = node?.attributes.find(([key]) => key === name);
+  return matchingAttribute?.[1] ?? null;
 }
 function hasClass(node: AnyNode, name: string) {
   return attr(node, 'class')?.split(' ').includes(name) ?? false;

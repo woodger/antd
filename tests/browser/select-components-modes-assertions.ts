@@ -48,7 +48,8 @@ function role(node: SelectComponentsModesNode, dom: SelectComponentsModesDOM) {
   if (node.identity === dom.current.editor?.identity) {
     return 'editor';
   }
-  const authored = node.attributes.find(([key]) => key === 'data-select-icons-node')?.[1];
+  const matchingAttribute = node.attributes.find(([key]) => key === 'data-select-icons-node');
+  const authored = matchingAttribute?.[1];
   if (authored) {
     return 'authored:' + authored;
   }
@@ -246,7 +247,8 @@ export function verifySelectComponentsModesPoint(
         original.indexOf(node)
       ).reverse()
         .find(n => has(n, 'ant-select-selection-item')) : undefined;
-      const title = tag?.attributes.find(([key]) => key === 'title')?.[1];
+      const matchingEntry = tag?.attributes.find(([key]) => key === 'title');
+      const title = matchingEntry?.[1];
       const nodeLabel = label + '/' + name + '/' + key + '/' + ordinal;
       if (!verifyExtraNode?.(match, node, nodeLabel)) {
         verifyNode(

@@ -29,7 +29,8 @@ function reference(value: unknown): number | undefined {
   return value && typeof value === 'object' && 'ref' in value ? (value as { ref: number }).ref : undefined;
 }
 function property(node: GraphNode, key: string) {
-  return node.properties.find(p => p.key === key)?.value;
+  const matchingProperty = node.properties.find(p => p.key === key);
+  return matchingProperty?.value;
 }
 function reactNode(node: GraphNode) {
   return node.type === 'object' && node.properties?.some(p => p.key === '$$typeof'
