@@ -1,3 +1,4 @@
+// Готовит содержимое тегов TreeSelect и сохраняет данные скрытых записей для summary.
 import { getSelectTagText } from './select-tag-text.engine';
 import type { TreeSelectLabel, TreeSelectLabeledValue } from './tree-select.types';
 

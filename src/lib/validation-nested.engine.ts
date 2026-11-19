@@ -1,3 +1,5 @@
+// Обходит поля вложенных object и array rules. Сравнение правила и исходного значения в цепочке
+// предков прерывает циклы.
 import type { FormValues, ValidationRule } from './validation.engine';
 import {
   formatValidationMessages, resolveValidationMessage, type ValidationMessageContext
@@ -21,6 +23,7 @@ type ValidateChildren<Values extends FormValues> = (
   key: string
 ) => Promise<ValidationMessages>;
 
+// warningOnly переводит в предупреждения также ошибки дочерних правил.
 export function collectValidationMessages<Values extends FormValues>(
   rule: ValidationRule<Values>,
   own: readonly string[],
@@ -37,6 +40,7 @@ export function collectValidationMessages<Values extends FormValues>(
   };
 }
 
+// Возвращает собственное поле контейнера, включая пустую строку и числовой ноль.
 function ownValue(value: unknown, key: string): unknown {
   if (value == null) {
     return;
@@ -45,6 +49,8 @@ function ownValue(value: unknown, key: string): unknown {
   return Object.hasOwn(source, key) ? source[key] : undefined;
 }
 
+// Запускает explicit fields перед defaultField массива. Порядок сообщений explicit fields
+// определяется завершением проверок.
 export async function validateNestedRule<Values extends FormValues>(
   value: unknown,
   original: unknown,

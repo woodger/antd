@@ -1,6 +1,9 @@
+// Вычисляет окно и положение строк виртуального списка. Неизмеренные высоты получают estimate, а
+// scrollTo учитывает незавершённые измерения.
 // Расчёты @rc-component/virtual-list1.5.1; MIT, vendor/LICENSE.rc-virtual-list.
 export type VirtualScrollAlign = 'top' | 'bottom' | 'auto';
 
+// Выбирает видимый интервал по суммарному префиксу высот и добавляет одну строку после конца.
 export function virtualListWindow<Row, Key>(
   rows: readonly Row[],
   getKey: (row: Row) => Key,
@@ -45,6 +48,7 @@ export function virtualListWindow<Row, Key>(
     offset, scrollHeight: total };
 }
 
+// Собирает верхнюю и нижнюю границы по ключам в порядке строк.
 export function virtualListSizes<Row, Key>(
   rows: readonly Row[],
   getKey: (row: Row) => Key,
@@ -61,6 +65,7 @@ export function virtualListSizes<Row, Key>(
   return sizes;
 }
 
+// Рассчитывает один проход scrollTo. unknown запрашивает повторное измерение в вызывающей модели.
 export function virtualListScrollStep<Row, Key>(
   rows: readonly Row[],
   getKey: (row: Row) => Key,

@@ -1,3 +1,4 @@
+// Преобразует измерения drag и touch Carousel в направление, смещение и цель перехода.
 // Swipe и navigable indexes из @ant-design/react-slick 2.0.0; MIT, LICENSE.react-slick.
 import type { CarouselState, CarouselSwipeDirection, CarouselTouchObject } from './carousel.types';
 import {
@@ -30,6 +31,7 @@ type CarouselSwipePatch = Partial<Pick<
     | 'touchObject' | 'currentDirection' | 'trackStyle'
 >>;
 
+// Различает горизонтальный жест и вертикальную ветку по углу, учитывая verticalSwiping.
 export function carouselSwipeDirection(
   touch: CarouselTouchObject,
   verticalSwiping = false
@@ -47,6 +49,7 @@ export function carouselSwipeDirection(
   return verticalSwiping ? angle >= 35 && angle <= 135 ? 'up' : 'down' : 'vertical';
 }
 
+// Обновляет touch-состояние и вычисляет edge friction для ограниченного трека.
 export function carouselSwipeMove(
   spec: CarouselSwipeSpec,
   x: number,
@@ -110,6 +113,7 @@ export function carouselSwipeMove(
   return { state, preventDefault, edge, swipeEvent };
 }
 
+// Строит последовательность индексов для заданного шага, включая возможные клоны.
 export function carouselNavigableIndexes(spec: Pick<
   CarouselSpec, 'infinite' | 'slideCount' | 'slidesToShow' | 'slidesToScroll'
 >) {
@@ -128,6 +132,7 @@ export function carouselNavigableIndexes(spec: Pick<
   return indexes;
 }
 
+// Возвращает ближайшую не превышающую цель позицию навигации.
 export function carouselCheckNavigable(spec: CarouselSpec, value: number) {
   const navigable = carouselNavigableIndexes(spec);
   if (value > navigable[navigable.length - 1]) {
@@ -143,6 +148,7 @@ export function carouselCheckNavigable(spec: CarouselSpec, value: number) {
   return value;
 }
 
+// Берёт стандартный шаг либо число пересечённых измеренных слайдов.
 export function carouselSlidesTraversed(spec: CarouselSwipeSpec) {
   if (!spec.swipeToSlide) {
     return spec.slidesToScroll;
@@ -158,6 +164,7 @@ export function carouselSlidesTraversed(spec: CarouselSwipeSpec) {
   return Math.abs(target.index - current) || 1;
 }
 
+// Завершает жест, определяя целевой индекс только после достижения порога.
 export function carouselSwipeEnd(spec: CarouselSwipeSpec): {
   state: CarouselSwipePatch;
   preventDefault: boolean;

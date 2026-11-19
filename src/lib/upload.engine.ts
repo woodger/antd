@@ -1,8 +1,11 @@
+// Описывает список и представление файлов Upload. Подбор accept и распознавание изображений не
+// используют транспорт.
 import type { HTMLAnchorAttributes } from 'svelte/elements';
 import type { UploadFile, UploadProps, UploadRcFile } from './upload.types';
 // Ant Design 6.6.8 / rc-upload 1.1.1; MIT, vendor/LICENSE.ant-design и LICENSE.rc-upload.
 export const UPLOAD_LIST_IGNORE = '__ANT_SVELTE_UPLOAD_LIST_IGNORE__';
 
+// Даёт строковому ответу сервера приоритет над statusText, message и общим fallback.
 export function getUploadErrorMessage(response: unknown, error: unknown, fallback: string): string {
   if (typeof response === 'string' && response) {
     return response;
@@ -29,6 +32,7 @@ export function resolveUploadLinkProps(value: UploadFile['linkProps']): HTMLAnch
     : {};
 }
 
+// Копирует метаданные строки, сохраняя ссылку на исходный File.
 export function uploadFileObject<T = unknown>(file: UploadRcFile): UploadFile<T> {
   return {
     ...file,
@@ -42,6 +46,7 @@ export function uploadFileObject<T = unknown>(file: UploadRcFile): UploadFile<T>
     originFileObj: file
   };
 }
+// Обновляет запись по uid на прежней позиции или добавляет её в конец.
 export function updateUploadList<T = unknown>(
   file: UploadFile<T>,
   list: readonly UploadFile<T>[]
@@ -58,6 +63,8 @@ export function updateUploadList<T = unknown>(
   }
   return next;
 }
+// Раздельно вычисляет новый список и необходимость onChange. При maxCount=1 остаётся последний
+// файл.
 export function limitUploadList<T = unknown>(
   file: UploadFile<T> | UploadRcFile,
   list: readonly UploadFile<T>[],
@@ -76,6 +83,7 @@ export function limitUploadList<T = unknown>(
       )
   };
 }
+// Сопоставляет расширения, MIME и wildcard с именем и типом File.
 export function uploadAccept(file: Pick<File, 'name' | 'type'>, accept?: string): boolean {
   if (!accept) {
     return true;
@@ -100,6 +108,7 @@ export function uploadAccept(file: Pick<File, 'name' | 'type'>, accept?: string)
     return file.type === valid || /^\w+$/.test(valid);
   });
 }
+// Соблюдает native и пользовательский filter до принудительной проверки accept.
 export function filterUploadFile(
   file: File,
   accept: UploadProps['accept'],
@@ -115,6 +124,7 @@ export function filterUploadFile(
   }
   return !force || uploadAccept(file, typeof accept === 'string' ? accept : accept?.format);
 }
+// Без thumbnail MIME имеет приоритет. Иначе классифицирует URL и расширение.
 export function uploadIsImage(file: UploadFile): boolean {
   if (file.type && !file.thumbUrl) {
     return file.type.startsWith('image/');

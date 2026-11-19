@@ -1,7 +1,10 @@
+// Вычисляет раскладку FormItem. Отступ пустой подписи возникает при использовании общих labelCol
+// и wrapperCol.
 import type { ColProps, ColSize, GridBreakpoint } from './grid.types';
 import { gridBreakpoints } from './grid.engine';
 import type { RenderEmptyContent } from './types';
 
+// Нормализует числовой span в объект, пригодный для расчёта offset.
 function colSize(value: ColProps[GridBreakpoint]): ColSize {
   // Source теряет numeric shorthand при выводе offset; сохраняем обычную семантику Col.
   if (typeof value === 'number') {

@@ -1,3 +1,5 @@
+// Собирает сообщения Form из локали и настроек. Сначала подставляет позиционные аргументы, затем
+// переменные правила.
 import type { FormValues, ValidationRule } from './validation.engine';
 import type { ValidateMessages } from './validation-messages.types';
 

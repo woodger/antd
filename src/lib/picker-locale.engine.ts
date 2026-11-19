@@ -1,6 +1,8 @@
+// Заполняет форматы отображения и ввода Picker устоявшимися defaults.
 // useLocale rc-picker 1.12.2; MIT, vendor/LICENSE.rc-picker.
 import type { PickerLocale } from './picker-locale.types';
 
+// Использует непустые форматы locale. Формат времени задаёт часть общего формата даты и времени.
 export function fillPickerLocale(locale: PickerLocale, timeFormat = 'HH:mm:ss'): PickerLocale {
   return {
     ...locale,

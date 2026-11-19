@@ -1,5 +1,8 @@
+// Обрабатывает выбор, поиск и переход по доступным строкам Select. Значения сохраняют различие
+// строк и чисел.
 import type { SelectDataFields } from './select-data.types';
 
+// Считает допустимый лимит достигнутым также при maxCount, равном нулю.
 export function isSelectCountReached(count: number, maxCount?: number) {
   return maxCount !== undefined && !Number.isNaN(maxCount) && count >= maxCount;
 }
@@ -13,6 +16,7 @@ export function isSelectOptionDisabled(
   return Boolean(disabled || countReached && !selected);
 }
 
+// Нормализует массив выбора до уникальных значений, сохраняя порядок.
 export function getSelectValues<Value extends string | number>(
   value: Value | readonly Value[] | undefined
 ): Value[] {
@@ -32,6 +36,7 @@ export function getSelectDisplayLabel(label: unknown, value: string | number) {
   return typeof content === 'boolean' ? '' : String(content);
 }
 
+// Начинает обход от текущей позиции или края списка согласно направлению.
 export function getEnabledIndex<Option extends object>(
   options: readonly (Option & { disabled?: boolean; group?: boolean; })[],
   current: number,

@@ -1,5 +1,7 @@
+// Нормализует подсказку подписи формы. Локальное значение накладывается на контекст Tooltip.
 import type { FormItemTooltip, FormTooltipProps } from './form.types';
 
+// Отличает объект настроек от массива или snippet, которые используются как содержимое.
 function isTooltipOptions(value: FormItemTooltip): value is FormTooltipProps {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }

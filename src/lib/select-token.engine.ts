@@ -1,7 +1,11 @@
+// Разбирает текстовые разделители Select и сопоставляет полученные слова с допустимыми
+// значениями.
 import type { SelectTokenSeparators } from './select.types';
 import type { SelectDataFields, SelectDataMaps, SelectDataValue } from './select-data.types';
 
 /** @rc-component/select 1.10.1; MIT, см. vendor/LICENSE.rc-select. */
+// Возвращает null, когда исходный текст не разделён. end ограничивает только завершённый
+// результат.
 export function splitSelectTokens(text: string, separators?: SelectTokenSeparators, end?: number) {
   if (typeof separators === 'function') {
     const words = separators(text);
@@ -14,6 +18,7 @@ export function splitSelectTokens(text: string, separators?: SelectTokenSeparato
   const tokens = separators;
   let matched = false;
 
+  // Применяет оставшиеся разделители к каждому фрагменту и убирает пустые токены.
   function split(value: string, index: number): string[] {
     const token = tokens[index];
     if (!token) {

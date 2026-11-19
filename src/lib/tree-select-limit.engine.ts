@@ -1,3 +1,5 @@
+// Вычисляет maxCount и недоступность вариантов для текущей стратегии TreeSelect. Отображаемые
+// теги и checked могут иметь разный размер.
 // Ant Design 6.6.8 / rc-tree-select 1.16.1; MIT, vendor/LICENSE.rc-tree-select.
 import type { TreeSelectIndex } from './tree-select.engine';
 import type { TreeSelectProps, TreeSelectRawValue } from './tree-select.types';

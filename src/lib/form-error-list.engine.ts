@@ -1,3 +1,4 @@
+// Строит строки сообщений Form и удерживает удаляемые строки до окончания motion.
 import type { FormErrorListProps, FormValidateStatus } from './form-error-list.types';
 import type { RenderEmptyContent } from './types';
 
@@ -15,6 +16,8 @@ export interface FormErrorMotionEntity extends FormErrorEntity {
 export function buildFormErrorList({
   help, helpStatus, errors = [], warnings = []
 }: Pick<FormErrorListProps, 'help' | 'helpStatus' | 'errors' | 'warnings'>): FormErrorEntity[] {
+  // Формирует ключ по префиксу и содержимому. Счётчик повторов применяется после построения
+  // списка.
   function entity(
     content: RenderEmptyContent,
     prefix: string,

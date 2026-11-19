@@ -1,3 +1,4 @@
+// Определяет совпадения и клавиатурную цель AutoComplete на общем списке Select.
 import type { SelectDataFields, SelectDataRow, SelectDataValue } from './select-data.types';
 
 /** Native Snippet group label не участвует в поиске; остальные поля следуют Source matching. */
@@ -14,6 +15,7 @@ export function autoCompleteMatchesData(
   return text.toUpperCase().includes(search.toUpperCase());
 }
 
+// Циклически обходит доступные записи и возвращает -1, если вариантов нет.
 export function autoCompleteNext<Value extends SelectDataValue, Data extends object>(
   entries: readonly SelectDataRow<Value, Data>[],
   current: number,

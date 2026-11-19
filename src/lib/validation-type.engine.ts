@@ -1,3 +1,5 @@
+// Определяет правила типа для скалярной проверки Form. Нормализация даты предшествует проверке
+// валидности.
 import { matchesValidationFormat } from './validation-format.engine';
 
 /** Rule.type по async-validator 6.0.0; MIT: vendor/LICENSE.rc-async-validator. */
@@ -5,6 +7,7 @@ export type ValidationRuleType = 'string' | 'number' | 'integer' | 'float' | 'bo
   | 'array' | 'object' | 'date' | 'regexp' | 'method' | 'any'
   | 'enum' | 'email' | 'url' | 'hex' | 'tel' | 'pattern';
 
+// Пустая строка для number считается отсутствующим значением. Прочие числа не преобразуются.
 export function normalizeValidationType(value: unknown, type: ValidationRuleType | undefined) {
   if (type === 'number' && value === '') {
     return undefined;
@@ -22,6 +25,8 @@ export function normalizeValidationType(value: unknown, type: ValidationRuleType
   }
 }
 
+// Проверяет тип без преобразования строки в число. Для форматов передаёт строку профильной
+// проверке.
 export function matchesValidationType(value: unknown, type: ValidationRuleType) {
   switch (type) {
     case 'string': return typeof value === 'string';

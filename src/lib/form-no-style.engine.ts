@@ -1,3 +1,5 @@
+// Собирает сообщения FormItem и его noStyle-потомков. Записи с тем же полным путём учитываются
+// один раз.
 import { formNamePath, type NamePath } from './form-store.engine';
 
 export interface FormItemMessages {
@@ -6,6 +8,7 @@ export interface FormItemMessages {
   readonly warnings: readonly string[];
 }
 
+// Сохраняет собственные сообщения в начале и добавляет сообщения дочерних полей.
 export function mergeFormItemMessages(
   errors: readonly string[],
   warnings: readonly string[],

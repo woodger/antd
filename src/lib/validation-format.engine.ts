@@ -1,3 +1,5 @@
+// Проверяет форматы async-validator и пользовательские pattern. Перед проверкой pattern учитывает
+// тип значения и состояние RegExp.
 /** Форматы async-validator 6.0.0; MIT: vendor/LICENSE.rc-async-validator. */
 const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+\.)+[a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,}))$/;
 const telPattern = /^(\+[0-9]{1,3}[-\s\u2011]?)?(\([0-9]{1,4}\)[-\s\u2011]?)?([0-9]+[-\s\u2011]?)*[0-9]+$/;
@@ -15,6 +17,7 @@ const urlPattern = new RegExp(
     + '(?::\\d+)?(?:[/?#][^\\s"]*)?$', 'i'
 );
 
+// Принимает строки и проверяет только формат, соответствующий указанному типу.
 export function matchesValidationFormat(value: unknown, type: string) {
   if (typeof value !== 'string') {
     return false;
@@ -39,6 +42,8 @@ export function matchesValidationFormat(value: unknown, type: string) {
   }
 }
 
+// Копирует RegExp перед проверкой. Флаги сохраняются, состояние lastIndex остаётся у переданного
+// объекта.
 export function matchesValidationPattern(
   value: unknown,
   pattern: RegExp | string,

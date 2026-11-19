@@ -1,3 +1,5 @@
+// Преобразует метаданные проверки в статус FormItem. Локальный validateStatus имеет верхний
+// приоритет.
 import type { FormValidateStatus } from './form-error-list.types';
 
 interface FormStatusOptions {
@@ -10,6 +12,7 @@ interface FormStatusOptions {
   warnings: readonly unknown[];
 }
 
+// После validating приоритет имеют ошибки, затем предупреждения и признак завершённой проверки.
 export function resolveFormStatus({
   validateStatus, validating, touched, hasFeedback, validated, errors, warnings
 }: FormStatusOptions): FormValidateStatus | undefined {

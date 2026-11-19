@@ -1,3 +1,5 @@
+// Рассчитывает колонки и позиции Masonry. Порядок записей для motion учитывает оставшиеся в DOM
+// строки.
 import { gridResponsiveValue } from './grid.engine';
 import type { GridScreenMap } from './grid.types';
 import type { MasonryItemType, MasonryKey, MasonryProps } from './masonry.types';
@@ -17,6 +19,7 @@ export interface MasonryEntry<Data = unknown> {
   visible: boolean;
 }
 
+// Принимает числовое количество либо выбирает активный breakpoint с запасным xs.
 export function getMasonryColumns(columns: MasonryProps['columns'], screens: GridScreenMap) {
   if (!columns) {
     return 3;
@@ -28,6 +31,7 @@ export function getMasonryColumns(columns: MasonryProps['columns'], screens: Gri
   return gridResponsiveValue(columns, screens) ?? columns.xs ?? 1;
 }
 
+// Раскладывает измеренные элементы по колонкам, сохраняя явно выбранную колонку.
 export function getMasonryPositions(
   heights: readonly MasonryHeight[],
   columns: number,
@@ -91,6 +95,7 @@ export function mergeMasonryEntries<Data>(
 export function equalMasonryData(left: unknown, right: unknown) {
   const seen = new Set<unknown>();
 
+  // Рекурсивно сравнивает собственные значения и останавливается при повторном посещении объекта.
   function equal(a: unknown, b: unknown): boolean {
     if (seen.has(a)) {
       return false;

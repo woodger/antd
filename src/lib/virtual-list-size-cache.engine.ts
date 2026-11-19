@@ -1,4 +1,7 @@
+// Кэширует накопленные высоты для текущего render. Уже пройденный префикс сохраняет прежние
+// измерения.
 // Расчёты @rc-component/virtual-list1.5.1/useGetSize; MIT, vendor/LICENSE.rc-virtual-list.
+// Возвращает запрос диапазона, лениво дополняющий индекс до найденных границ.
 export function createVirtualListSizeCache<Row, Key>(
   rows: readonly Row[],
   getKey: (row: Row) => Key,
