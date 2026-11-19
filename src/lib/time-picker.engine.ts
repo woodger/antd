@@ -4,6 +4,7 @@ import type { DatePickerFormat, DatePickerProps, DatePickerTimeConfig } from './
 import type { TimePickerProps, TimePickerColumnType, TimePickerUnit } from './time-picker.types';
 import { dayjsGenerateConfig as date } from './date-picker-dayjs.engine';
 import { validPickerTime } from './date-picker.engine';
+import { normalizePickerFieldFormat } from './picker-mask.engine';
 import { fillPickerLocale } from './picker-locale.engine';
 import type { PickerLocale } from './picker-locale.types';
 
@@ -49,7 +50,7 @@ export function timePickerFormats(
     | 'showSecond' | 'showMillisecond'>,
   locale: NonNullable<TimePickerProps['locale']>['lang'] = {}
 ): DatePickerFormat[] {
-  if (props.format) return Array.isArray(props.format) ? props.format : [props.format];
+  if (props.format) return normalizePickerFieldFormat<Dayjs>(props.format, 'HH:mm:ss').formats;
 
   return [locale.fieldTimeFormat || timeFormat(props)];
 }
@@ -99,7 +100,8 @@ export function datePickerClock(
   locale: NonNullable<DatePickerProps['locale']>['lang'] = {}
 ): DatePickerTimeConfig {
   const config = typeof props.showTime === 'object' ? props.showTime : {};
-  const first = config.format || (Array.isArray(props.format) ? props.format[0] : props.format);
+  const first = config.format
+    || normalizePickerFieldFormat<Dayjs>(props.format, '').formats[0];
   const format = typeof first === 'string' && first
     ? first : locale.fieldDateTimeFormat || `YYYY-MM-DD ${timeFormat(config)}`;
   // Буквы в [literal] не включают units; исходная ошибка зафиксирована в реестре.

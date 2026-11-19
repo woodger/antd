@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { datePickerEnUS, datePickerRuRU } from './date-picker.locale';
 import {
   timePickerFormats,
+  datePickerClock,
   timePickerClock,
   timePickerPanel,
   timePickerColumnDate,
@@ -19,6 +20,18 @@ import { timePickerSemantic } from './time-picker-semantic.engine';
 dayjs.extend(utc);
 
 describe('TimePicker formatting and units', () => {
+  it('unwraps scalar time masks and infers clock units from the actual format string', () => {
+    const format = { format: 'HH:mm:ss.SSS', type: 'mask' } as const;
+    const clock = timePickerClock({ format });
+
+    expect(timePickerFormats({ format })).toEqual(['HH:mm:ss.SSS']);
+    expect(clock.format).toBe('HH:mm:ss.SSS');
+    expect([clock.showHour, clock.showMinute, clock.showSecond, clock.showMillisecond])
+      .toEqual([true, true, true, true]);
+    expect(datePickerClock({ format: { format: 'YYYY-MM-DD HH:mm' }, showTime: true }).showSecond)
+      .toBe(false);
+    expect(datePickerClock({ format, showTime: { format: 'HH:mm' } }).format).toBe('HH:mm');
+  });
   it('defaults input formats from the time locale and visible units', () => {
     expect(timePickerFormats({})).toEqual(['HH:mm:ss']);
     expect(timePickerFormats({ use12Hours: true })).toEqual(['hh:mm:ss A']);
@@ -108,6 +121,27 @@ describe('TimePicker formatting and units', () => {
     expect(next.toISOString()).toBe('2024-09-15T08:15:40.500Z');
     expect(next.isUTC()).toBe(true);
     expect(value.toISOString()).toBe('2024-09-15T10:23:44.567Z');
+  });
+
+  it('keeps the time panel producer at one full-date argument before alignment', () => {
+    const value = dayjs('2020-12-31T16:37:59.456').locale('en');
+    const observed: Array<{ receiver: unknown; args: unknown[]; }> = [];
+    const disabledTime = function (this: unknown, _date: typeof value) {
+      observed.push({ receiver: this, args: Array.from(arguments) });
+      return {};
+    };
+    const clock = timePickerClock({ showSecond: true, showMillisecond: true, millisecondStep: 1 });
+
+    const panel = timePickerPanel(value, null, clock, disabledTime, datePickerEnUS.lang, value);
+    const aligned = panel.align(value);
+
+    expect(observed).toHaveLength(1);
+    expect(observed[0].receiver).toBeUndefined();
+    expect(observed[0].args).toHaveLength(1);
+    expect(observed[0].args[0]).toBe(value);
+    expect(panel.template.valueOf()).toBe(value.valueOf());
+    expect(aligned.valueOf()).toBe(value.valueOf());
+    expect(value.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2020-12-31 16:37:59.456');
   });
 
   it('filters 12-hour values and disables a meridiem with no enabled hours', () => {

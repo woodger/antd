@@ -9,6 +9,10 @@
 
 ### Added
 
+- DatePicker, RangePicker, TimePicker и TimeRangePicker поддерживают объектный
+  format и маски числовых разрядов. Неполный ввод отделён от календарного значения;
+  Enter использует уже проверенный Dayjs, смена формата сохраняет pending range.
+
 - AutoComplete поддерживает `optionRender`, `labelRender` и исходный no-op
   `tagRender` для combobox. Сохранены raw editor value, закрытый кеш options,
   абсолютные virtual indexes и поведение пользовательского input.

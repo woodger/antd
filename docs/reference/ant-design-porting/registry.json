@@ -6540,12 +6540,46 @@
           "note": "Ant Design6.6.8: locale-недели с исходным gggg-wo, US/GB week-year boundary, ordinal parser от January1 без нормализации weekday. Week selection/range/hover располагаются на строках; showWeek по умолчанию включает номера для week, явный false убирает колонку, а CSS show-week modifier появляется только при явном true. Номер выбирает фактическое начало строки, использует тот же Date ref, что первый день, проверяется с type=week и обходит cellRender; date-дни сохраняют type=date. Actual candidate validation без endpoint probes, partial-week min/max, full timestamp sorting и locked same-week reverse. Range показывает соседние месяцы; year→month→week descent и second-panel picker-value backoffset сохраняют Source payloads. ShowTime ignored, needConfirm default false. Typed candidate хранится отдельно от model ref; malformed Enter сохраняет открытый invalid input. Native Tab/стрелки сохраняют семидневный шаг и фокус при смене месяца; reactive week→date проверяется отдельно. Независимые Source first/repeat по2 owners/125 actions/127 points/17 Escape+1000/2unmount+late, по8 closedSSR packets US/GB:620 original parts/4 manifests в435 целых gzip blobs (43.5MB, max375KB). Native FIRST:584 public-state comparisons против обоих Source и все2579 actual producer argument/return/raw-Date/from/public-model-alias signatures имеют witness в каждом run в наблюдаемых model-transition windows. Pure producer count/order/timing не объявляются равными. Полные afterCall raw graphs сохранены отдельно от settled equality. Receiver/Singlecalendar-info/HTMLfocus/ref/retained-popup boundaries прежние; private browser resource counters не измерялись. Обычный picker=date с showWeek сверяется отдельно:2 owners/20 actions/22 settled points/2 Escape+1000 и8 total US closedSSR packets;132 original parts/4 manifests в97 целых gzip (5.0MB). Все104 public-phase comparisons и3840 actual producer signatures имеют BOTH Source witnesses, включая строгий initial-only bucket и ссылки на даты из callback/model graphs. Date field validation сохраняет full model Dayjs/ref вместо повторного разбора строки; поле и submit-start используют type-only info, submit-end сохраняет actual from:start, panel from не меняется. Date mode tuple сохраняет identity. Source Today A с disabled:null и aria-disabled остаётся raw; существующий Native Today BUTTON проверяет реальную disabled-семантику, role и accessible name. AfterCall variance Range step6 сохранена отдельно. Production public-dist consumers:6 tests/145 authored actions,6 actual closedSSR profiles, strict hydrate(recover:false) с сохранением parsed DOM и real unmount/+1000. Все actual SSR validation args/ref имеют closed Source witnesses; pure multiplicity не сравнивается. Client/SSR graphs исключают projectsrc/tests/React/HMR/Sourcefacts; external Dayjs/Svelte runtime и compiler entries закреплены хешами. Полный API семейства не заявляется."
         },
         {
+          "id": "numeric-mask",
+          "title": "Объектный format и маски числовых разрядов",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/picker-mask.engine.ts",
+            "src/lib/picker-mask.engine.test.ts",
+            "src/lib/picker-mask-input.model.svelte.ts",
+            "src/lib/picker-mask-input.model.test.ts",
+            "src/lib/date-picker.types.ts",
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "tests/browser/date-picker-mask-cases.mjs",
+            "tests/browser/date-picker-mask-native-types.ts",
+            "tests/browser/fixtures/DatePickerMaskCase.svelte",
+            "tests/browser/date-picker-mask-reference.mjs",
+            "tests/browser/date-picker-mask-assertions.ts",
+            "tests/browser/date-picker-mask-driver.ts",
+            "tests/browser/date-picker-mask.spec.ts",
+            "tests/browser/date-picker-mask-public-contract.spec.ts",
+            "tests/browser/fixtures/ant-design-date-picker-mask-source-manifest.json",
+            "tests/browser/fixtures/ant-design-date-picker-mask-source-notes.md",
+            "tests/package/date-picker-mask-source.test.ts",
+            "tests/package/date-picker-mask.ssr.test.ts",
+            "readme.md",
+            "tests/browser/date-picker-mask-hydration.spec.ts",
+            "tests/browser/date-picker-mask-hydration-reference.mjs",
+            "tests/browser/date-picker-mask-hydration-prefix-reference.mjs",
+            "tests/browser/fixtures/ant-design-date-picker-mask-hydration-source-manifest.json",
+            "tests/browser/fixtures/ant-design-date-picker-mask-hydration-prefix-source-manifest.json"
+          ],
+          "note": "Scalar {format,type?:mask} сохраняет primitive/function arrays. Числовые YYYY/MM/DD/HH/mm/ss/SSS, локальный неполный текст, реальный focus/segment/caret и отмена native key обработаны общими engine/controller без замены input. Enter использует сохранённый Dayjs; pristine сохраняет скрытое время, SSS не округляется panel step. Format-only updates сохраняют working range и исходную ссылку owner model. DefaultPickerValue удерживает панель при вводе; DOM value/defaultValue следуют отображению. Исходные React6.6.8 first/repeat:5 owners/75 macros/287 подшагов (272 физических и15 DOM controls)/1036 отдельных чтений на CSR;15 закрытых profiles×2SSR serializers на run. Все1618 original parts и4 manifests сохранены целыми gzip без изменения raw полей. Pure producer count/order не сравниваются; аргументы/возвраты/Dayjs/from и публичные aliases требуют Source witness в наблюдаемом переходе. AfterCall сохраняется отдельно от settled. Native combobox/dialog, button calendar, refs/receiver и pre-first-focus collapsed caret construction остаются явно проверяемыми границами. Clipboard/IME и preserveInvalidOnBlur=true matrix этим срезом не заявлены; полнота семейства не заявляется. Отдельный Source hydrateRoot first/repeat покрывает30 closed profiles/270 snapshots с сохранением parsed owner/root/input и нулевой каретки. Ещё4 исходных range-prefix packets сохраняют фокус/нулевую каретку конца после Enter начала;40 facts для10 точных labels проверяются по полным gzip/raw hashes, JSON paths и byte ranges. Только эти свидетели допускают различие с исходной CSR-кареткой; значения, callbacks, Date/from и producer arguments остаются строгими. Maintained Native browser проверяет15 SSR/hydration profiles, включая этот переход фокуса и unmount/+1000. Production public-dist подтверждён составным прогоном:13 успешных V2 cases, TimeRange V3 и финальный RangeDate V4, при побайтно одинаковых3832 src/dist files. V4 заново рендерит15 closed SSR profiles и проверяет RangeDate15 macros/56children, strict hydrate(recover:false), все actual producer arguments BOTH Source и unmount/+1000. Вызовы чистых ограничений во время unmount сохраняются в ledger; cleanup→late не допускает роста, callbacks и refs проверяются отдельно."
+        },
+        {
           "id": "extended-api",
-          "title": "Multiple, mask, generatePicker и полный semantic API",
+          "title": "Multiple, generatePicker и полный semantic API",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет multiple, generatePicker factory, mask format и полного набора semantic slots/events. Week/month/year/quarter, showWeek и RangePicker presets/previewValue перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно; остальные события семейства ещё не покрыты полностью. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
+          "note": "Нет multiple, generatePicker factory и полного набора semantic slots/events. Week/month/year/quarter, showWeek и RangePicker presets/previewValue перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно; остальные события семейства ещё не покрыты полностью. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
         },
         {
           "id": "global-parity",
@@ -12186,8 +12220,42 @@
           "note": "Общая машина RangePicker: calendar/submit/owner, последовательные OK/Enter/Tab, focus lock и strong/weak close, onOk до перехода/change, сортировка только final pair и locked boundary clear. Nullable panels/defaultOpenValue/pickerValue, from-dependent validation, native FormData/Dayjs/Form/refs и cleanup. Icons/semantic берутся из timePicker; variant/separator/class/plain style из rangePicker, один semantic слой. Узкая панель/стрелка сдвигаются под активное поле; source RTL column order. Svelte native buttons/popover и deferred focus адаптированы без изменения календарного RangePicker API. Локальный prefixCls при той же controlled-паре сохраняет текст, selection и неподтверждённый выбор; новый массив value с прежними Dayjs по-прежнему синхронизирует черновик."
         },
         {
+          "id": "numeric-mask",
+          "title": "Объектный format и маски числовых разрядов",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/picker-mask.engine.ts",
+            "src/lib/picker-mask.engine.test.ts",
+            "src/lib/picker-mask-input.model.svelte.ts",
+            "src/lib/picker-mask-input.model.test.ts",
+            "src/lib/date-picker.types.ts",
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "tests/browser/date-picker-mask-cases.mjs",
+            "tests/browser/date-picker-mask-native-types.ts",
+            "tests/browser/fixtures/DatePickerMaskCase.svelte",
+            "tests/browser/date-picker-mask-reference.mjs",
+            "tests/browser/date-picker-mask-assertions.ts",
+            "tests/browser/date-picker-mask-driver.ts",
+            "tests/browser/date-picker-mask.spec.ts",
+            "tests/browser/date-picker-mask-public-contract.spec.ts",
+            "tests/browser/fixtures/ant-design-date-picker-mask-source-manifest.json",
+            "tests/browser/fixtures/ant-design-date-picker-mask-source-notes.md",
+            "tests/package/date-picker-mask-source.test.ts",
+            "tests/package/date-picker-mask.ssr.test.ts",
+            "readme.md",
+            "tests/browser/date-picker-mask-hydration.spec.ts",
+            "tests/browser/date-picker-mask-hydration-reference.mjs",
+            "tests/browser/date-picker-mask-hydration-prefix-reference.mjs",
+            "tests/browser/fixtures/ant-design-date-picker-mask-hydration-source-manifest.json",
+            "tests/browser/fixtures/ant-design-date-picker-mask-hydration-prefix-source-manifest.json"
+          ],
+          "note": "Scalar {format,type?:mask} сохраняет primitive/function arrays. Числовые YYYY/MM/DD/HH/mm/ss/SSS, локальный неполный текст, реальный focus/segment/caret и отмена native key обработаны общими engine/controller без замены input. Enter использует сохранённый Dayjs; pristine сохраняет скрытое время, SSS не округляется panel step. Format-only updates сохраняют working range и исходную ссылку owner model. DefaultPickerValue удерживает панель при вводе; DOM value/defaultValue следуют отображению. Исходные React6.6.8 first/repeat:5 owners/75 macros/287 подшагов (272 физических и15 DOM controls)/1036 отдельных чтений на CSR;15 закрытых profiles×2SSR serializers на run. Все1618 original parts и4 manifests сохранены целыми gzip без изменения raw полей. Pure producer count/order не сравниваются; аргументы/возвраты/Dayjs/from и публичные aliases требуют Source witness в наблюдаемом переходе. AfterCall сохраняется отдельно от settled. Native combobox/dialog, button calendar, refs/receiver и pre-first-focus collapsed caret construction остаются явно проверяемыми границами. Clipboard/IME и preserveInvalidOnBlur=true matrix этим срезом не заявлены; полнота семейства не заявляется. Отдельный Source hydrateRoot first/repeat покрывает30 closed profiles/270 snapshots с сохранением parsed owner/root/input и нулевой каретки. Ещё4 исходных range-prefix packets сохраняют фокус/нулевую каретку конца после Enter начала;40 facts для10 точных labels проверяются по полным gzip/raw hashes, JSON paths и byte ranges. Только эти свидетели допускают различие с исходной CSR-кареткой; значения, callbacks, Date/from и producer arguments остаются строгими. Maintained Native browser проверяет15 SSR/hydration profiles, включая этот переход фокуса и unmount/+1000. Production public-dist подтверждён составным прогоном:13 успешных V2 cases, TimeRange V3 и финальный RangeDate V4, при побайтно одинаковых3832 src/dist files. V4 заново рендерит15 closed SSR profiles и проверяет RangeDate15 macros/56children, strict hydrate(recover:false), все actual producer arguments BOTH Source и unmount/+1000. Вызовы чистых ограничений во время unmount сохраняются в ledger; cleanup→late не допускает роста, callbacks и refs проверяются отдельно."
+        },
+        {
           "id": "advanced-api",
-          "title": "Multiple, mask, generatePicker, полный trigger/locale API и diagnostics",
+          "title": "Multiple, generatePicker, полный trigger/locale API и diagnostics",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [

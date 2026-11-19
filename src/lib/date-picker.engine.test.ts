@@ -22,6 +22,17 @@ import {
 } from './date-picker.engine';
 dayjs.extend(utc);
 describe('DatePicker date adapter and input', () => {
+  it('uses scalar object formats for display and parsing without changing the authored date', () => {
+    const value = dayjs('2020-12-31T16:37:59.456');
+    const formats = pickerFormats({ format: { format: 'YYYY-MM-DD HH:mm:ss.SSS', type: 'mask' } });
+
+    expect(formats).toEqual(['YYYY-MM-DD HH:mm:ss.SSS']);
+    expect(formatPicker(value, 'en_US', formats)).toBe('2020-12-31 16:37:59.456');
+    expect(parsePicker('2024-02-29 11:12:13.345', 'en_US', formats)?.toISOString())
+      .toBe(dayjs('2024-02-29T11:12:13.345').toISOString());
+    expect(pickerFormats({ format: { format: 'YYYY/MM/DD' } })).toEqual(['YYYY/MM/DD']);
+    expect(value.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2020-12-31 16:37:59.456');
+  });
   it('formats locale weeks and preserves the Source Jan1 weekday when parsing ordinals', () => {
     const value = dayjs('2020-12-31T16:37:59.456');
     const formats = pickerFormats({ picker: 'week', showTime: true });
@@ -330,6 +341,50 @@ describe('DatePicker date adapter and input', () => {
     ).toBe(
       false
     );
+  });
+  it('validates the original time with a start context on the natural field receiver', () => {
+    const value = dayjs('2020-12-31T16:37:59.456').locale('en');
+    const observed: Array<{ receiver: unknown; args: unknown[]; }> = [];
+    const props = {
+      showTime: true,
+      disabledTime(this: unknown, _date: typeof value) {
+        observed.push({ receiver: this, args: Array.from(arguments) });
+        return {
+          disabledMilliseconds: (hour: number, minute: number, second: number) =>
+            hour === 16 && minute === 37 && second === 59 ? [456] : []
+        };
+      }
+    };
+
+    expect(pickerTimeDisabled(value, props)).toBe(true);
+    expect(observed).toHaveLength(1);
+    expect(observed[0].receiver).toBe(props);
+    expect(observed[0].args).toHaveLength(3);
+    expect(observed[0].args[0]).toBe(value);
+    expect(observed[0].args[1]).toBe('start');
+    const info = observed[0].args[2];
+    if (info === null || typeof info !== 'object') throw Error('Time validation info missing');
+    expect(Object.keys(info)).toEqual(['from']);
+    expect(Object.hasOwn(info, 'from')).toBe(true);
+    expect(info).toEqual({ from: undefined });
+    expect(value.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2020-12-31 16:37:59.456');
+  });
+  it('keeps panel time alignment on its one-argument disabledTime path', () => {
+    const value = dayjs('2020-12-31T16:37:59.456').locale('en');
+    const observed: Array<{ receiver: unknown; args: unknown[]; }> = [];
+    const disabledTime = function (this: unknown, _date: typeof value) {
+      observed.push({ receiver: this, args: Array.from(arguments) });
+      return {};
+    };
+
+    const next = validPickerTime(value, { millisecondStep: 1 }, disabledTime);
+
+    expect(observed).toHaveLength(1);
+    expect(observed[0].receiver).toBeUndefined();
+    expect(observed[0].args).toHaveLength(1);
+    expect(observed[0].args[0]).toBe(value);
+    expect(next.valueOf()).toBe(value.valueOf());
+    expect(value.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2020-12-31 16:37:59.456');
   });
   it('defaults formats and exposes configured time units and steps', () => {
     expect(pickerFormats({ showTime: true })).toEqual(['YYYY-MM-DD HH:mm:ss']);

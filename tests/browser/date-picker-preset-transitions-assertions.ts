@@ -52,7 +52,7 @@ export const datePickerPresetTransitionBoundaries = Object.freeze({
   pureProducers: 'Validate complete actual producer ledgers locally; do not synthesize Source calls or assert equal render multiplicity',
   initialCaret: 'Only initial closed/alive owners with empty callback/action ledgers, BODY focus and an unfocused input collapsed at value.length have Native none versus Source forward direction; all later caret fields are strict',
   providerLocale: 'Source uses its implicit English default; the Native ordinary caller explicitly supplies enUS while preserving the library default',
-  producerArity: 'Measured Native disabledTime receives exactly one argument; Source may receive three during validation, with each actual ledger validated separately',
+  producerArity: 'Native validation disabledTime receives exactly (actual Dayjs,start,{own from:undefined}) on its natural object receiver; the measured panel path keeps exactly one Dayjs argument. Both forms are observed in Source; pure call multiplicity remains independent',
   loading: 'ResourceTiming and asset/network loading remain raw renderer observations; browser-owned counters remain unmeasured/null'
 });
 
@@ -207,12 +207,45 @@ function validateNativeOwner(owner: NativeOwner) {
   for (const [index, value] of owner.calls.entries()) {
     const call = record(value);
     assert.equal(call.index, index); assert.equal(call.side, 'own');
-    const supported: Record<string, number> = { disabledDate: 2, disabledTime: 1, disabledHours: 0 };
-    assert(Object.hasOwn(supported, String(call.kind)), 'Unknown Native producer: ' + String(call.kind));
     const args = encodedArray(call.argument);
+    const timeValidation = call.kind === 'disabledTime' && args.length === 3;
+    const supported: Record<string, number> = {
+      disabledDate: 2, disabledTime: timeValidation ? 3 : 1, disabledHours: 0
+    };
+    assert(Object.hasOwn(supported, String(call.kind)), 'Unknown Native producer: ' + String(call.kind));
     assert.equal(call.actualArgumentCount, supported[String(call.kind)], 'Measured strict Native producer arity: ' + call.kind);
     assert.equal(args.length, call.actualArgumentCount);
     assert.equal(rawProperty(call.rawArgument, 'length'), args.length);
+    if (timeValidation) {
+      assert.equal(args[1], 'start', 'Single field validation range');
+      assert.deepEqual(args[2], {
+        $: 'object', properties: [{ key: 'from', value: { $: 'undefined' } }]
+      }, 'Exact validation context without extra fields');
+      const argument = rawRoot(call.rawArgument);
+      assert.deepEqual(array(argument.properties).map(row => record(row).key),
+        ['0', '1', '2', 'length']);
+      assert.equal(rawProperty(call.rawArgument, '1'), 'start');
+      const infoRef = record(rawProperty(call.rawArgument, '2')).ref;
+      const info = array(record(call.rawArgument).objects).map(record)
+        .find(node => node.id === infoRef);
+      assert(info, 'Actual validation info raw object');
+      assert.equal(info.type, 'object');
+      assert.equal(info.array, false);
+      assert.equal(info.authoredRole, null);
+      assert.deepEqual(info.ownProperties, [{
+        key: 'from', enumerable: true, configurable: true, writable: true,
+        kind: 'value', valueType: 'undefined'
+      }]);
+      assert.deepEqual(info.properties, [{ key: 'from', value: { $: 'undefined' } }]);
+      const date = record(call.date);
+      assert.deepEqual(date.encoded, args[0], 'Exact validation Date argument');
+      assert.deepEqual(call.receiver, nativeReceiver, 'Natural validation props receiver');
+      if (!owner.open && owner.callbackInvocations.length === 0 && owner.ownerActions.length === 0
+        && call.actionIndex === -1) {
+        assert.equal(date.identity, owner.value.identity, 'Initial validation uses the public model Date');
+        assert.deepEqual(date.temporal, owner.value.temporal, 'Initial validation keeps full hidden fields');
+      }
+    }
     if (call.date) {
       const date = call.date as NativeDate;
       nativeDateAliases(date, owner);

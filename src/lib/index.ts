@@ -206,6 +206,7 @@ export type {
   DatePickerTimeConfig,
   DatePickerDisabledTime,
   DatePickerFormat,
+  DatePickerFormatConfig,
   DatePickerMode
 } from './date-picker.types';
 export { default as TextArea } from './TextArea.svelte';

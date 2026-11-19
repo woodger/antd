@@ -1,0 +1,62 @@
+{
+  "status": "released",
+  "sourceProtocolSHA256": "18caf577d37c657652640b13f22292e052e914a435c4ad38627f6b231df790fe",
+  "rootLease": "numeric-mask-source-20261119-01",
+  "holder": "/root",
+  "releasedAt": "2026-11-19T10:37:32.725Z",
+  "runs": [
+    {
+      "kind": "csr",
+      "variant": "first",
+      "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/csr-source-first.json",
+      "bytes": 571935,
+      "sha256": "8935ecc1840d869c26e0cf995f9d78a6dacac6a1b074b923b9c0c7ec2ea20060",
+      "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/csr-source-first.json.gz",
+      "gzipBytes": 93158,
+      "gzipSHA256": "f4431de4e292c8de80c8fd7299bbcc0b5f057605b457c7b25d7c0c2a1a91d735",
+      "actualExitCode": 0,
+      "terminalPinsUnchanged": true
+    },
+    {
+      "kind": "csr",
+      "variant": "repeat",
+      "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/csr-source-repeat.json",
+      "bytes": 573494,
+      "sha256": "d1236ef8caa22950815df67f8d6e3577b24eb59a16b7c50f9868c4c6bc1e23e1",
+      "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/csr-source-repeat.json.gz",
+      "gzipBytes": 93206,
+      "gzipSHA256": "39fa1cbe14d4c124e836ac82f6dc68c86368f0670f97c0b00a21d3dbc48164dd",
+      "actualExitCode": 0,
+      "terminalPinsUnchanged": true
+    },
+    {
+      "kind": "ssr",
+      "variant": "first",
+      "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json",
+      "bytes": 21257,
+      "sha256": "95da8b589856119ac9394c0d0a15f648dd41066a01f062d545f3c147e6cc0a72",
+      "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.gz",
+      "gzipBytes": 4016,
+      "gzipSHA256": "6c013e8ecdd4e668066d7147ea35e69b5e93bec1ad6ed67f23d8458825459310",
+      "actualExitCode": 0,
+      "terminalPinsUnchanged": true
+    },
+    {
+      "kind": "ssr",
+      "variant": "repeat",
+      "file": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-repeat.json",
+      "bytes": 21318,
+      "sha256": "2ceed08d86f0a2a0260417b2e91669acdd27e40ff271280400401c0d39bc96f2",
+      "gzipFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-repeat.json.gz",
+      "gzipBytes": 4024,
+      "gzipSHA256": "0d31d8b71ffc1a9a6960ddba381a32da3790a642f58ba07eff91af4b75d98a9d",
+      "actualExitCode": 0,
+      "terminalPinsUnchanged": true
+    }
+  ],
+  "sourceInputPinsUnchangedAtRelease": true,
+  "priorSourceMetadataPinsUnchanged": true,
+  "NativeDataRead": false,
+  "rawMutations": [],
+  "execution": "Four serial Root processes actually exited0 (CSR1379/42272; SSR79734/8570). Both CSR coordinators await browser.close in finally. No concurrent actual build/browser/SSR. Raw-part semantic audit follows separately."
+}

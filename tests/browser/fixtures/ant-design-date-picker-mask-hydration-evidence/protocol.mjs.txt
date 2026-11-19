@@ -1,0 +1,115 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
+import { samples } from '../date-picker-mask-source-proposal-v1/cases.mjs';
+import { sourceScripts, environment } from '../date-picker-mask-source-proposal-v1/protocol.mjs';
+
+export const base = '.upstream/artifacts/date-picker-mask-hydration-source-proposal-v2/';
+export const original = '.upstream/artifacts/date-picker-mask-source-proposal-v1/';
+export { sourceScripts, environment };
+export const phases = ['parsed', 'preHydrate', 'afterHydrateCall', 'mounted', 'settled',
+  'beforeUnmount', 'afterUnmountCall', 'cleanup', 'late1000'];
+export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+const digest = file => sha256(fs.readFileSync(file));
+const pin = file => ({ bytes: fs.statSync(file).size, sha256: digest(file) });
+const read = file => JSON.parse(fs.readFileSync(file, 'utf8'));
+const sourceFreezeSHA256 = '18caf577d37c657652640b13f22292e052e914a435c4ad38627f6b231df790fe';
+const proposalFile = base + 'protocol-proposal.json';
+const freezeFile = base + 'protocol-freeze.json';
+const validSHA = value => typeof value === 'string' && /^[0-9a-f]{64}$/.test(value);
+const validLease = value => typeof value === 'string' && /^[A-Za-z0-9][A-Za-z0-9_.:-]{7,127}$/.test(value)
+  && !/placeholder|replace|example|pending|ROOT_LEASE/.test(value);
+
+export function profiles() {
+  const manifest = read(original + 'ssr-source-first.json');
+  assert.equal(manifest.status, 'complete');
+  return samples.flatMap(sample => ['string', 'object', 'mask'].map(formatProfile => {
+    const row = manifest.cases.find(item => item.id === sample.id
+      && item.formatProfile === formatProfile && item.method === 'renderToString');
+    assert(row, sample.id + '/' + formatProfile);
+    return { id: sample.id, formatProfile, sample: { ...sample, initialFormatProfile: formatProfile },
+      sourceSSR: { variant: 'first', method: 'renderToString', rawJSONPart: row.rawJSONPart } };
+  }));
+}
+
+function currentProposal() {
+  assert.equal(digest(original + 'protocol-freeze.json'), sourceFreezeSHA256);
+  const sourceFreeze = read(original + 'protocol-freeze.json');
+  const sourceRelease = read(original + 'source-process-release.json');
+  assert.equal(sourceRelease.status, 'released');
+  const inputFiles = ['protocol.mjs', 'capture.mjs', 'plan.md'].map(file => base + file);
+  const preservedFiles = [...Object.keys(sourceFreeze.inputPins),
+    ...Object.keys(sourceFreeze.preservedPriorSource),
+    ...['protocol-freeze.json', 'protocol-proposal.json', 'execution-freeze.json',
+      'source-process-release.json', 'csr-source-first.json', 'csr-source-repeat.json',
+      'ssr-source-first.json', 'ssr-source-repeat.json'].map(file => original + file),
+    ...profiles().flatMap(row => [row.sourceSSR.rawJSONPart.file, row.sourceSSR.rawJSONPart.gzipFile])];
+  return { status: 'prepared-not-executed', scope: 'current-mask-initial-React-hydration-only',
+    source: { node: process.version, originalSourceFreezeSHA256: sourceFreezeSHA256,
+      environment, originalFactory: original + 'source-case.mjs', scripts: sourceScripts,
+      SSRInput: 'unchanged original SSR-first renderToString; no new server rendering' },
+    counts: { owners: 5, profilesPerOwner: 3, profilesPerRun: 15, independentRuns: 2,
+      hydrations: 30, snapshotsPerProfile: phases.length, snapshotsPerRun: 15 * phases.length,
+      totalSnapshots: 30 * phases.length, inputActions: 0, newSSRSerializations: 0 },
+    phases, profiles: profiles(),
+    inputPins: Object.fromEntries(inputFiles.map(file => [file, pin(file)])),
+    preservedOriginalPins: Object.fromEntries([...new Set(preservedFiles)].map(file => [file, pin(file)])),
+    requiredSequence: ['first actual process terminal 0 and complete/pins unchanged/browser closed',
+      'repeat actual process terminal 0 and complete/pins unchanged/browser closed',
+      'Root actual terminal receipt and release', 'separate read-only Node facts/stability review'] };
+}
+
+function verifyProposal(proposal) {
+  assert.deepEqual(proposal, currentProposal(), 'Prepared Source inputs/matrix must remain exact');
+}
+export function verifyPins(reviewedFreezeSHA256, rootLease) {
+  assert(validSHA(reviewedFreezeSHA256) && validLease(rootLease), 'Exact reviewed freeze SHA and exclusive Root lease required');
+  assert.equal(digest(freezeFile), reviewedFreezeSHA256);
+  const execution = read(base + 'execution-freeze.json'), frozen = read(freezeFile);
+  assert.equal(execution.sha256, reviewedFreezeSHA256); assert.equal(execution.rootLease, rootLease);
+  assert.equal(frozen.status, 'Root-reviewed-frozen-before-mask-React-hydration-observation');
+  assert.equal(frozen.rootLease, rootLease); assert.equal(digest(proposalFile), frozen.reviewedProposalSHA256);
+  verifyProposal(frozen.proposal);
+  assert.deepEqual(read(proposalFile), frozen.proposal);
+  return { sha256: reviewedFreezeSHA256, protocol: frozen };
+}
+
+if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
+  const [command, lease, reviewedProposalSHA256] = process.argv.slice(2);
+  if (command === 'prepare') {
+    assert(!fs.existsSync(proposalFile), 'Fresh proposal only');
+    const proposal = currentProposal();
+    assert.equal(proposal.profiles.length, 15);
+    for (const row of proposal.profiles) {
+      const bytes = fs.readFileSync(row.sourceSSR.rawJSONPart.file);
+      assert.equal(sha256(bytes), row.sourceSSR.rawJSONPart.sha256);
+      const packet = JSON.parse(bytes);
+      assert.equal(packet.method, 'renderToString'); assert.equal(packet.formatProfile, row.formatProfile);
+      assert.equal(sha256(Buffer.from(packet.rawHtml)), packet.htmlSha256);
+      assert.equal(packet.fatal, null); assert.equal(packet.initialClosedOnly, true);
+      assert.equal(packet.state.owner.id, row.id);
+    }
+    fs.writeFileSync(proposalFile, JSON.stringify(proposal, null, 2) + '\n', { flag: 'wx' });
+    console.log(JSON.stringify({ status: 'prepared-no-browser-build-or-SSR-executed',
+      proposal: { file: proposalFile, ...pin(proposalFile) }, counts: proposal.counts,
+      inputPins: Object.keys(proposal.inputPins).length,
+      preservedOriginalPins: Object.keys(proposal.preservedOriginalPins).length }));
+  } else if (command === 'freeze') {
+    assert(validLease(lease) && validSHA(reviewedProposalSHA256));
+    assert.equal(digest(proposalFile), reviewedProposalSHA256);
+    assert(!fs.existsSync(freezeFile)); assert(!fs.existsSync(base + 'execution-freeze.json'));
+    for (const variant of ['first', 'repeat']) assert(!fs.existsSync(base + 'hydrate-source-' + variant + '.json'));
+    const proposal = read(proposalFile); verifyProposal(proposal);
+    fs.writeFileSync(freezeFile, JSON.stringify({
+      status: 'Root-reviewed-frozen-before-mask-React-hydration-observation',
+      rootLease: lease, reviewedProposalSHA256, proposal }, null, 2) + '\n', { flag: 'wx' });
+    const sha = digest(freezeFile);
+    fs.writeFileSync(base + 'execution-freeze.json', JSON.stringify({ file: freezeFile, sha256: sha,
+      rootLease: lease }, null, 2) + '\n', { flag: 'wx' });
+    verifyPins(sha, lease); console.log(JSON.stringify({ file: freezeFile, sha256: sha, rootLease: lease }));
+  } else if (command === 'verify') {
+    const result = verifyPins(lease, reviewedProposalSHA256);
+    console.log(JSON.stringify({ status: 'unchanged', sha256: result.sha256 }));
+  } else throw Error('Use prepare, freeze ROOT_LEASE REVIEWED_PROPOSAL_SHA256, or verify FREEZE_SHA256 ROOT_LEASE');
+}

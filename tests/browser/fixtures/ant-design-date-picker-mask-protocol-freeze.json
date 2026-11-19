@@ -1,0 +1,1038 @@
+{
+  "status": "Root-reviewed-frozen-before-numeric-mask-Source-execution",
+  "subject": "public-date-datetime-range-Time-TimeRange-scalar-object-format-and-seven-numeric-mask-input",
+  "source": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "react": "18.3.1",
+    "rcPicker": "1.12.2",
+    "node": "v24.18.0",
+    "environment": {
+      "browserExecutable": "/usr/lib64/chromium-browser/chromium-browser",
+      "chromium": "157.0.8103.78",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "locale": "en-US",
+      "timezone": "UTC",
+      "fixedDate": "2024-06-10T08:23:45.678Z",
+      "clock": "CSR Date-only fixed time, real timers/RAF; SSR actual VM wall clock.",
+      "clipboard": "Excluded; no confirmed real roundtrip, permissions unchanged."
+    },
+    "scripts": [
+      ".upstream/artifacts/react-18.3.1/umd/react.production.min.js",
+      ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js",
+      "node_modules/dayjs/dayjs.min.js",
+      "node_modules/dayjs/locale/en-gb.js",
+      ".upstream/artifacts/antd-6.6.8/dist/antd.js"
+    ]
+  },
+  "samples": [
+    {
+      "id": "single-date-mask",
+      "kind": "single",
+      "family": "date",
+      "plainFormat": "YYYY-MM-DD",
+      "maskFormat": "YYYY-MM-DD",
+      "plainText": "2021-01-18",
+      "maskDigits": "20210120",
+      "initialFormatProfile": "string",
+      "initialStart": "2020-12-31T16:37:59.456",
+      "initialEnd": "2021-01-15T19:41:23.789",
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-string"
+        },
+        {
+          "type": "owner-control",
+          "value": "format-object"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-object"
+        },
+        {
+          "type": "input-type",
+          "index": 0,
+          "text": "2021-01-18",
+          "keys": [
+            "Control+A",
+            "2",
+            "0",
+            "2",
+            "1",
+            "-",
+            "0",
+            "1",
+            "-",
+            "1",
+            "8"
+          ]
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "typed-object"
+        },
+        {
+          "type": "owner-control",
+          "value": "restore-authored-value"
+        },
+        {
+          "type": "owner-control",
+          "value": "format-mask"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-mask"
+        },
+        {
+          "type": "mask-edit",
+          "index": 0,
+          "anchor": "text-start",
+          "keys": [
+            "ArrowRight",
+            "ArrowUp",
+            "ArrowDown",
+            "ArrowLeft",
+            "Delete",
+            "2",
+            "0",
+            "2",
+            "1",
+            "0",
+            "1",
+            "2",
+            "0"
+          ]
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "typed-mask"
+        },
+        {
+          "type": "incomplete-enter",
+          "index": 0,
+          "anchor": "text-start",
+          "keys": [
+            "Backspace",
+            "Enter"
+          ]
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "single-datetime-mask",
+      "kind": "single",
+      "family": "datetime",
+      "plainFormat": "YYYY-MM-DD HH:mm",
+      "maskFormat": "YYYY-MM-DD HH:mm:ss.SSS",
+      "plainText": "2021-01-18 18:19",
+      "maskDigits": "20240229111213345",
+      "initialFormatProfile": "string",
+      "initialStart": "2020-12-31T16:37:59.456",
+      "initialEnd": "2021-01-15T19:41:23.789",
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-string"
+        },
+        {
+          "type": "owner-control",
+          "value": "format-object"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-object"
+        },
+        {
+          "type": "input-type",
+          "index": 0,
+          "text": "2021-01-18 18:19",
+          "keys": [
+            "Control+A",
+            "2",
+            "0",
+            "2",
+            "1",
+            "-",
+            "0",
+            "1",
+            "-",
+            "1",
+            "8",
+            "Space",
+            "1",
+            "8",
+            ":",
+            "1",
+            "9"
+          ]
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "typed-object"
+        },
+        {
+          "type": "owner-control",
+          "value": "restore-authored-value"
+        },
+        {
+          "type": "owner-control",
+          "value": "format-mask"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-mask"
+        },
+        {
+          "type": "mask-edit",
+          "index": 0,
+          "anchor": "text-start",
+          "keys": [
+            "ArrowRight",
+            "ArrowUp",
+            "ArrowDown",
+            "ArrowLeft",
+            "Delete",
+            "2",
+            "0",
+            "2",
+            "4",
+            "0",
+            "2",
+            "2",
+            "9",
+            "1",
+            "1",
+            "1",
+            "2",
+            "1",
+            "3",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "typed-mask"
+        },
+        {
+          "type": "incomplete-enter",
+          "index": 0,
+          "anchor": "text-start",
+          "keys": [
+            "Backspace",
+            "Enter"
+          ]
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "range-date-mask",
+      "kind": "range",
+      "family": "date",
+      "plainFormat": "YYYY-MM-DD",
+      "maskFormat": "YYYY-MM-DD",
+      "plainText": "2021-01-18",
+      "maskDigits": "20210120",
+      "initialFormatProfile": "string",
+      "initialStart": "2020-12-31T16:37:59.456",
+      "initialEnd": "2021-01-15T19:41:23.789",
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-string"
+        },
+        {
+          "type": "owner-control",
+          "value": "format-object"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-object"
+        },
+        {
+          "type": "input-type",
+          "index": 1,
+          "text": "2021-01-18",
+          "keys": [
+            "Control+A",
+            "2",
+            "0",
+            "2",
+            "1",
+            "-",
+            "0",
+            "1",
+            "-",
+            "1",
+            "8"
+          ]
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "typed-object"
+        },
+        {
+          "type": "owner-control",
+          "value": "restore-authored-value"
+        },
+        {
+          "type": "owner-control",
+          "value": "format-mask"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-mask"
+        },
+        {
+          "type": "mask-edit",
+          "index": 1,
+          "anchor": "text-start",
+          "keys": [
+            "ArrowRight",
+            "ArrowUp",
+            "ArrowDown",
+            "ArrowLeft",
+            "Delete",
+            "2",
+            "0",
+            "2",
+            "1",
+            "0",
+            "1",
+            "2",
+            "0"
+          ]
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "typed-mask"
+        },
+        {
+          "type": "incomplete-enter",
+          "index": 1,
+          "anchor": "text-start",
+          "keys": [
+            "Backspace",
+            "Enter"
+          ]
+        },
+        {
+          "type": "input-escape",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "id": "single-time-mask",
+      "kind": "single",
+      "family": "time",
+      "plainFormat": "HH:mm",
+      "maskFormat": "HH:mm:ss.SSS",
+      "plainText": "18:19",
+      "maskDigits": "202122345",
+      "initialFormatProfile": "string",
+      "initialStart": "2020-12-31T16:37:59.456",
+      "initialEnd": "2021-01-15T19:41:23.789",
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-string"
+        },
+        {
+          "type": "owner-control",
+          "value": "format-object"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-object"
+        },
+        {
+          "type": "input-type",
+          "index": 0,
+          "text": "18:19",
+          "keys": [
+            "Control+A",
+            "1",
+            "8",
+            ":",
+            "1",
+            "9"
+          ]
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "typed-object"
+        },
+        {
+          "type": "owner-control",
+          "value": "restore-authored-value"
+        },
+        {
+          "type": "owner-control",
+          "value": "format-mask"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-mask"
+        },
+        {
+          "type": "mask-edit",
+          "index": 0,
+          "anchor": "text-start",
+          "keys": [
+            "ArrowRight",
+            "ArrowUp",
+            "ArrowDown",
+            "ArrowLeft",
+            "Delete",
+            "2",
+            "0",
+            "2",
+            "1",
+            "2",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "typed-mask"
+        },
+        {
+          "type": "incomplete-enter",
+          "index": 0,
+          "anchor": "text-start",
+          "keys": [
+            "Backspace",
+            "Enter"
+          ]
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "range-time-mask",
+      "kind": "range",
+      "family": "time",
+      "plainFormat": "HH:mm",
+      "maskFormat": "HH:mm:ss.SSS",
+      "plainText": "18:19",
+      "maskDigits": "202122345",
+      "initialFormatProfile": "string",
+      "initialStart": "2020-12-31T16:37:59.456",
+      "initialEnd": "2021-01-15T19:41:23.789",
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-string"
+        },
+        {
+          "type": "owner-control",
+          "value": "format-object"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-object"
+        },
+        {
+          "type": "input-type",
+          "index": 1,
+          "text": "18:19",
+          "keys": [
+            "Control+A",
+            "1",
+            "8",
+            ":",
+            "1",
+            "9"
+          ]
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "typed-object"
+        },
+        {
+          "type": "owner-control",
+          "value": "restore-authored-value"
+        },
+        {
+          "type": "owner-control",
+          "value": "format-mask"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "pristine-mask"
+        },
+        {
+          "type": "mask-edit",
+          "index": 1,
+          "anchor": "text-start",
+          "keys": [
+            "ArrowRight",
+            "ArrowUp",
+            "ArrowDown",
+            "ArrowLeft",
+            "Delete",
+            "2",
+            "0",
+            "2",
+            "1",
+            "2",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        {
+          "type": "input-key",
+          "key": "Enter",
+          "purpose": "typed-mask"
+        },
+        {
+          "type": "incomplete-enter",
+          "index": 1,
+          "anchor": "text-start",
+          "keys": [
+            "Backspace",
+            "Enter"
+          ]
+        },
+        {
+          "type": "input-escape",
+          "index": 1
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "owners": 5,
+    "authoredMacroActions": 75,
+    "initialAndMacroSettledPoints": 80,
+    "explicitSubsteps": 287,
+    "keyboardPressCalls": 167,
+    "inputMouseMoves": 35,
+    "inputMouseDowns": 35,
+    "inputMouseUps": 35,
+    "authoredDOMControlClicks": 15,
+    "declaredEscapeReadsAfter1000": 5,
+    "wholeUnmounts": 5,
+    "retainedFullPhasePoints": 1111,
+    "macroAfterCallReferencesToChildSnapshot": 75,
+    "distinctRetainedFullReads": 1036,
+    "initialClosedSSRProfiles": 15,
+    "initialClosedSSRSerializations": 30
+  },
+  "storage": {
+    "macroAndLifecycleUIPartsPerCSR": 100,
+    "substepUIPartsPerCSR": 287,
+    "rawPointPartsPerCSR": 387,
+    "producerPartsPerCSR": 392,
+    "totalPartsPerCSR": 779,
+    "serializerPartsPerSSR": 30,
+    "originalPartsAcrossFourRuns": 1618
+  },
+  "physicalKeyPlan": {
+    "0": 16,
+    "1": 25,
+    "2": 25,
+    "3": 4,
+    "4": 4,
+    "5": 3,
+    "8": 6,
+    "9": 4,
+    "-": 6,
+    ":": 3,
+    "ArrowDown": 5,
+    "ArrowLeft": 5,
+    "ArrowRight": 5,
+    "ArrowUp": 5,
+    "Backspace": 5,
+    "Control+A": 5,
+    "Delete": 5,
+    "Enter": 30,
+    "Escape": 5,
+    "Space": 1
+  },
+  "caller": {
+    "publicOnly": "Five ordinary React public owners, stable authored Date/tuple/panel/format/style/theme/id/clock/function refs. String, object without type, mask are actual ordinary format props. No private picker calls, Native code/outcomes or pre-authored Source results.",
+    "value": "Actual onChange payload objects become controlled model unchanged. A distinct value-only public owner control restores the same original authored Date/tuple before pristine mask Enter. Format controls change only format; value reset is never described as a format-only update.",
+    "precision": "Pristine string/object hide HMS/ms or date/seconds/ms. Datetime field mask covers all seven numeric tokens. Source fields/locale/epoch/ISO/raw IDs and actual candidate/calendar/change/model sharing remain observations; no normalization to midnight or replacement parsed value.",
+    "validation": "Stable disabledDate false for every real invocation; time/datetime disabledTime returns stable authored empty object. Complete real arguments/receiver/Date paths/from/return graphs recorded. No user producer is manually invoked. Default millisecondStep100 remains; no new plugin.",
+    "input": "Actual input center click for pristine; mask edit/incomplete use physical text-start coordinates from box/CSS+2px with actual hit check. No selection injection, setSelectionRange, force, fake events or permissions. Every mouse down/up and explicit keypress has independent full phases.",
+    "clipboard": "Not in the matrix: unconfirmed real roundtrip, no permission grants or fabricated paste. Passive paste/composition observation does not imply tested support."
+  },
+  "observation": {
+    "full": "Unchanged physical reader retains full scoped DOM/HTML/ordered attrs/CSS/rects/rows/columns, props/model/callback raw and encoded graphs/arity/receiver/Date fields/locale/aliases, field value/defaultValue/caret/focus/refs/connectivity and actual resource/network/errors.",
+    "hierarchy": "Every macro references each original child UI part. Every child stores full before/immediate-afterCall/settled. Macro.afterCall copies the actual last child immediate snapshot with afterCallSource reference; it is not a second observation or a settled replacement. 1111 retained phase positions include75 such repeated references;1036 distinct retained full reads. Stability polls outside retained counts are not compared as if retained.",
+    "producers": "All complete rows retain monotonic indices, contiguous cursor deltas and full encoded/raw return graphs. Child/lifecycle boundaries bind local windows. Macro tail explicitly marks aggregate window covering earlier child parts; its before/afterCall markers may precede its delta.cursor, without duplicating any producer row. All source counts/order/timing are actual, never Native parity expectations.",
+    "events": "Removable document capture observer records actual pointer/mousedown/mouseup/keyDown/keyUp/beforeinput/input/change/selectionchange/focus/paste/composition events, trust/modifiers/text/coordinates, input value/caret at capture and producer/callback cursors. Event capture is before target handlers; full before/afterCall/settled reads remain separate.",
+    "settling": "Known complete scoped stable4 actual doubleRAF+25ms polls, bound70; mouse-down is observed while held. Real timers/RAF; no global patches.",
+    "lifecycle": "Each explicit Escape gets+1000 regardless of actual outcome. Whole public unmount, frame drain, cleanup, quiet+1000 late, final complete producer tail, then event-observer disposal.",
+    "resources": "CSR private timers/frames/observers unmeasured. ResourceTiming/network/errors/console actual. SSR measured forbidden operations as in the unchanged original VM mechanism."
+  },
+  "SSR": {
+    "owners": 5,
+    "initialFormatProfiles": [
+      "string",
+      "object",
+      "mask"
+    ],
+    "locale": "US only",
+    "methods": [
+      "renderToString",
+      "renderToStaticMarkup"
+    ],
+    "serializationsPerRun": 30,
+    "baseline": "15 separately declared initial closed public props profiles, fresh original DOM-free VM per serializer/profile. Only authoring override initialFormatProfile; no open popup or simulated focus/selection. Actual VM wall clock, not CSR fixed Date.",
+    "retained": "Whole HTML/hash/state/model/format/callbacks/producers/refs/resources/fatal. No initial-empty-ledger assumption."
+  },
+  "inputPins": {
+    ".upstream/artifacts/date-picker-mask-source-proposal-v1/cases.mjs": {
+      "bytes": 4425,
+      "sha256": "bd8cf5b4816e0ed3c5de39e1299124d267c488ab2cd67e1bb301065b649eaabe"
+    },
+    ".upstream/artifacts/date-picker-mask-source-proposal-v1/source-case.mjs": {
+      "bytes": 8031,
+      "sha256": "945ab530747dd565950871aecb86afe3b2b04b8ea21b1fcc339278545caf8aba"
+    },
+    ".upstream/artifacts/date-picker-mask-source-proposal-v1/capture.mjs": {
+      "bytes": 19388,
+      "sha256": "f466bd1172ae7b263823ca391197d091dc98a5fa77d9e08eb89daa73d64684dc"
+    },
+    ".upstream/artifacts/date-picker-mask-source-proposal-v1/server.mjs": {
+      "bytes": 4224,
+      "sha256": "d066036fc91e41b38c95d2fe9c6132881dcb9cc36d07e2c77ddfa705d73e2c6b"
+    },
+    ".upstream/artifacts/date-picker-mask-source-proposal-v1/capture-ssr.mjs": {
+      "bytes": 2394,
+      "sha256": "da302de2c09387c66e836b380c0c78fb8ba98dd5de7393b41487670ae2054a1c"
+    },
+    ".upstream/artifacts/date-picker-mask-source-proposal-v1/protocol.mjs": {
+      "bytes": 16440,
+      "sha256": "694344ffb54caf324d827cecac16804f5f73449ae2bc65b21aaf73c6370a9b47"
+    },
+    ".upstream/artifacts/date-picker-mask-source-proposal-v1/plan.md": {
+      "bytes": 7903,
+      "sha256": "721a3f24f33d4937274a66883b84f008fc43236c6dd97ca45594baa5a47dad3f"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/reader.mjs": {
+      "bytes": 7710,
+      "sha256": "492336e8c35d3dafaa865c92b160d9d526d89aad6a5f448d7c9a99868ae22808"
+    },
+    ".upstream/artifacts/homepage-five-source-review-v1/shared.mjs": {
+      "bytes": 994,
+      "sha256": "27d35cd7ac9834dad22ddaa6bf91ea82b59e14bf7edc96519a64f3fde41b661e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/json-stream.mjs": {
+      "bytes": 2314,
+      "sha256": "b7e849ba0ff70e3673bcdc28b1a08747d79836ff061c5269f9b07fa26891ef93"
+    },
+    "tests/browser/select-surface-producers.mjs": {
+      "bytes": 4134,
+      "sha256": "40f7a24ab72043ea36871794a0bee004430c4201d795e592c9cece90a0cf3a9d"
+    },
+    ".upstream/artifacts/react-18.3.1/umd/react.production.min.js": {
+      "bytes": 10751,
+      "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js": {
+      "bytes": 131835,
+      "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+    },
+    "node_modules/dayjs/dayjs.min.js": {
+      "bytes": 7161,
+      "sha256": "0198dd0b1f760cded169c7e7ff7eaf56bc36c4c22c7c9b7c683e59437ed8700e"
+    },
+    "node_modules/dayjs/locale/en-gb.js": {
+      "bytes": 1215,
+      "sha256": "568b48aab0d3c9595c0da291a579af34d6e35e1b155bdd49a8ae3decc2af15da"
+    },
+    ".upstream/artifacts/antd-6.6.8/dist/antd.js": {
+      "bytes": 4217353,
+      "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom-server-legacy.browser.production.min.js": {
+      "bytes": 35128,
+      "sha256": "829b2f17da148d9bc5b635c329b67068e67e4bf7d6a5bb64e49e9e92483deee5"
+    },
+    "/usr/lib64/chromium-browser/chromium-browser": {
+      "bytes": 341191224,
+      "sha256": "93bccc93e19199a3998a758b841cb660dbd4d14922d525f6e1787fbf9a522a84"
+    },
+    "/usr/bin/node-24": {
+      "bytes": 27944,
+      "sha256": "491845f89f219ea0f463780989543b16a8b32be2d66888f074a100c0aa93ec8f"
+    },
+    "node_modules/@playwright/test/package.json": {
+      "bytes": 754,
+      "sha256": "6b1c8bb530059f2555530e8dcc1b3803565237e17598683b3766c0fa313b3fd6"
+    },
+    "node_modules/playwright-core/package.json": {
+      "bytes": 876,
+      "sha256": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6"
+    },
+    "node_modules/dayjs/package.json": {
+      "bytes": 2974,
+      "sha256": "680d74784223a074188617adc534fa5460171176d9904501241bbea087c3963b"
+    },
+    ".upstream/artifacts/date-picker-next-slice-proposal-v1/proposal.md": {
+      "bytes": 9376,
+      "sha256": "f7a040d0d12bdbc3c2fcce286d0a82a5134421435adac5488846e7b93975f113"
+    },
+    ".upstream/artifacts/date-picker-next-slice-proposal-v1/next-source-observation.md": {
+      "bytes": 4005,
+      "sha256": "02a41a5be390052b34b71d086939204afcd6ef2403d8fa0ef8688a939a0b9cae"
+    },
+    ".upstream/ant-design/components/date-picker/index.en-US.md": {
+      "bytes": 21771,
+      "sha256": "d7193bd2f1ebc35029b2553286217a4125381ae0b846635af5e6f7fe3bf9f9f3"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/interface.ts": {
+      "bytes": 5733,
+      "sha256": "d9f3e34418aaca9d1b11ffd72fc900d3e09908e8208c3ddf15427537153cd207"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/generateSinglePicker.tsx": {
+      "bytes": 10552,
+      "sha256": "f5d941ecf84732d7df3b36bc566e6021c69b155cd9eded2898961d43870736a3"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/generateRangePicker.tsx": {
+      "bytes": 8447,
+      "sha256": "1f29528186aea3ad0502d423d435cbee36c1d07cb8c5e5c2e3d4bcd36e7ecea4"
+    },
+    ".upstream/ant-design/components/date-picker/demo/mask.tsx": {
+      "bytes": 567,
+      "sha256": "a56bd6fcab4934dfcbbaae52db2818828c043d157c79dd2e206bac05d8abe3e2"
+    },
+    ".upstream/ant-design/components/date-picker/demo/mask.md": {
+      "bytes": 253,
+      "sha256": "0ce415febbba9f6595d42d7ced498dfa2a86a6b2fab31305cee8b1cbf3288626"
+    },
+    ".upstream/ant-design/components/time-picker/index.tsx": {
+      "bytes": 5086,
+      "sha256": "f781bc772a74c5bbc6fa4ee6a78a759697a9213318d017f98bad5cd933e4244a"
+    },
+    ".upstream/ant-design/components/time-picker/index.en-US.md": {
+      "bytes": 7847,
+      "sha256": "f2a3bc2c6918c86e306888d512582778508c8759bf10ae5c5a82789dc3f8bf04"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--interface.d.ts": {
+      "bytes": 15103,
+      "sha256": "940f7c9f731eca31f42070c75bc9ac8b743f9838272eef1a95a531bdaefaa066"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/picker-1.12.2.tgz": {
+      "bytes": 144620,
+      "sha256": "f44266fb8586f0a5386e18502ed60796c1976bd60b1d0f01c5302d40f072d502"
+    }
+  },
+  "preservedPriorSource": {
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/cases.mjs": {
+      "bytes": 3556,
+      "sha256": "89ba82460962013d2e2b0c5b092fa04bd5c8c279b6d394e43a0ca7ec22f7ef57"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/source-case.mjs": {
+      "bytes": 8888,
+      "sha256": "fe082309cc9b9f7ab9fd9e76f874c7daabf225291d9af2c8c891074d34f8b4d3"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/capture.mjs": {
+      "bytes": 16644,
+      "sha256": "f635b004f111ff3412c71b01b8cd6103f65f1393310281d798c71309a6aae47b"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/server.mjs": {
+      "bytes": 4079,
+      "sha256": "7e839ea1752c803a0bd574d35534149ca7644a20683b46e25966e1e1c1f22aff"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/capture-ssr.mjs": {
+      "bytes": 2290,
+      "sha256": "f5973c9155724752a93c85f335bd1aa329682c5e883726e64b905f13e8daf1bf"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/protocol.mjs": {
+      "bytes": 17332,
+      "sha256": "f19b1aa5b956768b91f84b8f17f8235b12550c550a2417dbc35963106e4dcc7a"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/plan.md": {
+      "bytes": 11129,
+      "sha256": "6d91e1563a9e953c06405ddea9251b0422ad72b2c96e0e8b5fdb42a3ef261956"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/protocol-freeze.json": {
+      "bytes": 33610,
+      "sha256": "fa8b261d9bd6fdd152e7510dff2231e278356ebac2d6b3ef8c606be64ac5f200"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-first.json": {
+      "bytes": 202983,
+      "sha256": "a865c2a4446e90d215742a9a51d3e1c1f3852cb26e9bbf652030fdc442b5c128"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/csr-source-repeat.json": {
+      "bytes": 203588,
+      "sha256": "8b875ce8710780626f79d42ede1dddf6eb98da374b5c63371b6e9e996c9c4f25"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/ssr-source-first.json": {
+      "bytes": 5930,
+      "sha256": "b13f3cab5a50dca291d5317344f9a3be6793a802fbbbcbc55c4257dadc58aa46"
+    },
+    ".upstream/artifacts/date-picker-week-source-proposal-v1/ssr-source-repeat.json": {
+      "bytes": 5947,
+      "sha256": "5e3c1ebfca633442e01bbd7c8ce17c626dd4dc399fc2fd6962e96f29d14965bf"
+    },
+    ".upstream/artifacts/date-picker-week-source-review-v1/release.json": {
+      "bytes": 5739,
+      "sha256": "6e0ff21763187caa77f8f3771f84dc74fe51d5994bf705edba57251dc4ccc572"
+    },
+    ".upstream/artifacts/date-picker-week-source-review-v1/semantic-review.json": {
+      "bytes": 25707245,
+      "sha256": "cba99753dd56b9385fc4e123248606df70853a52d0f3ebeed333fa9e8dfcbd13"
+    },
+    ".upstream/artifacts/date-picker-week-source-review-v1/all-point-stability.json": {
+      "bytes": 5439,
+      "sha256": "d28d7ba72c0cc84f212cb1a269fb300bb04081ec4acca6a9948d68dc0834c86c"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/cases.mjs": {
+      "bytes": 1281,
+      "sha256": "32f6b1a97ce95ceb375f0b535c6d3c2b60a41e5a9dcc9fcac966f677f32d66fb"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/source-case.mjs": {
+      "bytes": 6629,
+      "sha256": "e8b1b0316619f19f94eb7a44708b8d066a40f1b52c114ea4e9c6ca3f6adf56f6"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/capture.mjs": {
+      "bytes": 15457,
+      "sha256": "6bc81772d708e8aba131fce841ab788947261c2918d30064736af40c9a510954"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/server.mjs": {
+      "bytes": 4171,
+      "sha256": "0a05cbfc6ccbaf24b6f3385a9fcdb8683279d318db0f1dcb0d05a163f748c32d"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/capture-ssr.mjs": {
+      "bytes": 2333,
+      "sha256": "2ab8541810ebea827ec198e40e4482fca05ab5b182d0116294ace185f5ceeccf"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/protocol.mjs": {
+      "bytes": 13232,
+      "sha256": "60097c6ca39ba5a41133a82321768dcc8273b35fdfcd75936805c069c8706610"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/plan.md": {
+      "bytes": 3755,
+      "sha256": "a3d1c82e5ee68a1d11484ff7969cb7d503d9b39fecffb6013fa5845a112099c1"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/protocol-proposal.json": {
+      "bytes": 19716,
+      "sha256": "521f219a14d99d904f07df0731fec278b8986b255182a7c0038097dce5a79e7c"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/protocol-freeze.json": {
+      "bytes": 19851,
+      "sha256": "22e37486124e2066fbf53f7e53a9bfd7ae119c154413fcad03a46f07a76eccc6"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/source-process-release.json": {
+      "bytes": 2802,
+      "sha256": "d4056c4841185c81b02d1715fb3fa1611a87276ae2bf8fb9a12e5dbb18c01d9e"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-first.json": {
+      "bytes": 46929,
+      "sha256": "121802f6e72cf103cf5289adb2ac8c38fa67f8b4007ba4c469c9c52b2b4e7e3a"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/csr-source-repeat.json": {
+      "bytes": 47054,
+      "sha256": "a0be3be3b0343ec796e6f5646e12a17b7a0b133060b04e2007a414da161285a1"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-first.json": {
+      "bytes": 3637,
+      "sha256": "b93f0f7af63856916b1326b08d95d88f0c02dc830430114fd6425ac15e973463"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-proposal-v1/ssr-source-repeat.json": {
+      "bytes": 3646,
+      "sha256": "cd87f298300d1dd27e8b7b58acd7e9ee34340fdab3d78cb0199eb7f1b98d6409"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/csr-first-audit.json": {
+      "bytes": 4191373,
+      "sha256": "4b6d3b3ca7780fe188080fc44bd747a889b8310a004871489f5e62175296533f"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/csr-repeat-audit.json": {
+      "bytes": 4191375,
+      "sha256": "9b3a174fc36a8066505055fcbfbc08b54c78b19ca9d8d89dbf432c83f5d207a1"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/ssr-first-audit.json": {
+      "bytes": 443267,
+      "sha256": "4f5c65ad1a4a90f6c5594789c25e8d8ff08cc6af096b3415fdef15b21ea40f1c"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/ssr-repeat-audit.json": {
+      "bytes": 443269,
+      "sha256": "70a50b9a67c96cdb74821ea679f9ee31b725aac91a682bb405b387cf4b0a9572"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/semantic-review.json": {
+      "bytes": 4637882,
+      "sha256": "97d8ab7f01951e43cbe7e01444cc5571fdf0acaff25b6b85eb2bee8ff49fed0a"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/selected-facts-variances.json": {
+      "bytes": 473,
+      "sha256": "2635e1a84716eb95fd69449f71548a381edabb51d4727f87b94e26c10eb88c16"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/producer-variances.json": {
+      "bytes": 1774,
+      "sha256": "2b9da0a5d6f927d860ffc2ff0b2d7cf917334f51fcb23433b0a1dd9e56dbb55e"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/action-phase-stability.json": {
+      "bytes": 1256,
+      "sha256": "26fa68abb86cb79a0467461c173841b2d53cbe8d457a0177d3e069f50e788921"
+    },
+    ".upstream/artifacts/date-picker-date-week-prefix-source-review-v1/all-point-stability.json": {
+      "bytes": 1510,
+      "sha256": "cf73d4d52b3668d4ebdc5f25ded7e34aa232e19232d1b53a01d3a0fe7cb20255"
+    }
+  },
+  "outputMap": {
+    "csr-first": {
+      "manifest": ".upstream/artifacts/date-picker-mask-source-proposal-v1/csr-source-first.json",
+      "gzip": ".upstream/artifacts/date-picker-mask-source-proposal-v1/csr-source-first.json.gz",
+      "parts": ".upstream/artifacts/date-picker-mask-source-proposal-v1/csr-source-first.json.parts/"
+    },
+    "csr-repeat": {
+      "manifest": ".upstream/artifacts/date-picker-mask-source-proposal-v1/csr-source-repeat.json",
+      "gzip": ".upstream/artifacts/date-picker-mask-source-proposal-v1/csr-source-repeat.json.gz",
+      "parts": ".upstream/artifacts/date-picker-mask-source-proposal-v1/csr-source-repeat.json.parts/"
+    },
+    "ssr-first": {
+      "manifest": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json",
+      "gzip": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.gz",
+      "parts": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-first.json.parts/"
+    },
+    "ssr-repeat": {
+      "manifest": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-repeat.json",
+      "gzip": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-repeat.json.gz",
+      "parts": ".upstream/artifacts/date-picker-mask-source-proposal-v1/ssr-source-repeat.json.parts/"
+    }
+  },
+  "implementationPlan": ".upstream/artifacts/date-picker-mask-source-proposal-v1/plan.md",
+  "validation": {
+    "authoredMatrixAndSyntax": "passed",
+    "SourceExecution": false,
+    "NativeDataRead": false,
+    "browserRuns": 0,
+    "SSRRuns": 0,
+    "builds": 0,
+    "permissionsChanged": false
+  },
+  "plannedCommands": [
+    "node .upstream/artifacts/date-picker-mask-source-proposal-v1/protocol.mjs freeze <ROOT_REVIEWED_PROPOSAL_SHA> <ROOT_EXCLUSIVE_LEASE>",
+    "node .upstream/artifacts/date-picker-mask-source-proposal-v1/capture.mjs first <ROOT_REVIEWED_FROZEN_SHA> <ROOT_EXCLUSIVE_LEASE>",
+    "node .upstream/artifacts/date-picker-mask-source-proposal-v1/capture.mjs repeat <ROOT_REVIEWED_FROZEN_SHA> <ROOT_EXCLUSIVE_LEASE>",
+    "node .upstream/artifacts/date-picker-mask-source-proposal-v1/capture-ssr.mjs first <ROOT_REVIEWED_FROZEN_SHA> <ROOT_EXCLUSIVE_LEASE>",
+    "node .upstream/artifacts/date-picker-mask-source-proposal-v1/capture-ssr.mjs repeat <ROOT_REVIEWED_FROZEN_SHA> <ROOT_EXCLUSIVE_LEASE>"
+  ],
+  "lease": "Prepare grants no execution. Root finishes current week stage/commit, reviews exact proposal, freezes and separately grants exclusive lease. Actual first/repeat CSR then first/repeat SSR strictly serial, exact frozen SHA/lease required. Each actual terminal0/complete/unchanged pins before next; browsers awaited closed. All failures/raw parts/frozen inputs retained without automatic retry/amend. Root records actual release after four terminals.",
+  "exclusions": [
+    "multiple",
+    "generatePicker",
+    "custom editors",
+    "paste",
+    "clipboard permission changes",
+    "IME execution",
+    "preserveInvalidOnBlur=true matrix",
+    "all locales/unsupported-token combinations",
+    "new native focus/calendar/Today boundaries",
+    "whole DatePicker family parity claim"
+  ],
+  "reviewedProposalSHA256": "1c520497e6ae90b0a96bdb8ff41a941c2c14d3d2ab7ce52613d27109c3ef8e27",
+  "rootLease": "numeric-mask-source-20261119-01"
+}

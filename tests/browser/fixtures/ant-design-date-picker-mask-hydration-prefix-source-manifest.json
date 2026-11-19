@@ -1,0 +1,169 @@
+{
+  "format": "ant-design-public-numeric-mask-hydrated-range-prefix-source-v1",
+  "sourceOnly": true,
+  "NativeDataUsed": false,
+  "sourceProtocolSHA256": "f50d6d8b601b9b5e47aeb978840770b7a4ccfd2533638e60ef33e5cb8881a24c",
+  "rootLease": "mask-hydration-prefix-20261119-01",
+  "serialization": {
+    "originalStoredGzipBytesCopiedExactly": true,
+    "IDsRenumbered": false,
+    "rawFieldsDropped": [],
+    "rawFieldsRewritten": [],
+    "normalizedFields": []
+  },
+  "factProjection": {
+    "leaves": [
+      "/phase",
+      "/environment",
+      "/nodes",
+      "/inputs",
+      "/retainedParsedInputs",
+      "/source/owner",
+      "/source/refs",
+      "/events",
+      "/recoverableErrors"
+    ],
+    "omitted": [
+      "/html",
+      "/source/producers"
+    ],
+    "pointPaths": {
+      "step-1-substep-0:settled": "/substeps/3/actual",
+      "step-1:settled": "/steps/1/actual",
+      "step-2:before": "/steps/2/before",
+      "step-2-substep-0:before": "/substeps/4/before",
+      "step-2-substep-0:settled": "/substeps/4/actual",
+      "step-2:settled": "/steps/2/actual",
+      "step-3:before": "/steps/3/before",
+      "step-3-substep-0:before": "/substeps/5/before",
+      "step-3-substep-0:settled": "/substeps/5/actual",
+      "step-3-substep-1:before": "/steps/3/nextUnexecutedSubstepBefore/before"
+    },
+    "verification": "Once per profile: full gzip/raw hashes, actual JSON pointer byte ranges/hashes, exact original indexed-leaf equality. Cache small verified facts only."
+  },
+  "profiles": [
+    {
+      "id": "range-date-mask",
+      "variant": "first",
+      "formatProfile": "string",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-first.json.parts/range-date-mask-string.json",
+        "bytes": 530844068,
+        "sha256": "89c9ad6cae8c52cdbdd41abf42001f1ab2f664beb08271787b1616a2d0b8fc9b",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-first.json.parts/range-date-mask-string.json.gz",
+        "gzipBytes": 11951567,
+        "gzipSHA256": "4456c824b96185d21d00f8316cc84b7fb70bda68b7bd87f719287b52b0b39082"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-parts/4456c824b96185d21d00f8316cc84b7fb70bda68b7bd87f719287b52b0b39082.json.gz"
+    },
+    {
+      "id": "range-time-mask",
+      "variant": "first",
+      "formatProfile": "string",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-first.json.parts/range-time-mask-string.json",
+        "bytes": 30443080,
+        "sha256": "9860f6f02e81f09fd85c70633f029d38217ff94c948dd7cc293dfef0694ed611",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-first.json.parts/range-time-mask-string.json.gz",
+        "gzipBytes": 833855,
+        "gzipSHA256": "1e0e16e13a6d8fda711fcfa1f8792bfd66760c50890d3e81715deb58723ddabb"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-parts/1e0e16e13a6d8fda711fcfa1f8792bfd66760c50890d3e81715deb58723ddabb.json.gz"
+    },
+    {
+      "id": "range-date-mask",
+      "variant": "repeat",
+      "formatProfile": "string",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-repeat.json.parts/range-date-mask-string.json",
+        "bytes": 538021830,
+        "sha256": "42bd5704e30dba1c16a96fa5d4a3b706e177dff6e18da5f85d6394054b1cd8d1",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-repeat.json.parts/range-date-mask-string.json.gz",
+        "gzipBytes": 12159692,
+        "gzipSHA256": "bde1a7e6c6b03f86a3ce8a5d3085599ac3e8c81fed21194386f84ae7409cff6e"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-parts/bde1a7e6c6b03f86a3ce8a5d3085599ac3e8c81fed21194386f84ae7409cff6e.json.gz"
+    },
+    {
+      "id": "range-time-mask",
+      "variant": "repeat",
+      "formatProfile": "string",
+      "original": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-repeat.json.parts/range-time-mask-string.json",
+        "bytes": 30443081,
+        "sha256": "8d2b088866b14461fe8ff9841f37594051694f95efcbbba320812e5531d5f395",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-repeat.json.parts/range-time-mask-string.json.gz",
+        "gzipBytes": 833968,
+        "gzipSHA256": "64fcf84e1f80def6f92eaa9854389b53af20b245672c8109ee54010ab400fcc1"
+      },
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-parts/64fcf84e1f80def6f92eaa9854389b53af20b245672c8109ee54010ab400fcc1.json.gz"
+    }
+  ],
+  "documents": {
+    "protocol-freeze": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/protocol-freeze.json",
+      "bytes": 36244,
+      "sha256": "f50d6d8b601b9b5e47aeb978840770b7a4ccfd2533638e60ef33e5cb8881a24c",
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-evidence/protocol-freeze.json"
+    },
+    "protocol-proposal": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/protocol-proposal.json",
+      "bytes": 34071,
+      "sha256": "12ecd436ca8993db5139de8d256ab9e8e25db330ac084b57e9c685061a5ccc29",
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-evidence/protocol-proposal.json"
+    },
+    "execution-freeze": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/execution-freeze.json",
+      "bytes": 242,
+      "sha256": "d6309055f8b4ab42492661f3dbc8efd3c45d5063f4f278f1b7fe0b0a94b211c1",
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-evidence/execution-freeze.json"
+    },
+    "release": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/root-process-release.json",
+      "bytes": 1381,
+      "sha256": "cd0b767a02bb7ae1b05185ba0fe914374507c11652f696eac3f9398d10edb143",
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-evidence/release.json"
+    },
+    "capture": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/capture.mjs",
+      "bytes": 22870,
+      "sha256": "4e30520a67b60ced34dea3d886bb4c91cffe228d2982c908793e464627993c5b",
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-evidence/capture.mjs.txt"
+    },
+    "protocol": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/protocol.mjs",
+      "bytes": 8674,
+      "sha256": "a55f85a38f91351e6f7d2143db8adf6bd76ee376b601b7c2281fdabdc92f967a",
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-evidence/protocol.mjs.txt"
+    },
+    "plan": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/plan.md",
+      "bytes": 5572,
+      "sha256": "c7b5e4e90e95094d7daba1b4f63cf359106cb189d01bc7d993e17c5c0cb88017",
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-evidence/plan.md"
+    },
+    "capture-first": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-first.json",
+      "bytes": 3871,
+      "sha256": "24b1aa7875010a1e5adf8fa4d37280d81db2850f366a4d7f82353dc6899efe1b",
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-evidence/capture-first.json"
+    },
+    "capture-repeat": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-repeat.json",
+      "bytes": 3876,
+      "sha256": "a004ebbddcf7f3a5a497f8ff2c5b2de7d920162c3d281a8bf7cbdb1ebd797111",
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-evidence/capture-repeat.json"
+    },
+    "source-factory": {
+      "originalFile": ".upstream/artifacts/date-picker-mask-source-proposal-v1/source-case.mjs",
+      "bytes": 8031,
+      "sha256": "945ab530747dd565950871aecb86afe3b2b04b8ea21b1fcc339278545caf8aba",
+      "fixture": "ant-design-date-picker-mask-hydration-prefix-evidence/source-factory.mjs.txt"
+    }
+  },
+  "factIndex": {
+    "fixture": "ant-design-date-picker-mask-hydration-prefix-facts-index.json",
+    "bytes": 5593718,
+    "sha256": "20354d8cdca60f516723ec1a2fc6a9a89d872558c2f8b2b6c1a2f47e8feebf50"
+  }
+}

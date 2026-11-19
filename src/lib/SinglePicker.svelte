@@ -3,6 +3,8 @@
   import type { Dayjs } from 'dayjs';
   import type { DatePickerProps, DatePickerMode, DatePickerPreset } from './date-picker.types';
   import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
+  import { normalizePickerFieldFormat } from './picker-mask.engine';
+  import { createPickerMaskInput, type PickerMaskSharedKey } from './picker-mask-input.model.svelte.js';
   import {
     pickerFormats,
     pickerCalendarValue,
@@ -136,6 +138,7 @@
   let showTime = $derived(time || picker === 'date' ? providedShowTime : false);
   let formats = $derived(time ? timePickerFormats(time, actualLocale)
     : pickerFormats({ format, showTime, picker }, actualLocale));
+  let maskFormat = $derived(normalizePickerFieldFormat<Dayjs>(time ? time.format : format, '').mask);
   let readOnly = $derived(
     time && typeof formats[0] === 'function'
       || (inputReadOnly ?? (attributes.readonly || formats.every(item => typeof item === 'function')))
@@ -248,6 +251,14 @@
     const length = typeof first === 'function' ? first(now).length : first.length;
     return Math.max(8, length) + 2;
   });
+  const maskInput = createPickerMaskInput(() => ({
+    text: displayText, mask: maskFormat, active: focused, helped: !!hoverValue,
+    readOnly, preserveInvalidOnBlur,
+    validateText: next => !!parsePicker(next, actualLocale.locale, formats),
+    acceptInput: next => inputChange(next, true),
+    onHelp: () => requestOpen(true, true)
+  }));
+  $effect(() => maskInput.sync());
   const timeInteraction = createRangeInteraction<Dayjs[]>({
     fieldCount: () => 1,
     needConfirm: () => confirm,
@@ -324,7 +335,7 @@
     // Context repaint не сбрасывает draft, пока value и его отображение прежние.
     if (mergedValue === previousMergedValue && (time || formatted === previousDateText)) return;
 
-    if (!time && mergedValue === previousMergedValue && retainedDatePreset) {
+    if (!time && mergedValue === previousMergedValue) {
       text = formatPicker(draft, actualLocale.locale, formats);
       previousDateText = formatted;
       return;
@@ -442,11 +453,11 @@
       )
     );
   }
-  function requestOpen(next: boolean) {
+  function requestOpen(next: boolean, preserveDraft = false) {
     if (blocked || visible === next) return;
     if (next) {
       now = adapter.getNow();
-      if (!time && !retainedDatePreset) draft = mergedValue;
+      if (!time && !retainedDatePreset && !preserveDraft) draft = mergedValue;
       mode = picker;
       if (time) timeInteraction.trigger(0, 'field-switch');
     }
@@ -620,11 +631,40 @@
     text = formatPicker(next, actualLocale.locale, formats);
     dirty = true;
   }
-  async function keyboard(
+  function inputChange(next: string, masked = false) {
+    if (!time && !masked) requestOpen(true);
+    if (!time) {
+      retainedDatePreset = false;
+      datePresetInteraction.trigger(0, 'input');
+    }
+    text = next;
+    dirty = true;
+    draftSource = 'input';
+    const parsed = parsePicker(text, actualLocale.locale, formats);
+    if (!time && (picker === 'date' || picker === 'quarter' || picker === 'week')) quarterInputValue = parsed;
+    if (time) {
+      invalidTimeInput = text !== '' && !parsed?.isValid();
+      timeInteraction.trigger(0, 'input', parsed?.isValid() ? [parsed] : undefined);
+    } else if (valid(parsed)) {
+      setDraft(parsed, 'date');
+      if (picker === 'date' && !defaultPickerValue) internalPanel = parsed!;
+    }
+  }
+  function keyboard(
     event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }
   ) {
-    onkeydown?.(event);
-    if (event.defaultPrevented || event.isComposing || blocked) return;
+    const shared = (_event: KeyboardEvent, maskKey?: PickerMaskSharedKey) => {
+      onkeydown?.(event);
+      if (event.defaultPrevented || event.isComposing || blocked) return false;
+      void keyboardAction(event, maskKey);
+      return true;
+    };
+    if (!maskInput.keydown(event, shared)) shared(event);
+  }
+  async function keyboardAction(
+    event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; },
+    maskKey?: PickerMaskSharedKey
+  ) {
     if (time) {
       if (event.key === 'Tab') {
         timeInteraction.trigger(0, 'keyboard-submit-weak');
@@ -636,10 +676,10 @@
       } else if (event.key === 'Enter') {
         event.preventDefault();
         const closed = !visible;
-        if (parsePicker(text, actualLocale.locale, formats))
+        if (maskKey ? maskKey.enterValid : parsePicker(text, actualLocale.locale, formats))
           timeInteraction.trigger(0, 'keyboard-submit');
         if (closed) requestOpen(true);
-      } else if (event.key === 'ArrowDown') {
+      } else if (event.key === 'ArrowDown' && !maskKey) {
         event.preventDefault();
         requestOpen(true);
         await tick();
@@ -666,7 +706,7 @@
       event.preventDefault();
       const closed = !visible;
       const parsed = parsePicker(event.currentTarget.value, actualLocale.locale, formats);
-      if (parsed) datePresetInteraction.trigger(0, 'keyboard-submit');
+      if (maskKey ? maskKey.enterValid : parsed) datePresetInteraction.trigger(0, 'keyboard-submit');
       if (closed) requestOpen(true);
     } else if (event.key === 'Enter') {
       event.preventDefault();
@@ -674,19 +714,17 @@
         if (parsePicker(text, actualLocale.locale, formats)) datePresetInteraction.reset();
         requestOpen(true);
       } else {
-        if ((picker === 'quarter' || picker === 'week') && dirty
+        if (maskKey && !maskKey.enterValid) return;
+        if ((picker === 'date' || picker === 'quarter' || picker === 'week') && dirty
           && draftSource === 'input' && text !== '' && !quarterInputValue) return;
-        const next = text
-          ? picker !== 'date' || readOnly || draftSource === 'panel'
-            ? draft
-            : parsePicker(text, actualLocale.locale, formats)
-          : null;
+        if (picker === 'date' && dirty && draftSource === 'input' && text !== '' && invalid) return;
+        const next = text ? draft : null;
         if (!text || valid(next)) {
           commit(next);
           requestOpen(false);
         }
       }
-    } else if (event.key === 'ArrowDown' && picker === 'date') {
+    } else if (event.key === 'ArrowDown' && picker === 'date' && !maskKey) {
       event.preventDefault();
       if (!visible)
         requestOpen(true);
@@ -1030,32 +1068,31 @@
       readonly={readOnly}
       required={attributes.required ?? field?.required}
       autocomplete="off"
-      value={displayText}
+      value={maskInput.value}
+      defaultValue={maskInput.value}
+      {@attach maskInput.attach}
       oninput={event => {
-          if (!time) requestOpen(true);
-          if (!time) {
-            retainedDatePreset = false;
-            datePresetInteraction.trigger(0, 'input');
-          }
-          text = event.currentTarget.value;
-          dirty = true;
-          draftSource = 'input';
-          const parsed = parsePicker(text, actualLocale.locale, formats);
-          if (!time && (picker === 'date' || picker === 'quarter' || picker === 'week')) quarterInputValue = parsed;
-          if (time) {
-            invalidTimeInput = text !== '' && !parsed?.isValid();
-            timeInteraction.trigger(0, 'input', parsed?.isValid() ? [parsed] : undefined);
-          } else if (valid(parsed)) {
-            setDraft(parsed, 'date');
-            if (picker === 'date') internalPanel = parsed!;
-          }
+          if (!maskInput.nativeInput(event)) inputChange(event.currentTarget.value);
         }}
+      onmousedown={event => {
+        maskInput.mousedown();
+        attributes.onmousedown?.call(event.currentTarget, event);
+      }}
+      onmouseup={event => {
+        const shared = () => attributes.onmouseup?.call(event.currentTarget, event);
+        if (!maskInput.mouseup(event, shared)) shared();
+      }}
+      onpaste={event => {
+        if (!maskInput.paste(event)) attributes.onpaste?.call(event.currentTarget, event);
+      }}
       onclick={() => { if (!time) requestOpen(true); }} onkeydown={keyboard} onfocus={event => {
+          maskInput.focus();
           focused = true;
           if (time) timeInteraction.trigger(0, 'field-switch');
           else datePresetInteraction.trigger(0, 'field-switch');
           onfocus?.(event);
         }} onblur={event => {
+            maskInput.blur();
             onblur?.(event);
             blurWithin(event);
           }} />

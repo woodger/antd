@@ -13,6 +13,8 @@ export type DatePickerMode = 'date' | 'week' | 'month' | 'year' | 'decade' | 'qu
 /** Терминальный выбор; decade остаётся только режимом навигации панели. */
 export type DatePickerPicker = 'date' | 'week' | 'month' | 'year' | 'quarter';
 export type DatePickerFormat = string | ((value: Dayjs) => string);
+/** Строковый формат поля; mask включает редактирование числовых разрядов. */
+export interface DatePickerFormatConfig { format: string; type?: 'mask'; }
 /** Быстрый выбор одной даты: готовое или лениво вычисляемое значение. */
 export interface DatePickerPreset {
   label: string | Snippet;
@@ -74,8 +76,8 @@ export interface DatePickerProps extends Omit<
   showTime?: boolean | DatePickerTimeConfig;
   /** Номера недель в date/week панели; по умолчанию включены только для picker=week. */
   showWeek?: boolean;
-  /** Первый формат используется для вывода; дополнительные строки допускаются при разборе ввода. */
-  format?: DatePickerFormat | DatePickerFormat[];
+  /** Первый формат задаёт вывод; дополнительные строки допускаются при разборе. Объект type=mask включает числовые разряды. */
+  format?: DatePickerFormat | DatePickerFormat[] | DatePickerFormatConfig;
   /** Начальная дата панели; применяется заново при каждом открытии popup. */
   defaultPickerValue?: Dayjs;
   /** Управляемая дата панели, независимая от выбранного value. */

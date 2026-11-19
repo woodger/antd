@@ -30,6 +30,8 @@
     validPickerTime
   } from './date-picker.engine';
   import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
+  import { normalizePickerFieldFormat } from './picker-mask.engine';
+  import { createPickerMaskInput, type PickerMaskSharedKey } from './picker-mask-input.model.svelte.js';
   import { datePickerEnUS } from './date-picker.locale';
   import { useConfig } from './config-context';
   import { getPickerPrefixCss } from './picker-prefix.engine';
@@ -172,6 +174,7 @@
     }
   );
   let formats = $derived(time ? timePickerFormats(time, lang) : pickerFormats(formatConfig, lang));
+  let maskFormat = $derived(normalizePickerFieldFormat<Dayjs>(time ? time.format : format, '').mask);
   let readOnly = $derived(
     time && typeof formats[0] === 'function'
       || (inputReadOnly ?? (attributes.readonly
@@ -280,6 +283,15 @@
       pair[active] = formatPicker(hover, lang.locale, formats);
     return pair;
   });
+  const maskInputs = [0, 1].map(index => createPickerMaskInput(() => ({
+    text: displayedTexts[index], mask: maskFormat, active: active === index,
+    helped: !!previewValue && !!(presetHover || hover && active === index),
+    readOnly, preserveInvalidOnBlur,
+    validateText: next => !!parsePicker(next, lang.locale, formats),
+    acceptInput: next => inputChange(index, next, true),
+    onHelp: () => requestOpen(true)
+  })));
+  $effect(() => { for (const input of maskInputs) input.sync(); });
   let bar = $state({ left: 0, width: 0 });
   let actualPlacement = $derived(
     placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft')
@@ -384,6 +396,13 @@
       ? value !== previousDateValue : committed !== previousCommitted;
     if (!modelChanged
       && (time || start === previousDateStartText && end === previousDateEndText)) return;
+
+    if (!time && !modelChanged) {
+      texts = dateTexts(calendar);
+      previousDateStartText = start;
+      previousDateEndText = end;
+      return;
+    }
 
     calendar = [...committed];
     submit = [...committed];
@@ -785,10 +804,10 @@
       });
     }
   }
-  function focusField(index: number) {
+  function focusField(index: number, suppressOpen = false) {
     focused = true;
     send(index, 'field-switch');
-    if (!time) requestOpen(true);
+    if (!time && !suppressOpen) requestOpen(true);
     const accepted = interaction.currentIndex;
     if (accepted !== null && accepted !== index)
       void tick().then(() => {
@@ -886,14 +905,17 @@
     if (time) setTimePanel(active, date, 'panel');
     else setDatePanel(index, next, 'panel');
   }
-  function inputChange(index: number, text: string) {
-    focusField(index);
-    if (time && text && text !== formatPicker(calendar[index], lang.locale, formats))
+  function inputChange(index: number, text: string, masked = false) {
+    focusField(index, masked);
+    if (time && !masked && text && text !== formatPicker(calendar[index], lang.locale, formats))
       requestOpen(true);
     const copy: [string, string] = [...texts];
     copy[index] = text;
     texts = copy;
-    const next = text ? parsePicker(text, lang.locale, formats) : null;
+    const parsed = text ? parsePicker(text, lang.locale, formats) : null;
+    const current = calendar[index];
+    const next = !time && picker === 'date' && parsed && current
+      && timePickerSameValue(parsed, current) ? current : parsed;
     if (!time && (picker === 'date' || picker === 'quarter' || picker === 'week')) {
       const values: typeof quarterInputValues = [...quarterInputValues];
       values[index] = next;
@@ -906,10 +928,15 @@
       send(index, 'input', next ?? undefined);
       return;
     }
-    if (!text || next && !invalid(next, index, picker === 'quarter' || picker === 'week' ? undefined : from())) {
+    const reference = picker === 'date' || picker === 'quarter' || picker === 'week'
+      ? undefined : from();
+    if (!text || next && !invalid(next, index, reference, picker, picker === 'date')) {
       send(index, 'input', next);
-      if (next)
-        if (picker === 'date') syncPanel(index, 'reset', false, next);
+      if (next && picker === 'date') {
+        const defaultPanel = Array.isArray(defaultPickerValue)
+          ? defaultPickerValue[index] : defaultPickerValue;
+        if (!defaultPanel) syncPanel(index, 'reset', false, next);
+      }
     }
     else send(index, 'input');
   }
@@ -942,24 +969,38 @@
           ))
       );
   }
-  async function keyboard(
+  function keyboard(
     event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; },
     index: number
   ) {
+    const shared = (_event: KeyboardEvent, maskKey?: PickerMaskSharedKey) => {
+      if (time) {
+        if (event.key === 'Tab') send(active, 'keyboard-submit-weak');
+        else if (event.key === 'Escape') {
+          event.preventDefault();
+          event.stopPropagation();
+          send(active, 'esc');
+          requestOpen(false);
+        }
+        (time.onkeydown ?? time.onKeyDown)?.(event);
+      } else onkeydown?.(event);
+      if (event.defaultPrevented || event.isComposing || blocked[index]) return false;
+      void keyboardAction(event, index, maskKey);
+      return true;
+    };
+    if (!maskInputs[index].keydown(event, shared)) shared(event);
+  }
+  async function keyboardAction(
+    event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; },
+    index: number,
+    maskKey?: PickerMaskSharedKey
+  ) {
     if (time) {
-      if (event.key === 'Tab') send(active, 'keyboard-submit-weak');
-      else if (event.key === 'Escape') {
-        event.preventDefault();
-        event.stopPropagation();
-        send(active, 'esc');
-        requestOpen(false);
-      }
-      (time.onkeydown ?? time.onKeyDown)?.(event);
-      if (event.defaultPrevented || event.isComposing || blocked[index]) return;
       if (event.key === 'Enter') {
         event.preventDefault();
-        if (parsePicker(texts[index], lang.locale, formats)) send(index, 'keyboard-submit');
-      } else if (event.key === 'ArrowDown') {
+        if (maskKey ? maskKey.enterValid : parsePicker(texts[index], lang.locale, formats))
+          send(index, 'keyboard-submit');
+      } else if (event.key === 'ArrowDown' && !maskKey) {
         event.preventDefault();
         requestOpen(true);
         await tick();
@@ -971,8 +1012,6 @@
       }
       return;
     }
-    onkeydown?.(event);
-    if (event.defaultPrevented || event.isComposing || blocked[index]) return;
     if (event.key === 'Escape') {
       event.preventDefault();
       event.stopPropagation();
@@ -984,14 +1023,14 @@
       if (!visible) {
         focusField(index);
         requestOpen(true);
-      } else if (!inputInvalid(index))
+      } else if ((!maskKey || maskKey.enterValid) && !inputInvalid(index))
         send(index, 'keyboard-submit');
     }
     else if (event.key === 'Tab') {
       if (!inputInvalid(index))
         send(index, 'keyboard-submit-weak');
     }
-    else if (event.key === 'ArrowDown' && picker === 'date') {
+    else if (event.key === 'ArrowDown' && picker === 'date' && !maskKey) {
       event.preventDefault();
       requestOpen(true);
       await tick();
@@ -1305,17 +1344,30 @@
             .join(
               ' '
             )
-            || undefined} required={attributes.required ?? field?.required} disabled={blocked[0]} readonly={readOnly} autocomplete="off" value={displayedTexts[0]}
+            || undefined} required={attributes.required ?? field?.required} disabled={blocked[0]} readonly={readOnly} autocomplete="off" value={maskInputs[0].value} defaultValue={maskInputs[0].value}
+      {@attach maskInputs[0].attach}
       class={semantic?.classes.input} style={semantic?.styles.input} size={timeInputSize}
       data-range={time ? 'start' : undefined}
-      oninput={event => inputChange(0, event.currentTarget.value)} onclick={() => {
+      oninput={event => { if (!maskInputs[0].nativeInput(event)) inputChange(0, event.currentTarget.value); }}
+      onmousedown={event => {
+        maskInputs[0].mousedown();
+        attributes.onmousedown?.call(event.currentTarget, event);
+      }}
+      onmouseup={event => {
+        const shared = () => attributes.onmouseup?.call(event.currentTarget, event);
+        if (!maskInputs[0].mouseup(event, shared)) shared();
+      }}
+      onpaste={event => {
+        if (!maskInputs[0].paste(event)) attributes.onpaste?.call(event.currentTarget, event);
+      }} onclick={() => {
           if (!time) focusField(0);
           if (!time) requestOpen(true);
         }} onfocus={event => {
-            focusField(0);
+            maskInputs[0].focus();
+            focusField(0, true);
             if (time) (time.onfocus ?? time.onFocus)?.(event, { range: 'start' });
             else onfocus?.(event);
-          }} onblur={event => blurInput(0, event)} onkeydown={event => keyboard(event, 0)} />
+          }} onblur={event => { maskInputs[0].blur(); blurInput(0, event); }} onkeydown={event => keyboard(event, 0)} />
   </div>
   <div class={`${prefix}-range-separator`}>{#if !time && typeof resolvedSeparator === 'function'}{@render resolvedSeparator()}{:else}<span class={`${prefix}-separator`} aria-hidden={time && resolvedSeparator !== undefined ? undefined : 'true'}>{#if typeof resolvedSeparator === 'function'}{@render resolvedSeparator()}{:else if resolvedSeparator !== undefined}{resolvedSeparator}{:else}<PickerRangeSeparator />{/if}</span>{/if}</div>
   <div class={[
@@ -1334,17 +1386,30 @@
             .join(
               ' '
             )
-            || undefined} required={attributes.required ?? field?.required} disabled={blocked[1]} readonly={readOnly} autocomplete="off" value={displayedTexts[1]}
+            || undefined} required={attributes.required ?? field?.required} disabled={blocked[1]} readonly={readOnly} autocomplete="off" value={maskInputs[1].value} defaultValue={maskInputs[1].value}
+      {@attach maskInputs[1].attach}
       class={semantic?.classes.input} style={semantic?.styles.input} size={timeInputSize}
       data-range={time ? 'end' : undefined}
-      oninput={event => inputChange(1, event.currentTarget.value)} onclick={() => {
+      oninput={event => { if (!maskInputs[1].nativeInput(event)) inputChange(1, event.currentTarget.value); }}
+      onmousedown={event => {
+        maskInputs[1].mousedown();
+        attributes.onmousedown?.call(event.currentTarget, event);
+      }}
+      onmouseup={event => {
+        const shared = () => attributes.onmouseup?.call(event.currentTarget, event);
+        if (!maskInputs[1].mouseup(event, shared)) shared();
+      }}
+      onpaste={event => {
+        if (!maskInputs[1].paste(event)) attributes.onpaste?.call(event.currentTarget, event);
+      }} onclick={() => {
           if (!time) focusField(1);
           if (!time) requestOpen(true);
         }} onfocus={event => {
-            focusField(1);
+            maskInputs[1].focus();
+            focusField(1, true);
             if (time) (time.onfocus ?? time.onFocus)?.(event, { range: 'end' });
             else onfocus?.(event);
-          }} onblur={event => blurInput(1, event)} onkeydown={event => keyboard(event, 1)} />
+          }} onblur={event => { maskInputs[1].blur(); blurInput(1, event); }} onkeydown={event => keyboard(event, 1)} />
   </div>
   <div class={`${prefix}-active-bar`} style={`position:absolute;left:${bar.left}px;width:${bar.width}px`}></div>
   {#if suffixContent !== false && suffixContent !== null && suffixContent !== ''}

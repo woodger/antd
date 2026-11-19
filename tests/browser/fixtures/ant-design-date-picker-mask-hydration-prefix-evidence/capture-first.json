@@ -1,0 +1,98 @@
+{
+  "status": "complete",
+  "variant": "first",
+  "scope": "Independent original React hydrated two-range string prefix; no Source outcome expectation or generic focus boundary",
+  "sourceProtocol": {
+    "file": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/protocol-freeze.json",
+    "sha256": "f50d6d8b601b9b5e47aeb978840770b7a4ccfd2533638e60ef33e5cb8881a24c",
+    "rootLease": "mask-hydration-prefix-20261119-01"
+  },
+  "originalInputs": {
+    "node": "v24.18.0",
+    "originalSourceFreezeSHA256": "18caf577d37c657652640b13f22292e052e914a435c4ad38627f6b231df790fe",
+    "environment": {
+      "browserExecutable": "/usr/lib64/chromium-browser/chromium-browser",
+      "chromium": "157.0.8103.78",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "locale": "en-US",
+      "timezone": "UTC",
+      "fixedDate": "2024-06-10T08:23:45.678Z",
+      "clock": "CSR Date-only fixed time, real timers/RAF; SSR actual VM wall clock.",
+      "clipboard": "Excluded; no confirmed real roundtrip, permissions unchanged."
+    },
+    "originalFactory": ".upstream/artifacts/date-picker-mask-source-proposal-v1/source-case.mjs",
+    "scripts": [
+      ".upstream/artifacts/react-18.3.1/umd/react.production.min.js",
+      ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js",
+      "node_modules/dayjs/dayjs.min.js",
+      "node_modules/dayjs/locale/en-gb.js",
+      ".upstream/artifacts/antd-6.6.8/dist/antd.js"
+    ],
+    "SSRInput": "unchanged original SSR-first renderToString; no new server rendering"
+  },
+  "cases": [
+    {
+      "id": "range-date-mask",
+      "formatProfile": "string",
+      "snapshots": 9,
+      "macros": 4,
+      "substeps": 6,
+      "failure": null,
+      "rawJSONPart": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-first.json.parts/range-date-mask-string.json",
+        "bytes": 530844068,
+        "sha256": "89c9ad6cae8c52cdbdd41abf42001f1ab2f664beb08271787b1616a2d0b8fc9b",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-first.json.parts/range-date-mask-string.json.gz",
+        "gzipBytes": 11951567,
+        "gzipSHA256": "4456c824b96185d21d00f8316cc84b7fb70bda68b7bd87f719287b52b0b39082"
+      }
+    },
+    {
+      "id": "range-time-mask",
+      "formatProfile": "string",
+      "snapshots": 9,
+      "macros": 4,
+      "substeps": 6,
+      "failure": null,
+      "rawJSONPart": {
+        "file": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-first.json.parts/range-time-mask-string.json",
+        "bytes": 30443080,
+        "sha256": "9860f6f02e81f09fd85c70633f029d38217ff94c948dd7cc293dfef0694ed611",
+        "gzipFile": ".upstream/artifacts/date-picker-mask-hydration-prefix-source-proposal-v1/hydrate-source-first.json.parts/range-time-mask-string.json.gz",
+        "gzipBytes": 833855,
+        "gzipSHA256": "1e0e16e13a6d8fda711fcfa1f8792bfd66760c50890d3e81715deb58723ddabb"
+      }
+    }
+  ],
+  "errors": [],
+  "diagnostics": [],
+  "captureIssues": [],
+  "fatal": null,
+  "counts": {
+    "profiles": 2,
+    "snapshots": 18,
+    "snapshotCountScope": "lifecycle-only; child/macro full phase positions counted separately",
+    "retainedFullPhasePositions": 80,
+    "distinctRetainedFullReads": 72,
+    "completeMacros": 6,
+    "partialMacros": 2,
+    "executedSubsteps": 12,
+    "physicalPrimitives": 10,
+    "authoredDOMControlClicks": 2,
+    "newSSRSerializations": 0
+  },
+  "lifecycle": {
+    "browserVersion": "157.0.8103.78",
+    "browserCloseAwaited": true,
+    "contextsCreated": 2,
+    "contextsClosed": 2,
+    "allContextsCloseAwaited": true
+  },
+  "terminalInputVerification": {
+    "unchanged": true,
+    "sha256": "f50d6d8b601b9b5e47aeb978840770b7a4ccfd2533638e60ef33e5cb8881a24c"
+  }
+}

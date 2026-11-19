@@ -5056,12 +5056,24 @@ Value/open/pickerValue — controlled props с callbacks: владелец мо�
 decade служит экраном навигации. NativeElement с bind указывает на root div; bind:this даёт методы
 focus({preventScroll,cursor:'start'|'end'|'all'}) и blur().
 
-Format принимает строку, массив допустимых форматов или display callback; input
+Format принимает строку, массив допустимых форматов, display callback либо объект
+`{ format: 'YYYY-MM-DD', type: 'mask' }`; без type объект действует как строковый формат. Input
 с callback-only format автоматически readonly. По умолчанию дата YYYY-MM-DD,
 showTime — YYYY-MM-DD HH:mm:ss. Разбор строгий: переполнения и неверные високосные
 дни не нормализуются. Невалидный текст не меняет value и при blur восстанавливается;
-preserveInvalidOnBlur сохраняет его. InputReadOnly блокирует текстовый ввод, но
-сохраняет календарь и очистку. AllowClear=true по умолчанию.
+preserveInvalidOnBlur сохраняет его. InputReadOnly задаёт native readonly,
+сохраняя календарь и очистку. В режиме маски сохраняется поведение Ant Design:
+клавиши маски могут менять разряды и при readonly. AllowClear=true по умолчанию.
+
+Маска поддерживает разряды YYYY, MM, DD, HH, mm, ss и SSS у date/datetime,
+RangePicker, TimePicker и TimeRangePicker. Стрелки перемещают выделение или меняют
+разряд; Backspace/Delete возвращают его шаблон. Неполный текст остаётся в поле,
+не заменяя календарную дату; при допустимом тексте Enter применяет сохранённый объект Dayjs.
+Enter без редактирования сохраняет скрытое время. Ручной ввод SSS не округляется
+по шагу панели.
+Смена формата сохраняет поле, фокус и неподтверждённые границы диапазона.
+Пример: `<DatePicker format={{ format: 'YYYY-MM-DD', type: 'mask' }} />`.
+Эталон и границы сверки — [numeric mask](./tests/browser/fixtures/ant-design-date-picker-mask-source-notes.md).
 
 `picker="month"` и `picker="year"` поддержаны у DatePicker и RangePicker.
 Их форматы по умолчанию — YYYY-MM и YYYY; placeholder и формат берутся из
@@ -5336,7 +5348,7 @@ Defaults в prefix stylesheet имеют нулевую specificity: canonical N
 SSR проверяет также defaultOpen, browser — обновление общего префикса.
 
 Остальные picker/multiple modes, generatePicker factory,
-mask format, полный semantic/component config
+полный semantic/component config
 и полный rc-trigger/motion API ещё не перенесены. Реестр перечисляет эти пробелы
 отдельно; данный этап не заявляет полноту семейства DatePicker.
 

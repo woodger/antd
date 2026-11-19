@@ -1,18 +1,20 @@
 import type { Dayjs } from 'dayjs';
 import { dayjsGenerateConfig as date } from './date-picker-dayjs.engine';
+import { normalizePickerFieldFormat } from './picker-mask.engine';
 import type {
   DatePickerFormat,
   DatePickerMode,
   DatePickerPicker,
   DatePickerProps,
-  DatePickerTimeConfig
+  DatePickerTimeConfig,
+  DatePickerDisabledTime
 } from './date-picker.types';
 
 export function pickerFormats(
   props: Pick<DatePickerProps, 'format' | 'showTime' | 'picker'>,
   locale: NonNullable<DatePickerProps['locale']>['lang'] = {}
 ): DatePickerFormat[] {
-  if (props.format) return Array.isArray(props.format) ? props.format : [props.format];
+  if (props.format) return normalizePickerFieldFormat<Dayjs>(props.format, 'YYYY-MM-DD').formats;
   if (props.picker === 'week') return [locale.fieldWeekFormat || 'gggg-wo'];
   if (props.picker === 'quarter') return [locale.fieldQuarterFormat ?? 'YYYY-[Q]Q'];
   if (props.picker === 'month') return [locale.fieldMonthFormat ?? 'YYYY-MM'];
@@ -152,7 +154,14 @@ export function pickerTimeDisabled(
   props: Pick<DatePickerProps, 'showTime' | 'disabledTime'>
 ): boolean {
   if (!props.showTime) return false;
-  const config = props.disabledTime?.(value) ?? {};
+  const field: {
+    disabledTime?: (
+      date: Dayjs,
+      range: 'start',
+      info: { from: undefined; }
+    ) => DatePickerDisabledTime;
+  } = props;
+  const config = field.disabledTime?.(value, 'start', { from: undefined }) ?? {};
   return Boolean(
     config.disabledHours?.().includes(value.hour())
     || config.disabledMinutes?.(value.hour()).includes(

@@ -98,7 +98,7 @@ it('rejects a missing picker notification even when the remaining local ledgers 
   expect(() => verifyDatePickerPresetTransitionOwner(changed, sourceCallbacks(), callbackSample(),
     createDatePickerPresetTransitionProof(), 'missing picker')).toThrow();
 });
-it('keeps measured Native disabledTime arity1 and rejects Source arity3 as a Native compatibility fallback', () => {
+it('keeps panel disabledTime arity1 and rejects changing its count without actual arguments', () => {
   const original = readDatePickerPresetTransitionsStep(timeSample().id, 8).actual.owner;
   const native = point('time-visible').owner;
   expect(() => verifyDatePickerPresetTransitionOwner(native, original, timeSample(),
