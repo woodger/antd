@@ -12177,7 +12177,7 @@
             "src/lib/time-picker.engine.test.ts",
             "tests/browser/time-picker.spec.ts"
           ],
-          "note": "HH:mm:ss/hh:mm:ss A, locale field formats, display callback readonly, строгие input formats, show flags, disabledTime units, hideDisabledOptions. Panel selection выравнивает все units, включая скрытые milliseconds (default step=100); step=1 сохраняет точность. Сохранены дата и UTC режим входного Dayjs; parser/getNow используют общий adapter. При расчёте панели без value и pickerValue отсутствие доступных минут, секунд или миллисекунд сохраняет соответствующую единицу базового Dayjs. Штатное открытие TimePicker передаёт опорное время панели."
+          "note": "HH:mm:ss/hh:mm:ss A, locale field formats, display callback readonly, строгие input formats, show flags, disabledTime units, hideDisabledOptions. Panel selection выравнивает все units, включая скрытые milliseconds (default step=100); step=1 сохраняет точность. Сохранены дата и UTC режим входного Dayjs; parser/getNow используют общий adapter. При расчёте панели без value и pickerValue отсутствие доступных минут, секунд или миллисекунд сохраняет соответствующую единицу базового Dayjs. Штатное открытие TimePicker передаёт опорное время панели. В Ant Design React 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d) пустая колонка минут при hideDisabledOptions передаёт undefined в disabledSeconds для одиночного поля и обеих границ диапазона. Svelte подставляет числовую единицу из опорного времени для зависимого callback, а колонку оставляет пустой."
         },
         {
           "id": "hover-scroll-lifecycle",

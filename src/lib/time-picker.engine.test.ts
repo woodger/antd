@@ -125,6 +125,36 @@ describe('TimePicker formatting and units', () => {
     }
   );
 
+  it('passes numeric panel time to restrictions for empty higher columns', () => {
+    const now = dayjs.utc('2024-09-15T12:34:56.789Z');
+    const pickerValue = dayjs.utc('2024-09-15T08:09:10.123Z');
+    const clock = timePickerClock({ format: 'HH:mm:ss.SSS', hideDisabledOptions: true });
+    const allHours = Array.from({ length: 24 }, (_, hour) => hour);
+    const allMinutes = Array.from({ length: 60 }, (_, minute) => minute);
+    const allSeconds = Array.from({ length: 60 }, (_, second) => second);
+    const args: number[][] = [];
+
+    const panel = timePickerPanel(null, pickerValue, clock, () => ({
+      disabledHours: () => allHours,
+      disabledMinutes(hour) {
+        args.push([hour]);
+        return allMinutes;
+      },
+      disabledSeconds(hour, minute) {
+        args.push([hour, minute]);
+        return allSeconds;
+      },
+      disabledMilliseconds(hour, minute, second) {
+        args.push([hour, minute, second]);
+        return [];
+      }
+    }), datePickerEnUS.lang, now);
+
+    expect(args).toEqual([[8], [8, 9], [8, 9, 10]]);
+    expect(panel.columns.map(column => column.options.length)).toEqual([0, 0, 0, 10]);
+    expect(panel.template.toISOString()).toBe(pickerValue.toISOString());
+  });
+
   it('aligns all units with restrictions evaluated from the current panel value', () => {
     const value = dayjs.utc('2024-09-15T10:23:44.567Z');
     const observed: string[] = [];

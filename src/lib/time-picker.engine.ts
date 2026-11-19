@@ -160,6 +160,8 @@ export function timePickerPanel(
   now: Dayjs
 ) {
   const dynamic = disabledTime?.(value || now) || {};
+  const source = value ?? pickerValue;
+  const reference = source ?? now;
   const disabledHours = dynamic.disabledHours;
   const disabledMinutes = dynamic.disabledMinutes;
   const disabledSeconds = dynamic.disabledSeconds;
@@ -171,16 +173,31 @@ export function timePickerPanel(
         ? String(Number(option.value) % 12 || 12).padStart(2, '0') : option.label
     }));
   const hour = selectedTimeUnit(hours, value?.hour());
-  // Правило 2: при пустой колонке ограничения получают прежний undefined.
-  // Типы disabledTime объявляют number, явный fallback меняет наблюдаемые аргументы.
-  const minutes = timePickerOptions(60, config.minuteStep, disabledMinutes?.(hour!),
-    config.hideDisabledOptions);
+  // При пустой колонке ограничения получают соответствующую единицу опорного времени.
+  const hourForRestrictions = hour ?? reference.hour();
+  const minutes = timePickerOptions(
+    60,
+    config.minuteStep,
+    disabledMinutes?.(hourForRestrictions),
+    config.hideDisabledOptions
+  );
   const minute = selectedTimeUnit(minutes, value?.minute());
-  const seconds = timePickerOptions(60, config.secondStep, disabledSeconds?.(hour!, minute!),
-    config.hideDisabledOptions);
+  const minuteForRestrictions = minute ?? reference.minute();
+  const seconds = timePickerOptions(
+    60,
+    config.secondStep,
+    disabledSeconds?.(hourForRestrictions, minuteForRestrictions),
+    config.hideDisabledOptions
+  );
   const second = selectedTimeUnit(seconds, value?.second());
-  const milliseconds = timePickerOptions(1000, config.millisecondStep ?? 100,
-    dynamic.disabledMilliseconds?.(hour!, minute!, second!), config.hideDisabledOptions, 3);
+  const secondForRestrictions = second ?? reference.second();
+  const milliseconds = timePickerOptions(
+    1000,
+    config.millisecondStep ?? 100,
+    dynamic.disabledMilliseconds?.(hourForRestrictions, minuteForRestrictions, secondForRestrictions),
+    config.hideDisabledOptions,
+    3
+  );
   const millisecond = selectedTimeUnit(milliseconds, value?.millisecond());
   const am = value ? value.hour() < 12 : true;
   const meridiem: TimePickerOption<'am' | 'pm'>[] = config.use12Hours ? [
@@ -192,8 +209,7 @@ export function timePickerPanel(
       : 'PM',
     disabled: hours.every(option => option.disabled || Number(option.value) < 12) }
   ] : [];
-  const source = value || pickerValue;
-  let template = source || now;
+  let template = reference;
 
   if (source) {
     template = template.hour(source.hour()).minute(source.minute())
