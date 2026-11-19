@@ -1,3 +1,5 @@
+// Связывает окно виртуального списка с реальными размерами DOM и scrollTo.
+// Измерение и прокрутка отменяются раздельно, сохраняя высоты переиспользуемых строк.
 import { tick, untrack } from 'svelte';
 import { virtualListScrollStep, virtualListSizes, virtualListWindow } from './virtual-list.engine';
 import { createVirtualListSizeCache } from './virtual-list-size-cache.engine';
@@ -27,10 +29,10 @@ export function createVirtualList<Row, Key>(options: {
   let holder: HTMLDivElement | undefined;
   let inner: HTMLDivElement | undefined;
   let observer: ResizeObserver | undefined;
-  let collection = 0;
-  let request = 0;
+  let measurementRevision = 0;
+  let scrollRevision = 0;
   type Alignment = {
-    generation: number;
+    revision: number;
     times: number;
     index: number;
     key: Key | undefined;
@@ -70,7 +72,7 @@ export function createVirtualList<Row, Key>(options: {
     });
 
     $effect(() => () => {
-      request++;
+      scrollRevision++;
       alignment = undefined;
     });
   }
@@ -98,22 +100,17 @@ export function createVirtualList<Row, Key>(options: {
   }
 
   function measure() {
-    collection++;
+    measurementRevision++;
     if (!connected) {
       return;
     }
     const previousHeight = range.scrollHeight;
-    const changes: { key: Key; previous: number | undefined; height: number; }[] = [];
-    for (const [key, element] of nodes) {
-      const height = measureVirtualListRow(element);
-      if (height !== undefined && heights.get(key) !== height) {
-        changes.push({ key, previous: heights.get(key), height });
-      }
-    }
+    const changes = measureRows();
     if (changes.length) {
       const next = new Map(heights);
       for (const change of changes) next.set(change.key, change.height);
       heights = next;
+
       const change = changes[0];
       const first = options.rows()[range.start];
       if (changes.length === 1 && change.previous === undefined
@@ -122,6 +119,7 @@ export function createVirtualList<Row, Key>(options: {
         sync(top + change.height - options.estimate());
       }
     }
+
     if (inner) innerHeight = inner.offsetHeight;
     if (holder) {
       const rect = holder.getBoundingClientRect();
@@ -132,10 +130,29 @@ export function createVirtualList<Row, Key>(options: {
     }
   }
 
+  // Учитывает прежнюю высоту для компенсации позиции при первом измерении строки.
+  function measureRows() {
+    const changes: { key: Key; previous: number | undefined; height: number; }[] = [];
+    for (const [key, element] of nodes) {
+      const height = measureVirtualListRow(element);
+      if (height === undefined) {
+        continue;
+      }
+
+      const previous = heights.get(key);
+      if (previous !== height) {
+        changes.push({ key, previous, height });
+      }
+    }
+
+    return changes;
+  }
+
+  // Несколько DOM-изменений до одной микрозадачи требуют только последнего измерения.
   function collect() {
-    const generation = ++collection;
+    const scheduledRevision = ++measurementRevision;
     void Promise.resolve().then(() => {
-      if (generation === collection) measure();
+      if (scheduledRevision === measurementRevision) measure();
     });
   }
 
@@ -143,6 +160,8 @@ export function createVirtualList<Row, Key>(options: {
     nodes.set(key, element);
     observer?.observe(element);
     collect();
+
+    // При смене элемента с тем же ключом старый cleanup сохраняет новую регистрацию.
     return () => {
       observer?.unobserve(element);
       if (nodes.get(key) === element) nodes.delete(key);
@@ -161,24 +180,29 @@ export function createVirtualList<Row, Key>(options: {
     observer?.observe(content);
     for (const node of nodes.values()) observer?.observe(node);
     measure();
+
+    // Отключение viewport лишает отложенные операции их DOM-цели.
     return () => {
       observer?.disconnect();
       observer = undefined;
       connected = false;
       holder = undefined;
       inner = undefined;
-      collection++;
-      request++;
+      measurementRevision++;
+      scrollRevision++;
       if (options.renderSizeCache) alignment = undefined;
     };
   }
 
   function getSize(startKey: Key, endKey = startKey) {
-    return { top: sizes.get(startKey)?.top ?? 0, bottom: sizes.get(endKey)?.bottom };
+    const start = sizes.get(startKey);
+    const top = start?.top ?? 0;
+    const end = sizes.get(endKey);
+    return { top, bottom: end?.bottom };
   }
 
   function alignRendered(pending: Alignment) {
-    if (pending.generation !== request || !holder) {
+    if (pending.revision !== scrollRevision || !holder) {
       return;
     }
     const rows = options.rows();
@@ -191,7 +215,7 @@ export function createVirtualList<Row, Key>(options: {
     const resolved = pending.targetAlign || pending.originAlign;
     const value = typeof pending.offset === 'function'
       ? pending.offset({ getSize: size, align: resolved }) : pending.offset;
-    if (pending.generation !== request || !holder) {
+    if (pending.revision !== scrollRevision || !holder) {
       return;
     }
     const offset = Number.isFinite(value) ? value : 0;
@@ -208,7 +232,7 @@ export function createVirtualList<Row, Key>(options: {
       targetAlign = step.align;
       unknown = step.unknown || target !== pending.lastTop;
     }
-    if (unknown && pending.generation === request) {
+    if (unknown && pending.revision === scrollRevision) {
       alignment = {
         ...pending, times: pending.times + 1, index, targetAlign, lastTop: target
       };
@@ -223,7 +247,7 @@ export function createVirtualList<Row, Key>(options: {
   ) {
     if (options.renderSizeCache) {
       alignment = {
-        generation: ++request, times: 0, index, key, originAlign, offset
+        revision: ++scrollRevision, times: 0, index, key, originAlign, offset
       };
     }
     else {
@@ -237,11 +261,11 @@ export function createVirtualList<Row, Key>(options: {
     align: VirtualScrollAlign | undefined,
     rawOffset: VirtualScrollOffset<Key>
   ) {
-    const generation = ++request;
+    const alignmentRevision = ++scrollRevision;
     let resolved = align;
     let lastTop: number | null | undefined;
     for (let times = 0; times < 10; times++) {
-      if (generation !== request || !holder) {
+      if (alignmentRevision !== scrollRevision || !holder) {
         return;
       }
       measure();
@@ -287,14 +311,14 @@ export function createVirtualList<Row, Key>(options: {
       return;
     }
     if (typeof config === 'number') {
-      request++;
+      scrollRevision++;
       if (options.renderSizeCache) alignment = undefined;
       sync(config);
       return;
     }
     if ('top' in config || 'left' in config) {
       if (options.renderSizeCache) {
-        request++;
+        scrollRevision++;
         alignment = undefined;
       }
       if (config.left !== undefined) syncLeft(config.left);
@@ -304,7 +328,8 @@ export function createVirtualList<Row, Key>(options: {
       align(config.index, undefined, config.align, config.offset ?? 0);
     }
     else if ('key' in config) {
-      const index = options.rows().findIndex(row => options.getKey(row) === config.key);
+      const rows = options.rows();
+      const index = rows.findIndex(row => options.getKey(row) === config.key);
       align(index, config.key, config.align, config.offset ?? 0);
     }
   }
@@ -326,8 +351,8 @@ export function createVirtualList<Row, Key>(options: {
     syncLeft,
     scrollTo,
     reset() {
-      collection++;
-      request++;
+      measurementRevision++;
+      scrollRevision++;
       if (options.renderSizeCache) alignment = undefined;
       for (const node of nodes.values()) observer?.unobserve(node);
       nodes.clear();

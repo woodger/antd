@@ -1,3 +1,5 @@
+// Измеряет строки и заголовки Listy, рассчитывает видимое окно и sticky header.
+// Отмена измерений и scrollTo привязана к текущему подключению viewport.
 import { tick, untrack } from 'svelte';
 import { measureListyRow } from './listy.dom';
 import {
@@ -26,8 +28,8 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
   let connected = $state(false);
   let holder: HTMLDivElement | undefined;
   let inner: HTMLDivElement | undefined;
-  let collection = 0;
-  let request = 0;
+  let measurementRevision = 0;
+  let scrollRevision = 0;
   const nodes = new Map<string, HTMLElement>();
   const range = $derived(listyWindow(
     options.rows(), heights, options.estimate(), options.height(), top, innerHeight
@@ -52,7 +54,7 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
   }
 
   function measure() {
-    collection++;
+    measurementRevision++;
     if (!connected) {
       return;
     }
@@ -60,8 +62,13 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
     const changes: { key: string; previous: number | undefined; height: number; }[] = [];
     for (const [key, element] of nodes) {
       const height = measureListyRow(element);
-      if (height !== undefined && heights.get(key) !== height) {
-        changes.push({ key, previous: heights.get(key), height });
+      if (height === undefined) {
+        continue;
+      }
+
+      const previous = heights.get(key);
+      if (previous !== height) {
+        changes.push({ key, previous, height });
       }
     }
 
@@ -83,10 +90,11 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
     }
   }
 
+  // Объединяет ожидающие измерения в один проход после текущего обновления.
   function collect() {
-    const generation = ++collection;
+    const scheduledRevision = ++measurementRevision;
     void Promise.resolve().then(() => {
-      if (generation === collection) measure();
+      if (scheduledRevision === measurementRevision) measure();
     });
   }
 
@@ -115,23 +123,24 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
       connected = false;
       holder = undefined;
       inner = undefined;
-      collection++;
-      request++;
+      measurementRevision++;
+      scrollRevision++;
     };
   }
 
+  // Повторяет измерение после tick, пока высота и позиция цели стабилизируются.
   async function alignTo(
     key: string,
     align: ListyScrollAlign | undefined,
     baseOffset: number,
     stickyKey?: string
   ) {
-    const generation = ++request;
+    const alignmentRevision = ++scrollRevision;
     let index = options.rows().findIndex(row => row.taggedKey === key);
     let resolved = align;
     let lastTop: number | null | undefined;
     for (let times = 0; times < 10; times++) {
-      if (generation !== request || !holder) {
+      if (alignmentRevision !== scrollRevision || !holder) {
         return;
       }
       measure();
@@ -171,7 +180,7 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
       return;
     }
     if (typeof config === 'number') {
-      request++;
+      scrollRevision++;
       sync(config);
       return;
     }
@@ -185,21 +194,25 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
     }
     else if ('key' in config) {
       const key = listyTag(config.key, 'item');
-      let stickyKey: string | undefined;
-      if (options.sticky() && config.align !== 'bottom') {
-        let current: string | undefined;
-        for (const row of options.rows()) {
-          if (row.type === 'group') {
-            current = row.taggedKey;
-          }
-          else if (row.taggedKey === key) {
-            stickyKey = current;
-            break;
-          }
-        }
-      }
+      const stickyKey = options.sticky() && config.align !== 'bottom'
+        ? findGroupHeader(key) : undefined;
       void alignTo(key, config.align, config.offset ?? 0, stickyKey);
     }
+  }
+
+  // Возвращает заголовок, который предшествует элементу и может его перекрыть сверху.
+  function findGroupHeader(itemKey: string) {
+    let headerKey: string | undefined;
+    for (const row of options.rows()) {
+      if (row.type === 'group') {
+        headerKey = row.taggedKey;
+      }
+      else if (row.taggedKey === itemKey) {
+        return headerKey;
+      }
+    }
+
+    return undefined;
   }
 
   return {
