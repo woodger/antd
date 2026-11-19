@@ -3,6 +3,8 @@
 </script>
 
 <script lang="ts">
+  // Связывает native доступность и toggling с текущим checked. Form и клавиатура работают через
+  // тот же элемент.
   import { onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';

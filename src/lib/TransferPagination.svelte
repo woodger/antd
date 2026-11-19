@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Связывает переключатели страницы Transfer с текстом номера. Ввод и навигация не меняют выбор
+  // строк.
   import { untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getPaginationPrefixCss } from './pagination-prefix.engine';

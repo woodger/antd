@@ -3,6 +3,8 @@
 </script>
 
 <script lang="ts">
+  // Согласует DOM-редактор с value, clear, счётчиком и FormItem. Публичный ref делегирует
+  // операции тому же полю ввода.
   import { onDestroy, onMount, tick, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useVariant } from './variant.svelte';

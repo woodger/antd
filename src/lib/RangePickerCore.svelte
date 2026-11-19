@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Координирует два редактора, draft диапазона и панели календаря. Подтверждение публикует
+  // диапазон отдельно от навигации.
   import { onMount, tick, untrack } from 'svelte';
   import type { Dayjs } from 'dayjs';
   import type { RangePickerProps, RangePickerValue } from './range-picker.types';

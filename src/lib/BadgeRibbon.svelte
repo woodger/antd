@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Размещает Ribbon поверх внешнего содержимого. Слоты центра, индикатора и угла получают
+  // собственные слои стилей.
   import { untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';

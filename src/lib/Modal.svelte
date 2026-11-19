@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Соединяет native dialog с cancel и подтверждением. Отдельно обрабатывает запросы закрытия от
+  // маски и Escape.
   import { tick } from 'svelte';
   import NoCompactStyle from './NoCompactStyle.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';

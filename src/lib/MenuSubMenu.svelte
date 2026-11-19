@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Связывает trigger подменю с его содержимым и portal. Hover слушатели относятся к текущему
+  // контейнеру.
   import { onDestroy, onMount, untrack } from 'svelte';
   import { on } from 'svelte/events';
   import type { MenuEntry } from './menu.engine';

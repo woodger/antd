@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Координирует текстовый редактор Typography. Enter, Escape и blur определяют разные исходы
+  // завершения.
   import { onDestroy, tick, untrack } from 'svelte';
   import type { Snippet } from 'svelte';
   import { provideFormField, useFormField } from './form-context';

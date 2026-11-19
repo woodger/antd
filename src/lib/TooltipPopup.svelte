@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Применяет размеры, положение и содержимое всплывающей поверхности. Императивное выравнивание
+  // использует текущий popup.
   import { onMount, untrack } from 'svelte';
   import RenderContent from './RenderContent.svelte';
   import { useConfig } from './config-context';

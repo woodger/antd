@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Представляет скрытые вкладки в popup. Запросы фокуса и hover отменяются при смене состояния
+  // списка.
   import { flushSync, onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { connectPopup, getPopupActiveElement } from './popup.dom';

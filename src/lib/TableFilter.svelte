@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Хранит черновик условий фильтра до confirm/reset. Popup управляет фокусом отдельно от
+  // применённых фильтров Table.
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
   import type { TableFilterOption, TableFilterValue } from './table.types';

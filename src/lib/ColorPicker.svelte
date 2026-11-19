@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Управляет значением цвета, форматом и открытием панели. Изменение при вводе и завершение
+  // выбора имеют отдельные события.
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';

@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Регистрирует пункты одной панели Menu и передаёт клавиши владельцу выбора. Фокус остаётся в
+  // активном уровне списка.
   import { on } from 'svelte/events';
   import type { MenuEntry } from './menu.engine';
   import { menuItem } from './menu.engine';

@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Согласует текст редактора, выбранную дату и текущую панель. Навигация, предварительный ввод и
+  // commit выполняются раздельно.
   import { tick, untrack } from 'svelte';
   import type { Dayjs } from 'dayjs';
   import type { DatePickerProps, DatePickerMode, DatePickerPreset } from './date-picker.types';

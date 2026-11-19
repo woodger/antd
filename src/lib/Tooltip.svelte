@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Координирует задержки открытия Tooltip с событиями trigger. Popup получает уже принятое
+  // состояние видимости.
   import NoCompactStyle from './NoCompactStyle.svelte';
   import { onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';

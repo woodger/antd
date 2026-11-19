@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Управляет одной ручкой Slider и отслеживает активное взаимодействие. Публикация завершения
+  // относится к текущему жесту.
   import { onDestroy, onMount, untrack } from 'svelte';
   import type { SliderSingleProps } from './slider.types';
   import { useConfig } from './config-context';

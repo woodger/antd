@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Распределяет значения между ручками диапазона. Native input, track и tooltip используют
+  // состояние конкретной ручки.
   import { onMount, onDestroy, tick, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';

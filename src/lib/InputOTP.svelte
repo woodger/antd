@@ -3,6 +3,8 @@
 </script>
 
 <script lang="ts">
+  // Управляет отдельными ячейками OTP и их фокусом. Полное значение публикуется после заполнения
+  // заданной длины.
   import { untrack } from 'svelte';
   import InputOTPCell from './InputOTPCell.svelte';
   import { useConfig } from './config-context';

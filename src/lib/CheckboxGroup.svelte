@@ -1,4 +1,6 @@
 <script lang="ts" generics="Value extends CheckboxGroupValue = string">
+  // Хранит список зарегистрированных checkbox для одного выбора. Синхронизирует общую группу при
+  // смене участников.
   import { onDestroy, untrack } from 'svelte';
   import Checkbox from './Checkbox.svelte';
   import { useConfig } from './config-context';

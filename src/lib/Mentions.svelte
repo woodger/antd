@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Связывает выделение слова у caret с предложениями и вставкой mention. Клавиатура сохраняет
+  // управление текущим редактором.
   import { onDestroy, tick, untrack } from 'svelte';
   import RenderEmpty from './RenderEmpty.svelte';
   import type { MentionsProps, MentionsOption } from './mentions.types';

@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Распределяет фокус и действия вкладок по их ключам. Пользовательские ячейки регистрируются
+  // для той же клавиатурной навигации.
   import { onDestroy, onMount, tick, untrack } from 'svelte';
   import TabsOverflow from './TabsOverflow.svelte';
   import { connectTabsNav, connectTabsScroll, revealTab } from './tabs.dom';

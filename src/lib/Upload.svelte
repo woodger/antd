@@ -1,4 +1,6 @@
 <script lang="ts" generics="T = unknown">
+  // Связывает выбор файлов, drag и paste с контроллером Upload. Контроллер отвечает за подготовку
+  // партий, callbacks и отмену транспорта.
   import { onDestroy, untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getUploadPrefixCss } from './upload-prefix.engine';

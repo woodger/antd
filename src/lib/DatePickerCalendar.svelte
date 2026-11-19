@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Рисует панель даты и применяет ограничения навигации и выбора. Заголовок, сетка и
+  // пользовательские ячейки используют один режим.
   import type { Dayjs } from 'dayjs';
   import { tick, type Snippet } from 'svelte';
   import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';

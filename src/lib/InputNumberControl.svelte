@@ -1,4 +1,6 @@
 <script lang="ts" generics="Value extends InputNumberValue = number">
+  // Ведёт редактируемый текст отдельно от подтверждённого числа. Форматирование, шаг и blur
+  // используют decimal-операции.
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useVariant } from './variant.svelte';

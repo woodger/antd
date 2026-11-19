@@ -1,4 +1,6 @@
 <script lang="ts" generics="T = unknown">
+  // Отображает состояние и действия одного файла Upload. Preview и download используют данные
+  // текущей строки.
   import { onMount, untrack } from 'svelte';
   import { createUploadMotion, type UploadItemMotionState } from './upload-motion.dom';
   import { useToken } from './theme-context.svelte';

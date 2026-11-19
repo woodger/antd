@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Рисует трек, клоны, точки и стрелки из расчётов Carousel. Пользовательские элементы получают
+  // прежние команды навигации.
   import { untrack } from 'svelte';
   import CarouselContent from './CarouselContent.svelte';
   import {

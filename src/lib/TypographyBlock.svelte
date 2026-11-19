@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Управляет сокращением, редактированием и расширением текста. Размер содержимого измеряется
+  // отдельно от пользовательских событий.
   import { onDestroy, tick, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { typographySemantics } from './typography-semantic.engine';

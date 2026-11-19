@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Связывает способы открытия с фокусом и клавиатурой menu. Задержки принадлежат текущему
+  // trigger.
   import NoCompactStyle from './NoCompactStyle.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getDropdownPrefixCss } from './dropdown-prefix.engine';

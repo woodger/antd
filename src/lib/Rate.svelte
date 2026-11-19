@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Преобразует положение указателя или клавишу в значение рейтинга. Hover предварительно
+  // показывает значение отдельно от подтверждённого.
   import { onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';

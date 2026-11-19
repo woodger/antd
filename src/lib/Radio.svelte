@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Делегирует выбор зарегистрированной группе Radio и сообщает native события. Ref и blur
+  // относятся к связанному input.
   import { onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';

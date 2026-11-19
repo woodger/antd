@@ -1,4 +1,6 @@
 <script lang="ts" generics="Row extends object">
+  // Координирует настройки строк, пагинацию, выделение и раскрытие. Изменения отправляются с
+  // причиной и актуальным представлением данных.
   import { untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { getTablePrefixCss } from './table-prefix.engine';

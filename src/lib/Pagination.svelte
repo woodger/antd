@@ -3,6 +3,8 @@
 </script>
 
 <script lang="ts">
+  // Координирует страницу, размер и редакторы быстрого перехода. Текст в редакторе может
+  // отличаться от текущей страницы до подтверждения.
   import { tick, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useVariant } from './variant.svelte';

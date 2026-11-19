@@ -3,6 +3,8 @@
 </script>
 
 <script lang="ts">
+  // Связывает состояние native checkbox с группой и FormItem. Пользовательское действие сообщает
+  // новое checked через callback.
   import { onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';

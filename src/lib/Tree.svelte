@@ -1,4 +1,6 @@
 <script lang="ts" generics="Data extends object = TreeDataNode">
+  // Координирует видимые узлы, раскрытие, checked и клавиатурный фокус. События получают данные
+  // узла из текущего индекса.
   import { onDestroy, tick, untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getTreePrefixCss } from './tree-prefix.engine';

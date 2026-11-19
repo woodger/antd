@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Собирает содержимое и действия Tag со стилями отдельных слотов. Закрытие учитывает реакцию
+  // владельца на событие.
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';

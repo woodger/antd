@@ -3,6 +3,7 @@
 </script>
 
 <script lang="ts">
+  // Надстраивает над Input кнопку и событие поиска. Запуск поиска использует текущий текст поля.
   import Input from './Input.svelte';
   import Button from './Button.svelte';
   import SpaceCompact from './SpaceCompact.svelte';

@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Регистрирует поле и собирает его метаданные, связанные label и help. Сигналы потомков
+  // привязаны к текущей регистрации.
   import { onDestroy, onMount, tick, untrack, type Snippet } from 'svelte';
   import type { FormFieldRegistration } from './form-internal';
   import type { FormFieldMeta } from './form.model.svelte';

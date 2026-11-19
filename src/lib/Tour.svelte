@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Связывает текущий шаг Tour, target и popup. Завершение и закрытие сообщаются владельцу
+  // отдельными событиями.
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';

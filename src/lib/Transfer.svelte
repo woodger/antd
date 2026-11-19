@@ -3,6 +3,8 @@
 </script>
 
 <script lang="ts" generics="RecordType extends object = TransferItem">
+  // Управляет выбором, поиском и перемещением между двумя списками. Каждый список получает
+  // собственный вид текущих ключей.
   import { untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getTransferPrefixCss } from './transfer-prefix.engine';

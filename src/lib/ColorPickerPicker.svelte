@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Преобразует действия палитры в редактирование цвета и точек градиента. Завершение жеста
+  // сообщает итоговый цвет.
   import { onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { AggregationColor } from './color';

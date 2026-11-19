@@ -1,4 +1,6 @@
 <script lang="ts" generics="OptionType extends CascaderOption = CascaderOption, Multiple extends boolean = false">
+  // Управляет выбранными путями, поиском и раскрытыми колонками Cascader. Popup и panel
+  // используют один индекс options.
   import { tick, untrack } from 'svelte';
   import type { Snippet } from 'svelte';
   import type {

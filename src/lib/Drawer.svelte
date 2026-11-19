@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Координирует native dialog, маску и показ содержимого Drawer. Запрос закрытия проходит через
+  // callbacks владельца.
   import NoCompactStyle from './NoCompactStyle.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getDrawerPrefixCss } from './drawer-prefix.engine';

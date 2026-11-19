@@ -1,4 +1,6 @@
 <script lang="ts" generics="OptionType extends object = AutoCompleteItem, RootElement extends HTMLElement = HTMLDivElement, EditorElement extends HTMLElement = HTMLInputElement | HTMLTextAreaElement">
+  // Связывает редактор с предложениями, активной строкой и backfill. Проверяет ввод и публикует
+  // выбор отдельно от поиска.
   import { autoCompleteMatchesData, autoCompleteNext } from './auto-complete.engine';
   import { onMount, tick, untrack } from 'svelte';
   import type {

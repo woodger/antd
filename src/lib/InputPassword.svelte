@@ -3,6 +3,8 @@
 </script>
 
 <script lang="ts">
+  // Управляет видимостью пароля и передаёт редактирование Input. Ref указывает на тот же
+  // текстовый редактор.
   import { onDestroy, untrack } from 'svelte';
   import Input from './Input.svelte';
   import { useConfig } from './config-context';

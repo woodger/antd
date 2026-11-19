@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Управляет открытием панелей и клавиатурным фокусом по ключам. Недоступные заголовки
+  // исключаются из навигации.
   import { onDestroy, onMount, untrack } from 'svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { useComponentTheme } from './theme-component.svelte';

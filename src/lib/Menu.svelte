@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Владеет состоянием открытых и выбранных пунктов Menu. Клавиатура обрабатывает
+  // зарегистрированные видимые элементы.
   import { onDestroy, tick, untrack } from 'svelte';
   import {
     buildMenuEntries,

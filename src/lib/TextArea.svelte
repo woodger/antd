@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Публикует изменения многострочного редактора, clear и FormItem. Фокус и ref принадлежат
+  // одному textarea.
   import { onDestroy, tick, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useVariant } from './variant.svelte';

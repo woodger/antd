@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Рисует круг и подпись Progress. Подсказка миниатюрного режима использует стили и позицию
+  // текущего круга.
   import Tooltip from './Tooltip.svelte';
   import { useConfig } from './config-context';
   import { connectInlineStyle } from './inline-style.dom';

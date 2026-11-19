@@ -1,4 +1,6 @@
 <script lang="ts">
+  // Управляет trigger и содержимым Popover. Фокус, hover и закрытие проходят через текущее
+  // состояние открытости.
   import NoCompactStyle from './NoCompactStyle.svelte';
   import { onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';

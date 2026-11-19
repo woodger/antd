@@ -1,4 +1,6 @@
 <script lang="ts" generics="Item">
+  // Отображает строки списка Select и связывает их с активной записью. Виртуализация получает те
+  // же ключи строк.
   import { untrack } from 'svelte';
   import { connectListyGestures } from './listy-gestures.dom';
   import ListyScrollbar from './ListyScrollbar.svelte';
