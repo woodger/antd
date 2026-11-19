@@ -171,6 +171,7 @@
   );
   let dirty = $state(false);
   let invalidTimeInput = $state(false);
+  let quarterInputValue = $state.raw<Dayjs | null>(null);
   let draftSource = $state<'input' | 'panel'>('input');
   let focused = $state(false);
   let input = $state<HTMLInputElement>();
@@ -186,7 +187,9 @@
   let invalid = $derived(
     time
       ? !!draft && !valid(draft) || invalidTimeInput
-      : text !== '' && !valid(parsePicker(text, actualLocale.locale, formats)) && !readOnly
+      : text !== '' && !valid(picker === 'quarter'
+        ? dirty && draftSource === 'input' ? quarterInputValue : draft
+        : parsePicker(text, actualLocale.locale, formats)) && !readOnly
   );
   let clock = $derived(time ? timePickerClock(time, actualLocale)
     : datePickerClock({ format, showTime }, actualLocale));
@@ -230,7 +233,8 @@
     ? attributes.placeholder ?? locale?.timePickerLocale?.placeholder
       ?? config.locale.datePicker?.timePickerLocale?.placeholder
       ?? datePickerEnUS.timePickerLocale.placeholder
-    : attributes.placeholder ?? (picker === 'month' ? actualLocale.monthPlaceholder
+    : attributes.placeholder ?? (picker === 'quarter' ? actualLocale.quarterPlaceholder
+      : picker === 'month' ? actualLocale.monthPlaceholder
       : picker === 'year' ? actualLocale.yearPlaceholder : actualLocale.placeholder));
   let displayText = $derived(hoverValue
     ? formatPicker(hoverValue, actualLocale.locale, formats) : text);
@@ -568,7 +572,7 @@
       dirty = true;
       // onPanelValueSelect и triggerModeChange используют один React batch snapshot.
       setDatePanel(next, 'panel', event);
-      selectPanelMode(mode === 'decade' ? 'year' : 'month', next, event!);
+      selectPanelMode(mode === 'decade' ? 'year' : picker === 'quarter' ? 'quarter' : 'month', next, event!);
       return;
     }
     if (picker === 'date' && mode !== 'date') {
@@ -1032,6 +1036,7 @@
           dirty = true;
           draftSource = 'input';
           const parsed = parsePicker(text, actualLocale.locale, formats);
+          if (!time && picker === 'quarter') quarterInputValue = parsed;
           if (time) {
             invalidTimeInput = text !== '' && !parsed?.isValid();
             timeInteraction.trigger(0, 'input', parsed?.isValid() ? [parsed] : undefined);

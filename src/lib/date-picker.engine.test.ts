@@ -8,6 +8,7 @@ import {
   samePickerPanelValue,
   offsetPickerPanel,
   samePickerPanel,
+  samePickerQuarter,
   pickerPanelDateDisabled,
   pickerFormats,
   parsePicker,
@@ -19,6 +20,68 @@ import {
 } from './date-picker.engine';
 dayjs.extend(utc);
 describe('DatePicker date adapter and input', () => {
+  it('formats and parses terminal quarters with existing Dayjs support and locale overrides', () => {
+    const value = dayjs.utc('2024-05-20T16:37:59.456Z');
+
+    expect(pickerFormats({ picker: 'quarter', showTime: true })).toEqual(['YYYY-[Q]Q']);
+    expect(pickerFormats({ picker: 'quarter' }, { fieldQuarterFormat: 'YYYY/[Q]Q' }))
+      .toEqual(['YYYY/[Q]Q']);
+    expect(pickerFormats({ picker: 'quarter', format: '[Quarter ]Q YYYY' }))
+      .toEqual(['[Quarter ]Q YYYY']);
+    expect(formatPicker(value, 'en_US', pickerFormats({ picker: 'quarter' }))).toBe('2024-Q2');
+    expect(parsePicker('2025-Q2', 'en_US', ['YYYY-[Q]Q'])?.format('YYYY-MM-DD HH:mm:ss.SSS'))
+      .toBe('2025-04-01 00:00:00.000');
+    expect(parsePicker('2025-Q5', 'en_US', ['YYYY-[Q]Q'])).toBeNull();
+    expect(value.toISOString()).toBe('2024-05-20T16:37:59.456Z');
+  });
+  it('builds four quarters from January and keeps each source clamp and full timestamp', () => {
+    const panel = dayjs.utc('2024-01-31T16:37:59.456Z');
+    const cells = calendarCells(pickerCalendarValue(panel), 'quarter', 'en_US');
+
+    expect(cells.map(value => value.toISOString())).toEqual([
+      '2024-01-31T00:00:00.000Z', '2024-04-30T00:00:00.000Z',
+      '2024-07-31T00:00:00.000Z', '2024-10-31T00:00:00.000Z'
+    ]);
+    expect(cells.every(value => value.isUTC())).toBe(true);
+    const later = dayjs.utc('2024-05-20T16:37:59.456Z');
+    const earlier = dayjs.utc('2024-04-10T08:23:45.678Z');
+    expect(samePickerQuarter(later, earlier)).toBe(true);
+    expect(samePickerPanelValue(later, earlier, true, 'quarter')).toBe(true);
+    expect(samePickerPanelValue(later, earlier.year(2025), false, 'quarter')).toBe(false);
+    expect(samePickerPanel(later, later.month(11), 'quarter')).toBe(true);
+    expect(offsetPickerPanel(cells[3].year(2025), 'quarter', -1).toISOString())
+      .toBe('2024-10-31T00:00:00.000Z');
+    expect(offsetPickerPanel(panel, 'quarter', 1).toISOString())
+      .toBe('2025-01-31T16:37:59.456Z');
+    expect(panel.toISOString()).toBe('2024-01-31T16:37:59.456Z');
+  });
+  it('checks the actual quarter candidate once and permits partial boundary quarters', () => {
+    const cells = calendarCells(dayjs.utc('2024-01-31T00:00:00.000Z'), 'quarter', 'en_US');
+    const calls: { value: typeof cells[number]; type: string; }[] = [];
+    const first = (value: typeof cells[number], info: { type: string; }) => {
+      calls.push({ value, type: info.type });
+      return value.month() === 6;
+    };
+    expect(pickerPanelDateDisabled(cells[2], { disabledDate: first }, 'quarter')).toBe(true);
+    expect(calls).toHaveLength(1);
+    expect(calls[0].value).toBe(cells[2]);
+    expect(calls[0].type).toBe('quarter');
+    calls.length = 0;
+    expect(pickerPanelDateDisabled(cells[2], { disabledDate: (value, info) => {
+      calls.push({ value, type: info.type });
+      return value.month() === 8;
+    } }, 'quarter')).toBe(false);
+    expect(calls).toHaveLength(1);
+    expect(calls[0].value).toBe(cells[2]);
+    const limits = {
+      minDate: dayjs.utc('2024-02-15T18:30:20.500Z'),
+      maxDate: dayjs.utc('2025-10-05T09:12:34.567Z')
+    };
+    expect(pickerDateDisabled(cells[0], limits, 'quarter')).toBe(false);
+    expect(pickerDateDisabled(cells[3].year(2025), limits, 'quarter')).toBe(false);
+    expect(pickerDateDisabled(cells[3].year(2023), limits, 'quarter')).toBe(true);
+    expect(pickerDateDisabled(cells[0].year(2026), limits, 'quarter')).toBe(true);
+  });
   it('uses terminal period defaults and preserves explicit formats', () => {
     expect(pickerFormats({ picker: 'month', showTime: true })).toEqual(['YYYY-MM']);
     expect(pickerFormats({ picker: 'year', showTime: true })).toEqual(['YYYY']);

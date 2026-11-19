@@ -9,6 +9,28 @@ import {
   rangeFrom
 } from './range-picker.engine';
 describe('RangePicker source value semantics', () => {
+  it('validates locked reverse hidden dates by quarter without changing timestamp sorting or aliases', () => {
+    const start = dayjs('2024-05-20T16:37:59.456');
+    const end = dayjs('2024-04-10T00:00:00.000');
+    const pair: [typeof start, typeof end] = [start, end];
+    const locked = orderedRange(pair, true, [true, false]);
+
+    expect(locked[0]).toBe(start);
+    expect(locked[1]).toBe(end);
+    expect(validRange(locked, [false, false], true, [true, false], () => false, 'quarter'))
+      .toBe(true);
+    expect(validRange(locked, [false, false], true, [true, false], () => false, 'month'))
+      .toBe(false);
+    expect(validRange([start, end.month(2)], [false, false], true,
+      [true, false], () => false, 'quarter')).toBe(false);
+    const ordered = orderedRange(pair, true, [false, false]);
+    expect(ordered[0]).toBe(end);
+    expect(ordered[1]).toBe(start);
+    expect(orderedRange(pair, false, [false, false])).toEqual([start, end]);
+    expect(sameRange(pair, [start.clone(), end.clone()])).toBe(true);
+    expect(sameRange(pair, [start, end.hour(1)])).toBe(false);
+    expect(start.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2024-05-20 16:37:59.456');
+  });
   it('permits reversed hidden values in the same terminal period with a disabled field', () => {
     const later = dayjs('2024-05-20T16:37:59.456');
     const earlier = dayjs('2024-05-10T08:23:45.678');

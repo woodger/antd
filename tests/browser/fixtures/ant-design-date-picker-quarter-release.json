@@ -1,0 +1,89 @@
+{
+  "rootLease": "quarter-20261119-01",
+  "status": "released",
+  "sourceProtocolSHA256": "ee43854db3b3606e976375467ffa174c7053ad9ebe069a2066705cad80bd2e87",
+  "reviewedProposalSHA256": "ac359318e5643622e9cd2a5816e9ae28101842e19dfb7ebf1e4dfd6bf2a0d7d7",
+  "actualSourceProcesses": "All four approved coordinators reached actual exit0 in the declared order; CSR coordinator awaited browser.close before writing its final manifest. No active Source browser or Source SSR coordinator remains.",
+  "sourceInputPinsUnchangedAtRelease": true,
+  "priorSourceMetadataPinsUnchanged": true,
+  "runs": [
+    {
+      "kind": "csr",
+      "variant": "first",
+      "file": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-first.json",
+      "bytes": 153401,
+      "sha256": "20faaae953dfb3be1da2b24501fec180faa2b409d238baa7b691d5c5bcc1c40c",
+      "actualExitCode": 0,
+      "actualCounts": {
+        "owners": 2,
+        "actions": 90,
+        "initialAndSettledPoints": 92,
+        "declaredEscapeReadsAfter1000": 13,
+        "wholeUnmounts": 2,
+        "cleanupReads": 2,
+        "lateReads": 2,
+        "rawPointParts": 111,
+        "producerParts": 113,
+        "producerInvocations": 573,
+        "rawParts": 224
+      },
+      "terminalPinsUnchanged": true,
+      "coordinator": "node .upstream/artifacts/date-picker-quarter-source-proposal-v1/capture.mjs first ee43854db3b3606e976375467ffa174c7053ad9ebe069a2066705cad80bd2e87 quarter-20261119-01"
+    },
+    {
+      "kind": "csr",
+      "variant": "repeat",
+      "file": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-repeat.json",
+      "bytes": 153850,
+      "sha256": "b6ef744c9fd17aa7f8a50104bb770bf678f1f5fa45edfa5d23a0554a30ae5943",
+      "actualExitCode": 0,
+      "actualCounts": {
+        "owners": 2,
+        "actions": 90,
+        "initialAndSettledPoints": 92,
+        "declaredEscapeReadsAfter1000": 13,
+        "wholeUnmounts": 2,
+        "cleanupReads": 2,
+        "lateReads": 2,
+        "rawPointParts": 111,
+        "producerParts": 113,
+        "producerInvocations": 573,
+        "rawParts": 224
+      },
+      "terminalPinsUnchanged": true,
+      "coordinator": "node .upstream/artifacts/date-picker-quarter-source-proposal-v1/capture.mjs repeat ee43854db3b3606e976375467ffa174c7053ad9ebe069a2066705cad80bd2e87 quarter-20261119-01"
+    },
+    {
+      "kind": "ssr",
+      "variant": "first",
+      "file": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/ssr-source-first.json",
+      "bytes": 3277,
+      "sha256": "6f7d9441f358358195e321993f01d95cde06261410a2e124d27c0580c35869f8",
+      "actualExitCode": 0,
+      "actualCounts": {
+        "owners": 2,
+        "serializations": 4
+      },
+      "terminalPinsUnchanged": true,
+      "coordinator": "node .upstream/artifacts/date-picker-quarter-source-proposal-v1/capture-ssr.mjs first ee43854db3b3606e976375467ffa174c7053ad9ebe069a2066705cad80bd2e87 quarter-20261119-01"
+    },
+    {
+      "kind": "ssr",
+      "variant": "repeat",
+      "file": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/ssr-source-repeat.json",
+      "bytes": 3286,
+      "sha256": "77eee2f9e355d45aa67e4e95febb22ff6ca2031a7182bcd26c7a9f30fcd5e105",
+      "actualExitCode": 0,
+      "actualCounts": {
+        "owners": 2,
+        "serializations": 4
+      },
+      "terminalPinsUnchanged": true,
+      "coordinator": "node .upstream/artifacts/date-picker-quarter-source-proposal-v1/capture-ssr.mjs repeat ee43854db3b3606e976375467ffa174c7053ad9ebe069a2066705cad80bd2e87 quarter-20261119-01"
+    }
+  ],
+  "rawMutations": [],
+  "trackedEdits": [],
+  "NativeDataRead": false,
+  "remainingWork": "Read-only audit of immutable captures only. This does not retain a browser/build/SSR lease."
+}

@@ -1,0 +1,7 @@
+{
+  "file": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/protocol-freeze.json",
+  "sha256": "ee43854db3b3606e976375467ffa174c7053ad9ebe069a2066705cad80bd2e87",
+  "proposalSHA256": "ac359318e5643622e9cd2a5816e9ae28101842e19dfb7ebf1e4dfd6bf2a0d7d7",
+  "rootLease": "quarter-20261119-01",
+  "frozenBeforeSourceExecution": true
+}

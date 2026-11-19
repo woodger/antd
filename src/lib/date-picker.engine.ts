@@ -13,6 +13,7 @@ export function pickerFormats(
   locale: NonNullable<DatePickerProps['locale']>['lang'] = {}
 ): DatePickerFormat[] {
   if (props.format) return Array.isArray(props.format) ? props.format : [props.format];
+  if (props.picker === 'quarter') return [locale.fieldQuarterFormat ?? 'YYYY-[Q]Q'];
   if (props.picker === 'month') return [locale.fieldMonthFormat ?? 'YYYY-MM'];
   if (props.picker === 'year') return [locale.fieldYearFormat ?? 'YYYY'];
   if (!props.showTime) return [locale.fieldDateFormat ?? 'YYYY-MM-DD'];
@@ -54,10 +55,14 @@ export function pickerCalendarValue(value: Dayjs, template?: Dayjs): Dayjs {
   return value.hour(template?.hour() ?? 0).minute(template?.minute() ?? 0)
     .second(template?.second() ?? 0).millisecond(template?.millisecond() ?? 0);
 }
+export function samePickerQuarter(a: Dayjs, b: Dayjs): boolean {
+  return a.year() === b.year() && Math.floor(a.month() / 3) === Math.floor(b.month() / 3);
+}
 // rc-picker compares date panels by Y/M/D and datetime panels by all wall fields.
 export function samePickerPanelValue(
   a: Dayjs, b: Dayjs, datetime: boolean, picker: DatePickerPicker = 'date'
 ): boolean {
+  if (picker === 'quarter') return samePickerQuarter(a, b);
   if (picker === 'year') return a.year() === b.year();
   if (picker === 'month') return a.year() === b.year() && a.month() === b.month();
   return a.year() === b.year() && a.month() === b.month() && a.date() === b.date()
@@ -66,17 +71,21 @@ export function samePickerPanelValue(
 }
 export function offsetPickerPanel(value: Dayjs, picker: DatePickerPicker, amount: number): Dayjs {
   return picker === 'date' ? value.add(amount, 'month')
-    : value.add(amount * (picker === 'month' ? 1 : 10), 'year');
+    : value.add(amount * (picker === 'year' ? 10 : 1), 'year');
 }
 export function samePickerPanel(a: Dayjs, b: Dayjs, picker: DatePickerPicker): boolean {
   return picker === 'year' ? Math.floor(a.year() / 10) === Math.floor(b.year() / 10)
-    : a.isSame(b, picker === 'month' ? 'year' : 'month');
+    : a.isSame(b, picker === 'date' ? 'month' : 'year');
 }
 export function calendarCells(panel: Dayjs, mode: DatePickerMode, locale: string): Dayjs[] {
   if (mode === 'date') {
     const first = panel.date(1);
     const offset = (date.getWeekDay(first) - date.locale.getWeekFirstDay(locale) + 7) % 7;
     return Array.from({ length: 42 }, (_, index) => date.addDate(first, index - offset));
+  }
+  if (mode === 'quarter') {
+    const first = panel.month(0);
+    return Array.from({ length: 4 }, (_, index) => first.add(index * 3, 'month'));
   }
   if (mode === 'month') return Array.from({ length: 12 }, (_, index) => panel.month(index));
   const unit = mode === 'year' ? 1 : 10;
@@ -89,6 +98,11 @@ export function pickerDateDisabled(
   props: Pick<DatePickerProps, 'minDate' | 'maxDate' | 'disabledDate'>,
   mode: DatePickerMode = 'date'
 ): boolean {
+  if (mode === 'quarter') return Boolean(
+    props.disabledDate?.(value, { type: mode })
+    || props.minDate && props.minDate.isAfter(value) && !samePickerQuarter(props.minDate, value)
+    || props.maxDate && value.isAfter(props.maxDate) && !samePickerQuarter(props.maxDate, value)
+  );
   const unit = mode === 'date' ? 'day' : mode === 'month' ? 'month' : 'year';
   const period = mode === 'decade' ? value.year(Math.floor(value.year() / 10) * 10) : value;
   const first = period.startOf(unit);
@@ -112,7 +126,7 @@ export function pickerPanelDateDisabled(
   props: Pick<DatePickerProps, 'minDate' | 'maxDate' | 'disabledDate'>,
   mode: DatePickerMode
 ): boolean {
-  if (mode === 'date') return pickerDateDisabled(value, props, mode);
+  if (mode === 'date' || mode === 'quarter') return pickerDateDisabled(value, props, mode);
   const start = mode === 'month' ? value.date(1)
     : value.month(0).date(1).year(mode === 'decade'
       ? Math.floor(value.year() / 10) * 10 : value.year());

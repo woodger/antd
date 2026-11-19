@@ -21,6 +21,7 @@
     samePickerPanelValue,
     offsetPickerPanel,
     samePickerPanel,
+    samePickerQuarter,
     formatPicker,
     parsePicker,
     pickerDateDisabled,
@@ -180,6 +181,7 @@
   let submit = $state.raw<RangePickerValue>(untrack(() => [...calendar]));
   let texts = $state<[string, string]>(untrack(() => dateTexts(calendar)));
   let rawInvalid = $state<[boolean, boolean]>([false, false]);
+  let quarterInputValues = $state.raw<[Dayjs | null | undefined, Dayjs | null | undefined]>([undefined, undefined]);
   let revision = $state(0);
   const interaction = createRangeInteraction<Dayjs>({
     fieldCount: () => blocked.filter(item => !item).length,
@@ -201,6 +203,7 @@
       }
     },
     resetValue: index => {
+      resetQuarterInput(index);
       if (index === undefined) {
         changeCalendar(committed);
         submit = [...committed];
@@ -251,7 +254,8 @@
   let mode = $state<DatePickerMode>(untrack(() => picker));
   let periodModes = $state.raw<[DatePickerMode, DatePickerMode]>(untrack(() => [picker, picker]));
   let multiplePanels = $derived(!showTime && mode === picker);
-  let periodPlaceholder = $derived(picker === 'month' ? lang.rangeMonthPlaceholder
+  let periodPlaceholder = $derived(picker === 'quarter' ? lang.rangeQuarterPlaceholder
+    : picker === 'month' ? lang.rangeMonthPlaceholder
     : picker === 'year' ? lang.rangeYearPlaceholder : lang.rangePlaceholder);
   let showCurrent = $derived((showNow ?? false) && mode === 'date');
   let hover = $state.raw<Dayjs | null>(null);
@@ -380,6 +384,7 @@
     calendar = [...committed];
     submit = [...committed];
     texts = time ? dateTexts(committed) : [start ?? '', end ?? ''];
+    resetQuarterInput();
     previousCommitted = committed;
     previousDateValue = value;
     previousDateStartText = start;
@@ -573,6 +578,7 @@
     const same = other
       && (type === 'decade'
         ? Math.floor(other.year() / 10) === Math.floor(date.year() / 10)
+        : type === 'quarter' ? samePickerQuarter(other, date)
         : other.isSame(date, type === 'date' ? 'day' : type));
     if (blocked[index ^ 1]
       && other
@@ -585,7 +591,8 @@
       {
         minDate,
         maxDate,
-        disabledDate: next => Boolean(disabledDate?.(next, { type, from: reference }))
+        disabledDate: next => Boolean(disabledDate?.(next, type === 'quarter' && reference === undefined
+          ? { type } : { type, from: reference }))
       },
       type
     )) return true;
@@ -610,6 +617,7 @@
     const same = other
       && (info.type === 'decade'
         ? Math.floor(other.year() / 10) === Math.floor(date.year() / 10)
+        : info.type === 'quarter' ? samePickerQuarter(other, date)
         : other.isSame(date, info.type === 'date' ? 'day' : info.type));
     return Boolean(
       blocked[active ^ 1]
@@ -650,6 +658,7 @@
         (date, index, info) => timeRangeInvalid(date, time, clock, index, info))
       : validRange(pair, empty, order, blocked, invalid, picker));
     if (passed) {
+      resetQuarterInput();
       const changed = time ? !sameTimeRange(pair, committed) : !sameRange(pair, committed);
       if (time || value === undefined)
         internalValue = [...pair];
@@ -820,12 +829,13 @@
     setDatePanel(index, date, 'panel', event);
     setMode(next, index, date);
   }
-  function selectDate(date: Dayjs) {
+  function selectDate(date: Dayjs, panelOffset = 0) {
+    resetQuarterInput(active);
     const event = picker !== 'date'
       ? { previous: panelValues(), modes: panelModes() } : undefined;
     if (picker !== 'date' && mode !== picker) {
       const index = active;
-      const nextMode = mode === 'decade' ? 'year' : 'month';
+      const nextMode = mode === 'decade' ? 'year' : picker === 'quarter' ? 'quarter' : 'month';
       send(index, 'panel-intermediate', date);
       setDatePanel(index, date, 'panel', event);
       selectPanelMode(nextMode, date, index, event!);
@@ -847,7 +857,8 @@
       : date;
     const index = active;
     send(index, showTime ? 'panel-intermediate' : 'panel-final', next);
-    setDatePanel(index, next, 'panel', event);
+    setDatePanel(index, picker === 'quarter' && panelOffset
+      ? offsetPickerPanel(next, picker, -panelOffset) : next, 'panel', event);
   }
   function handleDateHover(date: Dayjs | null) {
     if (date && showTime) {
@@ -871,6 +882,11 @@
     copy[index] = text;
     texts = copy;
     const next = text ? parsePicker(text, lang.locale, formats) : null;
+    if (!time && picker === 'quarter') {
+      const values: typeof quarterInputValues = [...quarterInputValues];
+      values[index] = next;
+      quarterInputValues = values;
+    }
     if (time) {
       const errors: [boolean, boolean] = [...rawInvalid];
       errors[index] = !!text && !next;
@@ -878,16 +894,30 @@
       send(index, 'input', next ?? undefined);
       return;
     }
-    if (!text || next && !invalid(next, index, from())) {
+    if (!text || next && !invalid(next, index, picker === 'quarter' ? undefined : from())) {
       send(index, 'input', next);
       if (next)
         if (picker === 'date') syncPanel(index, 'reset', false, next);
     }
     else send(index, 'input');
   }
+  function resetQuarterInput(index?: number) {
+    if (time || picker !== 'quarter') return;
+    if (index === undefined) quarterInputValues = [undefined, undefined];
+    else {
+      const values: typeof quarterInputValues = [...quarterInputValues];
+      values[index] = undefined;
+      quarterInputValues = values;
+    }
+  }
   function inputInvalid(index: number) {
     if (time) return rawInvalid[index] || !!calendar[index]
       && timeRangeInvalid(calendar[index]!, time, clock, index);
+    if (picker === 'quarter') {
+      const typed = quarterInputValues[index];
+      const candidate = typed === undefined ? calendar[index] : typed;
+      return !readOnly && !!texts[index] && (!candidate || invalid(candidate, index));
+    }
     return !readOnly
       && Boolean(
         texts[index]
@@ -972,6 +1002,7 @@
     if (time) onClear?.();
   }
   function presetValue(next: RangePickerValue) {
+    resetQuarterInput();
     interaction.reset();
     revision++;
     if (commit(next))
@@ -1102,7 +1133,7 @@
                 }} />
             {#if showTime && mode === 'date'}<DatePickerTimePanel prefixCls={prefix} value={calendar[active] ?? datePanelValue} selectedValue={calendar[active]} config={clock} format={timeFormat} locale={panelLocale} {now} {cellRender} {cellRange} disabledTime={timeRestriction} onSelect={selectTime} onHover={handleTimeHover} />{/if}
           </div></div>
-          {#if multiplePanels}<div class={`${prefix}-panel`} tabindex="-1"><DatePickerCalendar {picker} prefixCls={prefix} panel={offsetPickerPanel(view, picker, 1)} selected={calendar[active]} range={calendarRange} hovered={periodWeakHover ? hover : undefined} onHover={handleDateHover} {mode} locale={secondPanelLocale} {cellRender} {cellRange} restrictions={{ minDate, maxDate, disabledDate: panelDisabled }} {now} direction={config.direction} showPrevious={false} onSelect={selectDate} onNavigate={next => syncPanel(
+          {#if multiplePanels}<div class={`${prefix}-panel`} tabindex="-1"><DatePickerCalendar {picker} prefixCls={prefix} panel={offsetPickerPanel(view, picker, 1)} selected={calendar[active]} range={calendarRange} hovered={periodWeakHover ? hover : undefined} onHover={handleDateHover} {mode} locale={secondPanelLocale} {cellRender} {cellRange} restrictions={{ minDate, maxDate, disabledDate: panelDisabled }} {now} direction={config.direction} showPrevious={false} onSelect={picker === 'quarter' ? date => selectDate(date, 1) : selectDate} onNavigate={next => syncPanel(
                 active,
                 'panel',
                 false,
@@ -1129,7 +1160,7 @@
               type="primary" size="small" disabled={!calendar[active]
               && !empty[active]
               || Boolean(
-                calendar[active] && invalid(calendar[active]!, active, from())
+                calendar[active] && invalid(calendar[active]!, active, picker === 'quarter' ? undefined : from())
               )} onclick={() => {
                 if (picker !== 'date') onOk?.([...calendar]);
                 send(active, 'confirm');

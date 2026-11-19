@@ -1,0 +1,757 @@
+{
+  "status": "Root-reviewed-frozen-before-quarter-Source-execution",
+  "subject": "public-Single-Range-picker-quarter-only",
+  "source": {
+    "version": "6.6.8",
+    "react": "18.3.1",
+    "rcPicker": "1.12.2",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "node": "v24.18.0",
+    "environment": {
+      "browserExecutable": "/usr/lib64/chromium-browser/chromium-browser",
+      "chromium": "157.0.8103.78",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "locale": "en-US",
+      "timezone": "UTC",
+      "fixedDate": "2024-06-10T08:23:45.678Z",
+      "clock": "CSR Date-only Playwright setFixedTime; real timers/RAF/events. SSR actual VM wall clock."
+    },
+    "scripts": [
+      ".upstream/artifacts/react-18.3.1/umd/react.production.min.js",
+      ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js",
+      "node_modules/dayjs/dayjs.min.js",
+      ".upstream/artifacts/antd-6.6.8/dist/antd.js"
+    ]
+  },
+  "counts": {
+    "owners": 2,
+    "actions": 90,
+    "initialAndSettledPoints": 92,
+    "declaredEscapeReadsAfter1000": 13,
+    "wholeUnmounts": 2,
+    "initialClosedSSRSerializations": 4
+  },
+  "samples": [
+    {
+      "id": "single-quarter",
+      "kind": "single",
+      "picker": "quarter",
+      "initialStart": "2024-01-31T16:37:59.456",
+      "initialEnd": "2024-11-20T09:12:34.567",
+      "minDate": "2024-02-15T18:30:20.500",
+      "maxDate": "2025-10-05T09:12:34.567",
+      "presetA": "2024-05-20T16:37:59.456",
+      "presetB": "2024-04-10T08:23:45.678",
+      "witnessStart": "2024-05-20T16:37:59.456",
+      "witnessEnd": "2024-04-10T08:23:45.678",
+      "blocked": {
+        "year": 2024,
+        "firstMonth": 6,
+        "lastMonth": 8
+      },
+      "locale": {
+        "lang": {
+          "fieldQuarterFormat": "YYYY/[Q]Q",
+          "cellQuarterFormat": "[Quarter ]Q",
+          "quarterPlaceholder": "Choose authored quarter",
+          "rangeQuarterPlaceholder": [
+            "Authored start quarter",
+            "Authored end quarter"
+          ]
+        }
+      },
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "header-promote"
+        },
+        {
+          "type": "upper-cell-click",
+          "value": "2024"
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q2"
+        },
+        {
+          "type": "owner-control",
+          "value": "need-confirm-true"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q3"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q3"
+        },
+        {
+          "type": "confirm-click"
+        },
+        {
+          "type": "owner-control",
+          "value": "need-confirm-false"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-type",
+          "index": 0,
+          "value": "2025-Q2"
+        },
+        {
+          "type": "input-key",
+          "value": "Enter"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "value": "ArrowDown"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "limits-on"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q3"
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q1"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "header-next"
+        },
+        {
+          "type": "cell-click",
+          "title": "2025-Q4"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "block-last"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q3"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "locale"
+        },
+        {
+          "type": "owner-control",
+          "value": "limits-off"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "preset-click",
+          "label": "Hidden A"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "preset-click",
+          "label": "Hidden B"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "range-quarter",
+      "kind": "range",
+      "picker": "quarter",
+      "initialStart": "2024-01-31T16:37:59.456",
+      "initialEnd": "2024-11-20T09:12:34.567",
+      "minDate": "2024-02-15T18:30:20.500",
+      "maxDate": "2025-10-05T09:12:34.567",
+      "presetA": "2024-05-20T16:37:59.456",
+      "presetB": "2024-04-10T08:23:45.678",
+      "witnessStart": "2024-05-20T16:37:59.456",
+      "witnessEnd": "2024-04-10T08:23:45.678",
+      "blocked": {
+        "year": 2024,
+        "firstMonth": 6,
+        "lastMonth": 8
+      },
+      "locale": {
+        "lang": {
+          "fieldQuarterFormat": "YYYY/[Q]Q",
+          "cellQuarterFormat": "[Quarter ]Q",
+          "quarterPlaceholder": "Choose authored quarter",
+          "rangeQuarterPlaceholder": [
+            "Authored start quarter",
+            "Authored end quarter"
+          ]
+        }
+      },
+      "actions": [
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "header-promote"
+        },
+        {
+          "type": "upper-cell-click",
+          "value": "2024"
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q2"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q1"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "need-confirm-true"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q3"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q3"
+        },
+        {
+          "type": "confirm-click"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q4"
+        },
+        {
+          "type": "confirm-click"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "need-confirm-false"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-type",
+          "index": 0,
+          "value": "2025-Q2"
+        },
+        {
+          "type": "input-key",
+          "value": "Enter"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "input-type",
+          "index": 1,
+          "value": "2025-Q3"
+        },
+        {
+          "type": "input-key",
+          "value": "Enter"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "input-key",
+          "value": "ArrowDown"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "limits-on"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q3"
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q1"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "header-next"
+        },
+        {
+          "type": "cell-click",
+          "title": "2025-Q4"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "block-last"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "cell-click",
+          "title": "2024-Q3"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "locale"
+        },
+        {
+          "type": "owner-control",
+          "value": "limits-off"
+        },
+        {
+          "type": "owner-control",
+          "value": "order-false"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "preset-click",
+          "label": "Hidden A"
+        },
+        {
+          "type": "input-open",
+          "index": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "order-true"
+        },
+        {
+          "type": "preset-click",
+          "label": "Hidden A"
+        },
+        {
+          "type": "input-escape",
+          "index": 0
+        },
+        {
+          "type": "owner-control",
+          "value": "same-period-disabled"
+        },
+        {
+          "type": "input-open",
+          "index": 1
+        },
+        {
+          "type": "cell-click",
+          "title": "2024/Q2"
+        },
+        {
+          "type": "input-escape",
+          "index": 1
+        }
+      ]
+    }
+  ],
+  "caller": {
+    "publicOnly": "Ordinary React Antd.DatePicker/DatePicker.RangePicker with public picker quarter. Controlled model/open accept actual callbacks using React state. No Native imports, expected data, private API, deprecated aliases or direct callback invocation.",
+    "stableReferences": "Authored Dayjs dates, callbacks, preset values and each first/last disabledDate function are stable. The block-last owner action changes only the selected public disabledDate function reference. App emits fresh ordinary props/style objects per render. Source values keep actual full hidden fields and identity.",
+    "ownerControls": "Real DOM button.click inside flushSync updates only declared state. The final Range same-period-disabled phase intentionally sets value, disabled, panel defaults, order, confirm, limits/open together as an authored scenario reset; it is not described as a one-prop update.",
+    "pointer": "Real input/header/upper-cell/preset/OK pointer actions and actual keyboard typing/Enter/ArrowDown/Escape. Blocked terminal cells/header-next use actual mouse at observed rect centres with hit target and disabled/attrs evidence; no locator enabled wait, forced event or disabled mutation.",
+    "layout": "Viewport1440x1000, body margin0/minheight900, owner absoluteleft160/top80/width520. Source implicit English and public ConfigProvider token.motion=false."
+  },
+  "observation": {
+    "callbacks": "Every cumulative public callback retains monotonic index, actionIndex, name, actual arity/receiver, all encoded/raw argument graphs, nested dates with full temporal fields/offset/epoch/ISO/locale and exact authored aliases. No authored expected calls or count guesses.",
+    "producers": "Every actual disabledDate invocation retains all raw/encoded args/receiver/date aliases and actual return. Contiguous cursor deltas start0; each part records cursor,next and every index. UI counts bind before/afterFocus/afterCall/settled/closed/beforeUnmount/cleanup/late. observationEnd records any calls after UI read; final terminal-tail seals the ledger. No invocation count equality with Native.",
+    "DOM": "Whole scoped owner/root/popup/panel HTML, ordered attrs, 12 enumerated CSS fields, all calendar mode cells including untitled decade cells, header/buttons and footer/controls, geometry/scroll, both input value/defaultValue/caret/focus, nativeElement/control surfaces/IDs, observed nodes/connectivity, actual DOM event trust/timestamps/coordinates/keys and producer count at event capture.",
+    "hiddenBoundary": "Retained React popup is observed as hidden/stale or zero geometry; future Native absence is separate. Full-button Snippet/keyboard, actual focus APIs, receiver and calendar-info boundaries remain explicit rather than being injected into Source.",
+    "settling": "Whole scoped read stable4 consecutive actual double-RAF+25ms polls, bounded70. Each action stores full before/afterCall/settled, actual actor evidence, and complete producer deltas. No timing/ID normalization or raw truncation.",
+    "cleanup": "Each declared Escape gets actual+1000ms read regardless of its outcome. Public root.unmount then frame drain/cleanup and+1000 late; final producer tail then remove owned document observer. Actual refs/nodes/callbacks/resources are recorded, not filled in.",
+    "resources": "CSR logs errors/console/network/ResourceTiming; global timers/frames/observers unmeasured. No all-page CSS/AX, fake inputs or global event/timer patches."
+  },
+  "SSR": {
+    "owners": 2,
+    "serializersPerOwner": [
+      "renderToString",
+      "renderToStaticMarkup"
+    ],
+    "scope": "Initial closed identical public props only. Fresh DOM-free VM per serializer, original UMD scripts and public factory. Original actual HTML/hash, props/model/callbacks/producer ledger/refs and environment retained.",
+    "resources": "Measured forbidden DOM/timer/RAF/observer/microtask/port operations as in the existing Source SSR mechanism; all actual attempts/failures retained. No private producer invoked manually and no open popup simulated.",
+    "clock": "Actual VM wall clock, not CSR fixedDate. No today-rendering hook is supplied in this closed baseline."
+  },
+  "storage": {
+    "rawPointPartsPerCSR": 111,
+    "producerPartsPerCSR": 113,
+    "totalPartsPerCSR": 224,
+    "rawSerializerPartsPerSSR": 4,
+    "writer": ".upstream/artifacts/date-picker-presets-source-v2/json-stream.mjs unchanged",
+    "preservation": "Every whole original JSON/gzip part has independent raw/stored size and SHA. No argument fields dropped/rewritten, no identity renumbering. Failed runs and frozen inputs remain immutable; no automatic rerun/amend."
+  },
+  "outputMap": {
+    "csr-first": {
+      "manifest": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-first.json",
+      "gzip": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-first.json.gz",
+      "parts": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-first.json.parts/"
+    },
+    "ssr-first": {
+      "manifest": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/ssr-source-first.json",
+      "gzip": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/ssr-source-first.json.gz",
+      "parts": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/ssr-source-first.json.parts/"
+    },
+    "csr-repeat": {
+      "manifest": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-repeat.json",
+      "gzip": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-repeat.json.gz",
+      "parts": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/csr-source-repeat.json.parts/"
+    },
+    "ssr-repeat": {
+      "manifest": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/ssr-source-repeat.json",
+      "gzip": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/ssr-source-repeat.json.gz",
+      "parts": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/ssr-source-repeat.json.parts/"
+    }
+  },
+  "primaryWitnesses": [
+    {
+      "file": ".upstream/ant-design/components/date-picker/util.ts",
+      "lines": "8-58",
+      "meaning": "quarter and Range quarter placeholder selection",
+      "evidenceKind": "static pinned code"
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "46060-46076,46363-46366",
+      "meaning": "quarter field/cell formats",
+      "evidenceKind": "static pinned code"
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "46119-46126,46157-46158",
+      "meaning": "same year and quarter granularity",
+      "evidenceKind": "static pinned code"
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "46478-46530,46723-46728",
+      "meaning": "effective time and needConfirm defaults",
+      "evidenceKind": "static pinned code"
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "49390-49459",
+      "meaning": "four quarter cells, Jan base, retained hidden day, year navigation and no endpoint disabled wrapper",
+      "evidenceKind": "static pinned code"
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "48249-48258,46564-46578",
+      "meaning": "actual candidate disabledDate probe and same-quarter min/max",
+      "evidenceKind": "static pinned code"
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "47031-47043,51339-51352",
+      "meaning": "Range adjacent-year offsets and terminal dual layout",
+      "evidenceKind": "static pinned code"
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "47087-47098,47243-47259,47342,47397",
+      "meaning": "picker equality, calendar equality, sorting/order",
+      "evidenceKind": "static pinned code"
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "49740-49801,52430-52438,51622-51630",
+      "meaning": "upper selection, year to quarter queue and reset mode",
+      "evidenceKind": "static pinned code"
+    },
+    {
+      "file": ".upstream/artifacts/antd-6.6.8/dist/antd.js",
+      "lines": "50331-50353,51595-51605,52409-52420",
+      "meaning": "actual non-mask selector keyboard routes",
+      "evidenceKind": "static pinned code"
+    }
+  ],
+  "implementationPlan": ".upstream/artifacts/date-picker-quarter-source-proposal-v1/plan.md",
+  "authoringProvenance": "Adapted only the immutable month/year Source public factory/coordinator/reader/SSR mechanism. No Native caller, metrics, expected data or feedback is imported. Original old Source files and captured bytes remain unchanged.",
+  "exclusions": [
+    "week",
+    "multiple",
+    "mask",
+    "generatePicker",
+    "public mode prop",
+    "deprecated aliases",
+    "new Time-only API",
+    "whole DatePicker parity claim"
+  ],
+  "inputPins": {
+    ".upstream/artifacts/date-picker-quarter-source-proposal-v1/cases.mjs": {
+      "bytes": 2827,
+      "sha256": "ff2f1e112a9c08f9e4e9f18a027351be453923605d3c3468dac29cbb147a2a6a"
+    },
+    ".upstream/artifacts/date-picker-quarter-source-proposal-v1/source-case.mjs": {
+      "bytes": 8624,
+      "sha256": "20a1895cde7f9ad43c205766a4b8da0214ed3c88698731bea5cd8a612f47d810"
+    },
+    ".upstream/artifacts/date-picker-quarter-source-proposal-v1/reader.mjs": {
+      "bytes": 6328,
+      "sha256": "ece55bfeb6c8b6504006d8735eb1ed637911317f7559170f36dd296c1c9bd181"
+    },
+    ".upstream/artifacts/date-picker-quarter-source-proposal-v1/capture.mjs": {
+      "bytes": 15959,
+      "sha256": "b3e6c3d6e68f7f41e64bc02169cd75c44c9f350610cdd30792bbe3845c729190"
+    },
+    ".upstream/artifacts/date-picker-quarter-source-proposal-v1/server.mjs": {
+      "bytes": 3921,
+      "sha256": "2cea43c33f3a97ae5b7943ea481b4ccf76770eeac11c2732199b29d28adb6f66"
+    },
+    ".upstream/artifacts/date-picker-quarter-source-proposal-v1/capture-ssr.mjs": {
+      "bytes": 2222,
+      "sha256": "1c9aa2eabcbac65b846d5ed81f0c7a18fbb4ccec112e230ef4bced5f7bf01534"
+    },
+    ".upstream/artifacts/date-picker-quarter-source-proposal-v1/protocol.mjs": {
+      "bytes": 15817,
+      "sha256": "970f87c7e680841b61386eab8a9201973ab84112e1ca339bae7f47b2990995cf"
+    },
+    ".upstream/artifacts/react-18.3.1/umd/react.production.min.js": {
+      "bytes": 10751,
+      "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom.production.min.js": {
+      "bytes": 131835,
+      "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+    },
+    "node_modules/dayjs/dayjs.min.js": {
+      "bytes": 7161,
+      "sha256": "0198dd0b1f760cded169c7e7ff7eaf56bc36c4c22c7c9b7c683e59437ed8700e"
+    },
+    ".upstream/artifacts/antd-6.6.8/dist/antd.js": {
+      "bytes": 4217353,
+      "sha256": "e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4"
+    },
+    "/usr/lib64/chromium-browser/chromium-browser": {
+      "bytes": 341191224,
+      "sha256": "93bccc93e19199a3998a758b841cb660dbd4d14922d525f6e1787fbf9a522a84"
+    },
+    ".upstream/artifacts/react-dom-18.3.1/umd/react-dom-server-legacy.browser.production.min.js": {
+      "bytes": 35128,
+      "sha256": "829b2f17da148d9bc5b635c329b67068e67e4bf7d6a5bb64e49e9e92483deee5"
+    },
+    ".upstream/artifacts/homepage-five-source-review-v1/shared.mjs": {
+      "bytes": 994,
+      "sha256": "27d35cd7ac9834dad22ddaa6bf91ea82b59e14bf7edc96519a64f3fde41b661e"
+    },
+    ".upstream/artifacts/date-picker-presets-source-v2/json-stream.mjs": {
+      "bytes": 2314,
+      "sha256": "b7e849ba0ff70e3673bcdc28b1a08747d79836ff061c5269f9b07fa26891ef93"
+    },
+    "tests/browser/select-surface-producers.mjs": {
+      "bytes": 4134,
+      "sha256": "40f7a24ab72043ea36871794a0bee004430c4201d795e592c9cece90a0cf3a9d"
+    },
+    "node_modules/@playwright/test/package.json": {
+      "bytes": 754,
+      "sha256": "6b1c8bb530059f2555530e8dcc1b3803565237e17598683b3766c0fa313b3fd6"
+    },
+    "node_modules/playwright-core/package.json": {
+      "bytes": 876,
+      "sha256": "8aa1c9863fa8dea324e674254158cdc79440f4124ef2d84d38053013541cb7d6"
+    },
+    ".upstream/artifacts/date-picker-quarter-source-proposal-v1/plan.md": {
+      "bytes": 9353,
+      "sha256": "7c7b44cb0fbcf53ef1aada0d8afabfdde281c417e01384d98b5e106859458a61"
+    },
+    ".upstream/ant-design/components/date-picker/index.en-US.md": {
+      "bytes": 21771,
+      "sha256": "d7193bd2f1ebc35029b2553286217a4125381ae0b846635af5e6f7fe3bf9f9f3"
+    },
+    ".upstream/ant-design/components/date-picker/util.ts": {
+      "bytes": 2523,
+      "sha256": "c1c68b4f3026923dce6d8e315b9879260cddb659e5225ea3289f03153556707b"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/interface.ts": {
+      "bytes": 5733,
+      "sha256": "d9f3e34418aaca9d1b11ffd72fc900d3e09908e8208c3ddf15427537153cd207"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/generateSinglePicker.tsx": {
+      "bytes": 10552,
+      "sha256": "f5d941ecf84732d7df3b36bc566e6021c69b155cd9eded2898961d43870736a3"
+    },
+    ".upstream/ant-design/components/date-picker/generatePicker/generateRangePicker.tsx": {
+      "bytes": 8447,
+      "sha256": "1f29528186aea3ad0502d423d435cbee36c1d07cb8c5e5c2e3d4bcd36e7ecea4"
+    },
+    ".upstream/ant-design/components/date-picker/locale/en_US.ts": {
+      "bytes": 944,
+      "sha256": "94925a99aca58d454e977b9bff6f56f147a0a6e0ab839eea19387fbe316e8473"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/upstream/es--interface.d.ts": {
+      "bytes": 15103,
+      "sha256": "940f7c9f731eca31f42070c75bc9ac8b743f9838272eef1a95a531bdaefaa066"
+    }
+  },
+  "preservedPriorSourceMetadata": {
+    ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/protocol-freeze.json": {
+      "bytes": 41577,
+      "sha256": "5214ca6f831ded7c015998f8f119129aea1499d7124754b763977415602fc1d1"
+    },
+    ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-first.json": {
+      "bytes": 23706,
+      "sha256": "0e2d6567b79b919ee061fa283fd535bd7746aa04ac247d8286041b48662d5b49"
+    },
+    ".upstream/artifacts/date-picker-empty-datetime-proposal-v2/csr-source-repeat.json": {
+      "bytes": 23775,
+      "sha256": "8a31eba1cda47dd44d377f0cfe4e9dd49f63d741627b81bf0a510fd6bf4cd605"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/protocol-freeze.json": {
+      "bytes": 33543,
+      "sha256": "3cd5f9c3b2131ce68fbd8ca0a79f30b48952609c0a4a0d4d1965f5614c1424a3"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/csr-source-first.json": {
+      "bytes": 182088,
+      "sha256": "240e48776ce2515f70cf60fa19843cc9227805eb0c7143f453ecfcbce8500316"
+    },
+    ".upstream/artifacts/date-picker-render-hooks-source-v2/csr-source-repeat.json": {
+      "bytes": 182656,
+      "sha256": "aee79feb736fc24a5a3007760035d94690207502708e84b3f51947f1d664bd36"
+    },
+    ".upstream/artifacts/date-picker-month-year-source-proposal-v1/protocol-freeze.json": {
+      "bytes": 32695,
+      "sha256": "166488b125f669da33f0f270fc4b205f6de830b0fe263ff2be0d9c79754ca4c0"
+    },
+    ".upstream/artifacts/date-picker-month-year-source-proposal-v1/csr-source-first.json": {
+      "bytes": 273346,
+      "sha256": "c4f2e5eddfa99fe3b3cecae0bb37ee25e7302a1d932ebca76c50b3bfbaed9e54"
+    },
+    ".upstream/artifacts/date-picker-month-year-source-proposal-v1/csr-source-repeat.json": {
+      "bytes": 274147,
+      "sha256": "d9e8260149ddcb0373507c8b8828dd284a4031e070df7112e80117588e471d4f"
+    },
+    ".upstream/artifacts/date-picker-month-year-source-proposal-v1/ssr-source-first.json": {
+      "bytes": 5800,
+      "sha256": "24e7c95acc6b170a13e423b8ca345fd710d515b528f0d5f0fa7dd9bdcb52b5ed"
+    },
+    ".upstream/artifacts/date-picker-month-year-source-proposal-v1/ssr-source-repeat.json": {
+      "bytes": 5817,
+      "sha256": "e71b72443572ec83b7b977984c49339c527075c21e014fa1ac7356e09111183d"
+    }
+  },
+  "validation": {
+    "staticMatrixAndParse": "passed",
+    "browserRuns": 0,
+    "SSRRuns": 0,
+    "NativeImports": 0,
+    "NativeExpectedDataRead": false,
+    "privatePickerCalls": 0
+  },
+  "lease": "Root reviews exact proposal SHA, separately grants explicit exclusive lease, then freeze records that ID. Both CSR/SSR coordinators require exact frozen SHA plus same ID. This records authorization and is not a self-granted lock.",
+  "plannedCommands": [
+    "node .upstream/artifacts/date-picker-quarter-source-proposal-v1/protocol.mjs freeze <ROOT_REVIEWED_PROPOSAL_SHA256> <ROOT_LEASE_ID>",
+    "node .upstream/artifacts/date-picker-quarter-source-proposal-v1/capture.mjs first <ROOT_REVIEWED_FROZEN_SHA256> <ROOT_LEASE_ID>",
+    "node .upstream/artifacts/date-picker-quarter-source-proposal-v1/capture.mjs repeat <ROOT_REVIEWED_FROZEN_SHA256> <ROOT_LEASE_ID>",
+    "node .upstream/artifacts/date-picker-quarter-source-proposal-v1/capture-ssr.mjs first <ROOT_REVIEWED_FROZEN_SHA256> <ROOT_LEASE_ID>",
+    "node .upstream/artifacts/date-picker-quarter-source-proposal-v1/capture-ssr.mjs repeat <ROOT_REVIEWED_FROZEN_SHA256> <ROOT_LEASE_ID>"
+  ],
+  "reviewedProposalSHA256": "ac359318e5643622e9cd2a5816e9ae28101842e19dfb7ebf1e4dfd6bf2a0d7d7",
+  "rootLease": "quarter-20261119-01"
+}

@@ -24,6 +24,7 @@
     picker = picker === 'month' ? 'year' : 'month';
   }}>Switch period</button>
   <button type="button" data-period-mode-date onclick={() => { picker = 'date'; }}>Select date mode</button>
+  <button type="button" data-period-mode-quarter onclick={() => { picker = 'quarter'; }}>Select quarter mode</button>
   <button type="button" data-period-mode-time onclick={() => { showTime = true; }}>Enable date time</button>
   <output data-period-mode-model>{JSON.stringify({
     single: date.toISOString(), range: range.map(value => value.toISOString())

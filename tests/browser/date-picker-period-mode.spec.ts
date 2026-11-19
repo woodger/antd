@@ -30,12 +30,14 @@ for (const kind of ['single', 'range'] as const) {
 }
 
 for (const kind of ['single', 'range'] as const) {
-  for (const initialPicker of ['month', 'year'] as const) {
+  for (const initialPicker of ['month', 'year', 'quarter'] as const) {
     test(`live ${kind} ${initialPicker} to date restores date and clock panels without replacing the owner`, async ({ page }) => {
       await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
       await page.goto('/date-picker-period-mode.html');
       // Настоящие owner-кнопки меняют props без переноса фокуса в другой элемент.
       if (initialPicker === 'year') await page.locator('[data-period-mode-switch]')
+        .evaluate(button => (button as HTMLButtonElement).click());
+      if (initialPicker === 'quarter') await page.locator('[data-period-mode-quarter]')
         .evaluate(button => (button as HTMLButtonElement).click());
       await page.locator('[data-period-mode-time]')
         .evaluate(button => (button as HTMLButtonElement).click());
