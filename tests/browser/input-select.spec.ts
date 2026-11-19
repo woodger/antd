@@ -177,9 +177,11 @@ test('Select clears through the keyboard and accepts an external reset', async (
 for (const key of ['g', 'ArrowUp']) {
   test(`Select keeps the ${key} keyboard target when its first popup opens`, async ({ page }) => {
     const select = page.getByLabel('Plain select', { exact: true });
+
     await expect(select).toHaveValue('Alpha');
     await select.press(key);
     await select.press('Enter');
+
     await expect(select).toHaveValue('Gamma');
     await expect(page.getByRole('status', { name: 'Selected value' })).toHaveText('gamma');
   });

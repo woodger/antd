@@ -32,7 +32,10 @@ describe('Form nested validation rules', () => {
       const deferred = new Promise<string>(resolve => { reject = resolve; });
       try {
         const validation = validateFieldValue({ name: '' }, {}, [
-          { type: 'object', fields: { name: { required: true, warningOnly: true, message: 'Warn' } } },
+          {
+            type: 'object',
+            fields: { name: { required: true, warningOnly: true, message: 'Warn' } }
+          },
           { validator: () => deferred }
         ], mode).finally(() => { settled = true; });
         await vi.advanceTimersByTimeAsync(0);
@@ -79,7 +82,10 @@ describe('Form nested validation rules', () => {
       { type: 'object', fields: {
         a: { required: true, message: 'A' }, b: { required: true, message: 'B' }
       } },
-      { validator: () => { later = true; return 'Later'; } }
+      { validator: () => {
+        later = true;
+        return 'Later';
+      } }
     ], true);
 
     expect(result).toEqual({ errors: ['A', 'B'], warnings: [] });
@@ -108,6 +114,7 @@ describe('Form nested validation rules', () => {
     expect(await validateValue(cycle, {}, [recursive])).toEqual(['Вложенные правила образуют цикл.']);
     const shared = { name: 'Name' };
     const child: ValidationRule = { type: 'object', fields: { name: { required: true } } };
+
     expect(await validateValue({ a: shared, b: shared }, {}, [{
       type: 'object', fields: { a: child, b: child }
     }])).toEqual([]);
@@ -127,6 +134,7 @@ describe('Form nested validation rules', () => {
     expect(0 in form.values.field).toBe(false);
     expect(2 in form.values.field).toBe(true);
     const value = Object.create({ name: 'Inherited' });
+
     expect(await validateValue(value, {}, [{
       type: 'object', fields: { name: { required: true, message: 'Own name' } }
     }])).toEqual(['Own name']);

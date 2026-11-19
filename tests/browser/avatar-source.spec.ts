@@ -21,6 +21,7 @@ test('Avatar preserves the accessibility and focus of a named or unnamed source'
 
   await expect(page.getByRole('group', { name: 'Outer avatar', exact: true })).toBeVisible();
   await input.focus();
+
   await expect(input).toBeFocused();
 
   await check(page, 'Name source avatar', false);
@@ -145,6 +146,7 @@ for (const focusTrap of [true, false]) {
     await check(page, 'Trap source preview focus', focusTrap);
     await open(page, 'group-hidden');
     await imageTrigger(page).click();
+
     await expect(viewer(page)).toBeVisible();
 
     await check(page, 'Mount source avatar', false);
@@ -268,11 +270,13 @@ for (const sample of reference.cases) {
     test(`Avatar source preview and parent lifetime match upstream for ${sample.name}`, async ({ page }) => {
       await open(page, sample.name);
       await imageTrigger(page).click();
+
       await expect(viewer(page)).toBeVisible();
       await frames(page);
 
       expect(await previewSnapshot(page)).toEqual(expected.opened);
       await viewer(page).getByRole('button', { name: 'Закрыть', exact: true }).click();
+
       await expect(viewer(page)).toHaveCount(0);
       await frames(page);
 

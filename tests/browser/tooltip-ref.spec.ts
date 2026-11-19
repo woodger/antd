@@ -54,7 +54,8 @@ for (const source of [false, true]) {
               return api?.popupElement?.isConnected && api.popupElement.tagName === 'SPAN'
                 && api.popupElement === document.querySelector('[data-ant-tooltip]');
             })).toBe(true);
-          } else {
+          }
+          else {
             await root.evaluate(node => (node as TooltipRefFixtureElement)
               .savedTooltipRef?.forceAlign());
             await expect(page.locator('[data-ant-tooltip]')).toHaveCount(0);
@@ -74,6 +75,7 @@ for (const source of [false, true]) {
         await root.getByRole('button', { name: 'Next ref step', exact: true })
           .evaluate(node => (node as HTMLButtonElement).click());
         const popup = page.locator('[data-ant-tooltip]');
+
         await expect(popup).toBeVisible();
         const previous = await popup.elementHandle();
         const draft = page.getByLabel('Lifecycle draft', { exact: true });
@@ -117,6 +119,7 @@ for (const source of [false, true]) {
         control.checked = true;
         control.dispatchEvent(new Event('change', { bubbles: true }));
       });
+
       await expect.poll(() => root.evaluate(node => (node as TooltipRefFixtureElement)
         .tooltipRef?.nativeElement?.tagName)).toBe('A');
       expect(await previous!.evaluate(node => node.isConnected)).toBe(false);
@@ -126,6 +129,7 @@ for (const source of [false, true]) {
         control.checked = true;
         control.dispatchEvent(new Event('change', { bubbles: true }));
       });
+
       await expect(page.locator('body > [data-ant-tooltip]')).toBeVisible();
       expect(await root.evaluate((node, previous) => (node as TooltipRefFixtureElement)
         .tooltipRef?.popupElement === previous, popup)).toBe(true);
@@ -135,9 +139,11 @@ for (const source of [false, true]) {
         control.checked = true;
         control.dispatchEvent(new Event('change', { bubbles: true }));
       });
+
       await expect(page.getByLabel('Ref effect calls', { exact: true })).toHaveText('1');
       await page.getByRole('button', { name: 'Update ref title', exact: true })
         .evaluate(node => (node as HTMLButtonElement).click());
+
       await expect(page.locator('[data-ant-tooltip]')).toContainText('Updated ref content');
       await expect(page.getByLabel('Ref effect calls', { exact: true })).toHaveText('1');
       await expect(page.getByLabel('Ref events', { exact: true })).toHaveText('[]');

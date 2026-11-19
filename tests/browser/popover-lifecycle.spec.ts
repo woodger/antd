@@ -59,7 +59,8 @@ for (const source of [false, true]) {
               widget: expected.widget,
               portal: expected.portal
             });
-          } else if (frame.props.destroyOnHidden
+          }
+          else if (frame.props.destroyOnHidden
             || sample.mode === 'avatar' && frame.props.destroyOnHidden !== false) {
             await expect(popup.locator('[data-ant-popover-container]')).toBeEmpty();
           }
@@ -155,6 +156,7 @@ for (const source of [false, true]) {
           .selectOption(`${mode}-fresh-content-styles`);
         await page.getByLabel('Use captured Snippet', { exact: true }).dispatchEvent('click');
         const payload = page.locator('[data-captured-content]');
+
         await expect(payload).toHaveText('Initial content');
         const draft = await page.getByLabel('Lifecycle draft', { exact: true }).elementHandle();
         const next = page.getByRole('button', { name: 'Next lifecycle step', exact: true });

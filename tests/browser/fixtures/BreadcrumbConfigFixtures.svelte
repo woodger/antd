@@ -28,7 +28,9 @@
     { separator: localSeparator, dropdownIcon: localIcon }));
   let items = $derived.by(() => {
     const result: BreadcrumbItem[] = [
-      { key: 'one', title: 'First', href: '#breadcrumb-config-first', onClick: () => { clicked++; } },
+      { key: 'one', title: 'First', href: '#breadcrumb-config-first', onClick: () => {
+        clicked++;
+      } },
       { key: 'menu', title: 'Section', href: '#breadcrumb-config-section',
         menu: { items: [{ key: 'entry', label: 'Menu entry' }],
           onClick: () => { menuClicks++; } } },

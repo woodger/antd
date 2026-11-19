@@ -15,8 +15,14 @@ export interface AutocompleteRenderSample {
 export type AutocompleteRenderSettings = AutocompleteRenderSample & { revision: number };
 export type AutocompleteRenderAction = { type: 'props'; set: Partial<AutocompleteRenderSettings> }
   | { type: 'value'; value: string } | { type: 'click' | 'outside' }
-  | { type: 'fill'; text: string } | { type: 'press'; key: string } | { type: 'scroll'; top: number };
-export const autocompleteRenderGeometry: { viewport: { width: number; height: number }; root: { left: number; top: number; width: number } };
+  | { type: 'fill'; text: string } | { type: 'press'; key: string } | {
+    type: 'scroll';
+    top: number
+  };
+export const autocompleteRenderGeometry: {
+  viewport: { width: number; height: number };
+  root: { left: number; top: number; width: number }
+};
 export const autocompleteRenderSamples: AutocompleteRenderSample[];
 export const autocompleteRenderSSRStates: Array<{ name: string; open: boolean }>;
 export function autocompleteRenderActions(sample: AutocompleteRenderSample): AutocompleteRenderAction[];

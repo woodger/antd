@@ -15,7 +15,8 @@
   let variables = $derived(overrideLabel ? { label: 'Updated label' } : sample.variables);
 
   async function validate() {
-    try { await model.validateFields(); } catch {}
+    try { await model.validateFields(); }
+    catch {}
     report = JSON.stringify(model.getFieldError(name));
   }
 </script>

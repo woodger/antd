@@ -249,7 +249,8 @@ export function createCarouselModel(
     if (slides.length) {
       commit({ lazyLoadedList: state.lazyLoadedList.concat(slides) });
       props.onLazyLoad?.(slides);
-    } else {
+    }
+    else {
       clearInterval(progressive);
       progressive = undefined;
     }

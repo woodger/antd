@@ -64,7 +64,10 @@
     getPopupContainer: sample.portal ? () => document.getElementById('picker-prefix-portal')!
       : undefined,
     'aria-label': 'Prefix picker',
-    onOpenChange: (next: boolean) => { open = next; events.push(`open:${next}`); }
+    onOpenChange: (next: boolean) => {
+      open = next;
+      events.push(`open:${next}`);
+    }
   } satisfies Pick<DatePickerProps, 'prefixCls' | 'class' | 'classNames' | 'style' | 'open'
     | 'size' | 'variant' | 'status' | 'disabled' | 'showNow' | 'getPopupContainer'
     | 'aria-label' | 'onOpenChange' | 'format'>);

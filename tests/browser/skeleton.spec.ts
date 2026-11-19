@@ -374,12 +374,14 @@ test(
     const original = await preview(page).locator('.ant-skeleton-title').elementHandle();
 
     await check(page, 'Active Skeleton');
+
     await expect.poll(
       () =>
         preview(page).evaluate(node => node.getAnimations({ subtree: true }).length)
     )
       .toBeGreaterThan(0);
     await page.emulateMedia({ reducedMotion: 'reduce' });
+
     await expect.poll(
       () =>
         preview(page).evaluate(node => node.getAnimations({ subtree: true }).length)
@@ -389,12 +391,14 @@ test(
     await expect(preview(page).locator('.ant-skeleton-title')).toHaveCSS('background-image', 'none');
 
     await page.emulateMedia({ reducedMotion: 'no-preference' });
+
     await expect.poll(
       () =>
         preview(page).evaluate(node => node.getAnimations({ subtree: true }).length)
     )
       .toBeGreaterThan(0);
     await check(page, 'Active Skeleton', false);
+
     await expect.poll(
       () =>
         preview(page).evaluate(node => node.getAnimations({ subtree: true }).length)
@@ -473,6 +477,7 @@ test.describe('mobile Skeleton', () => {
       await page.getByRole('textbox', { name: 'Skeleton paragraph width', exact: true })
         .fill('500%');
       await button(page, 'Start Skeleton loading').tap();
+
       await expect.poll(
         () => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)
       )

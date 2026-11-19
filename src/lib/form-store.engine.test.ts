@@ -20,9 +20,11 @@ describe('sameFormValue', () => {
 
     expect(sameFormValue(left, right)).toBe(true);
     right.value = 2;
+
     expect(sameFormValue(left, right)).toBe(false);
     const shared = { value: 1 };
     const equivalent = { value: 1 };
+
     expect(sameFormValue({ first: shared, second: shared }, {
       first: equivalent, second: equivalent
     })).toBe(true);
@@ -81,7 +83,10 @@ describe('Form NamePath store', () => {
 
   it('stores reserved property names as data without following object prototypes', () => {
     const next = setFormValue({}, ['__proto__', 'formStorePolluted'], true);
-    const merged = mergeFormValues({}, JSON.parse('{"constructor":{"prototype":{"polluted":true}}}'));
+    const merged = mergeFormValues(
+      {},
+      JSON.parse('{"constructor":{"prototype":{"polluted":true}}}')
+    );
 
     expect(getFormValue(next, ['__proto__', 'formStorePolluted'])).toBe(true);
     expect(getFormValue({}, 'toString')).toBeUndefined();

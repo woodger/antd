@@ -118,7 +118,8 @@
 
       values = getCheckboxGroupValue(items, [...next]);
       nextValue = values;
-    } else {
+    }
+    else {
       const next = toggleCheckboxGroupChildren(
         value ?? initialDefault,
         optionValue,

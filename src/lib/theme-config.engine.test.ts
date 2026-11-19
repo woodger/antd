@@ -22,7 +22,11 @@ describe('ConfigProvider theme inheritance', () => {
     });
     const parent = mergeThemeConfig(input, defaultThemeConfig, ':parent:');
 
-    const child = mergeThemeConfig({ components: { Input: { paddingBlock: 8 } } }, parent, ':child:');
+    const child = mergeThemeConfig(
+      { components: { Input: { paddingBlock: 8 } } },
+      parent,
+      ':child:'
+    );
 
     expect(child.cssVar).toEqual({ prefix: 'custom', key: 'css-var-child' });
     expect(child.token).toEqual({ colorPrimary: '#123456' });
@@ -75,7 +79,11 @@ describe('ConfigProvider design-token state', () => {
 
     const result = createDesignTokenState(config);
 
-    expect(result.token).toMatchObject({ fontSize: 12, controlHeight: 28, colorBgContainer: '#141414' });
+    expect(result.token).toMatchObject({
+      fontSize: 12,
+      controlHeight: 28,
+      colorBgContainer: '#141414'
+    });
     expect(result.token.colorPrimary).toBe('#642ab5');
     expect(config).toEqual({ ...defaultThemeConfig, mode: 'dark', primary: 'purple', compact: true });
   });
@@ -124,7 +132,10 @@ describe('ConfigProvider design-token state', () => {
 
   it('keeps source cache identity and the original algorithm array reference', () => {
     const first: MappingAlgorithm = seed => defaultAlgorithm(seed);
-    const later: MappingAlgorithm = (seed, map) => ({ ...map!, controlHeight: seed.controlHeight + 9 });
+    const later: MappingAlgorithm = (seed, map) => ({
+      ...map!,
+      controlHeight: seed.controlHeight + 9
+    });
     const algorithms = [first];
     const theme = createDerivativeTheme(algorithms)!;
 
@@ -143,7 +154,10 @@ describe('ConfigProvider design-token state', () => {
       } });
 
     expect(result.token.colorPrimary).toBe('#123456');
-    expect(result.token.Input).toMatchObject({ colorPrimary: '#00b96b', colorPrimaryHover: '#20c77c' });
+    expect(result.token.Input).toMatchObject({
+      colorPrimary: '#00b96b',
+      colorPrimaryHover: '#20c77c'
+    });
     expect(result.token.Button).toEqual({ fontWeight: 500 });
     expect(result.cssVar).not.toHaveProperty('Input');
     expect(result.cssVar).not.toHaveProperty('Button');

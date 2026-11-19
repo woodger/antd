@@ -232,6 +232,7 @@ test(
     await expect(back).toHaveCSS('--ant-float-btn-progress', '0.5turn');
 
     await back.click();
+
     await expect.poll(() => page.locator('#float-scroll').evaluate(node => node.scrollTop)).toBe(0);
 
     await expect(back).toHaveCount(0);
@@ -255,6 +256,7 @@ for (const target of ['window', 'document'] as const)
 
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await back.click();
+
       await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
 
       await expect(back).toHaveCount(0);

@@ -170,7 +170,8 @@ async function validateRuleValue<Values extends FormValues>(
   if (rule.transform) {
     try {
       transformedValue = rule.transform(originalValue);
-    } catch (error) {
+    }
+    catch (error) {
       // Source теряет исключение transform и принимает значение; ошибка не должна давать success.
       return collectValidationMessages(rule, formatValidationMessages(
         [rule.message ?? (error instanceof Error ? error.message : 'Проверьте значение.')],
@@ -302,7 +303,12 @@ async function validatePrimitiveRule<Values extends FormValues>(
     && (!array || type === 'pattern')
     && rule.pattern
     && !matchesValidationPattern(value, rule.pattern, !type || type === 'string')) {
-    messages.push(message(['pattern', 'mismatch'], 'Проверьте формат значения.', value, rule.pattern));
+    messages.push(message(
+      ['pattern', 'mismatch'],
+      'Проверьте формат значения.',
+      value,
+      rule.pattern
+    ));
     return messages;
   }
 
@@ -328,7 +334,8 @@ async function validateCustomRule<Values extends FormValues>(
       if (message) {
         messages.push(message);
       }
-    } catch (error) {
+    }
+    catch (error) {
       messages.push(rule.message
         ?? (error instanceof Error
           ? error.message

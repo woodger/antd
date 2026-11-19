@@ -19,12 +19,14 @@ test('Form resetFields remounts stateful help like the source', async ({ page })
   await page.locator('[data-counter="Help"]').evaluate((button: HTMLButtonElement) => {
     button.click();
   });
+
   await expect.poll(() => page.evaluate(formHelpMetrics)).toEqual(reference.counter.incremented);
   const previous = await page.locator('[data-counter="Help"]').elementHandle();
 
   await page.getByRole('button', { name: 'Reset help field', exact: true }).evaluate(
     (button: HTMLButtonElement) => { button.click(); }
   );
+
   await expect.poll(() => page.evaluate(formHelpMetrics)).toEqual(reference.counter.reset);
   expect(await previous!.evaluate((element) => element.isConnected)).toBe(false);
 });

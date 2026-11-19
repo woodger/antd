@@ -46,9 +46,15 @@
   function icons(label: string, selected: FeedbackMode): FormFeedbackIcons {
     return info => selected === 'empty-map' ? {} : { [info.status]: selected === 'false' ? false
       : selected === 'null' ? null : selected === 'zero' ? 0 : selected === 'true' ? true
-        : selected === 'empty-array' ? [] : selected === 'array' ? ['[', content(label, info), ']'] : content(label, info) };
+        : selected === 'empty-array' ? [] : selected === 'array' ? ['[', content(label, info), ']'] : content(
+          label,
+          info
+        ) };
   }
-  let hasFeedback = $derived<FormItemProps['hasFeedback']>(feedback ? mode ? { icons: icons('local', mode) } : true : false);
+  let hasFeedback = $derived<FormItemProps['hasFeedback']>(feedback ? mode ? { icons: icons(
+    'local',
+    mode
+  ) } : true : false);
   function apply(action: FeedbackPickerAction) {
     if (action === 'suffix-default') suffixValue = undefined;
     if (action === 'suffix-null') suffixValue = null;
@@ -65,9 +71,25 @@
     if (action === 'hide-icon') mode = 'false';
     if (action === 'show-icon') mode = 'custom';
     if (action === 'change-prefix') changedPrefix = true;
-    if (action === 'errors') model.setFields([{ name: 'node', errors: ['Invalid <node>'], warnings: [], touched: false }]);
-    if (action === 'warnings') model.setFields([{ name: 'node', errors: [], warnings: ['Check node'], touched: false }]);
-    if (action === 'validated') model.setFields([{ name: 'node', errors: [], warnings: [], validating: false, touched: false }]);
+    if (action === 'errors') model.setFields([{
+      name: 'node',
+      errors: ['Invalid <node>'],
+      warnings: [],
+      touched: false
+    }]);
+    if (action === 'warnings') model.setFields([{
+      name: 'node',
+      errors: [],
+      warnings: ['Check node'],
+      touched: false
+    }]);
+    if (action === 'validated') model.setFields([{
+      name: 'node',
+      errors: [],
+      warnings: [],
+      validating: false,
+      touched: false
+    }]);
     if (action === 'validate') void model.validateFields(['node']).catch(() => {});
     if (action === 'resolve') pending?.resolve();
     if (action === 'reject') pending?.reject(new Error('Rejected node'));

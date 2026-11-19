@@ -9,7 +9,10 @@
     padding?: number;
     enabled?: boolean;
   } = $props();
-  let context = $derived(segmentedConfigRecord('context' in sample ? sample.context : undefined, 'context'));
+  let context = $derived(segmentedConfigRecord(
+    'context' in sample ? sample.context : undefined,
+    'context'
+  ));
   let current = $derived<SegmentedConfig | undefined>(enabled ? {
     ...context,
     ...(padding === undefined ? {} : { style: `padding:${padding}px` })

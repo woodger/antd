@@ -119,7 +119,8 @@
         onSave(current.trim());
         end?.();
       });
-    } else if (action === 'cancel') {
+    }
+    else if (action === 'cancel') {
       finish(onCancel);
     }
   }

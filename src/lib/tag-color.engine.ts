@@ -16,7 +16,8 @@ export function getTagColor(
   if (!preset && !status && color) {
     if (variant === 'solid') {
       style.push(['background-color', props.color!]);
-    } else {
+    }
+    else {
       const hsl = new FastColor(color).toHsl();
       hsl.l = 0.95;
       style.push(['background-color', new FastColor(hsl).toHexString()], ['color', props.color!]);

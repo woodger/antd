@@ -48,8 +48,20 @@ export const treeSelectDataSamples: readonly TreeSelectDataSample[] = [
   { id: 'label-field', fields: { label: 'caption' }, value: 1, actions: choose },
   { id: 'children-field', fields: { children: 'nodes' }, value: 1, actions: choose },
   { id: 'empty-fields', fields: { value: '', label: '', children: '' }, value: 1, actions: choose },
-  { id: 'canonical-shadows', fields: treeSelectAliasFields, shadows: true, value: 1, actions: choose },
-  { id: 'label-prop', fields: treeSelectAliasFields, labelProp: 'secondary', value: 1, actions: choose },
+  {
+    id: 'canonical-shadows',
+    fields: treeSelectAliasFields,
+    shadows: true,
+    value: 1,
+    actions: choose
+  },
+  {
+    id: 'label-prop',
+    fields: treeSelectAliasFields,
+    labelProp: 'secondary',
+    value: 1,
+    actions: choose
+  },
   { id: 'null-label', labelKind: 'null', value: 1, actions: choose },
   { id: 'array-label', labelKind: 'array', value: 1, actions: choose },
   { id: 'missing-label', labelKind: 'missing', value: 1, actions: choose },
@@ -77,16 +89,33 @@ export const treeSelectDataSamples: readonly TreeSelectDataSample[] = [
     { kind: 'open' }, { kind: 'search', value: 'unmatched' }
   ] },
   { id: 'simple', simple: true, value: 1, actions: choose },
-  { id: 'simple-config', simple: { id: 'uid', pId: 'parent', rootPId: 'ROOT' }, value: 1, actions: choose },
+  {
+    id: 'simple-config',
+    simple: { id: 'uid', pId: 'parent', rootPId: 'ROOT' },
+    value: 1,
+    actions: choose
+  },
   { id: 'simple-root-zero', simple: { rootPId: 0 }, rootZero: true, value: 2, actions: [
     { kind: 'open' }, { kind: 'choose', value: 1 }
   ] },
   { id: 'simple-unordered', simple: true, unordered: true, value: 1, actions: choose },
-  { id: 'simple-aliases', simple: true, fields: { value: 'code', label: 'caption' }, value: 1, actions: choose },
+  {
+    id: 'simple-aliases',
+    simple: true,
+    fields: { value: 'code', label: 'caption' },
+    value: 1,
+    actions: choose
+  },
   { id: 'simple-children-field', simple: true, fields: treeSelectAliasFields, value: 0, actions: [
     { kind: 'open' }, { kind: 'choose', value: 0 }
   ] },
-  { id: 'controlled-hold', fields: treeSelectAliasFields, controlled: 'hold', value: 1, actions: choose },
+  {
+    id: 'controlled-hold',
+    fields: treeSelectAliasFields,
+    controlled: 'hold',
+    value: 1,
+    actions: choose
+  },
   { id: 'data-update', fields: treeSelectAliasFields, controlled: 'accept', value: 1, actions: [
     { kind: 'update' }, { kind: 'open' }, { kind: 'choose', value: 2 }
   ] },
@@ -119,25 +148,43 @@ export function treeSelectData(
   const childrenField = fields?.children || 'children';
   const make = (value: number | string, label: string): Record<string, unknown> => ({
     [valueField]: value, [labelField]: revision ? `${label} updated` : label,
-    secondary: `Secondary ${label}`, payload: { value, ordinal: typeof value === 'number' ? value + 40 : 49 },
+    secondary: `Secondary ${label}`, payload: {
+      value,
+      ordinal: typeof value === 'number' ? value + 40 : 49
+    },
     ...(sample.shadows ? { value: `shadow-${value}`, key: value, title: 'Raw title', children: [] } : {}),
     ...(sample.shadows ? { [valueField]: value, [labelField]: label } : {})
   });
   const root = make(sample.rootZero ? 1 : 0, 'Parent');
   const alpha = make(sample.rootZero ? 2 : 1, 'Alpha');
   const beta = make(sample.rootZero ? 3 : 2, 'Beta');
-  const locked: Record<string, unknown> = { ...make(sample.rootZero ? 4 : 3, 'Locked'), disabled: true };
+  const locked: Record<string, unknown> = {
+    ...make(sample.rootZero ? 4 : 3, 'Locked'),
+    disabled: true
+  };
   const tail = make('tail', 'Tail');
-  if (sample.labelKind === 'null') { alpha[labelField] = null; alpha.label = 'Ignored fallback'; }
+  if (sample.labelKind === 'null') {
+    alpha[labelField] = null;
+    alpha.label = 'Ignored fallback';
+  }
   if (sample.labelKind === 'array') alpha[labelField] = ['Alpha', 0, null, false, ' one'];
   if (sample.labelKind === 'missing') delete alpha[labelField];
   if (!simple) return [{ ...root, [childrenField]: [alpha, beta, locked] }, tail];
-  const config = { id: 'id', pId: 'pId', rootPId: null, ...(typeof simple === 'object' ? simple : {}) };
+  const config = {
+    id: 'id',
+    pId: 'pId',
+    rootPId: null,
+    ...(typeof simple === 'object' ? simple : {})
+  };
   const rows = [root, alpha, beta, locked, tail];
   for (const node of rows) {
     node[String(config.id)] = node[valueField];
     node[String(config.pId)] = node === root || node === tail ? config.rootPId : root[valueField];
   }
-  if (sample.existingChildren) root.children = [{ value: 'existing', title: 'Existing', payload: { ordinal: 90 } }];
+  if (sample.existingChildren) root.children = [{
+    value: 'existing',
+    title: 'Existing',
+    payload: { ordinal: 90 }
+  }];
   return sample.unordered ? [beta, alpha, tail, root, locked] : rows;
 }

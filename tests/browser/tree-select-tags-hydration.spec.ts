@@ -55,6 +55,7 @@ for (const name of ['count-one', 'responsive-400', 'renderer-summary']) {
       value: '', selection: [0, 0], outsidePreserved: true,
       outsideValue: 'Outside hydration draft', outsideSelection: [2, 8] });
     const form = page.getByRole('form', { name: 'Tree tag native form', exact: true });
+
     expect(await form.evaluate((node: HTMLFormElement) => new FormData(node).getAll('tree-tags')))
       .toEqual(['0', '1', 'locked', 'tail']);
     await expect(page.locator('[data-tree-tag-events]')).toHaveText('[]');

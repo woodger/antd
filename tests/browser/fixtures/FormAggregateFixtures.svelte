@@ -34,7 +34,10 @@
       groupsAll: form.isFieldsTouched([['user'], 'user.name'], true),
       numeric: form.isFieldsTouched([['rows', 0]]), string: form.isFieldsTouched([['rows', '0']]),
       emptyAny: form.isFieldsTouched([]), emptyAll: form.isFieldsTouched([], true),
-      missingAny: form.isFieldsTouched(['missing']), missingAll: form.isFieldsTouched(['missing'], true),
+      missingAny: form.isFieldsTouched(['missing']), missingAll: form.isFieldsTouched(
+        ['missing'],
+        true
+      ),
       rootAny: form.isFieldsTouched([[]]), rootAll: form.isFieldsTouched([[]], true),
       undefinedAll: form.isFieldsTouched(undefined, true),
       peopleAny: form.isFieldsTouched(['people']), peopleAll: form.isFieldsTouched(['people'], true),

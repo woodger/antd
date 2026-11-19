@@ -50,7 +50,9 @@ window.nativeEmptyDatetime = {
   },
   async dispose() {
     if (disposed) throw Error('Actual owner is already unmounted');
-    disposed = true; await unmount(app); await tick();
+    disposed = true;
+    await unmount(app);
+    await tick();
   },
   stopEventObserver() {
     for (const type of types) document.removeEventListener(type, listener, true);

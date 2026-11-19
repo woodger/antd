@@ -42,6 +42,7 @@ describe('TreeSelect renderer labels on the server', () => {
 
   it.each(reference.cases)('renders Source summary labels for $id without DOM or effects', entry => {
     const sample = [...treeLabelSamples, ...treeLabelObservations].find(item => item.id === entry.id)!;
+
     expect(typeof document).toBe('undefined');
     vi.useFakeTimers();
     try {

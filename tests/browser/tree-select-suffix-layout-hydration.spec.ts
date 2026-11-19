@@ -15,8 +15,14 @@ declare global {
 let server: ViteDevServer;
 let cache: string;
 test.beforeAll(async () => {
-  cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)), 'tree-select-suffix-hydration-'));
-  server = await createServer({ configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+  cache = await mkdtemp(join(
+    fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
+    'tree-select-suffix-hydration-'
+  ));
+  server = await createServer({ configFile: fileURLToPath(new URL(
+    './vite.config.ts',
+    import.meta.url
+  )),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null }, appType: 'custom', cacheDir: cache });
 });
 test.afterAll(async () => {
@@ -52,7 +58,10 @@ async function settle(page: Page) {
 
 for (const id of ['input-ltr', 'textarea-rtl', 'wrapped-dom-ref-ltr', 'composite-ref-ltr', 'fragment-rtl']) {
   test(`TreeSelect suffix ${id} strictly hydrates and preserves query, nodes and refs through layout changes`, async ({ page }) => {
-    const module = await server.ssrLoadModule(fileURLToPath(new URL('./fixtures/tree-select-suffix-layout-hydration.server.ts', import.meta.url)));
+    const module = await server.ssrLoadModule(fileURLToPath(new URL(
+      './fixtures/tree-select-suffix-layout-hydration.server.ts',
+      import.meta.url
+    )));
     const rendered = module.renderTreeSelectSuffixLayout(id);
     await page.goto(`/tree-select-suffix-layout-hydration.html?sample=${id}`);
     await page.evaluate(({ head, body }) => {
@@ -62,20 +71,41 @@ for (const id of ['input-ltr', 'textarea-rtl', 'wrapped-dom-ref-ltr', 'composite
       const OriginalObserver = window.ResizeObserver;
       window.ResizeObserver = class extends OriginalObserver {
         targets = new Set<Element>();
-        constructor(callback: ResizeObserverCallback) { super(callback); observers.add(this.targets); }
-        observe(target: Element, options?: ResizeObserverOptions) { this.targets.add(target); super.observe(target, options); }
-        unobserve(target: Element) { this.targets.delete(target); super.unobserve(target); }
-        disconnect() { this.targets.clear(); super.disconnect(); }
+        constructor(callback: ResizeObserverCallback) {
+          super(callback);
+          observers.add(this.targets);
+        }
+        observe(target: Element, options?: ResizeObserverOptions) {
+          this.targets.add(target);
+          super.observe(target, options);
+        }
+        unobserve(target: Element) {
+          this.targets.delete(target);
+          super.unobserve(target);
+        }
+        disconnect() {
+          this.targets.clear();
+          super.disconnect();
+        }
       };
       const frames = new Set<number>();
       const request = window.requestAnimationFrame.bind(window), cancel = window.cancelAnimationFrame.bind(window);
       window.requestAnimationFrame = callback => {
-        const frame = request(time => { frames.delete(frame); callback(time); });
+        const frame = request(time => {
+          frames.delete(frame);
+          callback(time);
+        });
         frames.add(frame);
         return frame;
       };
-      window.cancelAnimationFrame = frame => { frames.delete(frame); cancel(frame); };
-      window.suffixLayoutResources = { observers: () => [...observers].reduce((count, targets) => count + targets.size, 0),
+      window.cancelAnimationFrame = frame => {
+        frames.delete(frame);
+        cancel(frame);
+      };
+      window.suffixLayoutResources = { observers: () => [...observers].reduce(
+        (count, targets) => count + targets.size,
+        0
+      ),
         frames: () => frames.size };
       const outside = document.querySelector<HTMLInputElement>('[aria-label="Suffix layout outside draft"]')!;
       outside.value = 'Outside suffix hydration draft';
@@ -85,9 +115,16 @@ for (const id of ['input-ltr', 'textarea-rtl', 'wrapped-dom-ref-ltr', 'composite
       editor.focus();
       editor.setSelectionRange(2, 9);
     }, { head: rendered.head, body: rendered.body });
-    await page.addScriptTag({ type: 'module', url: '/tree-select-suffix-layout-hydration.client.ts' });
+    await page.addScriptTag({
+      type: 'module',
+      url: '/tree-select-suffix-layout-hydration.client.ts'
+    });
     await page.waitForFunction(() => window.treeSelectSuffixLayoutHydration);
-    await expect(page.locator('[data-suffix-layout-case]')).toHaveAttribute('data-suffix-layout-bound', 'true');
+
+    await expect(page.locator('[data-suffix-layout-case]')).toHaveAttribute(
+      'data-suffix-layout-bound',
+      'true'
+    );
     await settle(page);
     // Independently captured MULTIPLE Source hydrateRoot clears the dirty editor
     // after client measurement, retaining focus, parent and suffix/editor identity.
@@ -140,20 +177,24 @@ for (const id of ['input-ltr', 'textarea-rtl', 'wrapped-dom-ref-ltr', 'composite
     }
     await page.setViewportSize({ width: 1050, height: 850 });
     await settle(page);
+
     expect(await identity()).toEqual(expected);
     await page.evaluate(() => window.treeSelectSuffixLayoutHydration!.focus());
+
     expect(await identity()).toEqual(expected);
     expect(await page.getByRole('form', { name: 'Suffix layout hydration values', exact: true }).evaluate(node => {
       if (!(node instanceof HTMLFormElement)) throw Error('Expected native form');
       return new FormData(node).getAll('suffix-layout-choice');
     })).toEqual(['a', 'b', 'c', 'd']);
     await page.evaluate(() => window.treeSelectSuffixLayoutHydration!.dispose());
+
     expect(await page.evaluate(() => window.treeSelectSuffixLayoutHydration!.cleaned))
       .toEqual({ root: true, input: true, control: true });
     await expect(page.locator('[data-suffix-layout-case]')).toHaveCount(0);
     await expect(page.locator('[popover]')).toHaveCount(0);
     await page.setViewportSize({ width: 1100, height: 900 });
     await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
+
     expect(await page.evaluate(() => ({ observers: window.suffixLayoutResources!.observers(),
       frames: window.suffixLayoutResources!.frames() }))).toEqual({ observers: 0, frames: 0 });
   });

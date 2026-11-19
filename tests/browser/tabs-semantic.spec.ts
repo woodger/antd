@@ -24,6 +24,7 @@ for (const sample of reference.cases) {
       const more = page.locator('#tabs-semantic-main .ant-tabs-nav-more');
       await more.focus();
       await more.press('ArrowDown');
+
       await expect(page.getByRole('listbox', { name: 'expanded dropdown', exact: true })).toBeVisible();
       const capture = () => page.evaluate(() => {
         const root = document.getElementById('tabs-semantic-main')!;
@@ -143,6 +144,7 @@ test('open popup styles and classes update without replacing its focused option'
   await option.focus();
   const previous = await option.elementHandle();
   const surface = page.locator('[data-tabs-popup-owner="tabs-semantic-main"]');
+
   await expect(surface).toHaveCSS('background-color', 'rgb(70, 80, 90)');
 
   await page.getByLabel('Tabs semantic reference', { exact: true }).evaluate(element => {

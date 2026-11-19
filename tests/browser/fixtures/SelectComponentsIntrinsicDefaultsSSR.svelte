@@ -11,13 +11,24 @@
   let root = $state<HTMLDivElement>();
   let editor = $state<HTMLInputElement | HTMLTextAreaElement>();
   let authored: HTMLInputElement | HTMLTextAreaElement | undefined;
-  const reference = (node: HTMLInputElement | HTMLTextAreaElement | null) => { authored = node ?? undefined; };
+  const reference = (node: HTMLInputElement | HTMLTextAreaElement | null) => {
+    authored = node ?? undefined;
+  };
   const options = [{ value: 'a', label: 'Alpha' }];
   const editors = {
     'input-default': { element: 'input', ref: reference,
-      props: { 'data-intrinsic-defaults-editor': 'input-default', value: undefined, defaultValue: 'Native draft' } },
+      props: {
+        'data-intrinsic-defaults-editor': 'input-default',
+        value: undefined,
+        defaultValue: 'Native draft'
+      } },
     'checkbox-default': { element: 'input', ref: reference,
-      props: { 'data-intrinsic-defaults-editor': 'checkbox-default', type: 'checkbox', value: undefined, defaultChecked: true } },
+      props: {
+        'data-intrinsic-defaults-editor': 'checkbox-default',
+        type: 'checkbox',
+        value: undefined,
+        defaultChecked: true
+      } },
     'textarea-leading-lf': { element: 'textarea', ref: reference,
       props: { 'data-intrinsic-defaults-editor': 'textarea-leading-lf', value: '\nNative draft' } }
   };

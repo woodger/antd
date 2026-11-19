@@ -36,6 +36,7 @@ test.beforeEach(async ({ page }) => {
 test('Tooltip hides a zero-size trigger and reappears when its size returns', async ({ page }) => {
   const button = trigger(page);
   await button.focus();
+
   await expect(tooltip(page)).toBeVisible();
   const style = await button.getAttribute('style');
 
@@ -346,6 +347,7 @@ test(
 
     await page.locator('#tooltip-fixture .scroller')
       .evaluate((element) => { element.scrollTop += 20; });
+
     await expect.poll(async () => Math.abs((await tip.boundingBox())!.y - before.y + 20))
       .toBeLessThan(2);
     await page.keyboard.press('F8');

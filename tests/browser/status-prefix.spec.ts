@@ -97,5 +97,6 @@ test('Prefixed badge digits keep reduced motion while the count changes', async 
   await expect(digit).toHaveAttribute('style', /transform:/);
   await expect(digit).toHaveCSS('transition-property', 'none');
   await page.clock.runFor(1100);
+
   await expect(digit).toHaveText('9');
 });

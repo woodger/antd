@@ -156,12 +156,14 @@ export function getSplitterSizes(
 
     if (isPercentage(value)) {
       percentages[index] = getSplitterPercentage(value);
-    } else if (value || value === 0) {
+    }
+    else if (value || value === 0) {
       const number = Number(value);
 
       if (!Number.isNaN(number))
         percentages[index] = number / container;
-    } else {
+    }
+    else {
       percentages[index] = undefined;
     }
   }
@@ -242,7 +244,8 @@ export function resizeSplitterPanels(
   if ((!moving || !moving.confirmed) && offset !== 0) {
     if (offset > 0) {
       confirmed = index;
-    } else {
+    }
+    else {
       for (let candidate = index; candidate >= 0; candidate--) {
         if (cache[candidate] > 0 && infos[candidate].resizable) {
           confirmed = candidate;
@@ -296,7 +299,8 @@ export function collapseSplitterPanels(
     sizes[start] = 0;
     sizes[target] += startSize;
     nextCache[index] = startSize;
-  } else {
+  }
+  else {
     const total = startSize + targetSize;
     const startMin = getLimit(items[start].min, 0, container);
     const startMax = getLimit(items[start].max, container, container);
@@ -313,7 +317,8 @@ export function collapseSplitterPanels(
     if (useCache) {
       sizes[target] = cachedTarget;
       sizes[start] = cachedCurrent;
-    } else {
+    }
+    else {
       sizes[start] -= half;
       sizes[target] += half;
     }

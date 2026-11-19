@@ -79,5 +79,9 @@ export function readNativeQuarter() {
       timers: null, frames: null, observers: null,
       note: 'Private resource counters unmeasured. One removable document capture observer; no global timer/frame/observer hooks.' } };
 }
-export function readNativeQuarterProducers(cursor = 0) { return window.nativeQuarter.readProducers(cursor); }
-export function readNativeQuarterCallbacks(cursor = 0) { return window.nativeQuarter.readCallbacks(cursor); }
+export function readNativeQuarterProducers(cursor = 0) {
+  return window.nativeQuarter.readProducers(cursor);
+}
+export function readNativeQuarterCallbacks(cursor = 0) {
+  return window.nativeQuarter.readCallbacks(cursor);
+}

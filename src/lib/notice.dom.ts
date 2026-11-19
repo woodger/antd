@@ -88,7 +88,8 @@ export function connectNoticeSurface(
       surface.style.left = `${visual?.offsetLeft ?? 0}px`;
       if (!surface.matches(':popover-open'))
         surface.showPopover();
-    } else if (surface.matches(':popover-open'))
+    }
+    else if (surface.matches(':popover-open'))
       surface.hidePopover();
 
     if (shown !== visible) {

@@ -18,7 +18,10 @@ for (const [index, entry] of reference.cases.entries()) {
         const modifiers: ('Control' | 'Meta' | 'Shift')[] =
           modifier === 'Control' || modifier === 'Meta' || modifier === 'Shift' ? [modifier] : [];
         const force = Boolean('disabled' in entry.sample && entry.sample.disabled);
-        if ('double' in step.action && step.action.double) await target.dblclick({ modifiers, force });
+        if ('double' in step.action && step.action.double) await target.dblclick({
+          modifiers,
+          force
+        });
         else await target.click({ modifiers, force });
 
         await expect.poll(() => page.evaluate(readDirectoryTree, prefix)).toEqual(step.result);
@@ -115,6 +118,7 @@ test('DirectoryTree updates icon and block defaults without replacing its root o
 
 test('DirectoryTree forwards native focus refs and clears them on unmount', async ({ page }) => {
   await page.goto('/?fixture=directory-tree');
+
   await expect(page.locator('[data-directory-ref]')).toHaveText('DIV');
 
   await page.getByRole('button', { name: 'Focus directory', exact: true }).click();

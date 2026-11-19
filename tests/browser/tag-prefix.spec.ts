@@ -76,6 +76,7 @@ test('custom Tag close preserves its target and releases scoped CSS', async ({ p
 
   await expect(close).toHaveAttribute('type', 'button');
   const box = await close.boundingBox();
+
   expect(box!.width).toBeGreaterThanOrEqual(20);
   expect(box!.height).toBeGreaterThanOrEqual(20);
   await expect(style).toHaveCount(1);
@@ -132,6 +133,7 @@ for (const name of [
         classes: value.close.classes.map(name => name.replace(/^next-tag/, 'ant-tag'))
       } : null
     });
+
     expect(normalize(after)).toEqual(before);
     expect(await wrappers.evaluateAll(nodes => nodes.map(node => getComputedStyle(node).boxSizing)))
       .toEqual(boxes);

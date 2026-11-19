@@ -11,7 +11,10 @@ export function snapshotImageTheme({ id, prefix = 'ant' }: { id: string; prefix?
   ];
   const variables = (node: HTMLElement) => Object.fromEntries(properties.map(name => [
     name,
-    getComputedStyle(node).getPropertyValue(name.replace('--ant-', `--${prefix}-`)).trim().replace(/,\s*/g, ',')
+    getComputedStyle(node).getPropertyValue(name.replace('--ant-', `--${prefix}-`)).trim().replace(
+      /,\s*/g,
+      ','
+    )
   ]));
   const metrics = (selector: string) => {
     const element = viewer.querySelector<HTMLElement>(selector);

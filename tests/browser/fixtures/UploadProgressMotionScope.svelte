@@ -26,7 +26,12 @@
       || sample.listType === 'picture-circle' ? sample.listType : 'text'
   );
   let file = $derived.by<UploadFile>(() => {
-    const value: UploadFile = { uid: 'one', name: 'alpha.png', status, 'aria-label': 'Transfer alpha' };
+    const value: UploadFile = {
+      uid: 'one',
+      name: 'alpha.png',
+      status,
+      'aria-label': 'Transfer alpha'
+    };
     if (sample.percentMode !== 'missing') {
       value.percent = sample.percentMode === 'undefined' ? undefined : 40;
     }

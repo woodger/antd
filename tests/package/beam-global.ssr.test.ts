@@ -19,6 +19,7 @@ describe('BorderBeam global class and variable prefixes in the public package', 
       expect(raw.result.nested).not.toEqual(separate.result.nested);
     }
     const style = isolated.cases.find(entry => entry.sample.id === 'private-style')!;
+
     expect(style.result.nested[0].pseudo.width).toBe('66px');
     expect(reference.transitions.every(step => step.rootsRetained && step.sameInput)).toBe(true);
   });

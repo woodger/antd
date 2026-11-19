@@ -38,6 +38,7 @@ for (const kind of ['tooltip', 'popover', 'popconfirm', 'single', 'range']) {
         node.dispatchEvent(new Event('change', { bubbles: true }));
       });
     const initial = reference.cases.find(entry => entry.sample.id === `${kind}-global`)!;
+
     await expect.poll(() => page.evaluate(snapshotPopupPrefix))
       .toEqual(expectedSnapshot(initial.result));
     const scope = page.locator('[data-popup-prefix-scope="normal"]');
@@ -47,6 +48,7 @@ for (const kind of ['tooltip', 'popover', 'popconfirm', 'single', 'range']) {
       ? '[data-prefix-portal] [popover][role="dialog"]'
       : '[data-prefix-portal] [popover][role="tooltip"]';
     const popups = scope.locator(popupSelector);
+
     await expect(popups).toHaveCount(kind === 'range' ? 2 : 1);
     const oldPopups = await popups.elementHandles();
     const input = page.getByRole('textbox', { name: 'normal widget draft', exact: true });

@@ -7,6 +7,7 @@ for (const sample of reference.cases) {
     await page.setViewportSize({ width: sample.sample.viewport, height: 900 });
     await page.goto('/?fixture=form-layout');
     await page.getByRole('combobox', { name: 'Form layout sample', exact: true }).selectOption(sample.sample.id);
+
     await expect.poll(() => page.evaluate(formLayoutMetrics)).toEqual(sample.metrics);
   });
 }
@@ -41,11 +42,13 @@ test('Form changes layout and local overrides while keeping its native control, 
   }
 
   await page.getByRole('combobox', { name: 'Role layout', exact: true }).selectOption('vertical');
+
   await expect(page.locator('[data-layout-root] .ant-form-item').nth(1))
     .toHaveClass(/ant-form-item-vertical/);
   await expect(page.locator('[data-layout-root] .ant-form-item').first())
     .toHaveClass(/ant-form-item-inline/);
   await page.getByRole('combobox', { name: 'Role layout', exact: true }).selectOption('inherit');
+
   await expect(page.locator('[data-layout-root] .ant-form-item').nth(1))
     .toHaveClass(/ant-form-item-inline/);
 });
@@ -56,17 +59,20 @@ test('Form inline retains native form data, validation, focus, submit and reset'
   const form = page.locator('[data-layout-root] form');
   await name.fill('');
   await form.evaluate((element: HTMLFormElement) => { element.requestSubmit(); });
+
   await expect(name).toHaveAccessibleDescription('Name required');
   await expect(name).toBeFocused();
 
   await name.fill('New name');
   await form.evaluate((element: HTMLFormElement) => { element.requestSubmit(); });
+
   await expect(page.getByRole('status', { name: 'Layout submitted', exact: true }))
     .toHaveText('[{"name":"New name","role":"Editor"}]');
   expect(await form.evaluate((element: HTMLFormElement) => Object.fromEntries(new FormData(element))))
     .toEqual({ name: 'New name', role: 'Editor' });
 
   await form.evaluate((element: HTMLFormElement) => { element.reset(); });
+
   await expect(name).toHaveValue('Anna');
   await expect(page.getByRole('status', { name: 'Layout values', exact: true }))
     .toHaveText('{"name":"Anna","role":"Editor"}');
@@ -79,6 +85,7 @@ test('Form inline styles stay within their form and component=false keeps only t
     has: page.getByLabel('Sibling', { exact: true })
   });
   const withoutWrapper = page.getByLabel('Without wrapper', { exact: true });
+
   await expect(sibling).toHaveClass(/ant-form-item-vertical/);
   await expect(sibling).toHaveCSS('margin-bottom', '24px');
   await expect(withoutWrapper).toHaveCount(1);

@@ -4,7 +4,10 @@ import reference from './fixtures/ant-design-tree-select-max-count-reference.jso
 import type { TreeSelectMaxCountAction, TreeSelectMaxCountSample } from './fixtures/tree-select-max-count-cases';
 import { readTreeSelectData } from './tree-select-data-metrics';
 
-const input = (page: Page) => page.getByRole('combobox', { name: 'Limited tree selection', exact: true });
+const input = (page: Page) => page.getByRole(
+  'combobox',
+  { name: 'Limited tree selection', exact: true }
+);
 const root = (page: Page) => page.locator('.ant-select-dropdown [role="treeitem"][id$="-0"]');
 const events = async (page: Page) => JSON.parse(
   await page.locator('[data-tree-select-max-count-events]').innerText()
@@ -22,7 +25,11 @@ async function mount(page: Page, id: string) {
   await page.getByLabel('TreeSelect limit case').selectOption(String(index));
 }
 
-async function perform(page: Page, action: TreeSelectMaxCountAction, sample: TreeSelectMaxCountSample) {
+async function perform(
+  page: Page,
+  action: TreeSelectMaxCountAction,
+  sample: TreeSelectMaxCountSample
+) {
   if (action.kind === 'open') await input(page).click();
   else if (action.kind === 'choose' || action.kind === 'title') {
     const row = page.locator(`.ant-select-dropdown [role="treeitem"][id$="-${action.value}"]`);
@@ -30,13 +37,16 @@ async function perform(page: Page, action: TreeSelectMaxCountAction, sample: Tre
       ? '[data-ant-tree-checkbox]' : '[data-ant-tree-content]';
     // Оба controls проверяют запрет; физический клик по disabled строке не выбирает её.
     await row.locator(selector).click({ force: true });
-  } else if (action.kind === 'search') await input(page).fill(action.value);
+  }
+  else if (action.kind === 'search') await input(page).fill(action.value);
   else if (action.kind === 'key') await input(page).press(action.value);
   else if (action.kind === 'remove') {
     await page.getByRole('button', { name: `Удалить ${action.label}`, exact: true }).click();
-  } else if (action.kind === 'clear') {
+  }
+  else if (action.kind === 'clear') {
     await page.getByRole('button', { name: 'Очистить', exact: true }).click();
-  } else {
+  }
+  else {
     await page.getByRole('button', { name: action.kind === 'limit'
       ? 'Update selection limit' : 'Update limited data', exact: true }).dispatchEvent('click');
   }
@@ -45,6 +55,7 @@ async function perform(page: Page, action: TreeSelectMaxCountAction, sample: Tre
 for (const entry of reference.cases) {
   test(`TreeSelect maxCount matches Source for ${entry.sample.id}`, async ({ page }) => {
     await mount(page, entry.sample.id);
+
     await expect.poll(() => read(page)).toEqual(entry.initial);
     for (const step of entry.steps) {
       await perform(page, step.action as TreeSelectMaxCountAction,
@@ -59,6 +70,7 @@ for (const entry of reference.cases) {
 test('TreeSelect maxCount leaves single mode selectable like its public Source counterpart', async ({ page }) => {
   const observation = reference.observations.find(entry => entry.sample.id === 'single')!;
   const counterpart = reference.cases.find(entry => entry.sample.id === 'single-unlimited')!;
+
   expect(observation.steps[0].view.nodes.find(node => node.value === '2')!.disabled).toBe(true);
   await mount(page, observation.sample.id);
   await input(page).click();
@@ -67,6 +79,7 @@ test('TreeSelect maxCount leaves single mode selectable like its public Source c
     .toEqual({ view: counterpart.steps[0].view, events: counterpart.steps[0].events });
   await page.getByRole('treeitem', { name: 'Beta', exact: true })
     .locator('[data-ant-tree-content]').click();
+
   await expect.poll(() => read(page))
     .toEqual({ view: counterpart.steps[1].view, events: counterpart.steps[1].events });
   await expect(integrity(page)).toHaveText('{"payloadShared":true,"inputMutated":false}');
@@ -75,6 +88,7 @@ test('TreeSelect maxCount leaves single mode selectable like its public Source c
 test('TreeSelect refreshes disabled parents for new children while preserving raw payload and DOM', async ({ page }) => {
   const observation = reference.observations.find(entry => entry.sample.id === 'grow')!;
   const counterpart = reference.cases.find(entry => entry.sample.id === 'fresh-wide')!;
+
   expect(observation.steps[1].view.nodes.find(node => node.value === '0')!.disabled).toBe(false);
   await mount(page, observation.sample.id);
   await input(page).click();
@@ -88,6 +102,7 @@ test('TreeSelect refreshes disabled parents for new children while preserving ra
   expect(await editor!.evaluate(node => node.isConnected)).toBe(true);
   await expect(input(page)).toBeFocused();
   await root(page).locator('[data-ant-tree-checkbox]').click({ force: true });
+
   expect(await events(page)).toEqual([]);
   await expect(integrity(page)).toHaveText('{"payloadShared":true,"inputMutated":false}');
 });
@@ -97,11 +112,13 @@ test('TreeSelect limit updates retain refs, active IDs, search selection, form v
   const outside = page.getByRole('textbox', { name: 'Limited selection outside draft' });
   await outside.fill('Keep draft');
   await input(page).fill('Alpha');
+
   await expect(page.getByRole('treeitem', { name: 'Alpha', exact: true })).toBeVisible();
   const editor = await input(page).elementHandle();
   const wrapper = await page.locator('[data-ant-tree-choice-control]').elementHandle();
   const row = await root(page).elementHandle();
   const active = await input(page).getAttribute('aria-activedescendant');
+
   expect(active).toBeTruthy();
   await input(page).evaluate((node: HTMLInputElement) => node.setSelectionRange(1, 4, 'backward'));
   await page.getByRole('button', { name: 'Update selection limit', exact: true }).dispatchEvent('click');
@@ -127,12 +144,17 @@ test('TreeSelect blocks a capped active option and permits it after native tag r
   await input(page).press('ArrowDown');
   await input(page).press('ArrowDown');
   const beta = page.getByRole('treeitem', { name: 'Beta', exact: true });
-  await expect(input(page)).toHaveAttribute('aria-activedescendant', (await beta.getAttribute('id'))!);
+
+  await expect(input(page)).toHaveAttribute(
+    'aria-activedescendant',
+    (await beta.getAttribute('id'))!
+  );
   await input(page).press('Enter');
 
   expect(await events(page)).toEqual([]);
   await input(page).press('Backspace');
   await input(page).press('Enter');
+
   expect((await events(page)).at(-1)).toMatchObject({ kind: 'select', value: 2,
     node: { disabled: null, payload: { id: 'n2' } } });
   await expect(page.locator('.ant-select-selection-item-content')).toHaveText('Beta');

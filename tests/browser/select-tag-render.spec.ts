@@ -52,6 +52,7 @@ test('Select tagRender composes native Tag close and can switch without losing i
     const input = page.getByRole('combobox', { name: 'Custom rendered tags', exact: true });
     await input.focus();
     await page.getByRole('button', { name: 'Native close string:a', exact: true }).click();
+
     await expect(page.getByRole('status', { name: 'Tag render values', exact: true }))
       .toHaveText('[0]');
     await expect(input).toBeFocused();
@@ -87,6 +88,7 @@ test('Responsive tagRender receives a summary and restores ordinary metadata aft
     await expect.poll(readTags)
       .toEqual([expect.objectContaining({ isMaxTag: true, closable: false, disabled: false })]);
     await page.getByRole('spinbutton', { name: 'Custom tag width', exact: true }).fill('400');
+
     await expect.poll(async () => (await readTags()).map(info => info.value))
       .toEqual(['a', 0]);
     await expect(page.getByRole('status', { name: 'Tag render values', exact: true }))

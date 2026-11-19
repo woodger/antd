@@ -30,6 +30,7 @@ test('Carousel prefix updates retain the active slide, editor and focus', async 
   const scope = page.locator('[data-carousel-prefix-scope="normal"]');
   const root = scope.locator(':scope > div');
   await scope.getByRole('button', { name: 'Go to third normal slide', exact: true }).click();
+
   await expect(scope.getByLabel('normal Carousel prefix current')).toHaveText('2');
   const oldRoot = await root.elementHandle();
   const active = scope.locator('.slick-slide.slick-active');

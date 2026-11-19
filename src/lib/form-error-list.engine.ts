@@ -62,7 +62,8 @@ export function reconcileFormErrorList(
 
     if (index < 0) {
       merged.push({ ...entry, visible: false });
-    } else {
+    }
+    else {
       merged.push(...current.slice(cursor, index + 1).map((next) => ({ ...next, visible: true })));
       cursor = index + 1;
     }

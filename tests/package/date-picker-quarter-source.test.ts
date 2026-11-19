@@ -18,6 +18,7 @@ it('preserves four independent complete manifests and all456 original whole part
     sourceOnly: true, captures: 4, originalParts: 456, wholeBlobs: 323
   });
   const freeze = JSON.parse(Buffer.from(readQuarterSourceEvidence('protocol-freeze')).toString());
+
   expect(freeze.samples).toEqual(samples);
   expect(freeze.source.version).toBe('6.6.8');
   expect(freeze.source.rcPicker).toBe('1.12.2');
@@ -54,7 +55,10 @@ it('reads every UI/producer/SSR original on demand with complete cursor and raw 
           const value = readQuarterSourceClosed(row.id, closeIndex++, variant);
           closed++;
           expect(value.actionIndex).toBe(index);
-          boundaries.set('closed-' + index, { ['closed-' + index]: value.after1000.owner.producerCount });
+          boundaries.set(
+            'closed-' + index,
+            { ['closed-' + index]: value.after1000.owner.producerCount }
+          );
           expect(value.after1000.owner.callbacks.slice(0, callbacks.length)).toEqual(callbacks);
           callbacks = value.after1000.owner.callbacks;
         }
@@ -167,10 +171,12 @@ it('keeps all measured afterCall variance with identical complete producer rows'
     expect(a.boundaries.settled).toBe(b.boundaries.settled);
   }
   const phases = JSON.parse(Buffer.from(readQuarterSourceEvidence('phase-stability')).toString());
+
   expect(phases.differingPoints).toBe(4);
   expect(phases.variance.map((row: { phase: string }) => row.phase))
     .toEqual(Array(4).fill('afterCall'));
   const selected = JSON.parse(Buffer.from(readQuarterSourceEvidence('selected-variances')).toString());
+
   expect(selected.varianceCount).toBe(0);
 });
 
@@ -180,28 +186,36 @@ it('rejects corrupted compressed bytes, altered hashes and valid parts swapped a
     + original.rawJSONPart.gzipSHA256 + '.json.gz', import.meta.url));
   const changedBytes = Buffer.from(bytes);
   changedBytes[Math.floor(changedBytes.length / 2)] ^= 1;
+
   expect(() => verifyQuarterSourceStoredBytes(original, changedBytes)).toThrow();
   const wrongHash = structuredClone(original);
   wrongHash.rawJSONPart.sha256 = '0'.repeat(64);
+
   expect(() => verifyQuarterSourceStoredBytes(wrongHash, bytes)).toThrow();
   expect(() => verifyQuarterSourcePartBinding(original, 'csr', 'repeat')).toThrow();
   const ownerSwap = readQuarterSourceManifest('csr');
   ownerSwap.cases[0].steps[0] = ownerSwap.cases[1].steps[0];
+
   expect(() => verifyQuarterSourceManifest(ownerSwap)).toThrow();
   const actionSwap = readQuarterSourceManifest('csr');
   actionSwap.cases[0].steps.reverse();
+
   expect(() => verifyQuarterSourceManifest(actionSwap)).toThrow();
   const chunkGap = readQuarterSourceManifest('csr');
   chunkGap.cases[0].producerParts[2].cursor++;
+
   expect(() => verifyQuarterSourceManifest(chunkGap)).toThrow();
   const wrongMethod = readQuarterSourceManifest('ssr');
   wrongMethod.cases[0].method = 'renderToStaticMarkup';
+
   expect(() => verifyQuarterSourceManifest(wrongMethod, 'ssr')).toThrow();
   const header = readQuarterSourceManifest();
   header.sourceProtocol.sha256 = '0'.repeat(64);
+
   expect(() => verifyQuarterSourceManifest(header)).toThrow();
   const count = readQuarterSourceManifest();
   count.actualCounts.producerInvocations--;
+
   expect(() => verifyQuarterSourceManifest(count)).toThrow();
 });
 
@@ -211,33 +225,42 @@ it('rejects lost/reordered producer records, impossible boundaries and changed r
   const original = readQuarterSourceProducerChunk('single-quarter', index);
   const missing = structuredClone(original);
   missing.rows.pop();
+
   expect(() => verifyQuarterSourceProducerChunk(missing, refs[index])).toThrow();
   const swapped = structuredClone(original);
   swapped.rows.reverse();
+
   expect(() => verifyQuarterSourceProducerChunk(swapped, refs[index])).toThrow();
   const boundary = structuredClone(original);
   boundary.boundaries.settled = boundary.next + 1;
+
   expect(() => verifyQuarterSourceProducerChunk(boundary, refs[index])).toThrow();
   const arity = structuredClone(original);
   arity.rows[0].actualArgumentCount++;
+
   expect(() => verifyQuarterSourceProducerChunk(arity, refs[index])).toThrow();
   const label = structuredClone(original);
   Object.assign(label.rows[0], { boundary: 'invented' });
+
   expect(() => verifyQuarterSourceProducerChunk(label, refs[index])).toThrow();
   const returned = structuredClone(original);
   Object.assign(returned.rows[0], { returned: 'false' });
+
   expect(() => verifyQuarterSourceProducerChunk(returned, refs[index])).toThrow();
   const point = readQuarterSourceStep('single-quarter', 3).actual;
   const alias = structuredClone(point);
   alias.owner.callbacks.find(call => call.name === 'calendar' && call.actionIndex === 3)!
     .dates[0].value.identity++;
+
   expect(() => verifyQuarterSourcePoint(alias)).toThrow();
   const hidden = structuredClone(point);
   hidden.owner.callbacks.find(call => call.name === 'calendar' && call.actionIndex === 3)!
     .dates[0].value.temporal.fields[6]++;
+
   expect(() => verifyQuarterSourcePoint(hidden)).toThrow();
   const callbackArity = structuredClone(point);
   callbackArity.owner.callbacks[0].actualArgumentCount++;
+
   expect(() => verifyQuarterSourcePoint(callbackArity)).toThrow();
 });
 
@@ -250,5 +273,6 @@ it('rejects unsupported capture kinds, variants, owners and chunk/action/disposa
   expect(() => readQuarterSourceCleanup('single-quarter', 'other' as 'cleanup')).toThrow();
   const wrong = readQuarterSourceInitial('single-quarter') as QuarterSourcePoint;
   wrong.owner.id = 'range-quarter';
+
   expect(() => verifyQuarterSourcePoint(wrong)).toThrow();
 });

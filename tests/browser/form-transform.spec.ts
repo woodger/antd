@@ -13,7 +13,12 @@ for (const entry of reference.cases) {
       .toHaveText(errors.length ? 'invalid' : 'valid');
     await expect.poll(async () => JSON.parse((await page.getByRole('status', {
       name: 'Transform metadata', exact: true
-    }).textContent())!)).toEqual({ errors, warnings: entry.warnings, store: entry.store, calls: entry.calls });
+    }).textContent())!)).toEqual({
+      errors,
+      warnings: entry.warnings,
+      store: entry.store,
+      calls: entry.calls
+    });
     if (errors.length) {
       await expect(page.getByLabel('Transformed field', { exact: true }))
         .toHaveAttribute('aria-invalid', 'true');
@@ -33,6 +38,7 @@ test('Form transform leaves native FormData, successful submit and reset values 
     .toBe(' abc ');
   await input.fill(' xyz ');
   await page.getByRole('button', { name: 'Reset transformed field', exact: true }).click();
+
   await expect(input).toHaveValue(' abc ');
   await expect(page.locator('.ant-form-item-explain-error')).toHaveCount(0);
 });

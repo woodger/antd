@@ -24,7 +24,8 @@
 
     if (['empty-thumb', 'empty-no-url', 'non-image-url', 'empty-with-origin'].includes(mode)) {
       thumbUrl = '';
-    } else if (['thumb-and-url', 'thumb-only'].includes(mode)) {
+    }
+    else if (['thumb-and-url', 'thumb-only'].includes(mode)) {
       thumbUrl = thumb;
     }
 

@@ -36,9 +36,11 @@ for (const entry of reference.cases) {
       .find(sample => sample.id === entry.id)!;
     await page.goto('/?fixture=popup-width');
     await page.getByRole('combobox', { name: 'Popup width sample', exact: true }).selectOption(entry.id);
+
     await expect(page.locator('[data-width-case]')).toHaveAttribute('data-width-bound', 'true');
     await preparePopupWidth(page);
     const initial = await settle(page);
+
     expect(initial.view).toEqual(entry.initial.view);
     const identity = await page.evaluateHandle(() => {
       const refs: { root?: HTMLElement; editor?: HTMLInputElement; control?: Record<string, unknown>;
@@ -67,7 +69,11 @@ for (const entry of reference.cases) {
         const action = step.action as PopupWidthAction;
         await actPopupWidth(page, action);
         const actual = await settle(page);
-        expect(actual.view, JSON.stringify(action)).toEqual(popupWidthNativeView(step.view, entry.id, action));
+        expect(actual.view, JSON.stringify(action)).toEqual(popupWidthNativeView(
+          step.view,
+          entry.id,
+          action
+        ));
         expect(actual.view.leaks).toEqual([]);
         expect(await bindings()).toEqual(stableBindings);
         if (actual.view.popup) {
@@ -104,7 +110,8 @@ for (const entry of reference.cases) {
         expect(initial.raw.methods).toEqual({ focus: true, blur: true, scrollTo: true });
         expect(initial.raw.publicRoot).toBeNull();
         expect(initial.raw.publicEditor).toBeNull();
-      } else {
+      }
+      else {
         expect(initial.raw.methods.focus).toBe(true);
         expect(initial.raw.methods.blur).toBe(true);
         expect(initial.raw.publicRoot?.sameRoot).toBe(true);

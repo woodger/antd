@@ -94,8 +94,10 @@ test('FloatButton bottom menu closes toward its source offset with a custom glob
     .selectOption('menu-bottom');
   const scope = page.locator('[data-float-prefix-scope="normal"]');
   const list = scope.locator('.fixture-float-list');
+
   await expect.poll(() => list.evaluate(node => node.getAnimations().length)).toBe(0);
   await scope.getByRole('button', { name: 'normal floating menu', exact: true }).click();
+
   await expect.poll(() => list.evaluate(node => node.getAnimations().length)).toBe(1);
   const offset = await list.evaluate(node => {
     const animation = node.getAnimations()[0];

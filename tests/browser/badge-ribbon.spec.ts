@@ -161,8 +161,10 @@ test('BadgeRibbon keeps text and body controls accessible through theme changes'
     root)).toBe(true);
 
   await page.keyboard.press('Tab');
+
   await expect(page.getByRole('button', { name: 'Ribbon text counter', exact: true })).toBeFocused();
   await page.keyboard.press('Space');
+
   await expect(page.getByRole('button', { name: 'Ribbon text counter', exact: true })).toHaveText('1');
 });
 

@@ -15,9 +15,11 @@ describe('Form setFields public package', () => {
       archiveSha256: registry.upstream.archiveSha256
     });
     const stale = reference.observations.find(({ id }) => id === 'observation-stale-value-complete')!;
+
     expect(stale.values.name).toBe('New value');
     expect(stale.meta[0].errors).toEqual(['Async rejected']);
     const current = reference.observations.find(({ id }) => id === 'observation-current-value-complete')!;
+
     expect(current.values.name).toBe('New value');
     expect(current.meta[0].errors).toEqual([]);
     expect(reference.observations.find(({ id }) => id === 'observation-undefined-flags')!.meta[0].touched)
@@ -41,10 +43,13 @@ describe('Form setFields public package', () => {
     expect(form.getFieldError('unbound')).toEqual([]);
     expect(form.isFieldTouched('unbound')).toBe(false);
     await form.validateFields({ validateOnly: true });
+
     expect(form.getFieldError('name')).toEqual(['Server']);
     await form.validateFields();
+
     expect(form.getFieldError('name')).toEqual([]);
     form.resetFields();
+
     expect(form.values.name).toBe('Anna');
     expect(form.isFieldsTouched()).toBe(false);
   });
@@ -87,7 +92,10 @@ describe('Form setFields public package', () => {
     form.setFields([{ name: 'name', value: undefined, touched: undefined, validating: undefined }]);
     form.setFields([{ name: 'name', validated: false }]);
     const collected: unknown[] = [];
-    form.getFieldsValue({ filter: (meta) => { collected.push(meta); return true; } });
+    form.getFieldsValue({ filter: (meta) => {
+      collected.push(meta);
+      return true;
+    } });
 
     expect(Object.hasOwn(form.values, 'name')).toBe(true);
     expect(form.getFieldValue('name')).toBeUndefined();

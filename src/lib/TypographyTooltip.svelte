@@ -196,7 +196,8 @@
       if (actionOverrides) {
         if (value) {
           if (actions.show.has('hover') && visible) request(true, getTooltipDelay(enterDelay));
-        } else if (actions.hide.has('hover')) request(false, getTooltipDelay(leaveDelay));
+        }
+        else if (actions.hide.has('hover')) request(false, getTooltipDelay(leaveDelay));
         return;
       }
       if (sourceTrigger && !supports('hover')) return;

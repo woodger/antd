@@ -32,7 +32,8 @@ export function formTransformRules(
   else if (sample.kind === 'warning') {
     first.pattern = /^yes$/;
     first.warningOnly = true;
-  } else first.validator = async (value) => {
+  }
+  else first.validator = async (value) => {
     record(['first-validator', value]);
     if (value !== sample.expected) throw Error('First mismatch');
   };

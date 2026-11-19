@@ -45,6 +45,7 @@ describe('Form internal field metadata events', () => {
     getFormHooks(form)!.registerField({ name: 'name', onMetaChange });
 
     await form.validateFields();
+
     expect(onMetaChange).not.toHaveBeenCalled();
     form.setFields([{ name: 'name', errors: [] }]);
 
@@ -72,13 +73,18 @@ describe('Form internal field metadata events', () => {
       validator: () => new Promise<string | undefined>(resolve => { release = resolve; })
     }] } });
     const events: (FormFieldMeta | undefined)[] = [];
-    getFormHooks(form)!.registerField({ name: 'name', onMetaChange: meta => { events.push(meta); } });
+    getFormHooks(form)!.registerField({ name: 'name', onMetaChange: meta => {
+      events.push(meta);
+    } });
 
     const pending = form.validateFields();
+
     expect(events.at(-1)?.validating).toBe(true);
     form.resetFields(['name']);
+
     expect(events.at(-1)).toMatchObject({ validating: false, touched: false, errors: [] });
     release('Stale error');
+
     await expect(pending).rejects.toMatchObject({ outOfDate: true });
 
     expect(events.some(meta => meta?.errors.includes('Stale error'))).toBe(false);

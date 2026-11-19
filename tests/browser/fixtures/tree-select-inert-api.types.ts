@@ -26,10 +26,16 @@ export function treeSelectInertCustomProps(
   return {
     value: 1, treeData: [{ code: 1, caption: 'One' }],
     direction: 'rtl', dir: 'auto', popupStyle: '', choiceTransitionName: '',
-    onPopupVisibleChange(open) { const visible: boolean = open; void visible; },
+    onPopupVisibleChange(open) {
+      const visible: boolean = open;
+      void visible;
+    },
     components: { root: { render: root, props: { type: 'button', dir: 'ltr' } },
       input: { render: input, props: { rows: 2, dir: 'rtl' } } },
-    onChange(value) { const selected: number = value; void selected; },
+    onChange(value) {
+      const selected: number = value;
+      void selected;
+    },
     styles({ props }) {
       const direction: 'ltr' | 'rtl' | undefined = props.direction;
       const popup: string | undefined = props.popupStyle;
@@ -37,7 +43,12 @@ export function treeSelectInertCustomProps(
       const callback: ((open: boolean) => void) | undefined = props.onPopupVisibleChange;
       const root: HTMLButtonElement | HTMLDivElement | undefined = props.nativeElement;
       const editor: HTMLTextAreaElement | HTMLInputElement | undefined = props.inputElement;
-      void direction; void popup; void choice; void callback; void root; void editor;
+      void direction;
+      void popup;
+      void choice;
+      void callback;
+      void root;
+      void editor;
       return { popup: { root: 'outline:1px solid red' } };
     }
   } satisfies TreeSelectProps<number, Entry, HTMLButtonElement, HTMLTextAreaElement>;

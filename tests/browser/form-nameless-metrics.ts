@@ -5,7 +5,10 @@ export function formNamelessMetrics() {
   const state = JSON.parse(document.querySelector('output[aria-label="Nameless snapshot"]')!.textContent!);
 
   return {
-    label: { for: label.getAttribute('for'), required: label.classList.contains('ant-form-item-required') },
+    label: {
+      for: label.getAttribute('for'),
+      required: label.classList.contains('ant-form-item-required')
+    },
     input: {
       id: input.getAttribute('id'), name: input.getAttribute('name'), value: input.value,
       required: input.required, ariaRequired: input.getAttribute('aria-required'),

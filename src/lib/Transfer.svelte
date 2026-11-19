@@ -187,7 +187,8 @@
       const range = transferSelectRange(holder, keys, anchors[direction], index);
       next = range.selected;
       anchors[direction] = range.anchor;
-    } else {
+    }
+    else {
       const single = new Set(holder);
       single.delete(key);
       anchors[direction] = null;

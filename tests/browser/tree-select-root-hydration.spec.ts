@@ -10,7 +10,10 @@ let cache: string;
 test.beforeAll(async () => {
   cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
     'tree-select-root-hydration-'));
-  server = await createServer({ configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+  server = await createServer({ configFile: fileURLToPath(new URL(
+    './vite.config.ts',
+    import.meta.url
+  )),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
     appType: 'custom', cacheDir: cache });
 });
@@ -32,9 +35,16 @@ for (const id of ['own-button', 'own-input', 'composite', 'default-open']) {
     }, { head, body });
     const outside = page.getByRole('button', { name: 'Outside root', exact: true });
     await outside.focus();
-    await page.addScriptTag({ type: 'module', url: `/tree-select-root-hydration.client.ts?sample=${id}` });
+    await page.addScriptTag({
+      type: 'module',
+      url: `/tree-select-root-hydration.client.ts?sample=${id}`
+    });
     await page.waitForFunction(() => window.treeSelectRootHydration);
-    await expect(page.locator('[data-tree-select-root-host]')).toHaveAttribute('data-root-ready', 'true');
+
+    await expect(page.locator('[data-tree-select-root-host]')).toHaveAttribute(
+      'data-root-ready',
+      'true'
+    );
     await expect(outside).toBeFocused();
     expect(await page.evaluate(() => {
       const field = document.querySelector('[data-root-probe]');
@@ -50,9 +60,11 @@ for (const id of ['own-button', 'own-input', 'composite', 'default-open']) {
       await expect(page.locator('[data-root-events]')).not.toContainText('search');
     }
     await page.getByRole('button', { name: 'Root ref focus', exact: true }).dispatchEvent('click');
+
     await expect(field).toBeFocused();
     await expect(page.locator('[data-root-native-editor]')).toHaveText('');
     await page.evaluate(() => window.treeSelectRootHydration!.dispose());
+
     await expect(page.locator('[popover]')).toHaveCount(0);
   });
 }

@@ -75,26 +75,33 @@ test('Token separators update after mount and preserve native validation, reset,
     await page.getByRole('checkbox', { name: 'Native token constraints', exact: true }).check();
     const input = page.getByRole('combobox', { name: 'Tags', exact: true });
     const form = page.getByRole('form', { name: 'Tags native form', exact: true });
+
     expect(await form.evaluate(node => (node as HTMLFormElement).checkValidity())).toBe(false);
     await input.fill('a,b');
+
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('tags')))
       .toEqual(['a', 'b']);
     expect(await form.evaluate(node => (node as HTMLFormElement).checkValidity())).toBe(true);
     await page.getByRole('checkbox', { name: 'Use semicolon tokens', exact: true }).check();
     await input.fill('c,d');
+
     await expect(page.getByRole('status', { name: 'Tags values', exact: true }))
       .toHaveText('["a","b"]');
     await input.fill('c;d');
+
     await expect(page.getByRole('status', { name: 'Tags values', exact: true }))
       .toHaveText('["a","b","c","d"]');
     await page.getByRole('button', { name: 'Reset tags', exact: true }).click();
+
     await expect(input).toHaveValue('');
     await expect(page.getByRole('status', { name: 'Tags values', exact: true })).toHaveText('[]');
     await page.getByRole('checkbox', { name: 'Right to left', exact: true }).check();
     await input.fill('a');
+
     await expect(physicalSelectPopup(page, 'Tags'))
       .toHaveCSS('direction', 'rtl');
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).check();
+
     await expect(input).toBeDisabled();
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('tags')))
       .toEqual([]);
@@ -108,6 +115,7 @@ test('Token input preserves native event receivers and respects cancelled paste/
     const input = page.getByRole('combobox', { name: 'Tags', exact: true });
     await page.getByRole('checkbox', { name: 'Cancel token paste', exact: true }).check();
     await paste(input, 'a\r\nb');
+
     await expect(input).toHaveValue('');
     await page.getByRole('combobox', { name: 'Token sample', exact: true })
       .selectOption('compose-tags');

@@ -17,7 +17,10 @@ async function apply(page: Page, action: FeedbackAction, index: number) {
   if (action === 'focus') await input.focus();
   else if (action === 'open') await input.click();
   else if (action === 'search') await input.fill('Beta');
-  else if (action === 'outside') await page.getByRole('button', { name: 'Outside feedback', exact: true }).click();
+  else if (action === 'outside') await page.getByRole(
+    'button',
+    { name: 'Outside feedback', exact: true }
+  ).click();
   else if (action === 'clear') await page.locator('[data-feedback-autocomplete-control]').getByRole('button').first().click();
   else {
     await page.getByRole('combobox', { name: 'Feedback action', exact: true }).selectOption(String(index));
@@ -28,6 +31,7 @@ for (const entry of reference.cases) {
   test(`AutoComplete Form feedback matches Source for ${entry.id}`, async ({ page }) => {
     await mount(page, entry.id);
     const read = () => page.evaluate(readFormFeedbackAutoComplete);
+
     await expect.poll(read).toEqual(entry.initial);
     const input = page.getByRole('combobox', { name: 'Feedback completion', exact: true });
     let previous = await input.elementHandle();
@@ -56,10 +60,13 @@ test('AutoComplete preserves focused editors during feedback content and status 
 test('AutoComplete clears both refs and ignores pending feedback completion after unmount', async ({ page }) => {
   await mount(page, 'async-success');
   await apply(page, 'validate', 0);
+
   await expect(page.locator('[data-form-status-read="control"]')).toContainText('validating');
   await page.getByRole('button', { name: 'Unmount feedback', exact: true }).dispatchEvent('click');
+
   await expect(page.locator('[data-feedback-refs]')).toHaveAttribute('data-feedback-refs', 'false');
   await apply(page, 'resolve', 1);
+
   await expect(page.getByRole('combobox', { name: 'Feedback completion', exact: true })).toHaveCount(0);
   await expect(page.locator('[class*="-item-feedback-icon"]')).toHaveCount(0);
 });
@@ -73,6 +80,7 @@ for (const source of clearReference.cases) {
       .getByRole('button', { name: 'Очистить', exact: true }).dispatchEvent('click');
     await expect(page.locator('[data-feedback-completion-events]')).toHaveText(JSON.stringify(source.events));
     const input = page.getByRole('combobox', { name: 'Feedback completion', exact: true });
+
     await expect(input).toHaveAttribute('aria-expanded', source.open);
     await expect(input).toHaveValue(source.value);
   });

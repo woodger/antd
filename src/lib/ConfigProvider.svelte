@@ -284,7 +284,12 @@
     const prefix = prefixCls || parent.getPrefixCls();
     return suffix ? `${prefix}-${suffix}` : prefix;
   }
-  const designTokens = provideDesignTokens(() => theme, themeId, () => element, () => getPrefixCls());
+  const designTokens = provideDesignTokens(
+    () => theme,
+    themeId,
+    () => element,
+    () => getPrefixCls()
+  );
   let gridMediaScope = $derived(designTokens.enabled
     ? getGridMediaScope(designTokens.state.token) : undefined);
   let parentGridMediaScope = $derived(parentDesignTokens.enabled

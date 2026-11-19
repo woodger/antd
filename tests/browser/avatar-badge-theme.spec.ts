@@ -3,6 +3,7 @@ import reference from './fixtures/ant-design-avatar-badge-metrics.json' with { t
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=avatar-badge-theme');
+
   await expect(page.getByRole('heading', { name: 'Source Avatar and Badge tokens', exact: true }))
     .toBeVisible();
 });
@@ -44,6 +45,7 @@ test('overflow panels reset Avatar aliases while hidden avatars retain their own
 
   const popup = group.getByRole('dialog');
   const expected = reference.cases.find(sample => sample.name === 'avatar-aliases')!.metrics.popover;
+
   await expect(popup).toHaveCSS('font-size', expected.fontSize);
   await expect(popup).toHaveCSS('color', expected.color);
   await expect(popup.locator('.ant-popover-container'))
@@ -63,6 +65,7 @@ test('group tokens reach overflow avatars and the hidden list without losing key
   await page.keyboard.press('Enter');
 
   const popup = group.getByRole('dialog');
+
   await expect(popup).toBeVisible();
   await expect(popup.locator('.ant-avatar')).toHaveCount(2);
   await expect(popup.locator('.ant-avatar').first()).toHaveCSS('width', '48px');
@@ -113,6 +116,7 @@ test('theme updates refit text while preserving Avatar node identity and its acc
 
 test('nested providers can reset component defaults and keep the outer theme intact', async ({ page }) => {
   await page.getByLabel('Avatar Badge token preset', { exact: true }).selectOption('own-avatar');
+
   await expect(page.locator('#nested-themed-avatar')).toHaveCSS('width', '48px');
   await page.getByLabel('Inherit child Avatar Badge tokens', { exact: true }).uncheck();
 
@@ -128,13 +132,20 @@ test('custom prefixes and hashing settings reach both roots and group members', 
     await expect(page.locator('#' + id)).toHaveClass(/avatar-badge-source-scope/);
     await expect(page.locator('#' + id)).not.toHaveClass(/css-dev-only/);
   }
-  await expect(page.locator('#themed-avatar-group > .ant-avatar').first()).toHaveCSS('width', '47px');
-  await expect(page.locator('#themed-avatar')).toHaveCSS('--display-2-avatar-container-size', '47px');
+  await expect(page.locator('#themed-avatar-group > .ant-avatar').first()).toHaveCSS(
+    'width',
+    '47px'
+  );
+  await expect(page.locator('#themed-avatar')).toHaveCSS(
+    '--display-2-avatar-container-size',
+    '47px'
+  );
 });
 
 test('removing source settings and unmounting removes variables and the provider scope', async ({ page }) => {
   await page.getByLabel('Avatar Badge token preset', { exact: true }).selectOption('own-avatar');
   const scope = page.locator('head style[data-ant-svelte-theme="avatar-badge-source-scope"]');
+
   await expect(scope).toHaveCount(1);
 
   await page.getByLabel('Apply source Avatar Badge tokens', { exact: true }).uncheck();
@@ -143,6 +154,7 @@ test('removing source settings and unmounting removes variables and the provider
   await expect(page.locator('#themed-avatar')).not.toHaveAttribute('style');
   await expect(scope).toHaveCount(0);
   await page.getByLabel('Apply source Avatar Badge tokens', { exact: true }).check();
+
   await expect(page.locator('#themed-avatar')).toHaveCSS('width', '48px');
   await page.getByLabel('Mount themed avatars and badges', { exact: true }).uncheck();
 

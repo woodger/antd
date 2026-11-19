@@ -248,7 +248,8 @@
         delta = offset.format(origin[0] + delta) - origin[0];
         cache = origin.map(entry => entry + delta);
         publish(cache);
-      } else {
+      }
+      else {
         const working = [...cache];
         working[index] = origin[index];
         const next = offset.offset(working, ratio * (maximum - minimum), index, 'dist');
@@ -284,14 +285,16 @@
       && (!settings.maxCount || raw.length < settings.maxCount)) {
       next.splice(before + 1, 0, point);
       focus = before + 1;
-    } else next[index] = point;
+    }
+    else next[index] = point;
     if (!raw.length) next.push(point);
     publish(next, focus);
     if (event) {
       (nativeElement?.ownerDocument.activeElement as HTMLElement | null)?.blur?.();
       focusIndex(focus);
       start(event, focus, next, false, removeCount);
-    } else complete(focus);
+    }
+    else complete(focus);
   }
 
   function handleRootPointer(event: PointerEvent) {
@@ -334,7 +337,8 @@
       const next = offset.offset(raw, change, index);
       publish(next.values, index);
       focusIndex(raw[index] === next.value ? index : raw.indexOf(next.value));
-    } else if ((event.key === 'Delete' || event.key === 'Backspace')
+    }
+    else if ((event.key === 'Delete' || event.key === 'Backspace')
       && editable && raw.length > settings.minCount) {
       const next = raw.filter((_, item) => item !== index);
       publish(next);

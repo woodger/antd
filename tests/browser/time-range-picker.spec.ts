@@ -15,12 +15,14 @@ const initial = '2024-09-15T10:23:44.567Z,2024-09-15T17:45:56.789Z';
 test.beforeEach(async ({ page }) => {
   await page.clock.install({ time: new Date('2024-09-15T12:34:56.789Z') });
   await page.goto('/?fixture=time-range-picker');
+
   await expect(start(page)).toHaveValue('10:23:44');
   await expect(end(page)).toHaveValue('17:45:56');
 });
 
 test('TimeRangePicker opens one time-only panel with separate labels and source range config', async ({ page }) => {
   const root = page.locator('.fixture-time-range');
+
   await expect(start(page)).toHaveAttribute('placeholder', 'Время начала');
   await expect(end(page)).toHaveAttribute('placeholder', 'Время окончания');
   await expect(control(page, 'Interval refs')).toHaveText('DIV,INPUT,INPUT');
@@ -209,6 +211,7 @@ test('TimeRangePicker without confirmation still completes both fields through T
 
   await expect(owner(page)).toHaveText(initial);
   await start(page).press('Tab');
+
   await expect(end(page)).toBeFocused();
   await end(page).fill('18:19:20');
   await end(page).press('Tab');
@@ -393,6 +396,7 @@ test('TimeRangePicker previews disabled units without callbacks and supports dis
   await expect(unit(page, 'hour 11')).toBeDisabled();
   await expect(events(page)).toHaveText('open:true');
   await page.mouse.move(1, 1);
+
   await expect(start(page)).toHaveValue('10:23:44');
   await start(page).press('Escape');
   await control(page, 'Preview interval hover').uncheck();
@@ -414,6 +418,7 @@ test('TimeRangePicker presets submit immediately and snippets keep mode and rang
   await expect(popup(page).locator('.custom-interval-cell').first())
     .toHaveAttribute('data-range', 'start');
   await unit(page, 'ОК').click();
+
   await expect(popup(page).locator('.custom-interval-cell').first())
     .toHaveAttribute('data-range', 'end');
   await unit(page, 'Afternoon interval').click();
@@ -469,8 +474,10 @@ test('TimeRangePicker resolves a single semantic layer and supports nested range
 
 test('TimeRangePicker sizes, refs and native FormData preserve two display strings', async ({ page }) => {
   await control(page, 'Interval size').selectOption('small');
+
   await expect(page.locator('.fixture-time-range')).toHaveCSS('height', '24px');
   await control(page, 'Interval size').selectOption('large');
+
   await expect(page.locator('.fixture-time-range')).toHaveCSS('height', '40px');
   await button(page, 'Focus interval ref').click();
 
@@ -522,6 +529,7 @@ test('TimeRangePicker Form validates null, submits Dayjs pairs and resets both f
   const form = page.locator('.interval-form');
   const first = form.getByRole('combobox').nth(0);
   const last = form.getByRole('combobox').nth(1);
+
   await expect(first).toBeFocused();
   await first.fill('08:09:10');
   await first.press('Enter');
@@ -634,6 +642,7 @@ for (const rtl of [false, true]) {
     if (rtl) await control(page, 'Right to left').check();
     await end(page).click();
     const container = popup(page).locator('.ant-picker-panel-container');
+
     await expect.poll(() => container.evaluate(element =>
       parseFloat(getComputedStyle(element).marginInlineStart))).toBeGreaterThan(0);
     await expect.poll(() => popup(page).locator('.ant-picker-range-arrow').evaluate(element =>
@@ -643,11 +652,13 @@ for (const rtl of [false, true]) {
     const surface = await popup(page).boundingBox();
     const panel = await container.boundingBox();
     const arrow = await popup(page).locator('.ant-picker-range-arrow').boundingBox();
+
     expect(surface!.width).toBeGreaterThanOrEqual(root!.width - 1);
     expect(arrow!.x + arrow!.width / 2).toBeGreaterThan(panel!.x);
     expect(arrow!.x + arrow!.width / 2).toBeLessThan(panel!.x + panel!.width);
     const hour = await popup(page).locator('[data-type="hour"]').boundingBox();
     const minute = await popup(page).locator('[data-type="minute"]').boundingBox();
+
     expect(hour!.x).toBeLessThan(minute!.x);
   });
 }
@@ -663,10 +674,12 @@ test('TimeRangePicker supports a constrained RTL viewport with every time column
   await expect(popup(page).locator('.ant-picker-time-panel-column')).toHaveCount(5);
   const root = await page.locator('.fixture-time-range').boundingBox();
   const surface = await popup(page).boundingBox();
+
   expect(root!.x + root!.width).toBeLessThanOrEqual(320);
   expect(surface!.x).toBeGreaterThanOrEqual(0);
   expect(surface!.x + surface!.width).toBeLessThanOrEqual(320);
   await unit(page, 'ОК').click();
+
   await expect(start(page)).toBeFocused();
 });
 

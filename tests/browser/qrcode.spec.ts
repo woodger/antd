@@ -68,6 +68,7 @@ async function expectMatchingModules(page: Page) {
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=qrcode');
   const ratio = await page.evaluate(() => window.devicePixelRatio || 1);
+
   await expect(canvas(page)).toHaveAttribute('width', String(160 * ratio));
   await expect(control(page, 'QRCode ref')).toHaveText('DIV');
 });
@@ -174,6 +175,7 @@ test(
   'QRCode localizes status and refresh, inherits partial locale and preserves native action ordering',
   async ({ page }) => {
     await select(page, 'QRCode status').selectOption('expired');
+
     await expect(root(page).locator('.ant-qrcode-expired')).toHaveText('QR-код устарел');
     await root(page).getByRole('button', { name: 'Обновить', exact: true }).click();
 
@@ -266,6 +268,7 @@ test(
     await select(page, 'QRCode status').selectOption('expired');
 
     const cover = root(page).locator('.ant-qrcode-cover');
+
     await expect.poll(() => cover.evaluate(node => getComputedStyle(node).backgroundColor))
       .toMatch(/(?:color\(srgb 0\.07843|rgba\(20, 20, 20, 0\.96)/);
   }
@@ -331,6 +334,7 @@ test(
 test('QRCode retains unexcavated canvas modules when an icon cannot decode', async ({ page }) => {
   const before = await png(page);
   await select(page, 'QRCode icon').selectOption('broken');
+
   await expect.poll(() => root(page).locator('img').evaluate(
     (image: HTMLImageElement) => image.complete && image.naturalWidth === 0
   )).toBe(true);
@@ -349,6 +353,7 @@ test(
 
     await expect(canvas(page)).toHaveAttribute('width', '160');
     await expectMatchingModules(page);
+
     await expect(control(page, 'QRCode ref')).toHaveText('DIV');
     await control(page, 'Mount QRCode').uncheck();
 
@@ -361,6 +366,7 @@ test(
   'QRCode ignores a detached image load after unmount without repainting the old canvas',
   async ({ page }) => {
     await select(page, 'QRCode icon').selectOption('data');
+
     await expect.poll(() => centerPixel(page)).toEqual([255, 0, 0, 255]);
     const nodes = await page.evaluateHandle(() => ({
       canvas: document.querySelector<HTMLCanvasElement>('.fixture-qrcode canvas')!,

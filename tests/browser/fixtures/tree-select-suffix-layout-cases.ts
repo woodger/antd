@@ -24,11 +24,55 @@ export const treeSelectSuffixLayoutSamples: readonly TreeSelectSuffixLayoutSampl
   ...kinds.flatMap(kind => (['ltr', 'rtl'] as const).map(direction => ({
     id: `${kind}-${direction}`, kind, direction, width: 200, prefixWidth: 64, restWidth: 64, count: 4
   }))),
-  { id: 'fragment-small', kind: 'fragment', direction: 'ltr', size: 'small', width: 200, prefixWidth: 64, restWidth: 64, count: 4 },
-  { id: 'fragment-large', kind: 'fragment', direction: 'ltr', size: 'large', width: 200, prefixWidth: 64, restWidth: 64, count: 4 },
-  { id: 'default-tags-ltr', kind: 'input', direction: 'ltr', customTags: false, width: 200, prefixWidth: 64, restWidth: 64, count: 4 },
-  { id: 'default-tags-rtl', kind: 'wrapped-dom-ref', direction: 'rtl', customTags: false, width: 200, prefixWidth: 64, restWidth: 64, count: 4 },
-  { id: 'fragment-boundary', kind: 'fragment', direction: 'rtl', width: 9, prefixWidth: 64, restWidth: 64, count: 4 }
+  {
+    id: 'fragment-small',
+    kind: 'fragment',
+    direction: 'ltr',
+    size: 'small',
+    width: 200,
+    prefixWidth: 64,
+    restWidth: 64,
+    count: 4
+  },
+  {
+    id: 'fragment-large',
+    kind: 'fragment',
+    direction: 'ltr',
+    size: 'large',
+    width: 200,
+    prefixWidth: 64,
+    restWidth: 64,
+    count: 4
+  },
+  {
+    id: 'default-tags-ltr',
+    kind: 'input',
+    direction: 'ltr',
+    customTags: false,
+    width: 200,
+    prefixWidth: 64,
+    restWidth: 64,
+    count: 4
+  },
+  {
+    id: 'default-tags-rtl',
+    kind: 'wrapped-dom-ref',
+    direction: 'rtl',
+    customTags: false,
+    width: 200,
+    prefixWidth: 64,
+    restWidth: 64,
+    count: 4
+  },
+  {
+    id: 'fragment-boundary',
+    kind: 'fragment',
+    direction: 'rtl',
+    width: 9,
+    prefixWidth: 64,
+    restWidth: 64,
+    count: 4
+  }
 ];
 export function treeSelectSuffixLayoutActions(sample: TreeSelectSuffixLayoutSample): readonly TreeSelectSuffixLayoutAction[] {
   return [
@@ -45,7 +89,10 @@ export function treeSelectSuffixLayoutActions(sample: TreeSelectSuffixLayoutSamp
     ...(sample.kind === 'fragment' || sample.kind === 'wrapped-dom-ref' || sample.kind === 'composite-ref'
       ? [{ type: 'prefix-resize' as const, width: 96 }] : []),
     ...(sample.id === 'fragment-boundary' ? [
-      { type: 'resize' as const, width: 8 }, { type: 'resize' as const, width: 10 }, { type: 'resize' as const, width: 200 }
+      { type: 'resize' as const, width: 8 }, { type: 'resize' as const, width: 10 }, {
+        type: 'resize' as const,
+        width: 200
+      }
     ] : []),
     { type: 'value', count: 0 },
     { type: 'value', count: 2 },

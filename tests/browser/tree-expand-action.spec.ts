@@ -35,7 +35,8 @@ for (const [index, entry] of cases.entries()) {
       await page.clock.runFor(100);
       await target.dispatchEvent('dblclick', { bubbles: true, detail: 2 });
       await page.clock.runFor(100);
-    } else if (sample.action === 'doubleClick') await target.dblclick(options);
+    }
+    else if (sample.action === 'doubleClick') await target.dblclick(options);
     else await target.click(options);
 
     await expect.poll(() => page.evaluate(readTreeExpandAction, prefix)).toEqual(entry.result);

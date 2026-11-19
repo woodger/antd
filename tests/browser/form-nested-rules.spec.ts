@@ -24,7 +24,8 @@ for (const entry of reference.cases) {
     if (expected.errors.length) {
       await expect(input).toHaveAttribute('aria-invalid', 'true');
       await expect(input).toHaveAccessibleDescription(expected.errors.join(' '));
-    } else if (expected.warnings.length) {
+    }
+    else if (expected.warnings.length) {
       await expect(input).not.toHaveAttribute('aria-invalid');
       await expect(input).toHaveAccessibleDescription(expected.warnings.join(' '));
     }

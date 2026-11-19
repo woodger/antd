@@ -63,7 +63,10 @@ export function nestedRule(
   const { fields, defaultField, validator, transform, ...rest } = desc;
   const result: ValidationRule = { ...rest, type: desc.type as ValidationRuleType | undefined };
   if (fields) result.fields = Object.fromEntries(Object.entries(fields).flatMap(([key, rule]) =>
-    rule === undefined ? [] : [[key, Array.isArray(rule) ? rule.map(child => nestedRule(child, controller))
+    rule === undefined ? [] : [[key, Array.isArray(rule) ? rule.map(child => nestedRule(
+      child,
+      controller
+    ))
       : nestedRule(rule as NestedRuleDescriptor, controller)]]
   ));
   if (defaultField) result.defaultField = nestedRule(defaultField, controller);

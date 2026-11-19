@@ -55,7 +55,10 @@ export function pickerMaskIndexAt(spec: PickerMaskSpec, anchor: number): number 
   for (const [index, cell] of spec.segments.entries()) {
     if (anchor >= cell.start && anchor <= cell.end) return index;
     const next = Math.min(Math.abs(anchor - cell.start), Math.abs(anchor - cell.end));
-    if (next < distance) { distance = next; selected = index; }
+    if (next < distance) {
+      distance = next;
+      selected = index;
+    }
   }
   return selected;
 }
@@ -85,17 +88,38 @@ export function editPickerMask(spec: PickerMaskSpec, state: PickerMaskState,
     return String(first + (last - first + 1 + current + amount - first) % (last - first + 1));
   };
   switch (key) {
-    case 'Backspace': case 'Delete': nextCache = ''; fill = token; break;
-    case 'ArrowLeft': nextCache = ''; move(-1); break;
-    case 'ArrowRight': nextCache = ''; move(1); break;
-    case 'ArrowUp': nextCache = ''; fill = offset(1); break;
-    case 'ArrowDown': nextCache = ''; fill = offset(-1); break;
+    case 'Backspace': case 'Delete':
+      nextCache = '';
+      fill = token;
+      break;
+    case 'ArrowLeft':
+      nextCache = '';
+      move(-1);
+      break;
+    case 'ArrowRight':
+      nextCache = '';
+      move(1);
+      break;
+    case 'ArrowUp':
+      nextCache = '';
+      fill = offset(1);
+      break;
+    case 'ArrowDown':
+      nextCache = '';
+      fill = offset(-1);
+      break;
     default:
-      if (!Number.isNaN(Number(key))) { nextCache = state.cache + key; fill = nextCache; }
+      if (!Number.isNaN(Number(key))) {
+        nextCache = state.cache + key;
+        fill = nextCache;
+      }
   }
   if (nextCache !== null) {
     cache = nextCache;
-    if (nextCache.length >= size) { move(1); cache = ''; }
+    if (nextCache.length >= size) {
+      move(1);
+      cache = '';
+    }
   }
   if (fill !== null) text = (text.slice(0, start) + fill.padStart(size, '0') + text.slice(end))
     .slice(0, spec.format.length);

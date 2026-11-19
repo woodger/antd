@@ -25,7 +25,10 @@ describe('Menu local/shared prefixes', () => {
 
   it('renders local items, selection and canonical token markers without leaking prefix or leading text', () => {
     const props = {
-      prefixCls: 'navigation', defaultSelectedKeys: ['normal'], items: [{ key: 'normal', label: 'Normal' }]
+      prefixCls: 'navigation', defaultSelectedKeys: ['normal'], items: [{
+        key: 'normal',
+        label: 'Normal'
+      }]
     } satisfies MenuProps;
     const rendered = render(Menu, { props });
     const body = rendered.body;

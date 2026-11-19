@@ -39,12 +39,27 @@ export const treeSelectVirtualSamples: readonly TreeSelectVirtualSample[] = [
   { id: 'local-virtual-off', props: { virtual: false }, actions: positions.slice(0, 2) },
   { id: 'provider-virtual-off', provider: { virtual: false } },
   { id: 'local-virtual-on', provider: { virtual: false }, props: { virtual: true } },
-  { id: 'width-off', wide: true, props: { popupMatchSelectWidth: false }, actions: positions.slice(0, 2) },
+  {
+    id: 'width-off',
+    wide: true,
+    props: { popupMatchSelectWidth: false },
+    actions: positions.slice(0, 2)
+  },
   { id: 'provider-width-off', provider: { popupMatchSelectWidth: false } },
-  { id: 'local-width-on', wide: true, provider: { popupMatchSelectWidth: false }, props: { popupMatchSelectWidth: true } },
+  {
+    id: 'local-width-on',
+    wide: true,
+    provider: { popupMatchSelectWidth: false },
+    props: { popupMatchSelectWidth: true }
+  },
   { id: 'width-below-anchor', wide: true, props: { popupMatchSelectWidth: 140 } },
   { id: 'provider-width-number', wide: true, provider: { popupMatchSelectWidth: 300 } },
-  { id: 'local-width-overrides-number', provider: { popupMatchSelectWidth: 300 }, wide: true, props: { popupMatchSelectWidth: true } },
+  {
+    id: 'local-width-overrides-number',
+    provider: { popupMatchSelectWidth: 300 },
+    wide: true,
+    props: { popupMatchSelectWidth: true }
+  },
   { id: 'zero-estimate', props: { listItemHeight: 0 }, actions: positions.slice(0, 2) },
   { id: 'zero-height', props: { listHeight: 0 }, actions: positions.slice(0, 2) },
   { id: 'theme-estimate', tokens: { controlHeightSM: 30, paddingXXS: 6 } },
@@ -60,7 +75,12 @@ export const treeSelectVirtualSamples: readonly TreeSelectVirtualSample[] = [
     { scroll: { key: 20, align: 'top' } }, { props: { open: true } }
   ] },
   { id: 'branches', branches: true, actions: branches },
-  { id: 'default-expansion', branches: true, props: { treeDefaultExpandedKeys: [] }, actions: branches },
+  {
+    id: 'default-expansion',
+    branches: true,
+    props: { treeDefaultExpandedKeys: [] },
+    actions: branches
+  },
   { id: 'controlled-expansion', branches: true, props: { treeExpandedKeys: [] }, actions: branches },
   { id: 'live-viewport', actions: [
     { scroll: 560 }, { props: { virtual: false } }, { scroll: 420 }, { props: { virtual: true } },
@@ -72,8 +92,18 @@ export const treeSelectVirtualSamples: readonly TreeSelectVirtualSample[] = [
   { id: 'hidden-scroll', observation: true, props: { multiple: true, value: [60] }, actions: [
     { scroll: 280 }, { props: { open: false } }, { scroll: 560 }, { props: { open: true } }
   ] },
-  { id: 'provider-virtual-undefined', observation: true, provider: { virtual: false }, props: { virtual: undefined } },
-  { id: 'empty-ref', observation: true, props: { showSearch: { searchValue: 'none' } }, actions: [{ scroll: 840 }] }
+  {
+    id: 'provider-virtual-undefined',
+    observation: true,
+    provider: { virtual: false },
+    props: { virtual: undefined }
+  },
+  {
+    id: 'empty-ref',
+    observation: true,
+    props: { showSearch: { searchValue: 'none' } },
+    actions: [{ scroll: 840 }]
+  }
 ];
 
 export function treeSelectVirtualProps(sample: TreeSelectVirtualSample): VirtualProps {

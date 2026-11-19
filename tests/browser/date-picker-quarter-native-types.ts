@@ -25,7 +25,11 @@ export interface QuarterOwnerRead {
 export interface QuarterCapture {
   recorder?: ReturnType<typeof createDatePickerPresetsRecorder>;
   setActionIndex?: (index: number) => void;
-  readRefs?: () => { owner: HTMLElement | null; control: QuarterControl | null; root: HTMLDivElement | null };
+  readRefs?: () => {
+    owner: HTMLElement | null;
+    control: QuarterControl | null;
+    root: HTMLDivElement | null
+  };
   read?: () => QuarterOwnerRead;
   readCallbacks?: (cursor?: number) => QuarterCursorDelta;
   readProducers?: (cursor?: number) => QuarterCursorDelta;

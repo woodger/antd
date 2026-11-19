@@ -62,7 +62,8 @@ async function chooseAlpha(page: Page, component: ChoiceContainerCase['component
     const row = page.getByRole('treeitem', { name: 'Alpha', exact: true });
     await (component === 'tree-select-checkable' ? row.getByRole('checkbox')
       : row.getByRole('button', { name: 'Alpha', exact: true })).click();
-  } else {
+  }
+  else {
     await page.getByRole('menuitemcheckbox', { name: 'Parent', exact: true }).click();
     await page.getByRole('menuitemcheckbox', { name: 'Alpha', exact: true }).click();
   }
@@ -150,10 +151,12 @@ for (const component of components) {
     if (component.startsWith('tree-select')) {
       expect(await page.locator('#choice-container-form').evaluate(node =>
         new FormData(node as HTMLFormElement).getAll('selected'))).toEqual(['alpha']);
-    } else if (component === 'cascader-multiple') {
+    }
+    else if (component === 'cascader-multiple') {
       await expect(page.getByLabel('Choice container values', { exact: true }))
         .toHaveText('[[["parent","alpha"]]]');
-    } else {
+    }
+    else {
       await control(page, component).press('Escape');
       await page.getByRole('button', { name: 'Submit choice form', exact: true }).click();
       await expect(page.getByLabel('Choice submitted', { exact: true }))
@@ -178,6 +181,7 @@ for (const component of components) {
     if (component === 'tree-select' || component === 'cascader' || component === 'cascader-custom')
       await input.click();
     await input.press('Escape');
+
     await expect(input).toHaveAttribute('aria-expanded', 'false');
     await expect(input).toBeFocused();
   });
@@ -193,15 +197,19 @@ for (const component of components) {
       await input.evaluate(node => (node as HTMLInputElement).setSelectionRange(1, 2));
 
       await check(page, 'Alternate choice container', true);
+
       await expect(page.locator('#choice-child .ant-select-dropdown')).toBeVisible();
       await expect(page.locator('#choice-parent .ant-select-dropdown')).toHaveCount(0);
       await check(page, 'Override choice component theme', true);
       const color = component.startsWith('tree-select') ? '#123456' : '#234567';
+
       await expect(popup).toHaveCSS('--ant-color-bg-elevated', color);
       await check(page, 'Dark choice theme', true);
+
       await expect(popup).toHaveCSS('--choice-origin', 'dark');
       await expect(popup).toHaveCSS('--ant-color-bg-elevated', color);
       await check(page, 'Override choice component theme', false);
+
       await expect(popup).not.toHaveCSS('--ant-color-bg-elevated', color);
 
       expect(await popup.evaluate((node, old) => node === old, original)).toBe(true);
@@ -213,6 +221,7 @@ for (const component of components) {
       const scroller = component.startsWith('tree-select') ? popup.locator('.ant-tree-list-holder')
         : popup.getByRole('menu').first();
       await scroller.evaluate(node => node.dispatchEvent(new Event('scroll')));
+
       await expect(page.getByLabel('Choice container scrolls', { exact: true })).toHaveText('1');
     });
 
@@ -290,6 +299,7 @@ test('TreeSelect ignores pending load completion after unmounting its portal', a
   await check(page, 'Lazy choice children', true);
   await open(page, 'tree-select-shadow');
   await control(page, 'tree-select').press('ArrowRight');
+
   await expect(page.getByLabel('Choice loads', { exact: true })).toHaveText('1/0');
 
   await check(page, 'Mount choice component', false);
@@ -306,6 +316,7 @@ test('TreeSelect ignores pending load completion after unmounting its portal', a
 test('CascaderPanel remains inline and never calls the provider popup getter', async ({ page }) => {
   await page.getByLabel('Choice reference', { exact: true }).selectOption('cascader-parent');
   await check(page, 'Use CascaderPanel', true);
+
   await expect(page.locator('.ant-cascader-panel')).toBeVisible();
 
   await check(page, 'Dark choice theme', true);

@@ -18,4 +18,7 @@ export const omissionActions: readonly SelectSurfaceOmissionAction[];
 export const widthActions: readonly SelectSurfaceOmissionAction[];
 export const omissionSSRStates: readonly { name: string; popup: 'wrapped' | 'omitted' }[];
 export const widthSSRStates: readonly { name: string; query: string; fontSize: number }[];
-export const omissionGeometry: { viewport: { width: number; height: number }; root: { left: number; top: number; width: number } };
+export const omissionGeometry: {
+  viewport: { width: number; height: number };
+  root: { left: number; top: number; width: number }
+};

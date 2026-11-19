@@ -9,12 +9,21 @@ async function apply(page: Page, sample: TreeSelectPointerSample, action: TreeSe
   const root = page.locator('[data-pointer-control] .ant-select').first();
   const input = page.getByRole('combobox', { name: 'Pointer selection', exact: true });
   if (action === 'focus') await input.focus();
-  else if (action === 'outside') await page.getByRole('button', { name: 'Outside pointer', exact: true }).click();
+  else if (action === 'outside') await page.getByRole(
+    'button',
+    { name: 'Outside pointer', exact: true }
+  ).click();
   else if (action === 'query') await input.fill('Al');
-  else if (action === 'caret') await input.evaluate(node => (node as HTMLInputElement).setSelectionRange(1, 1));
+  else if (action === 'caret') await input.evaluate(node => (node as HTMLInputElement).setSelectionRange(
+    1,
+    1
+  ));
   else if (action === 'clear-click') await root.locator('.ant-select-clear').dispatchEvent('click');
   else if (action === 'node-mousedown') await root.locator('.ant-select-dropdown [class*="-node-content-wrapper"]').filter({ hasText: 'Alpha' }).first().dispatchEvent('mousedown');
-  else if (action === 'draft') await page.getByRole('textbox', { name: 'Pointer draft', exact: true }).click();
+  else if (action === 'draft') await page.getByRole(
+    'textbox',
+    { name: 'Pointer draft', exact: true }
+  ).click();
   else if (action === 'touch-cancel' || action === 'touch-scroll') {
     const box = (await root.boundingBox())!;
     const point = { x: box.x + 1, y: box.y + box.height / 2, id: 1 };
@@ -23,12 +32,19 @@ async function apply(page: Page, sample: TreeSelectPointerSample, action: TreeSe
       await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [point] });
       if (action === 'touch-scroll') {
         for (const delta of [20, 40, 80]) {
-          await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ ...point, y: point.y + delta }] });
+          await cdp.send(
+            'Input.dispatchTouchEvent',
+            { type: 'touchMove', touchPoints: [{ ...point, y: point.y + delta }] }
+          );
         }
       }
-      await cdp.send('Input.dispatchTouchEvent', { type: action === 'touch-cancel' ? 'touchCancel' : 'touchEnd', touchPoints: [] });
+      await cdp.send(
+        'Input.dispatchTouchEvent',
+        { type: action === 'touch-cancel' ? 'touchCancel' : 'touchEnd', touchPoints: [] }
+      );
     } finally { await cdp.detach(); }
-  } else {
+  }
+  else {
     const target = action === 'root' ? root : action === 'content' ? root.locator('.ant-select-content')
       : action === 'prefix' ? root.locator('[data-pointer-prefix]')
         : action === 'suffix' ? root.locator('.ant-select-suffix')
@@ -47,10 +63,12 @@ for (const entry of reference.cases) {
   test(`TreeSelect pointer follows Source for ${entry.id}`, async ({ page }) => {
     await page.goto('/?fixture=tree-select-pointer');
     await page.getByRole('combobox', { name: 'TreeSelect pointer sample', exact: true }).selectOption(entry.id);
+
     await expect(page.locator('[data-pointer-refs]')).toHaveAttribute('data-pointer-refs', 'true');
     await page.mouse.move(0, 0);
     const sample = treeSelectPointerSamples.find(sample => sample.id === entry.id)!;
     const read = () => page.evaluate(readTreeSelectPointer);
+
     await expect.poll(read).toEqual(entry.initial);
     const input = page.getByRole('combobox', { name: 'Pointer selection', exact: true });
     const root = page.locator('[data-pointer-control] .ant-select').first();

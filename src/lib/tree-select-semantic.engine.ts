@@ -43,11 +43,23 @@ export function treeSelectSemantics<ValueType extends TreeSelectValue, Data exte
   const inheritedPopupClasses = popupClasses(inheritedClasses?.popup);
   const localPopupClasses = popupClasses(localClasses?.popup);
   const classes: ResolvedClassNames = {
-    ...Object.fromEntries(controlSlots.map(slot => [slot, join(inheritedClasses?.[slot], localClasses?.[slot], ' ')])),
-    popup: Object.fromEntries(popupSlots.map(slot => [slot, join(inheritedPopupClasses?.[slot], localPopupClasses?.[slot], ' ')]))
+    ...Object.fromEntries(controlSlots.map(slot => [slot, join(
+      inheritedClasses?.[slot],
+      localClasses?.[slot],
+      ' '
+    )])),
+    popup: Object.fromEntries(popupSlots.map(slot => [slot, join(
+      inheritedPopupClasses?.[slot],
+      localPopupClasses?.[slot],
+      ' '
+    )]))
   };
   const styles: TreeSelectStyles & { popup: NonNullable<TreeSelectStyles['popup']>; } = {
-    ...Object.fromEntries(controlSlots.map(slot => [slot, join(inheritedStyles?.[slot], localStyles?.[slot], ';')])),
+    ...Object.fromEntries(controlSlots.map(slot => [slot, join(
+      inheritedStyles?.[slot],
+      localStyles?.[slot],
+      ';'
+    )])),
     // Popup merges by slot. A local item style replaces the provider item style.
     popup: { ...inheritedStyles?.popup, ...localStyles?.popup }
   };
@@ -59,7 +71,10 @@ export function treeSelectSemantics<ValueType extends TreeSelectValue, Data exte
       .map(({ property, value, priority }) => [property, priority ? `${value} !important` : value] as const)])
     : styles.root;
   const popupRootStyle = join(inheritedRootStyle, styles.popup.root, ';');
-  const popupProperties = new Set(Array.from(getInlineStyleDeclarations([popupRootStyle]), ({ property }) => property));
+  const popupProperties = new Set(Array.from(
+    getInlineStyleDeclarations([popupRootStyle]),
+    ({ property }) => property
+  ));
   const popupHasMaxWidth = popupProperties.has('max-width') || popupProperties.has('max-inline-size');
 
   return { classes, styles, popupRootStyle, popupHasMaxWidth };

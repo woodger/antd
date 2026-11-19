@@ -27,13 +27,17 @@ test('Form local templates update after mount and restore provider messages', as
   const toggle = page.getByRole('button', { name: 'Toggle local templates', exact: true });
 
   await validate.click();
+
   await expect(report).toContainText('Outer Field label');
   await toggle.click();
+
   await expect(report).toContainText('Outer Field label');
   await validate.click();
+
   await expect(report).toContainText('Updated local Field label');
   await toggle.click();
   await validate.click();
+
   await expect(report).toContainText('Outer Field label');
 });
 
@@ -52,16 +56,19 @@ test('Form provider templates isolate nested and sibling models during reactive 
   const report = (scope: typeof outer) => scope.getByRole('status', { name: 'Template report' });
 
   await validate();
+
   await expect(report(outer)).toContainText('Outer Field label');
   await expect(report(inner)).toContainText('Inner Field label');
   await expect(report(sibling)).toContainText('Outer Field label');
   await scopes.getByRole('button', { name: 'Toggle outer templates', exact: true }).click();
   await validate();
+
   await expect(report(outer)).toContainText('Updated outer Field label');
   await expect(report(inner)).toContainText('Inner Field label');
   await expect(report(sibling)).toContainText('Updated outer Field label');
   await scopes.getByRole('button', { name: 'Toggle inner templates', exact: true }).click();
   await validate();
+
   await expect(report(outer)).toContainText('Updated outer Field label');
   await expect(report(inner)).toContainText('Updated inner Field label');
   await expect(report(sibling)).toContainText('Updated outer Field label');
@@ -77,14 +84,18 @@ test('Form releases templates from retained models on replacement and unmount wi
   const mounted = ['Mounted Field label'];
 
   await validate.click();
+
   await expect(report).toHaveText(JSON.stringify([mounted, defaults]));
   await scope.getByRole('button', { name: 'Switch template model', exact: true }).click();
   await validate.click();
+
   await expect(report).toHaveText(JSON.stringify([defaults, mounted]));
   await scope.getByRole('button', { name: 'Toggle template Form', exact: true }).click();
   await validate.click();
+
   await expect(report).toHaveText(JSON.stringify([defaults, defaults]));
   await scope.getByRole('button', { name: 'Toggle template Form', exact: true }).click();
   await validate.click();
+
   await expect(report).toHaveText(JSON.stringify([defaults, mounted]));
 });

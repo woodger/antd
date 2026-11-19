@@ -111,14 +111,25 @@ export const treeTagSamples: readonly TreeTagSample[] = [
   { id: 'renderer-disabled', renderer: true, disabled: true },
   { id: 'renderer-stop-close', renderer: true, stopClose: true,
     actions: [{ kind: 'close', value: 0 }] },
-  { id: 'renderer-held', renderer: true, controlled: 'hold', actions: [{ kind: 'close', value: 0 }] },
+  {
+    id: 'renderer-held',
+    renderer: true,
+    controlled: 'hold',
+    actions: [{ kind: 'close', value: 0 }]
+  },
   { id: 'renderer-strict-only', renderer: true, strict: true, strictOnly: true,
     value: [{ value: 0 }, { value: 1 }] },
   { id: 'renderer-strict-checkable', renderer: true, strict: true, checkable: true,
     value: [{ value: 0 }, { value: 1 }] },
   { id: 'count-update', nextCount: 1, actions: [{ kind: 'update-count' }] },
   { id: 'text-update', length: 2, nextLength: 5, actions: [{ kind: 'update-length' }] },
-  { id: 'data-update', count: 1, length: 3, placeholderKind: 'snippet', actions: [{ kind: 'update-data' }] },
+  {
+    id: 'data-update',
+    count: 1,
+    length: 3,
+    placeholderKind: 'snippet',
+    actions: [{ kind: 'update-data' }]
+  },
   { id: 'rtl-prefix', count: 1, length: 3, rtl: true, prefix: 'choices' },
   { id: 'responsive-400', count: 'responsive', width: 400,
     actions: [{ kind: 'resize', value: 200 }, { kind: 'resize', value: 400 }] },
@@ -134,5 +145,10 @@ export const treeTagObservations: readonly TreeTagSample[] = [
   { id: 'opaque-array-title', kind: 'array', length: 1 },
   { id: 'title-renderer', titleRenderer: true, labeled: true, length: 2,
     value: [{ value: 0 }, { value: 1 }] },
-  { id: 'responsive-long-rest', count: 'responsive', width: 320, placeholder: 'Hidden values remain selected' }
+  {
+    id: 'responsive-long-rest',
+    count: 'responsive',
+    width: 320,
+    placeholder: 'Hidden values remain selected'
+  }
 ];

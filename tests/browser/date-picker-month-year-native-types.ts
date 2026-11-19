@@ -25,7 +25,11 @@ export interface MonthYearOwnerRead {
 export interface MonthYearCapture {
   recorder?: ReturnType<typeof createDatePickerPresetsRecorder>;
   setActionIndex?: (index: number) => void;
-  readRefs?: () => { owner: HTMLElement | null; control: MonthYearControl | null; root: HTMLDivElement | null };
+  readRefs?: () => {
+    owner: HTMLElement | null;
+    control: MonthYearControl | null;
+    root: HTMLDivElement | null
+  };
   read?: () => MonthYearOwnerRead;
   readCallbacks?: (cursor?: number) => MonthYearCursorDelta;
   readProducers?: (cursor?: number) => MonthYearCursorDelta;

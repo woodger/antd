@@ -13,7 +13,12 @@ interface SourceCase {
   id: string;
   initial: Snapshot;
   steps: Array<Snapshot & { action: SelectVirtualAction }>;
-  beforeUnmount: { focusKind: 'root' | 'editor' | null; rootFocused: boolean; editorFocused: boolean; activeTag: string | null };
+  beforeUnmount: {
+    focusKind: 'root' | 'editor' | null;
+    rootFocused: boolean;
+    editorFocused: boolean;
+    activeTag: string | null
+  };
   cleanup: { rootConnected: boolean; anchorConnected: boolean; editorConnected: boolean; popupConnected: boolean;
     callbacks: unknown[][]; offsets: unknown[] };
   counterpart?: { kind: string; primaryId: string; sameActionTrace?: boolean; policy?: string;
@@ -26,7 +31,10 @@ interface SourceCase {
 interface SourceReference {
   reference: { version: string; react: string; revision: string; archiveSha256: string;
     umdArchiveByteEqual: boolean; reactBuild: string; viewport: { width: number; height: number };
-    errors: unknown[]; diagnostics: Array<{ current: { id: string; action: string }; message: string }> };
+    errors: unknown[]; diagnostics: Array<{
+      current: { id: string; action: string };
+      message: string
+    }> };
   cases: SourceCase[];
 }
 
@@ -41,29 +49,64 @@ const observedKeys: ObservedKey[] = ['sameRoot', 'sameAnchor', 'sameEditor', 'sa
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw Error(`Invalid frozen Select virtual reference: ${message}`);
 }
-function load(filename: string, sha256: string, ids: readonly string[], diagnostics: SourceReference['reference']['diagnostics']) {
+function load(
+  filename: string,
+  sha256: string,
+  ids: readonly string[],
+  diagnostics: SourceReference['reference']['diagnostics']
+) {
   const bytes = readFileSync(new URL(`./fixtures/${filename}`, import.meta.url));
   assert(createHash('sha256').update(bytes).digest('hex') === sha256, `${filename} SHA256`);
   // The complete 41 MB raw capture stays intact; TypeScript need not infer its JSON literal tree.
   const data = JSON.parse(bytes.toString('utf8')) as SourceReference;
-  assert(data.reference?.version === '6.6.8' && data.reference.react === '18.3.1', `${filename} upstream version`);
-  assert(data.reference.revision === '984592267de88fbf9cdaecc96a56629e721c709d', `${filename} upstream revision`);
-  assert(data.reference.archiveSha256 === '8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa', `${filename} archive`);
-  assert(data.reference.umdArchiveByteEqual === true && data.reference.reactBuild === 'production', `${filename} unmodified UMD`);
-  assert(isDeepStrictEqual(data.reference.viewport, { width: 1200, height: 900 }), `${filename} viewport`);
-  assert(isDeepStrictEqual(data.reference.errors, []) && isDeepStrictEqual(data.reference.diagnostics, diagnostics), `${filename} diagnostics`);
+  assert(
+    data.reference?.version === '6.6.8' && data.reference.react === '18.3.1',
+    `${filename} upstream version`
+  );
+  assert(
+    data.reference.revision === '984592267de88fbf9cdaecc96a56629e721c709d',
+    `${filename} upstream revision`
+  );
+  assert(
+    data.reference.archiveSha256 === '8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa',
+    `${filename} archive`
+  );
+  assert(
+    data.reference.umdArchiveByteEqual === true && data.reference.reactBuild === 'production',
+    `${filename} unmodified UMD`
+  );
+  assert(
+    isDeepStrictEqual(data.reference.viewport, { width: 1200, height: 900 }),
+    `${filename} viewport`
+  );
+  assert(
+    isDeepStrictEqual(data.reference.errors, []) && isDeepStrictEqual(
+      data.reference.diagnostics,
+      diagnostics
+    ),
+    `${filename} diagnostics`
+  );
   assert(isDeepStrictEqual(data.cases.map(entry => entry.id), ids), `${filename} ordered cases`);
   for (const entry of data.cases) {
     const sample = selectVirtualSamples.find(sample => sample.id === entry.id)!;
-    assert(isDeepStrictEqual(entry.steps.map(step => step.action), selectVirtualActions(sample)), `${entry.id} original actions`);
+    assert(
+      isDeepStrictEqual(entry.steps.map(step => step.action), selectVirtualActions(sample)),
+      `${entry.id} original actions`
+    );
     for (const snapshot of [entry.initial, ...entry.steps]) {
-      assert(snapshot.view?.family === sample.family && snapshot.raw != null, `${entry.id} full projection`);
+      assert(
+        snapshot.view?.family === sample.family && snapshot.raw != null,
+        `${entry.id} full projection`
+      );
       assert(Array.isArray(snapshot.view.events) && Array.isArray(snapshot.view.offsets)
         && Array.isArray(snapshot.raw.renders) && Array.isArray(snapshot.raw.popups), `${entry.id} raw ledgers`);
       assert(isDeepStrictEqual(Object.keys(snapshot.observed).sort(), [...observedKeys].sort())
         && observedKeys.every(key => typeof snapshot.observed[key] === 'boolean'), `${entry.id} original observations`);
     }
-    assert(isDeepStrictEqual(entry.cleanup.callbacks, entry.steps.at(-1)!.view.events), `${entry.id} Source disposal ledger`);
+    assert(
+      isDeepStrictEqual(entry.cleanup.callbacks, entry.steps.at(-1)!.view.events),
+      `${entry.id} Source disposal ledger`
+    );
   }
   return data;
 }
@@ -87,7 +130,10 @@ for (const entry of selectVirtualNativeReference.cases) {
   const primary = selectVirtualReference.cases.find(source => source.id === entry.id)!;
   assert(entry.counterpart?.kind === 'actual-public-source-visible-queued-position-owner'
     && entry.counterpart.primaryId === entry.id && entry.counterpart.sameActionTrace === true, `${entry.id} actual owner policy`);
-  assert(isDeepStrictEqual(entry.counterpart.primaryActions, primary.steps.map(step => step.action)), `${entry.id} unchanged public inputs`);
+  assert(
+    isDeepStrictEqual(entry.counterpart.primaryActions, primary.steps.map(step => step.action)),
+    `${entry.id} unchanged public inputs`
+  );
   assert(isDeepStrictEqual(entry.counterpart.ownerCalls, [
     { phase: 'queue-while-closed', argument: { top: 500 } },
     { phase: 'apply-after-public-holder-visible', argument: { top: 500 } }
@@ -110,10 +156,16 @@ for (const entry of selectVirtualHoverReference.cases) {
     && entry.counterpart.sameOwnerFactory === true && entry.counterpart.samePublicProps === true,
   `${entry.id} actual Source prepared pointer gesture`);
   assert(isDeepStrictEqual(entry.counterpart.primaryActions, primary.steps.map(step => step.action))
-    && isDeepStrictEqual(entry.counterpart.gestureExpansion, [{ action: { type: 'hover', text: 'Option 062' },
+    && isDeepStrictEqual(entry.counterpart.gestureExpansion, [{ action: {
+      type: 'hover',
+      text: 'Option 062'
+    },
       beforeOriginalAction: [{ command: 'Playwright Locator.scrollIntoViewIfNeeded',
         locator: '.ant-select-dropdown:visible:first .ant-select-item-option-content', exactText: 'Option 062' },
-      { command: 'drainSelectVirtual', publicOperations: 'virtualstyles event; two requestAnimationFrame callbacks; two zero-delay tasks' }] }]),
+      {
+        command: 'drainSelectVirtual',
+        publicOperations: 'virtualstyles event; two requestAnimationFrame callbacks; two zero-delay tasks'
+      }] }]),
   `${entry.id} explicit same-option public scroll/drain/hover expansion`);
 }
 for (const entry of selectVirtualQueryNativeReference.cases) {
@@ -146,7 +198,10 @@ interface BlurBaseline {
   cases: Array<{ id: string; before: unknown[][]; synchronous: {
     during: Array<{ connected: boolean; focused: boolean; ledger: unknown[][] }>; after: unknown[][] } }>;
 }
-const blurBytes = readFileSync(new URL('./fixtures/select-virtual-blur-native-baseline.json', import.meta.url));
+const blurBytes = readFileSync(new URL(
+  './fixtures/select-virtual-blur-native-baseline.json',
+  import.meta.url
+));
 assert(createHash('sha256').update(blurBytes).digest('hex')
   === 'cad4507fabb6b212358679645e71d0459ae7eadc57055a558e5f20a6613ad873', 'historical connected blur baseline SHA256');
 export const selectVirtualBlurNativeBaseline = JSON.parse(blurBytes.toString('utf8')) as BlurBaseline;
@@ -155,7 +210,10 @@ assert(selectVirtualBlurNativeBaseline.reference.baseCommit === '75b93bf1d473e73
   && isDeepStrictEqual(selectVirtualBlurNativeBaseline.reference.warnings, []), 'historical connected blur provenance');
 const oldControls = ['8ce7449e134038576859a8f1fee4498349255176ac8b25eac715d4764a534288',
   'f7163a29490a6a0a62f0df1fdb4a9a4deafdba4e48ffa999d0902c85545e0b61'];
-assert(isDeepStrictEqual(selectVirtualBlurNativeBaseline.reference.sourceBlobs.map(blob => blob.sha256), oldControls),
+assert(isDeepStrictEqual(
+  selectVirtualBlurNativeBaseline.reference.sourceBlobs.map(blob => blob.sha256),
+  oldControls
+),
   'historical delivered Select/AC blobs');
 assert(isDeepStrictEqual(selectVirtualBlurNativeBaseline.cases.map(entry => entry.id),
   ['select-focus-ref', 'auto-complete-focus-ref']), 'historical connected blur cases');
@@ -163,7 +221,10 @@ for (const entry of selectVirtualBlurNativeBaseline.cases) {
   const after = [['focus'], ['open', true], ['open', false], ['blur']];
   assert(isDeepStrictEqual(entry.before, [['focus'], ['open', true]])
     && isDeepStrictEqual(entry.synchronous.after, after)
-    && isDeepStrictEqual(entry.synchronous.during, [{ connected: true, focused: false, ledger: after }]),
+    && isDeepStrictEqual(
+      entry.synchronous.during,
+      [{ connected: true, focused: false, ledger: after }]
+    ),
   `${entry.id} historical synchronous connected blur ledger`);
 }
 
@@ -172,7 +233,10 @@ interface QueryBaseline {
   cases: Array<{ id: string; trace: Array<{ action: { query?: string; open?: boolean }; query: string;
     events: unknown[][]; editor: { value: string; caret: number[]; focused: boolean }; open: boolean }> }>;
 }
-const queryBytes = readFileSync(new URL('./fixtures/select-virtual-query-native-baseline.json', import.meta.url));
+const queryBytes = readFileSync(new URL(
+  './fixtures/select-virtual-query-native-baseline.json',
+  import.meta.url
+));
 assert(createHash('sha256').update(queryBytes).digest('hex')
   === '1c91bc9788bb65152c14011977abfdf178d74cd6e387c5bd35958ee379bf0228', 'historical controlled query baseline SHA256');
 export const selectVirtualQueryNativeBaseline = JSON.parse(queryBytes.toString('utf8')) as QueryBaseline;
@@ -187,14 +251,21 @@ for (const entry of selectVirtualQueryNativeBaseline.cases) {
   const initialQuery = entry.id.endsWith('-09') ? '09' : 'Kept query';
   const events = initialQuery === '09' ? [['focus'], ['open', true]] : [['open', true]];
   const frame = (action: { query?: string; open?: boolean }, query: string, open: boolean) => ({
-    action, query, events, editor: { value: open ? query : '', caret: open ? [query.length, query.length] : [0, 0], focused: true }, open
+    action, query, events, editor: {
+      value: open ? query : '',
+      caret: open ? [query.length, query.length] : [0, 0],
+      focused: true
+    }, open
   });
   assert(isDeepStrictEqual(entry.trace, [frame({ query: initialQuery }, initialQuery, true),
     frame({ open: false }, initialQuery, false), frame({ open: true }, initialQuery, true),
     frame({ open: false }, initialQuery, false), frame({ query: '09' }, '09', false),
     frame({ open: true }, '09', true)]), `${entry.id} complete historical query trace`);
 }
-const caretBytes = readFileSync(new URL('./fixtures/select-virtual-query-caret-native-baseline.json', import.meta.url));
+const caretBytes = readFileSync(new URL(
+  './fixtures/select-virtual-query-caret-native-baseline.json',
+  import.meta.url
+));
 assert(createHash('sha256').update(caretBytes).digest('hex')
   === 'f5fd52af94151ea1feddecc37552ca62ee85830e307faa28c1854b228e13fdec', 'historical caret close/reopen baseline SHA256');
 export const selectVirtualQueryCaretNativeBaseline = JSON.parse(caretBytes.toString('utf8')) as QueryBaseline;
@@ -207,8 +278,14 @@ assert(selectVirtualQueryCaretNativeBaseline.reference.baseCommit === '75b93bf1d
     ['select-controlled-query-Kept query']), 'historical caret provenance');
 const caretProof = selectVirtualQueryCaretNativeBaseline.cases[0];
 assert(caretProof.trace.length === 6
-  && isDeepStrictEqual(caretProof.trace[0].editor, { value: 'Kept query', caret: [1, 5], focused: true })
+  && isDeepStrictEqual(
+    caretProof.trace[0].editor,
+    { value: 'Kept query', caret: [1, 5], focused: true }
+  )
   && isDeepStrictEqual(caretProof.trace[1].editor, { value: '', caret: [0, 0], focused: true })
-  && isDeepStrictEqual(caretProof.trace[2].editor, { value: 'Kept query', caret: [10, 10], focused: true })
+  && isDeepStrictEqual(
+    caretProof.trace[2].editor,
+    { value: 'Kept query', caret: [10, 10], focused: true }
+  )
   && caretProof.trace.every(frame => isDeepStrictEqual(frame.events, [['focus'], ['open', true]])),
 'historical selected range, cleared close and end-caret reopen with unchanged ledger');

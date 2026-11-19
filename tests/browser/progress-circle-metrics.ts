@@ -33,7 +33,10 @@ export function snapshotProgressCircle(prefix = 'ant-progress') {
     })),
     indicator: indicator && { classes: classes(indicator), text: indicator.textContent,
       style: css(indicator, ['color', 'font-size', 'line-height', 'width', 'height']) },
-    icon: icon ? { viewBox: icon.getAttribute('viewBox'), path: icon.querySelector('path')!.getAttribute('d') }
+    icon: icon ? {
+      viewBox: icon.getAttribute('viewBox'),
+      path: icon.querySelector('path')!.getAttribute('d')
+    }
       : null
   };
 }

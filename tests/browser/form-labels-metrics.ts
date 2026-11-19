@@ -15,6 +15,10 @@ export function formLabelsMetrics() {
     wrap: box.classList.contains('ant-form-item-label-wrap'),
     box: properties(box, ['text-align', 'white-space', 'overflow', 'line-height', 'padding-bottom']),
     label: properties(label, ['height', 'vertical-align', 'text-wrap']),
-    after: properties(label, ['content', 'visibility', 'margin-inline-start', 'margin-inline-end'], '::after')
+    after: properties(
+      label,
+      ['content', 'visibility', 'margin-inline-start', 'margin-inline-end'],
+      '::after'
+    )
   };
 }

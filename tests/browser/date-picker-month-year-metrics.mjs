@@ -79,5 +79,9 @@ export function readNativeMonthYear() {
       timers: null, frames: null, observers: null,
       note: 'Private resource counters unmeasured. One removable document capture observer; no global timer/frame/observer hooks.' } };
 }
-export function readNativeMonthYearProducers(cursor = 0) { return window.nativeMonthYear.readProducers(cursor); }
-export function readNativeMonthYearCallbacks(cursor = 0) { return window.nativeMonthYear.readCallbacks(cursor); }
+export function readNativeMonthYearProducers(cursor = 0) {
+  return window.nativeMonthYear.readProducers(cursor);
+}
+export function readNativeMonthYearCallbacks(cursor = 0) {
+  return window.nativeMonthYear.readCallbacks(cursor);
+}

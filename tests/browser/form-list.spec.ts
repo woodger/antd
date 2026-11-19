@@ -5,6 +5,7 @@ import sparseReference from './fixtures/ant-design-form-sparse-list-observation.
 test.describe('FormList operations', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?fixture=form-list');
+
     await expect(page.locator('#form-list-fixture')).toBeVisible();
   });
 
@@ -79,9 +80,11 @@ test.describe('FormList operations', () => {
     await page.getByRole('checkbox', { name: 'Hold list validation', exact: true }).check();
     await page.getByLabel('User 1', { exact: true }).fill('Pending');
     await page.getByLabel('User 1', { exact: true }).blur();
+
     await expect(page.getByRole('status', { name: 'Pending name validations', exact: true }))
       .toHaveText('1');
     await page.getByRole('button', { name: 'Replace list model', exact: true }).click();
+
     await expect(page.getByLabel('User 0', { exact: true })).toHaveValue('Replacement model');
     await expect(page.getByLabel('User 1', { exact: true })).toHaveCount(0);
     await page.getByRole('button', { name: 'Reject pending names', exact: true }).click();
@@ -90,6 +93,7 @@ test.describe('FormList operations', () => {
     await expect(page.getByRole('alert')).toHaveCount(0);
     await page.getByRole('checkbox', { name: 'Hold list validation', exact: true }).uncheck();
     await page.getByRole('button', { name: 'Submit list', exact: true }).click();
+
     await expect(page.getByRole('status', { name: 'Submitted list', exact: true }))
       .toHaveText('{"users":[{"name":"Replacement model"}]}');
   });
@@ -98,6 +102,7 @@ test.describe('FormList operations', () => {
     const bob = page.getByLabel('User 1', { exact: true });
     await bob.fill('');
     await bob.blur();
+
     await expect(bob).toHaveAccessibleDescription('Name required');
     await page.getByRole('button', { name: 'Move user 1 to first', exact: true }).click();
 
@@ -127,6 +132,7 @@ test.describe('FormList operations', () => {
 
     await expect(input).toHaveAccessibleDescription('Name required');
     await page.getByRole('button', { name: 'Submit list', exact: true }).click();
+
     await expect(input).toBeFocused();
     await expect(page.getByRole('status', { name: 'List error fields', exact: true }))
       .toHaveText('[{"name":["users",1,"name"],"errors":["Name required"],"warnings":[]}]');
@@ -143,6 +149,7 @@ test.describe('FormList operations', () => {
     await expect(page.getByRole('alert')).toHaveCount(0);
     await expect(page.getByRole('status', { name: 'List errors', exact: true })).toHaveText('[]');
     await page.getByRole('button', { name: 'Submit list', exact: true }).click();
+
     await expect(page.getByRole('status', { name: 'Submitted list', exact: true }))
       .toHaveText('{"users":[{"name":"Hana"}]}');
   });
@@ -153,10 +160,12 @@ test.describe('FormList operations', () => {
       const bob = page.getByLabel('User 1', { exact: true });
       await bob.fill('Pending');
       await bob.blur();
+
       await expect(page.getByRole('status', { name: 'Pending name validations', exact: true }))
         .toHaveText('1');
       await page.getByRole('button', { name: reset ? 'Reset list' : 'Remove user 1', exact: true }).click();
       await page.getByRole('button', { name: 'Reject pending names', exact: true }).click();
+
       await expect(page.getByRole('status', { name: 'Pending name validations', exact: true }))
         .toHaveText('0');
 
@@ -164,7 +173,8 @@ test.describe('FormList operations', () => {
       if (reset) {
         await expect(bob).toHaveValue('Bob');
         await expect(bob).not.toHaveAttribute('aria-invalid', 'true');
-      } else {
+      }
+      else {
         await expect(bob).toHaveCount(0);
         await page.getByRole('button', { name: 'Append empty row', exact: true }).click();
         await expect(page.getByLabel('User 2', { exact: true })).toHaveValue('');
@@ -179,9 +189,11 @@ test.describe('FormList operations', () => {
     const bob = page.getByLabel('User 1', { exact: true });
     await bob.fill('Pending');
     await bob.blur();
+
     await expect(page.getByRole('status', { name: 'Pending name validations', exact: true }))
       .toHaveText('1');
     await page.getByRole('button', { name: 'Move user 1 to first', exact: true }).click();
+
     await expect(page.getByRole('status', { name: 'Pending name validations', exact: true }))
       .toHaveText('2');
     await page.getByRole('button', { name: 'Accept latest name', exact: true }).click();
@@ -209,6 +221,7 @@ test.describe('FormList operations', () => {
 test('FormList initializes missing values, respects an empty Form default and resets fresh controls', async ({ page }) => {
   await page.goto('/?fixture=form-list-defaults');
   const user = page.getByLabel('Default user', { exact: true });
+
   await expect(user).toHaveValue('List default');
   await expect(page.getByRole('status', { name: 'Empty default fields', exact: true })).toHaveText('0');
   const original = await user.elementHandle();
@@ -221,8 +234,10 @@ test('FormList initializes missing values, respects an empty Form default and re
   expect(await original!.evaluate((node) => node.isConnected)).toBe(false);
   await original?.dispose();
   await page.getByRole('button', { name: 'Toggle default list', exact: true }).click();
+
   await expect(user).toHaveCount(0);
   await page.getByRole('button', { name: 'Toggle default list', exact: true }).click();
+
   await expect(user).toHaveValue('List default');
 });
 
@@ -242,9 +257,13 @@ test('FormList composes nested prefixes and keeps independent Form fields outsid
   await page.goto('/?fixture=form-list-nested');
   const ada = page.getByLabel('Group 0 user 0', { exact: true });
   const nested = page.getByLabel('Group 1 user 0', { exact: true });
+
   await expect(ada).toHaveValue('Ada');
   await expect(nested).toHaveValue('Nested default');
-  await expect(page.getByLabel('Independent title', { exact: true })).toHaveAttribute('name', 'title');
+  await expect(page.getByLabel('Independent title', { exact: true })).toHaveAttribute(
+    'name',
+    'title'
+  );
   await nested.fill('Edited nested');
   await page.getByRole('button', { name: 'Add user to group 1', exact: true }).click();
   await page.getByRole('button', { name: 'Move group 1 to first', exact: true }).click();
@@ -253,6 +272,7 @@ test('FormList composes nested prefixes and keeps independent Form fields outsid
   await expect(nested).toHaveAttribute('name', 'groups_0_users_0_name');
   await expect(ada).toHaveAttribute('name', 'groups_1_users_0_name');
   await page.getByRole('button', { name: 'Submit nested lists', exact: true }).click();
+
   await expect(page.getByRole('status', { name: 'Submitted nested lists', exact: true }))
     .toHaveText('{"groups":[{"title":"Second","users":[{"name":"Edited nested"},{"name":"New nested"}]},{"title":"First","users":[{"name":"Ada"}]}]}');
   await page.getByRole('button', { name: 'Remove group 0', exact: true }).click();

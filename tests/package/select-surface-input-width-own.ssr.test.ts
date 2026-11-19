@@ -21,7 +21,9 @@ function editor(html: string) {
 }
 it.each(selectSurfaceInputWidthOwnSSRReference.cases)('renders actual initial width ownership SSR $id without browser resources', entry => {
   vi.useFakeTimers();
-  const browserResource = vi.fn(() => { throw Error('Input width ownership SSR must remain DOM-free'); });
+  const browserResource = vi.fn(() => {
+    throw Error('Input width ownership SSR must remain DOM-free');
+  });
   vi.stubGlobal('getComputedStyle', browserResource);
   vi.stubGlobal('requestAnimationFrame', browserResource);
   vi.stubGlobal('queueMicrotask', browserResource);
@@ -36,13 +38,31 @@ it.each(selectSurfaceInputWidthOwnSSRReference.cases)('renders actual initial wi
     const capture: Capture = {};
     const { body } = render(SelectSurfaceInputWidthOwnCase, { props: { sample, capture } });
     const actual = capture.read!(), view = readSelectSurfaceSSR(body);
-    expect({ root: view.rootPresent, popup: view.popupPresent, prefix: view.prefixPresent, leaks: view.leakedAttributes })
-      .toEqual({ root: entry.view.rootPresent, popup: entry.view.popupPresent, prefix: entry.view.prefixPresent, leaks: entry.view.leakedAttributes });
+    expect({
+      root: view.rootPresent,
+      popup: view.popupPresent,
+      prefix: view.prefixPresent,
+      leaks: view.leakedAttributes
+    })
+      .toEqual({
+        root: entry.view.rootPresent,
+        popup: entry.view.popupPresent,
+        prefix: entry.view.prefixPresent,
+        leaks: entry.view.leakedAttributes
+      });
     expect([...view.authoredClasses].sort()).toEqual([...entry.view.authoredClasses].sort());
     for (const key of ['widthKind', 'widthOwnKey', 'widthValue', 'inputStyle', 'styleOwnKeys', 'inputStyleDescriptors',
       'fontSize', 'query', 'open', 'model'] as const) expect(actual[key]).toEqual(entry.state[key]);
-    verifySelectSurfaceEventGraph(actual.rawModel, entry.state.rawModel, `${entry.id} actual raw SSR model`);
-    verifySelectSurfaceEventGraph(actual.rawInputStyle, entry.state.rawInputStyle, `${entry.id} raw authored CSS descriptors/order`);
+    verifySelectSurfaceEventGraph(
+      actual.rawModel,
+      entry.state.rawModel,
+      `${entry.id} actual raw SSR model`
+    );
+    verifySelectSurfaceEventGraph(
+      actual.rawInputStyle,
+      entry.state.rawInputStyle,
+      `${entry.id} raw authored CSS descriptors/order`
+    );
     expect(normalizedSelectSurfaceAuthoredProps(actual.authoredProps)).toEqual(normalizedSelectSurfaceAuthoredProps(entry.state.authoredProps));
     expect(decodeSelectSurface(actual.authoredProvider)).toEqual(decodeSelectSurface(entry.state.authoredProvider));
     expect(actual.events).toEqual(entry.state.events);
@@ -61,6 +81,9 @@ it.each(selectSurfaceInputWidthOwnSSRReference.cases)('renders actual initial wi
     expect(warn).not.toHaveBeenCalled();
     expect(error).not.toHaveBeenCalled();
   } finally {
-    warn.mockRestore(); error.mockRestore(); vi.unstubAllGlobals(); vi.useRealTimers();
+    warn.mockRestore();
+    error.mockRestore();
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
   }
 });

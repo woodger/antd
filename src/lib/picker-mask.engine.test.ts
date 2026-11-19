@@ -51,8 +51,10 @@ describe('picker numeric mask', () => {
     for (const key of '2024') state = editPickerMask(mask, state, key, 2024);
     expect(state).toMatchObject({ text: '2024-MM-DD', index: 1, cache: '' });
     state = editPickerMask(mask, state, '1', 2024);
+
     expect(state).toMatchObject({ text: '2024-01-DD', index: 1, cache: '1' });
     state = editPickerMask(mask, state, '2', 2024);
+
     expect(state).toMatchObject({ text: '2024-12-DD', index: 2, cache: '' });
   });
 
@@ -77,6 +79,7 @@ describe('picker numeric mask', () => {
     expect(normalizePickerFieldFormat({ format: 'HH:mm:ss.SSS', type: 'mask' }, 'HH:mm:ss'))
       .toEqual({ formats: ['HH:mm:ss.SSS'], mask: 'HH:mm:ss.SSS' });
     const result = normalizePickerFieldFormat([formatter, 'YYYY-MM-DD'], 'YYYY-MM-DD');
+
     expect(result.formats[0]).toBe(formatter);
     expect(result.mask).toBeNull();
     expect(normalizePickerFieldFormat(undefined, 'YYYY-MM-DD').formats).toEqual(['YYYY-MM-DD']);

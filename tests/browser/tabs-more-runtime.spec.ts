@@ -154,6 +154,7 @@ for (const sample of reference.cases) {
   test(`More lifecycle and actions match the official source for ${sample.name}`, async ({ page }) => {
     await page.getByLabel('More runtime reference', { exact: true }).selectOption(sample.name);
     await page.mouse.move(1100, 900);
+
     await expect.poll(() => snapshot(page)).toEqual(sample.initial);
     await observeMotion(page);
 
@@ -208,6 +209,7 @@ test('autoDestroy keeps an inert popup until leave ends and recreates its conten
     await page.getByRole('button', { name: 'Increment raw More', exact: true }).click();
 
     await page.locator('.ant-tabs-nav-more').click();
+
     await expect(popup).toHaveClass(/ant-slide-up-leave-active/);
 
     await expect(popup).toHaveAttribute('inert', '');
@@ -238,6 +240,7 @@ test('reversing leave preserves the same popup, draft, selection and local state
   await page.getByRole('button', { name: 'Increment raw More', exact: true }).click();
 
   await page.locator('.ant-tabs-nav-more').click();
+
   await expect(popup).toHaveClass(/ant-slide-up-leave-active/);
   await popup.evaluate(node => node.getAnimations().forEach(animation => animation.pause()));
   await page.locator('.ant-tabs-nav-more').click();
@@ -259,6 +262,7 @@ for (const mode of ['reduced motion', 'theme motion'] as const) {
     await choose(page, 'raw-destroyed');
     await page.locator('.ant-tabs-nav-more').click();
     const popup = page.locator('.ant-tabs-dropdown');
+
     await expect(popup).toHaveClass(/ant-slide-up-leave-active/);
     await popup.evaluate(node => node.getAnimations().forEach(animation => animation.pause()));
 
@@ -277,6 +281,7 @@ test('enabling autoDestroy on an already closed popup removes retained content',
   await draft.fill('Retained until policy changes');
   await page.locator('.ant-tabs-nav-more').click();
   await stable(page);
+
   await expect(draft).toHaveCount(1);
 
   await check(page, 'Destroy runtime popup', true);
@@ -293,10 +298,12 @@ test('closing a raw overlay hides a nested Select and leaves Escape available du
     await choose(page, 'raw-destroyed');
     const select = page.getByRole('combobox', { name: 'Nested raw More select', exact: true });
     await select.click();
+
     await expect(page.getByRole('option', { name: 'Alpha', exact: true })).toBeVisible();
 
     await page.locator('.ant-tabs-nav-more').evaluate(button => (button as HTMLButtonElement).click());
     const popup = page.locator('.ant-tabs-dropdown');
+
     await expect(popup).toHaveClass(/ant-slide-up-leave-active/);
     await popup.evaluate(node => node.getAnimations().forEach(animation => animation.pause()));
 
@@ -306,8 +313,10 @@ test('closing a raw overlay hides a nested Select and leaves Escape available du
       document.dispatchEvent(event);
       return event.defaultPrevented;
     });
+
     expect(consumed).toBe(false);
     await check(page, 'Mount runtime Tabs', false);
+
     await expect(page.locator('.ant-tabs-dropdown')).toHaveCount(0);
     await expect(page.locator('.ant-select-dropdown:visible')).toHaveCount(0);
   });
@@ -316,6 +325,7 @@ test('unmount during leave removes portal DOM and cancels delayed lifecycle work
   await choose(page, 'raw-destroyed');
   await page.locator('.ant-tabs-nav-more').click();
   const popup = page.locator('.ant-tabs-dropdown');
+
   await expect(popup).toHaveClass(/ant-slide-up-leave-active/);
   await popup.evaluate(node => node.getAnimations().forEach(animation => animation.pause()));
   await page.clock.install();
@@ -351,6 +361,7 @@ for (const sizing of ['border-box', 'content-box']) {
     }, height);
 
     await button.click();
+
     await expect(popup).toHaveClass(/ant-slide-up-enter-active/);
     const positions = await popup.evaluate(async node => {
       const animation = node.getAnimations()[0];
@@ -375,6 +386,7 @@ for (const sizing of ['border-box', 'content-box']) {
       .toEqual(Array(3).fill('ant-tabs-dropdown-placement-topLeft'));
     const bounds = await popup.boundingBox();
     const anchor = await button.boundingBox();
+
     expect(Math.abs(bounds!.height - height)).toBeLessThan(1);
     expect(Math.abs(bounds!.y + bounds!.height + 4 - anchor!.y)).toBeLessThan(1);
   });
@@ -385,9 +397,11 @@ test('focus hide and autoFocus close custom content without reopening from nativ
     await page.getByLabel('More runtime reference', { exact: true }).selectOption('raw-focus-blur');
     await check(page, 'Autofocus runtime popup', true);
     const button = page.locator('.ant-tabs-nav-more');
+
     await expect(button).toBeVisible();
 
     await button.focus();
+
     await expect(page.getByLabel('Runtime More lifecycle', { exact: true })).toHaveText('["mount"]');
     await stable(page);
 

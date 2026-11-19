@@ -12,6 +12,7 @@ for (const entry of reference.cases) {
     await page.clock.install({ time: new Date('2026-11-10T12:00:00Z') });
     await page.goto('/?fixture=tree-drag');
     await page.getByRole('combobox', { name: 'Tree drag sample', exact: true }).selectOption(String(index));
+
     await expect(page.getByRole('tree', { name: 'Draggable tree', exact: true })).toBeVisible();
     await expect.poll(() => page.evaluate(readTreeDrag, prefix)).toEqual(entry.initial.nodes);
 

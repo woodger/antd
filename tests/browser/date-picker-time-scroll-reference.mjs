@@ -11,7 +11,10 @@ assert.equal(sha(bytes), '5098be724cc6c2bd7c58f3f61ba9c2fddbd025c8339e215f21cea2
 const metadata = JSON.parse(bytes);
 assert.equal(metadata.sourceOnly, true);
 assert.equal(metadata.NativeDataUsed, false);
-assert.equal(metadata.protocolSHA256, '6ab38509e7c2f926c146ed85884674c3e3c438b3163d174078aeb36d34535274');
+assert.equal(
+  metadata.protocolSHA256,
+  '6ab38509e7c2f926c146ed85884674c3e3c438b3163d174078aeb36d34535274'
+);
 function decode(entry) {
   const stored = readFileSync(fixture(entry.fixture));
   assert(stored.length < 1000000);

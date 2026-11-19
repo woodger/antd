@@ -37,8 +37,14 @@ export function snapshotNotificationPrefix() {
     close: css(part('-notice-close'), [
       ...typography, ...box, 'top', 'inset-inline-end'
     ]),
-    closeIcon: css(part('-notice-close')?.querySelector('svg') ?? null, ['width', 'height', 'color']),
-    input: css(root.querySelector('[aria-label="Notification prefix draft"]'), [...typography, ...box]),
+    closeIcon: css(
+      part('-notice-close')?.querySelector('svg') ?? null,
+      ['width', 'height', 'color']
+    ),
+    input: css(
+      root.querySelector('[aria-label="Notification prefix draft"]'),
+      [...typography, ...box]
+    ),
     actions: css(part('-notice-actions'), ['width', 'height', 'margin-top']),
     action: css(part('-notice-actions')?.querySelector('button') ?? null, [...typography, ...box])
   };

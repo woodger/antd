@@ -55,7 +55,8 @@
         };
         if (!visible)
           finish(); else disposeMotion = animateMessageNotice(root, true, from, finish);
-      } else if (visible && !entered) {
+      }
+      else if (visible && !entered) {
         entered = true;
         disposeMotion = animateMessageNotice(root, false, undefined, () => { });
       }

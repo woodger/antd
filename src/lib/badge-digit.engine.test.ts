@@ -7,7 +7,15 @@ describe('Badge digit rolling', () => {
     [5, 3, 20, 10, [3, 4, 5], [-2, -1, 0], 'translateY(200%)'],
     [9, 1, 9, 11, [9, 0, 1], [0, 1, 2], 'translateY(-200%)'],
     [1, 9, 11, 9, [9, 0, 1], [-2, -1, 0], 'translateY(200%)']
-  ] as const)('rolls %s to %s with the source path', (from, to, previous, count, values, offsets, transform) => {
+  ] as const)('rolls %s to %s with the source path', (
+    from,
+    to,
+    previous,
+    count,
+    values,
+    offsets,
+    transform
+  ) => {
     const state = getBadgeDigitState(String(to), count, from, previous);
 
     expect(state.units.map(unit => unit.value)).toEqual(values);

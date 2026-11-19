@@ -80,7 +80,10 @@ test('Layout resets inherited and removed themes without replacing focused sideb
     await input.focus();
     await page.getByLabel('Inherit child Layout theme', { exact: true }).dispatchEvent('click');
 
-    await expect(nested.locator('.ant-layout-sider')).toHaveCSS('background-color', 'rgb(0, 21, 41)');
+    await expect(nested.locator('.ant-layout-sider')).toHaveCSS(
+      'background-color',
+      'rgb(0, 21, 41)'
+    );
     await expect(nested.locator('.ant-layout-header')).toHaveCSS('height', '88px');
     await expect(input).toBeFocused();
     const dark = page.locator('[data-layout-theme="dark"]');

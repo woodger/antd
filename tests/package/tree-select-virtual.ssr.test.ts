@@ -15,9 +15,17 @@ it('pins the TreeSelect virtual list and DOM-free renders to the Source delegate
     ['theme-estimate', false, 0], ['retained-single', false, 0], ['custom-popup', false, 0]
   ]);
   const [hidden, inherited, empty] = reference.observations;
+
   expect(hidden).toMatchObject({ id: 'hidden-scroll', actionErrors: [] });
-  expect(hidden.steps.at(-1)?.viewport).toMatchObject({ top: 280, first: 'Node 19', last: 'Node 24' });
-  expect(inherited).toMatchObject({ id: 'provider-virtual-undefined', initial: { viewport: { count: 5 } } });
+  expect(hidden.steps.at(-1)?.viewport).toMatchObject({
+    top: 280,
+    first: 'Node 19',
+    last: 'Node 24'
+  });
+  expect(inherited).toMatchObject({
+    id: 'provider-virtual-undefined',
+    initial: { viewport: { count: 5 } }
+  });
   expect(empty).toMatchObject({ id: 'empty-ref', actionErrors: [
     { name: 'TypeError', message: 'listRef.current?.scrollTo is not a function' }
   ] });

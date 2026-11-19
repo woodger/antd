@@ -155,7 +155,8 @@
       && !current[index]?.extra) {
       repairFocus = true;
       repairKey = key;
-    } else if (panels.length !== current.length
+    }
+    else if (panels.length !== current.length
       || current.some(
         (item, position) => item.key !== panels[position]?.dataset.collapseKey
       ))

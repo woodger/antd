@@ -22,6 +22,7 @@ describe('DirectoryTree ranges', () => {
     expect(getDirectoryRangeKeys([root], ['root'], 0, 'last', fields)).toEqual([0, 'last']);
     expect(getDirectoryRangeKeys([root], [], 'root', 'last', fields)).toEqual(['root']);
     const selected = getDirectorySelectedNodes([root], ['last', 0], fields);
+
     expect(selected).toEqual([zero, last]);
     expect(selected[0]).toBe(zero);
     expect(selected[1]).toBe(last);

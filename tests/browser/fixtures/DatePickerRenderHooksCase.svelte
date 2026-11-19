@@ -64,10 +64,16 @@
       return observation;
     });
   }
-  function observeFooter(mode: DatePickerMode) { footers.push(mode); return mode; }
+  function observeFooter(mode: DatePickerMode) {
+    footers.push(mode);
+    return mode;
+  }
   function observePanel() { return ++panels; }
   function callback(name: string, text?: unknown) { events.push({ name, text }); }
-  const onOpenChange = (next: boolean) => { open = next; callback('open', next); };
+  const onOpenChange = (next: boolean) => {
+    open = next;
+    callback('open', next);
+  };
   const onChange = (_value: unknown, text: unknown) => callback('change', text);
   const onCalendarChange = (_value: unknown, text: unknown) => callback('calendar', text);
   export function read() {

@@ -28,11 +28,26 @@ interface OriginalState {
 }
 interface OriginalReference { cases: Array<{ id: string; states: OriginalState[] }> }
 type Capture = NonNullable<ComponentProps<typeof SelectSurfaceOmissionCase>['capture']>;
-const original = JSON.parse(readFileSync(new URL('../browser/fixtures/ant-design-select-surface-omission-ssr-reference.json', import.meta.url), 'utf8')) as OriginalReference;
-const width = JSON.parse(readFileSync(new URL('../browser/fixtures/ant-design-select-surface-omission-width-ssr-reference.json', import.meta.url), 'utf8')) as OriginalReference;
+const original = JSON.parse(readFileSync(
+  new URL(
+    '../browser/fixtures/ant-design-select-surface-omission-ssr-reference.json',
+    import.meta.url
+  ),
+  'utf8'
+)) as OriginalReference;
+const width = JSON.parse(readFileSync(
+  new URL(
+    '../browser/fixtures/ant-design-select-surface-omission-width-ssr-reference.json',
+    import.meta.url
+  ),
+  'utf8'
+)) as OriginalReference;
 const samples: readonly NativeSelectSurfaceOmissionSample[] = [...omissionSamples,
   ...selectSurfaceOmissionNativeSamples.filter(sample => sample.initialOpen)];
-const states = [...original.cases, ...width.cases].flatMap(entry => entry.states.map(state => ({ id: entry.id, ...state })));
+const states = [...original.cases, ...width.cases].flatMap(entry => entry.states.map(state => ({
+  id: entry.id,
+  ...state
+})));
 
 function editor(html: string) {
   const tag = html.match(/<input\b[^>]*\brole="combobox"[^>]*>/)?.[0];
@@ -67,15 +82,34 @@ it.each(states)('renders original omission/width SSR $id/$name without browser r
     const { body } = render(SelectSurfaceOmissionCase, { props: { sample, capture } });
     const actual = capture.read!();
     const view = readSelectSurfaceSSR(body);
-    expect({ root: view.rootPresent, popup: view.popupPresent, prefix: view.prefixPresent, leaks: view.leakedAttributes })
+    expect({
+      root: view.rootPresent,
+      popup: view.popupPresent,
+      prefix: view.prefixPresent,
+      leaks: view.leakedAttributes
+    })
       .toEqual({ root: entry.view.rootPresent, popup: entry.view.popupPresent, prefix: entry.view.prefixPresent,
         leaks: entry.view.leakedAttributes });
     const classes = entry.view.authoredClasses.filter((name, index, all) =>
       initial.control !== 'autocomplete' || name !== 'surface-control' || all.indexOf(name) === index);
     expect([...view.authoredClasses].sort()).toEqual([...classes].sort());
-    expect({ model: actual.model, open: actual.open, query: actual.query, fontSize: actual.fontSize })
-      .toEqual({ model: entry.state.model, open: entry.state.open, query: entry.state.query, fontSize: entry.state.fontSize });
-    verifySelectSurfaceEventGraph(actual.rawModel, entry.state.rawModel, `${entry.id}/${entry.name} raw SSR model`);
+    expect({
+      model: actual.model,
+      open: actual.open,
+      query: actual.query,
+      fontSize: actual.fontSize
+    })
+      .toEqual({
+        model: entry.state.model,
+        open: entry.state.open,
+        query: entry.state.query,
+        fontSize: entry.state.fontSize
+      });
+    verifySelectSurfaceEventGraph(
+      actual.rawModel,
+      entry.state.rawModel,
+      `${entry.id}/${entry.name} raw SSR model`
+    );
     expect(normalizedSelectSurfaceAuthoredProps(actual.authoredProps))
       .toEqual(normalizedSelectSurfaceAuthoredProps(entry.state.authoredProps));
     expect(decodeSelectSurface(actual.authoredProvider)).toEqual(decodeSelectSurface(entry.state.authoredProvider));

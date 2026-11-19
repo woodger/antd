@@ -35,7 +35,10 @@ export function snapshotCheckboxPrefix() {
       return [host.dataset.checkboxPrefixScope!, {
         standalone: checkbox(host.querySelector('.fixture-checkbox-single')!),
         group: [...host.querySelectorAll('.fixture-checkbox-group label')].map(checkbox),
-        row: row ? { classes: classes(row), style: style(row, ['display', 'flex-grow', 'flex-basis']) }
+        row: row ? {
+          classes: classes(row),
+          style: style(row, ['display', 'flex-grow', 'flex-basis'])
+        }
           : null
       }];
     })

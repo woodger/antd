@@ -69,12 +69,14 @@
       next = keys;
       lastSelectedKey = key;
       cachedSelectedKeys = next;
-    } else if (multiple && event?.shiftKey) {
+    }
+    else if (multiple && event?.shiftKey) {
       next = [...new Set([
         ...(cachedSelectedKeys ?? []),
         ...getDirectoryRangeKeys(treeData, actualExpanded, key, lastSelectedKey, fieldNames)
       ])];
-    } else {
+    }
+    else {
       next = [key];
       lastSelectedKey = key;
       cachedSelectedKeys = next;

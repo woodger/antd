@@ -21,7 +21,10 @@
   const recorder = createDatePickerPresetsRecorder();
   const authoredDate = (name: MaskAuthoredDateName) =>
     recorder.register(dayjs(sample[name]), { authoredDate: name });
-  const authored = { initialStart: authoredDate('initialStart'), initialEnd: authoredDate('initialEnd') };
+  const authored = {
+    initialStart: authoredDate('initialStart'),
+    initialEnd: authoredDate('initialEnd')
+  };
   const initialModel = range ? [authored.initialStart, authored.initialEnd] as RangePickerValue
     : authored.initialStart;
   const initialPanel = range ? [authored.initialStart, authored.initialStart] as [Dayjs, Dayjs]
@@ -29,12 +32,18 @@
   const formats = {
     string: sample.plainFormat,
     object: recorder.register({ format: sample.plainFormat }, { authoredFormat: 'object' }),
-    mask: recorder.register({ format: sample.maskFormat, type: 'mask' as const }, { authoredFormat: 'mask' })
+    mask: recorder.register(
+      { format: sample.maskFormat, type: 'mask' as const },
+      { authoredFormat: 'mask' }
+    )
   };
   const rangeIds = { start: 'mask-input', end: 'mask-end' };
   const theme = { token: { motion: false } };
   const clock = { format: 'HH:mm:ss.SSS', showSecond: true, showMillisecond: true };
-  const noTimeRestrictions = recorder.register<DatePickerDisabledTime>({}, { authoredTimeRestrictions: true });
+  const noTimeRestrictions = recorder.register<DatePickerDisabledTime>(
+    {},
+    { authoredTimeRestrictions: true }
+  );
   const callbacks: MaskInvocation[] = [], producers: MaskInvocation[] = [];
   const ownerActions: unknown[] = [], lifecycle: Array<{ phase: 'mount' | 'unmount' }> = [];
   let model = $state.raw<Dayjs | RangePickerValue | null>(initialModel), open = $state(false);
@@ -49,7 +58,10 @@
     sameAsAuthored: Object.fromEntries(Object.entries(authored).map(([name, date]) => [name, date === value])) });
   function nestedDates(value: unknown, path: Array<string | number> = []): unknown[] {
     if (dayjs.isDayjs(value)) return [{ path, value: dates(value) }];
-    if (Array.isArray(value)) return value.flatMap((item, index) => nestedDates(item, [...path, index]));
+    if (Array.isArray(value)) return value.flatMap((item, index) => nestedDates(
+      item,
+      [...path, index]
+    ));
     if (value && typeof value === 'object' && Object.getPrototypeOf(value) === Object.prototype)
       return Object.entries(value).flatMap(([key, item]) => nestedDates(item, [...path, key]));
     return [];
@@ -63,18 +75,33 @@
     dates: nestedDates(args), receiver: context(receiver) });
   const record = (name: string, args: unknown[], receiver: unknown) =>
     callbacks.push(invocation(name, args, receiver, callbacks.length));
-  const handler = <Value,>(name: string, value: Value): Value => recorder.register(value, { callback: name });
+  const handler = <Value,>(name: string, value: Value): Value => recorder.register(
+    value,
+    { callback: name }
+  );
   const onChange = handler('change', function (this: unknown, next: Dayjs | RangePickerValue | null) {
-    record('change', Array.from(arguments), this); model = next;
+    record('change', Array.from(arguments), this);
+    model = next;
   });
   const onOpenChange = handler('open', function (this: unknown, next: boolean) {
-    record('open', Array.from(arguments), this); open = next;
+    record('open', Array.from(arguments), this);
+    open = next;
   });
-  const onCalendarChange = handler('calendar', function (this: unknown) { record('calendar', Array.from(arguments), this); });
-  const onPickerValueChange = handler('picker-value', function (this: unknown) { record('picker-value', Array.from(arguments), this); });
-  const onPanelChange = handler('panel', function (this: unknown) { record('panel', Array.from(arguments), this); });
-  const onOk = handler('ok', function (this: unknown) { record('ok', Array.from(arguments), this); });
-  const onClear = handler('clear', function (this: unknown) { record('clear', Array.from(arguments), this); });
+  const onCalendarChange = handler('calendar', function (this: unknown) {
+    record('calendar', Array.from(arguments), this);
+  });
+  const onPickerValueChange = handler('picker-value', function (this: unknown) {
+    record('picker-value', Array.from(arguments), this);
+  });
+  const onPanelChange = handler('panel', function (this: unknown) {
+    record('panel', Array.from(arguments), this);
+  });
+  const onOk = handler('ok', function (this: unknown) {
+    record('ok', Array.from(arguments), this);
+  });
+  const onClear = handler('clear', function (this: unknown) {
+    record('clear', Array.from(arguments), this);
+  });
   function produce<Value>(name: string, args: unknown[], receiver: unknown, returned: Value): Value {
     producers.push({ ...invocation(name, args, receiver, producers.length),
       returned: recorder.encode(returned), rawReturned: recorder.raw(returned),
@@ -108,9 +135,16 @@
     return { cursor, next: rows.length, rows: rows.slice(cursor) };
   };
   output.recorder = recorder;
-  output.setActionIndex = index => { actionIndex = index; substepIndex = -1; };
+  output.setActionIndex = index => {
+    actionIndex = index;
+    substepIndex = -1;
+  };
   output.setSubstepIndex = index => { substepIndex = index; };
-  output.readRefs = () => ({ owner: ownerElement ?? null, control: control ?? null, root: root ?? null });
+  output.readRefs = () => ({
+    owner: ownerElement ?? null,
+    control: control ?? null,
+    root: root ?? null
+  });
   output.readCallbacks = cursor => delta(callbacks, cursor);
   output.readProducers = cursor => delta(producers, cursor);
   output.read = () => {
@@ -121,12 +155,21 @@
       modelDates: nestedDates(model), producerCount: producers.length,
       formatValue: { type: typeof value, identity: typeof value === 'object' ? recorder.identity(value) : null,
         encoded: recorder.encode(value), raw: recorder.raw(value) },
-      authoredDates: { initialStart: dates(authored.initialStart), initialEnd: dates(authored.initialEnd) },
+      authoredDates: {
+        initialStart: dates(authored.initialStart),
+        initialEnd: dates(authored.initialEnd)
+      },
       authoredProps: recorder.encode(props), rawAuthoredProps: recorder.raw(props),
       callbacks: [...callbacks], ownerActions: [...ownerActions], lifecycle: [...lifecycle] };
   };
-  onMount(() => { alive = true; lifecycle.push({ phase: 'mount' });
-    return () => { alive = false; lifecycle.push({ phase: 'unmount' }); }; });
+  onMount(() => {
+    alive = true;
+    lifecycle.push({ phase: 'mount' });
+    return () => {
+      alive = false;
+      lifecycle.push({ phase: 'unmount' });
+    };
+  });
 </script>
 
 <ConfigProvider locale={enUS} {theme}>

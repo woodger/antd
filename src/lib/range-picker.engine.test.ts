@@ -23,6 +23,7 @@ describe('RangePicker source value semantics', () => {
     expect(validRange(locked, [false, false], true, [true, false], () => false, 'week', 'en_US'))
       .toBe(false);
     const ordered = orderedRange(pair, true, [false, false]);
+
     expect(ordered[0]).toBe(monday);
     expect(ordered[1]).toBe(sunday);
     expect(orderedRange(pair, false, [false, false])).toEqual([sunday, monday]);
@@ -46,6 +47,7 @@ describe('RangePicker source value semantics', () => {
     expect(validRange([start, end.month(2)], [false, false], true,
       [true, false], () => false, 'quarter')).toBe(false);
     const ordered = orderedRange(pair, true, [false, false]);
+
     expect(ordered[0]).toBe(end);
     expect(ordered[1]).toBe(start);
     expect(orderedRange(pair, false, [false, false])).toEqual([start, end]);

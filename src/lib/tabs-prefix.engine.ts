@@ -13,12 +13,7 @@ export function getTabsPrefixCss(prefix: string, rootPrefix = 'ant') {
 
   return template.replace(
     /\.ant-tabs([-\w]*)|\.ant-slide-(up|down)([-\w]*)|"ant-tabs"|" ant-tabs"/g,
-    (
-      match,
-      suffix: string | undefined,
-      slide: string | undefined,
-      phase: string | undefined
-    ) => {
+    (match, suffix: string | undefined, slide: string | undefined, phase: string | undefined) => {
       if (suffix !== undefined) {
         if (suffix === '-css-var') return `.ant-tabs-css-var${scope}`;
         return `.${prefix}${suffix}${rootStates.has(suffix) ? scope : ''}`;

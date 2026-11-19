@@ -21,7 +21,10 @@ async function open(page: Page, owner: RenderHooksOwner) {
   return input;
 }
 async function assertMode(page: Page, mode: string, datetime: boolean) {
-  await expect(popup(page).locator('[data-hook-footer]')).toHaveAttribute('data-hook-footer-mode', mode);
+  await expect(popup(page).locator('[data-hook-footer]')).toHaveAttribute(
+    'data-hook-footer-mode',
+    mode
+  );
   await expect(popup(page).locator('[data-picker-current]')).toHaveCount(mode === 'date' ? 1 : 0);
   await expect(popup(page).locator('.ant-picker-ok button')).toHaveCount(datetime ? 1 : 0);
   await expect(popup(page).locator('[data-hook-footer]')).toHaveJSProperty('parentElement',
@@ -71,7 +74,8 @@ async function assertSourceCells(page: Page, source: SourcePhase) {
       expect(cell.currentTemporal?.iso).toBe(temporal.iso);
       // JSON preserves the numeric offset, but cannot preserve negative zero.
       expect(cell.currentTemporal?.utcOffset === temporal.utcOffset).toBe(true);
-    } else if ('value' in original.current) expect(cell.current).toBe(original.current.value);
+    }
+    else if ('value' in original.current) expect(cell.current).toBe(original.current.value);
     else throw Error('Source cell must contain a temporal or scalar snapshot');
     const locale = source.locales.find(item => item.identity === original.localeIdentity)!;
     expect(Object.keys(cell.locale)).toEqual(locale.ownKeys);
@@ -94,12 +98,14 @@ for (const owner of owners) {
     await open(page, owner);
     await assertSourceCells(page, source.firstwrap);
     const panel = popup(page).locator('[data-hook-panel]');
+
     await expect(panel.locator('[data-picker-presets]')).toHaveCount(1);
     await expect(panel.locator('.ant-picker-panel-layout > div > .ant-picker-footer')).toHaveCount(1);
     await expect(panel.locator('.ant-picker-panel .ant-picker-footer')).toHaveCount(0);
     await assertMode(page, 'date', datetime);
     const observation = await read(page);
     const dates = observation.cells.filter(cell => cell.type === 'date');
+
     expect(dates.length).toBeGreaterThanOrEqual(range && !datetime ? 84 : 42);
     expect(dates[0].currentTemporal?.fields).toEqual([2024, 4, 26, 0, 0, 0, 0]);
     for (const cell of observation.cells) {
@@ -143,6 +149,7 @@ for (const owner of owners) {
     await page.clock.setFixedTime(new Date('2024-06-11T09:24:46.789Z'));
     await control(page, 'repaint');
     await control(page, 'cell-replace');
+
     await expect(popup(page).locator('[data-hook-cell]').first())
       .toHaveAttribute('data-hook-today', '2024-06-11T09:24:46.789Z');
     await expect(popup(page).locator('td[title="2024-06-11"]'))
@@ -151,6 +158,7 @@ for (const owner of owners) {
       .not.toHaveClass(/ant-picker-cell-today/);
     await page.clock.setFixedTime(new Date('2024-06-12T10:25:47.890Z'));
     await control(page, 'prefix');
+
     await expect(popup(page)).toHaveClass(/hook-picker-dropdown/);
     await expect(popup(page).locator('[data-hook-cell]').first())
       .toHaveAttribute('data-hook-today', '2024-06-12T10:25:47.890Z');
@@ -164,6 +172,7 @@ for (const owner of owners) {
   test(`DatePicker render hooks replace cells and keep disabled selection ${owner}`, async ({ page }) => {
     await open(page, owner);
     await control(page, 'cell-replace');
+
     await expect(popup(page).locator('[data-hook-cell] button')).toHaveCount(0);
     await expect(popup(page).locator('[data-hook-cell="wrap"]')).toHaveCount(0);
     const disabled = datetime ? popup(page).locator('ul[aria-label="minute"] [data-hook-value="0"]')
@@ -173,11 +182,14 @@ for (const owner of owners) {
     const calendarCount = () => read(page).then(value => value.events.filter(row => row.name === 'calendar').length);
     const before = await calendarCount();
     await disabled.click();
+
     expect(await calendarCount()).toBe(before);
     await enabled.click();
+
     await expect.poll(calendarCount).toBe(before + 1);
     if (!datetime && !range) await page.locator('#hook-field').click();
     await control(page, 'cell-empty-fragment');
+
     await expect(popup(page).locator('.ant-picker-cell-inner')).toHaveCount(0);
     await expect(popup(page).locator('.ant-picker-time-panel-cell-inner')).toHaveCount(0);
     await expect(popup(page).locator('td').first()).toBeVisible();
@@ -187,35 +199,45 @@ for (const owner of owners) {
     const input = await open(page, owner);
     const parent = await popup(page).elementHandle();
     await control(page, 'panel-replace');
+
     await expect(popup(page).locator('[data-hook-panel="replace"]')).toBeVisible();
     await expect(popup(page).locator('.ant-picker-panel-layout')).toHaveCount(0);
     const replaced = await read(page);
     await control(page, 'repaint');
     const repainted = await read(page);
+
     expect(repainted.cells).toEqual(replaced.cells);
     expect(repainted.footers).toEqual(replaced.footers);
     await popup(page).getByRole('button', { name: 'Custom panel' }).click();
+
     expect((await read(page)).events.at(-1)?.name).toBe('custom-panel');
     await control(page, 'panel-empty-fragment');
+
     await expect(popup(page).locator('[data-hook-panel]')).toHaveCount(0);
     await expect(popup(page)).toBeVisible();
     expect(await parent?.evaluate(node => node.isConnected)).toBe(true);
     await control(page, 'panel-wrap');
+
     await expect(popup(page).locator('[data-picker-presets]')).toHaveCount(1);
     await expect(popup(page).locator('[data-hook-footer]')).toHaveCount(1);
     await control(page, 'footer-empty-fragment');
+
     await expect(popup(page).locator('.ant-picker-footer-extra')).toHaveCount(1);
     await expect(popup(page).locator('[data-hook-footer]')).toHaveCount(0);
     await control(page, 'footer-absent');
+
     await expect(popup(page).locator('.ant-picker-footer-extra')).toHaveCount(0);
     await control(page, 'close');
+
     await expect(popup(page)).toHaveCount(0);
     const closed = await read(page);
     await control(page, 'repaint');
     const after = await read(page);
+
     expect(after.cells).toEqual(closed.cells);
     expect(after.footers).toEqual(closed.footers);
     await control(page, 'reopen');
+
     await expect(input).toHaveAttribute('aria-expanded', 'true');
     await expect(popup(page).locator('[data-hook-panel="wrap"]')).toBeVisible();
   });
@@ -230,14 +252,17 @@ for (const owner of owners) {
     await control(page, 'cell-editable');
     const editor = popup(page).getByRole('textbox', { name: 'Cell editor' }).first();
     await typeInAuthoredEditor(page, editor);
+
     expect((await read(page)).events.filter(row => row.name === 'calendar')).toHaveLength(0);
   });
   if (datetime) test(`DatePicker cell locale keeps the raw time defaults ${owner}`, async ({ page }) => {
     await open(page, owner);
     const before = (await read(page)).cells.length;
     await control(page, 'format-only');
+
     await expect(popup(page).locator('ul[aria-label="second"]')).toHaveCount(0);
     const cells = (await read(page)).cells.slice(before);
+
     expect(cells.length).toBeGreaterThan(0);
     for (const cell of cells) {
       expect(cell.locale.fieldTimeFormat).toBe('HH:mm:ss');
@@ -250,8 +275,10 @@ for (const owner of owners) {
     const text = await input.inputValue();
     const before = (await read(page)).cells.length;
     await control(page, 'panel-time');
+
     await expect.poll(async () => (await read(page)).cells.length).toBeGreaterThan(before);
     const dates = (await read(page)).cells.slice(before).filter(cell => cell.type === 'date');
+
     expect(dates.length).toBeGreaterThan(0);
     for (const cell of dates) expect(cell.currentTemporal?.fields.slice(3)).toEqual([9, 12, 34, 567]);
     await expect(input).toHaveValue(text);
@@ -259,18 +286,23 @@ for (const owner of owners) {
   test(`DatePicker origin cell follows locale formats in every panel ${owner}`, async ({ page }) => {
     await open(page, owner);
     await control(page, 'cell-locale');
+
     await expect(popup(page).getByRole('button', { name: '2024-06-13', exact: true }).first())
       .toHaveText('D13');
     await expect(popup(page).locator('.ant-picker-month-btn').first()).toHaveText('M06');
     if (datetime) await expect(popup(page).locator('ul[aria-label="meridiem"] button'))
       .toHaveText(['period AM', 'period PM']);
     await popup(page).locator('.ant-picker-month-btn').first().click();
+
     await expect(popup(page).locator('td[title="2024-06"] button')).toHaveText('M06');
     await popup(page).locator('.ant-picker-year-btn').click();
+
     await expect(popup(page).locator('td[title="2024"] button')).toHaveText('Y2024');
     await popup(page).locator('.ant-picker-year-btn').click();
+
     await expect(popup(page).locator('td[title="2020"] button')).toHaveText('Y2020-Y2029');
     const last = (await read(page)).cells.at(-1)!;
+
     expect(last.locale.cellDateFormat).toBe('[D]DD');
     expect(last.locale.cellYearFormat).toBe('[Y]YYYY');
   });
@@ -279,6 +311,7 @@ for (const owner of owners) {
 test('DatePicker confirmation keeps the Today label in a date-only panel', async ({ page }) => {
   await open(page, 'single-date');
   await control(page, 'confirm');
+
   await expect(popup(page).locator('[data-picker-current]')).toHaveText('Today');
   await expect(popup(page).locator('.ant-picker-ok button')).toBeVisible();
 });
@@ -288,6 +321,7 @@ test('DatePicker wrapped origin retains keyboard selection and isolates nested c
   const day = popup(page).getByRole('button', { name: '2024-06-13', exact: true });
   await day.focus();
   await day.press('ArrowRight');
+
   await expect(popup(page).getByRole('button', { name: '2024-06-15', exact: true })).toBeFocused();
   await popup(page).getByRole('button', { name: '2024-06-15', exact: true }).press('Enter');
   const before = (await read(page)).events.filter(row => row.name === 'calendar').length;
@@ -295,17 +329,21 @@ test('DatePicker wrapped origin retains keyboard selection and isolates nested c
   const button = minute.getByRole('button', { name: 'minute 30', exact: true });
   await button.focus();
   await button.press('ArrowDown');
+
   await expect(minute.getByRole('button', { name: 'minute 45', exact: true })).toBeFocused();
   expect((await read(page)).events.filter(row => row.name === 'calendar')).toHaveLength(before + 1);
   await control(page, 'nested');
+
   await expect(minute.locator('[data-authored-list]')).toHaveCount(4);
   const beforeCustom = (await read(page)).events.filter(row => row.name === 'calendar').length;
   await minute.getByRole('button', { name: 'Cell action', exact: true }).nth(2).click();
+
   expect((await read(page)).events.filter(row => row.name === 'calendar')).toHaveLength(beforeCustom);
   expect((await read(page)).events.at(-1)?.name).toBe('custom-cell');
   await control(page, 'nested');
   await minute.getByRole('button', { name: 'minute 30', exact: true }).focus();
   await page.keyboard.press('Home');
+
   await expect(minute.getByRole('button', { name: 'minute 15', exact: true })).toBeFocused();
 });
 
@@ -314,20 +352,29 @@ test('DatePicker custom cell content preserves manual time scroll through render
   const hour: Locator = popup(page).locator('ul[aria-label="hour"]');
   await page.mouse.move(1200, 900);
   const rect = await hour.boundingBox();
+
   expect(rect).not.toBeNull();
   await page.mouse.move(rect!.x + rect!.width / 2, rect!.y + 12);
   await page.mouse.wheel(0, 28);
   await page.mouse.move(1200, 900);
+
   await expect.poll(() => hour.evaluate(node => node.scrollTop)).toBeGreaterThan(0);
   const manual = await hour.evaluate(node => node.scrollTop);
   await control(page, 'cell-replace');
+
   await expect(hour.locator('button')).toHaveCount(0);
-  const clamped = await hour.evaluate((node, top) => Math.min(top, node.scrollHeight - node.clientHeight), manual);
+  const clamped = await hour.evaluate(
+    (node, top) => Math.min(top, node.scrollHeight - node.clientHeight),
+    manual
+  );
+
   await expect.poll(() => hour.evaluate(node => node.scrollTop)).toBe(clamped);
   await control(page, 'close');
   await control(page, 'reopen');
+
   await expect.poll(() => hour.evaluate(node => node.scrollTop)).toBe(clamped);
   await control(page, 'cell-wrap');
+
   await expect(hour.locator('button')).toHaveCount(2);
   await expect.poll(() => hour.evaluate(node => node.scrollTop)).toBe(clamped);
 });

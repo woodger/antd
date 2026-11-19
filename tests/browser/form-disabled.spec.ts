@@ -7,6 +7,7 @@ for (const { sample, metrics } of reference.cases) {
     await page.goto('/?fixture=form-disabled');
     await page.getByRole('combobox', { name: 'Form disabled sample', exact: true })
       .selectOption(sample.id);
+
     await expect.poll(() => page.evaluate(formDisabledMetrics)).toEqual(metrics);
   });
 }
@@ -41,6 +42,7 @@ test('Form disabled updates preserve native controls, selection and free Select 
       .toHaveText('b');
   }
   await select.click();
+
   await expect(page.getByRole('option', { name: 'Beta', exact: true }))
     .toHaveAttribute('aria-selected', 'true');
 });
@@ -49,6 +51,7 @@ test('Form keeps native submitting locks separate from inherited disabled and lo
   await page.goto('/?fixture=form-disabled');
   const submit = page.getByRole('button', { name: 'Submit disabled form', exact: true });
   await submit.click();
+
   await expect(page.getByRole('status', { name: 'Disabled submission', exact: true }))
     .toHaveText('pending');
 
@@ -61,6 +64,7 @@ test('Form keeps native submitting locks separate from inherited disabled and lo
   await expect(page.getByRole('combobox', { name: 'Free select', exact: true })).toBeEnabled();
 
   await page.getByRole('button', { name: 'Release disabled submission', exact: true }).click();
+
   await expect(submit).toBeEnabled();
   await expect(page.getByRole('textbox', { name: 'Bound input', exact: true }))
     .toHaveValue('Draft');

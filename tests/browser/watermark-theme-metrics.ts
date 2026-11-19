@@ -18,7 +18,10 @@ export async function snapshotWatermarkTheme() {
     const id = host.dataset.watermarkTheme!;
     const root = host.querySelector<HTMLElement>('.theme-watermark')!;
     const mark = root.querySelector<HTMLElement>(':scope > div[style*="background-image"]');
-    if (!mark) { result[id] = null; continue; }
+    if (!mark) {
+      result[id] = null;
+      continue;
+    }
     const css = getComputedStyle(mark);
     const url = /url\(["']?(.*?)["']?\)/.exec(css.backgroundImage)![1];
     const image = new Image();
@@ -32,7 +35,10 @@ export async function snapshotWatermarkTheme() {
     context.drawImage(image, 0, 0);
     const bytes = context.getImageData(0, 0, copy.width, copy.height).data;
     let peakAlpha = 0;
-    for (let index = 3; index < bytes.length; index += 4) peakAlpha = Math.max(peakAlpha, bytes[index]);
+    for (let index = 3; index < bytes.length; index += 4) peakAlpha = Math.max(
+      peakAlpha,
+      bytes[index]
+    );
     result[id] = {
       mark: Object.fromEntries([
         'position', 'z-index', 'left', 'top', 'width', 'height', 'pointer-events',

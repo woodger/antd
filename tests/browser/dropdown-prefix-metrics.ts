@@ -25,9 +25,16 @@ export function snapshotDropdownPrefix() {
     icon: css(part('-item-icon'), ['font-size', 'margin-inline-end', 'min-width']),
     divider: css(part('-item-divider'), ['height', 'margin', 'background-color']),
     arrow: arrow ? {
-      root: css(arrow, ['width', 'height', 'top', 'bottom', 'inset-inline-start', 'inset-inline-end', 'transform']),
+      root: css(
+        arrow,
+        ['width', 'height', 'top', 'bottom', 'inset-inline-start', 'inset-inline-end', 'transform']
+      ),
       before: css(arrow, ['width', 'height', 'background-color', 'clip-path'], '::before'),
-      after: css(arrow, ['width', 'height', 'background-color', 'box-shadow', 'transform'], '::after')
+      after: css(
+        arrow,
+        ['width', 'height', 'background-color', 'box-shadow', 'transform'],
+        '::after'
+      )
     } : null
   };
 }

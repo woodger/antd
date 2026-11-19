@@ -33,12 +33,18 @@
           : selected === 'empty-array' ? [] : selected === 'array' ? ['[', node, ']'] : node };
     };
   }
-  let hasFeedback = $derived<FormItemProps['hasFeedback']>(feedback ? mode ? { icons: icons('local', mode) } : true : false);
+  let hasFeedback = $derived<FormItemProps['hasFeedback']>(feedback ? mode ? { icons: icons(
+    'local',
+    mode
+  ) } : true : false);
   function apply(action: MentionsFeedbackAction) {
     if (action === 'error') status = 'error';
     if (action === 'update-icon') revision++;
     if (action === 'toggle-feedback') feedback = !feedback;
-    if (action === 'swap-affixes') { feedback = !feedback; clear = !clear; }
+    if (action === 'swap-affixes') {
+      feedback = !feedback;
+      clear = !clear;
+    }
     if (action === 'hide-icon') mode = 'false';
     if (action === 'show-icon') mode = 'custom';
     if (action === 'validate') void model.validateFields(['node']).catch(() => {});

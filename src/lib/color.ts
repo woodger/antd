@@ -26,7 +26,8 @@ export class AggregationColor {
         color: new AggregationColor(entry.color), percent: entry.percent
       }));
       this.metaColor = new ColorCore(this.colors[0].color.metaColor);
-    } else {
+    }
+    else {
       this.metaColor = new ColorCore(Array.isArray(color) ? '' : color as ColorGenInput);
     }
     if (!color || Array.isArray(color) && !this.colors) {

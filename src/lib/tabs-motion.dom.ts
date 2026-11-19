@@ -188,7 +188,8 @@ export function createTabsPaneMotion(
             });
           });
         });
-      } else start();
+      }
+      else start();
     },
     destroy() {
       active = false;

@@ -37,6 +37,7 @@ for (const sample of reference.cases) {
       await page.getByLabel('Picker theme popup', { exact: true }).selectOption(mode);
       await page.locator(`[data-picker-theme="normal"] [data-picker-input="${mode}"]`)
         .scrollIntoViewIfNeeded();
+
       await expect(page.locator('.theme-picker-popup')).toBeVisible();
 
       await expect.poll(() => page.evaluate(snapshotPickerThemePopup)).toEqual(expected);
@@ -49,6 +50,7 @@ for (const sample of reference.headerCases) {
     await page.getByLabel('Picker theme preset', { exact: true }).selectOption('default');
     await page.getByLabel('Picker datetime header', { exact: true }).selectOption(sample.name);
     await page.getByLabel('Picker theme popup', { exact: true }).selectOption('datetime');
+
     await expect(page.locator('.theme-picker-popup')).toBeVisible();
 
     await expect.poll(() => page.evaluate(snapshotPickerThemePopup)).toEqual(sample.metrics);
@@ -60,6 +62,7 @@ test('TimePicker token updates preserve source scroll positions, selection and c
     await page.getByLabel('Picker theme popup', { exact: true }).selectOption('time');
     const input = page.locator('[data-picker-theme="normal"] [data-picker-input="time"] input');
     const popup = page.locator('.theme-picker-popup');
+
     await expect.poll(() => page.evaluate(snapshotPickerThemeScroll))
       .toEqual(reference.warmResize.before.columns);
     const originalInput = await input.elementHandle();
@@ -93,6 +96,7 @@ test('TimePicker token updates preserve source scroll positions, selection and c
     await expect(input).toHaveValue(reference.commitObservation.input);
     const expected = reference.commitObservation.events
       .map(event => `change:${event.mode}:${event.value}`);
+
     await expect(page.getByLabel('Picker theme events normal', { exact: true }))
       .toHaveText(JSON.stringify(expected));
   });

@@ -19,7 +19,10 @@ function getEntry(algorithms: readonly MappingAlgorithm[]) {
   return node?.value;
 }
 
-function deletePath(current: Map<MappingAlgorithm, ThemeCacheNode>, path: readonly MappingAlgorithm[]) {
+function deletePath(
+  current: Map<MappingAlgorithm, ThemeCacheNode>,
+  path: readonly MappingAlgorithm[]
+) {
   const node = current.get(path[0])!;
   if (path.length === 1) {
     if (!node.map) current.delete(path[0]);
@@ -53,7 +56,8 @@ export function createDerivativeTheme(
     algorithms.forEach((algorithm, index) => {
       if (index === algorithms.length - 1) {
         current.set(algorithm, { value: [theme, callCount++] });
-      } else {
+      }
+      else {
         const node = current.get(algorithm);
         if (!node) current.set(algorithm, { map: new Map() });
         else node.map ??= new Map();

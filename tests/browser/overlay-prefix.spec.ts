@@ -12,14 +12,19 @@ async function select(page: Page, name: string) {
   if (name.startsWith('typography-')) {
     await expect(page.locator('[data-config-anchor]')).toBeVisible();
     await page.locator('[data-config-anchor]').hover();
-  } else await expect(page.locator('#config-case')).toBeVisible();
+  }
+  else await expect(page.locator('#config-case')).toBeVisible();
 }
 
 const next = (page: Page) => page.getByRole('button', { name: 'Next prefix frame', exact: true })
   .dispatchEvent('click');
 
 function values(sample: OverlayConfigCase, step: number) {
-  const value: OverlayConfigValues = Object.assign({}, sample, ...(sample.frames?.slice(0, step) ?? []));
+  const value: OverlayConfigValues = Object.assign(
+    {},
+    sample,
+    ...(sample.frames?.slice(0, step) ?? [])
+  );
   return { component: sample.component, prefixCls: value.local?.prefixCls };
 }
 
@@ -52,7 +57,10 @@ for (const component of ['tooltip', 'popover', 'popconfirm', 'avatar-group', 'ty
     for (let step = 1; step < sample.snapshots.length; step++) {
       await next(page);
 
-      await expect.poll(() => page.evaluate(snapshotOverlayPrefix, values(sample as OverlayConfigCase, step)))
+      await expect.poll(() => page.evaluate(
+        snapshotOverlayPrefix,
+        values(sample as OverlayConfigCase, step)
+      ))
         .toEqual(sample.snapshots[step]);
       await expect(input).toHaveValue('Prefix draft');
       await expect(input).toBeFocused();
@@ -84,7 +92,10 @@ for (const name of ['slider-reactive', 'slider-range-reactive']) {
       if (step) await next(page);
 
       await expect(page.getByRole('tooltip')).toHaveCount(1);
-      await expect.poll(() => page.evaluate(snapshotOverlayPrefix, values(sample as OverlayConfigCase, step)))
+      await expect.poll(() => page.evaluate(
+        snapshotOverlayPrefix,
+        values(sample as OverlayConfigCase, step)
+      ))
         .toEqual([expected![0]]);
       await expect(handles.first()).toBeFocused();
     }
@@ -112,6 +123,7 @@ for (const component of ['tooltip', 'popover', 'popconfirm']) {
           return { color: style.color, background: style.backgroundColor,
             fontSize: style.fontSize, lineHeight: style.lineHeight, padding: style.padding };
         });
+
       await expect(popup).toHaveClass(new RegExp(`(?:^|\\s)${prefix}(?:\\s|$)`));
       const before = await paint();
 
@@ -129,12 +141,14 @@ test('Popover prefixes preserve native title bounds on a narrow viewport', async
   await page.getByLabel('Native prefix theme', { exact: true }).dispatchEvent('click');
   await page.setViewportSize({ width: 300, height: 400 });
   const title = page.locator('[data-ant-popover-title]');
+
   await expect(title).toHaveCSS('min-width', '252px');
 
   await next(page);
 
   await expect(title).toHaveCSS('min-width', '252px');
   const bounds = await title.boundingBox();
+
   expect(bounds!.width).toBeLessThanOrEqual(252);
 });
 
@@ -157,7 +171,10 @@ for (const sample of reference.cases.filter(sample => sample.name.endsWith('-por
     const popup = page.locator('[popover]:popover-open');
 
     expect(await popup.evaluate(node => node.parentElement === document.body)).toBe(true);
-    await expect.poll(() => page.evaluate(snapshotOverlayPrefix, values(sample as OverlayConfigCase, 0)))
+    await expect.poll(() => page.evaluate(
+      snapshotOverlayPrefix,
+      values(sample as OverlayConfigCase, 0)
+    ))
       .toEqual(sample.snapshots[0]);
   });
 }

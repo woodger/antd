@@ -6,7 +6,11 @@
   let { sample }: { sample: string } = $props();
   const initial = untrack(() => sample), autocomplete = initial.startsWith('ac-');
   const multiple = initial.includes('backspace'), slot = initial.includes('-root') || initial.startsWith('root-') ? 'root' : 'input';
-  const options = [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }, { value: 'locked', label: 'Locked', disabled: true }];
+  const options = [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }, {
+    value: 'locked',
+    label: 'Locked',
+    disabled: true
+  }];
   let single = $state<string | undefined>('a'), completion = $state('a');
   let values = $state(['a', 'b', 'locked']), open = $state(initial.endsWith('-open'));
   let control = $state<SelectRef>();
@@ -17,20 +21,32 @@
   const form = createForm<{ choice: string }>({ initialValues: { choice: 'a' } });
   const search = { filterOption: false, onSearch: (value: string) => { searches.push(value); } };
   const clear = { clearIcon: '×', label: 'Regression clear' };
-  function register(context: SelectInputContext<HTMLInputElement> | SelectRootContext<HTMLInputElement>, node: HTMLInputElement) {
+  function register(
+    context: SelectInputContext<HTMLInputElement> | SelectRootContext<HTMLInputElement>,
+    node: HTMLInputElement
+  ) {
     return context.register({ nativeElement: node, inputElement: node,
-      focus(...args: [FocusOptions?]) { focusOrder.push('composite-focus'); focusCalls.push(args); node.focus(...args); },
+      focus(...args: [FocusOptions?]) {
+        focusOrder.push('composite-focus');
+        focusCalls.push(args);
+        node.focus(...args);
+      },
       blur() { node.blur(); }
     });
   }
-  function onBlur(event: FocusEvent) { blurCalls.push({ type: event.type, tag: (event.currentTarget as Element | null)?.tagName }); }
+  function onBlur(event: FocusEvent) {
+    blurCalls.push({ type: event.type, tag: (event.currentTarget as Element | null)?.tagName });
+  }
   function onFocus() { focusOrder.push('public-focus'); }
   function read() {
     return { model: initial === 'default-blur' ? form.values.choice : multiple ? [...values] : autocomplete ? completion : single,
       open, focusCalls: focusCalls.map(args => [...args]), focusOrder: [...focusOrder], changes: [...changes], deselections: [...deselections], searches: [...searches],
       blurCalls: [...blurCalls], validatorCalls: [...validatorCalls], touched: form.isFieldTouched('choice'), clears };
   }
-  function focus() { if (!control) throw Error('Mounted public control required'); control.focus(); }
+  function focus() {
+    if (!control) throw Error('Mounted public control required');
+    control.focus();
+  }
 </script>
 
 {#snippet suffix()}<span data-component-regression-suffix style="pointer-events:auto">S</span>{/snippet}

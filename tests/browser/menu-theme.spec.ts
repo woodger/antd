@@ -130,6 +130,7 @@ test('plain overrides reach inline children while popup variables keep their own
   await page.getByLabel('Themed Menu mode', { exact: true }).selectOption('vertical');
   await root.getByRole('menuitem', { name: 'Parent', exact: true }).click();
   const leaf = root.locator('.menu-popup').getByRole('menuitem', { name: 'Leaf', exact: true });
+
   await expect(leaf).toHaveCSS('background-color', 'rgb(230, 244, 255)');
   await page.getByLabel('Menu selected background', { exact: true }).evaluate(element => {
     const input = element as HTMLInputElement;
@@ -195,6 +196,7 @@ test('provider scope resets aliases inherited from surrounding content', async (
   await expect(item).toHaveCSS('font-size', '14px');
   await expect(item).toHaveCSS('color', 'rgba(0, 0, 0, 0.88)');
   await root.getByRole('menuitem', { name: 'Parent', exact: true }).click();
+
   await expect(root.locator('.menu-popup').getByRole('menuitem', { name: 'Child', exact: true }))
     .toHaveCSS('color', 'rgba(0, 0, 0, 0.88)');
 });
@@ -222,6 +224,7 @@ test('light and dark hover tokens apply without selecting disabled items', async
 
 test('prerendered horizontal popups stay hidden and leave provider controls accessible', async ({ page }) => {
   const popups = page.locator('.menu-token-horizontal-light .menu-popup, .menu-token-horizontal-dark .menu-popup');
+
   await expect(popups).toHaveCount(2);
   await expect(popups.nth(0)).toBeHidden();
   await expect(popups.nth(1)).toBeHidden();
@@ -250,6 +253,7 @@ test('custom prefix and narrow RTL keep popup bounds, keyboard return and scope 
   expect(await root.evaluate(element =>
     [...element.classList].some(name => name.startsWith('css-')))).toBe(false);
   const bounds = (await popup.boundingBox())!;
+
   expect(bounds.x).toBeGreaterThanOrEqual(0);
   expect(bounds.x + bounds.width).toBeLessThanOrEqual(320);
   await leaf.press('Escape');

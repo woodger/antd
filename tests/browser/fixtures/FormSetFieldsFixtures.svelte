@@ -14,7 +14,12 @@
   } });
   const patches: Record<string, readonly FormFieldData[]> = {
     'computed-validated': [{ name: 'name', validated: true }],
-    'server-messages': [{ name: 'name', errors: ['Server error'], warnings: ['Heads up'], touched: false }],
+    'server-messages': [{
+      name: 'name',
+      errors: ['Server error'],
+      warnings: ['Heads up'],
+      touched: false
+    }],
     'touch-only': [{ name: 'name', touched: true }],
     'values-and-paths': [
       { name: 'name', value: 'Changed' },
@@ -29,7 +34,12 @@
     'clear-messages': [
       { name: 'name', errors: [], warnings: [] }, { name: ['user', 'name'], errors: [] }
     ],
-    'explicit-undefined-value': [{ name: 'name', value: undefined, errors: undefined, warnings: undefined }],
+    'explicit-undefined-value': [{
+      name: 'name',
+      value: undefined,
+      errors: undefined,
+      warnings: undefined
+    }],
     'unbound-metadata': [
       { name: 'unbound', value: 'Hidden changed', errors: ['Invisible'], touched: true },
       { name: 'missing', errors: ['Ignored'], warnings: ['Ignored'], touched: true }
@@ -45,7 +55,13 @@
       { name: 'name', validating: false, errors: ['Override'], warnings: ['Override warning'] }
     ],
     'ruleless-metadata': [
-      { name: ['user', 'name'], errors: ['Bare server'], warnings: ['Bare note'], touched: true, validating: true }
+      {
+        name: ['user', 'name'],
+        errors: ['Bare server'],
+        warnings: ['Bare note'],
+        touched: true,
+        validating: true
+      }
     ],
     'ruleless-cleared': [{ name: ['user', 'name'], validating: false }],
     'fresh-value': [{ name: 'name', value: 'New value', errors: ['Server after write'] }],
@@ -60,7 +76,10 @@
   function hold(value: unknown) {
     const id = calls++;
     return new Promise<string | void>((resolve) => {
-      pending.push({ id, complete: (message) => resolve(value === 'New value' ? undefined : message) });
+      pending.push({
+        id,
+        complete: (message) => resolve(value === 'New value' ? undefined : message)
+      });
     });
   }
 
@@ -68,7 +87,8 @@
     const id = nextRequest++;
     try {
       await form.validateFields(['name']);
-    } catch (error) {
+    }
+    catch (error) {
       if (!(error instanceof FormValidationError)) throw error;
     }
     finished.push(id);
@@ -87,7 +107,10 @@
 
   function snapshot() {
     const meta: (FormFieldMeta | null)[] = [];
-    const mounted = form.getFieldsValue({ filter: (value) => { meta.push(value); return true; } });
+    const mounted = form.getFieldsValue({ filter: (value) => {
+      meta.push(value);
+      return true;
+    } });
 
     return {
       values: encodeFormValues(form.getFieldsValue(true)), mounted: encodeFormValues(mounted),

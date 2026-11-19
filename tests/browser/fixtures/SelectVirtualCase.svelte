@@ -47,9 +47,16 @@
     ...(sample.layout === 'scaled-shadow' ? { getPopupContainer } : {}) });
   let innerProps = $derived(selectVirtualProviderProps(settings.inner));
   let options = $derived(selectVirtualOptions(data, settings.count));
-  let autoOptions: readonly AutoCompleteItem[] = $derived(selectVirtualOptions(data, settings.count, sample.groups)
+  let autoOptions: readonly AutoCompleteItem[] = $derived(selectVirtualOptions(
+    data,
+    settings.count,
+    sample.groups
+  )
     .map(option => 'options' in option
-      ? { ...option, options: option.options.map(item => autoData.find(original => original.key === item.key)!) }
+      ? {
+        ...option,
+        options: option.options.map(item => autoData.find(original => original.key === item.key)!)
+      }
       : autoData.find(original => original.key === option.key)!));
 
   function record(...entry: unknown[]) { events.push(entry); }
@@ -58,8 +65,14 @@
     if (sample.family === 'auto-complete') query = typeof next === 'string' ? next : '';
     record('change', next ?? null);
   }
-  function search(next: string) { query = next; record('search', next); }
-  function opening(next: boolean) { open = next; record('open', next); }
+  function search(next: string) {
+    query = next;
+    record('search', next);
+  }
+  function opening(next: boolean) {
+    open = next;
+    record('open', next);
+  }
   function active(next: string | null) { record('active', next); }
   function focused() { record('focus'); }
   function blurred() { record('blur'); }
@@ -69,7 +82,9 @@
       holder: node.classList.contains('ant-select-dropdown-list-holder'), top: node.scrollTop,
       left: node.scrollLeft, clientHeight: node.clientHeight, scrollHeight: node.scrollHeight });
   }
-  function filterOption(text: string, option: { value: unknown }) { return String(option.value).includes(text); }
+  function filterOption(text: string, option: { value: unknown }) {
+    return String(option.value).includes(text);
+  }
   function filterAutoOption(text: string, option: AutoCompleteItem) {
     return 'value' in option && String(option.value).includes(text);
   }
@@ -90,12 +105,16 @@
         shadowStyleCopies.set(original, copy);
         const following = originals.slice(index + 1).map(node => shadowStyleCopies.get(node)).find(Boolean);
         shadow.insertBefore(copy, following ?? null);
-      } else {
+      }
+      else {
         for (const name of copy.getAttributeNames()) {
           if (name !== 'data-select-virtual-copied' && !original.hasAttribute(name)) copy.removeAttribute(name);
         }
         for (const attribute of original.attributes) {
-          if (copy.getAttribute(attribute.name) !== attribute.value) copy.setAttribute(attribute.name, attribute.value);
+          if (copy.getAttribute(attribute.name) !== attribute.value) copy.setAttribute(
+            attribute.name,
+            attribute.value
+          );
         }
         if (original instanceof HTMLStyleElement && copy.textContent !== original.textContent)
           copy.textContent = original.textContent;
@@ -151,10 +170,12 @@
     else if (action.type === 'value') {
       model = action.value;
       if (sample.family === 'auto-complete') query = typeof action.value === 'string' ? action.value : '';
-    } else if (action.type === 'query') {
+    }
+    else if (action.type === 'query') {
       query = action.text;
       if (sample.family === 'auto-complete') model = action.text;
-    } else if (action.type === 'ref') {
+    }
+    else if (action.type === 'ref') {
       if (action.method === 'scrollTo') control?.scrollTo(scrollTarget(action.target));
       else if (action.method === 'focus') control?.focus(action.options);
       else control?.blur();
@@ -166,7 +187,9 @@
     const editor = publicEditor ?? root?.querySelector<HTMLInputElement | HTMLTextAreaElement>('input,textarea') ?? undefined;
     return { root, anchor: root, editor, control, publicRoot, publicEditor, renders };
   }
-  export function readReceipts() { return selectVirtualReceipts(settings, outerProps, innerProps, localProps); }
+  export function readReceipts() {
+    return selectVirtualReceipts(settings, outerProps, innerProps, localProps);
+  }
   export function readEvents() { return events; }
   export function readModel() { return model; }
   export function readQuery() { return query; }

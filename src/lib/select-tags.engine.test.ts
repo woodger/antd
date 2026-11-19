@@ -22,17 +22,31 @@ describe('Select tag option source boundaries', () => {
         : filter === 'label' ? (search: string, option: SelectOption<string | number>) =>
           option.label.includes(search) : filter === false ? false : true;
       const fields = 'optionFilterProp' in entry.sample ? entry.sample.optionFilterProp : undefined;
-      const maps = collectSelectData<string | number, SelectOption<string | number>>(options, names, fields);
-      const selected = resolveSelectDataCache(entry.sample.values, maps, names, emptySelectDataCache());
+      const maps = collectSelectData<string | number, SelectOption<string | number>>(
+        options,
+        names,
+        fields
+      );
+      const selected = resolveSelectDataCache(
+        entry.sample.values,
+        maps,
+        names,
+        emptySelectDataCache()
+      );
       const result = flattenSelectData(getSelectTagOptions(
         options, selected.display, maps, names, entry.sample.search,
         { filterOption: predicate, optionFilterProp: fields }
-      ), names).map(row => ({ ...row.data, label: String(selectDataContent(row)), disabled: Boolean(row.data.disabled) }));
+      ), names).map(row => ({
+        ...row.data,
+        label: String(selectDataContent(row)),
+        disabled: Boolean(row.data.disabled)
+      }));
 
       if (entry.sample.id === 'whitespace') {
         expect(entry.options).toEqual([{ value: '   ', label: '   ', disabled: false }]);
         expect(result).toEqual([]);
-      } else {
+      }
+      else {
         expect(result).toEqual(entry.options);
       }
     });
@@ -41,7 +55,12 @@ describe('Select tag option source boundaries', () => {
   it('retains cached selected labels/disabled state and never mutates owner options', () => {
     const options = Object.freeze([{ value: 'a', label: 'Alpha' }]);
     const locked = { value: 'locked', label: 'Retained', disabled: true };
-    const cached = resolveSelectDataCache(['locked'], collectSelectData([locked], names), names, emptySelectDataCache());
+    const cached = resolveSelectDataCache(
+      ['locked'],
+      collectSelectData([locked], names),
+      names,
+      emptySelectDataCache()
+    );
     const maps = collectSelectData(options, names);
     const selected = resolveSelectDataCache(['locked'], maps, names, cached);
     const result = getSelectTagOptions(options, selected.display, maps, names, '');

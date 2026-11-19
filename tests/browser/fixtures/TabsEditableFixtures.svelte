@@ -60,7 +60,8 @@
         const key = `new-${nextKey++}`;
         added = [...added, { key, label: key, children: addedContent }];
         if (selectOnEdit) current = key;
-      } else if (typeof target === 'string') {
+      }
+      else if (typeof target === 'string') {
         closed = [...closed, target];
         if (selectOnEdit && current === target) {
           current = items.find(item => item.key !== target && !item.disabled)?.key;

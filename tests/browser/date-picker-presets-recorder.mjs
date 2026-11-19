@@ -2,7 +2,10 @@
 export const createDatePickerPresetsRecorder = function createSelectSurfaceRecorder() {
   const roles = new Map(), identities = new WeakMap();
   let nextIdentity = 0;
-  const key = value => typeof value === 'symbol' ? { symbol: Symbol.keyFor(value) ?? null, description: value.description } : value;
+  const key = value => typeof value === 'symbol' ? {
+    symbol: Symbol.keyFor(value) ?? null,
+    description: value.description
+  } : value;
   const id = value => {
     if (!identities.has(value)) identities.set(value, ++nextIdentity);
     return identities.get(value);
@@ -28,7 +31,11 @@ export const createDatePickerPresetsRecorder = function createSelectSurfaceRecor
         attributes: item.nodeType === 1 ? [...item.attributes].map(attr => [attr.name, attr.value]) : null };
       if (seen.has(item)) return { $: 'alias', index: seen.get(item) };
       seen.set(item, seen.size);
-      if (typeof item === 'function') return { $: 'function', name: Object.getOwnPropertyDescriptor(item, 'name')?.value ?? '', own: own(item) };
+      if (typeof item === 'function') return {
+        $: 'function',
+        name: Object.getOwnPropertyDescriptor(item, 'name')?.value ?? '',
+        own: own(item)
+      };
       const properties = Reflect.ownKeys(item).map(name => {
         const d = Object.getOwnPropertyDescriptor(item, name);
         return { key: key(name), ...('value' in d ? { value: walk(d.value) }
@@ -48,9 +55,14 @@ export const createDatePickerPresetsRecorder = function createSelectSurfaceRecor
       const node = { id: identity, type: typeof item, array: Array.isArray(item),
         authoredRole: roles.has(item) ? roles.get(item) : null };
       objects.push(node);
-      if (typeof Window !== 'undefined' && item instanceof Window) { node.opaque = 'ambient-window'; return { ref: identity }; }
+      if (typeof Window !== 'undefined' && item instanceof Window) {
+        node.opaque = 'ambient-window';
+        return { ref: identity };
+      }
       if (typeof Node !== 'undefined' && item instanceof Node) {
-        node.opaque = 'dom-node'; node.nodeType = item.nodeType; node.nodeName = item.nodeName;
+        node.opaque = 'dom-node';
+        node.nodeType = item.nodeType;
+        node.nodeName = item.nodeName;
         node.attributes = item.nodeType === 1 ? [...item.attributes].map(attr => [attr.name, attr.value]) : null;
         return { ref: identity };
       }
@@ -69,11 +81,15 @@ export const createDatePickerPresetsRecorder = function createSelectSurfaceRecor
     return { root: walk(value), objects };
   };
   const calls = [];
-  return { register(value, role) { roles.set(value, role); return value; }, encode, raw, own,
+  return { register(value, role) {
+    roles.set(value, role);
+    return value;
+  }, encode, raw, own,
     identity: id, calls,
     record(kind, side, argument, result, extra = {}) {
       const call = { index: calls.length, kind, side, argument: encode(argument), result: encode(result),
         rawArgument: raw(argument), rawResult: raw(result), ...extra };
-      calls.push(call); return result;
+      calls.push(call);
+      return result;
     } };
 };

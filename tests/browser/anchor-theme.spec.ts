@@ -49,6 +49,7 @@ test('theme colors retain links, focus, scroll, history and callback state', asy
   const link = root.getByRole('link', { name: 'Delivery', exact: true });
   await link.focus();
   await link.press('Enter');
+
   await expect.poll(() => page.locator('#anchor-theme-scroll').evaluate(node => node.scrollTop))
     .toBe(200);
   await expect(link).toHaveClass(/-title-active/);
@@ -72,7 +73,10 @@ test('theme colors retain links, focus, scroll, history and callback state', asy
 });
 
 test('component algorithms retain native links and do not publish scroll callbacks', async ({ page }) => {
-  const link = page.locator('.anchor-token-main').getByRole('link', { name: 'Overview', exact: true });
+  const link = page.locator('.anchor-token-main').getByRole(
+    'link',
+    { name: 'Overview', exact: true }
+  );
   await link.focus();
   const original = await link.elementHandle();
   const changes = await page.getByLabel('Anchor theme changes', { exact: true }).textContent();
@@ -94,6 +98,7 @@ test('semantic and plain spacing overrides retain priority during source updates
   await page.getByLabel('Anchor token preset', { exact: true }).selectOption('own-tokens');
   await page.getByLabel('Override Anchor spacing', { exact: true }).check();
   const item = page.locator('.anchor-token-main .ant-anchor > .ant-anchor-link').first();
+
   await expect(item).toHaveCSS('padding-inline-start', '37px');
 
   await page.getByLabel('Anchor color override', { exact: true }).fill('#123456');
@@ -107,7 +112,10 @@ test('semantic and plain spacing overrides retain priority during source updates
 test('native compact styles return on existing focused links after source removal', async ({ page }) => {
   await page.getByLabel('Anchor token preset', { exact: true }).selectOption('own-tokens');
   await page.getByLabel('Native compact Anchor', { exact: true }).check();
-  const link = page.locator('.anchor-token-main').getByRole('link', { name: 'Overview', exact: true });
+  const link = page.locator('.anchor-token-main').getByRole(
+    'link',
+    { name: 'Overview', exact: true }
+  );
   await link.focus();
   const original = await link.elementHandle();
 
@@ -149,6 +157,7 @@ test('custom prefix and narrow RTL keep source spacing and clean up scope styles
   expect(await root.evaluate(element =>
     [...element.classList].some(name => name.startsWith('css-')))).toBe(false);
   const box = (await root.boundingBox())!;
+
   expect(box.x).toBeGreaterThanOrEqual(0);
   expect(box.x + box.width).toBeLessThanOrEqual(320);
   await page.getByLabel('Mount themed Anchor', { exact: true }).uncheck();

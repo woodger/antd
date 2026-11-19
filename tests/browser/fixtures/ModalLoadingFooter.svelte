@@ -7,6 +7,9 @@
     lifecycle: (slot: 'footer', event: 'mount' | 'unmount') => void;
   } = $props();
   untrack(() => activity('footer-render'));
-  onMount(() => { lifecycle('footer', 'mount'); return () => lifecycle('footer', 'unmount'); });
+  onMount(() => {
+    lifecycle('footer', 'mount');
+    return () => lifecycle('footer', 'unmount');
+  });
 </script>
 <button type="button" data-modal-loading-footer="" {@attach attachFooter}>Custom footer action</button>

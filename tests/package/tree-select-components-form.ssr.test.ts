@@ -16,9 +16,21 @@ it('pins independent Form/TreeSelect/Input inheritance and query-independent sel
   for (const entry of reference.cases) {
     expect(entry.initial.view.model).toBe('a');
     expect(entry.initial.view.icons).toHaveLength(entry.id === 'input-composite' ? 2 : 1);
-    expect(entry.initial.view.status).toMatchObject({ itemError: true, itemFeedback: true, inputError: true });
-    expect(entry.initial.observed).toMatchObject({ nativeFormData: [], strictSourceRefIdentity: true, fieldErrors: [] });
-    expect(entry.initial.view.aria).toEqual({ required: 'true', describedBy: 'choice_help', invalid: null });
+    expect(entry.initial.view.status).toMatchObject({
+      itemError: true,
+      itemFeedback: true,
+      inputError: true
+    });
+    expect(entry.initial.observed).toMatchObject({
+      nativeFormData: [],
+      strictSourceRefIdentity: true,
+      fieldErrors: []
+    });
+    expect(entry.initial.view.aria).toEqual({
+      required: 'true',
+      describedBy: 'choice_help',
+      invalid: null
+    });
     expect(entry.initial.view.help).toEqual([{ id: 'choice_help', text: 'Choice help' }]);
     expect(entry.steps.every(step => step.observed.fieldErrors.length === 0)).toBe(true);
     expect(entry.steps.filter(step => step.view.mounted)

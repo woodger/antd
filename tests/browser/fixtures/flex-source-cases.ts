@@ -23,7 +23,10 @@ export function flexSourceTheme(sample: FlexSourceCase): ThemeConfig | undefined
   const aliases = sample.theme?.startsWith('aliases');
 
   return {
-    cssVar: { key: 'flex-source-scope', ...(sample.theme === 'variables' ? { prefix: 'FlexX' } : {}) },
+    cssVar: {
+      key: 'flex-source-scope',
+      ...(sample.theme === 'variables' ? { prefix: 'FlexX' } : {})
+    },
     token: { motion: false },
     ...(sample.theme === 'dark' ? { algorithm: theme.darkAlgorithm }
       : sample.theme === 'compact' ? { algorithm: theme.compactAlgorithm } : {}),

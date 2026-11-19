@@ -79,7 +79,8 @@ export function listyRows<T, K extends ListyKey>(
       rows.push(header);
       segment.forEach(entry => header.children.push(append(entry.item, entry.index)));
     }
-  } else items.forEach(append);
+  }
+  else items.forEach(append);
 
   return rows;
 }
@@ -119,7 +120,8 @@ export function listySticky<T, K extends ListyKey>(
     if ((sizes.get(headers[middle].taggedKey)?.top ?? 0) <= scrollTop + 1) {
       active = middle;
       left = middle + 1;
-    } else right = middle - 1;
+    }
+    else right = middle - 1;
   }
 
   const row = headers[active];

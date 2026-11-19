@@ -16,70 +16,107 @@ import { readMaskHydrationPrefixSourceFact, verifyMaskHydrationPrefixSourceInteg
   from '../browser/date-picker-mask-hydration-prefix-reference.mjs';
 
 it('retains all1618 whole original parts, four manifests, public callers and final Source metadata', () => {
-  expect(verifyMaskSourceStoredParts()).toMatchObject({ sourceOnly: true, captures: 4, originalParts: 1618 });
+  expect(verifyMaskSourceStoredParts()).toMatchObject({
+    sourceOnly: true,
+    captures: 4,
+    originalParts: 1618
+  });
   const frozen = JSON.parse(Buffer.from(readMaskSourceEvidence('protocol-freeze')).toString());
-  expect(frozen.samples).toEqual(samples); expect(frozen.counts).toEqual(counts); expect(frozen.storage).toEqual(storage);
+
+  expect(frozen.samples).toEqual(samples);
+  expect(frozen.counts).toEqual(counts);
+  expect(frozen.storage).toEqual(storage);
   expect(frozen.source).toMatchObject({ version: '6.6.8', react: '18.3.1', rcPicker: '1.12.2' });
   const release = JSON.parse(Buffer.from(readMaskSourceEvidence('release')).toString());
+
   expect(release.runs).toHaveLength(4);
   expect(release.runs.every((run: { actualExitCode: number; terminalPinsUnchanged: boolean }) =>
     run.actualExitCode === 0 && run.terminalPinsUnchanged)).toBe(true);
   const provenance = JSON.parse(Buffer.from(readMaskSourceEvidence('audit-provenance')).toString());
-  expect(provenance.documents).toHaveLength(10); expect(provenance.fullOriginalPartsVerified).toBe(1618);
+
+  expect(provenance.documents).toHaveLength(10);
+  expect(provenance.fullOriginalPartsVerified).toBe(1618);
   expect(Buffer.from(readMaskSourceEvidence('source-factory')).toString()).toContain('createMaskSourceApp');
 }, 120000);
 
 it('loads every child phase, exact macro immediate reference, contiguous producer and quiet disposal', () => {
   let macros = 0, children = 0, retained = 0, closes = 0, producerChunks = 0, producerRows = 0;
-  for (const variant of ['first', 'repeat'] as const) for (const row of readMaskSourceManifest('csr', variant).cases) {
-    const initial = readMaskSourceInitial(row.id, variant); retained++;
+  for (const variant of ['first', 'repeat'] as const) for (const row of readMaskSourceManifest(
+    'csr',
+    variant
+  ).cases) {
+    const initial = readMaskSourceInitial(row.id, variant);
+    retained++;
     let historical = initial.owner.callbacks, closeOrdinal = 0;
     const boundaries = new Map<string, Record<string, number>>([['initial', { initial: initial.owner.producerCount }]]);
     for (const [index] of row.steps.entries()) {
-      const macro = readMaskSourceStep(row.id, index, variant); macros++; retained += 3;
+      const macro = readMaskSourceStep(row.id, index, variant);
+      macros++;
+      retained += 3;
       expect(macro.before.owner.callbacks.slice(0, historical.length)).toEqual(historical);
       historical = macro.before.owner.callbacks;
       expect(macro.substeps).toHaveLength(expandAction(row.sample.actions[index]).length);
       for (const [j] of macro.substeps.entries()) {
-        const child = readMaskSourceSubstep(row.id, index, j, variant); children++; retained += 3;
+        const child = readMaskSourceSubstep(row.id, index, j, variant);
+        children++;
+        retained += 3;
         for (const point of [child.before, child.afterCall, child.actual]) {
-          expect(point.owner.callbacks.slice(0, historical.length)).toEqual(historical); historical = point.owner.callbacks;
+          expect(point.owner.callbacks.slice(0, historical.length)).toEqual(historical);
+          historical = point.owner.callbacks;
         }
         boundaries.set('step-' + index + '-substep-' + j, { before: child.before.owner.producerCount,
           afterCall: child.afterCall.owner.producerCount, settled: child.actual.owner.producerCount });
       }
       expect(macro.afterCallSource).toEqual({ substep: macro.substeps.at(-1), field: 'afterCall' });
-      expect(macro.afterCall).toEqual(readMaskSourceSubstep(row.id, index, macro.substeps.length - 1, variant).afterCall);
+      expect(macro.afterCall).toEqual(readMaskSourceSubstep(
+        row.id,
+        index,
+        macro.substeps.length - 1,
+        variant
+      ).afterCall);
       // afterCall is an earlier child snapshot: do not use it as a later callback-prefix observation.
-      expect(macro.actual.owner.callbacks.slice(0, historical.length)).toEqual(historical); historical = macro.actual.owner.callbacks;
+      expect(macro.actual.owner.callbacks.slice(0, historical.length)).toEqual(historical);
+      historical = macro.actual.owner.callbacks;
       boundaries.set('step-' + index, { before: macro.before.owner.producerCount,
         afterCall: macro.afterCall.owner.producerCount, settled: macro.actual.owner.producerCount });
       if (macro.action.type === 'input-escape') {
-        const closed = readMaskSourceClosed(row.id, closeOrdinal++, variant); closes++; retained++;
+        const closed = readMaskSourceClosed(row.id, closeOrdinal++, variant);
+        closes++;
+        retained++;
         expect(closed.actionIndex).toBe(index);
-        boundaries.set('closed-' + index, { ['closed-' + index]: closed.after1000.owner.producerCount });
+        boundaries.set(
+          'closed-' + index,
+          { ['closed-' + index]: closed.after1000.owner.producerCount }
+        );
       }
     }
     for (const phase of ['beforeUnmount', 'cleanup', 'late'] as const) {
-      const point = readMaskSourceCleanup(row.id, phase, variant); retained++;
+      const point = readMaskSourceCleanup(row.id, phase, variant);
+      retained++;
       const name = phase === 'beforeUnmount' ? 'before-unmount' : phase;
       boundaries.set(name, { [name]: point.owner.producerCount });
       if (phase !== 'beforeUnmount') {
-        expect(point.owner.alive).toBe(false); expect(point.refs).toEqual({ owner: null, root: null, control: null });
-        expect(point.inputs).toEqual([]); expect(point.popups).toEqual([]); expect(point.retained.some(node => node.connected)).toBe(false);
+        expect(point.owner.alive).toBe(false);
+        expect(point.refs).toEqual({ owner: null, root: null, control: null });
+        expect(point.inputs).toEqual([]);
+        expect(point.popups).toEqual([]);
+        expect(point.retained.some(node => node.connected)).toBe(false);
       }
     }
     expect(row.cleanup.rawJSONPart.sha256).toBe(row.late.rawJSONPart.sha256);
     let cursor = 0;
     for (const [index, ref] of readMaskSourceProducerChunks(row.id, variant).entries()) {
-      const chunk = readMaskSourceProducerChunk(row.id, index, variant); producerChunks++; producerRows += chunk.rows.length;
+      const chunk = readMaskSourceProducerChunk(row.id, index, variant);
+      producerChunks++;
+      producerRows += chunk.rows.length;
       expect(chunk.cursor).toBe(cursor);
       expect(chunk.boundaries).toEqual(chunk.phase === 'terminal-tail' ? { afterLate: cursor } : boundaries.get(chunk.phase));
       for (const marker of Object.values(chunk.boundaries)) {
         expect(marker).toBeLessThanOrEqual(chunk.next);
         if (chunk.boundaryScope === 'local-substep-or-lifecycle-window') expect(marker).toBeGreaterThanOrEqual(cursor);
       }
-      cursor = chunk.next; expect(cursor).toBe(ref.next);
+      cursor = chunk.next;
+      expect(cursor).toBe(ref.next);
     }
     expect(cursor).toBe(row.producerFinalCount);
   }
@@ -99,9 +136,11 @@ it('keeps actual hidden time, original Date identities and physical input/caret 
         .toEqual(initial.owner.modelDates.map(date => date.value.identity));
     }
     const object = readMaskSourceStep(sample.id, 2, variant).actual;
-    expect(object.owner.formatProfile).toBe('object'); expect(object.owner.formatValue.type).toBe('object');
+    expect(object.owner.formatProfile).toBe('object');
+    expect(object.owner.formatValue.type).toBe('object');
     const mask = readMaskSourceStep(sample.id, 8, variant).actual;
-    expect(mask.owner.formatProfile).toBe('mask'); expect(mask.owner.formatValue.identity).not.toBe(object.owner.formatValue.identity);
+    expect(mask.owner.formatProfile).toBe('mask');
+    expect(mask.owner.formatValue.identity).not.toBe(object.owner.formatValue.identity);
     if (sample.kind === 'single') {
       const pristine = readMaskSourceStep(sample.id, 10, variant);
       expect(pristine.actual.owner.modelDates[0].value).toEqual(initial.owner.modelDates[0].value);
@@ -120,8 +159,18 @@ it('keeps actual hidden time, original Date identities and physical input/caret 
     }
     const incomplete = readMaskSourceStep(sample.id, 13, variant);
     const commands = expandAction(sample.actions[13]);
-    const backspace = readMaskSourceSubstep(sample.id, 13, commands.findIndex(command => command.type === 'key-press' && command.key === 'Backspace'), variant);
-    const enter = readMaskSourceSubstep(sample.id, 13, commands.findIndex(command => command.type === 'key-press' && command.key === 'Enter'), variant);
+    const backspace = readMaskSourceSubstep(
+      sample.id,
+      13,
+      commands.findIndex(command => command.type === 'key-press' && command.key === 'Backspace'),
+      variant
+    );
+    const enter = readMaskSourceSubstep(
+      sample.id,
+      13,
+      commands.findIndex(command => command.type === 'key-press' && command.key === 'Enter'),
+      variant
+    );
     expect(enter.before.inputs.map(input => input.value)).toEqual(backspace.actual.inputs.map(input => input.value));
     expect(enter.actual.owner.callbacks).toEqual(enter.before.owner.callbacks);
     expect(incomplete.actual.owner.open).toBe(true);
@@ -132,9 +181,13 @@ it('rejects corrupt gzip/hash, cross-capture references and substituted child/ow
   const original = readMaskSourceCase('single-date-mask').initial;
   const stored = fs.readFileSync(new URL('../browser/fixtures/ant-design-date-picker-mask-parts/'
     + original.rawJSONPart.gzipSHA256 + '.json.gz', import.meta.url));
-  const corrupt = Buffer.from(stored); corrupt[Math.floor(corrupt.length / 2)] ^= 1;
+  const corrupt = Buffer.from(stored);
+  corrupt[Math.floor(corrupt.length / 2)] ^= 1;
+
   expect(() => verifyMaskSourceStoredBytes(original, corrupt)).toThrow();
-  const hash = structuredClone(original); hash.rawJSONPart.sha256 = '0'.repeat(64);
+  const hash = structuredClone(original);
+  hash.rawJSONPart.sha256 = '0'.repeat(64);
+
   expect(() => verifyMaskSourceStoredBytes(hash, stored)).toThrow();
   expect(() => verifyMaskSourcePartBinding(original, 'csr', 'repeat')).toThrow();
   for (const mutate of [
@@ -142,7 +195,9 @@ it('rejects corrupt gzip/hash, cross-capture references and substituted child/ow
     (value: MaskSourceCSRManifest) => { value.cases[0].steps.reverse(); },
     (value: MaskSourceCSRManifest) => { value.cases[0].producerParts[2].cursor++; }
   ]) {
-    const value = readMaskSourceManifest(); mutate(value); expect(() => verifyMaskSourceManifest(value)).toThrow();
+    const value = readMaskSourceManifest();
+    mutate(value);
+    expect(() => verifyMaskSourceManifest(value)).toThrow();
   }
 });
 
@@ -156,15 +211,21 @@ it('rejects dropped producer rows, broken raw Date/callback aliases and changed 
     (value: typeof original) => { value.rows[0].actualArgumentCount++; },
     (value: typeof original) => { value.rows[0].returned = true; }
   ]) {
-    const value = structuredClone(original); mutate(value); expect(() => verifyMaskSourceProducerChunk(value, refs[index])).toThrow();
+    const value = structuredClone(original);
+    mutate(value);
+    expect(() => verifyMaskSourceProducerChunk(value, refs[index])).toThrow();
   }
   const point = readMaskSourceStep('single-date-mask', 12).actual;
   for (const mutate of [
     (value: MaskSourcePoint) => { value.owner.modelDates[0].value.identity++; },
-    (value: MaskSourcePoint) => { value.owner.callbacks.find(call => call.dates.length)!.dates[0].value.identity++; },
+    (value: MaskSourcePoint) => {
+      value.owner.callbacks.find(call => call.dates.length)!.dates[0].value.identity++;
+    },
     (value: MaskSourcePoint) => { value.owner.callbacks[0].actualArgumentCount++; }
   ]) {
-    const value = structuredClone(point); mutate(value); expect(() => verifyMaskSourcePoint(value)).toThrow();
+    const value = structuredClone(point);
+    mutate(value);
+    expect(() => verifyMaskSourcePoint(value)).toThrow();
   }
 });
 
@@ -172,15 +233,25 @@ it('rejects changed physical row/caret bindings and replaced macro immediate ref
   const point = readMaskSourceStep('single-date-mask', 0).actual;
   for (const mutate of [
     (value: MaskSourcePoint) => { value.popups[0].dateCells[0].rowIdentity++; },
-    (value: MaskSourcePoint) => { value.popups[0].tables.find(table => table.surface.tag === 'TABLE')!.rows[0].selected = true; },
-    (value: MaskSourcePoint) => { value.inputs[0].selectionEnd = value.inputs[0].value.length + 1; },
+    (value: MaskSourcePoint) => {
+      value.popups[0].tables.find(table => table.surface.tag === 'TABLE')!.rows[0].selected = true;
+    },
+    (value: MaskSourcePoint) => {
+      value.inputs[0].selectionEnd = value.inputs[0].value.length + 1;
+    },
     (value: MaskSourcePoint) => { value.inputs[0].focused = !value.inputs[0].focused; }
   ]) {
-    const value = structuredClone(point); mutate(value); expect(() => verifyMaskSourcePoint(value)).toThrow();
+    const value = structuredClone(point);
+    mutate(value);
+    expect(() => verifyMaskSourcePoint(value)).toThrow();
   }
-  const step = readMaskSourceStep('single-date-mask', 11); step.afterCall = step.before;
+  const step = readMaskSourceStep('single-date-mask', 11);
+  step.afterCall = step.before;
+
   expect(() => verifyMaskSourceStep(step, 'single-date-mask', 11)).toThrow();
-  const child = readMaskSourceSubstep('single-date-mask', 11, 3); child.command = { type: 'key-press', key: 'F12' };
+  const child = readMaskSourceSubstep('single-date-mask', 11, 3);
+  child.command = { type: 'key-press', key: 'F12' };
+
   expect(() => verifyMaskSourceSubstep(child, 'single-date-mask', 11, 3)).toThrow();
 }, 120000);
 
@@ -192,7 +263,11 @@ it('retains independent React hydration caret, defaults, original nodes and quie
       const profile = readMaskHydrationSourceProfile(sample.id, format, variant);
       const parsed = profile.observations[0];
       expect(parsed.phase).toBe('parsed');
-      expect(profile.versions).toMatchObject({ react: '18.3.1', antd: '6.6.8', hasHydrateRoot: true });
+      expect(profile.versions).toMatchObject({
+        react: '18.3.1',
+        antd: '6.6.8',
+        hasHydrateRoot: true
+      });
       for (const point of profile.observations.filter(point =>
         ['parsed', 'preHydrate', 'afterHydrateCall', 'mounted', 'settled'].includes(point.phase))) {
         expect(point.recoverableErrors).toEqual([]);
@@ -236,6 +311,7 @@ it('binds the focused range hydration prefix to original bytes without editing i
   expect(() => readMaskHydrationPrefixSourceFact('range-date-mask', 'step-3-substep-1:settled')).toThrow();
   const changed = readMaskHydrationPrefixSourceFact('range-date-mask', 'step-1:settled');
   changed.inputs[1].selectionStart = 2;
+
   expect(readMaskHydrationPrefixSourceFact('range-date-mask', 'step-1:settled').inputs[1].selectionStart).toBe(0);
 }, 120000);
 
@@ -244,7 +320,8 @@ it('retains all closed SSR profile models and rejects changed profile/resource/H
   for (const variant of ['first', 'repeat'] as const) for (const sample of samples)
     for (const profile of ['string', 'object', 'mask'] as const)
       for (const method of ['renderToString', 'renderToStaticMarkup'] as const) {
-        const value = readMaskSourceSSR(sample.id, profile, method, variant); serializers++;
+        const value = readMaskSourceSSR(sample.id, profile, method, variant);
+        serializers++;
         expect(value.state.owner.modelDates.every(date => Object.values(date.value.sameAsAuthored).some(Boolean))).toBe(true);
         expect(value.state.owner.formatProfile).toBe(profile);
         expect(value.state.producers.next).toBe(value.state.producers.rows.length);
@@ -252,7 +329,9 @@ it('retains all closed SSR profile models and rejects changed profile/resource/H
         expect(Object.values(value.resources).every(count => count === 0)).toBe(true);
       }
   expect(serializers).toBe(60);
-  const packet = readMaskSourceSSR('single-date-mask', 'mask', 'renderToString'); packet.resources.timers++;
+  const packet = readMaskSourceSSR('single-date-mask', 'mask', 'renderToString');
+  packet.resources.timers++;
+
   expect(() => verifyMaskSourceSSR(packet, 'single-date-mask', 'mask', 'renderToString')).toThrow();
   expect(() => readMaskSourceManifest('csr', 'other' as MaskSourceVariant)).toThrow();
   expect(() => readMaskSourceStep('single-date-mask', -1)).toThrow();

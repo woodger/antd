@@ -54,11 +54,13 @@ export function selectComponentProps(
     fieldNames: { value: 'code', label: 'caption' },
     components: {
       root: { render: root, props: { type: 'button', onkeydown(event) {
-        const target: HTMLButtonElement = event.currentTarget; void target;
+        const target: HTMLButtonElement = event.currentTarget;
+        void target;
       } } },
       input: { render: input, props: { rows: 3, wrap: 'soft', type: 'text',
         style: { width: 83, fontSize: 17, paddingInline: 7 }, oninput(event) {
-        const target: HTMLTextAreaElement = event.currentTarget; void target;
+        const target: HTMLTextAreaElement = event.currentTarget;
+        void target;
       } } }
     },
     onChange(values, options) {
@@ -71,11 +73,15 @@ export function selectComponentProps(
       const owner: string = option.audit.owner;
       void [primitive, owner];
     },
-    labelRender(info) { const primitive: number = info.value; return String(primitive); },
+    labelRender(info) {
+      const primitive: number = info.value;
+      return String(primitive);
+    },
     classNames({ props }) {
       const slots: SelectComponents<HTMLButtonElement, HTMLTextAreaElement> | undefined = props.components;
       const values: SelectLabelValue<number>[] | null | undefined = props.value;
-      void [slots, values]; return { root: 'typed-select' };
+      void [slots, values];
+      return { root: 'typed-select' };
     }
   } satisfies CustomSelect;
   const completion = {
@@ -90,7 +96,8 @@ export function selectComponentProps(
     styles({ props }) {
       const slots: SelectComponents<HTMLButtonElement, HTMLTextAreaElement> | undefined = props.components;
       const text: string | undefined = props.value;
-      void [slots, text]; return { input: { color: 'navy' } };
+      void [slots, text];
+      return { input: { color: 'navy' } };
     }
   } satisfies CustomCompletion;
   return { select, completion };
@@ -147,16 +154,25 @@ export function selectComponentRegistrations(
   const cleanupInput: () => void = input.register(inputComposite);
   const cleanupBareRoot: () => void = root.register(rootWithoutMethods);
   const cleanupBareInput: () => void = input.register(inputWithoutMethods);
-  return { rootAttachment, inputAttachment, cleanupRoot, cleanupInput, cleanupBareRoot, cleanupBareInput };
+  return {
+    rootAttachment,
+    inputAttachment,
+    cleanupRoot,
+    cleanupInput,
+    cleanupBareRoot,
+    cleanupBareInput
+  };
 }
 
 export const intrinsicComponents = [
   { root: 'button', input: 'textarea' },
   { root: 'custom-select-root', input: 'custom-select-input' },
   { root: { element: 'button', props: { type: 'button' }, ref(node) {
-    const button: HTMLButtonElement | null = node; void button;
+    const button: HTMLButtonElement | null = node;
+    void button;
   } }, input: { element: 'textarea', props: { rows: 2, type: 'text', value: undefined }, ref(node) {
-    const textarea: HTMLTextAreaElement | null = node; void textarea;
+    const textarea: HTMLTextAreaElement | null = node;
+    void textarea;
   } } }
 ] satisfies readonly SelectComponents<HTMLButtonElement, HTMLTextAreaElement>[];
 
@@ -173,7 +189,10 @@ export function selectComponentNegativeTypes(
   // @ts-expect-error Forwarded context style remains a DOM string.
   input.attributes.style = { width: 83 };
   // @ts-expect-error Input own style widening does not apply to root own props.
-  const invalidRootStyle: SelectRootComponent<HTMLButtonElement> = { element: 'button', props: { style: { width: 83 } } };
+  const invalidRootStyle: SelectRootComponent<HTMLButtonElement> = {
+    element: 'button',
+    props: { style: { width: 83 } }
+  };
   // @ts-expect-error A textarea context cannot register a native input.
   input.register(document.createElement('input'));
   // @ts-expect-error The composite editor must retain the declared textarea type.
@@ -183,12 +202,25 @@ export function selectComponentNegativeTypes(
   // @ts-expect-error Typed snippets cannot exchange input and textarea contexts.
   const invalidSnippet: SelectInputComponent<HTMLTextAreaElement> = wrongInputSnippet;
   // @ts-expect-error Descriptor refs receive the declared root type.
-  const invalidRef: SelectRootComponent<HTMLButtonElement> = { element: 'button', ref: (_node: HTMLInputElement | null) => {} };
+  const invalidRef: SelectRootComponent<HTMLButtonElement> = {
+    element: 'button',
+    ref: (_node: HTMLInputElement | null) => {}
+  };
   // @ts-expect-error Additional component generics do not widen primitive values.
   const invalidModel: SelectProps<number, undefined, Entry, false, HTMLButtonElement, HTMLTextAreaElement> = { value: 'a' };
   // @ts-expect-error Label-in-value and multiple still require labeled arrays.
   const invalidLabels: CustomSelect = { value: [1] };
   // @ts-expect-error AutoComplete keeps its existing free text value contract.
   const invalidCompletion: CustomCompletion = { value: 1 };
-  return { invalidInput, invalidRoot, invalidValue, invalidRootStyle, invalidSnippet, invalidRef, invalidModel, invalidLabels, invalidCompletion };
+  return {
+    invalidInput,
+    invalidRoot,
+    invalidValue,
+    invalidRootStyle,
+    invalidSnippet,
+    invalidRef,
+    invalidModel,
+    invalidLabels,
+    invalidCompletion
+  };
 }

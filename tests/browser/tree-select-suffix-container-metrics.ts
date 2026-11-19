@@ -19,7 +19,11 @@ export function projectTreeSelectSuffixContainer(snapshot: TreeSelectSuffixConta
   return {
     rootIsPublicRef: snapshot.rootIsPublicRef,
     rootRelativeHost: relative(snapshot.root),
-    host: { position: snapshot.host.style.position, top: snapshot.host.style.top, left: snapshot.host.style.left },
+    host: {
+      position: snapshot.host.style.position,
+      top: snapshot.host.style.top,
+      left: snapshot.host.style.left
+    },
     popup: snapshot.popup ? { relativeHost: relative(snapshot.popup), insideHost: snapshot.popupIsInsideHost,
       parentIsHost: snapshot.popupParentIsHost } : null,
     scroller: { left: snapshot.scroller.scrollLeft, top: snapshot.scroller.scrollTop,
@@ -40,7 +44,10 @@ export function readTreeSelectSuffixContainer(): TreeSelectSuffixContainerSnapsh
   const refs = JSON.parse(document.querySelector('[data-suffix-container-refs]')!.textContent!);
   return {
     root: { rect: rect(root) },
-    host: { rect: rect(host), style: { position: style.position, top: style.top, left: style.left } },
+    host: {
+      rect: rect(host),
+      style: { position: style.position, top: style.top, left: style.left }
+    },
     popup: popup ? { rect: rect(popup) } : null,
     scroller: { scrollTop: scroller.scrollTop, scrollLeft: scroller.scrollLeft,
       clientWidth: scroller.clientWidth, clientHeight: scroller.clientHeight },

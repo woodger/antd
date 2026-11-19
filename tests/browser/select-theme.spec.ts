@@ -4,6 +4,7 @@ import reference from './fixtures/ant-design-select-metrics.json' with { type: '
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=select-theme');
+
   await expect(page.getByRole('heading', { name: 'Source Select tokens', exact: true })).toBeVisible();
 });
 
@@ -120,6 +121,7 @@ test('native focus activates source border tokens and keyboard selection preserv
   await expect(page.getByLabel('Select value changes', { exact: true })).toHaveText('1');
   await expect(page.getByLabel('Select focus events', { exact: true })).toHaveText('1');
   await page.getByLabel('Select token preset', { exact: true }).focus();
+
   await expect(root).not.toHaveClass(/ant-select-focused/);
 });
 
@@ -136,6 +138,7 @@ test('removing source settings restores native styling without replacing the ope
   });
 
   const root = page.locator('.select-token-popup .ant-select');
+
   await expect(root).not.toHaveClass(/ant-select-source-theme/);
   await expect(root).toHaveCSS('font-size', '14px');
   await expect(root).toHaveCSS('outline-style', 'solid');
@@ -148,9 +151,11 @@ test('removing source settings restores native styling without replacing the ope
     input.checked = true;
     input.dispatchEvent(new Event('change', { bubbles: true }));
   });
+
   await expect(root).toHaveCSS('height', '28px');
   await page.getByLabel('Select token preset', { exact: true }).focus();
   await input.focus();
+
   await expect(page.getByLabel('Select focus receiver', { exact: true })).toHaveText('true');
   await expect(page.getByLabel('Select focus events', { exact: true })).toHaveText('2');
 });
@@ -165,7 +170,10 @@ test('custom prefixes and parent aliases retain the Select scope without hash cl
   await expect(page.locator('.select-token-popup .container')).toHaveClass(/select-source-scope/);
   await expect(page.locator('.select-token-popup .container')).not.toHaveClass(/css-dev-only/);
   await expect(page.locator('.select-token-popup .ant-select')).toHaveCSS('font-size', '14px');
-  await expect(physicalSelectOption(page, { name: 'Alpha', exact: true })).toHaveCSS('min-height', '45px');
+  await expect(physicalSelectOption(page, { name: 'Alpha', exact: true })).toHaveCSS(
+    'min-height',
+    '45px'
+  );
   await expect(physicalSelectPopup(page, 'Themed popup'))
     .toHaveCSS('--select-2-select-option-height', '45px');
   await page.getByLabel('Mount themed Select', { exact: true }).uncheck();
@@ -218,6 +226,7 @@ test('filtering switches between empty and option layout without losing focus or
   await input.fill('Gamma');
 
   const option = physicalSelectOption(list, { name: 'Gamma', exact: true });
+
   await expect(option).toHaveCSS('min-height', 'auto');
   expect(await list.evaluate((element, previous) => element === previous, original)).toBe(true);
   await expect(input).toBeFocused();

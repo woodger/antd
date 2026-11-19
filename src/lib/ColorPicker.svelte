@@ -114,7 +114,8 @@
         if (name === 'popup') {
           const root = [result.popup?.root, value?.root].filter(Boolean).join(separator);
           result.popup = { root };
-        } else {
+        }
+        else {
           const key = name as Exclude<keyof ColorPickerStyles, 'popup'>;
           result[key] = [result[key], value].filter(Boolean).join(separator);
         }
@@ -241,7 +242,10 @@
     portalMarker?.remove();
   });
 
-  function complete(next: AggregationColor, opaque = props.disabledAlpha && getColorAlpha(color) < 100) {
+  function complete(
+    next: AggregationColor,
+    opaque = props.disabledAlpha && getColorAlpha(color) < 100
+  ) {
     props.onChangeComplete?.(opaque ? genAlphaColor(next) : next);
   }
 
@@ -262,9 +266,13 @@
       activeIndex = 0;
       change(generateColor(color.getColors()[0].color));
       cachedGradient = previous;
-    } else if (next === 'gradient' && !color.isGradient()) {
+    }
+    else if (next === 'gradient' && !color.isGradient()) {
       const base = getColorAlpha(color) < 100 ? genAlphaColor(color) : color;
-      change(generateColor(cachedGradient || [{ percent: 0, color: base }, { percent: 100, color: base }]));
+      change(generateColor(cachedGradient || [{ percent: 0, color: base }, {
+        percent: 100,
+        color: base
+      }]));
     }
   }
 

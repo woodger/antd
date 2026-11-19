@@ -38,15 +38,31 @@ async function act(page: Page, action: TreeSelectAlignAction) {
     if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) throw Error('Expected editable field');
     node.setSelectionRange(range.start, range.end);
   }, action);
-  else if (action.type === 'props' || action.type === 'host') await page.locator('[data-align-command]').evaluate((node, detail) => {
+  else if (action.type === 'props' || action.type === 'host') await page.locator('[data-align-command]').evaluate((
+    node,
+    detail
+  ) => {
     node.dispatchEvent(new CustomEvent('alignupdate', { detail }));
   }, action);
-  else if (action.type === 'viewport') await page.setViewportSize({ width: action.width, height: action.height });
-  else if (action.type === 'scroll') await page.locator('[data-align-scroller]').evaluate((node, position) => {
-    node.scrollTop = position.top; node.scrollLeft = position.left;
+  else if (action.type === 'viewport') await page.setViewportSize({
+    width: action.width,
+    height: action.height
+  });
+  else if (action.type === 'scroll') await page.locator('[data-align-scroller]').evaluate((
+    node,
+    position
+  ) => {
+    node.scrollTop = position.top;
+    node.scrollLeft = position.left;
   }, action);
-  else if (action.type === 'outside') await page.getByRole('button', { name: 'Outside align', exact: true }).click();
-  else if (action.type === 'choose') await page.getByText(action.value === 'a' ? 'Alpha' : 'Beta', { exact: true }).last().click();
+  else if (action.type === 'outside') await page.getByRole(
+    'button',
+    { name: 'Outside align', exact: true }
+  ).click();
+  else if (action.type === 'choose') await page.getByText(
+    action.value === 'a' ? 'Alpha' : 'Beta',
+    { exact: true }
+  ).last().click();
   else if (action.type === 'remove') await page.locator('.ant-select-selection-item').filter({ hasText: action.value === 'a' ? 'Alpha' : 'Beta' })
     .locator('.ant-select-selection-item-remove').click();
 }
@@ -66,7 +82,8 @@ function verify(projection: Projection, expected: Projection, sample: TreeSelect
     expect(projection.raw.popup?.position).toBe('fixed');
     expect(projection.raw.popup?.offsetParent).toBeNull();
     expect(projection.raw.popup?.container).toBe(sample.container ?? 'host');
-  } else expect(projection.raw.popup).toBeNull();
+  }
+  else expect(projection.raw.popup).toBeNull();
 }
 
 test.use({ viewport: reference.reference.viewport });
@@ -91,13 +108,19 @@ for (const rawEntry of [...reference.cases, ...activationReference.cases]) {
     await page.goto('/?fixture=tree-select-align');
     await page.getByRole('combobox', { name: 'TreeSelect alignment sample', exact: true }).selectOption(entry.id);
     await page.mouse.move(0, 0);
+
     await expect(page.locator('[data-align-case]')).toHaveAttribute('data-align-bound', 'true');
     verify(await settle(page), entry.initial, sample);
     const previous = await page.evaluateHandle(() => {
       const host = document.querySelector('[data-align-case]')!;
       const root = host.querySelector('[data-align-root]') ?? host.querySelector('.ant-select')!;
       const editor = root.querySelector('[data-align-editor],input,textarea');
-      return { root, editor, editorParent: editor?.parentNode ?? null, popup: null as HTMLElement | null };
+      return {
+        root,
+        editor,
+        editorParent: editor?.parentNode ?? null,
+        popup: null as HTMLElement | null
+      };
     });
     const observed = () => previous.evaluate(old => {
       const host = document.querySelector('[data-align-case]')!;
@@ -107,8 +130,15 @@ for (const rawEntry of [...reference.cases, ...activationReference.cases]) {
       const popup = shadow?.querySelector<HTMLElement>('.ant-tree-select-dropdown') ?? document.querySelector<HTMLElement>('.ant-tree-select-dropdown');
       const samePopup = !old.popup || !popup || old.popup === popup;
       old.popup ??= popup;
-      const refs: { root?: Element; control?: { focus?: unknown; blur?: unknown }; getterArguments?: Element[] } = {};
-      host.querySelector('[data-align-command]')!.dispatchEvent(new CustomEvent('alignrefs', { detail: refs }));
+      const refs: {
+        root?: Element;
+        control?: { focus?: unknown; blur?: unknown };
+        getterArguments?: Element[]
+      } = {};
+      host.querySelector('[data-align-command]')!.dispatchEvent(new CustomEvent(
+        'alignrefs',
+        { detail: refs }
+      ));
       return { sameRoot: old.root === root, sameEditor: old.editor === editor,
         sameEditorParent: old.editorParent === (editor?.parentNode ?? null), samePopup,
         rootIsPublicRef: refs.root === root, focusMethod: typeof refs.control?.focus === 'function',

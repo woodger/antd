@@ -75,6 +75,7 @@ test('Table hides another column without replacing the visible row header editor
 test('Table keeps active sorting when its column is hidden after selection', async ({ page }) => {
   const root = page.locator('#table-column-hidden-control');
   await root.locator('th.user-score-cell').getByRole('button', { name: 'Score', exact: true }).click();
+
   await expect(root.locator('tbody .user-name-cell')).toHaveText(['Beta', 'Alpha', 'Gamma']);
 
   await page.getByLabel('Hide score column', { exact: true }).check();

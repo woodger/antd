@@ -4,4 +4,7 @@ export type LabelTitleAction = { type: 'renderer'; kind: 'string' | 'zero' | 'nu
 export const labelTitleSamples: LabelTitleSample[];
 export const labelTitleActions: LabelTitleAction[];
 export const labelTitleSSRStates: Array<NonNullable<LabelTitleSample['ssrState']>>;
-export const labelTitleGeometry: { viewport: { width: number; height: number }; root: { left: number; top: number; width: number } };
+export const labelTitleGeometry: {
+  viewport: { width: number; height: number };
+  root: { left: number; top: number; width: number }
+};

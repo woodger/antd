@@ -4,7 +4,11 @@ import FormFeedbackAutoCompleteCase from './FormFeedbackAutoCompleteCase.svelte'
 import { feedbackAutoCompleteSamples } from './form-feedback-autocomplete-cases';
 declare global {
   interface Window {
-    formFeedbackAutoCompleteHydration?: { input: Element | null; icons: Element[]; dispose(): Promise<void>; };
+    formFeedbackAutoCompleteHydration?: {
+      input: Element | null;
+      icons: Element[];
+      dispose(): Promise<void>;
+    };
   }
 }
 const target = document.getElementById('root')!;

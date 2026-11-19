@@ -13,7 +13,8 @@ function move(element: HTMLElement, parent: HTMLElement, before: ChildNode | nul
   const focused = element.ownerDocument.activeElement === element;
   if (typeof parent.moveBefore === 'function' && element.isConnected && parent.isConnected) {
     parent.moveBefore(element, before);
-  } else {
+  }
+  else {
     parent.insertBefore(element, before);
     if (focused && element.isConnected) element.focus({ preventScroll: true });
   }
@@ -53,13 +54,15 @@ export function connectTabsOverflow(
       add.classList.add('ant-tabs-add-in-operations');
       add.setAttribute('data-tabs-add-in-operations', '');
       move(add, operations, null);
-    } else if (!overflow && add.parentElement === operations) {
+    }
+    else if (!overflow && add.parentElement === operations) {
       add.classList.remove('ant-tabs-add-in-operations');
       add.removeAttribute('data-tabs-add-in-operations');
       move(add, marker.parentElement, marker.nextSibling);
       placeholder.hidden = true;
       placeholder.style.display = 'none';
-    } else if (overflow) {
+    }
+    else if (overflow) {
       const box = sizeOf(add);
       // Поперечная ось растягивается в list; размеры operations не должны расширять заглушку.
       if (options.vertical) placeholder.style.height = `${box.height}px`;

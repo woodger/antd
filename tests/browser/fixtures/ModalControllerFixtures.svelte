@@ -63,7 +63,8 @@
     });
     if (sample?.update === 'object') {
       handle.update({ title: 'Changed title', content: 'Changed content' });
-    } else if (sample?.update === 'function') {
+    }
+    else if (sample?.update === 'function') {
       handle.update(previous => ({ title: `${previous.title} updated` }));
     }
   }

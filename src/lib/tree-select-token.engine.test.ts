@@ -22,11 +22,15 @@ describe('TreeSelect search tokenization', () => {
     for (const separators of [() => [], (value: string) => [value]]) {
       expect(treeSelectTokenSearch('a,b', { previousSearch: '', separators }).split).toBe(false);
     }
-    expect(treeSelectTokenSearch('a,b', { previousSearch: '', separators: value => value.split(',') }).split).toBe(true);
+    expect(treeSelectTokenSearch(
+      'a,b',
+      { previousSearch: '', separators: value => value.split(',') }
+    ).split).toBe(true);
   });
 
   it('defers splitting during composition while preserving search callbacks', () => {
     const separators = vi.fn((value: string) => value.split(','));
+
     expect(treeSelectTokenSearch('a,b', { previousSearch: '', separators, composing: true }))
       .toEqual({ search: 'a,b', notifySearch: true, split: false, open: true });
     expect(separators).not.toHaveBeenCalled();
@@ -37,6 +41,7 @@ describe('TreeSelect search tokenization', () => {
   it('does not request open for effect-driven search updates', () => {
     expect(treeSelectTokenSearch('Alpha', { previousSearch: '', fromTyping: false }).open).toBeUndefined();
     const separators = vi.fn((text: string) => [text]);
+
     expect(treeSelectTokenSearch('', { previousSearch: '', separators, fromTyping: false }).notifySearch).toBe(false);
     expect(separators).toHaveBeenCalledWith('');
   });

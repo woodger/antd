@@ -7,6 +7,7 @@ for (const { sample, metrics } of reference.cases) {
     await page.setViewportSize({ width: sample.viewport, height: 800 });
     await page.goto('/?fixture=form-columns');
     await page.getByRole('combobox', { name: 'Form columns sample', exact: true }).selectOption(sample.id);
+
     await expect.poll(() => page.evaluate(formColumnsMetrics)).toEqual(metrics);
   });
 }
@@ -57,6 +58,7 @@ test('Form column visibility follows Grid span zero and restores its label assoc
   const input = page.getByLabel('Name', { exact: true });
   await page.getByRole('combobox', { name: 'Form columns sample', exact: true })
     .selectOption('zero-576-ltr');
+
   await expect(page.locator('.columns-root > .ant-form-item-row > .ant-form-item-label')).toBeHidden();
   await expect(input).toHaveValue('Alpha');
 

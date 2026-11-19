@@ -24,6 +24,7 @@ for (const part of ['edit-text', 'edit-title']) {
   test(`Typography theme updates preserve the ${part} draft, DOM, focus and selection`,
     async ({ page }) => {
       await openTypographyFixture(page);
+
       await expect(page.locator(
         '[data-typography-theme="outside"] [data-typography-part="edit-title"] textarea'
       )).toBeFocused();
@@ -39,6 +40,7 @@ for (const part of ['edit-text', 'edit-title']) {
         .dispatchEvent('click');
 
       const updated = reference.cases.find(sample => sample.name === 'updated-aliases')!;
+
       await expect.poll(() => page.evaluate(snapshotTypographyTheme)).toEqual(updated.metrics);
       expect(await editor.evaluate((node, old) => node === old, original)).toBe(true);
       await expect(editor).toBeFocused();
@@ -48,6 +50,7 @@ for (const part of ['edit-text', 'edit-title']) {
         (node as HTMLTextAreaElement).selectionEnd
       ])).toEqual([2, 10]);
       const events = root.getByLabel('Typography theme events normal', { exact: true });
+
       await expect(events).toHaveText('[]');
 
       await editor.press('End');
@@ -58,6 +61,7 @@ for (const part of ['edit-text', 'edit-title']) {
       ]));
       await page.getByLabel('Mount themed Typography controls', { exact: true })
         .dispatchEvent('click');
+
       expect(await original!.evaluate(node => node.isConnected)).toBe(false);
       await expect(page.locator(
         '[data-typography-theme="normal"]'
@@ -71,6 +75,7 @@ for (const part of ['edit-text', 'edit-title']) {
 test('Typography keeps async copy pending through theme updates', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await openTypographyFixture(page);
+
   await expect(page.locator(
     '[data-typography-theme="outside"] [data-typography-part="edit-title"] textarea'
   )).toBeFocused();
@@ -80,6 +85,7 @@ test('Typography keeps async copy pending through theme updates', async ({ page,
     .dispatchEvent('click');
   await copy.getByRole('button', { name: 'Копировать', exact: true }).click();
   const original = await copy.locator('.ant-typography').elementHandle();
+
   await expect(copy.locator('.anticon-loading')).toBeVisible();
 
   await page.getByRole('button', { name: 'Update Typography tokens', exact: true })
@@ -101,6 +107,7 @@ test('Typography keeps async copy pending through theme updates', async ({ page,
 
 test('Typography resets inherited tokens while preserving its nested editor', async ({ page }) => {
   await openTypographyFixture(page);
+
   await expect(page.locator(
     '[data-typography-theme="outside"] [data-typography-part="edit-title"] textarea'
   )).toBeFocused();
@@ -112,6 +119,7 @@ test('Typography resets inherited tokens while preserving its nested editor', as
   await page.getByLabel('Inherit Typography theme', { exact: true }).dispatchEvent('click');
 
   const defaults = reference.cases.find(sample => sample.name === 'default')!;
+
   await expect.poll(() => page.evaluate(snapshotTypographyTheme).then(metrics => metrics.nested))
     .toEqual(defaults.metrics.nested);
   expect(await editor.evaluate((node, old) => node === old, original)).toBe(true);
@@ -124,6 +132,7 @@ test('Typography resets inherited tokens while preserving its nested editor', as
 
 test('Typography restores legacy styles and preserves its editor draft', async ({ page }) => {
   await openTypographyFixture(page);
+
   await expect(page.locator(
     '[data-typography-theme="outside"] [data-typography-part="edit-title"] textarea'
   )).toBeFocused();

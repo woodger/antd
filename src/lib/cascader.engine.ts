@@ -281,7 +281,8 @@ export function navigateCascader(
   let selected: CascaderRow | undefined;
   if (searching) {
     selected = columns[0]?.find(row => row.key === searchKey);
-  } else {
+  }
+  else {
     for (let position = 0; position < active.length; position++) {
       const row = columns[position]?.find(row => row.path[position] === active[position]);
       if (!row) break;

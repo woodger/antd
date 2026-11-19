@@ -35,9 +35,26 @@ describe('Form visual validation status', () => {
     expect(resolveFormStatus({ hasFeedback: false, validated: true, errors: [], warnings: [] })).toBeUndefined();
     expect(resolveFormStatus({ hasFeedback: true, validated: false, errors: [], warnings: [] })).toBeUndefined();
     expect(resolveFormStatus({ hasFeedback: true, validated: true, errors: [], warnings: [] })).toBe('success');
-    expect(resolveFormStatus({ hasFeedback: true, validated: true, errors: ['Invalid'], warnings: [] })).toBe('error');
+    expect(resolveFormStatus({
+      hasFeedback: true,
+      validated: true,
+      errors: ['Invalid'],
+      warnings: []
+    })).toBe('error');
     expect(resolveFormStatus({ hasFeedback: true, validated: true, errors: [], warnings: ['Check'] })).toBe('warning');
-    expect(resolveFormStatus({ hasFeedback: true, validated: true, validating: true, errors: [], warnings: [] })).toBe('validating');
-    expect(resolveFormStatus({ hasFeedback: true, validated: true, validateStatus: '', errors: [], warnings: [] })).toBe('');
+    expect(resolveFormStatus({
+      hasFeedback: true,
+      validated: true,
+      validating: true,
+      errors: [],
+      warnings: []
+    })).toBe('validating');
+    expect(resolveFormStatus({
+      hasFeedback: true,
+      validated: true,
+      validateStatus: '',
+      errors: [],
+      warnings: []
+    })).toBe('');
   });
 });

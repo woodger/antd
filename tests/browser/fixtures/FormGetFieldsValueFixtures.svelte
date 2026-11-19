@@ -39,7 +39,8 @@
     const id = nextRequest++;
     try {
       await form.validateFields([['user', 'name']], { validateOnly });
-    } catch (error) {
+    }
+    catch (error) {
       if (!(error instanceof FormValidationError)) throw error;
     }
     finished.push(id);

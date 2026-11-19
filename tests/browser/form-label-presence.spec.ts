@@ -55,6 +55,7 @@ test('Form unlabelled fields keep native required, model validation and error fo
   await page.goto('/?fixture=form-label-presence');
   await page.getByRole('button', { name: 'Require unlabelled field', exact: true }).click();
   const input = page.getByRole('textbox', { name: 'Control', exact: true });
+
   await expect(input).toHaveJSProperty('required', true);
   await expect(page.locator('.columns-root > .ant-form-item-row > .ant-form-item-label')).toHaveCount(0);
   await input.fill('');

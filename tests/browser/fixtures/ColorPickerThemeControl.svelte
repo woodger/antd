@@ -10,7 +10,10 @@
   const gradient: ColorValue = [
     { color: '#1677ff', percent: 0 }, { color: '#fa541c', percent: 100 }
   ];
-  const presets = [{ label: 'Stored colors', colors: ['#1677ff', '#fa541c', '#00000055', '#ffffff55'] }];
+  const presets = [{
+    label: 'Stored colors',
+    colors: ['#1677ff', '#fa541c', '#00000055', '#ffffff55']
+  }];
   let styled = $derived(priority || id === 'priority');
   let modes = $derived(id === 'normal'
     ? ['basic', 'small', 'large', 'disabled', 'cleared', 'rgb', 'hsb', 'gradient'] : ['basic']);

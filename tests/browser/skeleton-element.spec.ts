@@ -6,6 +6,7 @@ const root = '[data-skeleton-element-frame] > [data-ant-skeleton-element]';
 test.use({ viewport: reference.viewport });
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=skeleton-element');
+
   expect(await page.evaluate(() => document.compatMode)).toBe(reference.reference.documentMode);
   await expect(page.getByRole('heading', { name: 'Source Skeleton elements', exact: true }))
     .toBeVisible();
@@ -50,13 +51,21 @@ test('Skeleton input block follows the container while keeping its source minimu
   await page.getByRole('button', { name: 'Expand Skeleton element', exact: true }).click();
 
   await expect(page.locator(root)).toHaveCSS('width', '300px');
-  await expect(page.locator(root).locator('[data-ant-skeleton-content]')).toHaveCSS('width', '300px');
+  await expect(page.locator(root).locator('[data-ant-skeleton-content]')).toHaveCSS(
+    'width',
+    '300px'
+  );
   await page.getByRole('button', { name: 'Small Skeleton context', exact: true }).click();
-  await expect(page.locator(root).locator('[data-ant-skeleton-content]')).toHaveCSS('min-width', '120px');
+
+  await expect(page.locator(root).locator('[data-ant-skeleton-content]')).toHaveCSS(
+    'min-width',
+    '120px'
+  );
 });
 
 test('Skeleton elements add no controls or live regions and obey reduced motion', async ({ page }) => {
   await page.getByRole('button', { name: 'Activate Skeleton element', exact: true }).click();
+
   await expect(page.locator(root).locator('[data-ant-skeleton-content]'))
     .toHaveCSS('animation-duration', '1.4s');
   const background = await page.locator(root).locator('[data-ant-skeleton-content]')
@@ -71,6 +80,7 @@ test('Skeleton elements add no controls or live regions and obey reduced motion'
   await expect(page.locator(root).locator('input, button, [tabindex]')).toHaveCount(0);
   await page.getByRole('button', { name: 'Before Skeleton element', exact: true }).focus();
   await page.keyboard.press('Tab');
+
   await expect(page.getByRole('button', { name: 'After Skeleton element', exact: true })).toBeFocused();
 });
 
@@ -84,12 +94,14 @@ test('Skeleton Node internal class replaces its default content class without ch
   await expect(content).not.toHaveClass(/ant-skeleton-node/);
   await expect(content).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
   await page.getByRole('button', { name: 'Activate Skeleton element', exact: true }).click();
+
   await expect(content).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
   await expect(content).toHaveCSS('animation-name', 'none');
 });
 
 test('Skeleton element unmount removes its custom prefix scope', async ({ page }) => {
   await page.getByRole('button', { name: 'Change Skeleton prefix', exact: true }).click();
+
   await expect(page.locator(root)).toBeVisible();
   await page.getByRole('button', { name: 'Toggle Skeleton element mount', exact: true }).click();
 
@@ -117,6 +129,7 @@ test('Skeleton theme updates both main and primitive placeholders without replac
   expect(await input.evaluate((node, old) => node === old, original)).toBe(true);
   await expect(page.getByRole('button', { name: 'Node counter 1', exact: true })).toBeVisible();
   const main = page.locator('[data-skeleton-main-preview]');
+
   await expect(main.locator('.ant-skeleton-title')).toHaveCSS('height', '20px');
   await expect(main.locator('.ant-skeleton-title')).toHaveCSS('border-radius', '9px');
   await expect(main.locator('.ant-skeleton-paragraph > li').first()).toHaveCSS('height', '18px');

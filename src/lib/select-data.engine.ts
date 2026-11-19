@@ -75,7 +75,8 @@ export function collectSelectData<
           labelOptions.set(label, item);
           if (Object.hasOwn(item, field)) nativeLabelOptions.set(label, item);
         }
-      } else dig(children as readonly Data[], true);
+      }
+      else dig(children as readonly Data[], true);
     }
   }
   dig(options, false);
@@ -119,7 +120,8 @@ export function filterSelectData<Data extends object>(
         const filtered = children.filter(child => match(child));
         if (filtered.length) result.push({ ...item, [fields.options]: filtered });
       }
-    } else if (match(item)) result.push(item);
+    }
+    else if (match(item)) result.push(item);
   }
   return result;
 }

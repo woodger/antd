@@ -13,6 +13,7 @@ for (const sample of reference.cases) {
   test(`Datetime config matches source input, header and columns for ${sample.name}`,
     async ({ page }) => {
       await page.getByLabel('Datetime config preset', { exact: true }).selectOption(sample.name);
+
       await expect(page.getByRole('dialog')).toBeVisible();
 
       await expect.poll(() => page.evaluate(snapshotDatetimeConfig)).toEqual(sample.metrics);
@@ -30,6 +31,7 @@ for (const range of [false, true]) {
       // Source принимает H/s внутри [Hours] за units; native исключает literal.
       const expected = structuredClone(source.metrics);
       expected.inputs = range ? ['2024-09-15 Hours', '2024-09-18 Hours'] : ['2024-09-15 Hours'];
+
       await expect.poll(() => page.evaluate(snapshotDatetimeConfig)).toEqual(expected);
       await expect(page.getByLabel('Datetime config events', { exact: true })).toHaveText('[]');
     });
@@ -41,6 +43,7 @@ test('Datetime inferred meridiem changes the draft and preserves UTC and source 
     await page.getByLabel('UTC datetime values', { exact: true }).check();
     const popup = page.getByRole('dialog');
     await popup.getByRole('button', { name: 'AM', exact: true }).click();
+
     await expect(page.getByLabel('Datetime config events', { exact: true })).toHaveText('[]');
 
     await popup.getByRole('button', { name: 'OK', exact: true }).click();
@@ -61,6 +64,7 @@ test('Datetime range applies inferred meridiem to the active boundary and retain
     await inputs.nth(1).click();
     const popup = page.getByRole('dialog');
     await popup.getByRole('button', { name: 'AM', exact: true }).click();
+
     await expect(page.getByLabel('Datetime config events', { exact: true })).toHaveText('[]');
 
     await popup.getByRole('button', { name: 'OK', exact: true }).click();

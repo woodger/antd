@@ -19,7 +19,8 @@ for (const [index, entry] of reference.cases.entries()) {
       await page.clock.runFor(350);
       await page.getByRole('button', { name: 'Start upload', exact: true }).click();
       await page.clock.runFor(80);
-    } else {
+    }
+    else {
       await page.clock.runFor(299);
       expect(await page.evaluate(readUploadProgressMotion, prefix)).toBeNull();
       await page.clock.runFor(81);
@@ -33,6 +34,7 @@ for (const [index, entry] of reference.cases.entries()) {
     await page.locator(`.${prefix}-list-item-progress`).evaluate(node => {
       for (const animation of node.getAnimations()) animation.finish();
     });
+
     await expect.poll(() => page.evaluate(readUploadProgressMotion, prefix))
       .toEqual({ ...entry.appeared, classes: [], animations: [] });
     await page.getByRole('button', { name: 'Complete upload', exact: true }).click();
@@ -150,6 +152,7 @@ for (const reduced of [false, true]) {
 
       await expect(page.locator('.ant-upload-list-item-progress')).toHaveCount(0);
       await page.clock.runFor(3000);
+
       await expect(page.locator('.ant-upload-list-item-progress')).toHaveCount(0);
     });
 }

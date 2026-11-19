@@ -15,9 +15,11 @@ for (const [index, entry] of reference.cases.entries()) {
       for (const step of entry.steps) {
         if (step.action === 'hover') {
           await page.locator(`.${prefix}-title`).filter({ hasText: /^Root$/ }).hover({ force: true });
-        } else if (step.action === 'leave') {
+        }
+        else if (step.action === 'leave') {
           await page.mouse.move(1000, 600);
-        } else {
+        }
+        else {
           await page.locator(`.${prefix}-switcher`).first().click();
         }
 

@@ -17,7 +17,10 @@ export function readFormFeedbackCascader() {
         || ['has-feedback','in-form-item','show-arrow'].includes(name)).sort(),
     item: [...item.classList].filter(name => /-item-(?:has-feedback|has-error|has-warning|has-success|is-validating)$/.test(name))
       .map(name => name.slice(name.lastIndexOf('-item-')+6)).sort(),
-    suffix: suffix ? { text: suffix.textContent, custom: suffix.querySelector('[data-custom-suffix]')?.textContent ?? null } : null,
+    suffix: suffix ? {
+      text: suffix.textContent,
+      custom: suffix.querySelector('[data-custom-suffix]')?.textContent ?? null
+    } : null,
     icon: icon ? { className: [...icon.classList].filter(name => name.includes('-item-feedback-icon')).join(' '),
       text: icon.textContent, color: css!.color, fontSize: css!.fontSize, visibility: css!.visibility,
       path: icon.querySelector('svg') ? [...icon.querySelectorAll('svg path')].map(path => path.getAttribute('d')) : null,

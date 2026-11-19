@@ -2,7 +2,10 @@ export function snapshotDescriptionsTheme() {
   return Object.fromEntries([...document.querySelectorAll<HTMLElement>('[data-descriptions-theme]')]
     .map(root => {
       const select = (selector: string) => root.querySelector<HTMLElement>(selector)!;
-      const style = (selector: string, pseudo?: string) => getComputedStyle(select(selector), pseudo);
+      const style = (selector: string, pseudo?: string) => getComputedStyle(
+        select(selector),
+        pseudo
+      );
       const label = style('.ant-descriptions-item-label');
       const content = style('.ant-descriptions-item-content');
       const colon = style('.ant-descriptions-item-label', '::after');
@@ -17,7 +20,11 @@ export function snapshotDescriptionsTheme() {
         extraColor: style('.ant-descriptions-extra').color,
         label: { color: label.color, background: label.backgroundColor },
         contentColor: content.color,
-        colon: { start: colon.marginInlineStart, end: colon.marginInlineEnd, display: colon.display },
+        colon: {
+          start: colon.marginInlineStart,
+          end: colon.marginInlineEnd,
+          display: colon.display
+        },
         firstCell: { bottom: first.paddingBottom, end: first.paddingInlineEnd },
         lastCell: { bottom: last.paddingBottom, end: last.paddingInlineEnd },
         spans: rows.map(row => [...row.children].map(cell => Number(cell.getAttribute('colspan') ?? 1)))

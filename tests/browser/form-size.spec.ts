@@ -6,6 +6,7 @@ for (const { sample, metrics } of reference.cases) {
   test(`Form size matches source labels, controls and inheritance for ${sample.id}`, async ({ page }) => {
     await page.goto('/?fixture=form-size');
     await page.getByRole('combobox', { name: 'Form size sample', exact: true }).selectOption(sample.id);
+
     await expect.poll(() => page.evaluate(formSizeMetrics)).toEqual(metrics);
   });
 }

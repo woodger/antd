@@ -51,7 +51,8 @@ it.each(reference.cases)('renders $id original motion props without scheduling b
     if (sample.defaultOpen || sample.initialOpen) {
       // Native's existing SSR shell remains hidden until browser layout connects the popup.
       expect(body).toMatch(/<div\b(?=[^>]*popover="manual")(?=[^>]*\bhidden(?:\s|=|>))[^>]*>/);
-    } else expect(body).not.toContain('popover="manual"');
+    }
+    else expect(body).not.toContain('popover="manual"');
     const resources = /<output[^>]*data-motion-ssr-resources[^>]*>([\s\S]*?)<\/output>/.exec(body)![1]
       .replace(/<!--[\s\S]*?-->/g, '');
     expect(JSON.parse(resources)).toEqual({

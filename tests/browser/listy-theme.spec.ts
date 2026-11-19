@@ -29,6 +29,7 @@ for (const part of ['raw', 'raw-grouped', 'virtual', 'virtual-grouped']) {
   test(`Listy theme updates preserve ${part} DOM, draft, focus, selection and measured cache`,
     async ({ page }) => {
       await page.goto('/?fixture=listy-theme');
+
       await expect(page.getByLabel('Listy theme refs normal', { exact: true })).toHaveText('4');
       const root = page.locator(`[data-listy-theme="normal"] [data-listy-part="${part}"]`);
       const input = root.getByRole('textbox', {
@@ -66,8 +67,10 @@ for (const part of ['raw', 'raw-grouped', 'virtual', 'virtual-grouped']) {
 
 test('Listy scrollTo follows source measured and estimated sticky-header offsets', async ({ page }) => {
   await page.goto('/?fixture=listy-theme');
+
   await expect(page.getByLabel('Listy theme refs normal', { exact: true })).toHaveText('4');
   await page.getByRole('button', { name: 'Update Listy tokens', exact: true }).dispatchEvent('click');
+
   await expect.poll(() => page.evaluate(snapshotListyVirtualSizes))
     .toEqual(updatedVirtualSizes);
 
@@ -100,6 +103,7 @@ test('Listy refreshes unmounted estimates when measured row heights stay unchang
   const item = root.locator('.ant-listy-item').first();
   const original = await item.elementHandle();
   const observation = reference.staleEstimateObservation;
+
   await expect.poll(() => page.evaluate(snapshotListyVirtualSizes)
     .then(sizes => sizes.priority.virtual)).toEqual({
       fillerHeight: observation.before.fillerHeight,
@@ -129,6 +133,7 @@ test('Listy resets inherited tokens without replacing its nested field', async (
   await page.getByLabel('Inherit Listy theme', { exact: true }).dispatchEvent('click');
 
   const defaults = reference.cases.find(sample => sample.name === 'default')!;
+
   await expect.poll(() => page.evaluate(snapshotListyTheme).then(metrics => metrics.nested))
     .toEqual(defaults.metrics.nested);
   expect(await input.evaluate((node, old) => node === old, original)).toBe(true);
@@ -141,7 +146,10 @@ test('Listy resets inherited tokens without replacing its nested field', async (
 test('Listy restores legacy styles while retaining the field and refs', async ({ page }) => {
   await page.goto('/?fixture=listy-theme');
   const root = page.locator('[data-listy-theme="normal"] [data-listy-part="raw"]');
-  const input = root.getByRole('textbox', { name: 'Listy theme draft normal raw row-00', exact: true });
+  const input = root.getByRole(
+    'textbox',
+    { name: 'Listy theme draft normal raw row-00', exact: true }
+  );
   const original = await input.elementHandle();
   await input.fill('Legacy Listy draft');
 

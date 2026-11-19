@@ -23,7 +23,11 @@ export function createTreeMotion<Data extends object>(options: {
   dragging: () => boolean;
 }) {
   const key = Symbol('tree motion');
-  let previous = untrack(() => ({ rows: options.rows(), expanded: options.expanded(), dragging: false }));
+  let previous = untrack(() => ({
+    rows: options.rows(),
+    expanded: options.expanded(),
+    dragging: false
+  }));
   let rows = $state.raw<readonly TreeMotionRow<Data>[]>(previous.rows);
   let group = $state.raw<TreeMotionGroup<Data> | null>(null);
   let revision = 0;
@@ -36,7 +40,11 @@ export function createTreeMotion<Data extends object>(options: {
   }
 
   $effect.pre(() => {
-    const next = { rows: options.rows(), expanded: options.expanded(), dragging: options.dragging() };
+    const next = {
+      rows: options.rows(),
+      expanded: options.expanded(),
+      dragging: options.dragging()
+    };
     const motion = options.motion();
     const virtual = options.virtual();
     const height = options.height();
@@ -55,7 +63,8 @@ export function createTreeMotion<Data extends object>(options: {
           group = { key, motionNodes: nodes, show: changed.show, id: ++revision };
           rows = [...shorter.slice(0, position + 1), group, ...shorter.slice(position + 1)];
         }
-      } else if (next.rows !== previous.rows) finish();
+      }
+      else if (next.rows !== previous.rows) finish();
       previous = next;
     });
   });

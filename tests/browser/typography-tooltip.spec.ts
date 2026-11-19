@@ -98,6 +98,7 @@ for (const name of ['provider-click', 'provider-contextMenu', 'body-click']) {
       .toBe(name === 'body-click');
 
     await anchor.dispatchEvent('click');
+
     await expect(popup).toBeHidden();
     await expect(page.getByLabel('Config changes', { exact: true })).toHaveText('[true,false]');
   });
@@ -150,6 +151,7 @@ test('Typography Tooltip closes on blur even when the focused popup remains insi
   await prepare(page, 'provider-focus');
   await page.locator('[data-config-anchor]').focus();
   await page.clock.runFor(100);
+
   await expect(page.getByRole('tooltip')).toBeVisible();
 
   await page.getByRole('textbox', { name: 'Config draft', exact: true }).focus();
@@ -162,6 +164,7 @@ test('Typography Tooltip cancels a pending hover opening when its target is remo
   await prepare(page, 'provider-hover');
   await page.locator('[data-config-anchor]').hover();
   await page.clock.runFor(199);
+
   await expect(page.getByLabel('Config changes', { exact: true })).toHaveText('[]');
 
   await page.getByRole('button', { name: 'Toggle Typography tooltip', exact: true })
@@ -195,6 +198,7 @@ test('Typography Tooltip removes a focused target without reopening after deferr
   await prepare(page, 'provider-focus');
   await page.locator('[data-config-anchor]').focus();
   await page.clock.runFor(100);
+
   await expect(page.getByRole('tooltip')).toBeVisible();
 
   await page.getByRole('button', { name: 'Toggle Typography tooltip', exact: true })
@@ -221,10 +225,12 @@ for (const action of ['Copy text', 'Edit text']) {
         await expect(popup).toHaveCount(0);
 
         await page.clock.runFor(21);
-      } else if (trigger === 'focus') {
+      }
+      else if (trigger === 'focus') {
         await button.focus();
         await page.clock.runFor(20);
-      } else {
+      }
+      else {
         const canceled = await button.evaluate(node => !node.dispatchEvent(new MouseEvent('contextmenu', {
           bubbles: true, cancelable: true
         })));
@@ -244,9 +250,11 @@ for (const action of ['Copy text', 'Edit text']) {
         await page.clock.runFor(299);
         await expect(popup).toBeVisible();
         await page.clock.runFor(1);
-      } else if (trigger === 'focus') {
+      }
+      else if (trigger === 'focus') {
         await page.getByRole('button', { name: 'After Typography tooltip', exact: true }).focus();
-      } else await button.dispatchEvent('contextmenu', { bubbles: true, cancelable: true });
+      }
+      else await button.dispatchEvent('contextmenu', { bubbles: true, cancelable: true });
 
       await expect(popup).toBeHidden();
       await expect(page.getByLabel('Typography action events', { exact: true })).toBeEmpty();
@@ -254,7 +262,10 @@ for (const action of ['Copy text', 'Edit text']) {
   }
 }
 
-test('Typography inherited click Tooltip preserves copy and updates the success title', async ({ page, context }) => {
+test('Typography inherited click Tooltip preserves copy and updates the success title', async ({
+  page,
+  context
+}) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await select(page, 'provider-click');
   await page.getByLabel('Typography action tooltips', { exact: true }).dispatchEvent('click');

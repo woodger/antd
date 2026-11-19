@@ -16,14 +16,21 @@ describe('diffSelectStyle', () => {
     const style = { color: ' red ', opacity: 1 };
     const previous = snapshotSelectStyle(style);
     style.color = 'red';
+
     expect(diffSelectStyle(previous, style)).toEqual([{ property: 'color', value: 'red' }]);
     expect(diffSelectStyle({ color: 'red', opacity: 1 }, { opacity: 1, color: 'red' })).toEqual([]);
   });
   it('preserves an explicit clear and restores a raw value after it', () => {
     expect(diffSelectStyle({ borderColor: 'green', border: '1px solid black' },
-      { borderColor: undefined, border: '1px solid black' })).toEqual([{ property: 'borderColor', value: undefined }]);
+      { borderColor: undefined, border: '1px solid black' })).toEqual([{
+        property: 'borderColor',
+        value: undefined
+      }]);
     expect(diffSelectStyle({ borderColor: undefined, border: '1px solid black' },
-      { borderColor: 'red', border: '1px solid black' })).toEqual([{ property: 'borderColor', value: 'red' }]);
+      { borderColor: 'red', border: '1px solid black' })).toEqual([{
+        property: 'borderColor',
+        value: 'red'
+      }]);
   });
 });
 
@@ -41,13 +48,19 @@ describe('resolveSelectStyleFrame', () => {
   });
   it('lets an own undefined width suppress framework measurement before serialization', () => {
     const frame = resolveSelectStyleFrame({ width: undefined, color: 'red' }, [[['width', '37px']]]);
+
     expect(frame.properties).toEqual({ width: undefined, color: 'red' });
     expect(frame.authored.has('width')).toBe(true);
     expect(frame.text).toBe('color:red');
   });
   it('retains object order and applies the final framework projection once', () => {
-    const frame = resolveSelectStyleFrame({ borderColor: 'red', border: '1px solid black', left: 12 },
+    const frame = resolveSelectStyleFrame({
+      borderColor: 'red',
+      border: '1px solid black',
+      left: 12
+    },
       ['--accent:blue;left:3px'], [[['left', '0px', 'important']]]);
+
     expect(Object.keys(frame.properties)).toEqual(['--accent', 'left', 'borderColor', 'border']);
     expect(frame.priorities.left).toBe('important');
     expect(frame.authored.has('left')).toBe(false);

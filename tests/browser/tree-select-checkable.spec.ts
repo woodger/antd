@@ -71,10 +71,17 @@ for (const raw of [...reference.cases, ...diagnostic.cases]) {
     await page.goto('/?fixture=tree-select-checkable');
     await page.getByRole('combobox', { name: 'TreeSelect checkable sample', exact: true }).selectOption(entry.id);
     await page.mouse.move(0, 0);
-    await expect(page.locator('[data-checkable-case]')).toHaveAttribute('data-checkable-bound', 'true');
+
+    await expect(page.locator('[data-checkable-case]')).toHaveAttribute(
+      'data-checkable-bound',
+      'true'
+    );
     verify(await settle(page), entry.initial, entry.id, 'initial', entry.id + '/initial');
     const identity = await page.evaluateHandle(() => {
-      const refs: { root?: HTMLElement; control?: { focus?: unknown; blur?: unknown; scrollTo?: unknown } } = {};
+      const refs: {
+        root?: HTMLElement;
+        control?: { focus?: unknown; blur?: unknown; scrollTo?: unknown }
+      } = {};
       document.querySelector('[data-checkable-command]')!
         .dispatchEvent(new CustomEvent('checkablerefs', { detail: refs }));
       const root = refs.root!;
@@ -103,7 +110,13 @@ for (const raw of [...reference.cases, ...diagnostic.cases]) {
       expect(await observe()).toEqual(treeSelectCheckableNativeObserved(entry.initial.observed));
       for (const [index, step] of entry.steps.entries()) {
         await actTreeSelectCheckable(page, step.action as TreeSelectCheckableAction);
-        verify(await settle(page), step, entry.id, 'step', `${entry.id}/${index + 1}/${JSON.stringify(step.action)}`);
+        verify(
+          await settle(page),
+          step,
+          entry.id,
+          'step',
+          `${entry.id}/${index + 1}/${JSON.stringify(step.action)}`
+        );
         expect(await observe()).toEqual(treeSelectCheckableNativeObserved(step.observed));
         const counters = await page.locator('[data-checkable-command]').evaluate(node => {
           const refs: { ignored?: unknown } = {};

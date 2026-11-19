@@ -10,11 +10,19 @@ import { selectDataSourceDiagnostic } from './select-data-reference';
 
 type Snapshot = ReturnType<typeof readSelectDataAttributes>;
 type Row = Snapshot['raw']['popups'][number]['physicalRows'][number];
-const bytes = readFileSync(new URL('./fixtures/ant-design-select-data-attributes-reference.json', import.meta.url));
+const bytes = readFileSync(new URL(
+  './fixtures/ant-design-select-data-attributes-reference.json',
+  import.meta.url
+));
 expect(createHash('sha256').update(bytes).digest('hex'))
   .toBe('95c56926369a18bb7f3b10ec13e8a697789b74e387a94f5ff5f87e4555162030');
 const source = JSON.parse(bytes.toString('utf8')) as {
-  reference: { revision: string; errors: unknown[]; diagnostics: unknown[]; viewport: { width: number; height: number } };
+  reference: {
+    revision: string;
+    errors: unknown[];
+    diagnostics: unknown[];
+    viewport: { width: number; height: number }
+  };
   cases: Array<{ id: string; sourceSampleId: string; publicGroupAttributeProbe: boolean;
     initial: Snapshot; steps: Array<Snapshot & { action: SelectDataAction }> }>;
 };
@@ -55,7 +63,11 @@ function verify(actual: Snapshot, expected: Snapshot, visible: boolean) {
       const rows = current.listboxes[boxIndex].rows;
       expect(rows.length).toBe(listbox.rows.length);
       for (const [rowIndex, row] of listbox.rows.entries()) {
-        expect(attributes(rows[rowIndex], true, rows[rowIndex].tag === 'BUTTON')).toEqual(attributes(row, false, false));
+        expect(attributes(rows[rowIndex], true, rows[rowIndex].tag === 'BUTTON')).toEqual(attributes(
+          row,
+          false,
+          false
+        ));
       }
     }
   }
@@ -74,7 +86,11 @@ for (const entry of source.cases) {
     const trace: unknown[] = [];
     await page.goto('/?fixture=select-data');
     await page.getByRole('combobox', { name: 'Select data sample', exact: true }).selectOption(entry.id);
-    await expect(page.locator('[data-select-data-case]')).toHaveAttribute('data-select-data-bound', 'true');
+
+    await expect(page.locator('[data-select-data-case]')).toHaveAttribute(
+      'data-select-data-bound',
+      'true'
+    );
     await prepareSelectData(page);
     const capture = async (expected: Snapshot, action?: SelectDataAction) => {
       const settled = await settleSelectData(page);

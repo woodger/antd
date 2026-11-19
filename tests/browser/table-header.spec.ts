@@ -108,6 +108,7 @@ for (const rtl of [false, true]) {
       await region.evaluate((node, rtl) => { node.scrollLeft = rtl ? -180 : 180; }, rtl);
 
       await expectPinnedBody(region);
+
       await expect(region).toHaveCSS('scroll-padding-top', '0px');
 
       await page.getByRole('button', { name: 'Replace header table rows', exact: true }).click();
@@ -125,6 +126,7 @@ for (const rtl of [false, true]) {
 
       await expect(root.locator('tbody tr.ant-table-row')).toHaveCount(2);
       await expectPinnedBody(region);
+
       await expect(root.getByLabel('Table header events', { exact: true })).toHaveText('[]');
     });
 }
@@ -133,6 +135,7 @@ test('Table removing the header closes its filter popover and leaves body data i
   async ({ page }) => {
     const root = page.locator('#table-header-control');
     await root.locator('.ant-table-filter-trigger').click();
+
     await expect(root.getByRole('dialog')).toBeVisible();
 
     await page.getByLabel('Table header visibility', { exact: true }).evaluate(node => {

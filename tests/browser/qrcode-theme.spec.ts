@@ -33,6 +33,7 @@ test('QRCode theme updates repaint the same canvas and SVG while preserving focu
     await expect.poll(async () => (await page.evaluate(snapshotQRCodeTheme)).svg.drawing.fills?.[1])
       .toBe('rgb(19, 82, 0)');
     const changed = await page.evaluate(snapshotQRCodeTheme);
+
     expect(changed.explicit.drawing.palette).toEqual(before.explicit.drawing.palette);
     expect(changed.sibling).toEqual(before.sibling);
     expect(changed.outside).toEqual(before.outside);
@@ -48,8 +49,14 @@ test('QRCode theme updates repaint the same canvas and SVG while preserving focu
 
     await expect(page.locator('[data-qrcode-theme="expired"] .ant-qrcode-cover'))
       .toHaveCSS('background-color', 'rgba(230, 244, 255, 0.96)');
-    await expect(page.locator('[data-qrcode-theme="canvas"] .ant-qrcode')).toHaveCSS('padding', '24px');
-    await expect(page.locator('[data-qrcode-theme="borderless"] .ant-qrcode')).toHaveCSS('padding', '0px');
+    await expect(page.locator('[data-qrcode-theme="canvas"] .ant-qrcode')).toHaveCSS(
+      'padding',
+      '24px'
+    );
+    await expect(page.locator('[data-qrcode-theme="borderless"] .ant-qrcode')).toHaveCSS(
+      'padding',
+      '0px'
+    );
     for (const [id, padding] of [['nested', 6], ['reset', 5], ['sibling', 4], ['outside', 12]]) {
       await expect(page.locator(`[data-qrcode-theme="${id}"] .ant-qrcode`))
         .toHaveCSS('padding', `${padding}px`);

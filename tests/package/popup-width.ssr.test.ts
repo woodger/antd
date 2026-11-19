@@ -77,8 +77,14 @@ it.each(closedCases)('renders $id without measuring, leaking width props or seed
     expect(typeof window).toBe('undefined');
     expect(typeof document).toBe('undefined');
     const { body } = entry.nested
-      ? render(PopupWidthNestedCase, { props: { sample: popupWidthNestedSamples.find(sample => sample.id === entry.id)! } })
-      : render(PopupWidthCase, { props: { sample: samples.find(sample => sample.id === entry.id)! } });
+      ? render(
+        PopupWidthNestedCase,
+        { props: { sample: popupWidthNestedSamples.find(sample => sample.id === entry.id)! } }
+      )
+      : render(
+        PopupWidthCase,
+        { props: { sample: samples.find(sample => sample.id === entry.id)! } }
+      );
     const actual = readPopupWidthSSR(body);
     expect(actual).toEqual(entry.view);
     expect(actual.events).toEqual([]);

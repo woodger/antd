@@ -75,6 +75,7 @@ test('Layout config updates preserve drafts, selection, focus and Sider collapse
     };
     await draft.fill('Retained layout draft');
     await sider.getByRole('button').press('Enter');
+
     await expect(sider).toHaveCSS('width', '80px');
     await draft.focus();
     await draft.evaluate(node => (node as HTMLInputElement).setSelectionRange(3, 12));

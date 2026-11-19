@@ -106,7 +106,8 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
       await physicalSelectOption(page, { name: 'Beta', exact: true }).click();
       expect(await page.locator('#select-container-form').evaluate(node =>
         new FormData(node as HTMLFormElement).getAll('selected'))).toEqual(['alpha', 'beta']);
-    } else await expect(input).toHaveValue(component === 'select' ? 'Alpha' : 'alpha');
+    }
+    else await expect(input).toHaveValue(component === 'select' ? 'Alpha' : 'alpha');
   });
 
   test(`portal ${component} keeps keyboard selection, Escape and outside dismissal`, async ({ page }) => {
@@ -123,10 +124,12 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
     await expect(input).toBeFocused();
     if (component !== 'select-multiple') await input.click();
     await input.press('Escape');
+
     await expect(input).toHaveAttribute('aria-expanded', 'false');
     await expect(input).toBeFocused();
     await input.click();
     await page.getByLabel('Select outside', { exact: true }).click();
+
     await expect(input).toHaveAttribute('aria-expanded', 'false');
     await expect(page.getByLabel('Select outside', { exact: true })).toBeFocused();
   });
@@ -140,15 +143,19 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
     await input.evaluate(node => (node as HTMLInputElement).setSelectionRange(1, 2));
 
     await check(page, 'Alternate select container', true);
+
     await expect(physicalSelectPopup(page.locator('#select-child'))).toBeVisible();
     await expect(physicalSelectPopup(page.locator('#select-parent'))).toHaveCount(0);
     await check(page, 'Override select component theme', true);
+
     await expect(popup).toHaveCSS('--ant-select-option-height', '42px');
     await expect(popup).toHaveCSS('--ant-color-bg-elevated', '#234567');
     await check(page, 'Dark select theme', true);
+
     await expect(popup).toHaveCSS('--select-origin', 'dark');
     await expect(popup).toHaveCSS('--ant-color-bg-elevated', '#234567');
     await check(page, 'Override select component theme', false);
+
     await expect(popup).not.toHaveCSS('--ant-color-bg-elevated', '#234567');
     await expect(popup).toHaveCSS('--ant-select-option-height', '32px');
 
@@ -159,11 +166,13 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
       (node as HTMLInputElement).selectionStart, (node as HTMLInputElement).selectionEnd
     ])).toEqual([1, 2]);
     await popup.locator('[class$="-list-holder"]').evaluate(node => node.dispatchEvent(new Event('scroll')));
+
     await expect(page.getByLabel('Select container scrolls', { exact: true })).toHaveText('1');
   });
 
   test(`removing the ${component} provider tree releases portals and callbacks`, async ({ page }) => {
     await open(page, `${component}-shadow`);
+
     await expect(physicalSelectPopup(page)).toBeVisible();
     const calls = await page.getByLabel('Select owner calls', { exact: true }).textContent();
 
@@ -208,6 +217,7 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
     const input = dialog.getByRole('combobox', { name: 'Container select', exact: true });
     await input.click();
     await physicalSelectOption(page, { name: 'Alpha', exact: true }).click();
+
     await expect(input).toBeFocused();
     expect(await dialog.locator('form').evaluate(node =>
       new FormData(node as HTMLFormElement).getAll('selected'))).toEqual(['alpha']);
@@ -220,6 +230,7 @@ for (const component of ['select', 'select-multiple', 'auto-complete',
     await expect(input).toBeFocused();
     await page.getByLabel('Select outside', { exact: true }).evaluate(node =>
       (node as HTMLElement).focus());
+
     await expect(input).toBeFocused();
   });
 

@@ -246,7 +246,10 @@
   let responsiveTags = $derived(isMultiple && maxTagCount === 'responsive');
   let componentResponsive = $derived(Boolean(responsiveTags && components?.input && !components.root));
   let tagOverflow = $derived(componentResponsive && componentOverflow
-    ? { visible: display.slice(0, componentOverflow.visibleCount), omitted: display.slice(componentOverflow.omittedStart) }
+    ? {
+      visible: display.slice(0, componentOverflow.visibleCount),
+      omitted: display.slice(componentOverflow.omittedStart)
+    }
     : treeSelectTagOverflow(display,
       responsiveTags ? responsiveCount : typeof maxTagCount === 'number' ? maxTagCount : undefined));
   const labelCache = createTreeSelectLabelCache<Data>();
@@ -362,7 +365,10 @@
   let popupFlipCache: PopupFlipCache | undefined;
   let sourcePlacements = $derived(treeSelectBuiltinPlacements(config.popupOverflow));
   let alignedPopupClass = $derived(sourceAlignmentUsed || sourceMotionUsed
-    ? cachedPopupAlignment && getPopupPlacement(builtinPlacements || sourcePlacements, cachedPopupAlignment)
+    ? cachedPopupAlignment && getPopupPlacement(
+      builtinPlacements || sourcePlacements,
+      cachedPopupAlignment
+    )
     : legacyPopupClass);
   $effect(() => {
     if (popupAlign !== undefined || builtinPlacements !== undefined
@@ -470,7 +476,10 @@
     const overflow = untrack(() => connectTreeSelectComponentOverflow(host, suffix, () => display.length,
       layout => { componentOverflow = layout; }));
     // Static renderers могут не изменить DOM при росте выбранного списка.
-    $effect(() => { void display.length; overflow.schedule(); });
+    $effect(() => {
+      void display.length;
+      overflow.schedule();
+    });
     return overflow.destroy;
   });
   $effect(() => {
@@ -639,7 +648,9 @@
       },
       get align() { return requestedPlacement().endsWith('Right') ? 'right' : 'left'; },
       autoAdjustOverflow: true,
-      get maxWidth() { return untrack(() => sourceAlignmentUsed || semantics.popupHasMaxWidth ? false : '100vw'); },
+      get maxWidth() {
+        return untrack(() => sourceAlignmentUsed || semantics.popupHasMaxWidth ? false : '100vw');
+      },
       getAnchorWidth: () => sourceMode() ? source.width : anchor.getBoundingClientRect().width,
       get constrainWidth() { return untrack(() => sourceAlignmentUsed ? false : undefined); },
       get allowOffscreenAnchor() { return untrack(() => sourceAlignmentUsed); },
@@ -797,10 +808,12 @@
       if (event.key === 'Enter' || !suffixSearch) event.preventDefault();
       if (!wasOpen) requestOpen(true, true);
       else handleKeyboard(event, true);
-    } else if (event.key === 'Backspace' && isMultiple && !search) {
+    }
+    else if (event.key === 'Backspace' && isMultiple && !search) {
       const last = [...display].reverse().find(item => !item.disabled);
       if (last) choose(last.value, 'selection', false);
-    } else if (wasOpen) handleKeyboard(event, true);
+    }
+    else if (wasOpen) handleKeyboard(event, true);
     onKeyDown?.(event);
   }
   function componentRootContext(): TreeSelectRootContext<RootElement> {
@@ -877,7 +890,10 @@
     };
     const own = typeof inputSlot === 'object' ? inputSlot.props : undefined;
     if (typeof inputSlot === 'object') Object.assign(generated, { placeholder: placeholderText });
-    return { attributes: mergeTreeSelectComponentAttributes(attrs, generated, own, 'input'), register: registerInput };
+    return {
+      attributes: mergeTreeSelectComponentAttributes(attrs, generated, own, 'input'),
+      register: registerInput
+    };
   }
   function requestOpen(next: boolean, allowBlocked = false) {
     cancelClose();
@@ -905,14 +921,12 @@
         if (inputSlot) {
           const value = inputContext.attributes.value;
           if (value != null) input.value = String(value);
-        } else input.value = inputValue;
+        }
+        else input.value = inputValue;
       });
     }
   }
-  function publish(
-    raw: TreeSelectRawValue[],
-    triggerValue?: TreeSelectRawValue
-  ) {
+  function publish(raw: TreeSelectRawValue[], triggerValue?: TreeSelectRawValue) {
     const formatted = treeSelectStrategy(raw, strategy, index);
     if (limit.changeMaxCount && formatted.length > limit.changeMaxCount) return;
     const before = items;

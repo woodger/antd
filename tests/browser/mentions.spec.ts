@@ -194,6 +194,7 @@ test(
     expect(before).toBeGreaterThanOrEqual(40);
 
     await control.fill('one\ntwo\nthree\nfour\nfive\nsix');
+
     await expect.poll(async () => (await control.boundingBox())!.height).toBeGreaterThan(before);
 
     expect((await control.boundingBox())!.height).toBeLessThanOrEqual(100);
@@ -263,6 +264,7 @@ test(
   'Mentions public refs survive updates and unmount releases popup state and deferred blur',
   async ({ page }) => {
     const refs = page.getByLabel('Mentions native refs', { exact: true });
+
     await expect(refs).toHaveText('{"root":true,"textarea":true,"contains":true}');
     await page.getByRole('button', { name: 'Focus mentions', exact: true }).click();
 

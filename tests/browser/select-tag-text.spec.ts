@@ -33,6 +33,7 @@ for (const component of ['select', 'cascader']) {
           node.checked = true;
           node.dispatchEvent(new Event('change', { bubbles: true }));
         });
+
       await expect(page.locator('[data-tag-text] .ant-select-selection-item-content'))
         .toHaveText('Al...');
       await page.getByRole('spinbutton', { name: 'Tag text length', exact: true })
@@ -63,12 +64,15 @@ test('Tag truncation preserves free text values, native form fields and full rem
     const input = page.getByRole('combobox', { name: 'Truncated values', exact: true });
     await input.fill('created-tag');
     await input.press('Enter');
+
     await expect(page.locator('[data-tag-text] .ant-select-selection-item-content'))
       .toHaveText(['Alp...', 'cre...']);
     const form = page.getByRole('form', { name: 'Tag text native form', exact: true });
+
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('tag-text')))
       .toEqual(['a', 'created-tag']);
     await page.getByRole('button', { name: 'Удалить created-tag', exact: true }).click();
+
     await expect(input).toBeFocused();
     await expect(page.getByRole('status', { name: 'Tag text values', exact: true }))
       .toHaveText('["a"]');

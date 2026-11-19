@@ -6,7 +6,10 @@
   let selected = $state<string>(selectSurfaceStyleHistorySamples[0].id);
   let sample = $derived(selectSurfaceStyleHistorySamples.find(sample => sample.id === selected)!);
   let mounted = $state(true);
-  let capture = $derived.by(() => { void selected; return {} as Capture; });
+  let capture = $derived.by(() => {
+    void selected;
+    return {} as Capture;
+  });
 </script>
 
 <section id="select-surface-style-history-fixture">

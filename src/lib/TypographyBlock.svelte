@@ -80,7 +80,12 @@
   let expanded = $derived(Boolean(clip.expanded !== undefined ? clip.expanded : innerExpanded));
   let triggers = $derived(edit.triggerType ?? ['icon']);
   let enabled = $derived(Boolean(ellipsis) && (!expanded || clip.expandable === 'collapsible'));
-  let measure = $derived(typographyMeasureNeeded(enabled, clip, Boolean(editable), Boolean(copyable)));
+  let measure = $derived(typographyMeasureNeeded(
+    enabled,
+    clip,
+    Boolean(editable),
+    Boolean(copyable)
+  ));
   let css = $state(untrack(() => enabled));
   let cssLine = $derived(enabled && css && (clip.rows ?? 1) === 1);
   let cssMultiple = $derived(enabled && css && (clip.rows ?? 1) > 1);
@@ -196,7 +201,9 @@
     const element = nativeElement;
     if (!element || !nativeMeasure || !enabled) return;
     const Observer = element.ownerDocument.defaultView?.IntersectionObserver;
-    const observer = Observer ? new Observer(() => { nativeVisible = Boolean(element.offsetParent); })
+    const observer = Observer ? new Observer(() => {
+      nativeVisible = Boolean(element.offsetParent);
+    })
       : undefined;
     observer?.observe(element);
     return () => observer?.disconnect();
@@ -241,7 +248,8 @@
     clearTimeout(actionTimer);
     if (enter) {
       hoverActions = true;
-    } else {
+    }
+    else {
       actionTimer = setTimeout(() => {
         hoverActions = false;
       }, 500);

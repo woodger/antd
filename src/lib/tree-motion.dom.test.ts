@@ -26,7 +26,12 @@ function setup(previous?: boolean) {
   }) as unknown as HTMLDivElement;
   const states: TreeGroupMotionState[] = [];
   const visible: boolean[] = [];
-  const motion = createTreeGroupMotion(node, state => states.push(state), next => visible.push(next), previous);
+  const motion = createTreeGroupMotion(
+    node,
+    state => states.push(state),
+    next => visible.push(next),
+    previous
+  );
   const frame = () => {
     const pending = [...frames.values()];
     frames.clear();
@@ -41,7 +46,10 @@ function setup(previous?: boolean) {
   return { node, media, frames, timers, states, visible, motion, frame, timer };
 }
 const config: TreeMotionConfig = { motionName: 'collapse', motionDeadline: 500 };
-const commit = async () => { await Promise.resolve(); await Promise.resolve(); };
+const commit = async () => {
+  await Promise.resolve();
+  await Promise.resolve();
+};
 
 describe('Tree group motion lifecycle', () => {
   it('keeps the entering group until two RAFs and its own end event complete', async () => {
@@ -52,11 +60,13 @@ describe('Tree group motion lifecycle', () => {
     expect(state.states.at(-1)?.className).toBe('collapse-appear collapse-appear-start collapse');
     state.node.dispatchEvent(new Event('transitionend'));
     state.frame();
+
     expect(state.visible).toEqual([]);
     state.frame();
     const child = new Event('transitionend');
     Object.defineProperty(child, 'target', { value: new EventTarget() });
     state.node.dispatchEvent(child);
+
     expect(state.states.at(-1)?.running).toBe(true);
     state.node.dispatchEvent(new Event('transitionend'));
     state.timer(0);
@@ -78,13 +88,16 @@ describe('Tree group motion lifecycle', () => {
       }
     }, true);
     await commit();
+
     expect(state.states.at(-1)?.style).toBe('height:84px');
-    state.frame(); state.frame();
+    state.frame();
+    state.frame();
     state.node.dispatchEvent(new Event('transitionend'));
 
     expect(state.states.at(-1)?.style).toBe('height:0px');
     expect(state.visible).toEqual([]);
-    state.timer(500); state.timer(0);
+    state.timer(500);
+    state.timer(0);
 
     expect(ended).toEqual(['transitionend', 'deadline']);
     expect(state.visible).toEqual([false]);
@@ -97,14 +110,20 @@ describe('Tree group motion lifecycle', () => {
     let resolve: (() => void) | undefined;
     const hooks: string[] = [];
     state.motion.sync(true, { ...config,
-      onAppearPrepare: () => new Promise<void>(done => { hooks.push('prepare'); resolve = done; }),
+      onAppearPrepare: () => new Promise<void>(done => {
+        hooks.push('prepare');
+        resolve = done;
+      }),
       onAppearStart: () => { hooks.push('start'); },
       onAppearActive: () => { hooks.push('active'); }
     }, false);
-    await commit(); state.frame(); state.frame();
+    await commit();
+    state.frame();
+    state.frame();
 
     expect(state.visible).toEqual([]);
-    resolve!(); await commit();
+    resolve!();
+    await commit();
 
     expect(hooks).toEqual(['prepare']);
     expect(state.visible).toEqual([true]);
@@ -119,11 +138,17 @@ describe('Tree group motion lifecycle', () => {
       state.motion.sync(true, { ...config,
         onAppearPrepare: () => new Promise<void>(done => { resolve = done; })
       }, true);
-      await commit(); state.frame(); state.frame();
+      await commit();
+      state.frame();
+      state.frame();
       if (cancel === 'replace') state.motion.sync(false, { motionLeave: false }, false);
       else state.motion.destroy();
       const count = state.states.length;
-      resolve!(); await commit(); state.frame(); state.frame(); state.timer(500);
+      resolve!();
+      await commit();
+      state.frame();
+      state.frame();
+      state.timer(500);
 
       expect(state.states).toHaveLength(count);
       expect(state.frames.size + state.timers.size).toBe(0);
@@ -134,7 +159,9 @@ describe('Tree group motion lifecycle', () => {
   it('settles reduced motion and cancels all scheduled work on unmount', async () => {
     const state = setup();
     state.motion.sync(true, config, true);
-    await commit(); state.frame(); state.frame();
+    await commit();
+    state.frame();
+    state.frame();
     state.media.matches = true;
     state.media.dispatchEvent(new Event('change'));
     await commit();
@@ -146,6 +173,7 @@ describe('Tree group motion lifecycle', () => {
     state.node.dispatchEvent(new Event('transitionend'));
     state.media.dispatchEvent(new Event('change'));
     state.timer(0);
+
     expect(state.states).toHaveLength(count);
   });
 });

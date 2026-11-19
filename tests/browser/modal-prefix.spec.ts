@@ -33,7 +33,10 @@ for (const type of ['modal', 'confirm'] as const) {
     }
     const opener = page.getByRole('button', { name: 'Open prefix Modal', exact: true });
     await opener.click();
-    const root = page.getByRole('dialog', { name: type === 'modal' ? 'Prefix panel' : 'Prefix confirmation', exact: true });
+    const root = page.getByRole(
+      'dialog',
+      { name: type === 'modal' ? 'Prefix panel' : 'Prefix confirmation', exact: true }
+    );
     const editor = page.getByLabel('Modal prefix draft', { exact: true });
     const panel = root.locator('[data-ant-modal-body]');
     await editor.fill('Edited');

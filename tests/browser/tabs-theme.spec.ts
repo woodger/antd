@@ -54,16 +54,24 @@ for (const sample of reference.cases) for (const direction of ['ltr', 'rtl']) {
     }
     await page.locator('.tabs-token-overflow .ant-tabs-nav-more').hover();
     const menu = page.getByRole('listbox', { name: 'expanded dropdown', exact: true });
+
     await expect(menu).toBeVisible();
     const expected = sample.metrics[`${direction}/popup` as keyof typeof sample.metrics];
+
     await expect.poll(() => menu.evaluate(element => {
       const css = (node: Element, fields: string[]) => {
         const style = getComputedStyle(node);
         return Object.fromEntries(fields.map(key => [key, style[key as keyof CSSStyleDeclaration]]));
       };
       return {
-        surface: css(element.closest('.ant-tabs-dropdown')!, ['fontSize', 'lineHeight', 'color', 'zIndex']),
-        menu: css(element, ['backgroundColor', 'paddingTop', 'paddingBottom', 'borderRadius', 'maxHeight']),
+        surface: css(
+          element.closest('.ant-tabs-dropdown')!,
+          ['fontSize', 'lineHeight', 'color', 'zIndex']
+        ),
+        menu: css(
+          element,
+          ['backgroundColor', 'paddingTop', 'paddingBottom', 'borderRadius', 'maxHeight']
+        ),
         option: css(element.querySelector('.ant-tabs-dropdown-menu-item')!, [
           'fontSize', 'lineHeight', 'color', 'paddingTop', 'paddingLeft', 'minWidth'
         ])
@@ -144,6 +152,7 @@ test('switching source scopes and hashes preserves native controls and disposes 
     await expect(draft).toHaveValue('Native theme draft');
     await expect(page.locator('#tabs-theme-interactive')).not.toHaveClass(/ant-tabs-source-theme/);
     await check(page, 'Apply source Tabs tokens');
+
     await expect(draft).toBeFocused();
     await page.getByRole('textbox', { name: 'Themed Tabs outside', exact: true }).focus();
     await check(page, 'Mount themed Tabs', false);

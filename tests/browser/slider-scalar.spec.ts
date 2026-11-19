@@ -9,6 +9,7 @@ const keyCodes: Record<string, number> = {
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=slider-scalar');
+
   await expect(page.getByRole('heading', { name: 'Scalar Slider source API', exact: true }))
     .toBeVisible();
 });
@@ -69,6 +70,7 @@ test('Scalar disabled handles leave Tab navigation and empty tabindex retains na
     const preset = page.getByRole('combobox', { name: 'Scalar preset', exact: true });
     await preset.selectOption('disabled-first');
     const input = page.locator('[data-scalar-case]').getByRole('slider');
+
     await expect(input).toBeDisabled();
     await page.getByLabel('Override scalar styles', { exact: true }).focus();
     await page.keyboard.press('Tab');
@@ -79,6 +81,7 @@ test('Scalar disabled handles leave Tab navigation and empty tabindex retains na
 
     await expect(input).toBeFocused();
     await input.press('ArrowRight');
+
     await expect(input).toHaveValue('49');
   });
 
@@ -151,8 +154,10 @@ test('Scalar autoFocus and imperative refs use the native input once', async ({ 
   await expect(page.getByLabel('Scalar focus events', { exact: true })).toHaveText('["focus"]');
   await expect(page.getByLabel('Scalar native root', { exact: true })).toHaveText('DIV');
   await page.getByRole('button', { name: 'Blur scalar ref', exact: true }).dispatchEvent('click');
+
   await expect(input).not.toBeFocused();
   await page.getByRole('button', { name: 'Focus scalar ref', exact: true }).dispatchEvent('click');
+
   await expect(input).toBeFocused();
   await expect(page.getByLabel('Scalar focus events', { exact: true }))
     .toHaveText('["focus","blur","focus"]');

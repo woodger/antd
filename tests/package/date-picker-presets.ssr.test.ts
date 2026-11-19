@@ -13,7 +13,9 @@ import type { DatePickerPresetCapture } from '../browser/date-picker-presets-met
 for (const sample of datePickerPresetSamples) {
   it(`keeps closed preset SSR definitions lazy and browser-free ${sample.id}`, () => {
     vi.useFakeTimers();
-    const resource = vi.fn(() => { throw Error('Closed DatePicker presets SSR must remain DOM-free'); });
+    const resource = vi.fn(() => {
+      throw Error('Closed DatePicker presets SSR must remain DOM-free');
+    });
     for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) {
       vi.stubGlobal(name, resource);
     }
@@ -99,6 +101,7 @@ it('keeps single preset types distinct from range tuples and compatible with tim
     // @ts-expect-error a single preset factory returns one Dayjs, not a tuple
     value: () => [dayjs('2024-06-12'), dayjs('2024-06-13')]
   };
+
   expect(dayjs.isDayjs(single.value)).toBe(true);
   expect(typeof lazy.value).toBe('function');
   expect(Array.isArray(pair.value)).toBe(true);

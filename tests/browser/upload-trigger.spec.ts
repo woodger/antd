@@ -102,12 +102,17 @@ for (const listType of ['picture-card', 'picture-circle']) {
       await page.goto('/?fixture=upload-trigger');
       await page.getByRole('combobox', { name: 'Upload trigger sample', exact: true })
         .selectOption(listType === 'picture-card' ? 'structure:10' : 'structure:14');
+
       await expect(page.locator('[data-upload-trigger-host] input[type=file]')).toHaveCount(1);
       const chooserPromise = page.waitForEvent('filechooser');
 
       await page.locator('[data-upload-trigger-host] button').click();
       const chooser = await chooserPromise;
-      await chooser.setFiles({ name: 'manual.txt', mimeType: 'text/plain', buffer: Buffer.from('file') });
+      await chooser.setFiles({
+        name: 'manual.txt',
+        mimeType: 'text/plain',
+        buffer: Buffer.from('file')
+      });
 
       await expect(page.locator('[data-trigger-changes]')).toHaveText('1');
       await expect(page.locator('[data-upload-trigger-host] input[type=file]')).toHaveCount(1);

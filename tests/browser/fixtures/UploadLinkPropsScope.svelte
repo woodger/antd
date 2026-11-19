@@ -35,7 +35,13 @@
       return sample.mode === 'json' ? JSON.stringify(attributes) : attributes;
     }
     if (sample.mode === 'class') {
-      return { class: 'custom-file-name', 'data-file-link': 'class', title: '', target: '', rel: '' };
+      return {
+        class: 'custom-file-name',
+        'data-file-link': 'class',
+        title: '',
+        target: '',
+        rel: ''
+      };
     }
     if (sample.mode?.startsWith('click-')) {
       const onclick: NonNullable<HTMLAnchorAttributes['onclick']> = event => {

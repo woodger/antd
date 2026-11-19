@@ -16,17 +16,21 @@ async function ownerButton(page: Page, name: string) {
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=tour');
+
   await expect(page.locator('#tour-fixture')).toBeVisible();
 });
 
 test('Tour opens a body portal with a target hole, steps and finish callbacks', async ({ page }) => {
   await expect(popup(page)).toHaveCount(0);
   await button(page, 'Open Tour owner').click();
+
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 1');
   await expect(page.locator('.ant-tour-mask mask rect')).toHaveCount(2);
   await button(page, 'Далее').click();
+
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 2');
   await button(page, 'Далее').click();
+
   await expect(button(page, 'Завершить')).toBeVisible();
   await button(page, 'Завершить').click();
 
@@ -37,8 +41,10 @@ test('Tour opens a body portal with a target hole, steps and finish callbacks', 
 
 test('Tour permits target pointer interaction and leaves panel inputs editable', async ({ page }) => {
   await button(page, 'Open Tour owner').click();
+
   await expect(popup(page)).toBeVisible();
   await button(page, 'Tour first target').click();
+
   await expect(control(page, 'Tour target hits')).toHaveText('1');
   await control(page, 'Tour editable').fill('Native draft');
   await control(page, 'Tour editable').press('ArrowRight');
@@ -46,23 +52,28 @@ test('Tour permits target pointer interaction and leaves panel inputs editable',
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 1');
   await expect(control(page, 'Tour editable')).toHaveValue('Native draft');
   await control(page, 'Tour editable').press('Escape');
+
   await expect(popup(page)).toHaveCount(0);
 });
 
 test('Tour centers without a target and uses keyboard step navigation', async ({ page }) => {
   await page.getByRole('combobox', { name: 'Tour target', exact: true }).selectOption('center');
   await button(page, 'Open Tour owner').click();
+
   await expect(popup(page)).toBeVisible();
   await expect(popup(page).locator('.ant-tour-arrow')).toHaveCount(0);
   await page.keyboard.press('ArrowRight');
+
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 2');
   await page.keyboard.press('ArrowLeft');
+
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 1');
 });
 
 test('Tour remains interactive inside the native Modal and Escape leaves the modal open', async ({ page }) => {
   await button(page, 'Open Tour modal').click();
   await button(page, 'Start modal Tour').click();
+
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Modal tour title');
   await expect(button(page, 'Завершить')).toBeEnabled();
   await button(page, 'Завершить').focus();
@@ -81,6 +92,7 @@ test('Tour preserves controlled current rejection and external replacement', asy
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 1');
   await expect(events(page)).toContainText('change:1|next:false:BUTTON');
   await ownerButton(page, 'Set Tour owner current');
+
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 3');
 });
 
@@ -98,6 +110,7 @@ test('Tour remains interactive inside a native Drawer without closing its parent
 test('Tour closes every open instance on Escape and releases their independent locks', async ({ page }) => {
   await control(page, 'Tour duplicate').check();
   await button(page, 'Open Tour owner').click();
+
   await expect(popup(page)).toHaveCount(2);
   await expect(page.locator('[data-ant-tour-lock]')).toHaveCount(4);
 
@@ -118,14 +131,17 @@ test('Tour preserves controlled close rejection and finish callback order', asyn
   await expect(popup(page)).toBeVisible();
   await expect(events(page)).toContainText('close:0|finish|next:false:BUTTON');
   await button(page, 'Закрыть').click();
+
   await expect(popup(page)).toBeVisible();
   await expect(events(page)).toContainText('next:false:BUTTON|close:0');
 });
 
 test('Tour defaults open when controlled open is released and defaultOpen stays initial', async ({ page }) => {
   await button(page, 'Release Tour owner open').click();
+
   await expect(popup(page)).toBeVisible();
   await button(page, 'Закрыть').click();
+
   await expect(popup(page)).toHaveCount(0);
 
   await control(page, 'Tour default open').check();
@@ -136,6 +152,7 @@ test('Tour defaults open when controlled open is released and defaultOpen stays 
 test('Tour resets an uncontrolled step to zero when it reopens', async ({ page }) => {
   await button(page, 'Open Tour owner').click();
   await button(page, 'Далее').click();
+
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 2');
   await button(page, 'Закрыть').click();
   await button(page, 'Open Tour owner').click();
@@ -149,6 +166,7 @@ test('Tour keeps initial defaultCurrent and closes when the active index leaves 
   await control(page, 'Tour default open').check();
   await control(page, 'Tour controlled open').uncheck();
   await control(page, 'Mount Tour').check();
+
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 3');
 
   await control(page, 'Tour count').fill('1');
@@ -160,6 +178,7 @@ test('Tour keeps initial defaultCurrent and closes when the active index leaves 
 test('Tour masks outside clicks without dismissing and disables the highlighted interaction', async ({ page }) => {
   await control(page, 'Tour disabled interaction').check();
   await button(page, 'Open Tour owner').click();
+
   await expect(popup(page)).toBeVisible();
   const target = await button(page, 'Tour first target').boundingBox();
   await page.mouse.click(target!.x + target!.width / 2, target!.y + target!.height / 2);
@@ -167,6 +186,7 @@ test('Tour masks outside clicks without dismissing and disables the highlighted 
   await expect(control(page, 'Tour target hits')).toHaveText('0');
   await expect(popup(page)).toBeVisible();
   await page.mouse.click(5, 5);
+
   await expect(popup(page)).toBeVisible();
 });
 
@@ -177,14 +197,17 @@ test('Tour without a mask keeps the outside page interactive and still locks bod
   await expect(page.locator('.ant-tour-mask svg')).toHaveCount(0);
   await expect(page.locator('[data-ant-tour-lock]')).toHaveCount(2);
   await control(page, 'Tour custom locale').check();
+
   await expect(button(page, 'Continue')).toBeVisible();
 });
 
 test('Tour lets false closable disable Escape while arrow navigation remains available', async ({ page }) => {
   await control(page, 'Tour closable').uncheck();
   await button(page, 'Open Tour owner').click();
+
   await expect(button(page, 'Закрыть')).toHaveCount(0);
   await page.keyboard.press('Escape');
+
   await expect(popup(page)).toBeVisible();
   await page.keyboard.press('ArrowRight');
 
@@ -199,6 +222,7 @@ test('Tour disables keyboard shortcuts without disabling native buttons', async 
 
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 1');
   await button(page, 'Далее').click();
+
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 2');
 });
 
@@ -207,13 +231,16 @@ test('Tour protects an IME Escape and the two hundred millisecond composition ta
   await page.clock.install({ time });
   await page.clock.pauseAt(time);
   await button(page, 'Open Tour owner').click();
+
   await expect(popup(page)).toBeVisible();
   await page.locator('body').dispatchEvent('keydown', { key: 'Escape', isComposing: true });
+
   await expect(popup(page)).toBeVisible();
   await page.locator('body').dispatchEvent('compositionend');
   await page.keyboard.press('Escape');
   await page.clock.runFor(199);
   await page.keyboard.press('Escape');
+
   await expect(popup(page)).toBeVisible();
 
   await page.clock.runFor(1);
@@ -227,9 +254,11 @@ test('Tour step close and finish callbacks override the root panel actions', asy
   await control(page, 'Tour step callbacks').check();
   await button(page, 'Open Tour owner').click();
   await button(page, 'Закрыть').click();
+
   await expect(popup(page)).toBeVisible();
   await expect(events(page)).toContainText('step-close');
   await button(page, 'Завершить').click();
+
   await expect(events(page)).toContainText('step-finish|next:false:BUTTON');
 
   await page.keyboard.press('Escape');
@@ -258,9 +287,11 @@ test('Tour passes original actions into custom renderers and preserves native bu
   await expect(popup(page).locator('.custom-indicators')).toHaveText('1/3');
   await expect(button(page, 'Forward custom')).toHaveClass(/custom-next/);
   await button(page, 'Forward custom').click({ modifiers: ['Control'] });
+
   await expect(events(page)).toContainText('change:1|next:true:BUTTON');
   await expect(popup(page).locator('.custom-indicators')).toHaveText('2/3');
   await button(page, 'Skip 2').click();
+
   await expect(popup(page)).toHaveCount(0);
 });
 
@@ -271,8 +302,10 @@ test('Tour keeps source locale aliases above component locale fields', async ({ 
 
   await expect(button(page, 'Source next')).toBeVisible();
   await button(page, 'Source next').click();
+
   await expect(button(page, 'Back')).toBeVisible();
   await button(page, 'Source next').click();
+
   await expect(button(page, 'Done')).toBeVisible();
 });
 
@@ -287,6 +320,7 @@ test('Tour keeps a stable description snippet and its native draft across steps'
 test('Tour uses a custom step panel and its supplied navigation callback', async ({ page }) => {
   await control(page, 'Tour custom panel').check();
   await button(page, 'Open Tour owner').click();
+
   await expect(popup(page).locator('.custom-panel')).toContainText('Custom panel 1');
   await button(page, 'Custom next').click();
 
@@ -304,6 +338,7 @@ test('Tour selects the rc-tour fallback when a step explicitly clears renderPane
 
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 1');
   await button(page, 'Close').click();
+
   await expect(popup(page)).toHaveCount(0);
 });
 
@@ -343,6 +378,7 @@ test('Tour uses inline coordinates and leaves body scroll unlocked', async ({ pa
 test('Tour mounts custom portals and removes their layers and body locks on unmount', async ({ page }) => {
   await page.getByRole('combobox', { name: 'Tour container', exact: true }).selectOption('custom');
   await button(page, 'Open Tour owner').click();
+
   await expect(page.locator('.portal-container .ant-tour')).toBeVisible();
   await expect(page.locator('[data-ant-tour-lock]')).toHaveCount(0);
 
@@ -355,8 +391,10 @@ test('Tour mounts custom portals and removes their layers and body locks on unmo
 
 test('Tour reflects theme changes in body portals and keeps compact source button height', async ({ page }) => {
   await button(page, 'Open Tour owner').click();
+
   await expect(popup(page)).toHaveCSS('color', 'rgba(0, 0, 0, 0.88)');
   await ownerClick(page, 'Tour dark');
+
   await expect(popup(page)).toHaveCSS('color', 'rgba(255, 255, 255, 0.85)');
   await ownerClick(page, 'Tour compact');
 
@@ -375,14 +413,23 @@ test('Tour updates gap axes and radius without losing the current native input d
   await expect(page.locator('.ant-tour-mask mask rect:last-child')).toHaveAttribute('rx', '8');
   await expect(control(page, 'Tour editable')).toHaveValue('Keep draft');
   const target = await button(page, 'Tour first target').boundingBox();
-  await expect(page.locator('.ant-tour-mask mask rect:last-child')).toHaveAttribute('x', String(target!.x - 12));
-  await expect(page.locator('.ant-tour-mask mask rect:last-child')).toHaveAttribute('y', String(target!.y - 2));
+
+  await expect(page.locator('.ant-tour-mask mask rect:last-child')).toHaveAttribute(
+    'x',
+    String(target!.x - 12)
+  );
+  await expect(page.locator('.ant-tour-mask mask rect:last-child')).toHaveAttribute(
+    'y',
+    String(target!.y - 2)
+  );
 });
 
 test('Tour releases keyboard handlers and pending align work after unmount', async ({ page }) => {
   await button(page, 'Open Tour owner').click();
+
   await expect(popup(page)).toBeVisible();
   await ownerClick(page, 'Mount Tour');
+
   await expect(popup(page)).toHaveCount(0);
   const value = await events(page).textContent();
 
@@ -398,16 +445,20 @@ test('Tour releases keyboard handlers and pending align work after unmount', asy
 
 test('Tour changes portal container while open and retains working panel controls', async ({ page }) => {
   await button(page, 'Open Tour owner').click();
+
   await expect(popup(page)).toBeVisible();
   await page.getByRole('combobox', { name: 'Tour container', exact: true }).selectOption('inline');
+
   await expect(page.locator('#tour-fixture .ant-tour')).toBeVisible();
   await expect(page.locator('[data-ant-tour-lock]')).toHaveCount(0);
   await button(page, 'Далее').click();
 
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 2');
   await page.getByRole('combobox', { name: 'Tour container', exact: true }).selectOption('custom');
+
   await expect(page.locator('.portal-container .ant-tour')).toBeVisible();
   await button(page, 'Закрыть').click();
+
   await expect(popup(page)).toHaveCount(0);
 });
 
@@ -418,6 +469,7 @@ test('Tour keeps the source portal container direction in RTL config', async ({ 
   await expect(popup(page)).toHaveClass(/ant-tour-rtl/);
   await expect(popup(page)).toHaveCSS('direction', 'ltr');
   await page.keyboard.press('ArrowRight');
+
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 2');
 });
 
@@ -442,6 +494,7 @@ for (const [root, step, expected] of [
     await expect(target).toHaveAttribute('data-scroll', expected);
     await expect(popup(page)).toBeVisible();
     const bounds = (await target.boundingBox())!;
+
     expect(bounds.y).toBeGreaterThanOrEqual(0);
     expect(bounds.y + bounds.height).toBeLessThanOrEqual(page.viewportSize()!.height);
   });
@@ -462,6 +515,7 @@ test('Tour defaultOpen leaves an offscreen target unscrolled without raw open', 
 
   await expect(popup(page).locator('.ant-tour-title')).toHaveText('Tour step 1');
   const target = button(page, 'Tour first target');
+
   expect((await target.boundingBox())!.y).toBeGreaterThan(page.viewportSize()!.height);
   await expect(target).not.toHaveAttribute('data-scrolled');
 });
@@ -481,6 +535,7 @@ test('Tour remeasures its target hole and flips a popup at the viewport edge', a
   });
 
   const target = (await button(page, 'Tour first target').boundingBox())!;
+
   await expect(page.locator('.ant-tour-mask mask rect:last-child'))
     .toHaveAttribute('x', String(target.x - 6));
   await expect(popup(page)).toHaveClass(/ant-tour-placement-top/);
@@ -496,6 +551,7 @@ test('Tour realigns on custom ancestor scrolling and removes its watcher on unmo
     element.append(spacer);
   });
   await button(page, 'Open Tour owner').click();
+
   await expect(popup(page)).toBeVisible();
   await ownerButton(page, 'Clear Tour events');
 
@@ -526,6 +582,7 @@ for (const placement of ['top', 'bottom', 'left', 'right', 'topLeft', 'topRight'
     });
     await page.getByRole('combobox', { name: 'Tour placement', exact: true }).selectOption(placement);
     await button(page, 'Open Tour owner').click();
+
     await expect(popup(page)).toHaveClass(new RegExp(`ant-tour-placement-${placement}(?: |$)`));
     const panel = (await popup(page).boundingBox())!;
     const target = (await button(page, 'Tour first target').boundingBox())!;

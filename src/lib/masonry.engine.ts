@@ -64,7 +64,8 @@ export function mergeMasonryEntries<Data>(
 
     if (match === -1) {
       result.push({ ...old, visible: false });
-    } else {
+    }
+    else {
       result.push(...current.slice(currentIndex, match), current[match]);
       currentIndex = match + 1;
     }

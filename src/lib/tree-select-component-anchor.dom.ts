@@ -1,7 +1,11 @@
 /** rc-trigger 3.x useAlign/useWatch; MIT, vendor/LICENSE.rc-trigger. */
 
 /** Source выравнивает popup при resize/scroll/open, а не при одном перемещении inline root. */
-export function createTreeSelectComponentAnchor(anchor: HTMLElement, popup: HTMLElement, right: boolean) {
+export function createTreeSelectComponentAnchor(
+  anchor: HTMLElement,
+  popup: HTMLElement,
+  right: boolean
+) {
   const document = anchor.ownerDocument, view = document.defaultView!;
   let dirty = true;
   let signature = '';
@@ -39,7 +43,10 @@ export function createTreeSelectComponentAnchor(anchor: HTMLElement, popup: HTML
     if (next === signature) return;
     signature = next;
     // Overflow должен применить свой measured layout до нового чтения target rect.
-    if (!frame) frame = view.requestAnimationFrame(() => { frame = 0; invalidate(); });
+    if (!frame) frame = view.requestAnimationFrame(() => {
+      frame = 0;
+      invalidate();
+    });
   });
   resize.observe(anchor);
   resize.observe(popup);
@@ -60,7 +67,12 @@ export function createTreeSelectComponentAnchor(anchor: HTMLElement, popup: HTML
       parentY = y;
       dirty = false;
     }
-    return new view.DOMRect(cached.x + x - parentX, cached.y + y - parentY, cached.width, cached.height);
+    return new view.DOMRect(
+      cached.x + x - parentX,
+      cached.y + y - parentY,
+      cached.width,
+      cached.height
+    );
   }
   return { read, destroy() {
     resize.disconnect();

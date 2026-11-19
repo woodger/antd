@@ -53,7 +53,11 @@ describe('createForm setFields', () => {
   });
 
   it('applies metadata to exact typed paths and every binding with that name', () => {
-    const form = createForm({ initialValues: { user: { name: 'Nested' }, 'user.name': 'Literal', rows: [{}] } });
+    const form = createForm({ initialValues: {
+      user: { name: 'Nested' },
+      'user.name': 'Literal',
+      rows: [{}]
+    } });
     const hooks = getFormHooks(form)!;
     hooks.registerField({ name: ['user', 'name'] });
     hooks.registerField({ name: ['user', 'name'] });
@@ -74,7 +78,11 @@ describe('createForm setFields', () => {
     expect(form.getFieldError(['rows', '0', 'name'])).toEqual([]);
     expect(form.getFieldWarning(['rows', '0', 'name'])).toEqual(['String']);
     const metadata: (FormFieldMeta | null)[] = [];
-    form.getFieldsValue({ filter: (meta) => { metadata.push(meta); return false; } });
+    form.getFieldsValue({ filter: (meta) => {
+      metadata.push(meta);
+      return false;
+    } });
+
     expect(metadata.filter((meta) => meta?.name[0] === 'user'))
       .toEqual(Array.from({ length: 2 }, () => ({
         name: ['user', 'name'], touched: true, validating: false, validated: false,
@@ -88,11 +96,14 @@ describe('createForm setFields', () => {
       fresh: [{ validator: () => { calls++; } }]
     } });
     await form.validateFields({ dirty: true });
+
     expect(calls).toBe(0);
     form.setFields([{ name: 'fresh', errors: ['Server'] }]);
+
     expect(calls).toBe(0);
     expect(form.isFieldTouched('fresh')).toBe(false);
     await form.validateFields({ dirty: true });
+
     expect(calls).toBe(1);
     expect(form.getFieldError('fresh')).toEqual([]);
   });
@@ -113,6 +124,7 @@ describe('createForm setFields', () => {
     expect(form.getFieldWarning('bare')).toEqual(['Note']);
     expect(form.isFieldValidating('bare')).toBe(true);
     form.setFields([{ name: 'bare', validating: false }]);
+
     expect(form.isFieldValidating('bare')).toBe(false);
   });
 
@@ -129,12 +141,18 @@ describe('createForm setFields', () => {
       name: [{ validator: () => pending.promise }]
     } });
     const validation = form.validateFields().catch((error: unknown) => error);
-    form.setFields([{ name: 'name', errors: ['Manual'], warnings: ['Manual warning'], touched: true }]);
+    form.setFields([{
+      name: 'name',
+      errors: ['Manual'],
+      warnings: ['Manual warning'],
+      touched: true
+    }]);
 
     expect(form.getFieldError('name')).toEqual(['Manual']);
     expect(form.isFieldValidating('name')).toBe(true);
     pending.resolve('Async rejected');
     const result = await validation;
+
     expect(result).toMatchObject({ outOfDate: false });
     expect(form.getFieldError('name')).toEqual(['Async rejected']);
     expect(form.getFieldWarning('name')).toEqual([]);
@@ -157,6 +175,7 @@ describe('createForm setFields', () => {
     expect(form.getFieldsValue({ filter: (meta) => !!meta?.validated }))
       .toEqual(validating ? {} : { name: 'Anna' });
     form.setFields([{ name: 'name', validating: false }]);
+
     expect(form.isFieldsValidating()).toBe(false);
   });
 
@@ -167,6 +186,7 @@ describe('createForm setFields', () => {
     } });
     const validation = form.validateFields().catch((error: unknown) => error);
     form.setFields([{ name: 'name', value: 'Updated', errors: ['Server after write'] }]);
+
     expect(form.isFieldValidating('name')).toBe(false);
     pending.resolve('Async rejected');
     const result = await validation;
@@ -193,12 +213,30 @@ describe('createForm setFields', () => {
   });
 
   it('normalizes optional undefined flags to booleans and keeps validated computed', () => {
-    const form = createForm({ initialValues: { name: 'Anna' }, rules: { name: [{ required: true }] } });
-    form.setFields([{ name: 'name', touched: true, validating: true, errors: ['Server'], warnings: ['Note'] }]);
-    form.setFields([{ name: 'name', touched: undefined, validating: undefined, errors: undefined, warnings: undefined }]);
+    const form = createForm({
+      initialValues: { name: 'Anna' },
+      rules: { name: [{ required: true }] }
+    });
+    form.setFields([{
+      name: 'name',
+      touched: true,
+      validating: true,
+      errors: ['Server'],
+      warnings: ['Note']
+    }]);
+    form.setFields([{
+      name: 'name',
+      touched: undefined,
+      validating: undefined,
+      errors: undefined,
+      warnings: undefined
+    }]);
     form.setFields([{ name: 'name', validated: false }]);
     let result: FormFieldMeta | null = null;
-    form.getFieldsValue({ filter: (meta) => { result = meta; return true; } });
+    form.getFieldsValue({ filter: (meta) => {
+      result = meta;
+      return true;
+    } });
 
     expect(result).toEqual({
       name: ['name'], touched: false, validating: false, validated: true, errors: [], warnings: []
@@ -214,6 +252,7 @@ describe('createForm setFields', () => {
 
     expect(form.values.user.name).toBe('Updated');
     form.resetFields();
+
     expect(form.values.user.name).toBe('Anna');
     expect(form.getFieldError('user')).toEqual([]);
     expect(form.getFieldWarning('user')).toEqual([]);

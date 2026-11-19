@@ -98,6 +98,7 @@ test(
     await expect.poll(() => region.evaluate((element) => element.scrollTop)).toBe(300);
     await expect.poll(async () => (await notes.boundingBox())!.x).toBeLessThan(originalX - 300);
     await expectPinnedGeometry(region);
+
     await expect.poll(
       () =>
         region.evaluate(
@@ -149,6 +150,7 @@ test(
     const width = (await name.boundingBox())!.width;
 
     await fixture.getByRole('button', { name: 'Widen pinned name', exact: true }).click();
+
     await expect.poll(async () => (await name.boundingBox())!.width).toBeGreaterThan(width);
     await region.evaluate((element) => { element.scrollLeft = element.scrollWidth; });
     await expectPinnedGeometry(region);
@@ -169,6 +171,7 @@ test(
     const originalX = (await region.locator('tbody tr > td').first().boundingBox())!.x;
 
     await region.evaluate((element) => { element.scrollLeft = 200; });
+
     await expect.poll(async () => (await region.locator('tbody tr > td').first().boundingBox())!.x)
       .toBeLessThan(originalX - 100);
 
@@ -407,8 +410,10 @@ test.describe('narrow fixed table', () => {
 
       await region.focus();
       await region.press('ArrowRight');
+
       await expect.poll(() => region.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
       await region.evaluate((element) => { element.scrollTop = 200; });
+
       await expect.poll(
         () =>
           region.evaluate(

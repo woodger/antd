@@ -4,7 +4,11 @@ import FormFeedbackPickerCase from './FormFeedbackPickerCase.svelte';
 import { feedbackPickerSamples } from './form-feedback-picker-cases';
 declare global {
   interface Window {
-    formFeedbackPickerHydration?: { inputs: Element[]; icon: Element | null; dispose(): Promise<void>; };
+    formFeedbackPickerHydration?: {
+      inputs: Element[];
+      icon: Element | null;
+      dispose(): Promise<void>;
+    };
   }
 }
 const target = document.getElementById('root')!;

@@ -6,6 +6,7 @@ test.use({ viewport: reference.viewport });
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=slider-prefix');
+
   await expect(page.getByRole('heading', { name: 'Slider prefixes', exact: true })).toBeVisible();
 });
 
@@ -84,6 +85,7 @@ test('Slider prefix CSS reaches portals and cleans up with a focused owner', asy
     .selectOption('tooltip-range');
   await page.getByLabel('Portal prefix tooltips', { exact: true }).dispatchEvent('click');
   const popup = page.locator('body > .owner-slider-tooltip:popover-open').first();
+
   await expect(popup).toBeVisible();
   await expect(popup).toHaveClass(/owner-tip/);
   await page.locator('[data-slider-prefix-case]').getByRole('slider').first().focus();
@@ -107,9 +109,11 @@ test('Slider prefix native transitions respect reduced motion', async ({ page })
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.getByRole('combobox', { name: 'Slider prefix preset', exact: true })
     .selectOption('native-single');
+
   await expect(page.locator('.native-slider-rail')).toHaveCSS('transition-duration', '0.2s');
 
   await page.emulateMedia({ reducedMotion: 'reduce' });
+
   await expect(page.locator('.native-slider-rail')).toHaveCSS('transition-duration', '0s');
   await expect.poll(() => page.locator('.native-slider-handle').evaluate(node =>
     getComputedStyle(node, '::after').transitionDuration)).toBe('0s');

@@ -93,11 +93,20 @@ export interface MonthYearSourceCase {
   producerParts: MonthYearSourceProducerReference[]; producerFinalCount: number;
   beforeUnmount: MonthYearSourceReference; cleanup: MonthYearSourceReference; late: MonthYearSourceReference;
   failure: null; interruptedAction: null; observationErrors: unknown[];
-  network: { requests: unknown[]; responses: Array<{ url: string; status: number; }>; failures: unknown[]; };
+  network: {
+    requests: unknown[];
+    responses: Array<{ url: string; status: number; }>;
+    failures: unknown[];
+  };
 }
 interface MonthYearSourceCaptureHeader {
   status: string; variant: MonthYearSourceVariant;
-  sourceProtocol: { file: string; sha256: string; reviewedProposalSHA256: string; rootLease: string; };
+  sourceProtocol: {
+    file: string;
+    sha256: string;
+    reviewedProposalSHA256: string;
+    rootLease: string;
+  };
   terminalInputVerification: { unchanged: boolean; sha256: string; }; diagnostics: unknown[];
 }
 export interface MonthYearSourceCSRManifest extends MonthYearSourceCaptureHeader {

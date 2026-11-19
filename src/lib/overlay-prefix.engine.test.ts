@@ -24,7 +24,8 @@ describe('Overlay prefix stylesheets', () => {
         expect(css).toContain('.tenant-popconfirm.ant-popover');
         expect(css).toContain('.tenant-popconfirm-message-icon .anticon');
         expect(css).not.toContain('.tenant-popover');
-      } else {
+      }
+      else {
         expect(css).toContain(`.tenant-${kind}:where(.ant-${kind}-css-var)`);
         expect(css).not.toMatch(new RegExp(`(?:^|\n)\\.ant-${kind}-css-var[\\s:{]`));
         expect(css).toContain(`.tenant-${kind}.tenant-${kind}-blue`);

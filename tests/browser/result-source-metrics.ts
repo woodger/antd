@@ -26,7 +26,10 @@ export function snapshotResultSource(prefix = 'ant-result') {
   return {
     root: root ? {
       classes: classes(root),
-      style: style(root, ['padding-top', 'padding-bottom', 'background-color', 'color', 'direction']),
+      style: style(
+        root,
+        ['padding-top', 'padding-bottom', 'background-color', 'color', 'direction']
+      ),
       data: root.getAttribute('data-owner'),
       role: root.getAttribute('role'),
       description: root.getAttribute('aria-description')

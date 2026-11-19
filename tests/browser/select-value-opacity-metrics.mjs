@@ -27,7 +27,10 @@ export function readSelectValueOpacity() {
       const factor = Number(css.opacity);
       if (!Number.isFinite(factor)) throw Error('Actual computed opacity is not finite: ' + css.opacity);
       effectiveOpacity *= factor;
-      if (!targets.has(element)) targets.set(element, `text:${text.length}:ancestor:${ancestors.length}`);
+      if (!targets.has(element)) targets.set(
+        element,
+        `text:${text.length}:ancestor:${ancestors.length}`
+      );
       ancestors.push({ target: targets.get(element), ...measure(element) });
       if (element === content) break;
     }

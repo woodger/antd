@@ -119,11 +119,13 @@ for (const sample of reference.cases) {
 
     await page.getByRole('button', { name: 'Close container panel', exact: true })
       .evaluate(node => (node as HTMLElement).click());
+
     await expect(panel(page)).toHaveCount(0);
     await frames(page);
 
     // Native Drawer сохраняет закрытый dialog shell и при destroyOnHidden.
     const expected = sample.afterClose;
+
     await expect.poll(async () => {
       const current = await snapshot(page);
       return expected.hasInput ? current : { ...current, target: 'default' };

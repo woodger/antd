@@ -50,7 +50,8 @@ export function createRangeInteraction<Value>(options: {
       if (modified !== undefined) {
         field.modified = modified;
       }
-    } else {
+    }
+    else {
       triggeredFields = [...triggeredFields, {
         index,
         modified: modified ?? false
@@ -191,7 +192,8 @@ export function createRangeInteraction<Value>(options: {
           if (allFieldsTriggered && source === 'field-switch') {
             setCurrentIndex(index);
             setForceFocus(false);
-          } else if (!allFieldsTriggered) {
+          }
+          else if (!allFieldsTriggered) {
             const nextIndex = (actionIndex + 1) % options.fieldCount();
             setCurrentIndex(nextIndex);
             setForceFocus(forceFocus);
@@ -225,7 +227,8 @@ export function createRangeInteraction<Value>(options: {
             setCurrentIndex(index);
             setForceFocus(false);
             recordTriggeredField(index, false);
-          } else {
+          }
+          else {
             reset();
           }
           break;

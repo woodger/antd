@@ -18,7 +18,8 @@ export function captureMasonryFocus(root: HTMLDivElement) {
 
     if (selectionStart !== null && selectionEnd !== null)
       selection = [selectionStart, selectionEnd, selectionDirection ?? 'none'];
-  } else if (focused.contentEditable === 'true') {
+  }
+  else if (focused.contentEditable === 'true') {
     const range = root.ownerDocument.defaultView!.getSelection();
 
     if (range?.anchorNode && range.focusNode && focused.contains(range.anchorNode)

@@ -32,7 +32,10 @@ let server: ViteDevServer;
 let cache: string;
 test.use({ viewport: reference.reference.viewport });
 test.beforeAll(async () => {
-  cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)), 'popup-width-hydration-'));
+  cache = await mkdtemp(join(
+    fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
+    'popup-width-hydration-'
+  ));
   server = await createServer({
     configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
@@ -61,7 +64,10 @@ async function settle(page: Parameters<typeof actPopupWidth>[0]) {
 for (const sample of popupWidthSamples.filter(sample => sample.live)) {
   test(`${sample.id} strictly hydrates live popupWidth and preserves its public controls`, async ({ page }) => {
     const source = reference.cases.find(entry => entry.id === sample.id)!;
-    const module = await server.ssrLoadModule(fileURLToPath(new URL('./fixtures/popup-width-hydration.server.ts', import.meta.url)));
+    const module = await server.ssrLoadModule(fileURLToPath(new URL(
+      './fixtures/popup-width-hydration.server.ts',
+      import.meta.url
+    )));
     const rendered = module.renderPopupWidth(sample.id);
     await page.goto(`/popup-width-hydration.html?sample=${sample.id}`);
     await page.addScriptTag({ type: 'module', url: '/popup-width-styles.client.ts' });
@@ -75,35 +81,65 @@ for (const sample of popupWidthSamples.filter(sample => sample.live)) {
       const Mutation = window.MutationObserver;
       window.ResizeObserver = class extends Resize {
         targets = new Set<Element>();
-        constructor(callback: ResizeObserverCallback) { super(callback); observers.add(this.targets); }
-        observe(target: Element, options?: ResizeObserverOptions) { this.targets.add(target); super.observe(target, options); }
-        unobserve(target: Element) { this.targets.delete(target); super.unobserve(target); }
-        disconnect() { this.targets.clear(); super.disconnect(); }
+        constructor(callback: ResizeObserverCallback) {
+          super(callback);
+          observers.add(this.targets);
+        }
+        observe(target: Element, options?: ResizeObserverOptions) {
+          this.targets.add(target);
+          super.observe(target, options);
+        }
+        unobserve(target: Element) {
+          this.targets.delete(target);
+          super.unobserve(target);
+        }
+        disconnect() {
+          this.targets.clear();
+          super.disconnect();
+        }
       };
       window.MutationObserver = class extends Mutation {
-        observe(target: Node, options?: MutationObserverInit) { mutations.add(this); super.observe(target, options); }
-        disconnect() { mutations.delete(this); super.disconnect(); }
+        observe(target: Node, options?: MutationObserverInit) {
+          mutations.add(this);
+          super.observe(target, options);
+        }
+        disconnect() {
+          mutations.delete(this);
+          super.disconnect();
+        }
       };
       const frames = new Set<number>();
       const request = window.requestAnimationFrame.bind(window);
       const cancel = window.cancelAnimationFrame.bind(window);
       window.requestAnimationFrame = callback => {
-        const frame = request(time => { frames.delete(frame); callback(time); });
+        const frame = request(time => {
+          frames.delete(frame);
+          callback(time);
+        });
         frames.add(frame);
         return frame;
       };
-      window.cancelAnimationFrame = frame => { frames.delete(frame); cancel(frame); };
+      window.cancelAnimationFrame = frame => {
+        frames.delete(frame);
+        cancel(frame);
+      };
       const timers = new Set<number>();
       const browser: Window = window;
       const schedule = browser.setTimeout.bind(browser);
       const clear = browser.clearTimeout.bind(browser);
       browser.setTimeout = (handler, timeout, ...args) => {
         if (typeof handler !== 'function') throw Error('Expected a function hydration timer');
-        const timer = schedule(() => { timers.delete(timer); handler(...args); }, timeout);
+        const timer = schedule(() => {
+          timers.delete(timer);
+          handler(...args);
+        }, timeout);
         timers.add(timer);
         return timer;
       };
-      browser.clearTimeout = timer => { if (timer !== undefined) timers.delete(timer); clear(timer); };
+      browser.clearTimeout = timer => {
+        if (timer !== undefined) timers.delete(timer);
+        clear(timer);
+      };
       window.popupWidthHydrationResources = {
         observers: () => [...observers].reduce((sum, targets) => sum + targets.size, 0),
         mutations: () => mutations.size, frames: () => frames.size, timers: () => timers.size
@@ -114,6 +150,7 @@ for (const sample of popupWidthSamples.filter(sample => sample.live)) {
     }, { head: rendered.head, body: rendered.body });
     await page.addScriptTag({ type: 'module', url: '/popup-width-hydration.client.ts' });
     await page.waitForFunction(() => window.popupWidthHydration);
+
     await expect(page.locator('[data-width-case]')).toHaveAttribute('data-width-bound', 'true');
     await preparePopupWidth(page);
     const identity = await page.evaluateHandle(() => {
@@ -185,9 +222,19 @@ for (const sample of popupWidthSamples.filter(sample => sample.live)) {
       });
       await expect(page.locator('[data-width-case]')).toHaveCount(0);
       await expect(page.locator('[popover]')).toHaveCount(0);
-      const disposed = { events: disposedEvents, rootConnected: false, editorConnected: false, ownerConnected: false };
+      const disposed = {
+        events: disposedEvents,
+        rootConnected: false,
+        editorConnected: false,
+        ownerConnected: false
+      };
       expect(await page.evaluate(() => window.popupWidthHydrationDisposal!.trace)).toEqual({
-        phase: 'disposed', before: { events, rootConnected: true, editorConnected: true, ownerConnected: true },
+        phase: 'disposed', before: {
+          events,
+          rootConnected: true,
+          editorConnected: true,
+          ownerConnected: true
+        },
         afterCall: disposed, afterAwait: disposed,
         probes: focused ? ['blur', 'focusout'].map(type => ({
           events: type === 'focusout' ? disposedEvents : events, rootConnected: true,
@@ -195,14 +242,23 @@ for (const sample of popupWidthSamples.filter(sample => sample.live)) {
           trusted: true, relatedTarget: null })) : []
       });
       await page.setViewportSize({ width: 1120, height: 860 });
-      await page.evaluate(() => { window.dispatchEvent(new Event('resize')); window.dispatchEvent(new Event('scroll')); });
+      await page.evaluate(() => {
+        window.dispatchEvent(new Event('resize'));
+        window.dispatchEvent(new Event('scroll'));
+      });
       await page.waitForTimeout(1000);
       expect(await page.evaluate(() => ({
         cleaned: window.popupWidthHydration!.cleaned,
         observers: window.popupWidthHydrationResources!.observers(), mutations: window.popupWidthHydrationResources!.mutations(),
         frames: window.popupWidthHydrationResources!.frames(), timers: window.popupWidthHydrationResources!.timers(),
         events: window.popupWidthHydration!.events()
-      }))).toEqual({ cleaned: { root: true, editor: true, control: true, publicRoot: true, publicEditor: true },
+      }))).toEqual({ cleaned: {
+        root: true,
+        editor: true,
+        control: true,
+        publicRoot: true,
+        publicEditor: true
+      },
         observers: 0, mutations: 0, frames: 0, timers: 0, events: disposedEvents });
     } finally {
       await identity.dispose();

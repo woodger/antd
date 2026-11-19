@@ -3,7 +3,10 @@ import { readFileSync } from 'node:fs';
 import type { SelectValueView } from './select-value-reference';
 import type { SelectValueSample } from './fixtures/select-value-cases';
 
-const queryBytes = readFileSync(new URL('./fixtures/select-virtual-query-native-baseline.json', import.meta.url));
+const queryBytes = readFileSync(new URL(
+  './fixtures/select-virtual-query-native-baseline.json',
+  import.meta.url
+));
 if (createHash('sha256').update(queryBytes).digest('hex') !== '1c91bc9788bb65152c14011977abfdf178d74cd6e387c5bd35958ee379bf0228')
   throw Error('Historical Native query/caret baseline changed');
 const queryProof = JSON.parse(queryBytes.toString('utf8')) as { cases: Array<{ id: string;
@@ -12,7 +15,10 @@ const closedQuery = queryProof.cases.find(entry => entry.id === 'select-controll
 if (closedQuery.query !== 'Kept query' || closedQuery.editor.value !== '' || closedQuery.editor.caret.some(value => value !== 0))
   throw Error('Historical Native closed editor contract changed');
 
-const mixedBytes = readFileSync(new URL('./fixtures/select-value-native-mixed-baseline.json', import.meta.url));
+const mixedBytes = readFileSync(new URL(
+  './fixtures/select-value-native-mixed-baseline.json',
+  import.meta.url
+));
 if (createHash('sha256').update(mixedBytes).digest('hex') !== '4d212cd96aa18bb6babd5c0e516180d251539c570e1ba1788ff73d488cfdc391')
   throw Error('Historical Native mixed-value baseline SHA256 changed');
 const mixedProof = JSON.parse(mixedBytes.toString('utf8')) as {
@@ -40,13 +46,19 @@ function selected(value: unknown): boolean {
 /** Preserve the measured Native scalar editor/caret and closed-query display contract. */
 export function selectValueNativeView(view: SelectValueView, sample: SelectValueSample,
   options: { hydratedInitial?: boolean } = {}): SelectValueView {
-  const model = view.model as { type: string; entries?: Array<[string, { type: string; value?: string }]> };
+  const model = view.model as {
+    type: string;
+    entries?: Array<[string, { type: string; value?: string }]>
+  };
   const raw = model.type === 'object' ? model.entries?.find(([key]) => key === 'value')?.[1] : undefined;
   if (sample.id === 'select-value-mixed' && view.popup && raw?.type === 'string' && raw.value === '0') {
     const rows = view.popup.rows;
     if (JSON.stringify(rows.map(row => [row.text, row.selected])) !== '[["Number zero",true],["String zero",false],["Alpha",false]]')
       throw Error('Original physical number/string selected-marker contradiction changed');
-    view = { ...view, popup: { ...view.popup, rows: rows.map((row, index) => ({ ...row, selected: index === 1 })) } };
+    view = {
+      ...view,
+      popup: { ...view.popup, rows: rows.map((row, index) => ({ ...row, selected: index === 1 })) }
+    };
   }
   if (sample.mode || view.editor.expanded !== 'false') return view;
   if (view.editor.value !== '' && view.editor.value !== view.query)

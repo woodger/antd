@@ -14,10 +14,16 @@
   let root = $state<HTMLDivElement>();
   let input = $state<HTMLInputElement>();
   function release(id: string, cleanup: () => void) {
-    if (id === 'input-lifecycle-0' && active) { deferred.push(cleanup); deferredCount = deferred.length; }
+    if (id === 'input-lifecycle-0' && active) {
+      deferred.push(cleanup);
+      deferredCount = deferred.length;
+    }
     else cleanup();
   }
-  function releaseDeferred() { for (const cleanup of deferred.splice(0)) cleanup(); deferredCount = 0; }
+  function releaseDeferred() {
+    for (const cleanup of deferred.splice(0)) cleanup();
+    deferredCount = 0;
+  }
   function record(...event: unknown[]) { events = [...events, event]; }
 </script>
 

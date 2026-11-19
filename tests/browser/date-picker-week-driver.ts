@@ -47,27 +47,36 @@ export async function actWeek(page: Page, action: WeekAction, index: number) {
   if (action.type === 'input-open' || action.type === 'input-type'
     || action.type === 'input-escape') {
     target = page.locator(action.index === 1 ? '#week-end' : '#week-input');
-  } else if (action.type === 'input-key') target = page.locator('.ant-picker input:focus');
+  }
+  else if (action.type === 'input-key') target = page.locator('.ant-picker input:focus');
   else if (action.type === 'owner-control') {
     target = page.locator('[data-week-control="' + action.value + '"]');
-  } else if (action.type === 'header-promote') {
+  }
+  else if (action.type === 'header-promote') {
     target = panel.locator('.ant-picker-header-view .ant-picker-year-btn');
-  } else if (action.type === 'header-next-month') {
+  }
+  else if (action.type === 'header-next-month') {
     target = popup.locator('.ant-picker-header-next-btn:visible').last();
-  } else if (action.type === 'upper-cell-click') {
+  }
+  else if (action.type === 'upper-cell-click') {
     target = panel.locator('td[title="' + action.title + '"] button');
-  } else if (action.type === 'cell-click' || action.type === 'cell-hover') {
+  }
+  else if (action.type === 'cell-click' || action.type === 'cell-hover') {
     target = panel.locator('td[title="' + action.title + '"] button');
-  } else if (action.type === 'week-number-click') {
+  }
+  else if (action.type === 'week-number-click') {
     target = panel.locator('tbody tr').filter({
       has: page.locator('td[title="' + action.contains + '"]')
     }).locator('td.ant-picker-cell-week');
-  } else if (action.type === 'pointer-leave') {
+  }
+  else if (action.type === 'pointer-leave') {
     target = page.locator('[data-week-owner]');
-  } else if (action.type === 'confirm-click') target = popup.locator('.ant-picker-ok button');
+  }
+  else if (action.type === 'confirm-click') target = popup.locator('.ant-picker-ok button');
   else if (action.type === 'preset-click') {
     target = popup.locator('.ant-picker-presets button').filter({ hasText: exactText(action.label) });
-  } else throw Error('Unknown declared week action');
+  }
+  else throw Error('Unknown declared week action');
   assert.equal(await target.count(), 1, 'Exactly one actual public action target');
   const actionEvidence: { targetBefore: unknown; afterFocusPointer?: NativeWeekPoint;
     ownerClick?: unknown; actualCoordinates?: { x: number; y: number }; hitBefore?: unknown } = {
@@ -82,20 +91,24 @@ export async function actWeek(page: Page, action: WeekAction, index: number) {
   if (action.type === 'owner-control') {
     actionEvidence.ownerClick = await page.evaluate(value =>
       window.nativeWeek.activateControl(value), action.value);
-  } else if (action.type === 'input-escape') {
+  }
+  else if (action.type === 'input-escape') {
     await target.click();
     actionEvidence.afterFocusPointer = await readWeek(page);
     await page.keyboard.press('Escape');
-  } else if (action.type === 'input-type') {
+  }
+  else if (action.type === 'input-type') {
     await target.click();
     await page.keyboard.press('Control+A');
     await page.keyboard.type(action.value);
-  } else if (action.type === 'input-key') await page.keyboard.press(action.value);
+  }
+  else if (action.type === 'input-key') await page.keyboard.press(action.value);
   else if (action.type === 'cell-hover') await target.hover();
   else if (action.type === 'pointer-leave') {
     actionEvidence.actualCoordinates = { x: 1200, y: 800 };
     await page.mouse.move(1200, 800);
-  } else if (action.type !== 'input-open') {
+  }
+  else if (action.type !== 'input-open') {
     const box = await target.boundingBox();
     assert(box && box.width > 0 && box.height > 0, 'Real visible target geometry required');
     const point = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
@@ -108,7 +121,8 @@ export async function actWeek(page: Page, action: WeekAction, index: number) {
     }, point);
     // Настоящий mouse click допускает disabled target; force/снятие disabled не используются.
     await page.mouse.click(point.x, point.y);
-  } else await target.click();
+  }
+  else await target.click();
   return { index, action, before, actionEvidence, afterCall: await readWeek(page) };
 }
 export async function disposeWeek(page: Page, hooks?: {

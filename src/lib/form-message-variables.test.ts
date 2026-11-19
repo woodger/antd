@@ -88,6 +88,7 @@ describe('Form validation message variables', () => {
 
     expect(await first).toMatchObject({ errorFields: [{ errors: ['Old'] }] });
     pending = Promise.resolve('${label}');
+
     await expect(form.validateFields()).rejects.toMatchObject({
       errorFields: [{ errors: ['New'] }]
     });
@@ -123,6 +124,7 @@ describe('Form validation message variables', () => {
   it('keeps inherited variables absent and honors explicit own-property overrides', () => {
     const variables = Object.create({ label: 'Inherited' });
     variables.constructor = 'Custom';
+
     expect(formatValidationMessages(['${constructor}/${label}/${toString}'], {}, {
       name: 'field', variables
     })).toEqual(['Custom/field/undefined']);

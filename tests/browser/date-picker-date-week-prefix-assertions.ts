@@ -36,7 +36,10 @@ const object = (value: unknown): Record<string, unknown> => {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Record<string, unknown>;
 };
-const array = (value: unknown): unknown[] => { assert(Array.isArray(value)); return value; };
+const array = (value: unknown): unknown[] => {
+  assert(Array.isArray(value));
+  return value;
+};
 const properties = (value: unknown) => array(object(value).properties).map(object);
 const property = (value: unknown, key: string) => {
   const row = properties(value).find(row => row.key === key);
@@ -186,7 +189,10 @@ function sameCallbacks(actual: NativeDateWeekPrefixPoint, source: DateWeekPrefix
     for (const key of keys) {
       assert(typeof key === 'string');
       if (single && key === '2' || empty && (key === '0' || key === '1')) continue;
-      assert.deepEqual(property(call.encodedArguments, key), property(expected.encodedArguments, key),
+      assert.deepEqual(property(call.encodedArguments, key), property(
+        expected.encodedArguments,
+        key
+      ),
         'Exact callback payload and picker-info own-key order');
     }
     if (actual.owner.id.startsWith('range-')) {
@@ -224,7 +230,10 @@ function visiblePanels(point: Pick<DateWeekPrefixSourcePoint, 'popups'>) {
         rangeHover: row.rangeHover,
         cells: row.cells.map(cell => ({ tag: cell.surface.tag, title: cell.title,
           weekNumber: cell.weekNumber, text: cell.surface.text, disabled: cell.disabled,
-          selected: cellFlag(cell.surface, 'selected'), rangeStart: cellFlag(cell.surface, 'range-start'),
+          selected: cellFlag(cell.surface, 'selected'), rangeStart: cellFlag(
+            cell.surface,
+            'range-start'
+          ),
           rangeEnd: cellFlag(cell.surface, 'range-end'), inRange: cellFlag(cell.surface, 'in-range'),
           inView: cellFlag(cell.surface, 'in-view'), hover: cellFlag(cell.surface, 'hover'),
           today: cellFlag(cell.surface, 'today') })) })) })),
@@ -242,7 +251,11 @@ export function verifyDateWeekPrefixFooterBoundary(actual: NativeDateWeekPrefixP
     for (const [ordinal, expected] of popup.footerControls.entries()) {
       const control = controls[ordinal];
       assert.equal(expected.tag, 'A');
-      assert.equal(expected.disabled, null, 'Source A has no HTML disabled property; original null retained');
+      assert.equal(
+        expected.disabled,
+        null,
+        'Source A has no HTML disabled property; original null retained'
+      );
       assert((attr(expected, 'class') ?? '').split(/\s+/).includes('ant-picker-now-btn'));
       const disabled = attr(expected, 'aria-disabled');
       assert(disabled === 'true' || disabled === 'false', 'Actual Source availability attribute');
@@ -252,7 +265,11 @@ export function verifyDateWeekPrefixFooterBoundary(actual: NativeDateWeekPrefixP
       assert.equal(attr(control, 'type'), 'button');
       assert.notEqual(attr(control, 'data-picker-current'), null);
       assert((attr(control, 'class') ?? '').split(/\s+/).includes('ant-picker-today-btn'));
-      assert.equal(control.disabled, disabled === 'true', 'Actual Native HTML disabled agrees with Source availability');
+      assert.equal(
+        control.disabled,
+        disabled === 'true',
+        'Actual Native HTML disabled agrees with Source availability'
+      );
       assert.equal(control.text, expected.text, 'Actual Today label');
     }
   }
@@ -292,7 +309,13 @@ function verifyPoint(actual: NativeDateWeekPrefixPoint, source: DateWeekPrefixSo
       property(source.owner.authoredProps, key), 'Actual public prop ' + key);
   }
   assert.deepEqual(actual.owner.model, source.owner.model);
-  sameDates(actual.owner.modelDates, source.owner.modelDates, actual.owner.rawModel, actual.owner, next);
+  sameDates(
+    actual.owner.modelDates,
+    source.owner.modelDates,
+    actual.owner.rawModel,
+    actual.owner,
+    next
+  );
   assert.deepEqual(actual.inputs.map(input => ({ value: input.value,
     placeholder: attr(input, 'placeholder'), disabled: attr(input, 'disabled') !== null })),
   source.inputs.map(input => ({ value: input.value,
@@ -312,7 +335,11 @@ function verifyPoint(actual: NativeDateWeekPrefixPoint, source: DateWeekPrefixSo
   }
   if (settled) {
     verifyDateWeekPrefixFooterBoundary(actual, source);
-    assert.deepEqual(visiblePanels(actual), visiblePanels(source), 'Visible calendar/header/footer state');
+    assert.deepEqual(
+      visiblePanels(actual),
+      visiblePanels(source),
+      'Visible calendar/header/footer state'
+    );
   }
   if (actual.owner.alive) {
     assert(actual.root?.connected);
@@ -331,9 +358,14 @@ function verifyPoint(actual: NativeDateWeekPrefixPoint, source: DateWeekPrefixSo
     assert.deepEqual(actual.inputs.map(input => input.identity), proof.inputs);
     const focused = object(actual.focus);
     for (const input of actual.inputs) {
-      assert.equal(input.focused, input.identity === focused.identity, 'Actual physical focus sidecar');
+      assert.equal(
+        input.focused,
+        input.identity === focused.identity,
+        'Actual physical focus sidecar'
+      );
     }
-  } else {
+  }
+  else {
     assert.deepEqual(actual.refs, { owner: null, root: null, control: null });
     assert.equal(actual.inputs.length, 0);
     assert.equal(actual.popups.length, 0);
@@ -404,7 +436,10 @@ function producerSignature(call: Record<string, unknown>, model: DateWeekPrefixS
     datePaths: dates.map(date => date.path),
     dateAliases: dates.map(a => dates.map(b => a.value.identity === b.value.identity)),
     modelAliases: dates.map(date => model.modelDates.map(value => date.value.identity === value.value.identity)),
-    candidate: { temporal: candidate.value.temporal, sameAsAuthored: candidate.value.sameAsAuthored },
+    candidate: {
+      temporal: candidate.value.temporal,
+      sameAsAuthored: candidate.value.sameAsAuthored
+    },
     from: from ? { temporal: from.value.temporal, sameAsAuthored: from.value.sameAsAuthored }
       : { own: fromOwn, encoded: fromValue },
     returned: call.returned });
@@ -480,7 +515,10 @@ export function createDateWeekPrefixProducerProof(sample: DateWeekPrefixSample):
             ...(reference.phase === 'initial' ? ['initial:' + modelSignature(model)] : [])]) {
             const signatures = models.get(key) ?? new Map<string, DateWeekPrefixProducerWitness[]>();
             const entries = signatures.get(value) ?? [];
-            entries.push({ dates: call.dates.map(date => ({ path: date.path, identity: date.value.identity })) });
+            entries.push({ dates: call.dates.map(date => ({
+              path: date.path,
+              identity: date.value.identity
+            })) });
             signatures.set(value, entries);
             models.set(key, signatures);
           }
@@ -502,7 +540,11 @@ export function verifyDateWeekPrefixProducerChunk(value: unknown, proof: DateWee
   const rows = array(chunk.rows).map(object);
   assert.equal(rows.length, Number(chunk.next) - proof.cursor);
   assert(phaseOwners.length > 0);
-  assert.deepEqual(phaseOwners.at(-1), owner, 'Final producer context is the actual complete point owner');
+  assert.deepEqual(
+    phaseOwners.at(-1),
+    owner,
+    'Final producer context is the actual complete point owner'
+  );
   for (const [index, call] of rows.entries()) {
     assert.equal(call.index, proof.cursor + index);
     assert.equal(call.name, 'disabledDate');

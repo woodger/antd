@@ -8,8 +8,14 @@ import { test, expect } from './test';
 let server: ViteDevServer;
 let cache: string;
 test.beforeAll(async () => {
-  cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)), 'tree-select-input-hydration-'));
-  server = await createServer({ configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+  cache = await mkdtemp(join(
+    fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
+    'tree-select-input-hydration-'
+  ));
+  server = await createServer({ configFile: fileURLToPath(new URL(
+    './vite.config.ts',
+    import.meta.url
+  )),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null }, appType: 'custom', cacheDir: cache });
 });
 test.afterAll(async () => {
@@ -18,7 +24,10 @@ test.afterAll(async () => {
 });
 
 test('TreeSelect hydrates a custom editor with the Source controlled value while keeping identity and focus', async ({ page }) => {
-  const module = await server.ssrLoadModule(fileURLToPath(new URL('./fixtures/tree-select-input-hydration.server.ts', import.meta.url)));
+  const module = await server.ssrLoadModule(fileURLToPath(new URL(
+    './fixtures/tree-select-input-hydration.server.ts',
+    import.meta.url
+  )));
   const rendered = module.renderTreeSelectInput();
   await page.goto('/tree-select-input-hydration.html');
   await page.evaluate(({ head, body }) => {
@@ -31,6 +40,7 @@ test('TreeSelect hydrates a custom editor with the Source controlled value while
   }, { head: rendered.head, body: rendered.body });
   await page.addScriptTag({ type: 'module', url: '/tree-select-input-hydration.client.ts' });
   await page.waitForFunction(() => window.treeSelectInputHydration);
+
   expect(await page.evaluate(() => {
     const { editor, root } = window.treeSelectInputHydration!;
     return { sameEditor: editor === document.querySelector('[data-tree-select-input-case] input'),
@@ -41,14 +51,20 @@ test('TreeSelect hydrates a custom editor with the Source controlled value while
   await expect(page.locator('[data-input-events]')).toHaveText('[]');
   const field = page.locator('[data-tree-select-input-case] input');
   await field.fill('Hydrated');
+
   await expect(page.locator('[data-input-controlled]')).toHaveText('"Hydrated"');
-  await page.locator('[data-input-update]').evaluate(node => node.dispatchEvent(new CustomEvent('fixtureupdate', { detail: { ownPhase: 1 } })));
+  await page.locator('[data-input-update]').evaluate(node => node.dispatchEvent(new CustomEvent(
+    'fixtureupdate',
+    { detail: { ownPhase: 1 } }
+  )));
+
   await expect(field).toHaveAttribute('id', 'own-live-after');
   await expect(field).toHaveValue('Hydrated');
   await expect(field).toBeFocused();
   expect(await page.evaluate(() => window.treeSelectInputHydration!.editor
     === document.querySelector('[data-tree-select-input-case] input'))).toBe(true);
   await page.evaluate(() => window.treeSelectInputHydration!.dispose());
+
   await expect(page.locator('[data-tree-select-input-case] input')).toHaveCount(0);
   await expect(page.locator('[popover]')).toHaveCount(0);
 });

@@ -11,7 +11,10 @@ export function readFormFeedbackPicker() {
     .filter(name => name.startsWith(start)).map(name => name.slice(start.length)).sort();
   return {
     root: flags(root, prefix+'-').filter(name => name.startsWith('status-') || ['has-feedback', 'in-form-item'].includes(name)),
-    item: flags(item, (item.className.match(/(?:^| )([^ ]+)-item(?: |$)/)?.[1] ?? 'ant-form')+'-item-')
+    item: flags(
+      item,
+      (item.className.match(/(?:^| )([^ ]+)-item(?: |$)/)?.[1] ?? 'ant-form')+'-item-'
+    )
       .filter(name => ['has-error', 'has-warning', 'has-success', 'is-validating', 'has-feedback'].includes(name)),
     suffix: suffix ? { text: suffix.textContent, custom: Boolean(suffix.querySelector('[data-picker-custom-suffix]')),
       feedback: Boolean(icon), glyphs: suffix.querySelectorAll('svg').length } : null,

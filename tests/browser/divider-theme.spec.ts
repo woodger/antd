@@ -6,6 +6,7 @@ test.use({ viewport: reference.viewport });
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=divider-theme');
+
   await expect(page.getByRole('heading', { name: 'Source Divider tokens', exact: true }))
     .toBeVisible();
 });
@@ -80,6 +81,7 @@ test('Divider source variables precede root and content semantic styles', async 
   await page.getByLabel('Divider theme style priority', { exact: true }).dispatchEvent('click');
 
   const content = page.locator('[data-divider-theme="title"] .ant-divider-inner-text');
+
   await expect(content).toHaveCSS('padding-inline-start', '31px');
   await expect(content).toHaveCSS('padding-inline-end', '37px');
 });
@@ -93,6 +95,7 @@ test('Divider removes source variables and hashes without replacing the separato
   await expect(root).toHaveCSS('--divider-x-divider-text-padding-inline', '24px');
   await expect(root).toHaveClass(/(?:^|\s)css-(?:dev-only-do-not-override-)?[a-z0-9]+(?:\s|$)/);
   await page.getByLabel('Hash themed Dividers', { exact: true }).dispatchEvent('click');
+
   await expect(root).not.toHaveClass(/(?:^|\s)css-(?:dev-only-do-not-override-)?[a-z0-9]+(?:\s|$)/);
 
   await page.getByLabel('Apply source Divider tokens', { exact: true }).dispatchEvent('click');

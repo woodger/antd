@@ -68,6 +68,7 @@ test('TreeSelect keeps its independent tree when ConfigProvider.tree config chan
     .selectOption(String(index));
   await page.getByRole('button', { name: 'Open semantic select', exact: true }).click();
   const leaf = page.getByRole('treeitem', { name: 'Select leaf', exact: true });
+
   await expect(leaf).toBeVisible();
   const node = await leaf.elementHandle();
   const before = await leaf.locator('.ant-tree-title').evaluate(element => {
@@ -92,6 +93,7 @@ test('Tree refreshes pending icon slots once and ignores load settlement after u
   await page.getByRole('combobox', { name: 'Tree semantic sample', exact: true })
     .selectOption(String(index));
   const host = page.locator('[data-tree-semantic-host]');
+
   await expect(host.locator('[aria-busy="true"]')).toHaveCount(1);
   await expect(page.locator('[data-tree-semantic-events]')).toHaveText('["load"]');
 

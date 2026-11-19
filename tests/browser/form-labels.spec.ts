@@ -6,6 +6,7 @@ for (const { sample, metrics } of reference.cases) {
   test(`Form label settings match source precedence, colon and wrapping for ${sample.id}`, async ({ page }) => {
     await page.goto('/?fixture=form-labels');
     await page.getByRole('combobox', { name: 'Form labels sample', exact: true }).selectOption(sample.id);
+
     await expect.poll(() => page.evaluate(formLabelsMetrics)).toEqual(metrics);
   });
 }
@@ -44,8 +45,10 @@ test('Form label punctuation keeps its original title and native click associati
   await page.goto('/?fixture=form-labels');
   await page.getByRole('combobox', { name: 'Form labels sample', exact: true }).selectOption('fullwidth-ltr');
   const label = page.locator('[data-label-case] label');
+
   await expect(label).toHaveText('Field');
   await expect(label).toHaveAttribute('title', 'Field： ');
   await label.click();
+
   await expect(page.getByRole('textbox', { name: 'Labelled field', exact: true })).toBeFocused();
 });

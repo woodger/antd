@@ -22,8 +22,15 @@ function readHeader(html: string, prefix: string, single: boolean) {
       const node = stack.pop()!;
       node.end = token.index!;
       node.body = html.slice(node.start + node.attrs.length, node.end);
-    } else {
-      const node: Span = { start: token.index!, end: 0, attrs: token[0], body: '', parent: stack.at(-1) };
+    }
+    else {
+      const node: Span = {
+        start: token.index!,
+        end: 0,
+        attrs: token[0],
+        body: '',
+        parent: stack.at(-1)
+      };
       spans.push(node);
       stack.push(node);
     }
@@ -47,7 +54,10 @@ function readHeader(html: string, prefix: string, single: boolean) {
       title: attribute(node, 'title') || null,
       disabled: node.attrs.includes(`${prefix}-selection-item-disabled`),
       removable: /data-ant-tree-choice-selection-item-remove|data-tree-tag-close=/.test(node.body),
-      custom: attribute(node, 'data-tree-tag-custom') ? JSON.parse(attribute(node, 'data-tree-tag-custom')!) : null
+      custom: attribute(node, 'data-tree-tag-custom') ? JSON.parse(attribute(
+        node,
+        'data-tree-tag-custom'
+      )!) : null
     }));
   const omitted = spans.find(node => node.attrs.includes('data-tree-tag-omitted=') && visible(node));
   const input = /<input\b(?=[^>]*data-ant-tree-choice-input)[^>]*>/.exec(html)?.[0] ?? '';
@@ -58,7 +68,10 @@ function readHeader(html: string, prefix: string, single: boolean) {
 
 function expected(entry: typeof reference.cases[number]) {
   if (entry.id === 'count-nan') return reference.cases.find(entry => entry.id === 'default')!.view;
-  const replacements: Record<string, string> = { 'emoji-split': '...', 'middle-emoji-split': 'A...' };
+  const replacements: Record<string, string> = {
+    'emoji-split': '...',
+    'middle-emoji-split': 'A...'
+  };
   const titles: Record<string, readonly string[]> = {
     'opaque-array-title': ['Array0 label'], 'title-renderer': ['Alphabet', 'Beta']
   };

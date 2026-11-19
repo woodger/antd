@@ -229,8 +229,10 @@ test(
     const before = (await input.boundingBox())!.height;
 
     await page.setViewportSize({ width: 320, height: 844 });
+
     await expect.poll(async () => (await input.boundingBox())!.height).toBeGreaterThan(before);
     await page.getByRole('combobox', { name: 'Textarea wrap', exact: true }).selectOption('off');
+
     await expect.poll(async () => (await input.boundingBox())!.height).toBeLessThan(before);
     await page.getByLabel('Compact textarea feature theme', { exact: true }).check();
 

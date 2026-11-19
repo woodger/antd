@@ -1,7 +1,10 @@
 <script lang="ts">
   import { Input, type TreeSelectInputContext } from 'antd-svelte';
   import type { TreeSelectInputKind } from './tree-select-input-cases';
-  let { context, kind }: { context: TreeSelectInputContext<HTMLInputElement>; kind: TreeSelectInputKind } = $props();
+  let { context, kind }: {
+    context: TreeSelectInputContext<HTMLInputElement>;
+    kind: TreeSelectInputKind
+  } = $props();
   let input = $state<HTMLInputElement>();
   let wrapper = $state<HTMLElement>();
   let component = $state<{ focus: (options?: FocusOptions) => void; blur: () => void }>();

@@ -101,5 +101,9 @@ export function readNativeWeek() {
       timers: null, frames: null, observers: null,
       note: 'Private resource counters unmeasured. One removable document capture observer; no global timer/frame/observer hooks.' } };
 }
-export function readNativeWeekProducers(cursor = 0) { return window.nativeWeek.readProducers(cursor); }
-export function readNativeWeekCallbacks(cursor = 0) { return window.nativeWeek.readCallbacks(cursor); }
+export function readNativeWeekProducers(cursor = 0) {
+  return window.nativeWeek.readProducers(cursor);
+}
+export function readNativeWeekCallbacks(cursor = 0) {
+  return window.nativeWeek.readCallbacks(cursor);
+}

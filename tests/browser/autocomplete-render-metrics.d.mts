@@ -22,7 +22,11 @@ export interface AutocompleteRenderDOM {
   sameAsOriginal: Record<'root' | 'editor' | 'child' | 'popup' | 'list', boolean | null>;
   publicRefs: { rootMatches: boolean; childIsEditor: boolean | null; controlIdentity: number | null;
     focusIdentity: number | null; blurIdentity: number | null; scrollToIdentity: number | null; methodOwnKeys: PropertyKey[] };
-  rows: Array<{ node: AutocompleteRenderNode; content: AutocompleteRenderNode; authored: AutocompleteRenderNode[] }>;
+  rows: Array<{
+    node: AutocompleteRenderNode;
+    content: AutocompleteRenderNode;
+    authored: AutocompleteRenderNode[]
+  }>;
   groups: AutocompleteRenderNode[];
   labels: AutocompleteRenderNode[];
   focus: { tag?: string; id?: string; role: string | null; isEditor: boolean; isRoot: boolean };

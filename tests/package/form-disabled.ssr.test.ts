@@ -14,6 +14,7 @@ describe('Form disabled public package', () => {
     const nested = reference.cases.find(
       ({ sample }) => sample.id === 'child-config-enable'
     )!.metrics;
+
     expect(disabled.free).toEqual(disabled.field);
     expect(disabled.free).toEqual({ input: true, select: true, button: true, tag: true });
     expect(nested.free).toEqual({ input: false, select: false, button: false, tag: false });

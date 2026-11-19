@@ -27,6 +27,7 @@ describe('Form DOM registrations', () => {
       expect(form.getFieldInstance(name)).toBe(refs[index]);
       expect(other.getFieldInstance(name)).toBeUndefined();
     });
+
     expect(form.getFieldInstance([])).toBeUndefined();
   });
 
@@ -53,12 +54,15 @@ describe('Form DOM registrations', () => {
     const remove = getFormHooks(form)!.registerField({
       get name() { return ['people', index]; }, getInstance: () => ref
     });
+
     expect(form.getFieldInstance(['people', 0])).toBe(ref);
 
     index = 1;
+
     expect(form.getFieldInstance(['people', 0])).toBeUndefined();
     expect(form.getFieldInstance(['people', 1])).toBe(ref);
     remove();
+
     expect(form.getFieldInstance(['people', 1])).toBeUndefined();
   });
 
@@ -67,12 +71,18 @@ describe('Form DOM registrations', () => {
     const first = {};
     const second = {};
     const unregister = getFormHooks(form)!.registerField({ name: 'name', getInstance: () => first });
-    const removeLatest = getFormHooks(form)!.registerField({ name: 'name', getInstance: () => second });
+    const removeLatest = getFormHooks(form)!.registerField({
+      name: 'name',
+      getInstance: () => second
+    });
+
     expect(form.getFieldInstance('name')).toBe(second);
 
     removeLatest();
+
     expect(form.getFieldInstance('name')).toBe(first);
     unregister();
+
     expect(form.getFieldInstance('name')).toBeUndefined();
     expect(form.values.name).toBe('Anna');
   });

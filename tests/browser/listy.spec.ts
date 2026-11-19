@@ -35,6 +35,7 @@ async function scrollItem(page: Page, key: string) {
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=listy');
+
   await expect(root(page)).toBeVisible();
 });
 
@@ -48,8 +49,10 @@ test('Listy renders native raw rows, stable ref and focusable content by default
 
   await rows(page).first().getByRole('link').focus();
   await page.keyboard.press('Tab');
+
   await expect(button(page, 'Action row-000')).toBeFocused();
   await page.keyboard.press('Enter');
+
   await expect(label(page, 'Listy actions')).toHaveText('1');
 });
 
@@ -58,6 +61,7 @@ test('Listy groups noncontiguous records while retaining original render indexes
 
   await expect(root(page).locator('.ant-listy-group-section')).toHaveCount(4);
   const first = root(page).locator('.ant-listy-group-section').first();
+
   await expect(first.locator('[data-record]').first()).toHaveAttribute('data-source-index', '0');
   expect(await first.locator('[data-record]').evaluateAll(nodes => nodes.map(node =>
     node.getAttribute('data-source-index')))).toEqual(['0', '4', '8', '12', '16']);
@@ -92,6 +96,7 @@ test('Listy raw group bottom alignment targets the entire section', async ({ pag
 
 test('Listy raw scrollTo preserves missing and null requests and reports native root events', async ({ page }) => {
   await button(page, 'Scroll Listy number').click();
+
   await expect.poll(() => top(root(page))).toBe(400);
   await expect(label(page, 'Listy events')).toContainText('ant-listy');
   await scrollItem(page, 'missing');
@@ -101,6 +106,7 @@ test('Listy raw scrollTo preserves missing and null requests and reports native 
   await expect.poll(() => top(root(page))).toBe(400);
   await label(page, 'Listy position').fill('120');
   await button(page, 'Scroll Listy position').click();
+
   await expect.poll(() => top(root(page))).toBe(120);
 });
 
@@ -124,11 +130,13 @@ test('Listy raw key selectors escape quotes, brackets and backslashes', async ({
   await expect.poll(() => top(root(page))).toBeGreaterThan(0);
   await expect(rows(page).nth(2)).toHaveAttribute('data-key', 'item:a:"b]\\c');
   await scrollItem(page, '');
+
   await expect(rows(page).nth(1)).toHaveAttribute('data-key', 'item:');
 });
 
 test('Listy inherits virtual from ConfigProvider with an explicit local override', async ({ page }) => {
   await label(page, 'Listy context virtual').check();
+
   await expect(holder(page)).toHaveCount(0);
   await select(page, 'Listy mode').selectOption('inherit');
 
@@ -141,8 +149,10 @@ test('Listy inherits virtual from ConfigProvider with an explicit local override
 
 test('Listy switches raw and virtual branches with fresh scroll state and bindings', async ({ page }) => {
   await button(page, 'Scroll Listy number').click();
+
   await expect.poll(() => top(root(page))).toBe(400);
   await virtual(page);
+
   await expect.poll(() => top(holder(page))).toBe(0);
   await expect(label(page, 'Listy refs')).toHaveText('scrollTo:DIV');
   await select(page, 'Listy mode').selectOption('raw');
@@ -206,6 +216,7 @@ test('Listy virtual top alignment uses actual sticky header height', async ({ pa
   await groups(page);
   await virtual(page);
   await button(page, 'Scroll Listy group').click();
+
   await expect(header(page, 2)).toHaveCSS('height', '38px');
   await label(page, 'Listy offset').fill('9');
   await scrollItem(page, 'row-014');
@@ -244,12 +255,15 @@ test('Listy virtual auto alignment keeps visible targets still and reveals offsc
   await virtual(page);
   await select(page, 'Listy align').selectOption('auto');
   await scrollItem(page, 'row-001');
+
   await expect.poll(() => top(holder(page))).toBe(0);
   await scrollItem(page, 'row-010');
+
   await expect(record(page, 'row-010')).toBeVisible();
   await expect.poll(async () => Math.abs((await edges(holder(page))).bottom
     - (await edges(record(page, 'row-010').locator('..'))).bottom)).toBeLessThan(1.1);
   await scrollItem(page, 'row-000');
+
   await expect.poll(() => top(holder(page))).toBe(0);
 });
 
@@ -276,11 +290,13 @@ test('Listy virtual group keys take priority over simultaneous item keys', async
 test('Listy virtual missing keys retain the current position after alignment retries', async ({ page }) => {
   await virtual(page);
   await button(page, 'Scroll Listy number').click();
+
   await expect.poll(() => top(holder(page))).toBe(400);
   await scrollItem(page, 'missing');
 
   await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() =>
     requestAnimationFrame(() => resolve()))));
+
   await expect.poll(() => top(holder(page))).toBe(400);
 });
 
@@ -300,6 +316,7 @@ test('Listy virtual scrollTo keeps the latest request after pending measurements
     - (await edges(holder(page))).top)).toBeLessThan(1.1);
   await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() =>
     requestAnimationFrame(() => resolve()))));
+
   await expect(record(page, 'row-006')).toBeVisible();
 });
 
@@ -311,9 +328,11 @@ test('Listy virtual variable-height rows settle scrollTo after measurement', asy
   await expect.poll(async () => Math.abs((await edges(record(page, 'row-012').locator('..'))).top
     - (await edges(holder(page))).top)).toBeLessThan(1.1);
   await label(page, 'Listy variable heights').uncheck();
+
   await expect.poll(() => rows(page).first().locator('[data-record]')
     .evaluate(node => node.style.height)).toBe('');
   await scrollItem(page, 'row-012');
+
   await expect.poll(async () => Math.abs((await edges(record(page, 'row-012').locator('..'))).top
     - (await edges(holder(page))).top)).toBeLessThan(1.1);
 });
@@ -322,6 +341,7 @@ test('Listy virtual clamps numeric positions and recovers when the dataset shrin
   await virtual(page);
   await label(page, 'Listy position').fill('100000');
   await button(page, 'Scroll Listy number').click();
+
   await expect(record(page, 'row-019')).toBeVisible();
   await select(page, 'Listy count').selectOption('2');
 
@@ -334,6 +354,7 @@ test('Listy virtual wheel scrolls rows and Shift-wheel keeps vertical position',
   await virtual(page);
   await holder(page).hover();
   await page.mouse.wheel(0, 300);
+
   await expect.poll(() => top(holder(page))).toBeGreaterThan(0);
   await expect.poll(() => rows(page).first().locator('[data-record]')
     .getAttribute('data-source-index').then(value => Number(value))).toBeGreaterThan(0);
@@ -358,11 +379,14 @@ test('Listy virtual wheel releases a boundary gesture to the parent after its lo
   expect(await wheel(-120)).toBe(false);
   expect(await wheel(120)).toBe(true);
   await page.clock.runFor(32);
+
   await expect.poll(() => top(holder(page))).toBe(120);
   await label(page, 'Listy position').fill('100000');
   await button(page, 'Scroll Listy number').click();
+
   await expect(record(page, 'row-019')).toBeVisible();
   await button(page, 'Scroll Listy number').click();
+
   await expect.poll(() => holder(page).evaluate(node =>
     Math.abs(node.scrollHeight - node.clientHeight - node.scrollTop))).toBeLessThan(1);
   await page.clock.runFor(64);
@@ -411,14 +435,17 @@ test('Listy scrollbar track clicks and dragging update the virtual viewport', as
   const track = root(page).locator('.ant-listy-scrollbar');
   const thumb = track.locator('.ant-listy-scrollbar-thumb');
   await track.click({ position: { x: 4, y: 130 } });
+
   await expect.poll(() => top(holder(page))).toBeGreaterThan(300);
   const previous = await top(holder(page));
   const bounds = await thumb.boundingBox();
   if (!bounds) throw new Error('Missing scrollbar thumb');
   await page.mouse.move(bounds.x + 4, bounds.y + bounds.height / 2);
   await page.mouse.down();
+
   await expect(holder(page)).toHaveCSS('pointer-events', 'none');
   await page.mouse.move(bounds.x + 4, bounds.y + bounds.height / 2 - 40);
+
   await expect.poll(() => top(holder(page))).toBeLessThan(previous);
   await page.mouse.up();
 
@@ -430,26 +457,33 @@ test('Listy scrollbar hides after its timeout and imperative null requests flash
   await page.clock.install();
   await virtual(page);
   const track = root(page).locator('.ant-listy-scrollbar');
+
   await expect(track).toBeVisible();
   await page.clock.runFor(3100);
+
   await expect(track).toBeHidden();
   await button(page, 'Scroll Listy null').click();
+
   await expect(track).toBeVisible();
   await page.clock.runFor(3100);
+
   await expect(track).toBeHidden();
   await button(page, 'Flash Listy scrollbar').click();
+
   await expect(track).toBeVisible();
 });
 
 test('Listy visible scrollbars inherit a hidden ancestor instead of overriding its visibility', async ({ page }) => {
   await virtual(page);
   const track = root(page).locator('.ant-listy-scrollbar');
+
   await expect(track).toBeVisible();
   await label(page, 'Listy hidden').check();
 
   await expect(track).toHaveCSS('visibility', 'hidden');
   await expect(track).toBeHidden();
   await label(page, 'Listy hidden').uncheck();
+
   await expect(track).toBeVisible();
 });
 
@@ -460,6 +494,7 @@ test('Listy virtual mouse selection drag scrolls outside the viewport and stops 
   await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + 100);
   await page.mouse.down();
   await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height + 50);
+
   await expect.poll(() => top(holder(page))).toBeGreaterThan(50);
   await page.mouse.up();
   const previous = await top(holder(page));
@@ -471,6 +506,7 @@ test('Listy virtual mouse selection drag scrolls outside the viewport and stops 
 
 test('Listy merges semantic slots and forces relative positioning only in virtual mode', async ({ page }) => {
   await label(page, 'Listy semantic styles').check();
+
   await expect(root(page)).toHaveClass(/provider-listy provider-height-200 root-listy local-listy/);
   await expect(rows(page).first()).toHaveClass(/provider-item local-item/);
   await expect(rows(page).first()).toHaveCSS('padding-top', '7px');
@@ -507,6 +543,7 @@ test('Listy sticky virtual headers push out before the following group takes ove
     + await top(holder(page));
   await label(page, 'Listy position').fill(String(next));
   await button(page, 'Scroll Listy number').click();
+
   await expect(fixed).toHaveText('Group 1 (5)');
 });
 
@@ -524,6 +561,7 @@ test('Listy preserves stable item content through reorder and appended records',
   await select(page, 'Listy height').selectOption('none');
   await rows(page).first().getByRole('button').focus();
   await button(page, 'Reverse Listy records').dispatchEvent('click');
+
   await expect(button(page, 'Action row-000')).toBeFocused();
   await expect(record(page, 'row-000')).toHaveAttribute('data-source-index', '19');
   await button(page, 'Append Listy records').click();
@@ -552,6 +590,7 @@ test('Listy uses dark and compact tokens without affecting virtual alignment', a
   await expect(rows(page).first()).toHaveCSS('padding-left', '8px');
   await expect(root(page)).toHaveCSS('color', 'rgba(255, 255, 255, 0.85)');
   await scrollItem(page, 'row-012');
+
   await expect.poll(async () => Math.abs((await edges(record(page, 'row-012').locator('..'))).top
     - (await edges(holder(page))).top)).toBeLessThan(1.1);
 });
@@ -572,11 +611,15 @@ test('Listy unmount cancels wheel, drag and scrollbar resources and clears refs'
   await virtual(page);
   await holder(page).dispatchEvent('wheel', { deltaY: 200, deltaX: 0 });
   await label(page, 'Mount Listy').uncheck();
+
   await expect(label(page, 'Listy refs')).toHaveText('none:none');
   await page.clock.runFor(3500);
   await label(page, 'Mount Listy').check();
 
   await expect(label(page, 'Listy refs')).toHaveText('scrollTo:DIV');
   await expect.poll(() => top(holder(page))).toBe(0);
-  await expect(rows(page).first().locator('[data-record]')).toHaveAttribute('data-source-index', '0');
+  await expect(rows(page).first().locator('[data-record]')).toHaveAttribute(
+    'data-source-index',
+    '0'
+  );
 });

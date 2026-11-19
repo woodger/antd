@@ -74,6 +74,7 @@ test(
     const icon = root.locator('.ant-timeline-item-icon').first();
 
     await page.getByLabel('Timeline title span', { exact: true }).selectOption('100px');
+
     await expect.poll(
       async () =>
         Math.abs(

@@ -26,6 +26,7 @@ test('Form theme updates preserve field DOM, focus, selection, values and submis
     await page.getByRole('button', { name: 'Update Form tokens', exact: true }).dispatchEvent('click');
 
     const updated = reference.cases.find(sample => sample.name === 'updated-tokens')!;
+
     await expect.poll(() => page.evaluate(snapshotFormTheme)).toEqual(updated.metrics);
     expect(await input.evaluate((node, old) => node === old, original)).toBe(true);
     await expect(input).toBeFocused();
@@ -59,6 +60,7 @@ test('Form retains validation errors and resets its model after a theme update',
   const description = await input.getAttribute('aria-describedby');
   await input.fill('');
   await input.press('Tab');
+
   await expect(root.getByRole('alert')).toHaveText('Field required');
   await expect(input).toHaveAttribute('aria-invalid', 'true');
 
@@ -87,6 +89,7 @@ test('Form resets inherited item tokens without replacing its nested field', asy
   await page.getByLabel('Inherit Form theme', { exact: true }).uncheck();
 
   const defaults = reference.cases.find(sample => sample.name === 'default')!;
+
   await expect.poll(() => page.evaluate(snapshotFormTheme).then(metrics => metrics.nested))
     .toEqual(defaults.metrics.nested);
   expect(await input.evaluate((node, old) => node === old, original)).toBe(true);

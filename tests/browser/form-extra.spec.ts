@@ -21,10 +21,12 @@ test('Form extra coexists with errors and warnings without hiding the permanent 
   await page.goto('/?fixture=form-extra');
   await act(page, 'Extra with-messages');
   const input = page.getByLabel('Name', { exact: true });
+
   await expect(input).toHaveAccessibleDescription('Error Warning Persistent extra');
   await expect(input).toHaveAttribute('aria-invalid', 'true');
   await expect(page.locator('[id$="_extra"]')).toHaveText('Persistent extra');
   await act(page, 'Extra messages-without-extra');
+
   await expect(input).toHaveAccessibleDescription('Error Warning');
   await expect(page.locator('[id$="_extra"]')).toHaveCount(0);
 });
@@ -37,11 +39,17 @@ test('Form extra changes its snippet and ARIA references without replacing input
   await input.evaluate((element: HTMLInputElement) => { element.setSelectionRange(1, 3); });
   const original = await input.elementHandle();
   await act(page, 'Update extra snippet');
-  await expect(page.getByRole('link', { name: 'Updated extra', exact: true })).toHaveAttribute('href', '#more');
+
+  await expect(page.getByRole('link', { name: 'Updated extra', exact: true })).toHaveAttribute(
+    'href',
+    '#more'
+  );
   await expect(input).toHaveAccessibleDescription('Updated extra');
   await act(page, 'Toggle external description');
+
   await expect(input).toHaveAccessibleDescription('External description Updated extra');
   await act(page, 'Extra false');
+
   await expect(input).toHaveAccessibleDescription('External description');
 
   await expect(input).toBeFocused();

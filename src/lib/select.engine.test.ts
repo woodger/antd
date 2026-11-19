@@ -154,6 +154,7 @@ describe('remote Select options', () => {
       expect(replaced.labels.get(0)).toBe('Renamed');
       expect(replaced.options.has('0')).toBe(false);
       const missing = resolveSelectDataCache([99], collectSelectData([], fields), fields, replaced);
+
       expect(missing.display[0].label).toBeUndefined();
       expect(getSelectDisplayLabel(missing.display[0].label, missing.display[0].value)).toBe('99');
     }

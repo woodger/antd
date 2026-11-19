@@ -362,6 +362,7 @@ test(
     await expect(progress(page)).toHaveAttribute('aria-valuenow', '42.5');
 
     await page.emulateMedia({ reducedMotion: 'reduce' });
+
     await expect.poll(
       () => track.evaluate((node) => node.getAnimations({ subtree: true }).length)
     )

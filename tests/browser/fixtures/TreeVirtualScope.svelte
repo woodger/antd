@@ -124,7 +124,11 @@
       ...request,
       offset: info => {
         const size = info.getSize('first', 1);
-        offsetCalls = [...offsetCalls, { align: info.align ?? null, top: size.top, bottom: size.bottom }];
+        offsetCalls = [...offsetCalls, {
+          align: info.align ?? null,
+          top: size.top,
+          bottom: size.bottom
+        }];
         return action.offsetKind === 'invalid' ? Infinity : (size.bottom ?? NaN) - size.top;
       }
     };

@@ -29,7 +29,11 @@ it.each(selectSurfaceHydrationReference.cases)('renders strict hydration owner $
         maps: actual.maps, events: actual.events, rawEvents: actual.rawEvents })
         .toEqual({ phase: source.state.phase, open: source.state.open, model: source.state.model,
           rawModel: source.state.rawModel, maps: source.state.maps, events: source.state.events, rawEvents: source.state.rawEvents });
-      verifySelectSurfaceProducerCalls(actual.calls, source.state.calls, selectSurfaceHydrationSemanticSample(entry));
+      verifySelectSurfaceProducerCalls(
+        actual.calls,
+        source.state.calls,
+        selectSurfaceHydrationSemanticSample(entry)
+      );
       expect(readStyleHistorySSRStyles(body)).toEqual(readStyleHistorySSRStyles(source.rawHtml));
     }
     expect(body).not.toMatch(/class="[^"]*\bant-select-dropdown\b/);
@@ -40,6 +44,9 @@ it.each(selectSurfaceHydrationReference.cases)('renders strict hydration owner $
     expect(warn).not.toHaveBeenCalled();
     expect(error).not.toHaveBeenCalled();
   } finally {
-    warn.mockRestore(); error.mockRestore(); vi.unstubAllGlobals(); vi.useRealTimers();
+    warn.mockRestore();
+    error.mockRestore();
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
   }
 });

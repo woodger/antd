@@ -39,6 +39,7 @@ describe('Typography public package', () => {
     expect(body).toMatch(/<i[\s>]/);
     const order = ['<i', '<kbd', '<mark', '<code', '<del', '<u', '<strong', 'Text content', 'ant-typography-actions'];
     const positions = order.map(value => body.indexOf(value));
+
     expect(positions.every(index => index >= 0)).toBe(true);
     expect(positions).toEqual([...positions].sort((first, second) => first - second));
   });
@@ -64,7 +65,11 @@ describe('Typography public package', () => {
 
     expect(body).toContain('computed-root');
     expect(callback).toHaveBeenCalledWith(expect.objectContaining({
-      props: expect.objectContaining({ prefixCls: 'ant-typography', direction: 'ltr', component: 'h3' })
+      props: expect.objectContaining({
+        prefixCls: 'ant-typography',
+        direction: 'ltr',
+        component: 'h3'
+      })
     }));
   });
 
@@ -81,7 +86,10 @@ describe('Typography public package', () => {
 
   it('preserves explicit rel and supplies the secure default only for an omitted blank link rel', () => {
     const body = render(TypographyLink, { props: { href: '#target', target: '_blank' } }).body;
-    const explicit = render(TypographyLink, { props: { href: '#target', target: '_blank', rel: '' } }).body;
+    const explicit = render(
+      TypographyLink,
+      { props: { href: '#target', target: '_blank', rel: '' } }
+    ).body;
 
     expect(body).toContain('rel="noopener noreferrer"');
     expect(explicit).toContain('rel=""');

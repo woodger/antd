@@ -4,7 +4,11 @@
   const caller = getContext<CustomTagPrefixContext>(customTagPrefixContext);
   function observe(content: Snippet) {
     const context = caller.current;
-    caller.bodyActivity.push({ kind: 'prefix', context: caller.recorder.encode(context), rawContext: caller.recorder.raw(context) });
+    caller.bodyActivity.push({
+      kind: 'prefix',
+      context: caller.recorder.encode(context),
+      rawContext: caller.recorder.raw(context)
+    });
     caller.recorder.register(content, { node: 'custom-tags-leading-prefix' });
     return caller.recorder.record('prefixBody', 'own', context, content);
   }

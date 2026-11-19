@@ -21,7 +21,10 @@ export function snapshotListyTheme() {
               'border-bottom-style', 'border-bottom-color']),
             header: properties(header, [...font, ...padding, 'position', 'background-color',
               'background-image']),
-            holder: properties(root.querySelector('.ant-listy-holder'), ['max-height', 'overflow-y'])
+            holder: properties(
+              root.querySelector('.ant-listy-holder'),
+              ['max-height', 'overflow-y']
+            )
           }];
         })
       )

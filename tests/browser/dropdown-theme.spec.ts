@@ -117,6 +117,7 @@ test('component algorithms retain focused commands and keyboard navigation', asy
   await expect(page.getByLabel('Dropdown theme changes', { exact: true })).toHaveText('[]');
   await normal.press('ArrowDown');
   const danger = menu.getByRole('menuitem', { name: 'Danger', exact: true });
+
   await expect(danger).toBeFocused();
   await danger.press('Enter');
 
@@ -163,6 +164,7 @@ test('popup scope resets surrounding aliases and retains component aliases', asy
   });
   const normal = page.getByRole('menu', { name: 'Themed Dropdown commands', exact: true })
     .getByRole('menuitem', { name: 'Normal', exact: true });
+
   await expect(normal).toHaveCSS('font-size', '14px');
   await expect(normal).toHaveCSS('color', 'rgba(0, 0, 0, 0.88)');
 
@@ -219,6 +221,7 @@ test('custom prefix and narrow RTL retain popup bounds, focus return and scope c
   expect(await popup.evaluate(element =>
     [...element.classList].some(name => name.startsWith('css-')))).toBe(false);
   const bounds = (await popup.boundingBox())!;
+
   expect(bounds.x).toBeGreaterThanOrEqual(0);
   expect(bounds.x + bounds.width).toBeLessThanOrEqual(320);
   await normal.press('Escape');

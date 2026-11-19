@@ -46,7 +46,10 @@ async function snapshot(page: Page) {
       ...document.querySelectorAll('.ant-menu-submenu-popup'),
       ...shadow.querySelectorAll('.ant-menu-submenu-popup')
     ];
-    const sort = (a: unknown, b: unknown) => JSON.stringify(a).localeCompare(JSON.stringify(b), 'en');
+    const sort = (a: unknown, b: unknown) => JSON.stringify(a).localeCompare(
+      JSON.stringify(b),
+      'en'
+    );
     return {
       calls: [...new Map(calls.map(call => [JSON.stringify(call), call])).values()].sort(sort),
       popups: popups.map(node => {
@@ -131,6 +134,7 @@ for (const sample of reference.cases) {
     await edit(page);
 
     await page.getByRole('menuitem', { name: 'Nested', exact: true }).click();
+
     await expect(page.getByRole('menuitem', { name: 'Leaf', exact: true })).toBeVisible();
 
     await expect.poll(() => snapshot(page)).toEqual(sourceSnapshot(sample.nested));
@@ -142,6 +146,7 @@ for (const sample of reference.cases) {
       await open(page, sample.name);
       await edit(page);
       await page.getByRole('menuitem', { name: 'Nested', exact: true }).click();
+
       await expect(page.getByRole('menuitem', { name: 'Leaf', exact: true })).toBeVisible();
       const previous = await parentPopup(page).elementHandle();
 
@@ -164,17 +169,22 @@ for (const name of ['vertical-local', 'vertical-local-shadow', 'horizontal-shado
     const sample = await open(page, name);
     await page.getByRole('button', { name: 'Focus container alpha', exact: true })
       .evaluate(node => (node as HTMLElement).click());
+
     await expect(alpha(page)).toBeFocused();
     const children = sample.rtl ? 'ArrowLeft' : 'ArrowRight';
 
     await alpha(page).press('End');
+
     await expect(nested(page)).toBeFocused();
     await nested(page).press(children);
+
     await expect(leaf(page)).toBeFocused();
     await leaf(page).press('Escape');
+
     await expect(nested(page)).toBeFocused();
     await expect(leaf(page)).toHaveCount(0);
     await nested(page).press('Home');
+
     await expect(alpha(page)).toBeFocused();
     await alpha(page).press('Enter');
 
@@ -193,8 +203,10 @@ for (const name of ['vertical-local', 'vertical-local-shadow', 'horizontal-shado
     await check(page, 'Hover container menu', true);
 
     await title(page).hover();
+
     await expect(draft(page)).toBeVisible();
     await nested(page).hover();
+
     await expect(leaf(page)).toBeVisible();
     await leaf(page).hover();
     await frames(page);
@@ -233,9 +245,11 @@ for (const name of ['vertical-local', 'vertical-local-shadow', 'horizontal-shado
     test(`portaled menu releases nodes and getters after ${label} for ${name}`, async ({ page }) => {
       await open(page, name);
       await nested(page).click();
+
       await expect(leaf(page)).toBeVisible();
 
       await check(page, label, false);
+
       await expect(page.locator(surface)).toHaveCount(0);
       const calls = await page.getByLabel('Menu owner calls', { exact: true }).innerText();
       await page.getByRole('button', { name: 'Refresh menu function', exact: true }).click();
@@ -274,10 +288,12 @@ for (const name of ['vertical-local', 'vertical-local-shadow', 'horizontal-shado
 for (const name of ['inline-force', 'inline-force-zero']) {
   test(`hidden inline menu copies preserve visible refs and consumer state for ${name}`, async ({ page }) => {
     await open(page, name);
+
     await expect(page.locator(surface)).toHaveCount(3);
     await expect(popups(page)).toHaveCount(0);
     await page.getByRole('button', { name: 'Focus container alpha', exact: true })
       .evaluate(node => (node as HTMLElement).click());
+
     await expect(alpha(page)).toBeFocused();
     await edit(page);
     const original = await draft(page).elementHandle();
@@ -298,6 +314,7 @@ for (const name of ['inline-force', 'inline-force-zero']) {
 
 test('menu force render retains hidden popup copies after being switched off', async ({ page }) => {
   await page.getByLabel('Menu reference', { exact: true }).selectOption('inline-local');
+
   await expect(page.locator(surface)).toHaveCount(0);
 
   await check(page, 'Force container menu', true);

@@ -35,7 +35,10 @@ const object = (value: unknown): Record<string, unknown> => {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Record<string, unknown>;
 };
-const array = (value: unknown): unknown[] => { assert(Array.isArray(value)); return value; };
+const array = (value: unknown): unknown[] => {
+  assert(Array.isArray(value));
+  return value;
+};
 const properties = (value: unknown) => array(object(value).properties).map(object);
 const property = (value: unknown, key: string) => {
   const row = properties(value).find(row => row.key === key);
@@ -183,7 +186,10 @@ function sameCallbacks(actual: NativeQuarterPoint, source: QuarterSourcePoint,
     for (const key of keys) {
       assert(typeof key === 'string');
       if (single && key === '2' || empty && (key === '0' || key === '1')) continue;
-      assert.deepEqual(property(call.encodedArguments, key), property(expected.encodedArguments, key),
+      assert.deepEqual(property(call.encodedArguments, key), property(
+        expected.encodedArguments,
+        key
+      ),
         'Exact callback payload and picker-info own-key order');
     }
     if (actual.owner.id.startsWith('range-')) {
@@ -238,14 +244,24 @@ function verifyPoint(actual: NativeQuarterPoint, source: QuarterSourcePoint,
     sameDate(actual.owner.authoredDates[role], source.owner.authoredDates[role], actual.owner, next);
   }
   assert.deepEqual(actual.owner.model, source.owner.model);
-  sameDates(actual.owner.modelDates, source.owner.modelDates, actual.owner.rawModel, actual.owner, next);
+  sameDates(
+    actual.owner.modelDates,
+    source.owner.modelDates,
+    actual.owner.rawModel,
+    actual.owner,
+    next
+  );
   assert.deepEqual(actual.inputs.map(input => ({ value: input.value,
     placeholder: attr(input, 'placeholder'), disabled: attr(input, 'disabled') !== null })),
   source.inputs.map(input => ({ value: input.value,
     placeholder: attr(input, 'placeholder'), disabled: attr(input, 'disabled') !== null })));
   sameCallbacks(actual, source, next);
   if (settled) {
-    assert.deepEqual(visiblePanels(actual), visiblePanels(source), 'Visible calendar/header/footer state');
+    assert.deepEqual(
+      visiblePanels(actual),
+      visiblePanels(source),
+      'Visible calendar/header/footer state'
+    );
   }
   if (actual.owner.alive) {
     assert(actual.root?.connected);
@@ -264,9 +280,14 @@ function verifyPoint(actual: NativeQuarterPoint, source: QuarterSourcePoint,
     assert.deepEqual(actual.inputs.map(input => input.identity), proof.inputs);
     const focused = object(actual.focus);
     for (const input of actual.inputs) {
-      assert.equal(input.focused, input.identity === focused.identity, 'Actual physical focus sidecar');
+      assert.equal(
+        input.focused,
+        input.identity === focused.identity,
+        'Actual physical focus sidecar'
+      );
     }
-  } else {
+  }
+  else {
     assert.deepEqual(actual.refs, { owner: null, root: null, control: null });
     assert.equal(actual.inputs.length, 0);
     assert.equal(actual.popups.length, 0);

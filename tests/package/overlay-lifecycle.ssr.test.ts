@@ -63,7 +63,10 @@ describe('Overlay content lifetime public package SSR', () => {
     const title = createRawSnippet(() => { throw new Error('SSR title must remain lazy'); });
     const children = createRawSnippet(() => ({ render: () => '<button>Trigger</button>' }));
 
-    const { body } = render(Tooltip, { props: { title, children, open: true, destroyOnHidden: true } });
+    const { body } = render(
+      Tooltip,
+      { props: { title, children, open: true, destroyOnHidden: true } }
+    );
 
     expect(body).toContain('role="tooltip"');
     expect(body).toContain('popover="manual"');

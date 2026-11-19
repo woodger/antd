@@ -8,5 +8,12 @@ export const labelTitleActions = [
   { type: 'renderer', kind: 'undefined' }, { type: 'click' }, { type: 'outside' },
 ];
 export const labelTitleSSRStates = ['string', 'zero', 'null', 'undefined']
-  .flatMap(renderer => [false, true].map(open => ({ name: renderer + '-' + (open ? 'open' : 'closed'), renderer, open })));
-export const labelTitleGeometry = { viewport: { width: 1200, height: 900 }, root: { left: 300, top: 200, width: 280 } };
+  .flatMap(renderer => [false, true].map(open => ({
+    name: renderer + '-' + (open ? 'open' : 'closed'),
+    renderer,
+    open
+  })));
+export const labelTitleGeometry = {
+  viewport: { width: 1200, height: 900 },
+  root: { left: 300, top: 200, width: 280 }
+};

@@ -35,7 +35,10 @@ export function snapshotTreeSelectPrefix() {
         content: css(nodePart(node, '-node-content-wrapper'),
           [...font, ...padding, 'min-height', 'background-color']),
         switcher: css(nodePart(node, '-switcher'), ['width', 'height', 'color']),
-        checkbox: css(nodePart(node, '-checkbox'), ['width', 'height', 'background-color', ...border])
+        checkbox: css(
+          nodePart(node, '-checkbox'),
+          ['width', 'height', 'background-color', ...border]
+        )
       })) : []
   };
 }

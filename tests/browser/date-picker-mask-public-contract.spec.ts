@@ -39,6 +39,7 @@ for (const owner of owners) {
     const input = await open(page, owner, 'mouse');
     await clickTextStart(page, input);
     await control(page, 'reset');
+
     await expect(input).toBeFocused();
     await clickTextStart(page, input);
     const events = page.locator('[data-contract-mouse] li');
@@ -93,6 +94,7 @@ test('rejected controlled opening receives one mask request after the accepted c
   const input = await open(page, 'date', 'reject-open');
   await clickTextStart(page, input);
   await control(page, 'reset');
+
   await expect(input).toBeFocused();
   await page.keyboard.press('ArrowUp');
 
@@ -115,6 +117,7 @@ test('switching an incomplete mask to the same plain format preserves local text
   const original = await input.elementHandle();
   await control(page, 'reset');
   await page.keyboard.press('Backspace');
+
   await expect(input).toHaveValue('YYYY-12-31');
   await control(page, 'plain');
 
@@ -150,6 +153,7 @@ test('ordinary date Enter does not submit a rejected typed candidate through the
   await control(page, 'reset');
   await input.press('Control+A');
   await page.keyboard.type('2021-02-03');
+
   await expect(input).toHaveAttribute('aria-invalid', 'true');
   await input.press('Enter');
 

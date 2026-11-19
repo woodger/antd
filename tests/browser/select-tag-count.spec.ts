@@ -54,6 +54,7 @@ test('Select tag count hands hidden remove focus to input and respects explicit 
         node.dispatchEvent(new Event('change', { bubbles: true }));
         document.getElementById('tag-count-outside')!.focus();
       });
+
     await expect(page.getByRole('button', { name: 'Outside tag count', exact: true })).toBeFocused();
     await expect(page.getByRole('status', { name: 'Tag count changes', exact: true })).toHaveText('0');
   });
@@ -64,25 +65,32 @@ test('Select hidden tags stay in FormData, Backspace, clear, reset and disabled 
     await page.getByRole('combobox', { name: 'Tag count sample', exact: true }).selectOption('one');
     const input = page.getByRole('combobox', { name: 'Counted values', exact: true });
     const form = page.getByRole('form', { name: 'Tag count native form', exact: true });
+
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('tag-count')))
       .toEqual(['a', 'locked', '0', 'z']);
     await input.press('Backspace');
+
     await expect(page.getByRole('status', { name: 'Tag count values', exact: true }))
       .toHaveText('["a","locked",0]');
     await input.press('Backspace');
     await input.press('Backspace');
+
     await expect(page.getByRole('status', { name: 'Tag count values', exact: true }))
       .toHaveText('["locked"]');
     await page.locator('[data-tag-count] .clear').click();
+
     await expect(page.getByRole('status', { name: 'Tag count values', exact: true })).toHaveText('[]');
     await page.getByRole('button', { name: 'Reset tag count', exact: true }).click();
+
     await expect(page.getByRole('status', { name: 'Tag count values', exact: true }))
       .toHaveText('["a","locked",0,"z"]');
     await page.getByRole('checkbox', { name: 'Right to left', exact: true }).check();
     await input.click();
+
     await expect(physicalSelectPopup(page, 'Counted values'))
       .toHaveCSS('direction', 'rtl');
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).check();
+
     await expect(input).toBeDisabled();
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('tag-count')))
       .toEqual([]);

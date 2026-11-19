@@ -46,7 +46,8 @@ export function getRateStarClass(
     classes.push(`${prefix}-star-half`, `${prefix}-star-active`);
     if (focused)
       classes.push(`${prefix}-star-focused`);
-  } else {
+  }
+  else {
     classes.push(value !== undefined && star <= value
       ? `${prefix}-star-full`
       : `${prefix}-star-zero`);

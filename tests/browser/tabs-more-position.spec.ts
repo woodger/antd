@@ -90,12 +90,14 @@ async function check(page: Page, label: string, checked: boolean) {
 for (const sample of reference.cases) {
   test(`More geometry and arrow match the official source for ${sample.name}`, async ({ page }) => {
     await page.getByLabel('More position reference', { exact: true }).selectOption(sample.name);
+
     await expect(page.locator('.ant-tabs-nav-more')).toBeVisible();
     await open(page, sample as TabsMorePositionCase);
     if (sample.snapshot.callback) {
       await expect(page.locator('.ant-tabs-dropdown')).toBeVisible();
       await expect(page.getByLabel('Position aligned', { exact: true })).not.toHaveText('null');
-    } else {
+    }
+    else {
       await expect(page.locator('.ant-tabs-dropdown')).toBeHidden();
       await page.evaluate(async () => {
         for (let frame = 0; frame < 7; frame++) await new Promise(requestAnimationFrame);
@@ -104,6 +106,7 @@ for (const sample of reference.cases) {
     }
 
     const { delta: _delta, arrowX: _x, arrowY: _y, ...expected } = sample.snapshot;
+
     await expect.poll(async () => {
       const { delta: _delta, arrowX: _x, arrowY: _y, ...actual } = await snapshot(page);
       return actual;
@@ -121,6 +124,7 @@ for (const name of ['dynamic-right-bottom', 'portal-clipping']) {
   test(`live ${name} alignment preserves content state, focus, draft and selection`,
     async ({ page }) => {
       await page.getByLabel('More position reference', { exact: true }).selectOption(name);
+
       await expect(page.locator('.ant-tabs-nav-more')).toBeVisible();
       await page.getByLabel('More position reference', { exact: true }).focus();
       await open(page, { name });
@@ -152,8 +156,10 @@ for (const name of ['dynamic-right-bottom', 'portal-clipping']) {
 for (const event of ['scroll', 'resize']) {
   test(`alignPoint click closes on window ${event}`, async ({ page }) => {
     await page.getByLabel('More position reference', { exact: true }).selectOption('point-click');
+
     await expect(page.locator('.ant-tabs-nav-more')).toBeVisible();
     await open(page, { name: 'point-click' });
+
     await expect(page.locator('.ant-tabs-dropdown')).toBeVisible();
 
     await page.evaluate(type => window.dispatchEvent(new Event(type)), event);
@@ -165,8 +171,10 @@ for (const event of ['scroll', 'resize']) {
 
 test('alignPoint hover remains open on scrolling and callbacks stop after unmount', async ({ page }) => {
   await page.getByLabel('More position reference', { exact: true }).selectOption('point-hover');
+
   await expect(page.locator('.ant-tabs-nav-more')).toBeVisible();
   await open(page, { name: 'point-hover', open: 'hover' });
+
   await expect(page.locator('.ant-tabs-dropdown')).toBeVisible();
   const count = Number(await page.getByLabel('Position callback count', { exact: true }).textContent());
 
@@ -189,8 +197,10 @@ test('alignPoint hover remains open on scrolling and callbacks stop after unmoun
 
 test('accepts callback alignment as controlled input without a callback loop', async ({ page }) => {
   await check(page, 'Sync More alignment', true);
+
   await expect(page.locator('.ant-tabs-nav-more')).toBeVisible();
   await open(page, { name: 'bottom-left' });
+
   await expect(page.locator('.ant-tabs-dropdown')).toBeVisible();
   await expect(page.getByLabel('Position aligned', { exact: true })).not.toHaveText('null');
   await page.evaluate(async () => {
@@ -207,9 +217,11 @@ test('accepts callback alignment as controlled input without a callback loop', a
 
 test('point hover retains its position after the anchor moves outside the viewport', async ({ page }) => {
   await page.getByLabel('More position reference', { exact: true }).selectOption('point-hover');
+
   await expect(page.locator('.ant-tabs-nav-more')).toBeVisible();
   await open(page, { name: 'point-hover', open: 'hover' });
   const popup = page.locator('.ant-tabs-dropdown');
+
   await expect(popup).toBeVisible();
   const original = await popup.boundingBox();
 
@@ -219,6 +231,7 @@ test('point hover retains its position after the anchor moves outside the viewpo
   });
 
   const source = reference.cases.find(sample => sample.name === 'point-hover')!;
+
   expect(source.offscreenVisible).toBe(true);
   await expect(popup).toBeVisible();
   expect(await popup.boundingBox()).toEqual(original);
@@ -228,14 +241,17 @@ test('equal-width flip updates CSS insets even when its physical coordinates sta
   async ({ page }) => {
     await page.getByLabel('More position reference', { exact: true })
       .selectOption('equal-width-dynamic-flip');
+
     await expect(page.locator('.ant-tabs-nav-more')).toBeVisible();
     await open(page, { name: 'equal-width-dynamic-flip' });
+
     await expect(page.locator('.ant-tabs-dropdown')).toBeVisible();
     const original = await page.locator('.ant-tabs-dropdown').boundingBox();
 
     await page.setViewportSize({ width: 700, height: 1000 });
 
     const source = reference.cases.find(sample => sample.name === 'equal-width-dynamic-flip')!;
+
     await expect.poll(async () => {
       const { delta: _delta, arrowX: _x, arrowY: _y, ...actual } = await snapshot(page);
       return actual;
@@ -246,15 +262,18 @@ test('equal-width flip updates CSS insets even when its physical coordinates sta
 test('alignment updates keep input focus after the initial custom-overlay autoFocus',
   async ({ page }) => {
     await page.getByLabel('More position reference', { exact: true }).selectOption('arrow-autofocus');
+
     await expect(page.locator('.ant-tabs-nav-more')).toBeVisible();
     await page.getByLabel('More position reference', { exact: true }).focus();
     await open(page, { name: 'arrow-autofocus' });
+
     await expect(page.getByRole('group', { name: 'Position overlay', exact: true })).toBeFocused();
     const draft = page.getByLabel('Position draft', { exact: true });
     await draft.fill('Retained after autoFocus');
     await draft.evaluate(input => (input as HTMLInputElement).setSelectionRange(2, 8));
 
     await check(page, 'Update More alignment', true);
+
     await expect.poll(async () => JSON.parse(
       await page.getByLabel('Position aligned', { exact: true }).textContent() ?? 'null'
     )).toMatchObject({ offset: [11, 17] });

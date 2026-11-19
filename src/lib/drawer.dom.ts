@@ -55,7 +55,8 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
       if (opening) {
         cancelMotion();
         phase = 'open';
-      } else finishClose();
+      }
+      else finishClose();
     }, () => { });
   }
 
@@ -84,7 +85,8 @@ export function createDrawerDialog(dialog: HTMLDialogElement, onClosing: (
       if (!dialog.open)
         dialog.showModal();
       animate(from, 'translate(0, 0)', opacity, true);
-    } else if (dialog.open && phase !== 'closing') {
+    }
+    else if (dialog.open && phase !== 'closing') {
       const from = view.getComputedStyle(panel).transform;
       const opacity = view.getComputedStyle(mask).opacity;
       cancelMotion();

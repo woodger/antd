@@ -39,6 +39,7 @@ describe('Grid global responsive CSS', () => {
     expect(getGridMediaScope(first)).not.toBe(getGridMediaScope(second));
     expect(getGridMediaCss(first)).not.toContain(`.${getGridMediaScope(second)}`);
     const aliases = { ...first, fontSize: 24 };
+
     expect(getGridMediaScope(aliases)).toBe(getGridMediaScope(first));
   });
 

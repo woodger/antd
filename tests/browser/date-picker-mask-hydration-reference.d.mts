@@ -12,10 +12,21 @@ export interface MaskHydrationSourceInput {
 }
 export interface MaskHydrationSourcePoint {
   phase: MaskHydrationSourcePhase;
-  environment: { dateNow: number; performanceNow: number; timezone: string; documentReadyState: string; };
+  environment: {
+    dateNow: number;
+    performanceNow: number;
+    timezone: string;
+    documentReadyState: string;
+  };
   nodes: { target: string; owner: string | null; root: string | null; active: string | null;
     activeTag: string | null; activeId: string | null;
-    sameParsed: { target: boolean; owner: boolean; root: boolean; inputCount: boolean; inputs: boolean[]; };
+    sameParsed: {
+      target: boolean;
+      owner: boolean;
+      root: boolean;
+      inputCount: boolean;
+      inputs: boolean[];
+    };
     parsed: { target: string; owner: string | null; root: string | null; inputs: string[]; }; };
   inputs: MaskHydrationSourceInput[]; retainedParsedInputs: MaskHydrationSourceInput[];
   html: { owner: string | null; root: string | null; target: string; body: string; };
@@ -26,9 +37,19 @@ export interface MaskHydrationSourcePoint {
 export interface MaskHydrationSourceProfile {
   id: MaskOwner; formatProfile: MaskFormatProfile;
   sourceSSR: { variant: 'first'; method: 'renderToString'; rawJSONPart: MaskSourceRawPart; };
-  originalSourceHTML: { value: string; sha256: string; originalEnvironment: Record<string, unknown>; };
+  originalSourceHTML: {
+    value: string;
+    sha256: string;
+    originalEnvironment: Record<string, unknown>;
+  };
   observations: MaskHydrationSourcePoint[];
-  versions: { react: string; antd: string; hasHydrateRoot: boolean; dateNow: number; dayjsLocale: string; };
+  versions: {
+    react: string;
+    antd: string;
+    hasHydrateRoot: boolean;
+    dateNow: number;
+    dayjsLocale: string;
+  };
   failure: null; network: { requests: unknown[]; responses: unknown[]; failures: unknown[]; };
   contextCloseAwaited: boolean;
 }
@@ -37,7 +58,12 @@ export interface MaskHydrationSourceMetadata {
   phases: MaskHydrationSourcePhase[];
   profiles: Array<{ id: MaskOwner; formatProfile: MaskFormatProfile; variant: MaskHydrationSourceVariant;
     original: MaskSourceRawPart; fixture: string; originalHTMLSHA256: string; }>;
-  documents: Record<string, { originalFile: string; bytes: number; sha256: string; fixture: string; }>;
+  documents: Record<string, {
+    originalFile: string;
+    bytes: number;
+    sha256: string;
+    fixture: string;
+  }>;
   [key: string]: unknown;
 }
 export function readMaskHydrationSourceManifest(): MaskHydrationSourceMetadata;

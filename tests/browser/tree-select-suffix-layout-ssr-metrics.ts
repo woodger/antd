@@ -25,7 +25,14 @@ export function readTreeSelectSuffixLayoutSSR(html: string) {
     if (!voidTags.has(tag) && !token[0].endsWith('/>')) stack.push(node);
   }
   const decode = (value: string) => value.replace(/&(?:amp|lt|gt|quot|#39|#x27);/g,
-    entity => ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&#x27;': "'" })[entity]!);
+    entity => ({
+      '&amp;': '&',
+      '&lt;': '<',
+      '&gt;': '>',
+      '&quot;': '"',
+      '&#39;': "'",
+      '&#x27;': "'"
+    })[entity]!);
   const attribute = (node: HtmlNode | undefined, name: string) => {
     if (!node) return null;
     const match = new RegExp(`\\s${name}(?:="([^"]*)"|(?=[\\s>]))`).exec(node.opening);
@@ -59,7 +66,10 @@ export function readTreeSelectSuffixLayoutSSR(html: string) {
       .map(node => attribute(node, 'data-suffix-layout-tag')),
     rest: { present: Boolean(rest), visible: Boolean(rest && visible(rest)),
       omitted: rest ? attribute(rest, 'data-suffix-layout-omitted') : null },
-    suffix: { present: Boolean(suffix), fixed: /(?:^|;)\s*position\s*:\s*absolute/.test(attribute(suffix, 'style') ?? '') },
+    suffix: {
+      present: Boolean(suffix),
+      fixed: /(?:^|;)\s*position\s*:\s*absolute/.test(attribute(suffix, 'style') ?? '')
+    },
     values: readOutput('data-suffix-layout-model'), events: readOutput('data-suffix-layout-events')
   };
 }

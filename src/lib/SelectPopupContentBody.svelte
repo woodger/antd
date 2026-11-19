@@ -11,7 +11,10 @@
   if (untrack(() => isolate)) {
     provideFormField(undefined);
     provideFormFeedback({});
-    provideFormItemStatus(Object.create(useFormItemStatusContext(), { status: { value: undefined } }));
+    provideFormItemStatus(Object.create(
+      useFormItemStatusContext(),
+      { status: { value: undefined } }
+    ));
     provideCompact(null);
   }
 </script>

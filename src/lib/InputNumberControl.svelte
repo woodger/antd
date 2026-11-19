@@ -116,7 +116,11 @@
     ? config.inputNumber.styles(info) : config.inputNumber?.styles);
   let localStyles = $derived(typeof props.styles === 'function'
     ? props.styles(info) : props.styles);
-  let classes = $derived(mergeSlots({ root: componentTheme.className }, contextClasses, localClasses));
+  let classes = $derived(mergeSlots(
+    { root: componentTheme.className },
+    contextClasses,
+    localClasses
+  ));
   let styles = $derived(mergeSlots({ root: componentTheme.style }, contextStyles,
     { root: config.inputNumber?.style },
     localStyles, { root: props.style }, ';'));
@@ -337,7 +341,8 @@
         previousValue = value;
         editor = { text: formatValue(decimal), dirty: false };
       });
-    } else editor = { text: formatValue(decimal), dirty: false };
+    }
+    else editor = { text: formatValue(decimal), dirty: false };
   }
 
   function changeStep(direction: 1 | -1, emitter: InputNumberStepInfo['emitter']) {

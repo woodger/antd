@@ -30,6 +30,7 @@ test(
   'AutoComplete accepts free input without local filtering and selects the option value rather than its label',
   async ({ page }) => {
     await input(page).fill('unmatched');
+
     await expect.poll(
       async () => {
         const bottom = await input(page).evaluate(
@@ -139,7 +140,10 @@ test(
     await expect(custom).toHaveAttribute('aria-expanded', 'false');
 
     await custom.fill('beta');
-    await physicalSelectOption(physicalSelectPopup(page, 'Custom completion'), { name: 'Beta rich', exact: true })
+    await physicalSelectOption(
+      physicalSelectPopup(page, 'Custom completion'),
+      { name: 'Beta rich', exact: true }
+    )
       .click();
 
     await expect(custom).toHaveValue('beta');

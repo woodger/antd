@@ -9,7 +9,10 @@ export interface VariantOptions {
 }
 
 /** Приоритет form/hooks/useVariants 6.6.8; explicit outlined тоже считается настройкой. */
-export function resolveVariant(options: VariantOptions): { variant: Variant; isConfigured: boolean; } {
+export function resolveVariant(options: VariantOptions): {
+  variant: Variant;
+  isConfigured: boolean;
+} {
   const { variant, formVariant, componentVariant, fallbackVariant, globalVariant } = options;
   const configured = [variant, formVariant, componentVariant, fallbackVariant, globalVariant]
     .some(value => value !== undefined);

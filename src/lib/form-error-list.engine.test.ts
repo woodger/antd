@@ -11,6 +11,7 @@ describe('buildFormErrorList', () => {
       { content: 'Advice', status: 'warning' }
     ]);
     const reordered = buildFormErrorList({ errors: ['Second', 'First'] });
+
     expect(reordered.map(({ key }) => key)).toEqual([messages[1].key, messages[0].key]);
   });
 
@@ -50,7 +51,10 @@ describe('reconcileFormErrorList', () => {
     const previous = buildFormErrorList({ errors: ['First', 'Second'] })
       .map((entry) => ({ ...entry, visible: true }));
 
-    const messages = reconcileFormErrorList(previous, buildFormErrorList({ errors: ['Second', 'Third'] }));
+    const messages = reconcileFormErrorList(
+      previous,
+      buildFormErrorList({ errors: ['Second', 'Third'] })
+    );
 
     expect(messages.map(({ content, visible }) => ({ content, visible }))).toEqual([
       { content: 'First', visible: false },

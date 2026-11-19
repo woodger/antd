@@ -66,6 +66,7 @@ for (const app of [false, true]) {
     await expect(notice).toHaveClass(/\bnotice-notice\b/);
     await expect(editor).toBeFocused();
     await notice.getByRole('button', { name: 'Action', exact: true }).click();
+
     await expect(page.getByLabel('Notification prefix events', { exact: true })).toHaveText('action');
     await notice.getByRole('button', { name: 'Close', exact: true }).click();
 

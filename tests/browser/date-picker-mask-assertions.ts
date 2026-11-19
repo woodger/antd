@@ -11,31 +11,52 @@ import type { MaskSourcePoint, MaskSourceOwner, MaskSourceDate, MaskSourceInvoca
 
 type Data = Record<string, unknown>;
 const object = (value: unknown): Data => {
-  assert(value !== null && typeof value === 'object' && !Array.isArray(value)); return value as Data;
+  assert(value !== null && typeof value === 'object' && !Array.isArray(value));
+  return value as Data;
 };
-const array = (value: unknown): unknown[] => { assert(Array.isArray(value)); return value; };
+const array = (value: unknown): unknown[] => {
+  assert(Array.isArray(value));
+  return value;
+};
 const properties = (value: unknown) => array(object(value).properties).map(object);
 const encoded = (value: unknown, key: string) => {
-  const entry = properties(value).find(row => row.key === key); assert(entry, 'Complete encoded key ' + key); return entry.value;
+  const entry = properties(value).find(row => row.key === key);
+  assert(entry, 'Complete encoded key ' + key);
+  return entry.value;
 };
 const rawNode = (graph: unknown, ref: unknown) => {
-  const node = array(object(graph).objects).map(object).find(node => node.id === ref); assert(node, 'Raw node exists'); return node;
+  const node = array(object(graph).objects).map(object).find(node => node.id === ref);
+  assert(node, 'Raw node exists');
+  return node;
 };
 const rawAt = (graph: unknown, path: Array<string | number>) => {
   let value = object(graph).root;
-  for (const key of path) value = encoded(rawNode(graph, object(value).ref), String(key)); return value;
+  for (const key of path) value = encoded(rawNode(graph, object(value).ref), String(key));
+  return value;
 };
 const attr = (surface: MaskSourceSurface, name: string) => surface.attributes.find(row => row[0] === name)?.[1] ?? null;
 const roles = ['initialStart', 'initialEnd'] as const;
 export interface MaskDifference { label: string; variant?: MaskSourceVariant; field: string; message: string; }
 interface Bindings { forward: Map<number, number>; reverse: Map<number, number>; }
 const bindings = (): Bindings => ({ forward: new Map(), reverse: new Map() });
-const cloneBindings = (value: Bindings): Bindings => ({ forward: new Map(value.forward), reverse: new Map(value.reverse) });
+const cloneBindings = (value: Bindings): Bindings => ({
+  forward: new Map(value.forward),
+  reverse: new Map(value.reverse)
+});
 function bind(actual: number, source: number, proof: Bindings) {
   assert(Number.isSafeInteger(actual) && actual > 0 && Number.isSafeInteger(source) && source > 0);
-  if (proof.forward.has(source)) assert.equal(actual, proof.forward.get(source), 'Shared raw/public identity');
-  if (proof.reverse.has(actual)) assert.equal(source, proof.reverse.get(actual), 'Distinct raw/public identity');
-  proof.forward.set(source, actual); proof.reverse.set(actual, source);
+  if (proof.forward.has(source)) assert.equal(
+    actual,
+    proof.forward.get(source),
+    'Shared raw/public identity'
+  );
+  if (proof.reverse.has(actual)) assert.equal(
+    source,
+    proof.reverse.get(actual),
+    'Distinct raw/public identity'
+  );
+  proof.forward.set(source, actual);
+  proof.reverse.set(actual, source);
 }
 interface CalendarBoundary { aRoot: number; sRoot: number; aInfo: number; sInfo: number; empty: boolean; }
 // Analytical callback-model views retain the original graph, without rewriting stored nodes.
@@ -45,18 +66,26 @@ function sameRaw(actual: unknown, source: unknown, proof: Bindings, boundary?: C
   function value(left: unknown, right: unknown) {
     if (left === null || right === null || typeof left !== 'object' || typeof right !== 'object') {
       if (typeof left === 'number' && typeof right === 'number') assert(left === right);
-      else assert.deepEqual(left, right); return;
+      else assert.deepEqual(left, right);
+      return;
     }
     assert.equal(Array.isArray(left), Array.isArray(right));
     assert.deepEqual(Object.keys(left), Object.keys(right));
     const l = left as Data, r = right as Data;
-    if (Object.keys(l).length === 1 && Object.hasOwn(l, 'ref')) { node(Number(l.ref), Number(r.ref)); return; }
+    if (Object.keys(l).length === 1 && Object.hasOwn(l, 'ref')) {
+      node(Number(l.ref), Number(r.ref));
+      return;
+    }
     for (const key of Object.keys(l)) value(l[key], r[key]);
   }
   function node(left: number, right: number) {
     bind(left, right, proof);
-    if (seen.has(left)) { assert(original.has(right)); return; }
-    seen.add(left); original.add(right);
+    if (seen.has(left)) {
+      assert(original.has(right));
+      return;
+    }
+    seen.add(left);
+    original.add(right);
     const l = rawNode(a, left), r = rawNode(s, right);
     assert.deepEqual(Object.keys(l), Object.keys(r));
     for (const key of Object.keys(l)) {
@@ -67,18 +96,29 @@ function sameRaw(actual: unknown, source: unknown, proof: Bindings, boundary?: C
         const lp = array(l[key]).map(object), rp = array(r[key]).map(object);
         assert.deepEqual(lp.map(row => row.key), rp.map(row => row.key));
         for (const [index, row] of lp.entries()) {
-          const other = rp[index]; assert.deepEqual(Object.keys(row), Object.keys(other));
+          const other = rp[index];
+          assert.deepEqual(Object.keys(row), Object.keys(other));
           if (row.key === '0' || row.key === '1') {
             assert.deepEqual(other.value, { $: 'undefined' });
             assert.equal(row.value, row.key === '0' ? null : '');
-          } else value(row, other);
+          }
+          else value(row, other);
         }
-      } else value(l[key], r[key]);
+      }
+      else value(l[key], r[key]);
     }
   }
   value(a.root, s.root);
-  if (!rawViews.has(a)) assert.equal(seen.size, array(a.objects).length, 'Every Native raw node compared');
-  if (!rawViews.has(s)) assert.equal(original.size, array(s.objects).length, 'Every Source raw node compared');
+  if (!rawViews.has(a)) assert.equal(
+    seen.size,
+    array(a.objects).length,
+    'Every Native raw node compared'
+  );
+  if (!rawViews.has(s)) assert.equal(
+    original.size,
+    array(s.objects).length,
+    'Every Source raw node compared'
+  );
 }
 function validateDate(date: MaskSourceDate, owner: MaskSourceOwner) {
   assert.equal(object(object(date.raw).root).ref, date.identity);
@@ -86,14 +126,23 @@ function validateDate(date: MaskSourceDate, owner: MaskSourceOwner) {
   for (const [index, key] of ['$y', '$M', '$D', '$H', '$m', '$s', '$ms'].entries()) {
     const raw = rawAt(date.raw, [key]), field = date.temporal.fields[index];
     if (raw !== null && typeof raw === 'object' && object(raw).$ === 'number')
-      assert(field === null || Number.isNaN(field), 'Original JSON nonfinite field and strict raw numeric codec');
+      assert(
+        field === null || Number.isNaN(field),
+        'Original JSON nonfinite field and strict raw numeric codec'
+      );
     else assert.deepEqual(field, raw, 'Full raw Date field ' + key);
   }
   assert.equal(rawAt(date.raw, ['$L']), date.temporal.locale);
-  if (date.temporal.valid) assert.equal(new Date(date.temporal.epoch!).toISOString(), date.temporal.iso);
+  if (date.temporal.valid) assert.equal(
+    new Date(date.temporal.epoch!).toISOString(),
+    date.temporal.iso
+  );
   else assert.equal(date.temporal.iso, null);
   assert.deepEqual(Object.keys(date.sameAsAuthored), [...roles]);
-  for (const role of roles) assert.equal(date.sameAsAuthored[role], date.identity === owner.authoredDates[role].identity);
+  for (const role of roles) assert.equal(
+    date.sameAsAuthored[role],
+    date.identity === owner.authoredDates[role].identity
+  );
 }
 function compatibleKnownID(actual: number, source: number, proof: Bindings) {
   return (!proof.forward.has(source) || proof.forward.get(source) === actual)
@@ -109,16 +158,25 @@ function compatibleKnownDate(actual: MaskSourceDate, source: MaskSourceDate, pro
   }
   return true;
 }
-function sameDate(actual: MaskSourceDate, source: MaskSourceDate, owner: MaskSourceOwner, proof: Bindings) {
+function sameDate(
+  actual: MaskSourceDate,
+  source: MaskSourceDate,
+  owner: MaskSourceOwner,
+  proof: Bindings
+) {
   validateDate(actual, owner);
   assert.deepEqual(actual.encoded, source.encoded);
   assert.deepEqual(Object.keys(actual.temporal), Object.keys(source.temporal));
-  for (const key of ['valid', 'iso', 'locale'] as const) assert.deepEqual(actual.temporal[key], source.temporal[key]);
+  for (const key of ['valid', 'iso', 'locale'] as const) assert.deepEqual(
+    actual.temporal[key],
+    source.temporal[key]
+  );
   if (actual.temporal.valid) {
     assert.deepEqual(actual.temporal.epoch, source.temporal.epoch);
     assert.deepEqual(actual.temporal.fields, source.temporal.fields);
     assert(actual.temporal.utcOffset === source.temporal.utcOffset);
-  } else {
+  }
+  else {
     // Original JSON records nonfinite temporal numbers as null; raw codec stays exact.
     for (const key of ['epoch', 'utcOffset'] as const)
       assert(actual.temporal[key] === source.temporal[key] || source.temporal[key] === null && Number.isNaN(actual.temporal[key]));
@@ -126,10 +184,12 @@ function sameDate(actual: MaskSourceDate, source: MaskSourceDate, owner: MaskSou
       || source.temporal.fields[index] === null && Number.isNaN(field)));
   }
   assert.deepEqual(actual.sameAsAuthored, source.sameAsAuthored);
-  bind(actual.identity, source.identity, proof); sameRaw(actual.raw, source.raw, proof);
+  bind(actual.identity, source.identity, proof);
+  sameRaw(actual.raw, source.raw, proof);
 }
 function validateInvocation(call: MaskSourceInvocation, index: number, owner: MaskSourceOwner) {
-  assert.equal(call.index, index); assert(Number.isInteger(call.actionIndex) && call.actionIndex >= -1);
+  assert.equal(call.index, index);
+  assert(Number.isInteger(call.actionIndex) && call.actionIndex >= -1);
   assert(Number.isInteger(call.substepIndex) && call.substepIndex >= -1);
   assert.equal(encoded(call.encodedArguments, 'length'), call.actualArgumentCount);
   assert.equal(rawAt(call.rawArguments, ['length']), call.actualArgumentCount);
@@ -139,8 +199,12 @@ function validateInvocation(call: MaskSourceInvocation, index: number, owner: Ma
   }
 }
 function receiver(actual: MaskSourceInvocation, source: MaskSourceInvocation) {
-  assert.deepEqual(source.receiver, { type: 'undefined', isUndefined: true, isNull: false, identity: null });
-  assert.equal(actual.receiver.type, 'object'); assert.equal(actual.receiver.isUndefined, false);
+  assert.deepEqual(
+    source.receiver,
+    { type: 'undefined', isUndefined: true, isNull: false, identity: null }
+  );
+  assert.equal(actual.receiver.type, 'object');
+  assert.equal(actual.receiver.isUndefined, false);
   assert.equal(actual.receiver.isNull, false);
   assert(Number.isSafeInteger(actual.receiver.identity) && actual.receiver.identity! > 0);
 }
@@ -152,13 +216,17 @@ function producerReceiver(actual: MaskSourceProducer, source: MaskSourceProducer
   }
   assert.equal(source.name, 'disabledTime');
   if (source.receiver.type === 'undefined') {
-    assert.deepEqual(source.receiver, { type: 'undefined', isUndefined: true, isNull: false, identity: null });
+    assert.deepEqual(
+      source.receiver,
+      { type: 'undefined', isUndefined: true, isNull: false, identity: null }
+    );
     if (actual.receiver.type === 'undefined') assert.deepEqual(actual.receiver, source.receiver);
     else receiver(actual, source);
     return;
   }
   for (const call of [actual, source]) {
-    assert.equal(call.receiver.type, 'object'); assert.equal(call.receiver.isUndefined, false);
+    assert.equal(call.receiver.type, 'object');
+    assert.equal(call.receiver.isUndefined, false);
     assert.equal(call.receiver.isNull, false);
     assert(Number.isSafeInteger(call.receiver.identity) && call.receiver.identity! > 0);
   }
@@ -172,15 +240,20 @@ function calendarBoundary(actual: MaskSourceInvocation, source: MaskSourceInvoca
   const aInfo = Number(object(rawAt(actual.rawArguments, [2])).ref);
   const sInfo = Number(object(rawAt(source.rawArguments, [2])).ref);
   const an = rawNode(actual.rawArguments, aInfo), sn = rawNode(source.rawArguments, sInfo);
-  assert.deepEqual(sn.properties, []); assert.deepEqual(sn.ownProperties, []);
+  assert.deepEqual(sn.properties, []);
+  assert.deepEqual(sn.ownProperties, []);
   assert.deepEqual(properties(an), [{ key: 'source', value: 'date' }]);
   assert.deepEqual(an.ownProperties, [{ key: 'source', enumerable: true, configurable: true,
     writable: true, kind: 'value', valueType: 'string' }]);
   const empty = source.dates.length === 0 && object(encoded(source.encodedArguments, '0')).$ === 'undefined';
   if (empty) {
     assert.equal(actual.dates.length, 0);
-    for (const key of ['0', '1']) assert.deepEqual(encoded(source.encodedArguments, key), { $: 'undefined' });
-    assert.equal(encoded(actual.encodedArguments, '0'), null); assert.equal(encoded(actual.encodedArguments, '1'), '');
+    for (const key of ['0', '1']) assert.deepEqual(
+      encoded(source.encodedArguments, key),
+      { $: 'undefined' }
+    );
+    assert.equal(encoded(actual.encodedArguments, '0'), null);
+    assert.equal(encoded(actual.encodedArguments, '1'), '');
   }
   return { aRoot: Number(object(object(actual.rawArguments).root).ref),
     sRoot: Number(object(object(source.rawArguments).root).ref), aInfo, sInfo, empty };
@@ -223,7 +296,10 @@ function nativeHydrationParsedZero(point: NativeMaskPoint, index: number) {
   const origin = point.hydrationConstruction, input = point.inputs[index], row = origin?.inputs[index], parsed = row?.parsed;
   return !!(origin && input && parsed && row.sameParsedInput && origin.sameParsedRoot && origin.sameParsedOwner
     && origin.owner === point.owner.id && origin.rootIdentity === point.root?.identity && origin.ownerIdentity === point.ownerDOM?.identity
-    && origin.inputs.length === point.inputs.length && parsed.identity === input.identity && parsed.id === attr(input, 'id')
+    && origin.inputs.length === point.inputs.length && parsed.identity === input.identity && parsed.id === attr(
+      input,
+      'id'
+    )
     && parsed.type === 'text' && parsed.connected && !parsed.focused && parsed.value.length > 0
     && parsed.value === parsed.defaultValue && parsed.value === parsed.valueAttribute
     && parsed.selectionStart === 0 && parsed.selectionEnd === 0 && ['none', 'forward'].includes(parsed.selectionDirection ?? '')
@@ -250,9 +326,21 @@ export function observeMaskHydrationConstruction(point: NativeMaskPoint, proof: 
     proof.hydrationOrigin = hydrationOriginKey(origin);
   point.inputs.forEach((input, index) => {
     if (point.hydrationConstruction || proof.hydrationZeroHistory.has(input.identity))
-      proof.hydrationZeroHistory.set(input.identity, proof.hydrationZeroHistory.get(input.identity) !== false && nativeHydrationParsedZero(point, index));
+      proof.hydrationZeroHistory.set(
+        input.identity,
+        proof.hydrationZeroHistory.get(input.identity) !== false && nativeHydrationParsedZero(
+          point,
+          index
+        )
+      );
     if (point.hydrationConstruction || proof.hydrationPristine.has(input.identity))
-      proof.hydrationPristine.set(input.identity, proof.hydrationPristine.get(input.identity) !== false && nativeHydrationPristine(point, index));
+      proof.hydrationPristine.set(
+        input.identity,
+        proof.hydrationPristine.get(input.identity) !== false && nativeHydrationPristine(
+          point,
+          index
+        )
+      );
   });
 }
 export function maskHydrationConstructionCaret(actual: NativeMaskPoint, source: MaskSourcePoint,
@@ -314,12 +402,14 @@ function inheritedRangeFocusEvents(events: readonly Data[], start: unknown, end:
       if (event.actionIndex !== 1 || event.substepIndex !== 0 || event.isTrusted !== true
         || event[native ? 'relatedTargetIdentity' : 'relatedTarget'] !== start) return null;
       signature.push('focusin-from-start-enter');
-    } else if (event.type === 'beforeinput') {
+    }
+    else if (event.type === 'beforeinput') {
       // React emits this unchanged-field event from the start Enter; Native prevents its default.
       if (native || event.actionIndex !== 1 || event.substepIndex !== 0 || event.key !== null
         || event.isTrusted !== true || event.active !== end) return null;
       signature.push('source-inherited-enter-beforeinput');
-    } else if (event.type === 'keyup') {
+    }
+    else if (event.type === 'keyup') {
       if (event.actionIndex !== 1 || event.substepIndex !== 0 || event.key !== 'Enter' || event.isTrusted !== true) return null;
       signature.push('inherited-enter-keyup');
     }
@@ -345,7 +435,11 @@ export function maskHydrationFocusedPrefixCaret(actual: NativeMaskPoint, source:
   const nativeEvents = inheritedRangeFocusEvents(actual.events as unknown as Data[], actual.inputs[0].identity,
     input.identity, input.value, input.selectionDirection, true);
   if (!nativeEvents) return false;
-  const fact = readMaskHydrationPrefixSourceFact(actual.owner.id as 'range-date-mask' | 'range-time-mask', label, variant);
+  const fact = readMaskHydrationPrefixSourceFact(
+    actual.owner.id as 'range-date-mask' | 'range-time-mask',
+    label,
+    variant
+  );
   const reference = fact.inputs[index], state = fact.source?.owner;
   if (!reference || !state || !state.alive || state.id !== actual.owner.id || state.actionIndex !== stage[0] || state.substepIndex !== stage[1]
     || state.open !== actual.owner.open || state.formatProfile !== actual.owner.formatProfile
@@ -370,7 +464,11 @@ export function readNativeMaskPoint(value: unknown): NativeMaskPoint {
   return value as NativeMaskPoint;
 }
 export function verifyMaskNativeAccessibility(point: NativeMaskPoint) {
-  if (!point.owner.alive) { assert.equal(point.inputs.length, 0); assert.equal(point.popups.length, 0); return; }
+  if (!point.owner.alive) {
+    assert.equal(point.inputs.length, 0);
+    assert.equal(point.popups.length, 0);
+    return;
+  }
   const visible = point.popups.filter(popup => popup.visible);
   assert.equal(visible.length, point.owner.open ? 1 : 0, 'Real Native controlled dialog visibility');
   const controls = point.inputs.map(input => attr(input, 'aria-controls'));
@@ -389,7 +487,8 @@ export function verifyMaskNativeAccessibility(point: NativeMaskPoint) {
   if (point.inputs.length === 1) active = 0;
   if (visible.length) assert(active >= 0, 'Expanded Range input follows actual input focus history');
   point.inputs.forEach((input, index) => {
-    assert.equal(attr(input, 'role'), 'combobox'); assert.equal(attr(input, 'aria-haspopup'), 'dialog');
+    assert.equal(attr(input, 'role'), 'combobox');
+    assert.equal(attr(input, 'aria-haspopup'), 'dialog');
     assert.equal(attr(input, 'aria-expanded'), String(Boolean(visible.length) && index === active));
   });
 }
@@ -408,21 +507,31 @@ export function verifyMaskLocalPoint(point: NativeMaskPoint, proof?: MaskProof) 
     assert.equal(object(object(owner.formatValue.raw).root).ref, owner.formatValue.identity);
     assert.deepEqual(rawNode(owner.formatValue.raw, owner.formatValue.identity).authoredRole,
       { authoredFormat: owner.formatProfile });
-  } else assert.equal(owner.formatValue.identity, null);
+  }
+  else assert.equal(owner.formatValue.identity, null);
   const observedEvents = new Set(['pointerdown', 'mousedown', 'mouseup', 'click', 'mouseover', 'mouseout',
     'keydown', 'keyup', 'beforeinput', 'input', 'change', 'selectionchange', 'focusin', 'focusout', 'paste',
     'compositionstart', 'compositionupdate', 'compositionend']);
   for (const event of point.events) {
-    assert(observedEvents.has(event.type)); assert.equal(event.phase, 'document-capture-before-target-handler');
-    assert.equal(event.eventPhase, 1); assert.equal(typeof event.isTrusted, 'boolean');
+    assert(observedEvents.has(event.type));
+    assert.equal(event.phase, 'document-capture-before-target-handler');
+    assert.equal(event.eventPhase, 1);
+    assert.equal(typeof event.isTrusted, 'boolean');
     assert(Number.isFinite(event.timeStamp));
     assert(Number.isSafeInteger(event.producerCursorAtCapture) && event.producerCursorAtCapture >= 0
       && event.producerCursorAtCapture <= owner.producerCount);
     assert(Number.isSafeInteger(event.callbackCountAtCapture) && event.callbackCountAtCapture >= 0
       && event.callbackCountAtCapture <= owner.callbacks.length);
     if (event.inputAtCapture) {
-      if (event.targetTag === 'INPUT') assert.equal(event.targetIdentity, event.inputAtCapture.identity);
-      else assert.equal(event.inputAtCapture.focused, true, 'Non-input target snapshot describes the actual active input');
+      if (event.targetTag === 'INPUT') assert.equal(
+        event.targetIdentity,
+        event.inputAtCapture.identity
+      );
+      else assert.equal(
+        event.inputAtCapture.focused,
+        true,
+        'Non-input target snapshot describes the actual active input'
+      );
       assert.equal(typeof event.inputAtCapture.value, 'string');
       assert.equal(typeof event.inputAtCapture.defaultValue, 'string');
       const input = event.inputAtCapture;
@@ -436,32 +545,48 @@ export function verifyMaskLocalPoint(point: NativeMaskPoint, proof?: MaskProof) 
   assert.deepEqual(owner.callbacks.slice(0, proof.localCallbacks.length), proof.localCallbacks,
     'Native cumulative callbacks remain append-only, including immediate reads');
   proof.localCallbacks = owner.callbacks;
-  assert.deepEqual(point.events.slice(0, proof.localEvents.length), proof.localEvents, 'Raw Native event log is append-only');
+  assert.deepEqual(
+    point.events.slice(0, proof.localEvents.length),
+    proof.localEvents,
+    'Raw Native event log is append-only'
+  );
   proof.localEvents = point.events;
   for (const call of owner.callbacks) {
-    assert.equal(call.receiver.type, 'object'); assert.equal(call.receiver.isUndefined, false);
+    assert.equal(call.receiver.type, 'object');
+    assert.equal(call.receiver.isUndefined, false);
     assert.equal(call.receiver.isNull, false);
     assert(Number.isSafeInteger(call.receiver.identity) && call.receiver.identity! > 0);
   }
   if (owner.alive) {
     assert(point.root?.connected && point.ownerDOM?.connected && point.refs.control);
-    proof.root ??= point.root.identity; proof.owner ??= point.ownerDOM.identity;
-    proof.control ??= point.refs.control.identity; proof.focus ??= point.refs.control.focusIdentity;
+    proof.root ??= point.root.identity;
+    proof.owner ??= point.ownerDOM.identity;
+    proof.control ??= point.refs.control.identity;
+    proof.focus ??= point.refs.control.focusIdentity;
     proof.blur ??= point.refs.control.blurIdentity;
     if (!proof.inputs.length) proof.inputs = point.inputs.map(input => input.identity);
-    assert.equal(point.root.identity, proof.root); assert.equal(point.refs.root, proof.root);
-    assert.equal(point.ownerDOM.identity, proof.owner); assert.equal(point.refs.owner, proof.owner);
+    assert.equal(point.root.identity, proof.root);
+    assert.equal(point.refs.root, proof.root);
+    assert.equal(point.ownerDOM.identity, proof.owner);
+    assert.equal(point.refs.owner, proof.owner);
     assert.equal(point.refs.control.identity, proof.control);
-    assert.equal(point.refs.control.focusIdentity, proof.focus); assert.equal(point.refs.control.blurIdentity, proof.blur);
+    assert.equal(point.refs.control.focusIdentity, proof.focus);
+    assert.equal(point.refs.control.blurIdentity, proof.blur);
     assert.deepEqual(point.inputs.map(input => input.identity), proof.inputs);
     assert(point.sameOwnerAsInitial && point.sameRootAsInitial && point.inputs.every(input => input.sameAsInitial));
-  } else {
+  }
+  else {
     assert.deepEqual(point.refs, { owner: null, root: null, control: null });
-    assert.equal(point.inputs.length, 0); assert.equal(point.popups.length, 0);
+    assert.equal(point.inputs.length, 0);
+    assert.equal(point.popups.length, 0);
     assert(point.retained.every(node => !node.connected));
   }
   const previous = proof.formats.get(owner.formatProfile);
-  if (proof.formats.has(owner.formatProfile)) assert.equal(owner.formatValue.identity, previous, 'Stable authored format object');
+  if (proof.formats.has(owner.formatProfile)) assert.equal(
+    owner.formatValue.identity,
+    previous,
+    'Stable authored format object'
+  );
   else proof.formats.set(owner.formatProfile, owner.formatValue.identity);
 }
 function focusKind(point: Pick<MaskSourcePoint, 'inputs' | 'focus'>) {
@@ -469,9 +594,19 @@ function focusKind(point: Pick<MaskSourcePoint, 'inputs' | 'focus'>) {
   const index = point.inputs.findIndex(input => input.identity === point.focus!.identity);
   if (index !== -1) return { kind: 'input', index };
   const get = (key: string) => point.focus!.attributes.find(row => row[0] === key)?.[1] ?? null;
-  return { kind: point.focus.tag, role: get('role'), id: get('id'), title: get('title'), label: get('aria-label') };
+  return {
+    kind: point.focus.tag,
+    role: get('role'),
+    id: get('id'),
+    title: get('title'),
+    label: get('aria-label')
+  };
 }
-function initialCaretConstructionBoundary(actual: NativeMaskPoint, source: MaskSourcePoint, index: number) {
+function initialCaretConstructionBoundary(
+  actual: NativeMaskPoint,
+  source: MaskSourcePoint,
+  index: number
+) {
   const a = actual.inputs[index], s = source.inputs[index];
   return a.selectionDirection === 'none' && s.selectionDirection === 'forward'
     && !a.focused && !s.focused && a.selectionStart === a.value.length && a.selectionEnd === a.value.length
@@ -482,7 +617,10 @@ function initialCaretConstructionBoundary(actual: NativeMaskPoint, source: MaskS
 function visibleState(point: Pick<MaskSourcePoint, 'popups'>) {
   return point.popups.filter(popup => popup.visible).map(popup => ({
     panels: popup.panels.length,
-    headers: popup.headerButtons.map(button => ({ text: button.text, label: attr(button, 'aria-label'),
+    headers: popup.headerButtons.map(button => ({ text: button.text, label: attr(
+      button,
+      'aria-label'
+    ),
       disabled: button.disabled, visible: button.css.display !== 'none' && button.css.visibility !== 'hidden' })),
     cells: popup.dateCells.map(cell => ({ title: cell.title, text: cell.surface.text, weekNumber: cell.weekNumber,
       selected: cell.selected, rangeStart: cell.rangeStart, rangeEnd: cell.rangeEnd, inRange: cell.inRange, disabled: cell.disabled,
@@ -490,9 +628,12 @@ function visibleState(point: Pick<MaskSourcePoint, 'popups'>) {
       hover: (attr(cell.surface, 'class') ?? '').split(/\s+/).includes('ant-picker-cell-hover'),
       today: (attr(cell.surface, 'class') ?? '').split(/\s+/).includes('ant-picker-cell-today') })),
     columns: popup.columns.map(column => ({ type: column.type,
-      rows: column.rows.map(row => { const data = row as unknown as Data; return {
+      rows: column.rows.map(row => {
+        const data = row as unknown as Data;
+        return {
         value: data.valueAttribute ?? data.nativeValueAttribute ?? data.value, text: row.surface.text,
-        selected: row.selected, disabled: row.disabled }; }) }))
+        selected: row.selected, disabled: row.disabled };
+      }) }))
   }));
 }
 export function verifyMaskFooterBoundary(actual: NativeMaskPoint, source: MaskSourcePoint) {
@@ -502,30 +643,52 @@ export function verifyMaskFooterBoundary(actual: NativeMaskPoint, source: MaskSo
     const controls = native[index].footerControls;
     assert.equal(controls.length, popup.footerControls.length, 'Actual visible footer controls');
     popup.footerControls.forEach((expected, ordinal) => {
-      const control = controls[ordinal]; assert.equal(control.text?.trim(), expected.text?.trim(), 'Footer accessible label; original textContent retained');
-      assert.equal(control.tag, 'BUTTON'); assert.equal(attr(control, 'type'), 'button');
+      const control = controls[ordinal];
+      assert.equal(
+        control.text?.trim(),
+        expected.text?.trim(),
+        'Footer accessible label; original textContent retained'
+      );
+      assert.equal(control.tag, 'BUTTON');
+      assert.equal(attr(control, 'type'), 'button');
       if (expected.tag === 'A') {
         assert.equal(expected.disabled, null);
         assert((attr(expected, 'class') ?? '').split(/\s+/).includes('ant-picker-now-btn'));
-        const disabled = attr(expected, 'aria-disabled'); assert(disabled === 'true' || disabled === 'false');
-        assert.equal((attr(expected, 'class') ?? '').split(/\s+/).includes('ant-picker-now-btn-disabled'), disabled === 'true');
+        const disabled = attr(expected, 'aria-disabled');
+        assert(disabled === 'true' || disabled === 'false');
+        assert.equal(
+          (attr(expected, 'class') ?? '').split(/\s+/).includes('ant-picker-now-btn-disabled'),
+          disabled === 'true'
+        );
         assert.notEqual(attr(control, 'data-picker-current'), null);
         assert.equal(control.disabled, disabled === 'true');
-      } else {
-        assert.equal(expected.tag, 'BUTTON'); assert.equal(control.disabled, expected.disabled);
       }
-      assert(control.text?.trim() || attr(control, 'aria-label'), 'Actual Native footer accessible name');
+      else {
+        assert.equal(expected.tag, 'BUTTON');
+        assert.equal(control.disabled, expected.disabled);
+      }
+      assert(
+        control.text?.trim() || attr(control, 'aria-label'),
+        'Actual Native footer accessible name'
+      );
     });
   });
 }
 function rawView(graph: unknown, path: Array<string | number>) {
-  const value = { root: rawAt(graph, path), objects: object(graph).objects }; rawViews.add(value); return value;
+  const value = { root: rawAt(graph, path), objects: object(graph).objects };
+  rawViews.add(value);
+  return value;
 }
 export function compareMaskPoint(actual: NativeMaskPoint, source: MaskSourcePoint, proof: MaskProof,
   variant: MaskSourceVariant, label: string): MaskDifference[] {
   const differences: MaskDifference[] = [];
   const check = (field: string, operation: () => void) => {
-    try { operation(); } catch (error) { differences.push({ label, variant, field, message: String(error).slice(0, 3000) }); }
+    try {
+      operation();
+    }
+    catch (error) {
+      differences.push({ label, variant, field, message: String(error).slice(0, 3000) });
+    }
   };
   observeMaskHydrationConstruction(actual, proof);
   check('Native local fields', () => verifyMaskLocalPoint(actual));
@@ -534,7 +697,12 @@ export function compareMaskPoint(actual: NativeMaskPoint, source: MaskSourcePoin
     check('owner.' + key, () => assert.deepEqual(actual.owner[key], source.owner[key]));
   const dateBindings = cloneBindings(proof.variants.get(variant) ?? bindings());
   check('model and authored Date graph', () => {
-    for (const role of roles) sameDate(actual.owner.authoredDates[role], source.owner.authoredDates[role], actual.owner, dateBindings);
+    for (const role of roles) sameDate(
+      actual.owner.authoredDates[role],
+      source.owner.authoredDates[role],
+      actual.owner,
+      dateBindings
+    );
     assert.deepEqual(actual.owner.model, source.owner.model);
     assert.equal(actual.owner.modelDates.length, source.owner.modelDates.length);
     actual.owner.modelDates.forEach((date, index) => {
@@ -548,19 +716,30 @@ export function compareMaskPoint(actual: NativeMaskPoint, source: MaskSourcePoin
     assert.equal(actual.owner.formatValue.type, source.owner.formatValue.type);
     assert.deepEqual(actual.owner.formatValue.encoded, source.owner.formatValue.encoded);
     const next = cloneBindings(proof.variants.get(variant) ?? bindings());
-    sameRaw(actual.owner.formatValue.raw, source.owner.formatValue.raw, next); proof.variants.set(variant, next);
+    sameRaw(actual.owner.formatValue.raw, source.owner.formatValue.raw, next);
+    proof.variants.set(variant, next);
   });
   check('ordinary public authored props', () => {
     const aKeys = properties(actual.owner.authoredProps).map(row => row.key).filter(key => key !== 'style');
     const sKeys = properties(source.owner.authoredProps).map(row => row.key).filter(key => key !== 'ref' && key !== 'style');
     assert.deepEqual([...aKeys].sort(), [...sKeys].sort());
     assert.equal(encoded(actual.owner.authoredProps, 'style'), 'width:100%');
-    assert.deepEqual(encoded(source.owner.authoredProps, 'style'), { $: 'object', properties: [{ key: 'width', value: '100%' }] });
+    assert.deepEqual(
+      encoded(source.owner.authoredProps, 'style'),
+      { $: 'object', properties: [{ key: 'width', value: '100%' }] }
+    );
     const next = cloneBindings(proof.variants.get(variant) ?? bindings());
     for (const key of aKeys) {
       assert(typeof key === 'string');
-      assert.deepEqual(encoded(actual.owner.authoredProps, key), encoded(source.owner.authoredProps, key));
-      sameRaw(rawView(actual.owner.rawAuthoredProps, [key]), rawView(source.owner.rawAuthoredProps, [key]), next);
+      assert.deepEqual(
+        encoded(actual.owner.authoredProps, key),
+        encoded(source.owner.authoredProps, key)
+      );
+      sameRaw(
+        rawView(actual.owner.rawAuthoredProps, [key]),
+        rawView(source.owner.rawAuthoredProps, [key]),
+        next
+      );
     }
     proof.variants.set(variant, next);
   });
@@ -570,13 +749,21 @@ export function compareMaskPoint(actual: NativeMaskPoint, source: MaskSourcePoin
       const original = source.owner.ownerActions[index];
       const { nativeIsTrusted, ...syntheticFields } = original;
       assert.deepEqual(action, syntheticFields);
-      assert.equal(action.isTrusted, nativeIsTrusted, 'Source wrapped native event versus actual Native DOM event trust');
+      assert.equal(
+        action.isTrusted,
+        nativeIsTrusted,
+        'Source wrapped native event versus actual Native DOM event trust'
+      );
     });
     assert.deepEqual(actual.owner.lifecycle, source.owner.lifecycle);
   });
-  check('callback count', () => assert.equal(actual.owner.callbacks.length, source.owner.callbacks.length));
+  check(
+    'callback count',
+    () => assert.equal(actual.owner.callbacks.length, source.owner.callbacks.length)
+  );
   for (const [index, call] of actual.owner.callbacks.entries()) {
-    const expected = source.owner.callbacks[index]; if (!expected) continue;
+    const expected = source.owner.callbacks[index];
+    if (!expected) continue;
     check('callback[' + index + '] full args/Date aliases', () => {
       const next = cloneBindings(proof.variants.get(variant) ?? bindings());
       for (const key of ['index', 'actionIndex', 'substepIndex', 'name', 'actualArgumentCount'] as const)
@@ -588,21 +775,33 @@ export function compareMaskPoint(actual: NativeMaskPoint, source: MaskSourcePoin
       for (const key of keys) {
         assert(typeof key === 'string');
         if (boundary && (key === '2' || boundary.empty && (key === '0' || key === '1'))) continue;
-        assert.deepEqual(encoded(call.encodedArguments, key), encoded(expected.encodedArguments, key));
+        assert.deepEqual(
+          encoded(call.encodedArguments, key),
+          encoded(expected.encodedArguments, key)
+        );
       }
       assert.equal(call.dates.length, expected.dates.length);
       call.dates.forEach((date, position) => {
         assert.deepEqual(date.path, expected.dates[position].path);
         sameDate(date.value, expected.dates[position].value, actual.owner, next);
       });
-      sameRaw(call.rawArguments, expected.rawArguments, next, boundary); proof.variants.set(variant, next);
+      sameRaw(call.rawArguments, expected.rawArguments, next, boundary);
+      proof.variants.set(variant, next);
     });
   }
   check('input count', () => assert.equal(actual.inputs.length, source.inputs.length));
   actual.inputs.forEach((input, index) => {
-    const original = source.inputs[index]; if (!original) return;
+    const original = source.inputs[index];
+    if (!original) return;
     const hydrationCaret = maskHydrationConstructionCaret(actual, source, proof, variant, index);
-    const focusedHydrationCaret = maskHydrationFocusedPrefixCaret(actual, source, proof, variant, index, label);
+    const focusedHydrationCaret = maskHydrationFocusedPrefixCaret(
+      actual,
+      source,
+      proof,
+      variant,
+      index,
+      label
+    );
     for (const key of ['value', 'defaultValue', 'selectionStart', 'selectionEnd', 'selectionDirection', 'focused'] as const)
       check('input[' + index + '].' + key, () => {
         if (hydrationCaret && ['selectionStart', 'selectionEnd', 'selectionDirection'].includes(key)) return;
@@ -610,12 +809,21 @@ export function compareMaskPoint(actual: NativeMaskPoint, source: MaskSourcePoin
         if (key === 'selectionDirection' && initialCaretConstructionBoundary(actual, source, index)) return;
         assert.deepEqual(input[key], original[key]);
       });
-    check('original Source input expanded attribute absent', () => assert.equal(attr(original, 'aria-expanded'), null));
+    check(
+      'original Source input expanded attribute absent',
+      () => assert.equal(attr(original, 'aria-expanded'), null)
+    );
     for (const name of ['placeholder', 'disabled', 'readonly'])
-      check('input[' + index + '].' + name, () => assert.equal(attr(input, name), attr(original, name)));
+      check(
+        'input[' + index + '].' + name,
+        () => assert.equal(attr(input, name), attr(original, name))
+      );
   });
   check('physical focus', () => assert.deepEqual(focusKind(actual), focusKind(source)));
-  check('visible popup/calendar/time state', () => assert.deepEqual(visibleState(actual), visibleState(source)));
+  check(
+    'visible popup/calendar/time state',
+    () => assert.deepEqual(visibleState(actual), visibleState(source))
+  );
   check('footer label/availability/accessibility', () => verifyMaskFooterBoundary(actual, source));
   proof.points++;
   return differences;
@@ -637,17 +845,27 @@ function modelSignature(owner: MaskSourceOwner) {
 function changedModels(before: MaskSourceOwner | null, after: MaskSourceOwner): MaskSourceOwner[] {
   return after.callbacks.slice(before?.callbacks.length ?? 0).filter(call => call.name === 'change')
     .map(call => {
-      const rawModel = { root: rawAt(call.rawArguments, [0]), objects: object(call.rawArguments).objects };
+      const rawModel = {
+        root: rawAt(call.rawArguments, [0]),
+        objects: object(call.rawArguments).objects
+      };
       rawViews.add(rawModel);
       return { ...after, model: encoded(call.encodedArguments, '0'), rawModel,
         modelDates: call.dates.filter(row => row.path[0] === 0)
           .map(row => ({ path: row.path.slice(1), value: row.value })) };
     });
 }
-function modelWindow(index: number, previous: MaskSourceOwner | null, points: readonly MaskSourceOwner[]) {
+function modelWindow(
+  index: number,
+  previous: MaskSourceOwner | null,
+  points: readonly MaskSourceOwner[]
+) {
   let before = previous;
   for (const after of points) {
-    if (index < after.producerCount) return [...(before ? [before] : []), after, ...changedModels(before, after)];
+    if (index < after.producerCount) return [...(before ? [before] : []), after, ...changedModels(
+      before,
+      after
+    )];
     before = after;
   }
   return [points.at(-1)!];
@@ -671,7 +889,10 @@ function phasePoints(sample: MaskSample, phase: string, variant: MaskSourceVaria
     return [readMaskSourceClosed(sample.id, ordinal, variant).after1000.owner];
   }
   const field = phase === 'before-unmount' ? 'beforeUnmount' : phase === 'terminal-tail' ? 'late' : phase;
-  assert(field === 'beforeUnmount' || field === 'cleanup' || field === 'late', 'Declared completed lifecycle phase');
+  assert(
+    field === 'beforeUnmount' || field === 'cleanup' || field === 'late',
+    'Declared completed lifecycle phase'
+  );
   return [readMaskSourceCleanup(sample.id, field, variant).owner];
 }
 interface SourceWitness {
@@ -691,27 +912,42 @@ function producerSignature(call: MaskSourceProducer) {
 }
 function sourceFrame(sample: MaskSample, ordinal: number, variant: MaskSourceVariant,
   pool: SourceWitnessPool): ProducerFrame {
-  const existing = pool.frames.get(ordinal); if (existing) return existing;
-  const ref = pool.refs[ordinal]; assert(ref);
+  const existing = pool.frames.get(ordinal);
+  if (existing) return existing;
+  const ref = pool.refs[ordinal];
+  assert(ref);
   const chunk = readMaskSourceProducerChunk(sample.id, ordinal, variant);
-  const frame = { phase: ref.phase, chunk, points: chunk.rows.length ? phasePoints(sample, ref.phase, variant) : [] };
+  const frame = {
+    phase: ref.phase,
+    chunk,
+    points: chunk.rows.length ? phasePoints(sample, ref.phase, variant) : []
+  };
   pool.frames.set(ordinal, frame);
   if (pool.frames.size > 4) pool.frames.delete(pool.frames.keys().next().value!);
   return frame;
 }
 function compactModel(owner: MaskSourceOwner): MaskSourceOwner {
   // Keep actual model/Date graphs; cumulative callback/DOM graphs stay in lazy whole parts.
-  return { ...owner, callbacks: [], ownerActions: [], lifecycle: [], rawAuthoredProps: null, authoredProps: null };
+  return {
+    ...owner,
+    callbacks: [],
+    ownerActions: [],
+    lifecycle: [],
+    rawAuthoredProps: null,
+    authoredProps: null
+  };
 }
 function sourceWitnesses(sample: MaskSample, phase: string, variant: MaskSourceVariant,
   proof: MaskProducerProof): SourceWitnessPool {
   let pool = proof.sourcePools.get(variant);
   if (!pool) {
     pool = { frontier: -1, limit: -1, refs: readMaskSourceProducerChunks(sample.id, variant),
-      slots: new Map(), candidates: new Map(), frames: new Map() }; proof.sourcePools.set(variant, pool);
+      slots: new Map(), candidates: new Map(), frames: new Map() };
+    proof.sourcePools.set(variant, pool);
   }
   const frontier = pool.refs.findIndex(ref => ref.phase === phase);
-  assert(frontier >= 0, 'Source has this declared physical/lifecycle transition'); pool.limit = frontier;
+  assert(frontier >= 0, 'Source has this declared physical/lifecycle transition');
+  pool.limit = frontier;
   for (let ordinal = pool.frontier + 1; ordinal <= frontier; ordinal++) {
     const frame = sourceFrame(sample, ordinal, variant, pool);
     const publicIDs = new Set(frame.points.flatMap(owner => [
@@ -722,15 +958,23 @@ function sourceWitnesses(sample: MaskSample, phase: string, variant: MaskSourceV
     for (const [row, call] of frame.chunk.rows.entries()) {
       for (const owner of modelWindow(call.index, frame.points[0], frame.points)) {
         const modelKey = modelSignature(owner), key = modelKey + '\n' + producerSignature(call);
-        let context = contexts.get(modelKey); if (!context) { context = compactModel(owner); contexts.set(modelKey, context); }
+        let context = contexts.get(modelKey);
+        if (!context) {
+          context = compactModel(owner);
+          contexts.set(modelKey, context);
+        }
         const values = pool.slots.get(key) ?? [];
         const dateIDs = call.dates.map(date => ({ identity: date.value.identity,
-          internals: ['$d', '$x'].map(key => { const value = rawAt(date.value.raw, [key]);
-            return value && typeof value === 'object' && Object.hasOwn(value, 'ref') ? Number(object(value).ref) : null; }) }));
+          internals: ['$d', '$x'].map(key => {
+            const value = rawAt(date.value.raw, [key]);
+            return value && typeof value === 'object' && Object.hasOwn(value, 'ref') ? Number(object(value).ref) : null;
+          }) }));
         const witness = { ordinal, row, owner: context, publicIDs, dateIDs };
-        values.push(witness); pool.slots.set(key, values);
+        values.push(witness);
+        pool.slots.set(key, values);
         const signature = producerSignature(call), candidates = pool.candidates.get(signature) ?? [];
-        candidates.push(witness); pool.candidates.set(signature, candidates);
+        candidates.push(witness);
+        pool.candidates.set(signature, candidates);
       }
     }
     pool.frontier = ordinal;
@@ -744,7 +988,8 @@ function promotedCurrentModel(call: MaskSourceProducer, owner: MaskSourceOwner, 
   if (call.dates.length !== 1 || call.dates[0].path.length !== 1 || call.dates[0].path[0] !== 0
     || owner.modelDates.length !== 1 || owner.modelDates[0].path.length !== 0
     || call.dates[0].value.identity !== owner.modelDates[0].value.identity) return null;
-  const established = publicProof.variants.get(variant); if (!established) return null;
+  const established = publicProof.variants.get(variant);
+  if (!established) return null;
   const currentFrame = sourceFrame(proof.sample, pool.limit, variant, pool);
   const currentPoints = currentFrame.points.length ? currentFrame.points
     : phasePoints(proof.sample, pool.refs[pool.limit].phase, variant);
@@ -759,7 +1004,12 @@ function promotedCurrentModel(call: MaskSourceProducer, owner: MaskSourceOwner, 
         && date.value.identity === sourceID) || change.actionIndex < 0 || change.substepIndex < 0) continue;
       const transitionOrdinal = pool.refs.findIndex(ref => ref.phase === 'step-' + change.actionIndex + '-substep-' + change.substepIndex);
       if (transitionOrdinal < witness.ordinal || transitionOrdinal > pool.limit) continue;
-      const transition = readMaskSourceSubstep(proof.sample.id, change.actionIndex, change.substepIndex, variant);
+      const transition = readMaskSourceSubstep(
+        proof.sample.id,
+        change.actionIndex,
+        change.substepIndex,
+        variant
+      );
       try {
         assert.deepEqual(transition.actual.owner.callbacks[change.index], change);
         assert.deepEqual(witness.owner.rawModel, transition.before.owner.rawModel,
@@ -769,7 +1019,8 @@ function promotedCurrentModel(call: MaskSourceProducer, owner: MaskSourceOwner, 
         assert(transition.actual.owner.modelDates.some(date => date.path.length === 0 && date.value.identity === sourceID));
         assert.equal(object(rawAt(change.rawArguments, [0])).ref, sourceID);
         return current;
-      } catch { /* An unrelated prior model never authorizes this promotion. */ }
+      }
+      catch { /* An unrelated prior model never authorizes this promotion. */ }
     }
   }
   return null;
@@ -788,23 +1039,35 @@ function producerLocal(call: MaskSourceProducer, index: number, owner: MaskSourc
   validateInvocation(call, index, owner);
   assert(call.name === 'disabledDate' || call.name === 'disabledTime');
   if (call.receiver.type === 'undefined')
-    assert.deepEqual(call.receiver, { type: 'undefined', isUndefined: true, isNull: false, identity: null });
+    assert.deepEqual(
+      call.receiver,
+      { type: 'undefined', isUndefined: true, isNull: false, identity: null }
+    );
   else {
-    assert.equal(call.receiver.type, 'object'); assert.equal(call.receiver.isUndefined, false);
-    assert.equal(call.receiver.isNull, false); assert(Number.isSafeInteger(call.receiver.identity) && call.receiver.identity! > 0);
+    assert.equal(call.receiver.type, 'object');
+    assert.equal(call.receiver.isUndefined, false);
+    assert.equal(call.receiver.isNull, false);
+    assert(Number.isSafeInteger(call.receiver.identity) && call.receiver.identity! > 0);
   }
   if (call.name === 'disabledDate') {
-    assert.equal(call.returned, false); assert.equal(object(call.rawReturned).root, false);
+    assert.equal(call.returned, false);
+    assert.equal(object(call.rawReturned).root, false);
     assert.equal(call.returnedIdentity, null);
-  } else {
+  }
+  else {
     assert(Number.isSafeInteger(call.returnedIdentity) && call.returnedIdentity! > 0);
     assert.equal(object(object(call.rawReturned).root).ref, call.returnedIdentity);
     const node = rawNode(call.rawReturned, call.returnedIdentity);
     assert.deepEqual(node.authoredRole, { authoredTimeRestrictions: true });
-    assert.deepEqual(node.properties, []); assert.deepEqual(node.ownProperties, []);
+    assert.deepEqual(node.properties, []);
+    assert.deepEqual(node.ownProperties, []);
     assert.deepEqual(call.returned, { $: 'authored', role: { authoredTimeRestrictions: true } });
     proof.returnedIdentity ??= call.returnedIdentity;
-    assert.equal(call.returnedIdentity, proof.returnedIdentity, 'Actual time restriction result object stays identical');
+    assert.equal(
+      call.returnedIdentity,
+      proof.returnedIdentity,
+      'Actual time restriction result object stays identical'
+    );
   }
 }
 export function compareMaskProducerChunk(chunk: MaskSourceProducerChunk, phaseOwners: readonly MaskSourceOwner[],
@@ -812,19 +1075,33 @@ export function compareMaskProducerChunk(chunk: MaskSourceProducerChunk, phaseOw
   compareSource = true): MaskDifference[] {
   const differences: MaskDifference[] = [];
   const check = (field: string, operation: () => void, variant?: MaskSourceVariant) => {
-    try { operation(); return true; }
-    catch (error) { differences.push({ label, variant, field, message: String(error).slice(0, 3000) }); return false; }
+    try {
+      operation();
+      return true;
+    }
+    catch (error) {
+      differences.push({ label, variant, field, message: String(error).slice(0, 3000) });
+      return false;
+    }
   };
   assert(phaseOwners.length > 0);
   check('Native producer cursor/window', () => {
-    assert.equal(chunk.cursor, proof.cursor); assert.equal(chunk.next - chunk.cursor, chunk.rows.length);
+    assert.equal(chunk.cursor, proof.cursor);
+    assert.equal(chunk.next - chunk.cursor, chunk.rows.length);
     assert.equal(chunk.observationEnd, chunk.next);
     assert(Number.isSafeInteger(chunk.next) && chunk.next >= proof.cursor);
     for (const count of Object.values(chunk.boundaries)) assert(Number.isSafeInteger(count) && count >= 0 && count <= chunk.next);
     if (chunk.boundaryScope !== 'aggregate-macro-window-covering-earlier-child-parts') {
       let previous = chunk.cursor;
-      for (const count of Object.values(chunk.boundaries)) { assert(count >= previous); previous = count; }
-    } else assert(/^step-\d+$/.test(chunk.phase), 'Only macro boundary windows include prior child parts');
+      for (const count of Object.values(chunk.boundaries)) {
+        assert(count >= previous);
+        previous = count;
+      }
+    }
+    else assert(
+      /^step-\d+$/.test(chunk.phase),
+      'Only macro boundary windows include prior child parts'
+    );
   });
   const pools = new Map<MaskSourceVariant, SourceWitnessPool>();
   if (compareSource && chunk.rows.length) for (const variant of ['first', 'repeat'] as const)
@@ -833,7 +1110,10 @@ export function compareMaskProducerChunk(chunk: MaskSourceProducerChunk, phaseOw
   for (const [offset, call] of chunk.rows.entries()) {
     const index = chunk.cursor + offset;
     const contexts = modelWindow(index, proof.previousOwner, phaseOwners);
-    check('producer[' + index + '] actual local raw/return/Date integrity', () => producerLocal(call, index, contexts.at(-1)!, proof));
+    check(
+      'producer[' + index + '] actual local raw/return/Date integrity',
+      () => producerLocal(call, index, contexts.at(-1)!, proof)
+    );
     proof.localCalls++;
     if (!compareSource) continue;
     for (const variant of ['first', 'repeat'] as const) {
@@ -855,10 +1135,14 @@ export function compareMaskProducerChunk(chunk: MaskSourceProducerChunk, phaseOw
           const compatible = owner.modelDates.every((date, n) => sourceOwner.modelDates[n]
               && compatibleKnownDate(date.value, sourceOwner.modelDates[n].value, established))
             && call.dates.every((date, n) => {
-              const ids = witness.dateIDs[n]; if (!ids || !compatibleKnownID(date.value.identity, ids.identity, established)) return false;
+              const ids = witness.dateIDs[n];
+              if (!ids || !compatibleKnownID(date.value.identity, ids.identity, established)) return false;
               return ['$d', '$x'].every((key, index) => {
                 const value = rawAt(date.value.raw, [key]), sourceID = ids.internals[index];
-                return sourceID === null || !value || typeof value !== 'object' || !Object.hasOwn(value, 'ref')
+                return sourceID === null || !value || typeof value !== 'object' || !Object.hasOwn(
+                  value,
+                  'ref'
+                )
                   || compatibleKnownID(Number(object(value).ref), sourceID, established);
               });
             });
@@ -869,12 +1153,18 @@ export function compareMaskProducerChunk(chunk: MaskSourceProducerChunk, phaseOw
           const frame = sourceFrame(proof.sample, witness.ordinal, variant, pool!);
           const original = frame.chunk.rows[witness.row];
           try {
-            assert.equal(call.name, original.name); assert.equal(call.actualArgumentCount, original.actualArgumentCount);
+            assert.equal(call.name, original.name);
+            assert.equal(call.actualArgumentCount, original.actualArgumentCount);
             producerReceiver(call, original);
             assert.deepEqual(call.encodedArguments, original.encodedArguments);
             assert.deepEqual(call.returned, original.returned);
             const next = cloneBindings(publicProof.variants.get(variant) ?? bindings());
-            for (const role of roles) sameDate(owner.authoredDates[role], sourceOwner.authoredDates[role], owner, next);
+            for (const role of roles) sameDate(
+              owner.authoredDates[role],
+              sourceOwner.authoredDates[role],
+              owner,
+              next
+            );
             assert.equal(owner.modelDates.length, sourceOwner.modelDates.length);
             owner.modelDates.forEach((date, n) => {
               assert.deepEqual(date.path, sourceOwner.modelDates[n].path);
@@ -897,8 +1187,11 @@ export function compareMaskProducerChunk(chunk: MaskSourceProducerChunk, phaseOw
               bind(call.returnedIdentity!, original.returnedIdentity!, next);
             }
             publicProof.variants.set(variant, next);
-            match = original; matchPublic = new Set([...witness.publicIDs, ...sourceOwner.modelDates.map(date => date.value.identity)]); break;
-          } catch (error) { if (errors.length < 2) errors.push(String(error).slice(0, 700)); }
+            match = original;
+            matchPublic = new Set([...witness.publicIDs, ...sourceOwner.modelDates.map(date => date.value.identity)]);
+            break;
+          }
+          catch (error) { if (errors.length < 2) errors.push(String(error).slice(0, 700)); }
         }
         if (match) break;
       }
@@ -907,28 +1200,49 @@ export function compareMaskProducerChunk(chunk: MaskSourceProducerChunk, phaseOw
           + (chunk.phase === 'initial' ? ' INITIAL CLOSED ONLY' : ' established observed-model/candidate/from prefix (no future pool)') + ': ' + errors.join('; '));
       }, variant);
       if (match) {
-        proof.pendingAliases.push({ index, variant, actual: call, source: match, publicSourceIDs: matchPublic });
+        proof.pendingAliases.push({
+          index,
+          variant,
+          actual: call,
+          source: match,
+          publicSourceIDs: matchPublic
+        });
         proof.matchedCalls++;
       }
     }
   }
-  proof.cursor = chunk.next; proof.previousOwner = phaseOwners.at(-1)!; proof.chunks++;
+  proof.cursor = chunk.next;
+  proof.previousOwner = phaseOwners.at(-1)!;
+  proof.chunks++;
   return differences;
 }
 export function verifyMaskProducerPublicAliases(proof: MaskProducerProof, publicProof: MaskProof): MaskDifference[] {
   const differences: MaskDifference[] = [];
   for (const pair of proof.pendingAliases) {
     try {
-      const map = publicProof.variants.get(pair.variant); assert(map);
+      const map = publicProof.variants.get(pair.variant);
+      assert(map);
       pair.source.dates.forEach((date, index) => {
-        const actual = pair.actual.dates[index]; assert.deepEqual(actual.path, date.path);
+        const actual = pair.actual.dates[index];
+        assert.deepEqual(actual.path, date.path);
         if (pair.publicSourceIDs.has(date.value.identity)) {
-          assert(map.forward.has(date.value.identity), 'Source public Date anchor unresolved after earlier public callback/model mismatches: ' + date.value.identity);
-          assert.equal(actual.value.identity, map.forward.get(date.value.identity), 'Producer retains actual public Date/from object');
+          assert(
+            map.forward.has(date.value.identity),
+            'Source public Date anchor unresolved after earlier public callback/model mismatches: ' + date.value.identity
+          );
+          assert.equal(
+            actual.value.identity,
+            map.forward.get(date.value.identity),
+            'Producer retains actual public Date/from object'
+          );
         }
-        if (map.reverse.has(actual.value.identity)) assert.equal(map.reverse.get(actual.value.identity), date.value.identity);
+        if (map.reverse.has(actual.value.identity)) assert.equal(
+          map.reverse.get(actual.value.identity),
+          date.value.identity
+        );
       });
-    } catch (error) { differences.push({ label: proof.sample.id + '/producer[' + pair.index + ']', variant: pair.variant,
+    }
+    catch (error) { differences.push({ label: proof.sample.id + '/producer[' + pair.index + ']', variant: pair.variant,
       field: 'public candidate/from alias', message: String(error).slice(0, 3000) }); }
   }
   return differences;

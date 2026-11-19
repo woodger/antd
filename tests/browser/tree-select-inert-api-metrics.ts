@@ -58,7 +58,10 @@ export function readTreeSelectInertApiSSR(html: string) {
     return match ? JSON.parse(decode(match[1].replace(/<!--[\s\S]*?-->/g, ''))) : null;
   };
   const leakedAttributes = tags.flatMap(tag => ['onPopupVisibleChange', 'popupStyle', 'choiceTransitionName', 'direction']
-    .filter(name => new RegExp(`\\s${name}(?:=|[\\s/>])`, 'i').test(tag)).map(name => ({ tag: tag.slice(1).split(/[\s>]/)[0], name })));
+    .filter(name => new RegExp(`\\s${name}(?:=|[\\s/>])`, 'i').test(tag)).map(name => ({
+      tag: tag.slice(1).split(/[\s>]/)[0],
+      name
+    })));
   return {
     mode: output('mode'), model: output('model'), events: output('events'), semantic: output('semantic'), receivedAttrs: output('received'),
     root: { tag: root.slice(1).split(/[\s>]/)[0].toUpperCase(), dir: attr(root, 'dir'),

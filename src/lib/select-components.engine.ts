@@ -13,7 +13,10 @@ export function mergeSelectComponentAttributes<Attributes extends object>(
 type ComponentRegistration = SelectRootRegistration<HTMLElement> | SelectInputRegistration<HTMLElement>;
 
 /** Composite без focus не перенаправляет публичный вызов на nativeElement. */
-export function focusSelectComponent(registration: ComponentRegistration | null | undefined, ...args: [options?: FocusOptions]) {
+export function focusSelectComponent(
+  registration: ComponentRegistration | null | undefined,
+  ...args: [options?: FocusOptions]
+) {
   registration?.focus?.(...args);
 }
 

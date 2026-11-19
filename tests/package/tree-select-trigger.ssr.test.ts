@@ -38,6 +38,7 @@ it('preserves explicit native autofocus, tabindex and maxlength over Source alia
   const { body } = render(TreeSelect, { props: { autoFocus: true, autofocus: false,
     tabIndex: 3, tabindex: 7, maxLength: 5, maxlength: 2, showAction: ['focus'] } });
   const input = /<input[^>]*role="combobox"[^>]*>/.exec(body)![0];
+
   expect(input).toContain('tabindex="7"');
   expect(input).toContain('maxlength="2"');
   expect(input).not.toContain('autofocus');

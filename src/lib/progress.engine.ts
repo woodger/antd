@@ -40,11 +40,7 @@ export function resolveProgressCircleSize(size?: ProgressCircleSize): number {
   return typeof size === 'number' ? positive(size, 120) : size === 'small' ? 60 : 120;
 }
 
-export function getProgressCircleGeometry(
-  percent: number,
-  diameter: number,
-  strokeWidth?: number
-) {
+export function getProgressCircleGeometry(percent: number, diameter: number, strokeWidth?: number) {
   const width = Math.min(
     99.9,
     positive(strokeWidth, Math.max(6, 3 / positive(diameter, 120) * 100))

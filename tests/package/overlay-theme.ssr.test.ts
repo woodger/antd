@@ -27,7 +27,10 @@ describe('Source Tooltip/Popover/Popconfirm theme SSR', () => {
   });
 
   it('retains inherited undefined values instead of reintroducing vendor defaults', () => {
-    const { body } = render(OverlayThemeFixture, { props: { preset: 'undefined-component-values' } });
+    const { body } = render(
+      OverlayThemeFixture,
+      { props: { preset: 'undefined-component-values' } }
+    );
 
     expect(body).toContain('--ant-tooltip-max-width:inherit');
     expect(body).toContain('--ant-tooltip-arrow-path:inherit');

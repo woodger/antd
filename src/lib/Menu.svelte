@@ -231,7 +231,8 @@
         : event.key === 'End' ? candidates.at(-1) : candidates[index];
       if (target)
         focusItem(target.key);
-    } else if (entry.kind === 'submenu' && (action === 'children' || action === 'toggle')) {
+    }
+    else if (entry.kind === 'submenu' && (action === 'children' || action === 'toggle')) {
       if (event.key === 'Enter')
         event.preventDefault();
       setOpen(entry, action === 'toggle' ? !actualOpen.includes(entry.key) : true);
@@ -249,7 +250,8 @@
         if (first && actualOpen.includes(entry.key))
           focusItem(first.key);
       }
-    } else if (action === 'parent' && entry.parent) {
+    }
+    else if (action === 'parent' && entry.parent) {
       if (event.key === 'Escape') {
         event.preventDefault();
         event.stopPropagation();

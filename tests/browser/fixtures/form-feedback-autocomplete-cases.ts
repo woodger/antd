@@ -18,6 +18,12 @@ export const feedbackAutoCompleteSamples: readonly FeedbackAutoCompleteSample[] 
       actions: ['focus', 'error', 'update-icon', 'hide-icon', 'show-icon', 'toggle-feedback', 'toggle-feedback'] as const }
   ]),
   { id: 'clear', status: 'error', clear: true, actions: ['focus', 'open', 'clear'] },
-  { id: 'clear-controlled', status: 'error', clear: true, controlledOpen: true, actions: ['focus', 'open', 'clear'] },
+  {
+    id: 'clear-controlled',
+    status: 'error',
+    clear: true,
+    controlledOpen: true,
+    actions: ['focus', 'open', 'clear']
+  },
   { id: 'surface', status: 'error', actions: ['focus', 'open', 'search', 'outside'] }
 ];

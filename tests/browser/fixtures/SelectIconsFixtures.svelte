@@ -5,7 +5,10 @@
   type Capture = NonNullable<ComponentProps<typeof SelectIconsCase>['capture']>;
   let selected = $state(selectIconSamples[0].id), mounted = $state(true);
   let sample = $derived(selectIconSamples.find(sample => sample.id === selected)!);
-  let capture = $derived.by(() => { void selected; return {} as Capture; });
+  let capture = $derived.by(() => {
+    void selected;
+    return {} as Capture;
+  });
 </script>
 <section id="select-icons-fixture">
   <label style="position:fixed;left:0;top:0;z-index:1">Select icon sample<select bind:value={selected} onchange={() => { mounted = true; }}>

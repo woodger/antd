@@ -388,6 +388,7 @@ test(
   'Message supports live top positioning without replacing existing notices',
   async ({ page }) => {
     await button(page, 'Message info').click();
+
     await expect.poll(() => notices(page).evaluate((node) => node.getAnimations().length)).toBe(0);
     await setting(page, 'top', '80');
 

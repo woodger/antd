@@ -62,10 +62,18 @@ export function readTreeSelectSuffixLayout() {
   return { direction, query: editor.value, focused: document.activeElement === editor,
     selection: [editor.selectionStart, editor.selectionEnd], variable: editor.style.getPropertyValue('--select-input-width'),
     open: root.classList.contains('ant-select-open'),
-    root: box(root), content: box(content), suffix: { ...box(suffix)!, top: suffixStyle.top, inlineStart: suffixStyle.insetInlineStart },
+    root: box(root), content: box(content), suffix: {
+      ...box(suffix)!,
+      top: suffixStyle.top,
+      inlineStart: suffixStyle.insetInlineStart
+    },
     editor: box(editor), prefix: box(prefix), wrapper: box(wrapper),
     tags, rendered: tags.map(tag => tag.value), visible: tags.filter(tag => tag.visible).map(tag => tag.value),
-    rest: rest ? { visible: visible(rest), omitted: restLabel!.getAttribute('data-suffix-layout-omitted')?.split(',').filter(Boolean) ?? [], box: box(rest) } : null,
+    rest: rest ? {
+      visible: visible(rest),
+      omitted: restLabel!.getAttribute('data-suffix-layout-omitted')?.split(',').filter(Boolean) ?? [],
+      box: box(rest)
+    } : null,
     popup: popupVisible && popupBox && popup ? { width: round(popupBox.width), height: round(popupBox.height),
       clientWidth: popup.clientWidth, clientHeight: popup.clientHeight, scrollWidth: popup.scrollWidth, scrollHeight: popup.scrollHeight,
       x: round(popupBox.x - rootBox.x), y: round(popupBox.y - rootBox.y), gap: round(popupBox.top - rootBox.bottom),

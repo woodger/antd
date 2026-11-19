@@ -3,7 +3,10 @@ import { test, expect } from './test';
 import reference from './fixtures/ant-design-avatar-responsive-reference.json' with { type: 'json' };
 
 const avatars = (page: Page) => page.locator('#avatar-responsive-surface .ant-avatar');
-const owner = (page: Page) => page.getByRole('button', { name: 'Responsive avatar owner', exact: true });
+const owner = (page: Page) => page.getByRole(
+  'button',
+  { name: 'Responsive avatar owner', exact: true }
+);
 test.beforeEach(async ({ page }) => { await page.goto('/?fixture=avatar-responsive'); });
 async function frames(page: Page) {
   await page.evaluate(async () => {
@@ -40,7 +43,10 @@ for (const sample of reference.cases) {
       await frames(page);
 
       await expect.poll(() => metrics(page)).toEqual(expected.metrics);
-      expect(await avatars(page).evaluateAll((nodes, old) => nodes.every((node, i) => node === old[i]), roots))
+      expect(await avatars(page).evaluateAll(
+        (nodes, old) => nodes.every((node, i) => node === old[i]),
+        roots
+      ))
         .toBe(true);
       if (!sample.group) await expect(owner(page)).toBeFocused();
     }
@@ -62,7 +68,10 @@ test('Avatar keeps source breakpoint subscriptions until responsive mode changes
     await frames(page);
 
     await expect.poll(() => metrics(page)).toEqual(expected.metrics);
-    expect(await avatars(page).evaluateAll((nodes, old) => nodes.every((node, i) => node === old[i]), roots))
+    expect(await avatars(page).evaluateAll(
+      (nodes, old) => nodes.every((node, i) => node === old[i]),
+      roots
+    ))
       .toBe(true);
   }
 });
@@ -115,6 +124,7 @@ test('responsive Avatar fits text again at every viewport size', async ({ page }
 test('responsive Avatar preserves an image failure through viewport and theme changes', async ({ page }) => {
   await page.getByLabel('Avatar size reference', { exact: true }).selectOption('full-image');
   const image = avatars(page).locator('img');
+
   await expect.poll(() => image.evaluate(node =>
     (node as HTMLImageElement).complete && (node as HTMLImageElement).naturalWidth > 0)).toBe(true);
   const root = await avatars(page).elementHandle();
@@ -141,6 +151,7 @@ test('responsive AvatarGroup keeps visible and overflow avatars during RTL and r
   await page.getByLabel('Avatar size reference', { exact: true }).selectOption('group');
   await page.locator('.ant-avatar-group-more').click();
   const hidden = page.locator('.ant-avatar-group-list .ant-avatar');
+
   await expect(hidden).toHaveCount(2);
   const roots = await hidden.elementHandles();
 
@@ -155,11 +166,15 @@ test('responsive AvatarGroup keeps visible and overflow avatars during RTL and r
     await expect(page.locator('.ant-avatar-group')).toHaveClass(/ant-avatar-group-rtl/);
     await expect(hidden.nth(0)).toHaveCSS('width', '24px');
     await expect(hidden.nth(1)).toHaveCSS('width', '32px');
-    expect(await hidden.evaluateAll((nodes, old) => nodes.every((node, i) => node === old[i]), roots))
+    expect(await hidden.evaluateAll(
+      (nodes, old) => nodes.every((node, i) => node === old[i]),
+      roots
+    ))
       .toBe(true);
     await expect(page.getByRole('dialog')).toBeFocused();
   }
   await page.keyboard.press('Escape');
+
   await expect(page.locator('.ant-avatar-group-more')).toBeFocused();
 });
 
@@ -192,9 +207,11 @@ test('responsive Avatar releases media listeners after remounts and unmount', as
     };
   });
   await page.goto('/?fixture=avatar-responsive');
+
   await expect(avatars(page)).toHaveCount(1);
   const read = () => page.evaluate(() => Number(document.documentElement.dataset.avatarWidthListeners));
   const initial = await read();
+
   expect(initial).toBeGreaterThan(0);
 
   for (let iteration = 0; iteration < 3; iteration++) {

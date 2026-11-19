@@ -17,7 +17,13 @@ export const mentionsFeedbackSamples: readonly MentionsFeedbackSample[] = [
     .filter(sample => shared.includes(sample.id)).map(sample => ({
       ...sample, component, id: `${component}-${sample.id}`, search: component === 'transfer'
     }))),
-  { id: 'mentions-clear', component: 'mentions', status: 'error', clear: true, actions: ['focus', 'clear'] },
+  {
+    id: 'mentions-clear',
+    component: 'mentions',
+    status: 'error',
+    clear: true,
+    actions: ['focus', 'clear']
+  },
   { id: 'mentions-clear-toggle', component: 'mentions', status: 'error', clear: true,
     actions: ['focus', 'toggle-feedback', 'toggle-feedback', 'clear'] },
   { id: 'mentions-interaction', component: 'mentions', status: 'warning', mode: 'custom',

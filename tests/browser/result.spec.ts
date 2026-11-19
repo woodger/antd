@@ -340,6 +340,7 @@ for (const kind of ['Modal', 'Drawer']) {
       .toBeFocused();
 
     await page.keyboard.press('Tab');
+
     await expect.poll(
       () =>
         dialog.evaluate(

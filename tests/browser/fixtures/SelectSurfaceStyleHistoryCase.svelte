@@ -25,7 +25,12 @@
   let selectEditor = $state<HTMLInputElement>();
   let autoCompleteEditor = $state<HTMLInputElement | HTMLTextAreaElement>();
   let alive = true;
-  let lastAuthored: { maps: unknown; rawMaps: unknown; authoredProps: unknown; rawAuthoredProps: unknown } | undefined;
+  let lastAuthored: {
+    maps: unknown;
+    rawMaps: unknown;
+    authoredProps: unknown;
+    rawAuthoredProps: unknown
+  } | undefined;
   onDestroy(() => { alive = false; });
 
   function callback<Value>(name: string, value: Value): Value {
@@ -36,12 +41,22 @@
     rawEvents.push(recorder.raw(args));
     revision += 1;
   }
-  const onOpenChange = callback('open', (value: boolean) => { open = value; event('open', value); });
-  const onChange = callback('change', (value: string | undefined, option: unknown) => {
-    model = value; event('change', value, option);
+  const onOpenChange = callback('open', (value: boolean) => {
+    open = value;
+    event('open', value);
   });
-  const onSelect = callback('select', (value: string, option: unknown) => event('select', value, option));
-  const onDeselect = callback('deselect', (value: string, option: unknown) => event('deselect', value, option));
+  const onChange = callback('change', (value: string | undefined, option: unknown) => {
+    model = value;
+    event('change', value, option);
+  });
+  const onSelect = callback(
+    'select',
+    (value: string, option: unknown) => event('select', value, option)
+  );
+  const onDeselect = callback(
+    'deselect',
+    (value: string, option: unknown) => event('deselect', value, option)
+  );
   const onSearch = callback('search', (value: string) => event('search', value));
   let maps = $derived.by(() => {
     void revision;
@@ -49,7 +64,10 @@
   });
   let ownerProps = $derived({ id: 'surface-style-history-field', class: 'surface-control',
     style: maps.style, styles: maps.styles, value: model, open, options,
-    placeholder: 'History value', 'aria-label': 'Style history value', showSearch: { filterOption: false, onSearch },
+    placeholder: 'History value', 'aria-label': 'Style history value', showSearch: {
+      filterOption: false,
+      onSearch
+    },
     onOpenChange, onChange, onSelect, onDeselect, listHeight: 140 });
   let selectProps = $derived(ownerProps as SelectProps<string, undefined, RawOption>);
   let autoCompleteProps = $derived(ownerProps as AutoCompleteProps<RawOption>);
@@ -67,7 +85,10 @@
       events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], ...lastAuthored };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+  }
 </script>
 
 <section data-surface-case={sample.id} data-surface-bound={Boolean(control)}

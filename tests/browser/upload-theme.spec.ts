@@ -49,7 +49,12 @@ test('Upload token updates keep a pending request, file input and focused trigge
     const originalRoot = await root.elementHandle();
     const originalInput = await input.elementHandle();
     const originalTrigger = await trigger.elementHandle();
-    await input.setInputFiles({ name: 'new.txt', mimeType: 'text/plain', buffer: Buffer.from('draft') });
+    await input.setInputFiles({
+      name: 'new.txt',
+      mimeType: 'text/plain',
+      buffer: Buffer.from('draft')
+    });
+
     await expect(page.getByLabel('Upload theme events', { exact: true }))
       .toContainText('request:new.txt');
     await trigger.focus();

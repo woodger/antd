@@ -59,7 +59,10 @@
     });
 
     return () => {
-      for (const key of ['popupRef', 'savedPopupRef', 'alignCalls']) Reflect.deleteProperty(node, key);
+      for (const key of ['popupRef', 'savedPopupRef', 'alignCalls']) Reflect.deleteProperty(
+        node,
+        key
+      );
     };
   }
 </script>

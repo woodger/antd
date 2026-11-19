@@ -12,7 +12,11 @@ function limits(sample: TreeSelectMaxCountSample, data = sample.data) {
   const config = { maxCount: sample.maxCount, multiple: sample.multiple ?? true,
     treeCheckable: sample.checkable, treeCheckStrictly: sample.strict,
     showCheckedStrategy: sample.strategy };
-  const checks = treeSelectChecks(treeSelectLabeled(sample.value), Boolean(sample.checkable && !sample.strict), index);
+  const checks = treeSelectChecks(
+    treeSelectLabeled(sample.value),
+    Boolean(sample.checkable && !sample.strict),
+    index
+  );
   const strategy = !sample.checkable ? 'SHOW_ALL' : sample.strategy ?? 'SHOW_CHILD';
   return { index, ...treeSelectLimit(config, index, checks.checked,
     treeSelectStrategy(checks.checked, strategy, index).length) };
@@ -59,7 +63,10 @@ describe('TreeSelect selection limits', () => {
 
     expect(source.steps[0].view.nodes.find(node => node.value === '2')!.disabled).toBe(true);
     expect(rows(source.sample as TreeSelectMaxCountSample))
-      .toEqual(counterpart.steps[0].view.nodes.map(node => ({ value: node.value, disabled: node.disabled })));
+      .toEqual(counterpart.steps[0].view.nodes.map(node => ({
+        value: node.value,
+        disabled: node.disabled
+      })));
   });
 
   it('recalculates child restrictions for new data even when the remaining count stays the same', () => {
@@ -70,6 +77,9 @@ describe('TreeSelect selection limits', () => {
     expect(limits(sample).disabled.has(0)).toBe(false);
     expect(source.steps[1].view.nodes.find(node => node.value === '0')!.disabled).toBe(false);
     expect(rows(sample, sample.nextData))
-      .toEqual(counterpart.steps[0].view.nodes.map(node => ({ value: node.value, disabled: node.disabled })));
+      .toEqual(counterpart.steps[0].view.nodes.map(node => ({
+        value: node.value,
+        disabled: node.disabled
+      })));
   });
 });

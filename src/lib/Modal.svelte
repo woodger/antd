@@ -69,7 +69,8 @@
       if (dialog.open) dialog.close();
       focusTrigger = dialog.ownerDocument.activeElement as HTMLElement | undefined;
       dialog.showModal();
-    } else if (!open && dialog.open) {
+    }
+    else if (!open && dialog.open) {
       dialog.close();
     }
   });
@@ -131,7 +132,8 @@
   function handleOk() {
     if (onOk) {
       onOk();
-    } else {
+    }
+    else {
       open = false;
     }
   }

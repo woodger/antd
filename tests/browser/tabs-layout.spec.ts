@@ -89,8 +89,10 @@ test('Tabs changes logical gutters without replacing panes or changing the selec
     await draft.focus();
 
     await gap(page, '0');
+
     await expect(tab(page, 'Beta')).toHaveCSS('margin-inline-start', '0px');
     await gap(page, '12.5');
+
     await expect(tab(page, 'Beta')).toHaveCSS('margin-inline-start', '12.5px');
     await expect(tab(page, 'Locked')).toHaveCSS('margin-inline-start', '12.5px');
     await expect(tab(page, 'Alpha')).not.toHaveAttribute('style');
@@ -182,7 +184,10 @@ test('Tabs keeps header styles on the header through theme changes and releases 
     await check(page, 'Dark Tabs layout');
     await check(page, 'Compact Tabs layout');
 
-    await expect(root(page).locator('.ant-tabs-nav')).toHaveCSS('background-color', 'rgb(9, 10, 11)');
+    await expect(root(page).locator('.ant-tabs-nav')).toHaveCSS(
+      'background-color',
+      'rgb(9, 10, 11)'
+    );
     await expect(root(page).locator('.ant-tabs-nav')).toHaveCSS('padding-top', '6px');
     await expect(root(page)).toHaveCSS('color', 'rgb(170, 20, 30)');
     await expect(root(page)).toHaveCSS('border-top-width', '0px');

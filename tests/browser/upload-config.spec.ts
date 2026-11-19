@@ -34,6 +34,7 @@ for (const entry of reference.publicRequests) {
         .toHaveText(JSON.stringify(entry.events));
       await expect(page.locator('.ant-upload-list-item-done')).toHaveCount(1);
       await page.getByRole('checkbox', { name: 'Mount Upload config', exact: true }).uncheck();
+
       await expect(page.locator('.ant-upload-wrapper')).toHaveCount(0);
       await expect(page.getByLabel('Retained configured request events', { exact: true }))
         .toHaveText(JSON.stringify(entry.events));
@@ -82,6 +83,7 @@ test('Upload config changes affect future requests while the running transport r
     await input.setInputFiles({
       name: 'first.txt', mimeType: 'text/plain', buffer: Buffer.from('first')
     });
+
     await expect(page.locator('.ant-upload-list-item-uploading')).toHaveCount(1);
     await page.getByRole('checkbox', { name: 'Local configured request', exact: true }).check();
     await input.setInputFiles({
@@ -100,8 +102,10 @@ test('Upload config changes affect future requests while the running transport r
     await input.setInputFiles({
       name: 'third.txt', mimeType: 'text/plain', buffer: Buffer.from('third')
     });
+
     await expect(page.locator('.ant-upload-list-item-uploading')).toHaveCount(1);
     await page.getByRole('checkbox', { name: 'Mount Upload config', exact: true }).uncheck();
+
     await expect(page.locator('.ant-upload-wrapper')).toHaveCount(0);
     await expect(page.getByLabel('Retained configured request events', { exact: true }))
       .toContainText('abort:local');

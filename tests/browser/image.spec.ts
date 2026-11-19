@@ -104,8 +104,10 @@ test(
   async ({ page }) => {
     await trigger(page).click();
     await viewer(page).getByRole('button', { name: 'zoomIn', exact: true }).click();
+
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(1.5);
     await viewer(page).getByRole('button', { name: 'zoomIn', exact: true }).click();
+
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(2.25);
 
     await expect(viewer(page).getByRole('button', { name: 'zoomIn', exact: true })).toBeDisabled();
@@ -115,8 +117,10 @@ test(
     await expect(picture(page)).toHaveAttribute('style', /rotate\(90deg\)/);
 
     await viewer(page).getByRole('button', { name: 'flipX', exact: true }).click();
+
     await expect.poll(async () => (await lastTransform(page))?.transform.flipX).toBe(true);
     await viewer(page).getByRole('button', { name: 'flipY', exact: true }).click();
+
     await expect.poll(async () => (await lastTransform(page))?.transform.flipY).toBe(true);
 
     expect(await picture(page).evaluate(el => (el as HTMLImageElement).style.transform))
@@ -136,8 +140,10 @@ test(
 
     await setCheckbox(page, 'Image wheel', true);
     await page.mouse.wheel(0, -100);
+
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(1.5);
     await picture(page).dblclick();
+
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(1);
 
     await expect(viewer(page).getByRole('button', { name: 'zoomOut', exact: true })).toBeDisabled();
@@ -149,14 +155,18 @@ test(
   async ({ page }) => {
     await trigger(page).click();
     await viewer(page).getByRole('button', { name: 'zoomIn', exact: true }).click();
+
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(1.5);
     await viewer(page).getByRole('button', { name: 'zoomIn', exact: true }).click();
+
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(2.25);
     await page.mouse.move(640, 350);
     await page.mouse.down();
     await page.mouse.move(1100, 650, { steps: 5 });
+
     await expect.poll(async () => (await lastTransform(page))?.action).toBe('move');
     await page.mouse.up();
+
     await expect.poll(async () => (await lastTransform(page))?.action).toBe('dragRebound');
 
     const transform = (await lastTransform(page)).transform;
@@ -179,6 +189,7 @@ test(
     await expect(page.getByLabel('Image transforms', { exact: true })).toHaveText('[]');
 
     await viewer(page).getByRole('button', { name: 'zoomIn', exact: true }).click();
+
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(1.5);
   }
 );
@@ -198,6 +209,7 @@ test(
     );
 
     await viewer(page).getByRole('button', { name: 'Reset transform', exact: true }).click();
+
     await expect.poll(async () => (await lastTransform(page))?.action).toBe('reset');
 
     await expect(picture(page)).toHaveAttribute('style', /rotate\(0deg\)/);
@@ -209,8 +221,10 @@ test(
   async ({ page }) => {
     await trigger(page).click();
     await viewer(page).getByRole('button', { name: 'zoomIn', exact: true }).click();
+
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(1.5);
     await page.keyboard.press('Escape');
+
     await expect.poll(async () => (await lastTransform(page))?.action).toBe('close');
     await trigger(page).click();
 
@@ -354,6 +368,7 @@ test(
       }
     );
     await page.getByRole('button', { name: 'Set stale image source', exact: true }).click();
+
     await expect.poll(() => requests).toBeGreaterThan(0);
     await page.getByRole('button', { name: 'Restore image source', exact: true }).click();
     release();
@@ -411,6 +426,7 @@ test(
         touchPoints: [{ x: 560, y: 330, id: 1 }, { x: 720, y: 330, id: 2 }]
       }
     );
+
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(2);
     await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     await session.send(
@@ -427,8 +443,10 @@ test(
         touchPoints: [{ x: 630, y: 330, id: 1 }, { x: 650, y: 330, id: 2 }]
       }
     );
+
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(0.5);
     await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+
     await expect.poll(async () => (await lastTransform(page))?.transform.scale).toBe(1);
     await session.detach();
   }

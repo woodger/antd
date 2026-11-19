@@ -86,6 +86,7 @@ describe('createForm getFieldsValue', () => {
       ['people', 0, 'name'], ['people', 1, 'name']
     ]);
     remove();
+
     expect(form.getFieldsValue([['people', 0]])).toEqual({
       people: [{ name: 'Anna', hidden: 'Secret' }]
     });
@@ -120,27 +121,36 @@ describe('createForm getFieldsValue', () => {
     ] } });
     function meta() {
       let result: FormFieldMeta | null = null;
-      form.getFieldsValue({ filter: (value) => { result = value; return false; } });
+      form.getFieldsValue({ filter: (value) => {
+        result = value;
+        return false;
+      } });
       return result as FormFieldMeta | null;
     }
     const silent = form.validateFields({ validateOnly: true }).catch(() => {});
+
     expect(meta()).toMatchObject({ validated: false, validating: false, errors: [], warnings: [] });
     pending.resolve('Rejected');
     await silent;
+
     expect(meta()).toMatchObject({ validated: false, validating: false, errors: [], warnings: [] });
     pending = deferred<string>();
     const normal = form.validateFields().catch(() => {});
+
     expect(form.getFieldsValue(true, (value) => !!value?.validating)).toEqual({ name: 'Anna' });
     expect(meta()).toMatchObject({ validated: false, validating: true });
     pending.resolve('Rejected');
     await normal;
+
     expect(meta()).toMatchObject({
       validated: true, validating: false, errors: ['Rejected'], warnings: ['Heads up']
     });
     expect(form.getFieldsValue({ filter: (value) => !!value?.validated })).toEqual({ name: 'Anna' });
     form.resetFields();
+
     expect(meta()).toMatchObject({ validated: false, validating: false, errors: [], warnings: [] });
     form.setFieldsValue({ name: 'Updated' });
+
     expect(meta()).toMatchObject({ validated: true, validating: false, touched: false });
   });
 
@@ -176,6 +186,7 @@ describe('createForm getFieldsValue', () => {
       expect(form.getFieldsValue(true, (meta) => !!meta?.validating)).toEqual({});
       pending.resolve('Rejected');
       await validation;
+
       expect(form.getFieldsValue({ filter: (meta) => !!meta?.validated })).toEqual({});
       expect(form.getFieldError('name')).toEqual([]);
     }

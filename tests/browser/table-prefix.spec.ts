@@ -13,6 +13,7 @@ for (const entry of reference.cases) {
       await page.getByRole('combobox', { name: 'Table prefix scope', exact: true })
         .selectOption(scope);
       const root = page.locator('.fixture-table-prefix');
+
       await expect(root.getByRole('table')).toBeVisible();
       await page.mouse.move(1300, 1100);
       const mode = 'mode' in entry.sample ? entry.sample.mode : undefined;
@@ -82,9 +83,11 @@ test('Table prefix updates retain expanded draft, DOM, focus, selection and cont
 
     await root.locator('.sort-button').focus();
     await page.keyboard.press('Enter');
+
     await expect(root.locator('th[aria-sort="ascending"]')).toBeVisible();
     await checkbox.focus();
     await page.keyboard.press('Space');
+
     await expect(checkbox).not.toBeChecked();
     await expect(page.getByLabel('Table prefix events', { exact: true })).toHaveText('sort|selection');
     expect(await page.getByRole('form', { name: 'Table prefix form', exact: true }).evaluate(node =>
@@ -152,7 +155,10 @@ for (const palette of ['light-blue', 'dark-green', 'compact-purple']) {
       await page.getByRole('checkbox', { name: 'Source prefix Table theme', exact: true }).uncheck();
       await page.getByRole('combobox', { name: 'Default Table palette', exact: true })
         .selectOption(palette);
-      const prefixInput = page.getByRole('textbox', { name: 'Live Table prefix value', exact: true });
+      const prefixInput = page.getByRole(
+        'textbox',
+        { name: 'Live Table prefix value', exact: true }
+      );
       await prefixInput.fill('');
       await page.getByRole('checkbox', { name: 'Fixed prefix Table', exact: true }).check();
       const root = page.locator('.fixture-table-prefix');
@@ -196,6 +202,7 @@ test('Table owner updates preserve independent pager focus, page and keyboard ac
     await second.focus();
     const oldPager = await pager.elementHandle();
     const oldSecond = await second.elementHandle();
+
     await expect(root.locator('tbody tr[data-ant-table-part="row"]')).toContainText('Beta');
     await expect(pager.locator('ul')).toHaveClass(/\bsuite-pagination\b/);
     await expect(pager.locator('ul')).toHaveClass(/\bgrid-pagination\b/);

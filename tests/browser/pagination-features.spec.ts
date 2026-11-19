@@ -21,6 +21,7 @@ const changer = (page: Page) => root(page).getByRole('combobox');
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=pagination-features');
+
   await expect(root(page)).toBeVisible();
 });
 
@@ -36,6 +37,7 @@ test('Pagination uses the source middle window and bound native navigation', asy
 
 test('Pagination jumps five pages or three with showLessItems', async ({ page }) => {
   await button(page, 'Следующие страницы').click();
+
   await expect(owner(page)).toHaveText('11:10');
   await control(page, 'Less page items').check();
   await button(page, 'Предыдущие страницы').click();
@@ -61,11 +63,14 @@ test('Pagination showTitle removes titles without removing accessible names', as
 
 test('Pagination simple mode commits Enter and native arrow keys', async ({ page }) => {
   await control(page, 'Pager mode').selectOption('simple');
+
   await expect(simple(page)).toHaveValue('6');
   await simple(page).fill('9');
   await simple(page).press('Enter');
+
   await expect(owner(page)).toHaveText('9:10');
   await simple(page).press('ArrowUp');
+
   await expect(owner(page)).toHaveText('8:10');
   await simple(page).press('ArrowDown');
 
@@ -76,6 +81,7 @@ test('Pagination simple mode commits Enter and native arrow keys', async ({ page
 test('Pagination simple input restores invalid text and clamps numeric blur', async ({ page }) => {
   await control(page, 'Pager mode').selectOption('simple');
   await simple(page).fill('wrong');
+
   await expect(simple(page)).toHaveValue('6');
   await simple(page).fill('999');
   await button(page, 'Outside pager').click();
@@ -90,6 +96,7 @@ test('Pagination source read-only simple mode contains no text input', async ({ 
   await expect(simple(page)).toHaveCount(0);
   await expect(pager(page).locator('.ant-pagination-simple-pager')).toHaveText('6/20');
   await next(page).click();
+
   await expect(pager(page).locator('.ant-pagination-simple-pager')).toHaveText('7/20');
 });
 
@@ -129,6 +136,7 @@ test('Pagination quick blur commits outside and skips a direct page click', asyn
   await control(page, 'Quick jumper').selectOption('blur');
   await quick(page).fill('11');
   await button(page, 'Outside pager').click();
+
   await expect(owner(page)).toHaveText('11:10');
   await button(page, 'Clear pager events').click();
   await quick(page).fill('18');
@@ -142,8 +150,10 @@ test('Pagination quick blur commits outside and skips a direct page click', asyn
 test('Pagination quick jumper accepts digits only and keeps leading zero input', async ({ page }) => {
   await control(page, 'Quick jumper').selectOption('blur');
   await quick(page).fill('abc');
+
   await expect(quick(page)).toHaveValue('');
   await quick(page).fill('0009');
+
   await expect(quick(page)).toHaveValue('0009');
   await quick(page).press('Enter');
 
@@ -154,6 +164,7 @@ test('Pagination go button defers blur and commits its current quick value', asy
   await control(page, 'Quick jumper').selectOption('button');
   await quick(page).fill('12');
   await button(page, 'Outside pager').click();
+
   await expect(owner(page)).toHaveText('6:10');
   await button(page, 'подтвердить').click();
 
@@ -174,6 +185,7 @@ test('Pagination simple confirmation renders a custom Svelte label', async ({ pa
 test('Pagination simple mode retains the source quick jumper and confirmation', async ({ page }) => {
   await control(page, 'Pager mode').selectOption('simple');
   await control(page, 'Quick jumper').selectOption('button');
+
   await expect(simple(page)).toHaveValue('6');
   await quick(page).fill('11');
   await button(page, 'подтвердить').click();
@@ -207,13 +219,17 @@ test('Pagination hides simple quick confirmation when the collection fits one pa
 
 test('Pagination size threshold and explicit flags preserve config precedence', async ({ page }) => {
   await control(page, 'Pagination total').fill('30');
+
   await expect(changer(page)).toHaveCount(0);
   await control(page, 'Pager semantics').check();
+
   await expect(changer(page)).toBeVisible();
   await expect(changer(page)).toHaveJSProperty('readOnly', true);
   await control(page, 'Size changer').selectOption('no');
+
   await expect(changer(page)).toHaveCount(0);
   await control(page, 'Size changer').selectOption('yes');
+
   await expect(changer(page)).toHaveJSProperty('readOnly', false);
 });
 
@@ -228,6 +244,7 @@ test('Pagination string sizes retain the established normalization contract', as
 test('Pagination size Select props retain source callback order', async ({ page }) => {
   await control(page, 'Size changer').selectOption('props');
   await control(page, 'Search size options').uncheck();
+
   await expect(changer(page)).toHaveJSProperty('readOnly', true);
   await changer(page).click();
   await page.getByRole('option', { name: '20 / стр.', exact: true }).click();
@@ -251,11 +268,13 @@ test('Pagination custom size changer receives value, disabled and callback', asy
   await expect(owner(page)).toHaveText('4:50');
   await expect(events(page)).toHaveText('size:6:50|change:4:50');
   await control(page, 'Disable all components').check();
+
   await expect(control(page, 'Custom page size')).toBeDisabled();
 });
 
 test('Pagination itemRender receives working original controls and source pages', async ({ page }) => {
   await control(page, 'Custom pager items').check();
+
   await expect(page.getByTestId('render-prev-5')).toBeVisible();
   await expect(page.getByTestId('render-jump-next-11')).toBeVisible();
   await next(page).click();
@@ -268,6 +287,7 @@ test('Pagination custom native controls bind the provided handlers and disabled'
   await control(page, 'Custom pager items').check();
   await control(page, 'Replace pager controls').check();
   await button(page, 'Custom Следующая страница').click();
+
   await expect(owner(page)).toHaveText('7:10');
   await control(page, 'Disable all components').check();
 
@@ -304,6 +324,7 @@ test('Pagination restores focus when the next control becomes disabled', async (
 test('Pagination align and custom icons update without affecting logical moves', async ({ page }) => {
   await control(page, 'Pagination alignment').selectOption('end');
   await control(page, 'Custom pager icons').check();
+
   await expect(pager(page)).toHaveCSS('justify-content', 'end');
   await expect(next(page)).toHaveText('→');
   await control(page, 'Right to left').check();
@@ -316,6 +337,7 @@ test('Pagination align and custom icons update without affecting logical moves',
 test('Pagination locale aliases control navigation, quick fields and size labels', async ({ page }) => {
   await control(page, 'Source locale aliases').check();
   await control(page, 'Quick jumper').selectOption('button');
+
   await expect(root(page).getByRole('button', { name: 'Forward one', exact: true })).toBeVisible();
   await expect(root(page)).toContainText('Jump to');
   await expect(changer(page)).toHaveAttribute('aria-label', 'Batch size');
@@ -350,13 +372,16 @@ test('Pagination empty and one-page collections preserve normalized state', asyn
   await expect(root(page).locator('[aria-current]')).toHaveCount(0);
   await expect(control(page, 'Pager range')).toHaveText('0–0 / 0');
   await control(page, 'Pager mode').selectOption('simple');
+
   await expect(pager(page).locator('.ant-pagination-simple-pager')).toHaveAttribute('title', '1/0');
   await control(page, 'Hide one-page pager').check();
+
   await expect(root(page)).toHaveCount(0);
 });
 
 test('Pagination inherits disabled state and lets explicit false enable controls', async ({ page }) => {
   await control(page, 'Disable all components').check();
+
   await expect(next(page)).toBeDisabled();
   await control(page, 'Pagination disabled').selectOption('false');
   await next(page).click();
@@ -369,9 +394,11 @@ test('Pagination dark compact and RTL preserve native focus and theme colors', a
   await control(page, 'Dark pager').check();
   await control(page, 'Compact pager').check();
   await control(page, 'Right to left').check();
+
   await expect(pager(page)).toHaveClass(/ant-pagination-rtl/);
   await pageButton(page, 6).focus();
   await pageButton(page, 6).press('ArrowRight');
+
   await expect(pageButton(page, 6)).toBeFocused();
   await expect(pager(page).locator('.ant-pagination-item-6')).toHaveCSS('height', '28px');
   expect(original).not.toBe('');
@@ -388,17 +415,21 @@ test('Pagination reactive resources reconnect after repeated unmount', async ({ 
   await control(page, 'Mount pager').uncheck();
   await page.setViewportSize({ width: 1280, height: 800 });
   await control(page, 'Mount pager').check();
+
   await expect(pager(page)).toHaveClass(/ant-pagination-medium/);
 });
 
 test('Pagination responsive size defers to explicit context and local sizes', async ({ page }) => {
   await control(page, 'Responsive pager').check();
   await page.setViewportSize({ width: 390, height: 844 });
+
   await expect(pager(page)).toHaveClass(/ant-pagination-mini/);
   await expect(pager(page).locator('.ant-pagination-item-6')).toHaveCSS('height', '32px');
   await expect(changer(page)).toBeVisible();
   await control(page, 'Context pagination size').selectOption('medium');
+
   await expect(pager(page)).toHaveClass(/ant-pagination-medium/);
   await control(page, 'Pagination size').selectOption('large');
+
   await expect(pager(page)).toHaveClass(/ant-pagination-large/);
 });

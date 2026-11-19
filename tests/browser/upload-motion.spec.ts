@@ -44,6 +44,7 @@ for (const [index, entry] of reference.cases.entries()) {
         for (const animation of node.getAnimations()) animation.finish();
       }
     });
+
     await expect.poll(() => page.evaluate(readUploadMotionItems, prefix))
       .toEqual(expectedItems(entry.added).map(item => ({
         ...item, motionClasses: [], height: null, opacity: null, animations: []
@@ -151,6 +152,7 @@ test('Upload respects reduced motion and never animates its initial files', asyn
 test('Upload keeps unique rows when a prototype-named uid is reordered', async ({ page }) => {
   await page.goto('/?fixture=upload-motion');
   await page.getByRole('button', { name: 'Use prototype keys', exact: true }).click();
+
   await expect(page.locator('.ant-upload-list-item-name')).toHaveText(['a.png', '__proto__.png']);
 
   await page.getByRole('button', { name: 'Reverse files', exact: true }).click();

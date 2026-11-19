@@ -41,8 +41,14 @@ export function snapshotTableTheme() {
     expandedBackground: css(expanded, ['background-color']),
     expandedPadding: css(expandedContent ?? null,
       ['padding-top', 'padding-right', 'padding-bottom', 'padding-left']),
-    filterTrigger: css(root.querySelector('.ant-table-filter-trigger'), ['color', 'background-color']),
-    filterPanel: css(filter, ['background-color', 'color', 'font-family', 'font-size', 'line-height']),
+    filterTrigger: css(
+      root.querySelector('.ant-table-filter-trigger'),
+      ['color', 'background-color']
+    ),
+    filterPanel: css(
+      filter,
+      ['background-color', 'color', 'font-family', 'font-size', 'line-height']
+    ),
     filterMenu: css(filter?.querySelector('.ant-dropdown-menu, .filter-options') ?? null,
       ['background-color'])
   };

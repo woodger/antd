@@ -4,7 +4,11 @@ import FormFeedbackCase from './FormFeedbackCase.svelte';
 import { feedbackSamples } from './form-feedback-cases';
 declare global {
   interface Window {
-    formFeedbackHydration?: { input: Element | null; icon: Element | null; dispose(): Promise<void>; };
+    formFeedbackHydration?: {
+      input: Element | null;
+      icon: Element | null;
+      dispose(): Promise<void>;
+    };
   }
 }
 const target = document.getElementById('root')!;

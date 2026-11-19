@@ -62,6 +62,7 @@ test('Breadcrumb changes its local prefix without replacing an open menu or stea
   const item = page.getByRole('menuitem', { name: 'Menu entry', exact: true });
   const oldItem = await item.elementHandle();
   const oldTrigger = await trigger.elementHandle();
+
   await expect(item).toBeFocused();
   await setPrefix(page, 'trail', true);
 

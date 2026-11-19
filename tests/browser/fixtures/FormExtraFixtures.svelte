@@ -23,7 +23,8 @@
     mode = id;
     if (id === 'with-messages') {
       form.setFields([{ name: 'name', errors: ['Error'], warnings: ['Warning'] }]);
-    } else if (id !== 'messages-without-extra') {
+    }
+    else if (id !== 'messages-without-extra') {
       form.setFields([{ name: 'name', errors: [], warnings: [] }]);
     }
   }

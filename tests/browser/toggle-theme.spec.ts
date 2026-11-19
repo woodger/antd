@@ -3,6 +3,7 @@ import reference from './fixtures/ant-design-toggle-metrics.json' with { type: '
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=toggle-theme');
+
   await expect(page.getByRole('heading', { name: 'Source checkable tokens', exact: true }))
     .toBeVisible();
 });
@@ -34,6 +35,7 @@ test('prepared Radio variables reach both group appearances and use unitless dim
   await expect(page.locator('#themed-radio-group .ant-radio-wrapper').first())
     .toHaveCSS('margin-inline-end', '13px');
   const selected = page.locator('#themed-button-group .ant-radio-button-wrapper-checked');
+
   await expect(selected).toHaveCSS('background-color', 'rgb(250, 204, 0)');
   await expect(selected).toHaveCSS('padding-inline-start', '18px');
   expect(await page.locator('#themed-radio').evaluate(element =>
@@ -45,6 +47,7 @@ test('Checkbox groups consume their own aliases without changing nearby controls
   await page.getByLabel('Checkable token preset', { exact: true }).selectOption('checkbox-aliases');
 
   const selected = page.locator('#themed-checkbox-group .ant-checkbox-checked');
+
   await expect(selected).toHaveCSS('width', '25px');
   await expect(selected).toHaveCSS('background-color', 'rgb(0, 185, 107)');
   await expect(page.locator('#outside-themed-checkbox').locator('..'))
@@ -88,6 +91,7 @@ test('token updates retain the native input, focus, value and callback contract'
 
 test('nested provider inheritance can reset component aliases', async ({ page }) => {
   await page.getByLabel('Checkable token preset', { exact: true }).selectOption('checkbox-aliases');
+
   await expect(page.locator('#nested-themed-checkbox').locator('..')).toHaveCSS('width', '25px');
 
   await page.getByLabel('Inherit child checkables', { exact: true }).uncheck();
@@ -106,12 +110,16 @@ test('custom CSS prefixes work on group roots with hashing disabled', async ({ p
     await expect(page.locator('#' + id)).not.toHaveClass(/css-dev-only/);
   }
   await expect(page.locator('#themed-radio-group .ant-radio').first()).toHaveCSS('width', '23px');
-  await expect(page.locator('#themed-checkbox-group .ant-checkbox').first()).toHaveCSS('width', '21px');
+  await expect(page.locator('#themed-checkbox-group .ant-checkbox').first()).toHaveCSS(
+    'width',
+    '21px'
+  );
 });
 
 test('removing source settings and unmounting clears component variables and scope styles', async ({ page }) => {
   await page.getByLabel('Checkable token preset', { exact: true }).selectOption('own-switch');
   const style = page.locator('head style[data-ant-svelte-theme="toggle-source-scope"]');
+
   await expect(style).toHaveCount(1);
 
   await page.getByLabel('Apply source checkable tokens', { exact: true }).uncheck();
@@ -120,6 +128,7 @@ test('removing source settings and unmounting clears component variables and sco
   await expect(style).toHaveCount(0);
 
   await page.getByLabel('Apply source checkable tokens', { exact: true }).check();
+
   await expect(page.locator('#themed-switch')).toHaveCSS('height', '31px');
   await page.getByLabel('Mount themed checkables', { exact: true }).uncheck();
 

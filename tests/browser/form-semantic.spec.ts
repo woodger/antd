@@ -6,6 +6,7 @@ for (const { sample, metrics } of reference.cases) {
   test(`Form semantic slots match source layers, callbacks and nested scopes for ${sample.id}`, async ({ page }) => {
     await page.goto('/?fixture=form-semantic');
     await page.getByRole('combobox', { name: 'Form semantic sample', exact: true }).selectOption(sample.id);
+
     await expect.poll(() => page.evaluate(formSemanticMetrics)).toEqual(metrics);
   });
 }

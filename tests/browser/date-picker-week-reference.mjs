@@ -93,7 +93,11 @@ export function verifyWeekSourcePartBinding(reference, kind, variant = 'first', 
   const capture = scope(kind, variant);
   assert.equal(original.file.startsWith(capture + '.parts/'), true, 'Original capture binding');
   assert.equal(original.gzipFile, original.file + '.gz');
-  if (expectedFile !== undefined) assert.equal(original.file, expectedFile, 'Owner/action slot binding');
+  if (expectedFile !== undefined) assert.equal(
+    original.file,
+    expectedFile,
+    'Owner/action slot binding'
+  );
   const entry = metadata.parts[original.file];
   assert(entry, 'Missing complete original Source part');
   assert.deepEqual(entry.original, original, 'Exact original raw/stored metadata');
@@ -211,7 +215,10 @@ function property(graph, identity, key) {
 function dateSnapshot(value, authored) {
   assert.equal(value.raw.root.ref, value.identity);
   const fields = ['$y', '$M', '$D', '$H', '$m', '$s', '$ms'];
-  assert.deepEqual(fields.map(key => property(value.raw, value.identity, key)), value.temporal.fields);
+  assert.deepEqual(
+    fields.map(key => property(value.raw, value.identity, key)),
+    value.temporal.fields
+  );
   assert.equal(value.temporal.fields.length, 7);
   assert.equal(value.temporal.valid, true);
   assert.equal(new Date(value.temporal.epoch).toISOString(), value.temporal.iso);
@@ -313,7 +320,11 @@ export function verifyWeekSourceRows(point) {
         }
       }
     }
-    assert.equal(popup.dateCells.length, flattened.length, 'All scoped TDs have a flat date/prefix entry');
+    assert.equal(
+      popup.dateCells.length,
+      flattened.length,
+      'All scoped TDs have a flat date/prefix entry'
+    );
     for (const [index, cell] of popup.dateCells.entries()) {
       const stored = flattened[index];
       assert.equal(cell.surface.identity, stored.cell.surface.identity, 'Original table/cell order');
@@ -321,7 +332,11 @@ export function verifyWeekSourceRows(point) {
       assert.equal(cell.weekNumber, stored.cell.weekNumber);
       assert.equal(cell.title, stored.cell.title);
       assert.equal(cell.disabled, stored.cell.disabled);
-      assert.deepEqual(cell.surface, stored.cell.surface, 'Whole scoped TD observation remains identical');
+      assert.deepEqual(
+        cell.surface,
+        stored.cell.surface,
+        'Whole scoped TD observation remains identical'
+      );
       assert(popup.panels.some(panel => panel.identity === cell.panelIdentity));
     }
   }
@@ -390,7 +405,10 @@ export function verifyWeekSourceProducerChunk(value, envelope) {
       'Actual UI boundaries lie in the original monotonic producer interval');
     previous = count;
   }
-  if (value.phase === 'terminal-tail') assert.deepEqual(value.boundaries, { afterLate: value.cursor });
+  if (value.phase === 'terminal-tail') assert.deepEqual(
+    value.boundaries,
+    { afterLate: value.cursor }
+  );
   for (const [index, call] of value.rows.entries()) {
     assert.equal(call.name, 'disabledDate');
     assert.equal(call.actualArgumentCount, 2);
@@ -402,7 +420,10 @@ export function verifyWeekSourceProducerChunk(value, envelope) {
 }
 export function readWeekSourceProducerChunk(id, index, variant = 'first') {
   const chunks = readWeekSourceProducerChunks(id, variant);
-  assert(Number.isInteger(index) && index >= 0 && index < chunks.length, 'Unknown Source producer chunk');
+  assert(
+    Number.isInteger(index) && index >= 0 && index < chunks.length,
+    'Unknown Source producer chunk'
+  );
   const value = readWeekSourcePart(chunks[index]);
   verifyWeekSourceProducerChunk(value, chunks[index]);
   return value;

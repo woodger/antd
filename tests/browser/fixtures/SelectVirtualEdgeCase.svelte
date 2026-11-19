@@ -13,7 +13,10 @@
   const innerProps = untrack(() => selectVirtualProviderProps(sample.inner));
   const theme = { token: { motion: false }, cssVar: { key: 'select-virtual' } };
   const position = selectVirtualGeometry.plain;
-  const getSizeCalls: Array<{ align: string | null; first: { top: number; bottom: number | undefined };
+  const getSizeCalls: Array<{ align: string | null; first: {
+    top: number;
+    bottom: number | undefined
+  };
     second: { top: number; bottom: number | undefined } }> = [];
   let open = $state(false);
   let model = $state<unknown>(untrack(() => sample.initialValue ?? ''));
@@ -24,9 +27,19 @@
   let editor = $state<HTMLInputElement | HTMLTextAreaElement>();
 
   function record(...entry: unknown[]) { events.push(entry); }
-  function opening(next: boolean) { open = next; record('open', next); }
-  function search(next: string) { query = next; record('search', next); }
-  function change(next: string | undefined) { model = next ?? null; query = next ?? ''; record('change', next ?? null); }
+  function opening(next: boolean) {
+    open = next;
+    record('open', next);
+  }
+  function search(next: string) {
+    query = next;
+    record('search', next);
+  }
+  function change(next: string | undefined) {
+    model = next ?? null;
+    query = next ?? '';
+    record('change', next ?? null);
+  }
   function active(next: string | null) { record('active', next); }
   function scrolled(event: UIEvent & { currentTarget: EventTarget & HTMLDivElement }) {
     const node = event.currentTarget;
@@ -36,16 +49,31 @@
   }
   export function update(action: SelectVirtualEdgeAction) {
     if (action.type === 'ref') {
-      if (action.target.kind === 'key') control?.scrollTo({ key: action.target.key, align: action.target.align });
+      if (action.target.kind === 'key') control?.scrollTo({
+        key: action.target.key,
+        align: action.target.align
+      });
       else control?.scrollTo({ index: action.target.index });
     }
   }
-  export function readRefs() { return { root, anchor: root, editor, control, publicRoot: root, publicEditor: editor, getSizeCalls }; }
+  export function readRefs() {
+    return {
+      root,
+      anchor: root,
+      editor,
+      control,
+      publicRoot: root,
+      publicEditor: editor,
+      getSizeCalls
+    };
+  }
   export function readEvents() { return events; }
   export function readGetSizeCalls() { return getSizeCalls; }
   export function readModel() { return model; }
   export function readQuery() { return query; }
-  export function readReceipts() { return selectVirtualReceipts(sample, outerProps, innerProps, localProps); }
+  export function readReceipts() {
+    return selectVirtualReceipts(sample, outerProps, innerProps, localProps);
+  }
 </script>
 
 <section data-select-virtual-case={sample.id} data-select-virtual-family="auto-complete"

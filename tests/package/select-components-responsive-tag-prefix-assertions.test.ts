@@ -8,9 +8,14 @@ it('accepts all twenty unmodified Source points without Native-only fabricated r
 });
 it('rejects a changed authored custom-tag width and an extra literal child', () => {
   const source = readSelectComponentsResponsiveTagPrefixCSR().cases[0].initial.customTagsPrefix.customLabels[0];
+
   expect(source).toBeTruthy();
-  const width = structuredClone(source); width.box.width += 1;
+  const width = structuredClone(source);
+  width.box.width += 1;
+
   expect(() => verifyResponsiveTagPrefixPhysicalNode(width, source, 'negative-width')).toThrow();
-  const extra = structuredClone(source); extra.childNodes.push({ identity: null, type: 3, tag: null, text: ' ' });
+  const extra = structuredClone(source);
+  extra.childNodes.push({ identity: null, type: 3, tag: null, text: ' ' });
+
   expect(() => verifyResponsiveTagPrefixPhysicalNode(extra, source, 'negative-whitespace')).toThrow();
 });

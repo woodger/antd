@@ -13,6 +13,7 @@ const unit = (page: Page, name: string) => popup(page)
 test.beforeEach(async ({ page }) => {
   await page.clock.install({ time: new Date('2024-09-15T12:34:56.789Z') });
   await page.goto('/?fixture=time-picker');
+
   await expect(input(page)).toHaveValue('10:23:44');
 });
 
@@ -155,6 +156,7 @@ test('TimePicker changes input formats and visible columns without changing the 
 
   await expect(input(page)).toHaveValue('10:23');
   await input(page).click();
+
   await expect(popup(page).locator('.ant-picker-time-panel-column')).toHaveCount(2);
   await input(page).press('Escape');
   await control(page, 'Time format').selectOption('callback');
@@ -212,6 +214,7 @@ test('TimePicker can disable hover preview and hide disabled stepped options', a
 
 test('TimePicker localizes 12-hour labels and changes meridiem without changing the date', async ({ page }) => {
   await control(page, 'Twelve hour time').check();
+
   await expect(input(page)).toHaveValue('10:23:44 утра');
   await input(page).click();
   await unit(page, 'дня').click();
@@ -232,8 +235,10 @@ test('TimePicker localizes 12-hour labels and changes meridiem without changing 
 test('TimePicker retains full millisecond precision when the step is one', async ({ page }) => {
   await control(page, 'Time milliseconds').check();
   await control(page, 'Precise time milliseconds').check();
+
   await expect(input(page)).toHaveValue('10:23:44.567');
   await input(page).click();
+
   await expect(popup(page).locator('[data-type="millisecond"] li')).toHaveCount(1000);
   await unit(page, 'millisecond 789').click();
   await unit(page, 'ОК').click();
@@ -326,9 +331,13 @@ test('TimePicker combines source semantic layers, themes, RTL and nested config 
   await expect(popup(page)).toHaveClass(/local-time-popup/);
   await expect(popup(page)).toHaveCSS('outline-offset', '6px');
   await expect(popup(page).locator('.local-time-content')).toHaveCSS('outline-offset', '6px');
-  await expect(popup(page).locator('.custom-time-cell').first()).toHaveAttribute('data-type', 'time');
+  await expect(popup(page).locator('.custom-time-cell').first()).toHaveAttribute(
+    'data-type',
+    'time'
+  );
   const hour = await popup(page).locator('[data-type="hour"]').boundingBox();
   const minute = await popup(page).locator('[data-type="minute"]').boundingBox();
+
   expect(hour!.x).toBeLessThan(minute!.x);
   await unit(page, 'hour 13').click();
   await unit(page, 'ОК').click();
@@ -385,6 +394,7 @@ test('TimePicker keeps its full time panel inside a narrow RTL viewport', async 
 
   await expect(popup(page).locator('.ant-picker-time-panel-column')).toHaveCount(5);
   const rect = await popup(page).boundingBox();
+
   expect(rect!.x).toBeGreaterThanOrEqual(0);
   expect(rect!.x + rect!.width).toBeLessThanOrEqual(320);
   await expect(popup(page)).toHaveClass(/ant-picker-dropdown-rtl/);
@@ -398,6 +408,7 @@ test('TimePicker integrates with Form validation, labels and reset without seria
 
   await expect(page.getByRole('alert')).toHaveText('Choose a time');
   const required = control(page, 'Required time');
+
   await expect(required).toBeFocused();
   await required.fill('08:09:10');
   await required.press('Enter');
@@ -502,6 +513,7 @@ for (const delay of [0, 80]) {
   test(`TimePicker double click confirms the first unit without footer onOk at ${delay}ms`, async ({ page }) => {
     await input(page).click();
     const column = popup(page).locator('[data-type="hour"]');
+
     await expect.poll(() => column.evaluate(node => {
       const first = node.querySelector<HTMLElement>('li')!;
       const selected = node.querySelector<HTMLElement>('[data-value="10"]')!;

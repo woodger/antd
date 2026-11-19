@@ -29,7 +29,8 @@ export function createTypographyCopy(options: {
       }
       // Уже начатое копирование и его callback завершаются и после unmount, как в React.
       config.onCopy?.(event);
-    } catch (error) {
+    }
+    catch (error) {
       loading = false;
       throw error;
     }

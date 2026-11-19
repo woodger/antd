@@ -74,7 +74,11 @@ export function verifyMonthYearSourcePartBinding(reference, kind, variant = 'fir
   const capture = scope(kind, variant);
   assert.equal(original.file.startsWith(capture + '.parts/'), true, 'Original capture binding');
   assert.equal(original.gzipFile, original.file + '.gz');
-  if (expectedFile !== undefined) assert.equal(original.file, expectedFile, 'Owner/action slot binding');
+  if (expectedFile !== undefined) assert.equal(
+    original.file,
+    expectedFile,
+    'Owner/action slot binding'
+  );
   const entry = metadata.parts[original.file];
   assert(entry, 'Missing complete original Source part');
   assert.deepEqual(entry.original, original, 'Exact original raw/stored metadata');
@@ -189,7 +193,10 @@ function property(graph, identity, key) {
 function dateSnapshot(value, authored) {
   assert.equal(value.raw.root.ref, value.identity);
   const fields = ['$y', '$M', '$D', '$H', '$m', '$s', '$ms'];
-  assert.deepEqual(fields.map(key => property(value.raw, value.identity, key)), value.temporal.fields);
+  assert.deepEqual(
+    fields.map(key => property(value.raw, value.identity, key)),
+    value.temporal.fields
+  );
   assert.equal(value.temporal.fields.length, 7);
   assert.equal(value.temporal.valid, true);
   assert.equal(new Date(value.temporal.epoch).toISOString(), value.temporal.iso);
@@ -235,11 +242,18 @@ export function verifyMonthYearSourcePoint(point) {
       isNull: false, identity: null });
     invocation(call, index, point.owner.authoredDates);
   }
-  for (const value of Object.values(point.owner.authoredDates)) dateSnapshot(value, point.owner.authoredDates);
+  for (const value of Object.values(point.owner.authoredDates)) dateSnapshot(
+    value,
+    point.owner.authoredDates
+  );
   for (const annotation of point.owner.modelDates) {
     dateSnapshot(annotation.value, point.owner.authoredDates);
     let identity = point.owner.rawModel.root.ref;
-    for (const key of annotation.path) identity = property(point.owner.rawModel, identity, String(key)).ref;
+    for (const key of annotation.path) identity = property(
+      point.owner.rawModel,
+      identity,
+      String(key)
+    ).ref;
     assert.equal(identity, annotation.value.identity, 'Actual owner model date identity');
   }
 }
@@ -291,7 +305,10 @@ export function verifyMonthYearSourceProducerChunk(value, envelope) {
       'Actual UI boundaries lie in the original monotonic producer interval');
     previous = count;
   }
-  if (value.phase === 'terminal-tail') assert.deepEqual(value.boundaries, { afterLate: value.cursor });
+  if (value.phase === 'terminal-tail') assert.deepEqual(
+    value.boundaries,
+    { afterLate: value.cursor }
+  );
   for (const [index, call] of value.rows.entries()) {
     assert.equal(call.name, 'disabledDate');
     assert.equal(typeof call.returned, 'boolean');
@@ -300,7 +317,10 @@ export function verifyMonthYearSourceProducerChunk(value, envelope) {
 }
 export function readMonthYearSourceProducerChunk(id, index, variant = 'first') {
   const chunks = readMonthYearSourceProducerChunks(id, variant);
-  assert(Number.isInteger(index) && index >= 0 && index < chunks.length, 'Unknown Source producer chunk');
+  assert(
+    Number.isInteger(index) && index >= 0 && index < chunks.length,
+    'Unknown Source producer chunk'
+  );
   const value = readMonthYearSourcePart(chunks[index]);
   verifyMonthYearSourceProducerChunk(value, chunks[index]);
   return value;

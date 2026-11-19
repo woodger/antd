@@ -54,7 +54,8 @@
     if (phase === 'prepare' && space) {
       whitespace = space.ownerDocument.defaultView?.getComputedStyle(space).whiteSpace;
       phase = 'start';
-    } else if (phase === 'start' && full && previousRows && symbol) {
+    }
+    else if (phase === 'start' && full && previousRows && symbol) {
       const overflow = full.scrollHeight > full.clientHeight;
       const previousHeight = rows === 1 ? 0 : previousRows.clientHeight;
       limit = Math.max(full.clientHeight, previousHeight + symbol.clientHeight) + 1;

@@ -17,15 +17,24 @@ export function installSelectTagClosePortTracker() {
       super();
       for (const port of [this.port1, this.port2]) {
         const record = { id: records.length, phase, closed: false };
-        records.push(record); active.add(port);
+        records.push(record);
+        active.add(port);
         const close = port.close.bind(port);
         port.close = () => {
           close();
-          if (active.delete(port)) { record.closed = true; closedPorts++; }
+          if (active.delete(port)) {
+            record.closed = true;
+            closedPorts++;
+          }
         };
       }
     }
   };
   window.selectTagClosePorts = { mark: value => { phase = value; },
-    snapshot: () => ({ createdPorts: records.length, closedPorts, activePorts: active.size, records: structuredClone(records) }) };
+    snapshot: () => ({
+      createdPorts: records.length,
+      closedPorts,
+      activePorts: active.size,
+      records: structuredClone(records)
+    }) };
 }

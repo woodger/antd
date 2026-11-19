@@ -11,6 +11,7 @@ for (const { sample, metrics } of reference.cases) {
     await page.goto('/?fixture=form-use-status');
     await page.getByRole('combobox', { name: 'Form use status sample', exact: true })
       .selectOption(sample.id);
+
     await expect.poll(() => page.evaluate(statusReaders)).toEqual(metrics);
   });
 }
@@ -50,10 +51,12 @@ test('Form useFormItemStatus clears on reset and follows OTP status while retain
   await page.getByRole('combobox', { name: 'Form use status sample', exact: true })
     .selectOption('errors-warnings');
   await page.getByRole('button', { name: 'Show status OTP', exact: true }).click();
+
   await expect.poll(async () => (await page.evaluate(statusReaders)).otp)
     .toEqual({ status: 'warning', errors: ['Invalid'], warnings: ['Check'] });
 
   await page.getByRole('button', { name: 'Reset status readers', exact: true }).click();
+
   await expect.poll(async () => (await page.evaluate(statusReaders)).main)
     .toEqual({ status: '', errors: [], warnings: [] });
 });

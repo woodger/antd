@@ -303,6 +303,7 @@ test(
   'Spin obeys reduced motion dynamically for standard and custom indicators',
   async ({ page }) => {
     await button(page, 'Start Spin loading').click();
+
     await expect.poll(
       () =>
         standalone(page)
@@ -310,6 +311,7 @@ test(
     )
       .toBeGreaterThan(0);
     await page.emulateMedia({ reducedMotion: 'reduce' });
+
     await expect.poll(
       () =>
         standalone(page)

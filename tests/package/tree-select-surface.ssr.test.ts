@@ -13,10 +13,16 @@ const decode = (value: string) => value.replace(/&(?:quot|amp|lt|gt|#39);/g,
 const attr = (tag: string, name: string) => decode(new RegExp(`\\s${name}="([^"]*)"`).exec(tag)?.[1] ?? '');
 
 function slots(html: string, tag: 'div' | 'button', name: string) {
-  const pattern = new RegExp(`<${tag}\\b(?=[^>]*\\sclass="(?:[^"]* )?${name}(?: |"))[^>]*>([\\s\\S]*?)</${tag}>`, 'g');
+  const pattern = new RegExp(
+    `<${tag}\\b(?=[^>]*\\sclass="(?:[^"]* )?${name}(?: |"))[^>]*>([\\s\\S]*?)</${tag}>`,
+    'g'
+  );
   return Array.from(html.matchAll(pattern), ([markup, body]) => ({ markup, body,
     text: decode(body.replace(/<!--[^]*?-->|<[^>]*>/g, '')), icons: [...body.matchAll(/<svg\b/g)].length,
-    rich: Array.from(body.matchAll(/<strong\b[^>]*data-surface-rich[^>]*>([^<]*)<\/strong>/g), ([, text]) => text) }));
+    rich: Array.from(
+      body.matchAll(/<strong\b[^>]*data-surface-rich[^>]*>([^<]*)<\/strong>/g),
+      ([, text]) => text
+    ) }));
 }
 
 describe('TreeSelect control slots and custom popup on the server', () => {
@@ -37,6 +43,7 @@ describe('TreeSelect control slots and custom popup on the server', () => {
 
   it.each(reference.cases)('renders the Source control content for $id without DOM or effects', entry => {
     const sample = treeSelectSurfaceSamples.find(item => item.id === entry.id)!;
+
     expect(typeof document).toBe('undefined');
     vi.useFakeTimers();
     try {
@@ -59,12 +66,18 @@ describe('TreeSelect control slots and custom popup on the server', () => {
         expect(native && { text: native.text, rich: native.rich, icons: native.icons }).toEqual(
           view[part] ? project(view[part]) : undefined);
         if (part === 'suffix' && view.info) {
-          expect(JSON.parse(attr(native.body, 'data-surface-suffix-info'))).toEqual({ ...view.info, open });
+          expect(JSON.parse(attr(native.body, 'data-surface-suffix-info'))).toEqual({
+            ...view.info,
+            open
+          });
         }
       }
       const [clear] = slots(html, 'button', `${prefix}-clear`);
       expect(clear && { text: clear.text, rich: clear.rich, icons: clear.icons,
-        label: attr(clear.markup, 'aria-label') }).toEqual(view.clear ? { ...project(view.clear), label: view.clear.label } : undefined);
+        label: attr(clear.markup, 'aria-label') }).toEqual(view.clear ? {
+          ...project(view.clear),
+          label: view.clear.label
+        } : undefined);
       expect(slots(html, 'button', `${prefix}-selection-item-remove`)
         .map(({ text, rich, icons }) => ({ text, rich, icons }))).toEqual(view.remove.map(project));
       expect(view.open).toBe(false);

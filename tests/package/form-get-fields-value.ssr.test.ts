@@ -19,6 +19,7 @@ describe('Form getFieldsValue public package', () => {
       archiveSha256: registry.upstream.archiveSha256
     });
     const list = reference.cases.find(({ id }) => id === 'list')!;
+
     expect(list.values.mounted).toEqual({ people: [{ name: 'Anna' }, { name: 'Bob' }] });
     expect(list.values.rejected).toEqual({ people: [] });
     expect(list.values.store).toEqual({ people: [{ name: 'Anna', extra: 'Hidden' }, { name: 'Bob' }] });
@@ -61,9 +62,11 @@ describe('Form getFieldsValue public package', () => {
     expect(form.getFieldsValue(options)).toEqual({});
     form.touchField('name');
     await form.validateFields();
+
     expect(form.getFieldsValue(options)).toEqual({ name: 'Anna' });
     form.resetFields();
     form.setFieldsValue({ name: 'Updated' });
+
     expect(form.getFieldsValue(['name', 'unbound'], (meta) => {
       metadata.push(meta);
       return !!meta?.validated;
@@ -85,15 +88,19 @@ describe('Form getFieldsValue public package', () => {
     expect(form.getFieldsValue(true, (meta) => !!meta?.validating)).toEqual({});
     complete('Rejected');
     await silent;
+
     expect(form.getFieldsValue(filter)).toEqual({});
     pending = new Promise<string>((resolve) => { complete = resolve; });
     const normal = form.validateFields().catch(() => {});
+
     expect(form.getFieldsValue(true, (meta) => !!meta?.validating)).toEqual({ name: 'Anna' });
     complete('Rejected');
     await normal;
+
     expect(form.getFieldsValue(filter)).toEqual({ name: 'Anna' });
     expect(form.getFieldsValue({ filter: (meta) => !!meta?.errors.length })).toEqual({ name: 'Anna' });
     form.resetFields();
+
     expect(form.getFieldsValue(filter)).toEqual({});
   });
 });

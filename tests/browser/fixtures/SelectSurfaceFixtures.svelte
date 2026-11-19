@@ -6,7 +6,10 @@
   let sample = $derived(selectSurfaceSamples.find(entry => entry.id === selected)!);
   type Capture = NonNullable<ComponentProps<typeof SelectSurfaceCase>['capture']>;
   let active = $state(true);
-  let capture = $derived.by(() => { void selected; return {} as Capture; });
+  let capture = $derived.by(() => {
+    void selected;
+    return {} as Capture;
+  });
 </script>
 
 <section id="select-surface-fixture">

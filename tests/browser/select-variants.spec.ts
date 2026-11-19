@@ -10,7 +10,8 @@ for (const sample of reference.cases) {
       .selectOption(sample.name);
     if (sample.focus) {
       await page.getByRole('combobox', { name: 'Variant select', exact: true }).focus();
-    } else await page.mouse.move(1200, 700);
+    }
+    else await page.mouse.move(1200, 700);
 
     await expect.poll(() => page.evaluate(snapshotSelectVariants)).toEqual(sample.expected);
   });

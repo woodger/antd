@@ -85,6 +85,7 @@ test('CascaderPanel prefixes retain the focused row and keyboard selection', asy
   await page.getByRole('menu', { name: 'Prefix choices', exact: true }).first().focus();
   await page.keyboard.press('ArrowUp');
   const row = page.getByRole('menuitemcheckbox', { name: 'Alpha', exact: true });
+
   await expect(row).toBeFocused();
   const oldRow = await row.elementHandle();
 

@@ -29,7 +29,11 @@ export function treeSelectCheckableNativeView<View extends {
   };
   if (id === 'search-live-falsy' && !source.open && source.editor
     && (phase === 'initial' || phase === 'hydrated-initial')) return {
-    ...view, editor: { ...source.editor, value: 'Alpha', caret: phase === 'initial' ? [5, 5] : [0, 0] }
+    ...view, editor: {
+      ...source.editor,
+      value: 'Alpha',
+      caret: phase === 'initial' ? [5, 5] : [0, 0]
+    }
   };
   return view;
 }

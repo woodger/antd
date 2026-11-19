@@ -22,6 +22,7 @@ for (const sample of reference.cases) {
       await page.getByLabel('Table theme preset', { exact: true }).selectOption(sample.name);
       await page.getByLabel('Table theme mode', { exact: true }).selectOption(mode);
       const root = page.locator('#table-theme-control');
+
       await expect(root.getByRole('table')).toBeVisible();
       await page.mouse.move(1300, 1100);
       if (mode === 'header-hover') await root.locator('th.ant-table-column-has-sorters')
@@ -98,6 +99,7 @@ test('Table token updates preserve row controls, draft, focus, selection and fix
     await expect(root.getByLabel('Table theme events', { exact: true })).toHaveText('["sort"]');
     await checkbox.focus();
     await page.keyboard.press('Space');
+
     await expect(checkbox).not.toBeChecked();
     await expect(root.getByLabel('Table theme events', { exact: true }))
       .toHaveText('["sort","selection"]');
@@ -111,12 +113,16 @@ test('Table inheritance resets typography and cells without replacing the expand
     const input = root.getByRole('textbox', { name: 'Table draft', exact: true });
     await input.fill('Nested draft');
     const original = await input.elementHandle();
+
     await expect(root.locator('.ant-table')).toHaveCSS('font-size', '15px');
 
     await page.getByLabel('Inherit Table theme', { exact: true }).dispatchEvent('click');
 
     await expect(root.locator('.ant-table')).toHaveCSS('font-size', '16px');
-    await expect(root.locator('thead th').last()).toHaveCSS('background-color', 'rgb(250, 250, 250)');
+    await expect(root.locator('thead th').last()).toHaveCSS(
+      'background-color',
+      'rgb(250, 250, 250)'
+    );
     await expect(input).toHaveValue('Nested draft');
     await expect(input).toBeFocused();
     expect(await input.evaluate((node, old) => node === old, original)).toBe(true);
@@ -160,6 +166,7 @@ test('Table returns to default styling and reopens with the current theme after 
     await expect(root.getByLabel('Table theme events', { exact: true })).toHaveText('[]');
 
     await page.getByLabel('Mount themed Table', { exact: true }).dispatchEvent('click');
+
     await expect(root).toHaveCount(0);
     await page.getByLabel('Apply source Table theme', { exact: true }).dispatchEvent('click');
     await page.getByRole('button', { name: 'Update Table tokens', exact: true }).click();
@@ -177,6 +184,7 @@ test('Table fixed header hover uses the source fixed token over the container un
     await page.getByLabel('Table theme mode', { exact: true }).selectOption('fixed-hover');
     const header = page.locator('#table-theme-control th.ant-table-column-has-sorters');
     const color = reference.fixedHeader.headers[0]?.['background-color'];
+
     expect(color).toBe('rgb(230, 255, 251)');
 
     await header.hover({ position: { x: 4, y: 4 } });

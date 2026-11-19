@@ -16,6 +16,7 @@ describe('Form semantic public package', () => {
     expect(reference.cases.find(({ sample }) => sample.id === 'local-style-root')!.metrics.root)
       .toMatchObject({ css: { color: 'rgb(171, 181, 191)' } });
     const callbacks = reference.cases.find(({ sample }) => sample.id === 'callbacks-default')!.metrics;
+
     expect(callbacks.label!.classes).toContain('owner-component-unset');
     expect(callbacks.label!.classes).toContain('owner-disabled-false');
     expect(callbacks.list!.classes).toContain('owner-context-help');

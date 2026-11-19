@@ -96,13 +96,26 @@ export function resolveSelectSuffix(input: SelectSuffixInput, defaults: SelectSu
 
   let content: RenderEmptyContent;
   if (local !== undefined) content = local;
-  else if (input.info.loading) content = firstDefined(input.loadingIcon, input.context?.loadingIcon, defaults.loading);
+  else if (input.info.loading) content = firstDefined(
+    input.loadingIcon,
+    input.context?.loadingIcon,
+    defaults.loading
+  );
   else if (input.info.open && input.info.showSearch)
-    content = firstDefined(searchIcon(input.showSearch), searchIcon(input.context?.showSearch), defaults.search);
+    content = firstDefined(
+      searchIcon(input.showSearch),
+      searchIcon(input.context?.showSearch),
+      defaults.search
+    );
   else content = firstDefined(input.context?.suffixIcon, defaults.down);
 
   // Source Fragment сохраняет Affix даже с false/0/пустым содержимым.
-  return { content: local === null ? false : content, appendFeedback, hasSuffix: true, visible: true };
+  return {
+    content: local === null ? false : content,
+    appendFeedback,
+    hasSuffix: true,
+    visible: true
+  };
 }
 
 export function resolveSelectMenuIcon<Value extends string | number>(

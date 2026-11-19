@@ -18,9 +18,11 @@ for (const [top, popupTop] of [['343.64', 387], ['344', 388]] as const) {
 
     await page.mouse.move(1000, 500);
     await page.mouse.wheel(0, 200);
+
     await expect.poll(() => page.evaluate(() => scrollY)).toBe(200);
     await expect.poll(async () => (await popup.boundingBox())?.y).toBe(popupTop - 200);
     await warm.click();
+
     await expect(warm).toHaveAttribute('aria-expanded', 'true');
     await expect(popup.getByRole('button', { name: 'rgb(250,173,20)', exact: true })).toBeVisible();
   });

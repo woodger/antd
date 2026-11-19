@@ -12,6 +12,7 @@ describe('Form columns public package', () => {
       archiveSha256: registry.upstream.archiveSha256
     });
     const nested = reference.cases.find(({ sample }) => sample.id === 'nested-576-ltr')!.metrics;
+
     expect(nested[0].label.classes).toContain('ant-col-6');
     expect(nested[1].label.classes).toEqual(['ant-col']);
     expect(reference.cases.find(({ sample }) => sample.id === 'responsive-576-ltr')!.metrics[0]

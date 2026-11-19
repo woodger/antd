@@ -6,7 +6,10 @@
   const samples = selectComponentSamples;
   let selected = $state(samples[0].id), mounted = $state(true);
   let sample = $derived(samples.find(s => s.id === selected)!);
-  let capture = $derived.by(() => { void selected; return {} as Capture; });
+  let capture = $derived.by(() => {
+    void selected;
+    return {} as Capture;
+  });
 </script>
 <section id="select-components-ac-style-fixture">
   <label style="position:fixed;left:0;top:0;z-index:1">Select component AC style sample<select bind:value={selected} onchange={() => { mounted = true; }}>

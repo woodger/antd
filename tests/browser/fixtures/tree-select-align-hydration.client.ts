@@ -35,12 +35,19 @@ await tick();
 const fixture = instance.fixtureApi()!;
 const state: NonNullable<Window['treeSelectAlignHydration']> = {
   root, editor, editorParent, outside, refs: () => fixture.readRefs(), events: () => fixture.readEvents(),
-  async update(action) { fixture.update(action); await tick(); },
+  async update(action) {
+    fixture.update(action);
+    await tick();
+  },
   async dispose() {
     await unmount(instance);
     await tick();
     const refs = fixture.readRefs();
-    state.cleaned = { root: refs.root == null, editor: refs.editor == null, control: refs.control == null };
+    state.cleaned = {
+      root: refs.root == null,
+      editor: refs.editor == null,
+      control: refs.control == null
+    };
   }
 };
 window.treeSelectAlignHydration = state;

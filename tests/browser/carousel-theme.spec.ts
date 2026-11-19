@@ -57,12 +57,17 @@ test('Carousel theme updates retain slides, drafts, focus and isolated provider 
   await expect(root).not.toHaveClass(/(?:^|\s)css-(?:dev-only-do-not-override-)?[a-z0-9]+(?:\s|$)/);
   expect(await draft.evaluate((node, old) => node === old, original)).toBe(true);
   await host.locator('.slick-next').click();
+
   await expect(host.locator('.slick-current')).not.toHaveAttribute('data-index', active!);
   await host.locator('.slick-current').focus();
   await host.locator('.slick-current').press('ArrowRight');
+
   await expect(host.locator('.slick-current')).toHaveAttribute('data-index', '2');
   await page.getByLabel('Mount themed Carousels', { exact: true }).uncheck();
 
   await expect(root).toHaveCount(0);
-  await expect(page.locator('[data-carousel-theme="outside"] .slick-prev')).toHaveCSS('width', '16px');
+  await expect(page.locator('[data-carousel-theme="outside"] .slick-prev')).toHaveCSS(
+    'width',
+    '16px'
+  );
 });

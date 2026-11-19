@@ -23,7 +23,11 @@
   let finishLoad: (() => void) | undefined;
   let pendingLoad: Promise<void> | undefined;
   let specs = $derived(treeSelectNodeSpecs(sample, revision, reversed, removed, added, loaded));
-  let rows = $derived(sample.data ? specs : [{ value: 'override', title: 'Data Override', payload: 'override' }]);
+  let rows = $derived(sample.data ? specs : [{
+    value: 'override',
+    title: 'Data Override',
+    payload: 'override'
+  }]);
   let data = $derived(mode === 'declarations' ? undefined : mode === 'empty' ? [] : rows.map(nodeData));
   let options = $derived<TreeSelectProps>({
     defaultOpen: !sample.closed,
@@ -64,7 +68,10 @@
       switcherIcon: spec.switcher === 'state' ? nodeSwitcher : spec.switcher ? 'Leaf switcher' : undefined,
       disabled: spec.disabled, disableCheckbox: spec.disableCheckbox, selectable: spec.selectable,
       checkable: spec.checkable, isLeaf: spec.isLeaf,
-      ...(sample.styled ? { className: 'node-source-class', style: `margin-bottom:${revision ? 12 : 6}px` } : {}),
+      ...(sample.styled ? {
+        className: 'node-source-class',
+        style: `margin-bottom:${revision ? 12 : 6}px`
+      } : {}),
       ...(sample.aria ? { 'aria-label': `Accessible ${spec.payload}` } : {}),
       'data-node-marker': spec.payload
     };
@@ -81,7 +88,10 @@
     if (action === 'data') mode = 'data';
     if (action === 'empty-data') mode = 'empty';
     if (action === 'declarations') mode = 'declarations';
-    if (action === 'resolve') { loaded = true; finishLoad?.(); }
+    if (action === 'resolve') {
+      loaded = true;
+      finishLoad?.();
+    }
   }
 </script>
 

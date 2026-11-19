@@ -26,7 +26,8 @@ export async function collectUploadDirectoryFiles(
         });
       }
       files.push(file);
-    } else if (entry.isDirectory) {
+    }
+    else if (entry.isDirectory) {
       const reader = (entry as FileSystemDirectoryEntry).createReader();
       while (true) {
         const entries = await new Promise<FileSystemEntry[]>(resolve => {

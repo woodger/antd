@@ -46,23 +46,30 @@ export async function actQuarter(page: Page, action: QuarterAction, index: numbe
   if (action.type === 'input-open' || action.type === 'input-type'
     || action.type === 'input-escape') {
     target = page.locator(action.index === 1 ? '#quarter-end' : '#quarter-input');
-  } else if (action.type === 'input-key') target = page.locator('.ant-picker input:focus');
+  }
+  else if (action.type === 'input-key') target = page.locator('.ant-picker input:focus');
   else if (action.type === 'owner-control') {
     target = page.locator('[data-quarter-control="' + action.value + '"]');
-  } else if (action.type === 'header-promote') {
+  }
+  else if (action.type === 'header-promote') {
     target = popup.locator('.ant-picker-header-view button').first();
-  } else if (action.type === 'header-next') {
+  }
+  else if (action.type === 'header-next') {
     target = popup.locator('.ant-picker-header-super-next-btn:visible').last();
-  } else if (action.type === 'upper-cell-click') {
+  }
+  else if (action.type === 'upper-cell-click') {
     target = popup.locator('td').filter({ has: page.locator('.ant-picker-cell-inner', {
       hasText: exactText(action.value)
     }) }).locator('button');
-  } else if (action.type === 'cell-click') {
+  }
+  else if (action.type === 'cell-click') {
     target = popup.locator('td[title="' + action.title + '"] button');
-  } else if (action.type === 'confirm-click') target = popup.locator('.ant-picker-ok button');
+  }
+  else if (action.type === 'confirm-click') target = popup.locator('.ant-picker-ok button');
   else if (action.type === 'preset-click') {
     target = popup.locator('.ant-picker-presets button').filter({ hasText: exactText(action.label) });
-  } else throw Error('Unknown declared quarter action');
+  }
+  else throw Error('Unknown declared quarter action');
   assert.equal(await target.count(), 1, 'Exactly one actual public action target');
   const actionEvidence: { targetBefore: unknown; afterFocusPointer?: NativeQuarterPoint;
     ownerClick?: unknown; actualCoordinates?: { x: number; y: number }; hitBefore?: unknown } = {
@@ -77,15 +84,18 @@ export async function actQuarter(page: Page, action: QuarterAction, index: numbe
   if (action.type === 'owner-control') {
     actionEvidence.ownerClick = await page.evaluate(value =>
       window.nativeQuarter.activateControl(value), action.value);
-  } else if (action.type === 'input-escape') {
+  }
+  else if (action.type === 'input-escape') {
     await target.click();
     actionEvidence.afterFocusPointer = await readQuarter(page);
     await page.keyboard.press('Escape');
-  } else if (action.type === 'input-type') {
+  }
+  else if (action.type === 'input-type') {
     await target.click();
     await page.keyboard.press('Control+A');
     await page.keyboard.type(action.value);
-  } else if (action.type === 'input-key') await page.keyboard.press(action.value);
+  }
+  else if (action.type === 'input-key') await page.keyboard.press(action.value);
   else if (action.type !== 'input-open') {
     const box = await target.boundingBox();
     assert(box && box.width > 0 && box.height > 0, 'Real visible target geometry required');
@@ -99,7 +109,8 @@ export async function actQuarter(page: Page, action: QuarterAction, index: numbe
     }, point);
     // Настоящий mouse click допускает disabled target; force/снятие disabled не используются.
     await page.mouse.click(point.x, point.y);
-  } else await target.click();
+  }
+  else await target.click();
   return { index, action, before, actionEvidence, afterCall: await readQuarter(page) };
 }
 export async function disposeQuarter(page: Page, hooks?: {

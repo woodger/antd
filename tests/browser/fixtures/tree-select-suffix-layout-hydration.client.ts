@@ -13,7 +13,11 @@ declare global {
       prefix: Element | null;
       outside: HTMLInputElement;
       focus: () => void;
-      refs: () => { root?: HTMLDivElement; input?: HTMLInputElement | HTMLTextAreaElement; control?: unknown };
+      refs: () => {
+        root?: HTMLDivElement;
+        input?: HTMLInputElement | HTMLTextAreaElement;
+        control?: unknown
+      };
       dispose: () => Promise<void>;
       cleaned?: { root: boolean; input: boolean; control: boolean };
     };
@@ -29,7 +33,10 @@ const editorParent = editor.parentNode;
 const suffix = editor.closest('[data-ant-tree-choice-input-suffix]');
 const prefix = root.querySelector('[data-suffix-layout-prefix]');
 const outside = target.querySelector<HTMLInputElement>('[aria-label="Suffix layout outside draft"]')!;
-const instance = hydrate(TreeSelectSuffixLayoutHydration, { target, props: { sample }, recover: false });
+const instance = hydrate(
+  TreeSelectSuffixLayoutHydration,
+  { target, props: { sample }, recover: false }
+);
 await tick();
 const fixture = instance.fixtureApi()!;
 const state: NonNullable<Window['treeSelectSuffixLayoutHydration']> = {
@@ -38,7 +45,11 @@ const state: NonNullable<Window['treeSelectSuffixLayoutHydration']> = {
     await unmount(instance);
     await tick();
     const refs = fixture.readRefs();
-    state.cleaned = { root: refs.root == null, input: refs.input == null, control: refs.control == null };
+    state.cleaned = {
+      root: refs.root == null,
+      input: refs.input == null,
+      control: refs.control == null
+    };
   }
 };
 window.treeSelectSuffixLayoutHydration = state;

@@ -51,7 +51,8 @@ export function createUploadController<T = unknown>(
     let parsed: unknown = response;
     try {
       if (typeof response === 'string') parsed = JSON.parse(response);
-    } catch { /* upstream сохраняет не-JSON строку */ }
+    }
+    catch { /* upstream сохраняет не-JSON строку */ }
     update(file, { status: 'done', percent: 100, response: parsed as T, xhr });
   };
   const onError: UploadRef<T>['onError'] = (error, response, file) => {
@@ -68,7 +69,8 @@ export function createUploadController<T = unknown>(
       if (item.parsedFile) {
         items[index].status = 'uploading';
         publish(items[index], list);
-      } else {
+      }
+      else {
         const clone = Object.assign(
           new File([item.file], item.file.name, { type: item.file.type }),
           { uid: item.file.uid }
@@ -91,7 +93,8 @@ export function createUploadController<T = unknown>(
     let result: Awaited<ReturnType<NonNullable<UploadProps<T>['beforeUpload']>>>;
     try {
       result = await options.props().beforeUpload?.(file, batch);
-    } catch {
+    }
+    catch {
       result = false;
     }
     if (result === false

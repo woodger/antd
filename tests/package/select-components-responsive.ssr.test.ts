@@ -20,7 +20,8 @@ function attributes(value: Array<[string, string]>) {
     // HTML names are case-insensitive; Source SSR prints autoComplete.
     // Native CSS strings retain a different harmless space/trailing-semicolon format.
     if (key === 'style') text = text.split(';').map(part => part.trim()).filter(Boolean).map(part => {
-      const colon = part.indexOf(':'); return part.slice(0, colon).trim() + ':' + part.slice(colon + 1).trim();
+      const colon = part.indexOf(':');
+      return part.slice(0, colon).trim() + ':' + part.slice(colon + 1).trim();
     }).join(';');
     return key === 'class' && !text ? [] : [[key, text]];
   });
@@ -28,37 +29,91 @@ function attributes(value: Array<[string, string]>) {
 for (const owner of entries) for (const source of owner.states) it(`matches full responsive component SSR ${owner.id}/${source.name}`, () => {
   vi.useFakeTimers();
   const resource = vi.fn(() => { throw Error('Select component SSR must stay DOM-free'); });
-  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(name, resource);
-  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() { resource(); } });
+  for (const name of ['getComputedStyle', 'requestAnimationFrame', 'queueMicrotask']) vi.stubGlobal(
+    name,
+    resource
+  );
+  for (const name of ['ResizeObserver', 'MutationObserver', 'MessageChannel']) vi.stubGlobal(name, class { constructor() {
+    resource();
+  } });
   const warn = vi.spyOn(console, 'warn'), error = vi.spyOn(console, 'error');
   try {
-    expect(typeof window).toBe('undefined'); expect(typeof document).toBe('undefined');
+    expect(typeof window).toBe('undefined');
+    expect(typeof document).toBe('undefined');
     const sample = selectComponentsSamples.find(s => s.id === owner.id)!;
-    expect(source.name).toBe('initial'); expect(owner.states).toHaveLength(1);
+    expect(source.name).toBe('initial');
+    expect(owner.states).toHaveLength(1);
     const authored = { settings: sample.settings }, capture: Capture = {};
-    const { body } = render(SelectComponentsResponsiveCase, { props: { sample: { ...sample, settings: authored.settings }, capture } });
-    verifySelectComponentsResponsiveSSRLayout(body, source.rawHtml, owner.id + '/SSR all content wrappers');
+    const { body } = render(
+      SelectComponentsResponsiveCase,
+      { props: { sample: { ...sample, settings: authored.settings }, capture } }
+    );
+    verifySelectComponentsResponsiveSSRLayout(
+      body,
+      source.rawHtml,
+      owner.id + '/SSR all content wrappers'
+    );
     const actual = capture.read!();
     for (const key of ['settings', 'model', 'open', 'query', 'authoredProvider', 'authoredInnerProvider'] as const)
       expect(actual[key], key).toEqual(source.state[key]);
     const currentProps = normalizedSelectSurfaceAuthoredProps(actual.authoredProps), originalProps = normalizedSelectSurfaceAuthoredProps(source.state.authoredProps);
-    delete currentProps.components; delete originalProps.components;
+    delete currentProps.components;
+    delete originalProps.components;
     expect(currentProps).toEqual(originalProps);
-    verifySelectSurfaceEventGraph(actual.rawModel, source.state.rawModel, owner.id + '/SSR full raw model');
-    verifySelectComponentsGraph(actual.rawAuthoredProps, source.state.rawAuthoredProps, owner.id + '/SSR full raw caller', actual.nodeSpecifications, true);
-    verifyIconGraph(actual.rawAuthoredProvider, source.state.rawAuthoredProvider, owner.id + '/SSR full raw provider', actual.nodeSpecifications);
-    verifyIconGraph(actual.rawAuthoredInnerProvider, source.state.rawAuthoredInnerProvider, owner.id + '/SSR full raw inner provider', actual.nodeSpecifications);
-    verifySelectComponentsProducers(actual.calls, source.state.calls, owner.id + '/SSR all pure producers', actual.nodeSpecifications, true);
-    verifySelectComponentsObservations(actual.componentObservations as ComponentsObservation[], source.state.calls, owner.id + '/SSR all component contexts', true);
-    expect(actual.events).toEqual(source.state.events); expect(actual.rawEvents).toEqual(source.state.rawEvents);
+    verifySelectSurfaceEventGraph(
+      actual.rawModel,
+      source.state.rawModel,
+      owner.id + '/SSR full raw model'
+    );
+    verifySelectComponentsGraph(
+      actual.rawAuthoredProps,
+      source.state.rawAuthoredProps,
+      owner.id + '/SSR full raw caller',
+      actual.nodeSpecifications,
+      true
+    );
+    verifyIconGraph(
+      actual.rawAuthoredProvider,
+      source.state.rawAuthoredProvider,
+      owner.id + '/SSR full raw provider',
+      actual.nodeSpecifications
+    );
+    verifyIconGraph(
+      actual.rawAuthoredInnerProvider,
+      source.state.rawAuthoredInnerProvider,
+      owner.id + '/SSR full raw inner provider',
+      actual.nodeSpecifications
+    );
+    verifySelectComponentsProducers(
+      actual.calls,
+      source.state.calls,
+      owner.id + '/SSR all pure producers',
+      actual.nodeSpecifications,
+      true
+    );
+    verifySelectComponentsObservations(
+      actual.componentObservations as ComponentsObservation[],
+      source.state.calls,
+      owner.id + '/SSR all component contexts',
+      true
+    );
+    expect(actual.events).toEqual(source.state.events);
+    expect(actual.rawEvents).toEqual(source.state.rawEvents);
     expect(actual.lifecycle).toEqual(source.state.lifecycle);
     expect(actual.bodyActivity).toEqual(source.state.bodyActivity ?? []);
     expect(Object.values(capture.readRefs!()).every(value => value == null)).toBe(true);
-    verifySelectIconSSRNodes(readSelectIconsSSR(body), readSelectIconsSSR(source.rawHtml), source.state, sample as never, owner.id + '/SSR inherited icon templates');
+    verifySelectIconSSRNodes(
+      readSelectIconsSSR(body),
+      readSelectIconsSSR(source.rawHtml),
+      source.state,
+      sample as never,
+      owner.id + '/SSR inherited icon templates'
+    );
     const view = readSelectComponentsSSRFields(body), original = readSelectComponentsSSRFields(source.rawHtml);
     expect(view.fields).toHaveLength(original.fields.length);
     for (const [index, field] of view.fields.entries()) {
-      expect(field.tag).toBe(original.fields[index].tag); expect(field.content).toBe(original.fields[index].content);
+      expect(field.tag).toBe(original.fields[index].tag);
+      expect(field.content).toBe(original.fields[index].content);
       expect(field.value).toBe(original.fields[index].value);
       expect(attributes(field.attributes)).toEqual(attributes(original.fields[index].attributes));
     }
@@ -69,9 +124,20 @@ for (const owner of entries) for (const source of owner.states) it(`matches full
       expect(call).toBeTruthy();
       const observation = (actual.componentObservations as ComponentsObservation[]).findLast(value => value.slot === slot && value.kind === kind)!;
       expect(observation).toBeTruthy();
-      verifySelectComponentsAttributes(observation, call, owner.id + '/SSR incoming component attrs');
+      verifySelectComponentsAttributes(
+        observation,
+        call,
+        owner.id + '/SSR incoming component attrs'
+      );
     }
-    expect(resource).not.toHaveBeenCalled(); expect(vi.getTimerCount()).toBe(0);
-    expect(warn).not.toHaveBeenCalled(); expect(error).not.toHaveBeenCalled();
-  } finally { warn.mockRestore(); error.mockRestore(); vi.unstubAllGlobals(); vi.useRealTimers(); }
+    expect(resource).not.toHaveBeenCalled();
+    expect(vi.getTimerCount()).toBe(0);
+    expect(warn).not.toHaveBeenCalled();
+    expect(error).not.toHaveBeenCalled();
+  } finally {
+    warn.mockRestore();
+    error.mockRestore();
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
+  }
 });

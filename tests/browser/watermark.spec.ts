@@ -342,10 +342,12 @@ test(
 
     await page.getByRole('combobox', { name: 'Watermark content', exact: true })
       .selectOption('object');
+
     await expect.poll(async () => (await tile(mark)).painted).toBeGreaterThan(100);
     await frame(page.locator('.fixture-watermark'));
     await page.getByRole('combobox', { name: 'Watermark content', exact: true })
       .selectOption('empty');
+
     await expect.poll(async () => (await tile(mark)).painted).toBe(0);
     await frame(page.locator('.fixture-watermark'));
     await page.getByRole('combobox', { name: 'Watermark content', exact: true })
@@ -364,6 +366,7 @@ test(
     const mark = ownMark(root);
 
     await page.getByRole('combobox', { name: 'Watermark image', exact: true }).selectOption('red');
+
     await expect.poll(async () => (await tile(mark)).red).toBeGreaterThan(100);
 
     const red = await tile(mark);
@@ -375,6 +378,7 @@ test(
     expect((await tile(mark)).url).toBe(red.url);
 
     await page.getByLabel('Watermark rotation', { exact: true }).fill('0');
+
     await expect.poll(async () => (await tile(mark)).blue).toBeGreaterThan(100);
 
     expect((await tile(mark)).red).toBe(0);

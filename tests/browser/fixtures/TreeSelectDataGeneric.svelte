@@ -12,13 +12,23 @@
   }
   const alpha: Node = { code: 1, caption: 'Alpha', value: 'raw', expanded: 'payload', props: { owner: 'alpha' },
     payload: { kind: 'leaf', rank: 1 }, isLeaf: true };
-  const beta: Node = { ...alpha, code: 2, caption: 'Beta', props: { owner: 'beta' }, payload: { kind: 'leaf', rank: 2 } };
+  const beta: Node = {
+    ...alpha,
+    code: 2,
+    caption: 'Beta',
+    props: { owner: 'beta' },
+    payload: { kind: 'leaf', rank: 2 }
+  };
   const parent: Node = { ...alpha, code: 0, caption: 'Parent', payload: { kind: 'branch', total: 2 },
     props: { owner: 'parent' }, isLeaf: false, nodes: [alpha, beta] };
   let nodes = $state.raw<readonly Node[]>([parent]);
   let lazy = $state.raw<readonly Node[]>([{ ...parent, nodes: undefined }]);
   let value = $state<TreeSelectRawValue | undefined>(1);
-  let fields = $state.raw<TreeSelectFieldNames>({ value: 'code', label: 'caption', children: 'nodes' });
+  let fields = $state.raw<TreeSelectFieldNames>({
+    value: 'code',
+    label: 'caption',
+    children: 'nodes'
+  });
   let records = $state.raw<unknown[]>([]);
   let loads = $state.raw<unknown[]>([]);
   let completed = $state(0);

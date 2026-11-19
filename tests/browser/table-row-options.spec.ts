@@ -59,6 +59,7 @@ test('Table disabling row hover clears paint under the stationary pointer and pr
     const original = await row.elementHandle();
     const cell = row.locator('td').first();
     await cell.hover();
+
     await expect(cell).toHaveCSS('background-color', 'rgb(230, 244, 255)');
     expect(observation.disabledUnderPointer).toEqual(observation.enabled);
     expect(observation.disabledAfterLeave).toEqual(observation.enabled);
@@ -125,6 +126,7 @@ test('Table row options preserve editors, keyboard selection, sorting and source
     await expect(root.getByLabel('Table row events', { exact: true })).toHaveText('["selection"]');
     await root.locator('.sort-button').focus();
     await page.keyboard.press('Enter');
+
     await expect(root.locator('th[aria-sort="ascending"]')).toBeVisible();
     await expect(root.getByLabel('Table row events', { exact: true }))
       .toHaveText('["selection","sort"]');

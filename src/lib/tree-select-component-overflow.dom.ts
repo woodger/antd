@@ -18,7 +18,13 @@ export function connectTreeSelectComponentOverflow(
   let layout: TreeSelectComponentOverflowLayout | undefined;
   let restWidth = 0;
   let previousRestWidth = 0;
-  type Size = { width: number; height: number; offsetWidth: number; offsetHeight: number; sourceWidth: number };
+  type Size = {
+    width: number;
+    height: number;
+    offsetWidth: number;
+    offsetHeight: number;
+    sourceWidth: number
+  };
   let restNode: HTMLElement | null = null;
   let restMeasurement: Size | undefined;
   const sizes = new Map<HTMLElement, Size>();
@@ -50,9 +56,14 @@ export function connectTreeSelectComponentOverflow(
     const prefix = host.querySelector<HTMLElement>(selectors.prefix);
     const nodes = new Set([host, suffix, ...tags, ...(rest ? [rest] : []), ...(prefix ? [prefix] : [])]);
     for (const node of observed) if (!nodes.has(node)) {
-      resize.unobserve(node); observed.delete(node); sizes.delete(node);
+      resize.unobserve(node);
+      observed.delete(node);
+      sizes.delete(node);
     }
-    for (const node of nodes) if (!observed.has(node)) { resize.observe(node); observed.add(node); }
+    for (const node of nodes) if (!observed.has(node)) {
+      resize.observe(node);
+      observed.add(node);
+    }
 
     const measurement = rest ? sourceSize(rest) : undefined;
     if (restNode !== rest || restMeasurement !== measurement) {

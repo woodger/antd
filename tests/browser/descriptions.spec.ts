@@ -17,12 +17,16 @@ test(
         .evaluateAll(nodes => nodes.map(node => node.getAttribute('colspan')));
 
     await page.setViewportSize({ width: 500, height: 900 });
+
     await expect.poll(spans).toEqual(['1', '1', '1', '1']);
     await page.setViewportSize({ width: 700, height: 900 });
+
     await expect.poll(spans).toEqual(['1', '1', '2', '2']);
     await page.setViewportSize({ width: 1000, height: 900 });
+
     await expect.poll(spans).toEqual(['1', '2', '3', '3']);
     await page.setViewportSize({ width: 1300, height: 900 });
+
     await expect.poll(spans).toEqual(['1', '2', '1', '4']);
     await page.getByLabel('Mount details').uncheck();
     await page.setViewportSize({ width: 500, height: 900 });

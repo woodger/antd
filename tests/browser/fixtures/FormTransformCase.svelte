@@ -16,7 +16,8 @@
     try {
       await model.validateFields();
       outcome = 'valid';
-    } catch { outcome = 'invalid'; }
+    }
+    catch { outcome = 'invalid'; }
   }
 </script>
 

@@ -46,16 +46,19 @@ export class FastColor {
         const [r, g, b, a] = splitColor(text, (number, part) =>
           part.includes('%') ? Math.round(number / 100 * 255) : number);
         Object.assign(this, { r, g, b, a });
-      } else if (text.startsWith('hsl') || text.startsWith('hsv') || text.startsWith('hsb')) {
+      }
+      else if (text.startsWith('hsl') || text.startsWith('hsv') || text.startsWith('hsb')) {
         const [h, s, third, a] = splitColor(text, (number, _, index) =>
           index === 0 ? number : number / 100);
         if (text.startsWith('hsl')) this.fromHsl({ h, s, l: third, a });
         else this.fromHsv({ h, s, v: third, a });
-      } else {
+      }
+      else {
         const named = colorNames[text.toLowerCase()];
         if (named) this.fromHex(parseInt(named, 36).toString(16).padStart(6, '0'));
       }
-    } else if (input instanceof FastColor) {
+    }
+    else if (input instanceof FastColor) {
       this.r = input.r;
       this.g = input.g;
       this.b = input.b;
@@ -65,12 +68,14 @@ export class FastColor {
       this.hslSaturation = input.hslSaturation;
       this.lightness = input.lightness;
       this.value = input.value;
-    } else if ('r' in input && 'g' in input && 'b' in input) {
+    }
+    else if ('r' in input && 'g' in input && 'b' in input) {
       this.r = limit(input.r);
       this.g = limit(input.g);
       this.b = limit(input.b);
       this.a = typeof input.a === 'number' ? limit(input.a, 1) : 1;
-    } else if ('h' in input && 's' in input && 'l' in input) this.fromHsl(input);
+    }
+    else if ('h' in input && 's' in input && 'l' in input) this.fromHsl(input);
     else if ('h' in input && 's' in input && 'v' in input) this.fromHsv(input);
     else throw new Error('@ant-design/fast-color: unsupported input ' + JSON.stringify(input));
   }
@@ -212,7 +217,8 @@ export class FastColor {
       this.g = connect(1);
       this.b = connect(2);
       this.a = hex[3] ? connect(3) / 255 : 1;
-    } else {
+    }
+    else {
       this.r = connect(0, 1);
       this.g = connect(2, 3);
       this.b = connect(4, 5);
@@ -239,19 +245,24 @@ export class FastColor {
     if (prime >= 0 && prime < 1) {
       r = chroma;
       g = second;
-    } else if (prime >= 1 && prime < 2) {
+    }
+    else if (prime >= 1 && prime < 2) {
       r = second;
       g = chroma;
-    } else if (prime >= 2 && prime < 3) {
+    }
+    else if (prime >= 2 && prime < 3) {
       g = chroma;
       b = second;
-    } else if (prime >= 3 && prime < 4) {
+    }
+    else if (prime >= 3 && prime < 4) {
       g = second;
       b = chroma;
-    } else if (prime >= 4 && prime < 5) {
+    }
+    else if (prime >= 4 && prime < 5) {
       r = second;
       b = chroma;
-    } else if (prime >= 5 && prime < 6) {
+    }
+    else if (prime >= 5 && prime < 6) {
       r = chroma;
       b = second;
     }

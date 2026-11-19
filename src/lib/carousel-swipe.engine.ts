@@ -161,7 +161,8 @@ export function carouselSwipeEnd(spec: CarouselSwipeSpec): {
     if (direction === 'left' || direction === 'up') {
       target += carouselSlidesTraversed(spec);
       state.currentDirection = 0;
-    } else if (direction === 'right' || direction === 'down') {
+    }
+    else if (direction === 'right' || direction === 'down') {
       target -= carouselSlidesTraversed(spec);
       state.currentDirection = 1;
     }

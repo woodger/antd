@@ -52,9 +52,21 @@ export async function settleNativeStyleHistory(page: Page) {
 function borderDeclarations(node: SelectSurfaceStyleHistoryNode) {
   return node.inlineProperties.filter(property => /^border(?:-|$)/.test(property.name));
 }
-export function verifyBorder(actual: SelectSurfaceStyleHistoryNode, original: SelectSurfaceStyleHistoryNode, label: string) {
-  assert.deepEqual(actual.inlineBorder, original.inlineBorder, `${label} actual CSSOM border values`);
-  assert.deepEqual(borderDeclarations(actual), borderDeclarations(original), `${label} actual border setter order and priorities`);
+export function verifyBorder(
+  actual: SelectSurfaceStyleHistoryNode,
+  original: SelectSurfaceStyleHistoryNode,
+  label: string
+) {
+  assert.deepEqual(
+    actual.inlineBorder,
+    original.inlineBorder,
+    `${label} actual CSSOM border values`
+  );
+  assert.deepEqual(
+    borderDeclarations(actual),
+    borderDeclarations(original),
+    `${label} actual border setter order and priorities`
+  );
   for (const side of ['Top', 'Right', 'Bottom', 'Left']) {
     for (const property of ['Color', 'Style', 'Width']) {
       const key = `border${side}${property}`;
@@ -69,18 +81,39 @@ export function verifyNativeStyleHistory(actual: NativeStyleHistoryPoint, origin
     rawModel: actual.owner.rawModel, maps: actual.owner.maps },
   { phase: original.owner.phase, open: original.owner.open, model: original.owner.model,
     rawModel: original.owner.rawModel, maps: original.owner.maps }, `${label} actual public CSS maps and state`);
-  assert.deepEqual(actual.owner.events, sourceCase.events.slice(0, original.owner.eventCount), `${label} public event prefix`);
-  assert.equal(actual.owner.rawEvents.length, original.owner.rawEventCount, `${label} raw event prefix`);
-  assert.deepEqual(actual.owner.calls, sourceCase.producerCalls.slice(0, original.owner.callCount), `${label} actual producer prefix`);
+  assert.deepEqual(
+    actual.owner.events,
+    sourceCase.events.slice(0, original.owner.eventCount),
+    `${label} public event prefix`
+  );
+  assert.equal(
+    actual.owner.rawEvents.length,
+    original.owner.rawEventCount,
+    `${label} raw event prefix`
+  );
+  assert.deepEqual(
+    actual.owner.calls,
+    sourceCase.producerCalls.slice(0, original.owner.callCount),
+    `${label} actual producer prefix`
+  );
   assert.deepEqual(actual.dom.view.leaks, [], `${label} consumed public styling props`);
   verifyBorder(actual.border.root, original.border.root, `${label}/root`);
   verifyBorder(actual.border.input, original.border.input, `${label}/input`);
   if (control === 'select' && !original.owner.open && original.border.popup) {
     // Прежний Native Select снимает default popup при закрытии; root/input сохраняют всю историю.
     assert.equal(actual.border.popup, null, `${label} retained Native default popup lifetime`);
-  } else {
-    assert.equal(Boolean(actual.border.popup), Boolean(original.border.popup), `${label} popup presence`);
-    if (original.border.popup) verifyBorder(actual.border.popup!, original.border.popup, `${label}/popup`);
+  }
+  else {
+    assert.equal(
+      Boolean(actual.border.popup),
+      Boolean(original.border.popup),
+      `${label} popup presence`
+    );
+    if (original.border.popup) verifyBorder(
+      actual.border.popup!,
+      original.border.popup,
+      `${label}/popup`
+    );
   }
 }
 

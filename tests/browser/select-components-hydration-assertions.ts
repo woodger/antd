@@ -33,14 +33,22 @@ function focusEvent(value: unknown) {
 }
 function markerAttributes(node: ComponentsHydrationNode, allowed: boolean) {
   const marker = node.attributes.filter(([name]) => name === selectComponentsHydrationSSRMarker);
-  assert.deepEqual(marker, allowed ? [[selectComponentsHydrationSSRMarker, '']] : [], 'exact private SSR marker');
+  assert.deepEqual(
+    marker,
+    allowed ? [[selectComponentsHydrationSSRMarker, '']] : [],
+    'exact private SSR marker'
+  );
   return allowed ? node.attributes.filter(([name]) => name !== selectComponentsHydrationSSRMarker) : node.attributes;
 }
 function editor(actual: ComponentsHydrationNode | null, source: ComponentsHydrationNode | null,
   timingBoundary: boolean, ssrMarker = false) {
   assert.equal(Boolean(actual), Boolean(source), 'physical editor presence');
   if (!actual || !source) return;
-  assert.deepEqual(markerAttributes(actual, ssrMarker), source.attributes, 'complete intrinsic attributes');
+  assert.deepEqual(
+    markerAttributes(actual, ssrMarker),
+    source.attributes,
+    'complete intrinsic attributes'
+  );
   for (const field of ['identity', 'connected', 'tag', 'defaultValue', 'textContent', 'focused'] as const)
     assert.deepEqual(actual[field], source[field], field);
   if (!timingBoundary) {
@@ -61,9 +69,18 @@ function pendingSourceRemoval(entry: ComponentsHydrationSourceCase, point: Compo
   const pending = entry.steps.at(-1)!;
   assert.equal(pending.action.type, 'close-dispose');
   assert(pending.immediate?.owner && pending.settled.owner);
-  assert.deepEqual(pending.settled.owner.events, [...pending.immediate.owner.events, ['open', false]]);
-  assert(pending.immediate.owner.events.every(event => !Array.isArray(event) || event[0] !== 'blur'), 'Source has no removal blur');
-  assert(pending.settled.owner.events.every(event => !Array.isArray(event) || event[0] !== 'blur'), 'Source late ledger has no blur');
+  assert.deepEqual(
+    pending.settled.owner.events,
+    [...pending.immediate.owner.events, ['open', false]]
+  );
+  assert(
+    pending.immediate.owner.events.every(event => !Array.isArray(event) || event[0] !== 'blur'),
+    'Source has no removal blur'
+  );
+  assert(
+    pending.settled.owner.events.every(event => !Array.isArray(event) || event[0] !== 'blur'),
+    'Source late ledger has no blur'
+  );
   assert.equal(point.refs.control, false);
   assert.deepEqual(point.owner.events, pending.immediate.owner.events.length === point.owner.events.length
     ? pending.immediate.owner.events : pending.settled.owner.events);
@@ -74,33 +91,59 @@ function pendingSourceRemoval(entry: ComponentsHydrationSourceCase, point: Compo
 export function verifySelectComponentsHydrationPoint(actual: ComponentsHydrationPoint, source: ComponentsHydrationPoint,
   entry: ComponentsHydrationSourceCase, phase: 'parsed' | 'dirty' | 'commit' | 'settled' | 'removed' | 'cleanup', label: string) {
   const failures: string[] = [];
-  const check = (name: string, fn: () => void) => { try { fn(); } catch (error) { failures.push(label + '/' + name + ': ' + String(error)); } };
+  const check = (name: string, fn: () => void) => {
+    try {
+    fn();
+  }
+  catch (error) {
+    failures.push(label + '/' + name + ': ' + String(error));
+  }
+  };
   const commitTiming = phase === 'commit' && entry.sample.control === 'select'
     && (!isDeepStrictEqual(entry.commit.editor?.value, entry.initial.editor?.value)
       || !isDeepStrictEqual(entry.commit.editor?.selection, entry.initial.editor?.selection));
   const parsedSSR = phase === 'parsed' || phase === 'dirty';
-  check('editor', () => editor(actual.editor, source.editor, commitTiming, parsedSSR && source.root?.tag === 'INPUT'));
+  check(
+    'editor',
+    () => editor(
+      actual.editor,
+      source.editor,
+      commitTiming,
+      parsedSSR && source.root?.tag === 'INPUT'
+    )
+  );
   check('identity', () => assert.deepEqual(actual.identity, source.identity));
   check('public-refs', () => assert.deepEqual(actual.refs, source.refs));
   check('root', () => {
     assert.equal(Boolean(actual.root), Boolean(source.root));
     if (!actual.root || !source.root) return;
-    assert.equal(actual.root.identity, source.root.identity); assert.equal(actual.root.tag, source.root.tag);
+    assert.equal(actual.root.identity, source.root.identity);
+    assert.equal(actual.root.tag, source.root.tag);
     assert.equal(actual.root.connected, source.root.connected);
     markerAttributes(actual.root, parsedSSR);
     // The standard Native Select container retains its documented presentation
     // boundary. New root replacements have the complete Source intrinsic attrs.
     if (source.root.tag === 'INPUT') editor(actual.root, source.root, false, parsedSSR);
-    if (phase !== 'parsed' && phase !== 'dirty' && phase !== 'commit') assert.deepEqual(actual.root.box, source.root.box);
+    if (phase !== 'parsed' && phase !== 'dirty' && phase !== 'commit') assert.deepEqual(
+      actual.root.box,
+      source.root.box
+    );
   });
   check('owner', () => {
     assert.equal(Boolean(actual.owner), Boolean(source.owner));
     if (!actual.owner || !source.owner) return;
     const removed = pendingSourceRemoval(entry, source);
-    for (const field of ['model', 'slot', 'alive', 'revision'] as const) assert.deepEqual(actual.owner[field], source.owner[field], field);
+    for (const field of ['model', 'slot', 'alive', 'revision'] as const) assert.deepEqual(
+      actual.owner[field],
+      source.owner[field],
+      field
+    );
     assert.equal(actual.owner.open, removed?.open ?? source.owner.open);
     const events = (removed?.events ?? source.owner.events).map(sourceCallbackEvent);
-    assert.deepEqual(actual.owner.events, removed ? [...events, selectComponentsConnectedRemovalBlur] : events);
+    assert.deepEqual(
+      actual.owner.events,
+      removed ? [...events, selectComponentsConnectedRemovalBlur] : events
+    );
     assert.deepEqual(actual.owner.methods, source.owner.methods);
     // React composeRef may detach/attach a stable DOM on each render; Svelte
     // tracks attachments. Check every authored lifecycle kind and keep both ledgers.
@@ -111,7 +154,10 @@ export function verifySelectComponentsHydrationPoint(actual: ComponentsHydration
       assert(actual.owner.lifecycle.some(row => row.event === event), 'authored lifecycle ' + event);
     }
   });
-  if (phase !== 'parsed' && phase !== 'dirty') check('popup-count', () => assert.equal(actual.popupCount, source.popupCount));
+  if (phase !== 'parsed' && phase !== 'dirty') check(
+    'popup-count',
+    () => assert.equal(actual.popupCount, source.popupCount)
+  );
   if (phase === 'cleanup') {
     check('retained-root', () => {
       assert.equal(actual.parsedRoot?.identity, source.parsedRoot?.identity);
@@ -123,12 +169,18 @@ export function verifySelectComponentsHydrationPoint(actual: ComponentsHydration
   return { failures, boundaries: [
     ...(parsedSSR ? ['private-SSR-component-marker-on-owner-only'] : []),
     ...(commitTiming ? ['react-layout-commit-vs-svelte-onMount/value-selection'] : []),
-    ...(source.owner?.events.some(event => !isDeepStrictEqual(sourceCallbackEvent(event), focusEvent(event)))
+    ...(source.owner?.events.some(event => !isDeepStrictEqual(
+      sourceCallbackEvent(event),
+      focusEvent(event)
+    ))
       ? ['source-empty-option-deprecated-props-accessor'] : []),
     ...(pendingSourceRemoval(entry, source) ? ['removed-control-pending-close', 'native-connected-input-removal-blur'] : [])
   ] };
 }
-export async function actSelectComponentsHydration(page: Page, action: SelectComponentsHydrationAction) {
+export async function actSelectComponentsHydration(
+  page: Page,
+  action: SelectComponentsHydrationAction
+) {
   if (action.type === 'focus' || action.type === 'blur') await page.evaluate(type => {
     const control = window.componentsHydrationProbe.api!.readRefs().control;
     if (!control) throw Error('Missing real hydrated public control');
@@ -138,11 +190,15 @@ export async function actSelectComponentsHydration(page: Page, action: SelectCom
     await page.evaluate(() => window.componentsHydrationProbe.api!.readRefs().editor!.focus());
     await page.keyboard.press('ControlOrMeta+A');
     await page.keyboard.insertText(action.value);
-  } else if (action.type === 'root-click') await page.locator('[data-hydration-control] .ant-select').click();
+  }
+  else if (action.type === 'root-click') await page.locator('[data-hydration-control] .ant-select').click();
   else if (action.type === 'close-dispose') return page.evaluate(() => {
     const state = window.componentsHydrationProbe;
     const editor = state.api!.readRefs().editor!;
-    editor.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', which: 27, keyCode: 27, bubbles: true, cancelable: true }));
+    editor.dispatchEvent(new KeyboardEvent(
+      'keydown',
+      { key: 'Escape', code: 'Escape', which: 27, keyCode: 27, bubbles: true, cancelable: true }
+    ));
     state.flushUpdate!({ type: 'alive', value: false });
     return state.observe!();
   });

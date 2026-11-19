@@ -40,6 +40,7 @@ async function perform(page: Page, sample: TreeSelectExpandActionSample) {
 for (const entry of reference.cases) {
   test(`TreeSelect title expansion matches Source for ${entry.sample.id}`, async ({ page }) => {
     await mount(page, entry.sample.id);
+
     await expect.poll(() => read(page)).toEqual(entry.initial);
     for (const step of entry.steps) {
       if (step.action === 'open') await input(page).click();
@@ -47,10 +48,12 @@ for (const entry of reference.cases) {
       else if (step.action === 'update') {
         await page.getByRole('button', { name: 'Enable title expansion', exact: true })
           .dispatchEvent('click');
-      } else if (step.action === 'reveal') {
+      }
+      else if (step.action === 'reveal') {
         await page.getByRole('button', { name: 'Resolve title load', exact: true })
           .dispatchEvent('click');
-      } else await perform(page, entry.sample);
+      }
+      else await perform(page, entry.sample);
       await expect.poll(() => read(page), { message: step.action })
         .toEqual({ view: step.view, events: step.events });
     }
@@ -88,11 +91,13 @@ test('TreeSelect title expansion preserves refs, row IDs, editor focus and outsi
 
   await expect(page.getByRole('treeitem', { name: 'Child', exact: true })).toBeVisible();
   await verifyIdentity();
+
   await expect(page.getByRole('textbox', { name: 'Title expansion outside draft' })).toHaveValue('Keep draft');
 });
 
 test('TreeSelect title expansion keeps a single pending load while matching Source hierarchy', async ({ page }) => {
   const observation = reference.observations[0];
+
   expect(observation.steps[1].events.filter(event => event.kind === 'load')).toHaveLength(2);
   await mount(page, observation.sample.id);
   await input(page).click();
@@ -104,6 +109,7 @@ test('TreeSelect title expansion keeps a single pending load while matching Sour
     { kind: 'load', key: 0, expanded: false }
   ]);
   await page.getByRole('button', { name: 'Resolve title load', exact: true }).dispatchEvent('click');
+
   await expect.poll(async () => (await read(page)).view).toEqual(observation.steps[2].view);
   await expect.poll(() => events(page)).toEqual([
     { kind: 'open', open: true }, { kind: 'expand', keys: [0] },
@@ -117,8 +123,10 @@ test('TreeSelect title load completion stays silent after unmount', async ({ pag
   await mount(page, 'lazy-click');
   await input(page).click();
   await content(page).click();
+
   await expect.poll(() => events(page)).toHaveLength(3);
   await page.getByRole('button', { name: 'Unmount title control', exact: true }).dispatchEvent('click');
+
   await expect(input(page)).toHaveCount(0);
   await page.getByRole('button', { name: 'Resolve title load', exact: true }).dispatchEvent('click');
   await page.clock.runFor(1500);

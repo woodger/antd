@@ -14,7 +14,8 @@ for (const sample of reference.cases) {
       const root = page.locator('[data-segmented-config="normal"]');
       if (sample.name === 'zero-icon-label') {
         await expect(root.getByRole('radio', { name: '0', exact: true })).toBeChecked();
-      } else if (['empty-icon-label', 'missing-icon-label'].includes(sample.name)) {
+      }
+      else if (['empty-icon-label', 'missing-icon-label'].includes(sample.name)) {
         await expect(root.getByRole('radio', { name: 'Icon option', exact: true })).toBeChecked();
       }
     });

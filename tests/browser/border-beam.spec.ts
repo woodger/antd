@@ -219,6 +219,7 @@ test(
   async ({ page }) => {
     const first = layers(page.locator('#moving-host-a'));
     const second = layers(page.locator('#moving-host-b'));
+
     await expect(first).toHaveCount(1);
     await page.getByLabel('Second beam target', { exact: true }).check();
 
@@ -290,7 +291,9 @@ test(
   'BorderBeam preserves existing layers when updating count and props',
   async ({ page }) => {
     const host = page.locator('#border-beam-host');
-    await layers(host).evaluate(element => { element.setAttribute('data-original-layer', 'true'); });
+    await layers(host).evaluate(element => {
+      element.setAttribute('data-original-layer', 'true');
+    });
     await page.getByLabel('Beam count', { exact: true }).fill('3');
     await page.getByLabel('Customize beam', { exact: true }).check();
 

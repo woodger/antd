@@ -5,7 +5,10 @@
   import type { SelectCustomTagPrefixCapture } from '../select-components-responsive-tag-prefix-metrics.mjs';
   let selected = $state(selectCustomTagPrefixSamples[0].id), mounted = $state(true);
   let sample = $derived(selectCustomTagPrefixSamples.find(sample => sample.id === selected)!);
-  let capture = $derived.by(() => { void selected; return {} as SelectCustomTagPrefixCapture; });
+  let capture = $derived.by(() => {
+    void selected;
+    return {} as SelectCustomTagPrefixCapture;
+  });
 </script>
 <section id="select-components-responsive-tag-prefix-fixture">
   <label style="position:fixed;left:0;top:0;z-index:1">Responsive custom tag/prefix sample<select bind:value={selected} onchange={() => { mounted = true; }}>

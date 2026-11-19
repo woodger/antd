@@ -34,7 +34,11 @@ export function formLayoutMetrics() {
         label: {
           style: properties(labelBox, ['padding-top', 'padding-bottom', 'text-align']),
           bounds: bounds(labelBox),
-          colon: properties(label, ['visibility', 'margin-inline-start', 'margin-inline-end'], '::after')
+          colon: properties(
+            label,
+            ['visibility', 'margin-inline-start', 'margin-inline-end'],
+            '::after'
+          )
         },
         input: { style: properties(input, ['height', 'font-size']), bounds: bounds(input) }
       };

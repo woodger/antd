@@ -87,12 +87,21 @@ function decodeStored(entry, stored) {
 function decode(entry) {
   return JSON.parse(decodeStored(entry, fs.readFileSync(fixture(entry.fixture))));
 }
-export function verifyDateWeekPrefixSourcePartBinding(reference, kind, variant = 'first', expectedFile) {
+export function verifyDateWeekPrefixSourcePartBinding(
+  reference,
+  kind,
+  variant = 'first',
+  expectedFile
+) {
   const original = reference.rawJSONPart ?? reference;
   const capture = scope(kind, variant);
   assert.equal(original.file.startsWith(capture + '.parts/'), true, 'Original capture binding');
   assert.equal(original.gzipFile, original.file + '.gz');
-  if (expectedFile !== undefined) assert.equal(original.file, expectedFile, 'Owner/action slot binding');
+  if (expectedFile !== undefined) assert.equal(
+    original.file,
+    expectedFile,
+    'Owner/action slot binding'
+  );
   const entry = metadata.parts[original.file];
   assert(entry, 'Missing complete original Source part');
   assert.deepEqual(entry.original, original, 'Exact original raw/stored metadata');
@@ -208,7 +217,10 @@ function property(graph, identity, key) {
 function dateSnapshot(value, authored) {
   assert.equal(value.raw.root.ref, value.identity);
   const fields = ['$y', '$M', '$D', '$H', '$m', '$s', '$ms'];
-  assert.deepEqual(fields.map(key => property(value.raw, value.identity, key)), value.temporal.fields);
+  assert.deepEqual(
+    fields.map(key => property(value.raw, value.identity, key)),
+    value.temporal.fields
+  );
   assert.equal(value.temporal.fields.length, 7);
   assert.equal(value.temporal.valid, true);
   assert.equal(new Date(value.temporal.epoch).toISOString(), value.temporal.iso);
@@ -310,7 +322,11 @@ export function verifyDateWeekPrefixSourceRows(point) {
         }
       }
     }
-    assert.equal(popup.dateCells.length, flattened.length, 'All scoped TDs have a flat date/prefix entry');
+    assert.equal(
+      popup.dateCells.length,
+      flattened.length,
+      'All scoped TDs have a flat date/prefix entry'
+    );
     for (const [index, cell] of popup.dateCells.entries()) {
       const stored = flattened[index];
       assert.equal(cell.surface.identity, stored.cell.surface.identity, 'Original table/cell order');
@@ -318,7 +334,11 @@ export function verifyDateWeekPrefixSourceRows(point) {
       assert.equal(cell.weekNumber, stored.cell.weekNumber);
       assert.equal(cell.title, stored.cell.title);
       assert.equal(cell.disabled, stored.cell.disabled);
-      assert.deepEqual(cell.surface, stored.cell.surface, 'Whole scoped TD observation remains identical');
+      assert.deepEqual(
+        cell.surface,
+        stored.cell.surface,
+        'Whole scoped TD observation remains identical'
+      );
       assert(popup.panels.some(panel => panel.identity === cell.panelIdentity));
     }
   }
@@ -387,7 +407,10 @@ export function verifyDateWeekPrefixSourceProducerChunk(value, envelope) {
       'Actual UI boundaries lie in the original monotonic producer interval');
     previous = count;
   }
-  if (value.phase === 'terminal-tail') assert.deepEqual(value.boundaries, { afterLate: value.cursor });
+  if (value.phase === 'terminal-tail') assert.deepEqual(
+    value.boundaries,
+    { afterLate: value.cursor }
+  );
   for (const [index, call] of value.rows.entries()) {
     assert.equal(call.name, 'disabledDate');
     assert.equal(call.actualArgumentCount, 2);
@@ -399,7 +422,10 @@ export function verifyDateWeekPrefixSourceProducerChunk(value, envelope) {
 }
 export function readDateWeekPrefixSourceProducerChunk(id, index, variant = 'first') {
   const chunks = readDateWeekPrefixSourceProducerChunks(id, variant);
-  assert(Number.isInteger(index) && index >= 0 && index < chunks.length, 'Unknown Source producer chunk');
+  assert(
+    Number.isInteger(index) && index >= 0 && index < chunks.length,
+    'Unknown Source producer chunk'
+  );
   const value = readDateWeekPrefixSourcePart(chunks[index]);
   verifyDateWeekPrefixSourceProducerChunk(value, chunks[index]);
   return value;

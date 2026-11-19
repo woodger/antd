@@ -3,13 +3,21 @@ import { readModalLoadingSourceCSR, readModalLoadingSourceCase } from '../browse
 
 it('loads the complete independently byte-equal Modal.loading Source capture with unmeasured resource counters', () => {
   const source = readModalLoadingSourceCSR();
+
   expect(source.reference.protocolSha256).toBe('4d3e2a1fbfbc4e13a11fecc5d4157701dd692c96e6db0b0c7864a9f475af4ee7');
   expect(source.cases.map(entry => entry.id)).toEqual(['default-footer', 'custom-footer-local-prefix']);
   expect(source.cases.flatMap(entry => entry.steps)).toHaveLength(10);
   for (const entry of source.cases) {
     expect(entry.initial.owner.rawProps).toBeTruthy();
     expect(entry.beforeUnmount.owner.rawEvents).toHaveLength(2);
-    expect(entry.cleanup.browserOwnedResourceCounters).toEqual({ measured: false, observers: null, mutations: null, frames: null, timers: null, ports: null });
+    expect(entry.cleanup.browserOwnedResourceCounters).toEqual({
+      measured: false,
+      observers: null,
+      mutations: null,
+      frames: null,
+      timers: null,
+      ports: null
+    });
     expect(entry.cleanup).toEqual(entry.late);
     expect(entry.cleanup.owner.alive).toBe(false);
     expect(Object.values(entry.cleanup.refs).every(Boolean)).toBe(true);
@@ -48,7 +56,10 @@ it('preserves loading body/footer replacement, physical four-row Skeleton, stabl
     expect(closed.owner.open).toBe(false);
     expect(closed.owner.loading).toBe(true);
     expect(closed.nodes.skeleton?.identity).toBe(reloading.nodes.skeleton?.identity);
-    expect(closed.owner.events).toEqual(['cancel', 'after-close'].map(value => ({ $: 'array', properties: [{ key: '0', value }, { key: 'length', value: 1 }] })));
+    expect(closed.owner.events).toEqual(['cancel', 'after-close'].map(value => ({
+      $: 'array',
+      properties: [{ key: '0', value }, { key: 'length', value: 1 }]
+    })));
   }
 });
 

@@ -54,7 +54,10 @@
     if (action.type === 'fields') form.setFields([
       { name: 'field', errors: ['Authored error'], warnings: ['Authored warning'] }
     ]);
-    if (action.type === 'contexts') { disabled = action.disabled; variant = action.variant; }
+    if (action.type === 'contexts') {
+      disabled = action.disabled;
+      variant = action.variant;
+    }
   }
   export function readRefs() {
     return { root, editor, control, publicRoot: root, publicEditor: editor };
@@ -66,7 +69,10 @@
       fieldValue: form.getFieldValue('field') };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+  }
 </script>
 
 {#snippet customPopup(origin: Snippet)}

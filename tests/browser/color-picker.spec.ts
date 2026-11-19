@@ -3,11 +3,13 @@ import { physicalSelectOption } from './select-physical';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=color-picker');
+
   await expect(page.getByRole('button', { name: 'Color picker', exact: true })).toBeVisible();
 });
 
 test('ColorPicker opens from a native button and dismisses without submitting', async ({ page }) => {
   const trigger = page.getByRole('button', { name: 'Color picker', exact: true });
+
   await expect(trigger).toHaveClass(/configured-color/);
   await expect(trigger).toContainText('#1677FF');
   await trigger.press('Enter');
@@ -16,6 +18,7 @@ test('ColorPicker opens from a native button and dismisses without submitting', 
   await expect(page.getByLabel('Hex color', { exact: true })).toHaveValue('1677ff');
   await page.getByLabel('Hex color', { exact: true }).focus();
   await page.keyboard.press('Escape');
+
   await expect(trigger).toBeFocused();
   await expect(page.getByRole('dialog', { name: 'Color picker' })).toHaveCount(0);
   await expect(page.getByLabel('Color submissions', { exact: true })).toHaveText('0');
@@ -24,8 +27,10 @@ test('ColorPicker opens from a native button and dismisses without submitting', 
 test('ColorPicker sanitizes hex drafts and publishes change before complete', async ({ page }) => {
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
   await page.getByLabel('Hex color', { exact: true }).fill('ff');
+
   await expect(page.getByLabel('Color css', { exact: true })).toHaveText('');
   await page.getByLabel('Hex color', { exact: true }).fill('ff_00_gg');
+
   await expect(page.getByLabel('Hex color', { exact: true })).toHaveValue('ff00');
   await page.getByLabel('Hex color', { exact: true }).fill('ff5500');
 
@@ -38,12 +43,15 @@ test('ColorPicker clears once and preserves source saturation when restoring its
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
   await page.getByRole('button', { name: 'Clear color', exact: true }).click();
   const events = page.getByLabel('Color events', { exact: true });
+
   await expect(events).toContainText('|clear');
   const previous = await events.textContent();
   await page.getByRole('button', { name: 'Clear color', exact: true }).click();
+
   await expect(events).toHaveText(previous!);
   await expect(page.getByRole('button', { name: 'Color picker', exact: true })).toContainText('Прозрачный');
   await page.getByRole('slider', { name: 'Hue', exact: true }).press('Home');
+
   await expect(page.getByLabel('Color css', { exact: true })).toHaveText('rgb(255,22,22)');
 });
 
@@ -52,10 +60,20 @@ test('ColorPicker selects preset colors with native buttons and retains collapse
   await page.getByRole('button', { name: 'rgb(0,255,0)', exact: true }).press('Space');
 
   await expect(page.getByLabel('Color css', { exact: true })).toHaveText('rgb(0,255,0)');
-  await expect(page.getByRole('button', { name: 'rgb(0,255,0)', exact: true })).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.getByRole('button', { name: /Gradients/ })).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.getByRole('button', { name: 'rgb(0,255,0)', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'true'
+  );
+  await expect(page.getByRole('button', { name: /Gradients/ })).toHaveAttribute(
+    'aria-expanded',
+    'false'
+  );
   await page.getByRole('button', { name: /Gradients/ }).click();
-  await page.getByRole('button', { name: 'linear-gradient(90deg, rgb(0,0,0) 0%, rgb(255,255,255) 100%)', exact: true }).click();
+  await page.getByRole(
+    'button',
+    { name: 'linear-gradient(90deg, rgb(0,0,0) 0%, rgb(255,255,255) 100%)', exact: true }
+  ).click();
+
   await expect(page.locator('.ant-color-picker-gradient-slider input')).toHaveCount(2);
 });
 
@@ -65,12 +83,15 @@ test('ColorPicker switches formats and edits RGB and rounded HSB fields', async 
   await physicalSelectOption(page, { name: 'RGB', exact: true }).click();
   await page.getByLabel('Color r', { exact: true }).fill('255');
   await page.getByLabel('Color r', { exact: true }).press('Enter');
+
   await expect(page.getByLabel('Color css', { exact: true })).toHaveText('rgb(255,119,255)');
   await page.getByRole('combobox', { name: 'Color format', exact: true }).click();
   await physicalSelectOption(page, { name: 'HSB', exact: true }).click();
+
   await expect(page.getByLabel('Color s', { exact: true })).toHaveValue(/%$/);
   await page.getByLabel('Color h', { exact: true }).fill('120');
   await page.getByLabel('Color h', { exact: true }).press('Enter');
+
   await expect(page.getByLabel('Color h', { exact: true })).toHaveValue('120');
 });
 
@@ -98,6 +119,7 @@ test('ColorPicker restores its cached gradient after a single-mode round trip', 
   await page.getByRole('button', { name: 'Set gradient owner', exact: true }).click();
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
   await page.getByText('Один цвет', { exact: true }).click();
+
   await expect(page.getByLabel('Color css', { exact: true })).toHaveText('rgb(255,0,0)');
   await page.getByText('Градиент', { exact: true }).click();
 
@@ -125,6 +147,7 @@ test('ColorPicker edits palette saturation and brightness with keyboard without 
 
 test('ColorPicker disables through ConfigProvider and honors custom trigger and panel snippets', async ({ page }) => {
   await page.getByLabel('Disable all components', { exact: true }).check();
+
   await expect(page.getByRole('button', { name: 'Color picker', exact: true })).toBeDisabled();
   await page.getByLabel('Disable all components', { exact: true }).uncheck();
   await page.getByLabel('Custom color trigger', { exact: true }).check();
@@ -138,6 +161,7 @@ test('ColorPicker disables through ConfigProvider and honors custom trigger and 
 test('ColorPicker moves its popup into a custom container and removes it on unmount', async ({ page }) => {
   await page.getByLabel('Color portal', { exact: true }).check();
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
+
   await expect(page.locator('#color-portal [role=dialog]')).toBeVisible();
   await page.getByLabel('Mount color', { exact: true })
     .evaluate((input: HTMLInputElement) => input.click());
@@ -147,6 +171,7 @@ test('ColorPicker moves its popup into a custom container and removes it on unmo
 
 test('InputNumber formatter parses displayed percentages and preserves numeric form values', async ({ page }) => {
   const input = page.getByRole('spinbutton', { name: 'Formatted number', exact: true });
+
   await expect(input).toHaveValue('50%');
   await input.fill('75%');
   await input.press('Enter');
@@ -156,6 +181,7 @@ test('InputNumber formatter parses displayed percentages and preserves numeric f
   expect(await page.locator('form').evaluate((form: HTMLFormElement) =>
     new FormData(form).get('formatted-number'))).toBe('75');
   await input.press('ArrowUp');
+
   await expect(input).toHaveValue('76%');
 });
 
@@ -163,6 +189,7 @@ test('ColorPicker initializes a cleared black owner through the hue control', as
   await page.getByRole('button', { name: 'Clear color owner', exact: true }).click();
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
   await page.getByRole('slider', { name: 'Hue', exact: true }).press('Home');
+
   await expect(page.getByLabel('Color css', { exact: true })).toHaveText('');
   await page.getByRole('slider', { name: 'Hue', exact: true }).press('ArrowRight');
 
@@ -226,11 +253,13 @@ test('ColorPicker keeps format controlled and restores HEX after that prop is re
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
   await page.getByRole('combobox', { name: 'Color format', exact: true }).click();
   await physicalSelectOption(page, { name: 'HSB', exact: true }).click();
+
   await expect(page.getByLabel('Color r', { exact: true })).toBeVisible();
   await expect(page.getByRole('combobox', { name: 'Color format', exact: true })).toHaveValue('RGB');
   await page.keyboard.press('Escape');
   await page.getByRole('combobox', { name: 'Fixed color format', exact: true }).selectOption({ label: 'Auto' });
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
+
   await expect(page.getByLabel('Hex color', { exact: true })).toHaveValue('1677ff');
 });
 
@@ -239,6 +268,7 @@ test('ColorPicker gives repeated Picker snippets independent palette geometry', 
   await page.getByLabel('Repeat color pickers', { exact: true }).check();
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
   const palettes = page.locator('.ant-color-picker-select');
+
   await expect(palettes).toHaveCount(2);
   const box = (await palettes.first().boundingBox())!;
   await page.mouse.click(box.x + box.width * .25, box.y + box.height * .5);
@@ -249,16 +279,28 @@ test('ColorPicker gives repeated Picker snippets independent palette geometry', 
 test('ColorPicker applies preset defaults only on creation and resets them after remount', async ({ page }) => {
   const trigger = page.getByRole('button', { name: 'Color picker', exact: true });
   await trigger.click();
-  await expect(page.getByRole('button', { name: 'Colors', exact: true })).toHaveAttribute('aria-expanded', 'true');
+
+  await expect(page.getByRole('button', { name: 'Colors', exact: true })).toHaveAttribute(
+    'aria-expanded',
+    'true'
+  );
   await page.keyboard.press('Escape');
   await page.getByLabel('Collapsed color defaults', { exact: true }).check();
   await trigger.click();
-  await expect(page.getByRole('button', { name: 'Colors', exact: true })).toHaveAttribute('aria-expanded', 'true');
+
+  await expect(page.getByRole('button', { name: 'Colors', exact: true })).toHaveAttribute(
+    'aria-expanded',
+    'true'
+  );
   await page.keyboard.press('Escape');
   await page.getByLabel('Color presets', { exact: true }).uncheck();
   await page.getByLabel('Color presets', { exact: true }).check();
   await trigger.click();
-  await expect(page.getByRole('button', { name: 'Colors', exact: true })).toHaveAttribute('aria-expanded', 'false');
+
+  await expect(page.getByRole('button', { name: 'Colors', exact: true })).toHaveAttribute(
+    'aria-expanded',
+    'false'
+  );
 });
 
 test('ColorPicker restores the mode derived from a rejected controlled gradient array', async ({ page }) => {
@@ -280,6 +322,7 @@ test('ColorPicker publishes palette movement before completing on pointer releas
   await expect(page.getByLabel('Color css', { exact: true })).toHaveText('rgb(96,109,128)');
   await expect(page.getByLabel('Color events', { exact: true })).not.toContainText('complete:');
   await page.mouse.up();
+
   await expect(page.getByLabel('Color events', { exact: true }))
     .toContainText('complete:rgb(96,109,128)');
 });
@@ -293,6 +336,7 @@ test('ColorPicker preserves source keyboard gradient deletion including one rema
     .toHaveText('linear-gradient(90deg, rgb(0,0,255) 100%)');
   await expect(page.locator('.ant-color-picker-gradient-slider input')).toHaveCount(1);
   await page.locator('.ant-color-picker-gradient-slider input').first().press('Backspace');
+
   await expect(page.getByRole('button', { name: 'Color picker', exact: true })).toContainText('Прозрачный');
 });
 
@@ -305,6 +349,7 @@ test('ColorPicker keeps controlled display during drag and accepts a completion-
 
   await expect(page.getByRole('button', { name: 'Color picker', exact: true })).toContainText('#1677FF');
   await page.mouse.up();
+
   await expect(page.getByRole('button', { name: 'Color picker', exact: true })).toContainText('#606D80');
 });
 
@@ -320,6 +365,7 @@ test('ColorPicker removes alpha controls and enforces source opacity on the next
   await page.getByRole('button', { name: 'Set alpha owner', exact: true }).click();
   await page.getByLabel('Disable color alpha', { exact: true }).check();
   await page.getByRole('button', { name: 'Color picker', exact: true }).click();
+
   await expect(page.getByRole('slider', { name: 'Alpha', exact: true })).toHaveCount(0);
   await expect(page.getByRole('spinbutton', { name: 'Color alpha', exact: true })).toHaveCount(0);
   await page.getByLabel('Hex color', { exact: true }).fill('00ff0080');
@@ -331,10 +377,13 @@ test('ColorPicker keeps hover entry and leave delays and does not open from a to
   await page.getByLabel('Hover color trigger', { exact: true }).check();
   const trigger = page.getByRole('button', { name: 'Color picker', exact: true });
   await trigger.hover();
+
   await expect(page.getByRole('dialog', { name: 'Color picker' })).toBeVisible();
   await page.mouse.move(1100, 680);
+
   await expect(page.getByRole('dialog', { name: 'Color picker' })).toHaveCount(0);
   await trigger.dispatchEvent('pointerenter', { pointerType: 'touch' });
+
   await expect(trigger).toHaveAttribute('aria-expanded', 'false');
 });
 
@@ -344,6 +393,7 @@ test('ColorPicker keeps drafts while hidden and discards them when destroyOnHidd
   await page.getByLabel('Hex color', { exact: true }).fill('ff');
   await page.keyboard.press('Escape');
   await trigger.click();
+
   await expect(page.getByLabel('Hex color', { exact: true })).toHaveValue('ff');
   await page.keyboard.press('Escape');
   await page.getByLabel('Destroy color popup', { exact: true }).check();
@@ -351,6 +401,7 @@ test('ColorPicker keeps drafts while hidden and discards them when destroyOnHidd
   await page.getByLabel('Hex color', { exact: true }).fill('ab');
   await page.keyboard.press('Escape');
   await trigger.click();
+
   await expect(page.getByLabel('Hex color', { exact: true })).toHaveValue('1677ff');
 });
 
@@ -373,6 +424,7 @@ for (const placement of ['top', 'bottom', 'left', 'right', 'topLeft', 'topRight'
 
     await expect(popup).toBeVisible();
     const bounds = (await popup.boundingBox())!;
+
     expect(bounds.x).toBeGreaterThanOrEqual(0);
     expect(bounds.y).toBeGreaterThanOrEqual(0);
     expect(bounds.x + bounds.width).toBeLessThanOrEqual(1280);

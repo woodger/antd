@@ -23,12 +23,18 @@ export interface NativeSurfaceOwner {
 }
 export function readNativeSurfaceOwner() {
   const detail = {};
-  document.querySelector('[data-surface-command]')!.dispatchEvent(new CustomEvent('surfaceread', { detail }));
+  document.querySelector('[data-surface-command]')!.dispatchEvent(new CustomEvent(
+    'surfaceread',
+    { detail }
+  ));
   return detail as NativeSurfaceOwner;
 }
 export function readNativeSurfaceTopology() {
   const refs: { root?: HTMLElement; editor?: HTMLInputElement } = {};
-  document.querySelector('[data-surface-command]')!.dispatchEvent(new CustomEvent('surfacerefs', { detail: refs }));
+  document.querySelector('[data-surface-command]')!.dispatchEvent(new CustomEvent(
+    'surfacerefs',
+    { detail: refs }
+  ));
   const root = refs.root!;
   const outer = root.parentElement?.matches('.container') ? root.parentElement : root;
   // The retained Native AutoComplete popup is a child. Source's Portal is outside
@@ -88,17 +94,28 @@ function ref(value: unknown): number | undefined {
 }
 
 /** Raw callback graphs retain descriptor/order/alias checks, apart from rc's old props getter. */
-export function verifySelectSurfaceEventGraph(actualValue: unknown, sourceValue: unknown, label: string) {
+export function verifySelectSurfaceEventGraph(
+  actualValue: unknown,
+  sourceValue: unknown,
+  label: string
+) {
   const actual = actualValue as Graph, source = sourceValue as Graph;
   const current = new Map(actual.objects.map(node => [node.id, node]));
   const original = new Map(source.objects.map(node => [node.id, node]));
   const pairs = new Map<number, number>(), reverse = new Map<number, number>();
   function walk(left: unknown, right: unknown) {
     const a = ref(left), b = ref(right);
-    if (a === undefined || b === undefined) { assert.deepEqual(left, right, label); return; }
-    if (pairs.has(a)) { assert.equal(pairs.get(a), b, `${label} raw alias`); return; }
+    if (a === undefined || b === undefined) {
+      assert.deepEqual(left, right, label);
+      return;
+    }
+    if (pairs.has(a)) {
+      assert.equal(pairs.get(a), b, `${label} raw alias`);
+      return;
+    }
     assert(!reverse.has(b), `${label} distinct raw identities`);
-    pairs.set(a, b); reverse.set(b, a);
+    pairs.set(a, b);
+    reverse.set(b, a);
     const native = current.get(a)!, legacy = original.get(b)!;
     assert(native && legacy, `${label} complete raw graph`);
     assert.deepEqual({ type: native.type, array: native.array, authoredRole: native.authoredRole },
@@ -109,12 +126,23 @@ export function verifySelectSurfaceEventGraph(actualValue: unknown, sourceValue:
     const properties = legacy.properties.filter(property => !getter || property.key !== 'props');
     assert.deepEqual(native.ownProperties,
       legacy.ownProperties.filter(property => !getter || property.key !== 'props'), `${label} own descriptors`);
-    assert.deepEqual(native.properties.map(property => property.key), properties.map(property => property.key), `${label} own key order`);
+    assert.deepEqual(
+      native.properties.map(property => property.key),
+      properties.map(property => property.key),
+      `${label} own key order`
+    );
     for (const [index, property] of properties.entries()) {
       const other = native.properties[index];
-      assert.equal(Object.hasOwn(other, 'value'), Object.hasOwn(property, 'value'), `${label} data/accessor property`);
+      assert.equal(
+        Object.hasOwn(other, 'value'),
+        Object.hasOwn(property, 'value'),
+        `${label} data/accessor property`
+      );
       if (Object.hasOwn(property, 'value')) walk(other.value, property.value);
-      else { walk(other.get, property.get); walk(other.set, property.set); }
+      else {
+        walk(other.get, property.get);
+        walk(other.set, property.set);
+      }
     }
   }
   walk(actual.root, source.root);
@@ -132,7 +160,11 @@ export function selectSurfaceEventValue(value: unknown): unknown {
 export function verifySelectSurfaceEvents(actual: NativeSurfaceOwner, source: SelectSurfaceSourceCase,
   point: SelectSurfaceSnapshot, label: string) {
   const events = source.events.slice(0, point.owner.eventCount);
-  assert.deepEqual(actual.events.map(selectSurfaceEventValue), events.map(selectSurfaceEventValue), `${label} complete public callback ledger`);
+  assert.deepEqual(
+    actual.events.map(selectSurfaceEventValue),
+    events.map(selectSurfaceEventValue),
+    `${label} complete public callback ledger`
+  );
   assert.equal(actual.rawEvents.length, point.owner.rawEventCount, `${label} every raw callback`);
   for (const [index, event] of actual.rawEvents.entries())
     verifySelectSurfaceEventGraph(event, source.rawEvents[index], `${label}/event${index}`);
@@ -142,14 +174,21 @@ function producerArgument(call: SelectSurfaceProducerCall, sample: SelectSurface
   const argument = decodeSelectSurface(call.argument) as { props?: Record<string, unknown> };
   if (call.kind === 'popupRender' || !argument.props) return argument;
   const props = { ...argument.props };
-  if (Object.hasOwn(props, 'class')) { props.className = props.class; delete props.class; }
+  if (Object.hasOwn(props, 'class')) {
+    props.className = props.class;
+    delete props.class;
+  }
   if (sample.control === 'select') {
     if (props.value === undefined) delete props.value;
     if (props.open === undefined) delete props.open;
   }
   return { ...argument, props };
 }
-function sameInvocation(actual: SelectSurfaceProducerCall, original: SelectSurfaceProducerCall, sample: SelectSurfaceSample) {
+function sameInvocation(
+  actual: SelectSurfaceProducerCall,
+  original: SelectSurfaceProducerCall,
+  sample: SelectSurfaceSample
+) {
   return actual.kind === original.kind && actual.side === original.side
     && isDeepStrictEqual(producerArgument(actual, sample), producerArgument(original, sample))
     && isDeepStrictEqual(decodeSelectSurface(actual.result), decodeSelectSurface(original.result))
@@ -183,7 +222,10 @@ function settledSingleSelectionCall(original: SelectSurfaceProducerCall,
       const settled = entry.producerCalls.slice(previous.owner.callCount, point.owner.callCount)
         .find(call => call.kind === original.kind && call.side === original.side
           && isDeepStrictEqual(producerArgument(call, sample), settledArgument)
-          && isDeepStrictEqual(decodeSelectSurface(call.result), decodeSelectSurface(original.result)));
+          && isDeepStrictEqual(
+            decodeSelectSurface(call.result),
+            decodeSelectSurface(original.result)
+          ));
       // React renders between controlled change and close. Svelte batches the pair;
       // the complete settled props/result receipt must still have executed.
       return Boolean(settled && actual.some(call => sameInvocation(call, settled, sample)));
@@ -198,7 +240,10 @@ export function verifySelectSurfaceCSRCalls(actual: readonly SelectSurfaceProduc
   entry?: SelectSurfaceSourceCase) {
   for (const call of actual) {
     const original = source.find(candidate => sameInvocation(call, candidate, sample));
-    assert(original, `${label} Native ${call.kind}/${call.side} invocation belongs to the original prefix`);
+    assert(
+      original,
+      `${label} Native ${call.kind}/${call.side} invocation belongs to the original prefix`
+    );
     verifySelectSurfaceProducerCalls([call], [original], sample);
   }
   for (const original of source) assert(actual.some(call => sameInvocation(call, original, sample))
@@ -220,10 +265,18 @@ export function verifySelectSurfaceNode(actual: SurfaceNode, source: SurfaceNode
   native?: { callerLabel?: unknown; inputLayout?: ReturnType<typeof readNativeSurfaceTopology>['editorLayout'];
     raw?: SelectSurfaceSnapshot['raw']['slots'][string][number] }) {
   const mapped = legacyTags[slot];
-  assert.equal(actual.tag, mapped && source.tag === mapped[0] ? mapped[1] : source.tag, `${label}/${slot} physical Native element`);
+  assert.equal(
+    actual.tag,
+    mapped && source.tag === mapped[0] ? mapped[1] : source.tag,
+    `${label}/${slot} physical Native element`
+  );
   const sourceClasses = slot === 'root' && sample.control === 'select'
     ? source.authoredClasses.filter(name => !legacyClasses.includes(name)) : source.authoredClasses;
-  assert.deepEqual([...actual.authoredClasses].sort(), [...sourceClasses].sort(), `${label}/${slot} every authored class`);
+  assert.deepEqual(
+    [...actual.authoredClasses].sort(),
+    [...sourceClasses].sort(),
+    `${label}/${slot} every authored class`
+  );
   const currentAttributes = attributes(actual), originalAttributes = attributes(source);
   if (slot === 'root' && sample.control === 'select') {
     assert.equal(currentAttributes.role, 'presentation', `${label} retained Native root role`);
@@ -242,12 +295,20 @@ export function verifySelectSurfaceNode(actual: SurfaceNode, source: SurfaceNode
     // Existing Native removal remains a keyboard-accessible, labelled button.
     // Both original attributes and the complete actual attributes stay in trace.
     assert.equal(originalAttributes['aria-label'], undefined, `${label} original remove span`);
-    assert.match(currentAttributes['aria-label'], /^Remove .+$/, `${label} retained labelled Native remove button`);
+    assert.match(
+      currentAttributes['aria-label'],
+      /^Remove .+$/,
+      `${label} retained labelled Native remove button`
+    );
     delete currentAttributes['aria-label'];
   }
   if (slot === 'popup.root' && !Object.hasOwn(originalAttributes, 'aria-label') && typeof native?.callerLabel === 'string') {
     // The pre-existing Native wrapper and list retain the caller's own label.
-    assert.equal(currentAttributes['aria-label'], native.callerLabel, `${label} retained caller-labelled Native popup`);
+    assert.equal(
+      currentAttributes['aria-label'],
+      native.callerLabel,
+      `${label} retained caller-labelled Native popup`
+    );
     delete currentAttributes['aria-label'];
   }
   const nativeAttributes = Object.fromEntries(native?.raw?.attributes ?? []);
@@ -255,7 +316,11 @@ export function verifySelectSurfaceNode(actual: SurfaceNode, source: SurfaceNode
     && nativeAttributes.class?.split(/\s+/).includes('ant-select-item-empty')
     && originalAttributes.role === 'listbox' && currentAttributes.role === 'listbox'
     && originalAttributes['aria-label'] === undefined && typeof native?.callerLabel === 'string') {
-    assert.equal(currentAttributes['aria-label'], native.callerLabel, `${label} retained caller-labelled empty Native listbox`);
+    assert.equal(
+      currentAttributes['aria-label'],
+      native.callerLabel,
+      `${label} retained caller-labelled empty Native listbox`
+    );
     delete currentAttributes['aria-label'];
   }
   assert.deepEqual(currentAttributes, originalAttributes, `${label}/${slot} public attributes`);
@@ -282,14 +347,17 @@ export function verifySelectSurfaceNode(actual: SurfaceNode, source: SurfaceNode
   if (nativePopover && !hasAuthoredDisplay && source.css.display === 'block' && actual.css.display === 'flex') {
     // The old manual popover uses a flex column; physical boxes stay strict above.
     assert.equal(actual.css.display, 'flex', `${label} retained Native popup layout`);
-  } else if (slot === 'suffix' && !hasAuthoredDisplay) {
+  }
+  else if (slot === 'suffix' && !hasAuthoredDisplay) {
     assert.equal(source.css.display, 'block', `${label} original suffix default`);
     assert.equal(actual.css.display, source.css.display, `${label} Source suffix content flow`);
-  } else if (oldFlexInput && sample.control === 'select' && sample.mode && !hasAuthoredDisplay
+  }
+  else if (oldFlexInput && sample.control === 'select' && sample.mode && !hasAuthoredDisplay
     && source.css.display === 'inline-block' && actual.css.display === 'block') {
     // Old Native multiple/tags inputs are direct flex items; Source wraps them.
     assert.equal(actual.css.display, 'block', `${label} retained blockified Native input`);
-  } else if (!nativeLayout || hasAuthoredDisplay) {
+  }
+  else if (!nativeLayout || hasAuthoredDisplay) {
     assert.equal(actual.css.display, source.css.display, `${label}/${slot} display`);
   }
   const oldAbsolutePlaceholder = slot === 'placeholder' && sample.control === 'select'
@@ -301,16 +369,32 @@ export function verifySelectSurfaceNode(actual: SurfaceNode, source: SurfaceNode
     && nativeAttributes.class?.split(/\s+/).includes('ant-select-dropdown-list');
   if (oldNativeList && !hasAuthoredMinHeight && source.css.minHeight === '0px' && actual.css.minHeight === 'auto') {
     assert.equal(actual.css.minHeight, 'auto', `${label} retained Native popup list minimum`);
-  } else if (oldNativeTag && !hasAuthoredMinHeight && source.css.minHeight === '0px' && actual.css.minHeight === 'auto') {
+  }
+  else if (oldNativeTag && !hasAuthoredMinHeight && source.css.minHeight === '0px' && actual.css.minHeight === 'auto') {
     assert.equal(actual.css.minHeight, 'auto', `${label} retained Native flex tag minimum`);
-  } else if (oldAbsolutePlaceholder && !hasAuthoredMinHeight && source.css.minHeight === 'auto' && actual.css.minHeight === '0px') {
-    assert.equal(actual.css.minHeight, '0px', `${label} retained absolute Native placeholder minimum`);
-  } else if (oldFlexInput && !hasAuthoredMinHeight && source.css.minHeight === '0px' && actual.css.minHeight === 'auto') {
-    assert.equal(actual.css.minHeight, 'auto', `${label} retained Native flex-input automatic minimum`);
-  } else if (!nativeLayout || hasAuthoredMinHeight) {
+  }
+  else if (oldAbsolutePlaceholder && !hasAuthoredMinHeight && source.css.minHeight === 'auto' && actual.css.minHeight === '0px') {
+    assert.equal(
+      actual.css.minHeight,
+      '0px',
+      `${label} retained absolute Native placeholder minimum`
+    );
+  }
+  else if (oldFlexInput && !hasAuthoredMinHeight && source.css.minHeight === '0px' && actual.css.minHeight === 'auto') {
+    assert.equal(
+      actual.css.minHeight,
+      'auto',
+      `${label} retained Native flex-input automatic minimum`
+    );
+  }
+  else if (!nativeLayout || hasAuthoredMinHeight) {
     assert.equal(actual.css.minHeight, source.css.minHeight, `${label}/${slot} min-height`);
   }
-  if (slot !== 'root') assert.equal(actual.text, source.text, `${label}/${slot} actual rendered content`);
+  if (slot !== 'root') assert.equal(
+    actual.text,
+    source.text,
+    `${label}/${slot} actual rendered content`
+  );
 }
 /** Existing default Select removes its hidden popup; custom popupRender retains its DOM. */
 export function nativeSelectPopupUnmounted(actual: ReturnType<typeof readSelectSurface>, source: ReturnType<typeof readSelectSurface>,
@@ -318,7 +402,11 @@ export function nativeSelectPopupUnmounted(actual: ReturnType<typeof readSelectS
   const unmounted = control === 'select' && authored.popupRender === undefined
     && source.view.popup.present && !actual.view.popup.present;
   if (unmounted) {
-    assert.equal(source.view.popup.visible, false, 'Only a hidden Source popup has the old Native lifetime boundary');
+    assert.equal(
+      source.view.popup.visible,
+      false,
+      'Only a hidden Source popup has the old Native lifetime boundary'
+    );
     assert.equal(actual.view.popup.visible, false, 'Unmounted default popup cannot be visible');
     assert.equal(actual.view.editor.expanded, 'false', 'Default Native editor is closed');
   }
@@ -327,14 +415,20 @@ export function nativeSelectPopupUnmounted(actual: ReturnType<typeof readSelectS
 export function normalizedSelectSurfaceAuthoredProps(value: unknown) {
   const props = { ...decodeSelectSurface(value) as Record<string, unknown> };
   delete props.ref;
-  if (Object.hasOwn(props, 'class')) { props.className = props.class; delete props.class; }
+  if (Object.hasOwn(props, 'class')) {
+    props.className = props.class;
+    delete props.class;
+  }
   return props;
 }
 function normalizedProvider(value: unknown) {
   const provider = { ...decodeSelectSurface(value) as Record<string, unknown> };
   if (provider.select && typeof provider.select === 'object') {
     const select = { ...provider.select as Record<string, unknown> };
-    if (Object.hasOwn(select, 'class')) { select.className = select.class; delete select.class; }
+    if (Object.hasOwn(select, 'class')) {
+      select.className = select.class;
+      delete select.class;
+    }
     provider.select = select;
   }
   if (provider.componentSize === 'medium') provider.componentSize = 'middle';
@@ -344,20 +438,53 @@ function normalizedProvider(value: unknown) {
 export function verifySelectSurfacePoint(actual: NativeSurfaceSnapshot, source: SelectSurfaceSnapshot & { action?: SelectSurfaceAction },
   entry: SelectSurfaceSourceCase, sample: SelectSurfaceSample, label: string, _initial: boolean) {
   assert.equal(actual.owner.alive, true, `${label} mounted owner`);
-  assert.deepEqual(decodeSelectSurface(actual.owner.settings), decodeSelectSurface(source.owner.settings), `${label} authored settings`);
+  assert.deepEqual(
+    decodeSelectSurface(actual.owner.settings),
+    decodeSelectSurface(source.owner.settings),
+    `${label} authored settings`
+  );
   assert.deepEqual(actual.owner.model, source.owner.model, `${label} public owner model`);
   assert.equal(actual.owner.open, source.owner.open, `${label} public open owner`);
-  assert.deepEqual(normalizedSelectSurfaceAuthoredProps(actual.owner.authoredProps), normalizedSelectSurfaceAuthoredProps(source.owner.authoredProps), `${label} authored public props`);
-  assert.deepEqual(normalizedProvider(actual.owner.authoredProvider), normalizedProvider(source.owner.authoredProvider), `${label} authored provider`);
+  assert.deepEqual(
+    normalizedSelectSurfaceAuthoredProps(actual.owner.authoredProps),
+    normalizedSelectSurfaceAuthoredProps(source.owner.authoredProps),
+    `${label} authored public props`
+  );
+  assert.deepEqual(
+    normalizedProvider(actual.owner.authoredProvider),
+    normalizedProvider(source.owner.authoredProvider),
+    `${label} authored provider`
+  );
   verifySelectSurfaceEvents(actual.owner, entry, source, label);
-  verifySelectSurfaceCSRCalls(actual.owner.calls, entry.producerCalls.slice(0, source.owner.callCount), sample, label, entry);
+  verifySelectSurfaceCSRCalls(
+    actual.owner.calls,
+    entry.producerCalls.slice(0, source.owner.callCount),
+    sample,
+    label,
+    entry
+  );
   const authored = normalizedSelectSurfaceAuthoredProps(source.owner.authoredProps);
   const unmountedPopup = nativeSelectPopupUnmounted(actual.dom, source, sample.control, authored);
   const legacyClasses = typeof authored.className === 'string' ? authored.className.split(/\s+/).filter(Boolean) : [];
-  assert.equal(actual.topology.publicRootIsInner, sample.control === 'select', `${label} original public root ownership`);
-  assert.equal(actual.topology.rootHasEditor, true, `${label} public editor belongs to public control`);
-  for (const name of legacyClasses) assert(actual.topology.outerClasses.includes(name), `${label} legacy class ${name} on outer root`);
-  assert.deepEqual(Object.keys(actual.dom.view.slots), Object.keys(source.view.slots), `${label} exact semantic slot schema`);
+  assert.equal(
+    actual.topology.publicRootIsInner,
+    sample.control === 'select',
+    `${label} original public root ownership`
+  );
+  assert.equal(
+    actual.topology.rootHasEditor,
+    true,
+    `${label} public editor belongs to public control`
+  );
+  for (const name of legacyClasses) assert(
+    actual.topology.outerClasses.includes(name),
+    `${label} legacy class ${name} on outer root`
+  );
+  assert.deepEqual(
+    Object.keys(actual.dom.view.slots),
+    Object.keys(source.view.slots),
+    `${label} exact semantic slot schema`
+  );
   for (const [slot, nodes] of Object.entries(source.view.slots)) {
     const current = actual.dom.view.slots[slot];
     if (unmountedPopup && slot.startsWith('popup.')) {
@@ -370,10 +497,24 @@ export function verifySelectSurfacePoint(actual: NativeSurfaceSnapshot, source: 
       { callerLabel: Object.hasOwn(authored, 'aria-label') ? authored['aria-label'] : undefined,
         inputLayout: actual.topology.editorLayout, raw: actual.dom.raw.slots[slot][index] });
   }
-  assert.equal(actual.topology.rootTextWithoutChildPopup, source.view.slots.root[0].text, `${label} painted root content without retained child popup`);
-  assert.deepEqual({ present: actual.dom.view.popup.present, visible: actual.dom.view.popup.visible },
-    { present: unmountedPopup ? false : source.view.popup.present, visible: source.view.popup.visible }, `${label} actual lazy popup presence/visibility`);
-  assert.equal(actual.dom.view.popup.extras.length, unmountedPopup ? 0 : source.view.popup.extras.length, `${label} every custom/empty/group popup node`);
+  assert.equal(
+    actual.topology.rootTextWithoutChildPopup,
+    source.view.slots.root[0].text,
+    `${label} painted root content without retained child popup`
+  );
+  assert.deepEqual({
+    present: actual.dom.view.popup.present,
+    visible: actual.dom.view.popup.visible
+  },
+    {
+      present: unmountedPopup ? false : source.view.popup.present,
+      visible: source.view.popup.visible
+    }, `${label} actual lazy popup presence/visibility`);
+  assert.equal(
+    actual.dom.view.popup.extras.length,
+    unmountedPopup ? 0 : source.view.popup.extras.length,
+    `${label} every custom/empty/group popup node`
+  );
   for (const [index, node] of (unmountedPopup ? [] : source.view.popup.extras).entries())
     verifySelectSurfaceNode(actual.dom.view.popup.extras[index], node, 'extra', sample, [], `${label}/extra${index}`,
       source.raw.extras[index].attributes.find(([name]) => name === 'style')?.[1] ?? '',
@@ -386,7 +527,8 @@ export function verifySelectSurfacePoint(actual: NativeSurfaceSnapshot, source: 
     assert.equal(source.view.focus, null, `${label} original Portal Tab exit`);
     assert.equal(actual.owner.open, false, `${label} Tab closes the owner`);
     assert.equal(actual.dom.view.focus, 'outside', `${label} natural Native Tab exit`);
-  } else assert.equal(actual.dom.view.focus, source.view.focus, `${label} real focus target`);
+  }
+  else assert.equal(actual.dom.view.focus, source.view.focus, `${label} real focus target`);
   let editor = source.view.editor;
   if (sample.control === 'select' && !sample.mode && (editor.expanded === 'false' || editor.readonly)) {
     assert.equal(editor.value, '', `${label} original empty single search editor`);
@@ -397,5 +539,9 @@ export function verifySelectSurfacePoint(actual: NativeSurfaceSnapshot, source: 
     const text = typeof model === 'string' || typeof model === 'number' ? labelText : '';
     editor = { ...editor, value: text, caret: [text.length, text.length] };
   }
-  assert.deepEqual(actual.dom.view.editor, editor, `${label} editor with bounded existing Native scalar contract`);
+  assert.deepEqual(
+    actual.dom.view.editor,
+    editor,
+    `${label} editor with bounded existing Native scalar contract`
+  );
 }

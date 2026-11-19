@@ -28,7 +28,8 @@ describe('Segmented local prefix public package SSR', () => {
         expect(body).not.toContain('data-ant-segmented-thumb');
         if (prefix === 'ant-segmented') {
           expect(head).not.toContain('data-ant-svelte-theme="segmented-prefix:');
-        } else {
+        }
+        else {
           expect(head).toContain(`data-ant-svelte-theme="segmented-prefix:${prefix}"`);
           expect(head).toContain(`.${prefix}:where([data-ant-segmented-prefix])`);
         }

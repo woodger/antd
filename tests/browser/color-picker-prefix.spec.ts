@@ -150,12 +150,15 @@ test('ColorPicker prefixes retain default styling and a custom trigger', async (
   await page.getByRole('checkbox', { name: 'Custom prefix ColorPicker', exact: true })
     .dispatchEvent('click');
   const custom = page.getByRole('button', { name: 'Custom prefix color', exact: true });
+
   await expect(custom).toBeVisible();
   await custom.click();
+
   await expect(popup).not.toBeVisible();
   await custom.click();
 
   await expect(popup).toBeVisible();
   await popup.getByRole('textbox', { name: 'Hex color', exact: true }).press('Escape');
+
   await expect(custom).toBeFocused();
 });

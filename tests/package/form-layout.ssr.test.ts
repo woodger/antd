@@ -12,6 +12,7 @@ describe('Form layouts public package', () => {
       archiveSha256: registry.upstream.archiveSha256
     });
     const sample = reference.cases.find(({ sample }) => sample.id === 'inline-1280-ltr')!;
+
     expect(sample.metrics.form.style).toMatchObject({ display: 'flex', 'flex-wrap': 'wrap' });
     expect(sample.metrics.items.map(({ style }) => style['margin-inline-end'])).toEqual(['16px', '16px']);
     expect(sample.metrics.items.map(({ style }) => style['margin-bottom'])).toEqual(['0px', '0px']);

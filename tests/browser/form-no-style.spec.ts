@@ -40,9 +40,11 @@ test('Form noStyle updates collection on noStyle/help changes instead of retaini
     .selectOption('error');
   const parent = page.locator('.capture-parent');
   const messages = parent.locator('.ant-form-item-explain-error');
+
   await expect(messages).toHaveCount(1);
 
   await page.getByRole('button', { name: 'Toggle no style layout', exact: true }).click();
+
   await expect(page.locator('.capture-child .ant-form-item-explain-error')).toHaveText('Invalid');
   await expect(messages).toHaveCount(1);
   await expect(parent.locator('.ant-form-item-explain').filter({
@@ -51,13 +53,16 @@ test('Form noStyle updates collection on noStyle/help changes instead of retaini
   expect((await page.evaluate(formNoStyleMetrics)).parent?.errors).toEqual([]);
 
   await page.getByRole('button', { name: 'Toggle no style layout', exact: true }).click();
+
   await expect.poll(async () => (await page.evaluate(formNoStyleMetrics)).parent?.errors)
     .toEqual(['Invalid']);
   await page.getByRole('button', { name: 'Toggle no style help', exact: true }).click();
+
   await expect(messages).toHaveCount(0);
   await expect(page.getByRole('textbox', { name: 'first', exact: true }))
     .not.toHaveAttribute('aria-describedby');
   await page.getByRole('button', { name: 'Toggle no style help', exact: true }).click();
+
   await expect(messages).toHaveText('Invalid');
 });
 
@@ -72,12 +77,14 @@ test('Form noStyle retains native focus/selection across reset and releases coll
 
   await page.getByRole('button', { name: 'Reset no style field', exact: true })
     .evaluate((node: HTMLButtonElement) => node.click());
+
   await expect(input).toBeFocused();
   expect(await input.evaluate((node, previous) => node === previous, old)).toBe(false);
   expect(await input.evaluate((node: HTMLInputElement) => [node.selectionStart, node.selectionEnd]))
     .toEqual([1, 3]);
   await expect(page.locator('.ant-form-item-explain-error')).toHaveCount(0);
   await page.getByRole('button', { name: 'Toggle no style field', exact: true }).click();
+
   await expect(input).toHaveCount(0);
   await expect(page.locator('.ant-form-item-explain-error')).toHaveCount(0);
 });
@@ -90,14 +97,17 @@ test('Form noStyle separates silent validation, connects visible errors and focu
   await input.fill('');
   await page.getByRole('button', { name: 'Validate no style silently', exact: true })
     .evaluate((node: HTMLButtonElement) => node.click());
+
   await expect(page.getByRole('status', { name: 'No style validation', exact: true }))
     .toHaveText('invalid');
   await expect(page.locator('.ant-form-item-explain-error')).toHaveCount(0);
 
   const submit = page.getByRole('button', { name: 'Submit no style form', exact: true });
   await submit.focus();
+
   await expect(input).toHaveAccessibleDescription('Required');
   await submit.click();
+
   await expect(input).toBeFocused();
   await expect(input).toHaveAttribute('aria-invalid', 'true');
   await expect(input).toHaveAccessibleDescription('Required');
@@ -108,11 +118,14 @@ test('Form noStyle publishes async errors and clears them when their field is re
   await page.getByRole('combobox', { name: 'Form no style sample', exact: true })
     .selectOption('async');
   await page.getByRole('button', { name: 'Validate no style visibly', exact: true }).click();
+
   await expect.poll(async () => (await page.evaluate(formNoStyleMetrics)).input.status)
     .toBe('validating');
   await page.getByRole('button', { name: 'Release no style validation', exact: true }).click();
+
   await expect(page.locator('.capture-parent .ant-form-item-explain-error')).toHaveText('Async error');
   await page.getByRole('button', { name: 'Toggle no style field', exact: true }).click();
+
   await expect(page.locator('.ant-form-item-explain-error')).toHaveCount(0);
 });
 
@@ -144,21 +157,26 @@ test('Form noStyle keeps keyed list messages through move, insert and removal', 
   const messages = page.locator('.no-style-list-parent .ant-form-item-explain-error');
   const anna = page.getByRole('textbox', { name: 'User 0', exact: true });
   const bob = page.getByRole('textbox', { name: 'User 1', exact: true });
+
   await expect(messages).toHaveText(['Bob error', 'Anna error']);
   const original = await anna.elementHandle();
 
   await page.getByRole('button', { name: 'Move no style user 1 to first', exact: true }).click();
+
   await expect(bob).toHaveValue('Bob');
   await expect(anna).toHaveValue('Anna');
   expect(await anna.evaluate((node, previous) => node === previous, original)).toBe(true);
   await expect(messages).toHaveText(['Bob error', 'Anna error']);
   await page.getByRole('button', { name: 'Insert no style user', exact: true }).click();
+
   await expect(page.getByRole('textbox', { name: 'User 2', exact: true })).toHaveValue('Cora');
   await expect(messages).toHaveText(['Bob error', 'Anna error']);
   await page.getByRole('button', { name: 'Remove no style user 1', exact: true }).click();
+
   await expect(messages).toHaveText(['Anna error']);
   await expect(anna).toHaveAccessibleDescription('Anna error');
   await page.getByRole('button', { name: 'Remove no style user 0', exact: true }).click();
+
   await expect(messages).toHaveCount(0);
 });
 
@@ -168,6 +186,7 @@ test('Form noStyle reset respects focus moved by the caller', async ({ page }) =
   await input.focus();
   await page.getByRole('button', { name: 'Reset no style and move focus', exact: true })
     .evaluate((node: HTMLButtonElement) => node.click());
+
   await expect(page.getByRole('textbox', { name: 'No style owner focus', exact: true })).toBeFocused();
 });
 
@@ -176,10 +195,12 @@ test('Form noStyle ignores an async result completed after its field is removed'
   await page.getByRole('combobox', { name: 'Form no style sample', exact: true })
     .selectOption('async');
   await page.getByRole('button', { name: 'Validate no style visibly', exact: true }).click();
+
   await expect.poll(async () => (await page.evaluate(formNoStyleMetrics)).input.status)
     .toBe('validating');
   await page.getByRole('button', { name: 'Toggle no style field', exact: true }).click();
   await page.getByRole('button', { name: 'Release no style validation', exact: true }).click();
+
   await expect(page.getByRole('status', { name: 'No style validation', exact: true }))
     .toHaveText('invalid');
   await expect(page.locator('.ant-form-item-explain-error')).toHaveCount(0);

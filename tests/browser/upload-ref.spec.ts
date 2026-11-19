@@ -31,11 +31,14 @@ for (const entry of transport.cases) {
       await page.locator('[data-upload-ref-host] input[type=file]').setInputFiles({
         name: 'pending.txt', mimeType: 'text/plain', buffer: Buffer.from('draft')
       });
+
       await expect.poll(() => page.evaluate(readUploadRefTransport)).toEqual(entry.initial);
 
       await page.getByRole('button', { name: 'Complete Upload through ref', exact: true }).click();
+
       await expect.poll(() => page.evaluate(readUploadRefTransport)).toEqual(entry.completed);
       await page.getByRole('button', { name: 'Abort delegated Upload', exact: true }).click();
+
       await expect.poll(() => page.evaluate(readUploadRefTransport)).toEqual(entry.aborted);
       await page.getByRole('button', { name: 'Abort delegated Upload', exact: true }).click();
 
@@ -56,6 +59,7 @@ for (const entry of transport.cases) {
       await page.locator('[data-upload-ref-host] input[type=file]').setInputFiles({
         name: 'pending.txt', mimeType: 'text/plain', buffer: Buffer.from('draft')
       });
+
       await expect(page.locator('[data-ref-callbacks]')).toHaveText('1');
 
       await page.getByRole('button', { name: 'Unmount ref Upload', exact: true }).click();
@@ -80,12 +84,16 @@ for (const drag of [false, true]) for (const mechanism of ['ref', 'picker']) {
       await page.goto('/?fixture=upload-ref');
       await page.getByRole('combobox', { name: 'Upload ref sample', exact: true })
         .selectOption(drag ? '10' : '1');
-      await page.getByRole('checkbox', { name: 'Unmount during first Upload callback', exact: true })
+      await page.getByRole(
+        'checkbox',
+        { name: 'Unmount during first Upload callback', exact: true }
+      )
         .check();
 
       if (mechanism === 'ref') {
         await page.getByRole('button', { name: 'Run reentrant Upload batch', exact: true }).click();
-      } else {
+      }
+      else {
         await page.locator('[data-upload-ref-host] input[type=file]').setInputFiles(
           ['a', 'b'].map(name => ({ name: `${name}.txt`, mimeType: 'text/plain',
             buffer: Buffer.from(name) }))

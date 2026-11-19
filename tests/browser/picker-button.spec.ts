@@ -2,6 +2,7 @@ import { test, expect } from './test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=picker-button');
+
   await expect(page.getByRole('heading', { name: 'Picker Button composition', exact: true }))
     .toBeVisible();
 });
@@ -14,6 +15,7 @@ for (const kind of ['date', 'range', 'time', 'time-range']) {
     }).click();
 
     const button = page.getByRole('dialog').locator('.ant-picker-ok > button');
+
     await expect(button).toHaveClass(/source-picker-button/);
     await expect(button).toHaveClass(/footer-small-string/);
     await expect(button).toHaveClass(/ant-btn-round/);
@@ -27,8 +29,10 @@ for (const kind of ['date', 'range', 'time', 'time-range']) {
     await button.dispatchEvent('pointerdown');
 
     const output = page.getByLabel('Footer Wave reports', { exact: true });
+
     await expect(output).toContainText('"component":"Button"');
     const [report] = JSON.parse(await output.innerText());
+
     expect(report).toMatchObject({ component: 'Button', event: 'pointerdown', target: 'BUTTON',
       primary: '#1677ff' });
     await expect(page.getByLabel('Footer confirmations', { exact: true })).toHaveText('0');

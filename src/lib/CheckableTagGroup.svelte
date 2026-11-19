@@ -67,7 +67,8 @@
         ? [...values, option.value] : values.filter(value => value !== option.value);
       innerValue = next;
       props.onChange?.(next);
-    } else {
+    }
+    else {
       const next = checked ? option.value : null;
       innerValue = next;
       props.onChange?.(next);

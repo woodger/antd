@@ -18,7 +18,10 @@ describe('Upload semantic slots', () => {
   });
 
   it('renders the four slots without leaking semantic props to the file input', () => {
-    const body = render(UploadSemanticScope, { props: { sample: { id: 'object', mode: 'object' } } })
+    const body = render(
+      UploadSemanticScope,
+      { props: { sample: { id: 'object', mode: 'object' } } }
+    )
       .body;
 
     for (const slot of ['root', 'list', 'item', 'trigger']) expect(body).toContain(`custom-${slot}`);

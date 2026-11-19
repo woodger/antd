@@ -32,7 +32,10 @@ export function snapshotBreadcrumbPrefix() {
             x: text.x - bounds.x,
             y: text.y - bounds.y,
             label: style(label, ['font-size', 'color', 'line-height']),
-            link: style(link, ['padding-inline-start', 'margin-inline-start', 'text-decoration-line']),
+            link: style(
+              link,
+              ['padding-inline-start', 'margin-inline-start', 'text-decoration-line']
+            ),
             overlay: overlay ? style(overlay, ['height', 'padding-inline-start', 'color']) : null
           };
         }),

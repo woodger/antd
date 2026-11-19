@@ -20,7 +20,13 @@ export interface SelectSurfaceHydrationState {
   read: NonNullable<Capture['read']>;
   refs: NonNullable<Capture['readRefs']>;
   dispose(): Promise<void>;
-  cleaned?: { root: boolean; editor: boolean; control: boolean; publicRoot: boolean; publicEditor: boolean };
+  cleaned?: {
+    root: boolean;
+    editor: boolean;
+    control: boolean;
+    publicRoot: boolean;
+    publicEditor: boolean
+  };
 }
 declare global { interface Window { selectSurfaceHydration?: SelectSurfaceHydrationState } }
 const id = new URL(location.href).searchParams.get('sample');
@@ -39,7 +45,10 @@ const initialValue = editor.value;
 const initialCaret = [editor.selectionStart, editor.selectionEnd];
 const outside = document.querySelector<HTMLInputElement>('[aria-label="Surface outside draft"]')!;
 const capture: Capture = {};
-const instance = hydrate(SelectSurfaceHydrationCase, { target, props: { sample, capture }, recover: false });
+const instance = hydrate(
+  SelectSurfaceHydrationCase,
+  { target, props: { sample, capture }, recover: false }
+);
 await tick();
 if (!capture.read || !capture.readRefs) throw Error('Hydrated surface must expose its actual public owner');
 const current = capture.readRefs();

@@ -6,7 +6,10 @@
   let selected = $state(autocompleteRenderSamples[0].id);
   let sample = $derived(autocompleteRenderSamples.find(sample => sample.id === selected)!);
   let mounted = $state(true);
-  let capture = $derived.by(() => { void selected; return {} as Capture; });
+  let capture = $derived.by(() => {
+    void selected;
+    return {} as Capture;
+  });
 </script>
 <section>
   <label id="autocomplete-render-fixture" style="position:fixed;left:0;top:0;z-index:1">AutoComplete render sample<select bind:value={selected} onchange={() => { mounted = true; }}>

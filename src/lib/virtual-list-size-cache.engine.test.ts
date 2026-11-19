@@ -20,6 +20,7 @@ describe('virtual list render size cache', () => {
   it('starts a new measured frame without changing a retained previous getter', () => {
     let heights = new Map<string, number>();
     const previous = createVirtualListSizeCache(rows, key, () => heights, 16);
+
     expect(previous('a', 'b')).toEqual({ top: 0, bottom: 32 });
 
     heights = new Map([['a', 32], ['b', 32]]);

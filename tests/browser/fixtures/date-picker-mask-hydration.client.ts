@@ -42,5 +42,9 @@ declare global {
 }
 window.maskHydrationContract = {
   read,
-  async dispose() { await unmount(app); await tick(); return read(); }
+  async dispose() {
+    await unmount(app);
+    await tick();
+    return read();
+  }
 };

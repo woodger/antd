@@ -45,7 +45,12 @@ export function createVirtualList<Row, Key>(options: {
     options.rows(), options.getKey, heights, options.estimate(), options.height(), top,
     innerHeight, options.enabled(), options.width()
   ));
-  const sizes = $derived(virtualListSizes(options.rows(), options.getKey, heights, options.estimate()));
+  const sizes = $derived(virtualListSizes(
+    options.rows(),
+    options.getKey,
+    heights,
+    options.estimate()
+  ));
   let renderedGetSize = options.renderSizeCache ? untrack(() => createVirtualListSizeCache(
     options.rows(), options.getKey, () => heights, options.estimate()
   )) : undefined;
@@ -272,9 +277,11 @@ export function createVirtualList<Row, Key>(options: {
       }
       if (config.left !== undefined) syncLeft(config.left);
       scrollTo(config.top);
-    } else if ('index' in config) {
+    }
+    else if ('index' in config) {
       align(config.index, undefined, config.align, config.offset ?? 0);
-    } else if ('key' in config) {
+    }
+    else if ('key' in config) {
       const index = options.rows().findIndex(row => options.getKey(row) === config.key);
       align(index, config.key, config.align, config.offset ?? 0);
     }

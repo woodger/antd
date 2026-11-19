@@ -97,7 +97,8 @@ const commands = command.registry([
             .some(name => provided[name])) throw new CliUsageError(
               'css --list cannot be combined with a recipe or extraction options'
             );
-      } else if (positionals.length !== 1) throw new CliUsageError(
+      }
+      else if (positionals.length !== 1) throw new CliUsageError(
         'css requires exactly one recipe or all; use --list to list recipes'
       );
       return runCss({ ...options, recipe: positionals[0] }, context);

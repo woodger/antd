@@ -31,7 +31,11 @@ describe('Form noStyle message collection', () => {
   it('does not mutate caller-owned arrays when producing parent messages', () => {
     const errors = Object.freeze(['Own']);
     const child = Object.freeze(['Child']);
-    const result = mergeFormItemMessages(errors, [], [{ name: 'name', errors: child, warnings: [] }]);
+    const result = mergeFormItemMessages(
+      errors,
+      [],
+      [{ name: 'name', errors: child, warnings: [] }]
+    );
     result.errors.push('Local');
 
     expect(errors).toEqual(['Own']);

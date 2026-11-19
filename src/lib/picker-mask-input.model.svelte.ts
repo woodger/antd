@@ -58,11 +58,16 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
     if (frame) frame.window.cancelAnimationFrame(frame.id);
   };
   function cancelFrames() {
-    cancel(selectionFrame); cancel(inactiveFrame);
-    selectionFrame = undefined; inactiveFrame = undefined;
+    cancel(selectionFrame);
+    cancel(inactiveFrame);
+    selectionFrame = undefined;
+    inactiveFrame = undefined;
   }
   function getSpec(format: string) {
-    if (specFormat !== format) { specFormat = format; spec = createPickerMask(format); }
+    if (specFormat !== format) {
+      specFormat = format;
+      spec = createPickerMask(format);
+    }
     return spec!;
   }
   function change(next: string, options = getOptions()) {
@@ -80,7 +85,8 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
     }
     if (options.active !== previousActive) {
       previousActive = options.active;
-      cancel(inactiveFrame); inactiveFrame = undefined;
+      cancel(inactiveFrame);
+      inactiveFrame = undefined;
       const window = input?.ownerDocument.defaultView;
       if (!options.active && window) {
         const node = input;
@@ -100,7 +106,8 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
     if (selectionVersion && Object.keys(version).every(key =>
       version[key as keyof SelectionVersion] === selectionVersion![key as keyof SelectionVersion])) return;
     selectionVersion = version;
-    cancel(selectionFrame); selectionFrame = undefined;
+    cancel(selectionFrame);
+    selectionFrame = undefined;
     if (!input || !format || !focused || mouseDown) return;
     if (!pickerMaskMatches(mask, text)) {
       untrack(() => change(format, options));
@@ -114,16 +121,23 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
     }) };
   }
   function attach(node: HTMLInputElement) {
-    cancelFrames(); selectionVersion = undefined; input = node;
+    cancelFrames();
+    selectionVersion = undefined;
+    input = node;
     return () => {
       if (input !== node) return;
-      cancelFrames(); input = undefined; selectionVersion = undefined;
+      cancelFrames();
+      input = undefined;
+      selectionVersion = undefined;
     };
   }
   function keydown(event: KeyboardEvent, shared: PickerMaskSharedKeyboard): boolean {
     const options = getOptions(), format = options.mask;
     if (!format) return false;
-    if (mouseDown) { event.preventDefault(); return true; }
+    if (mouseDown) {
+      event.preventDefault();
+      return true;
+    }
     const mask = getSpec(format);
     const before: PickerMaskState = { text, index, cache };
     const enterValid = event.key === 'Enter' && options.validateText(before.text);
@@ -132,14 +146,17 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
     if (shared(event, { mask: true, text: before.text, enterValid }) === false) return true;
     const year = new Date().getFullYear();
     const next = editPickerMask(mask, before, event.key, year, options.helped);
-    index = next.index; cache = next.cache;
+    index = next.index;
+    cache = next.cache;
     if (next.filled) change(next.text, options);
     mark++;
     return true;
   }
   function focus() {
     if (!getOptions().mask) return;
-    focused = true; index = 0; cache = '';
+    focused = true;
+    index = 0;
+    cache = '';
   }
   function blur() {
     if (getOptions().mask) focused = false;
@@ -171,13 +188,18 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
   function paste(event: ClipboardEvent) {
     const options = getOptions();
     if (!options.mask) return false;
-    if (mouseDown) { event.preventDefault(); return true; }
+    if (mouseDown) {
+      event.preventDefault();
+      return true;
+    }
     const value = event.clipboardData?.getData('text') ?? '';
     if (options.validateText(value)) change(value, options);
     return true;
   }
   function dispose() {
-    cancelFrames(); input = undefined; selectionVersion = undefined;
+    cancelFrames();
+    input = undefined;
+    selectionVersion = undefined;
   }
   return {
     get value() { return text; },

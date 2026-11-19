@@ -61,19 +61,23 @@ test('Tags participate in native required validation, repeated fields, clear and
     await page.getByRole('checkbox', { name: 'Native tags constraints', exact: true }).check();
     const input = page.getByRole('combobox', { name: 'Tags', exact: true });
     const form = page.getByRole('form', { name: 'Tags native form', exact: true });
+
     expect(await form.evaluate(node => (node as HTMLFormElement).checkValidity())).toBe(false);
     await input.fill('created');
     await input.press('Enter');
+
     expect(await form.evaluate(node => (node as HTMLFormElement).checkValidity())).toBe(true);
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('tags')))
       .toEqual(['created']);
     await page.locator('[data-select-tags] .clear').click();
+
     await expect(input).toBeFocused();
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('tags')))
       .toEqual([]);
     await input.fill('reset-me');
     await input.press('Enter');
     await page.getByRole('button', { name: 'Reset tags', exact: true }).click();
+
     await expect(page.getByRole('status', { name: 'Tags values', exact: true })).toHaveText('[]');
     expect(await form.evaluate(node => (node as HTMLFormElement).checkValidity())).toBe(false);
   });
@@ -85,15 +89,19 @@ test('Tags retain selected labels through remote result removal and inherit disa
       .selectOption('duplicate-blur');
     const input = page.getByRole('combobox', { name: 'Tags', exact: true });
     await page.getByRole('checkbox', { name: 'Missing remote tags options', exact: true }).check();
+
     await expect(page.locator('[data-select-tags] .ant-select-selection-item-content'))
       .toHaveText('Alpha');
     await page.getByRole('checkbox', { name: 'Right to left', exact: true }).check();
     await input.click();
+
     await expect(physicalSelectPopup(page, 'Tags'))
       .toHaveCSS('direction', 'rtl');
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).check();
+
     await expect(input).toBeDisabled();
     const form = page.getByRole('form', { name: 'Tags native form', exact: true });
+
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('tags')))
       .toEqual([]);
   });

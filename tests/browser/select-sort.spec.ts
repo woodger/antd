@@ -31,9 +31,11 @@ test('Select filterSort reacts without replacing input, losing focus or changing
     const input = page.getByRole('combobox', { name: 'Sorted values', exact: true });
     await input.press('ArrowDown');
     await input.press('Enter');
+
     await expect(page.getByRole('status', { name: 'Sorted selected values', exact: true }))
       .toHaveText('["a"]');
     await input.fill('unaccepted');
+
     await expect(input).toHaveValue('');
     const original = await input.elementHandle();
     await input.focus();
@@ -48,6 +50,7 @@ test('Select filterSort reacts without replacing input, losing focus or changing
     await expect(page.locator('[data-select-sort] [data-ant-select-item]'))
       .toHaveText(['Zero', 'Locked', 'Gamma', 'Bravo', 'Alpha']);
     const form = page.getByRole('form', { name: 'Sorted native form', exact: true });
+
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('sorted')))
       .toEqual(['a']);
     await expect(page.getByRole('status', { name: 'Sort comparator queries', exact: true }))
@@ -56,6 +59,7 @@ test('Select filterSort reacts without replacing input, losing focus or changing
     await page.getByRole('combobox', { name: 'Sort strategy', exact: true }).selectOption('none');
     await page.getByRole('checkbox', { name: 'Reverse owner options', exact: true }).check();
     await input.click();
+
     await expect(page.locator('[data-select-sort] [data-ant-select-item]'))
       .toHaveText(['Locked', 'Zero', 'Bravo', 'Alpha', 'Gamma']);
   });
@@ -68,10 +72,12 @@ test('Select filterSort uses accepted and uncontrolled queries with sorted keybo
     await page.getByRole('checkbox', { name: 'Accept sort query', exact: true }).check();
     const input = page.getByRole('combobox', { name: 'Sorted values', exact: true });
     await input.fill('turn');
+
     await expect(page.locator('[data-select-sort] [data-ant-select-item]'))
       .toHaveText(['Zero', 'turn', 'Locked', 'Gamma', 'Bravo', 'Alpha']);
     await expect(input).toHaveValue('turn');
     await input.press('Enter');
+
     await expect(page.getByRole('status', { name: 'Sorted selected values', exact: true }))
       .toHaveText('[0]');
     await page.getByRole('checkbox', { name: 'Controlled sort query', exact: true })
@@ -80,6 +86,7 @@ test('Select filterSort uses accepted and uncontrolled queries with sorted keybo
         node.dispatchEvent(new Event('change', { bubbles: true }));
       });
     await input.fill('another');
+
     await expect(page.locator('[data-select-sort] [data-ant-select-item]'))
       .toHaveText(['Alpha', 'another', 'Bravo', 'Gamma', 'Locked', 'Zero']);
     await expect.poll(async () => {

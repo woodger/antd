@@ -38,6 +38,7 @@ test('QRCode changes prefixes without replacing its root or canvas and retains r
 
   await host.getByRole('button').focus();
   await page.keyboard.press('Enter');
+
   await expect(page.getByRole('status', { name: 'QRCode prefix refreshes', exact: true }))
     .toHaveText('1');
 });

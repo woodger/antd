@@ -131,7 +131,8 @@ for (const sample of reference.cases) {
         const actual = await capture();
         return { ...actual, trace: byPane(actual.trace) };
       }).toEqual({ ...expected, trace: byPane(expected.trace) });
-    } else await expect.poll(capture).toEqual(expected);
+    }
+    else await expect.poll(capture).toEqual(expected);
     await page.evaluate(() => {
       (Reflect.get(window, 'tabsMotionCapture') as MotionCapture).observer?.disconnect();
     });
@@ -156,6 +157,7 @@ test('outgoing content keeps its draft, state and FormData until leave ends', as
   await page.getByRole('button', { name: 'Hide motion Alpha', exact: true })
     .evaluate(element => (element as HTMLButtonElement).click());
   const panel = root.locator('[role=tabpanel][data-tabs-key=alpha]');
+
   await expect(panel).toHaveClass(/ant-tabs-switch-leave-active/);
   await panel.evaluate(element => {
     for (const animation of element.getAnimations()) animation.pause();
@@ -196,6 +198,7 @@ test('reversing an unfinished leave preserves the same pane instance and draft',
   await page.getByRole('button', { name: 'Increment alpha motion', exact: true }).click();
   const original = await alpha.elementHandle();
   await root.getByRole('tab', { name: 'Beta', exact: true }).click();
+
   await expect(root.locator('[role=tabpanel][data-tabs-key=alpha]'))
     .toHaveClass(/ant-tabs-switch-leave-active/);
   await root.getByRole('tab', { name: 'Alpha', exact: true })
@@ -216,6 +219,7 @@ test('async prepare keeps content mounted and ignores its completion after unmou
   await check(page, 'Hold motion prepare', true);
   const root = page.locator('#tabs-motion-main');
   await root.getByRole('tab', { name: 'Beta', exact: true }).click();
+
   await expect(root.locator('[role=tabpanel][data-tabs-key=alpha]'))
     .toHaveClass(/tabs-motion-custom-leave-prepare/);
   await expect(root.locator('input[name=alpha]')).toHaveCount(1);
@@ -241,6 +245,7 @@ test('end=false retains the motion until an allowed end from each pane itself', 
   const root = page.locator('#tabs-motion-main');
   const panel = root.locator('[role=tabpanel][data-tabs-key=alpha]');
   await root.getByRole('tab', { name: 'Beta', exact: true }).click();
+
   await expect.poll(() => page.evaluate(() =>
     (Reflect.get(window, 'tabsMotionTrace') as TabsMotionTrace[])
       .filter(event => event.phase !== 'visible' && event.step === 'end').length)).toBe(2);
@@ -272,6 +277,7 @@ test('reduced motion and live disabling settle transitions without losing active
   await configure(page, 'enabled');
   const root = page.locator('#tabs-motion-main');
   await root.getByRole('tab', { name: 'Beta', exact: true }).click();
+
   await expect(root.locator('[role=tabpanel][data-tabs-key=alpha]'))
     .toHaveClass(/ant-tabs-switch-leave-active/);
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -335,6 +341,7 @@ test('motion styles stay above live item styles and restore the current semantic
   const alpha = root.locator('[role=tabpanel][data-tabs-key=alpha]');
   const beta = root.locator('[role=tabpanel][data-tabs-key=beta]');
   await root.getByRole('tab', { name: 'Beta', exact: true }).click();
+
   await expect(alpha).toHaveClass(/tabs-motion-custom-leave-active/);
   await alpha.evaluate(element => {
     for (const animation of element.getAnimations()) animation.pause();

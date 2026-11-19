@@ -14,7 +14,11 @@ export function readSelectSurfaceOmission() {
     return { identity: identity(node), connected: node.isConnected, tag: node.tagName, text: node.textContent,
       attributes: [...node.attributes].map(attr => [attr.name, attr.value]), classes: [...node.classList],
       styleAttribute: node.getAttribute('style'), cssText: node.style.cssText,
-      inlineProperties: [...node.style].map(name => ({ name, value: node.style.getPropertyValue(name), priority: node.style.getPropertyPriority(name) })),
+      inlineProperties: [...node.style].map(name => ({
+        name,
+        value: node.style.getPropertyValue(name),
+        priority: node.style.getPropertyPriority(name)
+      })),
       inputWidthVariable: node.style.getPropertyValue('--select-input-width'),
       legacyInputWidthVariable: node.style.getPropertyValue('--input-width'),
       css: Object.fromEntries(['width', 'minWidth', 'maxWidth', 'height', 'font', 'fontFamily', 'fontSize', 'fontWeight', 'fontStyle',

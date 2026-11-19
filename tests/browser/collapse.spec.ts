@@ -300,10 +300,12 @@ test(
     await profile(page).click();
     await preferences(page).click();
     await profile(page).click();
+
     await expect.poll(data).toEqual(
       [['Profile', 'Profile initial'], ['Preferences', 'Preferences initial']]
     );
     await page.getByLabel('Destroy hidden Collapse', { exact: true }).check();
+
     await expect.poll(data).toEqual([['Preferences', 'Preferences initial']]);
   }
 );

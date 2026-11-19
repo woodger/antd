@@ -190,7 +190,9 @@
     get isFormItemInput() { return hasLayout ? true : parentFeedback.isFormItemInput; },
     get hasFeedback() { return !hasLayout && hasFeedback === undefined
       ? parentFeedback.hasFeedback : ownFeedback.hasFeedback; },
-    get icon() { return !hasLayout && hasFeedback === undefined ? parentFeedback.icon : ownFeedback.icon; }
+    get icon() {
+      return !hasLayout && hasFeedback === undefined ? parentFeedback.icon : ownFeedback.icon;
+    }
   };
   let isRequired = $derived(required
     ?? (hasName && (rules

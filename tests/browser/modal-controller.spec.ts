@@ -12,6 +12,7 @@ for (const entry of reference.cases) {
       .selectOption(entry.sample.id);
     await page.getByRole('button', { name: 'Open confirmation', exact: true }).click();
     const dialog = page.getByRole('dialog', { name: entry.before.title, exact: true });
+
     await expect(dialog).toBeVisible();
     const snapshot = () => dialog.evaluate(node => ({
       title: node.querySelector('.ant-modal-confirm-title')?.textContent,
@@ -21,6 +22,7 @@ for (const entry of reference.cases) {
       width: getComputedStyle(node).width,
       closable: Boolean(node.querySelector('.ant-modal-close'))
     }));
+
     await expect.poll(snapshot).toEqual(entry.before);
     await expect(dialog.getByRole('button', { name: 'OK', exact: true })).toBeFocused();
 
@@ -38,6 +40,7 @@ for (const entry of reference.cases) {
       await page.keyboard.press(`Control+Alt+${key}`);
     }
     const settled = entry.sample.id === 'destroy' ? false : entry.after.settled;
+
     await expect(page.locator('dialog[open]')).toHaveCount(entry.after.dialogs);
     await expect(page.locator('#modal-controller-result'))
       .toHaveText(settled === null ? 'pending' : String(settled));
@@ -60,13 +63,17 @@ test('Modal controller retries rejected async actions and keeps Escape cancellat
     const dialog = page.getByRole('dialog', { name: 'Confirm title', exact: true });
     await dialog.getByRole('button', { name: 'OK', exact: true }).click();
     await page.keyboard.press('Control+Alt+j');
+
     await expect(dialog.locator('.ant-btn-loading')).toHaveCount(0);
     await dialog.getByRole('button', { name: 'OK', exact: true }).click();
+
     await expect(dialog.locator('.ant-btn-loading')).toHaveCount(1);
     await page.keyboard.press('Escape');
+
     await expect(page.locator('dialog[open]')).toHaveCount(0);
     await expect(page.locator('#modal-controller-result')).toHaveText('false');
     await page.keyboard.press('Control+Alt+r');
+
     await expect(page.locator('dialog[open]')).toHaveCount(0);
     await expect(page.locator('#modal-controller-events')).toContainText('cancel');
   });
@@ -93,7 +100,10 @@ test('Modal controller preserves its native dialog and draft through title theme
 
     await expect(dialog).toHaveAttribute('aria-labelledby', /ant-modal-confirm-title/);
     await expect(dialog).toHaveAttribute('dir', 'rtl');
-    await expect(dialog.locator('.ant-modal-container')).toHaveCSS('background-color', 'rgb(18, 52, 86)');
+    await expect(dialog.locator('.ant-modal-container')).toHaveCSS(
+      'background-color',
+      'rgb(18, 52, 86)'
+    );
     await expect(dialog.getByRole('button', { name: 'Подтвердить', exact: true })).toBeVisible();
     expect(await input.evaluate((node, old) => node === old, original)).toBe(true);
     await expect(input).toHaveValue('kept draft');
@@ -112,9 +122,11 @@ test('Modal controller settles holder removal during async work and ignores late
     await opener.click();
     await page.getByRole('dialog').getByRole('button', { name: 'OK', exact: true }).click();
     await page.keyboard.press('Control+Alt+h');
+
     await expect(page.locator('dialog')).toHaveCount(0);
     await expect(page.locator('#modal-controller-result')).toHaveText('false');
     await page.keyboard.press('Control+Alt+r');
+
     await expect(page.locator('#modal-controller-events')).toHaveText('ok|result:false');
     await expect(opener).toBeFocused();
   });
@@ -123,15 +135,18 @@ test('Modal controller restores the underlying confirmation after closing a nest
   async ({ page }) => {
     await page.getByRole('button', { name: 'Open confirmation', exact: true }).click();
     const first = page.getByRole('dialog', { name: 'Confirm title', exact: true });
+
     await expect(first.getByRole('button', { name: 'OK', exact: true })).toBeFocused();
     await page.keyboard.press('Control+Alt+n');
     const nested = page.getByRole('dialog', { name: 'Nested confirmation', exact: true });
+
     await expect(nested).toBeVisible();
     await nested.getByRole('button', { name: 'OK', exact: true }).click();
 
     await expect(first).toBeVisible();
     await expect(first.getByRole('button', { name: 'OK', exact: true })).toBeFocused();
     await page.keyboard.press('Escape');
+
     await expect(page.locator('dialog')).toHaveCount(0);
   });
 
@@ -141,10 +156,12 @@ test('Modal controller isolates sibling holder themes and preserves the underlyi
     const first = page.getByRole('dialog', { name: 'Confirm title', exact: true });
     const original = await first.elementHandle();
     await page.keyboard.press('Control+Alt+t');
+
     await expect(first.locator('.ant-modal-container'))
       .toHaveCSS('background-color', 'rgb(18, 52, 86)');
     await page.keyboard.press('Control+Alt+b');
     const sibling = page.getByRole('dialog', { name: 'Sibling confirmation', exact: true });
+
     await expect(sibling.locator('.ant-modal-container'))
       .toHaveCSS('background-color', 'rgb(171, 205, 239)');
     await sibling.getByRole('button', { name: 'OK', exact: true }).click();
@@ -160,6 +177,7 @@ test('Modal controller replaces its instance without reusing stale dialog handle
   const opener = page.getByRole('button', { name: 'Open confirmation', exact: true });
   await opener.click();
   await page.keyboard.press('Control+Alt+s');
+
   await expect(page.locator('dialog')).toHaveCount(0);
   await expect(page.locator('#modal-controller-result')).toHaveText('false');
   await expect(opener).toBeFocused();

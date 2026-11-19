@@ -32,7 +32,10 @@ test.beforeAll(() => {
 });
 
 for (const entry of reference.cases) {
-  test(`initial width and invalid reopen preserve Source placement for ${entry.id}`, async ({ page }, testInfo) => {
+  test(`initial width and invalid reopen preserve Source placement for ${entry.id}`, async (
+    { page },
+    testInfo
+  ) => {
     const errors: string[] = [];
     const warnings: string[] = [];
     const captures: Awaited<ReturnType<typeof settle>>[] = [];

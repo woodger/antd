@@ -5,7 +5,10 @@
     type TreeSelectRef, type TreeSelectRootContext, type TreeSelectStyles, type TreeSelectValue
   } from 'antd-svelte';
   import { treeSelectInertApiPropSpec, type TreeSelectInertApiMode, type TreeSelectInertApiSample } from './tree-select-inert-api-cases';
-  let { sample, initialMode = 'provided' }: { sample: TreeSelectInertApiSample; initialMode?: TreeSelectInertApiMode } = $props();
+  let { sample, initialMode = 'provided' }: {
+    sample: TreeSelectInertApiSample;
+    initialMode?: TreeSelectInertApiMode
+  } = $props();
   const names = ['onPopupVisibleChange', 'popupStyle', 'choiceTransitionName', 'direction'] as const;
   type InertProps = Pick<TreeSelectProps, typeof names[number]>;
   let mode = $state(untrack(() => initialMode));
@@ -46,10 +49,16 @@
   }
   function semanticReceipt() {
     // Refresh the receipt after a consumer update, keeping the callback itself pure.
-    void mode; void model; void query; void events.length;
+    void mode;
+    void model;
+    void query;
+    void events.length;
     return JSON.stringify(capture.semantic);
   }
-  function received(attributes: TreeSelectRootContext<HTMLButtonElement>['attributes'] | TreeSelectInputContext['attributes'], slot: 'root' | 'input') {
+  function received(
+    attributes: TreeSelectRootContext<HTMLButtonElement>['attributes'] | TreeSelectInputContext['attributes'],
+    slot: 'root' | 'input'
+  ) {
     return JSON.stringify({ slot, keys: names.filter(name => Object.hasOwn(attributes, name)),
       dirKey: Object.hasOwn(attributes, 'dir'), dir: attributes.dir ?? null,
       ownStyleKept: slot === 'root' ? attributes.style === ownStyle : null });
@@ -60,10 +69,16 @@
     id: 'inert-api-field', value: model, multiple: sample.multiple, style: 'width:220px',
     treeData: [{ value: 'a', title: 'Alpha' }, { value: 'b', title: 'Beta' }],
     showSearch: sample.multiple ? false as const : { searchValue: query, filterTreeNode: false as const,
-      onSearch: (text: string) => { query = text; record('search', text); } },
+      onSearch: (text: string) => {
+        query = text;
+        record('search', text);
+      } },
     ...resolved.props, ...nativeDir, styles, popupMatchSelectWidth: 300,
     onOpenChange: sample.callbackOnly ? undefined : (open: boolean) => record('open', open),
-    onChange: (next: TreeSelectValue) => { model = next ?? null; record('change', next ?? null); },
+    onChange: (next: TreeSelectValue) => {
+      model = next ?? null;
+      record('change', next ?? null);
+    },
     onFocus: () => record('focus'), onBlur: () => record('blur')
   });
   export function update(next: TreeSelectInertApiMode) { mode = next; }

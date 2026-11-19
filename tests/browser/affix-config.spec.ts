@@ -34,6 +34,7 @@ for (const preset of ['tenant', 'source-theme', 'native-light', 'native-dark', '
       const content = root.locator(':scope > div').last();
       const initial = preset === 'tenant' ? 'tenant-affix'
         : preset === 'source-theme' ? 'source-affix' : 'native-affix';
+
       await expect(content).toHaveClass(new RegExp(`\\b${initial}\\b`));
       const oldContent = await content.elementHandle();
       const oldRoot = await root.elementHandle();
@@ -52,6 +53,7 @@ for (const preset of ['tenant', 'source-theme', 'native-light', 'native-dark', '
       await expect(root).toHaveCSS('outline-offset', '7px');
       await expect.poll(() => page.evaluate(snapshotAffixTheme, 'next-affix')).toEqual(before);
       const wrappers = await page.evaluate(snapshotAffixConfiguration, 'next-affix');
+
       expect(wrappers.explicit.opacity).toBe('0.8');
       expect(wrappers.explicit.outlineOffset).toBe('9px');
       expect(wrappers.inherited.opacity).toBe('0.65');
@@ -85,10 +87,12 @@ for (const preset of ['tenant', 'source-theme', 'native-light', 'native-dark', '
 
 test('Affix releases custom prefix CSS when its fixed owner is removed', async ({ page }) => {
   await page.goto('/?fixture=affix-config');
+
   await expect(page.locator('[data-affix-scroll]')).toHaveCount(6);
   await page.locator('[data-affix-scroll]').evaluateAll(nodes => {
     for (const node of nodes) node.scrollTop = 80;
   });
+
   await expect(page.locator('.tenant-affix')).toHaveCount(5);
   await expect(page.locator('style[data-ant-svelte-theme^="affix-prefix:"]')).toHaveCount(5);
   await page.getByLabel('Mount configured Affix controls', { exact: true }).uncheck();

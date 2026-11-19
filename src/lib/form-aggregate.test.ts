@@ -33,27 +33,33 @@ describe('createForm aggregate metadata', () => {
     expect(form.isFieldsTouched(true)).toBe(true);
     expect(form.isFieldsTouched([['rows', 0], ['rows', '0']], true)).toBe(true);
     form.resetFields();
+
     expect(form.isFieldsTouched()).toBe(false);
     expect(form.isFieldsTouched(true)).toBe(false);
   });
 
   it('ignores unbound value containers while retaining model rules and explicit touch metadata', async () => {
     const empty = createForm({ initialValues: { user: {}, unused: 'Value' } });
+
     expect(empty.isFieldsTouched()).toBe(false);
     expect(empty.isFieldsTouched(true)).toBe(true);
 
     const model = createForm({ initialValues: { first: '', second: '', container: {} }, rules: {
       first: [{ required: true }], second: [{ required: true }]
     } });
+
     expect(model.isFieldsTouched(true)).toBe(false);
     model.touchField('first');
     await model.validateFields().catch(() => {});
+
     expect(model.isFieldsTouched(true)).toBe(false);
     model.touchField('second');
     await model.validateFields().catch(() => {});
+
     expect(model.isFieldsTouched(true)).toBe(true);
 
     empty.touchField(['custom', 'name']);
+
     expect(empty.isFieldsTouched()).toBe(true);
     expect(empty.isFieldsTouched(['custom'], true)).toBe(true);
   });
@@ -66,12 +72,15 @@ describe('createForm aggregate metadata', () => {
     expect(form.isFieldsTouched(true)).toBe(true);
     expect(form.isFieldsTouched(['people'], true)).toBe(false);
     const remove = getFormHooks(form)!.registerField({ name: ['people', 0, 'name'] });
+
     expect(form.isFieldsTouched(true)).toBe(false);
     form.touchField(['people', 0, 'name']);
     await form.validateFields();
+
     expect(form.isFieldsTouched(true)).toBe(true);
     expect(form.isFieldsTouched(['people'], true)).toBe(true);
     remove();
+
     expect(form.isFieldsTouched()).toBe(false);
     expect(form.isFieldsTouched(true)).toBe(true);
   });
@@ -99,6 +108,7 @@ describe('createForm aggregate metadata', () => {
     expect(form.isFieldValidating('name')).toBe(false);
     expect(form.isFieldsValidating()).toBe(false);
     await validation;
+
     expect(form.isFieldsValidating()).toBe(false);
   });
 
@@ -122,9 +132,11 @@ describe('createForm aggregate metadata', () => {
     expect(form.isFieldsValidating([['rows', '0', 'name']])).toBe(false);
     silent.resolve();
     await second;
+
     expect(form.isFieldsValidating()).toBe(true);
     visible.resolve();
     await first;
+
     expect(form.isFieldsValidating()).toBe(false);
   });
 
@@ -132,7 +144,10 @@ describe('createForm aggregate metadata', () => {
     const pending = deferred<void>();
     const form = createForm({ initialValues: { name: '' } });
     getFormHooks(form)!.registerField({ name: 'name' });
-    getFormHooks(form)!.registerField({ name: 'name', rules: [{ validator: () => pending.promise }] });
+    getFormHooks(form)!.registerField({
+      name: 'name',
+      rules: [{ validator: () => pending.promise }]
+    });
 
     const validation = form.validateFields();
 
@@ -140,6 +155,7 @@ describe('createForm aggregate metadata', () => {
     expect(form.isFieldsValidating(['name'])).toBe(true);
     pending.resolve();
     await validation;
+
     expect(form.isFieldsValidating(['name'])).toBe(false);
   });
 
@@ -158,6 +174,7 @@ describe('createForm aggregate metadata', () => {
     expect(form.isFieldsTouched()).toBe(false);
     pending.resolve();
     await validation;
+
     expect(form.isFieldsValidating()).toBe(false);
     expect(form.isFieldsTouched()).toBe(false);
   });

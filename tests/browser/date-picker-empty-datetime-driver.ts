@@ -61,9 +61,11 @@ export async function actEmptyDatetime(page: Page, action: EmptyDatetimeAction, 
     await target.click();
     evidence.afterFocusPointer = await readEmptyDatetime(page);
     await page.keyboard.press('Escape');
-  } else if (action.type === 'template-button') {
+  }
+  else if (action.type === 'template-button') {
     evidence.ownerClick = await page.evaluate(() => window.nativeEmptyDatetime.activateTemplate());
-  } else await target.click();
+  }
+  else await target.click();
   // Не перемещаем указатель: реальный scroll колонки меняет settled hover после hour12.
   return { action, before, evidence, afterCall: await readEmptyDatetime(page) };
 }

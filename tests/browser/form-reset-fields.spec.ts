@@ -4,6 +4,7 @@ import reference from './fixtures/ant-design-form-reset-fields-observation.json'
 
 test('Form resetFields matches source exact metadata, remounts, scratch state and focus across paths and lists', async ({ page }) => {
   await page.goto('/?fixture=form-reset-fields');
+
   await expect(page.locator('#form-reset-fields-fixture')).toBeVisible();
   const actions: Record<string, string> = {
     seeded: 'Seed reset fields', 'nested-reset': 'Reset nested field',
@@ -69,6 +70,7 @@ test('Form resetFields matches source exact metadata, remounts, scratch state an
 test('Form named reset keeps old validation messages out of its newly mounted control', async ({ page }) => {
   await page.goto('/?fixture=form-reset-fields');
   await page.getByRole('button', { name: 'Validate held reset field', exact: true }).click();
+
   await expect(page.getByRole('status', { name: 'Reset pending', exact: true })).toHaveText('1');
   await page.getByRole('button', { name: 'Reset held field', exact: true }).click();
   await page.getByRole('button', { name: 'Complete reset validations', exact: true }).click();

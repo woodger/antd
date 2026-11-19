@@ -10,12 +10,14 @@ for (const kind of ['single', 'range'] as const) {
   test(`quarter ${kind} validation retains controlled date references and distinguishes typed text`, async ({ page }) => {
     await page.goto('/date-picker-quarter-validation.html?kind=' + kind);
     const input = page.locator('#quarter-validation');
+
     await expect(input).toHaveValue('2024-Q1');
     const read = async (): Promise<ValidationSnapshot> => {
       await page.locator('[data-quarter-validation-read]').evaluate(button => (button as HTMLButtonElement).click());
       return JSON.parse((await page.locator('[data-quarter-validation-snapshot]').textContent())!);
     };
     const initial = await read();
+
     expect(initial.calls.length).toBeGreaterThan(0);
     for (const call of initial.calls) {
       expect(call.actualArgumentCount).toBe(2);
@@ -31,6 +33,7 @@ for (const kind of ['single', 'range'] as const) {
     const original = await input.elementHandle();
     await input.click();
     const popup = page.locator('[data-picker-popup]:visible');
+
     await expect(popup.locator('.ant-picker-quarter-panel')).toHaveCount(kind === 'range' ? 2 : 1);
     await expect(popup.locator('td[aria-disabled="true"]')).toHaveCount(kind === 'range' ? 8 : 4);
     const opened = await read();
@@ -38,9 +41,11 @@ for (const kind of ['single', 'range'] as const) {
     // Та же строка квартала разбирается в новый Jan1: identity predicate должен отклонить реальный ввод.
     await input.press('Control+A');
     await page.keyboard.type('2024-Q1');
+
     await expect(input).toHaveValue('2024-Q1');
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await input.press('Escape');
+
     await expect(popup).toHaveCount(0);
     await expect(input).toHaveValue('2024-Q1');
     await expect(input).not.toHaveAttribute('aria-invalid', 'true');
@@ -48,6 +53,7 @@ for (const kind of ['single', 'range'] as const) {
     await input.click();
     await input.press('Control+A');
     await page.keyboard.type('not-a-quarter');
+
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     if (kind === 'single') {
       await input.press('Enter');
@@ -59,9 +65,11 @@ for (const kind of ['single', 'range'] as const) {
       expect(malformed.changes).toEqual([]);
     }
     await input.press('Escape');
+
     await expect(input).toHaveValue('2024-Q1');
     await expect(input).not.toHaveAttribute('aria-invalid', 'true');
     const after = await read();
+
     expect(after.model).toEqual(initial.model);
     expect(after.changes).toEqual([]);
   });

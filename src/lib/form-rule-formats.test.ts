@@ -66,9 +66,14 @@ describe('Form format, enum and pattern validation rules', () => {
       initialValues: { field: ' user@example.com ' },
       rules: { field: [{ type: 'email', transform: value => String(value).trim() }] }
     });
+
     await expect(form.validateFields()).resolves.toEqual({ field: ' user@example.com ' });
     expect(form.values.field).toBe(' user@example.com ');
-    expect(await validateFieldValue('bad', {}, [{ type: 'url', warningOnly: true, message: 'Check URL' }]))
+    expect(await validateFieldValue(
+      'bad',
+      {},
+      [{ type: 'url', warningOnly: true, message: 'Check URL' }]
+    ))
       .toEqual({ errors: [], warnings: ['Check URL'] });
   });
 });

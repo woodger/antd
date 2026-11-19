@@ -54,12 +54,15 @@ for (const sample of reference.cases.filter(item => 'eventTrace' in item)) {
     if ('events' in sample && sample.events === 'focus') {
       await page.getByRole('textbox', { name: 'Event draft', exact: true }).focus();
       await page.getByRole('button', { name: 'After Collapse source', exact: true }).focus();
-    } else if ('events' in sample && sample.events === 'key') {
+    }
+    else if ('events' in sample && sample.events === 'key') {
       await item.locator('[data-collapse-trigger]').press('x');
-    } else if ('events' in sample && sample.events === 'mouse') {
+    }
+    else if ('events' in sample && sample.events === 'mouse') {
       await item.hover();
       await page.mouse.move(reference.viewport.width - 1, reference.viewport.height - 1);
-    } else await item.locator('[data-collapse-trigger]').click();
+    }
+    else await item.locator('[data-collapse-trigger]').click();
 
     await expect(page.getByLabel('Collapse source events', { exact: true }))
       .toHaveText('eventTrace' in sample ? sample.eventTrace!.join(',') : '');
@@ -123,7 +126,10 @@ test('Collapse preserves keyed fields, selection, focus and refs across config, 
 
   await expect(page.locator(root)).toHaveClass(/live-collapse/);
   await expect(page.locator(root)).toHaveCSS('background-color', 'rgb(17, 34, 51)');
-  await expect(page.locator(root).locator('[data-collapse-trigger]')).toHaveCSS('padding-right', '17px');
+  await expect(page.locator(root).locator('[data-collapse-trigger]')).toHaveCSS(
+    'padding-right',
+    '17px'
+  );
   await expect(draft).toBeFocused();
   await expect(draft).toHaveValue('Retained Collapse draft');
   expect(await draft.evaluate(node => [(node as HTMLInputElement).selectionStart,

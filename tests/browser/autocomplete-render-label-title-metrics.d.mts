@@ -9,7 +9,14 @@ export interface LabelTitleDOM {
   current: Record<'root' | 'editor' | 'child' | 'content' | 'popup', LabelTitleNode | null>;
   original: Partial<LabelTitleDOM['current']>;
   sameAsOriginal: Record<keyof LabelTitleDOM['current'], boolean | null>;
-  contentChildren: Array<{ identity: number; nodeType: number; nodeName: string; text: string; html: string | null; isEditor: boolean }>;
+  contentChildren: Array<{
+    identity: number;
+    nodeType: number;
+    nodeName: string;
+    text: string;
+    html: string | null;
+    isEditor: boolean
+  }>;
   publicRefs: { rootMatches: boolean; childIsEditor: boolean | null };
   focus: { tag?: string; id?: string; isEditor: boolean };
   popupCount: number; resources: Array<{ name: string; initiatorType: string }>;

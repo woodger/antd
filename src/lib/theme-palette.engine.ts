@@ -18,7 +18,8 @@ function getHue(hsv: ColorHsv, index: number, light = false) {
 
   if (Math.round(hsv.h) >= 60 && Math.round(hsv.h) <= 240) {
     hue = light ? Math.round(hsv.h) - 2 * index : Math.round(hsv.h) + 2 * index;
-  } else {
+  }
+  else {
     hue = light ? Math.round(hsv.h) + 2 * index : Math.round(hsv.h) - 2 * index;
   }
 

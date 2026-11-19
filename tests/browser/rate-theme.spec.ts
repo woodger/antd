@@ -51,7 +51,10 @@ test('Rate theme updates preserve value, radio identity, focus, callbacks and pr
       .dispatchEvent('click');
 
     for (const id of ['normal', 'rtl', 'disabled', 'character', 'tooltips']) {
-      await expect(page.locator(`[data-rate-theme="${id}"] .ant-rate`)).toHaveCSS('font-size', '28px');
+      await expect(page.locator(`[data-rate-theme="${id}"] .ant-rate`)).toHaveCSS(
+        'font-size',
+        '28px'
+      );
     }
     for (const [id, size] of [
       ['small', 18], ['large', 30], ['nested', 22], ['reset', 19], ['sibling', 21], ['outside', 20]

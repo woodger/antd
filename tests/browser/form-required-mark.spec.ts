@@ -6,6 +6,7 @@ for (const { sample, metrics } of reference.cases) {
   test(`Form requiredMark matches source classes, content and locale for ${sample.id}`, async ({ page }) => {
     await page.goto('/?fixture=form-required-mark');
     await page.getByRole('combobox', { name: 'Required mark sample', exact: true }).selectOption(sample.id);
+
     await expect.poll(() => page.evaluate(formRequiredMarkMetrics)).toEqual(metrics);
   });
 }
@@ -49,16 +50,20 @@ for (const id of ['hidden', 'optional-ru', 'custom']) {
     await page.getByRole('combobox', { name: 'Required mark sample', exact: true }).selectOption(id);
     const input = page.getByRole('textbox', { name: 'Required field', exact: true });
     const optional = page.getByRole('textbox', { name: 'Optional field', exact: true });
+
     await expect(input).toHaveJSProperty('required', true);
     await expect(optional).toHaveJSProperty('required', false);
     const form = page.locator('[data-required-mark-case] form');
+
     expect(await form.evaluate((element: HTMLFormElement) => Object.fromEntries(new FormData(element))))
       .toEqual({ required: 'Alpha', optional: 'Beta' });
     await page.locator('[data-required-mark-case] label').first().click();
+
     await expect(input).toBeFocused();
 
     await input.fill('');
     await form.evaluate((element: HTMLFormElement) => { element.requestSubmit(); });
+
     await expect(page.getByRole('status', { name: 'Required mark failures', exact: true })).toHaveText('1');
     await expect(page.getByRole('status', { name: 'Required mark submissions', exact: true })).toHaveText('0');
     await expect(input).toHaveAccessibleDescription('Required field');
@@ -66,6 +71,7 @@ for (const id of ['hidden', 'optional-ru', 'custom']) {
 
     await input.fill('Complete');
     await form.evaluate((element: HTMLFormElement) => { element.requestSubmit(); });
+
     await expect(page.getByRole('status', { name: 'Required mark submissions', exact: true })).toHaveText('1');
   });
 }

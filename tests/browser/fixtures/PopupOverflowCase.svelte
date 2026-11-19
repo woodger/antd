@@ -82,7 +82,8 @@
     if (action.type === 'context') {
       if (action.layer === 'outer') outer = action.value;
       else inner = action.value;
-    } else if (action.type === 'open') open = action.value;
+    }
+    else if (action.type === 'open') open = action.value;
   }
   export function readRefs() {
     const publicEditor = treeEditor ?? autoEditor ?? cascaderEditor;
@@ -101,7 +102,11 @@
       return { keyPresent: Object.hasOwn(props, 'popupOverflow'),
         type: typeof props.popupOverflow, value: props.popupOverflow ?? null };
     };
-    return { outer: receipt(outer), inner: receipt(inner), globalContainer: sample.globalContainer ?? 'default' };
+    return {
+      outer: receipt(outer),
+      inner: receipt(inner),
+      globalContainer: sample.globalContainer ?? 'default'
+    };
   }
   export function readGetterCalls() { return getterCalls; }
 </script>

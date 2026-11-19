@@ -9,14 +9,23 @@ declare global {
     selectVirtualInitialization?: {
       refs: Fixture['readRefs']; events: Fixture['readEvents']; offsets: Fixture['readOffsets'];
       dispose: () => Promise<void>;
-      cleaned?: { root: boolean; editor: boolean; control: boolean; publicRoot: boolean; publicEditor: boolean };
+      cleaned?: {
+        root: boolean;
+        editor: boolean;
+        control: boolean;
+        publicRoot: boolean;
+        publicEditor: boolean
+      };
     };
   }
 }
 const id = new URL(location.href).searchParams.get('sample');
 const sample = selectVirtualSamples.find(sample => sample.id === id);
 if (!sample || sample.scenario !== 'closed') throw Error(`Unknown closed-ref initialization sample: ${id}`);
-const instance = mount(SelectVirtualCase, { target: document.getElementById('root')!, props: { sample } });
+const instance = mount(
+  SelectVirtualCase,
+  { target: document.getElementById('root')!, props: { sample } }
+);
 await tick();
 const state: NonNullable<Window['selectVirtualInitialization']> = {
   refs: () => instance.readRefs(), events: () => instance.readEvents(), offsets: () => instance.readOffsets(),

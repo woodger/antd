@@ -17,11 +17,19 @@ interface EdgeReference {
     umdArchiveByteEqual: boolean; viewport: { width: number; height: number }; errors: unknown[]; diagnostics: unknown[] };
   cases: Array<{ id: string; sample: SelectVirtualEdgeSample; initial: Snapshot;
     steps: Array<Snapshot & { action: SelectVirtualEdgeAction; getSizeCalls: SizeCall[] }>;
-    beforeUnmount: { focusKind: 'root' | 'editor' | null; rootFocused: boolean; editorFocused: boolean; activeTag: string | null };
+    beforeUnmount: {
+      focusKind: 'root' | 'editor' | null;
+      rootFocused: boolean;
+      editorFocused: boolean;
+      activeTag: string | null
+    };
     cleanup: { rootConnected: boolean; anchorConnected: boolean; editorConnected: boolean; popupConnected: boolean;
       callbacks: unknown[][]; offsets: unknown[] } }>;
 }
-const bytes = readFileSync(new URL('./fixtures/ant-design-select-virtual-edge-reference.json', import.meta.url));
+const bytes = readFileSync(new URL(
+  './fixtures/ant-design-select-virtual-edge-reference.json',
+  import.meta.url
+));
 if (bytes.length !== 468644 || createHash('sha256').update(bytes).digest('hex')
   !== 'd24d994e056eca0b2f3901f050f948474c36ce3135caf4d324395c93f984097a')
   throw Error('Frozen actual Source virtual edge capture changed');
@@ -59,10 +67,17 @@ async function settle(page: Page) {
 }
 
 for (const entry of reference.cases) {
-  test(`${entry.id} matches actual Source values and measured group frames`, async ({ page }, testInfo) => {
+  test(`${entry.id} matches actual Source values and measured group frames`, async (
+    { page },
+    testInfo
+  ) => {
     await page.goto(`/select-virtual-edge.html?sample=${entry.id}`);
     await page.waitForFunction(() => window.selectVirtualEdge);
-    await expect(page.locator('[data-select-virtual-case]')).toHaveAttribute('data-select-virtual-bound', 'true');
+
+    await expect(page.locator('[data-select-virtual-case]')).toHaveAttribute(
+      'data-select-virtual-bound',
+      'true'
+    );
     await prepareSelectVirtual(page);
     const identity = await page.evaluateHandle(() => {
       const refs = window.selectVirtualEdge!.refs();
@@ -99,7 +114,11 @@ for (const entry of reference.cases) {
           const control = window.selectVirtualEdge!.refs().control!;
           const calls = window.selectVirtualEdge!.getSizeCalls();
           control.scrollTo({ key: 'g-1', align: 'top', offset(info) {
-            calls.push({ align: info.align ?? null, first: info.getSize('g-0'), second: info.getSize('g-1') });
+            calls.push({
+              align: info.align ?? null,
+              first: info.getSize('g-0'),
+              second: info.getSize('g-1')
+            });
             return 0;
           } });
         });
@@ -107,8 +126,14 @@ for (const entry of reference.cases) {
         const actual = await settle(page);
         trace.push({ action: step.action, actual });
         // These new IDs can use only the existing unassigned-index ARIA boundary.
-        expect(actual.view, JSON.stringify(step.action)).toEqual(selectVirtualNativeView(step.view, entry.id));
-        expect(actual.getSizeCalls, `all original callback invocations: ${JSON.stringify(step.action)}`).toEqual(step.getSizeCalls);
+        expect(actual.view, JSON.stringify(step.action)).toEqual(selectVirtualNativeView(
+          step.view,
+          entry.id
+        ));
+        expect(
+          actual.getSizeCalls,
+          `all original callback invocations: ${JSON.stringify(step.action)}`
+        ).toEqual(step.getSizeCalls);
         expect(actual.raw.renders).toEqual(step.raw.renders);
         expect(actual.view.leaks).toEqual([]);
         expect(await bindings()).toEqual(stableBindings);
@@ -117,7 +142,10 @@ for (const entry of reference.cases) {
       const final = entry.steps.at(-1)!;
       expect(await page.evaluate(() => ({ focused: document.activeElement === window.selectVirtualEdge!.refs().editor,
         activeTag: document.activeElement?.tagName ?? null })))
-        .toEqual({ focused: entry.beforeUnmount.editorFocused, activeTag: entry.beforeUnmount.activeTag });
+        .toEqual({
+          focused: entry.beforeUnmount.editorFocused,
+          activeTag: entry.beforeUnmount.activeTag
+        });
       expect(entry.beforeUnmount.focusKind).toBeNull();
       await page.evaluate(() => window.selectVirtualEdge!.dispose());
       const disposed = () => page.evaluate(() => ({
@@ -125,7 +153,14 @@ for (const entry of reference.cases) {
         getSizeCalls: window.selectVirtualEdge!.getSizeCalls(), model: window.selectVirtualEdge!.model(),
         query: window.selectVirtualEdge!.query(), receipts: window.selectVirtualEdge!.receipts()
       }));
-      const expected = { cleaned: { root: true, anchor: true, editor: true, control: true, publicRoot: true, publicEditor: true },
+      const expected = { cleaned: {
+        root: true,
+        anchor: true,
+        editor: true,
+        control: true,
+        publicRoot: true,
+        publicEditor: true
+      },
         callbacks: entry.cleanup.callbacks, getSizeCalls: final.getSizeCalls,
         model: final.view.model, query: final.view.query, receipts: final.view.receipts };
       expect(await disposed()).toEqual(expected);
@@ -138,13 +173,19 @@ for (const entry of reference.cases) {
       await page.waitForTimeout(0);
       expect(await disposed()).toEqual(expected);
       await identity.evaluate(old => {
-        for (const holder of old.holders) holder.dispatchEvent(new UIEvent('scroll', { bubbles: true }));
+        for (const holder of old.holders) holder.dispatchEvent(new UIEvent(
+          'scroll',
+          { bubbles: true }
+        ));
         old.editor!.dispatchEvent(new Event('input', { bubbles: true }));
       });
       await page.waitForTimeout(1000);
       expect(await disposed()).toEqual(expected);
     } finally {
-      await testInfo.attach('actual-virtual-edge-and-getSize-sequence', { body: JSON.stringify(trace, null, 2), contentType: 'application/json' });
+      await testInfo.attach(
+        'actual-virtual-edge-and-getSize-sequence',
+        { body: JSON.stringify(trace, null, 2), contentType: 'application/json' }
+      );
       await identity.dispose();
     }
   });

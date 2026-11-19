@@ -45,6 +45,7 @@ test('Transfer theme updates preserve search, selection and controlled move call
 
     const expected = reference.cases.find(sample => sample.name === 'updated-tokens')!
       .metrics.normal.basic.sections[0];
+
     await expect(section).toHaveCSS('width', expected.section.width);
     await expect(section.locator('.ant-transfer-list-content-item').first())
       .toHaveCSS('min-height', expected.item!['min-height']);
@@ -137,6 +138,7 @@ test('Transfer restores legacy defaults and cleans up without changing sibling s
     await expect(input).toBeFocused();
     await expect(basic.getByRole('checkbox', { name: 'Alpha', exact: true })).toBeChecked();
     await page.getByLabel('Mount themed Transfer controls', { exact: true }).dispatchEvent('click');
+
     expect(await original!.evaluate(node => node.isConnected)).toBe(false);
     await expect(page.locator('[data-transfer-theme="sibling"] .ant-transfer-section').first())
       .toHaveCSS('width', '195px');

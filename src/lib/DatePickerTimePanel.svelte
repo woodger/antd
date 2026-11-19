@@ -51,7 +51,11 @@
   }
   function meridiemLabel(hour: number) {
     return locale.cellMeridiemFormat
-      ? adapter.locale.format(locale.locale, renderToday.hour(hour ? 15 : 9), locale.cellMeridiemFormat)
+      ? adapter.locale.format(
+        locale.locale,
+        renderToday.hour(hour ? 15 : 9),
+        locale.cellMeridiemFormat
+      )
       : hour ? 'PM' : 'AM';
   }
   let activeValue = $derived(selectedValue ?? value);
@@ -151,8 +155,7 @@
         item => column.unit !== 'hour' || !config.use12Hours || (item < 12) === (value.hour() < 12)
       );
   }
-  function keyboard(event: KeyboardEvent,
-    target = event.currentTarget as HTMLButtonElement) {
+  function keyboard(event: KeyboardEvent, target = event.currentTarget as HTMLButtonElement) {
     if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
     const column = cellRender ? (event.currentTarget as HTMLLIElement).parentElement!
       : target.closest('ul')!;

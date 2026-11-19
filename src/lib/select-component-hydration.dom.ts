@@ -51,7 +51,10 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       listeners.delete(name);
       return;
     }
-    if (current) { current.handler = value as Handler; return; }
+    if (current) {
+      current.handler = value as Handler;
+      return;
+    }
     const record: Listener = { ...descriptor, handler: value as Handler, listener(input) {
       untrack(() => record.handler.call(element, input));
     } };
@@ -63,7 +66,10 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
   function attribute(name: string, value: unknown) {
     const normalized = name.toLowerCase();
     if (normalized === 'style' || controlled.has(normalized)) return;
-    if (eventName(name)) { event(name, value); return; }
+    if (eventName(name)) {
+      event(name, value);
+      return;
+    }
     if (name === 'class') {
       const classes = classValue(value);
       const text = classes == null || classes === '' ? null : String(classes);
@@ -89,7 +95,10 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
     const input = element as HTMLInputElement;
     const type = attributes.type;
     if (!(type === 'submit' || type === 'reset') || attributes.value != null) {
-      if (Object.hasOwn(attributes, 'value') || Object.hasOwn(attributes, 'defaultValue') || Object.hasOwn(attributes, 'defaultvalue'))
+      if (Object.hasOwn(attributes, 'value') || Object.hasOwn(attributes, 'defaultValue') || Object.hasOwn(
+        attributes,
+        'defaultvalue'
+      ))
         input.defaultValue = String(initialValue(attributes));
       // React postMountWrapper сохраняет dirty value; checked синхронизирует отдельно.
       const name = input.name;
@@ -98,7 +107,8 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       input.defaultChecked = Boolean(attributes.checked ?? attributes.defaultChecked ?? attributes.defaultchecked);
       if (name) input.name = name;
     }
-  } else {
+  }
+  else {
     const textarea = element as HTMLTextAreaElement;
     const text = textarea.textContent;
     // React postMountWrapper textarea: непустое совпавшее SSR body становится value.
@@ -113,11 +123,14 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
         element.removeAttribute('value');
         element.defaultValue = initial;
         element.value = '';
-      } else Reflect.set(element, 'value', value);
-    } else if (normalized === 'defaultvalue') {
+      }
+      else Reflect.set(element, 'value', value);
+    }
+    else if (normalized === 'defaultvalue') {
       // Web IDL setter сохраняет в том числе прежний synthetic null -> "null".
       Reflect.set(element, 'defaultValue', value);
-    } else if (element.localName === 'input') {
+    }
+    else if (element.localName === 'input') {
       const input = element as HTMLInputElement;
       if (normalized === 'checked') {
         if (value == null) {
@@ -125,8 +138,10 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
           input.removeAttribute('checked');
           input.defaultChecked = initial;
           input.checked = false;
-        } else Reflect.set(input, 'checked', value);
-      } else Reflect.set(input, 'defaultChecked', value);
+        }
+        else Reflect.set(input, 'checked', value);
+      }
+      else Reflect.set(input, 'defaultChecked', value);
     }
   }
 
@@ -153,7 +168,11 @@ export function createSelectComponentHydration(element: Editor, attributes: Attr
       previous = { ...changes };
     },
     destroy() {
-      for (const record of listeners.values()) element.removeEventListener(record.type, record.listener, record.capture);
+      for (const record of listeners.values()) element.removeEventListener(
+        record.type,
+        record.listener,
+        record.capture
+      );
       listeners.clear();
     }
   };

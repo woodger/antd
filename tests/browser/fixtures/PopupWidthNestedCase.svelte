@@ -64,16 +64,29 @@
         : sample.container === 'body' ? { getPopupContainer: userContainer } : {}) } : true;
   });
   function record(...entry: unknown[]) { events.push(entry); }
-  function change(next: unknown) { model = next ?? null; record('change', next ?? null); }
-  function search(next: string) { query = next; record('search', next); }
-  function opening(next: boolean) { open = next; record('open', next); }
-  function outerOpening(next: boolean) { outerOpen = next; record('outer-open', next); }
+  function change(next: unknown) {
+    model = next ?? null;
+    record('change', next ?? null);
+  }
+  function search(next: string) {
+    query = next;
+    record('search', next);
+  }
+  function opening(next: boolean) {
+    open = next;
+    record('open', next);
+  }
+  function outerOpening(next: boolean) {
+    outerOpen = next;
+    record('outer-open', next);
+  }
   export function update(action: PopupWidthAction) {
     if (action.type === 'width') {
       if (action.layer === 'outer') outer = action.value;
       else if (action.layer === 'inner') inner = action.value;
       else local = action.value;
-    } else if (action.type === 'anchor') anchorWidth = action.width;
+    }
+    else if (action.type === 'anchor') anchorWidth = action.width;
     else if (action.type === 'open') open = action.value;
     else if (action.type === 'outer') outerOpen = action.value;
   }
@@ -81,10 +94,21 @@
     const root = getRoot();
     const editor = cascaderEditor ?? root?.querySelector<HTMLInputElement | HTMLTextAreaElement>('input[role="combobox"],input,textarea')
       ?? undefined;
-    return { root, anchor: root, editor, control, publicRoot, publicEditor: cascaderEditor, getterCalls };
+    return {
+      root,
+      anchor: root,
+      editor,
+      control,
+      publicRoot,
+      publicEditor: cascaderEditor,
+      getterCalls
+    };
   }
   export function readReceipts() {
-    return { outer: popupWidthReceipt(outer, outerProps), inner: popupWidthReceipt(inner, innerProps),
+    return { outer: popupWidthReceipt(outer, outerProps), inner: popupWidthReceipt(
+      inner,
+      innerProps
+    ),
       local: popupWidthReceipt(local, localProps.value) };
   }
   export function readEvents() { return events; }

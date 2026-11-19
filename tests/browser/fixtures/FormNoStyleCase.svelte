@@ -63,7 +63,8 @@
     try {
       await model.validateFields(['first'], { validateOnly: silent });
       outcome = 'success';
-    } catch {
+    }
+    catch {
       outcome = 'invalid';
     }
   }

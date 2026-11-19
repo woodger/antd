@@ -16,7 +16,11 @@ it('pins Source suffix reservation including textarea, wrapped DOM refs, fragmen
   for (const id of ['wrapped-dom-ref', 'composite-ref', 'fragment']) {
     const entry = reference.cases.find(entry => entry.id === id)!;
     expect(entry.steps[0].view).toMatchObject({ visible: ['a'], prefixWidth: 64, editorWidth: 4 });
-    expect(entry.steps.at(-1)!.view).toMatchObject({ visible: ['a'], prefixWidth: 96, hostWidth: 260 });
+    expect(entry.steps.at(-1)!.view).toMatchObject({
+      visible: ['a'],
+      prefixWidth: 96,
+      hostWidth: 260
+    });
   }
 });
 it.each(reference.ssr)('renders responsive $id without measuring or registering DOM on the server', entry => {

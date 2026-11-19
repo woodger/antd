@@ -21,21 +21,29 @@ async function send(page: Page, mode: TooltipActionCase['mode'], event: string) 
     else if (event === 'click') trigger.click();
     else if (event === 'touch') {
       trigger.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, cancelable: true }));
-    } else if (event === 'contextMenu') {
+    }
+    else if (event === 'contextMenu') {
       trigger.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true }));
-    } else if (event === 'escape') {
+    }
+    else if (event === 'escape') {
       document.dispatchEvent(new KeyboardEvent('keydown', {
         key: 'Escape', bubbles: true, cancelable: true
       }));
-    } else if (event.startsWith('outside')) {
+    }
+    else if (event.startsWith('outside')) {
       document.body.dispatchEvent(event === 'outsidePointer'
         ? new PointerEvent('pointerdown', { bubbles: true })
-        : new MouseEvent(event === 'outsideContext' ? 'contextmenu' : 'mousedown', { bubbles: true }));
-    } else if (event.startsWith('popup')) {
+        : new MouseEvent(
+          event === 'outsideContext' ? 'contextmenu' : 'mousedown',
+          { bubbles: true }
+        ));
+    }
+    else if (event.startsWith('popup')) {
       document.querySelector('[data-ant-tooltip]')?.dispatchEvent(new PointerEvent(
         event === 'popupEnter' ? 'pointerenter' : 'pointerleave', { pointerType: 'mouse' }
       ));
-    } else {
+    }
+    else {
       const target = mode === 'tooltip' ? trigger.parentElement! : trigger;
       if (mode === 'typography') {
         trigger.dispatchEvent(new MouseEvent(event === 'enter' ? 'mouseenter' : 'mouseleave'));
@@ -77,7 +85,8 @@ for (const source of [false, true]) {
                   }).tooltipEvents);
                 expect(afterMicrotask).toEqual(frame.syncEvents);
               }
-            } else if (frame.action.kind === 'advance') await page.clock.runFor(frame.action.ms!);
+            }
+            else if (frame.action.kind === 'advance') await page.clock.runFor(frame.action.ms!);
           }
           await page.clock.runFor(100);
 
@@ -102,9 +111,11 @@ for (const source of [false, true]) {
             .selectOption(`${mode}-${name}`);
           const expected = reference.cleanup.find(item => item.mode === mode
             && item.pending === pending)!;
+
           expect(cases.find(item => item.name === `${mode}-${name}`)!.frames[0].props)
             .toEqual(expected.props);
           await pauseClock(page);
+
           expect(await send(page, mode, 'focus')).toEqual(expected.focused);
           await page.getByLabel('Mount lifecycle tooltip', { exact: true }).evaluate(node => {
             const control = node as HTMLInputElement;

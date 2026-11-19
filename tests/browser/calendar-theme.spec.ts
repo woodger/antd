@@ -42,6 +42,7 @@ test('Calendar token updates preserve the focused date, selection and precise ch
 
     const expected = reference.cases.find(sample => sample.name === 'updated-tokens')!
       .metrics.normal['full-month'];
+
     await expect(full.locator('.ant-picker-calendar'))
       .toHaveCSS('background-color', expected.root['background-color']);
     await expect(selected.locator('.ant-picker-cell-inner'))
@@ -101,6 +102,7 @@ test('Calendar inheritance reset preserves focused cells and its controlled valu
   await page.getByLabel('Inherit Calendar theme', { exact: true }).dispatchEvent('click');
 
   const defaults = reference.cases.find(sample => sample.name === 'default')!;
+
   await expect.poll(() => page.evaluate(snapshotCalendarTheme).then(metrics => metrics.nested))
     .toEqual(defaults.metrics.nested);
   expect(await selected.evaluate((node, old) => node === old, original)).toBe(true);
@@ -129,8 +131,10 @@ test('Calendar restores default styling without replacing fields or changing sib
     await expect(full.getByRole('gridcell', { name: '2024-09-15', exact: true }))
       .toHaveAttribute('aria-selected', 'true');
     await page.getByLabel('Mount themed Calendar controls', { exact: true }).dispatchEvent('click');
+
     expect(await original!.evaluate(node => node.isConnected)).toBe(false);
     const defaults = reference.cases.find(sample => sample.name === 'default')!;
+
     await expect.poll(() => page.evaluate(snapshotCalendarTheme).then(metrics => metrics.sibling))
       .toEqual(defaults.metrics.sibling);
   });

@@ -7,11 +7,21 @@ export interface ComponentsHydrationNode {
 }
 export interface ComponentsHydrationOwner {
   model: unknown; open: boolean; slot: string; alive: boolean; revision: number;
-  events: unknown[]; methods: unknown[]; lifecycle: Array<{ event: string; tag?: string | null; editor?: string }>;
+  events: unknown[]; methods: unknown[]; lifecycle: Array<{
+    event: string;
+    tag?: string | null;
+    editor?: string
+  }>;
 }
 export interface ComponentsHydrationPoint {
   root: ComponentsHydrationNode | null; editor: ComponentsHydrationNode | null;
-  identity: { owner: boolean; root: boolean; editor: boolean; rootConnected: boolean; editorConnected: boolean };
+  identity: {
+    owner: boolean;
+    root: boolean;
+    editor: boolean;
+    rootConnected: boolean;
+    editorConnected: boolean
+  };
   refs: { control: boolean; rootIdentity: number | null; editorIdentity: number | null;
     rootMatchesDOM: boolean; editorMatchesDOM: boolean };
   owner: ComponentsHydrationOwner | null; popupCount: number;
@@ -26,7 +36,11 @@ export interface ComponentsHydrationAPI {
 export interface ComponentsHydrationProbe {
   api?: ComponentsHydrationAPI;
   nodeIds: WeakMap<Element, number>; lastNodeId: number;
-  parsed: { owner: Element | null; root: Element | null; editor: HTMLInputElement | HTMLTextAreaElement | null };
+  parsed: {
+    owner: Element | null;
+    root: Element | null;
+    editor: HTMLInputElement | HTMLTextAreaElement | null
+  };
   commitSnapshot?: ComponentsHydrationPoint; afterCall?: ComponentsHydrationPoint;
   observe?(): ComponentsHydrationPoint;
   readNativeRefChecks?(): Array<{ kind: string; tag: string; markerPresent: boolean;

@@ -92,6 +92,7 @@ for (const sample of reference.cases) {
             (node.getRootNode() as Document | ShadowRoot).activeElement === node),
           count: await page.locator('[data-provider-count]').textContent()
         };
+
         expect(actual).toEqual(sample.refresh);
         await expect.poll(() => snapshot(page, sample.component as PopupContainerCase['component']))
           .toEqual(sample.snapshot);
@@ -136,6 +137,7 @@ for (const name of ['tabs-parent', 'color-parent']) {
     await page.evaluate(async () => {
       for (let frame = 0; frame < 5; frame++) await new Promise(requestAnimationFrame);
     });
+
     await expect(page.getByLabel('Container calls', { exact: true })).toHaveText(calls!);
   });
 }
@@ -147,6 +149,7 @@ for (const name of ['tabs-shadow', 'color-shadow']) {
       await open(page, sample);
       const draft = page.getByLabel('Container draft', { exact: true });
       await draft.fill('Shadow draft');
+
       await expect(draft).toBeFocused();
       await expect(page.locator(selector(sample.component))).toBeVisible();
 
@@ -155,6 +158,7 @@ for (const name of ['tabs-shadow', 'color-shadow']) {
       await expect(page.locator(selector(sample.component))).toBeHidden();
       const trigger = sample.component === 'tabs' ? page.locator('.ant-tabs-nav-more')
         : page.getByRole('button', { name: 'Container color picker', exact: true });
+
       await expect(trigger).toBeFocused();
     });
 }
@@ -168,6 +172,7 @@ test('More keyboard selection scrolls and activates options inside a shadow popu
 
   await first.press('ArrowDown');
   const second = popup.getByRole('option').nth(1);
+
   await expect(second).toBeFocused();
   const label = await second.textContent();
   await second.press('Enter');

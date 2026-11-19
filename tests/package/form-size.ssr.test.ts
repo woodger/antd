@@ -13,6 +13,7 @@ describe('Form size public package', () => {
     });
     const large = reference.cases.find(({ sample }) => sample.id === 'local-large')!.metrics;
     const medium = reference.cases.find(({ sample }) => sample.id === 'local-medium')!.metrics;
+
     expect(large.input.height).toBe(40);
     expect(large.nested.height).toBe(40);
     expect(large.sibling.height).toBe(32);

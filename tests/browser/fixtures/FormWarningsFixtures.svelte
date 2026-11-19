@@ -31,7 +31,8 @@
     try {
       await form.validateFields();
       validation = 'complete';
-    } catch (error) {
+    }
+    catch (error) {
       validation = error instanceof Error && 'outOfDate' in error && error.outOfDate
         ? 'outdated' : 'failed';
     }

@@ -22,8 +22,17 @@ export interface TreeLabelSample extends Pick<TreeTagSample,
 const chooseTail: readonly TreeLabelAction[] = [{ kind: 'open' }, { kind: 'choose', value: 'tail' }];
 export const treeLabelSamples: readonly TreeLabelSample[] = [
   { id: 'multiple', actions: [...chooseTail, { kind: 'key', value: 'Backspace' }] },
-  { id: 'single', single: true, actions: [{ kind: 'open' }, { kind: 'choose', value: 1 }, { kind: 'clear' }] },
-  { id: 'labeled', labeled: true, value: [{ value: 0, label: 'Custom' }, { value: 1 }], actions: chooseTail },
+  {
+    id: 'single',
+    single: true,
+    actions: [{ kind: 'open' }, { kind: 'choose', value: 1 }, { kind: 'clear' }]
+  },
+  {
+    id: 'labeled',
+    labeled: true,
+    value: [{ value: 0, label: 'Custom' }, { value: 1 }],
+    actions: chooseTail
+  },
   { id: 'single-labeled', single: true, labeled: true, value: { value: 0, label: 'Custom' },
     actions: [{ kind: 'open' }, { kind: 'choose', value: 1 }] },
   { id: 'strict-half', strict: true, value: [{ value: 0 }, { value: 1 },
@@ -35,7 +44,12 @@ export const treeLabelSamples: readonly TreeLabelSample[] = [
   { id: 'parent', checkable: true, strategy: 'SHOW_PARENT', value: ['p'], actions: chooseTail },
   { id: 'parent-labeled', checkable: true, strategy: 'SHOW_PARENT', labeled: true,
     value: [{ value: 'p', label: 'Custom parent' }], actions: chooseTail },
-  { id: 'missing', labeled: true, value: [{ value: 99, label: 'Outside' }, { value: 0 }], actions: chooseTail },
+  {
+    id: 'missing',
+    labeled: true,
+    value: [{ value: 99, label: 'Outside' }, { value: 0 }],
+    actions: chooseTail
+  },
   { id: 'aliases', alias: true, actions: chooseTail },
   { id: 'simple', simple: true, actions: chooseTail },
   { id: 'aliases-simple', alias: true, simple: true, actions: chooseTail },
@@ -48,7 +62,10 @@ export const treeLabelSamples: readonly TreeLabelSample[] = [
   { id: 'array-data', kind: 'array', actions: chooseTail },
   { id: 'zero-data', kind: 'zero', actions: chooseTail },
   { id: 'disabled-record', value: ['locked', 0], actions: chooseTail },
-  { id: 'data-update', actions: [...chooseTail, { kind: 'update-data' }, { kind: 'choose', value: 1 }] },
+  {
+    id: 'data-update',
+    actions: [...chooseTail, { kind: 'update-data' }, { kind: 'choose', value: 1 }]
+  },
   { id: 'data-remove', labeled: true,
     actions: [...chooseTail, { kind: 'remove-data' }, { kind: 'choose', value: 1 }] },
   { id: 'renderer-and-data', actions: [{ kind: 'update-both' }, ...chooseTail] },
@@ -76,5 +93,8 @@ export function treeLabelData(sample: TreeLabelSample, updated = false, remove =
       ...(Array.isArray(node[children]) ? { [children]: visit(node[children]) } : {})
     }));
   }
-  return visit(treeTagData({ id: sample.id, alias: sample.alias, simple: sample.simple, kind: sample.kind }, updated));
+  return visit(treeTagData(
+    { id: sample.id, alias: sample.alias, simple: sample.simple, kind: sample.kind },
+    updated
+  ));
 }

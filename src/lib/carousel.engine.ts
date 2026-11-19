@@ -117,7 +117,8 @@ export function carouselTrackLeft(spec: CarouselSpec, slideIndex: number) {
         ? slidesToShow - (slideIndex - slideCount) : slideCount % slidesToScroll);
     }
     if (centerMode) slidesToOffset += Number.parseInt(String(slidesToShow / 2));
-  } else {
+  }
+  else {
     if (slideCount % slidesToScroll !== 0 && slideIndex + slidesToScroll > slideCount) {
       slidesToOffset = slidesToShow - slideCount % slidesToScroll;
     }
@@ -153,7 +154,8 @@ export function carouselTrackStyle(spec: CarouselSpec, left: number, animate = f
     style.WebkitTransform = value;
     style.transform = value;
     style.msTransform = spec.vertical ? `translateY(${left}px)` : `translateX(${left}px)`;
-  } else {
+  }
+  else {
     style[spec.vertical ? 'top' : 'left'] = left;
   }
   if (spec.fade) style = { opacity: 1 };
@@ -167,7 +169,8 @@ export function carouselTrackStyle(spec: CarouselSpec, left: number, animate = f
     if (spec.useTransform) {
       style.WebkitTransition = `-webkit-transform ${spec.speed}ms ${spec.cssEase}`;
       style.transition = `transform ${spec.speed}ms ${spec.cssEase}`;
-    } else {
+    }
+    else {
       style.transition = `${spec.vertical ? 'top' : 'left'} ${spec.speed}ms ${spec.cssEase}`;
     }
   }
@@ -208,12 +211,15 @@ export function carouselSlideTransition(spec: CarouselSpec, index: number): {
     else if (slideCount % slidesToScroll !== 0) {
       finalSlide = slideCount - slideCount % slidesToScroll;
     }
-  } else if (!carouselCanGoNext(spec) && animationSlide > currentSlide) {
+  }
+  else if (!carouselCanGoNext(spec) && animationSlide > currentSlide) {
     animationSlide = finalSlide = currentSlide;
-  } else if (spec.centerMode && animationSlide >= slideCount) {
+  }
+  else if (spec.centerMode && animationSlide >= slideCount) {
     animationSlide = infinite ? slideCount : slideCount - 1;
     finalSlide = infinite ? 0 : slideCount - 1;
-  } else if (animationSlide >= slideCount) {
+  }
+  else if (animationSlide >= slideCount) {
     finalSlide = animationSlide - slideCount;
     if (!infinite) finalSlide = slideCount - slidesToShow;
     else if (slideCount % slidesToScroll !== 0) finalSlide = 0;

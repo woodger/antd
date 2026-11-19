@@ -16,9 +16,11 @@ for (const [index, entry] of reference.cases.entries()) {
         await page.getByRole('combobox', { name: 'Tree virtual action', exact: true })
           .selectOption(String(stepIndex));
         await page.getByRole('button', { name: 'Scroll virtual tree', exact: true }).click();
-      } else if (step.action.kind === 'update') {
+      }
+      else if (step.action.kind === 'update') {
         await page.getByRole('button', { name: 'Update virtual tree', exact: true }).click();
-      } else if ('value' in step.action && typeof step.action.value === 'string') {
+      }
+      else if ('value' in step.action && typeof step.action.value === 'string') {
         await page.getByRole('tree', { name: 'Virtual tree', exact: true }).press(step.action.value);
       }
 

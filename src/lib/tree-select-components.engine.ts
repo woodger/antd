@@ -7,8 +7,14 @@ export function mergeTreeSelectComponentAttributes<Attributes extends object>(
     const internal = Reflect.get(generated, key);
     if (typeof callback !== 'function' || typeof internal !== 'function') continue;
     Reflect.set(target, key, (...args: unknown[]) => {
-      if (slot === 'root') { internal(...args); callback(...args); }
-      else { callback(...args); internal(...args); }
+      if (slot === 'root') {
+        internal(...args);
+        callback(...args);
+      }
+      else {
+        callback(...args);
+        internal(...args);
+      }
     });
   }
   // React снимает delegated callbacks до удаления focused DOM. Svelte может
@@ -30,12 +36,18 @@ export function treeSelectNativeKeyCancelled<EventType extends Event>(
   event: EventType, callback: ((event: EventType) => void) | null | undefined
 ) {
   if (!callback) return false;
-  if (!event.defaultPrevented) { callback(event); return event.defaultPrevented; }
+  if (!event.defaultPrevented) {
+    callback(event);
+    return event.defaultPrevented;
+  }
   const descriptor = Object.getOwnPropertyDescriptor(event, 'preventDefault');
   const original = event.preventDefault;
   let cancelled = false;
   Object.defineProperty(event, 'preventDefault', { configurable: true, writable: true,
-    value() { cancelled = true; original.call(event); } });
+    value() {
+      cancelled = true;
+      original.call(event);
+    } });
   try { callback(event); }
   finally {
     if (descriptor) Object.defineProperty(event, 'preventDefault', descriptor);

@@ -7,6 +7,7 @@ for (const { sample, metrics } of reference.cases) {
     await page.goto('/?fixture=form-rich-labels');
     await page.getByRole('combobox', { name: 'Form rich labels sample', exact: true })
       .selectOption(sample.id);
+
     await expect.poll(() => page.evaluate(formRichLabelsMetrics)).toEqual(metrics);
   });
 }
@@ -79,6 +80,7 @@ test('Form rich labels name composite controls and keep explicit ARIA priorities
     await expect(control).toHaveAccessibleName(`Updated choices ${kinds[index]}`);
   }
   await controls.locator('.rich-radio > .ant-form-item-row > .ant-form-item-label > label').click();
+
   await expect(radio.getByRole('radio', { name: 'Alpha', exact: true })).toBeFocused();
   await controls.getByRole('button', { name: 'Toggle own rich names', exact: true }).click();
   const owner = ['radio', 'checkbox', 'otp', 'slider', 'start', 'end', 'color'];
@@ -95,5 +97,6 @@ test('Form rich labels name composite controls and keep explicit ARIA priorities
   }
   expect(await single.evaluate((element, old) => element === old, original)).toBe(true);
   await controls.locator('.rich-radio > .ant-form-item-row > .ant-form-item-label > label').click();
+
   await expect(radio.getByRole('radio', { name: 'Alpha', exact: true })).toBeFocused();
 });

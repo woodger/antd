@@ -48,7 +48,8 @@ function createField(mask: string | null = 'YYYY-MM-DD') {
       // The controller owns strings. The real existing parser owns the core Date.
       const candidate = parsePicker(text, 'en_US', formats);
       if (!candidate) throw Error('Controller forwarded an invalid calendar string');
-      acceptedText.push(text); acceptedDates.push(candidate);
+      acceptedText.push(text);
+      acceptedDates.push(candidate);
       calendar = candidate;
       options.text = formatPicker(candidate, 'en_US', formats);
     },
@@ -58,10 +59,17 @@ function createField(mask: string | null = 'YYYY-MM-DD') {
     value: options.text, defaultValue: '',
     selectionStart: options.text.length, selectionEnd: options.text.length,
     ownerDocument: { defaultView: frames.window },
-    get isConnected() { if (!connected) lateNodeReads++; return connected; },
+    get isConnected() {
+      if (!connected) lateNodeReads++;
+      return connected;
+    },
     setSelectionRange(start: number, end: number) {
-      if (!connected) { lateNodeReads++; throw Error('Selection reached a detached node'); }
-      this.selectionStart = start; this.selectionEnd = end;
+      if (!connected) {
+        lateNodeReads++;
+        throw Error('Selection reached a detached node');
+      }
+      this.selectionStart = start;
+      this.selectionEnd = end;
       selection.push([start, end]);
     }
   };
@@ -81,7 +89,8 @@ function createField(mask: string | null = 'YYYY-MM-DD') {
 describe('picker mask input controller', () => {
   it('keeps incomplete text local and gates Enter without replacing the accepted calendar Date', () => {
     const field = createField();
-    field.model.focus(); field.sync();
+    field.model.focus();
+    field.sync();
     let enter: PickerMaskSharedKey | undefined;
     field.model.keydown(keyboardEvent('Enter'), (_event, detail) => { enter = detail; });
 
@@ -126,7 +135,8 @@ describe('picker mask input controller', () => {
     expect(field.model.value).toBe('2020-12-31');
     expect(field.calendar).toBe(field.original);
 
-    field.model.focus(); field.sync();
+    field.model.focus();
+    field.sync();
 
     expect(field.selection.at(-1)).toEqual([0, 4]);
     expect(field.frames.pending.size).toBe(1);
@@ -136,7 +146,8 @@ describe('picker mask input controller', () => {
 
   it('keeps incomplete text when the same field format loses its mask and accepts ordinary input afterwards', () => {
     const field = createField();
-    field.model.focus(); field.sync();
+    field.model.focus();
+    field.sync();
     field.model.keydown(keyboardEvent('Delete'), () => {});
     field.sync();
     field.options.mask = null;
@@ -145,6 +156,7 @@ describe('picker mask input controller', () => {
     expect(field.model.value).toBe('YYYY-12-31');
     expect(field.calendar).toBe(field.original);
     field.node.value = '2021-12-31';
+
     expect(field.model.nativeInput({ target: field.input } as unknown as Event)).toBe(false);
     expect(field.model.value).toBe('2021-12-31');
     expect(field.acceptedDates).toEqual([]);
@@ -154,20 +166,24 @@ describe('picker mask input controller', () => {
   it('keeps the reset value equal to local display through incomplete text and plain formats', () => {
     const field = createField();
     field.sync();
+
     expect(field.node.defaultValue).toBe('2020-12-31');
     field.model.focus();
     field.sync();
     field.model.keydown(keyboardEvent('Delete'), () => {});
     field.sync();
+
     expect(field.node.defaultValue).toBe('YYYY-12-31');
 
     field.options.mask = null;
     field.sync();
+
     expect(field.node.defaultValue).toBe(field.model.value);
     expect(field.node.defaultValue).toBe('YYYY-12-31');
 
     field.options.text = '2021-02-03';
     field.sync();
+
     expect(field.node.defaultValue).toBe(field.model.value);
     expect(field.node.defaultValue).toBe('2021-02-03');
     expect(field.acceptedDates).toEqual([]);
@@ -177,7 +193,8 @@ describe('picker mask input controller', () => {
 
   it('locks mask keys during mousedown and chooses the real mouseup segment before editing', () => {
     const field = createField();
-    field.model.focus(); field.sync();
+    field.model.focus();
+    field.sync();
     field.model.mousedown();
     const event = keyboardEvent('ArrowUp');
     let sharedCalls = 0;
@@ -209,7 +226,8 @@ describe('picker mask input controller', () => {
 
   it('cancels its selection and inactive frames on attachment cleanup and ignores late callbacks', () => {
     const field = createField();
-    field.model.focus(); field.sync();
+    field.model.focus();
+    field.sync();
     field.model.keydown(keyboardEvent('Delete'), () => {});
     field.sync();
     field.options.active = false;
@@ -218,7 +236,8 @@ describe('picker mask input controller', () => {
 
     expect(pending).toHaveLength(2);
     expect(field.model.localText).toBe('YYYY-12-31');
-    field.detach(); field.disconnect();
+    field.detach();
+    field.disconnect();
 
     expect(field.frames.pending.size).toBe(0);
     expect(pending.every(([id]) => field.frames.cancelled.includes(id))).toBe(true);
@@ -233,17 +252,22 @@ describe('picker mask input controller', () => {
   it('passes ordinary events through and honors the existing shared keyboard cancellation', () => {
     const field = createField(null);
     let sharedCalls = 0;
+
     expect(field.model.keydown(keyboardEvent('Enter'), () => { sharedCalls++; })).toBe(false);
     expect(field.model.nativeInput({ target: field.input } as unknown as Event)).toBe(false);
     expect(sharedCalls).toBe(0);
     expect(field.frames.pending.size).toBe(0);
 
     field.options.mask = 'YYYY-MM-DD';
-    field.model.focus(); field.sync();
+    field.model.focus();
+    field.sync();
     const value = field.model.value;
     const event = keyboardEvent('1');
+
     expect(field.model.keydown(event, current => {
-      sharedCalls++; current.preventDefault(); return false;
+      sharedCalls++;
+      current.preventDefault();
+      return false;
     })).toBe(true);
 
     expect(sharedCalls).toBe(1);

@@ -16,9 +16,33 @@
     editor?: HTMLInputElement | HTMLTextAreaElement;
   }
   let fields = $state<Field[]>([
-    { id: 'uncontrolled', label: 'Uncontrolled textarea completion', model: 'seed', changes: [], resets: 0, prevented: false, mounted: true },
-    { id: 'controlled', label: 'Controlled textarea completion', model: 'seed', changes: [], resets: 0, prevented: false, mounted: true },
-    { id: 'cancelled', label: 'Cancelled textarea completion', model: 'seed', changes: [], resets: 0, prevented: false, mounted: true }
+    {
+      id: 'uncontrolled',
+      label: 'Uncontrolled textarea completion',
+      model: 'seed',
+      changes: [],
+      resets: 0,
+      prevented: false,
+      mounted: true
+    },
+    {
+      id: 'controlled',
+      label: 'Controlled textarea completion',
+      model: 'seed',
+      changes: [],
+      resets: 0,
+      prevented: false,
+      mounted: true
+    },
+    {
+      id: 'cancelled',
+      label: 'Cancelled textarea completion',
+      model: 'seed',
+      changes: [],
+      resets: 0,
+      prevented: false,
+      mounted: true
+    }
   ]);
   function props(field: Field): AutoCompleteProps {
     return {

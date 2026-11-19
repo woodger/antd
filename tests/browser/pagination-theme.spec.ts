@@ -172,7 +172,8 @@ for (const sample of reference.interactions) {
           ]))];
         })), expected)).toEqual(expected);
         await page.mouse.move(1590, 1390);
-      } else {
+      }
+      else {
         const input = page.locator(`.pagination-token-${name.slice(6)} `
           + '.ant-pagination-options-quick-jumper input');
         await input.focus();
@@ -192,10 +193,14 @@ for (const sample of reference.interactions) {
 test('Select tokens stay separate and size changes retain callback order after theme updates',
   async ({ page }) => {
     await page.getByLabel('Pagination token preset', { exact: true }).selectOption('select-aliases');
-    const root = page.getByRole('navigation', { name: 'Interactive themed Pagination', exact: true });
+    const root = page.getByRole(
+      'navigation',
+      { name: 'Interactive themed Pagination', exact: true }
+    );
     const select = root.getByRole('combobox');
     await select.click();
     const option = root.getByRole('option', { name: /^20 / });
+
     await expect(option).toBeVisible();
     const original = await option.elementHandle();
 
@@ -220,12 +225,16 @@ test('custom prefixes and narrow RTL preserve native controls, mobile size chang
     await page.getByLabel('RTL themed Pagination', { exact: true }).check();
     await page.getByLabel('Narrow themed Pagination', { exact: true }).check();
     await page.setViewportSize({ width: 320, height: 1400 });
-    const root = page.getByRole('navigation', { name: 'Interactive themed Pagination', exact: true });
+    const root = page.getByRole(
+      'navigation',
+      { name: 'Interactive themed Pagination', exact: true }
+    );
 
     await expect(root).not.toHaveClass(/(?:^|\s)css-[a-z0-9]+(?:\s|$)/);
     expect((await root.boundingBox())!.width).toBeLessThanOrEqual(200);
     await expect(root.getByRole('combobox')).toBeVisible();
     const pageButton = root.locator('.ant-pagination-item-20 > button');
+
     await expect(pageButton).toBeVisible();
     await pageButton.focus();
     await pageButton.press('Enter');

@@ -130,7 +130,10 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
       if (generation !== request || !holder) return;
       measure();
       if (index < 0) index = options.rows().findIndex(row => row.taggedKey === key);
-      if (index < 0) { await tick(); continue; }
+      if (index < 0) {
+        await tick();
+        continue;
+      }
       const header = stickyKey && resolved === 'top' ? sizes.get(stickyKey) : undefined;
       const headerHeight = header ? header.bottom - header.top : 0;
       const rawOffset = baseOffset + (Number.isFinite(headerHeight) ? headerHeight : 0);
@@ -151,22 +154,34 @@ export function createListyVirtual<T, K extends ListyKey>(options: {
 
   function scrollTo(config?: ListyScrollToConfig) {
     if (!holder) return;
-    if (config == null) { flash++; return; }
-    if (typeof config === 'number') { request++; sync(config); return; }
+    if (config == null) {
+      flash++;
+      return;
+    }
+    if (typeof config === 'number') {
+      request++;
+      sync(config);
+      return;
+    }
 
     // Listy выбирает groupKey раньше позиции; rc-virtual-list выбирает позицию раньше item key.
     if ('groupKey' in config) {
       void alignTo(listyTag(config.groupKey, 'group'), config.align, config.offset ?? 0);
-    } else if ('top' in config || 'left' in config) {
+    }
+    else if ('top' in config || 'left' in config) {
       scrollTo(config.top);
-    } else if ('key' in config) {
+    }
+    else if ('key' in config) {
       const key = listyTag(config.key, 'item');
       let stickyKey: string | undefined;
       if (options.sticky() && config.align !== 'bottom') {
         let current: string | undefined;
         for (const row of options.rows()) {
           if (row.type === 'group') current = row.taggedKey;
-          else if (row.taggedKey === key) { stickyKey = current; break; }
+          else if (row.taggedKey === key) {
+            stickyKey = current;
+            break;
+          }
         }
       }
       void alignTo(key, config.align, config.offset ?? 0, stickyKey);

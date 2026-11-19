@@ -74,7 +74,10 @@ export function stepsContextConfig(sample: StepsConfigSample): StepsConfig {
       `ctx-state-${props.type ?? 'default'}-${props.orientation}-${props.current}-${props.items?.length ?? 0}`
     ),
     styles: ({ props }) => ({
-      root: css({ borderTopWidth: props.orientation === 'horizontal' ? 5 : 3, borderTopStyle: 'solid' }),
+      root: css({
+        borderTopWidth: props.orientation === 'horizontal' ? 5 : 3,
+        borderTopStyle: 'solid'
+      }),
       itemContent: css({ color: props.current === 1 ? '#012345' : '#543210' })
     })
   };

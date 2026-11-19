@@ -10,7 +10,10 @@ let cache: string;
 test.beforeAll(async () => {
   cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
     'form-feedback-picker-hydration-'));
-  server = await createServer({ configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+  server = await createServer({ configFile: fileURLToPath(new URL(
+    './vite.config.ts',
+    import.meta.url
+  )),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
     appType: 'custom', cacheDir: cache });
 });
@@ -33,6 +36,7 @@ for (const picker of ['date', 'range', 'time', 'time-range']) {
     await outside.focus();
     await page.addScriptTag({ type: 'module', url: '/form-feedback-picker-hydration.client.ts' });
     await page.waitForFunction(() => window.formFeedbackPickerHydration);
+
     await expect(outside).toBeFocused();
     expect(await page.evaluate(() => {
       const captured = window.formFeedbackPickerHydration!;
@@ -43,10 +47,12 @@ for (const picker of ['date', 'range', 'time', 'time-range']) {
     await input.focus();
     await page.getByRole('combobox', { name: 'Feedback action', exact: true }).selectOption('1');
     await page.getByRole('button', { name: 'Apply feedback action', exact: true }).dispatchEvent('click');
+
     await expect(page.locator('[data-custom-feedback]')).toHaveText('local 0 error');
     await expect(input).toBeFocused();
     expect(await input.evaluate(node => window.formFeedbackPickerHydration!.inputs[0] === node)).toBe(true);
     await page.evaluate(() => window.formFeedbackPickerHydration!.dispose());
+
     await expect(input).toHaveCount(0);
     await expect(page.locator('[class*="-item-feedback-icon"]')).toHaveCount(0);
   });

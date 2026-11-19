@@ -11,8 +11,13 @@ for (const entry of reference.cases) {
     await page.goto('/?fixture=tree-select-suffix-layout-edges');
     await page.getByRole('combobox', { name: 'TreeSelect suffix edge sample', exact: true }).selectOption(entry.id);
     await page.mouse.move(0, 0);
-    await expect(page.locator('[data-suffix-edge-host]')).toHaveAttribute('data-suffix-edge-bound', 'true');
+
+    await expect(page.locator('[data-suffix-edge-host]')).toHaveAttribute(
+      'data-suffix-edge-bound',
+      'true'
+    );
     const read = () => page.evaluate(readTreeSelectSuffixLayoutEdges);
+
     expect(await settleTreeSelectSuffixLayout(page, read)).toEqual(entry.initial);
     const previous = await page.evaluateHandle(() => {
       const root = document.querySelector('[data-suffix-edge-host] .ant-select')!;

@@ -36,7 +36,8 @@ describe('Tooltip content public package SSR', () => {
         if (sample.name === 'escaped') {
           expect(markup).toContain('&lt;img');
           expect(markup).not.toContain('<img');
-        } else {
+        }
+        else {
           expect(markup!.replace(/<[^>]*>/g, '')).toBe(sample.snapshot.text ?? '');
         }
         expect(vi.getTimerCount()).toBe(0);

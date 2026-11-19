@@ -81,6 +81,7 @@ test('Anchor local prefix retains native focus and measures ink after direction 
   })).toEqual([true, true]);
   const sourceInk = reference.cases.find(entry => entry.sample.id === 'horizontal')!
     .result.normal.ink;
+
   await expect(scope.locator('.nav-ink')).toHaveCSS('left', sourceInk.left);
   await expect(scope.locator('.nav-ink')).toHaveCSS('width', sourceInk.width);
   expect(await link.evaluate((node, old) => node === old, previous)).toBe(true);
@@ -96,8 +97,10 @@ test('Anchor prefixed links keep theme decoration states and sibling isolation',
 
   await expect(link).toHaveCSS('text-decoration-line', 'underline');
   await link.hover();
+
   await expect(link).toHaveCSS('text-decoration-line', 'overline');
   await link.focus();
+
   await expect(link).toHaveCSS('text-decoration-line', 'line-through');
   await expect(page.locator('[data-anchor-prefix-scope="sibling"]')
     .getByRole('link', { name: 'Second', exact: true })).toHaveCSS('text-decoration-line', 'none');

@@ -21,7 +21,10 @@ export function snapshotTreePrefix() {
             node: properties(node, ['padding-bottom']),
             content: properties(content, [...font, 'min-height', 'padding-left', 'padding-right',
               'background-color', 'border-radius']),
-            switcher: properties(node.querySelector(selector('-switcher')), ['width', 'line-height']),
+            switcher: properties(
+              node.querySelector(selector('-switcher')),
+              ['width', 'line-height']
+            ),
             indent: properties(node.querySelector(selector('-indent-unit')), ['width']),
             checkbox: properties(node.querySelector(selector('-checkbox-inner')),
               ['width', 'height', 'background-color', 'border-color', 'border-width'])

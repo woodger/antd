@@ -54,8 +54,10 @@ test('FloatButtonBackTop retains source linear opacity and user transform throug
     expect(await snapshotFrame(back, reference.enter.time)).toEqual(expected(reference.enter));
 
     await back.evaluate(node => node.getAnimations()[0].finish());
+
     await expect.poll(() => back.evaluate(node => node.getAnimations().length)).toBe(0);
     await page.locator('#float-scroll').evaluate(node => { node.scrollTop = 0; });
+
     await expect.poll(() => back.evaluate(node => node.getAnimations().length)).toBe(1);
 
     expect(await snapshotFrame(back, reference.leave.time)).toEqual(expected(reference.leave));

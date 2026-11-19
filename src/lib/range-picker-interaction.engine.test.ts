@@ -25,7 +25,8 @@ function setup(needConfirm = false, allowEmpty = [false, false], count = 2) {
       if (index === undefined) {
         calendar = [...committed];
         submit = [...committed];
-      } else {
+      }
+      else {
         calendar[index] = committed[index];
         submit[index] = committed[index];
       }

@@ -17,9 +17,20 @@ describe('TreeSelect component attribute composition', () => {
   it.each(['root', 'input'] as const)('runs both %s callbacks even after cancellation', slot => {
     const calls: string[] = [];
     const event = new Event('keydown', { cancelable: true });
-    const generated = { onkeydown: (next: Event) => { calls.push('generated'); next.preventDefault(); } };
-    const own = { onkeydown: (next: Event) => { calls.push('own'); next.preventDefault(); } };
-    const attrs = mergeTreeSelectComponentAttributes({ onkeydown: generated.onkeydown }, generated, own, slot);
+    const generated = { onkeydown: (next: Event) => {
+      calls.push('generated');
+      next.preventDefault();
+    } };
+    const own = { onkeydown: (next: Event) => {
+      calls.push('own');
+      next.preventDefault();
+    } };
+    const attrs = mergeTreeSelectComponentAttributes(
+      { onkeydown: generated.onkeydown },
+      generated,
+      own,
+      slot
+    );
 
     attrs.onkeydown(event);
 
@@ -39,20 +50,30 @@ describe('TreeSelect component attribute composition', () => {
     const calls: string[] = [];
     const generated = { onblur: (_event: unknown) => { calls.push('generated'); } };
     const own = { onblur: (_event: unknown) => { calls.push('own'); } };
-    const attrs = mergeTreeSelectComponentAttributes({ onblur: generated.onblur }, generated, own, 'root');
+    const attrs = mergeTreeSelectComponentAttributes(
+      { onblur: generated.onblur },
+      generated,
+      own,
+      'root'
+    );
 
     attrs.onblur({ currentTarget: { isConnected: false } });
+
     expect(calls).toEqual([]);
     attrs.onblur({ currentTarget: { isConnected: true } });
+
     expect(calls).toEqual(['generated', 'own']);
   });
 
   it('preserves callbacks without a corresponding generated handler', () => {
     let value = '';
-    const attrs = mergeTreeSelectComponentAttributes({ oninput: (text: string) => { value = text; } },
+    const attrs = mergeTreeSelectComponentAttributes({ oninput: (text: string) => {
+      value = text;
+    } },
       {}, undefined, 'input');
 
     attrs.oninput('draft');
+
     expect(value).toBe('draft');
   });
 });
@@ -74,7 +95,9 @@ describe('TreeSelect native key cancellation', () => {
     event.preventDefault();
     const original = event.preventDefault;
 
-    expect(() => treeSelectNativeKeyCancelled(event, () => { throw new Error('handler'); })).toThrow('handler');
+    expect(() => treeSelectNativeKeyCancelled(event, () => {
+      throw new Error('handler');
+    })).toThrow('handler');
     expect(event.preventDefault).toBe(original);
   });
 });

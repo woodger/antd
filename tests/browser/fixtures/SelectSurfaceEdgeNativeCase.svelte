@@ -14,7 +14,10 @@
   const events: unknown[] = [], rawEvents: unknown[] = [];
   const options = [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }];
   const classes = { placeholder: 'surface-edge-empty-placeholder' };
-  const styles = { placeholder: { ...selectSurfaceEdgePaintStyles.placeholder }, input: { ...selectSurfaceEdgePaintStyles.input } };
+  const styles = {
+    placeholder: { ...selectSurfaceEdgePaintStyles.placeholder },
+    input: { ...selectSurfaceEdgePaintStyles.input }
+  };
   const theme = { token: { motion: false }, cssVar: { key: 'select-surface-edge' } };
   const prefix = recorder.register(createRawSnippet(() => ({
     render: () => '<strong data-surface-node="edge-prefix">Prefix edge</strong>'
@@ -35,18 +38,30 @@
   onDestroy(() => { alive = false; });
 
   function event(...args: unknown[]) {
-    events.push(recorder.encode(args)); rawEvents.push(recorder.raw(args)); revision += 1;
+    events.push(recorder.encode(args));
+    rawEvents.push(recorder.raw(args));
+    revision += 1;
   }
   function callback<Value extends (...args: never[]) => unknown>(name: string, fn: Value) {
     return recorder.register(fn, { callback: 'edge-' + name });
   }
   const onChange = callback('change', (value: string | undefined, option: unknown) => {
-    model = value; event('change', value, option);
+    model = value;
+    event('change', value, option);
   });
-  const onSelect = callback('select', (value: string, option: unknown) => event('select', value, option));
-  const onDeselect = callback('deselect', (value: string, option: unknown) => event('deselect', value, option));
+  const onSelect = callback(
+    'select',
+    (value: string, option: unknown) => event('select', value, option)
+  );
+  const onDeselect = callback(
+    'deselect',
+    (value: string, option: unknown) => event('deselect', value, option)
+  );
   const onClear = callback('clear', () => event('clear'));
-  const onOpenChange = callback('open', (value: boolean) => { open = value; event('open', value); });
+  const onOpenChange = callback('open', (value: boolean) => {
+    open = value;
+    event('open', value);
+  });
   const onSearch = callback('search', (query: string) => event('search', query));
   const popupRender: SelectPopupRender = callback('popup', (menu: Parameters<SelectPopupRender>[0]) => {
     recorder.register(menu, { node: 'origin-menu' });
@@ -64,14 +79,19 @@
     else if (sample.placeholder === 'empty') props.placeholder = '';
     if (sample.axis === 'replacement') props.popupRender = popupRender;
     if (sample.axis === 'prefix') props.prefix = prefix;
-    if (sample.axis === 'placeholder') { props.classNames = classes; props.styles = styles; }
+    if (sample.axis === 'placeholder') {
+      props.classNames = classes;
+      props.styles = styles;
+    }
     lastAuthoredProps = props;
     return props;
   }
   let ownerProps = $derived(ownProps());
   let selectProps = $derived(ownerProps as SelectProps<string, undefined, RawOption>);
   let autoCompleteProps = $derived(ownerProps as AutoCompleteProps<RawOption>);
-  export function readRefs() { return { control, root: publicRoot, editor: isSelect ? selectEditor : autoCompleteEditor }; }
+  export function readRefs() {
+    return { control, root: publicRoot, editor: isSelect ? selectEditor : autoCompleteEditor };
+  }
   export function read() {
     const authoredProps = alive ? ownerProps : lastAuthoredProps;
     return { model: recorder.encode(model), rawModel: recorder.raw(model), open,
@@ -79,7 +99,10 @@
       authoredProps: recorder.encode(authoredProps), rawAuthoredProps: recorder.raw(authoredProps) };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+  }
 </script>
 
 <section data-surface-case={sample.id} data-surface-bound={Boolean(control)}

@@ -26,6 +26,7 @@ test('Masonry prefix updates preserve layout DOM and the focused item editor', a
   const root = scope.locator(':scope > div');
   const oldRoot = await root.elementHandle();
   const tiles = root.locator(':scope > div');
+
   await expect(tiles).toHaveCount(5);
   const oldTiles = await tiles.elementHandles();
   const input = page.getByRole('textbox', { name: 'normal item 0', exact: true });
@@ -63,6 +64,7 @@ test('Masonry changes motion classes without replacing a leaving item', async ({
   const leaving = scope.locator('div:has(> [data-masonry-tile="4"])');
   const oldItem = await leaving.elementHandle();
   await page.getByRole('button', { name: 'Remove last prefixed tile', exact: true }).click();
+
   await expect(leaving).toHaveClass(/suite-masonry-item-fade-leave-active/);
   await leaving.evaluate(node => node.getAnimations().forEach(animation => animation.pause()));
 
@@ -80,6 +82,7 @@ test('Masonry changes motion classes without replacing a leaving item', async ({
       bubbles: true, propertyName: 'opacity'
     }));
   });
+
   await expect(leaving).toHaveCount(0);
   await expect(scope.locator('[data-masonry-tile]')).toHaveCount(4);
 });

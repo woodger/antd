@@ -18,7 +18,10 @@ const target = document.getElementById('root')!;
 const popup = target.querySelector<HTMLElement>('.ant-select-dropdown')!;
 const editor = target.querySelector<HTMLInputElement>('input[role="combobox"]')!;
 const draft = target.querySelector<HTMLInputElement>('[data-surface-draft]')!;
-const sample = { ...treeSelectSurfaceSamples.find(entry => entry.id === 'popup-wrap')!, defaultOpen: true };
+const sample = {
+  ...treeSelectSurfaceSamples.find(entry => entry.id === 'popup-wrap')!,
+  defaultOpen: true
+};
 const instance = hydrate(TreeSelectSurfaceScope, { target, props: { sample }, recover: false });
 await tick();
 window.treeSelectPopupHydration = { popup, editor, draft, dispose: () => unmount(instance) };

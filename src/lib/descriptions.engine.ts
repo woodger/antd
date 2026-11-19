@@ -58,7 +58,8 @@ export function descriptionsRows(
       rows.push(row);
       row = [];
       count = 0;
-    } else row.push(next);
+    }
+    else row.push(next);
   }
   if (row.length)
     rows.push(row);

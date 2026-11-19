@@ -32,7 +32,10 @@
   onDestroy(() => Spin.setDefaultIndicator(null));
   let resolvedProps = $derived.by((): SpinProps => {
     const { indicator, ...rest } = sample.props;
-    return { ...rest, indicator: indicator === 'local' ? local : indicator === null ? null : undefined };
+    return {
+      ...rest,
+      indicator: indicator === 'local' ? local : indicator === null ? null : undefined
+    };
   });
   const classes = (info: SpinSemanticInfo): SpinSemanticSlots => ({
     root: `local-root size-${info.props.size ?? 'none'} visible-${info.props.spinning} full-${info.props.fullscreen} percent-${info.props.percent ?? 'none'}`,
@@ -50,7 +53,10 @@
     styles: { root: 'padding-top:3px', section: 'padding-top:4px', indicator: 'color:#ff8800' }
   });
   let sourceTheme = $derived<ThemeConfig>({
-    cssVar: { key: 'spin-source-scope', ...(sample.theme === 'variables' ? { prefix: 'SpinX' } : {}) },
+    cssVar: {
+      key: 'spin-source-scope',
+      ...(sample.theme === 'variables' ? { prefix: 'SpinX' } : {})
+    },
     token: { motion: false },
     ...(sample.theme === 'dark' ? { algorithm: theme.darkAlgorithm }
       : sample.theme === 'compact' ? { algorithm: theme.compactAlgorithm } : {}),

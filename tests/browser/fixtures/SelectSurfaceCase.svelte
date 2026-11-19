@@ -54,27 +54,49 @@
     return recorder.register(callback, { callback: name });
   }
   const changed = handler('change', (value: string | string[] | undefined, option: unknown) => {
-    model = value; event('change', value, option);
+    model = value;
+    event('change', value, option);
   });
-  const selected = handler('select', (value: string, option: unknown) => event('select', value, option));
-  const deselected = handler('deselect', (value: string, option: unknown) => event('deselect', value, option));
+  const selected = handler(
+    'select',
+    (value: string, option: unknown) => event('select', value, option)
+  );
+  const deselected = handler(
+    'deselect',
+    (value: string, option: unknown) => event('deselect', value, option)
+  );
   const cleared = handler('clear', () => event('clear'));
-  const opening = handler('open', (value: boolean) => { open = value; event('open', value); });
+  const opening = handler('open', (value: boolean) => {
+    open = value;
+    event('open', value);
+  });
   const searched = handler('own-search', (value: string) => event('search', value));
-  const contextSearched = handler('context-search', (value: string) => event('context-search', value));
+  const contextSearched = handler(
+    'context-search',
+    (value: string) => event('context-search', value)
+  );
   const footerClicked = handler('footer-click', () => event('footer-click'));
   const footerInput = handler('footer-input', (input: Event) =>
     event('footer-input', (input.currentTarget as HTMLInputElement).value));
   const footerMouse = new Map<'plain' | 'prevent', (event: MouseEvent) => void>();
   for (const policy of ['plain', 'prevent'] as const) {
     footerMouse.set(policy, handler('footer-mousedown-' + policy, (input: MouseEvent) => {
-      if (policy === 'prevent') { input.preventDefault(); input.stopPropagation(); }
+      if (policy === 'prevent') {
+        input.preventDefault();
+        input.stopPropagation();
+      }
       event('footer-mousedown', policy, { defaultPrevented: input.defaultPrevented,
         propagationStopped: input.cancelBubble, target: (input.target as Element).tagName });
     }));
   }
-  recorder.register(wrappedPlain, { node: 'popup-wrap', origin: 'same-argument', footerPolicy: 'plain' });
-  recorder.register(wrappedPrevent, { node: 'popup-wrap', origin: 'same-argument', footerPolicy: 'prevent' });
+  recorder.register(
+    wrappedPlain,
+    { node: 'popup-wrap', origin: 'same-argument', footerPolicy: 'plain' }
+  );
+  recorder.register(
+    wrappedPrevent,
+    { node: 'popup-wrap', origin: 'same-argument', footerPolicy: 'prevent' }
+  );
   for (const kind of ['origin', 'wrap', 'replace', 'null', 'undefined', 'false', 'empty', 'zero', 'array', 'rich'] as const) {
     for (const policy of ['plain', 'prevent'] as const) {
       const callback: SelectPopupRender = origin => {
@@ -101,17 +123,28 @@
     const key = [kind, side, category, component].join(':');
     if (kind === 'function') {
       if (!semanticCallbacks.has(key)) semanticCallbacks.set(key, handler(key, (info: { props: unknown }) => {
-        const result = selectSurfaceSemantic(kind, side, component, info.props as Record<string, unknown>)[category];
+        const result = selectSurfaceSemantic(
+          kind,
+          side,
+          component,
+          info.props as Record<string, unknown>
+        )[category];
         return recorder.record(category === 'classes' ? 'classNames' : 'styles', side, info, result);
       }));
       return semanticCallbacks.get(key);
     }
-    if (!semanticObjects.has(key)) semanticObjects.set(key, selectSurfaceSemantic(kind, side, component)[category]);
+    if (!semanticObjects.has(key)) semanticObjects.set(
+      key,
+      selectSurfaceSemantic(kind, side, component)[category]
+    );
     return semanticObjects.get(key);
   }
   function data() {
     const key = settings.dataset + ':' + Boolean(settings.rawStyles);
-    if (!datasets.has(key)) datasets.set(key, selectSurfaceData(settings.dataset, Boolean(settings.rawStyles)));
+    if (!datasets.has(key)) datasets.set(
+      key,
+      selectSurfaceData(settings.dataset, Boolean(settings.rawStyles))
+    );
     return datasets.get(key)!;
   }
   function rootStyle(kind?: 'context' | 'own' | 'next') {
@@ -120,7 +153,10 @@
     return rootStyles.get(kind)!;
   }
   function search(kind: SelectSurfaceSample['search'], context = false) {
-    return kind === 'object' ? { filterOption: false, onSearch: context ? contextSearched : searched } : kind === 'true';
+    return kind === 'object' ? {
+      filterOption: false,
+      onSearch: context ? contextSearched : searched
+    } : kind === 'true';
   }
   function size(value: SelectSurfaceSample['size']): ComponentSize | undefined {
     return value === 'middle' ? 'medium' : value;
@@ -139,8 +175,18 @@
     else props.defaultOpen = settings.defaultOpen;
     if (settings.mode) props.mode = settings.mode;
     if (settings.popup !== 'omitted') props.popupRender = popupCallbacks.get(settings.popup + ':' + (settings.footerPolicy ?? 'plain'));
-    if (settings.classes !== 'omitted') props.classNames = semantic(settings.classes, 'own', 'classes', settings.control);
-    if (settings.styles !== 'omitted') props.styles = semantic(settings.styles, 'own', 'styles', settings.control);
+    if (settings.classes !== 'omitted') props.classNames = semantic(
+      settings.classes,
+      'own',
+      'classes',
+      settings.control
+    );
+    if (settings.styles !== 'omitted') props.styles = semantic(
+      settings.styles,
+      'own',
+      'styles',
+      settings.control
+    );
     if (settings.prefix) props.prefix = nodes.get('prefix');
     if (settings.notFound) props.notFoundContent = nodes.get('not-found');
     const ownSettings: SelectSurfaceSample & { virtual?: boolean } = settings;
@@ -155,8 +201,18 @@
     const select: Record<string, unknown> = {};
     if (config.className) select.class = 'surface-context-class';
     if (config.rootStyle) select.style = rootStyle('context');
-    if (config.classes && config.classes !== 'omitted') select.classNames = semantic(config.classes, 'context', 'classes', 'select');
-    if (config.styles && config.styles !== 'omitted') select.styles = semantic(config.styles, 'context', 'styles', 'select');
+    if (config.classes && config.classes !== 'omitted') select.classNames = semantic(
+      config.classes,
+      'context',
+      'classes',
+      'select'
+    );
+    if (config.styles && config.styles !== 'omitted') select.styles = semantic(
+      config.styles,
+      'context',
+      'styles',
+      'select'
+    );
     if (Object.hasOwn(config, 'allowClear')) select.allowClear = config.allowClear;
     if (Object.hasOwn(config, 'variant')) select.variant = config.variant;
     if (config.search) select.showSearch = search(config.search, true);
@@ -178,7 +234,13 @@
   }
   export function readRefs() {
     const actualEditor = settings.control === 'autocomplete' ? autoCompleteEditor : selectEditor;
-    return { control, root: publicRoot, editor: actualEditor, publicRoot, publicEditor: actualEditor };
+    return {
+      control,
+      root: publicRoot,
+      editor: actualEditor,
+      publicRoot,
+      publicEditor: actualEditor
+    };
   }
   export function read() {
     if (alive) lastAuthored = {
@@ -191,7 +253,10 @@
       ...lastAuthored };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+  }
 </script>
 
 {#snippet wrapped(origin: Snippet, policy: 'plain' | 'prevent')}

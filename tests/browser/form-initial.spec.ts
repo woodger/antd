@@ -7,13 +7,16 @@ for (const { sample, initial, selectedReset, fullReset } of reference.cases) {
     await page.goto('/?fixture=form-initial');
     await page.getByRole('combobox', { name: 'Form initial sample', exact: true })
       .selectOption(sample.id);
+
     await expect.poll(() => page.evaluate(formInitialMetrics)).toEqual(initial);
 
     await page.getByRole('button', { name: 'Edit initial model', exact: true }).click();
     await page.getByRole('button', { name: 'Reset selected initial', exact: true }).click();
+
     await expect.poll(() => page.evaluate(formInitialMetrics)).toEqual(selectedReset);
     await page.getByRole('button', { name: 'Edit initial model', exact: true }).click();
     await page.getByRole('button', { name: 'Reset all initial', exact: true }).click();
+
     await expect.poll(() => page.evaluate(formInitialMetrics)).toEqual(fullReset);
   });
 }
@@ -23,9 +26,11 @@ for (const { sample, before, mounted } of reference.lateMount) {
     await page.goto('/?fixture=form-initial');
     await page.getByRole('combobox', { name: 'Form initial sample', exact: true })
       .selectOption(`late-${sample.id}`);
+
     await expect.poll(() => page.evaluate(formInitialMetrics)).toEqual(before);
 
     await page.getByRole('button', { name: 'Mount initial field', exact: true }).click();
+
     await expect.poll(() => page.evaluate(formInitialMetrics)).toEqual(mounted);
   });
 }
@@ -44,6 +49,7 @@ test('Form retains a current value when initialValue changes and uses the latest
   await page.getByRole('button', { name: 'Update initial default', exact: true }).evaluate(
     (node: HTMLButtonElement) => node.click()
   );
+
   await expect.poll(() => page.evaluate(formInitialMetrics))
     .toEqual(reference.defaultUpdate.updated.metrics);
   await expect(input).toBeFocused();
@@ -53,6 +59,7 @@ test('Form retains a current value when initialValue changes and uses the latest
     .toEqual([1, 3]);
 
   await page.getByRole('button', { name: 'Reset all initial', exact: true }).click();
+
   await expect.poll(() => page.evaluate(formInitialMetrics))
     .toEqual(reference.defaultUpdate.reset.metrics);
   expect(await input.evaluate((node, previous) => node === previous, original))
@@ -64,9 +71,11 @@ test('Form applies a default added after mount only on reset', async ({ page }) 
   await page.getByRole('combobox', { name: 'Form initial sample', exact: true })
     .selectOption('undefined');
   await page.getByRole('button', { name: 'Add initial default', exact: true }).click();
+
   await expect.poll(() => page.evaluate(formInitialMetrics)).toEqual(reference.propAdded);
 
   await page.getByRole('button', { name: 'Reset all initial', exact: true }).click();
+
   await expect.poll(() => page.evaluate(formInitialMetrics)).toEqual(reference.propAddedReset);
 });
 
@@ -74,10 +83,13 @@ test('Form uses mount order for overlapping defaults when a child appears later'
   await page.goto('/?fixture=form-initial');
   await page.getByRole('combobox', { name: 'Form initial sample', exact: true })
     .selectOption('late-overlap');
+
   await expect.poll(() => page.evaluate(formInitialMetrics)).toEqual(reference.lateOverlap.beforeChild);
 
   await page.getByRole('button', { name: 'Mount initial child', exact: true }).click();
+
   await expect.poll(() => page.evaluate(formInitialMetrics)).toEqual(reference.lateOverlap.withChild);
   await page.getByRole('button', { name: 'Reset all initial', exact: true }).click();
+
   await expect.poll(() => page.evaluate(formInitialMetrics)).toEqual(reference.lateOverlap.reset);
 });

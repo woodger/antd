@@ -142,22 +142,28 @@ export function qrCodeDimensions(style?: string) {
 
       if (char === '\\') declaration += source[++index] ?? '';
       else if (char === quote) quote = '';
-    } else if (char === '/' && source[index + 1] === '*') {
+    }
+    else if (char === '/' && source[index + 1] === '*') {
       const end = source.indexOf('*/', index + 2);
       index = end === -1 ? source.length : end + 1;
       declaration += ' ';
-    } else if (char === '"' || char === "'") {
+    }
+    else if (char === '"' || char === "'") {
       quote = char;
       declaration += char;
-    } else if (char === '(') {
+    }
+    else if (char === '(') {
       depth++;
       declaration += char;
-    } else if (char === ')') {
+    }
+    else if (char === ')') {
       depth--;
       declaration += char;
-    } else if ((char === ';' && depth === 0) || index === source.length) {
+    }
+    else if ((char === ';' && depth === 0) || index === source.length) {
       publish();
-    } else {
+    }
+    else {
       declaration += char;
     }
   }

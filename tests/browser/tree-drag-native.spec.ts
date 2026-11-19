@@ -5,13 +5,16 @@ import { mountTreeDrag, treeDragAction, treeDragEvents } from './tree-drag-test'
 
 test('Tree rejects a drop when allowDrop changes after dragenter', async ({ page }) => {
   const source = reference.observations.find(entry => entry.sample.id === 'stale-allow-observation')!;
+
   expect(source.steps.some(step => step.result.events.some(event => event.type === 'drop'))).toBe(true);
   await mountTreeDrag(page, source.sample.id);
   await treeDragAction(page, { kind: 'dragstart', key: 'c' });
   await treeDragAction(page, { kind: 'dragenter', key: 'b', x: 160 });
+
   await expect(page.locator('.ant-tree-drop-indicator')).toHaveCount(1);
   await treeDragAction(page, { kind: 'allow', value: false });
   await treeDragAction(page, { kind: 'dragover', key: 'b', x: 160 });
+
   await expect(page.locator('.ant-tree-drop-indicator')).toHaveCount(0);
   await treeDragAction(page, { kind: 'drop', key: 'b', x: 160 });
   await treeDragAction(page, { kind: 'dragend', key: 'c' });
@@ -34,10 +37,12 @@ test('Tree revalidates allowDrop at drop without requiring another dragover', as
 
 test('Tree ends a virtualized-away source through the window with a valid node', async ({ page }) => {
   const source = reference.observations.find(entry => entry.sample.id === 'window-end-observation')!;
+
   expect(source.errors).toEqual(["Cannot destructure property 'data' of 'props' as it is null."]);
   await mountTreeDrag(page, source.sample.id);
   await treeDragAction(page, { kind: 'dragstart', key: 'v0' });
   await treeDragAction(page, { kind: 'scroll', key: 'v30' });
+
   await expect(page.locator('[data-tree-drag-key="v0"]')).toHaveCount(0);
   await treeDragAction(page, { kind: 'windowend' });
 
@@ -46,11 +51,13 @@ test('Tree ends a virtualized-away source through the window with a valid node',
   ]);
   await expect(page.locator('.dragging, .ant-tree-drop-indicator')).toHaveCount(0);
   await treeDragAction(page, { kind: 'windowend' });
+
   expect(await treeDragEvents(page)).toHaveLength(2);
 });
 
 test('Tree cancels delayed expand and retained DOM events after unmount', async ({ page }) => {
   const source = reference.observations.find(entry => entry.sample.id === 'unmount-timer-observation')!;
+
   expect(source.steps.at(-1)!.result.events.map(event => event.type)).toContain('expand');
   await mountTreeDrag(page, source.sample.id);
   await treeDragAction(page, { kind: 'dragstart', key: 'c' });
@@ -59,6 +66,7 @@ test('Tree cancels delayed expand and retained DOM events after unmount', async 
     element => element.closest('[role="treeitem"]')!
   );
   await treeDragAction(page, { kind: 'unmount' });
+
   await expect(page.locator('[data-tree-drag-ref]')).toHaveText('none');
   await page.clock.runFor(1200);
   await retained.evaluate(element => {
@@ -80,6 +88,7 @@ test('Tree keeps a zero parent as the drop container', async ({ page }) => {
   expect(zero?.container).toBe(true);
   await treeDragAction(page, { kind: 'drop', key: 'z1', x: 100 });
   await treeDragAction(page, { kind: 'dragend', key: 'c' });
+
   expect((await treeDragEvents(page)).find(event => event.type === 'drop'))
     .toMatchObject({ node: { key: 'z1' }, dropToGap: true });
 });
@@ -96,6 +105,7 @@ for (const id of ['inside-collapsed', 'hidden-handle']) {
     });
 
     const events = await treeDragEvents(page);
+
     expect(events.find(event => event.type === 'dragstart')).toMatchObject({ node: { key: 'c' } });
     expect(events.find(event => event.type === 'drop'))
       .toMatchObject({ node: { key: 'b' }, dragNode: { key: 'c' }, dropToGap: false });
@@ -122,6 +132,7 @@ for (const control of ['Toggle draggable', 'Remove drag source']) {
 test('Tree releases a drag cancelled by onDragStart', async ({ page }) => {
   await mountTreeDrag(page, 'inside-collapsed');
   await page.getByRole('button', { name: 'Cancel drag start', exact: true }).click();
+
   expect(await treeDragAction(page, { kind: 'dragstart', key: 'c' })).toBe(true);
   await treeDragAction(page, { kind: 'windowend' });
 
@@ -134,6 +145,7 @@ test('Tree drops after its source has left the virtual window', async ({ page })
   await mountTreeDrag(page, 'virtual');
   await treeDragAction(page, { kind: 'dragstart', key: 'v0' });
   await treeDragAction(page, { kind: 'scroll', key: 'v30' });
+
   await expect(page.locator('[data-tree-drag-key="v0"]')).toHaveCount(0);
   await treeDragAction(page, { kind: 'dragenter', key: 'v30', x: 160 });
   await treeDragAction(page, { kind: 'dragover', key: 'v30', x: 160 });
@@ -148,6 +160,7 @@ test('Tree drops after its source has left the virtual window', async ({ page })
 
 test('Tree updates drag handles and indicator direction without replacing nodes or refs', async ({ page }) => {
   const raw = reference.observations.find(entry => entry.sample.id === 'prefix-cache-observation')!;
+
   expect(raw.steps.find(step => step.action.kind === 'prefix')?.result.view.handles).toEqual([]);
   await mountTreeDrag(page, 'prefix-cache-observation');
   const root = await page.locator('[data-ant-tree-root]').elementHandle();
@@ -155,6 +168,7 @@ test('Tree updates drag handles and indicator direction without replacing nodes 
   await treeDragAction(page, { kind: 'dragstart', key: 'c' }, 'branch');
   await treeDragAction(page, { kind: 'dragenter', key: 'b', x: 160 }, 'branch');
   await treeDragAction(page, { kind: 'prefix', value: 'fresh-tree' }, 'branch');
+
   await expect(page.locator('.fresh-tree-draggable-icon')).toHaveCount(9);
   await expect(page.locator('.branch-draggable-icon')).toHaveCount(0);
   expect(await root!.evaluate(element => element === document.querySelector('[data-ant-tree-root]')))
@@ -162,6 +176,7 @@ test('Tree updates drag handles and indicator direction without replacing nodes 
   expect(await row!.evaluate(element => element === document.querySelector('.dragging'))).toBe(true);
   await expect(page.locator('[data-tree-drag-ref]')).toHaveText('DIV');
   await page.getByRole('button', { name: 'Toggle drag direction', exact: true }).click();
+
   await expect(page.locator('.fresh-tree-drop-indicator')).toHaveCSS('right', '28px');
   await expect(page.locator('.fresh-tree-drop-indicator')).toHaveCSS('left', '0px');
   await treeDragAction(page, { kind: 'dragend', key: 'c' }, 'fresh-tree');
@@ -169,6 +184,7 @@ test('Tree updates drag handles and indicator direction without replacing nodes 
   await page.getByRole('button', { name: 'Change drag indent', exact: true }).click();
   await treeDragAction(page, { kind: 'dragstart', key: 'c' }, 'fresh-tree');
   await treeDragAction(page, { kind: 'dragenter', key: 'b', x: 40 }, 'fresh-tree');
+
   await expect(page.locator('.fresh-tree-drop-indicator')).toHaveCSS('right', '40px');
   await treeDragAction(page, { kind: 'dragend', key: 'c' }, 'fresh-tree');
 });
@@ -180,16 +196,21 @@ test('Tree retains selection, checks and keyboard focus across a real drag', asy
   const target = page.getByRole('treeitem', { name: 'Beta', exact: true });
   await tree.focus();
   const active = await tree.getAttribute('aria-activedescendant');
-  await source.locator('.ant-tree-draggable-icon').dragTo(target, { targetPosition: { x: 120, y: 18 } });
+  await source.locator('.ant-tree-draggable-icon').dragTo(
+    target,
+    { targetPosition: { x: 120, y: 18 } }
+  );
 
   await expect(source).toHaveAttribute('aria-selected', 'true');
   await expect(source).toHaveAttribute('aria-checked', 'true');
   await expect(tree).toBeFocused();
   await expect(tree).toHaveAttribute('aria-activedescendant', active!);
   await source.getByRole('checkbox').click();
+
   await expect(source).toHaveAttribute('aria-checked', 'false');
   await tree.press('ArrowUp');
   await tree.press(' ');
+
   await expect(target).toHaveAttribute('aria-checked', 'true');
   await expect(source).toHaveAttribute('aria-selected', 'true');
 });
@@ -217,7 +238,11 @@ for (const id of ['inside-collapsed', 'prefix']) {
     await treeDragAction(page, { kind: 'dragstart', key: 'c' }, prefix);
     const feedback = await page.locator('.dragging').evaluate(element => {
       const style = getComputedStyle(element, '::after');
-      return { opacity: style.opacity, pointerEvents: style.pointerEvents, border: style.borderTopWidth };
+      return {
+        opacity: style.opacity,
+        pointerEvents: style.pointerEvents,
+        border: style.borderTopWidth
+      };
     });
 
     expect(feedback).toEqual({ opacity: '1', pointerEvents: 'none', border: '1px' });
@@ -248,13 +273,18 @@ test('Tree drag callbacks preserve generic raw data, bigint keys and canonical e
 test('Tree includes generic collapsed descendants and preserves the pre-collapse drag snapshot', async ({ page }) => {
   await page.goto('/?fixture=tree-drag-generic');
   await treeDragAction(page, { kind: 'dragstart', key: 0 });
+
   await expect(page.locator('[data-tree-drag-key="2"]')).toHaveCount(0);
   await treeDragAction(page, { kind: 'dragenter', key: 'moving', x: 160 });
   await treeDragAction(page, { kind: 'drop', key: 'moving', x: 160 });
   await treeDragAction(page, { kind: 'dragend', key: 0 });
   const events = JSON.parse(await page.locator('[data-tree-drag-generic-events]').textContent() ?? '[]');
 
-  expect(events[2]).toMatchObject({ type: 'drop', dragNode: { key: '0', keyType: 'number', expanded: true },
+  expect(events[2]).toMatchObject({ type: 'drop', dragNode: {
+    key: '0',
+    keyType: 'number',
+    expanded: true
+  },
     keys: ['number:0', 'bigint:2'], position: 1, gap: false });
   expect(events.at(-1)).toMatchObject({ type: 'dragend', node: { key: '0', expanded: false } });
   await expect(page.locator('[data-tree-drag-generic-valid]')).toHaveText('true');
@@ -262,10 +292,12 @@ test('Tree includes generic collapsed descendants and preserves the pre-collapse
 
 test('Tree forbids a descendant added after dragstart', async ({ page }) => {
   const raw = reference.observations.find(entry => entry.sample.id === 'late-descendant-observation')!;
+
   expect(raw.steps.some(step => step.result.events.some(event => event.type === 'drop'))).toBe(true);
   await mountTreeDrag(page, raw.sample.id);
   await treeDragAction(page, { kind: 'dragstart', key: 'a' });
   await treeDragAction(page, { kind: 'append-child' });
+
   await expect(page.locator('[data-tree-drag-key="late"]')).toHaveCount(1);
   await treeDragAction(page, { kind: 'dragenter', key: 'late', x: 160 });
   await treeDragAction(page, { kind: 'dragover', key: 'late', x: 160 });
@@ -299,6 +331,7 @@ test('Tree completes a real drag after scrolling its source out of the virtual w
   }
 
   const events = await treeDragEvents(page);
+
   expect(events.find(event => event.type === 'drop'))
     .toMatchObject({ node: { key: 'v30' }, dragNode: { key: 'v0' } });
   expect(events.at(-1)).toMatchObject({ type: 'dragend', node: { key: 'v0' } });
@@ -326,6 +359,7 @@ test('Tree preserves an opaque handle control and its native keyboard focus', as
   await expect(action).toBeFocused();
   await expect(page.locator('[data-tree-drag-handle-actions]')).toHaveText('1');
   await action.press('Enter');
+
   await expect(page.locator('[data-tree-drag-handle-actions]')).toHaveText('2');
   expect(await treeDragEvents(page)).toEqual([]);
 });
@@ -341,5 +375,6 @@ test('Tree routes keyboard navigation from a focused draggable row through its r
   await expect(tree).toBeFocused();
   await expect(tree).toHaveAttribute('aria-activedescendant', await target.getAttribute('id') ?? '');
   await tree.press('Enter');
+
   await expect(page.getByRole('treeitem', { name: 'Beta one', exact: true })).toBeVisible();
 });

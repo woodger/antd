@@ -24,7 +24,8 @@ for (const sample of reference.cases) {
       if (step.action === 'unmount') {
         await page.getByRole('button', { name: 'Toggle lifecycle component', exact: true })
           .dispatchEvent('click');
-      } else if (step.action === 'leave') await page.mouse.move(0, 0);
+      }
+      else if (step.action === 'leave') await page.mouse.move(0, 0);
       else if (step.action === 'focus') await anchor.focus();
       else if (step.action === 'blur') await anchor.evaluate(node => node.blur());
       else if (step.action === 'popupHover') await input.hover();
@@ -37,7 +38,8 @@ for (const sample of reference.cases) {
         })));
 
         expect(canceled).toBe(step.canceled);
-      } else if (step.action === 'popupClick') {
+      }
+      else if (step.action === 'popupClick') {
         await page.getByRole('button', { name: 'Lifecycle count', exact: true }).dispatchEvent('click');
       }
       await page.clock.runFor(1000);
@@ -55,6 +57,7 @@ for (const component of ['tooltip', 'popover', 'popconfirm', 'typography', 'avat
       await select(page, `empty-${component}-controlled`);
       const input = page.getByLabel('Lifecycle draft', { exact: true });
       await input.focus();
+
       await expect(page.getByLabel('Lifecycle events', { exact: true })).toHaveText('[]');
 
       if (action === 'escape') await page.keyboard.press('Escape');
@@ -66,7 +69,8 @@ for (const component of ['tooltip', 'popover', 'popconfirm', 'typography', 'avat
       if (action === 'outside') {
         await expect(page.getByRole('button', { name: 'After lifecycle popup', exact: true }))
           .toBeFocused();
-      } else if (['popover', 'popconfirm', 'avatar-group'].includes(component)) {
+      }
+      else if (['popover', 'popconfirm', 'avatar-group'].includes(component)) {
         await expect(page.locator('[data-lifecycle-anchor]')).toBeFocused();
       }
     });

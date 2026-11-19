@@ -9,15 +9,24 @@
   interface Option { value: string; label: string }
   const Multiple = Select<string, 'multiple', Option, false, HTMLDivElement, Editor>;
   const Completion = AutoComplete<Option, HTMLDivElement, Editor>;
-  let { sample, capture }: { sample: HydrationOwnershipOwnerSample; capture: HydrationOwnershipCapture } = $props();
+  let { sample, capture }: {
+    sample: HydrationOwnershipOwnerSample;
+    capture: HydrationOwnershipCapture
+  } = $props();
   const initial = untrack(() => sample), ownerCapture = untrack(() => capture), callerUID = $props.id();
   const recorder = createSelectSurfaceRecorder(), events: unknown[] = [], rawEvents: unknown[] = [], lifecycle: unknown[] = [];
   let query = $state(initial.initialQuery), model = $state.raw<string | string[]>(initial.initialValue);
   let tag = $state<HydrationOwnershipTag>(initial.initialTag);
   let control = $state<SelectRef>(), root = $state<HTMLDivElement>(), editor = $state<Editor>(), outside = $state<HTMLButtonElement>();
   let authoredInput: Editor | null = null, alive = true;
-  const handler = <Value,>(name: string, fn: Value): Value => recorder.register(fn, { callback: 'ownership-' + name });
-  const record = (...args: unknown[]) => { events.push(recorder.encode(args)); rawEvents.push(recorder.raw(args)); };
+  const handler = <Value,>(name: string, fn: Value): Value => recorder.register(
+    fn,
+    { callback: 'ownership-' + name }
+  );
+  const record = (...args: unknown[]) => {
+    events.push(recorder.encode(args));
+    rawEvents.push(recorder.raw(args));
+  };
   const target = (node: EventTarget | null) => node instanceof Node ? { tag: node instanceof Element ? node.tagName : node.nodeName,
     ownerKey: node instanceof Element ? node.closest('[data-ownership-owner]')?.getAttribute('data-ownership-owner') ?? null : null,
     connected: node.isConnected, rootType: node.getRootNode().nodeType } : null;
@@ -28,24 +37,36 @@
     if (initial.control === 'autocomplete') query = value as string; else model = value as string[];
     record('change', value, option);
   });
-  const onSearch = handler('search', (value: string, info?: unknown) => { query = value; record('search', value, info); });
+  const onSearch = handler('search', (value: string, info?: unknown) => {
+    query = value;
+    record('search', value, info);
+  });
   const onOpenChange = handler('open', (value: boolean) => record('open', value));
   const onFocus = handler('focus', (input: FocusEvent) => record('focus', event(input)));
   const onBlur = handler('blur', (input: FocusEvent) => record('blur', event(input)));
-  const onInputKeyDown = handler('input-keydown', (input: KeyboardEvent) => record('input-keydown', event(input)));
+  const onInputKeyDown = handler(
+    'input-keydown',
+    (input: KeyboardEvent) => record('input-keydown', event(input))
+  );
   const inputRef = handler('authored-input-ref', (node: Editor | null) => {
     authoredInput = node;
     lifecycle.push({ ownerKey: initial.ownerKey, event: node ? 'attach' : 'detach', tag: node?.tagName ?? null,
       observation: ownerCapture.onAuthoredRef?.(node) ?? null });
   });
-  const options = recorder.register([{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }], { dataset: 'ownership-options' });
+  const options = recorder.register(
+    [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }],
+    { dataset: 'ownership-options' }
+  );
   const ownInputProps = { ref: inputRef, 'data-ownership-editor': initial.ownerKey,
     class: 'ownership-editor', placeholder: 'Editor ' + initial.ownerKey, style: initial.editorStyle };
   const elements = new Map<HydrationOwnershipTag, SelectInputComponent<Editor>>();
   function component(currentTag: HydrationOwnershipTag) {
     if (!elements.has(currentTag)) {
       const { ref, ...props } = ownInputProps;
-      elements.set(currentTag, recorder.register({ element: currentTag, props, ref }, { node: 'ownership-input-element' }));
+      elements.set(
+        currentTag,
+        recorder.register({ element: currentTag, props, ref }, { node: 'ownership-input-element' })
+      );
     }
     return elements.get(currentTag)!;
   }
@@ -71,13 +92,22 @@
       events, rawEvents, lifecycle, calls: recorder.calls, ...lastAuthored };
   }
   ownerCapture.read = read;
-  ownerCapture.readRefs = () => ({ control, root: root ?? null, editor: editor ?? null, authoredInput, outside: outside ?? null });
+  ownerCapture.readRefs = () => ({
+    control,
+    root: root ?? null,
+    editor: editor ?? null,
+    authoredInput,
+    outside: outside ?? null
+  });
   ownerCapture.update = (action: HydrationOwnershipUpdate) => {
     if (action.type === 'controlled-query') query = action.value;
     else if (action.type === 'intrinsic-tag-replacement') tag = initial.replacementTag;
     else throw Error('Unknown public owner update');
   };
-  onMount(() => { ownerCapture.onCommit?.(); return () => { alive = false; }; });
+  onMount(() => {
+    ownerCapture.onCommit?.();
+    return () => { alive = false; };
+  });
   const frame = untrack(() => initial.frame);
   const frameStyle = `position:${frame.position};left:${frame.left}px;top:${frame.top}px;width:${frame.width}px;font-family:${frame.fontFamily};font-size:${frame.fontSize}px;line-height:${frame.lineHeight}`;
 </script>

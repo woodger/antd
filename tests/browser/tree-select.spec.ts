@@ -346,6 +346,7 @@ test(
     await expect(body).toHaveCSS('max-height', '96px');
 
     await body.evaluate(element => { element.scrollTop = element.scrollHeight; });
+
     await expect.poll(() => page.getByLabel('Tree select scrolls', { exact: true }).innerText()).not
       .toBe('0');
 

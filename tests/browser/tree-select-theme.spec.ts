@@ -4,6 +4,7 @@ import reference from './fixtures/ant-design-tree-select-metrics.json' with { ty
 test('bound root and input refs survive theme updates and clear on unmount', async ({ page }) => {
   const input = page.getByRole('combobox', { name: 'Themed tree popup', exact: true });
   await input.fill('draft');
+
   await expect(page.getByLabel('TreeSelect native refs', { exact: true }))
     .toHaveText('{"root":true,"input":true,"contains":true}');
 
@@ -19,6 +20,7 @@ test('bound root and input refs survive theme updates and clear on unmount', asy
   await expect(page.getByLabel('TreeSelect native refs', { exact: true }))
     .toHaveText('{"root":true,"input":true,"contains":true}');
   await page.getByLabel('Mount themed TreeSelect', { exact: true }).uncheck();
+
   await expect(page.getByLabel('TreeSelect native refs', { exact: true }))
     .toHaveText('{"root":false,"input":false,"contains":false}');
 });
@@ -31,6 +33,7 @@ test.beforeEach(async ({ page }) => {
 for (const sample of reference.cases) {
   test(`TreeSelect matches Ant Design source metrics for ${sample.name}`, async ({ page }) => {
     await page.getByLabel('TreeSelect token preset', { exact: true }).selectOption(sample.name);
+
     expect(await page.locator('.tree-token-single-middle').evaluate(element =>
       element.classList.contains('ant-tree-select-css-var'))).toBe(sample.rootHasTreeScope);
     const selectors: Record<string, string> = {};
@@ -88,6 +91,7 @@ test('color updates preserve popup position and editor state', async ({ page }) 
   const original = await input.elementHandle();
   const originalTitle = await alpha.elementHandle();
   const position = await popup.evaluate(element => [element.style.left, element.style.top]);
+
   expect(position.every(Boolean)).toBe(true);
 
   await page.getByLabel('TreeSelect color override', { exact: true }).evaluate(element => {
@@ -111,6 +115,7 @@ test('color updates preserve popup position and editor state', async ({ page }) 
   })).toEqual([2, 8, 'backward']);
   const values = await page.locator('#themed-tree-select-form').evaluate(element =>
     Object.fromEntries(new FormData(element as HTMLFormElement)));
+
   expect(values).toEqual({ project: 'a', teams: 'a' });
   await expect(page.getByLabel('TreeSelect theme changes', { exact: true })).toHaveText('0');
   await expect(page.getByLabel('TreeSelect theme searches', { exact: true })).toHaveText('1');
@@ -152,6 +157,7 @@ test('source changes before first open preserve checkbox state', async ({ page }
   const popup = page.locator('.popup:not([hidden])');
   const checkbox = popup.getByRole('checkbox', { name: 'Alpha', exact: true });
   const original = await checkbox.elementHandle();
+
   await expect(popup).not.toHaveAttribute('style', /--ant-tree-select-title-height/);
   await expect(checkbox).toHaveCSS('border-top-width', '0px');
 
@@ -212,10 +218,12 @@ test('custom prefixes and RTL scopes clean up on unmount', async ({ page }) => {
   const input = page.getByRole('combobox', { name: 'Themed tree popup', exact: true });
   await input.click();
   const popup = page.locator('.popup:not([hidden])');
+
   await expect(popup).toHaveCSS('--tree-2-tree-select-title-height', '30px');
   await expect(page.getByRole('treeitem', { name: 'Alpha', exact: true })
     .locator('.ant-tree-indent-unit')).toHaveCSS('width', '32px');
   await page.getByLabel('Hash themed TreeSelect', { exact: true }).uncheck();
+
   await expect(page.locator('.tree-token-popup')).not.toHaveClass(/(^|\s)css-[a-z0-9]+(\s|$)/);
   await input.click();
   await page.setViewportSize({ width: 375, height: 1200 });

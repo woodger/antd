@@ -65,6 +65,7 @@ for (const sample of reference.cases) {
   test(`Cascader responsive tags match source for ${sample.name}`, async ({ page }) => {
     await page.getByLabel('Cascader token preset', { exact: true }).selectOption(sample.name);
     const tags = page.locator('.cascader-token-responsive [data-cascader-tag]:not([inert])');
+
     await expect(tags).toHaveCount(sample.overflow['200']);
 
     await page.getByLabel('Cascader responsive width', { exact: true }).fill('400');
@@ -86,6 +87,7 @@ test('color updates retain popup position, input selection and active search row
   const original = await input.elementHandle();
   const originalRow = await row.elementHandle();
   const position = await popup.evaluate(element => [element.style.left, element.style.top]);
+
   expect(position.every(Boolean)).toBe(true);
 
   await page.getByLabel('Cascader color override', { exact: true }).evaluate(element => {
@@ -118,6 +120,7 @@ test('search layout updates retain the current component variables', async ({ pa
   await input.click();
   const popup = page.locator('.popup:not([hidden])');
   const original = await popup.elementHandle();
+
   await expect(popup.locator('.ant-cascader-menu')).toHaveCount(2);
 
   await input.fill('Alp');
@@ -141,6 +144,7 @@ test('popup variable overrides keep priority through theme and search changes', 
   const input = page.getByRole('combobox', { name: 'Themed path popup', exact: true });
   await input.click();
   const popup = page.locator('.popup:not([hidden])');
+
   await expect(popup).toHaveCSS('--ant-cascader-option-padding', '1px 3px');
 
   await page.getByLabel('Cascader color override', { exact: true }).evaluate(element => {
@@ -216,6 +220,7 @@ test('source settings chosen before first open do not leave old popup variables'
   const input = page.getByRole('combobox', { name: 'Themed path popup', exact: true });
   await input.click();
   const popup = page.locator('.popup:not([hidden])');
+
   await expect(popup).not.toHaveAttribute('style', /--ant-cascader-option-padding/);
 
   await page.getByLabel('Apply source Cascader tokens', { exact: true }).evaluate(element => {

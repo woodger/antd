@@ -3,6 +3,7 @@ import reference from './fixtures/ant-design-form-error-list-observation.json' w
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=form-error-list');
+
   await expect(page.locator('#form-error-list-fixture')).toBeVisible();
 });
 
@@ -26,7 +27,8 @@ test('FormErrorList matches source help priority, ordering, theme metrics and vi
 
     if (!sample.rendered) {
       await expect(holder).toHaveCount(0);
-    } else {
+    }
+    else {
       await expect(holder.locator(':scope > div')).toHaveText(sample.items.map(({ text }) => text));
       expect(await holder.evaluate((node) => node.id)).toBe(sample.idAttribute);
       const items = await holder.locator(':scope > div').evaluateAll((nodes) => nodes.map((node) => ({
@@ -48,6 +50,7 @@ test('FormErrorList matches source help priority, ordering, theme metrics and vi
 
 test('FormErrorList renders duplicate and prototype text exactly once per supplied entry', async ({ page }) => {
   await page.getByRole('button', { name: 'Show null help', exact: true }).click();
+
   await expect(page.locator('[data-ant-form-error-message]')).toHaveText(['Visible error']);
 
   await page.getByRole('button', { name: 'Show duplicate messages', exact: true }).click();
@@ -56,20 +59,26 @@ test('FormErrorList renders duplicate and prototype text exactly once per suppli
     'toString', 'toString', 'constructor', '__proto__', 'toString'
   ]);
   const sample = reference.cases.find((entry) => entry.id === 'duplicate-and-prototype-messages')!;
+
   expect(sample.items.map(({ text }) => text)).toHaveLength(7);
   await page.getByRole('button', { name: 'Clear messages', exact: true }).click();
+
   await expect(page.locator('[data-ant-form-error-list]')).toHaveCount(0);
 });
 
 test('FormErrorList preserves text nodes when messages reorder', async ({ page }) => {
   await page.getByRole('button', { name: 'Show errors', exact: true }).click();
+
   await expect(page.locator('[data-ant-form-error-message]')).toHaveText(['First', 'Second', 'Warning']);
   const first = await page.getByText('First', { exact: true }).elementHandle();
 
   await page.getByRole('button', { name: 'Reorder messages', exact: true }).click();
 
   await expect(page.locator('[data-ant-form-error-message]')).toHaveText(['Second', 'First', 'Warning']);
-  expect(await page.getByText('First', { exact: true }).evaluate((node, original) => node === original, first))
+  expect(await page.getByText('First', { exact: true }).evaluate(
+    (node, original) => node === original,
+    first
+  ))
     .toBe(true);
   await first?.dispose();
 });
@@ -95,6 +104,7 @@ test('FormErrorList renders snippets and updates its inherited prefix without re
 test('FormErrorList absorbs a short empty list without a hidden visibility callback', async ({ page }) => {
   await page.getByRole('button', { name: 'Show errors', exact: true }).click();
   const callbacks = page.getByRole('status', { name: 'Error list callbacks', exact: true });
+
   await expect(callbacks).toHaveText('[true]');
   await page.clock.install();
 
@@ -108,6 +118,7 @@ test('FormErrorList absorbs a short empty list without a hidden visibility callb
 test('FormErrorList cancels a pending hide callback when unmounted', async ({ page }) => {
   await page.getByRole('button', { name: 'Show errors', exact: true }).click();
   const callbacks = page.getByRole('status', { name: 'Error list callbacks', exact: true });
+
   await expect(callbacks).toHaveText('[true]');
   await page.clock.install();
 
@@ -137,13 +148,16 @@ test('FormErrorList honors motion disabled and reduced motion without missing ca
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.getByRole('button', { name: 'Show errors', exact: true }).click();
   const callbacks = page.getByRole('status', { name: 'Error list callbacks', exact: true });
+
   await expect(callbacks).toHaveText('[true]');
 
   await page.getByRole('button', { name: 'Clear messages', exact: true }).click();
+
   await expect(callbacks).toHaveText('[true,false]');
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.getByRole('button', { name: 'Toggle error motion', exact: true }).click();
   await page.getByRole('button', { name: 'Show errors', exact: true }).click();
+
   await expect(callbacks).toHaveText('[true,false,true]');
   await page.getByRole('button', { name: 'Clear messages', exact: true }).click();
 

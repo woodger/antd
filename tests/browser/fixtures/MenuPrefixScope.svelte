@@ -28,7 +28,12 @@
     { key: 'danger', label: 'Danger', class: 'sample-danger', danger: true },
     { key: 'parent', label: 'Parent', class: 'sample-parent', children: [
       { key: 'leaf', label: 'Leaf', class: 'sample-leaf' },
-      { type: 'group', key: 'group', label: 'Group', children: [{ key: 'group-leaf', label: 'Grouped' }] },
+      {
+        type: 'group',
+        key: 'group',
+        label: 'Group',
+        children: [{ key: 'group-leaf', label: 'Grouped' }]
+      },
       { type: 'divider', key: 'divider', dashed: true },
       { key: 'link', label: link }
     ] }

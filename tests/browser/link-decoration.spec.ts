@@ -39,7 +39,10 @@ for (const source of [false, true]) {
           .not.toBe('none');
         await link.evaluate(node => node.blur());
       }
-      await expect(page.locator('#outside-decoration')).toHaveCSS('text-decoration-line', 'underline');
+      await expect(page.locator('#outside-decoration')).toHaveCSS(
+        'text-decoration-line',
+        'underline'
+      );
     });
   }
 }
@@ -50,6 +53,7 @@ test('navigation links preserve nodes, focus, href, callbacks and dropdown keybo
   const previous = await link.elementHandle();
   await link.focus();
   await link.press('Enter');
+
   await expect(page.getByLabel('Decoration clicks', { exact: true })).toHaveText('1');
   await expect(link).toHaveAttribute('href', '#decoration-target');
 
@@ -64,7 +68,9 @@ test('navigation links preserve nodes, focus, href, callbacks and dropdown keybo
   const menu = page.getByRole('link', { name: 'Breadcrumb menu link', exact: true });
   await menu.focus();
   await menu.press('ArrowDown');
+
   await expect(page.getByRole('menuitem', { name: 'Menu choice', exact: true })).toBeFocused();
   await page.keyboard.press('Escape');
+
   await expect(menu).toBeFocused();
 });

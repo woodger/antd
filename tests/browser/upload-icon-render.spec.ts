@@ -43,6 +43,7 @@ test('Upload iconRender updates preserve the item, filename, file input and outs
         [node.selectionStart, node.selectionEnd, node.selectionDirection])).toEqual([1, 5, 'backward']);
     }
     await page.getByRole('checkbox', { name: 'Mount Upload icon renderer', exact: true }).uncheck();
+
     await expect(item).toHaveCount(0);
     await page.getByRole('checkbox', { name: 'Mount Upload icon renderer', exact: true }).check();
 

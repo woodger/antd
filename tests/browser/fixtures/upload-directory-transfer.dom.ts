@@ -21,11 +21,17 @@ export function createDirectoryTransfer(nodes: DirectoryFixtureNode[]) {
       createReader: () => {
         let cursor = 0;
         return {
-          readEntries: (success: (entries: unknown[]) => void, failure?: (error: DOMException) => void) => {
+          readEntries: (
+            success: (entries: unknown[]) => void,
+            failure?: (error: DOMException) => void
+          ) => {
             calls.push({ path: fullPath, operation: 'readEntries', errorHandler: Boolean(failure) });
             const page = node.pages?.[cursor++] ?? [];
             queueMicrotask(() => {
-              if (node.readError) failure?.(new DOMException('Unreadable directory', 'NotReadableError'));
+              if (node.readError) failure?.(new DOMException(
+                'Unreadable directory',
+                'NotReadableError'
+              ));
               else success(page.map(entry));
             });
           }

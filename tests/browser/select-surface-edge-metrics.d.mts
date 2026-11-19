@@ -24,7 +24,13 @@ export interface SelectSurfaceEdgePaint {
   raw: {
     input: SelectSurfaceEdgeMeasuredNode & { paintAncestors: SelectSurfaceEdgeMeasuredNode[] };
     placeholders: Array<SelectSurfaceEdgeMeasuredNode & { paintAncestors: SelectSurfaceEdgeMeasuredNode[] }>;
-    rules: Array<{ sheetIndex: number; context: string[]; selector: string; cssText: string; matched: string[] }>;
+    rules: Array<{
+      sheetIndex: number;
+      context: string[];
+      selector: string;
+      cssText: string;
+      matched: string[]
+    }>;
     cssErrors: string[];
   };
 }

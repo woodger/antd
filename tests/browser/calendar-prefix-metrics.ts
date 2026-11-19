@@ -45,7 +45,10 @@ export function snapshotCalendarPrefix() {
     year: control('year'),
     month: control('month'),
     mode: css(mode, ['font-size', 'height', 'margin-inline-start']),
-    radio: css(mode?.querySelector(`.${shared}-radio-button-wrapper`), [...font, 'height', ...padding]),
+    radio: css(
+      mode?.querySelector(`.${shared}-radio-button-wrapper`),
+      [...font, 'height', ...padding]
+    ),
     selected: cell(root.querySelector(`.${prefix}-cell-selected`)),
     disabled: cell(root.querySelector(`.${prefix}-cell-disabled`)),
     normal: cell(root.querySelector(`.${prefix}-cell-in-view:not(.${prefix}-cell-selected):not(.${prefix}-cell-disabled):not(.${prefix}-cell-today)`)),

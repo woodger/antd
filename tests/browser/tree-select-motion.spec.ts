@@ -48,7 +48,8 @@ function verify(
           && animation.currentTime === transition.currentTime
           && animation.timing?.duration === transition.timing?.duration)).toBe(true);
     }
-  } else expect(actual.raw.popup).toBeNull();
+  }
+  else expect(actual.raw.popup).toBeNull();
 }
 
 test.use({ viewport: reference.reference.viewport });
@@ -76,6 +77,7 @@ for (const rawEntry of reference.cases) {
     await page.getByRole('combobox', { name: 'TreeSelect motion sample', exact: true })
       .selectOption(rawEntry.id);
     await page.mouse.move(0, 0);
+
     await expect(page.locator('[data-motion-case]')).toHaveAttribute('data-motion-bound', 'true');
     await drain(page);
     verify(await page.evaluate(readTreeSelectMotion), entry.initial, sample, 'initial');

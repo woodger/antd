@@ -44,7 +44,11 @@ export const treeSelectPointerSamples: readonly TreeSelectPointerSample[] = [
   { id: 'show-action-none', showAction: [], actions: ['focus', 'outside', ...targets] },
   { id: 'show-action-click', showAction: ['click'], actions: ['focus', 'outside', ...targets] },
   { id: 'show-action-focus', showAction: ['focus'], actions: ['focus', 'outside', ...targets] },
-  { id: 'show-action-both', showAction: ['focus', 'click'], actions: ['focus', 'outside', ...targets] },
+  {
+    id: 'show-action-both',
+    showAction: ['focus', 'click'],
+    actions: ['focus', 'outside', ...targets]
+  },
   { id: 'touch-readonly', touch: true, search: false, actions: targets },
   { id: 'touch-search', touch: true, search: true, actions: targets },
   { id: 'touch-multiple', touch: true, multiple: true, actions: targets },
@@ -52,10 +56,46 @@ export const treeSelectPointerSamples: readonly TreeSelectPointerSample[] = [
   { id: 'touch-cancel', touch: true, actions: ['touch-cancel', 'root', 'root'] },
   { id: 'touch-scroll', touch: true, actions: ['touch-scroll', 'root', 'root'] },
   { id: 'touch-clear', touch: true, clear: true, actions: ['root', 'clear-pointer'] },
-  { id: 'native-default-multiple-search', multiple: true, search: true, nativeSearchDefault: true, actions: targets },
-  { id: 'native-default-checked-search', checked: true, search: true, nativeSearchDefault: true, actions: targets },
-  { id: 'native-default-touch-search', multiple: true, touch: true, search: true, nativeSearchDefault: true, actions: targets },
-  { id: 'popup-inside-menu', multiple: true, insideRoot: true, defaultOpen: true, actions: ['node-mousedown'] },
-  { id: 'popup-inside-draft', multiple: true, insideRoot: true, draft: true, defaultOpen: true, actions: ['focus', 'draft'] },
-  { id: 'search-caret', search: true, actions: ['query', 'caret', 'prefix', 'root', 'suffix', 'input', 'prefix'] }
+  {
+    id: 'native-default-multiple-search',
+    multiple: true,
+    search: true,
+    nativeSearchDefault: true,
+    actions: targets
+  },
+  {
+    id: 'native-default-checked-search',
+    checked: true,
+    search: true,
+    nativeSearchDefault: true,
+    actions: targets
+  },
+  {
+    id: 'native-default-touch-search',
+    multiple: true,
+    touch: true,
+    search: true,
+    nativeSearchDefault: true,
+    actions: targets
+  },
+  {
+    id: 'popup-inside-menu',
+    multiple: true,
+    insideRoot: true,
+    defaultOpen: true,
+    actions: ['node-mousedown']
+  },
+  {
+    id: 'popup-inside-draft',
+    multiple: true,
+    insideRoot: true,
+    draft: true,
+    defaultOpen: true,
+    actions: ['focus', 'draft']
+  },
+  {
+    id: 'search-caret',
+    search: true,
+    actions: ['query', 'caret', 'prefix', 'root', 'suffix', 'input', 'prefix']
+  }
 ];

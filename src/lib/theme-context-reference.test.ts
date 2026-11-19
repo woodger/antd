@@ -79,6 +79,7 @@ describe('Ant Design 6.6.8 official UMD ConfigProvider/useToken conformance', ()
       const expectedHash = sample.hashId && sample.hashId.replace(
         /^css-/, process.env.NODE_ENV !== 'production' ? 'css-dev-only-do-not-override-' : 'css-'
       );
+
       expect(result.hashId).toBe(expectedHash);
       expect(result.theme.getDerivativeToken(theme.defaultSeed)).toStrictEqual(sample.map);
     });

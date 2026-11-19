@@ -33,7 +33,10 @@ declare global {
     };
   }
 }
-const bytes = readFileSync(new URL('./fixtures/ant-design-select-virtual-initialization-reference.json', import.meta.url));
+const bytes = readFileSync(new URL(
+  './fixtures/ant-design-select-virtual-initialization-reference.json',
+  import.meta.url
+));
 if (createHash('sha256').update(bytes).digest('hex') !== 'c98e17f2203792f37c0bb175c3c78f5ab04cb9f6f94e9e778e9875da4a803bfc')
   throw Error('Frozen actual Source initialization capture changed');
 const reference = JSON.parse(bytes.toString('utf8')) as SourceInitialization;
@@ -41,7 +44,12 @@ const variants = ['api-same', 'api-roundtrip', 'manual-untrusted', 'reopen-only'
 
 test.use({ viewport: { width: 1200, height: 900 } });
 test.beforeAll(() => {
-  expect(reference.reference).toMatchObject({ version: '6.6.8', react: '18.3.1', errors: [], diagnostics: [] });
+  expect(reference.reference).toMatchObject({
+    version: '6.6.8',
+    react: '18.3.1',
+    errors: [],
+    diagnostics: []
+  });
   expect(reference.cases.map(entry => entry.id)).toEqual(['select', 'auto-complete']
     .flatMap(family => variants.map(variant => `${family}-initialization-${variant}`)));
   for (const entry of reference.cases) {
@@ -71,7 +79,10 @@ function logicalFrameView(view: ReturnType<typeof readSelectVirtual>['view']) {
     holder: withoutBox(view.popup.viewport.holder), filler: withoutBox(view.popup.viewport.filler),
     inner: withoutBox(view.popup.viewport.inner), rows: view.popup.viewport.rows.map(row => withoutBox(row)),
     aria: view.popup.viewport.aria.map(listbox => withoutBox(listbox)),
-    scrollbars: view.popup.viewport.scrollbars.map(({ box: _box, thumb, ...logical }) => ({ ...logical, thumbPresent: Boolean(thumb) }))
+    scrollbars: view.popup.viewport.scrollbars.map(({ box: _box, thumb, ...logical }) => ({
+      ...logical,
+      thumbPresent: Boolean(thumb)
+    }))
   } } : null };
 }
 
@@ -93,7 +104,11 @@ for (const entry of reference.cases) {
   test(`${entry.id} preserves public callbacks during initialization`, async ({ page }, testInfo) => {
     await page.goto(`/select-virtual-initialization.html?sample=${entry.sourceSampleId}`);
     await page.waitForFunction(() => window.selectVirtualInitialization);
-    await expect(page.locator('[data-select-virtual-case]')).toHaveAttribute('data-select-virtual-bound', 'true');
+
+    await expect(page.locator('[data-select-virtual-case]')).toHaveAttribute(
+      'data-select-virtual-bound',
+      'true'
+    );
     await page.evaluate(project => {
       const readProjection = new Function(`return (${project})`)() as typeof readSelectVirtual;
       const probe: NonNullable<Window['selectVirtualInitializationProbe']> = {
@@ -122,15 +137,26 @@ for (const entry of reference.cases) {
       await prepareSelectVirtual(page);
       const initial = await settle(page);
       trace.push({ phase: 'initial', actual: initial });
-      expect(initial.projection.view).toEqual(selectVirtualNativeView(entry.initial.projection.view, entry.sourceSampleId, 'initial'));
+      expect(initial.projection.view).toEqual(selectVirtualNativeView(
+        entry.initial.projection.view,
+        entry.sourceSampleId,
+        'initial'
+      ));
       expect(initial.callbacks).toEqual(entry.initial.callbacks);
       expect(initial.offsets).toEqual(entry.initial.offsets);
       for (const [index, step] of entry.setup.entries()) {
-        await page.evaluate(phase => { window.selectVirtualInitializationProbe!.phase = phase; }, `setup-${index}`);
+        await page.evaluate(phase => {
+          window.selectVirtualInitializationProbe!.phase = phase;
+        }, `setup-${index}`);
         await actSelectVirtual(page, step.action);
         const actual = await settle(page);
         trace.push({ action: step.action, actual });
-        expect(actual.projection.view).toEqual(selectVirtualNativeView(step.projection.view, entry.sourceSampleId, 'step', step.action));
+        expect(actual.projection.view).toEqual(selectVirtualNativeView(
+          step.projection.view,
+          entry.sourceSampleId,
+          'step',
+          step.action
+        ));
         expect(actual.callbacks).toEqual(step.callbacks);
         expect(actual.offsets).toEqual(step.offsets);
         if (index === 0) await page.evaluate(() => {
@@ -145,17 +171,26 @@ for (const entry of reference.cases) {
         return await new Promise<FrameObservation>(resolve => {
           const frame = () => {
             const holder = document.querySelector<HTMLElement>('.ant-select-dropdown-list-holder');
-            if (!holder?.clientHeight) { requestAnimationFrame(frame); return; }
+            if (!holder?.clientHeight) {
+              requestAnimationFrame(frame);
+              return;
+            }
             const control = window.selectVirtualInitialization!.refs().control!;
             const measure = (): HolderReceipt => ({ top: holder.scrollTop, clientHeight: holder.clientHeight,
               scrollHeight: holder.scrollHeight, sameSavedHolder: holder === probe.holder });
             const before = measure();
             const calls: unknown[] = [];
-            if (variant === 'api-same') { calls.push({ method: 'scrollTo', argument: 20 }); control.scrollTo(20); }
+            if (variant === 'api-same') {
+              calls.push({ method: 'scrollTo', argument: 20 });
+              control.scrollTo(20);
+            }
             else if (variant === 'api-roundtrip') {
-              calls.push({ method: 'scrollTo', argument: { top: 600 } }); control.scrollTo({ top: 600 });
-              calls.push({ method: 'scrollTo', argument: { top: 572 } }); control.scrollTo({ top: 572 });
-            } else if (variant === 'manual-untrusted') {
+              calls.push({ method: 'scrollTo', argument: { top: 600 } });
+              control.scrollTo({ top: 600 });
+              calls.push({ method: 'scrollTo', argument: { top: 572 } });
+              control.scrollTo({ top: 572 });
+            }
+            else if (variant === 'manual-untrusted') {
               calls.push({ method: 'dispatchEvent', event: 'scroll', bubbles: true });
               holder.dispatchEvent(new UIEvent('scroll', { bubbles: true }));
             }
@@ -171,12 +206,18 @@ for (const entry of reference.cases) {
       expect(inFrame.before).toEqual({ ...entry.inFrame.before, sameSavedHolder });
       expect(inFrame.after).toEqual({ ...entry.inFrame.after, sameSavedHolder });
       expect(logicalFrameView(inFrame.projection.view))
-        .toEqual(logicalFrameView(selectVirtualNativeView(entry.inFrame.projection.view, entry.sourceSampleId)));
+        .toEqual(logicalFrameView(selectVirtualNativeView(
+          entry.inFrame.projection.view,
+          entry.sourceSampleId
+        )));
       expect(inFrame.callbacks).toEqual(entry.inFrame.callbacks);
       expect(inFrame.offsets).toEqual(entry.inFrame.offsets);
       const afterAwait = await settle(page);
       trace.push({ phase: 'after-await', actual: afterAwait });
-      expect(afterAwait.projection.view).toEqual(selectVirtualNativeView(entry.afterAwait.projection.view, entry.sourceSampleId));
+      expect(afterAwait.projection.view).toEqual(selectVirtualNativeView(
+        entry.afterAwait.projection.view,
+        entry.sourceSampleId
+      ));
       expect(afterAwait.callbacks).toEqual(entry.afterAwait.callbacks);
       expect(afterAwait.offsets).toEqual(entry.afterAwait.offsets);
       expect(await page.evaluate(readSelectVirtualAriaIntegrity)).toBe(true);
@@ -184,7 +225,13 @@ for (const entry of reference.cases) {
       const delta = afterAwait.callbacks.slice(beforeCallbacks);
       expect(delta).toEqual(entry.afterAwait.callbacks.slice(beforeCallbacks));
       for (const [index, event] of delta.entries()) {
-        const receipt = event[1] as { trusted: boolean; top: number; left: number; clientHeight: number; scrollHeight: number };
+        const receipt = event[1] as {
+          trusted: boolean;
+          top: number;
+          left: number;
+          clientHeight: number;
+          scrollHeight: number
+        };
         expect(event[0]).toBe('scroll');
         expect(afterAwait.domScrolls.some(scroll => scroll.phase === 'reopen-public-frame'
           && scroll.ownerCallbacksBeforeEvent === beforeCallbacks + index && scroll.connected

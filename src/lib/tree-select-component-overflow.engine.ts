@@ -22,8 +22,18 @@ export function treeSelectComponentOverflow({
   previous?: TreeSelectComponentOverflowLayout;
 }): TreeSelectComponentOverflowLayout {
   const renderCount = Math.min(dataCount, Math.trunc(containerWidth / 10));
-  const current = previous ?? { renderCount: 0, visibleCount: 0, omittedStart: 1, restReady: false, offset: null };
-  let result = { ...current, renderCount, visibleCount: Math.min(current.omittedStart, renderCount) };
+  const current = previous ?? {
+    renderCount: 0,
+    visibleCount: 0,
+    omittedStart: 1,
+    restReady: false,
+    offset: null
+  };
+  let result = {
+    ...current,
+    renderCount,
+    visibleCount: Math.min(current.omittedStart, renderCount)
+  };
   function update(omittedStart: number, offset: number | null | undefined, notReady = false) {
     // Source updateDisplayCount не обновляет restReady при прежних count/offset.
     const unchanged = previous && previous.omittedStart === omittedStart
@@ -33,7 +43,10 @@ export function treeSelectComponentOverflow({
       offset: offset === undefined ? result.offset : offset };
   }
   if (!containerWidth) return result;
-  if (!renderCount) { update(1, null); return result; }
+  if (!renderCount) {
+    update(1, null);
+    return result;
+  }
 
   const reservedRest = Math.max(previousRestWidth, restWidth);
   let total = prefixWidth + suffixWidth;

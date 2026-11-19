@@ -18,28 +18,38 @@ async function send(page: Page, event: string) {
     else if (event === 'focusOutside') host.querySelector<HTMLElement>('#action-outside')!.focus();
     else if (event === 'popupFocus') {
       document.getElementById('action-popup-input')?.focus();
-    } else if (event === 'click') trigger.click();
+    }
+    else if (event === 'click') trigger.click();
     else if (event === 'touch') {
       trigger.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, cancelable: true }));
-    } else if (event === 'contextMenu') {
+    }
+    else if (event === 'contextMenu') {
       trigger.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true }));
-    } else if (event === 'escape') {
+    }
+    else if (event === 'escape') {
       document.dispatchEvent(new KeyboardEvent('keydown', {
         key: 'Escape', bubbles: true, cancelable: true
       }));
-    } else if (event === 'confirm' || event === 'cancel') {
+    }
+    else if (event === 'confirm' || event === 'cancel') {
       const text = event === 'confirm' ? 'Confirm action' : 'Cancel action';
       [...document.querySelectorAll<HTMLButtonElement>('[data-ant-popconfirm-buttons] button')]
         .find(node => node.textContent?.trim() === text)?.click();
-    } else if (event.startsWith('outside')) {
+    }
+    else if (event.startsWith('outside')) {
       document.body.dispatchEvent(event === 'outsidePointer'
         ? new PointerEvent('pointerdown', { bubbles: true })
-        : new MouseEvent(event === 'outsideContext' ? 'contextmenu' : 'mousedown', { bubbles: true }));
-    } else if (event.startsWith('popup')) {
+        : new MouseEvent(
+          event === 'outsideContext' ? 'contextmenu' : 'mousedown',
+          { bubbles: true }
+        ));
+    }
+    else if (event.startsWith('popup')) {
       document.querySelector('[data-ant-popover]')?.dispatchEvent(new PointerEvent(
         event === 'popupEnter' ? 'pointerenter' : 'pointerleave', { pointerType: 'mouse' }
       ));
-    } else trigger.parentElement!.dispatchEvent(new PointerEvent(
+    }
+    else trigger.parentElement!.dispatchEvent(new PointerEvent(
       event === 'enter' ? 'pointerenter' : 'pointerleave', { pointerType: 'mouse' }
     ));
     return (host as HTMLElement & { actionEvents: readonly boolean[]; }).actionEvents;
@@ -75,7 +85,8 @@ for (const source of [false, true]) {
                   }).actionEvents);
                 expect(afterMicrotask).toEqual(frame.syncEvents);
               }
-            } else if (frame.action.kind === 'advance') await page.clock.runFor(frame.action.ms!);
+            }
+            else if (frame.action.kind === 'advance') await page.clock.runFor(frame.action.ms!);
           }
           await page.clock.runFor(100);
 
@@ -100,6 +111,7 @@ for (const source of [false, true]) {
         await page.getByLabel('Popover action case', { exact: true })
           .selectOption(`${item.mode}-${name}`);
         await pauseClock(page);
+
         expect(await send(page, 'focus')).toEqual(item.focused);
         await page.getByLabel('Mount action popup', { exact: true }).evaluate(node => {
           const control = node as HTMLInputElement;

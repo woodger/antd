@@ -12,6 +12,7 @@ describe('Form slot context public package', () => {
     });
     const plain = reference.cases.find(({ sample }) => sample.id === 'default')!.metrics;
     const required = reference.cases.find(({ sample }) => sample.id === 'required')!.metrics;
+
     expect(plain.extra).toMatchObject({ name: null, id: null, required: false, describedBy: null });
     expect(plain.refIsMain).toBe(true);
     expect(required.popup.ariaRequired).toBeNull();

@@ -51,11 +51,16 @@ test('Upload local prefixes keep an active request and publish completion/remova
   await page.getByRole('checkbox', { name: 'Live Upload prefix', exact: true }).check();
   const root = page.locator('.fixture-upload-prefix');
   const input = root.locator('input[type=file]');
-  await input.setInputFiles({ name: 'draft.txt', mimeType: 'text/plain', buffer: Buffer.from('Draft') });
+  await input.setInputFiles({
+    name: 'draft.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from('Draft')
+  });
   const oldInput = await input.elementHandle();
   const filename = root.getByRole('link', { name: 'note.txt', exact: true });
   await filename.focus();
   const oldFilename = await root.getByText('draft.txt', { exact: true }).elementHandle();
+
   await expect(page.getByLabel('Upload prefix events', { exact: true }))
     .toHaveText('change:draft.txt:uploading|request:draft.txt');
   await page.getByRole('textbox', { name: 'Local Upload prefix value', exact: true })
@@ -66,7 +71,10 @@ test('Upload local prefixes keep an active request and publish completion/remova
 
   await expect(root).toHaveClass(/\bfiles-wrapper\b/);
   expect(await input.evaluate((node, old) => node === old, oldInput)).toBe(true);
-  expect(await root.getByText('draft.txt', { exact: true }).evaluate((node, old) => node === old, oldFilename))
+  expect(await root.getByText('draft.txt', { exact: true }).evaluate(
+    (node, old) => node === old,
+    oldFilename
+  ))
     .toBe(true);
   await expect(filename).toBeFocused();
   await expect(page.getByLabel('Upload prefix events', { exact: true }))

@@ -89,7 +89,14 @@ export interface SourceDerivedFacts {
     originOwnKeys: unknown[]; originElement: unknown; returnedIsOrigin: boolean; returnedChildrenContainOrigin: boolean; }>;
   footerCalls: Array<{ sequence: number; strategy: string; actualArgumentCount: number;
     encodedArguments: unknown; returnIsReactElement: boolean; returnRoot: unknown; }>;
-  owner: { open: boolean; cell: string; panel: string; footer: string; revision: number; confirm: boolean; };
+  owner: {
+    open: boolean;
+    cell: string;
+    panel: string;
+    footer: string;
+    revision: number;
+    confirm: boolean;
+  };
   inputValues: string[];
   focusedField: number;
   focus: unknown;
@@ -101,7 +108,12 @@ export interface SourceDerivedFacts {
       insidePanel: boolean; text: string; }>;
     extraFooter: Array<{ identity: number; parentIdentity: number; parentIsFooter: boolean;
       text: string; childNodes: unknown[]; }>;
-    footerControls: Array<{ tag: string; text: string; attributes: string[][]; parentIdentity: number; }>;
+    footerControls: Array<{
+      tag: string;
+      text: string;
+      attributes: string[][];
+      parentIdentity: number;
+    }>;
     panelLayouts: Array<{ identity: number; parentIdentity: number; }>;
     panelContainers: Array<{ identity: number; parentIdentity: number; }>;
   };

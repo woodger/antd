@@ -12,6 +12,7 @@ for (const sample of reference.cases) {
         await page.getByLabel('Drawer theme preset', { exact: true }).selectOption(sample.name);
         await page.getByLabel('Drawer theme scope', { exact: true }).selectOption(scope);
         const input = page.getByRole('textbox', { name: 'Drawer draft', exact: true });
+
         await expect(input).toBeVisible();
         await page.mouse.move(20, 1100);
         await input.focus();
@@ -26,6 +27,7 @@ for (const sample of reference.cases) {
         await page.getByLabel('Drawer theme preset', { exact: true }).selectOption(sample.name);
         await page.getByLabel('Drawer theme mode', { exact: true }).selectOption(mode);
         const input = page.getByRole('textbox', { name: 'Drawer draft', exact: true });
+
         await expect(input).toBeVisible();
         await page.mouse.move(20, 1100);
         await input.focus();
@@ -72,6 +74,7 @@ test('Drawer inheritance reset preserves its current editor and isolates footer 
     const input = page.getByRole('textbox', { name: 'Drawer draft', exact: true });
     await input.fill('Nested draft');
     const original = await input.elementHandle();
+
     await expect(page.locator('.ant-drawer-footer')).toHaveCSS('padding', '13px 27px');
 
     await page.getByLabel('Inherit Drawer theme', { exact: true }).dispatchEvent('click');
@@ -99,6 +102,7 @@ test('Drawer portal synchronization preserves local variables and focus after th
     const input = page.getByRole('textbox', { name: 'Drawer draft', exact: true });
     await input.fill('Portal draft');
     const original = await input.elementHandle();
+
     expect(await dialog.evaluate(node => node.parentElement === document.body)).toBe(true);
     await expect(page.locator('.ant-drawer-footer')).toHaveCSS('padding', '17px 27px');
 

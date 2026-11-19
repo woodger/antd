@@ -7,7 +7,11 @@
   interface Entry { value: number; label: string; audit: { owner: string }; }
   interface CompletionEntry { value: string; label: string; audit: { owner: string }; }
   const options: readonly Entry[] = [{ value: 1, label: 'Alpha', audit: { owner: 'source' } }];
-  const completions: readonly CompletionEntry[] = [{ value: 'a', label: 'Alpha', audit: { owner: 'source' } }];
+  const completions: readonly CompletionEntry[] = [{
+    value: 'a',
+    label: 'Alpha',
+    audit: { owner: 'source' }
+  }];
   const LabeledMultipleSelect = Select<number, 'multiple', Entry, true, HTMLButtonElement, HTMLTextAreaElement>;
   const TextareaSelect = Select<number, undefined, Entry, false, HTMLDivElement, HTMLTextAreaElement>;
   const CustomCompletion = AutoComplete<CompletionEntry, HTMLButtonElement, HTMLTextAreaElement>;

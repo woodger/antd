@@ -49,7 +49,8 @@
       const next = { ...settings, ...action.set };
       for (const key of action.unset ?? []) delete next[key];
       settings = next;
-    } else if (action.type === 'open') open = action.value;
+    }
+    else if (action.type === 'open') open = action.value;
     else if (action.type === 'label') label = action.value;
     else if (action.type === 'left') left = action.value;
     else if (action.type === 'root-swap') {

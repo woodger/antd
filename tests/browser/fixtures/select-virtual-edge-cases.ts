@@ -16,12 +16,36 @@ export type SelectVirtualEdgeAction =
   | { type: 'ref'; method: 'scrollTo'; target:
     { kind: 'key'; key: string; align: 'top' } | { kind: 'index'; index: number } };
 
-const base = { ...selectVirtualDefaults, family: 'auto-complete', scenario: 'basic', layout: 'plain', height: 'small' } as const;
+const base = {
+  ...selectVirtualDefaults,
+  family: 'auto-complete',
+  scenario: 'basic',
+  layout: 'plain',
+  height: 'small'
+} as const;
 export const selectVirtualEdgeSamples: readonly SelectVirtualEdgeSample[] = [
-  { ...base, id: 'auto-complete-empty-option-empty-value', edge: 'empty-option', count: 2, initialValue: '' },
-  { ...base, id: 'auto-complete-empty-option-other-value', edge: 'empty-option', count: 2, initialValue: 'other' },
+  {
+    ...base,
+    id: 'auto-complete-empty-option-empty-value',
+    edge: 'empty-option',
+    count: 2,
+    initialValue: ''
+  },
+  {
+    ...base,
+    id: 'auto-complete-empty-option-other-value',
+    edge: 'empty-option',
+    count: 2,
+    initialValue: 'other'
+  },
   { ...base, id: 'auto-complete-group-estimate32', edge: 'group-estimate', groups: true },
-  { ...base, id: 'auto-complete-group-estimate16', edge: 'group-estimate', groups: true, itemHeight: 'small' }
+  {
+    ...base,
+    id: 'auto-complete-group-estimate16',
+    edge: 'group-estimate',
+    groups: true,
+    itemHeight: 'small'
+  }
 ];
 
 /** Authored public options; no expected measurements or captured Source inputs are imported. */
@@ -35,6 +59,10 @@ export function selectVirtualEdgeOptions(sample: SelectVirtualEdgeSample) {
 export function selectVirtualEdgeActions(sample: SelectVirtualEdgeSample): readonly SelectVirtualEdgeAction[] {
   return sample.edge === 'group-estimate' ? [{ type: 'click' }, { type: 'edge-group-ref' },
     { type: 'ref', method: 'scrollTo', target: { kind: 'index', index: 0 } }, { type: 'outside' }]
-    : [{ type: 'click' }, { type: 'ref', method: 'scrollTo', target: { kind: 'key', key: 'empty-key', align: 'top' } },
+    : [{ type: 'click' }, {
+      type: 'ref',
+      method: 'scrollTo',
+      target: { kind: 'key', key: 'empty-key', align: 'top' }
+    },
       { type: 'outside' }];
 }

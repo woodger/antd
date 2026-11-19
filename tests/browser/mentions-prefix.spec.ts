@@ -43,6 +43,7 @@ test('Mentions prefix updates retain popup, query, editor, focus, selection and 
   await editor.fill('');
   await editor.pressSequentially('@');
   const popup = page.locator('.fixture-normal-mentions-popup');
+
   await expect(popup).toBeVisible();
   const oldRoot = await root.elementHandle();
   const oldEditor = await editor.elementHandle();

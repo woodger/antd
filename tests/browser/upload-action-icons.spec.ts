@@ -21,7 +21,10 @@ for (const entry of reference.actions) {
       .setChecked(entry.disabled);
 
     for (const name of ['Preview file', 'Download file', 'Remove file']) {
-      const control = page.locator('.ant-upload-list-item-actions').getByLabel(name, { exact: true });
+      const control = page.locator('.ant-upload-list-item-actions').getByLabel(
+        name,
+        { exact: true }
+      );
       if (await control.isDisabled()) continue;
       await control.dispatchEvent('click');
     }
@@ -68,7 +71,9 @@ test('Upload action icon updates preserve controls, input and the outside editor
     }
     await remove.focus();
     await page.keyboard.press('Enter');
+
     await expect(page.getByLabel('Action icon events', { exact: true })).toHaveText('["remove:one"]');
     await page.getByRole('checkbox', { name: 'Mount Upload action icons', exact: true }).uncheck();
+
     await expect(actions).toHaveCount(0);
   });

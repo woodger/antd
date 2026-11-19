@@ -33,7 +33,10 @@ let server: ViteDevServer;
 let cache: string;
 test.use({ viewport: reference.reference.viewport });
 test.beforeAll(async () => {
-  cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)), 'tree-select-checkable-hydration-'));
+  cache = await mkdtemp(join(
+    fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
+    'tree-select-checkable-hydration-'
+  ));
   server = await createServer({
     configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
@@ -62,7 +65,10 @@ async function settle(page: Parameters<typeof actTreeSelectCheckable>[0]) {
 for (const id of ['search-live-truthy', 'search-live-falsy']) {
   test(`TreeSelect strictly hydrates ${id} and preserves its query, caret and public bindings`, async ({ page }) => {
     const source = reference.cases.find(entry => entry.id === id)!;
-    const module = await server.ssrLoadModule(fileURLToPath(new URL('./fixtures/tree-select-checkable-hydration.server.ts', import.meta.url)));
+    const module = await server.ssrLoadModule(fileURLToPath(new URL(
+      './fixtures/tree-select-checkable-hydration.server.ts',
+      import.meta.url
+    )));
     const rendered = module.renderTreeSelectCheckable(id);
     await page.goto(`/tree-select-checkable-hydration.html?sample=${id}`);
     await page.addScriptTag({ type: 'module', url: '/tree-select-checkable-styles.client.ts' });
@@ -76,35 +82,65 @@ for (const id of ['search-live-truthy', 'search-live-falsy']) {
       const Mutation = window.MutationObserver;
       window.ResizeObserver = class extends Resize {
         targets = new Set<Element>();
-        constructor(callback: ResizeObserverCallback) { super(callback); observers.add(this.targets); }
-        observe(target: Element, options?: ResizeObserverOptions) { this.targets.add(target); super.observe(target, options); }
-        unobserve(target: Element) { this.targets.delete(target); super.unobserve(target); }
-        disconnect() { this.targets.clear(); super.disconnect(); }
+        constructor(callback: ResizeObserverCallback) {
+          super(callback);
+          observers.add(this.targets);
+        }
+        observe(target: Element, options?: ResizeObserverOptions) {
+          this.targets.add(target);
+          super.observe(target, options);
+        }
+        unobserve(target: Element) {
+          this.targets.delete(target);
+          super.unobserve(target);
+        }
+        disconnect() {
+          this.targets.clear();
+          super.disconnect();
+        }
       };
       window.MutationObserver = class extends Mutation {
-        observe(target: Node, options?: MutationObserverInit) { mutations.add(this); super.observe(target, options); }
-        disconnect() { mutations.delete(this); super.disconnect(); }
+        observe(target: Node, options?: MutationObserverInit) {
+          mutations.add(this);
+          super.observe(target, options);
+        }
+        disconnect() {
+          mutations.delete(this);
+          super.disconnect();
+        }
       };
       const frames = new Set<number>();
       const request = window.requestAnimationFrame.bind(window);
       const cancel = window.cancelAnimationFrame.bind(window);
       window.requestAnimationFrame = callback => {
-        const frame = request(time => { frames.delete(frame); callback(time); });
+        const frame = request(time => {
+          frames.delete(frame);
+          callback(time);
+        });
         frames.add(frame);
         return frame;
       };
-      window.cancelAnimationFrame = frame => { frames.delete(frame); cancel(frame); };
+      window.cancelAnimationFrame = frame => {
+        frames.delete(frame);
+        cancel(frame);
+      };
       const timers = new Set<number>();
       const browser: Window = window;
       const schedule = browser.setTimeout.bind(browser);
       const clear = browser.clearTimeout.bind(browser);
       browser.setTimeout = (handler, timeout, ...args) => {
         if (typeof handler !== 'function') throw Error('Expected a function hydration timer');
-        const timer = schedule(() => { timers.delete(timer); handler(...args); }, timeout);
+        const timer = schedule(() => {
+          timers.delete(timer);
+          handler(...args);
+        }, timeout);
         timers.add(timer);
         return timer;
       };
-      browser.clearTimeout = timer => { if (timer !== undefined) timers.delete(timer); clear(timer); };
+      browser.clearTimeout = timer => {
+        if (timer !== undefined) timers.delete(timer);
+        clear(timer);
+      };
       window.checkableHydrationResources = {
         observers: () => [...observers].reduce((sum, targets) => sum + targets.size, 0),
         mutations: () => mutations.size, frames: () => frames.size, timers: () => timers.size
@@ -115,7 +151,11 @@ for (const id of ['search-live-truthy', 'search-live-falsy']) {
     }, { head: rendered.head, body: rendered.body });
     await page.addScriptTag({ type: 'module', url: '/tree-select-checkable-hydration.client.ts' });
     await page.waitForFunction(() => window.treeSelectCheckableHydration);
-    await expect(page.locator('[data-checkable-case]')).toHaveAttribute('data-checkable-bound', 'true');
+
+    await expect(page.locator('[data-checkable-case]')).toHaveAttribute(
+      'data-checkable-bound',
+      'true'
+    );
     const identity = await page.evaluateHandle(() => {
       const state = window.treeSelectCheckableHydration!;
       const refs = state.refs();
@@ -143,7 +183,11 @@ for (const id of ['search-live-truthy', 'search-live-falsy']) {
     };
     try {
       expect(await page.evaluate(() => window.treeSelectCheckableHydration!.initialCaret)).toEqual([0, 0]);
-      expect((await settle(page)).view).toEqual(treeSelectCheckableNativeView(source.initial.view, id, 'hydrated-initial'));
+      expect((await settle(page)).view).toEqual(treeSelectCheckableNativeView(
+        source.initial.view,
+        id,
+        'hydrated-initial'
+      ));
       expect(await bindings()).toEqual(expectedBindings);
       for (const step of source.steps) {
         await actTreeSelectCheckable(page, step.action as TreeSelectCheckableAction);
@@ -176,9 +220,16 @@ for (const id of ['search-live-truthy', 'search-live-falsy']) {
       await expect(page.locator('[data-checkable-case]')).toHaveCount(0);
       await expect(page.locator('[popover]')).toHaveCount(0);
       await page.setViewportSize({ width: 1120, height: 860 });
-      await page.evaluate(() => { window.dispatchEvent(new Event('resize')); window.dispatchEvent(new Event('scroll')); });
+      await page.evaluate(() => {
+        window.dispatchEvent(new Event('resize'));
+        window.dispatchEvent(new Event('scroll'));
+      });
       await page.waitForTimeout(1000);
-      const disposed = { ledger: [...events, ['blur']], rootConnected: false, editorConnected: false };
+      const disposed = {
+        ledger: [...events, ['blur']],
+        rootConnected: false,
+        editorConnected: false
+      };
       expect(await page.evaluate(() => window.checkableHydrationDisposal!.trace)).toEqual({
         phase: 'disposed', before: { ledger: events, rootConnected: true, editorConnected: true },
         afterCall: disposed, afterAwait: disposed,

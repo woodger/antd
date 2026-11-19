@@ -7,7 +7,11 @@
   let control = $state<SelectRef>(), root = $state<HTMLDivElement>(), editor = $state<HTMLInputElement | HTMLTextAreaElement>();
   let handleKeys: string[] = [];
   function register(context: SelectInputContext<HTMLTextAreaElement>, node: HTMLTextAreaElement) {
-    const handle = { nativeElement: node, focus(...args: [FocusOptions?]) { node.focus(...args); }, blur() { node.blur(); } };
+    const handle = { nativeElement: node, focus(...args: [FocusOptions?]) {
+      node.focus(...args);
+    }, blur() {
+      node.blur();
+    } };
     handleKeys = Reflect.ownKeys(handle).map(String);
     return context.register(handle);
   }

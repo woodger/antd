@@ -12,7 +12,10 @@
   const profile = untrack(() => owner), output = untrack(() => capture);
   const range = profile === 'range', recorder = createDatePickerPresetsRecorder();
   const panel = recorder.register(dayjs(authoring.defaultPickerValue), { authoredDate: 'panel' });
-  const template = recorder.register(dayjs(authoring.defaultOpenValue), { authoredDate: 'template' });
+  const template = recorder.register(
+    dayjs(authoring.defaultOpenValue),
+    { authoredDate: 'template' }
+  );
   const emptyPair: [null, null] = recorder.register([null, null], { authoredValue: 'empty-pair' });
   const panelPair: [Dayjs, Dayjs] = [panel, panel];
   const plainClock = recorder.register({ ...authoring.clock }, { authoredClock: 'omitted' });
@@ -42,7 +45,10 @@
         identity: context !== null && (typeof context === 'object' || typeof context === 'function')
           ? recorder.identity(context) : null } });
   }
-  const handler = <Value,>(name: string, value: Value): Value => recorder.register(value, { callback: name });
+  const handler = <Value,>(name: string, value: Value): Value => recorder.register(
+    value,
+    { callback: name }
+  );
   const onChange = handler('change', function (this: unknown) {
     record('change', Array.from(arguments), this);
   });
@@ -55,9 +61,12 @@
   const onPanelChange = handler('panel', function (this: unknown) {
     record('panel', Array.from(arguments), this);
   });
-  const onOk = handler('ok', function (this: unknown) { record('ok', Array.from(arguments), this); });
+  const onOk = handler('ok', function (this: unknown) {
+    record('ok', Array.from(arguments), this);
+  });
   const onOpenChange = handler('open', function (this: unknown, next: boolean) {
-    record('open', Array.from(arguments), this); open = next;
+    record('open', Array.from(arguments), this);
+    open = next;
   });
   const shared = $derived({ format: authoring.format, needConfirm: true, showNow: false, open,
     style: 'width:100%', onChange, onCalendarChange, onPickerValueChange, onPanelChange, onOk,
@@ -69,7 +78,11 @@
     id: { start: 'empty-datetime-input', end: 'empty-datetime-end' } } satisfies RangePickerProps);
   output.recorder = recorder;
   output.setActionIndex = index => { actionIndex = index; };
-  output.readRefs = () => ({ owner: ownerElement ?? null, control: control ?? null, root: root ?? null });
+  output.readRefs = () => ({
+    owner: ownerElement ?? null,
+    control: control ?? null,
+    root: root ?? null
+  });
   output.read = () => ({ owner: profile, actionIndex, alive, open, hasTemplate,
     authoredModel: recorder.encode(range ? emptyPair : null),
     rawAuthoredModel: recorder.raw(range ? emptyPair : null),
@@ -77,8 +90,14 @@
     authoredProps: recorder.encode(range ? rangeProps : singleProps),
     rawAuthoredProps: recorder.raw(range ? rangeProps : singleProps),
     callbacks: [...callbacks], ownerActions: [...ownerActions], lifecycle: [...lifecycle] });
-  onMount(() => { alive = true; lifecycle.push({ phase: 'mount' });
-    return () => { alive = false; lifecycle.push({ phase: 'unmount' }); }; });
+  onMount(() => {
+    alive = true;
+    lifecycle.push({ phase: 'mount' });
+    return () => {
+      alive = false;
+      lifecycle.push({ phase: 'unmount' });
+    };
+  });
 </script>
 
 <ConfigProvider locale={enUS} theme={{ token: { motion: false } }}>

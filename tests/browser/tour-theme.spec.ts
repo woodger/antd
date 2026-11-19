@@ -12,6 +12,7 @@ for (const sample of reference.cases) {
       async ({ page }) => {
         await page.getByLabel('Tour theme preset', { exact: true }).selectOption(sample.name);
         await page.getByLabel('Tour theme scope', { exact: true }).selectOption(scope);
+
         await expect(page.locator('.ant-tour')).toBeVisible();
 
         await expect.poll(() => page.evaluate(snapshotTourTheme)).toEqual(expected);
@@ -24,6 +25,7 @@ for (const sample of reference.cases) {
         await page.getByLabel('Tour theme preset', { exact: true }).selectOption(sample.name);
         const selected = mode === 'previousHover' || mode === 'nextHover' ? 'primary' : mode;
         await page.getByLabel('Tour theme mode', { exact: true }).selectOption(selected);
+
         await expect(page.locator('.ant-tour')).toBeVisible();
         if (mode === 'previousHover') await page.locator('.ant-tour-prev-btn').hover();
         if (mode === 'nextHover') await page.locator('.ant-tour-next-btn').hover();
@@ -77,6 +79,7 @@ test('Tour inheritance reset keeps its current step and focused action button', 
   await page.getByLabel('Inherit Tour theme', { exact: true }).dispatchEvent('click');
 
   const expected = reference.cases.find(item => item.name === 'default')!.scopes.nested;
+
   await expect(popup).toHaveCSS('font-family', expected.root!['font-family']);
   await expect(popup).toHaveCSS('font-size', '16px');
   expect(await popup.evaluate((node, old) => node === old, originalPopup)).toBe(true);
@@ -116,12 +119,14 @@ test('Tour keeps the documented runtime layer and gives the explicit zIndex prop
     const popup = page.locator('.ant-tour');
     const original = await popup.elementHandle();
     const tokenCase = zIndexObservation.cases.find(item => item.name === 'tokens')!;
+
     await expect(popup).toHaveCSS('z-index', tokenCase.metrics.root!['z-index']);
     await expect(popup).toHaveCSS('--ant-tour-z-index-popup', '1750');
 
     await page.getByLabel('Use explicit Tour layer', { exact: true }).dispatchEvent('click');
 
     const explicit = zIndexObservation.cases.find(item => item.name === 'explicit-prop')!;
+
     await expect(popup).toHaveCSS('z-index', explicit.metrics.root!['z-index']);
     expect(await popup.evaluate((node, old) => node === old, original)).toBe(true);
     await expect(page.getByLabel('Tour theme events', { exact: true })).toHaveText('[]');

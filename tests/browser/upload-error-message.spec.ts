@@ -22,6 +22,7 @@ test('Upload error Tooltip updates the open message while retaining its row and 
     const oldRow = await row.elementHandle();
     const oldInput = await input.elementHandle();
     await row.hover();
+
     await expect(page.getByRole('tooltip')).toBeVisible();
 
     for (const [index, entry] of reference.transitions.entries()) {

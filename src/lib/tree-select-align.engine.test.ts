@@ -5,6 +5,7 @@ import { getPopupPosition } from './popup-position.engine';
 describe('treeSelectBuiltinPlacements', () => {
   it('uses Ant Select corner offsets, visible clipping and vertical shift without arrow offsets', () => {
     const placements = treeSelectBuiltinPlacements();
+
     expect(Object.keys(placements)).toEqual(['bottomLeft', 'bottomRight', 'topLeft', 'topRight']);
     expect(placements.topRight).toEqual({ points: ['br', 'tr'], offset: [0, -4],
       overflow: { adjustX: true, adjustY: true, shiftY: true }, htmlRegion: 'visible', dynamicInset: true });
@@ -12,7 +13,14 @@ describe('treeSelectBuiltinPlacements', () => {
       popup: { left: 0, top: 0, width: 300, height: 72 }, mirror: { right: 1200, bottom: 800 },
       visible: { left: 0, top: 0, right: 1200, bottom: 800 }, scaleX: 1, scaleY: 1,
       placements, align: placements.bottomRight });
-    expect(position).toMatchObject({ x: 220, y: 236, right: 680, bottom: 492, placement: 'bottomRight' });
+
+    expect(position).toMatchObject({
+      x: 220,
+      y: 236,
+      right: 680,
+      bottom: 492,
+      placement: 'bottomRight'
+    });
   });
 });
 
@@ -27,6 +35,7 @@ describe('treeSelectAlignProjection', () => {
     const matrix = treeSelectAlignProjection([{ x: 184.23828125, y: 206.73828125 },
       { x: 309.23828125, y: 206.73828125 }, { x: 309.23828125, y: 331.73828125 },
       { x: 184.23828125, y: 331.73828125 }]);
+
     expect(project(matrix, 180, 72)).toEqual([409.23828125, 296.73828125]);
     expect(project(matrix, 0, 0)).toEqual([184.23828125, 206.73828125]);
   });
@@ -34,6 +43,7 @@ describe('treeSelectAlignProjection', () => {
   it('maps a rotated CSS plane without treating its bounding box as an axis scale', () => {
     const matrix = treeSelectAlignProjection([{ x: 30, y: 40 }, { x: 110, y: 100 },
       { x: 50, y: 180 }, { x: -30, y: 120 }]);
+
     expect(project(matrix, 50, 25)).toEqual([55, 90]);
   });
 

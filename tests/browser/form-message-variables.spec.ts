@@ -24,11 +24,14 @@ test('Form messages read reactive variables again after mount and restore the fi
   const report = page.getByRole('status', { name: 'Message variable report', exact: true });
 
   await validate.click();
+
   await expect(report).toHaveText('["Field label/field"]');
   await toggle.click();
   await validate.click();
+
   await expect(report).toHaveText('["Updated label/field"]');
   await toggle.click();
   await validate.click();
+
   await expect(report).toHaveText('["Field label/field"]');
 });

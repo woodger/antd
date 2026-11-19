@@ -22,7 +22,11 @@
   const config = useConfig();
   const designTheme = useDesignTokenContext();
   let inheritedStyle = $derived(designTheme.enabled && designTheme.state.prefix !== 'ant'
-    ? inheritedComponentThemeStyle('Notification', designTheme.state.token, designTheme.state.prefix)
+    ? inheritedComponentThemeStyle(
+      'Notification',
+      designTheme.state.token,
+      designTheme.state.prefix
+    )
     : undefined);
   let rootStyle = $derived([inheritedStyle, notice.style].filter(Boolean).join(';') || undefined);
   const identity = $props.id();
@@ -102,7 +106,8 @@
         };
         if (!visible)
           finish(); else disposeMotion = animateNotice(root, true, from, finish, shift);
-      } else if (visible && !entered) {
+      }
+      else if (visible && !entered) {
         entered = true;
         disposeMotion = animateNotice(root, false, undefined, () => { }, shift);
       }

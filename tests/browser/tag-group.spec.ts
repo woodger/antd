@@ -23,7 +23,8 @@ for (const sample of reference.cases as TagGroupCase[]) {
         }).click();
         changed = step.patch;
         await page.mouse.move(0, 0);
-      } else {
+      }
+      else {
         const item = page.locator('[data-tag-group-root] .ant-tag-checkable').nth(
           'click' in step ? step.click : step.space
         );
@@ -49,13 +50,17 @@ test('CheckableTagGroup uses native buttons with Space, Enter and tab order', as
   await expect(items.nth(0)).toHaveAttribute('aria-pressed', 'false');
 
   await page.keyboard.press('Space');
+
   await expect(items.nth(0)).toHaveAttribute('aria-pressed', 'true');
   await page.keyboard.press('Tab');
+
   await expect(items.nth(1)).toBeFocused();
   await page.keyboard.press('Enter');
+
   await expect(items.nth(1)).toHaveAttribute('aria-pressed', 'true');
   await expect(items.nth(0)).toHaveAttribute('aria-pressed', 'false');
   await page.keyboard.press('Tab');
+
   await expect(page.getByRole('button', { name: 'After tag group' })).toBeFocused();
   await expect(page.getByRole('status', { name: 'Tag group events' })).toHaveText('["a","b"]');
 });
@@ -77,6 +82,7 @@ test('CheckableTagGroup preserves item DOM and focus when options reorder', asyn
 test('CheckableTagGroup clears its ref and resets defaults on remount', async ({ page }) => {
   await openCase(page, 'single-default');
   await page.getByRole('button', { name: 'b', exact: true }).click();
+
   await expect(page.getByRole('status', { name: 'Tag group ref' })).toHaveText('div');
   await page.getByRole('button', { name: 'Toggle API group' }).click();
 
@@ -84,6 +90,7 @@ test('CheckableTagGroup clears its ref and resets defaults on remount', async ({
   await expect(page.getByRole('status', { name: 'Tag group ref' })).toHaveText('empty');
 
   await page.getByRole('button', { name: 'Toggle API group' }).click();
+
   await expect(page.getByRole('button', { name: 'a', exact: true }))
     .toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('status', { name: 'Tag group ref' })).toHaveText('div');

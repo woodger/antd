@@ -55,7 +55,10 @@ const cases: Record<string, (prefixCls?: string) => ReturnType<typeof render>> =
   Collapse: prefixCls => render(UI.Collapse, { props: {
     prefixCls, items: [{ key: 'one', label: 'One', children: 'Body' }]
   } }),
-  ConfigProvider: prefixCls => render(UI.ConfigProvider, { props: { prefixCls, children: content } }),
+  ConfigProvider: prefixCls => render(
+    UI.ConfigProvider,
+    { props: { prefixCls, children: content } }
+  ),
   Descriptions: prefixCls => render(UI.Descriptions, { props: {
     prefixCls, items: [{ key: 'one', label: 'One', children: 'Body' }]
   } }),
@@ -100,7 +103,10 @@ const cases: Record<string, (prefixCls?: string) => ReturnType<typeof render>> =
   TypographyParagraph: prefixCls => render(UI.TypographyParagraph, { props: {
     prefixCls, children: 'Text'
   } }),
-  TypographyTitle: prefixCls => render(UI.TypographyTitle, { props: { prefixCls, children: 'Text' } }),
+  TypographyTitle: prefixCls => render(
+    UI.TypographyTitle,
+    { props: { prefixCls, children: 'Text' } }
+  ),
   TypographyLink: prefixCls => render(UI.TypographyLink, { props: {
     prefixCls, href: '#text', children: 'Text'
   } })

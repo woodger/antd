@@ -14,7 +14,8 @@
 
   async function validate() {
     let valid = true;
-    try { await model.validateFields(); } catch { valid = false; }
+    try { await model.validateFields(); }
+    catch { valid = false; }
     report = JSON.stringify({
       valid, errors: model.getFieldError('field'), warnings: model.getFieldWarning('field'),
       store: model.values.field,

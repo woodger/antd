@@ -29,7 +29,10 @@ export function snapshotPaginationPrefix() {
     simple: css(part('-simple-pager'), [...font, ...box]),
     simpleInput: css(part('-simple-pager')?.querySelector('input') ?? null, [...font, ...box]),
     quick: css(part('-options-quick-jumper'), [...font, 'height']),
-    quickInput: css(part('-options-quick-jumper')?.querySelector('input') ?? null, [...font, ...box]),
+    quickInput: css(
+      part('-options-quick-jumper')?.querySelector('input') ?? null,
+      [...font, ...box]
+    ),
     select: css(selectRoot, [...font, 'height', 'min-width'])
   };
 }

@@ -72,6 +72,7 @@ describe('Transfer source data and rendering', () => {
       expect(result.map(row => row.item.key)).toEqual([0]);
       expect(filter).toHaveBeenCalledWith(' ', records[0], 'right');
       filter.mockClear();
+
       expect(transferRender(records, undefined, '', filter)).toHaveLength(records.length);
       expect(filter).not.toHaveBeenCalled();
     }

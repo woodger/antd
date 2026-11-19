@@ -17,7 +17,10 @@ interface SourceCase {
   producers: Record<'filter' | 'sort' | 'render', unknown[]>;
   producerCalls: Record<'filter' | 'sort' | 'render', unknown[]>;
 }
-const bytes = readFileSync(new URL('../browser/fixtures/ant-design-select-data-ssr-reference.json', import.meta.url));
+const bytes = readFileSync(new URL(
+  '../browser/fixtures/ant-design-select-data-ssr-reference.json',
+  import.meta.url
+));
 const reference = JSON.parse(bytes.toString('utf8')) as {
   reference: { version: string; revision: string; domAvailableDuringRender: boolean;
     umdArchiveByteEqual: boolean; diagnostics: string[] };

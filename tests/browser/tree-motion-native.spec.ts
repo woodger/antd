@@ -38,8 +38,13 @@ test('Tree completes real collapse CSS transitions and keeps keyboard focus on i
   await expect(root).toBeFocused();
   await expect(row(page, 'a1')).toBeVisible();
   await root.press('ArrowRight');
-  await expect(root).toHaveAttribute('aria-activedescendant', await row(page, 'a1').getAttribute('id') as string);
+
+  await expect(root).toHaveAttribute(
+    'aria-activedescendant',
+    await row(page, 'a1').getAttribute('id') as string
+  );
   await row(page).locator('[data-ant-tree-switcher]').click();
+
   await expect(group(page)).toHaveCount(0);
   await expect(row(page, 'a1')).toHaveCount(0);
   await expect(root).toBeFocused();
@@ -56,24 +61,30 @@ test('Tree ignores another expand during motion while selection remains usable',
   await active(page);
   await end(page);
   await toggle(page);
+
   expect(await events(page)).toHaveLength(2);
 });
 
 test('Tree ignores child and opacity end events and completes only its own height transition', async ({ page }) => {
   await mount(page);
-  await toggle(page); await active(page);
+  await toggle(page);
+  await active(page);
   await end(page, 'height', true);
+
   await expect(group(page)).toHaveCount(1);
   await end(page, 'opacity');
+
   await expect(group(page)).toHaveCount(1);
   await end(page);
+
   await expect(group(page)).toHaveCount(0);
   await expect(row(page, 'a2')).toBeAttached();
 });
 
 test('Tree falls back to its deadline when no CSS height event arrives', async ({ page }) => {
   await mount(page, 'custom-name');
-  await toggle(page); await active(page);
+  await toggle(page);
+  await active(page);
   await page.clock.runFor(500);
 
   await expect(group(page)).toHaveCount(0);
@@ -83,10 +94,12 @@ test('Tree falls back to its deadline when no CSS height event arrives', async (
 
 for (const id of ['prepare', 'custom-name']) test(`Tree cancels retained ${id} work on unmount`, async ({ page }) => {
   await mount(page, id);
-  await toggle(page); await active(page);
+  await toggle(page);
+  await active(page);
   const retained = await group(page).elementHandle();
   const before = await events(page);
   await control(page, 'Unmount tree');
+
   await expect(page.locator('[data-tree-motion-refs]')).toHaveText('false:false');
   await control(page, 'Resolve prepare');
   await retained!.evaluate(node => node.dispatchEvent(new TransitionEvent('transitionend', {
@@ -100,9 +113,11 @@ for (const id of ['prepare', 'custom-name']) test(`Tree cancels retained ${id} w
 
 test('Tree discards a pending prepare after new data replaces its transition range', async ({ page }) => {
   await mount(page, 'prepare');
-  await toggle(page); await active(page);
+  await toggle(page);
+  await active(page);
   const before = await events(page);
   await control(page, 'Replace data');
+
   await expect(group(page)).toHaveCount(0);
   await control(page, 'Resolve prepare');
   await page.clock.runFor(2000);
@@ -115,7 +130,8 @@ for (const name of ['Toggle motion', 'Toggle theme motion']) test(`Tree settles 
   await mount(page, 'custom-name');
   const root = await page.getByRole('tree').elementHandle();
   const sibling = await row(page, 'b').elementHandle();
-  await toggle(page); await active(page);
+  await toggle(page);
+  await active(page);
   await control(page, name);
   const before = await events(page);
   await page.clock.runFor(2000);
@@ -129,8 +145,10 @@ for (const name of ['Toggle motion', 'Toggle theme motion']) test(`Tree settles 
 
 test('Tree awaits prepare when the theme disables CSS motion before resolution', async ({ page }) => {
   await mount(page, 'prepare');
-  await toggle(page); await active(page);
+  await toggle(page);
+  await active(page);
   await control(page, 'Toggle theme motion');
+
   await expect(group(page)).toHaveCount(1);
   await control(page, 'Resolve prepare');
   await page.clock.runFor(80);
@@ -144,12 +162,16 @@ test('Tree respects reduced motion before mount and when the preference changes 
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await mount(page);
   await toggle(page);
+
   await expect(group(page)).toHaveCount(0);
   await expect(row(page, 'a1')).toBeVisible();
   await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await toggle(page); await active(page);
+  await toggle(page);
+  await active(page);
+
   await expect(group(page)).toHaveCount(1);
   await page.emulateMedia({ reducedMotion: 'reduce' });
+
   await expect(group(page)).toHaveCount(0);
   await expect(row(page, 'a1')).toHaveCount(0);
 });
@@ -158,7 +180,8 @@ test('Tree updates the root motion namespace and RTL during an active transition
   await mount(page);
   const root = await page.getByRole('tree').elementHandle();
   const sibling = await row(page, 'b').elementHandle();
-  await toggle(page); await active(page);
+  await toggle(page);
+  await active(page);
   await control(page, 'Update prefix');
   await control(page, 'Toggle direction');
 
@@ -168,21 +191,25 @@ test('Tree updates the root motion namespace and RTL during an active transition
   expect(await root!.evaluate(node => node.isConnected)).toBe(true);
   expect(await sibling!.evaluate(node => node.isConnected)).toBe(true);
   await end(page);
+
   await expect(group(page)).toHaveCount(0);
 });
 
 test('Tree lazy resolution updates children without an empty motion group or delayed callbacks', async ({ page }) => {
   await mount(page, 'native-lazy');
   await toggle(page);
+
   await expect(row(page)).toHaveAttribute('aria-busy', 'true');
   await expect(group(page)).toHaveCount(0);
   await row(page).locator('[data-ant-tree-content]').dispatchEvent('click');
   await control(page, 'Resolve load');
+
   await expect(row(page)).not.toHaveAttribute('aria-busy', 'true');
   await expect(row(page, 'a1')).toBeVisible();
   await expect(group(page)).toHaveCount(0);
   const before = await events(page);
   await page.clock.runFor(2000);
+
   expect(await events(page)).toEqual(before);
 });
 
@@ -192,6 +219,7 @@ test('Tree dragend clears the collapse group and its old motion deadline', async
     bubbles: true, cancelable: true, clientX: 120, dataTransfer: new DataTransfer()
   })));
   await active(page);
+
   await expect(group(page)).toHaveCount(1);
   await page.evaluate(() => window.dispatchEvent(new DragEvent('dragend', { bubbles: true })));
   const before = await events(page);
@@ -211,7 +239,8 @@ test('Tree motion keeps generic aliases, zero/bigint keys and an outside opaque 
   const sibling = await row(page, 'outside').elementHandle();
   const draft = page.getByRole('textbox', { name: 'Outside draft', exact: true });
   await draft.fill('retained draft');
-  await toggle(page, '0'); await active(page);
+  await toggle(page, '0');
+  await active(page);
 
   expect(await group(page).evaluate(node => node.style.height)).toBe('92px');
   await expect(row(page, '2')).toBeAttached();
@@ -229,12 +258,19 @@ test('Tree motion keeps generic aliases, zero/bigint keys and an outside opaque 
 test('Tree does not lock a visible branch when a hidden expanded key changes', async ({ page }) => {
   await mount(page, 'controlled-accept');
   await control(page, 'Expand hidden');
+
   await expect(group(page)).toHaveCount(0);
   await toggle(page);
 
   await expect(row(page)).toHaveAttribute('aria-expanded', 'true');
-  expect(await events(page)).toEqual([{ type: 'expand', keys: ['a2', 'a'], key: 'a', expanded: true }]);
+  expect(await events(page)).toEqual([{
+    type: 'expand',
+    keys: ['a2', 'a'],
+    key: 'a',
+    expanded: true
+  }]);
   await active(page);
+
   await expect(group(page).locator('[data-tree-motion-key]')).toHaveCount(3);
   await end(page);
 });

@@ -22,12 +22,16 @@ describe('treeSelectComponentOverflow', () => {
 
   it('retains Source reservation of a large rest before reaching the final pair', () => {
     expect(treeSelectComponentOverflow({ containerWidth: 100, dataCount: 3, widths: [20, 20, 20],
-      suffixWidth: 10, restWidth: 90, previousRestWidth: 0 })).toMatchObject({ visibleCount: 0, offset: 90 });
+      suffixWidth: 10, restWidth: 90, previousRestWidth: 0 })).toMatchObject({
+        visibleCount: 0,
+        offset: 90
+      });
   });
 
   it('reserves the previous rest size but positions with its current size', () => {
     const state = { containerWidth: 160, dataCount: 4, widths: [40, 40, 40, 40],
       suffixWidth: 10, restWidth: 20, previousRestWidth: 100 };
+
     expect(treeSelectComponentOverflow(state)).toMatchObject({ visibleCount: 1, offset: 60 });
     expect(treeSelectComponentOverflow({ ...state, previousRestWidth: 20 })).toMatchObject({
       visibleCount: 3, offset: 140 });
@@ -39,18 +43,24 @@ describe('treeSelectComponentOverflow', () => {
   });
 
   it('preserves fractional wrapper measurements in the logical offset', () => {
-    expect(treeSelectComponentOverflow({ ...baseline, widths: [59.25, 59.25, 70, 66], restWidth: 86 }))
+    expect(treeSelectComponentOverflow({
+      ...baseline,
+      widths: [59.25, 59.25, 70, 66],
+      restWidth: 86
+    }))
       .toMatchObject({ visibleCount: 1, offset: 145.25 });
   });
 
   it('preserves positioning and rest readiness while a newly rendered item is unmeasured', () => {
     const previous = treeSelectComponentOverflow(baseline);
+
     expect(treeSelectComponentOverflow({ ...baseline, widths: [64, undefined], previous })).toEqual({
       ...previous, visibleCount: 1, omittedStart: 1 });
   });
 
   it('keeps the previous omission and offset when a hidden host reports zero width', () => {
     const previous = treeSelectComponentOverflow(baseline);
+
     expect(treeSelectComponentOverflow({ ...baseline, containerWidth: 0, previous })).toEqual({
       ...previous, renderCount: 0, visibleCount: 0 });
   });
@@ -61,7 +71,11 @@ describe('treeSelectComponentOverflow', () => {
   });
 
   it.each([1, 2])('preserves initial rest readiness for unchanged narrow layout starting with %i values', initial => {
-    let previous = treeSelectComponentOverflow({ ...baseline, containerWidth: 9, dataCount: initial });
+    let previous = treeSelectComponentOverflow({
+      ...baseline,
+      containerWidth: 9,
+      dataCount: initial
+    });
     for (const dataCount of [1, 2, 3, 1, 2]) {
       previous = treeSelectComponentOverflow({ ...baseline, containerWidth: 9, dataCount, previous });
       expect(previous).toMatchObject({ renderCount: 0, visibleCount: 0, omittedStart: 1,

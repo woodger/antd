@@ -50,6 +50,7 @@ test('App keeps APIs and existing notices while applying updated count and place
       .toHaveCount(2);
     await message.click();
     await notification.click();
+
     await expect(page.locator('.ant-message-notice')).toHaveCount(1);
     await expect(page.locator('.ant-message-notice')).toContainText('Message 4');
     await expect(page.locator('.ant-notification-topRight .ant-notification-notice'))
@@ -84,6 +85,7 @@ test('App updates modal context without replacing its dialog or losing focus', a
   const dialog = page.getByRole('dialog', { name: 'primary confirmation', exact: true });
   const original = await dialog.elementHandle();
   const focused = dialog.getByRole('button', { name: 'Подтвердить', exact: true });
+
   await expect(focused).toBeFocused();
   for (const name of ['English locale', 'Right to left']) {
     await page.getByRole('checkbox', { name, exact: true, includeHidden: true })
@@ -97,6 +99,7 @@ test('App updates modal context without replacing its dialog or losing focus', a
   await expect(dialog).toHaveAttribute('dir', 'rtl');
   await expect(dialog.getByRole('button', { name: 'OK', exact: true })).toBeFocused();
   await page.keyboard.press('Escape');
+
   await expect(page.locator('[data-app-result="primary"]')).toHaveText('false');
   await expect(opener).toBeFocused();
 });
@@ -119,6 +122,7 @@ test('App releases holders and modality when removed', async ({ page }) => {
   await page.getByRole('button', { name: 'primary message', exact: true }).click();
   await page.getByRole('button', { name: 'primary notification', exact: true }).click();
   await page.getByRole('button', { name: 'primary modal', exact: true }).click();
+
   await expect(page.getByRole('dialog')).toBeVisible();
   await page.keyboard.press('Control+Alt+h');
 

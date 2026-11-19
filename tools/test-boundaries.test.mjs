@@ -8,7 +8,10 @@ import { describe, expect, it } from 'vitest';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const testsRoot = join(root, 'tests');
 const metadata = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
-const dependencies = new Set(Object.keys({ ...metadata.peerDependencies, ...metadata.devDependencies }));
+const dependencies = new Set(Object.keys({
+  ...metadata.peerDependencies,
+  ...metadata.devDependencies
+}));
 const publicEntries = new Set(Object.keys(metadata.exports).map(entry =>
   entry === '.' ? metadata.name : metadata.name + entry.slice(1)
 ));
@@ -50,9 +53,11 @@ describe('Package test import boundaries', () => {
         if (dependency.startsWith('.')) {
           const target = relative(testsRoot, resolve(dirname(file), dependency));
           allowed = target !== '..' && !target.startsWith('..' + sep) && !isAbsolute(target);
-        } else if (dependency === metadata.name || dependency.startsWith(metadata.name + '/')) {
+        }
+        else if (dependency === metadata.name || dependency.startsWith(metadata.name + '/')) {
           allowed = publicEntries.has(dependency);
-        } else {
+        }
+        else {
           const packageName = dependency.startsWith('@')
             ? dependency.split('/').slice(0, 2).join('/')
             : dependency.split('/')[0];

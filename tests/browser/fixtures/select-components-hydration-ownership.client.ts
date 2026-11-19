@@ -13,7 +13,10 @@ for (const key of probe.scenario.environment.owners) {
   captures.set(key, capture);
   record.raw.current = { read: () => capture.read?.() ?? null, readRefs: () => capture.readRefs?.() ?? {},
     update: action => capture.update!(action) };
-  capture.onCommit = () => { record.raw.hydrationCommitted = true; record.committed = structuredClone(readHydrationOwnership()); };
+  capture.onCommit = () => {
+    record.raw.hydrationCommitted = true;
+    record.committed = structuredClone(readHydrationOwnership());
+  };
 }
 window.hydrationOwnershipNative = {
   ready: true,
@@ -26,13 +29,17 @@ window.hydrationOwnershipNative = {
   },
   async tick() { await tick(); },
   update(key: HydrationOwnershipOwnerKey, action: HydrationOwnershipUpdate) {
-    const capture = captures.get(key); if (!capture?.update) throw Error('Ownership root is not hydrated');
+    const capture = captures.get(key);
+    if (!capture?.update) throw Error('Ownership root is not hydrated');
     flushSync(() => capture.update!(action));
   },
   async dispose(key: HydrationOwnershipOwnerKey) {
-    const record = probe.roots[key]; if (!record?.app) throw Error('Ownership root is not hydrated');
-    const app = record.app; record.app = null;
-    await unmount(app); await tick();
+    const record = probe.roots[key];
+    if (!record?.app) throw Error('Ownership root is not hydrated');
+    const app = record.app;
+    record.app = null;
+    await unmount(app);
+    await tick();
     return readHydrationOwnership();
   }
 };

@@ -15,16 +15,35 @@
     suffix?: RenderNode; menuItemSelectedIcon?: RenderNode;
     removeIcon?: RenderNode;
     allowClear?: boolean | { clearIcon?: RenderEmptyContent; label?: string | null };
-    showSearch?: boolean | { filterOption?: boolean; searchIcon?: RenderEmptyContent; onSearch?: (value: string) => void };
+    showSearch?: boolean | {
+      filterOption?: boolean;
+      searchIcon?: RenderEmptyContent;
+      onSearch?: (value: string) => void
+    };
   };
-  type Registration = HTMLElement | { nativeElement: HTMLElement; inputElement?: HTMLElement; focus?: (options?: FocusOptions) => void; blur?: () => void };
-  type ReplacementContext = { attributes: Record<string, unknown>; register: (ref: Registration) => () => void };
+  type Registration = HTMLElement | {
+    nativeElement: HTMLElement;
+    inputElement?: HTMLElement;
+    focus?: (options?: FocusOptions) => void;
+    blur?: () => void
+  };
+  type ReplacementContext = {
+    attributes: Record<string, unknown>;
+    register: (ref: Registration) => () => void
+  };
   // Future props are intentionally accepted by the untouched baseline package.
   // Actual component props/context are captured below; no synthetic implementation.
-  type CallerProps = Record<string, unknown> & { nativeElement?: HTMLElement; inputElement?: HTMLElement };
+  type CallerProps = Record<string, unknown> & {
+    nativeElement?: HTMLElement;
+    inputElement?: HTMLElement
+  };
   type Slot = 'root' | 'input';
   let { sample, capture }: { sample: SelectComponentsSample;
-    capture?: { read?: () => ReturnType<typeof read>; readRefs?: () => ReturnType<typeof readRefs>; update?: (action: SelectComponentsAction, index?: number) => void } } = $props();
+    capture?: {
+      read?: () => ReturnType<typeof read>;
+      readRefs?: () => ReturnType<typeof readRefs>;
+      update?: (action: SelectComponentsAction, index?: number) => void
+    } } = $props();
   const initial = untrack(() => sample);
   const feedbackForm = createForm({ initialValues: {} });
   const Choice = Select as unknown as Component<CallerProps, SelectRef, 'nativeElement' | 'inputElement'>;
@@ -32,7 +51,12 @@
   const recorder = createSelectSurfaceRecorder(), events: unknown[] = [], rawEvents: unknown[] = [], lifecycle: unknown[] = [];
   const nativeRemountClosures: unknown[] = [];
   const nodes = new Map<string, Snippet>(), literalNodes = new Map<string, readonly Snippet[]>(), renderers = new Map<string, Producer>();
-  const nodeSpecifications = new Map<string, { type: string; key: string; ref: null; props: Record<string, unknown> }>();
+  const nodeSpecifications = new Map<string, {
+    type: string;
+    key: string;
+    ref: null;
+    props: Record<string, unknown>
+  }>();
   let settings = $state.raw<SelectIconSettings>({ ...initial.settings });
   let model = $state.raw<Model>(Object.hasOwn(initial.settings, 'value') ? initial.settings.value : initial.settings.mode ? ['a', 'locked'] : 'a');
   let open = $state(Boolean(initial.settings.open)), query = $state('');
@@ -41,40 +65,110 @@
   const elementRefs: Record<Slot, HTMLElement | undefined> = { root: undefined, input: undefined };
   const componentObservations: unknown[] = [], bodyActivity: unknown[] = [];
   const componentTypes = new Map<string, Snippet<[ReplacementContext]>>();
-  const componentElements = new Map<string, { element: string; props: Record<string, unknown>; ref: (value: HTMLElement | null) => void }>();
+  const componentElements = new Map<string, {
+    element: string;
+    props: Record<string, unknown>;
+    ref: (value: HTMLElement | null) => void
+  }>();
   let alive = true;
   let lastAuthored: { authoredProps: unknown; rawAuthoredProps: unknown; authoredProvider: unknown; rawAuthoredProvider: unknown;
     authoredInnerProvider: unknown; rawAuthoredInnerProvider: unknown } | undefined;
   onDestroy(() => { alive = false; });
-  const event = (...args: unknown[]) => { events.push(recorder.encode(args)); rawEvents.push(recorder.raw(args)); };
-  const handler = <Value,>(name: string, fn: Value): Value => recorder.register(fn, { callback: 'icons-' + name });
+  const event = (...args: unknown[]) => {
+    events.push(recorder.encode(args));
+    rawEvents.push(recorder.raw(args));
+  };
+  const handler = <Value,>(name: string, fn: Value): Value => recorder.register(
+    fn,
+    { callback: 'icons-' + name }
+  );
   const project = (input: Event) => ({ type: input.type, key: (input as KeyboardEvent).key,
     defaultPrevented: input.defaultPrevented, propagationStopped: input.cancelBubble,
     target: (input.target as Element | null)?.tagName, currentTarget: (input.currentTarget as Element | null)?.tagName });
-  const onChange = handler('change', (value: Model, option: unknown) => { model = value; event('change', value, option); });
-  const onSelect = handler('select', (value: SelectIconValue, option: unknown) => event('select', value, option));
-  const onDeselect = handler('deselect', (value: SelectIconValue, option: unknown) => event('deselect', value, option));
+  const onChange = handler('change', (value: Model, option: unknown) => {
+    model = value;
+    event('change', value, option);
+  });
+  const onSelect = handler(
+    'select',
+    (value: SelectIconValue, option: unknown) => event('select', value, option)
+  );
+  const onDeselect = handler(
+    'deselect',
+    (value: SelectIconValue, option: unknown) => event('deselect', value, option)
+  );
   const onClear = handler('clear', () => event('clear'));
-  const onSearch = handler('search', (value: string) => { query = value; event('search', value); });
-  const onOpenChange = handler('open', (value: boolean) => { open = value; event('open', value); });
-  const onInputKeyDown = handler('input-keydown', (input: KeyboardEvent) => event('input-keydown', project(input)));
-  const onRootMouseDown = handler('root-mousedown', (input: MouseEvent) => event('root-mousedown', project(input)));
-  const onOriginInputKeyDown = handler('origin-input-keydown', (input: KeyboardEvent) => event('origin-input-keydown', project(input)));
-  const onOriginInputChange = handler('origin-input-change', (input: Event) => event('origin-input-change', (input.target as HTMLInputElement).value));
-  const onOriginRootMouseDown = handler('origin-root-mousedown', (input: MouseEvent) => event('origin-root-mousedown', project(input)));
-  const onPublicFocus = handler('public-focus', (input: FocusEvent) => event('public-focus', project(input)));
-  const onPublicBlur = handler('public-blur', (input: FocusEvent) => event('public-blur', project(input)));
-  const onOriginRootFocus = handler('origin-root-focus', (input: FocusEvent) => event('origin-root-focus', project(input)));
-  const onOriginRootBlur = handler('origin-root-blur', (input: FocusEvent) => event('origin-root-blur', project(input)));
-  const onOriginRootClick = handler('origin-root-click', (input: MouseEvent) => event('origin-root-click', project(input)));
-  const onSubmit = handler('form-submit', (input: SubmitEvent) => { input.preventDefault(); event('form-submit', [...new FormData(input.currentTarget as HTMLFormElement)]); });
-  const iconClick = handler('authored-icon-click', (input: Event) => event('authored-icon-click', project(input)));
-  const iconMouseDown = handler('authored-icon-mousedown', (input: Event) => event('authored-icon-mousedown', project(input)));
+  const onSearch = handler('search', (value: string) => {
+    query = value;
+    event('search', value);
+  });
+  const onOpenChange = handler('open', (value: boolean) => {
+    open = value;
+    event('open', value);
+  });
+  const onInputKeyDown = handler(
+    'input-keydown',
+    (input: KeyboardEvent) => event('input-keydown', project(input))
+  );
+  const onRootMouseDown = handler(
+    'root-mousedown',
+    (input: MouseEvent) => event('root-mousedown', project(input))
+  );
+  const onOriginInputKeyDown = handler(
+    'origin-input-keydown',
+    (input: KeyboardEvent) => event('origin-input-keydown', project(input))
+  );
+  const onOriginInputChange = handler(
+    'origin-input-change',
+    (input: Event) => event('origin-input-change', (input.target as HTMLInputElement).value)
+  );
+  const onOriginRootMouseDown = handler(
+    'origin-root-mousedown',
+    (input: MouseEvent) => event('origin-root-mousedown', project(input))
+  );
+  const onPublicFocus = handler(
+    'public-focus',
+    (input: FocusEvent) => event('public-focus', project(input))
+  );
+  const onPublicBlur = handler(
+    'public-blur',
+    (input: FocusEvent) => event('public-blur', project(input))
+  );
+  const onOriginRootFocus = handler(
+    'origin-root-focus',
+    (input: FocusEvent) => event('origin-root-focus', project(input))
+  );
+  const onOriginRootBlur = handler(
+    'origin-root-blur',
+    (input: FocusEvent) => event('origin-root-blur', project(input))
+  );
+  const onOriginRootClick = handler(
+    'origin-root-click',
+    (input: MouseEvent) => event('origin-root-click', project(input))
+  );
+  const onSubmit = handler('form-submit', (input: SubmitEvent) => {
+    input.preventDefault();
+    event('form-submit', [...new FormData(input.currentTarget as HTMLFormElement)]);
+  });
+  const iconClick = handler(
+    'authored-icon-click',
+    (input: Event) => event('authored-icon-click', project(input))
+  );
+  const iconMouseDown = handler(
+    'authored-icon-mousedown',
+    (input: Event) => event('authored-icon-mousedown', project(input))
+  );
   const options = recorder.register([
     { value: 'a', label: 'Alpha' }, { value: 1, label: 'Number one' },
     { value: '1', label: 'String one' }, { value: 'locked', label: 'Locked', disabled: true }
   ], { dataset: 'select-icons-values' });
-  const escape = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+  const escape = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll(
+    '>',
+    '&gt;'
+  ).replaceAll(
+    '"',
+    '&quot;'
+  );
   function node(token: string): Snippet {
     if (!nodes.has(token)) {
       const text = token.includes('clear') ? 'C' : token.includes('remove') ? 'R' : token.includes('item') ? 'M'
@@ -85,8 +179,12 @@
       const rendered = createRawSnippet(() => ({
         render: () => '<span data-select-icons-node="' + escape(token) + '" style="display: inline-block; width: 12px; height: 12px; line-height: 12px; font-size: 10px;">' + escape(text) + '</span>',
         setup(element) {
-          element.addEventListener('mousedown', iconMouseDown); element.addEventListener('click', iconClick);
-          return () => { element.removeEventListener('mousedown', iconMouseDown); element.removeEventListener('click', iconClick); };
+          element.addEventListener('mousedown', iconMouseDown);
+          element.addEventListener('click', iconClick);
+          return () => {
+            element.removeEventListener('mousedown', iconMouseDown);
+            element.removeEventListener('click', iconClick);
+          };
         }
       }));
       nodes.set(token, recorder.register(rendered, { node: 'icon-' + token }));
@@ -121,7 +219,10 @@
       if (['suffix', 'menuItemSelectedIcon', 'removeIcon'].includes(slot)) {
         // Явный static content сохраняет Source visibility: function-иконка
         // вызывается и у unselected rows, статическая — только у selected.
-        if (!literalNodes.has(token)) literalNodes.set(token, recorder.register([snippet], { node: 'icon-' + token }));
+        if (!literalNodes.has(token)) literalNodes.set(
+          token,
+          recorder.register([snippet], { node: 'icon-' + token })
+        );
         return literalNodes.get(token);
       }
       return snippet;
@@ -134,7 +235,11 @@
     if ((spec as { kind?: string } | null)?.kind === 'undefined') return undefined;
     if (spec && typeof spec === 'object') {
       const config = { ...spec, onSearch } as Record<string, unknown>;
-      if (Object.hasOwn(spec, 'searchIcon')) config.searchIcon = resolve(Reflect.get(spec, 'searchIcon'), 'searchIcon', side);
+      if (Object.hasOwn(spec, 'searchIcon')) config.searchIcon = resolve(
+        Reflect.get(spec, 'searchIcon'),
+        'searchIcon',
+        side
+      );
       return config;
     }
     return spec;
@@ -143,7 +248,11 @@
     if ((spec as { kind?: string } | null)?.kind === 'undefined') return undefined;
     if (!spec || typeof spec !== 'object') return spec;
     const config = { ...spec } as Record<string, unknown>;
-    if (Object.hasOwn(spec, 'clearIcon')) config.clearIcon = resolve(Reflect.get(spec, 'clearIcon'), 'clearIcon', side);
+    if (Object.hasOwn(spec, 'clearIcon')) config.clearIcon = resolve(
+      Reflect.get(spec, 'clearIcon'),
+      'clearIcon',
+      side
+    );
     return config;
   }
   function icons(spec: Record<string, unknown>, side: string) {
@@ -163,7 +272,12 @@
     componentObservations.push(observation);
     return context.attributes;
   }
-  function connectComponent(slot: Slot, kind: string, context: ReplacementContext, element: HTMLElement) {
+  function connectComponent(
+    slot: Slot,
+    kind: string,
+    context: ReplacementContext,
+    element: HTMLElement
+  ) {
     const refCallback = (value: HTMLElement | undefined) => {
       elementRefs[slot] = value;
       lifecycle.push({ slot, event: value ? 'attach' : 'detach', tag: value?.tagName ?? null });
@@ -171,17 +285,28 @@
     const registration: Registration = kind === 'composite' || kind === 'composite-native-only'
       ? { nativeElement: element, ...(kind === 'composite-native-only' ? {} : {
         focus: handler('composite-focus-' + slot, function focus(...args: [FocusOptions?]) {
-          event('composite-focus', slot, args); element.focus(...args);
+          event('composite-focus', slot, args);
+          element.focus(...args);
         }),
         blur: handler('composite-blur-' + slot, function blur(...args: unknown[]) {
-          event('composite-blur', slot, args); element.blur();
+          event('composite-blur', slot, args);
+          element.blur();
         })
       }) } : element;
     const disconnect = context.register(registration);
     if (kind === 'element') refCallback(element);
-    return () => { disconnect(); if (kind === 'element') refCallback(undefined); };
+    return () => {
+      disconnect();
+      if (kind === 'element') refCallback(undefined);
+    };
   }
-  function component(slot: Slot, kind: string, collisions = false, authoredTag?: string, authoredProps?: Record<string, unknown>): unknown {
+  function component(
+    slot: Slot,
+    kind: string,
+    collisions = false,
+    authoredTag?: string,
+    authoredProps?: Record<string, unknown>
+  ): unknown {
     const key = slot + ':' + kind;
     const tag = authoredTag ?? (slot === 'input' ? 'textarea' : 'input');
     if (kind === 'intrinsic') return tag;
@@ -199,7 +324,11 @@
             value: 'Authored input', className: 'select-icons-origin-input', placeholder: 'Origin textarea'
           }).map(([name, value]) => [name === 'className' ? 'class' : name, value])) }
           : { onmousedown: onOriginRootMouseDown,
-            ...(settings.observeFocus ? { onfocusin: onOriginRootFocus, onfocusout: onOriginRootBlur, onclick: onOriginRootClick } : {}),
+            ...(settings.observeFocus ? {
+              onfocusin: onOriginRootFocus,
+              onfocusout: onOriginRootBlur,
+              onclick: onOriginRootClick
+            } : {}),
             placeholder: 'Origin root', defaultValue: 'Root draft',
             ...(collisions ? { id: 'origin-root-id', class: 'select-icons-origin-root', name: 'origin-root-field',
               style: 'color:rgb(63,17,31);width:197px' } : {}) }) };
@@ -214,7 +343,10 @@
     }
     return componentElements.get(elementKey);
   }
-  function prefixActivity() { bodyActivity.push({ prefix: 'render' }); return ''; }
+  function prefixActivity() {
+    bodyActivity.push({ prefix: 'render' });
+    return '';
+  }
   const semanticClasses = handler('classNames', (info: unknown) => recorder.record('classNames', 'own', info,
     { root: 'select-icons-metadata-root', input: 'select-icons-metadata-input' }));
   const semanticStyles = handler('styles', (info: unknown) => recorder.record('styles', 'own', info,
@@ -224,13 +356,31 @@
       style: { width: '100%' }, options, value: model, open, listHeight: 160, virtual: false,
       placeholder: 'Choose icon value', 'aria-label': 'Icon value', onChange, onSelect, onDeselect, onClear,
       onOpenChange, onInputKeyDown, ...icons(settings, 'own') };
-    for (const key of ['mode', 'loading', 'disabled', 'title', 'name']) if (Object.hasOwn(settings, key)) props[key] = settings[key];
-    if (settings.observeFocus) { props.onFocus = onPublicFocus; props.onBlur = onPublicBlur; }
-    if (settings.prefixProbe) props.prefix = recorder.register(prefixBody, { node: 'flow-prefix-element' });
-    if (settings.metadata) { props.classNames = semanticClasses; props.styles = semanticStyles; }
+    for (const key of ['mode', 'loading', 'disabled', 'title', 'name']) if (Object.hasOwn(
+      settings,
+      key
+    )) props[key] = settings[key];
+    if (settings.observeFocus) {
+      props.onFocus = onPublicFocus;
+      props.onBlur = onPublicBlur;
+    }
+    if (settings.prefixProbe) props.prefix = recorder.register(
+      prefixBody,
+      { node: 'flow-prefix-element' }
+    );
+    if (settings.metadata) {
+      props.classNames = semanticClasses;
+      props.styles = semanticStyles;
+    }
     if (settings.components) {
       const spec = settings.components as { slot: Slot; kind: string; collisions?: boolean };
-      props.components = { [spec.slot]: component(spec.slot, spec.kind, spec.collisions, settings.componentTag, settings.componentProps) };
+      props.components = { [spec.slot]: component(
+        spec.slot,
+        spec.kind,
+        spec.collisions,
+        settings.componentTag,
+        settings.componentProps
+      ) };
       props.onMouseDown = onRootMouseDown;
     }
     return props;
@@ -243,10 +393,16 @@
   export function update(action: SelectComponentsAction, actionIndex = -1) {
     if (action.type === 'model') model = action.value;
     else if (action.type === 'props') {
-      const next: SelectIconSettings = { ...settings, ...action.set }; for (const key of action.drop ?? []) delete next[key]; settings = next;
-    } else if (action.type === 'context') {
-      const config = { ...settings.config, ...action.set }; for (const key of action.drop ?? []) delete config[key]; settings = { ...settings, config };
-    } else if (action.type === 'inner') settings = { ...settings, inner: action.value };
+      const next: SelectIconSettings = { ...settings, ...action.set };
+      for (const key of action.drop ?? []) delete next[key];
+      settings = next;
+    }
+    else if (action.type === 'context') {
+      const config = { ...settings.config, ...action.set };
+      for (const key of action.drop ?? []) delete config[key];
+      settings = { ...settings, config };
+    }
+    else if (action.type === 'inner') settings = { ...settings, inner: action.value };
   }
   export function readRefs() {
     return { control, root, editor: root?.matches('input,textarea') ? root
@@ -260,10 +416,17 @@
     return { model: recorder.encode(model), rawModel: recorder.raw(model), open, query, settings: recorder.encode(settings),
       events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], lifecycle: [...lifecycle],
       nativeRemountClosures: [...nativeRemountClosures], componentObservations: [...componentObservations], bodyActivity: [...bodyActivity], alive, ...lastAuthored,
-      nodeSpecifications: [...nodeSpecifications].map(([token, spec]) => ({ role: { node: 'icon-' + token }, raw: recorder.raw(spec) })) };
+      nodeSpecifications: [...nodeSpecifications].map(([token, spec]) => ({
+        role: { node: 'icon-' + token },
+        raw: recorder.raw(spec)
+      })) };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; initialCapture.update = update; }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+    initialCapture.update = update;
+  }
 </script>
 
 {#snippet choice()}

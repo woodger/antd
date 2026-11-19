@@ -47,7 +47,10 @@
     sameAsAuthored: Object.fromEntries(Object.entries(authored).map(([name, date]) => [name, date === value])) });
   function nestedDates(value: unknown, path: Array<string | number> = []): unknown[] {
     if (dayjs.isDayjs(value)) return [{ path, value: dates(value) }];
-    if (Array.isArray(value)) return value.flatMap((item, index) => nestedDates(item, [...path, index]));
+    if (Array.isArray(value)) return value.flatMap((item, index) => nestedDates(
+      item,
+      [...path, index]
+    ));
     if (value && typeof value === 'object' && Object.getPrototypeOf(value) === Object.prototype)
       return Object.entries(value).flatMap(([key, item]) => nestedDates(item, [...path, key]));
     return [];
@@ -63,32 +66,60 @@
   function record(name: string, args: unknown[], receiver: unknown) {
     callbacks.push(invocation(name, args, receiver, callbacks.length));
   }
-  const handler = <Value,>(name: string, value: Value): Value => recorder.register(value, { callback: name });
+  const handler = <Value,>(name: string, value: Value): Value => recorder.register(
+    value,
+    { callback: name }
+  );
   const onSingleChange = handler('change', function (this: unknown, next: Dayjs | null) {
-    record('change', Array.from(arguments), this); singleModel = next;
+    record('change', Array.from(arguments), this);
+    singleModel = next;
   });
   const onRangeChange = handler('change', function (this: unknown, next: RangePickerValue | null) {
-    record('change', Array.from(arguments), this); rangeModel = next;
+    record('change', Array.from(arguments), this);
+    rangeModel = next;
   });
   const onOpenChange = handler('open', function (this: unknown, next: boolean) {
-    record('open', Array.from(arguments), this); open = next;
+    record('open', Array.from(arguments), this);
+    open = next;
   });
-  const onCalendarChange = handler('calendar', function (this: unknown) { record('calendar', Array.from(arguments), this); });
-  const onPanelChange = handler('panel', function (this: unknown) { record('panel', Array.from(arguments), this); });
-  const onPickerValueChange = handler('picker-value', function (this: unknown) { record('picker-value', Array.from(arguments), this); });
-  const onOk = handler('ok', function (this: unknown) { record('ok', Array.from(arguments), this); });
-  const createDisabledDate = (boundary: 'first' | 'last') => recorder.register(function (this: unknown, date: Dayjs) {
+  const onCalendarChange = handler('calendar', function (this: unknown) {
+    record('calendar', Array.from(arguments), this);
+  });
+  const onPanelChange = handler('panel', function (this: unknown) {
+    record('panel', Array.from(arguments), this);
+  });
+  const onPickerValueChange = handler('picker-value', function (this: unknown) {
+    record('picker-value', Array.from(arguments), this);
+  });
+  const onOk = handler('ok', function (this: unknown) {
+    record('ok', Array.from(arguments), this);
+  });
+  const createDisabledDate = (boundary: 'first' | 'last') => recorder.register(function (
+    this: unknown,
+    date: Dayjs
+  ) {
     const args = Array.from(arguments);
     const month = boundary === 'first' ? sample.blocked.firstMonth : sample.blocked.lastMonth;
     const returned = Boolean(limited && date.year() === sample.blocked.year && date.month() === month);
-    producers.push({ ...invocation('disabledDate', args, this, producers.length), boundary, returned });
+    producers.push({
+      ...invocation('disabledDate', args, this, producers.length),
+      boundary,
+      returned
+    });
     return returned;
   }, { producer: 'disabledDate', boundary });
-  const disabledDateFunctions = { first: createDisabledDate('first'), last: createDisabledDate('last') };
+  const disabledDateFunctions = {
+    first: createDisabledDate('first'),
+    last: createDisabledDate('last')
+  };
   const shared = $derived({ open, style: 'width:100%', onCalendarChange, onPickerValueChange,
     onPanelChange, onOpenChange, onOk,
     ...(needConfirm === undefined ? {} : { needConfirm }),
-    ...(limited ? { minDate: authored.minDate, maxDate: authored.maxDate, disabledDate: disabledDateFunctions[disabledBoundary] } : {}),
+    ...(limited ? {
+      minDate: authored.minDate,
+      maxDate: authored.maxDate,
+      disabledDate: disabledDateFunctions[disabledBoundary]
+    } : {}),
     ...(localized ? { locale: sample.locale } : {}) });
   const singleBase = $derived({ ...shared, value: singleModel, defaultPickerValue: authored.initialStart,
     presets: singlePresets, id: 'quarter-input', onChange: onSingleChange } satisfies DatePickerProps);
@@ -107,7 +138,11 @@
   };
   output.recorder = recorder;
   output.setActionIndex = index => { actionIndex = index; };
-  output.readRefs = () => ({ owner: ownerElement ?? null, control: control ?? null, root: root ?? null });
+  output.readRefs = () => ({
+    owner: ownerElement ?? null,
+    control: control ?? null,
+    root: root ?? null
+  });
   output.readCallbacks = cursor => delta(callbacks, cursor);
   output.readProducers = cursor => delta(producers, cursor);
   output.read = () => {
@@ -120,8 +155,14 @@
       rawAuthoredProps: recorder.raw(range ? rangeProps : singleProps),
       callbacks: [...callbacks], ownerActions: [...ownerActions], lifecycle: [...lifecycle] };
   };
-  onMount(() => { alive = true; lifecycle.push({ phase: 'mount' });
-    return () => { alive = false; lifecycle.push({ phase: 'unmount' }); }; });
+  onMount(() => {
+    alive = true;
+    lifecycle.push({ phase: 'mount' });
+    return () => {
+      alive = false;
+      lifecycle.push({ phase: 'unmount' });
+    };
+  });
 </script>
 
 <ConfigProvider locale={enUS} theme={{ token: { motion: false } }}>

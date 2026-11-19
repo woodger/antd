@@ -7,6 +7,7 @@ const root = '[data-progress-line] > [data-ant-progress-root]';
 test.use({ viewport: reference.viewport });
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=progress-line');
+
   expect(await page.evaluate(() => document.compatMode)).toBe(reference.reference.documentMode);
   await expect(page.getByRole('heading', { name: 'Source Progress line', exact: true })).toBeVisible();
 });
@@ -18,7 +19,10 @@ for (const sample of reference.cases) {
     await page.getByRole('combobox', { name: 'Progress line case', exact: true })
       .selectOption(sample.name);
 
-    await expect.poll(() => page.evaluate(snapshotProgressLine, sample.props.prefixCls || 'ant-progress'))
+    await expect.poll(() => page.evaluate(
+      snapshotProgressLine,
+      sample.props.prefixCls || 'ant-progress'
+    ))
       .toEqual(sample.name === 'numeric' ? nativeClipping.snapshot : sample.snapshot);
     await expect(page.getByLabel('Progress line ref', { exact: true })).toHaveText('true');
   });
@@ -58,6 +62,7 @@ test('Progress moves info into the rail and changes steps without altering its r
   await expect(page.locator(root).locator('[data-ant-progress-part="track"] [data-ant-progress-part="indicator"]'))
     .toHaveText('42.5%');
   await page.getByRole('button', { name: 'Set line steps', exact: true }).click();
+
   await expect(page.locator(root).locator('[data-ant-progress-part="step"]')).toHaveCount(7);
   await expect(page.locator(root).locator('.ant-progress-rail')).toHaveCount(0);
   await page.getByRole('button', { name: 'Clear line steps', exact: true }).click();
@@ -85,11 +90,17 @@ test('Progress keeps source gradient directions reactive and respects reduced mo
   await page.getByRole('button', { name: 'Toggle line RTL', exact: true }).click();
 
   await expect(page.locator(root).locator('.ant-progress-track'))
-    .toHaveCSS('background-image', 'linear-gradient(to left, rgb(16, 142, 233), rgb(135, 208, 104))');
+    .toHaveCSS(
+      'background-image',
+      'linear-gradient(to left, rgb(16, 142, 233), rgb(135, 208, 104))'
+    );
   await page.getByRole('button', { name: 'Change Progress prefix', exact: true }).click();
   await page.emulateMedia({ reducedMotion: 'reduce' });
 
-  await expect(page.locator(root).locator('.live-progress-track')).toHaveCSS('transition-duration', '0s');
+  await expect(page.locator(root).locator('.live-progress-track')).toHaveCSS(
+    'transition-duration',
+    '0s'
+  );
   expect(await page.locator(root).evaluate(node => node.getAnimations({ subtree: true }).length)).toBe(0);
 });
 

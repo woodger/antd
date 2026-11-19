@@ -46,5 +46,6 @@ test('Upload semantic updates preserve the wrapper, item, trigger, input and out
         [node.selectionStart, node.selectionEnd, node.selectionDirection])).toEqual([1, 5, 'backward']);
     }
     await page.getByRole('checkbox', { name: 'Mount Upload semantics', exact: true }).uncheck();
+
     await expect(root).toHaveCount(0);
   });

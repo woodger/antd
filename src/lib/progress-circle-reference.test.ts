@@ -35,7 +35,10 @@ describe('Ant Design 6.6.8 UMD circular Progress conformance', () => {
         const expected = sample.snapshot.paths[index];
         expect(result.radius).toBe(Number(expected.radius));
         // CSSOM округляет исходные числа; browser conformance сравнивает его строки точно.
-        expect(path.dashOffset).toBeCloseTo(Number.parseFloat(expected.style['stroke-dashoffset']), 3);
+        expect(path.dashOffset).toBeCloseTo(
+          Number.parseFloat(expected.style['stroke-dashoffset']),
+          3
+        );
       }
     });
   }

@@ -4,7 +4,11 @@ import TreeSelectNodesFixtures from './TreeSelectNodesFixtures.svelte';
 
 declare global {
   interface Window {
-    declaredTreeSelectHydration?: { popup: Element | null; input: Element | null; dispose: () => Promise<void>; };
+    declaredTreeSelectHydration?: {
+      popup: Element | null;
+      input: Element | null;
+      dispose: () => Promise<void>;
+    };
   }
 }
 

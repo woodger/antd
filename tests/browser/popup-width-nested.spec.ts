@@ -35,7 +35,12 @@ function getterOwners(projection: Projection) {
   return [...new Set(calls.map(call => `${call.scope}/${call.role}`))].sort();
 }
 
-function verify(projection: Projection, source: Projection, sample: PopupWidthNestedSample, label: string) {
+function verify(
+  projection: Projection,
+  source: Projection,
+  sample: PopupWidthNestedSample,
+  label: string
+) {
   expect(projection.raw.root, `${label}/actual nested root`).not.toBeNull();
   expect(projection.view.anchor, `${label}/actual nested anchor`).not.toBeNull();
   expect(ownership(projection.view), `${label}/Source width owner receipts and public state`).toEqual(ownership(source.view));
@@ -69,9 +74,11 @@ function verify(projection: Projection, source: Projection, sample: PopupWidthNe
       // Both observations prove the stretch relation without substituting Source anchor geometry.
       expect(sourceWidth, `${label}/Source true stretches to its actual anchor`).toBe(sourceAnchor);
       expect(actualWidth, `${label}/Native true stretches to its actual anchor`).toBe(actualAnchor);
-    } else if (source.view.popup.stretch.width) {
+    }
+    else if (source.view.popup.stretch.width) {
       expect(actualWidth, `${label}/actual Source numeric width`).toBe(sourceWidth);
-    } else {
+    }
+    else {
       expect(sourceWidth).toBeGreaterThanOrEqual(sourceAnchor);
       expect(actualWidth, `${label}/Native false keeps its actual anchor minimum`).toBeGreaterThanOrEqual(actualAnchor);
       if (sourceWidth > sourceAnchor)
@@ -126,7 +133,12 @@ async function capture(page: Page, sample: PopupWidthNestedSample, source: Sourc
     owner.querySelector('[data-width-command]')!
       .dispatchEvent(new CustomEvent('widthrefs', { detail: refs }));
     return { owner, control: refs.control, publicRoot: refs.publicRoot, publicEditor: refs.publicEditor,
-      fields: new Map<string, { root?: HTMLElement; anchor?: HTMLElement; editor?: HTMLElement; parent: ParentNode | null }>(),
+      fields: new Map<string, {
+        root?: HTMLElement;
+        anchor?: HTMLElement;
+        editor?: HTMLElement;
+        parent: ParentNode | null
+      }>(),
       popup: null as HTMLElement | null };
   });
   const observe = () => identity.evaluate(old => {
@@ -218,7 +230,12 @@ for (const family of families) {
     const captures: { id: string; states: Projection[]; bindings: unknown[] }[] = [];
     try {
       for (const sample of popupWidthNestedSamples.filter(sample => sample.family === family))
-        await capture(page, sample, reference.cases.find(entry => entry.id === sample.id)!, captures);
+        await capture(
+          page,
+          sample,
+          reference.cases.find(entry => entry.id === sample.id)!,
+          captures
+        );
       const pair = family === 'pagination'
         ? ['pagination-default-local-false', 'pagination-default-over-global-number']
         : family === 'color-picker' ? ['color-picker-global-true', 'color-picker-global-false']

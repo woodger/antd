@@ -8,6 +8,7 @@ const ids = ['single-horizontal', 'single-vertical', 'range-horizontal', 'range-
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=slider-theme');
+
   await expect(page.getByRole('heading', { name: 'Source Slider tokens', exact: true }))
     .toBeVisible();
 });
@@ -49,6 +50,7 @@ test('Slider rail token updates retain values, nodes, focus and callback silence
   const original = await handle.elementHandle();
   await handle.focus();
   await handle.press('ArrowRight');
+
   await expect(page.getByLabel('Slider theme value', { exact: true })).toHaveText('51');
   const changes = await page.getByLabel('Slider theme changes', { exact: true }).textContent();
 
@@ -122,6 +124,7 @@ test('Slider custom prefixes and source removal preserve the native controls', a
   await expect(root).toHaveClass(/slider-theme-scope/);
   await expect(root).toHaveClass(/(?:^|\s)css-(?:dev-only-do-not-override-)?[a-z0-9]+(?:\s|$)/);
   await page.getByLabel('Hash themed Sliders', { exact: true }).dispatchEvent('click');
+
   await expect(root).not.toHaveClass(/(?:^|\s)css-(?:dev-only-do-not-override-)?[a-z0-9]+(?:\s|$)/);
 
   await page.getByLabel('Apply source Slider tokens', { exact: true }).dispatchEvent('click');
@@ -146,6 +149,7 @@ test('Slider token changes retain range keyboard behavior and RTL direction', as
   await expect(handles.first()).toBeFocused();
   await page.getByRole('button', { name: 'Set themed rail to eight', exact: true })
     .dispatchEvent('click');
+
   await expect(handles.first()).toHaveValue('50');
   await expect(handles.first()).toBeFocused();
 });

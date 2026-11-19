@@ -11,5 +11,8 @@ export const selectSurfaceOmissionNativeSamples: readonly NativeSelectSurfaceOmi
   ...omissionSamples.filter(sample => sample.axis === 'omission'),
   { id: 'select-surface-omission-width-open', control: 'select', axis: 'width', initialValue: [],
     initialOpen: true, initialQuery: 'WWWW', initialFontSize: 12 },
-  ...defaultOmissionSamples.map(({ ssrState, ...sample }) => ({ ...sample, initialPopup: ssrState.popup })),
+  ...defaultOmissionSamples.map(({ ssrState, ...sample }) => ({
+    ...sample,
+    initialPopup: ssrState.popup
+  })),
 ];

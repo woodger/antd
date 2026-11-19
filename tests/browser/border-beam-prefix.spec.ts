@@ -35,6 +35,7 @@ for (const preset of ['tenant', 'component-aliases', 'native-light', 'native-dar
       const host = page.locator('[data-beam-theme="normal"]');
       const layer = host.locator(':scope > [aria-hidden="true"]');
       const external = page.locator('[data-beam-theme="external"] > [aria-hidden="true"]').first();
+
       await expect(layer).toHaveCSS('position', 'absolute');
       const original = await layer.elementHandle();
       const oldExternal = await external.elementHandle();
@@ -75,6 +76,7 @@ for (const preset of ['tenant', 'component-aliases', 'native-light', 'native-dar
 test('BorderBeam prefix styles and external decorations clean up with the owner', async ({ page }) => {
   await page.goto('/?fixture=border-beam-prefix');
   const external = page.locator('[data-beam-theme="external"] > .tenant-beam');
+
   await expect(external).toHaveCount(2);
   await expect(page.locator('style[data-ant-svelte-theme="border-beam-prefix:tenant-beam"]'))
     .toHaveCount(4);

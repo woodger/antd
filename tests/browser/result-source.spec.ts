@@ -69,7 +69,10 @@ test('Result keeps DOM, actions, drafts, selection and refs through live config 
   for (const name of ['Result source native ref', 'Result source object ref']) {
     await expect(page.getByLabel(name, { exact: true })).toHaveText('true');
   }
-  await expect(page.locator('#result-source-sibling .ant-result-title')).toHaveCSS('font-size', '15px');
+  await expect(page.locator('#result-source-sibling .ant-result-title')).toHaveCSS(
+    'font-size',
+    '15px'
+  );
   await expect(page.locator('#result-source-sibling .anticon')).toHaveCSS('font-size', '33px');
 });
 

@@ -59,6 +59,7 @@ for (const strategy of ['bound', 'accepted']) {
       const input = page.getByRole('combobox', { name: 'Open choice', exact: true });
       await input.focus();
       await input.press('ArrowUp');
+
       await expect(input).toHaveAttribute('aria-expanded', 'true');
       await expect(page.locator('#select-open-owner')).toHaveText('true');
       await expect(page.locator('.ant-select-item-option-active')).toHaveText('Gamma');
@@ -77,6 +78,7 @@ test('Select binds defaultOpen after mount without a synthetic open callback or 
     const chooser = page.getByRole('combobox', { name: 'Open sample', exact: true });
     await chooser.focus();
     await chooser.selectOption('bound-default');
+
     await expect(page.locator('#select-open-owner')).toHaveText('true');
     await expect(page.locator('#select-open-events')).toHaveText('[]');
     await expect(chooser).toBeFocused();
@@ -96,6 +98,7 @@ test('Select external open preserves input and focus and clears single search', 
   const original = await input.elementHandle();
   await input.evaluate((node: HTMLInputElement) => { node.setSelectionRange(0, 1); });
   await page.getByRole('button', { name: 'Toggle owner open', exact: true }).dispatchEvent('click');
+
   await expect(input).toHaveAttribute('aria-expanded', 'false');
   await expect(input).toHaveValue('');
   await page.getByRole('button', { name: 'Toggle owner open', exact: true }).dispatchEvent('click');
@@ -115,6 +118,7 @@ test('Select native reset closes bound multiple open without callbacks and clear
     const input = page.getByRole('combobox', { name: 'Open choice', exact: true });
     await input.click();
     await physicalSelectOption(page, { name: 'Alpha', exact: true }).click();
+
     await expect(page.locator('#select-open-events')).toHaveText('[true]');
     await page.locator('form').evaluate((node: HTMLFormElement) => node.reset());
 

@@ -113,7 +113,9 @@
     id: 'typography-under-test',
     editable: edit,
     copyable: copying ? {
-      text: asyncCopy ? () => new Promise<string>(resolve => { copyResolve = resolve; }) : copyText || undefined,
+      text: asyncCopy ? () => new Promise<string>(resolve => {
+        copyResolve = resolve;
+      }) : copyText || undefined,
       format: copyFormat,
       tooltips,
       icon: customIcons ? ['COPY', 'DONE'] : undefined,
@@ -135,7 +137,11 @@
     direction: localRtl ? 'rtl' as const : undefined,
     classNames: semantic ? { root: 'local-root', actions: 'local-actions', action: 'local-action',
       textarea: 'local-textarea' } : undefined,
-    styles: semantic ? { root: 'color:rgb(0,0,90)', action: 'padding:1px', textarea: 'font-size:20px' }
+    styles: semantic ? {
+      root: 'color:rgb(0,0,90)',
+      action: 'padding:1px',
+      textarea: 'font-size:20px'
+    }
       : undefined,
     style: semantic ? 'color:rgb(0,90,0)' : undefined,
     onClick: () => event('click')

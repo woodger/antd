@@ -101,5 +101,9 @@ export function readNativeDateWeekPrefix() {
       timers: null, frames: null, observers: null,
       note: 'Private resource counters unmeasured. One removable document capture observer; no global timer/frame/observer hooks.' } };
 }
-export function readNativeDateWeekPrefixProducers(cursor = 0) { return window.nativeDateWeekPrefix.readProducers(cursor); }
-export function readNativeDateWeekPrefixCallbacks(cursor = 0) { return window.nativeDateWeekPrefix.readCallbacks(cursor); }
+export function readNativeDateWeekPrefixProducers(cursor = 0) {
+  return window.nativeDateWeekPrefix.readProducers(cursor);
+}
+export function readNativeDateWeekPrefixCallbacks(cursor = 0) {
+  return window.nativeDateWeekPrefix.readCallbacks(cursor);
+}

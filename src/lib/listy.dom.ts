@@ -74,7 +74,11 @@ export function captureListyFocus(root: HTMLDivElement) {
     if (!focused.isConnected || !root.contains(focused)
       || document.activeElement !== document.body && document.activeElement !== focused) return;
     focused.focus({ preventScroll: true });
-    if (input && start != null && end != null) input.setSelectionRange(start, end, direction ?? undefined);
+    if (input && start != null && end != null) input.setSelectionRange(
+      start,
+      end,
+      direction ?? undefined
+    );
     if (range && selection) {
       selection.removeAllRanges();
       selection.addRange(range);

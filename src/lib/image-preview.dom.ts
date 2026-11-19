@@ -50,7 +50,8 @@ export function connectImagePreview(image: HTMLImageElement, options: {
           options.zoom(zoom.ratio, 'touchZoom', zoom.center, true);
           previous = next;
         });
-    } else if (start)
+    }
+    else if (start)
       options.update({ x: event.clientX - start.diffX, y: event.clientY - start.diffY }, 'move');
   }
   function end(event: PointerEvent) {

@@ -4,8 +4,16 @@ import { filterSelectData, flattenSelectData, selectFields } from './select-data
 import type { AutoCompleteItem } from './auto-complete.types';
 import type { SelectDataFilter } from './select-data.types';
 const fields = selectFields();
-function filterOptions(search: string, filterOption: SelectDataFilter<AutoCompleteItem>['filterOption'] = false) {
-  return filterSelectData(options, search, fields, { filterOption, defaultMatch: autoCompleteMatchesData });
+function filterOptions(
+  search: string,
+  filterOption: SelectDataFilter<AutoCompleteItem>['filterOption'] = false
+) {
+  return filterSelectData(
+    options,
+    search,
+    fields,
+    { filterOption, defaultMatch: autoCompleteMatchesData }
+  );
 }
 const options: AutoCompleteItem[] = [
   {

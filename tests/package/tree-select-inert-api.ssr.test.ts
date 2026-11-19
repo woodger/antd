@@ -37,7 +37,10 @@ it.each(reference.cases)('renders $id in its recorded prop mode without leaking 
     expect(typeof window).toBe('undefined');
     expect(typeof document).toBe('undefined');
     const sample = treeSelectInertApiSamples.find(sample => sample.id === entry.id)!;
-    const { body } = render(TreeSelectInertApiCase, { props: { sample, initialMode: sample.ssrMode } });
+    const { body } = render(
+      TreeSelectInertApiCase,
+      { props: { sample, initialMode: sample.ssrMode } }
+    );
     const view = readTreeSelectInertApiSSR(body);
 
     expect(view).toEqual(treeSelectInertApiNativeExpected(entry.view, sample));

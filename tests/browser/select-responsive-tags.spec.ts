@@ -41,9 +41,11 @@ test('Responsive tags preserve typed fields and hand hidden focus to the same in
     await expect(input).toBeFocused();
     expect(await input.evaluate((node, old) => node === old, original)).toBe(true);
     const visible = page.locator('[data-tag-count] .ant-select-selection-item:not([inert])');
+
     await expect(visible).toHaveText(['Alpha', '+ 3 ...']);
     await expect(page.getByRole('button', { name: 'Удалить Zeta', exact: true })).toHaveCount(0);
     const form = page.getByRole('form', { name: 'Tag count native form', exact: true });
+
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('tag-count')))
       .toEqual(['a', 'locked', '0', 'z']);
     await page.getByRole('spinbutton', { name: 'Tag count width', exact: true })
@@ -51,6 +53,7 @@ test('Responsive tags preserve typed fields and hand hidden focus to the same in
         node.value = '400';
         node.dispatchEvent(new Event('input', { bubbles: true }));
       });
+
     await expect(visible).toHaveText(['Alpha', 'Locked', 'Zero', 'Zeta']);
     await expect(page.getByRole('status', { name: 'Tag count changes', exact: true })).toHaveText('0');
   });
@@ -62,10 +65,12 @@ test('Responsive tag measurement follows input text and releases resources acros
       .selectOption('default-400');
     const input = page.getByRole('combobox', { name: 'Counted values', exact: true });
     await input.fill('long search text takes space');
+
     await expect.poll(() => input.evaluate(node => node.getBoundingClientRect().width))
       .toBeGreaterThan(100);
     await expect(page.locator('[data-tag-count] [data-select-rest]:not([inert])')).toBeVisible();
     await input.fill('');
+
     await expect(page.locator('[data-tag-count] .ant-select-selection-item:not([inert])'))
       .toHaveText(['Alpha', 'Locked', 'Zero', 'Zeta']);
     const mounted = page.getByRole('checkbox', { name: 'Mount counted Select', exact: true });
@@ -82,9 +87,11 @@ test('Responsive tag measurement follows input text and releases resources acros
     }
     await page.getByRole('checkbox', { name: 'Right to left', exact: true }).check();
     await input.click();
+
     await expect(physicalSelectPopup(page, 'Counted values'))
       .toHaveCSS('direction', 'rtl');
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).check();
+
     await expect(input).toBeDisabled();
     await expect(page.locator('[data-tag-count] .ant-select-selection-item-remove')).toHaveCount(0);
   });

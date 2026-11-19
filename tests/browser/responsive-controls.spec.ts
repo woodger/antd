@@ -29,6 +29,7 @@ test('Responsive tokens update Masonry and Pagination without replacing focused 
     const oldInput = await input.elementHandle();
     const oldRoot = await root.elementHandle();
     const oldPager = await pager.elementHandle();
+
     await expect.poll(() => page.evaluate(snapshotResponsiveControls)).toEqual(reference.live.initial);
 
     await page.getByRole('button', { name: 'Update responsive breakpoints', exact: true })
@@ -83,6 +84,7 @@ test('Responsive Pagination retains current page, quick-jump draft and selection
     await expect(pager.locator('[aria-current="page"]')).toHaveText('7');
     await expect(page.getByLabel('Responsive Pagination events', { exact: true })).toHaveText('7');
     await page.getByRole('checkbox', { name: 'Mount responsive controls', exact: true }).uncheck();
+
     await expect(pager).toHaveCount(0);
     await page.setViewportSize({ width: 900, height: 1200 });
     await page.getByRole('checkbox', { name: 'Mount responsive controls', exact: true }).check();

@@ -77,7 +77,10 @@ describe('resolveFormWrapperCol', () => {
     [{ sm: 6 }, { sm: { span: 12 } }],
     [{ sm: { span: 6 } }, { sm: 12 }],
     [{ sm: 6 }, { sm: 12 }]
-  ] satisfies [ColProps, ColProps][])('keeps numeric responsive spans equivalent to object spans', (label, wrapper) => {
+  ] satisfies [ColProps, ColProps][])('keeps numeric responsive spans equivalent to object spans', (
+    label,
+    wrapper
+  ) => {
     expect(resolveFormWrapperCol({
       label: null, formLabelCol: label, formWrapperCol: wrapper
     })).toEqual({ sm: { span: 12, offset: 6 } });

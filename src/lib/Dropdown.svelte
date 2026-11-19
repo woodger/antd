@@ -152,7 +152,8 @@
           closing = false;
         });
       }
-    } else if (element?.contains(getPopupActiveElement(element))) {
+    }
+    else if (element?.contains(getPopupActiveElement(element))) {
       const focused = getPopupActiveElement(element);
       if (focused instanceof HTMLElement && (focused.dataset.dropdownKey ?? null) !== key)
         repairFocus = true;

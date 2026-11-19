@@ -43,8 +43,12 @@ export function verifySelectValue(actual: ReturnType<typeof readSelectValue>, so
     if (Array.isArray(event[2])) {
       expect(Array.isArray(current[2])).toBe(true);
       expect((current[2] as unknown[]).length).toBe(event[2].length);
-      for (const [item, option] of event[2].entries()) verifySelectValueOption((current[2] as unknown[])[item], option);
-    } else verifySelectValueOption(current[2], event[2]);
+      for (const [item, option] of event[2].entries()) verifySelectValueOption(
+        (current[2] as unknown[])[item],
+        option
+      );
+    }
+    else verifySelectValueOption(current[2], event[2]);
   }
   // Client render scheduling differs between React and Svelte. Every invocation remains
   // in raw evidence; compare all semantic invocations and every raw argument/result.
@@ -66,5 +70,8 @@ export function verifySelectValue(actual: ReturnType<typeof readSelectValue>, so
     expect(source.view.editor).toMatchObject({ expanded: 'false', focused: false });
     expect(actual.view.editor.caret).toEqual([0, 0]);
   }
-  expect(current, `${label}: complete selected-value Source view with measured Native editor contract`).toEqual(original);
+  expect(
+    current,
+    `${label}: complete selected-value Source view with measured Native editor contract`
+  ).toEqual(original);
 }

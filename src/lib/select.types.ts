@@ -186,11 +186,7 @@ export interface SelectSearchConfig<
   /** Явные поля Source search; несколько полей объединяются через OR. */
   optionFilterProp?: string | readonly string[];
   /** Сортирует отфильтрованные options и synthetic tags; получает текущий searchValue. */
-  filterSort?: (
-    optionA: OptionType,
-    optionB: OptionType,
-    info: { searchValue: string }
-  ) => number;
+  filterSort?: (optionA: OptionType, optionB: OptionType, info: { searchValue: string }) => number;
   /** Очищает локальный search при выборе multiple/tags; controlled query меняет владелец. */
   autoClearSearchValue?: boolean;
 }
@@ -309,9 +305,15 @@ export interface SelectProps<
     option: Mode extends 'multiple' | 'tags' ? OptionType[] : OptionType | undefined
   ) => void;
   /** Выбор пункта, включая повторный single выбор; option — поверхностная копия raw record. */
-  onSelect?: (value: SelectValueElement<Mode extends 'tags' ? Value | string : Value, LabelInValue>, option: OptionType) => void;
+  onSelect?: (
+    value: SelectValueElement<Mode extends 'tags' ? Value | string : Value, LabelInValue>,
+    option: OptionType
+  ) => void;
   /** Снятие выбора в multiple/tags; очистка всех значений не вызывает callback. */
-  onDeselect?: (value: SelectValueElement<Mode extends 'tags' ? Value | string : Value, LabelInValue>, option: OptionType) => void;
+  onDeselect?: (
+    value: SelectValueElement<Mode extends 'tags' ? Value | string : Value, LabelInValue>,
+    option: OptionType
+  ) => void;
   /** Пользовательская очистка; вызывается до onChange. */
   onClear?: () => void;
   onInputKeyDown?: (event: KeyboardEvent) => void;

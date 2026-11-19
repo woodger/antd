@@ -41,9 +41,11 @@ test('Form tooltip keeps its default decorative icon out of the field name and i
       expected: [...original.querySelectorAll('path')].map((node) => node.getAttribute('d'))
     };
   }, reference.defaultIcon.svg);
+
   expect(glyph.actual).toEqual(glyph.expected);
   await page.locator('#before-tooltip').focus();
   await page.keyboard.press('Tab');
+
   await expect(input).toBeFocused();
 });
 

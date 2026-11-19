@@ -74,7 +74,10 @@ const scenarios = [
 ];
 
 for (const { id, pending, events } of scenarios) {
-  test(`TreeSelect ${id} strictly hydrates and disposes pending ${pending} work`, async ({ page }, testInfo) => {
+  test(`TreeSelect ${id} strictly hydrates and disposes pending ${pending} work`, async (
+    { page },
+    testInfo
+  ) => {
     const source = reference.cases.find(entry => entry.id === id)!;
     const initialPanel = id === 'default-open-appear' || id === 'controlled-initial-open';
     const module = await server.ssrLoadModule(fileURLToPath(
@@ -176,6 +179,7 @@ for (const { id, pending, events } of scenarios) {
     }, { head: rendered.head, body: rendered.body });
     await page.addScriptTag({ type: 'module', url: '/tree-select-motion-hydration.client.ts' });
     await page.waitForFunction(() => window.treeSelectMotionHydration);
+
     await expect(page.locator('[data-motion-case]')).toHaveAttribute('data-motion-bound', 'true');
     const drain = async () => {
       await page.evaluate(advanceTreeSelectMotionFrames, 0);
@@ -183,6 +187,7 @@ for (const { id, pending, events } of scenarios) {
       await page.evaluate(advanceTreeSelectMotionFrames, 0);
     };
     await drain();
+
     expect((await page.evaluate(readTreeSelectMotion)).view)
       .toEqual(treeSelectMotionNativeHydrationExpected(source.initial.view, initialPanel));
     const identity = await page.evaluateHandle(() => {

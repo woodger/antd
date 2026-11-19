@@ -15,7 +15,12 @@ export function readTreeSelectAlign() {
   const rootBox = root.getBoundingClientRect(), popupBox = visible ? popup!.getBoundingClientRect() : null;
   const relative = (node: Element) => {
     const r = node.getBoundingClientRect();
-    return { x: round(r.x - rootBox.x), y: round(r.y - rootBox.y), width: round(r.width), height: round(r.height) };
+    return {
+      x: round(r.x - rootBox.x),
+      y: round(r.y - rootBox.y),
+      width: round(r.width),
+      height: round(r.height)
+    };
   };
   const output = (name: string) => {
     const node = document.querySelector(`[data-align-${name}]`);
@@ -32,7 +37,12 @@ export function readTreeSelectAlign() {
   return {
     view: {
       viewport: { width: innerWidth, height: innerHeight },
-      root: { tag: root.tagName, box: rect(root), direction: getComputedStyle(root).direction, rtlClass: root.classList.contains('ant-select-rtl') },
+      root: {
+        tag: root.tagName,
+        box: rect(root),
+        direction: getComputedStyle(root).direction,
+        rtlClass: root.classList.contains('ant-select-rtl')
+      },
       editor: editor ? { box: relative(editor), value: editor.value, caret: [editor.selectionStart, editor.selectionEnd],
         focused: active.activeElement === editor, expanded: editor.getAttribute('aria-expanded'), readonly: editor.readOnly, disabled: editor.disabled } : null,
       focused: active.activeElement === (editor ?? root),
@@ -41,14 +51,23 @@ export function readTreeSelectAlign() {
         endDistance: round(rootBox.right - popupBox.right), rtlClass: popup!.classList.contains('ant-tree-select-dropdown-rtl'),
         direction: popupStyle!.direction } : null,
       host: rect(host),
-      scroller: (() => { const node = document.querySelector<HTMLElement>('[data-align-scroller]');return node ? { top: node.scrollTop, left: node.scrollLeft } : null; })(),
+      scroller: (() => {
+        const node = document.querySelector<HTMLElement>('[data-align-scroller]');
+        return node ? { top: node.scrollTop, left: node.scrollLeft } : null;
+      })(),
       model: output('model'), events: output('events'), semantic: output('semantic'), receivedAttrs: output('received'),
       leakedProps: { root: leaks(root), editor: leaks(editor), popup: leaks(popup) }
     },
     raw: {
       rootDir: root.getAttribute('dir'), editorDir: editor?.getAttribute('dir') ?? null,
       popup: popup ? { visible, position: popupStyle!.position,
-        axes: { left: popup.style.left, right: popup.style.right, top: popup.style.top, bottom: popup.style.bottom, transform: popup.style.transform },
+        axes: {
+          left: popup.style.left,
+          right: popup.style.right,
+          top: popup.style.top,
+          bottom: popup.style.bottom,
+          transform: popup.style.transform
+        },
         cssWidth: popupStyle!.width, cssHeight: popupStyle!.height, computedTransform: popupStyle!.transform,
         offsetParent: offsetParent ? { tag: offsetParent.tagName, caseHost: offsetParent === host,
           shadowHost: offsetParent === document.querySelector('[data-align-shadow]'), box: rect(offsetParent) } : null,

@@ -96,6 +96,7 @@ test('AvatarGroup prefix updates retain open popup content', async ({ page }) =>
   await page.locator('.ant-avatar-group-more').click();
   const popup = page.locator('.ant-popover');
   const hidden = popup.locator('.ant-avatar-group-list .ant-avatar');
+
   await expect(hidden).toBeVisible();
   const previous = await hidden.elementHandle();
 
@@ -111,6 +112,7 @@ test('AvatarGroup prefix updates retain open popup content', async ({ page }) =>
 test('Avatar text fitting remains attached while its prefix changes', async ({ page }) => {
   await select(page, 'reactive-text');
   const text = page.locator('[data-ant-avatar-string]').first();
+
   await expect(text).not.toHaveCSS('transform', 'none');
   const before = await text.evaluate(node => getComputedStyle(node).transform);
   const previous = await text.elementHandle();

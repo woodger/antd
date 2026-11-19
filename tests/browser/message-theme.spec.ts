@@ -12,6 +12,7 @@ for (const sample of reference.cases) {
       async ({ page }) => {
         await page.getByLabel('Message theme preset', { exact: true }).selectOption(sample.name);
         await page.getByLabel('Message theme scope', { exact: true }).selectOption(scope);
+
         await expect(page.locator('.ant-message-notice')).toBeVisible();
 
         // Прежний native перенос сохраняется; остальные CSS-метрики берутся из raw UMD.
@@ -27,6 +28,7 @@ for (const sample of reference.cases) {
       async ({ page }) => {
         await page.getByLabel('Message theme preset', { exact: true }).selectOption(sample.name);
         await page.getByLabel('Message theme mode', { exact: true }).selectOption(mode);
+
         await expect(page.locator('.ant-message-notice')).toBeVisible();
 
         await expect.poll(() => page.evaluate(snapshotMessageTheme)).toEqual({
@@ -48,6 +50,7 @@ test('Message token updates preserve notice identity, viewport styles and outsid
     const originalNotice = await notice.elementHandle();
     const originalInput = await input.elementHandle();
     const viewportStyle = await surface.evaluate(node => [node.style.width, node.style.left]);
+
     expect(viewportStyle.every(Boolean)).toBe(true);
 
     await surface.evaluate(node => {
@@ -115,6 +118,7 @@ test('Message updates do not restart a running duration timer', async ({ page })
   await page.getByRole('button', { name: 'Open timed themed message', exact: true })
     .dispatchEvent('click');
   const timed = page.locator('.timed-theme-message');
+
   await expect(timed).toBeVisible();
 
   await page.clock.runFor(600);
@@ -149,6 +153,7 @@ test('Message returns to legacy styling and reads the current theme when reopeni
       (node as HTMLElement).style.getPropertyValue('--ant-message-content-bg'))).toBe('');
 
     await page.getByRole('button', { name: 'Dismiss themed message', exact: true }).click();
+
     await expect(notice).toHaveCount(0);
     await page.getByRole('button', { name: 'Update Message tokens', exact: true }).click();
     await page.getByLabel('Apply source Message theme', { exact: true }).check();
@@ -169,6 +174,7 @@ test('Message keeps long words within the card instead of copying the observed s
     await page.getByLabel('Message theme preset', { exact: true }).selectOption('default');
     await page.getByRole('button', { name: 'Show long themed message', exact: true }).click();
     const source = wrapObservation.cases.find(sample => sample.name === 'long-word')!;
+
     expect(source.metrics.overflow.noticeScrollWidth)
       .toBeGreaterThan(source.metrics.overflow.noticeWidth);
     const geometry = await page.locator('.ant-message-notice').evaluate(node => ({

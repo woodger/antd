@@ -209,11 +209,13 @@ export function extractCss(css, recipe) {
           );
           foundKeyframes.add(keyframe[1]);
         }
-      } else if (/^@(media|supports|container|layer)\b/.test(block.prelude)) {
+      }
+      else if (/^@(media|supports|container|layer)\b/.test(block.prelude)) {
         const children = select(block.body);
         if (children.length)
           output.push(`${block.prelude}{${children.join('')}}`);
-      } else if (!block.prelude.startsWith('@')) {
+      }
+      else if (!block.prelude.startsWith('@')) {
         const selectors = splitSelectors(block.prelude).filter(
           selector => include.some(pattern => pattern.test(selector))
             && !exclude.some(

@@ -42,7 +42,10 @@ export function treeDragView(nodes: ReturnType<typeof readTreeDrag>) {
     dragging: nodes.filter(node => node.dragging).map(node => node.key),
     targets: nodes.filter(node => node.target).map(node => node.key),
     containers: nodes.filter(node => node.container).map(node => node.key),
-    over: nodes.filter(node => node.over.some(Boolean)).map(node => ({ key: node.key, flags: node.over })),
+    over: nodes.filter(node => node.over.some(Boolean)).map(node => ({
+      key: node.key,
+      flags: node.over
+    })),
     indicators: nodes.flatMap(node => node.indicator ? [{ key: node.key, ...node.indicator }] : [])
   };
 }

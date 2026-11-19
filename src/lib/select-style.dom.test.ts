@@ -43,9 +43,11 @@ describe('createSelectStyleWriter', () => {
     writes.length = 0;
 
     writer.update(frame(20, 45));
+
     expect(writes).toEqual([]);
     writer.update(frame(undefined, 45));
     writer.update(frame(20, 45));
+
     expect(values.get('width')).toBe('20px');
     Reflect.set(target, 'width', '');
     writes.length = 0;
@@ -62,24 +64,40 @@ describe('createSelectStyleWriter', () => {
     const hydrated = styleTarget();
     createSelectStyleWriter(hydrated.target, initial).update(initial);
 
-    expect(fresh.writes).toEqual([{ property: 'borderColor', value: '' }, { property: 'border', value: '' },
+    expect(fresh.writes).toEqual([{ property: 'borderColor', value: '' }, {
+      property: 'border',
+      value: ''
+    },
       { property: 'borderColor', value: 'red' }, { property: 'border', value: '1px solid black' }]);
     expect(hydrated.writes).toEqual([]);
   });
   it('reconciles controller coordinates without replaying an unchanged owner shorthand', () => {
     const style = { borderColor: 'red', border: '1px solid black' };
     const initial = resolveSelectStyleFrame(style, [[['left', '3px']]]);
-    const { target, writes } = styleTarget({ left: '99px', 'border-color': 'black', border: '1px solid black' });
+    const { target, writes } = styleTarget({
+      left: '99px',
+      'border-color': 'black',
+      border: '1px solid black'
+    });
     const writer = createSelectStyleWriter(target, initial);
 
-    writer.update(resolveSelectStyleFrame({ ...style, borderColor: 'green' }, [[['left', '3px']]]), true);
+    writer.update(
+      resolveSelectStyleFrame({ ...style, borderColor: 'green' }, [[['left', '3px']]]),
+      true
+    );
 
-    expect(writes).toEqual([{ property: 'borderColor', value: 'green' }, { property: 'left', value: '3px' }]);
+    expect(writes).toEqual([{ property: 'borderColor', value: 'green' }, {
+      property: 'left',
+      value: '3px'
+    }]);
   });
   it('carries raw logical history to another target after a conditional popup remount', () => {
     const border = '1px solid black';
     const first = styleTarget();
-    const writer = createSelectStyleWriter(first.target, resolveSelectStyleFrame({ borderColor: 'red', border }));
+    const writer = createSelectStyleWriter(
+      first.target,
+      resolveSelectStyleFrame({ borderColor: 'red', border })
+    );
     writer.update(resolveSelectStyleFrame({ borderColor: 'green', border }));
     const detached = styleTarget();
     writer.target(detached.target);
@@ -90,7 +108,10 @@ describe('createSelectStyleWriter', () => {
     writer.update(resolveSelectStyleFrame({ borderColor: 'red', border }), true);
 
     expect(first.writes).toEqual([{ property: 'borderColor', value: 'green' }]);
-    expect(detached.writes).toEqual([{ property: 'borderColor', value: '' }, { property: 'borderColor', value: 'red' }]);
+    expect(detached.writes).toEqual([{ property: 'borderColor', value: '' }, {
+      property: 'borderColor',
+      value: 'red'
+    }]);
     expect(reopened.writes).toEqual([]);
   });
   it('lets explicit own undefined clear framework width and does not reinstate it during reconciliation', () => {
@@ -109,10 +130,23 @@ describe('createSelectStyleWriter', () => {
 
 describe('copySelectStyle', () => {
   it('copies accepted declaration order without replaying logical shorthands or changing unrelated properties', () => {
-    const accepted = styleTarget({ 'border-top-color': 'red', 'border-top-width': '1px', 'border-top-style': 'solid' });
-    const recreated = styleTarget({ 'border-top-width': '1px', 'border-top-style': 'solid', 'border-top-color': 'red', '--external': 'kept' });
+    const accepted = styleTarget({
+      'border-top-color': 'red',
+      'border-top-width': '1px',
+      'border-top-style': 'solid'
+    });
+    const recreated = styleTarget({
+      'border-top-width': '1px',
+      'border-top-style': 'solid',
+      'border-top-color': 'red',
+      '--external': 'kept'
+    });
 
-    copySelectStyle(accepted.target, recreated.target, { borderColor: 'red', border: '1px solid black' });
+    copySelectStyle(
+      accepted.target,
+      recreated.target,
+      { borderColor: 'red', border: '1px solid black' }
+    );
 
     expect([...recreated.target]).toEqual(['--external', 'border-top-color', 'border-top-width', 'border-top-style']);
     expect(recreated.writes).toEqual([

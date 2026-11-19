@@ -100,10 +100,7 @@
       appear
     }));
   });
-  function show(
-    flag: boolean | ((file: UploadFile<T>) => boolean) | undefined,
-    fallback: boolean
-  ) {
+  function show(flag: boolean | ((file: UploadFile<T>) => boolean) | undefined, fallback: boolean) {
     return typeof flag === 'function' ? flag(file) : flag ?? fallback;
   }
   function preview(event?: MouseEvent, currentFile = file) {
@@ -115,7 +112,8 @@
   function download(currentFile: UploadFile<T>) {
     if (onDownload) {
       onDownload(currentFile);
-    } else if (currentFile.url) {
+    }
+    else if (currentFile.url) {
       window.open(currentFile.url, '_blank', 'noopener');
     }
   }

@@ -10,13 +10,20 @@ for (const entry of selectSurfaceReference.cases) {
     const sample = selectSurfaceSamples.find(sample => sample.id === entry.id)!;
     const trace: unknown[] = [], failures: string[] = [], errors: string[] = [], warnings: string[] = [];
     page.on('pageerror', error => errors.push(error.message));
-    page.on('console', message => { if (['warning', 'error'].includes(message.type())) warnings.push(message.text()); });
+    page.on('console', message => {
+      if (['warning', 'error'].includes(message.type())) warnings.push(message.text());
+    });
     await page.goto('/?fixture=select-surface');
     await page.getByRole('combobox', { name: 'Select surface sample', exact: true }).selectOption(sample.id);
+
     await expect(page.locator('[data-surface-case]')).toHaveAttribute('data-surface-bound', 'true');
     await prepareSelectSurface(page);
     const capture = await page.evaluateHandle(() => {
-      const detail: { read?: () => NativeSurfaceOwner; readRefs?: () => Record<string, unknown>; dispose?: () => void } = {};
+      const detail: {
+        read?: () => NativeSurfaceOwner;
+        readRefs?: () => Record<string, unknown>;
+        dispose?: () => void
+      } = {};
       document.querySelector('[data-surface-fixture-command]')!
         .dispatchEvent(new CustomEvent('surfacecapture', { detail }));
       if (!detail.read || !detail.readRefs || !detail.dispose) throw Error('Actual public owner capture is unavailable');
@@ -68,7 +75,10 @@ for (const entry of selectSurfaceReference.cases) {
       trace.push({ label: 'disposed', actual: disposed });
       expect(disposed.dom).toEqual({ rootConnected: entry.cleanup.rootConnected,
         editorConnected: entry.cleanup.editorConnected, popupCount: entry.cleanup.popupCount });
-      for (const [name, value] of Object.entries(disposed.refs)) expect(value == null, `${name} binding cleared`).toBe(true);
+      for (const [name, value] of Object.entries(disposed.refs)) expect(
+        value == null,
+        `${name} binding cleared`
+      ).toBe(true);
       expect(disposed.owner.alive).toBe(false);
       expect(disposed.owner.events).toEqual(beforeDispose.events);
       expect(disposed.owner.rawEvents).toEqual(beforeDispose.rawEvents);

@@ -16,10 +16,25 @@ export interface SelectComponentsReferenceVariant {
 }
 interface Selection<Value> { source: Value; referenceVariant: SelectComponentsReferenceVariant }
 const canonicalVersion = '156.0.8078.79', currentVersion = '157.0.8103.78';
-const affected = { modes: 'select-components-modes-multiple-element-input', 'ac-style': 'select-components-ac-style-input' };
-export function readSelectComponentsBrowserReference(axis: 'modes', id: string, chromiumVersion?: string): Selection<ModesCase>;
-export function readSelectComponentsBrowserReference(axis: 'ac-style', id: string, chromiumVersion?: string): Selection<ACStyleCase>;
-export function readSelectComponentsBrowserReference(axis: SelectComponentsBrowserAxis, id: string, chromiumVersion?: string): Selection<ModesCase | ACStyleCase> {
+const affected = {
+  modes: 'select-components-modes-multiple-element-input',
+  'ac-style': 'select-components-ac-style-input'
+};
+export function readSelectComponentsBrowserReference(
+  axis: 'modes',
+  id: string,
+  chromiumVersion?: string
+): Selection<ModesCase>;
+export function readSelectComponentsBrowserReference(
+  axis: 'ac-style',
+  id: string,
+  chromiumVersion?: string
+): Selection<ACStyleCase>;
+export function readSelectComponentsBrowserReference(
+  axis: SelectComponentsBrowserAxis,
+  id: string,
+  chromiumVersion?: string
+): Selection<ModesCase | ACStyleCase> {
   if (chromiumVersion !== undefined && chromiumVersion !== canonicalVersion && chromiumVersion !== currentVersion)
     throw Error('Unmeasured Chromium Source oracle: ' + chromiumVersion + '; supported exact versions: ' + canonicalVersion + ', ' + currentVersion);
   const canonical = axis === 'modes' ? readSelectComponentsModesCase(id) : readSelectComponentsACStyleCase(id);
@@ -29,17 +44,26 @@ export function readSelectComponentsBrowserReference(axis: SelectComponentsBrows
   if (chromiumVersion !== currentVersion) return { source: canonical, referenceVariant };
   const entry = selectComponentsChromium157Metadata(axis), proof = entry.cases.find(value => value.id === id);
   assert(proof, 'Every selected case has an independent Source fingerprint');
-  assert.equal(selectComponentsSourceCaseSHA256(canonical), proof.canonicalSHA256, 'Canonical156 case remains exact');
+  assert.equal(
+    selectComponentsSourceCaseSHA256(canonical),
+    proof.canonicalSHA256,
+    'Canonical156 case remains exact'
+  );
   referenceVariant.variantManifestSHA256 = selectComponentsChromium157ManifestSHA256;
   if (id !== affected[axis]) {
-    assert.equal(proof.wholeCaseEqual, true); assert.equal(proof.canonicalSHA256, proof.variantSHA256);
-    referenceVariant.completeCaseEquivalentUnder157 = true; referenceVariant.oracleStorageSHA256 = entry.canonical.storageSha256;
+    assert.equal(proof.wholeCaseEqual, true);
+    assert.equal(proof.canonicalSHA256, proof.variantSHA256);
+    referenceVariant.completeCaseEquivalentUnder157 = true;
+    referenceVariant.oracleStorageSHA256 = entry.canonical.storageSha256;
     return { source: canonical, referenceVariant };
   }
-  assert.equal(proof.wholeCaseEqual, false); assert.deepEqual(entry.route157, [id]);
-  const source = readSelectComponentsChromium157Source<ModesCase | ACStyleCase>(axis).cases.find(value => value.id === id); assert(source);
+  assert.equal(proof.wholeCaseEqual, false);
+  assert.deepEqual(entry.route157, [id]);
+  const source = readSelectComponentsChromium157Source<ModesCase | ACStyleCase>(axis).cases.find(value => value.id === id);
+  assert(source);
   assert.equal(selectComponentsSourceCaseSHA256(source), proof.variantSHA256);
-  referenceVariant.oracleChromiumVersion = currentVersion; referenceVariant.measured157Input = true;
+  referenceVariant.oracleChromiumVersion = currentVersion;
+  referenceVariant.measured157Input = true;
   referenceVariant.oracleStorageSHA256 = entry.copy.storageSha256;
   return { source, referenceVariant };
 }

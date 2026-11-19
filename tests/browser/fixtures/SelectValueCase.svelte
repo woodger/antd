@@ -32,12 +32,18 @@
     const recipe = selectValueNodeRecipe(token);
     const attributes = Object.entries(recipe.attributes).map(([key, value]) => `${key}="${escape(value)}"`).join(' ');
     const node = createRawSnippet(() => ({ render: () => `<${recipe.tag} ${attributes}>${escape(recipe.text)}</${recipe.tag}>` }));
-    nodes.set(token, node); nodeTokens.set(node, token);
+    nodes.set(token, node);
+    nodeTokens.set(node, token);
   }
   for (const kind of ['text', 'undefined', 'null', 'false', 'empty', 'zero', 'rich', 'array'] as const) {
     renderers.set(kind, (item: SelectLabelRenderInfo<RawValue>) => {
       const result = selectValueRender(kind, { ...item }, rich);
-      const receipt = { kind, argument: encode(item), ownProperties: selectValueOwn(item), result: encode(result) };
+      const receipt = {
+        kind,
+        argument: encode(item),
+        ownProperties: selectValueOwn(item),
+        result: encode(result)
+      };
       producerCalls.push({ ...receipt, rawArgument: rawEncode(item), rawResult: rawEncode(result) });
       producers.set(JSON.stringify(receipt), receipt);
       return result as RenderEmptyContent;
@@ -61,7 +67,10 @@
   onDestroy(() => { alive = false; });
 
   function escape(value: string) {
-    return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+    return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll(
+      '"',
+      '&quot;'
+    );
   }
   function rich(token: string) {
     const node = nodes.get(token);
@@ -73,12 +82,19 @@
   function register(value: unknown) {
     if (!value || typeof value !== 'object' || nodeTokens.has(value)) return;
     const descriptors = Object.getOwnPropertyDescriptors(value);
-    if (typeof descriptors.auditToken?.value === 'string') originals.set(descriptors.auditToken.value, value as RawOption);
+    if (typeof descriptors.auditToken?.value === 'string') originals.set(
+      descriptors.auditToken.value,
+      value as RawOption
+    );
     for (const descriptor of Object.values(descriptors)) if ('value' in descriptor) register(descriptor.value);
   }
   function data(dataset: SelectValueDataset) {
     let rows = datasets.get(dataset);
-    if (!rows) { rows = selectValueData(dataset, rich); register(rows); datasets.set(dataset, rows); }
+    if (!rows) {
+      rows = selectValueData(dataset, rich);
+      register(rows);
+      datasets.set(dataset, rows);
+    }
     return rows;
   }
   function item(value: unknown): ValueItem {
@@ -115,12 +131,17 @@
     const original = token ? originals.get(token) : undefined;
     const common = { data: encode(value), enumerableKeys: value && typeof value === 'object' ? Object.keys(value) : [],
       originalToken: token, sameOriginal: Boolean(original && original === value),
-      nestedMetaSame: Boolean(original && descriptors.meta?.value === Object.getOwnPropertyDescriptor(original, 'meta')?.value) };
+      nestedMetaSame: Boolean(original && descriptors.meta?.value === Object.getOwnPropertyDescriptor(
+        original,
+        'meta'
+      )?.value) };
     return { common, raw: { ...common, data: rawEncode(value), semanticData: common.data,
       ownProperties: selectValueOwn(value), originalOwnProperties: selectValueOwn(original) } };
   }
   function record(...event: unknown[]) {
-    events.push(event); rawEvents.push(event); revision += 1;
+    events.push(event);
+    rawEvents.push(event);
+    revision += 1;
   }
   function recordOption(kind: string, value: unknown, argument: unknown) {
     const receipt = Array.isArray(argument) ? argument.map(option) : option(argument);
@@ -130,19 +151,39 @@
         entries: Array.isArray(value) ? value.map(entry => selectValueOwn(entry)) : null }]);
     revision += 1;
   }
-  function changed(value: unknown, argument: unknown) { model = value; recordOption('change', value, argument); }
+  function changed(value: unknown, argument: unknown) {
+    model = value;
+    recordOption('change', value, argument);
+  }
   function selected(value: unknown, argument: unknown) { recordOption('select', value, argument); }
-  function deselected(value: unknown, argument: unknown) { recordOption('deselect', value, argument); }
+  function deselected(value: unknown, argument: unknown) {
+    recordOption('deselect', value, argument);
+  }
   function cleared() { record('clear'); }
-  function opening(value: boolean) { open = value; record('open', value); }
+  function opening(value: boolean) {
+    open = value;
+    record('open', value);
+  }
   function active(value: RawValue | null) { record('active', encode(value)); }
-  function searched(value: string) { query = value; record('search', value); }
+  function searched(value: string) {
+    query = value;
+    record('search', value);
+  }
   function receiptsFor(props: PassedProps, passedOptions: RawOption[]) {
     return { owner: sample.owner,
       value: { present: Object.hasOwn(props, 'value'), value: encode(props.value) },
-      defaultValue: { present: Object.hasOwn(props, 'defaultValue'), value: encode(props.defaultValue) },
-      mode: encode(props.mode), labelInValue: { present: Object.hasOwn(props, 'labelInValue'), value: encode(props.labelInValue) },
-      optionLabelProp: { present: Object.hasOwn(props, 'optionLabelProp'), value: encode(props.optionLabelProp) },
+      defaultValue: {
+        present: Object.hasOwn(props, 'defaultValue'),
+        value: encode(props.defaultValue)
+      },
+      mode: encode(props.mode), labelInValue: {
+        present: Object.hasOwn(props, 'labelInValue'),
+        value: encode(props.labelInValue)
+      },
+      optionLabelProp: {
+        present: Object.hasOwn(props, 'optionLabelProp'),
+        value: encode(props.optionLabelProp)
+      },
       labelRender: { present: Object.hasOwn(props, 'labelRender'), kind: settings.renderer,
         sameOriginal: props.labelRender === renderers.get(settings.renderer) },
       fieldNames: { present: Object.hasOwn(props, 'fieldNames'), value: encode(props.fieldNames) },
@@ -162,7 +203,10 @@
   }
   export function read() {
     return { settings, open, model: encode(model), rawModel: rawEncode(model), query, events, rawEvents,
-      producerCalls, producers: [...producers.values()], receipts: alive ? receiptsFor(passed, options) : latestReceipts };
+      producerCalls, producers: [...producers.values()], receipts: alive ? receiptsFor(
+        passed,
+        options
+      ) : latestReceipts };
   }
   export function readEvents() { return events; }
   export function readModel() { return encode(model); }
@@ -177,7 +221,10 @@
     receipts: receiptsFor(propsFor(), data(settings.dataset)), model: encode(model), query,
     events: JSON.stringify(events), producers: JSON.stringify([...producers.values()])
   } : undefined);
-  untrack(() => { if (capture) { capture.read = read; capture.readRefs = readRefs; } });
+  untrack(() => { if (capture) {
+    capture.read = read;
+    capture.readRefs = readRefs;
+  } });
 </script>
 
 <section data-select-value-case={sample.id} data-select-value-bound={Boolean(control)} bind:this={host}

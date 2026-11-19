@@ -6,6 +6,7 @@ for (const { sample, metrics } of reference.cases) {
   test(`Form root classes and styles match source config priority for ${sample.id}`, async ({ page }) => {
     await page.goto('/?fixture=form-root');
     await page.getByRole('combobox', { name: 'Form root sample', exact: true }).selectOption(sample.id);
+
     await expect.poll(() => page.evaluate(formRootMetrics)).toEqual(metrics);
   });
 }

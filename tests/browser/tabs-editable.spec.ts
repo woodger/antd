@@ -277,6 +277,7 @@ test('unmounting during an edit cancels deferred focus repair and keeps owner fo
 
     await expect(owned(page)).toHaveCount(0);
     await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => resolve())));
+
     await expect(page.getByRole('textbox', { name: 'Editable Tabs outside', exact: true }))
       .toBeFocused();
     await expect(events(page)).toHaveText('[{"action":"remove","key":"beta"}]');

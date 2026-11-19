@@ -14,7 +14,10 @@ export function readTreeSelectComponentsForm() {
       describedBy: editor?.getAttribute('aria-describedby') ?? null,
       invalid: editor?.getAttribute('aria-invalid') ?? null
     },
-    help: [...host.querySelectorAll('[id$="_help"],[id$="-help"]')].map(node => ({ id: node.id, text: node.textContent })),
+    help: [...host.querySelectorAll('[id$="_help"],[id$="-help"]')].map(node => ({
+      id: node.id,
+      text: node.textContent
+    })),
     focused: Boolean(editor && document.activeElement === editor),
     open: [...document.querySelectorAll<HTMLElement>('.ant-tree-select-dropdown')]
       .some(node => node.getClientRects().length > 0 && getComputedStyle(node).display !== 'none'),

@@ -109,8 +109,16 @@ export function pickerDateDisabled(
 ): boolean {
   if (mode === 'week') return Boolean(
     props.disabledDate?.(value, { type: mode })
-    || props.minDate && props.minDate.isAfter(value) && !samePickerWeek(props.minDate, value, locale)
-    || props.maxDate && value.isAfter(props.maxDate) && !samePickerWeek(props.maxDate, value, locale)
+    || props.minDate && props.minDate.isAfter(value) && !samePickerWeek(
+      props.minDate,
+      value,
+      locale
+    )
+    || props.maxDate && value.isAfter(props.maxDate) && !samePickerWeek(
+      props.maxDate,
+      value,
+      locale
+    )
   );
   if (mode === 'quarter') return Boolean(
     props.disabledDate?.(value, { type: mode })
@@ -141,7 +149,12 @@ export function pickerPanelDateDisabled(
   mode: DatePickerMode,
   locale = 'en_US'
 ): boolean {
-  if (mode === 'date' || mode === 'quarter' || mode === 'week') return pickerDateDisabled(value, props, mode, locale);
+  if (mode === 'date' || mode === 'quarter' || mode === 'week') return pickerDateDisabled(
+    value,
+    props,
+    mode,
+    locale
+  );
   const start = mode === 'month' ? value.date(1)
     : value.month(0).date(1).year(mode === 'decade'
       ? Math.floor(value.year() / 10) * 10 : value.year());

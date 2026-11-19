@@ -50,7 +50,10 @@ describe('Tree virtual SSR', () => {
     try {
       const body = render(Tree, { props: {
         height: 56,
-        treeData: Array.from({ length: 20 }, (_, key) => ({ key, title: `Branch ${key}`, isLeaf: false })),
+        treeData: Array.from(
+          { length: 20 },
+          (_, key) => ({ key, title: `Branch ${key}`, isLeaf: false })
+        ),
         defaultExpandAll: true,
         loadData: load
       } }).body;

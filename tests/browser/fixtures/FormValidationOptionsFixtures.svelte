@@ -6,7 +6,11 @@
 
   interface Outcome {
     id: number;
-    result: { status: 'success' | 'invalid'; outOfDate?: boolean; errorFields?: readonly FieldError[] };
+    result: {
+      status: 'success' | 'invalid';
+      outOfDate?: boolean;
+      errorFields?: readonly FieldError[]
+    };
   }
 
   let held = $state(false);
@@ -67,7 +71,8 @@
       if (undefinedNames) await checked.validateFields(undefined, options);
       else await checked.validateFields(options);
       result = { status: 'success' };
-    } catch (error) {
+    }
+    catch (error) {
       result = failed(error);
     }
 
@@ -79,7 +84,8 @@
     try {
       await nested.validateFields(names, options);
       nestedResult = JSON.stringify({ status: 'success' });
-    } catch (error) {
+    }
+    catch (error) {
       nestedResult = JSON.stringify(failed(error));
     }
   }
@@ -89,7 +95,8 @@
     try {
       await initialized.validateFields({ dirty: true, validateOnly: true });
       initialResult = JSON.stringify({ status: 'success' });
-    } catch (error) {
+    }
+    catch (error) {
       initialResult = JSON.stringify(failed(error));
     }
   }

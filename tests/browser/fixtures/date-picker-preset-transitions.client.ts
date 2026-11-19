@@ -54,5 +54,8 @@ window.datePickerPresetTransitionsNative = {
   ready: true, ...api, activateOwnerControl,
   readDOM: readDatePickerPresetTransitions as unknown as () => DatePickerPresetTransitionPoint,
   readCleanup: readDatePickerPresetsCleanup as unknown as () => DatePickerPresetTransitionCleanup,
-  async dispose() { await unmount(app); await tick(); }
+  async dispose() {
+    await unmount(app);
+    await tick();
+  }
 };

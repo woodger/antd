@@ -10,7 +10,10 @@ let cache: string;
 test.beforeAll(async () => {
   cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
     'form-feedback-autocomplete-hydration-'));
-  server = await createServer({ configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+  server = await createServer({ configFile: fileURLToPath(new URL(
+    './vite.config.ts',
+    import.meta.url
+  )),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
     appType: 'custom', cacheDir: cache });
 });
@@ -31,8 +34,12 @@ for (const picker of ['live-feedback', 'input-live', 'textarea-live']) {
     }, { head, body });
     const outside = page.getByRole('button', { name: 'Outside feedback', exact: true });
     await outside.focus();
-    await page.addScriptTag({ type: 'module', url: '/form-feedback-autocomplete-hydration.client.ts' });
+    await page.addScriptTag({
+      type: 'module',
+      url: '/form-feedback-autocomplete-hydration.client.ts'
+    });
     await page.waitForFunction(() => window.formFeedbackAutoCompleteHydration);
+
     await expect(outside).toBeFocused();
     await expect(page.locator('[data-custom-feedback]')).toHaveCount(picker === 'live-feedback' ? 1 : 2);
     expect(await page.evaluate(() => {
@@ -44,10 +51,12 @@ for (const picker of ['live-feedback', 'input-live', 'textarea-live']) {
     await input.focus();
     await page.getByRole('combobox', { name: 'Feedback action', exact: true }).selectOption('1');
     await page.getByRole('button', { name: 'Apply feedback action', exact: true }).dispatchEvent('click');
+
     await expect(page.locator('[data-custom-feedback]')).toHaveText(picker === 'live-feedback' ? ['local 0 error'] : ['local 0 error', 'local 0 error']);
     await expect(input).toBeFocused();
     expect(await input.evaluate(node => window.formFeedbackAutoCompleteHydration!.input === node)).toBe(true);
     await page.evaluate(() => window.formFeedbackAutoCompleteHydration!.dispose());
+
     await expect(input).toHaveCount(0);
     await expect(page.locator('[class*="-item-feedback-icon"]')).toHaveCount(0);
   });

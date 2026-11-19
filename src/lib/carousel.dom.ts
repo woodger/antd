@@ -95,7 +95,8 @@ export function connectCarouselDOM(
     if (state.animating) {
       resize(false);
       defer(() => resize(), props.speed);
-    } else {
+    }
+    else {
       resize();
     }
   }) : undefined;
@@ -127,7 +128,8 @@ export function connectCarouselDOM(
           if (read().props.lazyLoad) {
             adaptHeight();
             defer(() => resize(), read().props.speed);
-          } else if (++loaded >= found.size) {
+          }
+          else if (++loaded >= found.size) {
             resize();
           }
         }

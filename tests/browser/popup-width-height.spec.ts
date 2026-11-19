@@ -33,7 +33,10 @@ async function settle(page: Page) {
   let stable = 0;
   for (let attempt = 0; attempt < 60; attempt++) {
     await drainPopupWidth(page);
-    const actual = { projection: await page.evaluate(readPopupWidth), height: await page.evaluate(readHeight) };
+    const actual = {
+      projection: await page.evaluate(readPopupWidth),
+      height: await page.evaluate(readHeight)
+    };
     const key = JSON.stringify(actual);
     stable = key === previous ? stable + 1 : 0;
     if (stable >= 3) return actual;
@@ -84,7 +87,8 @@ for (const entry of reference.cases) {
               .map(key => [key, step.height.popup!.css[key as keyof typeof step.height.popup.css]])));
           expect(actual.height!.holderHeight, 'actual scroll viewport matches Source inner holder')
             .toBe(step.height.holders[0].clientHeight);
-        } else expect(actual.height).toBeNull();
+        }
+        else expect(actual.height).toBeNull();
         expect(actual.projection.view.leaks).toEqual([]);
       }
       expect(errors).toEqual([]);

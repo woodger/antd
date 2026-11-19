@@ -126,7 +126,8 @@
       panel?.style.setProperty('opacity', '0');
       panel?.style.setProperty('pointer-events', 'none');
       open = true;
-    } else {
+    }
+    else {
       open = false;
     }
   }
@@ -141,7 +142,8 @@
 
     if (checked) {
       selected.add(option);
-    } else {
+    }
+    else {
       selected.delete(option);
     }
 
@@ -173,7 +175,8 @@
       event.preventDefault();
       event.stopPropagation();
       close();
-    } else if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
+    }
+    else if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
       event.preventDefault();
       event.stopPropagation();
       confirm();

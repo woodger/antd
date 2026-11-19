@@ -20,7 +20,10 @@ interface SourceCase {
   producerCalls: unknown[];
   rawHtml: string;
 }
-const bytes = readFileSync(new URL('../browser/fixtures/ant-design-select-value-ssr-reference.json', import.meta.url));
+const bytes = readFileSync(new URL(
+  '../browser/fixtures/ant-design-select-value-ssr-reference.json',
+  import.meta.url
+));
 const source = JSON.parse(bytes.toString('utf8')) as {
   reference: { version: string; revision: string; domAvailableDuringRender: boolean;
     umdArchiveByteEqual: boolean; diagnostics: string[] };
@@ -45,7 +48,9 @@ it('pins forty-eight original SSR owners and their actual pure renderer calls', 
 
 it.each(source.cases)('renders selected values $id without browser resources', entry => {
   vi.useFakeTimers();
-  const browserResource = vi.fn(() => { throw Error('Selected-value SSR must not use browser resources'); });
+  const browserResource = vi.fn(() => {
+    throw Error('Selected-value SSR must not use browser resources');
+  });
   vi.stubGlobal('getComputedStyle', browserResource);
   vi.stubGlobal('ResizeObserver', class { constructor() { browserResource(); } });
   vi.stubGlobal('MutationObserver', class { constructor() { browserResource(); } });

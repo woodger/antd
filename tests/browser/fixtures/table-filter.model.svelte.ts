@@ -80,9 +80,7 @@ export function createTableFilterControls() {
         .push({
           keys,
           names: records
-            .map((
-              row
-            ) =>
+            .map((row) =>
               row.name)
         });
     },

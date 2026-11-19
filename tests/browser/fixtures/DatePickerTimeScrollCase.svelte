@@ -12,7 +12,10 @@
   const roles: DateRole[] = ['value', 'pickerValue', 'nextPickerValue',
     'defaultOpenValue', 'nextDefaultOpenValue'];
   const dates = Object.fromEntries(roles.map(name => [name, dayjs(initial[name])])) as DateMap;
-  for (const [name, value] of Object.entries(dates)) recorder.register(value, { authoredDate: name });
+  for (const [name, value] of Object.entries(dates)) recorder.register(
+    value,
+    { authoredDate: name }
+  );
   const callbacks: unknown[] = [];
   const getters: unknown[] = [];
   const ownerActions: unknown[] = [];
@@ -102,13 +105,22 @@
       triggerIdentity: args[0] == null ? null : recorder.identity(args[0]) });
     return target;
   }
-  const initialGetter = handler('initial-target-A', function initialGetter(this: unknown, trigger: HTMLElement) {
+  const initialGetter = handler('initial-target-A', function initialGetter(
+    this: unknown,
+    trigger: HTMLElement
+  ) {
     return getContainer('initial-target-A', Array.from(arguments), this, targetA);
   });
-  const sameTargetGetter = handler('new-callback-same-target-A', function sameTargetGetter(this: unknown, trigger: HTMLElement) {
+  const sameTargetGetter = handler('new-callback-same-target-A', function sameTargetGetter(
+    this: unknown,
+    trigger: HTMLElement
+  ) {
     return getContainer('new-callback-same-target-A', Array.from(arguments), this, targetA);
   });
-  const differentTargetGetter = handler('new-callback-different-target-B', function differentTargetGetter(this: unknown, trigger: HTMLElement) {
+  const differentTargetGetter = handler('new-callback-different-target-B', function differentTargetGetter(
+    this: unknown,
+    trigger: HTMLElement
+  ) {
     return getContainer('new-callback-different-target-B', Array.from(arguments), this, targetB);
   });
   let getPopupContainer = $derived(getterMode === 'initial' ? initialGetter
@@ -149,7 +161,10 @@
   onMount(() => {
     alive = true;
     lifecycle.push({ phase: 'mounted', actionIndex });
-    return () => { alive = false; lifecycle.push({ phase: 'unmounted', actionIndex }); };
+    return () => {
+      alive = false;
+      lifecycle.push({ phase: 'unmounted', actionIndex });
+    };
   });
   function ownerAction(kind: string, next: string | boolean, event: MouseEvent) {
     untrack(() => ownerActions.push({ actionIndex, kind, next,

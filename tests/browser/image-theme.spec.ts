@@ -41,6 +41,7 @@ test('Image token updates preserve the open viewer, transform, focus and refs wi
     const zoom = viewer.getByRole('button', { name: 'zoomIn', exact: true });
     const picture = viewer.locator('img');
     await zoom.press('Enter');
+
     await expect(page.getByLabel('Image theme transforms', { exact: true }))
       .toContainText('"scale":1.5');
     await zoom.focus();
@@ -95,8 +96,10 @@ test('Image group theme updates preserve index, counter, keyboard navigation and
     const trigger = page.getByRole('button', { name: 'Theme group two', exact: true });
     await trigger.click();
     const viewer = page.locator('.image-theme-preview-group.ant-image-preview');
+
     await expect(viewer.locator('.ant-image-preview-progress')).toHaveText('2 / 2');
     await viewer.getByRole('button', { name: 'zoomIn', exact: true }).click();
+
     await expect(viewer.locator('img'))
       .toHaveAttribute('style', /scale3d\(1\.5,\s*1\.5,\s*1\)/);
     const transform = await viewer.locator('img').getAttribute('style');
@@ -123,6 +126,7 @@ test('Image disabling theme inheritance and unmount preserve focus return and re
     const nested = page.locator('[data-image-theme="nested"] .ant-image');
     await nested.click();
     const nestedViewer = page.locator('.image-theme-preview-nested.ant-image-preview');
+
     await expect(nestedViewer).toHaveCSS('z-index', '2100');
     await page.getByLabel('Inherit child Image theme', { exact: true }).dispatchEvent('click');
 

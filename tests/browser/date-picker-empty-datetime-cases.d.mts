@@ -8,5 +8,14 @@ export type EmptyDatetimeAction = { type: 'input-open' | 'input-escape' | 'templ
   | { type: 'hour-hover' | 'hour-click'; value: number };
 export const authoring: EmptyDatetimeAuthoring;
 export const actions: readonly EmptyDatetimeAction[];
-export const samples: ReadonlyArray<EmptyDatetimeAuthoring & { id: EmptyDatetimeOwner; actions: readonly EmptyDatetimeAction[] }>;
-export const counts: { owners: number; actions: number; initialAndSettledPoints: number; inputEscapeCloses: number; wholeUnmounts: number };
+export const samples: ReadonlyArray<EmptyDatetimeAuthoring & {
+  id: EmptyDatetimeOwner;
+  actions: readonly EmptyDatetimeAction[]
+}>;
+export const counts: {
+  owners: number;
+  actions: number;
+  initialAndSettledPoints: number;
+  inputEscapeCloses: number;
+  wholeUnmounts: number
+};

@@ -48,7 +48,10 @@ export const styledMultiple: SelectProps<number, 'multiple', Option, true> = {
     void [options, values, disabled];
     return { root: 'typed-root', popup: 'typed-popup' };
   },
-  styles: () => ({ root: { color: undefined }, popup: { root: { height: 120 }, listItem: { opacity: 0.5 } } })
+  styles: () => ({
+    root: { color: undefined },
+    popup: { root: { height: 120 }, listItem: { opacity: 0.5 } }
+  })
 };
 export const autocomplete: AutoCompleteProps<Option> = {
   classNames: { root: 'complete-root', popup: 'complete-popup' },

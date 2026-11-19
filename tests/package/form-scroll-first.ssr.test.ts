@@ -12,6 +12,7 @@ describe('Form scrollToFirstError public package', () => {
       archiveSha256: registry.upstream.archiveSha256
     });
     const replaced = reference.cases.find(({ sample }) => sample.id === 'local-replace-options')!.metrics;
+
     expect(replaced.calls).toEqual([{ name: ['first'], options: { block: 'nearest' } }]);
     expect(replaced.order).toEqual(['failed', 'scroll']);
     expect(replaced.active).toBe('submit');

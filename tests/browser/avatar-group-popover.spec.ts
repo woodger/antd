@@ -130,6 +130,7 @@ for (const name of [
 ]) {
   test(`AvatarGroup container lifecycle preserves caller state for ${name}`, async ({ page }) => {
     await select(page, name);
+
     await expect(page.getByRole('status', { name: 'Group popup containers' })).toHaveText('[]');
     await trigger(page).click();
     await draft(page).fill('Portal draft');
@@ -188,6 +189,7 @@ for (const name of ['destroy-editor']) {
   test(`Popover destroys its own snippets after close for ${name}`, async ({ page }) => {
     await select(page, name);
     await page.getByLabel('Standalone group popup', { exact: true }).check();
+
     await expect(draft(page)).toHaveCount(0);
     await trigger(page).click();
     await draft(page).fill('Disposable standalone draft');

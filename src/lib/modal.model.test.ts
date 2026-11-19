@@ -196,6 +196,7 @@ describe('createModal context confirmations', () => {
 
   it('rejects a second holder without detaching the first', () => {
     const { modal, runtime } = setup();
+
     expect(() => runtime.connect()).toThrow('one mounted ModalHolder');
     modal.confirm({ title: 'Still attached' });
 
@@ -254,6 +255,7 @@ describe('createModal context confirmations', () => {
     const { modal, runtime, disconnect } = setup();
     const previous = modal.confirm({ title: 'Detached' });
     disconnect();
+
     expect(await previous).toBe(false);
     expect(await modal.info({ title: 'Between holders' })).toBe(false);
     runtime.connect();
@@ -262,6 +264,7 @@ describe('createModal context confirmations', () => {
 
     expect(runtime.confirmations.map(entry => entry.config.title)).toEqual(['Reconnected']);
     runtime.act(runtime.confirmations[0].id, true);
+
     expect(await next).toBe(true);
   });
 });

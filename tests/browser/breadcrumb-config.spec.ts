@@ -30,6 +30,7 @@ test('Breadcrumb configuration retains links, keyed items, focus and nested defa
       .selectOption('context-functions');
     const root = page.locator('.breadcrumb-config-main .ant-breadcrumb');
     const first = root.getByRole('link', { name: 'First', exact: true });
+
     await expect(root).toHaveClass(/context-breadcrumb-root-3-configured/);
     await first.focus();
     const previousRoot = await root.elementHandle();
@@ -80,6 +81,7 @@ test('Breadcrumb configured icon updates preserve the open native menu and its k
     await trigger.focus();
     await trigger.press('ArrowDown');
     const entry = page.getByRole('menuitem', { name: 'Menu entry', exact: true });
+
     await expect(entry).toBeFocused();
     const previous = await entry.elementHandle();
     await page.getByRole('button', { name: 'Update Breadcrumb configuration', exact: true })

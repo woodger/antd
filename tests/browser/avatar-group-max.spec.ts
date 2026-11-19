@@ -76,6 +76,7 @@ test('AvatarGroup hover/click trigger array does not open on focus', async ({ pa
 test('AvatarGroup max updates retain the open popup, focus and hidden avatars', async ({ page }) => {
   await select(page, 'reactive-style-placement');
   await button(page).click();
+
   await expect(popup(page)).toBeFocused();
   const hidden = popup(page).locator('.ant-avatar').first();
   const original = await hidden.elementHandle();
@@ -98,6 +99,7 @@ test('AvatarGroup max updates retain the open popup, focus and hidden avatars', 
 test('AvatarGroup count updates remove overflow and recover nearby focus', async ({ page }) => {
   await select(page, 'reactive-limit');
   await button(page).click();
+
   await expect(popup(page)).toBeFocused();
 
   await change(page);

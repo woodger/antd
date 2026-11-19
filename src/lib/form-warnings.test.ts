@@ -20,6 +20,7 @@ describe('createForm warningOnly', () => {
       }] }
     });
     await form.validateFields();
+
     expect(form.getFieldWarning('name')).toEqual(['First warning']);
 
     held = true;

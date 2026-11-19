@@ -37,7 +37,11 @@ describe('Form primitive validation rule types', () => {
 
     await expect(form.validateFields()).resolves.toEqual({ field: original });
     expect(form.values.field).toBe(original);
-    expect(await validateValue(original, {}, [{ type: 'date', max: timestamp - 1, message: 'Late' }]))
+    expect(await validateValue(
+      original,
+      {},
+      [{ type: 'date', max: timestamp - 1, message: 'Late' }]
+    ))
       .toEqual(['Late']);
   });
 

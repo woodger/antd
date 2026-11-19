@@ -15,6 +15,7 @@ for (const sample of reference.cases) {
       direction: 'rtl' in sample && sample.rtl && id !== 'outside' && id !== 'sibling'
         ? 'rtl' : metrics.direction
     }]));
+
     await expect.poll(() => page.evaluate(snapshotStatisticTheme)).toEqual(expected);
     if (sample.name === 'component-aliases') {
       await expect(page.locator('[data-statistic-theme="loading"] .ant-statistic-skeleton'))
@@ -71,6 +72,7 @@ test('Statistic Timer countup and countdown keep ticking through component token
   await page.goto('/?fixture=statistic-theme');
   const timers = page.locator('[data-statistic-theme="timer"], [data-statistic-theme="countdown"]');
   const values = timers.locator('.ant-statistic-content-value');
+
   await expect(values).toHaveCount(2);
   const original = await values.elementHandles();
   const before = await values.allTextContents();

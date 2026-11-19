@@ -17,10 +17,19 @@ state.readNativeBlurChecks = () => capture.readNativeBlurChecks!();
 const capture: HydrationCapture = {};
 state.api = { read: () => capture.read!(), readRefs: () => capture.readRefs!(),
   update: (action: Parameters<NonNullable<HydrationCapture['update']>>[0]) => capture.update!(action) };
-capture.onCommit = () => { state.commitSnapshot = readSelectComponentsHydration(); state.hydrationCommitted = true; };
-const app = hydrate(HydrationCase, { target, props: { sample: sample as HydrationSample, capture }, recover: false });
+capture.onCommit = () => {
+  state.commitSnapshot = readSelectComponentsHydration();
+  state.hydrationCommitted = true;
+};
+const app = hydrate(
+  HydrationCase,
+  { target, props: { sample: sample as HydrationSample, capture }, recover: false }
+);
 state.afterCall = readSelectComponentsHydration();
 await tick();
 state.flushUpdate = (action: Parameters<NonNullable<HydrationCapture['update']>>[0]) => flushSync(() => capture.update!(action));
-state.dispose = async () => { await unmount(app); await tick(); };
+state.dispose = async () => {
+  await unmount(app);
+  await tick();
+};
 state.ready = true;

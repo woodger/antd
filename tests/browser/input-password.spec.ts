@@ -393,6 +393,7 @@ test(
     const input = page.getByLabel('Password', { exact: true });
 
     await page.locator('.password-field .ant-input-password-icon').click();
+
     await expect(input).toHaveAttribute('value', 'secret');
     await page.clock.install();
     await page.clock.pauseAt(new Date());
@@ -440,6 +441,7 @@ test(
       .getByRole('combobox', { name: 'Password variant', exact: true })
       .selectOption('outlined');
     await page.getByRole('combobox', { name: 'Password size', exact: true }).selectOption('small');
+
     await expect(root).toHaveClass(/ant-input-password-small/);
     await expect(root).toHaveClass(/ant-input-affix-wrapper-sm/);
     await expect(root).toHaveCSS('color', 'rgb(0, 0, 255)');

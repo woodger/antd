@@ -16,10 +16,16 @@ export function treeSelectAlignActivationActions(sample: TreeSelectAlignSample):
   if (sample.id === 'first-popup-align') return [open,
     { type: 'props', set: { popupAlign: { offset: [19, 23] } } }, resize, outside];
   if (sample.id === 'first-builtin-map') return [open,
-    { type: 'props', set: { builtinPlacements: { bottomLeft: { points: ['tl', 'bl'], offset: [11, 17] } } } },
+    {
+      type: 'props',
+      set: { builtinPlacements: { bottomLeft: { points: ['tl', 'bl'], offset: [11, 17] } } }
+    },
     resize, outside];
   if (sample.id === 'provided-missing-entry') return [open,
-    { type: 'props', set: { builtinPlacements: { bottomLeft: { points: ['tl', 'bl'], offset: [11, 17] } } } },
+    {
+      type: 'props',
+      set: { builtinPlacements: { bottomLeft: { points: ['tl', 'bl'], offset: [11, 17] } } }
+    },
     { type: 'props', set: { builtinPlacements: {} } },
     { type: 'props', set: { popupAlign: { points: ['tl', 'bl'], offset: [19, 23] } } },
     { type: 'props', set: {

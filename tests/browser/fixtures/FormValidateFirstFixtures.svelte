@@ -70,9 +70,14 @@
     try {
       await form.validateFields({ validateOnly: silent });
       outcomes.push({ status: 'success' });
-    } catch (error) {
+    }
+    catch (error) {
       if (!(error instanceof FormValidationError)) throw error;
-      outcomes.push({ status: 'invalid', outOfDate: error.outOfDate, errorFields: error.errorFields });
+      outcomes.push({
+        status: 'invalid',
+        outOfDate: error.outOfDate,
+        errorFields: error.errorFields
+      });
     }
   }
 

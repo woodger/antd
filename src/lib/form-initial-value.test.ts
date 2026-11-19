@@ -29,6 +29,7 @@ describe('Form field initial values', () => {
 
     expect(form.getFieldValue(['profile', 'name'])).toBe('Edited');
     form.resetFields([['profile', 'name']]);
+
     expect(form.getFieldValue(['profile', 'name'])).toBe('New default');
   });
 
@@ -39,9 +40,11 @@ describe('Form field initial values', () => {
     getFormHooks(form)!.registerField({ name: 'details', initialValue });
 
     initialValue.labels.push('Second');
+
     expect(form.getFieldValue('details')).toEqual({ labels: ['First'], date });
     expect((form.getFieldValue('details') as typeof initialValue).date).toBe(date);
     form.resetFields(['details']);
+
     expect(form.getFieldValue('details')).toEqual(initialValue);
   });
 
@@ -52,15 +55,19 @@ describe('Form field initial values', () => {
     hooks.registerField({ name: 'name', get initialValue() { return initialValue; } });
 
     initialValue = 'Second';
+
     expect(form.getFieldValue('name')).toBe('First');
     form.resetFields(['name']);
+
     expect(form.getFieldValue('name')).toBe('Second');
 
     const remove = hooks.registerField({ name: 'name', initialValue: 'Conflicting' });
     form.resetFields(['name']);
+
     expect(form.getFieldValue('name')).toBeUndefined();
     remove();
     form.resetFields(['name']);
+
     expect(form.getFieldValue('name')).toBe('Second');
   });
 
@@ -74,6 +81,7 @@ describe('Form field initial values', () => {
 
     expect(form.getFieldValue(['people', 0, 'name'])).toBe('Local');
     form.resetFields([['people', 0, 'name']]);
+
     expect(form.getFieldValue(['people', 0, 'name'])).toBeUndefined();
     expect(form.getFieldValue('people')).toHaveLength(1);
   });
@@ -86,6 +94,7 @@ describe('Form field initial values', () => {
 
     expect(form.getFieldValue(['profile', 'name'])).toBe('Parent');
     form.resetFields();
+
     expect(form.getFieldValue(['profile', 'name'])).toBe('Child');
   });
 

@@ -8,7 +8,10 @@ async function mount(page: Page, id: string) {
   await page.clock.install({ time: new Date('2026-11-11T00:00:00Z') });
   await page.goto('/?fixture=tree-scrollbar');
   await page.getByRole('combobox', { name: 'Tree scrollbar sample', exact: true }).selectOption(id);
-  await expect(page.locator('[data-tree-scrollbar-ref]')).toHaveAttribute('data-tree-scrollbar-ref', 'true');
+  await expect(page.locator('[data-tree-scrollbar-ref]')).toHaveAttribute(
+    'data-tree-scrollbar-ref',
+    'true'
+  );
   await page.clock.runFor(100);
   await page.waitForTimeout(40);
   await page.clock.runFor(100);
@@ -32,7 +35,8 @@ async function apply(page: Page, action: TreeScrollbarAction) {
     await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2 + 24);
     await page.clock.runFor(32);
     await page.mouse.up();
-  } else {
+  }
+  else {
     await page.getByRole('combobox', { name: 'Tree scrollbar action', exact: true }).selectOption(action);
     await page.getByRole('button', { name: 'Apply tree scrollbar action', exact: true }).dispatchEvent('click');
   }
@@ -41,6 +45,7 @@ for (const entry of reference.cases.filter(entry => entry.id.startsWith('tree-se
   test(`TreeSelect scrollbar matches the Source inherited no-op for ${entry.id}`, async ({ page }) => {
     await mount(page, entry.id);
     const read = () => page.evaluate(readTreeScrollbar, false);
+
     await expect.poll(read).toEqual(entry.initial);
     let previous = await field(page).elementHandle();
     for (const step of entry.steps) {
@@ -49,7 +54,10 @@ for (const entry of reference.cases.filter(entry => entry.id.startsWith('tree-se
       await page.waitForTimeout(40);
       await page.clock.runFor(100);
       await expect.poll(read, { message: step.action }).toEqual(step.view);
-      expect(await field(page).evaluate((node, original) => node === original, previous), step.action).toBe(step.sameInput);
+      expect(
+        await field(page).evaluate((node, original) => node === original, previous),
+        step.action
+      ).toBe(step.sameInput);
       previous = await field(page).elementHandle();
     }
   });
@@ -58,10 +66,16 @@ test('TreeSelect scrollbar releases its popup, ref and hide timer on unmount', a
   await mount(page, 'tree-select-false');
   await page.locator('.ant-tree-list-holder').hover();
   await page.clock.runFor(100);
+
   await expect(page.locator('.ant-tree-list-scrollbar')).toBeVisible();
   await page.getByRole('button', { name: 'Unmount tree scrollbar', exact: true }).click();
-  await expect(page.locator('[data-tree-scrollbar-ref]')).toHaveAttribute('data-tree-scrollbar-ref', 'false');
+
+  await expect(page.locator('[data-tree-scrollbar-ref]')).toHaveAttribute(
+    'data-tree-scrollbar-ref',
+    'false'
+  );
   await page.clock.runFor(3400);
+
   await expect(page.locator('.ant-tree-list-scrollbar')).toHaveCount(0);
   await expect(field(page)).toHaveCount(0);
   await expect(page.locator('[popover]')).toHaveCount(0);

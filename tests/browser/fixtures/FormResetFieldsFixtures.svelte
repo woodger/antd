@@ -45,7 +45,8 @@
     try {
       await form.validateFields([name]);
       validated = 'success';
-    } catch (error) {
+    }
+    catch (error) {
       if (!(error instanceof FormValidationError)) throw error;
       validated = error.outOfDate ? 'outdated' : 'invalid';
     }
@@ -90,7 +91,13 @@
     form.setFields([
       { name: 'sibling', value: 'Sibling draft', errors: ['Sibling error'], touched: true },
       { name: 'people', errors: ['List error'], warnings: ['List warning'], touched: true },
-      { name: ['people', 0, 'name'], value: 'Draft Anna', errors: ['Person error'], warnings: ['Person warning'], touched: true },
+      {
+        name: ['people', 0, 'name'],
+        value: 'Draft Anna',
+        errors: ['Person error'],
+        warnings: ['Person warning'],
+        touched: true
+      },
       { name: ['people', 1, 'name'], value: 'Draft Bob', errors: ['Second error'], touched: true }
     ]);
     seedLocals();
@@ -108,7 +115,10 @@
 
   function snapshot() {
     const meta: (FormFieldMeta | null)[] = [];
-    form.getFieldsValue({ filter: (value) => { meta.push(value); return false; } });
+    form.getFieldsValue({ filter: (value) => {
+      meta.push(value);
+      return false;
+    } });
 
     return {
       mode, values: encodeFormValues(form.getFieldsValue(true)), meta: encodeFormValues(meta), mounts,

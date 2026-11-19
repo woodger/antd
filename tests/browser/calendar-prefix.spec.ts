@@ -102,6 +102,7 @@ test('Calendar local prefixes keep focused cell keyboard behavior and independen
     await expect(selected).toBeFocused();
     await selected.press('ArrowRight');
     const next = root.getByRole('gridcell', { name: '2024-09-16', exact: true });
+
     await expect(next).toBeFocused();
     await next.press('Enter');
 

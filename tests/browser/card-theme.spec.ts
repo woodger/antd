@@ -18,6 +18,7 @@ test('Card tokens work with the public cssVar object input', async ({ page }) =>
   await page.getByLabel('Use public cssVar object', { exact: true }).check();
 
   const sample = reference.cases.find(item => item.name === 'reported-true')!;
+
   await expect.poll(() => page.evaluate(snapshotCardTheme)).toEqual(sample.metrics);
 });
 

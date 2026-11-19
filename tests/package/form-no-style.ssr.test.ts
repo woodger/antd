@@ -11,6 +11,7 @@ describe('Form noStyle public package', () => {
       archiveSha256: registry.upstream.archiveSha256
     });
     const error = reference.cases.find(({ sample }) => sample.id === 'error')!.metrics;
+
     expect(error.roots).toBe(1);
     expect(error.parent?.classes).toEqual([]);
     expect(error.input.descriptionConnected).toBe(false);

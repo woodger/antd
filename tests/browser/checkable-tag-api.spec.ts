@@ -4,6 +4,7 @@ import type { CheckableTagApiCase } from './fixtures/checkable-tag-api-presets';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=checkable-tag-api');
+
   await expect(page.getByRole('heading', { name: 'CheckableTag callbacks and DOM' })).toBeVisible();
 });
 

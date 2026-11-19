@@ -27,8 +27,26 @@ export const feedbackControlSamples: readonly FeedbackControlSample[] = [
     { id: `${control}-live`, control, status: 'warning' as const, mode: 'custom' as const,
       actions: ['focus', 'error', 'update-icon', 'hide-icon', 'show-icon', 'toggle-feedback', 'toggle-feedback'] as const }
   ]),
-  { id: 'select-calendar', control: 'select', status: 'error', boundary: 'calendar', nameless: true },
+  {
+    id: 'select-calendar',
+    control: 'select',
+    status: 'error',
+    boundary: 'calendar',
+    nameless: true
+  },
   { id: 'input-color-panel', control: 'input', status: 'error', boundary: 'color', nameless: true },
-  { id: 'input-mentions-popup', control: 'input', status: 'error', boundary: 'mentions', nameless: true },
-  { id: 'select-pagination', control: 'select', status: 'error', boundary: 'pagination', nameless: true }
+  {
+    id: 'input-mentions-popup',
+    control: 'input',
+    status: 'error',
+    boundary: 'mentions',
+    nameless: true
+  },
+  {
+    id: 'select-pagination',
+    control: 'select',
+    status: 'error',
+    boundary: 'pagination',
+    nameless: true
+  }
 ];

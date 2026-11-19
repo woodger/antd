@@ -86,7 +86,8 @@
     if (children || rows.length === 0) {
       page = 1;
       localSize = 10;
-    } else if (section.pagination && page !== current) page = current;
+    }
+    else if (section.pagination && page !== current) page = current;
   });
 
   $effect(() => {
@@ -108,7 +109,8 @@
       }
 
       section.onItemSelectAll([...next], 'replace');
-    } else section.onItemRemove?.(key === 'remove-current' ? currentKeys : enabledKeys);
+    }
+    else section.onItemRemove?.(key === 'remove-current' ? currentKeys : enabledKeys);
   }
 
   function changeSearch(value: string) {

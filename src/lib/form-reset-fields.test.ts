@@ -21,7 +21,13 @@ describe('createForm resetFields', () => {
     hooks.registerField({ name: ['user', 'name'], onReset: () => { resets.push('nested'); } });
     hooks.registerField({ name: 'user.name', onReset: () => { resets.push('literal'); } });
     form.setFields([
-      { name: ['user', 'name'], value: 'Draft', errors: ['Nested'], warnings: ['Note'], touched: true },
+      {
+        name: ['user', 'name'],
+        value: 'Draft',
+        errors: ['Nested'],
+        warnings: ['Note'],
+        touched: true
+      },
       { name: 'user.name', value: 'Literal draft', errors: ['Literal'], touched: true }
     ]);
     form.resetFields(['user']);
@@ -32,6 +38,7 @@ describe('createForm resetFields', () => {
     expect(form.isFieldTouched(['user', 'name'])).toBe(true);
     expect(resets).toEqual([]);
     form.resetFields([['user', 'name']]);
+
     expect(form.getFieldError(['user', 'name'])).toEqual([]);
     expect(form.getFieldWarning(['user', 'name'])).toEqual([]);
     expect(form.isFieldTouched(['user', 'name'])).toBe(false);
@@ -84,6 +91,7 @@ describe('createForm resetFields', () => {
     expect(form.isFieldValidating('name')).toBe(true);
     pending.resolve('Current');
     const result = await validation;
+
     expect(result).toMatchObject({ outOfDate: false });
     expect(form.getFieldError('name')).toEqual(['Current']);
   });
@@ -114,6 +122,7 @@ describe('createForm resetFields', () => {
     expect(resets).toEqual(['first', 'second']);
     expect(hooks.resetKey).toBe(key);
     form.resetFields();
+
     expect(resets).toEqual(['first', 'second', 'first', 'second', 'sibling']);
     expect(hooks.resetKey).not.toBe(key);
   });
@@ -131,12 +140,17 @@ describe('createForm resetFields', () => {
 
     expect(form.values).toEqual({ sibling: 'Kept', people: [{ name: 'Updated default' }] });
     initialValue[0].name = 'Outside mutation';
+
     expect(form.getFieldValue(['people', 0, 'name'])).toBe('Updated default');
   });
 
   it('keeps Form defaults above List defaults and skips nested List initialValue fallback', () => {
     const form = createForm({ initialValues: { people: [{ name: 'Form' }] } });
-    getFormHooks(form)!.registerField({ name: 'people', isList: true, initialValue: [{ name: 'List' }] });
+    getFormHooks(form)!.registerField({
+      name: 'people',
+      isList: true,
+      initialValue: [{ name: 'List' }]
+    });
     getFormHooks(form)!.registerField({
       name: ['people', 0, 'items'], isList: true, isListField: true, initialValue: ['Nested']
     });
@@ -154,6 +168,7 @@ describe('createForm resetFields', () => {
 
     expect(form.values).toEqual({ people: undefined });
     form.resetFields();
+
     expect(form.values).toEqual({});
   });
 
@@ -167,6 +182,7 @@ describe('createForm resetFields', () => {
     expect(form.values.when).toBe(when);
     form.values.user.name = 'External mutation';
     form.resetFields(['user']);
+
     expect(form.values.user.name).toBe('Anna');
   });
 

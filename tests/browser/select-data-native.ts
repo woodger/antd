@@ -3,7 +3,10 @@ import { createHash } from 'node:crypto';
 import { selectDataAriaReference, type SelectDataView } from './select-data-reference';
 import type { SelectDataSample } from './fixtures/select-data-cases';
 
-const queryBytes = readFileSync(new URL('./fixtures/select-virtual-query-native-baseline.json', import.meta.url));
+const queryBytes = readFileSync(new URL(
+  './fixtures/select-virtual-query-native-baseline.json',
+  import.meta.url
+));
 if (createHash('sha256').update(queryBytes).digest('hex') !== '1c91bc9788bb65152c14011977abfdf178d74cd6e387c5bd35958ee379bf0228')
   throw Error('Historical Native controlled-query baseline changed');
 const queryProof = JSON.parse(queryBytes.toString('utf8')) as { cases: Array<{ id: string;
@@ -25,10 +28,16 @@ function field(value: unknown, key: string): unknown {
 }
 function names(view: SelectDataView) {
   const map = view.receipts.fieldNames.value;
-  return { value: scalar(field(map, 'value')) || 'value', label: scalar(field(map, 'label')) || 'label' };
+  return {
+    value: scalar(field(map, 'value')) || 'value',
+    label: scalar(field(map, 'label')) || 'label'
+  };
 }
 function inputRows(view: SelectDataView) {
-  return view.receipts.options.rows as Array<{ common: { data: unknown; originalToken: string | null } }>;
+  return view.receipts.options.rows as Array<{ common: {
+    data: unknown;
+    originalToken: string | null
+  } }>;
 }
 function selectedLabel(view: SelectDataView) {
   const value = scalar(view.model);
@@ -53,7 +62,12 @@ export function selectDataMappedAriaFields(view: SelectDataView, sample: SelectD
     const value = raw ? scalar(field(raw.common.data, mapping.value)) : undefined;
     const logical = sample.family === 'select' ? physical?.selected === true
       : value !== undefined && value.toLowerCase() === String(view.query).toLowerCase();
-    if (logical) changes.push({ listbox: listbox.id, id: option.id, source: 'false', native: 'true' });
+    if (logical) changes.push({
+      listbox: listbox.id,
+      id: option.id,
+      source: 'false',
+      native: 'true'
+    });
   }
   return changes;
 }
@@ -73,12 +87,19 @@ export function selectDataNativeView(view: SelectDataView, sample: SelectDataSam
       if (editor.value !== view.query || view.receipts.searchOwner.whileClosedOwnUndefined !== true)
         throw Error('Controlled-query closed Source editor guard changed');
       const label = scalar(view.model) === undefined ? '' : selectedLabel(view)!;
-      result = { ...result, editor: { ...result.editor!, value: label, caret: [label.length, label.length] } };
-    } else if (scalar(view.model) !== undefined) {
+      result = {
+        ...result,
+        editor: { ...result.editor!, value: label, caret: [label.length, label.length] }
+      };
+    }
+    else if (scalar(view.model) !== undefined) {
       if (view.query !== '' || editor.value !== '' || editor.caret.some(value => value !== 0))
         throw Error('Selected closed Source editor guard changed');
       const label = selectedLabel(view)!;
-      result = { ...result, editor: { ...result.editor!, value: label, caret: [label.length, label.length] } };
+      result = {
+        ...result,
+        editor: { ...result.editor!, value: label, caret: [label.length, label.length] }
+      };
     }
   }
   const corrections = selectDataMappedAriaFields(view, sample);

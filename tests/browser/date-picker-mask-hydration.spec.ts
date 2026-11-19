@@ -13,7 +13,10 @@ test.use({ locale: 'en-US', timezoneId: 'UTC', viewport: { width: 1440, height: 
 test.beforeAll(async () => {
   cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
     'date-picker-mask-hydration-'));
-  server = await createServer({ configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+  server = await createServer({ configFile: fileURLToPath(new URL(
+    './vite.config.ts',
+    import.meta.url
+  )),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
     appType: 'custom', cacheDir: cache });
 });
@@ -27,6 +30,7 @@ for (const sample of samples) for (const profile of ['string', 'object', 'mask']
     const module = await server.ssrLoadModule(fileURLToPath(new URL(
       './fixtures/date-picker-mask-hydration.server.ts', import.meta.url)));
     const { head, body, domFree } = module.renderMaskHydration(sample.id, profile);
+
     expect(domFree).toBe(true);
     expect(body).toContain('id="mask-input"');
     await page.goto(`/date-picker-mask-hydration.html?owner=${sample.id}&profile=${profile}`);
@@ -39,10 +43,13 @@ for (const sample of samples) for (const profile of ['string', 'object', 'mask']
     await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() =>
       requestAnimationFrame(() => resolve()))));
     const actual = await page.evaluate(() => window.maskHydrationContract!.read());
-    expect(actual.sameOwner).toBe(true); expect(actual.sameRoot).toBe(true);
+
+    expect(actual.sameOwner).toBe(true);
+    expect(actual.sameRoot).toBe(true);
     expect(actual.sameInputs).toEqual(actual.parsed.map(() => true));
     expect(actual.fields).toEqual(actual.parsed);
-    expect(actual.alive).toBe(true); expect(actual.callbacks).toBe(0);
+    expect(actual.alive).toBe(true);
+    expect(actual.callbacks).toBe(0);
     for (const variant of ['first', 'repeat'] as const) {
       const source = readMaskHydrationSourcePoint(sample.id, profile, 'settled', variant);
       expect(actual.fields).toEqual(source.inputs.map(input => ({
@@ -62,10 +69,13 @@ for (const sample of samples) for (const profile of ['string', 'object', 'mask']
       expect(focused.fields[1]).toEqual({ ...actual.parsed[1], focused: true });
     }
     const cleanup = await page.evaluate(() => window.maskHydrationContract!.dispose());
-    expect(cleanup.inputCount).toBe(0); expect(cleanup.alive).toBe(false);
+
+    expect(cleanup.inputCount).toBe(0);
+    expect(cleanup.alive).toBe(false);
     expect(cleanup.fields.every(input => !input.connected)).toBe(true);
     await page.waitForTimeout(1000);
     const late = await page.evaluate(() => window.maskHydrationContract!.read());
+
     expect(late).toEqual(cleanup);
   });
 }

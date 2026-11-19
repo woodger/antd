@@ -35,9 +35,18 @@ export function snapshotNotificationTheme() {
     close: css(root.querySelector('.ant-notification-notice-close'), [
       ...typography, ...box, 'top', 'inset-inline-end'
     ]),
-    closeIcon: css(root.querySelector('.ant-notification-notice-close svg'), ['width', 'height', 'color']),
-    actions: css(root.querySelector('.ant-notification-notice-actions'), ['width', 'height', 'margin-top']),
-    action: css(root.querySelector('.ant-notification-notice-actions .ant-btn'), [...typography, ...box])
+    closeIcon: css(
+      root.querySelector('.ant-notification-notice-close svg'),
+      ['width', 'height', 'color']
+    ),
+    actions: css(
+      root.querySelector('.ant-notification-notice-actions'),
+      ['width', 'height', 'margin-top']
+    ),
+    action: css(
+      root.querySelector('.ant-notification-notice-actions .ant-btn'),
+      [...typography, ...box]
+    )
   };
 }
 

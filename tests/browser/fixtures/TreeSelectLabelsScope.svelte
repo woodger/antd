@@ -46,7 +46,11 @@
     return node ? { value: node[field], label: literal(node[labelField]), payload: node.payload,
       payloadRef: find(data, node[field])?.payload === node.payload } : null;
   }
-  function change(next: TreeSelectValue, labels: TreeSelectLabel[] | null, triggerValue?: string | number) {
+  function change(
+    next: TreeSelectValue,
+    labels: TreeSelectLabel[] | null,
+    triggerValue?: string | number
+  ) {
     events = [...events, { kind: 'change', value: eventValue(next ?? null),
       labels: labels === null ? null : labels.map(literal), triggerValue }];
     const list = next == null ? [] : Array.isArray(next) ? next : [next];

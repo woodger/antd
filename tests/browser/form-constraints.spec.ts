@@ -12,7 +12,11 @@ for (const entry of reference.cases) {
       .toHaveText(entry.valid ? 'valid' : 'invalid');
     await expect.poll(async () => JSON.parse((await page.getByRole('status', {
       name: 'Constraint metadata', exact: true
-    }).textContent())!)).toEqual({ errors: entry.errors, warnings: entry.warnings, store: entry.store });
+    }).textContent())!)).toEqual({
+      errors: entry.errors,
+      warnings: entry.warnings,
+      store: entry.store
+    });
     if (entry.errors.length) {
       await expect(page.getByLabel('Constrained field', { exact: true }))
         .toHaveAttribute('aria-invalid', 'true');
@@ -26,12 +30,15 @@ test('Form whitespace validation clears after user input and returns to its capt
     .selectOption('space-rejected');
   const input = page.getByLabel('Constrained field', { exact: true });
   await page.getByRole('button', { name: 'Validate constrained field', exact: true }).click();
+
   await expect(input).toHaveAccessibleDescription('Rejected');
   await input.fill('abc');
   await page.getByRole('button', { name: 'Validate constrained field', exact: true }).click();
+
   await expect(page.getByRole('status', { name: 'Constraint result', exact: true })).toHaveText('valid');
   await expect(input).not.toHaveAttribute('aria-invalid');
   await page.getByRole('button', { name: 'Reset constrained field', exact: true }).click();
+
   await expect(input).toHaveValue('   ');
   await expect(input).not.toHaveAttribute('aria-invalid');
 });

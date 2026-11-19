@@ -99,12 +99,27 @@ export interface DatePickerPresetTransitionCorePoint {
   sameRoot: boolean; sameInput: boolean;
   publicRef: { controlPresent: boolean; nativeElementIdentity: number | null };
   rootElements: DatePickerPresetTransitionNode[];
-  popups: Array<{ node: DatePickerPresetTransitionNode; visible: boolean; allElements: DatePickerPresetTransitionNode[] }>;
-  popupAncestors: Array<{ node: DatePickerPresetTransitionNode; presentBeforeSourceMount: boolean | null; ownedAsPostMountPopupAncestor: boolean }>;
+  popups: Array<{
+    node: DatePickerPresetTransitionNode;
+    visible: boolean;
+    allElements: DatePickerPresetTransitionNode[]
+  }>;
+  popupAncestors: Array<{
+    node: DatePickerPresetTransitionNode;
+    presentBeforeSourceMount: boolean | null;
+    ownedAsPostMountPopupAncestor: boolean
+  }>;
   presets: DatePickerPresetTransitionNode[]; cells: DatePickerPresetTransitionNode[];
   clear: DatePickerPresetTransitionNode | null; authoredLabels: DatePickerPresetTransitionNode[];
   activeElement: DatePickerPresetTransitionNode | null;
-  browserOwnedResourceCounters: { measured: false; observers: null; mutations: null; frames: null; timers: null; ports: null };
+  browserOwnedResourceCounters: {
+    measured: false;
+    observers: null;
+    mutations: null;
+    frames: null;
+    timers: null;
+    ports: null
+  };
   environment: { timezone: string }; resourceTiming: unknown[];
 }
 export interface DatePickerPresetTransitionPoint extends DatePickerPresetTransitionCorePoint {
@@ -112,16 +127,32 @@ export interface DatePickerPresetTransitionPoint extends DatePickerPresetTransit
     controlIdentity: number | null; focusIdentity: number | null; blurIdentity: number | null;
     sameControl: boolean; sameFocus: boolean; sameBlur: boolean; controlOwnKeys: string[];
   };
-  form: null | { connected: boolean; attributes: Array<[string, string]>; entries: Array<[string, FormDataEntryValue]> };
+  form: null | {
+    connected: boolean;
+    attributes: Array<[string, string]>;
+    entries: Array<[string, FormDataEntryValue]>
+  };
   calendarHeaders: Array<{ text: string | null; html: string }>;
   timeColumns: Array<{
     type: string | null; scrollTop: number; scrollHeight: number; clientHeight: number;
-    cells: Array<{ value: string | null; text: string | null; attributes: Array<[string, string]>; selected: boolean; disabled: boolean }>;
+    cells: Array<{
+      value: string | null;
+      text: string | null;
+      attributes: Array<[string, string]>;
+      selected: boolean;
+      disabled: boolean
+    }>;
   }>;
 }
 export interface DatePickerPresetTransitionCleanup {
   owner: DatePickerPresetTransitionOwner; refs: Record<keyof DatePickerPresetTransitionRefs, boolean>;
-  retained: Array<{ identity: number; name: string; connected: boolean; owned: boolean; ownershipEvidence: unknown }>;
+  retained: Array<{
+    identity: number;
+    name: string;
+    connected: boolean;
+    owned: boolean;
+    ownershipEvidence: unknown
+  }>;
   ownerCount: number; popupCount: number;
   activeElement: { name: string; connected: boolean } | null;
   browserOwnedResourceCounters: DatePickerPresetTransitionCorePoint['browserOwnedResourceCounters'];

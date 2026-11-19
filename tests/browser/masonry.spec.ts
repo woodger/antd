@@ -42,6 +42,7 @@ test(
     await expect(item(root, 'e')).toHaveCSS('top', '100px');
     await expect(item(root, 'a')).toHaveCSS('height', '100px');
     await expectPixels(item(root, 'a'), 'width', 200);
+
     await expect(page.getByLabel('Masonry ref', { exact: true })).toHaveText('DIV');
     await expect(page.getByLabel('Masonry layout', { exact: true })).toContainText('"label":"Alpha"');
 
@@ -61,6 +62,7 @@ test(
     await expect(root).toHaveCSS('height', '224px');
     await expectPixels(item(root, 'a'), 'width', 192);
     await expectPixels(item(root, 'b'), 'inset-inline-start', 204);
+
     await expect(item(root, 'd')).toHaveCSS('top', '84px');
     await expect(item(root, 'e')).toHaveCSS('top', '124px');
 
@@ -109,6 +111,7 @@ test(
 
     await expect(item(root, 'b')).toHaveCSS('height', '180px');
     await frames(root);
+
     await expect(root).toHaveCSS('height', '200px');
     await expect(item(root, 'd')).toHaveCSS('top', '60px');
 
@@ -176,6 +179,7 @@ test(
     await draft.fill('Retained draft');
     await draft.focus();
     await draft.evaluate((element: HTMLInputElement) => element.setSelectionRange(2, 6, 'backward'));
+
     await expect(draft).toBeFocused();
     await page.getByRole('button', { name: 'Reverse Masonry items', exact: true }).dispatchEvent('click');
 
@@ -185,6 +189,7 @@ test(
       tag: document.activeElement?.tagName,
       label: document.activeElement?.getAttribute('aria-label')
     }));
+
     await expect(draft, JSON.stringify(active)).toBeFocused();
     expect(await draft.evaluate((element: HTMLInputElement) => [
       element.selectionStart, element.selectionEnd, element.selectionDirection
@@ -271,6 +276,7 @@ test(
     await expect(root).toHaveCSS('outline-offset', '10px');
     await expect(item(root, 'a')).toHaveCSS('outline-offset', '8px');
     await expectPixels(item(root, 'a'), 'width', 200);
+
     await expect(item(root, 'a')).toHaveCSS('top', '0px');
     await expect(item(root, 'a')).toHaveCSS('position', 'absolute');
 
@@ -314,6 +320,7 @@ test(
   async ({ page }) => {
     const root = page.locator('.fixture-masonry');
     const beta = item(root, 'b');
+
     await expect(beta).not.toHaveClass(/ant-masonry-item-fade/);
     await page.getByLabel('Slow Masonry leave', { exact: true }).check();
     await page.getByRole('button', { name: 'Remove Masonry item', exact: true }).click();
@@ -334,10 +341,12 @@ test(
     const root = page.locator('.fixture-masonry');
     const beta = item(root, 'b');
     const draft = page.getByLabel('Masonry draft b', { exact: true });
+
     await expect(beta).not.toHaveClass(/ant-masonry-item-fade/);
     await draft.fill('Restored draft');
     await page.getByLabel('Slow Masonry leave', { exact: true }).check();
     await page.getByRole('button', { name: 'Remove Masonry item', exact: true }).click();
+
     await expect(beta).toHaveClass(/ant-masonry-item-fade-leave-active/);
     await page.getByRole('button', { name: 'Restore Masonry item', exact: true }).click();
 

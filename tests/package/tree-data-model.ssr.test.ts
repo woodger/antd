@@ -37,6 +37,7 @@ describe('Tree data model package/SSR', () => {
     const getPath = model.getPath;
 
     const initial: string = getPath('root')[0].node.payload.label;
+
     expect(initial).toBe('Original');
 
     data = [{ id: 0n, payload: { label: 'Updated' } }];

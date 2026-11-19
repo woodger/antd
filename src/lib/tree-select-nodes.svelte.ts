@@ -22,8 +22,14 @@ export function provideTreeSelectNodes() {
       }).map(entry => entry.read());
     },
     register(entry: NodeEntry) {
-      untrack(() => { entries.add(entry); revision++; });
-      return () => untrack(() => { entries.delete(entry); revision++; });
+      untrack(() => {
+        entries.add(entry);
+        revision++;
+      });
+      return () => untrack(() => {
+        entries.delete(entry);
+        revision++;
+      });
     },
     observe(element: HTMLDivElement) {
       const observer = new MutationObserver(() => { revision++; });

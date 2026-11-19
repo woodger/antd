@@ -22,7 +22,9 @@
   const inner = createForm({ initialValues: {} });
   onMount(() => {
     let mounted = true;
-    void tick().then(() => { if (mounted && sample.initialTouched) model.setFields([{ name: 'node', touched: true }]); });
+    void tick().then(() => {
+      if (mounted && sample.initialTouched) model.setFields([{ name: 'node', touched: true }]);
+    });
     return () => { mounted = false; };
   });
   let prefix = $derived(changedPrefix ? 'updated' : sample.rootPrefix ?? 'ant');
@@ -36,9 +38,15 @@
   function icons(label: string, selected: FeedbackMode): FormFeedbackIcons {
     return info => selected === 'empty-map' ? {} : { [info.status]: selected === 'false' ? false
       : selected === 'null' ? null : selected === 'zero' ? 0 : selected === 'true' ? true
-        : selected === 'empty-array' ? [] : selected === 'array' ? ['[', content(label, info), ']'] : content(label, info) };
+        : selected === 'empty-array' ? [] : selected === 'array' ? ['[', content(label, info), ']'] : content(
+          label,
+          info
+        ) };
   }
-  let hasFeedback = $derived<FormItemProps['hasFeedback']>(feedback ? mode ? { icons: icons('local', mode) } : true : false);
+  let hasFeedback = $derived<FormItemProps['hasFeedback']>(feedback ? mode ? { icons: icons(
+    'local',
+    mode
+  ) } : true : false);
   function apply(action: FeedbackAction) {
     if (action === 'error') status = 'error';
     if (action === 'success') status = 'success';

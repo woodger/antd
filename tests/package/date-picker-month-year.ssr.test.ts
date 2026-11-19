@@ -11,6 +11,7 @@ for (const picker of ['month', 'year'] as const) {
   it(`renders a closed ${picker} field with its period format and placeholder`, () => {
     const body = render(DatePicker, { props: { picker, value: start, name: 'period',
       locale: enUS.datePicker } }).body;
+
     expect(body).toContain(`value="${start.format(format)}"`);
     expect(body).toContain(`placeholder="Select ${picker}"`);
     expect(body).toContain('name="period"');
@@ -22,6 +23,7 @@ for (const picker of ['month', 'year'] as const) {
   it(`renders a closed ${picker} range with both localized period placeholders`, () => {
     const body = render(RangePicker, { props: { picker, value: [start, end],
       locale: enUS.datePicker } }).body;
+
     expect(body).toContain(`value="${start.format(format)}"`);
     expect(body).toContain(`value="${end.format(format)}"`);
     expect(body).toContain(`placeholder="Start ${picker}"`);
@@ -33,6 +35,7 @@ for (const picker of ['month', 'year'] as const) {
     const body = render(DatePicker, { props: { picker, value: start, defaultOpen: true, locale: enUS.datePicker,
       showTime: { format: 'HH:mm', defaultOpenValue: dayjs('2000-01-01T09:12:34.567') }
     } }).body;
+
     expect(body).toMatch(/role="dialog"[^>]*hidden/);
     expect(body).toContain(`ant-picker-${picker}-panel`);
     expect(body).not.toContain('ant-picker-time-panel');
@@ -43,6 +46,7 @@ for (const picker of ['month', 'year'] as const) {
   it(`renders two ${picker} range panels without a time panel`, () => {
     const body = render(RangePicker, { props: { picker, value: [start, end],
       defaultOpen: true, showTime: true, locale: enUS.datePicker } }).body;
+
     expect(body).toMatch(/role="dialog"[^>]*hidden/);
     expect(body.match(new RegExp(`class="[^"]*\\bant-picker-${picker}-panel\\b`, 'g'))).toHaveLength(2);
     expect(body).not.toContain('ant-picker-time-panel');

@@ -62,7 +62,10 @@ describe('InputNumber source package features', () => {
     const callback = vi.fn();
 
     try {
-      const body = render(InputNumber, { props: { defaultValue: 1, mode: 'spinner', onChange: callback, onStep: callback } }).body;
+      const body = render(
+        InputNumber,
+        { props: { defaultValue: 1, mode: 'spinner', onChange: callback, onStep: callback } }
+      ).body;
 
       expect(body).toContain('ant-input-number-mode-spinner');
       expect(callback).not.toHaveBeenCalled();

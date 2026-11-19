@@ -65,7 +65,8 @@ export async function runCss(
       if (actual !== result.content) throw new Error(
         `CSS differs: ${recipe.output}. Review the recipe before --write`
       );
-    } else stdout.write(id === 'all' ? result.stylesheet : result.content);
+    }
+    else stdout.write(id === 'all' ? result.stylesheet : result.content);
     stderr.write(
       `${recipe
         .id}: ${result

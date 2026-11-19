@@ -52,42 +52,92 @@ export function verifyNativeInputWidthOwn(actual: NativeInputWidthOwnPoint, sour
   entry: SelectSurfaceInputWidthOwnSourceCase, label: string) {
   const failures: string[] = [];
   const check = (name: string, action: () => void) => {
-    try { action(); } catch (error) { failures.push(`${label}/${name}: ${String(error)}`); }
+    try { action(); }
+    catch (error) { failures.push(`${label}/${name}: ${String(error)}`); }
   };
   check('public-owner', () => {
     assert.equal(actual.owner.alive, true);
     for (const key of ['widthKind', 'widthOwnKey', 'widthValue', 'inputStyle', 'styleOwnKeys', 'inputStyleDescriptors',
-      'fontSize', 'query', 'open', 'model'] as const) assert.deepEqual(actual.owner[key], source.owner[key], `${label} whole public ${key}`);
-    verifySelectSurfaceEventGraph(actual.owner.rawModel, source.owner.rawModel, `${label} raw model graph`);
-    verifySelectSurfaceEventGraph(actual.owner.rawInputStyle, source.owner.rawInputStyle, `${label} complete authored style own descriptor/order graph`);
+      'fontSize', 'query', 'open', 'model'] as const) assert.deepEqual(
+        actual.owner[key],
+        source.owner[key],
+        `${label} whole public ${key}`
+      );
+    verifySelectSurfaceEventGraph(
+      actual.owner.rawModel,
+      source.owner.rawModel,
+      `${label} raw model graph`
+    );
+    verifySelectSurfaceEventGraph(
+      actual.owner.rawInputStyle,
+      source.owner.rawInputStyle,
+      `${label} complete authored style own descriptor/order graph`
+    );
     assert.deepEqual(normalizedSelectSurfaceAuthoredProps(actual.owner.authoredProps),
       normalizedSelectSurfaceAuthoredProps(source.owner.authoredProps), `${label} complete authored public props`);
-    assert.deepEqual(decodeSelectSurface(actual.owner.authoredProvider), decodeSelectSurface(source.owner.authoredProvider), `${label} complete public provider`);
+    assert.deepEqual(
+      decodeSelectSurface(actual.owner.authoredProvider),
+      decodeSelectSurface(source.owner.authoredProvider),
+      `${label} complete public provider`
+    );
   });
   check('public-callbacks', () => {
-    assert.deepEqual(actual.owner.events.map(selectSurfaceEventValue), entry.events.slice(0, source.owner.eventCount).map(selectSurfaceEventValue), `${label} full actual event prefix`);
+    assert.deepEqual(
+      actual.owner.events.map(selectSurfaceEventValue),
+      entry.events.slice(0, source.owner.eventCount).map(selectSurfaceEventValue),
+      `${label} full actual event prefix`
+    );
     assert.equal(actual.owner.rawEvents.length, source.owner.rawEventCount);
-    for (const [index, event] of actual.owner.rawEvents.entries()) verifySelectSurfaceEventGraph(event, entry.rawEvents[index], `${label}/event${index}`);
-    assert.deepEqual(actual.owner.calls, entry.producerCalls.slice(0, source.owner.producerCount), `${label} complete producer prefix`);
+    for (const [index, event] of actual.owner.rawEvents.entries()) verifySelectSurfaceEventGraph(
+      event,
+      entry.rawEvents[index],
+      `${label}/event${index}`
+    );
+    assert.deepEqual(
+      actual.owner.calls,
+      entry.producerCalls.slice(0, source.owner.producerCount),
+      `${label} complete producer prefix`
+    );
   });
   check('actual-width-cssom', () => {
     for (const key of ['value', 'inlineWidth', 'inlineWidthProperty', 'inlineWidthPriority', 'cssomOwnWidth', 'inlineOrder',
       'inlineProperties', 'styleAttribute', 'cssText', 'inlineVariable', 'computedVariable', 'legacyInlineVariable', 'computedWidth',
       'computedFont', 'computedFontSize', 'computedBoxSizing', 'computedMinWidth', 'computedMaxWidth', 'box', 'scrollWidth',
-      'clientWidth', 'offsetWidth'] as const) assert.deepEqual(actual.width[key], source.width[key], `${label} actual input ${key}`);
+      'clientWidth', 'offsetWidth'] as const) assert.deepEqual(
+        actual.width[key],
+        source.width[key],
+        `${label} actual input ${key}`
+      );
   });
   check('retained-identities', () => {
     assert.deepEqual(actual.nodes.sameAsOriginal, source.nodes.sameAsOriginal);
     assert.equal(actual.nodes.popupCount, source.nodes.popupCount);
     assert.equal(actual.nodes.footerCount, source.nodes.footerCount);
     for (const name of Object.keys(source.nodes.current) as Array<keyof typeof source.nodes.current>) {
-      assert.equal(Boolean(actual.nodes.current[name]), Boolean(source.nodes.current[name]), `${label}/${name} actual node presence`);
-      assert.equal(actual.nodes.current[name]?.connected ?? null, source.nodes.current[name]?.connected ?? null);
-      assert.equal(actual.nodes.original[name]?.connected ?? null, source.nodes.original[name]?.connected ?? null);
+      assert.equal(
+        Boolean(actual.nodes.current[name]),
+        Boolean(source.nodes.current[name]),
+        `${label}/${name} actual node presence`
+      );
+      assert.equal(
+        actual.nodes.current[name]?.connected ?? null,
+        source.nodes.current[name]?.connected ?? null
+      );
+      assert.equal(
+        actual.nodes.original[name]?.connected ?? null,
+        source.nodes.original[name]?.connected ?? null
+      );
     }
-    assert.deepEqual(actual.bindings, { root: true, editor: true, methods: true, methodNativeElement: false });
+    assert.deepEqual(
+      actual.bindings,
+      { root: true, editor: true, methods: true, methodNativeElement: false }
+    );
     assert.equal(source.nodes.publicRefs.rootMatches, true);
-    assert.equal(actual.nodes.publicRefs.rootMatches, false, `${label} separate Native bound ref / methods object contract`);
+    assert.equal(
+      actual.nodes.publicRefs.rootMatches,
+      false,
+      `${label} separate Native bound ref / methods object contract`
+    );
     assert.equal(actual.nodes.publicRefs.wrapMatches, source.nodes.publicRefs.wrapMatches);
     assert.equal(actual.nodes.publicRefs.footerMatches, source.nodes.publicRefs.footerMatches);
   });
@@ -100,13 +150,24 @@ export function verifyNativeInputWidthOwn(actual: NativeInputWidthOwnPoint, sour
     for (const name of legacyClasses) assert(actual.topology.outerClasses.includes(name));
     assert.deepEqual(Object.keys(actual.dom.view.slots), Object.keys(source.dom.view.slots));
     for (const [slot, nodes] of Object.entries(source.dom.view.slots)) {
-      assert.equal(actual.dom.view.slots[slot].length, nodes.length, `${label}/${slot} semantic node count`);
+      assert.equal(
+        actual.dom.view.slots[slot].length,
+        nodes.length,
+        `${label}/${slot} semantic node count`
+      );
       for (const [index, node] of nodes.entries()) verifySelectSurfaceNode(actual.dom.view.slots[slot][index], node, slot, sample,
         legacyClasses, `${label}/${index}`, source.dom.raw.slots[slot][index].attributes.find(([name]) => name === 'style')?.[1] ?? '',
-        { callerLabel: authored['aria-label'], inputLayout: actual.topology.editorLayout, raw: actual.dom.raw.slots[slot][index] });
+        {
+          callerLabel: authored['aria-label'],
+          inputLayout: actual.topology.editorLayout,
+          raw: actual.dom.raw.slots[slot][index]
+        });
     }
     assert.equal(actual.topology.rootTextWithoutChildPopup, source.dom.view.slots.root[0].text);
-    assert.deepEqual({ present: actual.dom.view.popup.present, visible: actual.dom.view.popup.visible },
+    assert.deepEqual({
+      present: actual.dom.view.popup.present,
+      visible: actual.dom.view.popup.visible
+    },
       { present: source.dom.view.popup.present, visible: source.dom.view.popup.visible });
     assert.equal(actual.dom.view.popup.extras.length, source.dom.view.popup.extras.length);
     for (const [index, node] of source.dom.view.popup.extras.entries()) verifySelectSurfaceNode(actual.dom.view.popup.extras[index], node,

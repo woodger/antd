@@ -40,17 +40,38 @@ export interface DatePickerPresetNode {
 export interface DatePickerPresetPoint {
   owner: DatePickerPresetOwner; root: DatePickerPresetNode | null; input: DatePickerPresetNode | null; sameRoot: boolean; sameInput: boolean;
   publicRef: { controlPresent: boolean; nativeElementIdentity: number | null }; rootElements: DatePickerPresetNode[];
-  popups: Array<{ node: DatePickerPresetNode; visible: boolean; allElements: DatePickerPresetNode[] }>;
-  popupAncestors: Array<{ node: DatePickerPresetNode; presentBeforeSourceMount: boolean | null; ownedAsPostMountPopupAncestor: boolean }>;
+  popups: Array<{
+    node: DatePickerPresetNode;
+    visible: boolean;
+    allElements: DatePickerPresetNode[]
+  }>;
+  popupAncestors: Array<{
+    node: DatePickerPresetNode;
+    presentBeforeSourceMount: boolean | null;
+    ownedAsPostMountPopupAncestor: boolean
+  }>;
   presets: DatePickerPresetNode[]; cells: DatePickerPresetNode[]; clear: DatePickerPresetNode | null;
   authoredLabels: DatePickerPresetNode[]; activeElement: DatePickerPresetNode | null;
-  browserOwnedResourceCounters: { measured: false; observers: null; mutations: null; frames: null; timers: null; ports: null };
+  browserOwnedResourceCounters: {
+    measured: false;
+    observers: null;
+    mutations: null;
+    frames: null;
+    timers: null;
+    ports: null
+  };
   environment: { timezone: string }; resourceTiming: unknown[];
 }
 export function readDatePickerPresets(): DatePickerPresetPoint;
 export function readDatePickerPresetsCleanup(): {
   owner: DatePickerPresetOwner; refs: Record<keyof DatePickerPresetRefs, boolean>;
-  retained: Array<{ identity: number; name: string; connected: boolean; owned: boolean; ownershipEvidence: unknown }>;
+  retained: Array<{
+    identity: number;
+    name: string;
+    connected: boolean;
+    owned: boolean;
+    ownershipEvidence: unknown
+  }>;
   ownerCount: number; popupCount: number; activeElement: { name: string; connected: boolean } | null;
   browserOwnedResourceCounters: DatePickerPresetPoint['browserOwnedResourceCounters']; resourceTiming: unknown[];
 };

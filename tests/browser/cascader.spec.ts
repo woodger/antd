@@ -16,6 +16,7 @@ const tags = (page: Page) => root(page).locator('[data-cascader-tag]:not([aria-h
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=cascader');
+
   await expect(input(page)).toBeVisible();
 });
 
@@ -82,8 +83,10 @@ test('Cascader clears a single path with undefined after onClear and preserves f
 test('Cascader reads defaultValue once and resets local state when controlled value is released', async ({ page }) => {
   await button(page, 'Set owner path').click();
   await control(page, 'Controlled paths').uncheck();
+
   await expect(root(page)).toContainText('Choose path');
   await button(page, 'Change path default').click();
+
   await expect(root(page)).toContainText('Choose path');
   await button(page, 'Remount cascader').click();
 
@@ -138,6 +141,7 @@ test('Cascader conducts parent checkboxes, keeps missing values and displays SHO
 
   await expect(tags(page)).toHaveText(['0', 'Asia']);
   await input(page).click();
+
   await expect(row(page, 'Asia')).toHaveAttribute('aria-checked', 'true');
   await row(page, 'Asia').locator('.ant-cascader-checkbox').click();
 
@@ -156,6 +160,7 @@ test('Cascader expands multiple parent content without checking it and cleans a 
 
   await expect(owner(page)).toHaveText('[]');
   await row(page, 'China').locator('.ant-cascader-checkbox').click();
+
   await expect(owner(page)).toHaveText('[["asia","china"]]');
   await row(page, 'China').click();
   await row(page, 'Hangzhou').click();
@@ -165,6 +170,7 @@ test('Cascader expands multiple parent content without checking it and cleans a 
   await expect(row(page, 'China').locator('.ant-cascader-checkbox')).toHaveClass(/indeterminate/);
   await expect(row(page, 'Locked leaf')).toBeDisabled();
   await row(page, 'No checkbox').click();
+
   await expect(owner(page)).toHaveText('[["asia","china","nanjing"]]');
 });
 
@@ -188,6 +194,7 @@ test('Cascader navigates columns and wraps around disabled roots while keeping i
 
   await expect(row(page, 'Zero').locator('..')).toHaveClass(/item-active/);
   const activeId = await input(page).getAttribute('aria-activedescendant');
+
   await expect(row(page, 'Zero')).toHaveAttribute('id', activeId!);
   await input(page).press('ArrowDown');
   await input(page).press('ArrowRight');
@@ -225,6 +232,7 @@ test('Cascader reverses column arrows in RTL and Backspace returns to the parent
   await expect(row(page, 'China').locator('..')).toHaveClass(/item-active/);
   await expect(popup(page)).toHaveCSS('direction', 'rtl');
   await input(page).press('Backspace');
+
   await expect(row(page, 'Asia').locator('..')).toHaveClass(/item-active/);
   await input(page).press('Backspace');
 
@@ -326,6 +334,7 @@ test('Cascader keeps search disabled branches unselectable and renders empty res
   await expect(popup(page).locator('.ant-empty')).toBeVisible();
   await expect(popup(page).getByRole('menuitemcheckbox')).toHaveAttribute('aria-disabled', 'true');
   await input(page).press('Enter');
+
   await expect(owner(page)).toHaveText('[]');
   await control(page, 'Styled cascader').check();
   await input(page).fill('no-such-path');
@@ -371,6 +380,7 @@ test('Cascader keeps lazy loading active after the returned Promise resolves unt
   await expect(row(page, 'Loaded child')).toBeVisible();
   await expect(row(page, 'Lazy branch')).not.toHaveAttribute('aria-busy', 'true');
   await row(page, 'Loaded child').click();
+
   await expect(owner(page)).toHaveText('["lazy","child"]');
 });
 
@@ -386,6 +396,7 @@ test('Cascader stops lazy loading for empty children and explicit leaf updates',
 
   await expect(row(page, 'Lazy branch')).not.toHaveAttribute('aria-busy', 'true');
   await row(page, 'Lazy branch').click();
+
   await expect(owner(page)).toHaveText('["lazy"]');
 });
 
@@ -419,6 +430,7 @@ test('Cascader inherits disabled and permits an explicit local override', async 
 
   await expect(owner(page)).toHaveText('[0]');
   await select(page, 'Path disabled').selectOption('true');
+
   await expect(input(page)).toBeDisabled();
   await expect(root(page).getByRole('button', { name: 'Очистить', exact: true })).toHaveCount(0);
 });
@@ -426,11 +438,14 @@ test('Cascader inherits disabled and permits an explicit local override', async 
 test('Cascader inherits sizes and theme density with the source column dimensions', async ({ page }) => {
   await expect(root(page)).toHaveCSS('height', '32px');
   await select(page, 'Path size').selectOption('small');
+
   await expect(root(page)).toHaveCSS('height', '24px');
   await select(page, 'Path size').selectOption('large');
+
   await expect(root(page)).toHaveCSS('height', '40px');
   await select(page, 'Path size').selectOption('medium');
   await control(page, 'Compact cascader').check();
+
   await expect(root(page)).toHaveCSS('height', '28px');
   await input(page).click();
 
@@ -515,6 +530,7 @@ test('Cascader renders custom option, display and tag snippets without changing 
 
   await expect(root(page).locator('.custom-cascader-tag')).toBeVisible();
   await root(page).getByRole('button', { name: 'Remove custom path', exact: true }).click();
+
   await expect(owner(page)).toHaveText('[]');
 });
 
@@ -554,6 +570,7 @@ test('Cascader measures responsive tags and restores them when the selector grow
 test('Cascader gives custom native triggers handlers, ARIA and focus without an input ref', async ({ page }) => {
   await control(page, 'Custom trigger').check();
   const trigger = button(page, 'Custom path trigger');
+
   await expect(control(page, 'Path ref')).toHaveText('DIV/-');
   await trigger.click();
   await row(page, 'Zero').click();
@@ -582,6 +599,7 @@ test('Cascader preserves custom popup widths, clamps at the viewport and matches
   await row(page, 'China').click();
 
   const bounds = await popup(page).boundingBox();
+
   expect(bounds!.x).toBeGreaterThanOrEqual(0);
   expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(320);
 });
@@ -594,6 +612,7 @@ test('Cascader inherits and hides icons while Panel inherits icons without root 
   await expect(root(page).locator('.ant-select-suffix .custom-cascader-icon')).toBeVisible();
   await expect(row(page, 'Asia').locator('.custom-cascader-icon')).toBeVisible();
   const panel = page.locator('.fixture-cascader-panel');
+
   await expect(panel.getByRole('menuitemcheckbox', { name: 'Asia', exact: true })
     .locator('.custom-cascader-icon')).toBeVisible();
   await expect(panel.locator('.local-path-entry')).toHaveCount(0);
@@ -609,6 +628,7 @@ test('Cascader uses dark tokens independently from the native selector variant',
   await select(page, 'Path variant').selectOption('filled');
   const light = await root(page).evaluate(element => getComputedStyle(element).backgroundColor);
   await control(page, 'Dark cascader').check();
+
   await expect.poll(() => root(page).evaluate(element => getComputedStyle(element).backgroundColor))
     .not.toBe(light);
   await input(page).click();
@@ -705,6 +725,7 @@ test('Cascader custom tagRender also receives the non-closable maxTagCount summa
   await select(page, 'Path tag count').selectOption('0');
 
   const rest = root(page).locator('[data-cascader-rest] .custom-cascader-tag');
+
   await expect(rest).toHaveAttribute('data-max-tag', 'true');
   await expect(rest).toContainText('+ 1 ...');
   await expect(rest.getByRole('button')).toHaveCount(0);
@@ -738,6 +759,7 @@ test('Cascader preserves option data attributes and activates the source row pad
 
 test('Cascader inherits Compact size and joins while the popup resets Compact context', async ({ page }) => {
   const compact = page.locator('.fixture-compact-cascader');
+
   await expect(compact).toHaveClass(/ant-select-compact-first-item/);
   await expect(compact).toHaveCSS('height', '24px');
   await page.getByRole('combobox', { name: 'Compact path', exact: true }).click();
@@ -799,13 +821,16 @@ test('Cascader preserves source checkbox spacing around native row content', asy
 test('Cascader preserves object and explicit empty clear icons without inheriting context icons', async ({ page }) => {
   await button(page, 'Set owner path').click();
   const clear = root(page).getByRole('button', { name: 'Очистить', exact: true });
+
   await expect(clear.locator('svg')).toHaveCount(1);
   await select(page, 'Path clear icon').selectOption('object');
+
   await expect(clear).toHaveText('×');
   await control(page, 'Styled cascader').check();
 
   await expect(clear).toHaveText('×');
   await select(page, 'Path clear icon').selectOption('false');
+
   await expect(clear).toHaveText('×');
 });
 
@@ -821,6 +846,7 @@ test('Cascader preserves native caret and selection arrows while editing a searc
     if (!(element instanceof HTMLInputElement)) throw new Error('Expected native input');
     return [element.selectionStart, element.selectionEnd];
   });
+
   expect(selection).toEqual([4, 5]);
   await expect(input(page)).toHaveValue('France');
   await expect(input(page)).toHaveAttribute('aria-activedescendant', active!);

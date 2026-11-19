@@ -62,15 +62,33 @@ export const treeSelectSemanticSamples: readonly TreeSelectSemanticSample[] = [
   { id: 'callbacks-disabled', local: 'callback', provider: 'callback', form: true },
   { id: 'popup-live', local: 'callback', provider: 'object', customPopup: true,
     initialOpen: true, popupWidth: 'style', actions: ['draft', 'update', 'outside', 'open'] },
-  { id: 'popup-numeric-width', local: 'object', provider: 'object', initialOpen: true, popupWidth: 'number' },
+  {
+    id: 'popup-numeric-width',
+    local: 'object',
+    provider: 'object',
+    initialOpen: true,
+    popupWidth: 'number'
+  },
   { id: 'popup-bounds', local: 'callback', provider: 'object', initialOpen: true, popupWidth: 'bounds',
     actions: ['update'] },
   { id: 'switcher-provider', provider: 'object', switcher: null, lines: true, lazy: true,
     initialOpen: true, actions: ['collapse', 'expand', 'load', 'finish-load'] },
   { id: 'switcher-render', local: 'object', provider: 'object', switcher: 'render',
     lines: { leaf: 'render' }, initialOpen: true },
-  { id: 'switcher-array', provider: 'object', switcher: 'array', lines: { leaf: 'array' }, initialOpen: true },
-  { id: 'switcher-false', provider: 'object', switcher: false, lines: { leaf: true }, initialOpen: true },
+  {
+    id: 'switcher-array',
+    provider: 'object',
+    switcher: 'array',
+    lines: { leaf: 'array' },
+    initialOpen: true
+  },
+  {
+    id: 'switcher-false',
+    provider: 'object',
+    switcher: false,
+    lines: { leaf: true },
+    initialOpen: true
+  },
   { id: 'switcher-zero', provider: 'object', switcher: 0, lines: { leaf: 0 }, initialOpen: true }
 ];
 
@@ -83,7 +101,10 @@ export interface SemanticTreeNode {
 }
 export function treeSelectSemanticData(lazy = false): SemanticTreeNode[] {
   const data = [{ code: 'p', label: 'Parent', nodes: [
-    { code: 'a', label: 'Alpha' }, { code: 'b', label: 'Beta', disabled: true }, { code: 'c', label: 'Gamma' }
+    { code: 'a', label: 'Alpha' }, { code: 'b', label: 'Beta', disabled: true }, {
+      code: 'c',
+      label: 'Gamma'
+    }
   ] }];
   return lazy ? [...data, { code: 'lazy', label: 'Lazy', isLeaf: false }] : data;
 }
@@ -110,9 +131,13 @@ export function treeSelectSemanticLayers(sample: TreeSelectSemanticSample) {
   if (sample.popupWidth === 'bounds') {
     Object.assign(local.styles.popup!.root!, { minWidth: 100, maxWidth: 192 });
     Object.assign(updated.styles.popup!.root!, { minWidth: 100 });
-  } else if (sample.popupWidth) {
+  }
+  else if (sample.popupWidth) {
     Object.assign(local.styles.popup!.root!, { width: 192, zIndex: 1266 });
-    if (sample.popupWidth === 'number') Object.assign(local.styles.popup!.root!, { minWidth: 120, maxWidth: 270 });
+    if (sample.popupWidth === 'number') Object.assign(
+      local.styles.popup!.root!,
+      { minWidth: 120, maxWidth: 270 }
+    );
     Object.assign(local.styles.root!, { zIndex: 1234 });
   }
   return { provider, local, updated, inner };

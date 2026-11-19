@@ -21,7 +21,10 @@ describe('AvatarGroup source max SSR', () => {
       try {
         for (const changed of sample.patch ? [false, true] : [false]) {
           const snapshot = changed ? sample.changed! : sample.snapshot;
-          const { body } = render(AvatarGroupMaxCase, { props: { sample: sample as Sample, changed } });
+          const { body } = render(
+            AvatarGroupMaxCase,
+            { props: { sample: sample as Sample, changed } }
+          );
           const avatars = [...body.matchAll(/<span\b[^>]*class="[^"]*\bant-avatar(?:\s|$)[^"]*"/g)];
           const texts = body.replace(/<!--[\s\S]*?-->/g, '');
 

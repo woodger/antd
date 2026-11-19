@@ -104,6 +104,7 @@ test('Alert forwards mouse notifications from its passive container and releases
   await expect(page.getByLabel('Alert source events', { exact: true })).toHaveText('enter,leave');
   await page.getByRole('button', { name: 'Toggle Alert source mount', exact: true })
     .dispatchEvent('click');
+
   expect(bounds).not.toBeNull();
   await page.mouse.move(bounds!.x + bounds!.width / 2, bounds!.y + bounds!.height / 2);
 

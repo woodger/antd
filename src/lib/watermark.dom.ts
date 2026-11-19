@@ -124,7 +124,8 @@ export function createWatermarkRuntime(
       image.crossOrigin = 'anonymous';
       image.referrerPolicy = 'no-referrer';
       image.src = current.image;
-    } else draw(currentLines);
+    }
+    else draw(currentLines);
   }
 
   const observer = typeof view.MutationObserver === 'function'

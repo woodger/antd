@@ -67,8 +67,10 @@ describe('Notice defaults for reactive App configuration', () => {
 
     expect(runtime.notices).toHaveLength(2);
     vi.advanceTimersByTime(2999);
+
     expect(runtime.notices.every(notice => !notice.closing)).toBe(true);
     vi.advanceTimersByTime(1);
+
     expect(runtime.notices.every(notice => notice.closing)).toBe(true);
   });
 

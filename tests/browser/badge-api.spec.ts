@@ -64,6 +64,7 @@ test('Badge clears its native ref on removal and forwards root events once', asy
   await expect(page.getByLabel('Badge API events', { exact: true })).toHaveText('native');
   await expect(page.locator('[data-api-root]')).toHaveAttribute('data-api-root', 'badge');
   await page.getByRole('button', { name: 'Badge API owner', exact: true }).press('Escape');
+
   await expect(page.getByLabel('Badge API events', { exact: true })).toHaveText('native,key:Escape');
 
   await page.getByRole('button', { name: 'Toggle API badge', exact: true }).click();
@@ -103,5 +104,6 @@ test('Badge forwards native span direction, language and focus attributes', asyn
   await expect(root).toHaveAttribute('tabindex', '0');
   await expect(root).not.toHaveClass(/ant-badge-rtl/);
   await root.focus();
+
   await expect(root).toBeFocused();
 });

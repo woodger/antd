@@ -38,9 +38,33 @@ export const treeSelectSurfaceData = [
 export const treeSelectSurfaceSamples: readonly TreeSelectSurfaceSample[] = [
   { id: 'default', value: 'a', allowClear: true, actions: ['open', 'choose', 'clear'] },
   { id: 'prefix-rich', prefix: ['Prefix ', rich, 0, true, false, null] },
-  { id: 'affix-zero', prefix: 0, suffix: 0, suffixIcon: rich, multiple: true, value: ['a'], removeIcon: 0 },
-  { id: 'affix-false', prefix: false, suffix: false, suffixIcon: rich, multiple: true, value: ['a'], removeIcon: false },
-  { id: 'affix-empty', prefix: '', suffix: '', suffixIcon: rich, multiple: true, value: ['a'], removeIcon: '' },
+  {
+    id: 'affix-zero',
+    prefix: 0,
+    suffix: 0,
+    suffixIcon: rich,
+    multiple: true,
+    value: ['a'],
+    removeIcon: 0
+  },
+  {
+    id: 'affix-false',
+    prefix: false,
+    suffix: false,
+    suffixIcon: rich,
+    multiple: true,
+    value: ['a'],
+    removeIcon: false
+  },
+  {
+    id: 'affix-empty',
+    prefix: '',
+    suffix: '',
+    suffixIcon: rich,
+    multiple: true,
+    value: ['a'],
+    removeIcon: ''
+  },
   { id: 'affix-array', prefix: [], suffix: [] },
   { id: 'icon-null', suffixIcon: null, suffix: null, loading: true },
   { id: 'icon-false', prefix: true, suffixIcon: false, loading: true },
@@ -52,16 +76,37 @@ export const treeSelectSurfaceSamples: readonly TreeSelectSurfaceSample[] = [
   { id: 'suffix-state', suffix: info, suffixIcon: rich, showSearch: true,
     actions: ['focus', 'open', 'search', 'reset-search', 'outside'] },
   { id: 'suffix-default-search', suffix: info, multiple: true },
-  { id: 'suffix-controlled-search', suffix: info, searchValue: 'b', multiple: true, defaultOpen: true, loading: false },
+  {
+    id: 'suffix-controlled-search',
+    suffix: info,
+    searchValue: 'b',
+    multiple: true,
+    defaultOpen: true,
+    loading: false
+  },
   { id: 'search-icon', showSearch: true, actions: ['open', 'outside'] },
   { id: 'loading-icon', loading: true, showSearch: true, defaultOpen: true },
-  { id: 'clear-remove', multiple: true, value: ['a', 'b'], allowClear: { clearIcon: rich, label: 'Reset selection' },
+  { id: 'clear-remove', multiple: true, value: ['a', 'b'], allowClear: {
+    clearIcon: rich,
+    label: 'Reset selection'
+  },
     removeIcon: [rich, '×'], actions: ['open', 'remove', 'clear-key'] },
   { id: 'clear-empty', value: 'a', allowClear: {} },
-  { id: 'clear-open-single', value: 'a', allowClear: { clearIcon: rich }, actions: ['open', 'clear'] },
+  {
+    id: 'clear-open-single',
+    value: 'a',
+    allowClear: { clearIcon: rich },
+    actions: ['open', 'clear']
+  },
   { id: 'clear-empty-label', multiple: true, value: ['a', 'c'],
     allowClear: { clearIcon: 0, label: '' }, removeIcon: null },
-  { id: 'clear-disabled', multiple: true, value: ['a'], allowClear: { clearIcon: rich }, disabled: true },
+  {
+    id: 'clear-disabled',
+    multiple: true,
+    value: ['a'],
+    allowClear: { clearIcon: rich },
+    disabled: true
+  },
   { id: 'clear-search-only', allowClear: { clearIcon: false, label: 'Reset selection' },
     keepSearch: true, suffix: info, actions: ['search', 'clear-key'] },
   { id: 'clear-hold-value', multiple: true, value: ['a'], holdValue: true, searchValue: 'b',

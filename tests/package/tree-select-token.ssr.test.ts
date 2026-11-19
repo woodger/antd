@@ -13,6 +13,7 @@ it('pins independent token search captures including full-count search and funct
   expect(reference.cases.reduce((count, entry) => count + entry.steps.length, 0)).toBe(56);
   expect(reference.ssr).toHaveLength(5);
   const full = reference.cases.find(entry => entry.id === 'count-full')!;
+
   expect(full.steps.at(-1)!.view.events).toContainEqual(['split', 'Beta,Alpha']);
   expect(full.steps.at(-1)!.view.value).toEqual(['a']);
   expect(reference.cases.find(entry => entry.id === 'functional-csv')!.initial.events).toEqual([['split', '']]);

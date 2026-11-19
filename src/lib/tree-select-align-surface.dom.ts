@@ -284,7 +284,10 @@ export function createTreeSelectAlignSurface(
     values.push(css.width, css.height, css.padding, css.borderWidth,
       css.transitionProperty, css.transitionDuration, css.transitionDelay,
       css.transitionTimingFunction, css.transitionBehavior);
-    for (const name of popup.style) if (name.startsWith('--')) values.push(name, popup.style.getPropertyValue(name));
+    for (const name of popup.style) if (name.startsWith('--')) values.push(
+      name,
+      popup.style.getPropertyValue(name)
+    );
     return values.map(value => String(value)).join(':');
   }
 

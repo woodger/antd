@@ -32,7 +32,8 @@ describe('Tag source prefixes SSR', () => {
           expect(head).toContain(`.${sample.prefixCls}:where(.ant-tag-css-var)`);
           expect(head).toContain(`.${sample.prefixCls}-checkable-group`);
           expect(head).toContain('--ant-tag-default-bg');
-        } else {
+        }
+        else {
           expect(head).not.toContain('data-ant-svelte-theme="tag-prefix:');
         }
         expect(vi.getTimerCount()).toBe(0);

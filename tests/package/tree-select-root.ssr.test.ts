@@ -14,6 +14,7 @@ it('pins the independent Source root replacements and filtered received props', 
   expect(reference.cases.reduce((count, entry) => count + entry.steps.length, 0)).toBe(112);
   expect(reference.cases.every(entry => entry.steps.every(step => step.sameField !== false))).toBe(true);
   const component = reference.cases.find(entry => entry.id === 'component-button')!;
+
   expect(Object.keys(component.received!).sort()).toEqual([
     'title', 'name', 'data-root-probe', 'data-collision', 'aria-label',
     'onClick', 'onFocus', 'onBlur', 'onKeyDown', 'onKeyUp'
@@ -26,11 +27,13 @@ it('pins the independent Source root replacements and filtered received props', 
 
 it('preserves the raw Source callback chain after cancellation and custom root disabled requests', () => {
   const prevented = reference.cases.find(entry => entry.id === 'generated-prevent')!;
+
   expect(prevented.steps[0].view.events.slice(-2)).toEqual([
     ['generated:click', 'BUTTON', true, 'BUTTON', null],
     ['own:click', 'BUTTON', true, 'BUTTON', null]
   ]);
   const disabled = reference.cases.find(entry => entry.id === 'disabled-button')!;
+
   expect(disabled.initial.disabled).toBe(false);
   expect(disabled.steps[0].view.open).toBe(false);
   expect(disabled.steps[0].view.events).toEqual([
@@ -77,8 +80,10 @@ it.each(reference.ssr)('renders $id root replacement without default content or 
 
 it('renders the live root with its selected hidden form value and empty DOM bindings', () => {
   const { body } = render(TreeSelectRootLifecycle);
+
   expect(/<input(?=[^>]*type="hidden")(?=[^>]*name="root-choice")(?=[^>]*value="a")[^>]*>/.test(body)).toBe(true);
   expect(body.includes('Custom response')).toBe(true);
   const refs = /<output(?=[^>]*\bdata-root-life-refs(?:[=\s>]))[^>]*>([\s\S]*?)<\/output>/.exec(body)!;
+
   expect(refs[1].replace(/<!--[\s\S]*?-->/g, '')).toBe('{"native":null,"input":null}');
 });

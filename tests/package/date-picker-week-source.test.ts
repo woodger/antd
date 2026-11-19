@@ -18,6 +18,7 @@ it('preserves four independent complete manifests and all620 original whole part
     sourceOnly: true, captures: 4, originalParts: 620, wholeBlobs: 435
   });
   const freeze = JSON.parse(Buffer.from(readWeekSourceEvidence('protocol-freeze')).toString());
+
   expect(freeze.samples).toEqual(samples);
   expect(freeze.source.version).toBe('6.6.8');
   expect(freeze.source.rcPicker).toBe('1.12.2');
@@ -54,7 +55,10 @@ it('reads every UI/producer/SSR original on demand with complete cursor and raw 
           const value = readWeekSourceClosed(row.id, closeIndex++, variant);
           closed++;
           expect(value.actionIndex).toBe(index);
-          boundaries.set('closed-' + index, { ['closed-' + index]: value.after1000.owner.producerCount });
+          boundaries.set(
+            'closed-' + index,
+            { ['closed-' + index]: value.after1000.owner.producerCount }
+          );
           expect(value.after1000.owner.callbacks.slice(0, callbacks.length)).toEqual(callbacks);
           callbacks = value.after1000.owner.callbacks;
         }
@@ -148,7 +152,8 @@ it('retains actual week rows, locale headers, ordinal weekdays and authored pres
     const gbSSR = readWeekSourceSSR('single-week', 'gb', 'renderToString', variant);
     expect(usSSR.rawHtml).toContain('value="2021-1st"');
     expect(gbSSR.rawHtml).toContain('value="2020-53rd"');
-    expect(usSSR.initialLocale).toBe('us'); expect(gbSSR.initialLocale).toBe('gb');
+    expect(usSSR.initialLocale).toBe('us');
+    expect(gbSSR.initialLocale).toBe('gb');
   }
 });
 
@@ -163,14 +168,18 @@ it('keeps measured immediate-phase variance and complete equal producer rows', (
     expect(a.boundaries.afterCall).toBe(firstBoundary);
     expect(b.boundaries.afterCall).toBe(repeatBoundary);
     expect(a.rows).toEqual(b.rows);
-    expect(a.cursor).toBe(b.cursor); expect(a.next).toBe(b.next);
+    expect(a.cursor).toBe(b.cursor);
+    expect(a.next).toBe(b.next);
     expect(a.boundaries.settled).toBe(b.boundaries.settled);
   }
   const phases = JSON.parse(Buffer.from(readWeekSourceEvidence('phase-stability')).toString());
+
   expect(phases.differingPoints).toBe(1);
   const all = JSON.parse(Buffer.from(readWeekSourceEvidence('all-point-stability')).toString());
+
   expect([all.checkedPoints, all.stablePoints, all.differingPoints]).toEqual([417, 416, 1]);
   const selected = JSON.parse(Buffer.from(readWeekSourceEvidence('selected-variances')).toString());
+
   expect(selected.varianceCount).toBe(2);
 });
 
@@ -180,28 +189,36 @@ it('rejects corrupted compressed bytes, altered hashes and valid parts swapped a
     + original.rawJSONPart.gzipSHA256 + '.json.gz', import.meta.url));
   const changedBytes = Buffer.from(bytes);
   changedBytes[Math.floor(changedBytes.length / 2)] ^= 1;
+
   expect(() => verifyWeekSourceStoredBytes(original, changedBytes)).toThrow();
   const wrongHash = structuredClone(original);
   wrongHash.rawJSONPart.sha256 = '0'.repeat(64);
+
   expect(() => verifyWeekSourceStoredBytes(wrongHash, bytes)).toThrow();
   expect(() => verifyWeekSourcePartBinding(original, 'csr', 'repeat')).toThrow();
   const ownerSwap = readWeekSourceManifest('csr');
   ownerSwap.cases[0].steps[0] = ownerSwap.cases[1].steps[0];
+
   expect(() => verifyWeekSourceManifest(ownerSwap)).toThrow();
   const actionSwap = readWeekSourceManifest('csr');
   actionSwap.cases[0].steps.reverse();
+
   expect(() => verifyWeekSourceManifest(actionSwap)).toThrow();
   const chunkGap = readWeekSourceManifest('csr');
   chunkGap.cases[0].producerParts[2].cursor++;
+
   expect(() => verifyWeekSourceManifest(chunkGap)).toThrow();
   const wrongMethod = readWeekSourceManifest('ssr');
   wrongMethod.cases[0].method = 'renderToStaticMarkup';
+
   expect(() => verifyWeekSourceManifest(wrongMethod, 'ssr')).toThrow();
   const header = readWeekSourceManifest();
   header.sourceProtocol.sha256 = '0'.repeat(64);
+
   expect(() => verifyWeekSourceManifest(header)).toThrow();
   const count = readWeekSourceManifest();
   count.actualCounts.producerInvocations--;
+
   expect(() => verifyWeekSourceManifest(count)).toThrow();
 });
 
@@ -211,50 +228,67 @@ it('rejects lost/reordered producer records, impossible boundaries and changed r
   const original = readWeekSourceProducerChunk('single-week', index);
   const missing = structuredClone(original);
   missing.rows.pop();
+
   expect(() => verifyWeekSourceProducerChunk(missing, refs[index])).toThrow();
   const swapped = structuredClone(original);
   swapped.rows.reverse();
+
   expect(() => verifyWeekSourceProducerChunk(swapped, refs[index])).toThrow();
   const boundary = structuredClone(original);
   boundary.boundaries.settled = boundary.next + 1;
+
   expect(() => verifyWeekSourceProducerChunk(boundary, refs[index])).toThrow();
   const arity = structuredClone(original);
   arity.rows[0].actualArgumentCount++;
+
   expect(() => verifyWeekSourceProducerChunk(arity, refs[index])).toThrow();
   const label = structuredClone(original);
   Object.assign(label.rows[0], { name: 'invented' });
+
   expect(() => verifyWeekSourceProducerChunk(label, refs[index])).toThrow();
   const returned = structuredClone(original);
   Object.assign(returned.rows[0], { returned: 'false' });
+
   expect(() => verifyWeekSourceProducerChunk(returned, refs[index])).toThrow();
   const point = readWeekSourceStep('single-week', 4).actual;
   const alias = structuredClone(point);
   alias.owner.callbacks.find(call => call.name === 'calendar' && call.actionIndex === 4)!
     .dates[0].value.identity++;
+
   expect(() => verifyWeekSourcePoint(alias)).toThrow();
   const hidden = structuredClone(point);
   hidden.owner.callbacks.find(call => call.name === 'calendar' && call.actionIndex === 4)!
     .dates[0].value.temporal.fields[6]++;
+
   expect(() => verifyWeekSourcePoint(hidden)).toThrow();
   const callbackArity = structuredClone(point);
   callbackArity.owner.callbacks[0].actualArgumentCount++;
+
   expect(() => verifyWeekSourcePoint(callbackArity)).toThrow();
   const rowPoint = readWeekSourceStep('single-week', 0).actual;
   for (const mutate of [
-    (value: WeekSourcePoint) => { value.popups[0].tables[0].rows[0].selected = !value.popups[0].tables[0].rows[0].selected; },
+    (value: WeekSourcePoint) => {
+      value.popups[0].tables[0].rows[0].selected = !value.popups[0].tables[0].rows[0].selected;
+    },
     (value: WeekSourcePoint) => { value.popups[0].tables[0].rows[0].cells[0].weekNumber = false; },
     (value: WeekSourcePoint) => { value.popups[0].dateCells[0].rowIdentity++; },
-    (value: WeekSourcePoint) => { value.popups[0].tables[0].headers[0].cells[0].surface.parentIdentity!++; }
+    (value: WeekSourcePoint) => {
+      value.popups[0].tables[0].headers[0].cells[0].surface.parentIdentity!++;
+    }
   ]) {
-    const value = structuredClone(rowPoint); mutate(value);
+    const value = structuredClone(rowPoint);
+    mutate(value);
     expect(() => verifyWeekSourcePoint(value)).toThrow();
   }
   const profile = readWeekSourceManifest('ssr');
   profile.cases[0].locale = 'gb';
+
   expect(() => verifyWeekSourceManifest(profile, 'ssr')).toThrow();
   const packet = readWeekSourceSSR('single-week', 'us', 'renderToString');
+
   expect(() => verifyWeekSourceSSR(packet, 'single-week', 'gb', 'renderToString')).toThrow();
   packet.method = 'renderToStaticMarkup';
+
   expect(() => verifyWeekSourceSSR(packet, 'single-week', 'us', 'renderToString')).toThrow();
 
 });
@@ -268,5 +302,6 @@ it('rejects unsupported capture kinds, variants, owners and chunk/action/disposa
   expect(() => readWeekSourceCleanup('single-week', 'other' as 'cleanup')).toThrow();
   const wrong = readWeekSourceInitial('single-week') as WeekSourcePoint;
   wrong.owner.id = 'range-week';
+
   expect(() => verifyWeekSourcePoint(wrong)).toThrow();
 });

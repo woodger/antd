@@ -85,6 +85,7 @@ describe('getSplitterSizes', () => {
     const result = getSplitterSizes(items, items.map(item => item.defaultSize), container);
 
     result.pixels.forEach((size, index) => expect(size).toBeCloseTo(expected[index], 8));
+
     expect(result.pixels).toHaveLength(expected.length);
   });
 

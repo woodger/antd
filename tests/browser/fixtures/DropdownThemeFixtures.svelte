@@ -21,7 +21,10 @@
     hashed,
     components: background ? {
       ...dropdownThemePresets[preset].components,
-      Dropdown: { ...dropdownThemePresets[preset].components?.Dropdown, colorBgElevated: background }
+      Dropdown: {
+        ...dropdownThemePresets[preset].components?.Dropdown,
+        colorBgElevated: background
+      }
     } : dropdownThemePresets[preset].components
   });
 </script>

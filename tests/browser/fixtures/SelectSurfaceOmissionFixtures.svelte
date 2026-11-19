@@ -6,13 +6,22 @@
   import { inputWidthOwnSamples } from '../select-surface-input-width-own-cases.mjs';
   type Capture = NonNullable<ComponentProps<typeof SelectSurfaceOmissionCase>['capture']>;
   type WidthCapture = NonNullable<ComponentProps<typeof SelectSurfaceInputWidthOwnCase>['capture']>;
-  const minimumWidthSample = { id: 'select-surface-input-width-own-native-minimum', initialWidthKind: 'omitted' as const };
+  const minimumWidthSample = {
+    id: 'select-surface-input-width-own-native-minimum',
+    initialWidthKind: 'omitted' as const
+  };
   const samples = [...selectSurfaceOmissionNativeSamples, ...inputWidthOwnSamples, minimumWidthSample];
   let selected = $state<string>(selectSurfaceOmissionNativeSamples[0].id);
   let sample = $derived(samples.find(sample => sample.id === selected)!);
   let mounted = $state(true);
-  let capture = $derived.by(() => { void selected; return {} as Capture; });
-  let widthCapture = $derived.by(() => { void selected; return {} as WidthCapture; });
+  let capture = $derived.by(() => {
+    void selected;
+    return {} as Capture;
+  });
+  let widthCapture = $derived.by(() => {
+    void selected;
+    return {} as WidthCapture;
+  });
 </script>
 
 <section id="select-surface-omission-fixture">

@@ -15,15 +15,30 @@ async function act(page: Page, action: TreeSelectInputAction) {
   else if (action.type === 'ref-focus') await page.locator('[data-input-ref-focus]').dispatchEvent('click');
   else if (action.type === 'ref-blur') await page.locator('[data-input-ref-blur]').dispatchEvent('click');
   else if (action.type === 'prefix-click') await page.locator('[data-input-prefix]').click();
-  else if (action.type === 'outside') await page.getByRole('button', { name: 'Outside input tree', exact: true }).click();
-  else if (action.type === 'composition-start') await field.dispatchEvent('compositionstart', { data: '' });
-  else if (action.type === 'composition-end') await field.dispatchEvent('compositionend', { data: '' });
+  else if (action.type === 'outside') await page.getByRole(
+    'button',
+    { name: 'Outside input tree', exact: true }
+  ).click();
+  else if (action.type === 'composition-start') await field.dispatchEvent(
+    'compositionstart',
+    { data: '' }
+  );
+  else if (action.type === 'composition-end') await field.dispatchEvent(
+    'compositionend',
+    { data: '' }
+  );
   else if (action.type === 'paste') await field.evaluate((node, text) => {
     const data = new DataTransfer();
     data.setData('text', text!);
-    node.dispatchEvent(new ClipboardEvent('paste', { clipboardData: data, bubbles: true, cancelable: true }));
+    node.dispatchEvent(new ClipboardEvent(
+      'paste',
+      { clipboardData: data, bubbles: true, cancelable: true }
+    ));
   }, action.text);
-  else if (action.type === 'update') await page.locator('[data-input-update]').evaluate((node, patch) => {
+  else if (action.type === 'update') await page.locator('[data-input-update]').evaluate((
+    node,
+    patch
+  ) => {
     node.dispatchEvent(new CustomEvent('fixtureupdate', { detail: patch }));
   }, action.update);
 }
@@ -31,6 +46,7 @@ for (const entry of reference.cases) {
   test(`TreeSelect components.input follows Source for ${entry.id}`, async ({ page }) => {
     await page.goto('/?fixture=tree-select-input');
     await page.getByRole('combobox', { name: 'TreeSelect input sample', exact: true }).selectOption(entry.id);
+
     await expect(page.locator('[data-input-refs]')).toHaveAttribute('data-input-refs', 'true');
     const sample = treeSelectInputSamples.find(sample => sample.id === entry.id)!;
     const read = () => page.evaluate(readTreeSelectInput);
@@ -67,7 +83,10 @@ for (const entry of reference.cases) {
 for (const id of ['multiple-input', 'multiple-textarea']) {
   test(`TreeSelect measures custom ${id} search width without responsive tags`, async ({ page }) => {
     const source = reference.cases.find(entry => entry.id === id)!;
-    const filled = source.steps.find(step => step.action.type === 'fill' && Reflect.get(step.action, 'text') === 'Beta')!;
+    const filled = source.steps.find(step => step.action.type === 'fill' && Reflect.get(
+      step.action,
+      'text'
+    ) === 'Beta')!;
     const initialWidth = Reflect.get(source.initial.props!.style, '--select-input-width');
     const filledWidth = Reflect.get(filled.props!.style, '--select-input-width');
     if (typeof initialWidth !== 'number' || typeof filledWidth !== 'number')
@@ -79,11 +98,18 @@ for (const id of ['multiple-input', 'multiple-textarea']) {
     const field = page.locator('[data-tree-select-input-case] input,[data-tree-select-input-case] textarea');
     const read = () => field.evaluate(node => ({ variable: node.style.getPropertyValue('--select-input-width'),
       width: getComputedStyle(node).width, inlineWidth: node.style.width }));
-    const expected = (width: number) => ({ variable: String(width), width: `${width}px`, inlineWidth: '' });
+    const expected = (width: number) => ({
+      variable: String(width),
+      width: `${width}px`,
+      inlineWidth: ''
+    });
+
     await expect.poll(read).toEqual(expected(initialWidth));
     await field.fill('Beta');
+
     await expect.poll(read).toEqual(expected(filledWidth));
     await field.fill('');
+
     await expect.poll(read).toEqual(expected(initialWidth));
   });
 }
@@ -91,21 +117,28 @@ for (const id of ['multiple-input', 'multiple-textarea']) {
 async function lifecycle(page: Page) {
   await page.goto('/?fixture=tree-select-input');
   await page.getByRole('combobox', { name: 'TreeSelect input sample', exact: true }).selectOption('native-lifecycle');
-  await expect(page.locator('[data-input-lifecycle]')).toHaveAttribute('data-input-lifecycle-refs', 'true');
+  await expect(page.locator('[data-input-lifecycle]')).toHaveAttribute(
+    'data-input-lifecycle-refs',
+    'true'
+  );
 }
 test('TreeSelect retains the current input registration after a replaced editor releases its stale ref', async ({ page }) => {
   await lifecycle(page);
   const field = page.getByRole('combobox', { name: 'Input lifecycle', exact: true });
   const previous = await field.elementHandle();
   await page.locator('[data-input-replace]').click();
+
   await expect(field).toHaveAttribute('id', 'input-lifecycle-1');
   await expect(page.locator('[data-input-lifecycle-deferred]')).toHaveText('true');
   expect(await field.evaluate((node, old) => node === old, previous)).toBe(false);
   await page.locator('[data-input-cleanup]').click();
+
   await expect(page.locator('[data-input-lifecycle-editor]')).toHaveText('input-lifecycle-1');
   await page.locator('[data-input-focus]').dispatchEvent('click');
+
   await expect(field).toBeFocused();
   await field.fill('Beta');
+
   await expect(field).toHaveValue('Beta');
   await expect(page.locator('[data-input-lifecycle-root]')).toHaveText('DIV');
 });
@@ -114,19 +147,29 @@ test('TreeSelect rebinds the fallback editor and resets a custom editor with its
   const field = page.getByRole('combobox', { name: 'Input lifecycle', exact: true });
   const original = await field.elementHandle();
   await page.locator('[data-input-set]').click();
+
   await expect(page.locator('[data-input-lifecycle-model]')).toHaveText('"b"');
   await page.locator('[data-input-reset]').click();
-  await expect(page.locator('[data-input-lifecycle]')).toHaveAttribute('data-input-lifecycle-refs', 'true');
+
+  await expect(page.locator('[data-input-lifecycle]')).toHaveAttribute(
+    'data-input-lifecycle-refs',
+    'true'
+  );
   await expect(page.locator('[data-input-lifecycle-model]')).toHaveText('"a"');
   expect(await field.evaluate((node, old) => node === old, original)).toBe(false);
   const custom = await field.elementHandle();
   await page.locator('[data-input-remove]').click();
+
   await expect(field).toHaveValue('Alpha');
   expect(await field.evaluate((node, old) => node === old, custom)).toBe(false);
   await page.locator('[data-input-cleanup]').click();
   await page.locator('[data-input-focus]').dispatchEvent('click');
+
   await expect(field).toBeFocused();
-  await expect(page.locator('[data-input-lifecycle]')).toHaveAttribute('data-input-lifecycle-refs', 'true');
+  await expect(page.locator('[data-input-lifecycle]')).toHaveAttribute(
+    'data-input-lifecycle-refs',
+    'true'
+  );
 });
 test('TreeSelect unmount releases custom refs and cancels an input blur close already waiting to run', async ({ page }) => {
   await lifecycle(page);
@@ -134,11 +177,18 @@ test('TreeSelect unmount releases custom refs and cancels an input blur close al
   await field.click();
   await field.evaluate(node => {
     (node as HTMLInputElement).blur();
-    document.querySelector<HTMLButtonElement>('[data-input-unmount]')!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    document.querySelector<HTMLButtonElement>('[data-input-unmount]')!.dispatchEvent(new MouseEvent(
+      'click',
+      { bubbles: true }
+    ));
   });
   await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
+
   await expect(field).toHaveCount(0);
-  await expect(page.locator('[data-input-lifecycle]')).toHaveAttribute('data-input-lifecycle-refs', 'false');
+  await expect(page.locator('[data-input-lifecycle]')).toHaveAttribute(
+    'data-input-lifecycle-refs',
+    'false'
+  );
   await expect(page.locator('[data-input-lifecycle-editor]')).toHaveText('');
   await expect(page.locator('[data-input-lifecycle-root]')).toHaveText('');
   await expect(page.locator('[popover]')).toHaveCount(0);

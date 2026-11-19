@@ -51,6 +51,7 @@ test(
     const root = page.locator('#fixture-anchor');
 
     await root.getByRole('link', { name: 'Second section', exact: true }).click();
+
     await expect.poll(() => page.locator('#anchor-scroll').evaluate(node => node.scrollTop))
       .toBe(310);
 
@@ -60,6 +61,7 @@ test(
     await expect(page.getByLabel('Anchor changes', { exact: true })).toContainText('#anchor-two');
 
     await root.getByRole('link', { name: 'Third section', exact: true }).click();
+
     await expect.poll(() => page.locator('#anchor-scroll').evaluate(node => node.scrollTop))
       .toBe(520);
 
@@ -105,6 +107,7 @@ test(
       links[2].click();
       links[2].click();
     });
+
     await expect.poll(() => page.locator('#anchor-scroll').evaluate(node => node.scrollTop))
       .toBe(310);
 
@@ -178,6 +181,7 @@ test(
     await expect(root.getByRole('link', { name: 'Second section', exact: true })).toHaveCount(1);
 
     await root.getByRole('link', { name: 'Second section', exact: true }).click();
+
     await expect.poll(() => page.locator('#anchor-scroll').evaluate(node => node.scrollTop))
       .toBe(310);
   }

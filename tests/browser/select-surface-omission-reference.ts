@@ -116,12 +116,22 @@ for (const [source, protocol, owners] of [
   assert.equal(header.preservedReferences, 471);
   assert.deepEqual(header.errors, []);
   assert.deepEqual(header.diagnostics, []);
-  assert.equal(header.archives[0].sha256, 'e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4');
-  assert.equal(header.archives[0].archiveSha256, '8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa');
+  assert.equal(
+    header.archives[0].sha256,
+    'e13aa9008d4d9edbb4cad022197f568227cc224b0ba016e5356ba29ed7a7e3f4'
+  );
+  assert.equal(
+    header.archives[0].archiveSha256,
+    '8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa'
+  );
   assert(header.archives.every(archive => archive.byteEqual));
   assert.deepEqual(source.cases.map(entry => entry.id), owners, 'complete original owner order');
   for (const [path, sha256] of Object.entries(header.inputPins)) {
-    if (!path.startsWith('.upstream/')) assert.equal(hash(readFileSync(new URL(`../../${path}`, import.meta.url))), sha256, path);
+    if (!path.startsWith('.upstream/')) assert.equal(
+      hash(readFileSync(new URL(`../../${path}`, import.meta.url))),
+      sha256,
+      path
+    );
   }
 }
 for (const [original, portable] of [
@@ -129,7 +139,10 @@ for (const [original, portable] of [
   ['.upstream/artifacts/select-surface-omission-reader.mjs', 'select-surface-omission-metrics.mjs'],
 ]) assert.equal(hash(readFileSync(new URL(`./${portable}`, import.meta.url))),
   selectSurfaceOmissionReference.reference.inputPins[original], `byte-identical portable ${portable}`);
-assert.equal(hash(readFileSync(new URL('./select-surface-omission-default-cases.mjs', import.meta.url))),
+assert.equal(hash(readFileSync(new URL(
+  './select-surface-omission-default-cases.mjs',
+  import.meta.url
+))),
   selectSurfaceOmissionDefaultReference.reference.inputPins['.upstream/artifacts/select-surface-omission-default-cases.mjs'],
   'byte-identical default-origin public owners/actions');
 for (const entry of [...selectSurfaceOmissionReference.cases, ...selectSurfaceOmissionWidthReference.cases,

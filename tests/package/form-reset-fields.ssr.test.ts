@@ -47,11 +47,14 @@ describe('Form resetFields public package', () => {
     const form = createForm<Record<string, unknown>>({ initialValues });
     const value = form.values;
     form.resetFields([]);
+
     expect(form.values).toBe(value);
     form.resetFields(['missing']);
+
     expect(Object.hasOwn(form.values, 'missing')).toBe(true);
     form.setFields([{ name: ['user', 'name'], value: 'Draft' }]);
     form.resetFields([[]]);
+
     expect(form.values).toEqual(initialValues);
     expect(Object.hasOwn(form.values, 'missing')).toBe(false);
   });

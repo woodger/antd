@@ -99,6 +99,7 @@ test('More keeps the original Add button while moving it between list and operat
     const add = root.getByRole('button', { name: 'Add tab', exact: true });
     await add.focus();
     const original = await add.elementHandle();
+
     await expect(root.locator('.ant-tabs-nav-operations .ant-tabs-nav-add')).toHaveCount(1);
 
     await page.getByLabel('Overflow count', { exact: true }).evaluate(element => {
@@ -111,6 +112,7 @@ test('More keeps the original Add button while moving it between list and operat
     await expect(add).toBeFocused();
     expect(await add.evaluate((element, previous) => element === previous, original)).toBe(true);
     await add.press('Enter');
+
     await expect(page.getByLabel('Overflow edits', { exact: true }))
       .toHaveText('[{"action":"add"}]');
   });
@@ -292,7 +294,10 @@ test('More preserves popup style variables and dark RTL tokens in a custom conta
     await check(page, 'Compact overflow');
 
     await expect(popup).toHaveCSS('color', 'rgb(20, 40, 60)');
-    await expect(popup.locator('.ant-tabs-dropdown-menu')).toHaveCSS('background-color', 'rgb(20, 20, 20)');
+    await expect(popup.locator('.ant-tabs-dropdown-menu')).toHaveCSS(
+      'background-color',
+      'rgb(20, 20, 20)'
+    );
     await expect(popup.getByRole('option').first()).toHaveCSS('font-size', '12px');
   });
 
@@ -305,6 +310,7 @@ test('More uses source Tab focus transfer and repairs focus when all tabs fit', 
 
   await expect(menu).toBeFocused();
   await menu.press('ArrowDown');
+
   await expect(menu.getByRole('option', { name: 'Tab 6', exact: true })).toBeFocused();
   await page.getByLabel('Overflow count', { exact: true }).evaluate(element => {
     const input = element as HTMLInputElement;
@@ -324,6 +330,7 @@ test('Tabs repairs focus from the More portal when its enclosing panel is hidden
   await more.press('ArrowDown');
   await more.press('Tab');
   const menu = page.getByRole('listbox', { name: 'expanded dropdown', exact: true });
+
   await expect(menu).toBeFocused();
   await page.getByRole('button', { name: 'Switch outer Tabs', exact: true })
     .evaluate(element => {
@@ -332,7 +339,10 @@ test('Tabs repairs focus from the More portal when its enclosing panel is hidden
     });
 
   await expect(menu).toBeHidden();
-  await expect(page.locator('#tabs-overflow-outer').getByRole('tab', { name: 'Other panel', exact: true }))
+  await expect(page.locator('#tabs-overflow-outer').getByRole(
+    'tab',
+    { name: 'Other panel', exact: true }
+  ))
     .toBeFocused();
 });
 
@@ -367,8 +377,10 @@ test('More menu moves native option focus through Home, End and disabled headers
   await more.focus();
   await more.press('ArrowDown');
   const menu = page.getByRole('listbox', { name: 'expanded dropdown', exact: true });
+
   await expect(menu.getByRole('option', { name: 'Tab 1', exact: true })).toBeVisible();
   await more.press('Tab');
+
   await expect(menu).toBeFocused();
   await menu.press('Home');
 
@@ -415,6 +427,7 @@ test('More autofocus waits for the popup and cancels pending focus after unmount
 
   await expect(menu).toBeFocused();
   await page.keyboard.press('Escape');
+
   await expect(menu).toBeHidden();
   await page.clock.install();
   await page.clock.pauseAt(new Date());
@@ -433,6 +446,7 @@ test.describe('mobile user agents', () => {
 
   test('More follows source mobile detection while native scrolling remains available', async ({ page }) => {
     const root = page.locator('#tabs-overflow-main');
+
     await expect(root.getByRole('button', { name: 'ellipsis', exact: true })).toHaveCount(0);
     const last = root.getByRole('tab', { name: 'Tab 10', exact: true });
     await last.focus();

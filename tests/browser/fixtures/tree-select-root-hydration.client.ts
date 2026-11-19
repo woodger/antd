@@ -5,7 +5,11 @@ import { treeSelectRootSamples } from './tree-select-root-cases';
 
 declare global {
   interface Window {
-    treeSelectRootHydration?: { field: Element | null; native: Element | null; dispose: () => Promise<void>; };
+    treeSelectRootHydration?: {
+      field: Element | null;
+      native: Element | null;
+      dispose: () => Promise<void>;
+    };
   }
 }
 const id = new URL(import.meta.url).searchParams.get('sample')!;

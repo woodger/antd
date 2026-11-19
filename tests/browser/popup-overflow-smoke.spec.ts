@@ -59,7 +59,12 @@ function sourceCase(sample: PopupOverflowSmokeSample | PopupOverflowNestedLayout
   return entry;
 }
 
-function assertPair(viewport: readonly Projection[], scroll: readonly Projection[], reader: boolean, label: string) {
+function assertPair(
+  viewport: readonly Projection[],
+  scroll: readonly Projection[],
+  reader: boolean,
+  label: string
+) {
   expect(scroll.length, label).toBe(viewport.length);
   for (const [index, left] of viewport.entries()) {
     const right = scroll[index];
@@ -88,7 +93,12 @@ test('popupOverflow smoke retains the independent Source pair evidence', () => {
     const [viewport, scroll] = popupOverflowSmokeSamples.filter(sample => sample.family === family);
     const left = sourceCase(viewport);
     const right = sourceCase(scroll);
-    assertPair([left.initial, ...left.steps], [right.initial, ...right.steps], viewport.reader, `Source/${family}`);
+    assertPair(
+      [left.initial, ...left.steps],
+      [right.initial, ...right.steps],
+      viewport.reader,
+      `Source/${family}`
+    );
   }
   expect(createHash('sha256').update(readFileSync(new URL(
     './fixtures/ant-design-popup-overflow-nested-layout-reference.json', import.meta.url
@@ -122,7 +132,12 @@ for (const family of families) {
       if (message.type() === 'error') errors.push(message.text());
       else if (message.type() === 'warning') warnings.push(message.text());
     });
-    const captures: { id: string; sourceReference: string; publicStyle: string | null; states: Projection[] }[] = [];
+    const captures: {
+      id: string;
+      sourceReference: string;
+      publicStyle: string | null;
+      states: Projection[]
+    }[] = [];
     try {
       for (const sample of nativeSamples.filter(sample => sample.family === family)) {
         const source = sourceCase(sample);
@@ -130,8 +145,14 @@ for (const family of families) {
         await page.setViewportSize(reference.reference.viewport);
         await page.goto('/?fixture=popup-overflow-smoke');
         await page.getByRole('combobox', { name: 'Popup overflow smoke sample', exact: true }).selectOption(sample.id);
-        await expect(page.locator('[data-overflow-case]')).toHaveAttribute('data-overflow-case', sample.id);
-        await expect(page.locator('[data-overflow-case]')).toHaveAttribute('data-overflow-bound', 'true');
+        await expect(page.locator('[data-overflow-case]')).toHaveAttribute(
+          'data-overflow-case',
+          sample.id
+        );
+        await expect(page.locator('[data-overflow-case]')).toHaveAttribute(
+          'data-overflow-bound',
+          'true'
+        );
         await preparePopupOverflow(page, sample);
         const states = [await settle(page)];
         const capture = { id: sample.id,
@@ -156,7 +177,12 @@ for (const family of families) {
                 .dispatchEvent(new CustomEvent('overflowrefs', { detail: refs }));
               return { root: old.root === refs.root, anchor: old.anchor === refs.anchor,
                 editor: old.editor === refs.editor, parent: old.parent === (refs.editor?.parentNode ?? null) };
-            }), `${sample.id}/stable DOM bindings`).toEqual({ root: true, anchor: true, editor: true, parent: true });
+            }), `${sample.id}/stable DOM bindings`).toEqual({
+              root: true,
+              anchor: true,
+              editor: true,
+              parent: true
+            });
           }
         } finally {
           await identity.dispose();
@@ -166,7 +192,10 @@ for (const family of families) {
           expect(state.view.leaks, sample.id).toEqual([]);
           expect(Boolean(state.view.popup), `${sample.id}/${index}/public popup outcome`)
             .toBe(Boolean(sourceStates[index].view.popup));
-          if (sample.reader) expect(outcomes(state.view), `${sample.id}/${index}/Source placement outcome`)
+          if (sample.reader) expect(
+            outcomes(state.view),
+            `${sample.id}/${index}/Source placement outcome`
+          )
             .toEqual(outcomes(sourceStates[index].view));
         }
       }

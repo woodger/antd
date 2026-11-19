@@ -11,7 +11,11 @@
   import type { WeekCapture, WeekControl, WeekInvocation, WeekOwner }
     from '../date-picker-week-native-types';
 
-  let { owner, capture, initialLocale = 'us' }: { owner: WeekOwner; capture: WeekCapture; initialLocale?: 'us' | 'gb' } = $props();
+  let { owner, capture, initialLocale = 'us' }: {
+    owner: WeekOwner;
+    capture: WeekCapture;
+    initialLocale?: 'us' | 'gb'
+  } = $props();
   const selected = untrack(() => samples.find(sample => sample.id === owner));
   if (!selected) throw Error('Choose one authored week owner');
   const sample = selected, output = untrack(() => capture), range = sample.kind === 'range';
@@ -53,7 +57,10 @@
     sameAsAuthored: Object.fromEntries(Object.entries(authored).map(([name, date]) => [name, date === value])) });
   function nestedDates(value: unknown, path: Array<string | number> = []): unknown[] {
     if (dayjs.isDayjs(value)) return [{ path, value: dates(value) }];
-    if (Array.isArray(value)) return value.flatMap((item, index) => nestedDates(item, [...path, index]));
+    if (Array.isArray(value)) return value.flatMap((item, index) => nestedDates(
+      item,
+      [...path, index]
+    ));
     if (value && typeof value === 'object' && Object.getPrototypeOf(value) === Object.prototype)
       return Object.entries(value).flatMap(([key, item]) => nestedDates(item, [...path, key]));
     return [];
@@ -69,20 +76,34 @@
   function record(name: string, args: unknown[], receiver: unknown) {
     callbacks.push(invocation(name, args, receiver, callbacks.length));
   }
-  const handler = <Value,>(name: string, value: Value): Value => recorder.register(value, { callback: name });
+  const handler = <Value,>(name: string, value: Value): Value => recorder.register(
+    value,
+    { callback: name }
+  );
   const onSingleChange = handler('change', function (this: unknown, next: Dayjs | null) {
-    record('change', Array.from(arguments), this); singleModel = next;
+    record('change', Array.from(arguments), this);
+    singleModel = next;
   });
   const onRangeChange = handler('change', function (this: unknown, next: RangePickerValue | null) {
-    record('change', Array.from(arguments), this); rangeModel = next;
+    record('change', Array.from(arguments), this);
+    rangeModel = next;
   });
   const onOpenChange = handler('open', function (this: unknown, next: boolean) {
-    record('open', Array.from(arguments), this); open = next;
+    record('open', Array.from(arguments), this);
+    open = next;
   });
-  const onCalendarChange = handler('calendar', function (this: unknown) { record('calendar', Array.from(arguments), this); });
-  const onPanelChange = handler('panel', function (this: unknown) { record('panel', Array.from(arguments), this); });
-  const onPickerValueChange = handler('picker-value', function (this: unknown) { record('picker-value', Array.from(arguments), this); });
-  const onOk = handler('ok', function (this: unknown) { record('ok', Array.from(arguments), this); });
+  const onCalendarChange = handler('calendar', function (this: unknown) {
+    record('calendar', Array.from(arguments), this);
+  });
+  const onPanelChange = handler('panel', function (this: unknown) {
+    record('panel', Array.from(arguments), this);
+  });
+  const onPickerValueChange = handler('picker-value', function (this: unknown) {
+    record('picker-value', Array.from(arguments), this);
+  });
+  const onOk = handler('ok', function (this: unknown) {
+    record('ok', Array.from(arguments), this);
+  });
   const disabledDate = recorder.register(function (this: unknown, date: Dayjs) {
     const args = Array.from(arguments);
     const returned = Boolean(limited && date.year() === sample.blocked.year
@@ -113,7 +134,11 @@
   };
   output.recorder = recorder;
   output.setActionIndex = index => { actionIndex = index; };
-  output.readRefs = () => ({ owner: ownerElement ?? null, control: control ?? null, root: root ?? null });
+  output.readRefs = () => ({
+    owner: ownerElement ?? null,
+    control: control ?? null,
+    root: root ?? null
+  });
   output.readCallbacks = cursor => delta(callbacks, cursor);
   output.readProducers = cursor => delta(producers, cursor);
   output.read = () => {
@@ -126,8 +151,14 @@
       rawAuthoredProps: recorder.raw(range ? rangeProps : singleProps),
       callbacks: [...callbacks], ownerActions: [...ownerActions], lifecycle: [...lifecycle] };
   };
-  onMount(() => { alive = true; lifecycle.push({ phase: 'mount' });
-    return () => { alive = false; lifecycle.push({ phase: 'unmount' }); }; });
+  onMount(() => {
+    alive = true;
+    lifecycle.push({ phase: 'mount' });
+    return () => {
+      alive = false;
+      lifecycle.push({ phase: 'unmount' });
+    };
+  });
 </script>
 
 <ConfigProvider locale={enUS} theme={{ token: { motion: false } }}>

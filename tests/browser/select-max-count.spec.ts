@@ -72,6 +72,7 @@ test('Select maxCount updates eligibility while retaining input, search, focus a
     const input = page.getByRole('combobox', { name: 'Tags', exact: true });
     await input.click();
     const original = await input.elementHandle();
+
     await expect(physicalSelectOption(page, { name: 'Zero', exact: true })).toBeDisabled();
     await page.getByRole('checkbox', { name: 'Override selection limit', exact: true })
       .evaluate((node: HTMLInputElement) => {
@@ -88,13 +89,17 @@ test('Select maxCount updates eligibility while retaining input, search, focus a
         node.value = '0';
         node.dispatchEvent(new Event('input', { bubbles: true }));
       });
+
     await expect(input).toHaveValue('draft');
     await input.press('Enter');
+
     await expect(page.getByRole('status', { name: 'Tags values', exact: true }))
       .toHaveText('["a"]');
     await page.locator('#tags-outside').click();
+
     await expect(input).toHaveValue('');
     const form = page.getByRole('form', { name: 'Tags native form', exact: true });
+
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('tags')))
       .toEqual(['a']);
   });
@@ -107,23 +112,30 @@ test('Select maxCount preserves native forms, reset and disabled state and ignor
     await page.getByRole('checkbox', { name: 'Native limit constraints', exact: true }).check();
     const input = page.getByRole('combobox', { name: 'Tags', exact: true });
     const form = page.getByRole('form', { name: 'Tags native form', exact: true });
+
     expect(await form.evaluate(node => (node as HTMLFormElement).checkValidity())).toBe(false);
     await input.fill('a,b,c');
+
     expect(await form.evaluate(node => new FormData(node as HTMLFormElement).getAll('tags')))
       .toEqual(['a', 'b']);
     expect(await form.evaluate(node => (node as HTMLFormElement).checkValidity())).toBe(true);
     await page.getByRole('button', { name: 'Reset tags', exact: true }).click();
+
     await expect(page.getByRole('status', { name: 'Tags values', exact: true })).toHaveText('[]');
     await page.getByRole('checkbox', { name: 'Right to left', exact: true }).check();
     await input.click();
+
     await expect(physicalSelectPopup(page, 'Tags'))
       .toHaveCSS('direction', 'rtl');
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).check();
+
     await expect(input).toBeDisabled();
     await page.getByRole('checkbox', { name: 'Disable all components', exact: true }).uncheck();
     await page.getByRole('combobox', { name: 'Single ignores limit', exact: true }).click();
+
     await expect(physicalSelectOption(page, { name: 'Alpha', exact: true })).toBeEnabled();
     await physicalSelectOption(page, { name: 'Alpha', exact: true }).click();
+
     await expect(page.getByRole('combobox', { name: 'Single ignores limit', exact: true }))
       .toHaveValue('Alpha');
   });

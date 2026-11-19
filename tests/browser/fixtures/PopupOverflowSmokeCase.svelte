@@ -81,7 +81,11 @@
       return { keyPresent: Object.hasOwn(props, 'popupOverflow'),
         type: typeof props.popupOverflow, value: props.popupOverflow ?? null };
     };
-    return { outer: receipt(outer), inner: receipt(inner), globalContainer: sample.globalContainer ?? 'default' };
+    return {
+      outer: receipt(outer),
+      inner: receipt(inner),
+      globalContainer: sample.globalContainer ?? 'default'
+    };
   }
   export function readGetterCalls() { return getterCalls; }
 </script>

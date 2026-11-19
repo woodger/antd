@@ -180,7 +180,8 @@ export function createSliderRangeOffset(options: SliderRangeOptions) {
       if (index < next.length - 1 && next[index + 1] !== origin) {
         next[index] = Math.min(next[index], next[index + 1] - gap);
       }
-    } else if (typeof pushable === 'number' || pushable === null) {
+    }
+    else if (typeof pushable === 'number' || pushable === null) {
       for (let item = index + 1; item < next.length; item++) {
         if (sliderHandleDisabled(options.disabled, item)) break;
         push(next, item, 1);

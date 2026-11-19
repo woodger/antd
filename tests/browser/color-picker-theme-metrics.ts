@@ -49,7 +49,10 @@ export function snapshotColorPickerThemePopup() {
       colorThemeCSS(node, ['height', 'margin-top', 'margin-bottom'])),
     fields: colorThemeCSS(popup.querySelector('.ant-color-picker-input-container'), both),
     // Flex constraints принадлежат внешней Svelte-обёртке Select; здесь видимая часть.
-    format: colorThemeCSS(format, both.filter(name => name !== 'min-width' && name !== 'min-height')),
+    format: colorThemeCSS(
+      format,
+      both.filter(name => name !== 'min-width' && name !== 'min-height')
+    ),
     hexRoot: colorThemeCSS(popup.querySelector('.ant-color-picker-hex-input'), both),
     inputs: [...popup.querySelectorAll('.ant-color-picker-input input, .ant-color-picker-alpha-input input')]
       .map(node => colorThemeCSS(node, [...colorThemeFont, 'height', 'padding-top',
@@ -65,6 +68,9 @@ export function snapshotColorPickerThemePopup() {
       checked: node.classList.contains('ant-color-picker-presets-color-checked'),
       bright: node.classList.contains('ant-color-picker-presets-color-bright')
     })),
-    presetLabel: colorThemeCSS(popup.querySelector('.ant-color-picker-presets-label'), colorThemeFont)
+    presetLabel: colorThemeCSS(
+      popup.querySelector('.ant-color-picker-presets-label'),
+      colorThemeFont
+    )
   };
 }

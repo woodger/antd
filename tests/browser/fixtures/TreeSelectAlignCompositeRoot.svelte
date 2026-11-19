@@ -14,7 +14,11 @@
   $effect(() => {
     const root = nativeElement, editor = inputElement;
     if (!root || !editor) return;
-    return register({ nativeElement: root, focus: options => editor.focus(options), blur: () => editor.blur() });
+    return register({
+      nativeElement: root,
+      focus: options => editor.focus(options),
+      blur: () => editor.blur()
+    });
   });
 </script>
 

@@ -41,8 +41,14 @@ export async function actTreeSelectMotion(page: Page, action: TreeSelectMotionRo
     const node = end.target === 'child' ? popup.querySelector('[data-motion-panel]') : popup;
     if (!node) throw Error('Missing TreeSelect motion end target');
     const event = end.event === 'animationend'
-      ? new AnimationEvent('animationend', { bubbles: true, animationName: end.name ?? 'consumer-motion' })
-      : new TransitionEvent('transitionend', { bubbles: true, propertyName: end.name ?? 'transform' });
+      ? new AnimationEvent(
+        'animationend',
+        { bubbles: true, animationName: end.name ?? 'consumer-motion' }
+      )
+      : new TransitionEvent(
+        'transitionend',
+        { bubbles: true, propertyName: end.name ?? 'transform' }
+      );
     node.dispatchEvent(event);
   }, action);
   else throw Error(`Unexpected TreeSelect motion action: ${JSON.stringify(action)}`);

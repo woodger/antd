@@ -7,6 +7,7 @@ function sourceNumber(page: Page) {
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=input-number-features');
+
   await expect(sourceNumber(page)).toHaveValue('1.2');
 });
 
@@ -167,6 +168,7 @@ test(
 
     await expect(input).toHaveValue('1.2');
     await input.press('ArrowUp');
+
     await expect(input).toHaveValue('1.2');
     await expect(page.getByLabel('Source number step', { exact: true }))
       .toHaveText('{"offset":0.1,"type":"up","emitter":"keyboard"}');
@@ -216,6 +218,7 @@ test(
 
     await input.fill('5000');
     await input.press('Tab');
+
     await expect(input).toHaveValue('$ 5,000');
 
     await input.fill('3000');
@@ -262,6 +265,7 @@ test(
   'InputNumber ref and bind:this focus support start, end, all and blur',
   async ({ page }) => {
     const input = sourceNumber(page);
+
     await expect(page.getByLabel('Source number refs', { exact: true })).toHaveText('true');
 
     for (const [label, range] of [
@@ -314,10 +318,13 @@ test(
 
     await expect(input).toHaveValue('1.3');
     await page.clock.runFor(599);
+
     await expect(input).toHaveValue('1.3');
     await page.clock.runFor(1);
+
     await expect(input).toHaveValue('1.4');
     await page.clock.runFor(200);
+
     await expect(input).toHaveValue('1.5');
 
     await page.mouse.up();
@@ -343,6 +350,7 @@ test(
     await page.clock.pauseAt(time);
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
     await page.mouse.down();
+
     await expect(input).toHaveValue('1.3');
     const before = await page.getByLabel('Source number events', { exact: true }).innerText();
 
@@ -463,7 +471,10 @@ for (const variant of ['outlined', 'filled', 'borderless', 'underlined']) {
 
       await expect(root).toHaveClass(new RegExp(`ant-input-number-${variant}`));
       await expect(root).toHaveCSS('height', '32px');
-      await expect(root).toHaveCSS('border-left-width', variant === 'underlined' || variant === 'borderless' ? '0px' : '1px');
+      await expect(root).toHaveCSS(
+        'border-left-width',
+        variant === 'underlined' || variant === 'borderless' ? '0px' : '1px'
+      );
     }
   );
 }

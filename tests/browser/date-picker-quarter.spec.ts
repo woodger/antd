@@ -28,9 +28,15 @@ for (const sample of samples) {
       const requests: unknown[] = [], failedRequests: unknown[] = [];
       const responses: Array<{ url: string; status: number }> = [];
       page.on('pageerror', error => errors.push({ name: error.name, message: error.message }));
-      page.on('console', message => diagnostics.push({ type: message.type(), text: message.text() }));
+      page.on(
+        'console',
+        message => diagnostics.push({ type: message.type(), text: message.text() })
+      );
       page.on('request', request => requests.push({ url: request.url(), method: request.method() }));
-      page.on('response', response => responses.push({ url: response.url(), status: response.status() }));
+      page.on(
+        'response',
+        response => responses.push({ url: response.url(), status: response.status() })
+      );
       page.on('requestfailed', request => failedRequests.push({
         url: request.url(), failure: request.failure()
       }));
@@ -49,7 +55,8 @@ for (const sample of samples) {
           try {
             await expect(button).toHaveCount(1, { timeout: 1000 });
             await expect(button).toHaveAccessibleName(control.text, { timeout: 1000 });
-          } catch (error) {
+          }
+          catch (error) {
             semanticFailures.push({ label, assertion: 'Actual accessible footer name',
               sourceRecordedLabel: control.text, message: String(error) });
           }
@@ -125,8 +132,15 @@ for (const sample of samples) {
             assert.equal(original.actionIndex, index);
             await page.waitForTimeout(1000);
             const after1000 = await readQuarter(page);
-            await attach('closed-' + index + '-complete-scoped-raw', { actionIndex: index, after1000 });
-            await collect('closed-' + index, after1000.owner, { after1000: after1000.owner.producerCount });
+            await attach(
+              'closed-' + index + '-complete-scoped-raw',
+              { actionIndex: index, after1000 }
+            );
+            await collect(
+              'closed-' + index,
+              after1000.owner,
+              { after1000: after1000.owner.producerCount }
+            );
             verify(after1000, variant =>
               readQuarterSourceClosed(sample.id, closedIndex, variant).after1000, 'closed-' + index);
             await verifyAccessibleFooter(original.after1000, 'closed-' + index);
@@ -138,14 +152,22 @@ for (const sample of samples) {
         const disposal = await disposeQuarter(page, {
           async beforeUnmount(point) {
             await attach('before-unmount-complete-scoped-raw', point);
-            await collect('before-unmount', point.owner, { beforeUnmount: point.owner.producerCount });
+            await collect(
+              'before-unmount',
+              point.owner,
+              { beforeUnmount: point.owner.producerCount }
+            );
             verify(point, variant => readQuarterSourceCleanup(sample.id, 'beforeUnmount', variant),
               'beforeUnmount');
           },
           async afterCleanup(point) {
             await attach('cleanup-complete-scoped-raw', point);
             await collect('cleanup', point.owner, { cleanup: point.owner.producerCount });
-            verify(point, variant => readQuarterSourceCleanup(sample.id, 'cleanup', variant), 'cleanup');
+            verify(
+              point,
+              variant => readQuarterSourceCleanup(sample.id, 'cleanup', variant),
+              'cleanup'
+            );
           },
           async afterLate(point) {
             await attach('late-1000-complete-scoped-raw', point);
@@ -165,7 +187,10 @@ for (const sample of samples) {
         expect(responses.filter(response => response.status >= 400)).toEqual([]);
         expect(diagnostics.filter(message => ['warning', 'warn', 'error'].includes(message.type)))
           .toEqual([]);
-        expect(semanticFailures, 'Full Source comparisons; original complete ledgers remain attached')
+        expect(
+          semanticFailures,
+          'Full Source comparisons; original complete ledgers remain attached'
+        )
           .toEqual([]);
       } finally {
         if (!disposed) {

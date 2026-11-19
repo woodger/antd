@@ -41,7 +41,8 @@ export function connectFeedbackFocus(
         ).reverse(),
         ...(dialog ? [dialog] : [])
       ];
-    } else if (focused !== document.body) {
+    }
+    else if (focused !== document.body) {
       target = undefined;
       neighbors = [];
     }
@@ -54,7 +55,8 @@ export function connectFeedbackFocus(
       const next = [...host.querySelectorAll<HTMLElement>(focusable)].find(available);
       if (next)
         next.focus({ preventScroll: true }); else focusAfterNotice(host, true);
-    } else candidates.find(
+    }
+    else candidates.find(
       node => available(node)
         || node instanceof HTMLDialogElement
         && node.open

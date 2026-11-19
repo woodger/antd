@@ -10,7 +10,10 @@
   let enabled = $state(true);
   let entry = $derived(reference.cases[selected]);
   let sample = $derived<ResponsiveControlsSample>(live
-    ? { id: 'live', token: updated ? reference.live.token : undefined } : { ...entry.sample, size: entry.sample.size === 'large' ? 'large' : undefined });
+    ? { id: 'live', token: updated ? reference.live.token : undefined } : {
+      ...entry.sample,
+      size: entry.sample.size === 'large' ? 'large' : undefined
+    });
 </script>
 
 <section id="responsive-controls-fixture">

@@ -106,7 +106,8 @@
       values.position = 'relative';
       if (settings.vertical && model.state.slideHeight) {
         values.top = -item.item * Number.parseInt(String(model.state.slideHeight));
-      } else {
+      }
+      else {
         values.left = -item.item * Number.parseInt(String(model.state.slideWidth));
       }
       values.opacity = model.state.currentSlide === item.item ? 1 : 0;

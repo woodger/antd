@@ -48,7 +48,10 @@ describe('getPopupAlignment', () => {
     expect(getPopupArrowStyle(align('bottom'))).toContain('top:0');
   });
 
-  it.each([[343.625, 387], [344, 388]])('retains a bottom corner at y=%s when the document offers more scroll area', (top, popupTop) => {
+  it.each([[343.625, 387], [344, 388]])('retains a bottom corner at y=%s when the document offers more scroll area', (
+    top,
+    popupTop
+  ) => {
     for (const scrollTop of [0, 200]) {
       const result = getPopupAlignment({
         target: { left: 480, top: top - scrollTop, width: 103.875, height: 32 },

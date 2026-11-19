@@ -132,7 +132,8 @@ export function validateRegistry(data) {
         );
     try {
       projectPath('/project', item.upstreamPath);
-    } catch (error) {
+    }
+    catch (error) {
       errors.push(`${label}: ${error.message}`);
     }
     if (!Array.isArray(item.exports) || !Array.isArray(item.features))
@@ -287,10 +288,12 @@ export async function inspectRegistry(root, { requireUpstream = false } = {}) {
           { encoding: 'utf8' }
         ).trim())
         errors.push('Upstream checkout has local modifications');
-    } catch {
+    }
+    catch {
       errors.push('Cannot verify upstream Git revision');
     }
-  } else if (requireUpstream)
+  }
+  else if (requireUpstream)
     errors.push('Pinned upstream checkout is required but absent');
   for (const item of data.components) {
     const refs = [...item.evidence, ...item.features.flatMap(feature => feature.evidence)];

@@ -92,7 +92,8 @@
       gradient.addColorStop(0.5, 'blue');
       gradient.addColorStop(1, 'blue');
       paint = gradient;
-    } else {
+    }
+    else {
       context.fillStyle = 'red';
       context.fillRect(0, 0, 4, 8);
       context.fillStyle = 'blue';

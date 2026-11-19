@@ -29,7 +29,8 @@ export function matchesValidationFormat(value: unknown, type: string) {
         new URL(value.startsWith('//') ? `http:${value}`
           : /^www\./i.test(value) ? `http://${value}` : value);
         return true;
-      } catch { return false; }
+      }
+      catch { return false; }
     default: return false;
   }
 }
@@ -41,7 +42,8 @@ export function matchesValidationPattern(value: unknown, pattern: RegExp | strin
     const expression = typeof pattern === 'string' ? new RegExp(pattern)
       : new RegExp(pattern.source, pattern.flags);
     return expression.test((coerce ? String(value) : value) as string);
-  } catch {
+  }
+  catch {
     return false;
   }
 }

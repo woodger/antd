@@ -9,6 +9,9 @@
   } = $props();
   // An actual Svelte component setup invocation, not a simulated React render.
   untrack(() => activity('body-render'));
-  onMount(() => { lifecycle('body', 'mount'); return () => lifecycle('body', 'unmount'); });
+  onMount(() => {
+    lifecycle('body', 'mount');
+    return () => lifecycle('body', 'unmount');
+  });
 </script>
 <section data-modal-loading-body="" {@attach attachBody}><p>Body content</p><input aria-label="Loading body draft" value="Body draft" {@attach attachEditor} /></section>

@@ -29,6 +29,7 @@ describe('Modal context controller public package', () => {
     const rich = createRawSnippet(() => ({ render: () => '<strong>Rich body</strong>' }));
     const options: ModalConfirmConfig = { title: 'SSR confirm', content: rich, onOk, afterClose };
     const handle = modal.confirm(options);
+
     expectTypeOf(modal).toEqualTypeOf<ModalInstance>();
     expectTypeOf(handle).toEqualTypeOf<ModalConfirmHandle>();
     const body = render(ModalHolder, { props: { modal } }).body;
@@ -45,6 +46,7 @@ describe('Modal context controller public package', () => {
     const first = createModal();
     const second = createModal();
     const handle = first.info({ title: 'First request' });
+
     expect(render(ModalHolder, { props: { modal: second } }).body).not.toContain('First request');
     handle.destroy();
 

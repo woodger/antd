@@ -16,18 +16,34 @@
   let layers = $derived(treeSelectSemanticLayers(sample));
   let prefix = $derived(sample.rtl ? 'scope-choice' : undefined);
   let provider = $derived<TreeSelectConfig | undefined>(sample.provider === 'plain'
-    ? { class: 'semantic-plain-provider', style: '--semantic-plain-provider:ignored', variant: 'filled' }
-    : sample.provider ? { variant: 'filled', ...appearance(sample.provider, layers.provider, 'provider'),
+    ? {
+      class: 'semantic-plain-provider',
+      style: '--semantic-plain-provider:ignored',
+      variant: 'filled'
+    }
+    : sample.provider ? { variant: 'filled', ...appearance(
+      sample.provider,
+      layers.provider,
+      'provider'
+    ),
       switcherIcon: providerSwitcher } : undefined);
   let inner = $derived<TreeSelectConfig | undefined>(sample.nested === 'replace'
-    ? { variant: 'borderless', ...appearance('object', layers.inner, 'inner'), switcherIcon: switcher('array', 'Inner') }
+    ? {
+      variant: 'borderless',
+      ...appearance('object', layers.inner, 'inner'),
+      switcherIcon: switcher('array', 'Inner')
+    }
     : sample.nested === 'reset' ? {} : undefined);
   let options = $derived<TreeSelectProps<TreeSelectValue, SemanticTreeNode>>({
     prefixCls: prefix,
     class: 'semantic-direct',
     rootClassName: 'semantic-root-class',
     style: 'width:320px;--semantic-inline:root;--semantic-priority:inline',
-    ...appearance(sample.local, updated ? layers.updated : layers.local, updated ? 'updated' : 'local'),
+    ...appearance(
+      sample.local,
+      updated ? layers.updated : layers.local,
+      updated ? 'updated' : 'local'
+    ),
     treeData: data,
     fieldNames: treeSelectSemanticFields,
     treeDefaultExpandedKeys: ['p'],

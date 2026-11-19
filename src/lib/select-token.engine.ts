@@ -2,9 +2,7 @@ import type { SelectTokenSeparators } from './select.types';
 import type { SelectDataFields, SelectDataMaps, SelectDataValue } from './select-data.types';
 
 /** @rc-component/select 1.10.1; MIT, см. vendor/LICENSE.rc-select. */
-export function splitSelectTokens(
-  text: string, separators?: SelectTokenSeparators, end?: number
-) {
+export function splitSelectTokens(text: string, separators?: SelectTokenSeparators, end?: number) {
   if (typeof separators === 'function') {
     const words = separators(text);
     return Array.isArray(words) && words.length && !(words.length === 1 && words[0] === text)

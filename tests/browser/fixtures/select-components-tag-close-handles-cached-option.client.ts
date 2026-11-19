@@ -6,10 +6,15 @@ import type { SelectTagCloseHandleCapture } from '../select-components-tag-close
 const sample = cachedOptionSamples.find(value => value.id === new URL(location.href).searchParams.get('sample'));
 if (!sample) throw Error('Unknown frozen tag close handle sample');
 const capture: SelectTagCloseHandleCapture = {};
-const api = { read: () => capture.read!(), readRefs: () => capture.readRefs!(), setActionIndex: (value: number) => capture.setActionIndex!(value) };
+const api = {
+  read: () => capture.read!(),
+  readRefs: () => capture.readRefs!(),
+  setActionIndex: (value: number) => capture.setActionIndex!(value)
+};
 // The frozen Source reader observes actual public control and separate Native binds.
 Object.assign(window, { raw: { current: api } });
-const target = document.getElementById('root'); if (!target) throw Error('Ordinary consumer target missing');
+const target = document.getElementById('root');
+if (!target) throw Error('Ordinary consumer target missing');
 const app = mount(Case, { target, props: { sample, capture } });
 await tick();
 window.tagCloseHandlesNative = { ready: true, ...api,
@@ -20,4 +25,7 @@ window.tagCloseHandlesNative = { ready: true, ...api,
     // DOM .click(), isTrusted=false; no pointer/mousedown/focus injection.
     flushSync(() => button.click());
   },
-  async dispose() { await unmount(app); await tick(); } };
+  async dispose() {
+    await unmount(app);
+    await tick();
+  } };

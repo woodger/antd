@@ -28,6 +28,7 @@ const next = (page: Page, right = false) => (right ? target(page) : source(page)
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=transfer');
+
   await expect(root(page)).toBeVisible();
 });
 
@@ -61,6 +62,7 @@ test(
     await source(page).getByText('Beta', { exact: true }).click();
     await check(page, 'Alpha').focus();
     await page.keyboard.press('Space');
+
     await expect(selection(page)).toHaveText('string:b,string:a');
     await button(page, 'Clear transfer events').click();
     await move(page).click();
@@ -121,6 +123,7 @@ test(
   'Transfer ignores disabled selected keys on move and keeps number/string zero distinct',
   async ({ page }) => {
     await button(page, 'Preselect transfer').click();
+
     await expect(check(page, 'Locked', true)).toBeChecked();
     await expect(move(page, false)).toBeDisabled();
     await check(page, 'Zero string').click();
@@ -143,6 +146,7 @@ test('Transfer releases controlled selection into empty local state', async ({ p
   await expect(check(page, 'Alpha')).not.toBeChecked();
   await expect(check(page, 'Zero number')).not.toBeChecked();
   await check(page, 'Beta').click();
+
   await expect(selection(page)).toHaveText('string:b');
 });
 
@@ -153,6 +157,7 @@ test('Transfer Shift selects and deselects only enabled rows in the range', asyn
   await expect(selection(page)).toHaveText('string:a,string:b,string:e');
   await expect(check(page, 'Disabled')).not.toBeChecked();
   await check(page, 'Alpha').click({ modifiers: ['Shift'] });
+
   await expect(selection(page)).toHaveText('');
   await expect(move(page)).toBeDisabled();
 });
@@ -168,6 +173,7 @@ test(
     await expect(selection(page)).toHaveText('string:a,string:b,string:e');
     await expect(header(page)).toBeChecked();
     await search(page).fill('');
+
     await expect(check(page, 'Alpha')).toBeChecked();
     await expect(header(page)).toHaveJSProperty('indeterminate', true);
   }
@@ -184,6 +190,7 @@ test(
 
     await expect(selection(page)).toHaveText('string:a');
     await search(page).fill('');
+
     await expect(check(page, 'Alpha')).toBeChecked();
     await expect(check(page, 'Beta')).not.toBeChecked();
   }
@@ -193,6 +200,7 @@ test(
   'Transfer default search is case sensitive and clear emits exactly one logical-side callback',
   async ({ page }) => {
     await search(page).fill('alpha');
+
     await expect(rows(page)).toHaveCount(0);
     await button(page, 'Clear transfer events').click();
     await source(page).getByRole('button', { name: 'Очистить', exact: true }).click();
@@ -220,13 +228,17 @@ test(
   async ({ page }) => {
     await control(page, 'Initial search').fill('Alpha');
     await button(page, 'Remount transfer').click();
+
     await expect(rows(page)).toHaveCount(1);
     await expect(search(page, true)).toHaveValue('Alpha');
     await control(page, 'Initial search').fill('Beta');
+
     await expect(search(page)).toHaveValue('Alpha');
     await control(page, 'Search placeholder').fill('Find records');
+
     await expect(search(page)).toHaveAttribute('placeholder', 'Find records');
     await button(page, 'Remount transfer').click();
+
     await expect(rows(page)).toHaveText(['Beta']);
   }
 );
@@ -261,6 +273,7 @@ test(
 
 test('Transfer oneWay removes enabled targets and hides the reverse action', async ({ page }) => {
   await control(page, 'One way').check();
+
   await expect(move(page, false)).toHaveCount(0);
   await expect(target(page).getByRole('checkbox')).toHaveCount(0);
   await expect(target(page).getByRole('button', { name: 'Удалить', exact: true }).nth(1))
@@ -291,6 +304,7 @@ test(
   'Transfer pagination defaults to ten rows and keeps each list page independent',
   async ({ page }) => {
     await control(page, 'Transfer pagination').selectOption('simple');
+
     await expect(rows(page)).toHaveCount(10);
     await expect(source(page).getByRole('textbox', { name: 'Страница', exact: true })).toHaveValue(
       '1'
@@ -315,6 +329,7 @@ test(
     await next(page).click();
     await next(page).click();
     await search(page).fill('absent');
+
     await expect(rows(page)).toHaveCount(0);
     await expect(source(page).locator('.ant-pagination')).toHaveCount(0);
     await search(page).fill('');
@@ -332,6 +347,7 @@ test(
     await control(page, 'Transfer pagination').selectOption('simple');
     await dropdown(page).click();
     await page.getByRole('menuitem', { name: 'Выбрать текущую страницу', exact: true }).click();
+
     await expect(selection(page)).toHaveText(
       'string:a,string:b,string:e,number:0,string:0,bigint:9,string:item-1,string:item-2,string:item-3'
     );
@@ -351,6 +367,7 @@ test('Transfer invert-current preserves selections outside the visible page', as
   await next(page).click();
   await dropdown(page).click();
   await page.getByRole('menuitem', { name: 'Инвертировать выбор', exact: true }).click();
+
   await expect(source(page).locator('.ant-transfer-list-header-selected')).toHaveText(
     '11/31 элем.'
   );
@@ -367,13 +384,17 @@ test(
     const input = source(page).getByRole('textbox', { name: 'Страница', exact: true });
     await input.fill('3');
     await input.press('Enter');
+
     await expect(rows(page).first()).toHaveText('Item 14');
     await input.press('ArrowUp');
+
     await expect(input).toHaveValue('2');
     await input.press('ArrowDown');
+
     await expect(input).toHaveValue('3');
     await input.fill('999');
     await input.blur();
+
     await expect(input).toHaveValue('4');
     await expect(rows(page)).toHaveText(['Item 24']);
   }
@@ -384,10 +405,12 @@ test(
   async ({ page }) => {
     await control(page, 'Fixed page size').check();
     await control(page, 'Transfer pagination').selectOption('normal');
+
     await expect(source(page).locator('.ant-pagination-item')).toHaveText(
       ['1', '2', '3', '4', '5', '11']
     );
     await control(page, 'Fewer page items').check();
+
     await expect(source(page).locator('.ant-pagination-item')).toHaveText(['1', '2', '3', '11']);
     await source(page).getByRole('button', { name: 'Следующие страницы', exact: true }).click();
 
@@ -415,11 +438,14 @@ test(
   async ({ page }) => {
     await control(page, 'Transfer pagination').selectOption('simple');
     await control(page, 'Custom transfer body').check();
+
     await expect(root(page).locator('.ant-pagination')).toHaveCount(0);
     await expect(page.getByTestId('custom-left')).toContainText('left:31/0');
     await button(page, 'Custom Alpha').click();
+
     await expect(button(page, 'Custom Alpha')).toHaveAttribute('aria-pressed', 'true');
     await search(page).fill('Beta');
+
     await expect(page.getByTestId('custom-left')).toContainText('left:1/1');
     await button(page, 'Custom select all left').click();
     await move(page).click();
@@ -449,6 +475,7 @@ test(
     await control(page, 'Transfer pagination').selectOption('simple');
     await next(page).click();
     await control(page, 'Transfer pagination').selectOption('off');
+
     await expect(rows(page)).toHaveCount(31);
     await control(page, 'Transfer pagination').selectOption('simple');
 
@@ -465,8 +492,10 @@ test(
     await control(page, 'Transfer pagination').selectOption('simple');
     await source(page).getByRole('combobox', { name: 'Записей на странице', exact: true }).click();
     await page.getByRole('option', { name: '50 / стр.', exact: true }).click();
+
     await expect(rows(page)).toHaveCount(31);
     await search(page).fill('absent');
+
     await expect(rows(page)).toHaveCount(0);
     await search(page).fill('');
 
@@ -489,6 +518,7 @@ test(
     await expect(source(page).getByRole('combobox', { name: 'Записей на странице', exact: true }))
       .toHaveValue('3 / стр.');
     await control(page, 'Transfer page size').fill('5');
+
     await expect(rows(page)).toHaveCount(5);
   }
 );
@@ -496,6 +526,7 @@ test(
 test('Transfer footer receives physical direction and full per-section props', async ({ page }) => {
   await control(page, 'Transfer footer').check();
   await button(page, 'Preselect transfer').click();
+
   await expect(page.getByTestId('footer-left')).toHaveText('left:31/2');
   await expect(page.getByTestId('footer-right')).toHaveText('right:2/1');
   await control(page, 'Right to left').check();
@@ -510,6 +541,7 @@ test(
     await control(page, 'Custom transfer actions').check();
     await control(page, 'Disable custom action').check();
     await check(page, 'Alpha').click();
+
     await expect(button(page, 'Custom move')).toBeDisabled();
     await control(page, 'Disable custom action').uncheck();
     await control(page, 'Prevent custom click').check();
@@ -520,6 +552,7 @@ test(
       'custom-action|select:/|change:right:string:a=>string:a,string:c,string:locked,string:missing'
     );
     await button(page, 'Extra action').click();
+
     await expect(events(page)).toContainText('|extra-action');
   }
 );
@@ -537,12 +570,15 @@ test(
   'Transfer handles custom count callbacks, zero labels and false/empty fallbacks',
   async ({ page }) => {
     await control(page, 'Transfer label').selectOption('zero');
+
     await expect(source(page).locator('.ant-transfer-list-header-selected')).toHaveText('0');
     await expect(target(page).locator('.ant-transfer-list-header-selected')).toHaveText('0');
     await control(page, 'Transfer label').selectOption('false');
+
     await expect(source(page).locator('.ant-transfer-list-header-selected')).toHaveText('31 элем.');
     await control(page, 'Transfer label').selectOption('custom');
     await check(page, 'Alpha').click();
+
     await expect(source(page).locator('.ant-transfer-list-header-selected')).toHaveText('1 of 31');
   }
 );
@@ -570,9 +606,11 @@ test(
   'Transfer inherits locale and disabled but lets explicit false enable native controls',
   async ({ page }) => {
     await control(page, 'English locale').check();
+
     await expect(search(page)).toHaveAttribute('placeholder', 'Search here');
     await expect(source(page).locator('.ant-transfer-list-header-selected')).toHaveText('31 items');
     await control(page, 'Disable all components').check();
+
     await expect(check(page, 'Alpha')).toBeDisabled();
     await expect(search(page)).toBeDisabled();
     await expect(dropdown(page)).toBeDisabled();
@@ -612,6 +650,7 @@ test(
   async ({ page }) => {
     await control(page, 'Empty transfer').check();
     await control(page, 'Custom empty content').check();
+
     await expect(source(page)).toContainText('Empty physical left');
     await expect(target(page)).toContainText('Empty physical right');
     await expect(header(page)).toBeDisabled();
@@ -627,6 +666,7 @@ test(
   async ({ page }) => {
     await dropdown(page).focus();
     await page.keyboard.press('ArrowDown');
+
     await expect(page.getByRole('menuitem', { name: 'Выбрать все данные', exact: true }))
       .toBeFocused();
     await page.keyboard.press('Escape');
@@ -638,6 +678,7 @@ test(
 
 test('Transfer search and list scrolling keep distinct logical callbacks', async ({ page }) => {
   await source(page).locator('ul.ant-transfer-list-content').evaluate(list => list.scrollTop = 300);
+
   await expect(events(page)).toContainText('scroll:left');
   await search(page, true).fill('Charlie');
 
@@ -665,12 +706,14 @@ test(
   async ({ page }) => {
     const field = page.getByTestId('transfer-field-root');
     await button(page, 'Validate transfer').click();
+
     await expect(field).toHaveClass(/ant-transfer-status-error/);
     await expect(field.locator('.ant-input-status-error')).toHaveCount(2);
     await expect(field.locator('input[name], input[id], input[required]')).toHaveCount(0);
     expect(await page.getByTestId('transfer-library-form').evaluate(form =>
       [...new FormData(form as HTMLFormElement)])).toEqual([]);
     await control(page, 'Disable transfer form').check();
+
     await expect(field.getByRole('checkbox', { name: 'Form row', exact: true })).toBeDisabled();
   }
 );
@@ -682,17 +725,21 @@ test(
     const light = await source(page).locator('.ant-transfer-list-header')
       .evaluate(node => getComputedStyle(node).backgroundColor);
     await control(page, 'Dark transfer').check();
+
     await expect.poll(() => source(page).locator('.ant-transfer-list-header')
       .evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(light);
     await control(page, 'Compact transfer').check();
+
     await expect(rows(page).first()).toHaveCSS('min-height', '28px');
     for (const status of ['success', 'validating']) {
       await control(page, 'Transfer status').selectOption(status);
       await expect(root(page)).toHaveClass(new RegExp(`ant-transfer-status-${status}`));
     }
     await control(page, 'Transfer status').selectOption('error');
+
     await expect(root(page)).toHaveClass(/ant-transfer-status-error/);
     await control(page, 'Right to left').check();
+
     await expect(root(page)).toHaveCSS('direction', 'rtl');
     await expect(move(page).locator('path')).toHaveAttribute('d', 'm15 6-6 6 6 6');
   }

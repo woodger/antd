@@ -29,13 +29,7 @@ function setupDrag(initial: Partial<SplitterDragOptions> = {}) {
     preview: offset => events.push(['preview', offset])
   });
 
-  function emit(
-    target: EventTarget,
-    type: string,
-    x = 0,
-    y = 0,
-    touches = 1
-  ) {
+  function emit(target: EventTarget, type: string, x = 0, y = 0, touches = 1) {
     const event = new Event(type, { cancelable: true });
     Object.defineProperties(event, {
       pageX: { value: x },

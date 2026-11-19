@@ -24,6 +24,7 @@ async function chooseMonth(page: Page, name: string) {
 test.beforeEach(async ({ page }) => {
   await page.clock.install({ time: new Date('2024-09-15T03:00:00.000Z') });
   await page.goto('/?fixture=calendar');
+
   await expect(cell(page, '2024-09-15')).toHaveAttribute('aria-selected', 'true');
 });
 
@@ -432,6 +433,7 @@ test('Calendar clears native refs on removal while preserving external owner val
 
 test('generateCalendar keeps Date values, reactive props and ref setters through its adapter', async ({ page }) => {
   const generated = page.locator('.generated-calendar');
+
   await expect(generated.getByRole('gridcell', { name: '2024-02-29', exact: true }))
     .toHaveAttribute('aria-selected', 'true');
   await button(page, 'Set generated Calendar date').click();
@@ -456,6 +458,7 @@ test('Calendar header does not inherit native field association or required from
   await expect(form.locator('[name="calendar-field"],[required]')).toHaveCount(0);
   await expect(form.locator('input[type="hidden"]')).toHaveCount(0);
   const ids = await form.locator('input[id]').evaluateAll(nodes => nodes.map(node => node.id));
+
   expect(new Set(ids).size).toBe(ids.length);
   await button(page, 'Read Calendar form').click();
 

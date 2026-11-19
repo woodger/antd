@@ -300,13 +300,16 @@ test('Avatar applies circle and size-specific square radii', async ({ page }) =>
 
 test('Avatar refits live text gap font weight and custom root width', async ({ page }) => {
   await input(page, 'text').fill('A');
+
   await expect.poll(() => scale(page)).toBe(1);
   await input(page, 'text').fill('LONGUSERNAME');
+
   await expect.poll(() => scale(page)).toBeLessThan(0.4);
 
   const previous = await scale(page);
 
   await number(page, 'gap', '8');
+
   await expect.poll(() => scale(page)).toBeLessThan(previous);
   await input(page, 'root style').fill('width: 96px; height: 96px');
 
@@ -329,6 +332,7 @@ test('Avatar refits live text gap font weight and custom root width', async ({ p
     0
   );
   await input(page, 'text').fill('A');
+
   await expect.poll(() => scale(page)).toBe(1);
 });
 
@@ -444,16 +448,20 @@ test(
     await expect.poll(count).toBe(1);
     await setting(page, 'image mode', 'image');
     await loaded(page);
+
     await expect.poll(count).toBe(0);
     await setting(page, 'image mode', 'none');
+
     await expect.poll(count).toBe(1);
     await owner(page).focus();
     await page.keyboard.press('Control+Alt+Shift+F12');
+
     await expect.poll(count).toBe(0);
 
     await expect(owner(page)).toBeFocused();
 
     await page.keyboard.press('Control+Alt+Shift+F12');
+
     await expect.poll(count).toBe(1);
   }
 );
@@ -517,6 +525,7 @@ test(
   async ({ page }, testInfo) => {
     await page.setViewportSize({ width: 320, height: 800 });
     await input(page, 'text').fill('LongUnbrokenParticipantName'.repeat(8));
+
     await expect.poll(
       () => text(page).evaluate(node => node.getBoundingClientRect().width)
     ).toBeCloseTo(

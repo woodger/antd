@@ -75,6 +75,7 @@ test(
     const copy = scope.getByRole('button', { name: 'Copy', exact: true });
     const oldCopy = await copy.elementHandle();
     await copy.click();
+
     await expect(scope.getByLabel('normal Typography prefix events')).toHaveText('copy');
     await setPrefix(page, 'next');
     const success = scope.getByRole('button', { name: 'Copied', exact: true });

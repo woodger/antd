@@ -29,6 +29,7 @@ test('FloatButton theme updates retain native refs, draft, focus and form submis
       .dispatchEvent('click');
 
     const updated = reference.cases.find(sample => sample.name === 'updated-aliases')!;
+
     await expect.poll(() => page.evaluate(snapshotFloatButtonTheme)).toEqual(updated.metrics);
     expect(await button.evaluate((node, old) => node === old, original)).toBe(true);
     await expect(input).toHaveValue('Retained floating draft');
@@ -50,12 +51,16 @@ test('FloatButton theme updates retain native refs, draft, focus and form submis
 
     expect(await original!.evaluate(node => node.isConnected)).toBe(false);
     await expect(page.locator('[data-float-theme="normal"]')).toHaveCount(0);
-    await expect(page.locator('[data-float-theme="sibling"] .ant-float-btn')).toHaveCSS('width', '48px');
+    await expect(page.locator('[data-float-theme="sibling"] .ant-float-btn')).toHaveCSS(
+      'width',
+      '48px'
+    );
   });
 
 test('FloatButton restores legacy defaults when its source theme is removed', async ({ page }) => {
   await page.goto('/?fixture=float-button-theme');
   const button = page.locator('[data-float-theme="normal"] .ant-float-btn');
+
   await expect(button).toHaveCSS('width', '52px');
   const original = await button.elementHandle();
   await button.focus();
@@ -65,12 +70,16 @@ test('FloatButton restores legacy defaults when its source theme is removed', as
   await expect(button).toHaveCSS('bottom', '48px');
   await expect(button).toBeFocused();
   expect(await button.evaluate((node, old) => node === old, original)).toBe(true);
-  await expect(page.locator('[data-float-theme="sibling"] .ant-float-btn')).toHaveCSS('width', '48px');
+  await expect(page.locator('[data-float-theme="sibling"] .ant-float-btn')).toHaveCSS(
+    'width',
+    '48px'
+  );
 });
 
 test('FloatButton resets inherited aliases while retaining its explicit nested size', async ({ page }) => {
   await page.goto('/?fixture=float-button-theme');
   const button = page.locator('[data-float-theme="nested"] .ant-float-btn');
+
   await expect(button).toHaveCSS('width', '44px');
   await expect(button).toHaveCSS('padding-top', '8px');
   const original = await button.elementHandle();
@@ -80,5 +89,8 @@ test('FloatButton resets inherited aliases while retaining its explicit nested s
   await expect(button).toHaveCSS('padding-top', '4px');
   await expect(button).toHaveCSS('bottom', '48px');
   expect(await button.evaluate((node, old) => node === old, original)).toBe(true);
-  await expect(page.locator('[data-float-theme="normal"] .ant-float-btn')).toHaveCSS('width', '52px');
+  await expect(page.locator('[data-float-theme="normal"] .ant-float-btn')).toHaveCSS(
+    'width',
+    '52px'
+  );
 });

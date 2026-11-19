@@ -23,7 +23,9 @@
     maxTagTextLength: sample.textLength,
     tagRender: hideRenderer ? undefined : nativeTag ? renderNativeTag : renderTag,
     'aria-label': 'Custom rendered tags', name: 'custom-tags',
-    showSearch: { onSearch: (query: string) => { events = [...events, { type: 'search', query }]; } },
+    showSearch: { onSearch: (query: string) => {
+      events = [...events, { type: 'search', query }];
+    } },
     onOpenChange: (open: boolean) => { events = [...events, { type: 'open', open }]; }
   });
 </script>

@@ -9,9 +9,11 @@ async function choose(page: Page, name: string, component: string) {
 
   if (component === 'Select') {
     await page.getByRole('combobox', { name: 'Empty Select', exact: true }).click();
-  } else if (component === 'Mentions') {
+  }
+  else if (component === 'Mentions') {
     await page.locator('[data-render-empty-frame] textarea').fill('@missing');
-  } else if (component === 'Table.filter') {
+  }
+  else if (component === 'Table.filter') {
     await page.getByRole('button', { name: 'Filter: Name', exact: true }).click();
   }
 }

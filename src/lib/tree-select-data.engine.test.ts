@@ -99,12 +99,17 @@ describe('TreeSelect data fields and simple mode', () => {
 
     expect(filterTreeSelect(nodes, '1', {}, fields)).toEqual([]);
     expect(filterTreeSelect(nodes, 'Alpha', { treeNodeFilterProp: 'caption' }, fields))
-      .toEqual([{ ...nodes[0], isLeaf: undefined, nodes: [{ ...child, isLeaf: undefined, nodes: [] }] }]);
+      .toEqual([{
+        ...nodes[0],
+        isLeaf: undefined,
+        nodes: [{ ...child, isLeaf: undefined, nodes: [] }]
+      }]);
     const filtered = filterTreeSelect(nodes, 'Alpha', { filterTreeNode: (_text, node) => {
       const value = node.caption;
       node.caption = 'Consumer mutation';
       return value === 'Parent';
     } }, fields);
+
     expect(filtered[0].caption).toBe('Parent');
     expect(nodes[0].caption).toBe('Parent');
   });

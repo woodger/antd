@@ -22,6 +22,7 @@ test('Watermark global updates preserve the wrapper, mark, draft, selection and 
     const host = page.locator('[data-watermark-theme="normal"]');
     const root = host.locator('.theme-watermark');
     const mark = root.locator(':scope > div[style*="background-image"]');
+
     await expect(mark).toHaveCSS('z-index', '1699');
     const oldRoot = await root.elementHandle();
     const oldMark = await mark.elementHandle();
@@ -41,6 +42,7 @@ test('Watermark global updates preserve the wrapper, mark, draft, selection and 
     await expect.poll(() => mark.evaluate(node => getComputedStyle(node).backgroundImage))
       .not.toBe(original);
     const metrics = await page.evaluate(snapshotWatermarkTheme) as typeof reference.cases[0]['metrics'];
+
     expect(metrics.normal.text).toEqual([
       { text: 'normal:Text', font: '26px sans-serif', color: '#135200', align: 'center' }
     ]);
@@ -74,6 +76,7 @@ for (const kind of ['modal', 'drawer'] as const) {
       const mark = panel.locator(':scope > div[style*="background-image"]');
       const rootMark = page.locator('[data-watermark-theme="normal"] .theme-watermark')
         .locator(':scope > div[style*="background-image"]');
+
       await expect(mark).toHaveCSS('z-index', '1699');
       const original = await mark.elementHandle();
       const input = panel.getByRole('textbox', { name: `Watermark ${kind} draft`, exact: true });
@@ -112,6 +115,7 @@ test('Watermark restores legacy CSS defaults after removing the source theme', a
   await page.getByLabel('Watermark theme preset', { exact: true }).selectOption('custom-css-prefix');
   const root = page.locator('[data-watermark-theme="css"] .theme-watermark');
   const mark = root.locator(':scope > div[style*="background-image"]');
+
   await expect(mark).toHaveCSS('z-index', '1699');
   await root.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() =>
     requestAnimationFrame(() => resolve()))));
@@ -119,6 +123,7 @@ test('Watermark restores legacy CSS defaults after removing the source theme', a
 
   await expect(mark).toHaveCSS('z-index', '5999');
   const metrics = await page.evaluate(snapshotWatermarkTheme) as typeof reference.cases[0]['metrics'];
+
   expect(metrics.css.text[0].font).toBe('50px sans-serif');
   expect(metrics.css.text[0].color).toBe('#ff0000');
   expect(metrics.normal.text[0].font).toBe('16px sans-serif');

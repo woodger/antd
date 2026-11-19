@@ -14,7 +14,11 @@ export function readAutocompleteLabelTitle() {
     return { identity: identity(node), connected: node.isConnected, tag: node.tagName,
       attributes: [...node.attributes].map(attr => [attr.name, attr.value]), text: node.textContent,
       html: node.outerHTML, innerHTML: node.innerHTML, title: node.getAttribute('title'), classes: [...node.classList],
-      cssText: node.style.cssText, inlineProperties: [...node.style].map(name => ({ name, value: node.style.getPropertyValue(name), priority: node.style.getPropertyPriority(name) })),
+      cssText: node.style.cssText, inlineProperties: [...node.style].map(name => ({
+        name,
+        value: node.style.getPropertyValue(name),
+        priority: node.style.getPropertyPriority(name)
+      })),
       css: Object.fromEntries(['display', 'position', 'visibility', 'opacity', 'color', 'backgroundColor', 'font', 'fontSize', 'fontWeight',
         'lineHeight', 'boxSizing', 'width', 'height', 'minWidth', 'minHeight', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft'].map(key => [key, style[key]])),
       box: { x: box.x, y: box.y, width: box.width, height: box.height },
@@ -28,8 +32,18 @@ export function readAutocompleteLabelTitle() {
     sameAsOriginal: Object.fromEntries(Object.entries(current).map(([key, node]) => [key, observer.original[key] ? node === observer.original[key] : null])),
     contentChildren: [...current.content?.childNodes ?? []].map(node => ({ identity: identity(node), nodeType: node.nodeType,
       nodeName: node.nodeName, text: node.textContent, html: node.nodeType === 1 ? node.outerHTML : null, isEditor: node === refs.editor })),
-    publicRefs: { rootMatches: refs.control?.nativeElement === refs.root, childIsEditor: refs.child ? refs.child === refs.editor : null },
-    focus: { tag: document.activeElement?.tagName, id: document.activeElement?.id, isEditor: document.activeElement === refs.editor },
+    publicRefs: {
+      rootMatches: refs.control?.nativeElement === refs.root,
+      childIsEditor: refs.child ? refs.child === refs.editor : null
+    },
+    focus: {
+      tag: document.activeElement?.tagName,
+      id: document.activeElement?.id,
+      isEditor: document.activeElement === refs.editor
+    },
     popupCount: document.querySelectorAll('.ant-select-dropdown').length,
-    resources: performance.getEntriesByType('resource').map(entry => ({ name: entry.name, initiatorType: entry.initiatorType })) };
+    resources: performance.getEntriesByType('resource').map(entry => ({
+      name: entry.name,
+      initiatorType: entry.initiatorType
+    })) };
 }

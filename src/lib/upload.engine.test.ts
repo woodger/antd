@@ -12,7 +12,11 @@ import type { UploadFile } from './upload.types';
 
 describe('getUploadErrorMessage', () => {
   it('prefers a nonempty string response over error metadata', () => {
-    expect(getUploadErrorMessage('Response', { statusText: 'Status', message: 'Message' }, 'Fallback'))
+    expect(getUploadErrorMessage(
+      'Response',
+      { statusText: 'Status', message: 'Message' },
+      'Fallback'
+    ))
       .toBe('Response');
   });
 

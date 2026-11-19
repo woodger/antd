@@ -58,7 +58,8 @@ export function treeSelectData<Data extends object>(
       if (!Array.isArray(children)) throw new TypeError('Tree data children must be an array');
       children.push(node);
       Reflect.set(parent, 'children', children);
-    } else if (parentKey === rootPId || rootPId === null) roots.push(node);
+    }
+    else if (parentKey === rootPId || rootPId === null) roots.push(node);
   }
   return roots;
 }

@@ -1,7 +1,11 @@
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-tree-data-model-reference.json' with { type: 'json' };
 
-function pathKeys(path: { key: { type: string; value: string | null; }; pos: string; level: number; }[]) {
+function pathKeys(path: {
+  key: { type: string; value: string | null; };
+  pos: string;
+  level: number;
+}[]) {
   return path.map(entity => ({ key: entity.key, pos: entity.pos, level: entity.level }));
 }
 
@@ -24,6 +28,7 @@ test('Tree data model saved getPath tracks replaced data through Svelte derived 
     await page.getByRole('button', { name: 'Replace model data', exact: true }).click();
 
     const expected = reference.updates.data.paths.find(entry => entry.query.value === 'leaf')!;
+
     await expect(page.locator('[data-model-path]')).toHaveText(JSON.stringify(pathKeys(expected.path)));
     await expect(page.locator('[data-model-stable]')).toHaveText('true');
   });
@@ -34,11 +39,13 @@ test('Tree data model observes field getter changes without replacing the data a
     await page.getByRole('button', { name: 'Use dual schema', exact: true }).click();
     const before = reference.updates.fieldsOnlyInitial.paths
       .find(entry => entry.query.value === 'oldLeaf')!;
+
     await expect(page.locator('[data-model-path]')).toHaveText(JSON.stringify(pathKeys(before.path)));
 
     await page.getByRole('button', { name: 'Use id keys', exact: true }).click();
 
     const after = reference.updates.fieldsOnly.paths.find(entry => entry.query.value === 'leaf')!;
+
     await expect(page.locator('[data-model-path]')).toHaveText(JSON.stringify(pathKeys(after.path)));
     await expect(page.locator('[data-model-dual-data]')).toHaveText('true');
     await expect(page.locator('[data-model-stable]')).toHaveText('true');

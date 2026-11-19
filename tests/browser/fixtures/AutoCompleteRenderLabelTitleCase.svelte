@@ -18,13 +18,33 @@
   let editor = $state<HTMLInputElement | HTMLTextAreaElement>();
   let childNode = $state<HTMLInputElement>();
   let alive = true;
-  let lastAuthored: { authoredProps: unknown; rawAuthoredProps: unknown; authoredProvider: unknown; rawAuthoredProvider: unknown } | undefined;
+  let lastAuthored: {
+    authoredProps: unknown;
+    rawAuthoredProps: unknown;
+    authoredProvider: unknown;
+    rawAuthoredProvider: unknown
+  } | undefined;
   onDestroy(() => { alive = false; });
-  const event = (...args: unknown[]) => { events.push(recorder.encode(args)); rawEvents.push(recorder.raw(args)); };
-  const callback = <Value,>(name: string, value: Value): Value => recorder.register(value, { callback: 'label-title-' + name });
-  const onOpenChange = callback('open', (value: boolean) => { open = value; event('open', value); });
-  const onChange = callback('change', (value: string | undefined, option: unknown) => event('change', value, option));
-  const onSelect = callback('select', (value: string, option: unknown) => event('select', value, option));
+  const event = (...args: unknown[]) => {
+    events.push(recorder.encode(args));
+    rawEvents.push(recorder.raw(args));
+  };
+  const callback = <Value,>(name: string, value: Value): Value => recorder.register(
+    value,
+    { callback: 'label-title-' + name }
+  );
+  const onOpenChange = callback('open', (value: boolean) => {
+    open = value;
+    event('open', value);
+  });
+  const onChange = callback(
+    'change',
+    (value: string | undefined, option: unknown) => event('change', value, option)
+  );
+  const onSelect = callback(
+    'select',
+    (value: string, option: unknown) => event('select', value, option)
+  );
   const renderers = new Map<string, (info: SelectLabelRenderInfo<string>) => string | number | null | undefined>();
   for (const kind of ['string', 'zero', 'null', 'undefined']) renderers.set(kind, callback('renderer-' + kind, info => {
     const result = kind === 'string' ? 'Display ' + info.value : kind === 'zero' ? 0 : kind === 'null' ? null : undefined;
@@ -33,10 +53,17 @@
   }));
   recorder.register(child, { node: 'label-title-custom-input' });
   function registerChild(node: HTMLInputElement, register: AutoCompleteInput['register']) {
-    const registration = register(node); childNode = node;
-    return { destroy() { registration.destroy(); childNode = undefined; } };
+    const registration = register(node);
+    childNode = node;
+    return { destroy() {
+      registration.destroy();
+      childNode = undefined;
+    } };
   }
-  const provider = { theme: { token: { motion: false }, cssVar: { key: 'autocomplete-render-label-title' } }, popupOverflow: 'viewport' as const };
+  const provider = {
+    theme: { token: { motion: false }, cssVar: { key: 'autocomplete-render-label-title' } },
+    popupOverflow: 'viewport' as const
+  };
   let ownerProps = $derived.by(() => {
     const props: Record<string, unknown> = { id: 'label-title-field', class: 'surface-control label-title-owner',
       style: { width: '100%' }, value: 'a', options, open, listHeight: 120, virtual: false,
@@ -47,7 +74,9 @@
   });
   let completionProps = $derived(ownerProps as AutoCompleteProps<Record<string, unknown>> & {
     labelRender?: (info: SelectLabelRenderInfo<string>) => string | number | null | undefined; children?: Snippet<[AutoCompleteInput]> });
-  export function update(action: LabelTitleAction) { if (action.type === 'renderer') renderer = action.kind; }
+  export function update(action: LabelTitleAction) {
+    if (action.type === 'renderer') renderer = action.kind;
+  }
   export function readRefs() { return { control, root, editor, child: childNode }; }
   export function read() {
     if (alive) lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
@@ -57,7 +86,11 @@
       optionTitleOwnKey: Object.hasOwn(options[0], 'title'), optionOwnKeys: Reflect.ownKeys(options[0]), ...lastAuthored };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; initialCapture.update = update; }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+    initialCapture.update = update;
+  }
 </script>
 {#snippet child(context: AutoCompleteInput)}<input {...context.attributes} data-label-title-child aria-label="Label title value" use:registerChild={context.register} />{/snippet}
 <section data-surface-case={initial.id} data-surface-bound={Boolean(control)} style="font-family:initial;font-size:16px;line-height:normal">

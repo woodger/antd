@@ -25,7 +25,13 @@ declare global {
       read: Read;
       refs: ReadRefs;
       dispose: () => Promise<void>;
-      cleaned?: { root: boolean; editor: boolean; control: boolean; publicRoot: boolean; publicEditor: boolean };
+      cleaned?: {
+        root: boolean;
+        editor: boolean;
+        control: boolean;
+        publicRoot: boolean;
+        publicEditor: boolean
+      };
     };
   }
 }
@@ -66,7 +72,10 @@ const state: NonNullable<Window['selectValueHydration']> = {
     outer: outer === target.querySelector('.select-value-control'),
     root: root === current.root, content: content === root.querySelector('.ant-select-content'),
     editor: editor === current.editor, parent: parent === current.editor?.parentNode,
-    rich: sameNodes(rich, '[data-select-value-node]'), tags: sameNodes(tags, '.ant-select-selection-item'),
+    rich: sameNodes(rich, '[data-select-value-node]'), tags: sameNodes(
+      tags,
+      '.ant-select-selection-item'
+    ),
     fields: sameNodes(fields, 'input[type="hidden"][name="value-selection"]')
   },
   read: capture.read, refs,

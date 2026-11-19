@@ -133,5 +133,6 @@ test('Badge releases its prefix stylesheet and active motion resources on remova
   expect(await resources(page)).toEqual({ timers: 0, frames: 0 });
   await expect(page.locator('head [data-ant-svelte-theme^="badge-prefix:"]')).toHaveCount(0);
   await page.clock.runFor(1100);
+
   await expect(page.locator('sup')).toHaveCount(0);
 });

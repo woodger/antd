@@ -1,9 +1,15 @@
 /** Read-only actual paint: computed text fill and every real ancestor, no expected colors. */
 export function readSelectSurfaceEdgePaint() {
   const owner = document.querySelector('[data-surface-case]'), refs = {};
-  owner.querySelector('[data-surface-command]').dispatchEvent(new CustomEvent('surfacerefs', { detail: refs }));
+  owner.querySelector('[data-surface-command]').dispatchEvent(new CustomEvent(
+    'surfacerefs',
+    { detail: refs }
+  ));
   const root = refs.root, input = refs.editor;
-  const box = node => { const r = node.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; };
+  const box = node => {
+    const r = node.getBoundingClientRect();
+    return { x: r.x, y: r.y, width: r.width, height: r.height };
+  };
   const css = node => {
     const s = getComputedStyle(node);
     return { color: s.color, textFillColor: s.getPropertyValue('-webkit-text-fill-color'), backgroundColor: s.backgroundColor,
@@ -23,7 +29,9 @@ export function readSelectSurfaceEdgePaint() {
     const ancestors = [];
     let opacity = 1;
     for (let current = node; current; current = current.parentElement) {
-      const style = css(current); opacity *= Number(style.opacity); ancestors.push(measure(current));
+      const style = css(current);
+      opacity *= Number(style.opacity);
+      ancestors.push(measure(current));
       if (current === root) break;
     }
     const self = css(node), rect = box(node), suppressedByDisplay = ancestors.some(n => n.css.display === 'none');
@@ -45,16 +53,39 @@ export function readSelectSurfaceEdgePaint() {
       if (rule.selectorText) {
         const matched = [];
         for (const [node, key] of targets) if (node.matches(rule.selectorText)) matched.push(key);
-        if (matched.length) rules.push({ sheetIndex, context, selector: rule.selectorText, cssText: rule.cssText, matched });
+        if (matched.length) rules.push({
+          sheetIndex,
+          context,
+          selector: rule.selectorText,
+          cssText: rule.cssText,
+          matched
+        });
       }
-      if (rule.cssRules) readRules(rule.cssRules, sheetIndex, [...context, rule.conditionText ?? rule.name ?? '']);
+      if (rule.cssRules) readRules(
+        rule.cssRules,
+        sheetIndex,
+        [...context, rule.conditionText ?? rule.name ?? '']
+      );
     }
   };
-  [...document.styleSheets].forEach((sheet, index) => { try { readRules(sheet.cssRules, index); } catch (error) { cssErrors.push(String(error)); } });
+  [...document.styleSheets].forEach((sheet, index) => {
+    try {
+    readRules(sheet.cssRules, index);
+  }
+  catch (error) {
+    cssErrors.push(String(error));
+  }
+  });
   return { view: { input: { ...inputView, value: input.value },
     placeholders: placeholderPaint.map(({ ancestors: _ancestors, ...rest }) => rest),
-    passivePanels: [...document.querySelectorAll('[data-surface-edge-panel]')].map(node => ({ text: node.textContent, ...box(node) })) },
+    passivePanels: [...document.querySelectorAll('[data-surface-edge-panel]')].map(node => ({
+      text: node.textContent,
+      ...box(node)
+    })) },
     raw: { input: { ...measure(input), paintAncestors: inputAncestors },
-      placeholders: placeholders.map((node, index) => ({ ...measure(node), paintAncestors: placeholderPaint[index].ancestors })),
+      placeholders: placeholders.map((node, index) => ({
+        ...measure(node),
+        paintAncestors: placeholderPaint[index].ancestors
+      })),
       rules, cssErrors } };
 }

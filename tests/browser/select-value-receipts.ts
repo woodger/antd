@@ -70,7 +70,10 @@ function withoutDeprecatedGetter(receipt: OptionReceipt) {
   expect(compatibility).toEqual({ key: 'props', enumerable: false, configurable: false,
     kind: 'accessor', get: true, set: false });
   expect(receipt.originalOwnProperties.some(property => property.key === 'props')).toBe(false);
-  return { ...receipt, ownProperties: receipt.ownProperties.filter(property => property.key !== 'props') };
+  return {
+    ...receipt,
+    ownProperties: receipt.ownProperties.filter(property => property.key !== 'props')
+  };
 }
 export function verifySelectValueOption(actual: unknown, source: unknown) {
   const { data: currentData, ...current } = actual as OptionReceipt;

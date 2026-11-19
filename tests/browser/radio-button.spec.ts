@@ -1,7 +1,10 @@
 import type { Page } from '@playwright/test';
 import { test, expect } from './test';
 
-const group = (page: Page) => page.getByRole('radiogroup', { name: 'Calendar mode buttons', exact: true });
+const group = (page: Page) => page.getByRole(
+  'radiogroup',
+  { name: 'Calendar mode buttons', exact: true }
+);
 const month = (page: Page) => group(page).getByRole('radio', { name: 'Button month', exact: true });
 const label = (page: Page) => group(page).locator(':scope > label').first();
 const select = (page: Page, name: string) => page.getByRole('combobox', { name, exact: true });
@@ -9,6 +12,7 @@ const control = (page: Page, name: string) => page.getByLabel(name, { exact: tru
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=radio-button');
+
   await expect(month(page)).toBeChecked();
 });
 
@@ -111,6 +115,7 @@ test('RadioButton block and vertical layouts distribute source borders and avail
   const widths = await group(page).locator(':scope > label').evaluateAll(nodes =>
     nodes.map(node => node.getBoundingClientRect().width)
   );
+
   expect(Math.max(...widths) - Math.min(...widths)).toBeLessThan(1);
   await control(page, 'Vertical radio buttons').check();
 

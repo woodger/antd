@@ -9,13 +9,17 @@
     const context = caller.current;
     caller.bodyActivity.push({ kind: 'tag', value: caller.recorder.encode(info.value), isMaxTag: info.isMaxTag,
       context: caller.recorder.encode(context), rawContext: caller.recorder.raw(context) });
-    caller.recorder.register(content, { node: 'custom-tag-body-' + (info.isMaxTag ? 'rest' : info.value) });
+    caller.recorder.register(
+      content,
+      { node: 'custom-tag-body-' + (info.isMaxTag ? 'rest' : info.value) }
+    );
     return caller.recorder.record('tagBody', 'own', { info, context }, content);
   }
   function closeHandler() {
     return caller.handler('tag-close-' + info.value, (event: MouseEvent) => {
       caller.event('tag-close-before', info.value, caller.project(event));
-      info.onClose?.(event); caller.event('tag-close-after', info.value, caller.project(event));
+      info.onClose?.(event);
+      caller.event('tag-close-after', info.value, caller.project(event));
     });
   }
 </script>

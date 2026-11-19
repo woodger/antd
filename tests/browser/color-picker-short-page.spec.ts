@@ -21,6 +21,7 @@ for (const source of reference.cases) {
     if (short) expect(initialRange).toBe(0);
     else expect(initialRange).toBeGreaterThan(0);
     await trigger.click();
+
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollHeight - innerHeight))
       .toBe(scrollRange ?? initialRange);
     await expect(green).toHaveAttribute('aria-expanded', 'true');
@@ -28,17 +29,22 @@ for (const source of reference.cases) {
 
     await page.mouse.move(1000, height / 2);
     await page.mouse.wheel(0, short ? 1000 : 200);
+
     await expect.poll(() => page.evaluate(() => scrollY)).toBe(scrollRange ?? 200);
     await expect(warm).toBeInViewport({ ratio: 1 });
     await warm.click();
+
     await expect(green).toHaveAttribute('aria-expanded', 'true');
     await expect(warm).toHaveAttribute('aria-expanded', 'true');
     await page.mouse.wheel(0, short ? 1000 : 200);
+
     await expect(orange).toBeInViewport({ ratio: 1 });
     await orange.click();
+
     await expect(page.getByRole('status', { name: 'Selected viewport color' })).toHaveText('#fa8c16');
 
     await page.keyboard.press('Escape');
+
     await expect(popup).toBeHidden();
     await expect(trigger).toBeFocused();
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollHeight - innerHeight))
@@ -52,6 +58,7 @@ for (const source of reference.cases) {
     const popup = page.getByRole('dialog', { name: 'Color picker', exact: true });
     await trigger.focus();
     await page.keyboard.press('Enter');
+
     await expect(popup).toBeVisible();
 
     const visited: string[] = [];
@@ -83,6 +90,7 @@ for (const source of reference.cases) {
     expect(chosen).toBe(true);
     await expect(page.getByRole('status', { name: 'Selected viewport color' })).toHaveText('#fa8c16');
     await page.keyboard.press('Escape');
+
     await expect(popup).toBeHidden();
     await expect(trigger).toBeFocused();
   });
@@ -93,11 +101,13 @@ test('ColorPicker preserves fixed popup styles while scrolling', async ({ page }
   await page.goto('/?fixture=color-picker-fixed-popup');
   await page.getByRole('button', { name: 'Viewport color', exact: true }).click();
   const popup = page.getByRole('dialog', { name: 'Color picker', exact: true });
+
   await expect(popup).toHaveCSS('position', 'fixed');
   await expect.poll(async () => (await popup.boundingBox())?.y).toBe(387);
 
   await page.mouse.move(1000, 500);
   await page.mouse.wheel(0, 200);
+
   await expect.poll(() => page.evaluate(() => scrollY)).toBe(200);
   await expect.poll(async () => (await popup.boundingBox())?.y).toBe(187);
 });

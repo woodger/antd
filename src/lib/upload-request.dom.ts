@@ -21,7 +21,8 @@ export function uploadRequest<T = unknown>(option: UploadRequestOptions<T>) {
     const text = xhr.responseText || xhr.response;
     try {
       return JSON.parse(text);
-    } catch {
+    }
+    catch {
       return text;
     }
   };
@@ -33,7 +34,8 @@ export function uploadRequest<T = unknown>(option: UploadRequestOptions<T>) {
         { status: xhr.status, method: option.method, url: option.action }
       );
       option.onError?.(error, response());
-    } else option.onSuccess?.(response(), xhr);
+    }
+    else option.onSuccess?.(response(), xhr);
   };
   xhr.open(option.method, option.action, true);
   if (option.withCredentials)

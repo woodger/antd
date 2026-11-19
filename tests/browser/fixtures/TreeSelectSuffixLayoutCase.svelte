@@ -24,7 +24,10 @@
   let editor = $derived(sample.kind === 'textarea' ? textarea : input);
   function record(...entry: unknown[]) { events = [...events, entry]; }
   function resize(width: number) {
-    if (!root) { rootWidth = width + 34; return; }
+    if (!root) {
+      rootWidth = width + 34;
+      return;
+    }
     const content = root.querySelector<HTMLElement>('.ant-select-content')!;
     rootWidth = width + root.getBoundingClientRect().width - content.clientWidth;
   }
@@ -51,9 +54,22 @@
     id: 'suffix-layout-control', name: 'suffix-layout-choice', multiple: true, value: values, size,
     style: `width:${rootWidth}px`, maxTagCount,
     getPopupContainer: popupContainer,
-    showSearch: { filterTreeNode: false as const, onSearch: (text: string) => { lastQuery = text; record('search', text); } },
-    treeData: [{ value: 'a', title: 'One' }, { value: 'b', title: 'Two' }, { value: 'c', title: 'Three' }, { value: 'd', title: 'Four' }],
-    onChange: (next: string[]) => { values = next; lastQuery = ''; record('change', next); },
+    showSearch: { filterTreeNode: false as const, onSearch: (text: string) => {
+      lastQuery = text;
+      record('search', text);
+    } },
+    treeData: [{ value: 'a', title: 'One' }, { value: 'b', title: 'Two' }, {
+      value: 'c',
+      title: 'Three'
+    }, {
+      value: 'd',
+      title: 'Four'
+    }],
+    onChange: (next: string[]) => {
+      values = next;
+      lastQuery = '';
+      record('change', next);
+    },
     onOpenChange: (open: boolean) => record('open', open), onFocus: () => record('focus'), onBlur: () => record('blur')
   });
   export function readRefs() { return { root, input: textarea ?? input, control }; }

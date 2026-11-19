@@ -24,7 +24,10 @@ describe('Form validateDebounce', () => {
     const form = createForm({ initialValues: { name: 'Alpha' } });
     const calls: unknown[] = [];
     register(form, { name: 'name', validateDebounce: 300, rules: [{
-      validator: (value) => { calls.push(value); return 'Invalid'; }
+      validator: (value) => {
+        calls.push(value);
+        return 'Invalid';
+      }
     }] });
 
     form.touchField('name');
@@ -33,8 +36,10 @@ describe('Form validateDebounce', () => {
     expect(form.isFieldValidating('name')).toBe(true);
     expect(form.getFieldError('name')).toEqual([]);
     await vi.advanceTimersByTimeAsync(299);
+
     expect(calls).toEqual([]);
     await vi.advanceTimersByTimeAsync(1);
+
     expect(calls).toEqual(['Alpha']);
     expect(form.isFieldValidating('name')).toBe(false);
     expect(form.getFieldError('name')).toEqual(['Invalid']);
@@ -55,6 +60,7 @@ describe('Form validateDebounce', () => {
     expect(calls).toEqual([]);
     expect(form.isFieldValidating('name')).toBe(true);
     await vi.advanceTimersByTimeAsync(1);
+
     expect(calls).toEqual(['Beta']);
     expect(form.isFieldValidating('name')).toBe(false);
   });
@@ -70,6 +76,7 @@ describe('Form validateDebounce', () => {
 
     expect(calls).toEqual(['Alpha']);
     await vi.runAllTimersAsync();
+
     expect(form.isFieldValidating('name')).toBe(false);
   });
 
@@ -77,7 +84,10 @@ describe('Form validateDebounce', () => {
     const form = createForm({ initialValues: { name: 'Alpha' } });
     const calls: unknown[] = [];
     register(form, { name: 'name', validateDebounce: 300, rules: [{
-      validator: (value) => { calls.push(value); return 'Invalid'; }
+      validator: (value) => {
+        calls.push(value);
+        return 'Invalid';
+      }
     }] });
     form.touchField('name');
 
@@ -86,6 +96,7 @@ describe('Form validateDebounce', () => {
     expect(calls).toEqual(['Alpha']);
     await expect(result).rejects.toMatchObject({ outOfDate: false, errors: { name: ['Invalid'] } });
     await vi.advanceTimersByTimeAsync(600);
+
     expect(calls).toEqual(['Alpha']);
     expect(form.getFieldError('name')).toEqual(['Invalid']);
     expect(form.isFieldValidating('name')).toBe(false);
@@ -95,7 +106,10 @@ describe('Form validateDebounce', () => {
     const form = createForm({ initialValues: { name: 'Alpha' } });
     const calls: unknown[] = [];
     register(form, { name: 'name', validateDebounce: 300, rules: [{
-      validator: (value) => { calls.push(value); return 'Invalid'; }
+      validator: (value) => {
+        calls.push(value);
+        return 'Invalid';
+      }
     }] });
     form.touchField('name');
 
@@ -107,6 +121,7 @@ describe('Form validateDebounce', () => {
     expect(form.getFieldError('name')).toEqual([]);
     expect(form.isFieldValidating('name')).toBe(true);
     await vi.advanceTimersByTimeAsync(300);
+
     expect(calls).toEqual(['Alpha', 'Alpha']);
     expect(form.getFieldError('name')).toEqual(['Invalid']);
     expect(form.isFieldValidating('name')).toBe(false);
@@ -130,9 +145,11 @@ describe('Form validateDebounce', () => {
     expect(calls).toEqual(['Alpha']);
     expect(form.isSubmitting).toBe(true);
     await vi.advanceTimersByTimeAsync(600);
+
     expect(calls).toEqual(['Alpha']);
     expect(submitted).toEqual([]);
     complete('Invalid');
+
     expect(await result).toMatchObject({ status: 'invalid', error: { outOfDate: false } });
     expect(form.isSubmitting).toBe(false);
     expect(submitted).toEqual([]);
@@ -142,7 +159,10 @@ describe('Form validateDebounce', () => {
     const form = createForm({ initialValues: { name: 'Alpha' } });
     const calls: unknown[] = [];
     register(form, { name: 'name', validateDebounce: 300, rules: [{
-      validator: (value) => { calls.push(value); return 'Invalid'; }
+      validator: (value) => {
+        calls.push(value);
+        return 'Invalid';
+      }
     }] });
     form.touchField('name');
 
@@ -160,7 +180,10 @@ describe('Form validateDebounce', () => {
     const form = createForm({ initialValues: { name: 'Alpha' } });
     const calls: unknown[] = [];
     const cleanup = register(form, { name: 'name', validateDebounce: 300, rules: [{
-      validator: (value) => { calls.push(value); return 'Invalid'; }
+      validator: (value) => {
+        calls.push(value);
+        return 'Invalid';
+      }
     }] });
     form.touchField('name');
 
@@ -209,6 +232,7 @@ describe('Form validateDebounce', () => {
     form.touchField('name');
     form.setFields([{ name: 'name', validating: true }]);
     await vi.advanceTimersByTimeAsync(600);
+
     expect(calls).toEqual([]);
     expect(form.isFieldValidating('name')).toBe(true);
   });
@@ -230,6 +254,7 @@ describe('Form validateDebounce', () => {
     expect(form.isFieldValidating('name')).toBe(false);
     expect(form.isFieldValidating('other')).toBe(true);
     await vi.advanceTimersByTimeAsync(300);
+
     expect(calls).toEqual(['Alpha', 'Beta']);
     expect(form.isFieldsValidating()).toBe(false);
   });
@@ -242,6 +267,7 @@ describe('Form validateDebounce', () => {
     form.touchField('name');
 
     rules = [];
+
     await expect(form.validateFields()).resolves.toEqual({ name: 'Alpha' });
     await vi.advanceTimersByTimeAsync(600);
 
@@ -266,9 +292,11 @@ describe('Form validateDebounce', () => {
 
     expect(calls).toEqual([]);
     await vi.advanceTimersByTimeAsync(1);
+
     expect(calls).toEqual(['Old']);
     form.touchField('name');
     await vi.advanceTimersByTimeAsync(10);
+
     expect(calls).toEqual(['Old', 'New']);
   });
 
@@ -290,6 +318,7 @@ describe('Form validateDebounce', () => {
     await vi.advanceTimersByTimeAsync(1);
     completions[1]('New');
     await vi.runAllTimersAsync();
+
     expect(form.getFieldError('name')).toEqual(['New']);
     expect(form.isFieldValidating('name')).toBe(false);
   });
@@ -310,6 +339,7 @@ describe('Form validateDebounce', () => {
     expect(form.isFieldValidating(['names', 1])).toBe(false);
     form.touchField(['names', 1]);
     await vi.advanceTimersByTimeAsync(300);
+
     expect(calls).toEqual(['Beta']);
   });
 });

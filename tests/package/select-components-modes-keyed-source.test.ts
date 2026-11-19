@@ -5,11 +5,17 @@ import { readSelectComponentsModesKeyedCase, readSelectComponentsModesKeyedSSR, 
 import { verifySelectComponentsModesKeyedSourcePair } from '../browser/select-components-modes-keyed-source-proof';
 import { selectComponentsModesPopupSource } from '../browser/select-components-modes-key-collision';
 for (const sample of selectComponentsModesSamples) it(`proves independent Original keyed counterpart ${sample.id}`, () => {
-  const proof = verifySelectComponentsModesKeyedSourcePair(readSelectComponentsModesCase(sample.id), readSelectComponentsModesKeyedCase(sample.id));
-  expect(proof.controlPoints).toBe(sample.actions.length + 1); expect(proof.descendantIdentityPairs).toBe(38);
+  const proof = verifySelectComponentsModesKeyedSourcePair(
+    readSelectComponentsModesCase(sample.id),
+    readSelectComponentsModesKeyedCase(sample.id)
+  );
+
+  expect(proof.controlPoints).toBe(sample.actions.length + 1);
+  expect(proof.descendantIdentityPairs).toBe(38);
 });
 it('preserves all six diagnostics and all29 complete Original SSR HTML bytes with explicit option keys', () => {
   const current = readSelectComponentsModesKeyedSource();
+
   expect(current.reference.diagnostics).toHaveLength(6);
   const original = readSelectComponentsModesSSR().normal, keyed = readSelectComponentsModesKeyedSSR();
   const hash = (value: string) => createHash('sha256').update(value).digest('hex');
@@ -18,8 +24,11 @@ it('preserves all six diagnostics and all29 complete Original SSR HTML bytes wit
     expect(keyed.cases[index].id).toBe(owner.id);
     for (const [ordinal, state] of owner.states.entries()) {
       const counterpart = keyed.cases[index].states[ordinal];
-      expect(counterpart.name).toBe(state.name); expect(counterpart.rawHtml).toBe(state.rawHtml);
-      expect(hash(counterpart.rawHtml)).toBe(hash(state.rawHtml)); expect(counterpart.resources).toEqual(state.resources); count++;
+      expect(counterpart.name).toBe(state.name);
+      expect(counterpart.rawHtml).toBe(state.rawHtml);
+      expect(hash(counterpart.rawHtml)).toBe(hash(state.rawHtml));
+      expect(counterpart.resources).toEqual(state.resources);
+      count++;
     }
   }
   expect(count).toBe(29);
@@ -32,13 +41,16 @@ it('gates only27 captured stale-popup points and retains direct canonical/keyed 
       points++;
       const view = selectComponentsModesPopupSource(point, original), tags = sample.settings.mode === 'tags';
       if (!tags || index < 3) {
-        expect(view).toBeUndefined(); untouched++;
+        expect(view).toBeUndefined();
+        untouched++;
         if (tags) tagsPrefix++; else multiple++;
         continue;
       }
-      expect(view).toBeTruthy(); collisions++;
+      expect(view).toBeTruthy();
+      collisions++;
       expect(view!.name).toBe('React-key-collision/Native-typed-distinct-keys');
-      expect(view!.canonical).toBe(point); expect(view!.keyed).toBe(keyed.steps[index - 1]);
+      expect(view!.canonical).toBe(point);
+      expect(view!.keyed).toBe(keyed.steps[index - 1]);
       const originalRootIds = new Set(point.icons.layout.map(node => node.identity));
       const keyedRootIds = new Set(view!.keyed.icons.layout.map(node => node.identity));
       for (const key of ['nodes', 'svg'] as const) {
@@ -53,5 +65,11 @@ it('gates only27 captured stale-popup points and retains direct canonical/keyed 
       }
     }
   }
-  expect({ points, collisions, untouched, tagsPrefix, multiple }).toEqual({ points: 78, collisions: 27, untouched: 51, tagsPrefix: 9, multiple: 42 });
+  expect({ points, collisions, untouched, tagsPrefix, multiple }).toEqual({
+    points: 78,
+    collisions: 27,
+    untouched: 51,
+    tagsPrefix: 9,
+    multiple: 42
+  });
 });

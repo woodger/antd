@@ -110,7 +110,8 @@ describe('theme.getDesignToken', () => {
 
     try {
       theme.getDesignToken({ algorithm });
-    } catch (error) {
+    }
+    catch (error) {
       caught = error;
     }
 

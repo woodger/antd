@@ -113,7 +113,10 @@ describe('Cascader SSR', () => {
     const seen: CascaderSemantic['props'][] = [];
     const body = render(Cascader, { props: {
       options, value, placeholder: 'Raw placeholder',
-      classNames: info => { seen.push(info.props); return undefined; }
+      classNames: info => {
+        seen.push(info.props);
+        return undefined;
+      }
     } }).body;
 
     expect(body).toContain('Parent / Alpha');

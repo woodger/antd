@@ -40,7 +40,10 @@
     events = [...events, { type, node: snapshot(info.node) }];
   }
   const draggable: TreeDraggableConfig<Record> = {
-    nodeDraggable: node => { checkRaw(node); return true; }
+    nodeDraggable: node => {
+      checkRaw(node);
+      return true;
+    }
   };
   const allowDrop: TreeAllowDrop<Record> = info => {
     checkRaw(info.dragNode);

@@ -34,6 +34,7 @@ async function pausedFixture(page: Page) {
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=carousel');
+
   await expect(carousel(page).locator('.slick-slide[data-index="0"] h3')).toHaveText('Slide A');
   await expect(output(page, 'Carousel events')).toContainText('before:0:0');
   await settled(page);
@@ -42,10 +43,14 @@ test.beforeEach(async ({ page }) => {
 test('Carousel exposes its ref and source slide clones with working native fields', async ({ page }) => {
   await expect(output(page, 'Carousel ref')).toHaveText('carousel-under-test');
   await expect(carousel(page).locator('.slick-slide')).toHaveCount(6);
-  await expect(carousel(page).locator('.slick-slide.slick-active')).toHaveAttribute('data-index', '0');
+  await expect(carousel(page).locator('.slick-slide.slick-active')).toHaveAttribute(
+    'data-index',
+    '0'
+  );
   await expect(carousel(page).locator('.slick-dots li.slick-active')).toHaveText('1');
   await carousel(page).locator('.slick-active input').fill('Persistent draft');
   await button(page, 'Следующий слайд').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('1');
   await settled(page);
   await button(page, 'Предыдущий слайд').click();
@@ -53,15 +58,19 @@ test('Carousel exposes its ref and source slide clones with working native field
 
   await expect(carousel(page).locator('.slick-active input')).toHaveValue('Persistent draft');
   await button(page, 'Action A').click();
+
   await expect(output(page, 'Carousel clicks')).toHaveText('1');
 });
 
 test('Carousel cycles through infinite clones and supports goTo without animation', async ({ page }) => {
   await button(page, 'Carousel previous ref').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('3');
   await settled(page);
+
   await expect(carousel(page).locator('.slick-active h3')).toHaveText('Slide D');
   await button(page, 'Carousel next ref').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('0');
   await settled(page);
   await button(page, 'Carousel instant ref').click();
@@ -80,11 +89,13 @@ test('Carousel honors vertical dot placement and localized arrows without RTL mi
   await expect(carousel(page)).not.toHaveClass(/ant-carousel-rtl/);
   await expect(carousel(page).locator('.slick-dots')).toHaveClass(/slick-dots-start/);
   await button(page, 'Следующий слайд').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('1');
 });
 
 test('Carousel keeps native form actions independent from navigation buttons', async ({ page }) => {
   await carousel(page).locator('.slick-dots button').nth(2).click();
+
   await expect(output(page, 'Carousel current')).toHaveText('2');
   await settled(page);
   await button(page, 'Следующий слайд').click();
@@ -105,6 +116,7 @@ test('Carousel keeps current input state when children are added and clamps a re
 
   await expect(output(page, 'Carousel current')).toHaveText('1');
   await settled(page);
+
   await expect(carousel(page).locator('.slick-active h3')).toHaveText('Slide B');
   await expect(carousel(page).locator('.slick-slide')).toHaveCount(4);
 });
@@ -136,6 +148,7 @@ test('Carousel keeps initialSlide when empty children are populated', async ({ p
 test('Carousel applies later initialSlide changes and preserves native drafts across visits', async ({ page }) => {
   await carousel(page).locator('.slick-active input').fill('Edited Alpha');
   await output(page, 'Carousel initial').fill('2');
+
   await expect(output(page, 'Carousel current')).toHaveText('2');
   await settled(page);
   await output(page, 'Carousel initial').fill('0');
@@ -146,15 +159,18 @@ test('Carousel applies later initialSlide changes and preserves native drafts ac
 
 test('Carousel finite arrows keep the source disabled classes and stop at the last slide', async ({ page }) => {
   await output(page, 'Carousel infinite').uncheck();
+
   await expect(carousel(page).locator('.slick-prev')).toHaveClass(/slick-disabled/);
   await output(page, 'Carousel destination').fill('3');
   await button(page, 'Carousel go ref').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('3');
   await settled(page);
 
   await expect(carousel(page).locator('.slick-next')).toHaveClass(/slick-disabled/);
   await button(page, 'Carousel next ref').click();
   await settled(page);
+
   await expect(output(page, 'Carousel current')).toHaveText('3');
 });
 
@@ -167,6 +183,7 @@ test('Carousel groups uneven finite pages and keeps targetSlide separate from cu
   });
   await settled(page);
   await button(page, 'Следующий слайд').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('2');
   await settled(page);
   await button(page, 'Следующий слайд').click();
@@ -182,6 +199,7 @@ test('Carousel routes keyboard arrows while retaining native input navigation', 
   const current = carousel(page).locator('.slick-slide[data-index="0"]');
   await current.focus();
   await page.keyboard.press('ArrowRight');
+
   await expect(output(page, 'Carousel current')).toHaveText('1');
   await settled(page);
   const input = carousel(page).locator('.slick-active input');
@@ -197,6 +215,7 @@ test('Carousel can disable keyboard navigation independently of arrow buttons', 
   await output(page, 'Carousel accessibility').uncheck();
   await carousel(page).locator('.slick-slide[data-index="0"]').focus();
   await page.keyboard.press('ArrowRight');
+
   await expect(output(page, 'Carousel current')).toHaveText('0');
   await button(page, 'Следующий слайд').click();
 
@@ -205,11 +224,18 @@ test('Carousel can disable keyboard navigation independently of arrow buttons', 
 
 test('Carousel mirrors the source RTL index and swaps localized physical arrow labels', async ({ page }) => {
   await output(page, 'Right to left').check();
+
   await expect(output(page, 'Carousel current')).toHaveText('3');
   await settled(page);
 
-  await expect(carousel(page).locator('.slick-prev')).toHaveAttribute('aria-label', 'Следующий слайд');
-  await expect(carousel(page).locator('.slick-next')).toHaveAttribute('aria-label', 'Предыдущий слайд');
+  await expect(carousel(page).locator('.slick-prev')).toHaveAttribute(
+    'aria-label',
+    'Следующий слайд'
+  );
+  await expect(carousel(page).locator('.slick-next')).toHaveAttribute(
+    'aria-label',
+    'Предыдущий слайд'
+  );
   await button(page, 'Следующий слайд').click();
 
   await expect(output(page, 'Carousel current')).toHaveText('2');
@@ -218,6 +244,7 @@ test('Carousel mirrors the source RTL index and swaps localized physical arrow l
 
 test('Carousel retains Slick next direction for an imperative RTL next call', async ({ page }) => {
   await output(page, 'Right to left').check();
+
   await expect(output(page, 'Carousel current')).toHaveText('3');
   await settled(page);
   await button(page, 'Carousel next ref').click();
@@ -234,8 +261,10 @@ test('Carousel applies source config styles to the inner slider and custom rende
   await expect(carousel(page).locator('.slick-slider')).toHaveCSS('color', 'rgb(0, 80, 0)');
   await expect(carousel(page).locator('.slick-dots')).toHaveAttribute('data-append', 'custom');
   await button(page, 'Custom dot 3').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('2');
   await settled(page);
+
   await expect(button(page, 'Custom next')).toHaveAttribute('data-current', '2');
   await expect(button(page, 'Custom next')).toHaveAttribute('data-count', '4');
   await button(page, 'Custom previous').click();
@@ -248,6 +277,7 @@ test('Carousel honors the source locale alias for default arrows', async ({ page
 
   await expect(button(page, 'Source previous')).toBeVisible();
   await button(page, 'Source next').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('1');
 });
 
@@ -264,6 +294,7 @@ test('Carousel waits for an active animation when requested', async ({ page }) =
   await expect(output(page, 'Carousel current')).toHaveText('1');
   await expect(output(page, 'Carousel events')).toHaveText('before:0:1');
   await settled(page);
+
   await expect(output(page, 'Carousel events')).toHaveText('before:0:1|after:1');
 });
 
@@ -272,20 +303,24 @@ test('Carousel publishes interrupted afterChange before accepting a later comple
   await settled(page);
   await button(page, 'Clear Carousel events').click();
   await button(page, 'Carousel next ref').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('1');
   await button(page, 'Carousel next ref').click();
 
   await expect(output(page, 'Carousel current')).toHaveText('2');
   await expect(output(page, 'Carousel events')).toContainText('before:1:2|after:1');
   await settled(page);
+
   await expect(output(page, 'Carousel events')).toHaveText('before:0:1|before:1:2|after:1|after:2');
 });
 
 test('Carousel renders fade on a single overlaid slide and preserves source styles', async ({ page }) => {
   await output(page, 'Carousel fade').check();
   await output(page, 'Carousel show').fill('3');
+
   await expect(carousel(page).locator('.slick-slide')).toHaveCount(4);
   await button(page, 'Carousel go ref').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('2');
   await settled(page);
 
@@ -305,6 +340,7 @@ test('Carousel can position the track without CSS transforms', async ({ page }) 
 
 test('Carousel measures adaptive height for the selected slide', async ({ page }) => {
   await output(page, 'Carousel adaptive').check();
+
   await expect(carousel(page).locator('.slick-list')).toHaveCSS('height', '160px');
   await button(page, 'Следующий слайд').click();
 
@@ -326,6 +362,7 @@ test('Carousel groups rows and per-row cells and disables unsupported variable w
   await expect(carousel(page).locator('.slick-slide[data-index="0"] .carousel-child').first())
     .toHaveCSS('width', '300px');
   await button(page, 'Следующий слайд').click();
+
   await expect(carousel(page).locator('.slick-active .carousel-child')).toHaveCount(3);
 });
 
@@ -333,11 +370,13 @@ test('Carousel measures variable-width children and centers the selected slide',
   await output(page, 'Carousel variable').check();
   await output(page, 'Carousel center').check();
   await button(page, 'Carousel go ref').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('2');
   await settled(page);
 
   const list = (await carousel(page).locator('.slick-list').boundingBox())!;
   const current = (await carousel(page).locator('.slick-slide[data-index="2"]').boundingBox())!;
+
   expect(current.width).toBe(180);
   expect(current.x + current.width / 2).toBeCloseTo(list.x + list.width / 2, 0);
 });
@@ -354,6 +393,7 @@ test('Carousel focuses the previous DOM current slide before a selection commit'
 
 test('Carousel links two independent sliders through asNavFor without recursive navigation', async ({ page }) => {
   await output(page, 'Carousel sync').check();
+
   await expect(page.locator('#carousel-peer .slick-active h3')).toHaveText('Slide A');
   await button(page, 'Carousel go ref').click();
 
@@ -384,9 +424,11 @@ test('Carousel autoplay preserves the extra fifty millisecond interval', async (
   await output(page, 'Carousel pause hover').uncheck();
   await output(page, 'Carousel autoplay').check();
   await output(page, 'Carousel duration').check();
+
   await expect(output(page, 'Carousel playing')).toHaveText('playing');
 
   await page.clock.runFor(1049);
+
   await expect(output(page, 'Carousel current')).toHaveText('0');
   await page.clock.runFor(1);
 
@@ -399,6 +441,7 @@ test('Carousel imperative play and pause work while the autoplay prop stays fals
   await pausedFixture(page);
   await button(page, 'Carousel play ref').click();
   await page.clock.runFor(1050);
+
   await expect(output(page, 'Carousel current')).toHaveText('1');
   await button(page, 'Carousel pause ref').click();
   await page.clock.runFor(4000);
@@ -412,10 +455,13 @@ test('Carousel pauses on track hover and resumes after leaving', async ({ page }
   await pausedFixture(page);
   await output(page, 'Carousel autoplay').check();
   await carousel(page).locator('.slick-active h3').hover();
+
   await expect(output(page, 'Carousel playing')).toHaveText('hovered');
   await page.clock.runFor(4000);
+
   await expect(output(page, 'Carousel current')).toHaveText('0');
   await button(page, 'Carousel next ref').hover();
+
   await expect(output(page, 'Carousel playing')).toHaveText('playing');
   await page.clock.runFor(1050);
 
@@ -428,8 +474,10 @@ test('Carousel pauses on a focused slide and resumes after native blur', async (
   await output(page, 'Carousel pause focus').check();
   await output(page, 'Carousel autoplay').check();
   await carousel(page).locator('.slick-slide[data-index="0"]').focus();
+
   await expect(output(page, 'Carousel playing')).toHaveText('focused');
   await page.clock.runFor(3000);
+
   await expect(output(page, 'Carousel current')).toHaveText('0');
   await button(page, 'Carousel next ref').focus();
   await page.clock.runFor(1050);
@@ -443,8 +491,10 @@ test('Carousel can pause autoplay on the dot container independently of track ho
   await output(page, 'Carousel pause dots').check();
   await output(page, 'Carousel autoplay').check();
   await carousel(page).locator('.slick-dots').hover();
+
   await expect(output(page, 'Carousel playing')).toHaveText('hovered');
   await page.clock.runFor(3000);
+
   await expect(output(page, 'Carousel current')).toHaveText('0');
   await button(page, 'Carousel next ref').hover();
   await page.clock.runFor(1050);
@@ -458,9 +508,11 @@ for (const mode of ['ondemand', 'anticipated']) {
       await page.getByRole('combobox', { name: 'Carousel lazy', exact: true }).selectOption(mode);
     });
     await settled(page);
+
     await expect(carousel(page).locator('.slick-slide[data-index="2"] h3')).toHaveCount(0);
     await carousel(page).locator('.slick-active input').fill('Lazy draft');
     await button(page, 'Carousel go ref').click();
+
     await expect(carousel(page).locator('.slick-active h3')).toHaveText('Slide C');
     await expect(output(page, 'Carousel events')).toContainText('lazy:2');
     await settled(page);
@@ -497,8 +549,10 @@ test('Carousel responsive settings activate on media changes and retain source b
   await expect(carousel(page).locator('.slick-slide.slick-active')).toHaveCount(2);
   await expect(carousel(page).locator('.slick-dots li')).toHaveCount(2);
   await page.setViewportSize({ width: 800, height: 1100 });
+
   await expect(carousel(page).locator('.slick-slide.slick-active')).toHaveCount(3);
   await page.setViewportSize({ width: 1200, height: 900 });
+
   await expect(carousel(page).locator('.slick-slide.slick-active')).toHaveCount(1);
 });
 
@@ -513,8 +567,10 @@ test('Carousel responsive unslick restores original children and remounts a work
   await expect(carousel(page).locator('.slick-list')).toHaveCount(0);
   await expect(output(page, 'Carousel current')).toHaveText('none');
   await page.setViewportSize({ width: 1200, height: 900 });
+
   await expect(carousel(page).locator('.slick-list')).toBeVisible();
   await button(page, 'Carousel next ref').click();
+
   await expect(output(page, 'Carousel current')).toHaveText('1');
 });
 
@@ -533,6 +589,7 @@ test('Carousel uses the source mouse drag gate and changes slides only after ena
   await page.mouse.down();
   await page.mouse.move(bounds.x + 100, bounds.y + 25, { steps: 5 });
   await page.mouse.up();
+
   await expect(output(page, 'Carousel current')).toHaveText('0');
   await output(page, 'Carousel draggable').check();
   await page.evaluate(() => window.getSelection()?.removeAllRanges());
@@ -623,6 +680,7 @@ for (const flag of ['Carousel touch', 'Carousel swipe']) {
 
     await expect(output(page, 'Carousel current')).toHaveText('0');
     await button(page, 'Следующий слайд').click();
+
     await expect(output(page, 'Carousel current')).toHaveText('1');
   });
 }
@@ -630,6 +688,7 @@ for (const flag of ['Carousel touch', 'Carousel swipe']) {
 test('Carousel handles image errors without replacing native image handlers', async ({ page }) => {
   await output(page, 'Carousel images').check();
   const image = carousel(page).locator('.slick-slide[data-index="0"] img');
+
   await expect(image).toBeVisible();
   await image.evaluate(element => element.addEventListener('error', () => {
     element.setAttribute('data-native-error', 'true');

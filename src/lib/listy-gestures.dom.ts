@@ -42,7 +42,8 @@ export function connectListyGestures(holder: HTMLDivElement, options: ListyGestu
       if (smooth && boundary) {
         view!.clearTimeout(timer);
         locked = false;
-      } else if (!boundary || locked) {
+      }
+      else if (!boundary || locked) {
         view!.clearTimeout(timer);
         locked = true;
         timer = view!.setTimeout(() => { locked = false; }, 50);
@@ -206,10 +207,12 @@ export function connectListyGestures(holder: HTMLDivElement, options: ListyGestu
     if (y <= rect.top) {
       dragOffset = -Math.floor(Math.sqrt(rect.top - y));
       continueDrag();
-    } else if (y >= rect.bottom) {
+    }
+    else if (y >= rect.bottom) {
       dragOffset = Math.floor(Math.sqrt(y - rect.bottom));
       continueDrag();
-    } else view!.cancelAnimationFrame(dragFrame);
+    }
+    else view!.cancelAnimationFrame(dragFrame);
   }
 
   holder.addEventListener('mousedown', handleMouseDown);

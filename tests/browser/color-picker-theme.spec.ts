@@ -19,6 +19,7 @@ for (const sample of reference.cases) {
     test(`ColorPicker ${mode} popup theme matches source for ${sample.name}`, async ({ page }) => {
       await page.getByLabel('ColorPicker theme preset', { exact: true }).selectOption(sample.name);
       await page.getByLabel('ColorPicker theme popup', { exact: true }).selectOption(mode);
+
       await expect(page.locator('.theme-color-popup')).toBeVisible();
 
       await expect.poll(() => page.evaluate(snapshotColorPickerThemePopup)).toEqual(expected);
@@ -32,9 +33,13 @@ test('ColorPicker theme updates keep popup position, hex draft, caret and collap
     const popup = page.locator('.theme-color-popup');
     const presets = popup.getByRole('button', { name: 'Stored colors', exact: true });
     await presets.click();
+
     await expect(presets).toHaveAttribute('aria-expanded', 'false');
     const input = popup.getByLabel('Hex color', { exact: true });
-    const trigger = page.getByRole('button', { name: 'Themed ColorPicker normal basic', exact: true });
+    const trigger = page.getByRole(
+      'button',
+      { name: 'Themed ColorPicker normal basic', exact: true }
+    );
     const originalInput = await input.elementHandle();
     const originalPopup = await popup.elementHandle();
     const originalTrigger = await trigger.elementHandle();
@@ -45,6 +50,7 @@ test('ColorPicker theme updates keep popup position, hex draft, caret and collap
       .dispatchEvent('click');
 
     const updated = reference.cases.find(item => item.name === 'updated-aliases')!;
+
     await expect(trigger).toHaveCSS('font-size', updated.metrics.normal.basic.root['font-size']);
     await expect(popup).toHaveCSS('font-size', updated.popups.basic.popup!['font-size']);
     await expect(popup).toHaveCSS('position', 'absolute');
@@ -72,13 +78,17 @@ test('ColorPicker theme updates keep popup position, hex draft, caret and collap
 
 test('ColorPicker inheritance reset keeps its focused trigger, color and DOM identity',
   async ({ page }) => {
-    const trigger = page.getByRole('button', { name: 'Themed ColorPicker nested basic', exact: true });
+    const trigger = page.getByRole(
+      'button',
+      { name: 'Themed ColorPicker nested basic', exact: true }
+    );
     const original = await trigger.elementHandle();
     await trigger.focus();
 
     await page.getByLabel('Inherit ColorPicker theme', { exact: true }).dispatchEvent('click');
 
     const expected = reference.cases.find(item => item.name === 'default')!.metrics.nested.basic;
+
     await expect(trigger).toHaveCSS('font-family', expected.root['font-family']);
     await expect(trigger).toHaveCSS('font-size', expected.root['font-size']);
     expect(await trigger.evaluate((node, old) => node === old, original)).toBe(true);
@@ -92,7 +102,10 @@ test('ColorPicker restores default styling and removes its portal without changi
     await page.getByLabel('ColorPicker theme popup', { exact: true }).selectOption('basic');
     const popup = page.locator('.theme-color-popup');
     const input = popup.getByLabel('Hex color', { exact: true });
-    const trigger = page.getByRole('button', { name: 'Themed ColorPicker normal basic', exact: true });
+    const trigger = page.getByRole(
+      'button',
+      { name: 'Themed ColorPicker normal basic', exact: true }
+    );
     const originalInput = await input.elementHandle();
     const originalPopup = await popup.elementHandle();
     await input.fill('12');

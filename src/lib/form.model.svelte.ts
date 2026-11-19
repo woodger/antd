@@ -432,7 +432,8 @@ export function createForm<Values extends FormValues>({
       let rules: readonly ValidationRule<Values>[];
       try {
         rules = resolveValidationRules(fieldRules(field), form);
-      } catch (error) {
+      }
+      catch (error) {
         if (!validateOnly && field.run === token) {
           field.validating = false;
           notifyFieldMeta(field);
@@ -509,11 +510,13 @@ export function createForm<Values extends FormValues>({
         selected = fields.filter((field) =>
           names.some((name) => containsFormPath(name, fieldPath(field)))
         );
-      } else if (settings?.validateOnly) {
+      }
+      else if (settings?.validateOnly) {
         selected = fields.filter((field) =>
           names.some((name) => sameFormPath(name, fieldPath(field)))
         );
-      } else {
+      }
+      else {
         selected = names.map(ensureField);
       }
     }
@@ -752,7 +755,8 @@ export function createForm<Values extends FormValues>({
       if (names) {
         if (!sameFormValue(values, next)) revision++;
         updateValues(next);
-      } else {
+      }
+      else {
         revision++;
         values = next;
         resetKey = {};
@@ -794,7 +798,8 @@ export function createForm<Values extends FormValues>({
         await onFinish(result);
 
         return { status: 'success' };
-      } catch (error) {
+      }
+      catch (error) {
         if (error instanceof FormValidationError) return { status: 'invalid', error };
 
         submissionError = error;
@@ -892,7 +897,8 @@ export function createForm<Values extends FormValues>({
             }
 
             registered.registration = undefined;
-          } else {
+          }
+          else {
             registered.run = ++request;
             fieldRegistry.delete(registered);
             fields = [...fieldRegistry];

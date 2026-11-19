@@ -12,6 +12,7 @@ for (const sample of reference.cases) {
         await page.getByLabel('Modal theme preset', { exact: true }).selectOption(sample.name);
         await page.getByLabel('Modal theme scope', { exact: true }).selectOption(scope);
         const input = page.getByRole('textbox', { name: 'Modal draft', exact: true });
+
         await expect(input).toBeVisible();
         await page.mouse.move(20, 1100);
         await input.focus();
@@ -26,6 +27,7 @@ for (const sample of reference.cases) {
         await page.getByLabel('Modal theme preset', { exact: true }).selectOption(sample.name);
         await page.getByLabel('Modal theme mode', { exact: true }).selectOption(mode);
         const input = page.getByRole('textbox', { name: 'Modal draft', exact: true });
+
         await expect(input).toBeVisible();
         await page.mouse.move(20, 1100);
         await input.focus();
@@ -82,6 +84,7 @@ test('Modal inheritance reset preserves its focused close control and isolates t
     const close = page.locator('.ant-modal-close');
     await close.focus();
     const originalClose = await close.elementHandle();
+
     await expect(page.locator('.ant-modal-title')).toHaveCSS('font-size', '23px');
 
     await page.getByLabel('Inherit Modal theme', { exact: true }).dispatchEvent('click');
@@ -105,6 +108,7 @@ test('Modal portal synchronization preserves component aliases, width, draft and
     const input = page.getByRole('textbox', { name: 'Modal draft', exact: true });
     await input.fill('Portal draft');
     const original = await input.elementHandle();
+
     expect(await dialog.evaluate(node => node.parentElement === document.body)).toBe(true);
     await expect(page.locator('.ant-modal-title')).toHaveCSS('font-size', '23px');
 

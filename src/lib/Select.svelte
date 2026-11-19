@@ -220,7 +220,10 @@
   let uncontrolledLabels = $state.raw<readonly SelectValueItem<RawValue>[]>();
   let labelFeaturesUsed = $state(untrack(() => hasSelectLabelFeatures(
     labelInValue, optionLabelProp, labelRender,
-    selectValueDrafts(value !== undefined ? value : initialDefault, mode === 'multiple' || mode === 'tags')
+    selectValueDrafts(
+      value !== undefined ? value : initialDefault,
+      mode === 'multiple' || mode === 'tags'
+    )
   )));
   let activeIndex = $state(-1);
   let componentAccessibilityIndex = $state(0);
@@ -293,7 +296,13 @@
   let isReadOnly = $derived(!canSearch && (!multiple || !attributes.required));
   let intrinsicWidth = $derived(_autoWidth && !multiple && isReadOnly);
   let localDrafts = $derived(selectValueDrafts(selectedValue, multiple));
-  let labelFeatures = $derived(hasSelectLabelFeatures(labelInValue, optionLabelProp, labelRender, localDrafts, internalLabels));
+  let labelFeatures = $derived(hasSelectLabelFeatures(
+    labelInValue,
+    optionLabelProp,
+    labelRender,
+    localDrafts,
+    internalLabels
+  ));
   let valueDrafts = $derived(value === undefined && providedValue === undefined && uncontrolledLabels
     && (labelFeatures || labelFeaturesUsed) ? uncontrolledLabels : localDrafts);
   let selectedRaw = $derived(multiple ? undefined : selectValueRaw<RawValue>(valueDrafts[0]));
@@ -348,7 +357,12 @@
   });
   let filteredOptions = $derived(tagMode
     ? getSelectTagOptions(options, selectionData.display, dataMaps, fields, search, filterConfig)
-    : filterSelectData(options, search, fields, { ...filterConfig, defaultMatch: matchesSelectDataLabel }));
+    : filterSelectData(
+      options,
+      search,
+      fields,
+      { ...filterConfig, defaultMatch: matchesSelectDataLabel }
+    ));
   let orderedOptions = $derived(sortSelectData(
     filteredOptions, search, searchConfig.filterSort
   ));
@@ -409,7 +423,10 @@
         prefix: ':scope > [class*="-content-item-prefix"]'
       }));
     // Query/style/width не сбрасывают историю размеров rest и suffix.
-    $effect(() => { void tags.length; overflow.schedule(); });
+    $effect(() => {
+      void tags.length;
+      overflow.schedule();
+    });
     return overflow.destroy;
   });
   $effect(() => {
@@ -433,7 +450,8 @@
           disconnect = connectSelectTagOverflow(host, update, {
             tag: ':scope > [data-select-tag]', rest: ':scope > [data-select-rest]', input
           });
-        } else disconnect = connectSelectTagOverflow(host, update);
+        }
+        else disconnect = connectSelectTagOverflow(host, update);
       }
     });
     return () => {
@@ -628,7 +646,10 @@
         optionList.prepare();
         return source.position(anchorRect, popupRect, viewport);
       },
-      applyPosition: position => source.commitFrame(() => popupStyle.position(position, source.style)),
+      applyPosition: position => source.commitFrame(() => popupStyle.position(
+        position,
+        source.style
+      )),
       onAlign: position => { popupPlacement = position.alignedPlacement; },
       onPlacement: () => {},
       onVisibilityChange: next => { shown = next; },
@@ -741,7 +762,8 @@
   }
 
   function registerRoot(registration: SelectRootRegistration<RootElement>) {
-    const current = { registration }; customRoot = current;
+    const current = { registration };
+    customRoot = current;
     return () => { if (customRoot === current) customRoot = undefined; };
   }
   const initializedComponentEditors = new WeakSet<HTMLElement>();
@@ -761,7 +783,8 @@
       }
     }
     untrack(() => componentInputStyle.prepare(editor, componentInputStyleFrame(), hydrating));
-    const current = { registration }; customInput = current;
+    const current = { registration };
+    customInput = current;
     return () => { if (customInput === current) customInput = undefined; };
   }
   function componentDOMAttributes(aria = true) {
@@ -779,7 +802,9 @@
   }
   function componentBlur(event: FocusEvent) {
     if (componentDestroyed) return;
-    focused = false; composing = false; pastedText = undefined;
+    focused = false;
+    composing = false;
+    pastedText = undefined;
     const state = committedBlurState;
     const disabled = state.componentInput ? componentInputBlurDisabled : state.disabled;
     if (state.tagMode) submitTag(state.search);
@@ -811,7 +836,10 @@
     componentCloseChannel?.port2.close();
     componentCloseChannel = undefined;
   }
-  onDestroy(() => { componentDestroyed = true; cancelComponentClose(); });
+  onDestroy(() => {
+    componentDestroyed = true;
+    cancelComponentClose();
+  });
   function scheduleComponentClose(fromBlur = false, useMessageChannel = false) {
     if (componentDestroyed) return;
     cancelComponentClose();
@@ -833,7 +861,8 @@
         close();
       };
       channel.port2.postMessage(null);
-    } else componentCloseTimer = setTimeout(() => {
+    }
+    else componentCloseTimer = setTimeout(() => {
       componentCloseTimer = undefined;
       close();
     }, 0);
@@ -854,12 +883,16 @@
     }
     if (wasOpen && event.key !== ' ') handleKeyboardNavigation(event);
     else if (event.key === 'Backspace' && multiple && !search) {
-      const last = [...tags].reverse().find(tag => !tag.disabled); if (last) remove(last.value, false);
+      const last = [...tags].reverse().find(tag => !tag.disabled);
+      if (last) remove(last.value, false);
     }
     onKeyDown?.(event);
   }
   function componentSelectorMouseDown(event: MouseEvent) {
-    if (resolvedDisabled) { onMouseDown?.(event); return; }
+    if (resolvedDisabled) {
+      onMouseDown?.(event);
+      return;
+    }
     if (componentClearMouseDown.has(event)) {
       if (expanded && !multiple) scheduleComponentClose();
       onMouseDown?.(event);
@@ -876,17 +909,29 @@
     return slot && typeof slot === 'object' && 'props' in slot ? slot.props as object | undefined : undefined;
   }
   function componentRootContext() {
-    void value; void providedOpen; void internalSearch; void focused; void expanded;
-    void resolvedDisabled; void semantics; void resolvedSuffix;
+    void value;
+    void providedOpen;
+    void internalSearch;
+    void focused;
+    void expanded;
+    void resolvedDisabled;
+    void semantics;
+    void resolvedSuffix;
     const own = ownComponentProps(rootSlot);
     const attrs: Record<string, unknown> = {};
     const generated = { ...componentDOMAttributes(),
       ...(rootTitle !== undefined ? { title: rootTitle } : {}),
       onfocusin: componentFocus, onfocusout: componentBlur, onkeydown: componentRootKeyboard,
       onkeyup: (event: KeyboardEvent) => onKeyUp?.(event),
-      onclick: (event: MouseEvent) => { setOpen(!expanded); onClick?.(event); }
+      onclick: (event: MouseEvent) => {
+        setOpen(!expanded);
+        onClick?.(event);
+      }
     };
-    return { attributes: mergeSelectComponentAttributes(attrs, generated, own, 'root'), register: registerRoot };
+    return {
+      attributes: mergeSelectComponentAttributes(attrs, generated, own, 'root'),
+      register: registerRoot
+    };
   }
   function restoreComponentInput(input: HTMLInputElement) {
     const registration = customInput;
@@ -913,7 +958,11 @@
     return raw === null || typeof raw === 'string' ? raw : resolveSelectStyleFrame(raw).text;
   }
   function componentInputContext() {
-    void internalSearch; void focused; void expanded; void semantics; void resolvedSuffix;
+    void internalSearch;
+    void focused;
+    void expanded;
+    void semantics;
+    void resolvedSuffix;
     const aria = Object.fromEntries(Object.entries(attributes).filter(([key]) => key.startsWith('aria-')));
     const styleText = componentInputStyleText();
     const generated = { id: controlId, type: 'text',
@@ -924,9 +973,15 @@
       autocomplete: attributes.autocomplete || 'new-password',
       class: [`${prefix}-input`, semantics.classes.input].filter(Boolean).join(' '), disabled: resolvedDisabled,
       value: componentInputValue,
-      oninput: (event: Event) => { handleInput(event as Event & { currentTarget: HTMLInputElement }); restoreComponentInput(event.currentTarget as HTMLInputElement); },
+      oninput: (event: Event) => {
+        handleInput(event as Event & { currentTarget: HTMLInputElement });
+        restoreComponentInput(event.currentTarget as HTMLInputElement);
+      },
       onkeydown: (event: KeyboardEvent) => handleKeydown(event as KeyboardEvent & { currentTarget: HTMLInputElement }),
-      onblur: () => { composing = false; pastedText = undefined; },
+      onblur: () => {
+        composing = false;
+        pastedText = undefined;
+      },
       onpaste: (event: ClipboardEvent) => handlePaste(event as ClipboardEvent & { currentTarget: HTMLInputElement }),
       oncompositionstart: (event: CompositionEvent) => handleCompositionStart(event as CompositionEvent & { currentTarget: HTMLInputElement }),
       oncompositionend: (event: CompositionEvent) => handleCompositionEnd(event as CompositionEvent & { currentTarget: HTMLInputElement }),
@@ -1052,7 +1107,10 @@
   function notifySelect(value: RawValue, data: OptionType | undefined, selected: boolean) {
     const callback = (selected ? onSelect : onDeselect) as
       ((value: unknown, option: OptionType) => void) | undefined;
-    callback?.(selectValueEvent(value, data, fields, Boolean(labelInValue)), copySelectData(data) as OptionType);
+    callback?.(
+      selectValueEvent(value, data, fields, Boolean(labelInValue)),
+      copySelectData(data) as OptionType
+    );
   }
 
   function submitTag(text: string) {
@@ -1075,14 +1133,18 @@
     if (rootSlot || inputSlot) focus(); else control?.focus({ preventScroll: true });
     if (multiple) {
       if (selectedValues.length) changeMultiple([], 'display');
-    } else {
+    }
+    else {
       const changed = selectedRaw !== undefined;
       useDefault = false;
       rememberLabels([]);
       value = undefined;
       if (changed) {
         (onValueChange as ((value: undefined) => void) | undefined)?.(undefined);
-        (onChange as ((value: undefined, option: undefined) => void) | undefined)?.(undefined, undefined);
+        (onChange as ((value: undefined, option: undefined) => void) | undefined)?.(
+          undefined,
+          undefined
+        );
       }
     }
     if (!blockedSearch && !preserveSearch) {
@@ -1139,7 +1201,8 @@
         if (removing)
           next.delete(chosenValue);
         else next.add(chosenValue);
-      } else {
+      }
+      else {
         if (!next.size && !clearQuery) return;
         onClear?.();
         next.clear();
@@ -1159,7 +1222,12 @@
     const rawOption = chosenValue === undefined ? undefined : copySelectData(data) as OptionType;
     if (!option && selected) onClear?.();
     useDefault = false;
-    const labeled = convertSelectValues(chosenValue === undefined ? [] : [chosenValue], dataMaps, fields, optionLabelProp);
+    const labeled = convertSelectValues(
+      chosenValue === undefined ? [] : [chosenValue],
+      dataMaps,
+      fields,
+      optionLabelProp
+    );
     const output = selectValueOutput(labeled, false, Boolean(labelInValue));
     const keepSupplied = !changed && keepSelectSuppliedValue(value, providedValue, chosenValue);
     if (!keepSupplied) {
@@ -1305,30 +1373,37 @@
 
       if (!expanded) {
         openList(event.key === 'ArrowUp' ? 'last' : 'first');
-      } else {
+      }
+      else {
         activate(enabledIndex(activeIndex, event.key === 'ArrowUp' ? 'previous' : 'next'), true);
       }
-    } else if ((event.key === 'Home' || event.key === 'End') && expanded) {
+    }
+    else if ((event.key === 'Home' || event.key === 'End') && expanded) {
       event.preventDefault();
       activate(enabledIndex(-1, event.key === 'Home'
         ? 'first'
         : 'last'), true);
-    } else if (event.key === 'Enter' || (event.key === ' ' && !canSearch)) {
+    }
+    else if (event.key === 'Enter' || (event.key === ' ' && !canSearch)) {
       event.preventDefault();
 
       if (!expanded) {
         openList();
         if (tagMode && event.key === 'Enter' && activeIndex >= 0) choose(filtered[activeIndex]);
-      } else if (activeIndex >= 0) {
+      }
+      else if (activeIndex >= 0) {
         choose(filtered[activeIndex]);
       }
-    } else if (event.key === 'Escape' && expanded) {
+    }
+    else if (event.key === 'Escape' && expanded) {
       event.preventDefault();
       event.stopPropagation();
       setOpen(false);
-    } else if (event.key === 'Tab') {
+    }
+    else if (event.key === 'Tab') {
       setOpen(false);
-    } else if (multiple
+    }
+    else if (multiple
       && event.key === 'Backspace'
       && !search
       && !event.ctrlKey
@@ -1338,14 +1413,16 @@
 
       if (!rootSlot && !inputSlot) event.preventDefault();
       if (last) remove(last.value, !rootSlot && !inputSlot);
-    } else if (!multiple
+    }
+    else if (!multiple
       && mergedAllowClear
       && !canSearch
       && (event.key === 'Backspace'
         || event.key === 'Delete')) {
       event.preventDefault();
       choose(undefined);
-    } else if (!canSearch
+    }
+    else if (!canSearch
       && event.key.length === 1
       && !event.ctrlKey
       && !event.metaKey
@@ -1375,7 +1452,10 @@
   }
 
   function restoreControlledSearch(input: HTMLInputElement) {
-    if (inputSlot) { restoreComponentInput(input); return; }
+    if (inputSlot) {
+      restoreComponentInput(input);
+      return;
+    }
     if (controlledSearch === undefined) return;
 
     void tick().then(() => {
@@ -1473,7 +1553,8 @@
     if (!event.defaultPrevented && !activated) {
       if (expanded && !canSearch) {
         setOpen(false);
-      } else {
+      }
+      else {
         openList();
       }
     }
@@ -1538,7 +1619,8 @@
       event.preventDefault();
       if (rootSlot || inputSlot) focus(); else control?.focus();
       openList();
-    } else if ((target === event.currentTarget || leading && event.composedPath().some(node =>
+    }
+    else if ((target === event.currentTarget || leading && event.composedPath().some(node =>
       node instanceof Element && node.classList.contains(`${prefix}-prefix`)
         && node.parentElement === event.currentTarget)) && !resolvedDisabled) {
       event.preventDefault();

@@ -54,7 +54,11 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 }
 
 function defineValue(target: object, key: string | number, value: unknown) {
-  Object.defineProperty(target, key, { value, enumerable: true, configurable: true, writable: true });
+  Object.defineProperty(
+    target,
+    key,
+    { value, enumerable: true, configurable: true, writable: true }
+  );
 }
 
 /** Копирует изменяемые контейнеры, сохраняя Dayjs и другие непрозрачные экземпляры. */

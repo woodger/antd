@@ -25,6 +25,7 @@ for (const [index, entry] of reference.cases.entries()) {
       await page.getByRole('combobox', { name: 'Upload directory sample', exact: true })
         .selectOption(String(index));
       const input = page.locator('input[type=file]');
+
       expect(await input.evaluate((node: HTMLInputElement) => ({
         directory: node.getAttribute('directory'), webkitdirectory: node.getAttribute('webkitdirectory'),
         directoryProperty: node.webkitdirectory, multiple: node.multiple
@@ -40,7 +41,8 @@ for (const [index, entry] of reference.cases.entries()) {
           node.files = transfer.files;
           node.dispatchEvent(new Event('change', { bubbles: true }));
         }, entry.sample.files);
-      } else await transfer(page, entry.sample);
+      }
+      else await transfer(page, entry.sample);
 
       const expected = entry.readableCounterpart ?? entry;
       // Source пропускает error callback файла; Native продолжает оставшимися читаемыми файлами.
@@ -107,9 +109,13 @@ for (const action of ['disable', 'unmount'] as const) {
           }
         })
       }] });
-      const event = new DragEvent('drop', { dataTransfer: transfer, bubbles: true, cancelable: true });
+      const event = new DragEvent(
+        'drop',
+        { dataTransfer: transfer, bubbles: true, cancelable: true }
+      );
       document.querySelector('input[type=file]')!.parentElement!.dispatchEvent(event);
     });
+
     await expect(page.getByLabel('Directory observed', { exact: true })).toHaveText('[]');
     if (action === 'disable') await page.getByRole('checkbox', {
       name: 'Disable directory Upload', exact: true
@@ -138,7 +144,10 @@ test('Upload directory picker preserves real Chromium relative paths and applies
     const input = page.locator('input[type=file]');
     const oldInput = await input.elementHandle();
 
-    await input.setInputFiles(fileURLToPath(new URL('./fixtures/upload-directory-data', import.meta.url)));
+    await input.setInputFiles(fileURLToPath(new URL(
+      './fixtures/upload-directory-data',
+      import.meta.url
+    )));
 
     await expect.poll(async () => {
       const entries = JSON.parse((await page.getByLabel('Directory before', { exact: true })

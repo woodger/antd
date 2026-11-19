@@ -11,7 +11,11 @@ declare global {
       editor: HTMLInputElement;
       editorParent: Node | null;
       outside: HTMLInputElement;
-      refs: () => { root?: HTMLDivElement | HTMLButtonElement; editor?: HTMLInputElement; control?: TreeSelectRef };
+      refs: () => {
+        root?: HTMLDivElement | HTMLButtonElement;
+        editor?: HTMLInputElement;
+        control?: TreeSelectRef
+      };
       events: () => unknown[][];
       update: (mode: TreeSelectInertApiMode) => Promise<void>;
       dispose: () => Promise<void>;
@@ -31,12 +35,19 @@ await tick();
 const fixture = instance.fixtureApi()!;
 const state: NonNullable<Window['treeSelectInertApiHydration']> = {
   root, editor, editorParent, outside, refs: () => fixture.readRefs(), events: () => fixture.readEvents(),
-  async update(mode) { fixture.update(mode); await tick(); },
+  async update(mode) {
+    fixture.update(mode);
+    await tick();
+  },
   async dispose() {
     await unmount(instance);
     await tick();
     const refs = fixture.readRefs();
-    state.cleaned = { root: refs.root == null, editor: refs.editor == null, control: refs.control == null };
+    state.cleaned = {
+      root: refs.root == null,
+      editor: refs.editor == null,
+      control: refs.control == null
+    };
   }
 };
 window.treeSelectInertApiHydration = state;

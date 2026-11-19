@@ -14,9 +14,16 @@
   const recorder = createSelectSurfaceRecorder();
   const events: unknown[] = [], rawEvents: unknown[] = [];
   const options = [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }];
-  const classes = { root: 'surface-width-own-root', input: 'surface-width-own-input', popup: { root: 'surface-width-own-popup' } };
+  const classes = {
+    root: 'surface-width-own-root',
+    input: 'surface-width-own-input',
+    popup: { root: 'surface-width-own-popup' }
+  };
   const provider = untrack(() => withoutTheme ? { popupOverflow: 'viewport' as const }
-    : { theme: { token: { motion: false }, cssVar: { key: 'select-surface-input-width-own' } }, popupOverflow: 'viewport' as const });
+    : {
+      theme: { token: { motion: false }, cssVar: { key: 'select-surface-input-width-own' } },
+      popupOverflow: 'viewport' as const
+    });
   let widthState = $state.raw<{ kind: SelectSurfaceInputWidthKind }>(untrack(() => ({ kind: sample.initialWidthKind })));
   let query = $state(untrack(() => initialQuery));
   let open = $state(true);
@@ -32,15 +39,36 @@
   function callback<Value>(name: string, value: Value): Value {
     return recorder.register(value, { callback: 'input-width-own-' + name });
   }
-  function event(...args: unknown[]) { events.push(recorder.encode(args)); rawEvents.push(recorder.raw(args)); }
-  const onOpenChange = callback('open', (value: boolean) => { open = value; event('open', value); });
-  const onSearch = callback('search', (value: string) => { query = value; event('search', value); });
-  const onChange = callback('change', (value: string[], option: unknown) => { model = value; event('change', value, option); });
-  const onSelect = callback('select', (value: string, option: unknown) => event('select', value, option));
-  const onDeselect = callback('deselect', (value: string, option: unknown) => event('deselect', value, option));
+  function event(...args: unknown[]) {
+    events.push(recorder.encode(args));
+    rawEvents.push(recorder.raw(args));
+  }
+  const onOpenChange = callback('open', (value: boolean) => {
+    open = value;
+    event('open', value);
+  });
+  const onSearch = callback('search', (value: string) => {
+    query = value;
+    event('search', value);
+  });
+  const onChange = callback('change', (value: string[], option: unknown) => {
+    model = value;
+    event('change', value, option);
+  });
+  const onSelect = callback(
+    'select',
+    (value: string, option: unknown) => event('select', value, option)
+  );
+  const onDeselect = callback(
+    'deselect',
+    (value: string, option: unknown) => event('deselect', value, option)
+  );
   const onClear = callback('clear', () => event('clear'));
   let inputStyle = $derived.by(() => {
-    const style: { fontSize: number; width?: number } = { fontSize: 12, width: widthState.kind === 'numeric20' ? 20 : undefined };
+    const style: { fontSize: number; width?: number } = {
+      fontSize: 12,
+      width: widthState.kind === 'numeric20' ? 20 : undefined
+    };
     if (widthState.kind === 'omitted') delete style.width;
     return style;
   });
@@ -52,7 +80,9 @@
   export function update(action: SelectSurfaceInputWidthOwnAction) {
     if (action.type === 'width-own') widthState = { kind: action.kind };
   }
-  export function readRefs() { return { control, root: publicRoot, editor, publicRoot, publicEditor: editor }; }
+  export function readRefs() {
+    return { control, root: publicRoot, editor, publicRoot, publicEditor: editor };
+  }
   export function read() {
     if (alive) lastAuthored = { widthOwnKey: Object.hasOwn(inputStyle, 'width'), widthValue: recorder.encode(inputStyle.width),
       inputStyle: recorder.encode(inputStyle), rawInputStyle: recorder.raw(inputStyle),
@@ -64,7 +94,10 @@
       alive, events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], ...lastAuthored };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+  }
 </script>
 
 <section data-surface-case={sampleId} data-surface-bound={Boolean(control)} style="font-family:initial;font-size:16px;line-height:normal">

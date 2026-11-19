@@ -24,17 +24,32 @@ export function snapshotImagePrefix(override?: string) {
 
   return {
     thumbnail: css(thumbnail, [...font, ...box, 'position', 'display']),
-    image: css(thumbnail.querySelector('img'), ['width', 'height', 'vertical-align', 'border-radius']),
+    image: css(
+      thumbnail.querySelector('img'),
+      ['width', 'height', 'vertical-align', 'border-radius']
+    ),
     cover: css(cover, [...font, 'position', 'opacity', 'display', 'justify-content']),
     viewer: viewer ? {
       zIndex: getComputedStyle(viewer).zIndex,
       image: css(part('-img'), ['max-width', 'max-height', 'cursor', 'transform']),
       mask: css(part('-mask'), ['display', 'background-color', 'backdrop-filter']),
       footer: css(part('-footer'), ['bottom', 'gap']),
-      actions: css(part('-actions'), [...font, 'padding', 'gap', 'background-color', 'border-radius']),
-      enabled: css(part('-actions-action-zoomIn'), ['font-size', 'color', 'padding', 'background-color']),
-      disabled: css(part('-actions-action-zoomOut'), ['font-size', 'color', 'padding', 'background-color']),
-      close: css(part('-close'), [...font, 'padding', 'top', 'inset-inline-end', 'background-color']),
+      actions: css(
+        part('-actions'),
+        [...font, 'padding', 'gap', 'background-color', 'border-radius']
+      ),
+      enabled: css(
+        part('-actions-action-zoomIn'),
+        ['font-size', 'color', 'padding', 'background-color']
+      ),
+      disabled: css(
+        part('-actions-action-zoomOut'),
+        ['font-size', 'color', 'padding', 'background-color']
+      ),
+      close: css(
+        part('-close'),
+        [...font, 'padding', 'top', 'inset-inline-end', 'background-color']
+      ),
       previous: css(part('-switch-prev'), ['color', 'font-size', 'padding', 'background-color']),
       next: css(part('-switch-next'), ['color', 'font-size', 'padding', 'background-color']),
       progress: part('-progress')?.textContent ?? null

@@ -9,6 +9,7 @@ for (const sample of reference.cases) {
     async ({ page }) => {
       await page.goto('/?fixture=masonry-theme');
       await page.getByLabel('Masonry theme preset', { exact: true }).selectOption(sample.name);
+
       await expect(page.locator('[data-masonry-theme="normal"] .ant-masonry-item')).toHaveCount(4);
       await expect(page.locator('.ant-masonry-item-fade')).toHaveCount(0);
 
@@ -22,6 +23,7 @@ test('Masonry font aliases remeasure fresh content while preserving drafts, focu
     const root = page.locator('[data-masonry-theme="normal"] .ant-masonry');
     const stale = page.locator('[data-masonry-theme="stale"] .ant-masonry');
     const draft = root.getByRole('textbox', { name: 'Masonry theme draft normal b', exact: true });
+
     await expect(root).toHaveCSS('height', '158px');
     await expect(stale).toHaveCSS('height', '158px');
     await draft.fill('Retained Masonry draft');
@@ -76,6 +78,7 @@ test('Masonry disabling motion finishes pending leave even when CSS durations re
     await page.getByLabel('Masonry theme preset', { exact: true })
       .selectOption('motion-disabled-long-css');
     const root = page.locator('[data-masonry-theme="normal"] .ant-masonry');
+
     await expect(root.locator('.ant-masonry-item')).toHaveCount(4);
     await expect(root.locator('.ant-masonry-item-fade')).toHaveCount(0);
     await expect(root.locator('.ant-masonry-item').first())
@@ -85,6 +88,7 @@ test('Masonry disabling motion finishes pending leave even when CSS durations re
     await expect(root.locator('.ant-masonry-item-fade')).toHaveCount(0);
     await page.getByRole('button', { name: 'Remove themed Masonry item', exact: true }).click();
     const leaving = root.locator('.ant-masonry-item:has([data-key="b"])');
+
     await expect(leaving).toHaveClass(/ant-masonry-item-fade-leave-active/);
     await page.getByRole('button', { name: 'Disable Masonry motion', exact: true }).click();
 
@@ -97,6 +101,7 @@ test('Masonry removes items without transition events when theme motion is disab
   async ({ page }) => {
     await page.goto('/?fixture=masonry-theme');
     const root = page.locator('[data-masonry-theme="normal"] .ant-masonry');
+
     await expect(root.locator('.ant-masonry-item')).toHaveCount(4);
     await expect(root.locator('.ant-masonry-item-fade')).toHaveCount(0);
     await page.getByRole('button', { name: 'Remove themed Masonry item', exact: true }).click();
@@ -116,6 +121,7 @@ test('Masonry finishes zero-duration component motion without requiring syntheti
     await page.getByLabel('Masonry theme preset', { exact: true }).selectOption('default');
     await page.getByLabel('Use zero-duration Masonry CSS', { exact: true }).check();
     const root = page.locator('[data-masonry-theme="normal"] .ant-masonry');
+
     await expect(root.locator('.ant-masonry-item')).toHaveCount(4);
     await expect(root.locator('.ant-masonry-item-fade')).toHaveCount(0);
     await expect(root.locator('.ant-masonry-item').first())

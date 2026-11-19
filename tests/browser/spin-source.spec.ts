@@ -11,6 +11,7 @@ test.beforeEach(async ({ page }) => {
   await page.clock.install({ time });
   await page.clock.pauseAt(time);
   await page.goto('/?fixture=spin-source');
+
   await expect(page.getByRole('heading', { name: 'Source Spin', exact: true })).toBeVisible();
 });
 
@@ -26,7 +27,8 @@ for (const sample of reference.cases) {
       expect(actual.dot).toBeNull();
       expect(actual.progress).toBeNull();
       await expect(page.locator(root)).toBeHidden();
-    } else {
+    }
+    else {
       await expect.poll(snapshot).toEqual(sample.snapshot);
     }
     await expect(page.getByLabel('Spin source ref', { exact: true })).toHaveText('true');
@@ -48,6 +50,7 @@ test(
       previous = sample.time;
     }
     const progress = page.locator(root).getByRole('progressbar');
+
     await expect(progress).toHaveAttribute('aria-valuenow', '96.01238963686535');
 
     await page.getByRole('button', { name: 'Stop source Spin', exact: true }).dispatchEvent('click');
@@ -60,6 +63,7 @@ test(
 
     await expect.poll(value).toBe(0);
     await page.clock.runFor(200);
+
     await expect(progress).toHaveAttribute('aria-valuenow', '5');
   }
 );
@@ -68,6 +72,7 @@ test(
   'Spin clamps numeric circles and retains the mounted ring when progress returns to zero',
   async ({ page }) => {
     const progress = page.locator(root).getByRole('progressbar');
+
     await expect(progress).toHaveCount(0);
 
     await page.getByRole('button', { name: 'Quarter Spin percent', exact: true }).click();
@@ -97,6 +102,7 @@ test(
 
     await expect(progress).toHaveCount(0);
     await page.clock.runFor(1);
+
     await expect(page.locator(root)).toBeVisible();
     await expect(progress).toHaveCount(0);
     await page.clock.runFor(200);
@@ -150,6 +156,7 @@ test(
   async ({ page }) => {
     await page.getByRole('combobox', { name: caseSelect, exact: true }).selectOption('fullscreen');
     const spinner = page.locator(root);
+
     await expect(spinner).toHaveCSS('position', 'fixed');
     expect(await spinner.evaluate(node => node.parentElement?.hasAttribute('data-spin-source')))
       .toBe(true);
@@ -166,6 +173,7 @@ test(
     await expect(spinner).not.toHaveAttribute('hidden');
     await expect(spinner).toHaveAttribute('aria-hidden', 'true');
     await outside.fill('Available again');
+
     await expect(outside).toHaveValue('Available again');
   }
 );
@@ -234,6 +242,7 @@ test(
 
     await expect(page.locator(root).locator('[data-spin-custom="replacement"]')).toHaveCount(1);
     await page.getByRole('button', { name: 'Quarter Spin percent', exact: true }).click();
+
     await expect(page.locator(root).locator('[data-spin-custom]'))
       .toHaveAttribute('data-spin-percent', '25');
   }
@@ -249,7 +258,10 @@ test(
     await expect(page.locator(root)).toHaveCSS('transition-duration', '0s');
     await expect(page.locator(root).locator('[data-ant-spin-part="progress"]'))
       .toHaveCSS('transition-duration', '0s');
-    await expect(page.locator(root).locator('circle').first()).toHaveCSS('transition-duration', '0s');
+    await expect(page.locator(root).locator('circle').first()).toHaveCSS(
+      'transition-duration',
+      '0s'
+    );
     expect(await page.locator(root).evaluate(node => node.getAnimations({ subtree: true }).length))
       .toBe(0);
   }

@@ -143,11 +143,17 @@ export function tabsSemanticSettings(
       });
       settings.classNames = ({ props }) => {
         record('classNames', props);
-        return { ...original, root: `${original.root} s-${scope}-${props.size}-${props.tabPlacement ?? 'none'}` };
+        return {
+          ...original,
+          root: `${original.root} s-${scope}-${props.size}-${props.tabPlacement ?? 'none'}`
+        };
       };
       settings.styles = ({ props }) => {
         record('styles', props);
-        return { ...originalStyles, root: `${originalStyles.root};font-size:${props.items.length + 11}px` };
+        return {
+          ...originalStyles,
+          root: `${originalStyles.root};font-size:${props.items.length + 11}px`
+        };
       };
     }
   }

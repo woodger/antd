@@ -17,6 +17,7 @@ for (const { sample, metrics } of reference.cases) {
     await page.goto('/?fixture=form-scroll-first');
     await page.getByRole('combobox', { name: 'First error sample', exact: true }).selectOption(sample.id);
     await act(page, 'Submit scroll form');
+
     await expect.poll(() => page.evaluate(formScrollFirstMetrics)).toEqual(metrics);
   });
 }
@@ -54,6 +55,7 @@ test('Form uses current scroll props without replacing its focused input or valu
   }
   await act(page, 'Submit scroll form');
   const second = page.getByLabel('Second', { exact: true });
+
   await expect(second).toBeFocused();
   await expect.poll(async () => (await page.evaluate(formScrollFirstMetrics)).calls)
     .toEqual([{ name: ['second'], options: { block: 'center', focus: true, behavior: 'instant' } }]);
@@ -64,15 +66,21 @@ for (const action of ['Reset scroll fields', 'Replace scroll model', 'Unmount sc
     await page.goto('/?fixture=form-scroll-first');
     await act(page, 'Hold scroll validation');
     await act(page, 'Submit scroll form');
+
     await expect(page.getByRole('status', { name: 'Pending scroll validation', exact: true })).toHaveText('1');
     await act(page, action);
     await act(page, 'Release scroll validation');
+
     await expect(page.getByRole('status', { name: 'Settled scroll submits', exact: true })).toHaveText('1');
     await page.evaluate(() => new Promise<void>((resolve) =>
       requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
     ));
 
-    const state = JSON.parse((await page.getByRole('status', { name: 'First error capture', exact: true }).textContent())!);
+    const state = JSON.parse((await page.getByRole(
+      'status',
+      { name: 'First error capture', exact: true }
+    ).textContent())!);
+
     expect(state.calls).toEqual([]);
     if (action === 'Reset scroll fields') expect(state.failed?.outOfDate).toBe(true);
     else expect(state.failed).toBeNull();
@@ -85,16 +93,24 @@ for (const action of ['Replace model after failure', 'Unmount after failure']) {
     await page.goto('/?fixture=form-scroll-first');
     await act(page, action);
     await act(page, 'Submit scroll form');
+
     await expect(page.getByRole('status', { name: 'Settled scroll submits', exact: true })).toHaveText('1');
     await expect.poll(async () => {
-      const state = JSON.parse((await page.getByRole('status', { name: 'First error capture', exact: true }).textContent())!);
+      const state = JSON.parse((await page.getByRole(
+        'status',
+        { name: 'First error capture', exact: true }
+      ).textContent())!);
       return state.failed?.outOfDate;
     }).toBe(false);
     await page.evaluate(() => new Promise<void>((resolve) =>
       requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
     ));
 
-    const state = JSON.parse((await page.getByRole('status', { name: 'First error capture', exact: true }).textContent())!);
+    const state = JSON.parse((await page.getByRole(
+      'status',
+      { name: 'First error capture', exact: true }
+    ).textContent())!);
+
     expect(state.calls).toEqual([]);
     await expect(page.getByRole('button', { name: 'Submit scroll form', exact: true })).toBeFocused();
   });

@@ -6,6 +6,7 @@ test.use({ viewport: reference.viewport });
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=divider-config');
+
   await expect(page.getByRole('heading', { name: 'Divider prefix and config', exact: true }))
     .toBeVisible();
 });
@@ -15,7 +16,10 @@ for (const sample of reference.cases) {
     await page.getByRole('combobox', { name: 'Divider config preset', exact: true })
       .selectOption(sample.name);
 
-    await expect.poll(() => page.evaluate(snapshotDividerConfig, sample.props.prefixCls || 'ant-divider'))
+    await expect.poll(() => page.evaluate(
+      snapshotDividerConfig,
+      sample.props.prefixCls || 'ant-divider'
+    ))
       .toEqual(sample.snapshot);
   });
 }
@@ -27,7 +31,10 @@ for (const preset of ['prefix-native', 'own-tokens', 'callback-both']) {
     const sample = reference.cases.find(sample => sample.name === preset)!;
     const root = page.locator('[data-divider-config-case]').getByRole('separator');
     const original = await root.elementHandle();
-    const before = await page.evaluate(snapshotDividerConfig, sample.props.prefixCls || 'ant-divider');
+    const before = await page.evaluate(
+      snapshotDividerConfig,
+      sample.props.prefixCls || 'ant-divider'
+    );
     const input = page.getByLabel('Divider config neighbor', { exact: true });
     await input.fill('Draft');
     await input.focus();
@@ -40,6 +47,7 @@ for (const preset of ['prefix-native', 'own-tokens', 'callback-both']) {
     await expect(page.getByLabel('Configured Divider ref', { exact: true })).toHaveText('DIV');
     expect(await root.evaluate((node, before) => node === before, original)).toBe(true);
     const after = await page.evaluate(snapshotDividerConfig, 'updated-divider');
+
     expect(after.root).toEqual(before.root);
     expect(after.content?.style).toEqual(before.content?.style);
     expect(after.rails.map(rail => rail.style)).toEqual(before.rails.map(rail => rail.style));
@@ -71,8 +79,14 @@ test('Divider config updates replace the record and preserve DOM and an adjacent
   await expect(root).toHaveClass(/alternate-provider/);
   await expect(root).not.toHaveClass(/provider-root|provider-main/);
   await expect(root).toHaveCSS('opacity', '1');
-  await expect(root.locator('.configured-divider-inner-text')).toHaveCSS('padding-inline-start', '16px');
-  await expect(root.locator('.configured-divider-inner-text')).toHaveCSS('padding-inline-end', '37px');
+  await expect(root.locator('.configured-divider-inner-text')).toHaveCSS(
+    'padding-inline-start',
+    '16px'
+  );
+  await expect(root.locator('.configured-divider-inner-text')).toHaveCSS(
+    'padding-inline-end',
+    '37px'
+  );
   await expect(input).toBeFocused();
   await expect(input).toHaveValue('Draft');
   expect(await root.evaluate((node, before) => node === before, original)).toBe(true);

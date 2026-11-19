@@ -16,16 +16,19 @@ for (const [index, entry] of reference.cases.entries()) {
         const action = step.action;
         if (action.kind === 'schema') {
           await page.getByRole('button', { name: 'Change schema and data', exact: true }).click();
-        } else if (action.kind === 'resolve') {
+        }
+        else if (action.kind === 'resolve') {
           await page.getByRole('button', { name: 'Resolve field load', exact: true }).click();
-        } else if ('title' in action && typeof action.title === 'string') {
+        }
+        else if ('title' in action && typeof action.title === 'string') {
           const title = page.getByText(action.title, { exact: true });
           if (action.kind === 'select') {
             await title.click({
               modifiers: 'modifier' in action && action.modifier === 'Shift' ? ['Shift']
                 : 'modifier' in action && action.modifier === 'Control' ? ['Control'] : []
             });
-          } else {
+          }
+          else {
             await title.locator('..').locator('..')
               .locator(`.${prefix}-${action.kind === 'check' ? 'checkbox' : 'switcher'}`)
               .first().click();
@@ -56,6 +59,7 @@ test('Tree and DirectoryTree infer custom records while preserving raw and event
     await page.goto('/?fixture=tree-generic-fields');
     const tree = page.getByRole('region', { name: 'Typed tree', exact: true });
     const directory = page.getByRole('region', { name: 'Typed directory', exact: true });
+
     await expect(tree.locator('[data-ant-tree-root]')).toHaveClass(/typed-tree-root-3/);
     expect(await tree.locator('[data-ant-tree-root]').evaluate(node =>
       getComputedStyle(node).getPropertyValue('--typed-rank').trim())).toBe('3');
@@ -136,6 +140,7 @@ test('Tree schema refresh preserves DOM, selection, active IDs and native refs',
   await expect(page.getByRole('treeitem', { name: 'Alias Zero', exact: true }))
     .toHaveAttribute('aria-selected', 'false');
   await page.getByRole('button', { name: 'Blur field tree', exact: true }).click();
+
   await expect(tree).not.toBeFocused();
   await expect(page.locator('[data-tree-fields-ref]')).toHaveText('DIV');
 });
@@ -147,6 +152,7 @@ test('Tree discards pending aliased load events after unmount and keeps the exte
     await page.getByRole('combobox', { name: 'Tree fields sample', exact: true })
       .selectOption(String(index));
     await page.locator('[data-ant-tree-switcher]').first().click();
+
     await expect(page.locator('[data-tree-fields-events]')).toContainText('"kind":"load"');
     await page.getByRole('checkbox', { name: 'Mount field tree', exact: true }).uncheck();
     const before = await page.locator('[data-tree-fields-events]').innerText();

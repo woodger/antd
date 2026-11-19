@@ -11,7 +11,8 @@ async function sendEvent(trigger: Locator, name: string) {
   else if (name === 'click') await trigger.evaluate(node => (node as HTMLElement).click());
   else if (name === 'contextMenu') {
     await trigger.dispatchEvent('contextmenu', { bubbles: true, cancelable: true });
-  } else {
+  }
+  else {
     await trigger.locator('..').dispatchEvent(name === 'enter' ? 'pointerenter' : 'pointerleave', {
       pointerType: 'mouse'
     });
@@ -74,7 +75,8 @@ for (const source of [false, true]) {
           }
           if (expected.contentMounted && expected.id !== '<generated>') {
             await expect(popup).toHaveAttribute('id', expected.id!);
-          } else if (expected.id === '<generated>' || !frame.props.id) {
+          }
+          else if (expected.id === '<generated>' || !frame.props.id) {
             generatedId ??= id!;
             expect(id).toBe(generatedId);
             expect(id).toMatch(/^ant-tooltip-/);
@@ -129,7 +131,8 @@ for (const source of [false, true]) {
                   ? 'mouseenter' : 'mouseleave');
                 await trigger.dispatchEvent(frame.action.event === 'show'
                   ? 'pointerenter' : 'pointerleave', { pointerType: 'mouse' });
-              } else if (frame.action.event === 'show') await trigger.focus();
+              }
+              else if (frame.action.event === 'show') await trigger.focus();
               else await trigger.evaluate(node => (node as HTMLElement).blur());
             }
           }
@@ -173,6 +176,7 @@ for (const source of [false, true]) {
       }
 
       await update('State lifecycle ID and layer', true);
+
       await expect(popup).toHaveAttribute('id', 'state-changed');
       await expect(popup).toHaveCSS('z-index', '1600');
       await expect(draft).toBeFocused();
@@ -180,17 +184,22 @@ for (const source of [false, true]) {
         (node as HTMLInputElement).selectionStart, (node as HTMLInputElement).selectionEnd
       ])).toEqual([1, 6]);
       await update('State lifecycle disabled', true);
+
       await expect(popup).toBeHidden();
       await expect(draft).toHaveValue('Kept draft');
       await update('State lifecycle disabled', false);
+
       await expect(popup).toBeVisible();
       expect(await draft.evaluate((node, old) => node === old, before)).toBe(true);
       await update('State lifecycle open', false);
+
       await expect(popup).toBeHidden();
       await expect(draft).toHaveValue('Kept draft');
       await update('State lifecycle force', false);
+
       await expect(draft).toHaveCount(0);
       await update('State lifecycle force', true);
+
       await expect(popup).toBeHidden();
       await expect(draft).toHaveValue('Draft');
       await expect(popup.locator('button')).toHaveText('0');
@@ -212,6 +221,7 @@ for (const source of [false, true]) {
         input.checked = true;
         input.dispatchEvent(new Event('change', { bubbles: true }));
       });
+
       await expect(popup).toHaveAttribute('id', 'existing-description');
       await expect(trigger).toHaveAttribute('aria-describedby', 'existing-description');
       await page.getByLabel('Existing description ID', { exact: true }).evaluate(node => {
@@ -220,7 +230,10 @@ for (const source of [false, true]) {
         input.dispatchEvent(new Event('change', { bubbles: true }));
       });
 
-      await expect(trigger).toHaveAttribute('aria-describedby', 'existing-description first-tooltip-id');
+      await expect(trigger).toHaveAttribute(
+        'aria-describedby',
+        'existing-description first-tooltip-id'
+      );
       await expect(trigger).toBeFocused();
       expect(await trigger.evaluate((node, before) => node === before, original)).toBe(true);
     });

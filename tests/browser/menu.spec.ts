@@ -166,6 +166,7 @@ test(
   async ({ page }) => {
     await page.getByLabel('Menu mode', { exact: true }).selectOption('vertical');
     await item(page, 'Projects').click();
+
     await expect.poll(async () => {
       const title = await item(page, 'Projects').boundingBox();
       const popup = await page.locator('[popover]:popover-open').boundingBox();

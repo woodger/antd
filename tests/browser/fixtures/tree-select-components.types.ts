@@ -46,30 +46,50 @@ export function treeSelectComponentProps(
         render: root,
         props: {
           type: 'button', disabled: false,
-          onmousedown(event) { const target: HTMLButtonElement = event.currentTarget; void target; }
+          onmousedown(event) {
+            const target: HTMLButtonElement = event.currentTarget;
+            void target;
+          }
         }
       },
       input: {
         render: input,
         props: {
           rows: 3, wrap: 'soft',
-          onkeydown(event) { const target: HTMLTextAreaElement = event.currentTarget; void target; }
+          onkeydown(event) {
+            const target: HTMLTextAreaElement = event.currentTarget;
+            void target;
+          }
         }
       }
     },
-    onChange(value) { const result: number = value; void result; },
-    onSelect(_value, node) { const caption: string | undefined = node?.caption; void caption; },
+    onChange(value) {
+      const result: number = value;
+      void result;
+    },
+    onSelect(_value, node) {
+      const caption: string | undefined = node?.caption;
+      void caption;
+    },
     onInputKeyDown(event) {
       const target: HTMLInputElement | HTMLTextAreaElement = event.currentTarget;
       void target;
     },
-    onFocus(event) { const target: HTMLButtonElement | HTMLDivElement = event.currentTarget; void target; },
-    onpaste(event) { const target: HTMLInputElement | HTMLTextAreaElement = event.currentTarget; void target; },
+    onFocus(event) {
+      const target: HTMLButtonElement | HTMLDivElement = event.currentTarget;
+      void target;
+    },
+    onpaste(event) {
+      const target: HTMLInputElement | HTMLTextAreaElement = event.currentTarget;
+      void target;
+    },
     classNames({ props }) {
       const root: HTMLButtonElement | HTMLDivElement | undefined = props.nativeElement;
       const input: HTMLTextAreaElement | HTMLInputElement | undefined = props.inputElement;
       const value: number | undefined = props.value;
-      void root; void input; void value;
+      void root;
+      void input;
+      void value;
       return { root: 'custom-tree-select' };
     }
   } satisfies CustomProps;
@@ -82,13 +102,25 @@ export function treeSelectComponentInference(
   const treeData: readonly Entry[] = [{ code: 1, caption: 'Alpha' }];
   const defaults = inferTreeSelectProps({
     value: 1, treeData,
-    onChange(value) { const result: number = value; void result; },
-    onSelect(_value, node) { const caption: string | undefined = node?.caption; void caption; }
+    onChange(value) {
+      const result: number = value;
+      void result;
+    },
+    onSelect(_value, node) {
+      const caption: string | undefined = node?.caption;
+      void caption;
+    }
   });
   const custom = inferTreeSelectProps({
     value: 1, treeData, components: { root, input },
-    onChange(value) { const result: number = value; void result; },
-    onSelect(_value, node) { const caption: string | undefined = node?.caption; void caption; }
+    onChange(value) {
+      const result: number = value;
+      void result;
+    },
+    onSelect(_value, node) {
+      const caption: string | undefined = node?.caption;
+      void caption;
+    }
   });
   const assertions: [
     Assert<Equal<typeof defaults.nativeElement, HTMLDivElement | undefined>>,

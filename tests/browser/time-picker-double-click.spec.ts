@@ -59,6 +59,7 @@ for (const custom of [false, true]) {
       await expect(page.getByLabel('Time value', { exact: true }))
         .toHaveText('2024-09-15T13:23:44.500Z');
       const events = await page.getByLabel('Time events', { exact: true }).textContent();
+
       expect(events?.match(/calendar:/g)).toHaveLength(1);
       expect(events).not.toContain('ok:');
     });
@@ -83,6 +84,7 @@ test('TimeRangePicker confirms each first unit when the second click lands on it
     await expect(page.getByLabel('Interval value', { exact: true }))
       .toHaveText('2024-09-15T13:23:44.500Z,2024-09-15T20:45:56.700Z');
     const events = await page.getByLabel('Interval events', { exact: true }).textContent();
+
     expect(events?.match(/calendar:/g)).toHaveLength(2);
     expect(events).not.toContain('ok:');
   });
@@ -114,6 +116,7 @@ test('TimePicker does not confirm a previous unit on a new double click in colum
     await expect(page.getByLabel('Time value', { exact: true }))
       .toHaveText('2024-09-15T10:23:44.567Z');
     const events = await page.getByLabel('Time events', { exact: true }).textContent();
+
     expect(events?.match(/calendar:/g)).toHaveLength(1);
     expect(events).not.toContain('change:');
   });

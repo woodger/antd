@@ -25,6 +25,7 @@ test(
     await expect(physicalSelectPopup(fixture, 'Multiple numbers')).toBeVisible();
     await expect(input).toBeFocused();
     await physicalSelectOption(fixture, { name: 'Zero', exact: true }).hover();
+
     await expect(list.getByRole('option', { name: 'Zero', exact: true })).toHaveAttribute(
       'aria-selected',
       'true'
@@ -252,6 +253,7 @@ test(
     await fixture.getByLabel('Search multiple options', { exact: true }).check();
     await input.fill('Zero');
     await input.press('Enter');
+
     await expect.poll(
       () => input.evaluate((element) => (element as HTMLInputElement).checkValidity())
     )

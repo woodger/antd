@@ -24,7 +24,10 @@
       : { ...overlayThemePresets[preset].token, sizePopupArrow: arrowSize },
     components: colorOverride ? {
       ...overlayThemePresets[preset].components,
-      Popover: { ...overlayThemePresets[preset].components?.Popover, colorBgElevated: colorOverride }
+      Popover: {
+        ...overlayThemePresets[preset].components?.Popover,
+        colorBgElevated: colorOverride
+      }
     } : overlayThemePresets[preset].components
   });
 

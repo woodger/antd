@@ -32,7 +32,10 @@ let server: ViteDevServer;
 let cache: string;
 test.use({ viewport: reference.reference.viewport });
 test.beforeAll(async () => {
-  cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)), 'select-data-hydration-'));
+  cache = await mkdtemp(join(
+    fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
+    'select-data-hydration-'
+  ));
   server = await createServer({
     configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
@@ -49,7 +52,10 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
   test(`${sample.id} strictly hydrates raw data, stable refs and cleanup`, async ({ page }) => {
     const act = actSelectData;
     const source = selectDataNativeCase(reference.cases.find(entry => entry.id === sample.id)!);
-    const module = await server.ssrLoadModule(fileURLToPath(new URL('./fixtures/select-data-hydration.server.ts', import.meta.url)));
+    const module = await server.ssrLoadModule(fileURLToPath(new URL(
+      './fixtures/select-data-hydration.server.ts',
+      import.meta.url
+    )));
     const rendered = module.renderSelectData(sample.id);
     await page.goto(`/select-data-hydration.html?sample=${sample.id}`);
     await page.addScriptTag({ type: 'module', url: '/select-data-styles.client.ts' });
@@ -63,35 +69,65 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
       const Mutation = window.MutationObserver;
       window.ResizeObserver = class extends Resize {
         targets = new Set<Element>();
-        constructor(callback: ResizeObserverCallback) { super(callback); observers.add(this.targets); }
-        observe(target: Element, options?: ResizeObserverOptions) { this.targets.add(target); super.observe(target, options); }
-        unobserve(target: Element) { this.targets.delete(target); super.unobserve(target); }
-        disconnect() { this.targets.clear(); super.disconnect(); }
+        constructor(callback: ResizeObserverCallback) {
+          super(callback);
+          observers.add(this.targets);
+        }
+        observe(target: Element, options?: ResizeObserverOptions) {
+          this.targets.add(target);
+          super.observe(target, options);
+        }
+        unobserve(target: Element) {
+          this.targets.delete(target);
+          super.unobserve(target);
+        }
+        disconnect() {
+          this.targets.clear();
+          super.disconnect();
+        }
       };
       window.MutationObserver = class extends Mutation {
-        observe(target: Node, options?: MutationObserverInit) { mutations.add(this); super.observe(target, options); }
-        disconnect() { mutations.delete(this); super.disconnect(); }
+        observe(target: Node, options?: MutationObserverInit) {
+          mutations.add(this);
+          super.observe(target, options);
+        }
+        disconnect() {
+          mutations.delete(this);
+          super.disconnect();
+        }
       };
       const frames = new Set<number>();
       const request = window.requestAnimationFrame.bind(window);
       const cancel = window.cancelAnimationFrame.bind(window);
       window.requestAnimationFrame = callback => {
-        const frame = request(time => { frames.delete(frame); callback(time); });
+        const frame = request(time => {
+          frames.delete(frame);
+          callback(time);
+        });
         frames.add(frame);
         return frame;
       };
-      window.cancelAnimationFrame = frame => { frames.delete(frame); cancel(frame); };
+      window.cancelAnimationFrame = frame => {
+        frames.delete(frame);
+        cancel(frame);
+      };
       const timers = new Set<number>();
       const browser: Window = window;
       const schedule = browser.setTimeout.bind(browser);
       const clear = browser.clearTimeout.bind(browser);
       browser.setTimeout = (handler, timeout, ...args) => {
         if (typeof handler !== 'function') throw Error('Expected a function hydration timer');
-        const timer = schedule(() => { timers.delete(timer); handler(...args); }, timeout);
+        const timer = schedule(() => {
+          timers.delete(timer);
+          handler(...args);
+        }, timeout);
         timers.add(timer);
         return timer;
       };
-      browser.clearTimeout = timer => { if (timer !== undefined) timers.delete(timer); clear(timer); };
+      browser.clearTimeout = timer => {
+        if (timer !== undefined) timers.delete(timer);
+        clear(timer);
+      };
       const ports = new Set<MessagePort>();
       const Channel = window.MessageChannel;
       window.MessageChannel = class extends Channel {
@@ -100,7 +136,10 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
           for (const port of [this.port1, this.port2]) {
             ports.add(port);
             const close = port.close.bind(port);
-            port.close = () => { ports.delete(port); close(); };
+            port.close = () => {
+              ports.delete(port);
+              close();
+            };
           }
         }
       };
@@ -114,7 +153,11 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
     }, { head: rendered.head, body: rendered.body });
     await page.addScriptTag({ type: 'module', url: '/select-data-hydration.client.ts' });
     await page.waitForFunction(() => window.selectDataHydration);
-    await expect(page.locator('[data-select-data-case]')).toHaveAttribute('data-select-data-bound', 'true');
+
+    await expect(page.locator('[data-select-data-case]')).toHaveAttribute(
+      'data-select-data-bound',
+      'true'
+    );
     await prepareSelectData(page);
     const identity = await page.evaluateHandle(() => {
       const state = window.selectDataHydration!;
@@ -172,7 +215,12 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
         await act(page, { type: 'choose', text: 'Beta' });
         const mapped = await settle(page);
         expect(mapped.view.model).toEqual({ type: 'array', items: [{ type: 'string', value: 'b' }] });
-        expect(mapped.view.selected).toEqual([{ label: 'Beta', title: 'Beta', disabled: false, remove: true }]);
+        expect(mapped.view.selected).toEqual([{
+          label: 'Beta',
+          title: 'Beta',
+          disabled: false,
+          remove: true
+        }]);
         expect(await bindings()).toEqual(expectedBindings(mapped.view.model, mapped.view.query));
         expect(await page.evaluate(readSelectDataAriaIntegrity)).toBe(true);
         const original = reference.cases.find(entry => entry.id === 'select-all-four-mapped')!;
@@ -206,7 +254,13 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
         const queuedPorts = window.selectDataHydrationResources!.ports();
         const snapshot = (): DisposeSnapshot => ({ events: JSON.parse(JSON.stringify(state.events())),
           rootConnected: state.root.isConnected, editorConnected: state.editor.isConnected, ownerConnected: owner.isConnected });
-        const trace: DisposeTrace = { phase: 'disposing', before: snapshot(), afterCall: null, afterAwait: null, probes: [] };
+        const trace: DisposeTrace = {
+          phase: 'disposing',
+          before: snapshot(),
+          afterCall: null,
+          afterAwait: null,
+          probes: []
+        };
         const record: EventListener = event => {
           const relatedTarget = (event as FocusEvent).relatedTarget;
           trace.probes.push({ ...snapshot(), type: event.type,
@@ -229,9 +283,19 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
       expect(queuedPorts).toBe(sample.family === 'auto-complete' ? 2 : 0);
       await expect(page.locator('[data-select-data-case]')).toHaveCount(0);
       await expect(page.locator('.ant-select-dropdown')).toHaveCount(0);
-      const disposed = { events: disposedEvents, rootConnected: false, editorConnected: false, ownerConnected: false };
+      const disposed = {
+        events: disposedEvents,
+        rootConnected: false,
+        editorConnected: false,
+        ownerConnected: false
+      };
       expect(await page.evaluate(() => window.selectDataHydrationDisposal!.trace)).toEqual({
-        phase: 'disposed', before: { events, rootConnected: true, editorConnected: true, ownerConnected: true },
+        phase: 'disposed', before: {
+          events,
+          rootConnected: true,
+          editorConnected: true,
+          ownerConnected: true
+        },
         afterCall: disposed, afterAwait: disposed,
         probes: ['blur', 'focusout'].map(type => ({ events: type === 'focusout' ? disposedEvents : events,
           rootConnected: true, editorConnected: true, ownerConnected: true, type,
@@ -244,7 +308,13 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
         ports: window.selectDataHydrationResources!.ports(),
         events: window.selectDataHydration!.events()
       }));
-      const noResources = { cleaned: { root: true, editor: true, control: true, publicRoot: true, publicEditor: true },
+      const noResources = { cleaned: {
+        root: true,
+        editor: true,
+        control: true,
+        publicRoot: true,
+        publicEditor: true
+      },
         observers: 0, mutations: 0, frames: 0, timers: 0, ports: 0, events: disposedEvents };
       expect(await resources()).toEqual(noResources);
       await page.setViewportSize({ width: 1120, height: 860 });
@@ -253,7 +323,8 @@ for (const sample of selectDataSamples.filter(sample => ['select-keys-and-index'
         state.root.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         state.editor.dispatchEvent(new InputEvent('input', { bubbles: true, data: 'late' }));
         state.editor.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'ArrowDown' }));
-        window.dispatchEvent(new Event('resize')); window.dispatchEvent(new Event('scroll'));
+        window.dispatchEvent(new Event('resize'));
+        window.dispatchEvent(new Event('scroll'));
       });
       await page.waitForTimeout(0);
       expect(await resources()).toEqual(noResources);

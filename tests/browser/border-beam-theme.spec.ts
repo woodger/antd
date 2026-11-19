@@ -22,6 +22,7 @@ test('BorderBeam token updates retain target content, layer identity and scoped 
     const layer = host.locator('.ant-border-beam');
     const external = page.locator('[data-beam-theme="external"] .ant-border-beam').first();
     const input = host.getByRole('textbox', { name: 'Beam themed draft normal', exact: true });
+
     await expect(layer).toHaveCSS('padding', '4px');
     await input.fill('Preserved beam draft');
     await input.focus();
@@ -69,6 +70,7 @@ test('BorderBeam preserves owner CSS overrides for an external target and releas
     await page.getByLabel('BorderBeam theme preset', { exact: true }).selectOption('default');
     const owner = page.locator('[data-beam-owner="external"]');
     const beam = page.locator('[data-beam-theme="external"] .ant-border-beam').first();
+
     await expect(beam).toHaveCSS('padding', '1px');
     const origin = await owner.evaluateHandle(node => node.closest('.ant-svelte-theme')!);
     await origin.evaluate(node => {
@@ -95,6 +97,7 @@ test('BorderBeam clears source styling and inherits the physical target again wh
   async ({ page }) => {
     await page.goto('/?fixture=border-beam-theme');
     const external = page.locator('[data-beam-theme="external"] .ant-border-beam').first();
+
     await expect(external).toHaveCSS('padding', '4px');
     await page.getByLabel('Apply source beam theme', { exact: true }).uncheck();
 

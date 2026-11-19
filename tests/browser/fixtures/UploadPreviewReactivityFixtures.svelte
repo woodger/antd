@@ -41,14 +41,17 @@
   const callbacks = [generator('A'), generator('B')];
   const previewFile = $derived(callbacks[callback]);
   const pendingCount = $derived.by(() => {
-    void calls; void resolutions;
+    void calls;
+    void resolutions;
     return pending.filter(entry => !entry.resolved).length;
   });
   function resolvePreview(newest: boolean) {
     const entry = newest ? pending.findLast(value => !value.resolved)
       : pending.find(value => !value.resolved);
     if (!entry) return;
-    entry.resolved = true; entry.resolve(entry.result); resolutions++;
+    entry.resolved = true;
+    entry.resolve(entry.result);
+    resolutions++;
   }
   function replaceOrigin() { file.originFileObj = origins[1]; }
   function replaceFile() {
@@ -62,7 +65,8 @@
   onMount(() => {
     origins = ['alpha.png', 'beta.png', 'gamma.png'].map(name =>
       Object.assign(new File([name], name, { type: 'image/png' }), { uid: name }));
-    file.originFileObj = origins[0]; ready = true;
+    file.originFileObj = origins[0];
+    ready = true;
     const api = { read: () => ({ actualCalls, increments: calls,
       fileIdentity: identity(file), originalIdentity: identity(file.originFileObj),
       callbackIdentity: identity(previewFile), fileListIdentity: identity(files),

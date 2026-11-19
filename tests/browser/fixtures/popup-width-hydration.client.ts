@@ -18,7 +18,13 @@ declare global {
       model: Fixture['readModel'];
       receipts: Fixture['readReceipts'];
       dispose: () => Promise<void>;
-      cleaned?: { root: boolean; editor: boolean; control: boolean; publicRoot: boolean; publicEditor: boolean };
+      cleaned?: {
+        root: boolean;
+        editor: boolean;
+        control: boolean;
+        publicRoot: boolean;
+        publicEditor: boolean
+      };
     };
   }
 }

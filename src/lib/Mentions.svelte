@@ -316,7 +316,8 @@
       if (next >= 0)
         active = next;
       event.preventDefault();
-    } else if (event.key === 'Escape') {
+    }
+    else if (event.key === 'Escape') {
       event.preventDefault();
       event.stopPropagation();
       measuring = false;
@@ -363,7 +364,8 @@
         measuring = true;
       }
       onSearch?.(next, found.prefix);
-    } else measuring = false;
+    }
+    else measuring = false;
   }
   function handleFocus(event: FocusEvent) {
     if (blurTimer !== undefined)

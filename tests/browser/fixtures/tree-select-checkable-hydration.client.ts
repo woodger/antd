@@ -29,7 +29,10 @@ const editor = root.querySelector<HTMLInputElement>('input[role="combobox"]')!;
 const parent = editor.parentNode;
 const initialCaret = [editor.selectionStart, editor.selectionEnd];
 const outside = target.querySelector<HTMLInputElement>('[aria-label="Checkable outside draft"]')!;
-const instance = hydrate(TreeSelectCheckableHydration, { target, props: { sample }, recover: false });
+const instance = hydrate(
+  TreeSelectCheckableHydration,
+  { target, props: { sample }, recover: false }
+);
 await tick();
 const fixture = instance.fixtureApi()!;
 const state: NonNullable<Window['treeSelectCheckableHydration']> = {
@@ -39,7 +42,11 @@ const state: NonNullable<Window['treeSelectCheckableHydration']> = {
     await unmount(instance);
     await tick();
     const refs = fixture.readRefs();
-    state.cleaned = { root: refs.root == null, editor: refs.editor == null, control: refs.control == null };
+    state.cleaned = {
+      root: refs.root == null,
+      editor: refs.editor == null,
+      control: refs.control == null
+    };
   }
 };
 window.treeSelectCheckableHydration = state;

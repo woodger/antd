@@ -25,23 +25,35 @@ export function snapshotCardPrefix() {
           'background-color', 'border-bottom-width', 'margin-bottom']),
         title: { classes: classes(title), style: style(title, ['font-size', 'margin-top',
           'margin-bottom', 'color']) },
-        body: style(body, ['padding-top', 'padding-bottom', 'padding-inline-start', 'padding-inline-end']),
+        body: style(
+          body,
+          ['padding-top', 'padding-bottom', 'padding-inline-start', 'padding-inline-end']
+        ),
         meta: meta ? {
           classes: classes(meta),
           root: style(meta, ['display', 'margin-top', 'margin-bottom']),
-          title: style(meta.querySelector('.fixture-meta-title')!, ['font-size', 'font-weight', 'color']),
+          title: style(
+            meta.querySelector('.fixture-meta-title')!,
+            ['font-size', 'font-weight', 'color']
+          ),
           description: style(meta.querySelector('.fixture-meta-description')!, ['color'])
         } : null,
         grids: [...root.querySelectorAll('.fixture-card-grid')].map(grid => ({
           classes: classes(grid),
-          style: style(grid, ['width', 'padding-top', 'padding-inline-start', 'float', 'box-sizing'])
+          style: style(
+            grid,
+            ['width', 'padding-top', 'padding-inline-start', 'float', 'box-sizing']
+          )
         })),
         tabs: [...header.querySelectorAll('[role="tab"]')].map(tab => ({
           selected: tab.getAttribute('aria-selected'),
           label: style(tab.querySelector('.fixture-card-tab-label')!, ['font-size', 'color'])
         })),
         actions: root.querySelector('.fixture-card-actions')
-          ? style(root.querySelector('.fixture-card-actions')!, ['background-color', 'border-top-width'])
+          ? style(
+            root.querySelector('.fixture-card-actions')!,
+            ['background-color', 'border-top-width']
+          )
           : null
       }];
     })

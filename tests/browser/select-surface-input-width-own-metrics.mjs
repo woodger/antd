@@ -14,5 +14,8 @@ export function readInputWidthOwn() {
     scrollWidth: editor.scrollWidth, clientWidth: editor.clientWidth, offsetWidth: editor.offsetWidth,
     editorAttributes: [...editor.attributes].map(attr => [attr.name, attr.value]), editorOuterHTML: editor.outerHTML,
     rootAttributes: [...root.attributes].map(attr => [attr.name, attr.value]),
-    resourceEntries: performance.getEntriesByType('resource').map(entry => ({ name: entry.name, initiatorType: entry.initiatorType })) };
+    resourceEntries: performance.getEntriesByType('resource').map(entry => ({
+      name: entry.name,
+      initiatorType: entry.initiatorType
+    })) };
 }

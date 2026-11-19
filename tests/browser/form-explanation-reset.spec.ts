@@ -16,6 +16,7 @@ async function act(page: Page, name: string) {
 
 test('Form resetFields remounts the selected label, tooltip and extra states like the source', async ({ page }) => {
   await page.goto('/?fixture=form-explanation-reset');
+
   await expect.poll(() => snapshot(page)).toEqual(reference.initial);
   for (const id of Object.keys(reference.initial)) {
     await page.locator(`[data-counter="${id}"]`).evaluate((button: HTMLButtonElement) => {
@@ -26,14 +27,17 @@ test('Form resetFields remounts the selected label, tooltip and extra states lik
   const extra = await page.locator('[data-counter="a-extra"]').elementHandle();
 
   await act(page, 'Reset explanations for a');
+
   await expect.poll(() => snapshot(page)).toEqual(reference.selected);
   expect(await extra!.evaluate((element) => element.isConnected)).toBe(false);
   await page.locator('[data-counter="a-extra"]').evaluate((button: HTMLButtonElement) => {
     button.click();
   });
   await act(page, 'Reset explanations for a');
+
   await expect.poll(() => snapshot(page)).toEqual(reference.repeated);
   await act(page, 'Reset all explanations');
+
   await expect.poll(() => snapshot(page)).toEqual(reference.all);
 });
 
@@ -51,6 +55,7 @@ test('Form explanation reset preserves the untouched control, selection and slot
   const extra = await page.locator('[data-counter="b-extra"]').elementHandle();
 
   await act(page, 'Reset explanations for a');
+
   await expect(first).toHaveValue('Alpha');
   await expect(second).toHaveValue('Draft b');
   await expect(second).toBeFocused();

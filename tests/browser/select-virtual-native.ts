@@ -5,7 +5,11 @@ import {
   selectVirtualQueryNativeBaseline, selectVirtualQueryCaretNativeBaseline, type SelectVirtualView
 } from './select-virtual-reference';
 
-function connectedBlurEvents(view: SelectVirtualView, id: string, action: SelectVirtualAction | undefined) {
+function connectedBlurEvents(
+  view: SelectVirtualView,
+  id: string,
+  action: SelectVirtualAction | undefined
+) {
   if (id !== 'select-focus-ref' && id !== 'auto-complete-focus-ref') return null;
   const source = selectVirtualReference.cases.find(entry => entry.id === id)!;
   const blurIndex = source.steps.findIndex(step => step.action.type === 'ref' && step.action.method === 'blur');
@@ -24,7 +28,11 @@ function connectedBlurEvents(view: SelectVirtualView, id: string, action: Select
   return [...before, ['open', false], ['blur'], ...view.events.slice(prefix.length)];
 }
 
-function retainedQueryView(view: SelectVirtualView, id: string, action: SelectVirtualAction | undefined) {
+function retainedQueryView(
+  view: SelectVirtualView,
+  id: string,
+  action: SelectVirtualAction | undefined
+) {
   if (id === 'select-live-props') {
     const source = selectVirtualNativeCases.find(entry => entry.id === id)!;
     const closeIndex = source.steps.findIndex(step => step.action.type === 'open' && !step.action.value);
@@ -42,7 +50,10 @@ function retainedQueryView(view: SelectVirtualView, id: string, action: SelectVi
       throw Error('Select retained-query Source prefix or historical proof changed');
     const editorProof = proof.trace[view.editor.expanded === 'true' ? 2 : 1].editor;
     // The whole Source owner already supplies the actual query and every callback unchanged.
-    return { ...view, editor: { ...view.editor, value: editorProof.value, caret: [...editorProof.caret] } };
+    return {
+      ...view,
+      editor: { ...view.editor, value: editorProof.value, caret: [...editorProof.caret] }
+    };
   }
   if (id === 'select-ref-closed' && view.query === '09' && view.editor?.expanded === 'false') {
     const source = selectVirtualNativeCases.find(entry => entry.id === id)!;

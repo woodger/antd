@@ -107,6 +107,7 @@ for (const sample of reference.cases) {
     test(`closing resets source popupRender state for ${sample.name}`, async ({ page }) => {
       await open(page, sample.name);
       await page.locator('[data-mention-count]').evaluate(node => (node as HTMLElement).click());
+
       await expect(page.locator('[data-mention-count]')).toHaveText('1');
 
       await input(page).press('Escape');
@@ -114,6 +115,7 @@ for (const sample of reference.cases) {
       await expect(page.locator('[data-mention-count]')).toHaveCount(0);
       await input(page).fill('');
       await input(page).pressSequentially('@');
+
       await expect(page.locator(surface)).toBeVisible();
       await expect(page.locator('[data-mention-count]')).toHaveText(reopened.count);
       await expect(page.locator(surface)).toHaveCount(1);
@@ -167,8 +169,10 @@ test(
   async ({ page }) => {
     await open(page, 'custom-shadow');
     await check(page, 'Loading mention popup', true);
+
     await expect(page.getByRole('listbox')).toHaveAttribute('aria-busy', 'true');
     await input(page).press('Enter');
+
     await expect(input(page)).toHaveValue('@');
 
     await check(page, 'Empty mention popup', true);
@@ -180,6 +184,7 @@ test(
     await check(page, 'Empty mention popup', false);
     await input(page).press('ArrowDown');
     await input(page).press('Enter');
+
     await expect(input(page)).toHaveValue('@beta ');
   }
 );
@@ -188,6 +193,7 @@ for (const name of ['custom-local', 'custom-shadow']) {
   test(`custom ${name} keeps menu focus and closes for a footer field`, async ({ page }) => {
     await open(page, name);
     await page.getByRole('option', { name: 'Alpha', exact: true }).focus();
+
     await expect(page.locator(surface)).toBeVisible();
     await expect(page.getByLabel('Mention popup blurred', { exact: true })).toHaveText('0');
 
@@ -201,6 +207,7 @@ for (const name of ['custom-local', 'custom-shadow']) {
     await open(page, name);
     const original = await page.locator(surface).elementHandle();
     await check(page, 'Dark mention theme', true);
+
     await expect(page.locator(surface)).toHaveCSS('--mention-origin', 'dark');
     expect(await page.locator(surface).evaluate((node, old) => node === old, original)).toBe(true);
     const calls = await page.getByLabel('Mention owner calls', { exact: true }).textContent();
@@ -226,6 +233,7 @@ test(
     await check(page, 'Mention in native dialog', true);
     await input(page).pressSequentially('@');
     await page.getByRole('option', { name: 'Alpha', exact: true }).click();
+
     await expect(input(page)).toHaveValue('@alpha ');
     await input(page).pressSequentially('@');
 

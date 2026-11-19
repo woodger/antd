@@ -12,8 +12,15 @@
   let phase = $state<ControlledRemovalPhase>('owned');
   let control = $state<SelectRef>(), root = $state<HTMLDivElement>(), editor = $state<Editor>();
   let authored: Editor | null = null, firstRef: ControlledRemovalNode | null = null;
-  const reference = (node: Editor | null) => { authored = node; if (node && !firstRef) firstRef = readControlledRemovalNode(node); };
-  const elements = new WeakMap<object, { element: string; props: SelectInputOwnProps<Editor>; ref: typeof reference }>();
+  const reference = (node: Editor | null) => {
+    authored = node;
+    if (node && !firstRef) firstRef = readControlledRemovalNode(node);
+  };
+  const elements = new WeakMap<object, {
+    element: string;
+    props: SelectInputOwnProps<Editor>;
+    ref: typeof reference
+  }>();
   function component(frame: object) {
     if (!elements.has(frame)) {
       // Null is an intentional JS-runtime compatibility input; public types stay unchanged.
@@ -26,13 +33,27 @@
   let own = $derived(frames.get(phase)!);
   let ownerProps = $derived({ id: 'controlled-removal-field', open: false, virtual: false, options,
     components: { input: component(own) }, 'aria-label': 'Controlled removal editor',
-    showSearch: { filterOption: false, ...(initial.control === 'select' ? { searchValue: 'generated', autoClearSearchValue: false } : {}) } });
+    showSearch: {
+      filterOption: false,
+      ...(initial.control === 'select' ? { searchValue: 'generated', autoClearSearchValue: false } : {})
+    } });
   owner.read = () => {
     const frame = frames.get(phase)!;
-    return { phase, ownKeys: Object.keys(frame), hasOwnValue: Object.hasOwn(frame, 'value'), hasOwnDefaultValue: Object.hasOwn(frame, 'defaultValue'), hasOwnChecked: Object.hasOwn(frame, 'checked'),
+    return { phase, ownKeys: Object.keys(frame), hasOwnValue: Object.hasOwn(frame, 'value'), hasOwnDefaultValue: Object.hasOwn(
+      frame,
+      'defaultValue'
+    ), hasOwnChecked: Object.hasOwn(
+      frame,
+      'checked'
+    ),
       valueKind: frame.value === undefined ? 'undefined' : frame.value === null ? 'null' : frame.value,
       checkedKind: frame.checked === undefined ? 'undefined' : frame.checked === null ? 'null' : String(frame.checked), firstRef,
-      refs: { control: Boolean(control), root: Boolean(root), editor: Boolean(editor), authored: Boolean(authored) } };
+      refs: {
+        control: Boolean(control),
+        root: Boolean(root),
+        editor: Boolean(editor),
+        authored: Boolean(authored)
+      } };
   };
   owner.readRefs = () => ({ editor });
   owner.update = next => { phase = next; };

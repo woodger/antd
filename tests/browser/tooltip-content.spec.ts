@@ -19,7 +19,8 @@ for (const source of [false, true]) {
           await expect(popup.locator('[data-ant-tooltip-container]'))
             .toHaveText(sample.snapshot.text ?? '');
           await expect(trigger).toHaveAccessibleDescription(sample.snapshot.text ?? '');
-        } else {
+        }
+        else {
           await expect(popup).toBeHidden();
           await expect(trigger).not.toHaveAttribute('aria-describedby');
         }
@@ -78,16 +79,20 @@ for (const source of [false, true]) {
         control.checked = false;
         control.dispatchEvent(new Event('change', { bubbles: true }));
       });
+
       await expect(popup).toBeHidden();
       await page.getByLabel('Replace tooltip content', { exact: true }).check();
+
       await expect(popup.locator('input')).toHaveValue('Kept draft');
       await popup.getByRole('button', { name: 'Lifecycle count', exact: true, includeHidden: true })
         .evaluate(node => (node as HTMLButtonElement).click());
+
       await expect(popup.locator('button')).toHaveText('2');
       expect(await popup.locator('input').evaluate((node, before) => node === before, previous))
         .toBe(true);
 
       await page.getByLabel('State tooltip fresh', { exact: true }).check();
+
       await expect(popup.locator('input')).toHaveCount(0);
       await expect(popup.locator('[data-ant-tooltip-container]')).toHaveText('Replacement content');
     });
@@ -105,15 +110,20 @@ for (const mode of ['single', 'range', 'typography']) {
         : root.locator(mode === 'typography' ? '.ant-typography' : '.ant-slider-handle').first();
       const popup = root.locator('[data-ant-tooltip]').first();
       await anchor.hover();
+
       await expect(popup).toBeVisible();
       const content = popup.locator('[data-ant-tooltip-container]');
+
       await expect(content).toHaveText('A');
       await page.getByRole('button', { name: 'Leave consumer', exact: true }).click();
+
       await expect(popup).toBeHidden();
 
       await page.getByRole('button', { name: 'Update consumer title', exact: true }).click();
+
       await expect(content).toHaveText(fresh ? 'B' : 'A');
       await anchor.hover();
+
       await expect(popup).toBeVisible();
       await expect(content).toHaveText('B');
     });

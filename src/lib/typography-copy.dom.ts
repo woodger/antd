@@ -14,11 +14,13 @@ export async function writeTypographyClipboard(
         'text/plain': new view.Blob([text], { type: 'text/plain' })
       })]);
       if (clipboard) return true;
-    } else if (clipboard) {
+    }
+    else if (clipboard) {
       await clipboard.writeText(text);
       return true;
     }
-  } catch {
+  }
+  catch {
     // Отказ async API передаёт попытку исходному synchronous fallback.
   }
 
@@ -35,7 +37,8 @@ export async function writeTypographyClipboard(
     document.addEventListener('copy', handleCopy, { capture: true });
     document.execCommand('copy');
     return copied;
-  } catch {
+  }
+  catch {
     return false;
   } finally {
     document.removeEventListener('copy', handleCopy, { capture: true });

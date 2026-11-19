@@ -3,6 +3,7 @@ import reference from './fixtures/ant-design-compact-metrics.json' with { type: 
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=compact-theme');
+
   await expect(page.getByRole('heading', { name: 'Compact theme metrics', exact: true })).toBeVisible();
 });
 
@@ -55,7 +56,10 @@ for (const mode of ['native', 'source', 'native-token', 'source-parent']) {
       expect(Number.parseFloat(value), name).toBeCloseTo(tokens[token], 8);
     }
     for (const selector of ['.ant-input', '.ant-select', '.ant-input-number', '.ant-btn']) {
-      await expect(page.locator('#compact-metrics').locator(selector).first()).toHaveCSS('height', '28px');
+      await expect(page.locator('#compact-metrics').locator(selector).first()).toHaveCSS(
+        'height',
+        '28px'
+      );
     }
   });
 }
@@ -63,8 +67,14 @@ for (const mode of ['native', 'source', 'native-token', 'source-parent']) {
 test('native metrics retain legacy colors and keep source styles disabled', async ({ page }) => {
   await page.getByLabel('Compact theme preset', { exact: true }).selectOption('dark-compact');
 
-  await expect(page.locator('#compact-metrics-button')).toHaveCSS('background-color', 'rgb(22, 119, 255)');
-  await expect(page.locator('#compact-metrics-input')).toHaveCSS('background-color', 'rgb(20, 20, 20)');
+  await expect(page.locator('#compact-metrics-button')).toHaveCSS(
+    'background-color',
+    'rgb(22, 119, 255)'
+  );
+  await expect(page.locator('#compact-metrics-input')).toHaveCSS(
+    'background-color',
+    'rgb(20, 20, 20)'
+  );
   await expect(page.locator('head style[data-ant-svelte-theme]')).toHaveCount(1);
   await expect(page.locator('.compact-metrics-provider')).not.toHaveAttribute('style');
   await expect(page.locator('#compact-metrics-button')).not.toHaveClass(/css-var-|css-dev-only/);
@@ -97,8 +107,10 @@ test('theme switches retain input identity, edits and focus while updating metri
   expect(await input.evaluate((element, previous) => element === previous, original)).toBe(true);
 
   await page.getByLabel('Compact theme preset', { exact: true }).selectOption('compact');
+
   await expect(input).toHaveCSS('height', '28px');
   await page.getByLabel('Compact theme mode', { exact: true }).selectOption('source');
+
   await expect(input).toHaveCSS('height', '28px');
   await expect(input).toHaveValue('Edited value');
 });

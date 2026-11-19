@@ -12,12 +12,14 @@ for (const picker of ['week', 'date'] as const) for (const kind of ['single', 'r
     const text = picker === 'week' ? '2024-5th' : '2024-01-31';
     const malformedText = 'not-a-' + picker;
     const input = page.locator('#week-validation');
+
     await expect(input).toHaveValue(text);
     const read = async (): Promise<ValidationSnapshot> => {
       await page.locator('[data-week-validation-read]').evaluate(button => (button as HTMLButtonElement).click());
       return JSON.parse((await page.locator('[data-week-validation-snapshot]').textContent())!);
     };
     const initial = await read();
+
     expect(initial.calls.length).toBeGreaterThan(0);
     for (const call of initial.calls) {
       expect(call.actualArgumentCount).toBe(2);
@@ -33,6 +35,7 @@ for (const picker of ['week', 'date'] as const) for (const kind of ['single', 'r
     const original = await input.elementHandle();
     await input.click();
     const popup = page.locator('[data-picker-popup]:visible');
+
     await expect(popup.locator(`.ant-picker-${picker}-panel`)).toHaveCount(kind === 'range' ? 2 : 1);
     await expect(popup.locator('td[aria-disabled="true"]')).toHaveCount(kind === 'range' ? 96 : 48);
     const opened = await read();
@@ -40,9 +43,11 @@ for (const picker of ['week', 'date'] as const) for (const kind of ['single', 'r
     // Реальный ввод той же строки создаёт новый Dayjs; predicate проверяет ссылку.
     await input.press('Control+A');
     await page.keyboard.type(text);
+
     await expect(input).toHaveValue(text);
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await input.press('Escape');
+
     await expect(popup).toHaveCount(0);
     await expect(input).toHaveValue(text);
     await expect(input).not.toHaveAttribute('aria-invalid', 'true');
@@ -50,6 +55,7 @@ for (const picker of ['week', 'date'] as const) for (const kind of ['single', 'r
     await input.click();
     await input.press('Control+A');
     await page.keyboard.type(malformedText);
+
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     if (kind === 'single') {
       await input.press('Enter');
@@ -61,9 +67,11 @@ for (const picker of ['week', 'date'] as const) for (const kind of ['single', 'r
       expect(malformed.changes).toEqual([]);
     }
     await input.press('Escape');
+
     await expect(input).toHaveValue(text);
     await expect(input).not.toHaveAttribute('aria-invalid', 'true');
     const after = await read();
+
     expect(after.model).toEqual(initial.model);
     expect(after.changes).toEqual([]);
   });

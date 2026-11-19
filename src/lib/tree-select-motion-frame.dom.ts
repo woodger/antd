@@ -196,7 +196,8 @@ function createMotionFrame(popup: HTMLElement) {
           observed?.get(name)?.toString() ?? computed.getPropertyValue(name)])) };
       if (capture) animationTargets = target;
       Object.assign(style.values, target.values);
-    } else Object.assign(style.values, animationTargets.values);
+    }
+    else Object.assign(style.values, animationTargets.values);
     const nativeStyle = nativeTransitions(style, underlying);
     const time = now();
     if (capture) {

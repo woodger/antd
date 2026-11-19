@@ -73,6 +73,7 @@ test('Upload pastable toggles the document listener without replacing refs or tr
     expect(await paste(page, sample)).toBe(reference.afterUnmount.prevented);
     await expect(input).toHaveCount(0);
     await page.getByRole('checkbox', { name: 'Mount pastable Upload', exact: true }).check();
+
     await expect(page.getByLabel('Paste changes', { exact: true })).toHaveText('[]');
     expect(await paste(page, sample)).toBe(true);
     await expect(page.getByLabel('Paste before', { exact: true }))
@@ -115,6 +116,7 @@ test('UploadDragger pastable respects disabled changes and retains input selecti
     expect(await paste(page, sample)).toBe(false);
     await expect(page.getByLabel('Paste before', { exact: true })).toHaveText('[]');
     await page.getByRole('checkbox', { name: 'Disable pastable Upload', exact: true }).uncheck();
+
     expect(await paste(page, sample)).toBe(true);
     await expect(page.getByLabel('Paste changes', { exact: true }))
       .toHaveText('[{"name":"notes.txt","status":null,"list":["notes.txt"]}]');

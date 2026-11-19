@@ -119,6 +119,7 @@ for (const sample of reference.cases) {
 test('Badge removes hidden descriptions immediately while retaining the outgoing visual value', async ({ page }) => {
   await select(page, 'leave-cache');
   const owner = page.getByRole('button', { name: 'Zoom owner', exact: true });
+
   await expect(owner).toHaveAccessibleDescription('Количество: 5');
 
   await next(page);
@@ -190,6 +191,7 @@ test('Badge releases its active deadline on removal', async ({ page }) => {
 
   expect(await resources(page)).toEqual({ timers: 0, frames: 0 });
   await page.clock.runFor(1100);
+
   await expect(page.locator('sup')).toHaveCount(0);
 });
 
@@ -213,5 +215,6 @@ test('Badge settles an active exit when reduced motion is enabled', async ({ pag
 
   await expect(page.locator('sup')).toHaveCount(0);
   await page.clock.runFor(1100);
+
   expect(await resources(page)).toEqual({ timers: 0, frames: 0 });
 });

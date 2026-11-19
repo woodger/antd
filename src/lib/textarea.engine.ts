@@ -50,7 +50,8 @@ export function textAreaResizeStyle(style = ''): string {
     if (char === ';' && !depth) {
       declaration();
       current = '';
-    } else current += char;
+    }
+    else current += char;
   }
   return value ? `resize:${value}` : '';
 }

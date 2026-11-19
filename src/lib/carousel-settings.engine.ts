@@ -97,7 +97,8 @@ export function getCarouselItems(props: Pick<CarouselProps, 'items' | 'children'
   function visit(value: CarouselContent) {
     if (Array.isArray(value)) {
       for (const child of value) visit(child);
-    } else if (value && typeof value !== 'boolean' && (typeof value !== 'string' || value.trim())) {
+    }
+    else if (value && typeof value !== 'boolean' && (typeof value !== 'string' || value.trim())) {
       items.push({ children: value });
     }
   }

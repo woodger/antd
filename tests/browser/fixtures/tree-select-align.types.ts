@@ -43,14 +43,23 @@ export function treeSelectAlignCustomProps(
   return {
     value: 1, treeData: [{ code: 1, caption: 'One' }],
     popupAlign: treeSelectReadonlyAlign, builtinPlacements: treeSelectReadonlyPlacements,
-    components: { root: { render: root, props: { type: 'button' } }, input: { render: input, props: { rows: 2 } } },
-    onChange(next) { const value: number = next; void value; },
+    components: {
+      root: { render: root, props: { type: 'button' } },
+      input: { render: input, props: { rows: 2 } }
+    },
+    onChange(next) {
+      const value: number = next;
+      void value;
+    },
     styles({ props }) {
       const align: TreeSelectPopupAlign | undefined = props.popupAlign;
       const placements: Readonly<Record<string, TreeSelectPopupAlign>> | undefined = props.builtinPlacements;
       const nativeRoot: HTMLButtonElement | HTMLDivElement | undefined = props.nativeElement;
       const nativeEditor: HTMLTextAreaElement | HTMLInputElement | undefined = props.inputElement;
-      void align; void placements; void nativeRoot; void nativeEditor;
+      void align;
+      void placements;
+      void nativeRoot;
+      void nativeEditor;
       return { popup: { root: '--align-semantic:typed' } };
     }
   } satisfies CustomProps;
@@ -60,7 +69,8 @@ export const treeSelectAlignProvider: TreeSelectConfig = {
   styles({ props }) {
     const align: TreeSelectPopupAlign | undefined = props.popupAlign;
     const placements: Readonly<Record<string, TreeSelectPopupAlign>> | undefined = props.builtinPlacements;
-    void align; void placements;
+    void align;
+    void placements;
     return { popup: { root: '--align-provider:typed' } };
   }
 };
@@ -90,5 +100,18 @@ export function treeSelectAlignNegativeProps(map: NonNullable<TreeSelectProps['b
   map.bottomLeft = treeSelectReadonlyAlign;
   const empty: TreeSelectProps = { popupAlign: {}, builtinPlacements: {} };
   const omitted: TreeSelectProps = { popupAlign: undefined, builtinPlacements: undefined };
-  return { privateAlign, privateMap, region, points, offset, target, overflow, dynamic, align, placements, empty, omitted };
+  return {
+    privateAlign,
+    privateMap,
+    region,
+    points,
+    offset,
+    target,
+    overflow,
+    dynamic,
+    align,
+    placements,
+    empty,
+    omitted
+  };
 }

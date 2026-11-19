@@ -3,6 +3,7 @@ import reference from './fixtures/ant-design-form-validation-options-observation
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=form-validation-options');
+
   await expect(page.locator('#form-validation-options-fixture')).toBeVisible();
 });
 
@@ -97,6 +98,7 @@ test('Form keeps focus, selection and UI metadata unchanged during a silent asyn
 
   await page.getByRole('button', { name: 'Silent validation', exact: true })
     .evaluate((button) => (button as HTMLButtonElement).click());
+
   await expect(page.getByRole('status', { name: 'Pending validators', exact: true })).toHaveText('1');
   await expect(page.getByRole('status', { name: 'Fresh validating', exact: true })).toHaveText('false');
   await expect(input).toBeFocused();
@@ -123,6 +125,7 @@ for (const firstSilent of [false, true]) {
     await page.getByRole('button', {
       name: firstSilent ? 'Normal validation' : 'Silent validation', exact: true
     }).click();
+
     await expect(page.getByRole('status', { name: 'Pending validators', exact: true })).toHaveText('2');
 
     await page.getByRole('button', {
@@ -146,6 +149,7 @@ for (const firstSilent of [false, true]) {
 test('Form rejects a silent snapshot reset while validation is pending', async ({ page }) => {
   await page.getByRole('checkbox', { name: 'Hold validators', exact: true }).check();
   await page.getByRole('button', { name: 'Silent validation', exact: true }).click();
+
   await expect(page.getByRole('status', { name: 'Pending validators', exact: true })).toHaveText('1');
 
   await page.getByRole('button', { name: 'Reset fresh', exact: true }).click();

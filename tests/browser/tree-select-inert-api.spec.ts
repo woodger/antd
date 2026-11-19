@@ -15,11 +15,20 @@ async function act(page: Page, action: TreeSelectInertApiAction, slot: string) {
     if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) throw Error('Expected native editor');
     node.setSelectionRange(range.start, range.end);
   }, action);
-  else if (action.type === 'props') await page.locator('[data-inert-api-command]').evaluate((node, mode) => {
+  else if (action.type === 'props') await page.locator('[data-inert-api-command]').evaluate((
+    node,
+    mode
+  ) => {
     node.dispatchEvent(new CustomEvent('inertapiupdate', { detail: mode }));
   }, action.mode);
-  else if (action.type === 'outside') await page.getByRole('button', { name: 'Outside inert API', exact: true }).click();
-  else if (action.type === 'choose') await page.getByText(action.value === 'a' ? 'Alpha' : 'Beta', { exact: true }).last().click();
+  else if (action.type === 'outside') await page.getByRole(
+    'button',
+    { name: 'Outside inert API', exact: true }
+  ).click();
+  else if (action.type === 'choose') await page.getByText(
+    action.value === 'a' ? 'Alpha' : 'Beta',
+    { exact: true }
+  ).last().click();
   else if (action.type === 'remove') await page.locator('.ant-select-selection-item').filter({ hasText: action.value === 'a' ? 'Alpha' : 'Beta' })
     .locator('.ant-select-selection-item-remove').click();
   else throw Error(`Unsupported inherited API action: ${action.type}`);
@@ -31,13 +40,22 @@ for (const entry of reference.cases) {
     await page.goto('/?fixture=tree-select-inert-api');
     await page.getByRole('combobox', { name: 'TreeSelect inherited API sample', exact: true }).selectOption(entry.id);
     await page.mouse.move(0, 0);
-    await expect(page.locator('[data-inert-api-case]')).toHaveAttribute('data-inert-api-bound', 'true');
+
+    await expect(page.locator('[data-inert-api-case]')).toHaveAttribute(
+      'data-inert-api-bound',
+      'true'
+    );
     const read = () => page.evaluate(readTreeSelectInertApi);
+
     await expect.poll(read).toEqual(treeSelectInertApiNativeExpected(entry.initial, sample));
     const previous = await page.evaluateHandle(() => {
       const host = document.querySelector('[data-inert-api-case]')!;
       const root = host.querySelector('[data-inert-api-root]') ?? host.querySelector('.ant-select')!;
-      return { root, editor: root.querySelector('input[role="combobox"],textarea[role="combobox"]'), popup: null as Element | null };
+      return {
+        root,
+        editor: root.querySelector('input[role="combobox"],textarea[role="combobox"]'),
+        popup: null as Element | null
+      };
     });
     const observed = () => previous.evaluate(old => {
       const host = document.querySelector('[data-inert-api-case]')!;
@@ -47,7 +65,10 @@ for (const entry of reference.cases) {
       const samePopup = !old.popup || !popup || old.popup === popup;
       old.popup ??= popup;
       const refs: { root?: Element; control?: { focus?: unknown; blur?: unknown } } = {};
-      host.querySelector('[data-inert-api-command]')!.dispatchEvent(new CustomEvent('inertapirefs', { detail: refs }));
+      host.querySelector('[data-inert-api-command]')!.dispatchEvent(new CustomEvent(
+        'inertapirefs',
+        { detail: refs }
+      ));
       return { sameRoot: old.root === root, sameEditor: old.editor === editor, samePopup,
         rootIsPublicRef: refs.root === root, focusMethod: typeof refs.control?.focus === 'function',
         blurMethod: typeof refs.control?.blur === 'function' };
@@ -56,7 +77,10 @@ for (const entry of reference.cases) {
       expect(await observed()).toEqual(entry.initialObserved);
       for (const step of entry.steps) {
         await act(page, step.action as TreeSelectInertApiAction, sample.slot);
-        await expect.poll(read, { message: JSON.stringify(step.action) }).toEqual(treeSelectInertApiNativeExpected(step.view, sample));
+        await expect.poll(read, { message: JSON.stringify(step.action) }).toEqual(treeSelectInertApiNativeExpected(
+          step.view,
+          sample
+        ));
         expect(await observed()).toEqual(step.observed);
       }
     } finally { await previous.dispose(); }

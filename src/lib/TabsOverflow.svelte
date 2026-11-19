@@ -189,7 +189,8 @@
     if (!focusReady) {
       focusSession = false;
       cancelFocus();
-    } else if (!focusSession) {
+    }
+    else if (!focusSession) {
       focusSession = true;
       // Как useAccessibility: изменение autoFocus/align внутри открытого сеанса не фокусирует снова.
       if (untrack(() => more?.autoFocus)) untrack(scheduleFocus);
@@ -222,7 +223,8 @@
     if (controller && (motionStarted || ready)) {
       motionStarted = true;
       untrack(() => controller.sync(next, options, enabled));
-    } else if (!next && autoDestroy) rendered = false;
+    }
+    else if (!next && autoDestroy) rendered = false;
   });
 
   $effect(() => {
@@ -238,7 +240,8 @@
       cancelPending();
       if (!visible && focused && (focused === button || popup?.contains(focused)))
         untrack(onUnavailable);
-    } else if (focused instanceof HTMLElement && popup?.contains(focused)
+    }
+    else if (focused instanceof HTMLElement && popup?.contains(focused)
       && focused.dataset.tabsOverflowKey !== undefined
       && !current.some(item => item.key === focused.dataset.tabsOverflowKey && !item.disabled)) {
       repairFocus = true;
@@ -327,7 +330,11 @@
     author.cssText = authorStyle ?? '';
     for (const name of new Set([...motionProperties, ...css])) {
       const source = css.getPropertyValue(name) ? css : author;
-      surface.style.setProperty(name, source.getPropertyValue(name), source.getPropertyPriority(name));
+      surface.style.setProperty(
+        name,
+        source.getPropertyValue(name),
+        source.getPropertyPriority(name)
+      );
     }
     motionProperties = Array.from(css);
   });
@@ -458,7 +465,8 @@
             overlay.focus({ preventScroll: true });
             focusAttempted = true;
             event.preventDefault();
-          } else {
+          }
+          else {
             source.focus({ preventScroll: true });
             requestVisible(false);
           }
@@ -589,23 +597,32 @@
 
     if (fromMore && event.key === 'Escape') {
       open = false;
-    } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+    }
+    else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       const offset = event.key === 'ArrowDown' ? 1 : -1;
       if (fromMore) selectedKey = getTabsMoreNavigationKey(items, selectedKey, offset);
       else focusOption(getTabsNavigationKey(items, menuKey, offset === 1 ? 'next' : 'previous'));
       event.preventDefault();
-    } else if (!fromMore && (event.key === 'Home' || event.key === 'End')) {
+    }
+    else if (!fromMore && (event.key === 'Home' || event.key === 'End')) {
       focusOption(getTabsNavigationKey(items, menuKey, event.key === 'Home' ? 'first' : 'last'));
       event.preventDefault();
-    } else if (!fromMore && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+    }
+    else if (!fromMore && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
       if (menuKey === undefined)
-        focusOption(getTabsNavigationKey(items, undefined, event.key === 'ArrowLeft' ? 'last' : 'first'));
+        focusOption(getTabsNavigationKey(
+          items,
+          undefined,
+          event.key === 'ArrowLeft' ? 'last' : 'first'
+        ));
       event.preventDefault();
-    } else if (event.key === 'Enter' || event.key === ' ') {
+    }
+    else if (event.key === 'Enter' || event.key === ' ') {
       if (!fromMore) {
         focusOption(menuKey ?? getTabsNavigationKey(items, undefined, 'first'));
         event.preventDefault();
-      } else if (selectedKey !== null) {
+      }
+      else if (selectedKey !== null) {
         const option = Array.from(list?.querySelectorAll<HTMLButtonElement>('[role="option"]') ?? [])
           .find(element => element.dataset.tabsOverflowKey === selectedKey);
         // Публичный onTabClick остаётся MouseEvent, как у обычного native tab button.
@@ -613,7 +630,8 @@
           keyboardClick = true;
           option.click();
           keyboardClick = false;
-        } else {
+        }
+        else {
           const click = getTabsClickEvent(event, button);
           if (click) onSelect(selectedKey, click);
         }

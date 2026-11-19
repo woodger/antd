@@ -15,7 +15,9 @@ it('preserves both complete independent captures and original whole raw/gzip byt
   expect(verifyEmptyDatetimeSourceStoredParts()).toEqual({ sourceOnly: true,
     captures: 2, originalParts: 68, partBlobs: 64, allBlobs: 75 });
   const failed = JSON.parse(Buffer.from(readEmptyDatetimeSourceEvidence('failedV1')).toString('utf8'));
-  expect(failed.status).toBe('failed'); expect(failed.diagnostics).toHaveLength(2);
+
+  expect(failed.status).toBe('failed');
+  expect(failed.diagnostics).toHaveLength(2);
   expect(failed.diagnostics.every((row: { message: string }) => row.message.includes('secondStep'))).toBe(true);
 });
 
@@ -23,9 +25,11 @@ it('reads all48 logical points/eight closes/twelve disposal reads one complete p
   let points = 0, closes = 0, disposalReads = 0;
   for (const variant of ['first', 'repeat'] as const) {
     for (const row of readEmptyDatetimeSourceManifest(variant).cases) {
-      const initial = readEmptyDatetimeSourceInitial(row.id, variant); points++;
+      const initial = readEmptyDatetimeSourceInitial(row.id, variant);
+      points++;
       for (let index = 0; index < row.steps.length; index++) {
-        const step = readEmptyDatetimeSourceStep(row.id, index, variant); points++;
+        const step = readEmptyDatetimeSourceStep(row.id, index, variant);
+        points++;
         expect(step.action).toEqual(row.sample.actions[index]);
         for (const state of [step.before, step.afterCall, step.actual]) {
           expect(state.owner.authoredDates).toEqual(initial.owner.authoredDates);
@@ -33,15 +37,19 @@ it('reads all48 logical points/eight closes/twelve disposal reads one complete p
         }
       }
       for (let index = 0; index < row.closed.length; index++) {
-        const closed = readEmptyDatetimeSourceClosed(row.id, index, variant); closes++;
+        const closed = readEmptyDatetimeSourceClosed(row.id, index, variant);
+        closes++;
         expect(closed.after1000.owner.open).toBe(false);
         expect(closed.after1000.inputs.every(input => input.value === '')).toBe(true);
       }
       for (const phase of ['beforeUnmount', 'cleanup', 'late'] as const) {
-        const state = readEmptyDatetimeSourceCleanup(row.id, phase, variant); disposalReads++;
+        const state = readEmptyDatetimeSourceCleanup(row.id, phase, variant);
+        disposalReads++;
         if (phase !== 'beforeUnmount') {
-          expect(state.owner.alive).toBe(false); expect(state.refs).toEqual({ owner: null, root: null, control: null });
-          expect(state.inputs).toEqual([]); expect(state.popups).toEqual([]);
+          expect(state.owner.alive).toBe(false);
+          expect(state.refs).toEqual({ owner: null, root: null, control: null });
+          expect(state.inputs).toEqual([]);
+          expect(state.popups).toEqual([]);
           expect(state.retained.every(node => !node.connected)).toBe(true);
         }
       }
@@ -81,30 +89,45 @@ it('rejects invalid captures, owners, indices and unmount phases', () => {
 it('rejects changed Source headers/counts, missing actions/closes and swapped owners/slots', () => {
   for (const change of [
     (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => { value.status = 'failed'; },
-    (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => { value.browserVersion = 'wrong'; },
-    (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => { value.sourceProtocol.sha256 = '0'.repeat(64); },
-    (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => { value.actualCounts.actions--; },
+    (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => {
+      value.browserVersion = 'wrong';
+    },
+    (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => {
+      value.sourceProtocol.sha256 = '0'.repeat(64);
+    },
+    (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => {
+      value.actualCounts.actions--;
+    },
     (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => { value.cases[0].steps.pop(); },
     (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => { value.cases[0].closed.pop(); },
     (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => { value.cases.reverse(); },
-    (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => { value.cases[0].initial = value.cases[1].initial; },
-    (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => { value.cases[0].steps.reverse(); }
+    (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => {
+      value.cases[0].initial = value.cases[1].initial;
+    },
+    (value: ReturnType<typeof readEmptyDatetimeSourceManifest>) => {
+      value.cases[0].steps.reverse();
+    }
   ]) {
-    const changed = readEmptyDatetimeSourceManifest(); change(changed);
+    const changed = readEmptyDatetimeSourceManifest();
+    change(changed);
     expect(() => verifyEmptyDatetimeSourceManifest(changed)).toThrow();
   }
 });
 
 it('rejects cross-capture metadata, changed raw/stored hashes and changed compressed bytes', () => {
   const original = readEmptyDatetimeSourceCase('single').initial;
+
   expect(() => verifyEmptyDatetimeSourcePartBinding(original, 'repeat')).toThrow();
   for (const key of ['sha256', 'gzipSHA256'] as const) {
-    const changed = structuredClone(original); changed.rawJSONPart[key] = '0'.repeat(64);
+    const changed = structuredClone(original);
+    changed.rawJSONPart[key] = '0'.repeat(64);
     expect(() => readEmptyDatetimeSourcePart(changed)).toThrow();
   }
   const file = new URL('../browser/fixtures/ant-design-date-picker-empty-datetime-parts/'
     + original.rawJSONPart.gzipSHA256 + '.json.gz', import.meta.url);
-  const changed = fs.readFileSync(file); changed[0] ^= 1;
+  const changed = fs.readFileSync(file);
+  changed[0] ^= 1;
+
   expect(() => verifyEmptyDatetimeSourceStoredBytes(original, changed)).toThrow();
 });
 
@@ -114,11 +137,18 @@ it('rejects changed actual Source arity/order/receiver and broken raw Dayjs iden
     (value: EmptyDatetimeSourcePoint) => { value.owner.callbacks.at(-1)!.actualArgumentCount = 1; },
     (value: EmptyDatetimeSourcePoint) => { value.owner.callbacks[0].index = 3; },
     (value: EmptyDatetimeSourcePoint) => { value.owner.callbacks[0].receiver.isUndefined = false; },
-    (value: EmptyDatetimeSourcePoint) => { value.owner.callbacks.at(-1)!.dates[0].value.identity++; },
-    (value: EmptyDatetimeSourcePoint) => { value.owner.callbacks.at(-1)!.dates[0].value.temporal.fields[3] = 0; },
-    (value: EmptyDatetimeSourcePoint) => { value.owner.callbacks.at(-1)!.dates[0].value.sameAsAuthored.panel = false; }
+    (value: EmptyDatetimeSourcePoint) => {
+      value.owner.callbacks.at(-1)!.dates[0].value.identity++;
+    },
+    (value: EmptyDatetimeSourcePoint) => {
+      value.owner.callbacks.at(-1)!.dates[0].value.temporal.fields[3] = 0;
+    },
+    (value: EmptyDatetimeSourcePoint) => {
+      value.owner.callbacks.at(-1)!.dates[0].value.sameAsAuthored.panel = false;
+    }
   ]) {
-    const changed = structuredClone(point); change(changed);
+    const changed = structuredClone(point);
+    change(changed);
     expect(() => verifyEmptyDatetimeSourcePoint(changed)).toThrow();
   }
 });

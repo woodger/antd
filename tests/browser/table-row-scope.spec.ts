@@ -24,7 +24,8 @@ for (const sample of reference.cases) {
     if (sample.name.includes('hover')) {
       await page.locator('#table-row-scope-control tbody tr.ant-table-row').first()
         .locator('.user-row-header').hover();
-    } else await page.mouse.move(1200, 700);
+    }
+    else await page.mouse.move(1200, 700);
 
     const layered = sample.name.startsWith('fixed');
     // Scope сверяется у всех ячеек, оформление — у переносимой колонки.
@@ -78,7 +79,10 @@ test('Table rowScope updates keep row header editors and independent selection/e
     expect(await root.getByRole('form').evaluate(node =>
       new FormData(node as HTMLFormElement).get('draft'))).toBe('Row header draft retained');
     await expect(row.locator('td')).toHaveCount(3);
-    await expect(root.locator('tbody tr.ant-table-expanded-row > td')).toHaveAttribute('colspan', '4');
+    await expect(root.locator('tbody tr.ant-table-expanded-row > td')).toHaveAttribute(
+      'colspan',
+      '4'
+    );
     await expect(root.locator('thead th:not([scope="col"])')).toHaveCount(0);
 
     await row.getByRole('checkbox').press('Space');
@@ -103,6 +107,7 @@ test('Table data cells retain selection priority over a fixed sorted column back
       .selectOption('none');
     const row = page.locator('#table-row-scope-control tbody tr.ant-table-row').first();
     const cell = row.locator('.user-row-header');
+
     await expect(cell).toHaveJSProperty('tagName', 'TD');
     await expect(cell).toHaveClass(/ant-table-column-sort/);
 
@@ -110,6 +115,7 @@ test('Table data cells retain selection priority over a fixed sorted column back
 
     const color = reference.cases.find(sample => sample.name === 'selected')!
       .expected.rows[0][1].backgroundColor;
+
     await expect(row.getByRole('checkbox')).toBeChecked();
     await expect(cell).toHaveCSS('background-image', `linear-gradient(${color}, ${color})`);
   });

@@ -106,11 +106,13 @@
         const item = candidates.find(item => item.key === focusedKey);
         if (focusedKey === undefined && !adding && !removing) {
           if (moving) retainedFocus = focused;
-        } else if (adding ? !canAdd : !item || layoutChanged
+        }
+        else if (adding ? !canAdd : !item || layoutChanged
           || removing && !isTabsItemRemovable(item, editable)) {
           focusKey = adding ? undefined : item?.key;
           repairFocus = true;
-        } else if (moving) {
+        }
+        else if (moving) {
           retainedFocus = focused;
         }
       }
@@ -265,11 +267,7 @@
       revealTab(viewport, element.closest<HTMLElement>('[data-tabs-cell]') ?? element, vertical);
   }
 
-  async function removeTab(
-    item: TabsItem,
-    event: MouseEvent | KeyboardEvent,
-    moveFocus = false
-  ) {
+  async function removeTab(item: TabsItem, event: MouseEvent | KeyboardEvent, moveFocus = false) {
     if (!isTabsItemRemovable(item, editable)) return;
 
     event.preventDefault();

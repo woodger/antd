@@ -62,7 +62,10 @@
   let original = $derived({ value: materialize(settings.value) });
   let checkableProps = $derived(settings.value === 'omitted' ? {} : { treeCheckable: original.value });
   function record(...entry: unknown[]) { events = [...events, entry]; }
-  function observeSemantic(slot: 'classNames' | 'styles', info: { props: Pick<TreeSelectProps, 'treeCheckable'> }) {
+  function observeSemantic(
+    slot: 'classNames' | 'styles',
+    info: { props: Pick<TreeSelectProps, 'treeCheckable'> }
+  ) {
     const value = info.props.treeCheckable;
     receipt.semantic[slot] = {
       keyPresent: Object.hasOwn(info.props, 'treeCheckable'), descriptor: settings.value,
@@ -95,7 +98,10 @@
   }
   function received(attributes: TreeSelectRootContext<HTMLButtonElement>['attributes']
     | TreeSelectInputContext['attributes'], slot: 'root' | 'input') {
-    return JSON.stringify({ slot, keys: ['treeCheckable'].filter(name => Object.hasOwn(attributes, name)) });
+    return JSON.stringify({
+      slot,
+      keys: ['treeCheckable'].filter(name => Object.hasOwn(attributes, name))
+    });
   }
   let common = $derived({
     id: 'checkable-field', class: 'checkable-audit-root', style: 'width:220px',
@@ -107,16 +113,30 @@
     classNames, styles, transitionName: '',
     showSearch: sample.searchable ? {
       searchValue: query, filterTreeNode: false as const,
-      onSearch: (text: string) => { query = text; record('search', text); }
+      onSearch: (text: string) => {
+        query = text;
+        record('search', text);
+      }
     } : false as const,
     allowClear: { label: 'Clear checked values' },
-    onOpenChange: (next: boolean) => { open = next; record('open', next); },
+    onOpenChange: (next: boolean) => {
+      open = next;
+      record('open', next);
+    },
     onChange: (next: TreeSelectValue, labels: unknown, extra: { triggerValue?: unknown }) => {
       model = next ?? null;
       record('change', next ?? null, labels ?? null, { triggerValue: extra.triggerValue ?? null });
     },
-    onSelect: (value: unknown, node?: { value?: unknown }) => record('select', value, node?.value ?? null),
-    onDeselect: (value: unknown, node?: { value?: unknown }) => record('deselect', value, node?.value ?? null),
+    onSelect: (value: unknown, node?: { value?: unknown }) => record(
+      'select',
+      value,
+      node?.value ?? null
+    ),
+    onDeselect: (value: unknown, node?: { value?: unknown }) => record(
+      'deselect',
+      value,
+      node?.value ?? null
+    ),
     onClear: () => record('clear'), onFocus: () => record('focus'), onBlur: () => record('blur')
   });
   export function update(action: TreeSelectCheckableAction) {
@@ -125,7 +145,8 @@
       const next = { ...settings, ...action.set };
       for (const name of action.unset ?? []) delete next[name];
       settings = next;
-    } else if (action.type === 'open') open = action.value;
+    }
+    else if (action.type === 'open') open = action.value;
   }
   export function readRefs() { return { root: customRoot ?? defaultRoot, editor, control }; }
   export function readEvents() { return events; }

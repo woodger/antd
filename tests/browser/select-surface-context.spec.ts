@@ -6,15 +6,25 @@ import { verifySelectSurfaceContextPoint } from './select-surface-context-assert
 
 test.use({ viewport: { width: 1200, height: 900 } });
 for (const original of selectSurfaceContextReference.cases) {
-  test(`Select popup isolates and retains public Form context for ${original.id}`, async ({ page }, testInfo) => {
+  test(`Select popup isolates and retains public Form context for ${original.id}`, async (
+    { page },
+    testInfo
+  ) => {
     const trace: unknown[] = [];
     await page.goto('/?fixture=select-surface-context');
     await page.getByRole('combobox', { name: 'Select surface context sample', exact: true }).selectOption(original.id);
-    await expect(page.locator('[data-surface-context-case]')).toHaveAttribute('data-surface-context-bound', 'true');
+
+    await expect(page.locator('[data-surface-context-case]')).toHaveAttribute(
+      'data-surface-context-bound',
+      'true'
+    );
     await page.mouse.move(0, 0);
     const retained = await page.evaluateHandle(() => {
       const refs: { root?: HTMLElement; editor?: HTMLElement; control?: unknown } = {};
-      document.querySelector('[data-surface-context-command]')!.dispatchEvent(new CustomEvent('contextrefs', { detail: refs }));
+      document.querySelector('[data-surface-context-command]')!.dispatchEvent(new CustomEvent(
+        'contextrefs',
+        { detail: refs }
+      ));
       return { ...refs, parent: refs.editor?.parentNode };
     });
     let inside: JSHandle<HTMLInputElement | null> | undefined;
@@ -24,7 +34,10 @@ for (const original of selectSurfaceContextReference.cases) {
       verifySelectSurfaceContextPoint(actual, source, label, original.calls);
       expect(await retained.evaluate(before => {
         const refs: { root?: HTMLElement; editor?: HTMLElement; control?: unknown } = {};
-        document.querySelector('[data-surface-context-command]')!.dispatchEvent(new CustomEvent('contextrefs', { detail: refs }));
+        document.querySelector('[data-surface-context-command]')!.dispatchEvent(new CustomEvent(
+          'contextrefs',
+          { detail: refs }
+        ));
         return { root: refs.root === before.root, editor: refs.editor === before.editor,
           parent: refs.editor?.parentNode === before.parent, control: refs.control === before.control };
       })).toEqual({ root: true, editor: true, parent: true, control: true });
@@ -45,7 +58,13 @@ for (const original of selectSurfaceContextReference.cases) {
         .toEqual(original.cleanup);
       if (inside) expect(await inside.evaluate(node => node?.isConnected)).toBe(false);
     } finally {
-      await testInfo.attach('actual-select-surface-context', { body: JSON.stringify({ id: original.id, trace }, null, 2), contentType: 'application/json' });
+      await testInfo.attach(
+        'actual-select-surface-context',
+        {
+          body: JSON.stringify({ id: original.id, trace }, null, 2),
+          contentType: 'application/json'
+        }
+      );
       await retained.dispose();
       await inside?.dispose();
     }

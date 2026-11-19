@@ -25,7 +25,15 @@ export interface HydrationOwnershipOwnerSample {
   scenarioId: string; ownerKey: HydrationOwnershipOwnerKey; controlKey: HydrationOwnershipControl['id'];
   control: HydrationOwnershipControl['control']; initialTag: HydrationOwnershipTag; replacementTag: HydrationOwnershipTag;
   publicId: string; initialQuery: string; initialValue: string | string[];
-  frame: { position: 'absolute'; left: number; top: number; width: number; fontFamily: 'initial'; fontSize: number; lineHeight: 'normal' };
+  frame: {
+    position: 'absolute';
+    left: number;
+    top: number;
+    width: number;
+    fontFamily: 'initial';
+    fontSize: number;
+    lineHeight: 'normal'
+  };
   editorStyle: { width: number; fontSize: number };
 }
 export const ownershipControls: HydrationOwnershipControl[];
@@ -34,4 +42,7 @@ export const ownershipPrehydrateStates: HydrationOwnershipPrehydrateState[];
 export const ownershipActions: HydrationOwnershipAction[];
 export const ownershipScenarios: HydrationOwnershipScenario[];
 export const ownershipGeometry: { viewport: { width: number; height: number } };
-export function ownershipOwnerSample(scenario: HydrationOwnershipScenario, ownerKey: HydrationOwnershipOwnerKey): HydrationOwnershipOwnerSample;
+export function ownershipOwnerSample(
+  scenario: HydrationOwnershipScenario,
+  ownerKey: HydrationOwnershipOwnerKey
+): HydrationOwnershipOwnerSample;

@@ -42,7 +42,8 @@ export function progressLineSteps(
   if (typeof size === 'number') {
     width = size;
     height = size;
-  } else if (size && typeof size === 'object') {
+  }
+  else if (size && typeof size === 'object') {
     const pair = Array.isArray(size) ? size : [size.width, size.height];
     width = pair[0] ?? 14;
     height = Number(pair[1] ?? 8);

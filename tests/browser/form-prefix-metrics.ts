@@ -36,7 +36,11 @@ export function snapshotFormPrefix() {
             label: { box: box(labelBox), style: style(labelBox, ['display', 'flex', 'padding-top',
               'padding-bottom', 'margin', 'text-align', 'white-space']),
             content: style(label, ['color', 'height', 'font-size']),
-            colon: style(label, ['visibility', 'margin-inline-start', 'margin-inline-end'], '::after') },
+            colon: style(
+              label,
+              ['visibility', 'margin-inline-start', 'margin-inline-end'],
+              '::after'
+            ) },
             control: { box: box(control), style: style(control, ['display', 'flex', 'max-width']) },
             input: style(input, ['height', 'font-size', 'line-height', 'color', 'background-color']),
             value: (input as HTMLInputElement).value

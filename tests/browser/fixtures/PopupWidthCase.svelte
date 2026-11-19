@@ -77,7 +77,8 @@
       if (action.layer === 'outer') outer = action.value;
       else if (action.layer === 'inner') inner = action.value;
       else local = action.value;
-    } else if (action.type === 'anchor') anchorWidth = action.width;
+    }
+    else if (action.type === 'anchor') anchorWidth = action.width;
     else if (action.type === 'open') open = action.value;
   }
   export function readRefs() {
@@ -88,7 +89,10 @@
     return { root, anchor: root, editor, control, publicRoot, publicEditor, getterCalls };
   }
   export function readReceipts() {
-    return { outer: popupWidthReceipt(outer, outerProps), inner: popupWidthReceipt(inner, innerProps),
+    return { outer: popupWidthReceipt(outer, outerProps), inner: popupWidthReceipt(
+      inner,
+      innerProps
+    ),
       local: popupWidthReceipt(local, localProps.value) };
   }
   export function readEvents() { return events; }

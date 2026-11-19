@@ -71,7 +71,9 @@ test('Upload itemRender mode updates retain containers, file input and the outsi
     expect(await page.locator('.ant-upload-list-item-container').last()
       .evaluate((node, old) => node === old, oldFirst)).toBe(true);
     await page.getByRole('button', { name: 'Custom preview one', exact: true }).click();
+
     await expect(page.getByLabel('Item render events', { exact: true })).toHaveText('["preview:one"]');
     await page.getByRole('checkbox', { name: 'Mount Upload item renderer', exact: true }).uncheck();
+
     await expect(first).toHaveCount(0);
   });

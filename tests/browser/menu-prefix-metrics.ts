@@ -18,7 +18,10 @@ export function snapshotMenuPrefix() {
   const nested = root.querySelector<HTMLElement>(`:scope > .sample-parent > [class~="${prefix}-sub"]`);
 
   return {
-    root: css(root, [...font, ...box, 'width', 'border-inline-end-width', 'border-bottom-width', 'direction']),
+    root: css(
+      root,
+      [...font, ...box, 'width', 'border-inline-end-width', 'border-bottom-width', 'direction']
+    ),
     selected: row(root.querySelector(':scope > .sample-selected')),
     normal: row(root.querySelector(':scope > .sample-normal')),
     disabled: row(root.querySelector(':scope > .sample-disabled')),
@@ -30,14 +33,20 @@ export function snapshotMenuPrefix() {
       root: css(nested, [...font, ...box]),
       leaf: row(nested.querySelector('.sample-leaf')),
       group: css(part(nested, '-item-group-title'), [...font, ...box]),
-      divider: css(part(nested, '-item-divider'), ['height', 'margin', 'border-color', 'border-style'])
+      divider: css(
+        part(nested, '-item-divider'),
+        ['height', 'margin', 'border-color', 'border-style']
+      )
     } : null,
     popup: popup ? {
       root: css(popup, [...font, 'background-color', 'border-radius', 'z-index']),
       list: css(popup.querySelector('[role="menu"]'), [...font, ...box]),
       leaf: row(popup.querySelector('.sample-leaf')),
       group: css(part(popup, '-item-group-title'), [...font, ...box]),
-      divider: css(part(popup, '-item-divider'), ['height', 'margin', 'border-color', 'border-style'])
+      divider: css(
+        part(popup, '-item-divider'),
+        ['height', 'margin', 'border-color', 'border-style']
+      )
     } : null
   };
 }

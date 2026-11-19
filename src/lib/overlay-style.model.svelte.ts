@@ -8,7 +8,12 @@ export function createOverlayStyle(
   getLayers: () => readonly InlineStyleLayer[], sourceWidthVariable?: string,
   getSourceOpen?: () => boolean, objectStyle?: SelectOverlayStyleOptions
 ) {
-  if (objectStyle) return createSelectOverlayStyle(getLayers, sourceWidthVariable, getSourceOpen, objectStyle);
+  if (objectStyle) return createSelectOverlayStyle(
+    getLayers,
+    sourceWidthVariable,
+    getSourceOpen,
+    objectStyle
+  );
   let write: ReturnType<typeof connectInlineStyle> | undefined;
   let position: InlineStyleLayer;
   let projection: InlineStyleLayer;

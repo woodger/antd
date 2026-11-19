@@ -21,6 +21,7 @@ for (const name of controls) {
 
     const field = page.locator(`[data-dom-field="${name}"]`);
     const source = reference.cases.find(({ id }) => id === `focus-${name}`);
+
     expect(await field.evaluate((element) => element.contains(document.activeElement)))
       .toBe(true);
     if (source) {
@@ -30,10 +31,12 @@ for (const name of controls) {
     }
     const snapshot = page.getByRole('status', { name: 'DOM snapshot', exact: true });
     const first = JSON.parse((await snapshot.textContent())!);
+
     expect(first).toMatchObject({ tag: name, instance: true });
     if (first.sameRef !== null) expect(first.sameRef).toBe(true);
 
     await act(page, `Focus ${name}`);
+
     expect(JSON.parse((await snapshot.textContent())!)).toMatchObject({ stable: true });
     if (name === 'otp') await expect(field.locator('input').first()).toBeFocused();
     if (name === 'slider' || name === 'range') {
@@ -55,25 +58,31 @@ test('Form keeps literal and typed paths distinct when their upstream ref keys c
 test('Form delegates the exact custom ref with its receiver and supports native id fallback', async ({ page }) => {
   await page.goto('/?fixture=form-dom');
   await act(page, 'Focus custom');
+
   await expect(page.getByRole('textbox', { name: 'Custom input', exact: true })).toBeFocused();
   await expect(page.getByRole('status', { name: 'Custom focus calls', exact: true })).toHaveText('1');
   expect(JSON.parse((await page.getByRole('status', { name: 'DOM snapshot' }).textContent())!))
     .toMatchObject({ instance: true, sameRef: true });
 
   await act(page, 'Focus raw');
+
   await expect(page.locator('#dom-raw')).toBeFocused();
   expect(JSON.parse((await page.getByRole('status', { name: 'DOM snapshot' }).textContent())!))
     .toMatchObject({ instance: true, sameRef: true });
 
   await act(page, 'Focus fallback');
+
   await expect(page.locator('#dom-fallback')).toBeFocused();
   expect(JSON.parse((await page.getByRole('status', { name: 'DOM snapshot' }).textContent())!))
     .toMatchObject({ instance: false });
   await act(page, 'Focus missing');
+
   await expect(page.locator('#dom-fallback')).toBeFocused();
   await act(page, 'Focus disabled');
+
   await expect(page.locator('#dom-fallback')).toBeFocused();
   await act(page, 'Focus transfer');
+
   await expect(page.locator('#dom-fallback')).toBeFocused();
   expect(JSON.parse((await page.getByRole('status', { name: 'DOM snapshot' }).textContent())!))
     .toMatchObject({ instance: true, sameRef: true });
@@ -84,15 +93,19 @@ test('Form follows keyed List refs through move and removal without replacing th
   await act(page, 'Focus first person');
   const anna = page.locator('[data-dom-field="person-0"] input');
   const bob = page.locator('[data-dom-field="person-1"] input');
+
   await expect(anna).toBeFocused();
   const oldAnna = await anna.elementHandle();
 
   await act(page, 'Move DOM person');
   await act(page, 'Focus first person');
+
   await expect(bob).toBeFocused();
   await act(page, 'Remove DOM person');
+
   await expect(bob).toHaveCount(0);
   await act(page, 'Focus first person');
+
   await expect(anna).toBeFocused();
   expect(await anna.evaluate((element, previous) => element === previous, oldAnna)).toBe(true);
 });
@@ -103,26 +116,33 @@ test('Form releases removed refs, registers reset controls and detaches a replac
   await act(page, 'Focus input');
   const previous = await input.elementHandle();
   await act(page, 'Reset DOM input');
+
   await expect(input).toBeFocused();
   expect(await input.evaluate((element, old) => element === old, previous)).toBe(false);
   await expect(page.getByRole('status', { name: 'DOM snapshot' }))
     .toHaveText('{"tag":"input","instance":true,"stable":false,"sameRef":null}');
 
   await act(page, 'Toggle DOM field');
+
   await expect(page.locator('[data-dom-field="removable"]')).toHaveCount(0);
   await act(page, 'Focus removable');
+
   expect(JSON.parse((await page.getByRole('status', { name: 'DOM snapshot' }).textContent())!))
     .toMatchObject({ instance: false });
   await act(page, 'Toggle DOM field');
   await act(page, 'Focus removable');
+
   await expect(page.locator('[data-dom-field="removable"] input')).toBeFocused();
 
   await act(page, 'Replace DOM model');
+
   await expect(page.getByRole('status', { name: 'DOM snapshot' })).toHaveText('{"oldInstance":false}');
   await expect(input).toBeFocused();
   await act(page, 'Toggle DOM form');
+
   await expect(input).toHaveCount(0);
   await act(page, 'Focus input');
+
   expect(JSON.parse((await page.getByRole('status', { name: 'DOM snapshot' }).textContent())!))
     .toMatchObject({ instance: false });
 });
@@ -157,6 +177,7 @@ test('Form scrollToField matches source nearest, alignment, custom actions and o
     .toHaveText(JSON.stringify(reference.custom));
   await expect(page.getByRole('status', { name: 'Scroll focus calls', exact: true })).toHaveText('1');
   await act(page, 'Custom scroll focus');
+
   await expect(page.getByRole('textbox', { name: 'Scroll target', exact: true })).toBeFocused();
   await expect(page.getByRole('status', { name: 'Scroll focus calls', exact: true })).toHaveText('2');
 });
@@ -167,21 +188,25 @@ test('Form scopes scroll boundaries and can skip hidden overflow in nested conta
   const box = page.getByTestId('scroll-box');
   const outer = page.locator('.outer');
   await act(page, 'Bounded scroll');
+
   expect(await box.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
   expect(await outer.evaluate((element) => element.scrollTop)).toBe(0);
 
   await act(page, 'Reset scroll');
   await act(page, 'Predicate scroll');
+
   expect(await box.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
   expect(await outer.evaluate((element) => element.scrollTop)).toBe(0);
 
   await act(page, 'Reset scroll');
   await page.getByLabel('Hidden overflow', { exact: true }).check();
   await act(page, 'Skip hidden scroll');
+
   expect(await box.evaluate((element) => element.scrollTop)).toBe(0);
   expect(await outer.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
   await act(page, 'Reset scroll');
   await act(page, 'Scroll nearest');
+
   expect(await box.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
 });
 
@@ -189,6 +214,7 @@ test('Form completes smooth scrolling and keeps a visible control stable when sc
   await page.goto('/?fixture=form-dom-scroll');
   await act(page, 'Smooth scroll');
   const box = page.getByTestId('scroll-box');
+
   await expect.poll(() => box.evaluate((element) => [element.scrollTop, element.scrollLeft]))
     .toEqual([184, 220]);
   await act(page, 'Reset scroll');
@@ -196,6 +222,7 @@ test('Form completes smooth scrolling and keeps a visible control stable when sc
   await act(page, 'Scroll nearest');
   const position = await box.evaluate((element) => [element.scrollTop, element.scrollLeft]);
   await act(page, 'Scroll visible');
+
   expect(await box.evaluate((element) => [element.scrollTop, element.scrollLeft])).toEqual(position);
   expect(await page.getByRole('textbox', { name: 'Scroll target', exact: true }).evaluate(
     (input) => {
@@ -210,7 +237,9 @@ test('Form completes smooth scrolling and keeps a visible control stable when sc
 test('Form targets its own control when adjacent forms share an explicit native id', async ({ page }) => {
   await page.goto('/?fixture=form-dom-scroll');
   await act(page, 'Focus first form');
+
   await expect(page.getByRole('textbox', { name: 'First form input' })).toBeFocused();
   await act(page, 'Focus second form');
+
   await expect(page.getByRole('textbox', { name: 'Second form input' })).toBeFocused();
 });

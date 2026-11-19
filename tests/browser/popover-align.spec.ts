@@ -64,6 +64,7 @@ for (const mode of ['popover', 'popconfirm', 'avatar']) {
     await page.getByLabel('Popover alignment case', { exact: true })
       .selectOption(`${mode}-reactive-align`);
     const root = page.locator('#popover-align-case');
+
     await expect(page.locator('[data-ant-popover]:not([hidden])')).toBeVisible();
     await expect(page.getByLabel('Alignment calls', { exact: true })).toHaveText('2');
     const total = page.getByLabel('Total alignment calls', { exact: true });

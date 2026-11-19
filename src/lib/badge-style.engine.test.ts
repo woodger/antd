@@ -32,6 +32,7 @@ describe('Badge semantic CSS values', () => {
   it('preserves raw important values and their precision across generated layers', () => {
     const matrix = 'matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,842.9375,664,0,1)';
     const layer = [['transform', matrix, 'important']] as const;
+
     expect(getBadgeStyleValue([layer, 'transform:none'], 'transform')).toBe(matrix);
     expect(getBadgeStyleValue([layer, 'transform:none!important'], 'transform')).toBe('none');
     expect(serializeBadgeStyleLayers([layer])).toBe(`transform:${matrix} !important`);

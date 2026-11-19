@@ -85,7 +85,10 @@ it('checks date-panel week prefixes with week type and the identical first-day c
   const calls: Array<{ value: typeof start; type: string }> = [];
   const body = render(DatePicker, { props: { value: start, defaultPickerValue: start,
     defaultOpen: true, showWeek: true, locale: enUS.datePicker,
-    disabledDate(value, info) { calls.push({ value, type: info.type }); return false; }
+    disabledDate(value, info) {
+      calls.push({ value, type: info.type });
+      return false;
+    }
   } }).body;
   const prefixes = calls.filter(call => call.type === 'week');
 

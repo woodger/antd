@@ -67,11 +67,23 @@ guard(isDeepStrictEqual(reference.errors, []), 'errors');
 guard(reference.diagnostics.length === 18 && reference.diagnostics.every(entry =>
   entry.message === 'Warning: Please avoid setting option to disabled in tags mode since user can always type text as tag.'
   || entry.message === 'Warning: `label` of `value` is not same as `label` in Select options.'), 'original diagnostics');
-guard(isDeepStrictEqual(selectValueReference.cases.map(entry => entry.id), selectValueSamples.map(sample => sample.id)), 'ordered cases');
+guard(
+  isDeepStrictEqual(
+    selectValueReference.cases.map(entry => entry.id),
+    selectValueSamples.map(sample => sample.id)
+  ),
+  'ordered cases'
+);
 for (const entry of selectValueReference.cases) {
   const sample = selectValueSamples.find(sample => sample.id === entry.id)!;
-  guard(isDeepStrictEqual(entry.steps.map(step => step.action), selectValueActions(sample)), `${entry.id} complete action trace`);
-  guard(isDeepStrictEqual(entry.cleanup.callbacks, entry.steps.at(-1)!.view.events), `${entry.id} cleanup ledger`);
+  guard(
+    isDeepStrictEqual(entry.steps.map(step => step.action), selectValueActions(sample)),
+    `${entry.id} complete action trace`
+  );
+  guard(
+    isDeepStrictEqual(entry.cleanup.callbacks, entry.steps.at(-1)!.view.events),
+    `${entry.id} cleanup ledger`
+  );
   for (const snapshot of [entry.initial, ...entry.steps]) {
     guard(Array.isArray(snapshot.view.events) && Array.isArray(snapshot.view.producers)
       && Array.isArray(snapshot.raw.producerCalls) && Array.isArray(snapshot.raw.eventArguments), `${entry.id} raw ledgers`);
@@ -87,19 +99,37 @@ function additional(filename: string, sha256: string) {
     && reference.reference.archiveSha256 === selectValueReference.reference.archiveSha256
     && reference.reference.umdArchiveByteEqual && reference.reference.reactBuild === 'production', `${filename} original renderer`);
   guard(isDeepStrictEqual(reference.reference.viewport, selectValueReference.reference.viewport)
-    && isDeepStrictEqual(reference.reference.errors, []) && isDeepStrictEqual(reference.reference.diagnostics, []), `${filename} diagnostics/viewport`);
+    && isDeepStrictEqual(reference.reference.errors, []) && isDeepStrictEqual(
+      reference.reference.diagnostics,
+      []
+    ), `${filename} diagnostics/viewport`);
   return reference;
 }
 
 export const selectValueLiveReference = additional('ant-design-select-value-live-reference.json',
   'ab2c4f600296233201ccc712ece548319cde73b548eb99532f4a86fdf4a3b99a');
-guard(isDeepStrictEqual(selectValueLiveReference.cases.map(entry => entry.id), selectValueLiveSamples.map(sample => sample.id)), 'ordered live cases');
+guard(
+  isDeepStrictEqual(
+    selectValueLiveReference.cases.map(entry => entry.id),
+    selectValueLiveSamples.map(sample => sample.id)
+  ),
+  'ordered live cases'
+);
 for (const [index, entry] of selectValueLiveReference.cases.entries()) {
-  guard(isDeepStrictEqual(entry.steps.map(step => step.action), selectValueLiveActions(selectValueLiveSamples[index])), `${entry.id} whole live trace`);
+  guard(
+    isDeepStrictEqual(
+      entry.steps.map(step => step.action),
+      selectValueLiveActions(selectValueLiveSamples[index])
+    ),
+    `${entry.id} whole live trace`
+  );
 }
 const cached = additional('ant-design-select-value-cache-native-reference.json',
   'a07683c962316e2c574052a0859da78c4ed47798fe355c9008257e0ec255301e');
-guard(cached.cases.length === 1 && cached.cases[0].id === 'select-value-cache-disabled', 'bounded disabled cache owner');
+guard(
+  cached.cases.length === 1 && cached.cases[0].id === 'select-value-cache-disabled',
+  'bounded disabled cache owner'
+);
 guard(isDeepStrictEqual(cached.cases[0].steps.map(step => step.action), selectValueActions(
   selectValueSamples.find(sample => sample.id === cached.cases[0].id)!)), 'bounded owner unchanged actions');
 export function selectValueNativeCase(primary: SelectValueSourceCase) {

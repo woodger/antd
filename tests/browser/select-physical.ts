@@ -1,7 +1,10 @@
 import type { Locator, Page } from '@playwright/test';
 
 /** Физические строки отделены от виртуального srlist и не зависят от prefixCls. */
-export function physicalSelectOption(scope: Page | Locator, options: { name?: string | RegExp; exact?: boolean } = {}) {
+export function physicalSelectOption(
+  scope: Page | Locator,
+  options: { name?: string | RegExp; exact?: boolean } = {}
+) {
   const rows = scope.locator('[data-ant-select-item]:visible,[data-ant-auto-complete-item-option]:visible');
   const name = options.name;
   if (name === undefined) return rows;

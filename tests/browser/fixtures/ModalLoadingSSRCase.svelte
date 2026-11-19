@@ -4,7 +4,11 @@
   import Footer from './ModalLoadingFooter.svelte';
   import type { ModalLoadingSample } from '../modal-loading-cases.mjs';
   import type { ModalLoadingActivity } from '../modal-loading-metrics.mjs';
-  let { sample, loading, activity }: { sample: ModalLoadingSample; loading: boolean; activity: ModalLoadingActivity[] } = $props();
+  let { sample, loading, activity }: {
+    sample: ModalLoadingSample;
+    loading: boolean;
+    activity: ModalLoadingActivity[]
+  } = $props();
   const record = (kind: ModalLoadingActivity['kind']) => { activity.push({ kind }); };
   const neverAttach = () => { throw Error('SSR must not attach DOM refs'); };
   const neverMount = () => { throw Error('SSR must not execute onMount'); };

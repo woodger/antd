@@ -37,7 +37,9 @@ export async function settleDatePickerPresetTransitions(page: Page): Promise<Poi
     const encoded = JSON.stringify(actual);
     stable = encoded === previous ? stable + 1 : 0;
     if (stable >= 3) return actual;
-    previous = encoded; prior = latest; latest = actual;
+    previous = encoded;
+    prior = latest;
+    latest = actual;
   }
   throw Object.assign(Error('Actual Native DatePicker transition owner did not settle'), {
     observation: { prior, latest }
@@ -46,27 +48,33 @@ export async function settleDatePickerPresetTransitions(page: Page): Promise<Poi
 export async function actDatePickerPresetTransitions(
   page: Page, sample: Sample, action: Action, index: number
 ) {
-  await page.evaluate(value => window.datePickerPresetTransitionsNative.setActionIndex(value), index);
+  await page.evaluate(
+    value => window.datePickerPresetTransitionsNative.setActionIndex(value),
+    index
+  );
   const prefix = sample.prefixCls ?? 'ant-picker';
   if (action.type === 'open') await page.locator('#preset-field').click();
   else if (action.type === 'preset-click') await page.locator('.' + prefix + '-presets li').click();
   else if (action.type === 'leave') await page.mouse.move(1000, 750);
   else if (action.type === 'cell-hover') {
     await page.locator('.' + prefix + '-dropdown td[title="' + action.value + '"]').hover();
-  } else if (action.type === 'time-hover') {
+  }
+  else if (action.type === 'time-hover') {
     const column = page.locator('.' + prefix + '-time-panel-column[aria-label="' + action.unit + '"]');
     const button = action.unit === 'meridiem'
       ? column.getByRole('button', { name: String(action.value).toUpperCase(), exact: true })
       : column.getByRole('button', { name: action.unit + ' ' + action.value, exact: true });
     // Hover the real LI, including when its actual child button is disabled.
     await button.locator('..').hover();
-  } else if (action.type === 'input-focus') await page.locator('#preset-field').focus();
+  }
+  else if (action.type === 'input-focus') await page.locator('#preset-field').focus();
   else if (action.type === 'input-escape') {
     const input = page.locator('#preset-field');
     if (!await input.evaluate(node => node.ownerDocument.activeElement === node))
       throw Error('Input Escape requires preceding actual input focus');
     await input.press('Escape');
-  } else if (action.type === 'format' || action.type === 'preview'
+  }
+  else if (action.type === 'format' || action.type === 'preview'
     || action.type === 'owner-open' || action.type === 'min-date') {
     return page.evaluate(action => {
       const kind = action.type === 'owner-open' ? 'open' : action.type;
@@ -91,7 +99,8 @@ export async function actDatePickerPresetTransitions(
       );
       return observed;
     }, action);
-  } else throw Error('Unknown frozen DatePicker transition action');
+  }
+  else throw Error('Unknown frozen DatePicker transition action');
   return null;
 }
 export async function disposeDatePickerPresetTransitions(

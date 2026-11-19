@@ -2,6 +2,7 @@ import { test, expect } from './test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=radio-features');
+
   await expect(page.getByRole('radio', { name: 'Numeric zero', exact: true })).toBeChecked();
 });
 
@@ -138,10 +139,13 @@ test(
     await expect(page.getByLabel('Source radio group ref', { exact: true })).toHaveText('FIELDSET');
     await expect(input).toHaveAttribute('tabindex', '2');
     await page.getByRole('button', { name: 'Focus source radio ref', exact: true }).click();
+
     await expect(input).toBeFocused();
     await page.getByRole('button', { name: 'Blur source radio ref', exact: true }).click();
+
     await expect(input).not.toBeFocused();
     await page.getByRole('button', { name: 'Focus source radio instance', exact: true }).click();
+
     await expect(input).toBeFocused();
 
     await page.getByLabel('Mount source radios', { exact: true }).uncheck();

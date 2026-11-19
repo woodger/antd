@@ -17,7 +17,11 @@ export function decodeSelectSurface(value: unknown): unknown {
     const array: unknown[] = [];
     array.length = Number(result.length);
     for (const [key, item] of Object.entries(result)) if (key !== 'length') {
-      Object.defineProperty(array, key, { value: item, enumerable: true, configurable: true, writable: true });
+      Object.defineProperty(
+        array,
+        key,
+        { value: item, enumerable: true, configurable: true, writable: true }
+      );
     }
     return array;
   }

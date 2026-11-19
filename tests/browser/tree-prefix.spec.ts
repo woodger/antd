@@ -75,6 +75,7 @@ test('Tree local prefixes retain a pending load, switcher, focus and loaded chil
   const oldNode = await lazy.elementHandle();
   const id = await lazy.getAttribute('id');
   const label = await lazy.getAttribute('aria-labelledby');
+
   await expect(lazy).toHaveAttribute('aria-busy', 'true');
   await page.getByRole('textbox', { name: 'Local Tree prefix value', exact: true })
     .evaluate((node: HTMLInputElement) => {

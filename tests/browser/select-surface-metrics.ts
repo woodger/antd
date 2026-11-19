@@ -2,13 +2,17 @@
 export function readSelectSurface() {
   const owner = document.querySelector<HTMLElement>('[data-surface-case]')!;
   const refs: { root?: HTMLElement; editor?: HTMLInputElement } = {};
-  owner.querySelector('[data-surface-command]')?.dispatchEvent(new CustomEvent('surfacerefs', { detail: refs }));
+  owner.querySelector('[data-surface-command]')?.dispatchEvent(new CustomEvent(
+    'surfacerefs',
+    { detail: refs }
+  ));
   const root = refs.root ?? owner.querySelector<HTMLElement>('.surface-control')!;
   const input = refs.editor ?? root.querySelector<HTMLInputElement>('input[role="combobox"]')!;
   const popups = [...document.querySelectorAll<HTMLElement>('.ant-select-dropdown')];
   const popup = popups.find(node => getComputedStyle(node).display !== 'none' && node.getBoundingClientRect().height > 0) ?? popups.at(-1);
   const box = (node: Element) => {
-    const r = node.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height };
+    const r = node.getBoundingClientRect();
+    return { x: r.x, y: r.y, width: r.width, height: r.height };
   };
   const css = (node: Element) => {
     const style = getComputedStyle(node);
@@ -46,5 +50,8 @@ export function readSelectSurface() {
     editor: { value: input.value, caret: [input.selectionStart, input.selectionEnd], disabled: input.disabled,
       readonly: input.readOnly, expanded: input.getAttribute('aria-expanded') }, focus, leaks },
     raw: { slots: Object.fromEntries(Object.entries(slots).map(([key, nodes]) => [key, nodes.map(measure)])),
-      extras: extras.map(measure), active: active ? { tag: active.tagName, attributes: [...active.attributes].map(attr => [attr.name, attr.value]) } : null } };
+      extras: extras.map(measure), active: active ? {
+        tag: active.tagName,
+        attributes: [...active.attributes].map(attr => [attr.name, attr.value])
+      } : null } };
 }

@@ -5,7 +5,9 @@
     activity: Array<{ id: string; text: string }>; lifecycle: DatePickerPresetLifecycle[] } = $props();
   // Реальный lifecycle Svelte; вызовы React и сохранённый popup не имитируются.
   untrack(() => activity.push({ id, text }));
-  onMount(() => { lifecycle.push({ slot: 'label', id, event: 'mount' });
-    return () => { lifecycle.push({ slot: 'label', id, event: 'unmount' }); }; });
+  onMount(() => {
+    lifecycle.push({ slot: 'label', id, event: 'mount' });
+    return () => { lifecycle.push({ slot: 'label', id, event: 'unmount' }); };
+  });
 </script>
 <span data-preset-label={id}><b>{'Custom '}</b><em>June 12</em></span>

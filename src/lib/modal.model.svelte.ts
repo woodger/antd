@@ -65,7 +65,8 @@ export function createModal() {
     let result: unknown;
     try {
       result = callback.length ? callback(finish) : (callback as () => unknown)();
-    } catch (error) {
+    }
+    catch (error) {
       entry.running.delete(confirmed);
       throw error;
     }
@@ -86,9 +87,11 @@ export function createModal() {
         entry.view = { ...entry.view, [field]: false };
         publish();
       });
-    } else if (callback.length === 0) {
+    }
+    else if (callback.length === 0) {
       finish();
-    } else {
+    }
+    else {
       entry.running.delete(confirmed);
     }
   }

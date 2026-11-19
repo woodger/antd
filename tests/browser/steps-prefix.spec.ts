@@ -40,9 +40,11 @@ test('Steps prefix updates keep keyboard focus, selection and Icon context', asy
   const id = await host.locator('ol').getAttribute('id');
   await first.focus();
   await page.keyboard.press('Tab');
+
   await expect(second).toBeFocused();
   await expect(second).toHaveCSS('outline-style', 'solid');
   await page.keyboard.press('Enter');
+
   await expect(second).toHaveAttribute('aria-current', 'step');
 
   const select = page.getByRole('combobox', { name: 'Steps prefix transition', exact: true });

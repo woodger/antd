@@ -26,7 +26,11 @@ export function selectValueRaw<Value extends SelectDataValue>(draft: unknown): V
 }
 
 /** Raw-noop controlled reselect не заменяет supplied labeled record новым option label. */
-export function keepSelectSuppliedValue(current: unknown, provided: unknown, next: SelectDataValue | undefined) {
+export function keepSelectSuppliedValue(
+  current: unknown,
+  provided: unknown,
+  next: SelectDataValue | undefined
+) {
   return next !== undefined && provided !== null && typeof provided === 'object' && !Array.isArray(provided)
     && selectValueRaw(provided) === next && selectValueRaw(current) === next;
 }
@@ -79,7 +83,10 @@ function sameMap<Key, Value>(before: ReadonlyMap<Key, Value>, next: ReadonlyMap<
   return true;
 }
 
-function sameItem<Value extends SelectDataValue>(before: SelectValueItem<Value> | undefined, next: SelectValueItem<Value>) {
+function sameItem<Value extends SelectDataValue>(
+  before: SelectValueItem<Value> | undefined,
+  next: SelectValueItem<Value>
+) {
   return before && Object.is(before.value, next.value) && Object.is(before.label, next.label)
     && Object.is(before.disabled, next.disabled) && Object.is(before.title, next.title);
 }
@@ -97,7 +104,10 @@ export function resolveSelectValueCache<Value extends SelectDataValue, Data exte
   for (const item of convertSelectValues(drafts, maps, fields, optionLabelProp)) {
     const current = maps.valueOptions.get(item.value);
     const data = current ?? previous.options.get(item.value);
-    const next = { ...item, label: item.label === undefined ? previous.labels.get(item.value) : item.label };
+    const next = {
+      ...item,
+      label: item.label === undefined ? previous.labels.get(item.value) : item.label
+    };
     // Только Native display сохраняет disabled удалённого raw option; renderer metadata остаётся Source.
     const disabled = current ? item.disabled : data ? Reflect.get(data, 'disabled') as boolean | undefined : undefined;
     labels.set(item.value, next.label);

@@ -74,6 +74,7 @@ test('Grid inheritance reset preserves slots while restoring independent typogra
     const input = root.getByRole('textbox', { name: 'Grid draft', exact: true });
     await input.fill('Nested Grid');
     const original = await input.elementHandle();
+
     await expect(root.locator('.ant-col').first()).toHaveCSS('font-size', '16px');
 
     await page.getByLabel('Inherit Grid theme', { exact: true }).dispatchEvent('click');

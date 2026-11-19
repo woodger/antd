@@ -37,6 +37,7 @@ for (const layout of ['vertical', 'horizontal', 'inline']) {
     await act(page, 'Conceal field');
     await page.getByRole('button', { name: 'Before hidden controls', exact: true }).focus();
     await page.keyboard.press('Tab');
+
     await expect(page.getByLabel('Sibling', { exact: true })).toBeFocused();
     expect(await page.locator('#form-hidden-fixture form').evaluate((element: HTMLFormElement) =>
       Object.fromEntries(new FormData(element))
@@ -50,10 +51,12 @@ test('Form submit still rejects the invalid hidden binding and reveals its store
   await page.locator('#form-hidden-fixture form').evaluate((element: HTMLFormElement) => {
     element.requestSubmit();
   });
+
   await expect(page.getByRole('status', { name: 'Hidden submission errors', exact: true }))
     .toHaveText('[{"name":["concealed"],"errors":["Concealed required"],"warnings":[]}]');
   await expect(page.getByRole('status', { name: 'Hidden submissions', exact: true })).toHaveText('0');
   await act(page, 'Reveal invalid field');
+
   await expect(page.getByLabel('Concealed', { exact: true }))
     .toHaveAccessibleDescription('Concealed required');
   await expect(page.getByLabel('Concealed', { exact: true })).toBeFocused();

@@ -10,7 +10,10 @@ export function renderSelectSurfaceHydration(id: string) {
   const sample = selectSurfaceHydrationSamples.find(sample => sample.id === id);
   if (!sample) throw Error(`Unknown Select surface hydration sample: ${id}`);
   const capture: NonNullable<ComponentProps<typeof SelectSurfaceHydrationCase>['capture']> = {};
-  const rendered = render(SelectSurfaceHydrationCase, { props: { sample, capture }, idPrefix: 'select-surface-hydration' });
+  const rendered = render(
+    SelectSurfaceHydrationCase,
+    { props: { sample, capture }, idPrefix: 'select-surface-hydration' }
+  );
   return { head: rendered.head, domFree: true, state: capture.read!(),
     body: `<section data-select-surface-hydration><div data-select-surface-hydration-target>${rendered.body}</div><input aria-label="Surface outside draft" style="position:fixed;left:16px;bottom:16px" /></section>` };
 }

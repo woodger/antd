@@ -77,6 +77,7 @@ test('Segmented theme geometry changes cancel the thumb and retain the selected 
   });
   await root.locator('label').nth(1).click();
   const thumb = root.locator('.ant-segmented-thumb');
+
   await expect(thumb).toBeAttached();
   await thumb.evaluate(node => node.getAnimations().forEach(animation => animation.pause()));
   const radio = root.getByRole('radio', { name: 'Beta', exact: true });

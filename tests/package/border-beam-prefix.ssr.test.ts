@@ -23,7 +23,8 @@ describe('BorderBeam prefix public package SSR', () => {
       expect(body).not.toContain('aria-hidden="true"');
       if (prefix === 'ant-border-beam') {
         expect(head).not.toContain('data-ant-svelte-theme="border-beam-prefix:');
-      } else {
+      }
+      else {
         expect(head).toContain(`data-ant-svelte-theme="border-beam-prefix:${prefix}"`);
         expect(head).toContain(
           `.${prefix}:where([data-ant-border-beam-prefix][data-ant-border-beam-vars="ant"])`

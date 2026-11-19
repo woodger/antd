@@ -91,7 +91,10 @@ export function createTreeSelectAlign(
     for (const node of watch) node.removeEventListener('scroll', invalidate);
     const container = getOptions().container;
     const from = container instanceof view.ShadowRoot ? null : container;
-    watch = new Set([view, ...treeSelectAlignScrollers(anchor), ...treeSelectAlignScrollers(popup, from)]);
+    watch = new Set([view, ...treeSelectAlignScrollers(anchor), ...treeSelectAlignScrollers(
+      popup,
+      from
+    )]);
     for (const node of watch) node.addEventListener('scroll', invalidate, { passive: true });
     const saved = clipping.get(popup);
     if (!saved || saved.parent !== container)

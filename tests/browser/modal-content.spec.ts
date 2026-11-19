@@ -32,6 +32,7 @@ for (const entry of reference.cases) {
       externalLabelledBy: dialog.getAttribute('aria-labelledby') === 'external-title',
       ariaLabel: dialog.getAttribute('aria-label')
     }));
+
     await expect.poll(snapshot).toEqual(expected);
     await expect(page.locator('dialog')).toHaveJSProperty('open', true);
     if ('label' in entry.sample) {
@@ -67,6 +68,7 @@ test('Modal replaces title content without resetting the native dialog, draft, f
       expect(await page.locator('dialog').evaluate(node => node.matches(':modal'))).toBe(true);
     }
     await input.press('Escape');
+
     await expect(page.locator('dialog')).toHaveJSProperty('open', false);
     await expect(page.getByRole('button', { name: 'Open content modal', exact: true })).toBeFocused();
   });

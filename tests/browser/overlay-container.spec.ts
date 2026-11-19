@@ -90,7 +90,10 @@ for (const sample of reference.cases) {
             (node.getRootNode() as Document | ShadowRoot).activeElement === node),
           count: await page.locator('[data-overlay-count]').textContent()
         }).toEqual(sample.refresh);
-        await expect.poll(() => snapshot(page, sample.component as OverlayContainerCase['component']))
+        await expect.poll(() => snapshot(
+          page,
+          sample.component as OverlayContainerCase['component']
+        ))
           .toEqual(sample.snapshot);
       });
   }
@@ -115,6 +118,7 @@ for (const component of ['tooltip', 'popover', 'popconfirm', 'dropdown', 'slider
     await page.evaluate(async () => {
       for (let frame = 0; frame < 5; frame++) await new Promise(requestAnimationFrame);
     });
+
     await expect(page.getByLabel('Overlay container calls', { exact: true })).toHaveText(calls!);
   });
 }
@@ -125,17 +129,21 @@ for (const component of ['tooltip', 'popover', 'dropdown'] as const) {
       const sample = reference.cases.find(item => item.name === `${component}-parent`)!;
       await open(page, sample as OverlayContainerCase);
       const popup = page.locator(`${selector(component)}:popover-open`);
+
       await expect(popup).toHaveCSS('--overlay-origin', 'light');
 
       await check(page, 'Override overlay component theme', true);
 
       const variable = component === 'tooltip' ? '--ant-color-bg-spotlight' : '--ant-color-bg-elevated';
       const color = component === 'tooltip' ? '#123456' : component === 'popover' ? '#234567' : '#345678';
+
       await expect(popup).toHaveCSS(variable, color);
       await check(page, 'Dark overlay theme', true);
+
       await expect(popup).toHaveCSS('--overlay-origin', 'dark');
       await expect(popup).toHaveCSS(variable, color);
       await check(page, 'Override overlay component theme', false);
+
       await expect(popup).not.toHaveCSS(variable, color);
       await expect(popup).toBeVisible();
     });
@@ -151,6 +159,7 @@ test('shadow Dropdown keeps native keyboard selection and returns focus on Escap
 
   await expect(menu.getByRole('menuitem', { name: 'Beta command', exact: true })).toBeFocused();
   await page.keyboard.press('Escape');
+
   await expect(menu).toBeHidden();
   await expect(page.getByRole('button', { name: 'Overlay trigger', exact: true })).toBeFocused();
 });
@@ -160,6 +169,7 @@ test('shadow Popover keeps input focus and dismisses outside with its native con
   await open(page, sample as OverlayContainerCase);
   const input = page.getByLabel('Overlay draft', { exact: true });
   await input.fill('Shadow input');
+
   await expect(input).toBeFocused();
   await expect(page.locator('.ant-popover:popover-open')).toBeVisible();
 

@@ -115,12 +115,14 @@ for (const sample of reference.cases) {
         direction: getComputedStyle(node).direction,
         icon: document.querySelector('#tabs-render-main .ant-tabs-nav-more')!.textContent
       }))).toEqual('nativePopup' in sample ? sample.nativePopup : sample.popup);
-    } else if (sample.initial.tabs.length) {
+    }
+    else if (sample.initial.tabs.length) {
       await page.locator('#tabs-render-main').getByRole('tab', { name: 'Beta', exact: true })
         .click();
     }
 
     await page.mouse.move(1100, 500);
+
     await expect.poll(() => capture(page)).toEqual(sample.after);
   });
 }
@@ -139,6 +141,7 @@ test('the standard bar ref retains its node and clears the previous owner on rep
     const nav = page.locator('#tabs-render-main .ant-tabs-nav');
     const original = await nav.elementHandle();
     const refs = page.getByLabel('Render Tabs header refs', { exact: true });
+
     await expect(refs).toHaveText('["old:set"]');
 
     await page.locator('#tabs-render-main').getByRole('tab', { name: 'Beta', exact: true }).click();
@@ -173,6 +176,7 @@ test('tab bar updates and keyed sorting keep panel state, native nodes and attac
       .getByLabel('Render Tabs lifecycle', { exact: true }).textContent())!) as string[];
 
     await toggle(page, 'Update tab bar props');
+
     await expect(root.locator('.ant-tabs-nav')).toHaveCSS('padding-top', '15px');
     await toggle(page, 'Compact render theme');
     await toggle(page, 'Reverse render items');
@@ -195,6 +199,7 @@ test('tab bar updates and keyed sorting keep panel state, native nodes and attac
       new FormData(element as HTMLFormElement).get('alpha'))).toBe('Retained render draft');
     const attached = JSON.parse((await page.getByLabel('Render Tabs attachments', { exact: true })
       .textContent())!) as string[];
+
     expect(attached.toSorted()).toEqual(['attach:alpha', 'attach:beta', 'attach:locked']);
     await expect(page.getByLabel('Render Tabs trace', { exact: true })).toHaveText('[]');
 
@@ -347,6 +352,7 @@ test('updating an open custom bar retains More and scroll and uses the latest sc
     await more.focus();
     await more.press('ArrowDown');
     const popup = page.getByRole('listbox', { name: 'expanded dropdown', exact: true });
+
     await expect(popup).toBeVisible();
     // ResizeObserver завершает перенос Add и пересчёт допустимого scroll до исходного замера.
     await page.evaluate(() => new Promise(resolve => {

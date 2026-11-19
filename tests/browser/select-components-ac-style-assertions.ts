@@ -23,8 +23,12 @@ export async function settleNativeSelectComponentsACStyle(page: Page): Promise<N
     await drainSelectSurface(page);
     const icons = await page.evaluate(readSelectIcons), owner = await page.evaluate(() => {
       const detail = {} as { read?: () => NativeComponentsOwner };
-      document.querySelector('[data-select-components-fixture-command]')!.dispatchEvent(new CustomEvent('selectcomponentscapture', { detail }));
-      if (!detail.read) throw Error('Actual AC style owner absent'); return detail.read();
+      document.querySelector('[data-select-components-fixture-command]')!.dispatchEvent(new CustomEvent(
+        'selectcomponentscapture',
+        { detail }
+      ));
+      if (!detail.read) throw Error('Actual AC style owner absent');
+      return detail.read();
     });
     const popupTopology = await page.evaluate(() => {
       const current = (globalThis as unknown as { raw: {
@@ -47,7 +51,8 @@ export async function settleNativeSelectComponentsACStyle(page: Page): Promise<N
       } : null };
     });
     const point = { icons, owner, popupTopology }, next = JSON.stringify(point);
-    stable = previous === next ? stable + 1 : 0; if (stable >= 3) return point;
+    stable = previous === next ? stable + 1 : 0;
+    if (stable >= 3) return point;
     previous = next;
   }
   throw Error('Actual AC style owner/geometry/complete raw ledgers did not settle');
@@ -60,17 +65,33 @@ function attributes(node: SelectComponentsACStyleNode) {
     return classes.length ? [[key, classes.join(' ')]] : [];
   });
 }
-function verifyLayoutNode(actual: SelectComponentsACStyleNode, source: SelectComponentsACStyleNode, label: string) {
-  let current = attributes(actual); const original = attributes(source);
+function verifyLayoutNode(
+  actual: SelectComponentsACStyleNode,
+  source: SelectComponentsACStyleNode,
+  label: string
+) {
+  let current = attributes(actual);
+  const original = attributes(source);
   if (source.classes.includes('ant-select-content')) {
     assert.equal(current.find(([name]) => name === 'data-ant-auto-complete-content')?.[1], 'true');
     current = current.filter(([name]) => name !== 'data-ant-auto-complete-content');
-    assert.deepEqual(Object.fromEntries(current), Object.fromEntries(original), label + ' complete existing content wrapper attributes');
-  } else if (source.classes.includes('ant-select-clear')) {
+    assert.deepEqual(
+      Object.fromEntries(current),
+      Object.fromEntries(original),
+      label + ' complete existing content wrapper attributes'
+    );
+  }
+  else if (source.classes.includes('ant-select-clear')) {
     // Reuse the unchanged inherited icon wrapper comparator: exact private
     // `clear` class only; authored styles and every computed field/box stay strict.
-    verifyIconNode(actual, source, label, { control: 'autocomplete', legacyClear: false, rootDisabled: false, hiddenPopup: false });
-  } else verifySelectComponentsDOMAttributes(actual, source, current, original, label);
+    verifyIconNode(
+      actual,
+      source,
+      label,
+      { control: 'autocomplete', legacyClear: false, rootDisabled: false, hiddenPopup: false }
+    );
+  }
+  else verifySelectComponentsDOMAttributes(actual, source, current, original, label);
   for (const key of ['tag', 'connected', 'text', 'styleAttribute', 'cssText', 'inlineProperties', 'css', 'box',
     'geometryBoundary', 'value', 'caret', 'focused', 'metrics'] as const)
     assert.deepEqual(actual[key], source[key], label + '/' + key);
@@ -85,26 +106,47 @@ function surfaceRoot(node: SelectComponentsACStyleNode) {
 }
 function verifiedRootLayout(actual: NativeACStylePoint, source: ACStylePoint) {
   const topology = actual.popupTopology, popup = actual.icons.current.popup;
-  assert.equal(topology.boundRootIdentity, actual.icons.current.root?.identity, 'topology uses the real public root ref');
-  assert.equal(Boolean(topology.popup), Boolean(popup), 'topology describes exactly the observed popup');
+  assert.equal(
+    topology.boundRootIdentity,
+    actual.icons.current.root?.identity,
+    'topology uses the real public root ref'
+  );
+  assert.equal(
+    Boolean(topology.popup),
+    Boolean(popup),
+    'topology describes exactly the observed popup'
+  );
   if (!popup) return actual.icons.layout;
   const current = topology.popup!;
   // Existing contract: AutoComplete.svelte renders componentPopup last inside
   // the default root; createPopupContainer preserves that parent unless an own
   // container is requested. Source portals outside the root. The same existing
   // boundary is documented in readNativeSurfaceTopology; all raw layout stays.
-  assert.equal(actual.icons.popupCount, 1); assert.equal(current.identity, popup.identity);
+  assert.equal(actual.icons.popupCount, 1);
+  assert.equal(current.identity, popup.identity);
   assert.equal(current.parentIdentity, topology.boundRootIdentity);
-  assert.equal(current.parentIsPublicRoot, true); assert.equal(current.rootContainsPopup, true);
-  assert.equal(current.directChild, true); assert.equal(current.lastElementChild, true); assert.equal(current.connected, true);
+  assert.equal(current.parentIsPublicRoot, true);
+  assert.equal(current.rootContainsPopup, true);
+  assert.equal(current.directChild, true);
+  assert.equal(current.lastElementChild, true);
+  assert.equal(current.connected, true);
   assert.equal(current.rootChildIdentities.at(-1), popup.identity);
-  assert.equal(current.popoverAttribute, 'manual'); assert.equal(current.popoverProperty, 'manual');
+  assert.equal(current.popoverAttribute, 'manual');
+  assert.equal(current.popoverProperty, 'manual');
   // popup.dom.ts hide()/update() explicitly synchronize these two states.
   assert.equal(typeof current.hidden, 'boolean');
-  assert.equal(current.popoverOpen, !current.hidden, 'retained popup has the established manual top-layer state');
+  assert.equal(
+    current.popoverOpen,
+    !current.hidden,
+    'retained popup has the established manual top-layer state'
+  );
   const ids = current.subtreeIdentities;
-  assert(ids.length > 0 && ids.every(id => typeof id === 'number' && Number.isInteger(id) && id > 0), 'all popup subtree nodes already have observed identities');
-  const excluded = new Set(ids); assert.equal(excluded.size, ids.length, 'each physical popup descendant occurs once');
+  assert(
+    ids.length > 0 && ids.every(id => typeof id === 'number' && Number.isInteger(id) && id > 0),
+    'all popup subtree nodes already have observed identities'
+  );
+  const excluded = new Set(ids);
+  assert.equal(excluded.size, ids.length, 'each physical popup descendant occurs once');
   assert.equal(ids[0], popup.identity);
   assert.deepEqual(actual.icons.layout.slice(-ids.length).map(node => node.identity), ids,
     'only the complete observed direct last-child popup subtree forms this raw root-layout suffix');
@@ -115,21 +157,53 @@ function verifiedRootLayout(actual: NativeACStylePoint, source: ACStylePoint) {
 }
 export function verifySelectComponentsACStylePoint(actual: NativeACStylePoint, source: ACStylePoint, owner: ACStyleCase,
   sample: SelectComponentsACStyleSample, label: string): string[] {
-  const failures = verifySelectComponentsPoint(actual, source, owner as unknown as ComponentsCase, sample as never, label);
-  const check = (name: string, work: () => void) => { try { work(); } catch (error) { failures.push(label + '/' + name + ': ' + (error instanceof Error ? error.message : String(error))); } };
+  const failures = verifySelectComponentsPoint(
+    actual,
+    source,
+    owner as unknown as ComponentsCase,
+    sample as never,
+    label
+  );
+  const check = (name: string, work: () => void) => {
+    try {
+    work();
+  }
+  catch (error) {
+    failures.push(label + '/' + name + ': ' + (error instanceof Error ? error.message : String(error)));
+  }
+  };
   check('whole-root-computed-and-scroll', () => {
-    const current = actual.icons.current.root, original = source.icons.current.root; assert(current && original);
+    const current = actual.icons.current.root, original = source.icons.current.root;
+    assert(current && original);
     assert.deepEqual(current.css, original.css, label + ' every root computed property');
-    assert.deepEqual(current.metrics, original.metrics, label + ' actual root scroll/client/offset metrics');
+    assert.deepEqual(
+      current.metrics,
+      original.metrics,
+      label + ' actual root scroll/client/offset metrics'
+    );
     verifySelectSurfaceNode(surfaceRoot(current), surfaceRoot(original), 'root', { control: 'autocomplete' }, [], label,
       original.styleAttribute ?? '');
   });
   check('whole-root-layout', () => {
     const layout = verifiedRootLayout(actual, source);
-    assert.equal(layout.length, source.icons.layout.length, label + ' every physical control descendant outside the verified Native popup');
-    for (const [index, node] of source.icons.layout.entries()) verifyLayoutNode(layout[index], node, label + '/layout' + index);
+    assert.equal(
+      layout.length,
+      source.icons.layout.length,
+      label + ' every physical control descendant outside the verified Native popup'
+    );
+    for (const [index, node] of source.icons.layout.entries()) verifyLayoutNode(
+      layout[index],
+      node,
+      label + '/layout' + index
+    );
   });
-  check('all-editor-metrics', () => assert.deepEqual(actual.icons.current.editor?.metrics, source.icons.current.editor?.metrics));
+  check(
+    'all-editor-metrics',
+    () => assert.deepEqual(
+      actual.icons.current.editor?.metrics,
+      source.icons.current.editor?.metrics
+    )
+  );
   check('inherited-option-and-icon-nodes', () => {
     // The unchanged icon comparator already names AC's existing BUTTON and
     // popup flex annotations. The new editor/root/layout comparisons above
@@ -137,29 +211,62 @@ export function verifySelectComponentsACStylePoint(actual: NativeACStylePoint, s
     const boundary = { control: 'autocomplete' as const, legacyClear: false, rootDisabled: false,
       hiddenPopup: source.icons.current.popup?.css.display === 'none' };
     for (const key of ['nodes', 'svg'] as const) {
-      assert.equal(actual.icons[key].length, source.icons[key].length, label + '/' + key + ' complete count');
+      assert.equal(
+        actual.icons[key].length,
+        source.icons[key].length,
+        label + '/' + key + ' complete count'
+      );
       for (const [index, node] of source.icons[key].entries()) {
         const current = actual.icons[key][index];
-        if (node.identity === source.icons.current.editor?.identity) verifyLayoutNode(current, node, label + '/' + key + index);
-        else { verifyIconNode(current, node, label + '/' + key + index, boundary); assert.deepEqual(current.metrics, node.metrics); }
+        if (node.identity === source.icons.current.editor?.identity) verifyLayoutNode(
+          current,
+          node,
+          label + '/' + key + index
+        );
+        else {
+          verifyIconNode(current, node, label + '/' + key + index, boundary);
+          assert.deepEqual(current.metrics, node.metrics);
+        }
       }
     }
     assert.equal(Boolean(actual.icons.current.popup), Boolean(source.icons.current.popup));
     if (source.icons.current.popup) {
-      assert.deepEqual(actual.icons.current.popup?.box, source.icons.current.popup.box, label + ' popup anchor follows real root height');
-      assert.equal(actual.icons.current.popup?.css.display === 'none', source.icons.current.popup.css.display === 'none');
+      assert.deepEqual(
+        actual.icons.current.popup?.box,
+        source.icons.current.popup.box,
+        label + ' popup anchor follows real root height'
+      );
+      assert.equal(
+        actual.icons.current.popup?.css.display === 'none',
+        source.icons.current.popup.css.display === 'none'
+      );
     }
   });
   check('public-refs', () => {
-    assert.deepEqual(source.icons.publicRefs.methods, { focus: 'function', blur: 'function', scrollTo: 'function', nativeElement: 'object' });
-    const native = actual.icons.publicRefs.methods; assert(native);
+    assert.deepEqual(
+      source.icons.publicRefs.methods,
+      { focus: 'function', blur: 'function', scrollTo: 'function', nativeElement: 'object' }
+    );
+    const native = actual.icons.publicRefs.methods;
+    assert(native);
     for (const key of ['focus', 'blur', 'scrollTo']) assert.equal(native[key], 'function');
-    const framework: Record<string, string> = { $destroy: 'function', $on: 'function', $set: 'function', 'Symbol(component)': 'boolean' };
+    const framework: Record<string, string> = {
+      $destroy: 'function',
+      $on: 'function',
+      $set: 'function',
+      'Symbol(component)': 'boolean'
+    };
     for (const [key, value] of Object.entries(native)) if (!['focus', 'blur', 'scrollTo'].includes(key)) {
-      assert(Object.hasOwn(framework, key), label + ' only named Svelte public export metadata'); assert.equal(value, framework[key]);
+      assert(Object.hasOwn(framework, key), label + ' only named Svelte public export metadata');
+      assert.equal(value, framework[key]);
     }
-    assert.equal(source.icons.publicRefs.rootMatches, true); assert.equal(actual.icons.publicRefs.rootMatches, false);
-    assert(actual.icons.publicRefs.authoredInput); assert.equal(actual.icons.publicRefs.authoredInput.identity, actual.icons.current.editor?.identity);
+    assert.equal(source.icons.publicRefs.rootMatches, true);
+    assert.equal(actual.icons.publicRefs.rootMatches, false);
+    assert(actual.icons.publicRefs.authoredInput);
+    assert.equal(
+      actual.icons.publicRefs.authoredInput.identity,
+      actual.icons.current.editor?.identity
+    );
   });
   return failures;
 }

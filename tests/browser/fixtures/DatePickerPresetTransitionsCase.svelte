@@ -34,8 +34,19 @@
   const updatedMinDate = initial.updatedMinDate === undefined ? undefined : dayjs(initial.updatedMinDate);
   const maxDate = initial.maxDate === undefined ? undefined : dayjs(initial.maxDate);
   const presetValue = initial.preset === undefined ? undefined : dayjs(initial.preset.value);
-  const presets = initial.preset === undefined ? undefined : [{ label: initial.preset.label, value: presetValue! }];
-  const authoredDates = { initialValue, defaultPickerValue, initialPickerValue, initialMinDate, updatedMinDate, maxDate, presetValue };
+  const presets = initial.preset === undefined ? undefined : [{
+    label: initial.preset.label,
+    value: presetValue!
+  }];
+  const authoredDates = {
+    initialValue,
+    defaultPickerValue,
+    initialPickerValue,
+    initialMinDate,
+    updatedMinDate,
+    maxDate,
+    presetValue
+  };
   for (const [role, date] of Object.entries(authoredDates)) {
     if (date != null) recorder.register(date, { authoredDate: role });
   }
@@ -87,7 +98,11 @@
     });
   };
 
-  const onChange = handler('change', function onChange(this: unknown, date: Dayjs | null, text: string) {
+  const onChange = handler('change', function onChange(
+    this: unknown,
+    date: Dayjs | null,
+    text: string
+  ) {
     event('change', Array.from(arguments), this);
     recordDate('change', date, text, undefined);
     if (!initial.rejectChange) value = date;
@@ -99,21 +114,39 @@
     recordDate('calendar', date, text, info);
   });
   const onOpenChange = handler('open', function onOpenChange(this: unknown, next: boolean) {
-    event('open', Array.from(arguments), this); open = next;
+    event('open', Array.from(arguments), this);
+    open = next;
   });
-  const onPanelChange = handler('panel', function onPanelChange(this: unknown, date: Dayjs, mode: unknown) {
-    event('panel', Array.from(arguments), this); recordDate('panel', date, undefined, mode);
+  const onPanelChange = handler('panel', function onPanelChange(
+    this: unknown,
+    date: Dayjs,
+    mode: unknown
+  ) {
+    event('panel', Array.from(arguments), this);
+    recordDate('panel', date, undefined, mode);
   });
-  const onPickerValueChange = handler('picker-value', function onPickerValueChange(this: unknown, date: Dayjs, info?: unknown) {
-    event('picker-value', Array.from(arguments), this); recordDate('picker-value', date, undefined, info);
+  const onPickerValueChange = handler('picker-value', function onPickerValueChange(
+    this: unknown,
+    date: Dayjs,
+    info?: unknown
+  ) {
+    event('picker-value', Array.from(arguments), this);
+    recordDate('picker-value', date, undefined, info);
     if (initial.pickerOwner === 'accept') pickerValue = date;
   });
   const onOk = handler('ok', function onOk(this: unknown, date: Dayjs) {
-    event('ok', Array.from(arguments), this); recordDate('ok', date, undefined, undefined);
+    event('ok', Array.from(arguments), this);
+    recordDate('ok', date, undefined, undefined);
   });
-  const onFocus = handler('focus', function onFocus(this: unknown) { event('focus', Array.from(arguments), this); });
-  const onBlur = handler('blur', function onBlur(this: unknown) { event('blur', Array.from(arguments), this); });
-  const onClear = handler('clear', function onClear(this: unknown) { event('clear', Array.from(arguments), this); });
+  const onFocus = handler('focus', function onFocus(this: unknown) {
+    event('focus', Array.from(arguments), this);
+  });
+  const onBlur = handler('blur', function onBlur(this: unknown) {
+    event('blur', Array.from(arguments), this);
+  });
+  const onClear = handler('clear', function onClear(this: unknown) {
+    event('clear', Array.from(arguments), this);
+  });
 
   const disabledDate = initial.disabledDay === undefined ? undefined : handler('disabled-date', function disabledDate(
     this: unknown, date: Dayjs, info: { type: string }
@@ -132,7 +165,10 @@
     });
   });
   const disabledTimeResult = disabledHours ? { disabledHours } : undefined;
-  const disabledTime = disabledHours === undefined ? undefined : handler('disabled-time', function disabledTime(this: unknown, date: Dayjs) {
+  const disabledTime = disabledHours === undefined ? undefined : handler('disabled-time', function disabledTime(
+    this: unknown,
+    date: Dayjs
+  ) {
     return recorder.record('disabledTime', 'own', Array.from(arguments), disabledTimeResult!, {
       actionIndex, actualArgumentCount: arguments.length, receiver: receiver(this), date: snapshot(date)
     });
@@ -171,7 +207,9 @@
       authoredDates: Object.fromEntries(Object.entries(authoredDates).map(([name, date]) => [name, snapshot(date)]))
     };
   }
-  export function readRefs() { return { control: control ?? null, root: root ?? null, owner: owner ?? null }; }
+  export function readRefs() {
+    return { control: control ?? null, root: root ?? null, owner: owner ?? null };
+  }
   export function setActionIndex(index: number) { actionIndex = index; }
   untrack(() => {
     if (capture) {
@@ -184,24 +222,45 @@
     if (control) recorder.register(control, { ref: 'control' });
     if (root) recorder.register(root, { ref: 'nativeElement' });
     if (owner) recorder.register(owner, { ref: 'owner' });
-    alive = true; lifecycle.push({ phase: 'mount' });
-    return () => { alive = false; lifecycle.push({ phase: 'unmount' }); };
+    alive = true;
+    lifecycle.push({ phase: 'mount' });
+    return () => {
+      alive = false;
+      lifecycle.push({ phase: 'unmount' });
+    };
   });
 
-  const ownerButtons: Array<{ kind: DatePickerPresetTransitionOwnerControl; value: string | boolean }> = [
+  const ownerButtons: Array<{
+    kind: DatePickerPresetTransitionOwnerControl;
+    value: string | boolean
+  }> = [
     { kind: 'open', value: true }, { kind: 'open', value: false },
     { kind: 'format', value: initial.alternateFormat ?? 'DD/MM/YYYY' },
     { kind: 'format', value: initial.format },
     { kind: 'preview', value: 'hover' }, { kind: 'preview', value: false },
-    ...(updatedMinDate === undefined ? [] : [{ kind: 'min-date' as const, value: initial.updatedMinDate! }])
+    ...(updatedMinDate === undefined ? [] : [{
+      kind: 'min-date' as const,
+      value: initial.updatedMinDate!
+    }])
   ];
-  function ownerAction(kind: DatePickerPresetTransitionOwnerControl, next: string | boolean, mouse: MouseEvent) {
+  function ownerAction(
+    kind: DatePickerPresetTransitionOwnerControl,
+    next: string | boolean,
+    mouse: MouseEvent
+  ) {
     const args = Array.from(arguments);
     ownerActions.push({
       actionIndex, kind, value: next,
       // Source has a React nativeEvent wrapper. Here the underlying DOM event is mouse itself.
       event: { type: mouse.type, isTrusted: mouse.isTrusted, nativeIsTrusted: mouse.isTrusted },
-      before: { open, format, preview, value: snapshot(value), pickerValue: snapshot(pickerValue), minDate: snapshot(minDate) },
+      before: {
+        open,
+        format,
+        preview,
+        value: snapshot(value),
+        pickerValue: snapshot(pickerValue),
+        minDate: snapshot(minDate)
+      },
       nativeMouse: {
         actualArgumentCount: args.length, arguments: recorder.encode(args), rawArguments: recorder.raw(args),
         targetTag: mouse.target instanceof Element ? mouse.target.tagName : null,

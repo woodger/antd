@@ -53,7 +53,10 @@ for (const source of [false, true]) {
       await page.getByLabel('Mount list links', { exact: true }).uncheck();
 
       await expect(page.locator('#list-link-row')).toHaveCount(0);
-      await expect(page.locator('#outside-list-links')).toHaveCSS('text-decoration-line', 'underline');
+      await expect(page.locator('#outside-list-links')).toHaveCSS(
+        'text-decoration-line',
+        'underline'
+      );
     });
 }
 
@@ -68,6 +71,7 @@ test('Listy link tokens update without replacing the focused native anchor', asy
     .dispatchEvent('click');
 
   const expected = reference.cases.find(sample => sample.name === 'custom')!.links.row.focus;
+
   await expect(link).toHaveCSS('color', expected.color);
   await expect(link).toHaveCSS('text-decoration-line', expected.decoration);
   expect(await link.evaluate((node, old) => node === old, original)).toBe(true);

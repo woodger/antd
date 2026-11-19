@@ -88,10 +88,15 @@ export function verifyDatePickerPresetsReturnedDate(native: DatePickerPresetValu
     for (const key of ['isDayjs', 'valid', 'epoch', 'iso', 'fields'] as const) {
       assert.deepEqual(native.temporal[key], source.temporal[key], label + '/Dayjs/' + key);
     }
-  } else {
+  }
+  else {
     assert.deepEqual(native.temporal, source.temporal, label + ' nullable Dayjs value');
   }
-  assert.deepEqual(native.sameAsLazyReturns, source.sameAsLazyReturns, label + ' actual return aliases');
+  assert.deepEqual(
+    native.sameAsLazyReturns,
+    source.sameAsLazyReturns,
+    label + ' actual return aliases'
+  );
   if (source.identity === null || native.identity === null) {
     assert.equal(native.identity, source.identity);
     return;
@@ -99,7 +104,11 @@ export function verifyDatePickerPresetsReturnedDate(native: DatePickerPresetValu
   const previousNative = proof.sourceToNative.get(source.identity);
   const previousSource = proof.nativeToSource.get(native.identity);
   if (previousNative !== undefined) assert.equal(native.identity, previousNative, label + ' alias');
-  if (previousSource !== undefined) assert.equal(source.identity, previousSource, label + ' distinct date');
+  if (previousSource !== undefined) assert.equal(
+    source.identity,
+    previousSource,
+    label + ' distinct date'
+  );
   proof.sourceToNative.set(source.identity, native.identity);
   proof.nativeToSource.set(native.identity, source.identity);
 }
@@ -181,7 +190,11 @@ function compareOwners(native: DatePickerPresetOwner, source: DatePickerPresetOw
   assert.equal(native.open, source.open);
   assert.equal(native.preview, source.preview);
   verifyDatePickerPresetsReturnedDate(native.value, source.value, proof, label + '/value');
-  assert.deepEqual(callbackShape(native, true), callbackShape(source, false), label + ' public callbacks');
+  assert.deepEqual(
+    callbackShape(native, true),
+    callbackShape(source, false),
+    label + ' public callbacks'
+  );
   assert.equal(native.callbackDates.length, source.callbackDates.length);
   const dateNames = ['calendar', 'change', 'panel', 'picker-value', 'ok'];
   const nativeInvocations = native.callbackInvocations.filter(call => dateNames.includes(call.name));
@@ -195,7 +208,10 @@ function compareOwners(native: DatePickerPresetOwner, source: DatePickerPresetOw
     verifyDatePickerPresetsReturnedDate(value, sourceValue, proof, label + '/callback' + index);
     if (value.identity !== null) {
       assert.equal(record(property(nativeInvocations[index].rawArguments, '0')).ref, value.identity);
-      assert.equal(record(property(sourceInvocations[index].rawArguments, '0')).ref, sourceValue.identity);
+      assert.equal(
+        record(property(sourceInvocations[index].rawArguments, '0')).ref,
+        sourceValue.identity
+      );
     }
     if (current.name === 'calendar') {
       assert.deepEqual(current.actualInfo, {
@@ -234,7 +250,10 @@ function physicalFocus(point: DatePickerPresetPoint, prefix: string) {
 function cells(point: DatePickerPresetPoint, prefix: string) {
   return point.cells.map(node => ({
     title: attribute(node, 'title'), selected: hasClass(node, prefix + '-cell-selected'),
-    hover: hasClass(node, prefix + '-cell-hover'), disabled: hasClass(node, prefix + '-cell-disabled'),
+    hover: hasClass(node, prefix + '-cell-hover'), disabled: hasClass(
+      node,
+      prefix + '-cell-disabled'
+    ),
     inView: hasClass(node, prefix + '-cell-in-view'), today: hasClass(node, prefix + '-cell-today')
   }));
 }
@@ -259,7 +278,11 @@ export function verifyDatePickerPresetsPhysical(native: DatePickerPresetsPhysica
     assert.deepEqual(original.attributes, []);
     assert.deepEqual(row.attributes, renderer === 'vite-hmr' ? [['class', scopeClass]] : []);
     assert.equal(row.text, original.text, label + '/label text');
-    assert.deepEqual(row.children?.map(child => ({ type: child.type, name: child.name, text: child.text })),
+    assert.deepEqual(row.children?.map(child => ({
+      type: child.type,
+      name: child.name,
+      text: child.text
+    })),
       [{ type: 1, name: 'BUTTON', text: null }]);
     const buttons = elements.filter(node => node.parentIdentity === row.identity);
     assert.equal(buttons.length, 1);
@@ -286,7 +309,8 @@ export function verifyDatePickerPresetsPhysical(native: DatePickerPresetsPhysica
       ]);
       assert.equal(buttons[0].html,
         openButton + '<!---->'.repeat(count) + span.html + '<!----></button>');
-    } else {
+    }
+    else {
       assert.deepEqual(shape, [{ type: 3, name: '#text', text: original.text }, comment]);
       const sourceHTML = original.html;
       assert(typeof sourceHTML === 'string');
@@ -302,7 +326,10 @@ export function verifyDatePickerPresetsPhysical(native: DatePickerPresetsPhysica
     physicalNode(node, original, label + '/custom label' + index);
   }
 }
-function validationOrder(owner: Pick<DatePickerPresetOwner, 'calls' | 'callbackInvocations'>, sample: DatePickerPresetSample) {
+function validationOrder(
+  owner: Pick<DatePickerPresetOwner, 'calls' | 'callbackInvocations'>,
+  sample: DatePickerPresetSample
+) {
   const results: Array<{ actionIndex: number; result: unknown }> = [];
   for (const call of owner.callbackInvocations) {
     if (call.name !== 'calendar' || sample.actions[call.actionIndex]?.type !== 'preset-click') continue;
@@ -358,7 +385,8 @@ export function verifyDatePickerPresetsPoint(native: DatePickerPresetPoint,
     assert.equal(source.cells.length, 42);
     assert.deepEqual(cells(native, prefix), cells(source, prefix), label + ' all calendar cells');
     verifyDatePickerPresetsPhysical(native, source, label, renderer);
-  } else {
+  }
+  else {
     // Прежний Native popup удаляется; Source сохраняет скрытое дерево rc-trigger.
     assert.equal(native.popups.length, 0);
     assert(source.popups.every(popup => !popup.visible));
@@ -403,7 +431,8 @@ export interface DatePickerPresetsRemovalBefore {
   input: Pick<DatePickerPresetNode, 'identity' | 'focused'> | null;
   activeElement: Pick<DatePickerPresetNode, 'identity' | 'tag' | 'attributes'> | null;
   owner: Pick<DatePickerPresetOwner, 'alive' | 'callbackInvocations'>;
-};
+}
+;
 /** Prefix и фактические поля Native FocusEvent запрещают общий disposal-blur waiver. */
 export function verifyDatePickerPresetsRemovalBlur(nativeBefore: DatePickerPresetsRemovalBefore,
   nativeAfter: Pick<DatePickerPresetOwner, 'alive' | 'callbackInvocations'>,

@@ -18,8 +18,10 @@ for (const source of [false, true]) {
         await page.getByLabel('Tooltip alignment case', { exact: true }).selectOption(sample.name);
         const root = page.locator('#tooltip-align-case');
         const popup = page.locator('[data-ant-tooltip]');
+
         await expect(popup).toBeVisible();
         const expected = ({ calls: _calls, ...snapshot }: typeof sample.initial) => snapshot;
+
         await expect.poll(() => page.evaluate(snapshotTooltipAlignment))
           .toEqual(expected(sample.initial));
         await expect(page.getByLabel('Alignment calls', { exact: true }))
@@ -32,6 +34,7 @@ for (const source of [false, true]) {
           await Promise.resolve();
           return host.alignCalls - before;
         });
+
         expect(result).toBe(sample.manual.delta);
         const batched = await root.evaluate(async node => {
           const host = node as TooltipAlignmentHost;
@@ -41,6 +44,7 @@ for (const source of [false, true]) {
           await Promise.resolve();
           return host.alignCalls - before;
         });
+
         expect(batched).toBe(sample.batchDelta);
 
         if (sample.patch) {
@@ -77,6 +81,7 @@ for (const source of [false, true]) {
         .selectOption('resize-without-offset');
       const root = page.locator('#tooltip-align-case');
       const popup = page.locator('[data-ant-tooltip]');
+
       await expect(popup).toBeVisible();
       await expect(page.getByLabel('Alignment calls', { exact: true }))
         .toHaveText(String(sample.initial.calls));
@@ -89,6 +94,7 @@ for (const source of [false, true]) {
       await expect.poll(() => root.evaluate(node => (node as TooltipAlignmentHost).alignCalls))
         .toBe(calls + sample.resize!.delta);
       const after = await popup.boundingBox();
+
       expect([after!.x, after!.y]).toEqual([before!.x, before!.y]);
     });
 }
@@ -104,6 +110,7 @@ for (const mode of ['single', 'range', 'pinned', 'typography']) {
       if (mode !== 'typography') await root.getByRole('slider').first().focus();
       await anchor.hover();
       const popups = root.locator('[data-ant-tooltip]:not([hidden])');
+
       await expect(popups).toHaveCount(mode === 'pinned' ? 2 : 1);
       const before = await popups.evaluateAll(nodes => nodes.map(node => ({
         id: node.id, x: node.getBoundingClientRect().x, y: node.getBoundingClientRect().y

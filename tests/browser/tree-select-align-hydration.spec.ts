@@ -27,8 +27,14 @@ let server: ViteDevServer;
 let cache: string;
 test.use({ viewport: reference.reference.viewport });
 test.beforeAll(async () => {
-  cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)), 'tree-select-align-hydration-'));
-  server = await createServer({ configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+  cache = await mkdtemp(join(
+    fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
+    'tree-select-align-hydration-'
+  ));
+  server = await createServer({ configFile: fileURLToPath(new URL(
+    './vite.config.ts',
+    import.meta.url
+  )),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null }, appType: 'custom', cacheDir: cache });
 });
 test.afterAll(async () => {
@@ -59,9 +65,16 @@ async function act(page: Page, action: TreeSelectAlignAction) {
   }, action);
   else if (action.type === 'props' || action.type === 'host') await page.evaluate(action =>
     window.treeSelectAlignHydration!.update(action), action);
-  else if (action.type === 'viewport') await page.setViewportSize({ width: action.width, height: action.height });
-  else if (action.type === 'scroll') await page.locator('[data-align-scroller]').evaluate((node, action) => {
-    node.scrollTop = action.top; node.scrollLeft = action.left;
+  else if (action.type === 'viewport') await page.setViewportSize({
+    width: action.width,
+    height: action.height
+  });
+  else if (action.type === 'scroll') await page.locator('[data-align-scroller]').evaluate((
+    node,
+    action
+  ) => {
+    node.scrollTop = action.top;
+    node.scrollLeft = action.left;
   }, action);
   else throw Error(`Unexpected strict hydration action: ${action.type}`);
 }
@@ -70,9 +83,15 @@ for (const { id, events } of [
   { id: 'cache-provided', events: [['focus'], ['open', true], ['search', 'Draft']] },
   { id: 'root-composite', events: [['focus'], ['open', true], ['root-input', 'Root draft']] }
 ]) {
-  test(`TreeSelect ${id} strictly hydrates and preserves its editor and refs through Source alignment updates`, async ({ page }, testInfo) => {
+  test(`TreeSelect ${id} strictly hydrates and preserves its editor and refs through Source alignment updates`, async (
+    { page },
+    testInfo
+  ) => {
     const source = reference.cases.find(entry => entry.id === id)!;
-    const module = await server.ssrLoadModule(fileURLToPath(new URL('./fixtures/tree-select-align-hydration.server.ts', import.meta.url)));
+    const module = await server.ssrLoadModule(fileURLToPath(new URL(
+      './fixtures/tree-select-align-hydration.server.ts',
+      import.meta.url
+    )));
     const rendered = module.renderTreeSelectAlign(id);
     await page.clock.install();
     await page.goto(`/tree-select-align-hydration.html?sample=${id}`);
@@ -82,25 +101,49 @@ for (const { id, events } of [
       const observers = new Set<Set<Element>>(), OriginalObserver = window.ResizeObserver;
       window.ResizeObserver = class extends OriginalObserver {
         targets = new Set<Element>();
-        constructor(callback: ResizeObserverCallback) { super(callback); observers.add(this.targets); }
-        observe(target: Element, options?: ResizeObserverOptions) { this.targets.add(target); super.observe(target, options); }
-        unobserve(target: Element) { this.targets.delete(target); super.unobserve(target); }
-        disconnect() { this.targets.clear(); super.disconnect(); }
+        constructor(callback: ResizeObserverCallback) {
+          super(callback);
+          observers.add(this.targets);
+        }
+        observe(target: Element, options?: ResizeObserverOptions) {
+          this.targets.add(target);
+          super.observe(target, options);
+        }
+        unobserve(target: Element) {
+          this.targets.delete(target);
+          super.unobserve(target);
+        }
+        disconnect() {
+          this.targets.clear();
+          super.disconnect();
+        }
       };
       const frames = new Set<number>();
       const request = window.requestAnimationFrame.bind(window), cancel = window.cancelAnimationFrame.bind(window);
       window.requestAnimationFrame = callback => {
-        const frame = request(time => { frames.delete(frame); callback(time); });
-        frames.add(frame); return frame;
+        const frame = request(time => {
+          frames.delete(frame);
+          callback(time);
+        });
+        frames.add(frame);
+        return frame;
       };
-      window.cancelAnimationFrame = frame => { frames.delete(frame); cancel(frame); };
-      window.alignHydrationResources = { observers: () => [...observers].reduce((sum, targets) => sum + targets.size, 0),
+      window.cancelAnimationFrame = frame => {
+        frames.delete(frame);
+        cancel(frame);
+      };
+      window.alignHydrationResources = { observers: () => [...observers].reduce(
+        (sum, targets) => sum + targets.size,
+        0
+      ),
         frames: () => frames.size };
       const outside = document.querySelector<HTMLInputElement>('[aria-label="Align outside draft"]')!;
-      outside.value = 'Outside align hydration draft'; outside.setSelectionRange(1, 10);
+      outside.value = 'Outside align hydration draft';
+      outside.setSelectionRange(1, 10);
     }, { head: rendered.head, body: rendered.body });
     await page.addScriptTag({ type: 'module', url: '/tree-select-align-hydration.client.ts' });
     await page.waitForFunction(() => window.treeSelectAlignHydration);
+
     await expect(page.locator('[data-align-case]')).toHaveAttribute('data-align-bound', 'true');
     expect(await settle(page)).toEqual(source.initial.view);
     const identity = await page.evaluateHandle(() => {
@@ -108,7 +151,12 @@ for (const { id, events } of [
       return { control: refs.control, focus: refs.control?.focus, blur: refs.control?.blur,
         scrollTo: refs.control?.scrollTo, popup: null as Element | null };
     });
-    expect(await identity.evaluate(old => ({ focus: typeof old.focus, blur: typeof old.blur, scrollTo: typeof old.scrollTo })))
+
+    expect(await identity.evaluate(old => ({
+      focus: typeof old.focus,
+      blur: typeof old.blur,
+      scrollTo: typeof old.scrollTo
+    })))
       .toEqual({ focus: 'function', blur: 'function', scrollTo: 'function' });
     const readIdentity = () => identity.evaluate(old => {
       const state = window.treeSelectAlignHydration!, refs = state.refs();
@@ -144,26 +192,43 @@ for (const { id, events } of [
         const state = window.treeSelectAlignHydration!;
         const snapshot = (): AlignDisposeSnapshot => ({ ledger: JSON.parse(JSON.stringify(state.events())),
           rootConnected: state.root.isConnected, editorConnected: state.editor.isConnected });
-        const trace: AlignDisposeTrace = { phase: 'disposing', before: snapshot(), afterCall: null, afterAwait: null, probes: [] };
+        const trace: AlignDisposeTrace = {
+          phase: 'disposing',
+          before: snapshot(),
+          afterCall: null,
+          afterAwait: null,
+          probes: []
+        };
         const record = (event: FocusEvent) => trace.probes.push({ ...snapshot(), type: event.type, phase: trace.phase,
           targetIsEditor: event.target === state.editor, trusted: event.isTrusted,
           relatedTarget: event.relatedTarget instanceof Element ? event.relatedTarget.tagName : null });
-        state.editor.addEventListener('blur', record, true); state.editor.addEventListener('focusout', record, true);
+        state.editor.addEventListener('blur', record, true);
+        state.editor.addEventListener('focusout', record, true);
         window.alignHydrationDisposal = { trace, stop() {
-          state.editor.removeEventListener('blur', record, true); state.editor.removeEventListener('focusout', record, true);
+          state.editor.removeEventListener('blur', record, true);
+          state.editor.removeEventListener('focusout', record, true);
         } };
-        const pending = state.dispose(); trace.afterCall = snapshot();
-        await pending; trace.afterAwait = snapshot(); trace.phase = 'disposed';
+        const pending = state.dispose();
+        trace.afterCall = snapshot();
+        await pending;
+        trace.afterAwait = snapshot();
+        trace.phase = 'disposed';
       });
       expect(await page.evaluate(() => window.treeSelectAlignHydration!.cleaned))
         .toEqual({ root: true, editor: true, control: true });
       await expect(page.locator('[data-align-case]')).toHaveCount(0);
       await expect(page.locator('[popover]')).toHaveCount(0);
       await page.setViewportSize({ width: 1120, height: 860 });
-      await page.evaluate(() => { window.dispatchEvent(new Event('resize')); window.dispatchEvent(new Event('scroll')); });
+      await page.evaluate(() => {
+        window.dispatchEvent(new Event('resize'));
+        window.dispatchEvent(new Event('scroll'));
+      });
       await page.clock.runFor(1000);
       const disposal = await page.evaluate(() => window.alignHydrationDisposal!.trace);
-      await testInfo.attach('tree-select-align-disposal-timing', { body: JSON.stringify({ id, disposal }, null, 2), contentType: 'application/json' });
+      await testInfo.attach(
+        'tree-select-align-disposal-timing',
+        { body: JSON.stringify({ id, disposal }, null, 2), contentType: 'application/json' }
+      );
       console.log('TreeSelect align disposal timing:', JSON.stringify({ id, disposal }));
       const disposed = {
         ledger: [...events, ['blur']], rootConnected: false, editorConnected: false

@@ -10,6 +10,7 @@ for (const sample of reference.cases) {
   test(`Tag matches source styling for ${sample.name}`, async ({ page }) => {
     await page.getByRole('combobox', { name: 'Tag style reference' }).selectOption(sample.name);
     const host = page.locator('#tag-style-surface');
+
     await expect(host).toBeVisible();
 
     expect(await host.evaluate(snapshotTagStyle)).toEqual(sample.snapshot);

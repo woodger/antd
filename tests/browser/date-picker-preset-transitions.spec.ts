@@ -32,8 +32,14 @@ for (const sample of datePickerPresetTransitionSamples) {
     page.on('pageerror', error => errors.push({ name: error.name, message: error.message }));
     page.on('console', message => diagnostics.push({ type: message.type(), text: message.text() }));
     page.on('request', request => requests.push({ url: request.url(), method: request.method() }));
-    page.on('response', response => responses.push({ url: response.url(), status: response.status() }));
-    page.on('requestfailed', request => failedRequests.push({ url: request.url(), failure: request.failure() }));
+    page.on(
+      'response',
+      response => responses.push({ url: response.url(), status: response.status() })
+    );
+    page.on(
+      'requestfailed',
+      request => failedRequests.push({ url: request.url(), failure: request.failure() })
+    );
     const proof = createDatePickerPresetTransitionProof();
     const metadata = readDatePickerPresetTransitionsCaseMetadata(sample.id);
     const attach = (label: string, value: unknown) => testInfo.attach(label + '.json.gz', {
@@ -52,20 +58,41 @@ for (const sample of datePickerPresetTransitionSamples) {
         expect(original.action).toEqual(action);
         const evidence = await actDatePickerPresetTransitions(page, sample, action, index);
         const afterCall = await page.evaluate(() => window.datePickerPresetTransitionsNative.readDOM());
-        await attach('action-' + index + '-after-call-complete-raw', { action, evidence, afterCall });
+        await attach(
+          'action-' + index + '-after-call-complete-raw',
+          { action, evidence, afterCall }
+        );
         // afterCall сохраняется целиком; семантически сравниваются установившиеся состояния.
         verifyDatePickerPresetTransitionActionEvidence(evidence, original.actionEvidence);
         actual = await settleDatePickerPresetTransitions(page);
         await attach('action-' + index + '-settled-complete-raw', actual);
-        verifyDatePickerPresetTransitionPoint(actual, original.actual, sample, proof, 'action' + index);
+        verifyDatePickerPresetTransitionPoint(
+          actual,
+          original.actual,
+          sample,
+          proof,
+          'action' + index
+        );
         if (previousOpen && !actual.owner.open) {
           const closed = readDatePickerPresetTransitionsClosed(sample.id, closedIndex++);
           expect(closed.actionIndex).toBe(index);
-          verifyDatePickerPresetTransitionPoint(actual, closed.settled, sample, proof, 'closed' + index);
+          verifyDatePickerPresetTransitionPoint(
+            actual,
+            closed.settled,
+            sample,
+            proof,
+            'closed' + index
+          );
           await page.waitForTimeout(1000);
           const after1000 = await page.evaluate(() => window.datePickerPresetTransitionsNative.readDOM());
           await attach('action-' + index + '-closed-1000-complete-raw', after1000);
-          verifyDatePickerPresetTransitionPoint(after1000, closed.after1000, sample, proof, 'closed' + index + '/1000ms');
+          verifyDatePickerPresetTransitionPoint(
+            after1000,
+            closed.after1000,
+            sample,
+            proof,
+            'closed' + index + '/1000ms'
+          );
         }
         previousOpen = actual.owner.open;
       }
@@ -90,10 +117,17 @@ for (const sample of datePickerPresetTransitionSamples) {
         try {
           const before = await settleDatePickerPresetTransitions(page);
           disposalStarted = true;
-          await attach('finally-disposal-complete-raw', await disposeDatePickerPresetTransitions(page, before));
-        } catch (error) { errors.push({ phase: 'finally', message: String(error) }); }
+          await attach(
+            'finally-disposal-complete-raw',
+            await disposeDatePickerPresetTransitions(page, before)
+          );
+        }
+        catch (error) { errors.push({ phase: 'finally', message: String(error) }); }
       }
-      await attach('complete-diagnostics', { sample, errors, diagnostics, requests, responses, failedRequests });
+      await attach(
+        'complete-diagnostics',
+        { sample, errors, diagnostics, requests, responses, failedRequests }
+      );
     }
   });
 }

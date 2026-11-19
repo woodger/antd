@@ -19,6 +19,7 @@ for (const entry of reference.cases) {
       ? `${sample.groupLocal}-preview`
       : 'previewPrefix' in sample && sample.previewPrefix !== undefined
         ? sample.previewPrefix : `${sample.local}-preview`;
+
     await expect(viewer).toBeVisible();
     await page.mouse.move(1090, 5);
 
@@ -26,11 +27,15 @@ for (const entry of reference.cases) {
     await expect.poll(() => page.evaluate(snapshotImagePrefix, prefix)).toEqual(entry.styled);
     if (prefix) {
       expect(await viewer.evaluate((node, prefix) => node.classList.contains(prefix), prefix)).toBe(true);
-    } else {
+    }
+    else {
       expect(await viewer.getAttribute('class')).not.toContain('photo-preview');
     }
     expect(await viewer.getByRole('button', { name: 'zoomIn', exact: true })
-      .evaluate((node, prefix) => node.classList.contains(`${prefix}-actions-action-zoomIn`), prefix))
+      .evaluate(
+        (node, prefix) => node.classList.contains(`${prefix}-actions-action-zoomIn`),
+        prefix
+      ))
       .toBe(true);
   });
 }

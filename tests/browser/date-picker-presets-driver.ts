@@ -39,15 +39,20 @@ export async function actDatePickerPresets(page: Page, sample: DatePickerPresetS
   const prefix = sample.prefixCls ?? 'ant-picker';
   if (action.type === 'open') {
     await page.locator('#preset-field').click();
-  } else if (action.type === 'leave') {
+  }
+  else if (action.type === 'leave') {
     await page.mouse.move(1000, 750);
-  } else if (action.type === 'escape') {
+  }
+  else if (action.type === 'escape') {
     await page.keyboard.press('Escape');
-  } else if (action.type === 'outside') {
+  }
+  else if (action.type === 'outside') {
     await page.locator('[data-picker-outside]').click();
-  } else if (action.type === 'preview') {
+  }
+  else if (action.type === 'preview') {
     await page.evaluate(value => window.datePickerPresetsNative.setPreview(value), action.value);
-  } else if (action.type === 'clear') {
+  }
+  else if (action.type === 'clear') {
     return page.locator('.' + prefix + '-clear').evaluate(node => {
       if (!(node instanceof HTMLButtonElement)) throw Error('Actual Native clear button required');
       let observed: null | {
@@ -63,15 +68,18 @@ export async function actDatePickerPresets(page: Page, sample: DatePickerPresetS
       node.click();
       return observed;
     });
-  } else if (action.type === 'cell-hover') {
+  }
+  else if (action.type === 'cell-hover') {
     await page.locator('.' + prefix + '-dropdown td[title="' + action.value + '"]').hover();
-  } else if (action.type === 'preset-hover' || action.type === 'preset-click') {
+  }
+  else if (action.type === 'preset-hover' || action.type === 'preset-click') {
     const slot = sample.presets.findIndex(preset => preset.id === action.value);
     if (slot < 0) throw Error('Frozen preset id required');
     const node = page.locator('.' + prefix + '-presets li').nth(slot);
     if (action.type === 'preset-hover') await node.hover();
     else await node.click();
-  } else {
+  }
+  else {
     throw Error('Unknown frozen DatePicker action');
   }
   return null;

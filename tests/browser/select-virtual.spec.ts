@@ -42,7 +42,11 @@ for (const entry of selectVirtualNativeCases) {
     const act = sample.scenario === 'selected' ? actSelectVirtualHover : actSelectVirtual;
     await page.goto('/?fixture=select-virtual');
     await page.getByRole('combobox', { name: 'Select virtual sample', exact: true }).selectOption(entry.id);
-    await expect(page.locator('[data-select-virtual-case]')).toHaveAttribute('data-select-virtual-bound', 'true');
+
+    await expect(page.locator('[data-select-virtual-case]')).toHaveAttribute(
+      'data-select-virtual-bound',
+      'true'
+    );
     if (sample.layout === 'scaled-shadow') await page.evaluate(installSelectVirtualShadowStyleProbe);
     await prepareSelectVirtual(page);
     const identity = await page.evaluateHandle(() => {
@@ -82,7 +86,12 @@ for (const entry of selectVirtualNativeCases) {
         await act(page, action);
         const actual = await settle(page);
         trace.push({ action, actual });
-        expect(actual.view, JSON.stringify(action)).toEqual(selectVirtualNativeView(step.view, entry.id, 'step', action));
+        expect(actual.view, JSON.stringify(action)).toEqual(selectVirtualNativeView(
+          step.view,
+          entry.id,
+          'step',
+          action
+        ));
         expect(actual.raw.renders, `public renderer arguments: ${JSON.stringify(action)}`).toEqual(step.raw.renders);
         expect(actual.view.leaks).toEqual([]);
         expect(await bindings()).toEqual(stableBindings);
@@ -118,7 +127,10 @@ for (const entry of selectVirtualNativeCases) {
       }
     } finally {
       if (sample.layout === 'scaled-shadow') await page.evaluate(() => window.selectVirtualShadowStyleProbe?.stop());
-      await testInfo.attach('actual-select-virtual', { body: JSON.stringify(trace, null, 2), contentType: 'application/json' });
+      await testInfo.attach(
+        'actual-select-virtual',
+        { body: JSON.stringify(trace, null, 2), contentType: 'application/json' }
+      );
       await identity.dispose();
     }
   });

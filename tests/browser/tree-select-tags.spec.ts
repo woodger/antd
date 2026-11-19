@@ -11,6 +11,7 @@ for (const entry of reference.cases) {
     await page.getByLabel('Tree tag sample').selectOption(sample.id);
     const read = async () => ({ view: await page.evaluate(readTreeTags, prefix),
       events: JSON.parse(await page.locator('[data-tree-tag-events]').innerText()) });
+
     await expect.poll(read).toEqual(entry.initial);
     for (const step of entry.steps) {
       const action = step.action as TreeTagAction;
@@ -20,19 +21,24 @@ for (const entry of reference.cases) {
       else if (action.kind === 'search') await input.fill(action.value);
       else if (action.kind === 'remove') {
         await page.getByRole('button', { name: 'Удалить Tail', exact: true }).click();
-      } else if (action.kind === 'tag') {
+      }
+      else if (action.kind === 'tag') {
         await page.locator('[data-tree-tag-custom]').filter({
           has: page.locator(`[data-tree-tag-close="${action.value}"]`)
         }).locator('[data-tree-tag-label]').click();
-      } else if (action.kind === 'close') {
+      }
+      else if (action.kind === 'close') {
         await page.getByRole('button', { name: `Close ${action.value}`, exact: true }).click();
-      } else if (action.kind === 'clear') {
+      }
+      else if (action.kind === 'clear') {
         await page.getByRole('button', { name: 'Очистить', exact: true }).click();
-      } else if (action.kind === 'choose') {
+      }
+      else if (action.kind === 'choose') {
         await page.locator(`.${prefix}-dropdown [role="treeitem"][id$="-${action.value}"]`)
           .locator(sample.checkable || sample.strict ? '[data-ant-tree-checkbox]' : '[data-ant-tree-content]')
           .click({ force: true });
-      } else {
+      }
+      else {
         const name = action.kind === 'update-count' ? 'Update tree tag count'
           : action.kind === 'update-length' ? 'Update tree tag length'
             : action.kind === 'update-data' ? 'Update tree tag data'

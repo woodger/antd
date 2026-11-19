@@ -109,6 +109,7 @@ test('Splitter reads defaults once and adopts controlled drag proposals', async 
   await drag(page, 80);
 
   await expectSizes(page, [380, 220]);
+
   expect((await events(page)).at(-1)).toEqual({
     event: 'end', sizes: [380, expect.closeTo(220, 10)]
   });
@@ -121,6 +122,7 @@ test(
     await drag(page, 90);
 
     await expectSizes(page, [300, 300]);
+
     expect(await events(page)).toEqual([
       { event: 'start', sizes: [300, 300] },
       { event: 'resize', sizes: [390, 210] },
@@ -143,6 +145,7 @@ test(
     await drag(page, 50);
 
     await expectSizes(page, [150, 225, 225]);
+
     expect((await events(page)).at(-2)).toEqual({ event: 'resize', sizes: [150, 200, 250] });
     expect((await events(page)).at(-1)).toEqual({ event: 'end', sizes: [150, 225, 225] });
   }
@@ -156,12 +159,14 @@ test('Splitter lazy previews within limits and commits once on release', async (
   const preview = root(page).locator('.ant-splitter-bar-preview');
 
   await expectSizes(page, [300, 300]);
+
   await expect(preview).toHaveClass(/ant-splitter-bar-preview-active/);
   await expect(preview).toHaveCSS('--ant-splitter-bar-preview-offset', '120px');
   expect(await events(page)).toEqual([{ event: 'start', sizes: [300, 300] }]);
   await page.mouse.up();
 
   await expectSizes(page, [420, 180]);
+
   await expect(preview).not.toHaveClass(/ant-splitter-bar-preview-active/);
   expect(await events(page)).toEqual([
     { event: 'start', sizes: [300, 300] },
@@ -177,6 +182,7 @@ test(
     await drag(page, 70);
 
     await expectSizes(page, [300, 300]);
+
     expect((await events(page)).at(-1)).toEqual({ event: 'end', sizes: [370, 230] });
     await select(page, 'Splitter state').selectOption('controlled');
     await drag(page, -40);
@@ -194,6 +200,7 @@ test(
     await expect(root(page)).toHaveCSS('direction', 'rtl');
     const first = (await panels(page).nth(0).boundingBox())!;
     const second = (await panels(page).nth(1).boundingBox())!;
+
     expect(first.x).toBeGreaterThan(second.x);
     await drag(page, 60);
 
@@ -221,6 +228,7 @@ test('Splitter vertical drag uses heights independently of inherited RTL', async
   await drag(page, 80, 0, true);
 
   await expectSizes(page, [380, 220]);
+
   await expect(panels(page).nth(0)).toHaveCSS('height', '380px');
   await expect(panels(page).nth(0)).toHaveCSS('width', '600px');
 });
@@ -232,11 +240,13 @@ test(
     const draft = control(page, 'Splitter first draft');
     await draft.fill('Retained draft');
     const start = root(page).getByRole('button', { name: 'Toggle start panel', exact: true });
+
     await expect(start).toHaveAttribute('type', 'button');
     await start.focus();
     await page.keyboard.press('Enter');
 
     await expectSizes(page, [0, 600]);
+
     await expect(panels(page).nth(0)).toHaveClass(/ant-splitter-panel-hidden/);
     await expect(draft).toHaveCount(1);
     expect(await events(page)).toEqual([
@@ -249,6 +259,7 @@ test(
     await page.keyboard.press('Space');
 
     await expectSizes(page, [200, 400]);
+
     await expect(draft).toHaveValue('Retained draft');
     expect((await events(page)).map(event => event.event))
       .toEqual(['resize', 'end', 'collapse', 'resize', 'end', 'collapse']);
@@ -261,6 +272,7 @@ test('Splitter rechecks limits before expanding a collapsed panel', async ({ pag
   await root(page).getByRole('button', { name: 'Toggle end panel', exact: true }).click();
 
   await expectSizes(page, [200, 400]);
+
   expect((await events(page)).at(-1)?.collapsed).toEqual([false, false]);
 });
 
@@ -317,7 +329,8 @@ for (const sample of focusReference.cases) {
     if (sample.destroyOnHidden) {
       await expect(page.getByRole('button', { name: 'Clear Splitter events', exact: true }))
         .toBeFocused();
-    } else {
+    }
+    else {
       // Сохраняем ограничение pinned upstream: clipping не исключает controls из Tab-порядка.
       await expect(root(page).getByRole('button', { name: 'Splitter content action', exact: true }))
         .toBeFocused();
@@ -327,6 +340,7 @@ for (const sample of focusReference.cases) {
     }
 
     await expand.click();
+
     await expect(panel).toHaveCSS(dimension, '300px');
 
     expect({
@@ -388,6 +402,7 @@ test(
     await drag(page, 60);
 
     await expectSizes(page, [300, 300]);
+
     expect(await events(page)).toEqual([]);
     await separator(page).dispatchEvent('dblclick');
 
@@ -408,6 +423,7 @@ test(
     })));
 
     await expectSizes(page, [260, 40, 300]);
+
     await expect(separator(page, 0)).toHaveClass(/ant-splitter-bar-dragger-active/);
     await page.evaluate(() => window.dispatchEvent(new MouseEvent('mouseup')));
 
@@ -447,6 +463,7 @@ test(
   'Splitter keeps explicit empty icons and uses defaults for an empty icon object',
   async ({ page }) => {
     const start = root(page).getByRole('button', { name: 'Toggle start panel', exact: true });
+
     await expect(start.locator('svg')).toHaveAttribute('viewBox', '64 64 896 896');
     await select(page, 'Splitter icons').selectOption('custom');
 
@@ -528,6 +545,7 @@ test(
     await control(page, 'Mount Splitter').check();
 
     await expectSizes(page, [300, 300]);
+
     await expect(control(page, 'Splitter ref')).toHaveText('DIV');
   }
 );
@@ -558,6 +576,7 @@ test.describe('Splitter touch', () => {
       });
 
       await expectSizes(page, [360, 240]);
+
       expect(await events(page)).toEqual([
         { event: 'start', sizes: [300, 300] },
         { event: 'resize', sizes: [360, 240] },

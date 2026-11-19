@@ -34,7 +34,10 @@ export interface FeedbackSample {
   actions?: readonly FeedbackAction[];
 }
 export const feedbackSamples: readonly FeedbackSample[] = [
-  ...(['success', 'error', 'warning', 'validating', ''] as const).map(status => ({ id: 'status-' + (status || 'empty'), status })),
+  ...(['success', 'error', 'warning', 'validating', ''] as const).map(status => ({
+    id: 'status-' + (status || 'empty'),
+    status
+  })),
   { id: 'pristine' },
   { id: 'feedback-false', status: 'error', feedback: false },
   ...(['custom', 'false', 'null', 'zero', 'true', 'empty-array', 'array', 'empty-map'] as const)
@@ -57,8 +60,21 @@ export const feedbackSamples: readonly FeedbackSample[] = [
   { id: 'nested-form', status: 'error', nestedForm: true },
   { id: 'otp-isolation', status: 'error', otp: true },
   { id: 'nameless', status: 'success', nameless: true },
-  { id: 'prefixes', status: 'error', rootPrefix: 'brand', formPrefix: 'local-form', itemPrefix: 'field', treePrefix: 'choice' },
-  { id: 'no-style-prefix', status: 'error', noStyle: 'inherit', itemPrefix: 'parent', formPrefix: 'sheet' },
+  {
+    id: 'prefixes',
+    status: 'error',
+    rootPrefix: 'brand',
+    formPrefix: 'local-form',
+    itemPrefix: 'field',
+    treePrefix: 'choice'
+  },
+  {
+    id: 'no-style-prefix',
+    status: 'error',
+    noStyle: 'inherit',
+    itemPrefix: 'parent',
+    formPrefix: 'sheet'
+  },
   { id: 'dark-rtl', status: 'warning', theme: 'dark', rtl: true },
   { id: 'compact-small', status: 'error', theme: 'compact', size: 'small' },
   { id: 'large-clear', status: 'success', size: 'large', actions: ['hover', 'clear'] },

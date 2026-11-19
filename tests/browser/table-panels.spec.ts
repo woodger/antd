@@ -25,6 +25,7 @@ test('Table panels follow paging, sorting and filters without replacing an edite
     await input.fill('Retained footer');
     await input.evaluate(node => (node as HTMLInputElement).setSelectionRange(1, 5, 'backward'));
     const original = await input.elementHandle();
+
     await expect(root.locator('[data-title-data]')).toHaveText('[1,2]');
 
     await root.getByRole('button', { name: 'Page 2', exact: true }).dispatchEvent('click');

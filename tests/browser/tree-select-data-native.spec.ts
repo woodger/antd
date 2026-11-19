@@ -13,6 +13,7 @@ const events = async (page: Page) => JSON.parse(await page.locator('[data-tree-s
 
 test('TreeSelect simple mode keeps its input children array while preserving Source hierarchy', async ({ page }) => {
   const observation = reference.observations.find(sample => sample.id === 'simple-input-mutation')!;
+
   expect(observation.initial.inputMutated).toBe(true);
   await mount(page, observation.id);
   await control(page).click();
@@ -24,8 +25,10 @@ test('TreeSelect simple mode keeps its input children array while preserving Sou
 
 test('TreeSelect raw renderer receives original payload instead of a labeled value', async ({ page }) => {
   const observation = reference.observations.find(sample => sample.id === 'raw-renderer-data')!;
+
   expect(observation.initial.rendererData).toBe(false);
   await mount(page, observation.id);
+
   await expect(page.locator('.single-snippet')).toHaveText('41:Alpha');
   await control(page).click();
 
@@ -47,9 +50,11 @@ test('TreeSelect keeps native refs and active row identity while its schema upda
   expect(await row!.evaluate(node => node.isConnected)).toBe(true);
   await expect(control(page)).toBeFocused();
   const active = await control(page).getAttribute('aria-activedescendant');
+
   expect(active).toBe(await row!.getAttribute('id'));
   await control(page).press('ArrowDown');
   await control(page).press('Enter');
+
   expect((await events(page)).at(-1)).toMatchObject({ type: 'select', value: 2 });
 });
 
@@ -69,6 +74,7 @@ test('TreeSelect alias selection submits native raw values and retains an outsid
   const draft = page.getByRole('textbox', { name: 'Outside data draft' });
   await draft.fill('retained');
   await page.getByRole('button', { name: 'Refresh data schema', exact: true }).dispatchEvent('click');
+
   await expect(draft).toHaveValue('retained');
   await expect(draft).toBeFocused();
   await expect(page.locator('[data-tree-select-generic-refs]')).toHaveText('true:true');
@@ -76,6 +82,7 @@ test('TreeSelect alias selection submits native raw values and retains an outsid
 
 test('TreeSelect generic renderer updates selected labels from a new data reference', async ({ page }) => {
   await page.goto('/?fixture=tree-select-data-generic');
+
   await expect(page.locator('.single-snippet')).toHaveText('1:Alpha');
   await page.getByRole('button', { name: 'Update generic labels', exact: true }).dispatchEvent('click');
 
@@ -93,6 +100,7 @@ test('TreeSelect lazy aliases expose canonical state and original user props wit
       shared: true, titlePresent: false }
   ]);
   await page.getByRole('button', { name: 'Resolve generic load', exact: true }).dispatchEvent('click');
+
   await expect(page.locator('[data-tree-select-generic-completed]')).toHaveText('1');
   await expect(page.getByRole('tree', { name: 'Generic lazy data', exact: true })
     .getByRole('treeitem', { name: 'Alpha', exact: true })).toBeVisible();

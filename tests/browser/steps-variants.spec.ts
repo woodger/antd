@@ -183,10 +183,12 @@ test(
 
     await expect.poll(arrow).toBe('rgba(0, 0, 0, 0.25)');
     await page.getByLabel('Dark Steps variants', { exact: true }).check();
+
     await expect.poll(arrow).toBe('rgba(255, 255, 255, 0.25)');
     await root.evaluate(
       node => node.style.setProperty('--ant-steps-nav-arrow-color', 'rgb(1, 2, 3)')
     );
+
     await expect.poll(arrow).toBe('rgb(1, 2, 3)');
   }
 );

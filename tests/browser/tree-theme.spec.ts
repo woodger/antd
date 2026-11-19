@@ -18,6 +18,7 @@ test('TreeSelect keeps its own theme when Tree and Select tokens conflict', asyn
   await page.goto('/?fixture=tree-theme');
   const input = page.getByRole('combobox', { name: 'Tree theme composition', exact: true });
   await input.scrollIntoViewIfNeeded();
+
   await expect(page.locator('.ant-tree-select-dropdown')).toBeVisible();
 
   await expect.poll(() => page.evaluate(snapshotTreeThemeComposition))
@@ -46,6 +47,7 @@ test('Tree theme updates preserve active descendant, focus, selection, checks an
     await tree.focus();
     await tree.press('ArrowDown');
     const active = await tree.getAttribute('aria-activedescendant');
+
     await expect.poll(() => page.evaluate(snapshotTreeTheme)).toEqual(reference.activeUpdate.before);
 
     await page.getByRole('button', { name: 'Update Tree tokens', exact: true }).dispatchEvent('click');
@@ -68,6 +70,7 @@ test('Tree theme updates preserve active descendant, focus, selection, checks an
     await expect(host.getByLabel('Tree theme events normal', { exact: true }))
       .toHaveText('["check:p:true"]');
     await page.getByLabel('Mount themed Tree controls', { exact: true }).dispatchEvent('click');
+
     expect(await original!.evaluate(node => node.isConnected)).toBe(false);
     await expect(page.locator('[data-tree-theme="sibling"] .ant-tree').first())
       .toHaveCSS('font-size', '18px');
@@ -80,6 +83,7 @@ test('Tree keeps pending loading and its callback across a theme update', async 
   const root = lazy.locator('.ant-tree');
   const original = await root.elementHandle();
   await lazy.locator('.ant-tree-switcher').click();
+
   await expect(lazy.locator('.ant-tree-switcher-loading-icon')).toBeVisible();
 
   await page.getByRole('button', { name: 'Update Tree tokens', exact: true }).dispatchEvent('click');
@@ -106,6 +110,7 @@ test('Tree resets inherited tokens without replacing its focus target or selecte
     await page.getByLabel('Inherit Tree theme', { exact: true }).dispatchEvent('click');
 
     const defaults = reference.cases.find(sample => sample.name === 'default')!;
+
     await expect.poll(() => page.evaluate(snapshotTreeTheme).then(metrics => metrics.nested))
       .toEqual(defaults.metrics.nested);
     expect(await tree.evaluate((node, old) => node === old, original)).toBe(true);

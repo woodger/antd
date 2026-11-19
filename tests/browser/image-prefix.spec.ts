@@ -25,7 +25,8 @@ for (const entry of reference.cases) {
         await page.mouse.move(1090, 5);
 
         await expect.poll(() => page.evaluate(snapshotImagePrefix, undefined)).toEqual(entry.result[scope].opened);
-      } else {
+      }
+      else {
         await expect(page.locator('dialog')).toHaveCount(0);
       }
     });

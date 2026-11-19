@@ -25,17 +25,37 @@ export function readTreeSelectAlignSSR(html: string) {
   };
   const classes = (tag: string) => attribute(tag, 'class')?.split(/\s+/) ?? [];
   const leakedAttributes = tags.flatMap(tag => ['popupAlign', 'builtinPlacements']
-    .filter(name => attribute(tag, name) !== null).map(name => ({ tag: tag.slice(1).split(/[\s>]/)[0], name })));
+    .filter(name => attribute(tag, name) !== null).map(name => ({
+      tag: tag.slice(1).split(/[\s>]/)[0],
+      name
+    })));
   return {
     root: { tag: root.slice(1).split(/[\s>]/)[0].toUpperCase(), id: attribute(root, 'id'),
-      dir: attribute(root, 'dir'), role: attribute(root, 'role'), expanded: attribute(root, 'aria-expanded'),
+      dir: attribute(root, 'dir'), role: attribute(root, 'role'), expanded: attribute(
+        root,
+        'aria-expanded'
+      ),
       rtlClass: classes(root).includes('ant-select-rtl'), multipleClass: classes(root).includes('ant-select-multiple'),
-      style: { width: style(root, 'width'), height: style(root, 'height'), display: style(root, 'display') } },
-    editor: editor ? { tag: editor.slice(1).split(/[\s>]/)[0].toUpperCase(), id: attribute(editor, 'id'),
-      dir: attribute(editor, 'dir'), role: attribute(editor, 'role'), expanded: attribute(editor, 'aria-expanded'),
+      style: {
+        width: style(root, 'width'),
+        height: style(root, 'height'),
+        display: style(root, 'display')
+      } },
+    editor: editor ? { tag: editor.slice(1).split(/[\s>]/)[0].toUpperCase(), id: attribute(
+      editor,
+      'id'
+    ),
+      dir: attribute(editor, 'dir'), role: attribute(editor, 'role'), expanded: attribute(
+        editor,
+        'aria-expanded'
+      ),
       readonly: attribute(editor, 'readonly') !== null, disabled: attribute(editor, 'disabled') !== null,
       valueAttribute: attribute(editor, 'value'),
-      style: { width: style(editor, 'width'), height: style(editor, 'height'), boxSizing: style(editor, 'box-sizing') } } : null,
+      style: {
+        width: style(editor, 'width'),
+        height: style(editor, 'height'),
+        boxSizing: style(editor, 'box-sizing')
+      } } : null,
     popupPresent: tags.some(tag => classes(tag).includes('ant-tree-select-dropdown')),
     prefixCount: tags.filter(tag => attribute(tag, 'data-align-prefix') !== null).length,
     restCount: tags.filter(tag => attribute(tag, 'data-align-rest') !== null).length,
@@ -45,7 +65,10 @@ export function readTreeSelectAlignSSR(html: string) {
 }
 
 /** Существующий Native default/input root: role=presentation и provider dir; custom root задаёт attrs сам. */
-export function treeSelectAlignNativeSSRExpected<View extends { root: { dir: string | null; role: string | null } }>(
+export function treeSelectAlignNativeSSRExpected<View extends { root: {
+  dir: string | null;
+  role: string | null
+} }>(
   source: View, sample: TreeSelectAlignSample
 ): View {
   const expected = structuredClone(source);

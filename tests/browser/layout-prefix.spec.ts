@@ -82,6 +82,7 @@ test('Layout prefix updates preserve drafts, selection, focus and keyboard colla
     const draft = host.getByRole('textbox', { name: 'Layout config draft', exact: true });
     await draft.fill('Prefix retained draft');
     await trigger.press('Enter');
+
     await expect(sider).toHaveCSS('width', '80px');
     await draft.focus();
     await draft.evaluate(node => (node as HTMLInputElement).setSelectionRange(2, 10));
@@ -100,6 +101,7 @@ test('Layout prefix updates preserve drafts, selection, focus and keyboard colla
       expect(await trigger.evaluate((node, previous) => node === previous, original)).toBe(true);
     }
     await trigger.press('Space');
+
     await expect(sider).toHaveCSS('width', '120px');
     await expect(trigger).toBeFocused();
   });
@@ -149,6 +151,7 @@ for (const sampleId of ['zero-ltr', 'shared-zero-ltr']) {
       await expect(trigger).toBeFocused();
       await expect(trigger).toHaveAttribute('aria-expanded', 'false');
       await trigger.press('Enter');
+
       await expect(body).not.toHaveAttribute('inert');
       await expect(draft).toHaveValue('Zero-width draft');
       await draft.focus();
@@ -158,6 +161,7 @@ for (const sampleId of ['zero-ltr', 'shared-zero-ltr']) {
           '[data-layout-prefix="normal"] [data-layout-part="content"] input'
         )!.focus();
       });
+
       await expect(page.locator('[data-layout-prefix="normal"]')
         .getByRole('textbox', { name: 'Layout config draft', exact: true })).toBeFocused();
     });

@@ -10,7 +10,12 @@ export function snapshotSegmentedConfig() {
       const style = (node: Element) => getComputedStyle(node);
 
       return [host.dataset.segmentedConfig, {
-        classes: { root: classes(root), item: classes(item), label: classes(label), icon: classes(icon) },
+        classes: {
+          root: classes(root),
+          item: classes(item),
+          label: classes(label),
+          icon: classes(icon)
+        },
         root: {
           padding: style(root).padding,
           background: style(root).backgroundColor,

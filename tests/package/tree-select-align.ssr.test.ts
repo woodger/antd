@@ -43,8 +43,19 @@ it.each(reference.cases)('renders $id original alignment props without resolving
     expect(body).toContain('data-align-bound="false"');
     const resources = /<output[^>]*data-align-ssr-resources[^>]*>([\s\S]*?)<\/output>/.exec(body)![1]
       .replace(/<!--[\s\S]*?-->/g, '');
-    expect(JSON.parse(resources)).toEqual({ getterCalls: 0, native: null, editor: null, control: 'undefined' });
-    expect(entry.resources).toEqual({ timers: 0, frames: 0, measurements: 0, microtasks: 0, getters: 0 });
+    expect(JSON.parse(resources)).toEqual({
+      getterCalls: 0,
+      native: null,
+      editor: null,
+      control: 'undefined'
+    });
+    expect(entry.resources).toEqual({
+      timers: 0,
+      frames: 0,
+      measurements: 0,
+      microtasks: 0,
+      getters: 0
+    });
     expect(entry.refs).toEqual({ control: null, shadow: null });
     expect(entry.query).toBe('');
     expect(entry.callbacks).toEqual([]);

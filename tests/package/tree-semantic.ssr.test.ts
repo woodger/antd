@@ -15,6 +15,7 @@ describe('Tree semantic SSR', () => {
     expect(reference.cases).toHaveLength(18);
     expect(reference.observations).toHaveLength(3);
     const stale = reference.observations.find(entry => entry.sample.id === 'live-default-icon-observation')!;
+
     expect(stale.updated.nodes[0].icon).toEqual(stale.initial.nodes[0].icon);
     expect(stale.updated.nodes[0].title.classes).toContain('updated-title');
   });

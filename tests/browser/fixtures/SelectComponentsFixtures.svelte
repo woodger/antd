@@ -8,7 +8,10 @@
   const samples: SelectComponentsSample[] = [...selectComponentSamples, ...flowSamples];
   let selected = $state(samples[0].id), mounted = $state(true);
   let sample = $derived(samples.find(s => s.id === selected)!);
-  let capture = $derived.by(() => { void selected; return {} as Capture; });
+  let capture = $derived.by(() => {
+    void selected;
+    return {} as Capture;
+  });
 </script>
 <section id="select-components-fixture">
   <label style="position:fixed;left:0;top:0;z-index:1">Select components sample<select bind:value={selected} onchange={() => { mounted = true; }}>

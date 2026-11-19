@@ -18,6 +18,7 @@ for (const { sample, metrics } of reference.cases.filter(({ sample }) => sample.
   test(`Nameless FormItem matches source ownership, labels and appearance for ${sample.id}`, async ({ page }) => {
     await page.goto('/?fixture=form-nameless');
     await choose(page, sample.id);
+
     await expect.poll(() => inspect(page)).toEqual(metrics);
   });
 }
@@ -28,11 +29,13 @@ test('Nameless FormItem ignores local rules and retains explicit owner label ass
   const input = page.getByRole('textbox', { name: 'control', exact: true });
   await input.fill('');
   await page.getByRole('button', { name: 'Validate nameless form', exact: true }).click();
+
   await expect(page.getByRole('status', { name: 'Nameless validation', exact: true })).toHaveText('valid');
   await expect(page.getByRole('alert')).toHaveCount(0);
 
   await choose(page, 'manual-label');
   await page.locator('.ant-form-item-label > label').click();
+
   await expect(input).toBeFocused();
 });
 
@@ -46,6 +49,7 @@ test('Nameless FormItem keeps local draft, focus and selection through model res
   await page.getByRole('button', { name: 'Reset nameless form', exact: true }).evaluate(
     (button: HTMLButtonElement) => { button.click(); }
   );
+
   await expect.poll(() => inspect(page)).toEqual(reference.reset.metrics);
   expect(await input.evaluate((node, old) => node === old, previous)).toBe(reference.reset.same);
   await expect(input).toBeFocused();
@@ -59,6 +63,7 @@ test('FormItem recreates its control when switching name ownership and keeps nat
   const unbound = await input.elementHandle();
 
   await choose(page, 'named');
+
   await expect.poll(() => inspect(page)).toMatchObject({
     values: reference.named.metrics.values, instance: reference.named.metrics.instance,
     store: reference.named.metrics.store, input: { value: reference.named.metrics.input.value }
@@ -69,6 +74,7 @@ test('FormItem recreates its control when switching name ownership and keeps nat
   const named = await input.elementHandle();
 
   await choose(page, 'default');
+
   await expect.poll(() => inspect(page)).toEqual(reference.unnamed.metrics);
   expect(await input.evaluate((node, old) => node === old, named)).toBe(reference.unnamed.same);
 });

@@ -9,7 +9,11 @@ export interface MaskHydrationPrefixSourceProfile {
   id: MaskHydrationPrefixSourceOwner; formatProfile: 'string'; observations: MaskHydrationPrefixSourcePoint[];
   steps: Array<{ index: number; complete: boolean; before: MaskHydrationPrefixSourcePoint;
     afterCall: MaskHydrationPrefixSourcePoint; actual: MaskHydrationPrefixSourcePoint;
-    nextUnexecutedSubstepBefore: null | { index: 3; substepIndex: 1; before: MaskHydrationPrefixSourcePoint; }; }>;
+    nextUnexecutedSubstepBefore: null | {
+      index: 3;
+      substepIndex: 1;
+      before: MaskHydrationPrefixSourcePoint;
+    }; }>;
   substeps: Array<{ index: number; substepIndex: number; before: MaskHydrationPrefixSourcePoint;
     afterCall: MaskHydrationPrefixSourcePoint; actual: MaskHydrationPrefixSourcePoint; }>;
   [key: string]: unknown;

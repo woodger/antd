@@ -25,6 +25,7 @@ async function drag(page: Page, index: number, fraction: number, remove = 0) {
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=slider-range');
+
   await expect(handles(page)).toHaveCount(2);
   await expect(handles(page).first()).toHaveValue('20');
 });
@@ -103,6 +104,7 @@ test('Slider range keeps disabled anchors fixed and excludes their native form v
   await expect(output(page, 'value')).toHaveText('[40,50,80]');
   await expect(handles(page).nth(1)).toBeDisabled();
   await button(page, 'Read range form').click();
+
   await expect(output(page, 'data')).toHaveText('40,80');
 });
 
@@ -122,6 +124,7 @@ test('Slider range adds editable points and applies source deletion without an e
   await page.getByLabel('Editable range', { exact: true }).check();
   const middle = await point(page, .5);
   await page.mouse.click(middle.x, middle.y);
+
   await expect(output(page, 'value')).toHaveText('[20,50,80]');
   await clear(page);
   await handles(page).nth(1).press('Delete');
@@ -129,6 +132,7 @@ test('Slider range adds editable points and applies source deletion without an e
   await expect(output(page, 'value')).toHaveText('[20,80]');
   await expect(output(page, 'events')).toHaveText('change:20,80');
   await handles(page).first().press('Delete');
+
   await expect(handles(page)).toHaveCount(2);
 });
 
@@ -136,6 +140,7 @@ test('Slider range removes a dragged point after 130 pixels and restores its nat
   await button(page, 'Use three range points').click();
   await page.getByLabel('Editable range', { exact: true }).check();
   await drag(page, 1, .5, 140);
+
   await expect(output(page, 'value')).toHaveText('[20,80]');
   await expect(root(page).locator('.ant-slider-handle-dragging-delete')).toHaveCount(1);
   await page.mouse.up();
@@ -153,6 +158,7 @@ test('Slider range marks stay native buttons and complete without submitting the
   await expect(output(page, 'events')).toContainText('complete:25,100');
   await expect(output(page, 'submissions')).toHaveText('0');
   await handles(page).first().press('ArrowRight');
+
   await expect(output(page, 'value')).toHaveText('[100,100]');
 });
 
@@ -168,14 +174,18 @@ test('Slider range restores empty collections through the source two-handle rail
 test('Slider range keeps vertical and RTL keyboard directions and native refs', async ({ page }) => {
   await page.getByLabel('Right to left', { exact: true }).check();
   await handles(page).first().press('ArrowLeft');
+
   await expect(output(page, 'value')).toHaveText('[25,80]');
   await page.getByLabel('Vertical range', { exact: true }).check();
   await handles(page).first().press('ArrowUp');
+
   await expect(output(page, 'value')).toHaveText('[30,80]');
   await expect(handles(page).first()).toHaveAttribute('aria-orientation', 'vertical');
   await button(page, 'Focus range ref').click();
+
   await expect(handles(page).first()).toBeFocused();
   await button(page, 'Blur range ref').click();
+
   await expect(handles(page).first()).not.toBeFocused();
 });
 
@@ -191,6 +201,7 @@ test('Slider range resets native defaults without change callbacks and releases 
     .evaluate((input: HTMLInputElement) => input.click());
   await clear(page);
   await page.mouse.up();
+
   await expect(output(page, 'events')).toHaveText('');
 });
 
@@ -200,6 +211,7 @@ test('Slider range shows pinned per-handle formatted tooltips and releases them 
   await expect(page.getByRole('tooltip')).toHaveCount(2);
   await expect(page.getByRole('tooltip')).toHaveText(['20%', '80%']);
   await page.getByLabel('Mount range', { exact: true }).uncheck();
+
   await expect(page.getByRole('tooltip')).toHaveCount(0);
 });
 
@@ -214,6 +226,7 @@ test('Slider range disables native keyboard changes and preserves source keyup c
 test('Slider range lets native handlers cancel a key or pointer start', async ({ page }) => {
   await page.getByLabel('Cancel range keys', { exact: true }).check();
   await handles(page).first().press('ArrowRight');
+
   await expect(output(page, 'value')).toHaveText('[20,80]');
   await clear(page);
   await page.getByLabel('Cancel range pointer', { exact: true }).check();
@@ -226,9 +239,11 @@ test('Slider range lets native handlers cancel a key or pointer start', async ({
 
 test('Slider range disables all controls through ConfigProvider and resumes independently', async ({ page }) => {
   await page.getByLabel('Disable all components', { exact: true }).check();
+
   await expect(handles(page).first()).toBeDisabled();
   const middle = await point(page, .5);
   await page.mouse.click(middle.x, middle.y);
+
   await expect(output(page, 'events')).toHaveText('');
   await page.getByLabel('Disable all components', { exact: true }).uncheck();
   await handles(page).first().press('ArrowRight');
@@ -249,6 +264,7 @@ test('Slider range stops adding at maxCount and disables editing around any fixe
 
   await expect(handles(page)).toHaveCount(5);
   await handles(page).first().press('Delete');
+
   await expect(handles(page)).toHaveCount(5);
 });
 
@@ -260,11 +276,13 @@ test('Slider range moves focus with keyboard crossing and keeps all segment widt
   await expect(handles(page).nth(2)).toBeFocused();
   const widths = await root(page).locator('.ant-slider-track')
     .evaluateAll(nodes => nodes.map(node => (node as HTMLElement).style.width));
+
   expect(widths).toEqual(['30%', '20%']);
 });
 
 test('Slider range applies source compact geometry and dark tokens for all supported primaries', async ({ page }) => {
   await page.getByLabel('Compact range', { exact: true }).check();
+
   await expect(root(page).locator('.ant-slider-handle').first()).toHaveCSS('width', '8.75px');
   await page.getByLabel('Dark range', { exact: true }).check();
   for (const [primary, color] of [['blue', 'rgb(21, 50, 91)'],
@@ -330,11 +348,13 @@ test('Slider range removes a focused control without reading its destroyed state
 
   await expect(handles(page)).toHaveCount(0);
   await page.getByLabel('Mount range', { exact: true }).check();
+
   await expect(handles(page).first()).toHaveValue('25');
 });
 
 test('Slider range restores native defaults even when its current collection has no inputs', async ({ page }) => {
   await button(page, 'Clear range points').click();
+
   await expect(handles(page)).toHaveCount(0);
   await clear(page);
   await button(page, 'Reset range form').click();

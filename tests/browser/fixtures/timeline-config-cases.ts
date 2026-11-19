@@ -65,7 +65,10 @@ export function timelineContextConfig(sample: TimelineConfigSample): TimelineCon
       `ctx-state-${props.mode}-${props.orientation}-${Boolean(props.reverse)}-${props.items?.length}`
     ),
     styles: ({ props }) => ({
-      root: css({ borderTopWidth: props.orientation === 'horizontal' ? 5 : 3, borderTopStyle: 'solid' }),
+      root: css({
+        borderTopWidth: props.orientation === 'horizontal' ? 5 : 3,
+        borderTopStyle: 'solid'
+      }),
       itemContent: css({ color: props.reverse ? '#012345' : '#543210' })
     })
   };

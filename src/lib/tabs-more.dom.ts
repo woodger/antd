@@ -128,11 +128,7 @@ export function getTabsMorePosition(
 }
 
 /** Только ancestors/window, как useWatch; прокрутка самого popup не закрывает alignPoint. */
-export function watchTabsMoreScroll(
-  popup: HTMLElement,
-  target: HTMLElement,
-  callback: () => void
-) {
+export function watchTabsMoreScroll(popup: HTMLElement, target: HTMLElement, callback: () => void) {
   const view = popup.ownerDocument.defaultView!;
   const parents = new Set<EventTarget>([view, ...scrollParents(target), ...scrollParents(popup)]);
   for (const parent of parents) parent.addEventListener('scroll', callback, { passive: true });

@@ -32,7 +32,10 @@
     hashed,
     components: color ? {
       ...treeSelectThemePresets[preset].components,
-      TreeSelect: { ...treeSelectThemePresets[preset].components?.TreeSelect, nodeSelectedBg: color }
+      TreeSelect: {
+        ...treeSelectThemePresets[preset].components?.TreeSelect,
+        nodeSelectedBg: color
+      }
     } : treeSelectThemePresets[preset].components
   });
 </script>

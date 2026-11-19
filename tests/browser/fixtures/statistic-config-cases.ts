@@ -71,7 +71,10 @@ export function statisticContextConfig(sample: StatisticConfigSample): Statistic
       ...styles(sample.context?.styles),
       root: css({ ...sample.context?.styles?.root,
         borderTopWidth: props.loading ? 5 : 3, borderTopStyle: 'solid' }),
-      value: css({ ...sample.context?.styles?.value, color: props.value === 0 ? '#012345' : '#543210' })
+      value: css({
+        ...sample.context?.styles?.value,
+        color: props.value === 0 ? '#012345' : '#543210'
+      })
     })
   };
 }

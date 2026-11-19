@@ -18,9 +18,16 @@ export function formRequiredMarkMetrics() {
           required: label.classList.contains('ant-form-item-required'),
           hidden: label.classList.contains('ant-form-item-required-mark-hidden'),
           optionalClass: label.classList.contains('ant-form-item-required-mark-optional'),
-          before: properties(label, ['content', 'display', 'color', 'margin-inline-end'], '::before'),
+          before: properties(
+            label,
+            ['content', 'display', 'color', 'margin-inline-end'],
+            '::before'
+          ),
           optional: optional ? {
-            text: optional.textContent, style: properties(optional, ['color', 'margin-inline-start'])
+            text: optional.textContent, style: properties(
+              optional,
+              ['color', 'margin-inline-start']
+            )
           } : null,
           custom: custom?.getAttribute('data-custom-mark') ?? null
         };

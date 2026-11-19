@@ -6,7 +6,10 @@ import { readNativeMask, readNativeMaskProducers } from './date-picker-mask-metr
 import { readNativeMaskPoint, type NativeMaskPoint } from './date-picker-mask-assertions';
 
 export const readMask = async (page: Page) => readNativeMaskPoint(await page.evaluate(readNativeMask));
-export const readMaskProducers = (page: Page, cursor: number) => page.evaluate(readNativeMaskProducers, cursor);
+export const readMaskProducers = (page: Page, cursor: number) => page.evaluate(
+  readNativeMaskProducers,
+  cursor
+);
 async function drainMask(page: Page) {
   await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => {
     requestAnimationFrame(() => setTimeout(resolve, 25));
@@ -43,7 +46,12 @@ export async function actMask(page: Page, action: MaskAction, index: number, hoo
   await page.evaluate(index => window.nativeMask.setActionIndex(index), index);
   const before = await readMask(page);
   await hooks?.beforeMacro?.(before);
-  let pointer: { index: number; anchor: string; point: { x: number; y: number }; hitBefore: unknown } | null = null;
+  let pointer: {
+    index: number;
+    anchor: string;
+    point: { x: number; y: number };
+    hitBefore: unknown
+  } | null = null;
   let afterCall: NativeMaskPoint | null = null;
   let afterCallSource: { substep: { index: number; substepIndex: number }; field: 'afterCall' } | null = null;
   const substeps: Array<{ index: number; substepIndex: number }> = [];
@@ -75,32 +83,60 @@ export async function actMask(page: Page, action: MaskAction, index: number, hoo
           tag: hit?.tagName ?? null, targetContainsHit: hit != null && node.contains(hit),
           attributes: hit ? [...hit.attributes].map(a => [a.name, a.value]) : null };
       }, point);
-      assert.equal(hitBefore.targetContainsHit, true, 'Authored coordinate must hit the actual input');
+      assert.equal(
+        hitBefore.targetContainsHit,
+        true,
+        'Authored coordinate must hit the actual input'
+      );
       evidence = { geometry, point, hitBefore };
       pointer = { index: command.index, anchor: command.anchor, point, hitBefore };
       await page.mouse.move(point.x, point.y);
-    } else if (command.type === 'mouse-down') {
-      assert(pointer); evidence = { pointer }; await page.mouse.down({ button: command.button });
-    } else if (command.type === 'mouse-up') {
-      assert(pointer); evidence = { pointer }; await page.mouse.up({ button: command.button });
-    } else if (command.type === 'key-press') {
-      const target = page.locator('.ant-picker input:focus'); assert.equal(await target.count(), 1);
+    }
+    else if (command.type === 'mouse-down') {
+      assert(pointer);
+      evidence = { pointer };
+      await page.mouse.down({ button: command.button });
+    }
+    else if (command.type === 'mouse-up') {
+      assert(pointer);
+      evidence = { pointer };
+      await page.mouse.up({ button: command.button });
+    }
+    else if (command.type === 'key-press') {
+      const target = page.locator('.ant-picker input:focus');
+      assert.equal(await target.count(), 1);
       evidence = { focusedInput: await target.evaluate(node => {
         if (!(node instanceof HTMLInputElement)) throw Error('Actual focused input required');
         return { identity: window.nativeMask.getRecorder().identity(node), attributes: [...node.attributes].map(a => [a.name, a.value]),
           value: node.value, selectionStart: node.selectionStart, selectionEnd: node.selectionEnd,
-          selectionDirection: node.selectionDirection }; }) };
+          selectionDirection: node.selectionDirection };
+      }) };
       await page.keyboard.press(command.key);
-    } else if (command.type === 'owner-control-click') {
+    }
+    else if (command.type === 'owner-control-click') {
       const target = page.locator('[data-mask-control="' + command.value + '"]');
       assert.equal(await target.count(), 1);
-      evidence = await page.evaluate(value => window.nativeMask.activateControl(value), command.value);
-    } else throw Error('Undeclared physical command');
+      evidence = await page.evaluate(
+        value => window.nativeMask.activateControl(value),
+        command.value
+      );
+    }
+    else throw Error('Undeclared physical command');
     const immediate = await readMask(page), actual = await settleMask(page);
-    const child = { index, substepIndex, command, evidence, before: childBefore, afterCall: immediate, actual };
+    const child = {
+      index,
+      substepIndex,
+      command,
+      evidence,
+      before: childBefore,
+      afterCall: immediate,
+      actual
+    };
     await hooks?.afterSubstep?.(child);
-    const reference = { index, substepIndex }; substeps.push(reference);
-    afterCall = immediate; afterCallSource = { substep: reference, field: 'afterCall' };
+    const reference = { index, substepIndex };
+    substeps.push(reference);
+    afterCall = immediate;
+    afterCallSource = { substep: reference, field: 'afterCall' };
   }
   await page.evaluate(() => window.nativeMask.setSubstepIndex(-1));
   assert(afterCall && afterCallSource);
@@ -113,13 +149,20 @@ export async function disposeMask(page: Page, hooks?: {
   afterLate?: (point: NativeMaskPoint) => void | Promise<void>;
 }) {
   const trace: string[] = [];
-  const beforeUnmount = await readMask(page); trace.push('beforeUnmount-read');
+  const beforeUnmount = await readMask(page);
+  trace.push('beforeUnmount-read');
   await hooks?.beforeUnmount?.(beforeUnmount);
-  trace.push('dispose-start'); await page.evaluate(() => window.nativeMask.dispose()); trace.push('dispose-finished');
+  trace.push('dispose-start');
+  await page.evaluate(() => window.nativeMask.dispose());
+  trace.push('dispose-finished');
   await drainMask(page);
-  const cleanup = await readMask(page); trace.push('cleanup-read'); await hooks?.afterCleanup?.(cleanup);
+  const cleanup = await readMask(page);
+  trace.push('cleanup-read');
+  await hooks?.afterCleanup?.(cleanup);
   await page.waitForTimeout(1000);
-  const late = await readMask(page); trace.push('late-1000-read'); await hooks?.afterLate?.(late);
+  const late = await readMask(page);
+  trace.push('late-1000-read');
+  await hooks?.afterLate?.(late);
   await page.evaluate(() => window.nativeMask.stopEventObserver());
   return { beforeUnmount, cleanup, late, trace };
 }

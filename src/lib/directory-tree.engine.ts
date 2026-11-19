@@ -42,7 +42,8 @@ export function getDirectoryRangeKeys<Data extends object>(
         record = 'end';
         return false;
       }
-    } else if (record === 'start' && !Reflect.get(node, 'disabled')
+    }
+    else if (record === 'start' && !Reflect.get(node, 'disabled')
       && Reflect.get(node, 'selectable') !== false) {
       keys.push(key);
     }

@@ -20,7 +20,10 @@ describe('Form validation options public package', () => {
     let calls: string[] = [];
     function create() {
       return createForm<{ fresh?: string }>({ initialValues: {}, rules: { fresh: [{
-        validator: () => { calls.push('Fresh'); return 'Fresh'; }
+        validator: () => {
+          calls.push('Fresh');
+          return 'Fresh';
+        }
       }] } });
     }
     let form = create();
@@ -40,7 +43,10 @@ describe('Form validation options public package', () => {
       calls = [];
       const options = id.startsWith('dirty') ? { dirty: true }
         : id.startsWith('silent') ? { validateOnly: true } : undefined;
-      const result = await form.validateFields(options).then(() => ({ status: 'success' }), summarize);
+      const result = await form.validateFields(options).then(
+        () => ({ status: 'success' }),
+        summarize
+      );
       const sample = reference.cases.find((entry) => entry.id === id)!;
 
       expect(calls).toEqual(sample.calls);
@@ -59,8 +65,14 @@ describe('Form validation options public package', () => {
         if (pending.length === 2) entered();
       })
     }] } });
-    const first = form.validateFields({ validateOnly: silentFirst }).then(() => ({ status: 'success' }), summarize);
-    const second = form.validateFields({ validateOnly: !silentFirst }).then(() => ({ status: 'success' }), summarize);
+    const first = form.validateFields({ validateOnly: silentFirst }).then(
+      () => ({ status: 'success' }),
+      summarize
+    );
+    const second = form.validateFields({ validateOnly: !silentFirst }).then(
+      () => ({ status: 'success' }),
+      summarize
+    );
     await started;
 
     function check(id: string, result?: unknown) {
@@ -76,7 +88,8 @@ describe('Form validation options public package', () => {
       check('outdated-silent-keeps-visible-pending', await first);
       pending[1]('Current visible error');
       check('current-visible-result', await second);
-    } else {
+    }
+    else {
       check('silent-keeps-visible-pending');
       pending[1]('Silent error');
       check('silent-result-without-ui', await second);
@@ -95,6 +108,7 @@ describe('Form validation options public package', () => {
 
     await form.validateFields(['second']);
     const current = concurrency.cases.find(({ id }) => id === 'disjoint-current-complete')!;
+
     expect(form.getFieldsError()).toEqual(current.fields);
     expect({ first: form.isFieldValidating('first'), second: form.isFieldValidating('second') })
       .toEqual(current.validatingFields);

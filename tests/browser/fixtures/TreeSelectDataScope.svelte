@@ -31,7 +31,10 @@
   }
   function rendered(node: Record<string, unknown>) {
     const payload = node.payload as { ordinal: number; } | undefined;
-    if (!payload) { rendererData = false; return 'Missing data'; }
+    if (!payload) {
+      rendererData = false;
+      return 'Missing data';
+    }
     return `${payload.ordinal}:${node[fields?.label || 'title']}`;
   }
 </script>

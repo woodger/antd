@@ -14,7 +14,11 @@ export function readAutocompleteRender() {
     return { identity: identity(node), tag: node.tagName, connected: node.isConnected,
       text: node.textContent, innerHTML: node.innerHTML, outerHTML: node.outerHTML,
       attributes: [...node.attributes].map(attr => [attr.name, attr.value]), classes: [...node.classList],
-      cssText: node.style.cssText, inlineStyle: [...node.style].map(name => ({ name, value: node.style.getPropertyValue(name), priority: node.style.getPropertyPriority(name) })),
+      cssText: node.style.cssText, inlineStyle: [...node.style].map(name => ({
+        name,
+        value: node.style.getPropertyValue(name),
+        priority: node.style.getPropertyPriority(name)
+      })),
       css: Object.fromEntries(['display', 'position', 'visibility', 'opacity', 'width', 'height', 'minWidth', 'minHeight',
         'maxWidth', 'boxSizing', 'font', 'fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'color', 'backgroundColor',
         'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
@@ -41,5 +45,8 @@ export function readAutocompleteRender() {
     focus: { tag: document.activeElement?.tagName, id: document.activeElement?.id, role: document.activeElement?.getAttribute('role'),
       isEditor: document.activeElement === refs.editor, isRoot: document.activeElement === refs.root },
     popupCount: document.querySelectorAll('.ant-select-dropdown').length,
-    resources: performance.getEntriesByType('resource').map(entry => ({ name: entry.name, initiatorType: entry.initiatorType })) };
+    resources: performance.getEntriesByType('resource').map(entry => ({
+      name: entry.name,
+      initiatorType: entry.initiatorType
+    })) };
 }

@@ -18,6 +18,7 @@ it('preserves four independent complete manifests and all816 original whole part
     sourceOnly: true, captures: 4, originalParts: 816, wholeBlobs: 528
   });
   const freeze = JSON.parse(Buffer.from(readMonthYearSourceEvidence('protocol-freeze')).toString());
+
   expect(freeze.samples).toEqual(samples);
   expect(freeze.source.version).toBe('6.6.8');
   expect(freeze.source.rcPicker).toBe('1.12.2');
@@ -54,7 +55,10 @@ it('reads every UI/producer/SSR original on demand with complete cursor and raw 
           const value = readMonthYearSourceClosed(row.id, closeIndex++, variant);
           closed++;
           expect(value.actionIndex).toBe(index);
-          boundaries.set('closed-' + index, { ['closed-' + index]: value.after1000.owner.producerCount });
+          boundaries.set(
+            'closed-' + index,
+            { ['closed-' + index]: value.after1000.owner.producerCount }
+          );
           expect(value.after1000.owner.callbacks.slice(0, callbacks.length)).toEqual(callbacks);
           callbacks = value.after1000.owner.callbacks;
         }
@@ -139,6 +143,7 @@ it('retains both real afterCall producer boundaries without equating them across
     .findIndex(ref => ref.phase === 'step-32');
   const a = readMonthYearSourceProducerChunk('range-month', first);
   const b = readMonthYearSourceProducerChunk('range-month', repeat, 'repeat');
+
   expect(a.boundaries.afterCall).toBe(268);
   expect(b.boundaries.afterCall).toBe(239);
   expect(a.rows).toEqual(b.rows);
@@ -153,22 +158,28 @@ it('rejects corrupted compressed bytes, altered hashes and valid parts swapped a
     + original.rawJSONPart.gzipSHA256 + '.json.gz', import.meta.url));
   const changedBytes = Buffer.from(bytes);
   changedBytes[Math.floor(changedBytes.length / 2)] ^= 1;
+
   expect(() => verifyMonthYearSourceStoredBytes(original, changedBytes)).toThrow();
   const wrongHash = structuredClone(original);
   wrongHash.rawJSONPart.sha256 = '0'.repeat(64);
+
   expect(() => verifyMonthYearSourceStoredBytes(wrongHash, bytes)).toThrow();
   expect(() => verifyMonthYearSourcePartBinding(original, 'csr', 'repeat')).toThrow();
   const ownerSwap = readMonthYearSourceManifest('csr');
   ownerSwap.cases[0].steps[0] = ownerSwap.cases[1].steps[0];
+
   expect(() => verifyMonthYearSourceManifest(ownerSwap)).toThrow();
   const actionSwap = readMonthYearSourceManifest('csr');
   actionSwap.cases[0].steps.reverse();
+
   expect(() => verifyMonthYearSourceManifest(actionSwap)).toThrow();
   const chunkGap = readMonthYearSourceManifest('csr');
   chunkGap.cases[0].producerParts[2].cursor++;
+
   expect(() => verifyMonthYearSourceManifest(chunkGap)).toThrow();
   const wrongMethod = readMonthYearSourceManifest('ssr');
   wrongMethod.cases[0].method = 'renderToStaticMarkup';
+
   expect(() => verifyMonthYearSourceManifest(wrongMethod, 'ssr')).toThrow();
 });
 
@@ -178,21 +189,26 @@ it('rejects lost/reordered producer records, impossible boundaries and changed r
   const original = readMonthYearSourceProducerChunk('single-month', index);
   const missing = structuredClone(original);
   missing.rows.pop();
+
   expect(() => verifyMonthYearSourceProducerChunk(missing, refs[index])).toThrow();
   const swapped = structuredClone(original);
   swapped.rows.reverse();
+
   expect(() => verifyMonthYearSourceProducerChunk(swapped, refs[index])).toThrow();
   const boundary = structuredClone(original);
   boundary.boundaries.settled = boundary.next + 1;
+
   expect(() => verifyMonthYearSourceProducerChunk(boundary, refs[index])).toThrow();
   const point = readMonthYearSourceStep('single-month', 3).actual;
   const alias = structuredClone(point);
   alias.owner.callbacks.find(call => call.name === 'calendar' && call.actionIndex === 3)!
     .dates[0].value.identity++;
+
   expect(() => verifyMonthYearSourcePoint(alias)).toThrow();
   const hidden = structuredClone(point);
   hidden.owner.callbacks.find(call => call.name === 'calendar' && call.actionIndex === 3)!
     .dates[0].value.temporal.fields[6]++;
+
   expect(() => verifyMonthYearSourcePoint(hidden)).toThrow();
 });
 
@@ -205,5 +221,6 @@ it('rejects unsupported capture kinds, variants, owners and chunk/action/disposa
   expect(() => readMonthYearSourceCleanup('single-month', 'other' as 'cleanup')).toThrow();
   const wrong = readMonthYearSourceInitial('single-month') as MonthYearSourcePoint;
   wrong.owner.id = 'single-year';
+
   expect(() => verifyMonthYearSourcePoint(wrong)).toThrow();
 });

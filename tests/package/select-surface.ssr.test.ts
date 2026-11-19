@@ -18,7 +18,9 @@ it('pins actual original closed popup producers separately from browser renderin
 
 it.each(selectSurfaceSSRReference.cases)('renders surface $id with the actual original pure callback contract', entry => {
   vi.useFakeTimers();
-  const browserResource = vi.fn(() => { throw Error('Select surface SSR must not use browser resources'); });
+  const browserResource = vi.fn(() => {
+    throw Error('Select surface SSR must not use browser resources');
+  });
   vi.stubGlobal('getComputedStyle', browserResource);
   vi.stubGlobal('ResizeObserver', class { constructor() { browserResource(); } });
   vi.stubGlobal('MutationObserver', class { constructor() { browserResource(); } });

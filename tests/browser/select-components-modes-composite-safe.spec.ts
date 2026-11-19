@@ -16,6 +16,7 @@ interface Bridge {
 for (const mode of ['multiple', 'tags'] as const) test(`Native mode measures the physical textarea behind a style-less composite ${mode}`, async ({ page }) => {
   await page.goto('/?fixture=select-components-modes-composite-safe');
   const owner = page.locator(`[data-modes-composite-safe=${mode}]`);
+
   await expect(owner).toHaveCount(1);
   const capture = await owner.evaluateHandle(node => {
     const bridge = {} as Bridge;
@@ -27,23 +28,33 @@ for (const mode of ['multiple', 'tags'] as const) test(`Native mode measures the
     await drainSelectSurface(page);
     const initial = await capture.evaluate(bridge => bridge.read());
     expect(initial.handleKeys).toEqual(['nativeElement', 'focus', 'blur']);
-    expect(initial.handleKeys).not.toContain('style'); expect(initial.handleKeys).not.toContain('scrollWidth');
-    expect(initial.editorTag).toBe('TEXTAREA'); expect(initial.rootTag).toBe('DIV');
-    expect(initial.physicalStyle).toBe('object'); expect(initial.connected).toBe(true);
+    expect(initial.handleKeys).not.toContain('style');
+    expect(initial.handleKeys).not.toContain('scrollWidth');
+    expect(initial.editorTag).toBe('TEXTAREA');
+    expect(initial.rootTag).toBe('DIV');
+    expect(initial.physicalStyle).toBe('object');
+    expect(initial.connected).toBe(true);
     const initialMeasure = Number(initial.widthVar);
-    expect(Number.isFinite(initialMeasure)).toBe(true); expect(initialMeasure).toBeGreaterThan(0);
+    expect(Number.isFinite(initialMeasure)).toBe(true);
+    expect(initialMeasure).toBeGreaterThan(0);
     expect(initial.width!).toBeGreaterThan(0);
     await capture.evaluate(bridge => bridge.focus());
     await expect.poll(() => capture.evaluate(bridge => bridge.read().focused)).toBe(true);
     const textarea = owner.locator(`[data-modes-composite-safe-editor=${mode}]`);
     const query = 'WMWMWMWMWMWMWMWMWMWMWMWMWMWM';
-    await textarea.fill(query); await drainSelectSurface(page);
+    await textarea.fill(query);
+    await drainSelectSurface(page);
     const typed = await capture.evaluate(bridge => bridge.read());
-    expect(typed.model).toEqual(['a']); expect(typed.query).toBe(query); expect(typed.value).toBe(query);
+    expect(typed.model).toEqual(['a']);
+    expect(typed.query).toBe(query);
+    expect(typed.value).toBe(query);
     const typedMeasure = Number(typed.widthVar);
-    expect(Number.isFinite(typedMeasure)).toBe(true); expect(typedMeasure).toBeGreaterThan(initialMeasure);
+    expect(Number.isFinite(typedMeasure)).toBe(true);
+    expect(typedMeasure).toBeGreaterThan(initialMeasure);
     expect(typed.width!).toBeGreaterThan(initial.width!);
-    expect(typed.handleKeys).toEqual(initial.handleKeys); expect(typed.connected).toBe(true); expect(typed.focused).toBe(true);
+    expect(typed.handleKeys).toEqual(initial.handleKeys);
+    expect(typed.connected).toBe(true);
+    expect(typed.focused).toBe(true);
     const physical = await capture.evaluate((bridge, expectedMode) => bridge.readRefs().editor === document.querySelector(
       `[data-modes-composite-safe-editor=${expectedMode}]`), mode);
     expect(physical).toBe(true);

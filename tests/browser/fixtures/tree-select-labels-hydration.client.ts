@@ -28,6 +28,13 @@ field.focus();
 field.setSelectionRange(2, 7);
 const owner = hydrate(TreeSelectLabelsScope, { target, recover: false, intro: false,
   props: { sample: treeLabelSamples[0], interactive: true, probeIntro: true } });
-window.treeLabelHydration = { control, editor, field, outside, ready: false, dispose: () => unmount(owner) };
+window.treeLabelHydration = {
+  control,
+  editor,
+  field,
+  outside,
+  ready: false,
+  dispose: () => unmount(owner)
+};
 await tick();
 window.treeLabelHydration.ready = true;

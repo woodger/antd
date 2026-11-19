@@ -16,7 +16,11 @@ mount(DatePicker, { target, props: { picker: 'quarter', value, defaultPickerValu
 } });
 declare global {
   interface Window {
-    readQuarterKeyboard(): { modelISO: string; selectionEvents: string[]; navigationEvents: string[] };
+    readQuarterKeyboard(): {
+      modelISO: string;
+      selectionEvents: string[];
+      navigationEvents: string[]
+    };
   }
 }
 window.readQuarterKeyboard = () => ({ modelISO: value.toISOString(),

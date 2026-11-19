@@ -24,33 +24,59 @@ export async function settleNativeResponsiveTagPrefix(page: Page): Promise<Respo
     const actual = { icons, overflow, customTagsPrefix, owner }, encoded = JSON.stringify(actual);
     stable = previous === encoded ? stable + 1 : 0;
     if (stable >= 3) return actual;
-    previous = encoded; prior = latest; latest = actual;
+    previous = encoded;
+    prior = latest;
+    latest = actual;
   }
-  throw Object.assign(Error('Actual public custom-tag/prefix consumer did not settle'), { observation: { prior, latest } });
+  throw Object.assign(
+    Error('Actual public custom-tag/prefix consumer did not settle'),
+    { observation: { prior, latest } }
+  );
 }
 export async function openNativeResponsiveTagPrefix(page: Page, sample: SelectCustomTagPrefixSample) {
   await page.goto('/select-components-responsive-tag-prefix.html?sample=' + encodeURIComponent(sample.id));
-  await page.addScriptTag({ type: 'module', url: '/select-components-responsive-tag-prefix.client.ts' });
+  await page.addScriptTag({
+    type: 'module',
+    url: '/select-components-responsive-tag-prefix.client.ts'
+  });
   await page.waitForFunction(() => window.customTagPrefixNative?.ready === true);
-  await page.evaluate(() => document.fonts.ready); await prepareSelectSurface(page);
+  await page.evaluate(() => document.fonts.ready);
+  await prepareSelectSurface(page);
 }
-export async function actNativeResponsiveTagPrefix(page: Page, sample: SelectCustomTagPrefixSample, action: SelectCustomTagPrefixAction, index: number) {
+export async function actNativeResponsiveTagPrefix(
+  page: Page,
+  sample: SelectCustomTagPrefixSample,
+  action: SelectCustomTagPrefixAction,
+  index: number
+) {
   if (action.type === 'caller-width' || action.type === 'caller-prefix-width' || action.type === 'caller-tag-width' || action.type === 'prefix')
-    await page.evaluate(({ action, index }) => window.customTagPrefixNative.update(action, index), { action, index });
+    await page.evaluate(
+      ({ action, index }) => window.customTagPrefixNative.update(action, index),
+      { action, index }
+    );
   else if (action.type === 'fill') {
     const handle = await page.evaluateHandle(() => window.customTagPrefixNative.readRefs().editor), editor = handle.asElement();
     if (!editor) throw Error('Actual bound/custom editor ref required');
     try { await editor.fill(action.text); } finally { await handle.dispose(); }
-  } else if (action.type === 'custom-tag-close') {
+  }
+  else if (action.type === 'custom-tag-close') {
     if (action.activation !== 'pointer') throw Error('Frozen close action requires an actual pointer');
     await page.locator('[data-surface-case="' + sample.id + '"] [data-custom-tag-close="' + action.value + '"]').click();
-  } else throw Error('Unknown frozen custom-tag/prefix action');
+  }
+  else throw Error('Unknown frozen custom-tag/prefix action');
   await page.mouse.move(0, 0);
 }
 export function readNativeResponsiveTagPrefixLedger(page: Page) {
   return page.evaluate(() => {
     const { events, rawEvents, calls, lifecycle, bodyActivity, componentObservations } = window.customTagPrefixNative.read();
-    return { events, rawEvents, producerCalls: calls, lifecycle, bodyActivity, componentObservations };
+    return {
+      events,
+      rawEvents,
+      producerCalls: calls,
+      lifecycle,
+      bodyActivity,
+      componentObservations
+    };
   });
 }
 export type ResponsiveTagPrefixNativeLedger = Awaited<ReturnType<typeof readNativeResponsiveTagPrefixLedger>>;
@@ -58,10 +84,20 @@ export function readNativeResponsiveTagPrefixCleanup(page: Page) {
   return page.evaluate(() => {
     const observer = (globalThis as unknown as { raw: { iconsObserver: { retained: Map<number, Node> } } }).raw.iconsObserver;
     return { owner: window.customTagPrefixNative.read(),
-      retainedConnected: [...observer.retained].map(([identity, node]) => ({ identity, connected: node.isConnected })),
+      retainedConnected: [...observer.retained].map(([identity, node]) => ({
+        identity,
+        connected: node.isConnected
+      })),
       popupCount: document.querySelectorAll('.ant-select-dropdown').length, ownerCount: document.querySelectorAll('[data-surface-case]').length,
       refs: Object.fromEntries(Object.entries(window.customTagPrefixNative.readRefs()).map(([key, value]) => [key, value == null])),
-      browserOwnedResourceCounters: { measured: false, observers: null, mutations: null, frames: null, timers: null, ports: null },
+      browserOwnedResourceCounters: {
+        measured: false,
+        observers: null,
+        mutations: null,
+        frames: null,
+        timers: null,
+        ports: null
+      },
       resourceTiming: performance.getEntriesByType('resource').map(entry => entry.toJSON()) };
   });
 }
@@ -85,7 +121,13 @@ export async function installNativeResponsiveTagPrefixFocusoutProbe(page: Page) 
         propagationStopped: event.cancelBubble, eventPhase: event.eventPhase });
     };
     document.addEventListener('focusout', listener, true);
-    Object.assign(window, { responsiveTagPrefixFocusoutProbe: { events, release: () => document.removeEventListener('focusout', listener, true) } });
+    Object.assign(
+      window,
+      { responsiveTagPrefixFocusoutProbe: {
+        events,
+        release: () => document.removeEventListener('focusout', listener, true)
+      } }
+    );
   });
 }
 export function readNativeResponsiveTagPrefixFocusoutProbe(page: Page) {

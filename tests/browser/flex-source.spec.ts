@@ -6,6 +6,7 @@ test.use({ viewport: reference.viewport });
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=flex-source');
+
   await expect(page.getByRole('heading', { name: 'Source Flex API', exact: true })).toBeVisible();
 });
 
@@ -26,6 +27,7 @@ test('Flex custom root preserves state, DOM, input selection and events through 
     const root = page.locator('[data-flex-source] > section');
     const original = await root.elementHandle();
     await root.getByRole('button', { name: 'First item', exact: true }).click();
+
     await expect(root).toHaveAttribute('data-custom-state', '1');
     await expect(page.getByLabel('Flex source events', { exact: true })).toHaveText('1');
     const input = page.getByLabel('Flex source draft', { exact: true });
@@ -51,6 +53,7 @@ test('Flex custom root preserves state, DOM, input selection and events through 
 
 test('Flex switches native and custom roots and clears refs for a root without forwarding', async ({ page }) => {
   const ref = page.getByLabel('Flex source ref', { exact: true });
+
   await expect(ref).toHaveText('DIV');
 
   await page.getByRole('button', { name: 'Use custom Flex root', exact: true }).click();
@@ -62,6 +65,7 @@ test('Flex switches native and custom roots and clears refs for a root without f
 
   await expect(ref).toHaveText('none');
   const plain = page.locator('[data-flex-source] > article');
+
   await expect(plain).toBeVisible();
   await expect(plain).not.toHaveAttribute('nativeElement');
   await expect(plain).not.toHaveAttribute('nativeelement');
@@ -79,8 +83,10 @@ test('Flex custom root keeps native event targets and keyboard focus order', asy
   await root.getByRole('button', { name: 'First item', exact: true }).focus();
 
   await page.keyboard.press('Tab');
+
   await expect(page.getByLabel('Flex source draft', { exact: true })).toBeFocused();
   await page.keyboard.press('Tab');
+
   await expect(root.getByRole('button', { name: 'Last item', exact: true })).toBeFocused();
   await page.keyboard.press('Enter');
 
@@ -120,6 +126,7 @@ test('Flex prefix reset removes its stylesheet while preserving the native root 
   await page.getByRole('button', { name: 'Reset Flex prefix', exact: true }).dispatchEvent('click');
 
   const current = page.locator('[data-flex-source] > .ant-flex');
+
   expect(await current.evaluate((node, before) => node === before, original)).toBe(true);
   await expect(input).toBeFocused();
   await expect(input).toHaveValue('Local draft');

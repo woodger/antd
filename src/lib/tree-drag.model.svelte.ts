@@ -96,7 +96,8 @@ export function createTreeDrag<Data extends object>(options: TreeDragOptions<Dat
     try {
       // Firefox требует запись DataTransfer; readonly transfer может отклонить её.
       event.dataTransfer?.setData('text/plain', '');
-    } catch {
+    }
+    catch {
       // Ограничение браузера не отменяет начатый drag.
     }
     if (event.defaultPrevented) clean();

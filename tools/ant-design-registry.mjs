@@ -9,7 +9,8 @@ export async function runRegistry(command, { component, upstream }, { root, stdo
   if (command === 'report') {
     await writeAtomic(projectPath(root, reportFile), report);
     stdout.write(`Updated ${reportFile}\n`);
-  } else if (command === 'show') {
+  }
+  else if (command === 'show') {
     const item = result.data.components.find(item => item.id === component);
     if (!item) throw new Error(`Unknown component: ${component}`);
     stdout.write(
@@ -19,7 +20,8 @@ export async function runRegistry(command, { component, upstream }, { root, stdo
         2
       )}\n`
     );
-  } else {
+  }
+  else {
     const actual = await readFile(projectPath(root, reportFile), 'utf8').catch(() => '');
     if (actual !== report) throw new Error(
       'Registry report is stale. Run npm run cli -- registry report'

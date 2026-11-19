@@ -24,7 +24,11 @@ export interface MaskOwnerRead {
 export interface MaskCapture {
   recorder?: ReturnType<typeof createDatePickerPresetsRecorder>;
   setActionIndex?: (index: number) => void; setSubstepIndex?: (index: number) => void;
-  readRefs?: () => { owner: HTMLElement | null; control: MaskControl | null; root: HTMLDivElement | null };
+  readRefs?: () => {
+    owner: HTMLElement | null;
+    control: MaskControl | null;
+    root: HTMLDivElement | null
+  };
   read?: () => MaskOwnerRead;
   readCallbacks?: (cursor?: number) => MaskCursorDelta;
   readProducers?: (cursor?: number) => MaskCursorDelta;

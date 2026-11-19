@@ -54,14 +54,17 @@ test('Form status follows pending validation, touched success and reset without 
   await sample.selectOption('errors');
   const item = page.locator('.capture-input');
   const input = page.getByRole('textbox', { name: 'Input', exact: true });
+
   await expect(item).toHaveClass(/ant-form-item-has-error/);
 
   await page.getByRole('button', { name: 'Begin status validation', exact: true }).click();
+
   await expect(item).toHaveClass(/ant-form-item-is-validating/);
   await expect(item).not.toHaveClass(/ant-form-item-has-error/);
   await expect(input).toHaveAttribute('aria-invalid', 'true');
   await expect(item.locator('.ant-form-item-explain-error')).toHaveText('Invalid');
   await page.getByRole('button', { name: 'Release status validation', exact: true }).click();
+
   await expect(page.getByRole('status', { name: 'Status validation', exact: true }))
     .toHaveText('ready');
   await expect(item).toHaveClass(/ant-form-item-has-success/);
@@ -69,6 +72,7 @@ test('Form status follows pending validation, touched success and reset without 
   await expect(item.locator('.ant-form-item-explain-error')).toHaveCount(0);
 
   await page.getByRole('button', { name: 'Reset status form', exact: true }).click();
+
   await expect(item).not.toHaveClass(/ant-form-item-has-success|ant-form-item-is-validating/);
   await expect(input).toHaveValue('Draft');
 });
@@ -78,6 +82,7 @@ test('Form visual success or empty status retains error accessibility across con
   await page.getByRole('button', { name: 'Show status controls', exact: true }).click();
   await page.getByRole('button', { name: 'Seed control errors', exact: true }).click();
   const items = page.locator('[class*="status-control-"]');
+
   await expect(items).toHaveCount(20);
 
   for (const status of ['success', 'warning', 'validating', '']) {
@@ -96,6 +101,7 @@ test('Form visual success or empty status retains error accessibility across con
   }
 
   await page.getByRole('button', { name: 'Reset control errors', exact: true }).click();
+
   await expect(page.locator('[class*="status-control-"] [aria-invalid="true"]')).toHaveCount(0);
   await expect(page.locator('[class*="status-control-"] [data-ant-form-invalid="true"]'))
     .toHaveCount(0);

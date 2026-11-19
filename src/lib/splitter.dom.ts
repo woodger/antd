@@ -83,7 +83,8 @@ export function connectSplitterDrag(
         current.vertical ? dy : dx
       );
       callbacks.preview(preview);
-    } else {
+    }
+    else {
       const offset = captured.vertical ? dy : dx;
       callbacks.update(captured.index, captured.reverse ? -offset : offset, false);
     }
@@ -114,7 +115,8 @@ export function connectSplitterDrag(
       preview = 0;
       callbacks.preview(0);
       callbacks.end(true);
-    } else {
+    }
+    else {
       callbacks.end(false);
     }
 

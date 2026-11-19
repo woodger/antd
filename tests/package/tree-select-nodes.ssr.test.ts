@@ -22,6 +22,7 @@ it.each([false, true])('preserves own children prop presence in semantic callbac
       return {};
     }
   } });
+
   expect(body).toContain('role="combobox"');
   expect(presence.length).toBeGreaterThan(0);
   expect(presence.every(value => value === provided)).toBe(true);
@@ -34,8 +35,12 @@ it('pins the independent browser and DOM-free Source captures', () => {
   });
   expect(reference.cases).toHaveLength(23);
   expect(reference.ssr).toHaveLength(9);
-  expect(reference.observations.find(entry => entry.id === 'lazy')?.calls).toEqual({ load: 2, globalIcon: 0 });
+  expect(reference.observations.find(entry => entry.id === 'lazy')?.calls).toEqual({
+    load: 2,
+    globalIcon: 0
+  });
   const literal = reference.observations.find(entry => entry.id === 'literal-title-observation');
+
   expect(literal?.steps.at(-1)?.view.changeLabels).toBe('Node Zero');
   expect(reference.cases.find(entry => entry.id === 'rich-title')?.steps.at(-1)?.view.changeLabels)
     .toBe('Updated Zero');

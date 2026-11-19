@@ -4,7 +4,11 @@ import FormFeedbackCascaderCase from './FormFeedbackCascaderCase.svelte';
 import { feedbackCascaderSamples } from './form-feedback-cascader-cases';
 declare global {
   interface Window {
-    formFeedbackCascaderHydration?: { inputs: Element[]; icon: Element | null; dispose(): Promise<void>; };
+    formFeedbackCascaderHydration?: {
+      inputs: Element[];
+      icon: Element | null;
+      dispose(): Promise<void>;
+    };
   }
 }
 const target = document.getElementById('root')!;

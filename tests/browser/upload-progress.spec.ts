@@ -20,6 +20,7 @@ test('Upload progress updates preserve the item, input, progress root and outsid
     const progress = page.getByRole('progressbar', { name: 'File transfer', exact: true });
     const input = page.locator('input[type=file]');
     const editor = page.getByRole('textbox', { name: 'Upload progress editor', exact: true });
+
     await expect(progress).toBeVisible();
     const oldItem = await item.elementHandle();
     const oldProgress = await progress.elementHandle();
@@ -49,6 +50,7 @@ test('Upload progress updates preserve the item, input, progress root and outsid
     await expect(page.getByLabel('Progress file', { exact: true }))
       .toHaveText('{"uid":"one","percent":73}');
     await page.getByRole('checkbox', { name: 'Uploading progress file', exact: true }).uncheck();
+
     await expect(progress).toHaveCount(0);
     expect(await item.evaluate((node, old) => node === old, oldItem)).toBe(true);
   });
@@ -61,8 +63,10 @@ test('Upload progress keeps the 300ms delay and cancels the timer on unmount', a
 
   await expect(progress).toHaveCount(0);
   await page.clock.runFor(299);
+
   await expect(progress).toHaveCount(0);
   await page.clock.runFor(1);
+
   await expect(progress).toBeVisible();
   const mounted = page.getByRole('checkbox', { name: 'Mount Upload progress', exact: true });
   const setMounted = (checked: boolean) => mounted.evaluate((node: HTMLInputElement, value) => {
@@ -72,6 +76,7 @@ test('Upload progress keeps the 300ms delay and cancels the timer on unmount', a
   await setMounted(false);
   await setMounted(true);
   await page.clock.runFor(299);
+
   await expect(progress).toHaveCount(0);
   await setMounted(false);
   await page.clock.runFor(1000);

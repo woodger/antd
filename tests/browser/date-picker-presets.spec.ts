@@ -36,7 +36,10 @@ for (const sample of datePickerPresetSamples) {
     page.on('pageerror', error => errors.push({ name: error.name, message: error.message }));
     page.on('console', message => diagnostics.push({ type: message.type(), text: message.text() }));
     page.on('request', request => requests.push({ url: request.url(), method: request.method() }));
-    page.on('response', response => responses.push({ url: response.url(), status: response.status() }));
+    page.on(
+      'response',
+      response => responses.push({ url: response.url(), status: response.status() })
+    );
     page.on('requestfailed', request => failedRequests.push({
       url: request.url(), failure: request.failure()
     }));
@@ -59,7 +62,10 @@ for (const sample of datePickerPresetSamples) {
         expect(original.action).toEqual(action);
         const evidence = await actDatePickerPresets(page, sample, action, index);
         const afterCall = await page.evaluate(readDatePickerPresets);
-        await attach('action-' + index + '-after-call-complete-raw', { action, evidence, afterCall });
+        await attach(
+          'action-' + index + '-after-call-complete-raw',
+          { action, evidence, afterCall }
+        );
         actual = await settleDatePickerPresets(page);
         await attach('action-' + index + '-settled-complete-raw', actual);
         verifyDatePickerPresetsPoint(actual, original.actual, sample, 'action' + index,
@@ -101,8 +107,12 @@ for (const sample of datePickerPresetSamples) {
       if (!disposed) {
         try {
           const before = await settleDatePickerPresets(page);
-          await attach('finally-disposal-complete-raw', await disposeDatePickerPresets(page, before));
-        } catch (error) {
+          await attach(
+            'finally-disposal-complete-raw',
+            await disposeDatePickerPresets(page, before)
+          );
+        }
+        catch (error) {
           errors.push({ phase: 'finally', message: String(error) });
         }
       }

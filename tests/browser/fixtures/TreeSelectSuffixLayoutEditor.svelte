@@ -12,7 +12,12 @@
   $effect(() => {
     const field = input, nativeElement = wrapper;
     if (kind !== 'composite-ref' || !field || !nativeElement) return;
-    return register({ inputElement: field, nativeElement, focus: options => field.focus(options), blur: () => field.blur() });
+    return register({
+      inputElement: field,
+      nativeElement,
+      focus: options => field.focus(options),
+      blur: () => field.blur()
+    });
   });
 </script>
 

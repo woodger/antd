@@ -16,6 +16,7 @@ for (const [id, text] of [['emoji-split', '...'], ['middle-emoji-split', 'A...']
   test(`TreeSelect tag text keeps a complete Unicode boundary for ${id}`, async ({ page }) => {
     const source = reference.observations.find(entry => entry.sample.id === id)!;
     const tags = source.initial.view.tags.map((tag, index) => index ? tag : { ...tag, text });
+
     expect(source.initial.view.tags[0].text).not.toBe(text);
     await mount(page, id);
 
@@ -28,6 +29,7 @@ for (const [id, text] of [['emoji-split', '...'], ['middle-emoji-split', 'A...']
 test('TreeSelect NaN visible count retains the selected tags like the Native Select adapter', async ({ page }) => {
   const source = reference.observations.find(entry => entry.sample.id === 'count-nan')!;
   const baseline = reference.cases.find(entry => entry.sample.id === 'default')!;
+
   expect(source.initial.view.tags).toEqual([]);
   await mount(page, source.sample.id);
 
@@ -37,6 +39,7 @@ test('TreeSelect NaN visible count retains the selected tags like the Native Sel
 test('TreeSelect shows all fitting tags instead of reserving an unnecessary oversized summary', async ({ page }) => {
   const source = reference.observations.find(entry => entry.sample.id === 'responsive-long-rest')!;
   const counterpart = reference.cases.find(entry => entry.sample.id === 'responsive-fit-320')!;
+
   expect(source.initial.view.tags).toHaveLength(1);
   expect(counterpart.initial.view.tags).toHaveLength(4);
   await mount(page, source.sample.id);
@@ -68,22 +71,28 @@ test('TreeSelect hidden tags remain in FormData, Backspace and clear while callb
   await mount(page, 'count-zero');
   const form = page.getByRole('form', { name: 'Tree tag native form', exact: true });
   const values = () => form.evaluate((node: HTMLFormElement) => new FormData(node).getAll('tree-tags'));
+
   expect(await values()).toEqual(['0', '1', 'locked', 'tail']);
   await input(page).press('Backspace');
+
   expect(await values()).toEqual(['0', '1', 'locked']);
   const events = (await read(page)).events;
+
   expect(events[0]).toMatchObject({ kind: 'change', value: [0, 1, 'locked'],
     labels: ['Alphabet', 'Beta', 'Locked'] });
   await input(page).press('Backspace');
   await input(page).press('Backspace');
+
   expect(await values()).toEqual(['locked']);
   await page.getByRole('button', { name: 'Очистить', exact: true }).click();
+
   expect(await values()).toEqual([]);
   await expect(input(page)).toBeFocused();
 });
 
 test('TreeSelect responsive hiding transfers remove focus and preserves explicit outside focus', async ({ page }) => {
   await mount(page, 'responsive-400');
+
   expect(await page.locator('.ant-select-selection-item').first().textContent())
     .toBe(reference.cases.find(entry => entry.sample.id === 'responsive-400')!.initial.view.tags[0].text);
   const editor = await input(page).elementHandle();
@@ -100,6 +109,7 @@ test('TreeSelect responsive hiding transfers remove focus and preserves explicit
     (node as HTMLButtonElement).click();
     document.querySelector<HTMLInputElement>('[aria-label="Tree tag outside draft"]')!.focus();
   });
+
   await expect(outside).toBeFocused();
   expect((await read(page)).events).toEqual([]);
 });
@@ -108,6 +118,7 @@ test('TreeSelect cancels retained custom-tag close messages on a newer open and 
   await mount(page, 'renderer');
   const tag = page.locator('[data-tree-choice-custom-tag]').first();
   await tag.locator('[data-tree-tag-label]').click();
+
   await expect(input(page)).toHaveAttribute('aria-expanded', 'true');
   await page.evaluate(() => {
     const Native = MessageChannel;
@@ -118,7 +129,10 @@ test('TreeSelect cancels retained custom-tag close messages on a newer open and 
         super();
         for (const port of [this.port1, this.port2]) {
           const close = port.close.bind(port);
-          port.close = () => { probe.closed++; close(); };
+          port.close = () => {
+            probe.closed++;
+            close();
+          };
         }
         this.port2.postMessage = () => {
           const port = this.port1;
@@ -130,6 +144,7 @@ test('TreeSelect cancels retained custom-tag close messages on a newer open and 
   });
   await tag.dispatchEvent('mousedown');
   await input(page).click();
+
   expect(await page.evaluate(() => {
     const probe = Reflect.get(window, 'treeTagChannelProbe');
     probe.jobs.shift()();
@@ -139,6 +154,7 @@ test('TreeSelect cancels retained custom-tag close messages on a newer open and 
   await tag.dispatchEvent('mousedown');
   const before = (await read(page)).events;
   await page.getByRole('button', { name: 'Toggle tree tag mount', exact: true }).dispatchEvent('click');
+
   await expect(input(page)).toHaveCount(0);
   const closed = await page.evaluate(() => {
     const probe = Reflect.get(window, 'treeTagChannelProbe');

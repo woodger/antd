@@ -4,7 +4,10 @@ import { test, expect } from './test';
 const root = (page: Page) => page.locator('dialog.ant-svelte-dialog,dialog.ant-svelte-drawer');
 const panel = (page: Page) => page.getByRole('dialog', { name: 'Container panel', exact: true });
 const draft = (page: Page) => page.getByRole('textbox', { name: 'Panel draft', exact: true });
-const opener = (page: Page) => page.getByRole('button', { name: 'Open container panel', exact: true });
+const opener = (page: Page) => page.getByRole(
+  'button',
+  { name: 'Open container panel', exact: true }
+);
 test.use({ viewport: { width: 1300, height: 1000 } });
 test.beforeEach(async ({ page }) => { await page.goto('/?fixture=dialog-container'); });
 
@@ -91,6 +94,7 @@ for (const name of ['modal-local', 'modal-local-shadow', 'drawer-local', 'drawer
     const select = panel(page).getByRole('combobox', { name: 'Nested panel choice', exact: true });
 
     await select.click();
+
     await expect(panel(page).getByRole('option', { name: 'Beta', exact: true })).toBeVisible();
     await select.press('Escape');
 
@@ -98,6 +102,7 @@ for (const name of ['modal-local', 'modal-local-shadow', 'drawer-local', 'drawer
     await expect(panel(page)).toBeVisible();
     const hint = panel(page).getByRole('button', { name: 'Panel hint', exact: true });
     await hint.focus();
+
     await expect(page.getByRole('tooltip')).toBeVisible();
     await hint.press('Escape');
 
@@ -115,6 +120,7 @@ for (const name of ['modal-local', 'modal-local-shadow', 'drawer-local', 'drawer
       await draft(page).fill('Removed draft');
 
       await check(page, label, false);
+
       await expect(root(page)).toHaveCount(0);
       const calls = await page.getByLabel('Panel owner calls', { exact: true }).innerText();
       await page.getByRole('button', { name: 'Refresh panel function', exact: true }).click();
@@ -174,6 +180,7 @@ for (const customPrefix of [false, true]) {
 
     await page.getByRole('button', { name: 'Close container panel', exact: true })
       .evaluate(node => (node as HTMLElement).click());
+
     await expect(root(page)).toHaveJSProperty('open', true);
     await check(page, 'Alternate panel container', true);
 
@@ -181,6 +188,7 @@ for (const customPrefix of [false, true]) {
     await expect(page.locator('[aria-label="Panel draft"]')).toHaveCount(0);
     expect(await root(page).evaluate((node, old) => node === old, previousRoot)).toBe(false);
     await opener(page).click();
+
     await expect(draft(page)).toHaveValue('Seed');
     await frames(page);
 

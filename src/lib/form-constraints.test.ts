@@ -34,7 +34,10 @@ describe('Form exact length and whitespace constraints', () => {
 
   it('keeps exact length before ranges, with pattern and custom validation still applied', async () => {
     let calls = 0;
-    const validator = () => { calls++; return 'Custom error'; };
+    const validator = () => {
+      calls++;
+      return 'Custom error';
+    };
 
     expect(await validateValue('ab', {}, [{ len: 2, min: 5, max: 1, validator }]))
       .toEqual(['Custom error']);
@@ -75,11 +78,14 @@ describe('Form exact length and whitespace constraints', () => {
     });
     let submitted: unknown;
 
-    await expect(form.submit(values => { submitted = values; })).resolves.toEqual({ status: 'success' });
+    await expect(form.submit(values => {
+      submitted = values;
+    })).resolves.toEqual({ status: 'success' });
     expect(submitted).toEqual({ field: '  ' });
     expect(form.getFieldWarning('field')).toEqual(['Check whitespace']);
     form.setFieldValue('field', 'abc');
     form.resetFields();
+
     expect(form.values.field).toBe('  ');
     expect(form.getFieldWarning('field')).toEqual([]);
   });

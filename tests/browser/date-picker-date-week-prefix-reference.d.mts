@@ -111,11 +111,20 @@ export interface DateWeekPrefixSourceCase {
   producerParts: DateWeekPrefixSourceProducerReference[]; producerFinalCount: number;
   beforeUnmount: DateWeekPrefixSourceReference; cleanup: DateWeekPrefixSourceReference; late: DateWeekPrefixSourceReference;
   failure: null; interruptedAction: null; observationErrors: unknown[];
-  network: { requests: unknown[]; responses: Array<{ url: string; status: number; }>; failures: unknown[]; };
+  network: {
+    requests: unknown[];
+    responses: Array<{ url: string; status: number; }>;
+    failures: unknown[];
+  };
 }
 interface DateWeekPrefixSourceCaptureHeader {
   status: string; variant: DateWeekPrefixSourceVariant;
-  sourceProtocol: { file: string; sha256: string; reviewedProposalSHA256: string; rootLease: string; };
+  sourceProtocol: {
+    file: string;
+    sha256: string;
+    reviewedProposalSHA256: string;
+    rootLease: string;
+  };
   terminalInputVerification: { unchanged: boolean; sha256: string; }; diagnostics: unknown[];
 }
 export interface DateWeekPrefixSourceCSRManifest extends DateWeekPrefixSourceCaptureHeader {
@@ -146,11 +155,17 @@ export function readDateWeekPrefixSourceManifest(
 export function readDateWeekPrefixSourceManifest(
   kind: DateWeekPrefixSourceCaptureKind, variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourceCSRManifest | DateWeekPrefixSourceSSRManifest;
-export function readDateWeekPrefixSourceCase(id: DateWeekPrefixOwner, variant?: DateWeekPrefixSourceVariant): DateWeekPrefixSourceCase;
+export function readDateWeekPrefixSourceCase(
+  id: DateWeekPrefixOwner,
+  variant?: DateWeekPrefixSourceVariant
+): DateWeekPrefixSourceCase;
 export function readDateWeekPrefixSourcePart<Value = unknown>(
   reference: DateWeekPrefixSourceReference | DateWeekPrefixSourceRawPart
 ): Value;
-export function readDateWeekPrefixSourceInitial(id: DateWeekPrefixOwner, variant?: DateWeekPrefixSourceVariant): DateWeekPrefixSourcePoint;
+export function readDateWeekPrefixSourceInitial(
+  id: DateWeekPrefixOwner,
+  variant?: DateWeekPrefixSourceVariant
+): DateWeekPrefixSourcePoint;
 export function readDateWeekPrefixSourceStep(
   id: DateWeekPrefixOwner, index: number, variant?: DateWeekPrefixSourceVariant
 ): DateWeekPrefixSourceStep;

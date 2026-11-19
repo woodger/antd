@@ -30,6 +30,7 @@ test('Grid breakpoint updates preserve DOM, editor, refs, focus and form value',
   const previousRow = await row.elementHandle();
   const previousCol = await col.elementHandle();
   const previousInput = await input.elementHandle();
+
   await expect(input).toBeFocused();
 
   await page.getByRole('combobox', { name: 'Grid breakpoint case', exact: true })
@@ -75,9 +76,11 @@ test('Grid reset and unmount restore default media and remove owned style scopes
     .selectOption('shifted:ltr:nested');
   const col = page.locator('#grid-breakpoints-control .ant-row').first()
     .locator('.ant-col').first();
+
   await expect(col).toHaveCSS('flex-basis', '50%');
   const scope = await col.evaluate(node => [...node.classList].find(name =>
     name.startsWith('ant-grid-media-'))!);
+
   await expect(page.locator(`head style[data-ant-svelte-theme="${scope}"]`)).toHaveCount(1);
 
   await page.getByLabel('Inherit Grid breakpoints', { exact: true }).uncheck();

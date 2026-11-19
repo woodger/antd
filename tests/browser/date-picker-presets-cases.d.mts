@@ -13,4 +13,7 @@ export interface DatePickerPresetSample {
   presets: DatePickerPresetProfile[]; actions: DatePickerPresetAction[];
 }
 export const datePickerPresetSamples: DatePickerPresetSample[];
-export const datePickerPresetGeometry: { viewport: { width: number; height: number }; root: { left: number; top: number; width: number } };
+export const datePickerPresetGeometry: {
+  viewport: { width: number; height: number };
+  root: { left: number; top: number; width: number }
+};

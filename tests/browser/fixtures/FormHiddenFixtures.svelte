@@ -66,7 +66,8 @@
     let outcome: unknown = { status: 'success' };
     try {
       await form.validateFields(['concealed']);
-    } catch (error) {
+    }
+    catch (error) {
       if (!(error instanceof FormValidationError)) throw error;
       outcome = { status: 'invalid', outOfDate: error.outOfDate, errorFields: error.errorFields };
     }

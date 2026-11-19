@@ -56,6 +56,7 @@ for (const sample of reference.cases) {
     await open(page, sample.name);
 
     const { gap, ...source } = sample.snapshot;
+
     await expect.poll(() => snapshot(page)).toEqual(source);
     // Source округляет координаты вниз; высоты React и native panel различаются.
     const geometry = await page.locator(surface).evaluate((popup, placement) => {
@@ -158,8 +159,10 @@ for (const fallback of [false, true]) {
       await open(page, 'date-local-shadow');
 
       const popup = page.locator(surface);
+
       await expect(popup).toHaveCSS('z-index', '33');
       const color = await popup.evaluate(node => getComputedStyle(node).color);
+
       await expect(popup).toHaveCSS('border-top-color', color);
       expect(await root.evaluate((node, initial) => node.children.length === initial.length
         && [...node.children].every((child, index) => child === initial[index]), children)).toBe(true);
@@ -196,6 +199,7 @@ test('picker portals copy resolved aliases and release removed variables', async
     const style = getComputedStyle(node);
     return names.map(name => style.getPropertyValue(name));
   }, names);
+
   await expect.poll(variables).toEqual(['red', 'green', 'green', 'red']);
 
   await origin.evaluate(node => {
@@ -219,12 +223,14 @@ for (const component of ['date', 'date-range', 'time', 'time-range']) {
     async ({ page }) => {
       await open(page, `${component}-local-shadow`);
       await page.locator('[data-picker-count]').evaluate(node => (node as HTMLElement).click());
+
       await expect(page.locator('[data-picker-count]')).toHaveText('1');
 
       await entries(page).first().press('Escape');
 
       await expect(page.locator(surface)).toHaveCount(0);
       await entries(page).first().click();
+
       await expect(page.locator(surface)).toBeVisible();
       // Native panel удаляется при закрытии; retained state rc-trigger остаётся отдельным пробелом.
       await expect(page.locator('[data-picker-count]')).toHaveText('0');
@@ -290,6 +296,7 @@ for (const component of ['date', 'date-range', 'time', 'time-range']) {
       const style = getComputedStyle(node);
       return names.map(name => style.getPropertyValue(name));
     }, variables);
+
     expect(tokens.every(value => value !== '')).toBe(true);
     expect(await page.locator(surface).evaluate((node, names) => {
       const style = getComputedStyle(node);
@@ -312,6 +319,7 @@ for (const component of ['date', 'date-range', 'time', 'time-range']) {
 
     await check(page, 'Mount picker component', true);
     await entries(page).first().click();
+
     await expect(page.locator(surface)).toBeVisible();
     const remounted = await page.getByLabel('Picker owner calls', { exact: true }).textContent();
     await check(page, 'Mount picker tree', false);

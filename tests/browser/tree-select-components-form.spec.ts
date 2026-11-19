@@ -10,7 +10,10 @@ function nativeCompositeView(view: ReturnType<typeof readTreeSelectComponentsFor
   // Сохраняем существующий Native id help и проверяем реальный узел подсказки.
   return { ...view, aria: { ...view.aria, invalid: view.mounted ? 'true' : null,
     describedBy: view.mounted ? 'choice-help' : null },
-    help: view.help.map(node => ({ ...node, id: node.id === 'choice_help' ? 'choice-help' : node.id })) };
+    help: view.help.map(node => ({
+      ...node,
+      id: node.id === 'choice_help' ? 'choice-help' : node.id
+    })) };
 }
 
 async function apply(page: Page, action: TreeSelectComponentsFormAction) {
@@ -27,7 +30,11 @@ for (const entry of reference.cases) {
   test(`TreeSelect custom ${entry.id} preserves Form selection, association and inherited feedback`, async ({ page }) => {
     await page.goto('/?fixture=tree-select-components-form');
     await page.getByRole('combobox', { name: 'TreeSelect components Form sample', exact: true }).selectOption(entry.id);
-    await expect(page.locator('[data-form-components-case]')).toHaveAttribute('data-form-components-ready', 'true');
+
+    await expect(page.locator('[data-form-components-case]')).toHaveAttribute(
+      'data-form-components-ready',
+      'true'
+    );
     const read = () => page.evaluate(readTreeSelectComponentsForm);
     const values = () => page.locator('[data-form-components-native]').evaluate(form => {
       if (!(form instanceof HTMLFormElement)) throw Error('Expected native Form wrapper');
@@ -35,9 +42,18 @@ for (const entry of reference.cases) {
     });
     const editor = page.getByLabel('Form component editor', { exact: true });
     const original = await editor.elementHandle();
+
     await expect.poll(read).toEqual(nativeCompositeView(entry.initial.view));
-    expect(entry.initial.view.aria).toEqual({ required: 'true', describedBy: 'choice_help', invalid: null });
-    expect(entry.initial.observed).toMatchObject({ nativeFormData: [], strictSourceRefIdentity: true, fieldErrors: [] });
+    expect(entry.initial.view.aria).toEqual({
+      required: 'true',
+      describedBy: 'choice_help',
+      invalid: null
+    });
+    expect(entry.initial.observed).toMatchObject({
+      nativeFormData: [],
+      strictSourceRefIdentity: true,
+      fieldErrors: []
+    });
     expect(await values()).toEqual(['a']);
     await expect(page.locator('[data-form-components-native] [name="choice"]')).toHaveCount(1);
     await expect(editor).not.toHaveAttribute('name');
@@ -48,7 +64,10 @@ for (const entry of reference.cases) {
       expect(step.observed.nativeFormData).toEqual([]);
       expect(step.observed.fieldErrors).toEqual([]);
       expect(await values()).toEqual(step.view.mounted ? [step.view.model] : []);
-      if (step.sameEditor) expect(await editor.evaluate((node, previous) => node === previous, original)).toBe(true);
+      if (step.sameEditor) expect(await editor.evaluate(
+        (node, previous) => node === previous,
+        original
+      )).toBe(true);
       if (step.action === 'type-query') {
         expect(step.view.model).toBe('a');
         expect(await values()).toEqual(['a']);

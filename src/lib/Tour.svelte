@@ -203,7 +203,8 @@
       if (event.key === 'ArrowLeft' && current > 0) {
         event.preventDefault();
         change(current - 1);
-      } else if (event.key === 'ArrowRight' && current < steps.length - 1) {
+      }
+      else if (event.key === 'ArrowRight' && current < steps.length - 1) {
         event.preventDefault();
         change(current + 1);
       }

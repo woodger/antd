@@ -6,7 +6,10 @@ import stopReference from './fixtures/ant-design-select-icons-stop-reference.jso
 import menuReference from './fixtures/ant-design-select-icons-menu-focused-reference.json' with { type: 'json' };
 import unfocusedMenuReference from './fixtures/ant-design-select-icons-menu-reference.json' with { type: 'json' };
 
-expect(createHash('sha256').update(readFileSync(new URL('./fixtures/ant-design-select-icons-edges-reference.json', import.meta.url))).digest('hex'))
+expect(createHash('sha256').update(readFileSync(new URL(
+  './fixtures/ant-design-select-icons-edges-reference.json',
+  import.meta.url
+))).digest('hex'))
   .toBe('cdba9aad852ab404b2d8b836a4157ffa660beab8e1fed37add05b477d47ead8f');
 expect(reference.reference.protocolSHA256).toBe('2f10e8d5e711ad9f404f154e64026e4233b08a371316c8dde41bb17efebeb423');
 expect(reference.reference.errors).toEqual([]);
@@ -16,18 +19,28 @@ for (const [name, sha, protocol, source] of [
   ['menu', '6160ac68d7b4630962d3e2fa9f33d48857a3b95e5be2751add81a8292f715d44', 'e3e779677d636c6fd3559bbe0295e618edadf08581bb4edd6460ef2470962fae', unfocusedMenuReference],
   ['menu-focused', '0a55a0399ab8faec321b0a7d9ac6e6f5a29d028ac5960c81314e852a383e171f', '72b5054ce13b787bbab0ae6e02dd7792199028e00cc1eb87de7a8dee32700c32', menuReference]
 ] as const) {
-  expect(createHash('sha256').update(readFileSync(new URL('./fixtures/ant-design-select-icons-' + name + '-reference.json', import.meta.url))).digest('hex')).toBe(sha);
+  expect(createHash('sha256').update(readFileSync(new URL(
+    './fixtures/ant-design-select-icons-' + name + '-reference.json',
+    import.meta.url
+  ))).digest('hex')).toBe(sha);
   expect(source.reference.protocolSHA256).toBe(protocol);
-  expect(source.reference.errors).toEqual([]); expect(source.reference.diagnostics).toEqual([]);
+  expect(source.reference.errors).toEqual([]);
+  expect(source.reference.diagnostics).toEqual([]);
 }
 type Snapshot = Omit<(typeof reference.cases)[number]['initial'], 'events'> & { events: unknown[] };
-for (const entry of [...reference.cases, ...stopReference.cases, ...menuReference.cases]) test(`icon API edge follows Original ${entry.sample.id}`, async ({ page }, testInfo) => {
+for (const entry of [...reference.cases, ...stopReference.cases, ...menuReference.cases]) test(`icon API edge follows Original ${entry.sample.id}`, async (
+  { page },
+  testInfo
+) => {
   const trace: unknown[] = [];
   await page.goto('/?fixture=select-icons-edge');
   await page.getByRole('combobox', { name: 'Icon edge sample', exact: true }).selectOption(entry.sample.id);
   const read = () => page.evaluate(() => {
     const detail = {} as { read?: () => Snapshot };
-    document.querySelector('[data-icon-edge]')!.dispatchEvent(new CustomEvent('iconedgecapture', { detail }));
+    document.querySelector('[data-icon-edge]')!.dispatchEvent(new CustomEvent(
+      'iconedgecapture',
+      { detail }
+    ));
     if (!detail.read) throw Error('Actual icon edge owner absent');
     return detail.read();
   });
@@ -48,7 +61,8 @@ for (const entry of [...reference.cases, ...stopReference.cases, ...menuReferenc
         info: actual.infos.at(-1) };
     }).toEqual({ model: expected.model, open: expected.open, events: expected.events, input: expected.input,
       info: expected.infos.at(-1) });
-    const actual = await read(); trace.push({ phase, actual });
+    const actual = await read();
+    trace.push({ phase, actual });
     for (const info of actual.infos) {
       expect(info.keys).toEqual(['searchValue', 'open', 'focused', 'showSearch', 'loading']);
       expect(info.argumentCount).toBe(1);
@@ -64,11 +78,15 @@ for (const entry of [...reference.cases, ...stopReference.cases, ...menuReferenc
     else if ('clear' in entry.sample && entry.sample.clear) await page.locator('.ant-select-clear').click();
     else if ('key' in entry.sample && entry.sample.key) {
       const editor = page.getByRole('combobox', { name: 'Icon edge value', exact: true });
-      await editor.focus(); await editor.press(entry.sample.key);
+      await editor.focus();
+      await editor.press(entry.sample.key);
     }
     await verify(entry.after, 'after');
   } finally {
     trace.push({ phase: 'final', actual: await read() });
-    await testInfo.attach('actual-icon-edge-owner', { body: JSON.stringify({ sample: entry.sample, trace }), contentType: 'application/json' });
+    await testInfo.attach(
+      'actual-icon-edge-owner',
+      { body: JSON.stringify({ sample: entry.sample, trace }), contentType: 'application/json' }
+    );
   }
 });

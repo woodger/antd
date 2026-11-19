@@ -82,6 +82,7 @@ test(
     await expect(input).toHaveValue('20');
 
     await input.press('ArrowUp');
+
     await expect.poll(
       () =>
         input.locator('..').locator('.ant-slider-handle').evaluate(

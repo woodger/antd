@@ -46,6 +46,7 @@ describe('DatePicker date adapter and input', () => {
     expect(parsePicker('2021-2nd', 'en_US', formats)?.format('YYYY-MM-DD HH:mm:ss.SSS'))
       .toBe('2021-01-08 00:00:00.000');
     const gb = parsePicker('2020-53rd', 'en_GB', formats)!;
+
     expect(gb.format('YYYY-MM-DD HH:mm:ss.SSS')).toBe('2020-12-30 00:00:00.000');
     expect(gb.day()).toBe(dayjs('2020-01-01').day());
     expect(gb.locale()).toBe('en-gb');
@@ -94,12 +95,18 @@ describe('DatePicker date adapter and input', () => {
       return date.year() === 2021 && date.month() === 0 && date.date() === 1;
     };
     const prefix = dayjs('2020-12-28T00:00:00.000');
+
     expect(pickerPanelDateDisabled(prefix, { minDate, maxDate, disabledDate }, 'week', 'en_GB'))
       .toBe(false);
     expect(calls).toHaveLength(1);
     expect(calls[0]).toEqual({ date: prefix, type: 'week' });
     expect(calls[0].date).toBe(prefix);
-    expect(pickerPanelDateDisabled(dayjs('2021-01-01'), { minDate, maxDate, disabledDate }, 'week', 'en_GB'))
+    expect(pickerPanelDateDisabled(
+      dayjs('2021-01-01'),
+      { minDate, maxDate, disabledDate },
+      'week',
+      'en_GB'
+    ))
       .toBe(true);
     expect(pickerDateDisabled(dayjs('2021-01-10'), { minDate, maxDate }, 'week', 'en_GB')).toBe(false);
     expect(pickerDateDisabled(dayjs('2021-01-10'), { minDate, maxDate }, 'week', 'en_US')).toBe(true);
@@ -130,6 +137,7 @@ describe('DatePicker date adapter and input', () => {
     expect(cells.every(value => value.isUTC())).toBe(true);
     const later = dayjs.utc('2024-05-20T16:37:59.456Z');
     const earlier = dayjs.utc('2024-04-10T08:23:45.678Z');
+
     expect(samePickerQuarter(later, earlier)).toBe(true);
     expect(samePickerPanelValue(later, earlier, true, 'quarter')).toBe(true);
     expect(samePickerPanelValue(later, earlier.year(2025), false, 'quarter')).toBe(false);
@@ -147,11 +155,13 @@ describe('DatePicker date adapter and input', () => {
       calls.push({ value, type: info.type });
       return value.month() === 6;
     };
+
     expect(pickerPanelDateDisabled(cells[2], { disabledDate: first }, 'quarter')).toBe(true);
     expect(calls).toHaveLength(1);
     expect(calls[0].value).toBe(cells[2]);
     expect(calls[0].type).toBe('quarter');
     calls.length = 0;
+
     expect(pickerPanelDateDisabled(cells[2], { disabledDate: (value, info) => {
       calls.push({ value, type: info.type });
       return value.month() === 8;
@@ -162,6 +172,7 @@ describe('DatePicker date adapter and input', () => {
       minDate: dayjs.utc('2024-02-15T18:30:20.500Z'),
       maxDate: dayjs.utc('2025-10-05T09:12:34.567Z')
     };
+
     expect(pickerDateDisabled(cells[0], limits, 'quarter')).toBe(false);
     expect(pickerDateDisabled(cells[3].year(2025), limits, 'quarter')).toBe(false);
     expect(pickerDateDisabled(cells[3].year(2023), limits, 'quarter')).toBe(true);
@@ -208,6 +219,7 @@ describe('DatePicker date adapter and input', () => {
     expect(pickerPanelDateDisabled(value, { disabledDate: reject }, 'month')).toBe(true);
     expect(calls).toEqual(['2024-02-01', '2024-02-29']);
     calls.length = 0;
+
     expect(pickerPanelDateDisabled(value, { disabledDate: date => {
       calls.push(date.format('YYYY-MM-DD'));
       return false;

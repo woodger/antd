@@ -12,6 +12,7 @@ describe('FormErrorList public package SSR', () => {
       archiveSha256: registry.upstream.archiveSha256
     });
     const duplicates = reference.cases.find((entry) => entry.id === 'duplicate-and-prototype-messages')!;
+
     expect(duplicates.input.errors).toHaveLength(4);
     expect(duplicates.input.warnings).toHaveLength(1);
     expect(duplicates.items).toHaveLength(7);

@@ -60,11 +60,15 @@ export function mergeSelectStyle(...layers: readonly unknown[]): SelectStyle | u
           value, priority: priority ? 'important' : ''
         });
       }
-    } else {
+    }
+    else {
       for (const [property, value] of Object.entries(cssObject(layer)!)) {
         const name = property.startsWith('--') ? property : property.replace(/[A-Z]/g, '-$&')
           .toLowerCase().replace(/^ms-/, '-ms-');
-        if (value == null || value === '') { declarations.delete(name); continue; }
+        if (value == null || value === '') {
+          declarations.delete(name);
+          continue;
+        }
         for (const declaration of getInlineStyleDeclarations([serializeSelectDataStyle({ [property]: value })])) {
           if (!declarations.get(name)?.priority) declarations.set(name, {
             value: declaration.value, priority: declaration.priority ? 'important' : ''
@@ -99,6 +103,9 @@ export function mergeSelectSemanticMaps(
     styles[slot] = mergeSelectStyle(context.styles?.[slot], slot === 'root' ? contextStyle : undefined,
       local.styles?.[slot], slot === 'root' ? ownStyle : undefined);
   }
-  for (const slot of popupSlots) classes.popup[slot] = join(contextPopup?.[slot], localPopup?.[slot]);
+  for (const slot of popupSlots) classes.popup[slot] = join(
+    contextPopup?.[slot],
+    localPopup?.[slot]
+  );
   return { classes, styles };
 }

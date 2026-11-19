@@ -3,6 +3,7 @@ import reference from './fixtures/ant-design-form-get-fields-value-observation.j
 
 test('Form getFieldsValue matches source projections, nullable filter metadata, lists and validation', async ({ page }) => {
   await page.goto('/?fixture=form-get-fields-value');
+
   await expect(page.locator('#form-get-fields-value-fixture')).toBeVisible();
   const actions: Record<string, string> = {
     'literal-touched': 'Touch projection literal',

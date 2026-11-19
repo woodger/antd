@@ -16,7 +16,14 @@ export interface EmptyDatetimeSourcePart {
 }
 export interface EmptyDatetimeSourceDate {
   identity: number; encoded: unknown; raw: unknown;
-  temporal: { valid: boolean; epoch: number; iso: string; utcOffset: number; fields: number[]; locale: string };
+  temporal: {
+    valid: boolean;
+    epoch: number;
+    iso: string;
+    utcOffset: number;
+    fields: number[];
+    locale: string
+  };
   sameAsAuthored: { panel: boolean; template: boolean };
 }
 export interface EmptyDatetimeSourceCallback {
@@ -38,7 +45,13 @@ export interface EmptyDatetimeSourcePoint {
     [key: string]: unknown }>;
   root: unknown; ownerDOM: unknown; focus: unknown; popups: unknown[]; events: unknown[];
   retained: Array<{ identity: number; connected: boolean; [key: string]: unknown }>;
-  environment: unknown; resources: { timing: unknown[]; timers: null; frames: null; observers: null; note: string };
+  environment: unknown; resources: {
+    timing: unknown[];
+    timers: null;
+    frames: null;
+    observers: null;
+    note: string
+  };
   [key: string]: unknown;
 }
 export interface EmptyDatetimeSourceCase {
@@ -50,7 +63,12 @@ export interface EmptyDatetimeSourceCase {
 }
 export interface EmptyDatetimeSourceManifest {
   status: string; variant: EmptyDatetimeSourceVariant; cases: EmptyDatetimeSourceCase[];
-  sourceProtocol: { file: string; sha256: string; reviewedProposalSHA256: string; rootLease: string };
+  sourceProtocol: {
+    file: string;
+    sha256: string;
+    reviewedProposalSHA256: string;
+    rootLease: string
+  };
   browserVersion: string; counts: Record<string, number>; actualCounts: Record<string, number>;
   errors: unknown[]; diagnostics: unknown[]; fatal: null;
   terminalInputVerification: { unchanged: boolean; sha256: string };
@@ -61,15 +79,52 @@ export interface EmptyDatetimeSourceStep {
   actionEvidence: unknown; phaseTwoPrerequisite: unknown;
 }
 export function readEmptyDatetimeSourceManifest(variant?: EmptyDatetimeSourceVariant): EmptyDatetimeSourceManifest;
-export function readEmptyDatetimeSourceCase(id: EmptyDatetimeSourceOwner, variant?: EmptyDatetimeSourceVariant): EmptyDatetimeSourceCase;
+export function readEmptyDatetimeSourceCase(
+  id: EmptyDatetimeSourceOwner,
+  variant?: EmptyDatetimeSourceVariant
+): EmptyDatetimeSourceCase;
 export function readEmptyDatetimeSourcePart<Value = unknown>(reference: EmptyDatetimeSourcePart): Value;
-export function readEmptyDatetimeSourceInitial(id: EmptyDatetimeSourceOwner, variant?: EmptyDatetimeSourceVariant): EmptyDatetimeSourcePoint;
-export function readEmptyDatetimeSourceStep(id: EmptyDatetimeSourceOwner, index: number, variant?: EmptyDatetimeSourceVariant): EmptyDatetimeSourceStep;
-export function readEmptyDatetimeSourceClosed(id: EmptyDatetimeSourceOwner, index: number, variant?: EmptyDatetimeSourceVariant): { actionIndex: number; after1000: EmptyDatetimeSourcePoint };
-export function readEmptyDatetimeSourceCleanup(id: EmptyDatetimeSourceOwner, phase?: 'beforeUnmount' | 'cleanup' | 'late', variant?: EmptyDatetimeSourceVariant): EmptyDatetimeSourcePoint;
+export function readEmptyDatetimeSourceInitial(
+  id: EmptyDatetimeSourceOwner,
+  variant?: EmptyDatetimeSourceVariant
+): EmptyDatetimeSourcePoint;
+export function readEmptyDatetimeSourceStep(
+  id: EmptyDatetimeSourceOwner,
+  index: number,
+  variant?: EmptyDatetimeSourceVariant
+): EmptyDatetimeSourceStep;
+export function readEmptyDatetimeSourceClosed(
+  id: EmptyDatetimeSourceOwner,
+  index: number,
+  variant?: EmptyDatetimeSourceVariant
+): {
+  actionIndex: number;
+  after1000: EmptyDatetimeSourcePoint
+};
+export function readEmptyDatetimeSourceCleanup(
+  id: EmptyDatetimeSourceOwner,
+  phase?: 'beforeUnmount' | 'cleanup' | 'late',
+  variant?: EmptyDatetimeSourceVariant
+): EmptyDatetimeSourcePoint;
 export function readEmptyDatetimeSourceEvidence(name: string): Uint8Array;
-export function verifyEmptyDatetimeSourceManifest(value: unknown, variant?: EmptyDatetimeSourceVariant): void;
+export function verifyEmptyDatetimeSourceManifest(
+  value: unknown,
+  variant?: EmptyDatetimeSourceVariant
+): void;
 export function verifyEmptyDatetimeSourcePoint(value: unknown): void;
-export function verifyEmptyDatetimeSourcePartBinding(reference: EmptyDatetimeSourcePart, variant?: EmptyDatetimeSourceVariant, expectedFile?: string): unknown;
-export function verifyEmptyDatetimeSourceStoredBytes(reference: EmptyDatetimeSourcePart, stored: Uint8Array): Uint8Array;
-export function verifyEmptyDatetimeSourceStoredParts(): { sourceOnly: true; captures: number; originalParts: number; partBlobs: number; allBlobs: number };
+export function verifyEmptyDatetimeSourcePartBinding(
+  reference: EmptyDatetimeSourcePart,
+  variant?: EmptyDatetimeSourceVariant,
+  expectedFile?: string
+): unknown;
+export function verifyEmptyDatetimeSourceStoredBytes(
+  reference: EmptyDatetimeSourcePart,
+  stored: Uint8Array
+): Uint8Array;
+export function verifyEmptyDatetimeSourceStoredParts(): {
+  sourceOnly: true;
+  captures: number;
+  originalParts: number;
+  partBlobs: number;
+  allBlobs: number
+};

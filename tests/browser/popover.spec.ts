@@ -549,6 +549,7 @@ test(
 
     await page.locator('#popover-fixture .scroller')
       .evaluate((element) => { element.scrollTop += 20; });
+
     await expect.poll(async () => Math.abs((await popup.boundingBox())!.y - before.y + 20))
       .toBeLessThan(2);
     await page.keyboard.press('F8');

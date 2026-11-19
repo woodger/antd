@@ -81,6 +81,7 @@ describe('Slider range public package', () => {
 
     const stops = [...body.matchAll(/<input\b[^>]*\btabindex="([^"]*)"/g)]
       .map(match => match[1]);
+
     expect(stops).toEqual(['0', '-1']);
   });
 });

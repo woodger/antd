@@ -112,6 +112,7 @@ test('TreeSelect prefix updates retain an in-flight child load and publish its r
   const control = page.getByRole('combobox', { name: 'Prefix choices', exact: true });
   await control.click();
   await page.getByRole('button', { name: 'Start prefix load', exact: true }).dispatchEvent('click');
+
   await expect(page.getByLabel('TreeSelect prefix requests', { exact: true })).toHaveText('1');
   const row = page.getByRole('treeitem', { name: 'Pending', exact: true });
   const oldRow = await row.elementHandle();

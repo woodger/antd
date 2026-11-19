@@ -43,7 +43,8 @@ for (const viewport of [1280, 320]) {
             const box = (await root.boundingBox())!;
             expect(box.x).toBeGreaterThanOrEqual(0);
             expect(box.x + box.width).toBeLessThanOrEqual(viewport);
-          } else {
+          }
+          else {
             expect(positions[1].top - positions[0].bottom).toBeCloseTo(8, 1);
             const nested = root.locator('.ant-anchor-link .ant-anchor-link');
             await expect(nested).toHaveCSS('padding-block-start', '2px');

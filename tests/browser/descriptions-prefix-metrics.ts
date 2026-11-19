@@ -27,7 +27,11 @@ export function snapshotDescriptionsPrefix() {
         table: style(table, ['width', 'flex', 'table-layout']),
         label: { classes: classes(label), style: style(label, ['color', 'background-color']) },
         content: { classes: classes(content), style: style(content, ['color', 'display']) },
-        colon: style(label, ['content', 'display', 'margin-inline-start', 'margin-inline-end'], '::after'),
+        colon: style(
+          label,
+          ['content', 'display', 'margin-inline-start', 'margin-inline-end'],
+          '::after'
+        ),
         rows: [...table.tBodies[0].rows].map(row => ({
           classes: classes(row),
           cells: [...row.cells].map(cell => ({

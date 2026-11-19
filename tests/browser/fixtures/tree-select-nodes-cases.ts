@@ -58,8 +58,20 @@ export const treeSelectNodesSamples: readonly TreeSelectNodesSample[] = [
   { id: 'strict', checkable: true, strict: true, actions: ['choose-beta', 'choose-zero'] },
   { id: 'live-order', actions: ['reverse', 'remove', 'add', 'update'] },
   { id: 'live-data', actions: ['data', 'empty-data', 'declarations'] },
-  { id: 'lazy', lazy: true, icons: true, observation: true, actions: ['expand', 'resolve', 'choose-zero'] },
-  { id: 'expanded-lazy', lazy: true, initiallyExpanded: true, icons: true, actions: ['resolve', 'choose-zero'] },
+  {
+    id: 'lazy',
+    lazy: true,
+    icons: true,
+    observation: true,
+    actions: ['expand', 'resolve', 'choose-zero']
+  },
+  {
+    id: 'expanded-lazy',
+    lazy: true,
+    initiallyExpanded: true,
+    icons: true,
+    actions: ['resolve', 'choose-zero']
+  },
   { id: 'rich-title', rich: true, actions: ['choose-zero', 'open', 'update'] },
   { id: 'disabled', disabled: true },
   { id: 'closed', closed: true, actions: ['open', 'choose-beta'] },
@@ -81,7 +93,13 @@ export function treeSelectNodeSpecs(sample: TreeSelectNodesSample, revision = 0,
     { value: 'fallback', label: 'Label fallback', payload: 'fallback' }
   ];
   let children: TreeSelectNodeSpec[] = [
-    { value: 0, title: revision ? 'Updated Zero' : 'Node Zero', payload: 'zero', icon: 'text', rich: sample.rich },
+    {
+      value: 0,
+      title: revision ? 'Updated Zero' : 'Node Zero',
+      payload: 'zero',
+      icon: 'text',
+      rich: sample.rich
+    },
     { value: 'b', title: 'Node Beta', payload: 'beta', icon: 'state' },
     { value: 'd', title: 'Node Disabled', payload: 'disabled', disabled: true, icon: 'text' }
   ];

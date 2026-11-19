@@ -40,6 +40,7 @@ for (const sample of reference.cases) {
 
     await open(page);
     await page.clock.runFor(1000);
+
     await expect.poll(snapshot).toEqual(sample.snapshots.opened);
     const input = page.getByLabel('Lifecycle draft', { exact: true });
     const original = await input.elementHandle();
@@ -105,6 +106,7 @@ test('Popconfirm releases destroyed pending controls and ignores the old result 
   await page.getByLabel('Async lifecycle confirm', { exact: true }).dispatchEvent('click');
   await open(page);
   await page.getByRole('button', { name: 'Confirm lifetime', exact: true }).click();
+
   await expect(page.getByRole('button', { name: 'Confirm lifetime', exact: true })).toBeDisabled();
 
   await close(page);
@@ -112,6 +114,7 @@ test('Popconfirm releases destroyed pending controls and ignores the old result 
   await expect(page.locator('[data-ant-popconfirm-content]')).toHaveCount(0);
 
   await open(page);
+
   await expect(page.getByRole('button', { name: 'Confirm lifetime', exact: true })).toBeEnabled();
   await page.getByRole('button', { name: 'Resolve lifecycle confirm', exact: true }).dispatchEvent('click');
 

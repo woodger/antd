@@ -35,10 +35,12 @@ test('TreeSelect hydrates the initial custom popup in place before moving it to 
   const outside = page.getByRole('button', { name: 'Outside selection' });
   const editor = page.getByRole('combobox', { name: 'Surface selection', exact: true });
   const draft = page.getByRole('textbox', { name: 'Popup draft' });
+
   await expect(draft).toHaveCount(0);
   await outside.focus();
   await page.addScriptTag({ type: 'module', url: '/tree-select-surface-hydration.client.ts' });
   await page.waitForFunction(() => window.treeSelectPopupHydration);
+
   await expect(outside).toBeFocused();
   await expect(draft).toHaveValue('Draft');
   expect(await page.evaluate(() => {
@@ -58,11 +60,14 @@ test('TreeSelect hydrates the initial custom popup in place before moving it to 
   await draft.fill('Hydrated draft');
   await outside.click();
   await editor.click();
+
   await expect(draft).toHaveValue('Hydrated draft');
   await page.locator('[data-surface-target]').getByText('Beta', { exact: true }).click();
+
   await expect(editor).toHaveValue('Beta');
   await expect(editor).toBeFocused();
   await page.evaluate(() => window.treeSelectPopupHydration!.dispose());
+
   await expect(page.locator('[popover]:popover-open')).toHaveCount(0);
 });
 
@@ -76,15 +81,18 @@ test('TreeSelect hydrates a hidden virtual window before scrolling to the select
     document.head.insertAdjacentHTML('beforeend', head);
     document.getElementById('root')!.innerHTML = body;
   }, { head, body });
+
   await expect(page.locator('[popover][hidden] [role="treeitem"]')).toHaveCount(5);
   await page.addScriptTag({ type: 'module', url: '/tree-select-virtual-hydration.client.ts' });
   await page.waitForFunction(() => window.virtualTreeSelectHydration);
+
   await expect.poll(() => page.evaluate(readTreeSelectVirtual, 'native')).toMatchObject({
     open: true, viewport: { count: 5, height: 84, top: 1627, active: 'Node 60' }
   });
   expect(await page.evaluate(() => window.virtualTreeSelectHydration!.popup
     === document.querySelector('[popover]:popover-open'))).toBe(true);
   await page.evaluate(() => window.virtualTreeSelectHydration!.dispose());
+
   await expect(page.locator('[popover]:popover-open')).toHaveCount(0);
 });
 
@@ -98,10 +106,12 @@ test('TreeSelect hydrates declarative nodes and the existing popup without repla
     document.head.insertAdjacentHTML('beforeend', head);
     document.getElementById('root')!.innerHTML = body;
   }, { head, body });
+
   await expect(page.locator('[popover][hidden] [role="treeitem"]')).toHaveCount(5);
   await page.addScriptTag({ type: 'module', url: '/tree-select-nodes-hydration.client.ts' });
   await page.waitForFunction(() => window.declaredTreeSelectHydration);
   const input = page.getByRole('combobox', { name: 'Declared selection', exact: true });
+
   await expect(page.locator('[popover]:popover-open .ant-tree-title'))
     .toHaveText(['Node Parent', 'Node Zero', 'Node Beta', 'Node Disabled', 'Node Tail']);
   expect(await page.evaluate(() => ({
@@ -109,9 +119,11 @@ test('TreeSelect hydrates declarative nodes and the existing popup without repla
     popup: window.declaredTreeSelectHydration!.popup === document.querySelector('[popover]:popover-open')
   }))).toEqual({ input: true, popup: true });
   await page.locator('[popover]:popover-open [data-node-marker="beta"] [data-ant-tree-content]').click();
+
   await expect(input).toHaveValue('Node Beta');
   await expect(input).toBeFocused();
   await page.evaluate(() => window.declaredTreeSelectHydration!.dispose());
+
   await expect(page.locator('[popover]:popover-open')).toHaveCount(0);
 });
 
@@ -129,18 +141,22 @@ test('TreeSelect hydrates autofocus without taking focus from another control an
   await outside.focus();
   await page.addScriptTag({ type: 'module', url: '/tree-select-trigger-hydration.client.ts' });
   await page.waitForFunction(() => window.treeSelectTriggerHydration);
+
   await expect(outside).toBeFocused();
   await expect(page.locator('[data-trigger-events]')).toHaveText('[]');
   const editor = page.getByRole('combobox', { name: 'Trigger selection', exact: true });
+
   expect(await page.evaluate(() => ({
     input: window.treeSelectTriggerHydration!.input === document.querySelector('[aria-label="Trigger selection"]'),
     root: window.treeSelectTriggerHydration!.root === document.querySelector('.ant-select')
   }))).toEqual({ input: true, root: true });
   await page.getByRole('button', { name: 'Focus trigger ref', exact: true }).dispatchEvent('click');
+
   await expect(editor).toBeFocused();
   await expect(editor).toHaveAttribute('aria-expanded', 'true');
   await expect(page.locator('[data-trigger-events]')).toHaveText('[["open",true],["focus","DIV"]]');
   await page.evaluate(() => window.treeSelectTriggerHydration!.dispose());
+
   await expect(page.locator('[popover]')).toHaveCount(0);
 });
 
@@ -158,6 +174,7 @@ test('TreeSelect hydrates custom Form feedback in place and keeps its field duri
   await outside.focus();
   await page.addScriptTag({ type: 'module', url: '/form-feedback-hydration.client.ts' });
   await page.waitForFunction(() => window.formFeedbackHydration);
+
   await expect(outside).toBeFocused();
   expect(await page.evaluate(() => ({
     input: window.formFeedbackHydration!.input === document.querySelector('[aria-label="Feedback selection"]'),
@@ -167,11 +184,13 @@ test('TreeSelect hydrates custom Form feedback in place and keeps its field duri
   await input.focus();
   await page.getByRole('combobox', { name: 'Feedback action', exact: true }).selectOption('1');
   await page.getByRole('button', { name: 'Apply feedback action', exact: true }).dispatchEvent('click');
+
   await expect(page.locator('[data-custom-feedback]')).toHaveText('local 0 error');
   await expect(input).toBeFocused();
   expect(await page.evaluate(() => window.formFeedbackHydration!.input
     === document.querySelector('[aria-label="Feedback selection"]'))).toBe(true);
   await page.evaluate(() => window.formFeedbackHydration!.dispose());
+
   await expect(page.locator('[class*="-item-feedback-icon"]')).toHaveCount(0);
 });
 
@@ -190,6 +209,7 @@ for (const control of ['input', 'textarea', 'number', 'select']) {
     await outside.focus();
     await page.addScriptTag({ type: 'module', url: '/form-feedback-control-hydration.client.ts' });
     await page.waitForFunction(() => window.formFeedbackControlHydration);
+
     await expect(outside).toBeFocused();
     expect(await page.evaluate(() => ({
       input: window.formFeedbackControlHydration!.input === document.querySelector('[aria-label="Feedback field"]'),
@@ -199,11 +219,13 @@ for (const control of ['input', 'textarea', 'number', 'select']) {
     await input.focus();
     await page.getByRole('combobox', { name: 'Feedback action', exact: true }).selectOption('1');
     await page.getByRole('button', { name: 'Apply feedback action', exact: true }).dispatchEvent('click');
+
     await expect(page.locator('[data-custom-feedback]')).toHaveText('local 0 error');
     await expect(input).toBeFocused();
     expect(await page.evaluate(() => window.formFeedbackControlHydration!.input
       === document.querySelector('[aria-label="Feedback field"]'))).toBe(true);
     await page.evaluate(() => window.formFeedbackControlHydration!.dispose());
+
     await expect(input).toHaveCount(0);
     await expect(page.locator('[class*="-item-feedback-icon"]')).toHaveCount(0);
   });

@@ -30,7 +30,8 @@ for (const entry of reference.cases) {
       if (entry.sample.mode !== 'single') {
         await expect(page.locator('.ant-select-selection-item-content'))
           .toHaveText(entry.selectedLabels);
-      } else if (entry.selectedLabels.length) {
+      }
+      else if (entry.selectedLabels.length) {
         await expect(input).toHaveValue(entry.selectedLabels[0]);
       }
     });
@@ -43,17 +44,21 @@ test('Select optionRender keeps selected labels, native FormData, keyboard and r
     const input = page.getByRole('combobox', { name: 'Rendered choice', exact: true });
     await input.click();
     await physicalSelectOption(page, { name: 'Alpha / first', exact: true }).click();
+
     await expect(page.locator('.ant-select-selection-item-content')).toHaveText(['Alpha']);
     await expect(input).toBeFocused();
     await input.press('Home');
     await input.press('Enter');
+
     await expect(page.locator('.ant-select-selection-item-content')).toHaveText(['Alpha', 'Zero']);
     const values = () => page.locator('form').evaluate((node: HTMLFormElement) =>
       new FormData(node).getAll('choice'));
+
     await expect.poll(values).toEqual(['a', '0']);
     await expect(page.locator('#option-render-events')).toHaveText('["a"]|["a",0]');
     await input.press('Escape');
     await page.getByRole('button', { name: 'Reset rendered choice', exact: true }).click();
+
     await expect.poll(values).toEqual([]);
     await expect(page.locator('.ant-select-selection-item-content')).toHaveCount(0);
   });
@@ -75,6 +80,7 @@ test('Select replaces optionRender without resetting popup input focus or select
     await expect(input).toHaveAttribute('aria-expanded', 'true');
   }
   await input.press('Enter');
+
   await expect(input).toHaveValue('Alpha');
   await expect(page.locator('#option-render-events')).toHaveText('"a"');
 });
@@ -85,8 +91,10 @@ test('Select optionRender keeps raw disabled metadata separate from maxCount and
       .selectOption('multiple-cap');
     const input = page.getByRole('combobox', { name: 'Rendered choice', exact: true });
     await input.click();
+
     await expect(physicalSelectOption(page, { name: 'Gamma / last', exact: true })).toBeDisabled();
     await physicalSelectOption(page, { name: 'Alpha / first', exact: true }).click();
+
     await expect(physicalSelectOption(page, { name: 'Gamma / last', exact: true })).toBeEnabled();
     await page.keyboard.press('Control+Alt+h');
 

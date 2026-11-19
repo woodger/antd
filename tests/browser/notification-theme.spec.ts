@@ -17,6 +17,7 @@ for (const sample of reference.cases) {
         await page.getByLabel('Notification theme preset', { exact: true })
           .selectOption(sample.name);
         await page.getByLabel('Notification theme scope', { exact: true }).selectOption(scope);
+
         await expect(page.locator('.ant-notification-notice')).toBeVisible();
         await page.mouse.move(20, 1100);
 
@@ -40,6 +41,7 @@ for (const sample of reference.cases) {
         await page.getByLabel('Notification theme preset', { exact: true })
           .selectOption(sample.name);
         await page.getByLabel('Notification theme mode', { exact: true }).selectOption(mode);
+
         await expect(page.locator('.ant-notification-notice')).toBeVisible();
         await page.mouse.move(20, 1100);
         if (mode === 'close-hover') await page.locator('.ant-notification-notice-close').hover();
@@ -72,6 +74,7 @@ test('Notification token updates preserve action controls, selection, focus and 
     const originalInput = await input.elementHandle();
     const originalAction = await action.elementHandle();
     const viewport = await surface.evaluate(node => [node.style.width, node.style.left]);
+
     expect(viewport.every(Boolean)).toBe(true);
 
     await page.getByRole('button', { name: 'Update Notification tokens', exact: true })
@@ -125,6 +128,7 @@ test('Notification token updates do not restart a running duration timer', async
   await page.getByRole('button', { name: 'Open timed themed notification', exact: true })
     .dispatchEvent('click');
   const timed = page.locator('.timed-theme-notification');
+
   await expect(timed).toBeVisible();
 
   await page.clock.runFor(600);
@@ -193,6 +197,7 @@ for (const mode of ['success', 'warning'] as const) {
         sample => sample.name === 'component-tokens'
       )!;
       const equivalent = reference.cases.find(sample => sample.name === 'component-tokens')!;
+
       expect(source.backgrounds[mode]).not.toBe(equivalent.modes[mode].notice['background-color']);
 
       await page.getByLabel('Explicit matching Notification colors', { exact: true }).check();
@@ -207,6 +212,7 @@ for (const mode of ['success', 'warning'] as const) {
 test('Notification keeps close reachable with explicit undefined width instead of source clipping',
   async ({ page }) => {
     const source = widthObservation.cases.find(sample => sample.name === 'undefined-width')!;
+
     expect(source.metrics.closeHit?.hit).toBe(false);
 
     await page.getByLabel('Undefined Notification width', { exact: true }).check();

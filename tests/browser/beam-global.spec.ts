@@ -23,6 +23,7 @@ test('Global beam prefix changes preserve layers targets and focused drafts', as
   const target = scope.locator('[data-beam-global-target]');
   const oldTarget = await target.elementHandle();
   const layers = target.locator(':scope > [aria-hidden="true"]');
+
   await expect(layers).toHaveCount(2);
   const oldLayers = await layers.elementHandles();
   const input = page.getByRole('textbox', { name: 'normal widget draft', exact: true });

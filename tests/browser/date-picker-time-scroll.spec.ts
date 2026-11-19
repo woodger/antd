@@ -30,7 +30,10 @@ for (const sample of samples) {
     page.on('pageerror', error => errors.push({ name: error.name, message: error.message }));
     page.on('console', message => diagnostics.push({ type: message.type(), text: message.text() }));
     page.on('request', request => requests.push({ url: request.url(), method: request.method() }));
-    page.on('response', response => responses.push({ url: response.url(), status: response.status() }));
+    page.on(
+      'response',
+      response => responses.push({ url: response.url(), status: response.status() })
+    );
     page.on('requestfailed', request => failedRequests.push({
       url: request.url(), failure: request.failure()
     }));
@@ -44,7 +47,13 @@ for (const sample of samples) {
       await openTimeScroll(page, sample);
       const initial = await settleTimeScroll(page);
       await attach('initial-complete-scoped-raw', initial);
-      verifyTimeScrollPoint(initial, readTimeScrollSourcePart(source.initial), sample, proof, 'initial');
+      verifyTimeScrollPoint(
+        initial,
+        readTimeScrollSourcePart(source.initial),
+        sample,
+        proof,
+        'initial'
+      );
       let closedIndex = 0;
       for (const [index, action] of sample.actions.entries()) {
         const original = readTimeScrollSourcePart<SourceStep>(source.steps[index]);
@@ -82,7 +91,8 @@ for (const sample of samples) {
       if (!disposed) {
         try {
           await attach('finally-actual-disposal', await disposeTimeScroll(page));
-        } catch (error) {
+        }
+        catch (error) {
           errors.push({ phase: 'finally', message: String(error) });
         }
       }

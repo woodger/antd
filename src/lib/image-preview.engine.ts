@@ -65,7 +65,8 @@ export function fixImagePosition(
     if (size > client) {
       if (start > 0) return { [key]: offset };
       if (start < 0 && start + size < client) return { [key]: -offset };
-    } else if (start < 0 || start + size > client) return { [key]: start < 0 ? offset : -offset };
+    }
+    else if (start < 0 || start + size > client) return { [key]: start < 0 ? offset : -offset };
     return {};
   }
   return { ...fix('x', left, width, viewport.width), ...fix('y', top, height, viewport.height) };

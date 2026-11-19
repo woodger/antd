@@ -39,7 +39,8 @@ export function previewImage(file: File | Blob): Promise<string> {
       if (width > height) {
         drawHeight = height * (MEASURE_SIZE / width);
         offsetY = -(drawHeight - drawWidth) / 2;
-      } else {
+      }
+      else {
         drawWidth = width * (MEASURE_SIZE / height);
         offsetX = -(drawWidth - drawHeight) / 2;
       }
@@ -64,7 +65,8 @@ export function previewImage(file: File | Blob): Promise<string> {
         }
       };
       reader.readAsDataURL(file);
-    } else {
+    }
+    else {
       img.src = window.URL.createObjectURL(file);
     }
   });

@@ -118,7 +118,10 @@
     onNavigate(
       datePanel
         ? cellPanel.add(amount, large ? 'year' : 'month')
-        : cellPanel.add(amount * (mode === 'month' || mode === 'quarter' ? 1 : mode === 'year' ? 10 : 100), 'year')
+        : cellPanel.add(
+          amount * (mode === 'month' || mode === 'quarter' ? 1 : mode === 'year' ? 10 : 100),
+          'year'
+        )
     );
   }
   function selectedCell(date: Dayjs) {
@@ -155,7 +158,10 @@
         : !!restrictions.maxDate && target.startOf('month').isAfter(restrictions.maxDate, 'day');
     }
     if (picker === 'date' || mode === 'date') return false;
-    const target = cellPanel.add(amount * (mode === 'month' || mode === 'quarter' ? 1 : mode === 'year' ? 10 : 100), 'year');
+    const target = cellPanel.add(
+      amount * (mode === 'month' || mode === 'quarter' ? 1 : mode === 'year' ? 10 : 100),
+      'year'
+    );
     const size = mode === 'month' || mode === 'quarter' ? 1 : mode === 'year' ? 10 : 100;
     const first = Math.floor(target.year() / size) * size;
     const last = first + size - 1;

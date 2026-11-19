@@ -7,7 +7,11 @@ import type { ModalLoadingCapture, ModalLoadingProbe } from '../modal-loading-me
 const sample = modalLoadingSamples.find(sample => sample.id === new URL(location.href).searchParams.get('sample'));
 if (!sample) throw Error('Unknown frozen Modal.loading sample');
 const capture: ModalLoadingCapture = {};
-const api = { read: () => capture.read!(), readRefs: () => capture.readRefs!(), update: (action: ModalLoadingUpdate) => capture.update!(action) };
+const api = {
+  read: () => capture.read!(),
+  readRefs: () => capture.readRefs!(),
+  update: (action: ModalLoadingUpdate) => capture.update!(action)
+};
 const rawState: { current: typeof api; modalLoadingProbe?: ModalLoadingProbe } = { current: api };
 Object.assign(window, { raw: rawState });
 initializeModalLoadingProbe();
@@ -18,4 +22,7 @@ const app = mount(Case, { target, props: { sample, capture } });
 await tick();
 window.modalLoadingNative = { ready: true, read: api.read, readRefs: api.readRefs,
   update: action => flushSync(() => capture.update!(action)),
-  async dispose() { await unmount(app); await tick(); } };
+  async dispose() {
+    await unmount(app);
+    await tick();
+  } };

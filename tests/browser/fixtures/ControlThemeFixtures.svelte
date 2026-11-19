@@ -19,7 +19,12 @@
     components: {
       Button: { colorPrimary: buttonColor, algorithm: true, fontWeight: 600, iconGap: 3 },
       Input: { colorPrimary: '#00b96b', algorithm: true, inputFontSize: font, paddingInline: 5 },
-      InputNumber: { handleWidth: width, handleVisible: true, inputFontSize: font, controlWidth: 170 },
+      InputNumber: {
+        handleWidth: width,
+        handleVisible: true,
+        inputFontSize: font,
+        controlWidth: 170
+      },
       Addon: { colorText: '#a011bb' }
     }
   });

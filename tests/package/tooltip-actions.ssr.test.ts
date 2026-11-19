@@ -34,7 +34,8 @@ describe('Tooltip action public package SSR', () => {
           .toContain('aria-label="Lifecycle events">[]');
         if (sample.mode === 'tooltip') {
           expect(body).toMatch(/role="tooltip"[^>]*\shidden(?:[\s=>])/);
-        } else expect(body).not.toContain('role="tooltip"');
+        }
+        else expect(body).not.toContain('role="tooltip"');
         expect(vi.getTimerCount()).toBe(0);
       } finally {
         vi.useRealTimers();

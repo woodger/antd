@@ -378,7 +378,10 @@
       anchorWidthVariable: '--cascader-anchor-width',
       getAnchorWidth: () => source.width,
       preserveFocus: !children,
-      applyPosition: value => untrack(() => source.commitFrame(() => popupOverlay.position(value, source.style))),
+      applyPosition: value => untrack(() => source.commitFrame(() => popupOverlay.position(
+        value,
+        source.style
+      ))),
       onAlign: value => { alignedPopupPlacement = value.alignedPlacement; },
       onPlacement: () => { },
       onVisibilityChange: next => { shown = next; },
@@ -513,7 +516,8 @@
       event.preventDefault();
       event.stopPropagation();
       requestOpen(false);
-    } else if (key === 'Backspace' && !panel && isMultiple && !search && !clearLocked) {
+    }
+    else if (key === 'Backspace' && !panel && isMultiple && !search && !clearLocked) {
       const last = display.findLast(item => !item.disabled);
       if (last) choose(last.path);
     }
@@ -526,7 +530,8 @@
         if (row) selectRow(row, true);
       }
       if (key === 'Enter') enterHeld = true;
-    } else if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Backspace'].includes(key)) {
+    }
+    else if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Backspace'].includes(key)) {
       const editingSearch = Boolean(search) && (key === 'ArrowLeft' || key === 'ArrowRight');
       if (key !== 'Backspace' && !editingSearch) event.preventDefault();
       if (!visible && key !== 'Backspace' && !editingSearch) requestOpen(true);

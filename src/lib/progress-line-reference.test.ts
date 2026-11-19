@@ -31,6 +31,7 @@ describe('Ant Design 6.6.8 UMD Progress line conformance', () => {
           sample.props.size as ProgressLineSize, rounding);
 
         const prefix = sample.props.prefixCls || 'ant-progress';
+
         expect(layout.items).toEqual(sample.snapshot.tracks.map(track =>
           track.classes.includes(`${prefix}-steps-item-active`)));
       });

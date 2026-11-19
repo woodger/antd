@@ -23,24 +23,35 @@ export async function treeDragEvents(page: Page): Promise<{
 export async function treeDragAction(page: Page, action: TreeDragAction, prefix = 'ant-tree') {
   if (action.kind === 'wait') {
     await page.clock.runFor(action.milliseconds);
-  } else if (action.kind === 'allow') {
-    await page.getByRole('button', { name: action.value ? 'Allow drag drop' : 'Deny drag drop', exact: true })
+  }
+  else if (action.kind === 'allow') {
+    await page.getByRole(
+      'button',
+      { name: action.value ? 'Allow drag drop' : 'Deny drag drop', exact: true }
+    )
       .click();
-  } else if (action.kind === 'prefix') {
+  }
+  else if (action.kind === 'prefix') {
     await page.getByRole('button', { name: 'Change drag prefix', exact: true }).click();
-  } else if (action.kind === 'payload') {
+  }
+  else if (action.kind === 'payload') {
     await page.getByRole('button', { name: 'Update drag payload', exact: true }).click();
-  } else if (action.kind === 'append-child') {
+  }
+  else if (action.kind === 'append-child') {
     await page.getByRole('button', { name: 'Append drag descendant', exact: true }).click();
-  } else if (action.kind === 'unmount') {
+  }
+  else if (action.kind === 'unmount') {
     await page.getByRole('button', { name: 'Toggle drag mount', exact: true }).click();
-  } else if (action.kind === 'scroll') {
+  }
+  else if (action.kind === 'scroll') {
     await page.getByRole('button', { name: 'Scroll drag tree', exact: true }).click();
-  } else if (action.kind === 'windowend') {
+  }
+  else if (action.kind === 'windowend') {
     await page.evaluate(() => window.dispatchEvent(new DragEvent('dragend', {
       bubbles: true, cancelable: true, dataTransfer: new DataTransfer()
     })));
-  } else {
+  }
+  else {
     return page.evaluate(({ action, prefix }) => {
       const root = document.querySelector(`.${prefix}`)!;
       const title = root.querySelector(`[data-tree-drag-key="${action.key}"]`);

@@ -78,6 +78,7 @@ test('Listy prefix updates retain virtual scroll, sticky header and the edited k
   await editor.evaluate((node: HTMLInputElement) => { node.setSelectionRange(2, 7); });
   const oldEditor = await editor.elementHandle();
   const top = await holder.evaluate(node => node.scrollTop);
+
   expect(top).toBeGreaterThan(0);
 
   for (const [prefix, local] of [['next', false], ['records', true]] as const) {

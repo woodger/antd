@@ -50,28 +50,34 @@ it('rejects a changed measured width, color, padding side or physical box', () =
   }
   const changed = structuredClone(physical);
   changed.presets[0].box.width += 1;
+
   expect(() => verifyDatePickerPresetsPhysical(changed, source, 'box', 'vite-hmr')).toThrow();
 });
 it('rejects an arbitrary scope class, wrong renderer or extra literal child', () => {
   const source = sourcePhysical(), changed = structuredClone(physical);
   changed.presets[0].attributes = [['class', 'unexpected']];
+
   expect(() => verifyDatePickerPresetsPhysical(changed, source, 'scope', 'vite-hmr')).toThrow();
   expect(() => verifyDatePickerPresetsPhysical(physical, source, 'renderer', 'no-hmr')).toThrow();
   const literal = structuredClone(physical);
   literal.presets[0].children!.push({ identity: -1, type: 3, name: '#text', text: 'extra' });
+
   expect(() => verifyDatePickerPresetsPhysical(literal, source, 'literal', 'vite-hmr')).toThrow();
 });
 it('rejects altered custom label HTML and unknown compiler anchors', () => {
   const source = sourcePhysical(), changed = structuredClone(physical);
   changed.authoredLabels[0].html += '<i>extra</i>';
+
   expect(() => verifyDatePickerPresetsPhysical(changed, source, 'label', 'vite-hmr')).toThrow();
   const anchor = structuredClone(physical);
   anchor.popups[0].allElements[0].html = anchor.popups[0].allElements[0].html!
     .replace('<!---->', '<!--unknown-->');
+
   expect(() => verifyDatePickerPresetsPhysical(anchor, source, 'anchor', 'vite-hmr')).toThrow();
 });
 it('accepts the actual returned Dayjs object and rejects a substituted alias', () => {
   const source = sourceReturn(), identities = createDatePickerPresetsIdentityProof();
+
   expect(() => verifyDatePickerPresetsReturnedDate(nativeReturn, source, identities, 'actual'))
     .not.toThrow();
   const cloned = structuredClone(nativeReturn);
@@ -80,6 +86,7 @@ it('accepts the actual returned Dayjs object and rejects a substituted alias', (
   cloned.identity = old + 100000;
   graph.root.ref = cloned.identity;
   graph.objects.find(node => node.id === old)!.id = cloned.identity;
+
   expect(() => verifyDatePickerPresetsReturnedDate(cloned, source, identities, 'substitution'))
     .toThrow();
 });
@@ -88,33 +95,40 @@ it('rejects changing full preset milliseconds or the recorded lazy return relati
   changed.temporal!.epoch += 1;
   changed.temporal!.iso = new Date(changed.temporal!.epoch).toISOString();
   changed.temporal!.fields[6] += 1;
+
   expect(() => verifyDatePickerPresetsReturnedDate(changed, source,
     createDatePickerPresetsIdentityProof(), 'precision')).toThrow();
   const alias = structuredClone(nativeReturn);
   alias.sameAsLazyReturns[0] = false;
+
   expect(() => verifyDatePickerPresetsReturnedDate(alias, source,
     createDatePickerPresetsIdentityProof(), 'return')).toThrow();
 });
 it('accepts numeric UTC zero signs and rejects a changed offset or temporal field set', () => {
   const source = sourceReturn(), negativeZero = structuredClone(nativeReturn);
   negativeZero.temporal!.utcOffset = -0;
+
   expect(() => verifyDatePickerPresetsReturnedDate(negativeZero, source,
     createDatePickerPresetsIdentityProof(), 'negative zero')).not.toThrow();
   const offset = structuredClone(nativeReturn);
   offset.temporal!.utcOffset = 60;
+
   expect(() => verifyDatePickerPresetsReturnedDate(offset, source,
     createDatePickerPresetsIdentityProof(), 'offset')).toThrow();
   const extra = structuredClone(nativeReturn);
   Object.assign(extra.temporal!, { unexpected: true });
+
   expect(() => verifyDatePickerPresetsReturnedDate(extra, source,
     createDatePickerPresetsIdentityProof(), 'extra field')).toThrow();
   const missing = structuredClone(nativeReturn);
   delete (missing.temporal as Partial<NonNullable<DatePickerPresetValue['temporal']>>).fields;
+
   expect(() => verifyDatePickerPresetsReturnedDate(missing, source,
     createDatePickerPresetsIdentityProof(), 'missing field')).toThrow();
 });
 it('accepts only the observed connected removal blur after the exact live callback prefix', () => {
   const source = sourceRemoval();
+
   expect(() => verifyDatePickerPresetsRemovalBlur(nativeBefore, nativeAfter,
     source.before, source.after, sample, 'recorded')).not.toThrow();
 });
@@ -128,14 +142,17 @@ it('rejects missing metadata, disconnected targets, extra callbacks and a change
   }
   const missing = structuredClone(nativeAfter);
   delete missing.callbackInvocations.at(-1)!.nativeFocus;
+
   expect(() => verifyDatePickerPresetsRemovalBlur(nativeBefore, missing,
     source.before, source.after, sample, 'metadata')).toThrow();
   const extra = structuredClone(nativeAfter);
   extra.callbackInvocations.push(structuredClone(extra.callbackInvocations.at(-1)!));
+
   expect(() => verifyDatePickerPresetsRemovalBlur(nativeBefore, extra,
     source.before, source.after, sample, 'extra')).toThrow();
   const prefix = structuredClone(nativeAfter);
   prefix.callbackInvocations[0].actionIndex += 1;
+
   expect(() => verifyDatePickerPresetsRemovalBlur(nativeBefore, prefix,
     source.before, source.after, sample, 'prefix')).toThrow();
 });
@@ -144,6 +161,7 @@ it('rejects a pre-calendar validation even when a later valid-looking call remai
   const source = readDatePickerPresetsStep(sample.id, 9).actual.owner;
   const native = proof.validationOrder as unknown as Pick<DatePickerPresetOwner,
     'calls' | 'callbackInvocations'>;
+
   expect(() => verifyDatePickerPresetsValidationOrder(native, source, sample)).not.toThrow();
   const changed = structuredClone(native);
   const calendar = changed.callbackInvocations.find(row => row.name === 'calendar')!;
@@ -154,5 +172,6 @@ it('rejects a pre-calendar validation even when a later valid-looking call remai
   graph.root.ref = (calendar.rawArguments as { root: { ref: number } }).root.ref - 1;
   graph.objects.find(node => node.id === old)!.id = graph.root.ref;
   changed.calls.unshift(first);
+
   expect(() => verifyDatePickerPresetsValidationOrder(changed, source, sample)).toThrow();
 });

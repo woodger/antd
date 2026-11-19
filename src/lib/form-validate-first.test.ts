@@ -7,7 +7,10 @@ import { getFormHooks } from './form-internal';
 function deferred<Value>() {
   let resolve!: (value: Value) => void;
   let reject!: (error: unknown) => void;
-  const promise = new Promise<Value>((complete, fail) => { resolve = complete; reject = fail; });
+  const promise = new Promise<Value>((complete, fail) => {
+    resolve = complete;
+    reject = fail;
+  });
 
   return { promise, resolve, reject };
 }
@@ -18,13 +21,20 @@ describe('Form validateFirst rules', () => {
     const second = deferred<string>();
     const calls: string[] = [];
     const result = validateFieldValue('Anna', {}, [
-      { validator: () => { calls.push('first'); return first.promise; } },
-      { validator: () => { calls.push('second'); return second.promise; } }
+      { validator: () => {
+        calls.push('first');
+        return first.promise;
+      } },
+      { validator: () => {
+        calls.push('second');
+        return second.promise;
+      } }
     ], mode);
 
     expect(calls).toEqual(['first', 'second']);
     second.resolve('Second');
     first.resolve('First');
+
     expect(await result).toEqual({ errors: ['First', 'Second'], warnings: [] });
   });
 
@@ -32,7 +42,10 @@ describe('Form validateFirst rules', () => {
     const calls: string[] = [];
     const result = await validateFieldValue('', {}, [
       { required: true, message: 'Required' },
-      { validator: () => { calls.push('later'); return 'Later'; } }
+      { validator: () => {
+        calls.push('later');
+        return 'Later';
+      } }
     ], true);
 
     expect(result).toEqual({ errors: ['Required'], warnings: [] });
@@ -44,9 +57,17 @@ describe('Form validateFirst rules', () => {
     const entered = deferred<void>();
     const calls: string[] = [];
     const result = validateFieldValue('Anna', {}, [
-      { validator: () => { calls.push('first'); return first.promise; } },
-      { validator: () => { calls.push('second'); entered.resolve(); return 'Second'; } }
+      { validator: () => {
+        calls.push('first');
+        return first.promise;
+      } },
+      { validator: () => {
+        calls.push('second');
+        entered.resolve();
+        return 'Second';
+      } }
     ], true);
+
     expect(calls).toEqual(['first']);
 
     first.resolve();
@@ -92,12 +113,17 @@ describe('Form validateFirst rules', () => {
     let settled = false;
     const result = validateFieldValue('Anna', {}, [
       { validator: () => first.promise }, { validator: () => second.promise }
-    ], 'parallel').then((value) => { settled = true; return value; });
+    ], 'parallel').then((value) => {
+      settled = true;
+      return value;
+    });
     first.resolve();
     await first.promise;
+
     expect(settled).toBe(false);
 
     second.resolve();
+
     expect(await result).toEqual({ errors: [], warnings: [] });
   });
 
@@ -108,12 +134,17 @@ describe('Form validateFirst rules', () => {
     const result = validateFieldValue('Anna', {}, [
       { warningOnly: true, validator: () => warning.promise },
       { validator: () => blocking.promise }
-    ], 'parallel').then((value) => { settled = true; return value; });
+    ], 'parallel').then((value) => {
+      settled = true;
+      return value;
+    });
     warning.resolve('Warning');
     await warning.promise;
+
     expect(settled).toBe(false);
 
     blocking.resolve(fail ? 'Error' : undefined);
+
     expect(await result).toEqual(fail
       ? { errors: ['Error'], warnings: [] } : { errors: [], warnings: ['Warning'] });
   });
@@ -145,15 +176,18 @@ describe('createForm validateFirst bindings', () => {
       name: 'name', get validateFirst() { return mode; },
       rules: [{ validator: () => 'First' }, { validator: () => 'Second' }]
     });
+
     await expect(form.validateFields(['name'])).rejects.toMatchObject({
       errors: { name: ['First'] }, values: { name: 'Anna', sibling: 'Kept' }
     });
 
     mode = false;
+
     await expect(form.validateFields(['name'])).rejects.toMatchObject({
       errors: { name: ['First', 'Second'] }
     });
     remove();
+
     expect(form.getFieldError('name')).toEqual([]);
   });
 
@@ -191,6 +225,7 @@ describe('createForm validateFirst bindings', () => {
     expect(form.isFieldTouched('name')).toBe(true);
     expect(form.isFieldValidating('name')).toBe(false);
     await tick();
+
     expect(form.getFieldsError()).toEqual(before);
   });
 });

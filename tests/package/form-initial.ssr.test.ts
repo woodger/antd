@@ -13,6 +13,7 @@ describe('Form field initial values public package', () => {
     expect(reference.defaultUpdate.updated.metrics.inputs).toEqual(['First']);
     expect(reference.defaultUpdate.reset.metrics.inputs).toEqual(['Second']);
     const list = reference.cases.find(({ sample }) => sample.id === 'list-local')!;
+
     expect(list.selectedReset.inputs).toEqual(['']);
     expect(list.fullReset.inputs).toEqual(['Local']);
   });

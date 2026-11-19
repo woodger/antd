@@ -111,11 +111,20 @@ export interface WeekSourceCase {
   producerParts: WeekSourceProducerReference[]; producerFinalCount: number;
   beforeUnmount: WeekSourceReference; cleanup: WeekSourceReference; late: WeekSourceReference;
   failure: null; interruptedAction: null; observationErrors: unknown[];
-  network: { requests: unknown[]; responses: Array<{ url: string; status: number; }>; failures: unknown[]; };
+  network: {
+    requests: unknown[];
+    responses: Array<{ url: string; status: number; }>;
+    failures: unknown[];
+  };
 }
 interface WeekSourceCaptureHeader {
   status: string; variant: WeekSourceVariant;
-  sourceProtocol: { file: string; sha256: string; reviewedProposalSHA256: string; rootLease: string; };
+  sourceProtocol: {
+    file: string;
+    sha256: string;
+    reviewedProposalSHA256: string;
+    rootLease: string;
+  };
   terminalInputVerification: { unchanged: boolean; sha256: string; }; diagnostics: unknown[];
 }
 export interface WeekSourceCSRManifest extends WeekSourceCaptureHeader {

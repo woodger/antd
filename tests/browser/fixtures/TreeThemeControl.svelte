@@ -27,7 +27,11 @@
     return new Promise<void>(resolve => { finish = resolve; });
   }
   function resolveLoad() {
-    lazy = [{ key: 'load', title: 'Load branch', children: [{ key: 'done', title: 'Loaded child' }] }];
+    lazy = [{
+      key: 'load',
+      title: 'Load branch',
+      children: [{ key: 'done', title: 'Loaded child' }]
+    }];
     finish?.();
   }
 </script>

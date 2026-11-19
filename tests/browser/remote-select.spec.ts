@@ -120,7 +120,9 @@ test(
     const input = page.getByRole('combobox', { name: 'Remote single', exact: true });
 
     await input.click();
-    await physicalSelectPopup(page).locator('[class$="-list-holder"]').evaluate(node => { node.scrollTop = node.scrollHeight; });
+    await physicalSelectPopup(page).locator('[class$="-list-holder"]').evaluate(node => {
+      node.scrollTop = node.scrollHeight;
+    });
 
     await expect(physicalSelectOption(page, { name: 'Appended result', exact: true })).toBeVisible();
 

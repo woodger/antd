@@ -4,7 +4,14 @@ const attr = (node, name) => node.attributes.find(row => row[0] === name)?.[1] ?
 const props = value => Object.fromEntries(value.properties.map(row => [row.key, row.value]));
 const nonFocus = calls => calls.filter(call => !['focus', 'blur'].includes(call.name));
 export function createTimeScrollProof() {
-  return { root: null, input: null, points: 0, previousVisible: null, boundaries: [], transitions: [] };
+  return {
+    root: null,
+    input: null,
+    points: 0,
+    previousVisible: null,
+    boundaries: [],
+    transitions: []
+  };
 }
 function sameTemporal(actual, source) {
   assert.deepEqual(Object.keys(actual), Object.keys(source));
@@ -121,7 +128,10 @@ export function verifyTimeScrollPoint(actual, source, sample, proof, label) {
         assert.equal(row.button.tag, 'BUTTON');
         assert.equal(attr(row.button, 'aria-pressed'), String(expectedRow.selectedClass));
         if (column.type !== 'meridiem') {
-          assert.equal(attr(row.button, 'aria-label'), column.type + ' ' + expectedRow.valueAttribute);
+          assert.equal(
+            attr(row.button, 'aria-label'),
+            column.type + ' ' + expectedRow.valueAttribute
+          );
         }
       }
     }
@@ -147,7 +157,8 @@ export function verifyTimeScrollPoint(actual, source, sample, proof, label) {
       assert(nativeVisible.every(popup => popup.ancestors.some(node =>
         attr(node, 'data-scroll-target') === target)));
     }
-  } else {
+  }
+  else {
     proof.previousVisible = null;
     assert.equal(nativeVisible.length, 0);
   }
@@ -181,7 +192,8 @@ export function verifyTimeScrollActionEvidence(actual, action) {
     assert.equal(actual.observed.length, 1);
     assert.equal(actual.observed[0].isTrusted, true);
     assert.equal(actual.observed[0].deltaY, action.deltaY);
-  } else if (action.type.startsWith('owner-')) {
+  }
+  else if (action.type.startsWith('owner-')) {
     assert.equal(actual.click.type, 'click');
     assert.equal(actual.click.isTrusted, false);
     assert.equal(actual.click.targetMatches, true);

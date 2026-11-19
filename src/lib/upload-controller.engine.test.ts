@@ -56,7 +56,10 @@ const file = (name = 'a.txt') => new File(['content'], name, { type: 'text/plain
 describe('Upload imperative lifecycle', () => {
   it('publishes a manual batch without preprocessing or transport', () => {
     let prepared = 0;
-    const h = setup([], { beforeUpload: () => { prepared++; return true; } });
+    const h = setup([], { beforeUpload: () => {
+      prepared++;
+      return true;
+    } });
     const raw = Object.assign(file(), { uid: 'manual' });
 
     h.controller.onBatchStart([{ file: raw, parsedFile: null }]);

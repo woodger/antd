@@ -254,6 +254,7 @@ test(
       }
     });
     await page.keyboard.press('Control+Alt+o');
+
     await expect.poll(
       () =>
         dialog(page)
@@ -347,7 +348,8 @@ for (const placement of ['left', 'right', 'top', 'bottom']) {
         expect(bounds.width).toBeCloseTo(378, 0);
         expect(bounds.height).toBeCloseTo(viewport.height, 0);
         expect(bounds.x).toBeCloseTo(placement === 'left' ? 0 : viewport.width - bounds.width, 0);
-      } else {
+      }
+      else {
         expect(bounds.height).toBeCloseTo(378, 0);
         expect(bounds.width).toBeCloseTo(viewport.width, 0);
         expect(bounds.y).toBeCloseTo(placement === 'top' ? 0 : viewport.height - bounds.height, 0);

@@ -12,6 +12,7 @@ for (const sample of reference.cases) {
     await page.getByRole('combobox', { name: 'Tag close reference' }).selectOption(sample.name);
     const host = page.locator('#tag-close-surface');
     const root = host.locator('[data-tag-api-root]');
+
     await expect(root).toBeVisible();
 
     expect(await host.evaluate(snapshotTagClose)).toEqual(sample.snapshot);

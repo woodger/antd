@@ -52,9 +52,7 @@ test(
     const associations = await list(page).getByRole('tab')
       .evaluateAll((tabs) =>
         tabs
-          .map((
-            element
-          ) => {
+          .map((element) => {
             const target = element.ownerDocument
               .getElementById(element
                 .getAttribute('aria-controls')!);
@@ -209,8 +207,10 @@ test(
 
     await expect.poll(data).toEqual([['Alpha', 'Alpha initial']]);
     await tab(page, 'Beta').click();
+
     await expect.poll(data).toEqual([['Alpha', 'Alpha initial'], ['Beta', 'Beta initial']]);
     await page.getByLabel('Destroy hidden Tabs', { exact: true }).check();
+
     await expect.poll(data).toEqual([['Beta', 'Beta initial']]);
   }
 );
@@ -583,6 +583,7 @@ test(
 
     await page.keyboard.press('Enter');
     await page.setViewportSize({ width: 900, height: 800 });
+
     await expect.poll(async () => {
       const ink = (await root(page).locator('.ant-tabs-ink-bar').boundingBox())!;
       const bounds = (await tab(page, 'Beta').boundingBox())!;

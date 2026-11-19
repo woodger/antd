@@ -31,7 +31,12 @@ declare global {
     selectValueHydrationResources?: {
       observers: () => number; mutations: () => number; frames: () => number; timers: () => number; ports: () => number;
     };
-    selectValueHydrationDisposal?: { trace: DisposeTrace; popup: HTMLElement; holder: HTMLElement | null; stop: () => void };
+    selectValueHydrationDisposal?: {
+      trace: DisposeTrace;
+      popup: HTMLElement;
+      holder: HTMLElement | null;
+      stop: () => void
+    };
   }
 }
 
@@ -62,7 +67,10 @@ let server: ViteDevServer;
 let cache: string;
 test.use({ viewport: reference.reference.viewport });
 test.beforeAll(async () => {
-  cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)), 'select-value-hydration-'));
+  cache = await mkdtemp(join(
+    fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
+    'select-value-hydration-'
+  ));
   server = await createServer({
     configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
@@ -80,8 +88,12 @@ for (const id of ids) {
   test(`${id} strictly hydrates selected values, stable refs and complete disposal`, async ({ page }) => {
     const sample = selectValueSamples.find(sample => sample.id === id)!;
     const source = selectValueNativeCase(reference.cases.find(entry => entry.id === id)!);
-    const module = await server.ssrLoadModule(fileURLToPath(new URL('./fixtures/select-value-hydration.server.ts', import.meta.url)));
+    const module = await server.ssrLoadModule(fileURLToPath(new URL(
+      './fixtures/select-value-hydration.server.ts',
+      import.meta.url
+    )));
     const rendered = module.renderSelectValue(id);
+
     expect(rendered.domFree).toBe(true);
     await page.goto(`/select-value-hydration.html?sample=${id}`);
     await page.addScriptTag({ type: 'module', url: '/select-value-hydration.styles.client.ts' });
@@ -95,35 +107,65 @@ for (const id of ids) {
       const Mutation = window.MutationObserver;
       window.ResizeObserver = class extends Resize {
         targets = new Set<Element>();
-        constructor(callback: ResizeObserverCallback) { super(callback); observers.add(this.targets); }
-        observe(target: Element, options?: ResizeObserverOptions) { this.targets.add(target); super.observe(target, options); }
-        unobserve(target: Element) { this.targets.delete(target); super.unobserve(target); }
-        disconnect() { this.targets.clear(); super.disconnect(); }
+        constructor(callback: ResizeObserverCallback) {
+          super(callback);
+          observers.add(this.targets);
+        }
+        observe(target: Element, options?: ResizeObserverOptions) {
+          this.targets.add(target);
+          super.observe(target, options);
+        }
+        unobserve(target: Element) {
+          this.targets.delete(target);
+          super.unobserve(target);
+        }
+        disconnect() {
+          this.targets.clear();
+          super.disconnect();
+        }
       };
       window.MutationObserver = class extends Mutation {
-        observe(target: Node, options?: MutationObserverInit) { mutations.add(this); super.observe(target, options); }
-        disconnect() { mutations.delete(this); super.disconnect(); }
+        observe(target: Node, options?: MutationObserverInit) {
+          mutations.add(this);
+          super.observe(target, options);
+        }
+        disconnect() {
+          mutations.delete(this);
+          super.disconnect();
+        }
       };
       const frames = new Set<number>();
       const request = window.requestAnimationFrame.bind(window);
       const cancel = window.cancelAnimationFrame.bind(window);
       window.requestAnimationFrame = callback => {
-        const frame = request(time => { frames.delete(frame); callback(time); });
+        const frame = request(time => {
+          frames.delete(frame);
+          callback(time);
+        });
         frames.add(frame);
         return frame;
       };
-      window.cancelAnimationFrame = frame => { frames.delete(frame); cancel(frame); };
+      window.cancelAnimationFrame = frame => {
+        frames.delete(frame);
+        cancel(frame);
+      };
       const timers = new Set<number>();
       const browser: Window = window;
       const schedule = browser.setTimeout.bind(browser);
       const clear = browser.clearTimeout.bind(browser);
       browser.setTimeout = (handler, timeout, ...args) => {
         if (typeof handler !== 'function') throw Error('Expected a function hydration timer');
-        const timer = schedule(() => { timers.delete(timer); handler(...args); }, timeout);
+        const timer = schedule(() => {
+          timers.delete(timer);
+          handler(...args);
+        }, timeout);
         timers.add(timer);
         return timer;
       };
-      browser.clearTimeout = timer => { if (timer !== undefined) timers.delete(timer); clear(timer); };
+      browser.clearTimeout = timer => {
+        if (timer !== undefined) timers.delete(timer);
+        clear(timer);
+      };
       const ports = new Set<MessagePort>();
       const Channel = window.MessageChannel;
       window.MessageChannel = class extends Channel {
@@ -132,7 +174,10 @@ for (const id of ids) {
           for (const port of [this.port1, this.port2]) {
             ports.add(port);
             const close = port.close.bind(port);
-            port.close = () => { ports.delete(port); close(); };
+            port.close = () => {
+              ports.delete(port);
+              close();
+            };
           }
         }
       };
@@ -150,10 +195,15 @@ for (const id of ids) {
       const values = rawFormValues(model);
       return (sample.mode ? values : [values[0] ?? '']).map(value => ['value-selection', value]);
     };
+
     expect(await form()).toEqual(expectedForm(source.initial.view.model));
     await page.addScriptTag({ type: 'module', url: '/select-value-hydration.client.ts' });
     await page.waitForFunction(() => window.selectValueHydration);
-    await expect(page.locator('[data-select-value-case]')).toHaveAttribute('data-select-value-bound', 'true');
+
+    await expect(page.locator('[data-select-value-case]')).toHaveAttribute(
+      'data-select-value-bound',
+      'true'
+    );
     await prepareSelectValue(page);
     const identity = await page.evaluateHandle(() => {
       const state = window.selectValueHydration!;
@@ -189,7 +239,13 @@ for (const id of ids) {
       // Native's parsed SSR value attribute starts with caret 0; hydration keeps
       // that position instead of the end position produced by a CSR value setter.
       const initial = await settle(page);
-      verifySelectValue(initial, source.initial, sample, `${id}/hydrated-initial`, { hydratedInitial: true });
+      verifySelectValue(
+        initial,
+        source.initial,
+        sample,
+        `${id}/hydrated-initial`,
+        { hydratedInitial: true }
+      );
       expect(await bindings()).toEqual(expectedBindings);
       expect(await page.evaluate(() => ({ value: window.selectValueHydration!.editor.value,
         caret: [window.selectValueHydration!.editor.selectionStart, window.selectValueHydration!.editor.selectionEnd] })))
@@ -218,7 +274,13 @@ for (const id of ids) {
         const snapshot = (): DisposeSnapshot => ({ state: JSON.parse(JSON.stringify(state.read())),
           rootConnected: state.root.isConnected, editorConnected: state.editor.isConnected,
           ownerConnected: state.owner.isConnected, popupConnected: popup.isConnected });
-        const trace: DisposeTrace = { phase: 'disposing', before: snapshot(), afterCall: null, afterAwait: null, probes: [] };
+        const trace: DisposeTrace = {
+          phase: 'disposing',
+          before: snapshot(),
+          afterCall: null,
+          afterAwait: null,
+          probes: []
+        };
         const record: EventListener = event => {
           const relatedTarget = (event as FocusEvent).relatedTarget;
           trace.probes.push({ ...snapshot(), type: event.type, phase: trace.phase,
@@ -250,7 +312,12 @@ for (const id of ids) {
       expect(pending.observers).toBeGreaterThan(0);
       const trace = await page.evaluate(() => window.selectValueHydrationDisposal!.trace);
       const before = trace.before;
-      expect(before).toMatchObject({ rootConnected: true, editorConnected: true, ownerConnected: true, popupConnected: true });
+      expect(before).toMatchObject({
+        rootConnected: true,
+        editorConnected: true,
+        ownerConnected: true,
+        popupConnected: true
+      });
       const disposedState: OwnerState = { ...before.state, open: false,
         events: [...before.state.events, ['open', false]], rawEvents: [...before.state.rawEvents, ['open', false]] };
       const disposed: DisposeSnapshot = { state: disposedState,
@@ -267,7 +334,13 @@ for (const id of ids) {
         frames: window.selectValueHydrationResources!.frames(), timers: window.selectValueHydrationResources!.timers(),
         ports: window.selectValueHydrationResources!.ports()
       }));
-      const noResources = { cleaned: { root: true, editor: true, control: true, publicRoot: true, publicEditor: true },
+      const noResources = { cleaned: {
+        root: true,
+        editor: true,
+        control: true,
+        publicRoot: true,
+        publicEditor: true
+      },
         state: disposedState, observers: 0, mutations: 0, frames: 0, timers: 0, ports: 0 };
       expect(await resources()).toEqual(noResources);
       await page.setViewportSize({ width: 1120, height: 860 });

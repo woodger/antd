@@ -57,6 +57,7 @@ test('Table user column classes preserve sort and fixed-cell classes', async ({ 
   const select = page.getByRole('combobox', { name: 'Table column class case', exact: true });
   await select.selectOption('sorted');
   const root = page.locator('#table-column-classes-control');
+
   await expect(root.locator('th').nth(1)).toHaveAttribute('aria-sort', 'ascending');
   await expect(root.locator('th').nth(1)).toHaveClass(/ant-table-column-sort/);
   await expect(root.locator('tbody tr.ant-table-row').first().locator('td').nth(1))

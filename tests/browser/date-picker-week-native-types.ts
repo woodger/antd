@@ -25,7 +25,11 @@ export interface WeekOwnerRead {
 export interface WeekCapture {
   recorder?: ReturnType<typeof createDatePickerPresetsRecorder>;
   setActionIndex?: (index: number) => void;
-  readRefs?: () => { owner: HTMLElement | null; control: WeekControl | null; root: HTMLDivElement | null };
+  readRefs?: () => {
+    owner: HTMLElement | null;
+    control: WeekControl | null;
+    root: HTMLDivElement | null
+  };
   read?: () => WeekOwnerRead;
   readCallbacks?: (cursor?: number) => WeekCursorDelta;
   readProducers?: (cursor?: number) => WeekCursorDelta;

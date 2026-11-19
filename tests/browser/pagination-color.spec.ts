@@ -18,10 +18,12 @@ for (const source of [false, true]) {
         const root = page.getByRole('navigation', { name: 'Pagination colors', exact: true });
         const page1 = root.locator('.ant-pagination-item-1 > button');
         const page2 = root.locator('.ant-pagination-item-2 > button');
+
         await expect(page2).toHaveCSS('color', metrics.page.color);
         await expect(page1).toHaveCSS('color', activeColor);
         await page2.click();
         await page.mouse.move(1200, 700);
+
         await expect(page2).toHaveAttribute('aria-current', 'page');
         await expect(page2).toHaveCSS('color', activeColor);
         await expect(page1).toHaveCSS('color', metrics.page.color);
@@ -29,7 +31,8 @@ for (const source of [false, true]) {
         if (!dark || !source) {
           const hover = reference.interactions.find(item => item.name === 'default')!;
           await expect(page2).toHaveCSS('color', hover.states['hover-active'].control.color);
-        } else {
+        }
+        else {
           await expect.poll(() => root.locator('.ant-pagination-item-active').evaluate(node => {
             const button = node.querySelector('button')!;
             return getComputedStyle(button).color === getComputedStyle(node).borderTopColor;
@@ -37,10 +40,12 @@ for (const source of [false, true]) {
         }
         await page.getByLabel('Disabled pagination colors', { exact: true }).check();
         const disabled = sample.metrics['ltr/disabled'];
+
         await expect(page2).toBeDisabled();
         await expect(page2).toHaveCSS('color', disabled.activePage.color);
         await expect(page1).toHaveCSS('color', disabled.page.color);
         await page2.hover();
+
         await expect(page2).toHaveCSS('color', disabled.activePage.color);
         await expect(page.getByLabel('Pagination color changes', { exact: true })).toHaveText('["2:10"]');
         await expect(page.getByLabel('Pagination color submissions', { exact: true })).toHaveText('0');
@@ -56,18 +61,23 @@ for (const source of [false, true]) {
     await page.getByLabel('Custom active page colors', { exact: true }).check();
     const root = page.getByRole('navigation', { name: 'Pagination colors', exact: true });
     const page1 = root.locator('.ant-pagination-item-1 > button');
+
     await expect(page1).toHaveCSS('color', 'rgb(17, 119, 51)');
     await page1.hover();
+
     await expect(page1).toHaveCSS('color', 'rgb(51, 136, 85)');
     await page.getByLabel('Disabled pagination colors', { exact: true }).check();
+
     await expect(page1).toHaveCSS('color', 'rgb(119, 85, 51)');
     await page.getByLabel('Inline pagination colors', { exact: true }).check();
+
     await expect(page1).toHaveCSS('color', 'rgb(85, 68, 51)');
     await expect(page1).toBeDisabled();
     await page.getByLabel('Disabled pagination colors', { exact: true }).uncheck();
     const page2 = root.locator('.ant-pagination-item-2 > button');
     await page2.focus();
     await page2.press('Enter');
+
     await expect(page2).toHaveAttribute('aria-current', 'page');
     await expect(page2).toHaveCSS('color', 'rgb(85, 68, 51)');
     await expect(page.getByLabel('Pagination color current', { exact: true })).toHaveText('2');

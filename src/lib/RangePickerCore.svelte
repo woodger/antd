@@ -212,7 +212,8 @@
       if (index === undefined) {
         changeCalendar(committed);
         submit = [...committed];
-      } else {
+      }
+      else {
         const copy: RangePickerValue = [...calendar];
         copy[index] = committed[index];
         changeCalendar(copy);
@@ -462,7 +463,8 @@
         ? defaultPickerValue : [defaultPickerValue, defaultPickerValue];
       if (defaults[index]) {
         if (opening || switched) syncPanel(index, 'reset', false);
-      } else if (opening || switched || current !== previous.calendar
+      }
+      else if (opening || switched || current !== previous.calendar
         || preserve !== previous.focused) {
         syncPanel(index, 'reset', preserve && priorFocusIndex !== null
           && priorFocusIndex !== index);
@@ -983,7 +985,8 @@
           requestOpen(false);
         }
         (time.onkeydown ?? time.onKeyDown)?.(event);
-      } else onkeydown?.(event);
+      }
+      else onkeydown?.(event);
       if (event.defaultPrevented || event.isComposing || blocked[index]) return false;
       void keyboardAction(event, index, maskKey);
       return true;
@@ -1000,7 +1003,8 @@
         event.preventDefault();
         if (maskKey ? maskKey.enterValid : parsePicker(texts[index], lang.locale, formats))
           send(index, 'keyboard-submit');
-      } else if (event.key === 'ArrowDown' && !maskKey) {
+      }
+      else if (event.key === 'ArrowDown' && !maskKey) {
         event.preventDefault();
         requestOpen(true);
         await tick();
@@ -1023,7 +1027,8 @@
       if (!visible) {
         focusField(index);
         requestOpen(true);
-      } else if ((!maskKey || maskKey.enterValid) && !inputInvalid(index))
+      }
+      else if ((!maskKey || maskKey.enterValid) && !inputInvalid(index))
         send(index, 'keyboard-submit');
     }
     else if (event.key === 'Tab') {
@@ -1077,9 +1082,11 @@
     if (defaults[index]) {
       if (!resetDefault) return;
       next = defaults[index];
-    } else if (focused && timePanelWasOpen && previousTimeActive !== index) {
+    }
+    else if (focused && timePanelWasOpen && previousTimeActive !== index) {
       next = panelValues()[index ^ 1];
-    } else {
+    }
+    else {
       next = calendar[index] || calendar[index ^ 1];
     }
     if (!next) return;

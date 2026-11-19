@@ -39,7 +39,8 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       next = getter
         ? (options.component === 'drawer' ? getter(document.body) : getter()) ?? document.body
         : undefined;
-    } else if (choice === false) next = false;
+    }
+    else if (choice === false) next = false;
     else if (typeof choice === 'string') {
       next = (choice ? document.querySelector(choice) : null) ?? document.body;
     }
@@ -93,7 +94,8 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
           lock.dataset.antDialogLock = '';
           lock.textContent = 'html { overflow: hidden; }';
           document.head.append(lock);
-        } else if (!shadowModal && lock) {
+        }
+        else if (!shadowModal && lock) {
           lock.remove();
           lock = undefined;
         }

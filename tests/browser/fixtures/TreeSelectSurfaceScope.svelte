@@ -40,7 +40,12 @@
     showSearch,
     notFoundContent: 'No nodes',
     onClear: () => record('clear'),
-    onChange: (value, labels, extra) => record('change', value ?? null, labels, extra.triggerValue ?? null),
+    onChange: (value, labels, extra) => record(
+      'change',
+      value ?? null,
+      labels,
+      extra.triggerValue ?? null
+    ),
     onOpenChange: open => record('open', open),
     onSelect: value => record('select', value),
     onDeselect: value => record('deselect', value),

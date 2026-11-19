@@ -19,12 +19,16 @@ describe('mergeSelectStyle', () => {
     const before = { color: 'red', backgroundColor: 'blue', padding: 4, opacity: 0.5 };
     const after = { color: undefined, backgroundColor: null, padding: '', opacity: 0 };
     const result = mergeSelectStyle(before, after);
+
     expect(result).toEqual(after);
     expect(serializeSelectStyle(result)).toBe('opacity:0');
     expect(before).toEqual({ color: 'red', backgroundColor: 'blue', padding: 4, opacity: 0.5 });
   });
   it('keeps legacy CSS declarations and handles object overrides without losing clears', () => {
-    expect(mergeSelectStyle('color:red;background-color:blue;padding:4px', { color: undefined, padding: 2 }))
+    expect(mergeSelectStyle(
+      'color:red;background-color:blue;padding:4px',
+      { color: undefined, padding: 2 }
+    ))
       .toBe('background-color:blue;padding:2px');
     expect(mergeSelectStyle({ padding: 2 }, 'padding:3px;--owner:0')).toBe('padding:3px;--owner:0');
     expect(mergeSelectStyle('color:red!important', { color: 'blue' })).toBe('color:red !important');
@@ -43,11 +47,15 @@ describe('mergeSelectSemanticMaps', () => {
       .toEqual({ root: 'context-popup own-popup', list: 'own-list', listItem: undefined });
   });
   it('keeps classes cumulative and applies the four Source root style layers', () => {
-    const result = mergeSelectSemanticMaps({ classes: { root: 'same', popup: { root: 'ctx', list: 'ctx-list' } },
+    const result = mergeSelectSemanticMaps({ classes: {
+      root: 'same',
+      popup: { root: 'ctx', list: 'ctx-list' }
+    },
       styles: { root: { color: 'red', padding: 1 }, input: { color: 'red', opacity: 0.5 } } },
     { classes: { root: 'same', popup: { root: 'own' } },
       styles: { root: { color: 'blue' }, input: { color: undefined } } },
     { color: 'green', padding: 2 }, { padding: 4 });
+
     expect(result.classes.root).toBe('same same');
     expect(result.classes.popup).toEqual({ root: 'ctx own', list: 'ctx-list', listItem: undefined });
     expect(result.styles.root).toEqual({ color: 'blue', padding: 4 });
@@ -55,8 +63,12 @@ describe('mergeSelectSemanticMaps', () => {
   });
   it('replaces nested popup CSS leaves and preserves explicit AC wrapper undefined', () => {
     const result = mergeSelectSemanticMaps({ styles: { popup: {
-      root: { color: 'red', padding: 4 }, list: { color: 'red' }, listItem: { color: 'red', opacity: 0.5 }
+      root: { color: 'red', padding: 4 }, list: { color: 'red' }, listItem: {
+        color: 'red',
+        opacity: 0.5
+      }
     } } }, { styles: { popup: { root: {}, list: undefined, listItem: { color: 'blue' } } } });
+
     expect(result.styles.popup).toEqual({ root: {}, list: undefined, listItem: { color: 'blue' } });
     expect(Object.hasOwn(result.styles.popup, 'list')).toBe(true);
   });
@@ -64,7 +76,11 @@ describe('mergeSelectSemanticMaps', () => {
     const props = { mode: 'multiple', ownUndefined: undefined };
     const info = { props };
     const seen: unknown[] = [];
-    const result = resolveSelectSemanticValue(input => { seen.push(input); return { root: input.props.mode }; }, info);
+    const result = resolveSelectSemanticValue(input => {
+      seen.push(input);
+      return { root: input.props.mode };
+    }, info);
+
     expect(result).toEqual({ root: 'multiple' });
     expect(seen[0]).toBe(info);
     expect(Object.keys(props)).toEqual(['mode', 'ownUndefined']);

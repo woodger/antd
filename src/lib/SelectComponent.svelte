@@ -81,19 +81,29 @@
     const attachedRegister = register;
     const attachedReference = reference;
     const element = node as Element;
-    const attrs = untrack(() => context.attributes) as { value?: unknown; defaultValue?: unknown; defaultvalue?: unknown };
+    const attrs = untrack(() => context.attributes) as {
+      value?: unknown;
+      defaultValue?: unknown;
+      defaultvalue?: unknown
+    };
     const initialValue = attrs.defaultValue ?? attrs.defaultvalue;
     if (node instanceof HTMLInputElement && !initializedInputs.has(node)) {
       initializedInputs.add(node);
       if (!isSelectComponentHydration(node) && attrs.value == null && initialValue != null) {
         node.value = String(initialValue);
-        if (node.selectionStart !== null) node.setSelectionRange(node.value.length, node.value.length);
+        if (node.selectionStart !== null) node.setSelectionRange(
+          node.value.length,
+          node.value.length
+        );
       }
     }
     const unregister = untrack(() => attachedRegister(element));
     if (root) takeSelectComponentHydration(node);
     try { untrack(() => attachedReference?.(element)); }
-    catch (error) { unregister(); throw error; }
+    catch (error) {
+      unregister();
+      throw error;
+    }
     let released = false;
     return () => {
       if (released) return;
@@ -132,7 +142,10 @@
     const attributes = editorAttributes;
     const current = hydration;
     if (current && attributes !== current.attributes) {
-      untrack(() => current.writer.update(attributes, (context.attributes as { value?: unknown }).value != null));
+      untrack(() => current.writer.update(
+        attributes,
+        (context.attributes as { value?: unknown }).value != null
+      ));
       current.attributes = attributes;
     }
   });

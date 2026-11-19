@@ -11,6 +11,7 @@ async function openSamples(page: Page) {
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=overlay-theme');
+
   await expect(page.getByRole('heading', { name: 'Source overlay tokens', exact: true })).toBeVisible();
 });
 
@@ -88,6 +89,7 @@ test('arrow geometry follows global source tokens and toggles without closing th
   const popup = page.locator('.themed-popover');
   const gap = () => popup.evaluate(element => element.getBoundingClientRect().top
     - document.getElementById('themed-popover-anchor')!.getBoundingClientRect().bottom);
+
   await expect.poll(gap).toBeCloseTo(12, 1);
 
   await page.getByLabel('Global arrow width', { exact: true }).evaluate(element => {
@@ -136,7 +138,10 @@ test('custom prefixes work without hashes and unmount removes the provider scope
 
   await expect(page.locator('.themed-popover')).toHaveClass(/overlay-source-scope/);
   await expect(page.locator('.themed-popover')).not.toHaveClass(/css-dev-only/);
-  await expect(page.locator('.themed-popover')).toHaveCSS('--overlay-2-popover-title-min-width', '230px');
+  await expect(page.locator('.themed-popover')).toHaveCSS(
+    '--overlay-2-popover-title-min-width',
+    '230px'
+  );
   await page.getByLabel('Mount themed overlays', { exact: true }).uncheck();
 
   await expect(page.locator('.ant-tooltip,.themed-popover,.ant-popconfirm')).toHaveCount(0);

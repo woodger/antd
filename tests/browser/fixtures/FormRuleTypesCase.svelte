@@ -13,7 +13,10 @@
   let outcome = $state('ready');
 
   async function validate() {
-    try { await model.validateFields(); outcome = 'valid'; }
+    try {
+      await model.validateFields();
+      outcome = 'valid';
+    }
     catch { outcome = 'invalid'; }
   }
 </script>

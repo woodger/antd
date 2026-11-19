@@ -62,13 +62,16 @@ export function resolveTreeDrop<Data extends object>(options: TreeDropOptions<Da
   if (target.index === 0 && target.level === 0 && firstHalf && allow(-1)
     && target.key === targetKey) {
     position = -1;
-  } else if (over.children.length && expanded.has(over.key)) {
+  }
+  else if (over.children.length && expanded.has(over.key)) {
     allowed = allow(0);
-  } else if (levelOffset === 0 && !(rawLevelOffset > -1.5)) {
+  }
+  else if (levelOffset === 0 && !(rawLevelOffset > -1.5)) {
     if (allow(0)) position = 0;
     else if (allow(1)) position = 1;
     else allowed = false;
-  } else {
+  }
+  else {
     if (allow(1)) position = 1;
     else allowed = false;
   }

@@ -28,29 +28,56 @@
   let selectEditor = $state<HTMLInputElement>();
   let autoCompleteEditor = $state<HTMLInputElement | HTMLTextAreaElement>();
   let alive = true;
-  let lastAuthored: { maps: unknown; rawMaps: unknown; authoredProps: unknown; rawAuthoredProps: unknown } | undefined;
+  let lastAuthored: {
+    maps: unknown;
+    rawMaps: unknown;
+    authoredProps: unknown;
+    rawAuthoredProps: unknown
+  } | undefined;
   onDestroy(() => { alive = false; });
 
   function callback<Value>(name: string, value: Value): Value {
     return recorder.register(value, { callback: 'style-history-hydration-' + name });
   }
   function event(...args: unknown[]) {
-    events.push(recorder.encode(args)); rawEvents.push(recorder.raw(args)); revision += 1;
+    events.push(recorder.encode(args));
+    rawEvents.push(recorder.raw(args));
+    revision += 1;
   }
-  const onOpenChange = callback('open', (value: boolean) => { open = value; event('open', value); });
-  const onChange = callback('change', (value: string | undefined, option: unknown) => { model = value; event('change', value, option); });
-  const onSelect = callback('select', (value: string, option: unknown) => event('select', value, option));
-  const onDeselect = callback('deselect', (value: string, option: unknown) => event('deselect', value, option));
+  const onOpenChange = callback('open', (value: boolean) => {
+    open = value;
+    event('open', value);
+  });
+  const onChange = callback('change', (value: string | undefined, option: unknown) => {
+    model = value;
+    event('change', value, option);
+  });
+  const onSelect = callback(
+    'select',
+    (value: string, option: unknown) => event('select', value, option)
+  );
+  const onDeselect = callback(
+    'deselect',
+    (value: string, option: unknown) => event('deselect', value, option)
+  );
   const onSearch = callback('search', (value: string) => event('search', value));
   const prefix = recorder.register(createRawSnippet(() => ({
     render: () => '<strong data-surface-node="hydration-prefix">Pfx</strong>'
   })), { node: 'hydration-prefix' });
-  let maps = $derived.by(() => { void revision; return selectSurfaceStyleHistoryMaps(phase); });
+  let maps = $derived.by(() => {
+    void revision;
+    return selectSurfaceStyleHistoryMaps(phase);
+  });
   const classNames = callback('classNames', (info: { props: unknown }) =>
     recorder.record('classNames', 'own', info,
       selectSurfaceSemantic('function', 'own', component, info.props as Record<string, unknown>).classes));
   const styles = callback('styles', (info: { props: unknown }) => {
-    const base = selectSurfaceSemantic('function', 'own', component, info.props as Record<string, unknown>).styles;
+    const base = selectSurfaceSemantic(
+      'function',
+      'own',
+      component,
+      info.props as Record<string, unknown>
+    ).styles;
     const popup = base.popup as Record<string, unknown>;
     const result = { ...base, root: { ...base.root as object, ...maps.styles.root },
       input: { ...base.input as object, ...maps.styles.input },
@@ -61,11 +88,17 @@
   const popupRender: SelectPopupRender = callback('popupRender', origin => {
     recorder.register(origin, { node: 'origin-menu' });
     return recorder.record('popupRender', 'own', origin, customPopup,
-      { sameResultAsArgument: Object.is(customPopup, origin), originIdentity: recorder.identity(origin) });
+      {
+        sameResultAsArgument: Object.is(customPopup, origin),
+        originIdentity: recorder.identity(origin)
+      });
   });
   let ownerProps: Record<string, unknown> = $derived({ id: 'surface-style-history-field', class: 'surface-control', style: maps.style,
     styles: producers ? styles : maps.styles, value: model, open, options,
-    placeholder: 'History value', 'aria-label': 'Style history value', showSearch: { filterOption: false, onSearch },
+    placeholder: 'History value', 'aria-label': 'Style history value', showSearch: {
+      filterOption: false,
+      onSearch
+    },
     onOpenChange, onChange, onSelect, onDeselect, listHeight: 140,
     ...(producers ? { classNames, popupRender, prefix } : {}) });
   let selectProps = $derived(ownerProps as SelectProps<string, undefined, RawOption>);
@@ -85,7 +118,10 @@
       events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], ...lastAuthored };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+  }
 </script>
 
 {#snippet customPopup(origin: Snippet)}<div data-surface-popup="hydration-wrap"><header data-surface-header>Hydration header</header>{@render origin()}<footer data-surface-footer>Hydration footer</footer></div>{/snippet}

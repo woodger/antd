@@ -197,7 +197,10 @@
   let selectedStyle = $derived(selectedRow?.data.style);
   let hasSelectedStyle = $derived(Boolean(selectedClass || selectedStyle));
   let selectedTitle = $derived(attributes.title !== undefined ? attributes.title
-    : selectValueTitle(selectedRow ? { label: selectedRow.data.label, title: selectedRow.data.title } : undefined)
+    : selectValueTitle(selectedRow ? {
+      label: selectedRow.data.label,
+      title: selectedRow.data.title
+    } : undefined)
       || selectValueTitle(displayValue ? { label: displayLabel, title: displayValue.title } : undefined));
   let hasDisplayValue = $derived(Boolean(displayValue && hasSelectDisplayContent(displayLabel)));
   let semantics = $derived.by(() => {
@@ -358,7 +361,11 @@
   onMount(() => {
     clearSelectComponentHydration(defaultRoot);
     hydrated = true;
-    return () => { componentDestroyed = true; cancelClearClose(); cancelPointerUpdate(); };
+    return () => {
+      componentDestroyed = true;
+      cancelClearClose();
+      cancelPointerUpdate();
+    };
   });
 
   $effect.pre(() => {
@@ -434,7 +441,10 @@
         optionList.prepare();
         return source.position(anchorRect, popupRect, viewport);
       },
-      applyPosition: position => source.commitFrame(() => popupStyle.position(position, source.style)),
+      applyPosition: position => source.commitFrame(() => popupStyle.position(
+        position,
+        source.style
+      )),
       onAlign: position => { popupPlacement = position.alignedPlacement; },
       onPlacement: () => { },
       onVisibilityChange: next => {
@@ -480,7 +490,11 @@
       listVisited = true;
       lastListLength = rows.length;
       lastListSearch = query;
-      untrack(() => activate(defaultActiveFirstOption ? autoCompleteNext(rows.map(row => row.item), -1, 1) : -1));
+      untrack(() => activate(defaultActiveFirstOption ? autoCompleteNext(
+        rows.map(row => row.item),
+        -1,
+        1
+      ) : -1));
     }
   });
   const optionList = createSelectOptionList<Entry>({
@@ -660,7 +674,8 @@
       ), true);
       if (backfill)
         preview = optionList.items[active]?.item.value;
-    } else if ((event.key === 'Enter' || event.key === 'Tab') && visible && !enterLock) {
+    }
+    else if ((event.key === 'Enter' || event.key === 'Tab') && visible && !enterLock) {
       const option = optionList.items[active]?.item;
       if (event.key === 'Enter')
         enterLock = true;
@@ -669,12 +684,14 @@
         choose(option);
       }
       else requestOpen(false);
-    } else if (event.key === 'Escape' && visible) {
+    }
+    else if (event.key === 'Escape' && visible) {
       event.preventDefault();
       event.stopPropagation();
       preview = undefined;
       requestOpen(false);
-    } else if ((event.key === 'Enter' || event.key === ' ') && !visible)
+    }
+    else if ((event.key === 'Enter' || event.key === ' ') && !visible)
       requestOpen(true);
     else if (!event.ctrlKey && !event.altKey && !event.metaKey && event.keyCode
       && event.code !== 'Semicolon' && event.code !== 'Equal' && !/^F(?:[1-9]|1[0-2])$/.test(event.key)
@@ -708,7 +725,8 @@
         if (target !== editor && !editor?.contains(target)) event.preventDefault();
         if (componentClearMouseDowns.has(event)) {
           if (state.visible) scheduleClose();
-        } else {
+        }
+        else {
           customInput?.registration.focus?.();
           if (!state.visible) requestComponentOpen(true, state.visible);
         }
@@ -839,12 +857,17 @@
     enterLock = false;
     preview = undefined;
     if (state.visible && !(event.relatedTarget instanceof Node && state.popup?.contains(event.relatedTarget))) scheduleClose();
-    if (!state.blocked) { field?.onBlur(); state.onBlur?.(event); }
+    if (!state.blocked) {
+      field?.onBlur();
+      state.onBlur?.(event);
+    }
   }
   function componentDefaultRootBlur(event: FocusEvent) {
     if (replacingDefaultComponentRoot) return;
     if (componentInputBlurBlocked) {
-      focused = false; enterLock = false; preview = undefined;
+      focused = false;
+      enterLock = false;
+      preview = undefined;
       return;
     }
     componentRootBlur(event);
@@ -870,13 +893,16 @@
           state.active < 0 && event.key === 'ArrowUp' ? rows.length : state.active,
           event.key === 'ArrowDown' ? 1 : -1), true);
         if (backfill) preview = optionList.items[active]?.item.value;
-      } else if (enter || event.key === 'Tab') {
+      }
+      else if (enter || event.key === 'Tab') {
         const option = rows[state.active]?.item;
         if (option && !option.group && !option.data.disabled) {
           event.preventDefault();
           choose(option);
-        } else requestComponentOpen(false, state.visible);
-      } else if (event.key === 'Escape') {
+        }
+        else requestComponentOpen(false, state.visible);
+      }
+      else if (event.key === 'Escape') {
         event.stopPropagation();
         preview = undefined;
         scheduleClose();
@@ -944,7 +970,13 @@
     return slot && typeof slot === 'object' ? Reflect.get(slot, 'props') as object | undefined : undefined;
   }
   function componentRootContext(): SelectRootContext<RootElement> {
-    void actualValue; void visible; void focused; void blocked; void semantics; void resolvedSuffix; void displayLabel;
+    void actualValue;
+    void visible;
+    void focused;
+    void blocked;
+    void semantics;
+    void resolvedSuffix;
+    void displayLabel;
     const { placeholder: _placeholder, tabindex: _tabindex, maxlength: _maxlength, autofocus: _autofocus,
       ...remaining } = nativeAttributes;
     const generated = { ...remaining,
@@ -954,7 +986,10 @@
       onkeydown: componentRootKeydown, onkeyup: componentRootKeyup, onclick: componentRootClick };
     const own = ownComponentProps(rootSlot);
     const attrs = {} as SelectRootContext<RootElement>['attributes'];
-    return { attributes: mergeSelectComponentAttributes(attrs, generated, own, 'root'), register: registerComponentRoot };
+    return {
+      attributes: mergeSelectComponentAttributes(attrs, generated, own, 'root'),
+      register: registerComponentRoot
+    };
   }
   function componentInputContext() {
     const aria = Object.fromEntries(Object.entries(nativeAttributes).filter(([key]) => key.startsWith('aria-')));
@@ -977,7 +1012,12 @@
       'aria-activedescendant': visible ? `${controlId}_list_${active}` : undefined };
     const own = ownComponentProps(inputSlot);
     const fallback = typeof inputSlot === 'object' ? { placeholder: attributes.placeholder } : {};
-    const attrs = mergeSelectComponentAttributes<Record<string, unknown>>({}, { ...fallback, ...generated }, own, 'input');
+    const attrs = mergeSelectComponentAttributes<Record<string, unknown>>(
+      {},
+      { ...fallback, ...generated },
+      own,
+      'input'
+    );
     attrs.style = styleText;
     return { attributes: attrs, register: registerComponentInput };
   }

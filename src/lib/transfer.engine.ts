@@ -60,7 +60,8 @@ export function transferRender<RecordType extends object>(
     if (typeof rendered === 'object' && rendered !== null) {
       renderedEl = rendered.label;
       renderedText = rendered.value;
-    } else {
+    }
+    else {
       renderedEl = rendered;
       const text = [rendered, 'title' in item ? item.title : undefined, transferKey(item)]
         .find(value => typeof value === 'string' || typeof value === 'number');

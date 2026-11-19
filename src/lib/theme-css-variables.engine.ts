@@ -43,7 +43,8 @@ export function transformThemeToken(token: object, prefix = 'ant') {
   for (const [key, value] of Object.entries(token)) {
     if (preservedTokens.has(key)) {
       result[key] = value;
-    } else if ((typeof value === 'string' || typeof value === 'number')
+    }
+    else if ((typeof value === 'string' || typeof value === 'number')
       && !ignoredTokens.has(key)) {
       const variable = tokenToCSSVariable(key, prefix);
       variables[variable] = typeof value === 'number' && !unitlessTokens[key as keyof AliasToken]

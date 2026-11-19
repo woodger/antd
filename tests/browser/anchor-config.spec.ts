@@ -22,6 +22,7 @@ test('Anchor indicator follows a mutated provider class without remounting its f
     await page.getByRole('button', { name: 'Use Anchor class configuration', exact: true }).click();
     const root = page.locator('.anchor-config-main .ant-anchor-wrapper');
     const link = root.getByRole('link', { name: 'Second', exact: true });
+
     await expect(link).toHaveClass(/-title-active/);
     await link.focus();
     const previous = await link.elementHandle();
@@ -48,6 +49,7 @@ for (const preset of ['context-functions', 'functions-horizontal']) {
       const root = page.locator('.anchor-config-main .ant-anchor-wrapper');
       const link = root.getByRole('link', { name: 'Second', exact: true });
       const indicator = root.locator('.ant-anchor-ink');
+
       await expect(link).toHaveClass(/-title-active/);
       await link.focus();
       await link.press('Enter');

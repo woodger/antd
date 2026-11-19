@@ -2,6 +2,7 @@ import { test, expect } from './test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=checkbox-features');
+
   await expect(page.getByRole('checkbox', { name: 'Child zero', exact: true })).toBeChecked();
 });
 
@@ -59,6 +60,7 @@ test(
   async ({ page }) => {
     const variable = page.getByRole('checkbox', { name: 'Variable child', exact: true });
     await page.getByRole('button', { name: 'Set source checkbox owner', exact: true }).click();
+
     await expect(variable).not.toBeChecked();
 
     await page.getByRole('button', { name: 'Change source child value', exact: true }).click();
@@ -92,6 +94,7 @@ test(
     await expect(skipped).not.toBeChecked();
     await expect(skipped).toHaveAttribute('name', 'choices');
     await skipped.check();
+
     await expect(page.getByLabel('Source checkbox owner', { exact: true }))
       .toHaveText('[0,"skipped"]');
 
@@ -222,6 +225,7 @@ test(
   'Checkbox label activation emits one external click and preserves mixed-state and native events',
   async ({ page }) => {
     const solo = page.getByRole('checkbox', { name: 'Standalone source checkbox', exact: true });
+
     await expect(solo).toHaveJSProperty('indeterminate', true);
 
     await page.getByText('Standalone source checkbox', { exact: true }).click();
@@ -269,16 +273,20 @@ test(
   'Checkbox ref and bind:this expose native focus and blur and clear their handles on unmount',
   async ({ page }) => {
     const solo = page.getByRole('checkbox', { name: 'Standalone source checkbox', exact: true });
+
     await expect(page.getByLabel('Source checkbox refs', { exact: true })).toHaveText('true');
     await expect(page.getByLabel('Source checkbox group ref', { exact: true }))
       .toHaveText('FIELDSET');
     await expect(solo).toHaveAttribute('tabindex', '2');
 
     await page.getByRole('button', { name: 'Focus source checkbox ref', exact: true }).click();
+
     await expect(solo).toBeFocused();
     await page.getByRole('button', { name: 'Blur source checkbox ref', exact: true }).click();
+
     await expect(solo).not.toBeFocused();
     await page.getByRole('button', { name: 'Focus source checkbox instance', exact: true }).click();
+
     await expect(solo).toBeFocused();
 
     await page.getByLabel('Mount source checkboxes', { exact: true }).uncheck();

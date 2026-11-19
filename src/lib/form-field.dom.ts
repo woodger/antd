@@ -24,7 +24,8 @@ export function focusFormField(instance: unknown, fallback?: () => Element | und
   if (target && (typeof target === 'object' || typeof target === 'function')
     && 'focus' in target && typeof target.focus === 'function') {
     target.focus();
-  } else {
+  }
+  else {
     const node = getFormFieldElement(instance) ?? fallback?.();
     if (node && 'focus' in node && typeof node.focus === 'function') node.focus();
   }

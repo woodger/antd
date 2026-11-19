@@ -16,7 +16,10 @@ async function mount(page: Page, id: string) {
 }
 async function apply(page: Page, action: FeedbackAction, index: number) {
   if (action === 'focus') await page.getByLabel('Feedback field', { exact: true }).focus();
-  else if (action === 'outside') await page.getByRole('button', { name: 'Outside feedback', exact: true }).click();
+  else if (action === 'outside') await page.getByRole(
+    'button',
+    { name: 'Outside feedback', exact: true }
+  ).click();
   else if (action === 'clear') await page.locator('[data-feedback-control]').getByRole('button').first().click();
   else {
     await page.getByRole('combobox', { name: 'Feedback action', exact: true }).selectOption(String(index));
@@ -27,6 +30,7 @@ for (const entry of reference.cases) {
   test(`Form feedback consumers match Source for ${entry.id}`, async ({ page }) => {
     await mount(page, entry.id);
     const read = () => page.evaluate(readFormFeedbackControl);
+
     await expect.poll(read).toEqual(entry.initial);
     let previous = entry.steps.length ? await page.getByLabel('Feedback field', { exact: true }).elementHandle() : null;
     for (const [index, step] of entry.steps.entries()) {

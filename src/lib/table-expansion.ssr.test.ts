@@ -99,7 +99,11 @@ describe('Table expanded row rendering', () => {
         props: {
           columns,
           dataSource: people,
-          expandable: { expandedRowRender: unusedDetails, expandedRowKeys: keys, defaultExpandedRowKeys: [0] }
+          expandable: {
+            expandedRowRender: unusedDetails,
+            expandedRowKeys: keys,
+            defaultExpandedRowKeys: [0]
+          }
         }
       }
     );
@@ -157,7 +161,11 @@ describe('Table expanded row rendering', () => {
       props: {
         columns,
         dataSource: people,
-        expandable: { expandedRowRender: unusedDetails, rowExpandable: () => false, expandedRowKeys: keys }
+        expandable: {
+          expandedRowRender: unusedDetails,
+          rowExpandable: () => false,
+          expandedRowKeys: keys
+        }
       }
     });
 

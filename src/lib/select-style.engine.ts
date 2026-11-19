@@ -50,7 +50,10 @@ export function diffSelectStyle(previous: SelectStyleProperties, next: SelectSty
 
 function logicalName(property: string): string {
   if (property.startsWith('--')) return property;
-  return property.replace(/^-ms-/, 'ms-').replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase());
+  return property.replace(/^-ms-/, 'ms-').replace(
+    /-([a-z])/g,
+    (_, letter: string) => letter.toUpperCase()
+  );
 }
 
 /** Framework layers объединяются с исходным object до setter diff, включая own undefined. */

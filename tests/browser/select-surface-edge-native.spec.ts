@@ -8,24 +8,44 @@ import { settleSelectSurfaceEdgeNative, verifySelectSurfaceEdgeNative,
 
 test.use({ viewport: { width: 1200, height: 900 } });
 for (const entry of selectSurfaceEdgeNativeReference.cases) {
-  test(`Select surface public edge matches the independent original for ${entry.id}`, async ({ page }, testInfo) => {
+  test(`Select surface public edge matches the independent original for ${entry.id}`, async (
+    { page },
+    testInfo
+  ) => {
     const sample = selectSurfaceEdgeSamples.find(sample => sample.id === entry.id)!;
     const trace: unknown[] = [], failures: string[] = [], errors: string[] = [], warnings: string[] = [];
     page.on('pageerror', error => errors.push(error.message));
-    page.on('console', message => { if (['warning', 'error'].includes(message.type())) warnings.push(message.text()); });
+    page.on('console', message => {
+      if (['warning', 'error'].includes(message.type())) warnings.push(message.text());
+    });
     await page.goto('/?fixture=select-surface-edge-native');
     await page.getByRole('combobox', { name: 'Select surface edge sample', exact: true }).selectOption(sample.id);
+
     await expect(page.locator('[data-surface-case]')).toHaveAttribute('data-surface-bound', 'true');
     await prepareSelectSurface(page);
     const capture = await page.evaluateHandle(() => {
-      const detail: { read?: () => NativeSurfaceEdgeOwner; readRefs?: () => Record<string, unknown>; dispose?: () => void } = {};
-      document.querySelector('[data-surface-fixture-command]')!.dispatchEvent(new CustomEvent('surfacecapture', { detail }));
+      const detail: {
+        read?: () => NativeSurfaceEdgeOwner;
+        readRefs?: () => Record<string, unknown>;
+        dispose?: () => void
+      } = {};
+      document.querySelector('[data-surface-fixture-command]')!.dispatchEvent(new CustomEvent(
+        'surfacecapture',
+        { detail }
+      ));
       if (!detail.read || !detail.readRefs || !detail.dispose) throw Error('Actual Native edge owner capture missing');
       return { read: detail.read, readRefs: detail.readRefs, dispose: detail.dispose };
     });
     const retained = await page.evaluateHandle(() => {
-      const refs: { root?: HTMLElement; editor?: HTMLInputElement; control?: Record<string, unknown> } = {};
-      document.querySelector('[data-surface-command]')!.dispatchEvent(new CustomEvent('surfacerefs', { detail: refs }));
+      const refs: {
+        root?: HTMLElement;
+        editor?: HTMLInputElement;
+        control?: Record<string, unknown>
+      } = {};
+      document.querySelector('[data-surface-command]')!.dispatchEvent(new CustomEvent(
+        'surfacerefs',
+        { detail: refs }
+      ));
       return { ...refs, parent: refs.editor?.parentNode, focus: refs.control?.focus,
         blur: refs.control?.blur, scrollTo: refs.control?.scrollTo };
     });
@@ -35,13 +55,28 @@ for (const entry of selectSurfaceEdgeNativeReference.cases) {
       try { verifySelectSurfaceEdgeNative(actual, source, entry, sample, label, initial); }
       catch (error) { failures.push(String(error)); }
       expect(await retained.evaluate(before => {
-        const refs: { root?: HTMLElement; editor?: HTMLInputElement; control?: Record<string, unknown> } = {};
-        document.querySelector('[data-surface-command]')!.dispatchEvent(new CustomEvent('surfacerefs', { detail: refs }));
+        const refs: {
+          root?: HTMLElement;
+          editor?: HTMLInputElement;
+          control?: Record<string, unknown>
+        } = {};
+        document.querySelector('[data-surface-command]')!.dispatchEvent(new CustomEvent(
+          'surfacerefs',
+          { detail: refs }
+        ));
         return { root: refs.root === before.root, editor: refs.editor === before.editor,
           parent: refs.editor?.parentNode === before.parent, control: refs.control === before.control,
           focus: refs.control?.focus === before.focus, blur: refs.control?.blur === before.blur,
           scrollTo: refs.control?.scrollTo === before.scrollTo };
-      }), label).toEqual({ root: true, editor: true, parent: true, control: true, focus: true, blur: true, scrollTo: true });
+      }), label).toEqual({
+        root: true,
+        editor: true,
+        parent: true,
+        control: true,
+        focus: true,
+        blur: true,
+        scrollTo: true
+      });
     };
     try {
       await verify(entry.initial, 'initial', true);
@@ -59,7 +94,10 @@ for (const entry of selectSurfaceEdgeNativeReference.cases) {
       const disposed = await cleanup();
       trace.push({ label: 'disposed', actual: disposed });
       expect(disposed.dom).toEqual(entry.cleanup);
-      for (const [name, value] of Object.entries(disposed.refs)) expect(value == null, `${name} binding cleared`).toBe(true);
+      for (const [name, value] of Object.entries(disposed.refs)) expect(
+        value == null,
+        `${name} binding cleared`
+      ).toBe(true);
       expect(disposed.owner.alive).toBe(false);
       expect(disposed.owner.events).toEqual(beforeDispose.events);
       expect(disposed.owner.rawEvents).toEqual(beforeDispose.rawEvents);

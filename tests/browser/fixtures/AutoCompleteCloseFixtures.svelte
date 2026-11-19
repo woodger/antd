@@ -21,22 +21,51 @@
   }));
   let selectedSample = $derived(samples.find(item => item.id === selected)!);
   let mounted = $state(true);
-  let childCapture = $derived.by(() => { void selected; return {} as NonNullable<typeof capture>; });
+  let childCapture = $derived.by(() => {
+    void selected;
+    return {} as NonNullable<typeof capture>;
+  });
   const options: Option[] = [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' },
-    ...Array.from({ length: 10 }, (_, index) => ({ value: 'filler-' + index, label: 'Filler ' + index }))];
-  for (const option of options) recorder.register(option, { data: 'close-contrast-option', value: option.value });
+    ...Array.from(
+      { length: 10 },
+      (_, index) => ({ value: 'filler-' + index, label: 'Filler ' + index })
+    )];
+  for (const option of options) recorder.register(
+    option,
+    { data: 'close-contrast-option', value: option.value }
+  );
   const events: unknown[] = [], rawEvents: unknown[] = [];
   let value = $state<string | undefined>(''), open = $state(false);
   let control = $state<SelectRef>(), root = $state<HTMLDivElement>(), editor = $state<HTMLInputElement | HTMLTextAreaElement>();
   let alive = true, selectionCallback = false;
-  let lastAuthored: { authoredProps: unknown; rawAuthoredProps: unknown; authoredProvider: unknown; rawAuthoredProvider: unknown } | undefined;
+  let lastAuthored: {
+    authoredProps: unknown;
+    rawAuthoredProps: unknown;
+    authoredProvider: unknown;
+    rawAuthoredProvider: unknown
+  } | undefined;
   onDestroy(() => { alive = false; });
-  const record = (...args: unknown[]) => { events.push(recorder.encode(args)); rawEvents.push(recorder.raw(args)); };
-  const callback = <Value,>(name: string, fn: Value): Value => recorder.register(fn, { callback: 'close-contrast-' + name });
-  const onChange = callback('change', (next: string | undefined, option: unknown) => { record('change', next, option); value = next; });
+  const record = (...args: unknown[]) => {
+    events.push(recorder.encode(args));
+    rawEvents.push(recorder.raw(args));
+  };
+  const callback = <Value,>(name: string, fn: Value): Value => recorder.register(
+    fn,
+    { callback: 'close-contrast-' + name }
+  );
+  const onChange = callback('change', (next: string | undefined, option: unknown) => {
+    record('change', next, option);
+    value = next;
+  });
   const onSearch = callback('search', (query: string) => record('search', query));
-  const onSelect = callback('select', (next: string, option: unknown) => { record('select', next, option); selectionCallback = next === 'b'; });
-  const onOpenChange = callback('open', (next: boolean) => { record('open', next); open = next; });
+  const onSelect = callback('select', (next: string, option: unknown) => {
+    record('select', next, option);
+    selectionCallback = next === 'b';
+  });
+  const onOpenChange = callback('open', (next: boolean) => {
+    record('open', next);
+    open = next;
+  });
   const onActive = callback('active', (next: string | null) => record('active', next));
   recorder.register(optionRenderer, { callback: 'close-contrast-option' });
   function optionValue(option: SelectFlattenOption<string, Option>, info: { index: number }) {
@@ -44,7 +73,10 @@
       { index: info.index, value: option.value, rawOptionIdentity: recorder.identity(option.data) });
   }
   const search = { filterOption: false, onSearch };
-  const provider = { theme: { token: { motion: false }, cssVar: { key: 'autocomplete-close-contrast' } }, popupOverflow: 'viewport' as const };
+  const provider = {
+    theme: { token: { motion: false }, cssVar: { key: 'autocomplete-close-contrast' } },
+    popupOverflow: 'viewport' as const
+  };
   let ownerProps = $derived<AutoCompleteProps<Option>>({ id: 'close-contrast-field', class: 'surface-control autocomplete-close-contrast',
     style: { width: '100%' }, options, value, open, virtual: initial?.virtual, listHeight: 96, listItemHeight: 32,
     'aria-label': 'Close contrast value', placeholder: 'Close contrast choice', defaultActiveFirstOption: false,
@@ -54,10 +86,23 @@
     if (alive) lastAuthored = { authoredProps: recorder.encode(ownerProps), rawAuthoredProps: recorder.raw(ownerProps),
       authoredProvider: recorder.encode(provider), rawAuthoredProvider: recorder.raw(provider) };
     if (!lastAuthored) throw Error('Read the actual live close owner before unmount');
-    return { value, query: value, open, alive, events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], ...lastAuthored };
+    return {
+      value,
+      query: value,
+      open,
+      alive,
+      events: [...events],
+      rawEvents: [...rawEvents],
+      calls: [...recorder.calls],
+      ...lastAuthored
+    };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; initialCapture.flags = () => ({ selectionCallback }); }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+    initialCapture.flags = () => ({ selectionCallback });
+  }
 </script>
 
 {#snippet optionRenderer(option: SelectFlattenOption<string, Option>, info: { index: number })}{optionValue(option, info)}{/snippet}

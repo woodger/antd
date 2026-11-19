@@ -67,7 +67,8 @@ export function connectPopupPortal(element: HTMLElement, options: {
     const focused = getPopupActiveElement(element);
     if (typeof parent.moveBefore === 'function' && parent.isConnected && element.isConnected) {
       parent.moveBefore(element, before);
-    } else {
+    }
+    else {
       parent.insertBefore(element, before);
       if (focused instanceof view.HTMLElement && element.contains(focused)
         && document.activeElement === document.body) focused.focus({ preventScroll: true });

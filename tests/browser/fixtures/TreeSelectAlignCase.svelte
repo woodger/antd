@@ -7,7 +7,10 @@
   } from 'antd-svelte';
   import TreeSelectAlignCompositeRoot from './TreeSelectAlignCompositeRoot.svelte';
   import type { TreeSelectAlignAction, TreeSelectAlignSample, TreeSelectAlignSettings } from './tree-select-align-cases';
-  let { sample, baselineNoAlignment = false }: { sample: TreeSelectAlignSample; baselineNoAlignment?: boolean } = $props();
+  let { sample, baselineNoAlignment = false }: {
+    sample: TreeSelectAlignSample;
+    baselineNoAlignment?: boolean
+  } = $props();
   const names = ['popupAlign', 'builtinPlacements', 'placement'] as const;
   type AlignProps = Pick<TreeSelectProps, typeof names[number]>;
   let settings = $state.raw<TreeSelectAlignSettings>(untrack(() => ({ ...sample })));
@@ -39,7 +42,8 @@
       const next = { ...settings, ...action.set };
       for (const key of action.unset ?? []) delete next[key];
       settings = next;
-    } else if (action.type === 'host') {
+    }
+    else if (action.type === 'host') {
       hostState = { ...hostState,
         ...(action.left === undefined ? {} : { left: action.left }),
         ...(action.top === undefined ? {} : { top: action.top }),
@@ -60,7 +64,10 @@
     ].filter(Boolean).join(';') } };
   }
   function semanticReceipt() {
-    void settings; void model; void query; void events.length;
+    void settings;
+    void model;
+    void query;
+    void events.length;
     return JSON.stringify(receipt.semantic);
   }
   let alignProps = $derived.by<AlignProps>(() => {
@@ -77,14 +84,23 @@
     ...alignProps,
     multiple: sample.multiple || sample.slot === 'input-responsive',
     showSearch: { searchValue: query, filterTreeNode: false as const,
-      onSearch: (text: string) => { query = text; record('search', text); } },
+      onSearch: (text: string) => {
+        query = text;
+        record('search', text);
+      } },
     treeData: [{ value: 'a', title: 'Alpha' }, { value: 'b', title: 'Beta' },
-      { value: 'c', title: 'Gamma' }, { value: 'd', title: 'Delta' }].slice(0, sample.slot === 'input-responsive' ? 4 : 2),
+      { value: 'c', title: 'Gamma' }, { value: 'd', title: 'Delta' }].slice(
+        0,
+        sample.slot === 'input-responsive' ? 4 : 2
+      ),
     popupMatchSelectWidth: settings.popupWidth ?? 300,
     getPopupContainer: sample.container ? getter : undefined, styles,
     maxTagCount: sample.slot === 'input-responsive' ? 'responsive' as const : undefined,
     onOpenChange: (open: boolean) => record('open', open),
-    onChange: (next: TreeSelectValue) => { model = next ?? null; record('change', next ?? null); },
+    onChange: (next: TreeSelectValue) => {
+      model = next ?? null;
+      record('change', next ?? null);
+    },
     onFocus: () => record('focus'), onBlur: () => record('blur')
   });
   let hostStyle = $derived([

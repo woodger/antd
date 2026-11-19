@@ -42,13 +42,15 @@ export function drawQRCode(
   try {
     new view.Path2D().addPath(new view.Path2D());
     supportsPath = true;
-  } catch {
+  }
+  catch {
     // Исходный fallback также проверяет работоспособность addPath, а не только наличие Path2D.
   }
 
   if (supportsPath) {
     context.fill(new view.Path2D(qrCodePath(cellsToDraw, margin)));
-  } else {
+  }
+  else {
     // В fallback эталон рисует исходные modules без excavation; сохраняем это отличие путей.
     modules.forEach((row, y) => row.forEach((cell, x) => {
       if (cell)

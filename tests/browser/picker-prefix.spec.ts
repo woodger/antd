@@ -124,6 +124,7 @@ for (const sample of ['datetime', 'datetime-range']) {
           node.value = 'choices';
           node.dispatchEvent(new Event('input', { bubbles: true }));
         });
+
       await expect(popup).toHaveClass(/\bchoices-dropdown\b/);
       expect(await popup.evaluate((node, old) => node === old, oldPopup)).toBe(true);
       expect(await minute.evaluate((node, old) => node === old, oldMinute)).toBe(true);
@@ -153,6 +154,7 @@ for (const kind of ['date', 'range']) {
         node.value = 'next';
         node.dispatchEvent(new Event('input', { bubbles: true }));
       });
+
     await expect(input).toHaveValue('draft');
 
     await page.getByRole('button', { name: 'Use slash picker format', exact: true })

@@ -25,10 +25,12 @@ test('Affix theme updates retain the fixed node, draft, native ref and transitio
     const host = page.locator('[data-affix-theme="normal"]');
     const root = host.locator('.theme-affix');
     const content = root.locator(':scope > div').last();
+
     await expect(page.locator('[data-affix-scroll]')).toHaveCount(6);
     await page.locator('[data-affix-scroll]').evaluateAll(nodes => {
       for (const node of nodes) node.scrollTop = 80;
     });
+
     await expect(content).toHaveCSS('z-index', '73');
     const previous = await content.elementHandle();
     const previousRoot = await root.elementHandle();
@@ -51,6 +53,7 @@ test('Affix theme updates retain the fixed node, draft, native ref and transitio
     await expect(host.getByLabel('Affix theme ref normal', { exact: true })).toHaveText('mounted');
     await expect(host.getByLabel('Affix theme changes normal', { exact: true })).toHaveText('[true]');
     const metrics = await page.evaluate(snapshotAffixTheme) as typeof reference.cases[0]['metrics'];
+
     expect(metrics.normal.placeholder).toEqual(['260px', '32px']);
     expect(metrics.normal.topOffset).toBe(5);
     expect(metrics.nested.content['z-index']).toBe('21');
@@ -76,6 +79,7 @@ test('Affix restores legacy defaults when its source theme is removed while fixe
   const host = page.locator('[data-affix-theme="normal"]');
   const content = host.locator('.theme-affix > div').last();
   await host.locator('[data-affix-scroll]').evaluate(node => node.scrollTop = 80);
+
   await expect(content).toHaveCSS('z-index', '73');
   const original = await content.elementHandle();
   await page.getByLabel('Apply source Affix theme', { exact: true }).uncheck();

@@ -31,7 +31,10 @@ describe('Form primitive rule types public package', () => {
   });
 
   it('classifies scientific-notation integers without parseInt rounding', async () => {
-    const form = createForm({ initialValues: { field: 1e21 }, rules: { field: [{ type: 'integer' }] } });
+    const form = createForm({
+      initialValues: { field: 1e21 },
+      rules: { field: [{ type: 'integer' }] }
+    });
 
     await expect(form.validateFields()).resolves.toEqual({ field: 1e21 });
     expect(form.getFieldError('field')).toEqual([]);

@@ -241,7 +241,8 @@
     if (repairFocus) {
       repairFocus = false;
       untrack(() => focusTab(key));
-    } else if (previous?.isConnected && previous.getClientRects().length
+    }
+    else if (previous?.isConnected && previous.getClientRects().length
       && !previous.matches(':disabled')
       && body.ownerDocument.activeElement === body.ownerDocument.body)
       untrack(() => previous.focus({ preventScroll: true }));

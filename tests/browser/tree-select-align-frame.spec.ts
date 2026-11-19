@@ -57,6 +57,7 @@ for (const entry of reference.cases) {
     await page.getByRole('combobox', { name: 'TreeSelect frame sample', exact: true })
       .selectOption(entry.id);
     await page.mouse.move(0, 0);
+
     await expect(page.locator('[data-align-frame-case]'))
       .toHaveAttribute('data-align-frame-bound', 'true');
     verify(await settle(page), entry.initial);

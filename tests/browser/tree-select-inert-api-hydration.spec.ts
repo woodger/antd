@@ -33,8 +33,14 @@ let server: ViteDevServer;
 let cache: string;
 test.use({ viewport: reference.reference.viewport });
 test.beforeAll(async () => {
-  cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)), 'tree-select-inert-hydration-'));
-  server = await createServer({ configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+  cache = await mkdtemp(join(
+    fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
+    'tree-select-inert-hydration-'
+  ));
+  server = await createServer({ configFile: fileURLToPath(new URL(
+    './vite.config.ts',
+    import.meta.url
+  )),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null }, appType: 'custom', cacheDir: cache });
 });
 test.afterAll(async () => {
@@ -45,7 +51,10 @@ test.afterAll(async () => {
 test('TreeSelect strictly hydrates inert props and preserves its focused editor and public refs through live updates', async ({ page }) => {
   const sample = treeSelectInertApiSamples.find(sample => sample.id === 'inert-live-controls')!;
   const source = reference.cases.find(entry => entry.id === sample.id)!;
-  const module = await server.ssrLoadModule(fileURLToPath(new URL('./fixtures/tree-select-inert-api-hydration.server.ts', import.meta.url)));
+  const module = await server.ssrLoadModule(fileURLToPath(new URL(
+    './fixtures/tree-select-inert-api-hydration.server.ts',
+    import.meta.url
+  )));
   const rendered = module.renderTreeSelectInertApi();
   await page.clock.install();
   await page.goto('/tree-select-inert-api-hydration.html');
@@ -56,20 +65,41 @@ test('TreeSelect strictly hydrates inert props and preserves its focused editor 
     const OriginalObserver = window.ResizeObserver;
     window.ResizeObserver = class extends OriginalObserver {
       targets = new Set<Element>();
-      constructor(callback: ResizeObserverCallback) { super(callback); observers.add(this.targets); }
-      observe(target: Element, options?: ResizeObserverOptions) { this.targets.add(target); super.observe(target, options); }
-      unobserve(target: Element) { this.targets.delete(target); super.unobserve(target); }
-      disconnect() { this.targets.clear(); super.disconnect(); }
+      constructor(callback: ResizeObserverCallback) {
+        super(callback);
+        observers.add(this.targets);
+      }
+      observe(target: Element, options?: ResizeObserverOptions) {
+        this.targets.add(target);
+        super.observe(target, options);
+      }
+      unobserve(target: Element) {
+        this.targets.delete(target);
+        super.unobserve(target);
+      }
+      disconnect() {
+        this.targets.clear();
+        super.disconnect();
+      }
     };
     const frames = new Set<number>();
     const request = window.requestAnimationFrame.bind(window), cancel = window.cancelAnimationFrame.bind(window);
     window.requestAnimationFrame = callback => {
-      const frame = request(time => { frames.delete(frame); callback(time); });
+      const frame = request(time => {
+        frames.delete(frame);
+        callback(time);
+      });
       frames.add(frame);
       return frame;
     };
-    window.cancelAnimationFrame = frame => { frames.delete(frame); cancel(frame); };
-    window.inertApiResources = { observers: () => [...observers].reduce((count, targets) => count + targets.size, 0),
+    window.cancelAnimationFrame = frame => {
+      frames.delete(frame);
+      cancel(frame);
+    };
+    window.inertApiResources = { observers: () => [...observers].reduce(
+      (count, targets) => count + targets.size,
+      0
+    ),
       frames: () => frames.size };
     const outside = document.querySelector<HTMLInputElement>('[aria-label="Inert API outside draft"]')!;
     outside.value = 'Outside inert hydration draft';
@@ -77,8 +107,13 @@ test('TreeSelect strictly hydrates inert props and preserves its focused editor 
   }, { head: rendered.head, body: rendered.body });
   await page.addScriptTag({ type: 'module', url: '/tree-select-inert-api-hydration.client.ts' });
   await page.waitForFunction(() => window.treeSelectInertApiHydration);
-  await expect(page.locator('[data-inert-api-case]')).toHaveAttribute('data-inert-api-bound', 'true');
+
+  await expect(page.locator('[data-inert-api-case]')).toHaveAttribute(
+    'data-inert-api-bound',
+    'true'
+  );
   const read = () => page.evaluate(readTreeSelectInertApi);
+
   await expect.poll(read).toEqual(treeSelectInertApiNativeExpected(source.initial, sample));
   expect(await page.evaluate(() => {
     const state = window.treeSelectInertApiHydration!, refs = state.refs();
@@ -97,15 +132,22 @@ test('TreeSelect strictly hydrates inert props and preserves its focused editor 
     if (!(node instanceof HTMLInputElement)) throw Error('Expected native TreeSelect editor');
     node.setSelectionRange(1, 4);
   });
+
   await expect(page.locator('.ant-tree-select-dropdown')).toBeVisible();
   const events = await page.evaluate(() => window.treeSelectInertApiHydration!.events());
+
   expect(events).toEqual([['focus'], ['open', true], ['search', 'Hydrated search']]);
   const identity = await page.evaluateHandle(() => {
     const state = window.treeSelectInertApiHydration!, refs = state.refs();
     return { control: refs.control, focus: refs.control?.focus, blur: refs.control?.blur,
       scrollTo: refs.control?.scrollTo, popup: document.querySelector('.ant-tree-select-dropdown') };
   });
-  expect(await identity.evaluate(old => ({ focus: typeof old.focus, blur: typeof old.blur, scrollTo: typeof old.scrollTo })))
+
+  expect(await identity.evaluate(old => ({
+    focus: typeof old.focus,
+    blur: typeof old.blur,
+    scrollTo: typeof old.scrollTo
+  })))
     .toEqual({ focus: 'function', blur: 'function', scrollTo: 'function' });
   try {
     for (const mode of ['undefined', 'empty', 'omitted', 'live'] satisfies TreeSelectInertApiMode[]) {
@@ -170,7 +212,10 @@ test('TreeSelect strictly hydrates inert props and preserves its focused editor 
     await expect(page.locator('[data-inert-api-case]')).toHaveCount(0);
     await expect(page.locator('[popover]')).toHaveCount(0);
     await page.setViewportSize({ width: 1080, height: 900 });
-    await page.evaluate(() => { window.dispatchEvent(new Event('resize')); window.dispatchEvent(new Event('scroll')); });
+    await page.evaluate(() => {
+      window.dispatchEvent(new Event('resize'));
+      window.dispatchEvent(new Event('scroll'));
+    });
     // Продвигаем часы за blur/close timers, чтобы проверить настоящий поздний ledger после unmount.
     await page.clock.runFor(1000);
     const disposal = await page.evaluate(() => window.inertApiDisposal!.trace);

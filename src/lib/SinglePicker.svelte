@@ -200,7 +200,10 @@
   let timeFormat = $derived(
     clock.format ?? (typeof formats[0] === 'string' ? formats[0] : 'HH:mm:ss')
   );
-  let panelLocale = $derived(timePickerLang(typeof showTime === 'object' ? showTime : {}, actualLocale));
+  let panelLocale = $derived(timePickerLang(
+    typeof showTime === 'object' ? showTime : {},
+    actualLocale
+  ));
   let datePanelValue = $derived(pickerCalendarValue(panel, clock.defaultOpenValue));
   let restrictions = $derived({ minDate, maxDate, disabledDate });
   let hoverValue = $state.raw<Dayjs | null>(null);
@@ -319,7 +322,8 @@
     if (target !== dateTimeTarget) {
       dateTimeTarget = target;
       dateTimeScroll.clear();
-    } else if (visible && (!showTime || mode !== 'date')) dateTimeScroll.clear();
+    }
+    else if (visible && (!showTime || mode !== 'date')) dateTimeScroll.clear();
     else if (!visible) untrack(() => dateTimePanel?.captureScroll());
   });
   $effect(() => {
@@ -427,7 +431,8 @@
         if (time) {
           if (reason === 'escape') timeInteraction.trigger(0, 'esc');
           requestOpen(false);
-        } else if (keepPreset) closeDatePreset();
+        }
+        else if (keepPreset) closeDatePreset();
         else finish(false);
         if (reason === 'escape' && !keepPreset)
           input?.focus();
@@ -499,7 +504,8 @@
           timeInteraction.trigger(0, 'panel-intermediate', [clock.defaultOpenValue]);
         if (draft) onOk?.(draft);
         timeInteraction.trigger(0, 'confirm');
-      } else requestOpen(false);
+      }
+      else requestOpen(false);
       return;
     }
     if (confirmed && retainedDatePreset) {
@@ -519,7 +525,8 @@
       if (!valid(draft) || !commit(draft)) return;
       if (draft)
         onOk?.(draft);
-    } else if (!confirm && dirty) {
+    }
+    else if (!confirm && dirty) {
       if (!text)
         commit(null);
       else {
@@ -645,14 +652,13 @@
     if (time) {
       invalidTimeInput = text !== '' && !parsed?.isValid();
       timeInteraction.trigger(0, 'input', parsed?.isValid() ? [parsed] : undefined);
-    } else if (valid(parsed)) {
+    }
+    else if (valid(parsed)) {
       setDraft(parsed, 'date');
       if (picker === 'date' && !defaultPickerValue) internalPanel = parsed!;
     }
   }
-  function keyboard(
-    event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }
-  ) {
+  function keyboard(event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
     const shared = (_event: KeyboardEvent, maskKey?: PickerMaskSharedKey) => {
       onkeydown?.(event);
       if (event.defaultPrevented || event.isComposing || blocked) return false;
@@ -668,18 +674,21 @@
     if (time) {
       if (event.key === 'Tab') {
         timeInteraction.trigger(0, 'keyboard-submit-weak');
-      } else if (event.key === 'Escape') {
+      }
+      else if (event.key === 'Escape') {
         event.preventDefault();
         event.stopPropagation();
         timeInteraction.trigger(0, 'esc');
         requestOpen(false);
-      } else if (event.key === 'Enter') {
+      }
+      else if (event.key === 'Enter') {
         event.preventDefault();
         const closed = !visible;
         if (maskKey ? maskKey.enterValid : parsePicker(text, actualLocale.locale, formats))
           timeInteraction.trigger(0, 'keyboard-submit');
         if (closed) requestOpen(true);
-      } else if (event.key === 'ArrowDown' && !maskKey) {
+      }
+      else if (event.key === 'ArrowDown' && !maskKey) {
         event.preventDefault();
         requestOpen(true);
         await tick();
@@ -698,22 +707,27 @@
         event.stopPropagation();
         datePresetInteraction.trigger(0, 'esc');
         requestOpen(false);
-      } else datePresetInteraction.reset();
-    } else if (event.key === 'Tab') {
+      }
+      else datePresetInteraction.reset();
+    }
+    else if (event.key === 'Tab') {
       if (retainedDatePreset) datePresetInteraction.trigger(0, 'keyboard-submit-weak');
       else if (draft) datePresetInteraction.reset();
-    } else if (event.key === 'Enter' && retainedDatePreset) {
+    }
+    else if (event.key === 'Enter' && retainedDatePreset) {
       event.preventDefault();
       const closed = !visible;
       const parsed = parsePicker(event.currentTarget.value, actualLocale.locale, formats);
       if (maskKey ? maskKey.enterValid : parsed) datePresetInteraction.trigger(0, 'keyboard-submit');
       if (closed) requestOpen(true);
-    } else if (event.key === 'Enter') {
+    }
+    else if (event.key === 'Enter') {
       event.preventDefault();
       if (!visible) {
         if (parsePicker(text, actualLocale.locale, formats)) datePresetInteraction.reset();
         requestOpen(true);
-      } else {
+      }
+      else {
         if (maskKey && !maskKey.enterValid) return;
         if ((picker === 'date' || picker === 'quarter' || picker === 'week') && dirty
           && draftSource === 'input' && text !== '' && !quarterInputValue) return;
@@ -724,7 +738,8 @@
           requestOpen(false);
         }
       }
-    } else if (event.key === 'ArrowDown' && picker === 'date' && !maskKey) {
+    }
+    else if (event.key === 'ArrowDown' && picker === 'date' && !maskKey) {
       event.preventDefault();
       if (!visible)
         requestOpen(true);
@@ -795,7 +810,8 @@
     if (next && showTime) {
       const base = draft ?? datePanelValue;
       next = base.year(next.year()).month(next.month()).date(next.date());
-    } else if (next) {
+    }
+    else if (next) {
       next = next.hour(0).minute(0).second(0).millisecond(0);
     }
     handleDateHover(next);

@@ -13,25 +13,44 @@ test.beforeAll(() => {
 });
 for (const primary of reference.cases) {
   const entry = selectDataNativeCase(primary);
-  test(`Select data raw callbacks and mapped options follow Source for ${entry.id}`, async ({ page }, testInfo) => {
+  test(`Select data raw callbacks and mapped options follow Source for ${entry.id}`, async (
+    { page },
+    testInfo
+  ) => {
     const sample = selectDataSamples.find(sample => sample.id === entry.id)!;
     const errors: string[] = [], warnings: string[] = [], trace: unknown[] = [];
     page.on('pageerror', error => errors.push(error.message));
-    page.on('console', message => { if (['warning', 'error'].includes(message.type())) warnings.push(message.text()); });
+    page.on('console', message => {
+      if (['warning', 'error'].includes(message.type())) warnings.push(message.text());
+    });
     await page.goto('/?fixture=select-data');
     await page.getByRole('combobox', { name: 'Select data sample', exact: true }).selectOption(entry.id);
-    await expect(page.locator('[data-select-data-case]')).toHaveAttribute('data-select-data-bound', 'true');
+
+    await expect(page.locator('[data-select-data-case]')).toHaveAttribute(
+      'data-select-data-bound',
+      'true'
+    );
     await prepareSelectData(page);
     const identity = await page.evaluateHandle(() => {
-      const refs: { root?: HTMLElement; editor?: HTMLInputElement | HTMLTextAreaElement; control?: Record<string, unknown> } = {};
-      document.querySelector('[data-select-data-command]')!.dispatchEvent(new CustomEvent('datarefs', { detail: refs }));
+      const refs: {
+        root?: HTMLElement;
+        editor?: HTMLInputElement | HTMLTextAreaElement;
+        control?: Record<string, unknown>
+      } = {};
+      document.querySelector('[data-select-data-command]')!.dispatchEvent(new CustomEvent(
+        'datarefs',
+        { detail: refs }
+      ));
       return { ...refs, parent: refs.editor?.parentNode,
         focus: refs.control?.focus, blur: refs.control?.blur, scrollTo: refs.control?.scrollTo };
     });
     const stable = () => identity.evaluate(old => {
       const refs: { root?: HTMLElement; editor?: HTMLInputElement | HTMLTextAreaElement; control?: Record<string, unknown>;
         publicRoot?: HTMLElement; publicEditor?: HTMLElement } = {};
-      document.querySelector('[data-select-data-command]')!.dispatchEvent(new CustomEvent('datarefs', { detail: refs }));
+      document.querySelector('[data-select-data-command]')!.dispatchEvent(new CustomEvent(
+        'datarefs',
+        { detail: refs }
+      ));
       return { root: old.root === refs.root, editor: old.editor === refs.editor, parent: old.parent === refs.editor?.parentNode,
         control: old.control === refs.control, publicRoot: refs.publicRoot === refs.root, publicEditor: refs.publicEditor === refs.editor,
         focus: old.focus === refs.control?.focus, blur: old.blur === refs.control?.blur, scrollTo: old.scrollTo === refs.control?.scrollTo };
@@ -56,7 +75,13 @@ for (const primary of reference.cases) {
       expect(errors).toEqual([]);
       expect(warnings).toEqual([]);
     } finally {
-      await testInfo.attach('actual-select-data-raw', { body: JSON.stringify({ trace, errors, warnings }, null, 2), contentType: 'application/json' });
+      await testInfo.attach(
+        'actual-select-data-raw',
+        {
+          body: JSON.stringify({ trace, errors, warnings }, null, 2),
+          contentType: 'application/json'
+        }
+      );
       await identity.dispose();
     }
   });

@@ -63,13 +63,15 @@ for (const source of [false, true]) {
               await page.getByLabel('Lifecycle draft', { exact: true }).fill('Kept ref draft');
               await page.getByLabel('Lifecycle count', { exact: true })
                 .evaluate(node => (node as HTMLButtonElement).click());
-            } else if (index === 3) {
+            }
+            else if (index === 3) {
               await expect(page.getByLabel('Lifecycle draft', { exact: true }))
                 .toHaveValue(sample.destroy ? 'Draft' : 'Kept ref draft');
               await expect(page.getByLabel('Lifecycle count', { exact: true }))
                 .toHaveText(sample.destroy ? '0' : '1');
             }
-          } else {
+          }
+          else {
             await root.evaluate(node => (node as PopoverRefFixtureElement).savedPopupRef?.forceAlign());
             await expect(page.locator('[data-ant-popover]')).toHaveCount(0);
             expect(await root.evaluate(node => {
@@ -94,6 +96,7 @@ for (const source of [false, true]) {
           await root.getByRole('button', { name: 'Next ref step', exact: true })
             .evaluate(node => (node as HTMLButtonElement).click());
           const popup = page.locator('[data-ant-popover]');
+
           await expect(popup).toBeVisible();
           const previous = await popup.elementHandle();
           const draft = page.getByLabel('Lifecycle draft', { exact: true });
@@ -132,6 +135,7 @@ for (const source of [false, true]) {
             await Promise.resolve();
             return host.alignCalls - before;
           });
+
           expect(batch).toBe(observe ? sample.batchDelta : 0);
           expect(await popup.evaluate((node, old) => node === old, previous)).toBe(true);
           await expect(draft).toHaveValue('Preserved by forceAlign');
@@ -183,6 +187,7 @@ for (const source of [false, true]) {
         await expect(page.getByLabel('Ref effect calls', { exact: true })).toHaveText('1');
         await page.getByRole('button', { name: 'Update ref title', exact: true })
           .evaluate(node => (node as HTMLButtonElement).click());
+
         await expect(page.locator('[data-ant-popover]')).toContainText('Updated ref content');
         await expect(page.getByLabel('Ref effect calls', { exact: true })).toHaveText('1');
         for (const step of [2, 3]) {
@@ -215,6 +220,7 @@ for (const source of [false, true]) {
       await expect(page.getByRole('button', { name: 'Confirm via ref', exact: true })).toBeDisabled();
       await expect(page.getByRole('button', { name: 'Cancel via ref', exact: true })).toBeDisabled();
       const focusTarget = page.locator('[data-ant-popconfirm-content]');
+
       await expect(focusTarget).toBeFocused();
       await root.evaluate(async node => {
         const api = (node as PopoverRefFixtureElement).popupRef!;

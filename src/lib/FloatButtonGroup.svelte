@@ -163,7 +163,8 @@
     if (menu && motion) {
       motion.sync(opened);
       motionState = opened;
-    } else if (!menu)
+    }
+    else if (!menu)
       motionState = undefined;
   });
   $effect(() => {

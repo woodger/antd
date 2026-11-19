@@ -24,7 +24,10 @@ export function sliderPrefixTheme(sample: SliderPrefixCase): ThemeConfig {
   if (sample.native) return { mode: dark ? 'dark' : 'light', primary };
 
   return {
-    cssVar: { key: 'slider-prefix-scope', ...(sample.theme === 'variables' ? { prefix: 'SliderX' } : {}) },
+    cssVar: {
+      key: 'slider-prefix-scope',
+      ...(sample.theme === 'variables' ? { prefix: 'SliderX' } : {})
+    },
     token: { motion: false, ...(primary === 'green' ? { colorPrimary: '#52c41a' }
       : primary === 'purple' ? { colorPrimary: '#722ed1' } : {}) },
     ...(dark ? { algorithm: theme.darkAlgorithm }

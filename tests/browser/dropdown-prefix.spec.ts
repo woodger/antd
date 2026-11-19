@@ -14,6 +14,7 @@ for (const entry of reference.cases) {
         .selectOption(entry.sample.id);
       await page.getByRole('combobox', { name: 'Dropdown prefix scope', exact: true })
         .selectOption(scope);
+
       await expect(page.getByRole('menu', { name: 'Prefix commands', exact: true })).toBeVisible();
       await page.mouse.move(1090, 5);
 

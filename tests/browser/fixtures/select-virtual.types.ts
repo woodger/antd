@@ -38,7 +38,10 @@ export const selectVirtual = {
   virtual: true, listHeight: 100, listItemHeight: 16, showScrollBar: 'optional',
   nativeElement: undefined, inputElement: undefined,
   onActive: value => value?.toUpperCase(),
-  onPopupScroll: event => { const top: number = event.currentTarget.scrollTop; return top; }
+  onPopupScroll: event => {
+    const top: number = event.currentTarget.scrollTop;
+    return top;
+  }
 } satisfies SelectProps<string>;
 export const selectVirtualUndefined = {
   virtual: undefined, listHeight: undefined, listItemHeight: undefined, showScrollBar: undefined
@@ -55,7 +58,10 @@ export const autoCompleteVirtual = {
   virtual: false, listHeight: 100, listItemHeight: 0, showScrollBar: true,
   nativeElement: undefined, inputElement: undefined,
   onActive: value => value?.toUpperCase(),
-  onPopupScroll: event => { const top: number = event.currentTarget.scrollTop; return top; }
+  onPopupScroll: event => {
+    const top: number = event.currentTarget.scrollTop;
+    return top;
+  }
 } satisfies AutoCompleteProps;
 export const autoCompleteVirtualUndefined = {
   virtual: undefined, listHeight: undefined, listItemHeight: undefined, showScrollBar: undefined

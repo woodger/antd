@@ -21,7 +21,10 @@ for (const profile of ['string', 'object', 'mask'] as const) {
     const end = dayjs('2021-01-15T19:41:23.789');
     const format = fieldFormat('YYYY-MM-DD');
     const single = render(DatePicker, { props: { value: start, format, locale: enUS.datePicker } }).body;
-    const range = render(RangePicker, { props: { value: [start, end], format, locale: enUS.datePicker } }).body;
+    const range = render(
+      RangePicker,
+      { props: { value: [start, end], format, locale: enUS.datePicker } }
+    ).body;
 
     expect(single).toContain('value="2020-12-31"');
     expect(range).toContain('value="2020-12-31"');

@@ -316,6 +316,7 @@ test.describe('mobile Empty', () => {
     async ({ page }, testInfo) => {
       await page.getByRole('textbox', { name: 'Empty description', exact: true })
         .fill('VeryLongEmptyDescriptionWithoutSpaces'.repeat(8));
+
       await expect.poll(
         () => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)
       )

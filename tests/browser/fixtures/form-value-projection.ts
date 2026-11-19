@@ -18,7 +18,10 @@ export function encodeFormValues(value: unknown): unknown {
 
 export function snapshotFormValues(form: FormInstance<Record<string, unknown>>) {
   const meta: (FormFieldMeta | null)[] = [];
-  const filter = (value: FormFieldMeta | null) => { meta.push(value); return true; };
+  const filter = (value: FormFieldMeta | null) => {
+    meta.push(value);
+    return true;
+  };
   const queries: Record<string, () => unknown> = {
     mounted: () => form.getFieldsValue(),
     store: () => form.getFieldsValue(true),
@@ -35,7 +38,10 @@ export function snapshotFormValues(form: FormInstance<Record<string, unknown>>) 
     list: () => form.getFieldsValue(['people']),
     row: () => form.getFieldsValue([['people', 0]]),
     filteredSelection: () => form.getFieldsValue([['user'], 'unbound', 'missing'], filter),
-    meta: () => form.getFieldsValue({ filter: (value) => { meta.push(value); return false; } })
+    meta: () => form.getFieldsValue({ filter: (value) => {
+      meta.push(value);
+      return false;
+    } })
   };
   const values = Object.fromEntries(Object.entries(queries).map(([key, get]) =>
     [key, encodeFormValues(get())]

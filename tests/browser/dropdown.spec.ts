@@ -31,11 +31,14 @@ test('Dropdown retains unbound visibility, menu DOM and focus when spread props 
   await expect(item).toBeFocused();
   expect(await item.evaluate((node, old) => node === old, oldItem)).toBe(true);
   await item.press('Escape');
+
   await expect(popup).toBeHidden();
   await refresh.dispatchEvent('click');
+
   await expect(popup).toBeHidden();
   await page.getByLabel('Default Dropdown initial visibility', { exact: true }).uncheck();
   await page.getByLabel('Default Dropdown initial visibility', { exact: true }).check();
+
   await expect(popup).toBeHidden();
   await expect(page.getByRole('status', { name: 'Default Dropdown changes', exact: true }))
     .toHaveText('[false]');
@@ -44,6 +47,7 @@ test('Dropdown retains unbound visibility, menu DOM and focus when spread props 
 test('Dropdown keeps its initial fallback when an external open owner is released', async ({ page }) => {
   await page.getByLabel('Mount default Dropdown', { exact: true }).check();
   const popup = menu(page, 'Default menu');
+
   await expect(popup).toBeVisible();
   await page.getByRole('button', { name: 'Hide default Dropdown externally', exact: true })
     .dispatchEvent('click');
@@ -69,6 +73,7 @@ for (const value of ['click', 'manual']) {
     await trigger(page).scrollIntoViewIfNeeded();
     await freeze(page);
     await page.keyboard.press('F4');
+
     await expect(menu(page)).toBeVisible();
     await command(page, 'Rename').hover();
     await trigger(page).hover();
@@ -636,6 +641,7 @@ test(
     await expect(popup).toHaveClass(/ant-dropdown-placement-topLeft/);
 
     await page.evaluate(() => window.scrollBy(0, 100));
+
     await expect.poll(async () => {
       const anchor = (await trigger(page).boundingBox())!;
       const bounds = (await popup.boundingBox())!;

@@ -4,7 +4,11 @@ import TreeSelectTriggerCase from './TreeSelectTriggerCase.svelte';
 import { treeSelectTriggerSamples } from './tree-select-trigger-cases';
 declare global {
   interface Window {
-    treeSelectTriggerHydration?: { input: Element | null; root: Element | null; dispose: () => Promise<void>; };
+    treeSelectTriggerHydration?: {
+      input: Element | null;
+      root: Element | null;
+      dispose: () => Promise<void>;
+    };
   }
 }
 const target = document.getElementById('root')!;

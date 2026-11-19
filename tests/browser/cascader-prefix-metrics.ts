@@ -36,7 +36,10 @@ export function snapshotCascaderPrefix() {
           label: (nodePart(node, '-menu-item-content') ?? node).textContent
             ?.replace(/\s+/g, ' ').trim(),
           row: css(node, [...font, ...padding, 'min-height', 'background-color', 'font-weight']),
-          checkbox: css(nodePart(node, '-checkbox'), ['width', 'height', 'background-color', ...border]),
+          checkbox: css(
+            nodePart(node, '-checkbox'),
+            ['width', 'height', 'background-color', ...border]
+          ),
           keyword: css(nodePart(node, '-menu-item-keyword'), ['color', 'font-weight'])
         }))
       })) : []

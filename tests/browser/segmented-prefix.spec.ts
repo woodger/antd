@@ -6,6 +6,7 @@ test.use({ viewport: reference.viewport });
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=segmented-prefix');
+
   await expect(page.getByRole('heading', { name: 'Segmented local prefixes', exact: true }))
     .toBeVisible();
 });
@@ -106,6 +107,7 @@ test('Segmented prefix changes cancel an active thumb and retain keyboard focus'
   await root.getByRole('radio', { name: 'Alpha', exact: true }).focus();
   await page.keyboard.press('ArrowRight');
   const thumb = root.locator('.tenant-segmented-thumb');
+
   await expect(thumb).toHaveCount(1);
   const animation = await thumb.evaluateHandle(node => {
     const active = node.getAnimations()[0];

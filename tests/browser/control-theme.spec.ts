@@ -2,6 +2,7 @@ import { test, expect } from './test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=control-theme');
+
   await expect(page.getByRole('heading', { name: 'Source control tokens', exact: true })).toBeVisible();
 });
 
@@ -9,7 +10,10 @@ test('Button consumes its own aliases, font weight and icon gap', async ({ page 
   await expect(page.locator('#themed-primary')).toHaveCSS('background-color', 'rgb(255, 0, 0)');
   await expect(page.locator('#themed-primary')).toHaveCSS('font-weight', '600');
   await expect(page.locator('#themed-icon-gap')).toHaveCSS('column-gap', '3px');
-  await expect(page.locator('#outside-control-primary')).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+  await expect(page.locator('#outside-control-primary')).toHaveCSS(
+    'background-color',
+    'rgb(22, 119, 255)'
+  );
 });
 
 test('Input tokens reach plain, affix and TextArea controls', async ({ page }) => {
@@ -21,6 +25,7 @@ test('Input tokens reach plain, affix and TextArea controls', async ({ page }) =
     await expect(paddingRoot).toHaveCSS('padding-left', '5px');
   }
   await page.getByLabel('Themed plain input', { exact: true }).focus();
+
   await expect(page.locator('#themed-input')).toHaveCSS('border-color', 'rgb(0, 185, 107)');
 });
 
@@ -37,10 +42,12 @@ test('Input tokens reach Password, Search and OTP composition', async ({ page })
 
 test('InputNumber consumes dimensions and persistent handles from its component tokens', async ({ page }) => {
   const root = page.getByLabel('Themed number', { exact: true }).locator('xpath=ancestor::div[contains(@class,"ant-input-number")][1]');
+
   await expect(root).toHaveCSS('width', '170px');
   await expect(page.getByLabel('Themed number', { exact: true })).toHaveCSS('font-size', '17px');
   await expect(root.locator('.ant-input-number-actions')).toHaveCSS('width', '22px');
   await root.hover();
+
   await expect(root.locator('.ant-input-number-actions')).toHaveCSS('width', '36px');
 
   await page.getByLabel('Handle token width', { exact: true }).fill('48');
@@ -83,6 +90,7 @@ test('local theme inheritance resets aliases and prepared component variables', 
 
   await expect(page.locator('#reset-control-input')).toHaveCSS('font-size', '14px');
   await page.locator('#reset-control-input').focus();
+
   await expect(page.locator('#reset-control-input')).toHaveCSS('border-color', 'rgb(22, 119, 255)');
 });
 
@@ -102,15 +110,20 @@ test('plain style retains priority over prepared tokens and semantic style', asy
 
 test('source style scopes update across algorithms and disappear with their provider', async ({ page }) => {
   const style = page.locator('head style[data-ant-svelte-theme="control-source-scope"]');
+
   await expect(style).toHaveCount(1);
   await page.getByLabel('Dark compact controls', { exact: true }).check();
+
   await expect(page.locator('#themed-input')).toHaveCSS('background-color', 'rgb(20, 20, 20)');
   await expect(page.locator('#themed-primary')).toHaveCSS('background-color', 'rgb(220, 3, 3)');
 
   await page.getByLabel('Mount themed controls', { exact: true }).uncheck();
 
   await expect(style).toHaveCount(0);
-  await expect(page.locator('#outside-control-primary')).toHaveCSS('background-color', 'rgb(22, 119, 255)');
+  await expect(page.locator('#outside-control-primary')).toHaveCSS(
+    'background-color',
+    'rgb(22, 119, 255)'
+  );
 });
 
 test('removing source settings restores native CSS without stale component variables', async ({ page }) => {

@@ -26,7 +26,8 @@ describe('Affix configuration public package SSR', () => {
       expect(body).not.toContain('aria-hidden="true"');
       if (prefix === 'ant-affix') {
         expect(head).not.toContain('data-ant-svelte-theme="affix-prefix:');
-      } else {
+      }
+      else {
         expect(head).toContain(`data-ant-svelte-theme="affix-prefix:${prefix}"`);
         expect(head).toContain(`.${prefix}:where([data-ant-affix-prefix])`);
         expect(head).toContain('--ant-affix-z-index-popup:10');

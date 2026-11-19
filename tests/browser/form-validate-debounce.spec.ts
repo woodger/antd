@@ -24,7 +24,10 @@ for (const id of new Set(reference.cases.map(({ id }) => id))) {
   test(`Form debounce follows source values, calls and metadata for ${id}`, async ({ page }) => {
     await freeze(page);
     if (id === 'zero') await act(page, 'Debounce disable');
-    await act(page, id === 'change' || id === 'zero' ? 'Debounce first value' : 'Debounce old value');
+    await act(
+      page,
+      id === 'change' || id === 'zero' ? 'Debounce first value' : 'Debounce old value'
+    );
     const actions: Record<string, string> = {
       burst: 'Debounce new value', explicit: 'Debounce validate', silent: 'Debounce validate silently',
       submit: 'Debounce submit', reset: 'Debounce reset', unmount: 'Debounce remove',
@@ -35,9 +38,11 @@ for (const id of new Set(reference.cases.map(({ id }) => id))) {
       if (sample.phase === 'changed') {
         await page.clock.runFor(80);
         await act(page, actions[id]);
-      } else if (sample.phase === 'action' && id !== 'burst') {
+      }
+      else if (sample.phase === 'action' && id !== 'burst') {
         await act(page, actions[id]);
-      } else if (sample.phase === 'waiting' || sample.phase === 'settled') {
+      }
+      else if (sample.phase === 'waiting' || sample.phase === 'settled') {
         await page.clock.runFor(sample.phase === 'waiting' ? 80 : 600);
       }
       const { id: _id, phase: _phase, ...expected } = sample;
@@ -54,6 +59,7 @@ test('Form delayed errors follow real input and blur without replacing its focus
   await input.fill('bad draft');
   await input.blur();
   await page.clock.runFor(32);
+
   await expect.poll(() => snapshot(page)).toMatchObject({ calls: [], validating: true });
   await input.focus();
   await input.evaluate((element: HTMLInputElement) => { element.setSelectionRange(1, 4); });
@@ -65,6 +71,7 @@ test('Form delayed errors follow real input and blur without replacing its focus
   await expect.poll(() => snapshot(page)).toMatchObject({ calls: [], validating: true });
   await expect(input).toBeFocused();
   await page.clock.runFor(600);
+
   await expect(input).toHaveAccessibleDescription('Invalid bad draft');
   await expect(input).toHaveAttribute('aria-invalid', 'true');
   await expect(input).toBeFocused();
@@ -83,9 +90,15 @@ test('Form remount starts fresh validation without executing work from the remov
   await act(page, 'Debounce remove');
   await act(page, 'Debounce restore');
   const input = page.getByRole('textbox', { name: 'Name', exact: true });
+
   await expect(input).toHaveValue('bad-old');
   await page.clock.runFor(600);
-  await expect.poll(() => snapshot(page)).toMatchObject({ calls: [], validating: false, touched: false });
+
+  await expect.poll(() => snapshot(page)).toMatchObject({
+    calls: [],
+    validating: false,
+    touched: false
+  });
 
   await input.fill('Good new');
   await input.blur();

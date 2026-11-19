@@ -9,7 +9,10 @@ export function renderSelectComponentsOwnStyle(id: string) {
   const sample = selectOwnStyleInitSamples.find(sample => sample.id === id);
   if (!sample) throw Error('Unknown own-style owner');
   const capture: Capture = {};
-  const rendered = render(OwnStyleCase, { props: { sample: { ...sample, profile: 'same' }, capture } });
+  const rendered = render(
+    OwnStyleCase,
+    { props: { sample: { ...sample, profile: 'same' }, capture } }
+  );
   return { head: rendered.head, body: rendered.body, state: capture.read!(),
     refs: Object.fromEntries(Object.entries(capture.readRefs!()).map(([key, ref]) => [key, ref == null])), domFree: true };
 }

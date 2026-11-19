@@ -11,7 +11,8 @@ export function normalizeValidationType(value: unknown, type: ValidationRuleType
 
   try {
     return new Date(value as string);
-  } catch {
+  }
+  catch {
     // Source проглатывает исключение Date constructor и даёт success; сохраняем invalid date.
     return new Date(NaN);
   }
@@ -31,7 +32,10 @@ export function matchesValidationType(value: unknown, type: ValidationRuleType) 
     case 'method': return typeof value === 'function';
     case 'regexp':
       if (value instanceof RegExp) return true;
-      try { new RegExp(value as string); return true; }
+      try {
+        new RegExp(value as string);
+        return true;
+      }
       catch { return false; }
     case 'any': return true;
     case 'enum': case 'pattern': return true;

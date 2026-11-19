@@ -34,7 +34,10 @@ for (const source of [false, true]) {
       if (!await nested.isVisible()) await title.click();
 
       for (const [kind, expected] of Object.entries(sample.links)) {
-        const link = page.getByRole('link', { name: names[kind as keyof typeof names], exact: true });
+        const link = page.getByRole(
+          'link',
+          { name: names[kind as keyof typeof names], exact: true }
+        );
         await page.mouse.move(1180, 980);
         await expect(link).toHaveCSS('text-decoration-line', expected.normal);
         await link.hover();
@@ -66,6 +69,7 @@ for (const source of [false, true]) {
         await configure(page, reference.cases.find(item => item.mode === mode)!, source);
         const regular = page.getByRole('link', { name: 'Regular link', exact: true });
         await regular.focus();
+
         await expect(regular).toBeFocused();
         await regular.press('Enter');
 
@@ -106,13 +110,16 @@ for (const source of [false, true]) {
           await expect(nested).toBeFocused();
           expect(await nested.evaluate((node, before) => node === before, original)).toBe(true);
           await update(page, 'Inline Menu link decoration', true);
+
           await expect(nested).toHaveCSS('text-decoration-line', 'underline');
           await update(page, 'Source Menu links', !source);
+
           await expect(nested).toHaveCSS('text-decoration-line', 'underline');
           await expect(nested).toBeFocused();
           expect(await nested.evaluate((node, before) => node === before, original)).toBe(true);
           await expect(page.getByLabel('Menu link clicks', { exact: true })).toHaveText('[]');
           await nested.press('Escape');
+
           await expect(title).toBeFocused();
         });
     }

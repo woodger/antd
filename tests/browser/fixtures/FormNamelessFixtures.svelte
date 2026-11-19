@@ -34,7 +34,8 @@
     try {
       await model.validateFields();
       validation = 'valid';
-    } catch {
+    }
+    catch {
       validation = 'invalid';
     }
   }

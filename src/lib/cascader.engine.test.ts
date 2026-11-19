@@ -80,6 +80,7 @@ describe('Cascader paths and checks', () => {
     expect(cascaderPathOptions([0, 2], custom, names)).toEqual([custom[0], custom[0].nodes[0]]);
     expect(cascaderDisplay([[0, 2]], custom, names, false)[0].text).toBe('Root / Leaf');
     const shared = cascaderFields({ label: 'code', value: 'code', children: 'nodes' });
+
     expect(cascaderDisplay([[0, 2]], custom, shared, false)[0].text).toBe('0 / 2');
   });
 
@@ -198,7 +199,10 @@ describe('Cascader search', () => {
   it('limits traversal before sorting only when no comparator is supplied', () => {
     let calls = 0;
     const result = searchCascader('a', options, fields, {
-      limit: 1, filter: () => { calls++; return true; }
+      limit: 1, filter: () => {
+        calls++;
+        return true;
+      }
     }, false);
     const sorted = searchCascader('a', options, fields, {
       limit: 1, filter: () => true,

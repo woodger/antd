@@ -50,7 +50,12 @@ for (const expected of reference.cases) {
       })));
       const box = element.getBoundingClientRect();
       const list = element.closest('.ant-tabs-nav-list')!.getBoundingClientRect();
-      return { left: box.left - list.left, top: box.top - list.top, width: box.width, height: box.height };
+      return {
+        left: box.left - list.left,
+        top: box.top - list.top,
+        width: box.width,
+        height: box.height
+      };
     }).then(bounds => Object.entries(expected.bounds).every(([key, value]) =>
       Math.abs(bounds[key as keyof typeof bounds] - value) < 0.6))).toBe(true);
     await expect(root(page).getByRole('tab', { name: 'Beta', exact: true }))
@@ -112,6 +117,7 @@ test('custom indicator changes keep the open More popup and the scrolled header 
     await more.focus();
     await more.press('ArrowDown');
     const menu = page.getByRole('listbox', { name: 'expanded dropdown', exact: true });
+
     await expect(menu.getByRole('option', { name: 'Alpha', exact: true })).toBeVisible();
     const before = await root(page).locator('.ant-tabs-nav-wrap').evaluate(element => element.scrollLeft);
     await clearScroll(page);
@@ -165,12 +171,16 @@ test('empty and unavailable active headers hide the indicator and pending frames
   async ({ page }) => {
     await expect(ink(page)).toBeVisible();
     await check(page, 'Empty indicator Tabs');
+
     await expect(ink(page)).toBeHidden();
     await check(page, 'Empty indicator Tabs', false);
+
     await expect(ink(page)).toBeVisible();
     await check(page, 'Disable indicator tabs');
+
     await expect(ink(page)).toBeHidden();
     await check(page, 'Disable indicator tabs', false);
+
     await expect(ink(page)).toBeVisible();
     await page.clock.install();
     await page.clock.pauseAt(new Date());

@@ -2,6 +2,7 @@ import { test, expect } from './test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=switch-features');
+
   await expect(page.getByRole('switch', { name: 'Source switch', exact: true })).toBeVisible();
 });
 
@@ -104,6 +105,7 @@ test(
   'Switch checked overrides value and explicit false defaults override defaultValue',
   async ({ page }) => {
     const priority = page.getByRole('switch', { name: 'Priority switch', exact: true });
+
     await expect(priority).toHaveAttribute('aria-checked', 'false');
     await expect(page.getByRole('switch', { name: 'Default priority switch', exact: true }))
       .toHaveAttribute('aria-checked', 'false');
@@ -121,6 +123,7 @@ test(
   'Switch captures defaultValue once and restores it through native reset',
   async ({ page }) => {
     const control = page.getByRole('switch', { name: 'Default alias switch', exact: true });
+
     await expect(control).toHaveAttribute('aria-checked', 'true');
 
     await control.click();
@@ -220,6 +223,7 @@ test(
   'Switch refs and instance methods expose focus and blur and clear on unmount',
   async ({ page }) => {
     const control = page.getByRole('switch', { name: 'Source switch', exact: true });
+
     await expect(page.getByLabel('Source switch refs', { exact: true })).toHaveText('true');
     await expect(control).toHaveAttribute('tabindex', '2');
 

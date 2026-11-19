@@ -48,7 +48,8 @@ async function expectHeaderToFit(page: Page, mobile: boolean) {
   }
   if (mobile) {
     expect(layout.controls.mode.y).toBeGreaterThanOrEqual(layout.controls.year.bottom);
-  } else {
+  }
+  else {
     expect(Math.abs(layout.controls.mode.y - layout.controls.year.y)).toBeLessThanOrEqual(.5);
   }
 }
@@ -75,8 +76,14 @@ for (const width of [300, 360]) {
         await expectHeaderToFit(page, viewport <= 480);
 
         if (viewport > 480) {
-          await expect(header(page).locator('.ant-picker-calendar-year-select')).toHaveCSS('width', '80px');
-          await expect(header(page).locator('.ant-picker-calendar-month-select')).toHaveCSS('width', '70px');
+          await expect(header(page).locator('.ant-picker-calendar-year-select')).toHaveCSS(
+            'width',
+            '80px'
+          );
+          await expect(header(page).locator('.ant-picker-calendar-month-select')).toHaveCSS(
+            'width',
+            '70px'
+          );
         }
         await header(page).locator('.ant-picker-calendar-mode-switch > label').nth(1).click();
 
@@ -102,6 +109,7 @@ for (const viewport of [1280, 390]) {
 
     await year.focus();
     await page.keyboard.press('ArrowDown');
+
     await expect(physicalSelectPopup(calendar(page))).toBeVisible();
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('Enter');

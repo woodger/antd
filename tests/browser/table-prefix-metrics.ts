@@ -44,8 +44,14 @@ export function snapshotTablePrefix() {
     expandedBackground: css(expanded, ['background-color']),
     expandedPadding: css(expandedContent ?? null,
       ['padding-top', 'padding-right', 'padding-bottom', 'padding-left']),
-    filterTrigger: css(root.querySelector(`.${prefix}-filter-trigger`), ['color', 'background-color']),
-    filterPanel: css(filter, ['background-color', 'color', 'font-family', 'font-size', 'line-height']),
+    filterTrigger: css(
+      root.querySelector(`.${prefix}-filter-trigger`),
+      ['color', 'background-color']
+    ),
+    filterPanel: css(
+      filter,
+      ['background-color', 'color', 'font-family', 'font-size', 'line-height']
+    ),
     filterMenu: css(filter?.querySelector('[role=menu], .filter-options') ?? null,
       ['background-color'])
   };

@@ -48,8 +48,10 @@ test('theme colors preserve popup position and editor state', async ({ page }) =
   });
   const original = await input.elementHandle();
   const popup = physicalSelectPopup(page, 'Themed completion popup');
+
   await expect(popup).toBeVisible();
   const position = await popup.evaluate(element => [element.style.left, element.style.top]);
+
   expect(position.every(Boolean)).toBe(true);
 
   await page.getByLabel('Completion color override', { exact: true }).evaluate(element => {
@@ -167,6 +169,7 @@ test('custom Input keeps its own tokens and native ref', async ({ page }) => {
 test('published root and input refs survive updates and clear on unmount', async ({ page }) => {
   const input = page.getByRole('combobox', { name: 'Themed completion popup', exact: true });
   await input.fill('draft');
+
   await expect(page.getByLabel('Completion native refs', { exact: true }))
     .toHaveText('{"root":true,"input":true,"contains":true}');
 
@@ -183,6 +186,7 @@ test('published root and input refs survive updates and clear on unmount', async
   await expect(page.getByLabel('Completion native refs', { exact: true }))
     .toHaveText('{"root":true,"input":true,"contains":true}');
   await page.getByLabel('Mount themed completion', { exact: true }).uncheck();
+
   await expect(input).toHaveCount(0);
   await expect(page.getByLabel('Completion native refs', { exact: true }))
     .toHaveText('{"root":false,"input":false,"contains":false}');
@@ -220,6 +224,7 @@ test('custom prefixes and hash settings clean up on unmount', async ({ page }) =
   await page.getByLabel('Completion token preset', { exact: true }).selectOption('custom-prefix');
   const input = page.getByRole('combobox', { name: 'Themed completion popup', exact: true });
   await input.click();
+
   await expect(page.locator('.completion-token-popup')).toHaveClass(/completion-source-scope/);
   await expect(page.locator('.completion-token-popup'))
     .toHaveCSS('--select-2-select-option-height', '45px');
@@ -295,6 +300,7 @@ test('RTL keeps group indentation and popup inside a narrow viewport', async ({ 
   await expect(physicalSelectOption(popup, { name: 'Alpha', exact: true }))
     .toHaveCSS('padding-inline-start', '24px');
   const box = (await popup.boundingBox())!;
+
   expect(box.x).toBeGreaterThanOrEqual(0);
   expect(box.x + box.width).toBeLessThanOrEqual(375);
   await input.press('Escape');

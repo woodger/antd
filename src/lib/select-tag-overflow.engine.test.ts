@@ -36,6 +36,7 @@ describe('Select numeric tag count source boundaries', () => {
       { value: '0', key: '0', label: 'String', disabled: true }
     ]);
     result.omitted[0].label = 'Owner override';
+
     expect(options[0].label).toBe('Number');
     expect(getSelectTagOverflow(options).visible).toBe(options);
     expect(getSelectTagOverflow(options, Number.NaN).visible).toBe(options);
@@ -54,7 +55,13 @@ describe('Select numeric tag count source boundaries', () => {
     const option = Object.freeze({ value: 'a', label, disabled: false, title: 'Current title' });
     const result = getSelectTagOverflow([option], 0);
 
-    expect(result.omitted).toEqual([{ label, value: 'a', key: 'a', disabled: false, title: 'Current title' }]);
+    expect(result.omitted).toEqual([{
+      label,
+      value: 'a',
+      key: 'a',
+      disabled: false,
+      title: 'Current title'
+    }]);
     expect(result.omitted[0].label).toBe(label);
     expect(Object.keys(result.omitted[0])).toEqual(['label', 'value', 'key', 'disabled', 'title']);
   });

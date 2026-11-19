@@ -49,7 +49,12 @@ describe('Space family local and shared prefixes in the public package', () => {
 
   it('publishes separate Compact and Addon prefixes without forwarding them as HTML attributes', () => {
     const children = createRawSnippet(() => ({ render: () => '<span>Child</span>' }));
-    const compactProps: SpaceCompactProps = { prefixCls: 'group', children, vertical: true, block: true };
+    const compactProps: SpaceCompactProps = {
+      prefixCls: 'group',
+      children,
+      vertical: true,
+      block: true
+    };
     const addonProps: SpaceAddonProps = {
       prefixCls: 'cell', children, variant: 'filled', status: 'warning', disabled: true
     };

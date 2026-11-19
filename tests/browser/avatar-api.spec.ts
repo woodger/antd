@@ -108,6 +108,7 @@ test('Avatar config updates preserve failed image state and the root ref', async
   const root = page.locator('[data-marker="api"]');
   const previous = await root.elementHandle();
   await root.locator('img').dispatchEvent('error');
+
   await expect(root.locator('img')).toHaveCount(0);
 
   await page.getByRole('button', { name: 'Change Avatar API props' }).dispatchEvent('click');
@@ -133,8 +134,10 @@ test('Avatar forwards already prevented native clicks without changing caller ca
 test('AvatarGroup keeps item metadata out of visible and overflow DOM', async ({ page }) => {
   await select(page, 'group-classes');
   const root = page.locator('.ant-avatar-group');
+
   await expect(root).not.toHaveClass(/case-context/);
   await page.locator('.ant-avatar-group-more').click();
+
   await expect(page.locator('.ant-avatar-group-list')).toBeVisible();
   const avatars = page.locator('.ant-avatar-group .ant-avatar, .ant-avatar-group-list .ant-avatar');
 
@@ -152,6 +155,7 @@ test('Avatar config updates reach an already open overflow without replacing its
   await select(page, 'reactive-group');
   await page.locator('.ant-avatar-group-more').click();
   const hidden = page.locator('.ant-avatar-group-list .ant-avatar');
+
   await expect(hidden).toBeVisible();
   const previous = await hidden.elementHandle();
   await page.getByRole('button', { name: 'Change Avatar API props' }).dispatchEvent('click');

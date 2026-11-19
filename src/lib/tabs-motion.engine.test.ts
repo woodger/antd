@@ -40,7 +40,11 @@ describe('Tabs source animation config', () => {
   it('maps string and object motion names to the source phase classes', () => {
     expect(getTabsMotionClassName('tabs-switch', 'enter', 'start'))
       .toBe('tabs-switch-enter tabs-switch-enter-start tabs-switch');
-    expect(getTabsMotionClassName({ leave: 'leaving', leaveActive: 'leaving-now' }, 'leave', 'active'))
+    expect(getTabsMotionClassName(
+      { leave: 'leaving', leaveActive: 'leaving-now' },
+      'leave',
+      'active'
+    ))
       .toBe('leaving leaving-now');
     expect(getTabsMotionClassName({ enter: 'entering' }, 'enter', 'start')).toBe('entering');
     expect(getTabsMotionClassName(undefined, 'appear', 'prepare')).toBeUndefined();

@@ -60,7 +60,10 @@
     return { defaultValue: version + 1, precision: 2 };
   }
 
-  function formatPercent(value: number | string | undefined, info: { userTyping: boolean; input: string; }) {
+  function formatPercent(
+    value: number | string | undefined,
+    info: { userTyping: boolean; input: string; }
+  ) {
     if (info.userTyping) return info.input;
 
     return `${value ?? ''}%`;

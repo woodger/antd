@@ -80,8 +80,12 @@ it('derives bounded public metadata and layout facts from full actual Source par
 }, 60000);
 
 it('derives the bounded plain fixture from actual materialized Source cells in DOM order', () => {
-  const file = new URL('../browser/fixtures/ant-design-date-picker-render-hooks-facts.json', import.meta.url);
+  const file = new URL(
+    '../browser/fixtures/ant-design-date-picker-render-hooks-facts.json',
+    import.meta.url
+  );
   const snapshot = JSON.parse(fs.readFileSync(file, 'utf8'));
+
   expect(snapshot.sourceOnly).toBe(true);
   expect(snapshot.NativeDataUsed).toBe(false);
   expect(snapshot.sourceProtocolSHA256).toBe(

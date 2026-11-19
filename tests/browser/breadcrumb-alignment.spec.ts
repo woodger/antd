@@ -56,6 +56,7 @@ for (const preset of presets) {
             - Math.min(...metrics.map(value => value.top));
         }).toBeLessThan(0.1);
         const metrics = await textMetrics(root);
+
         expect(metrics).toHaveLength(3);
         for (const value of metrics) {
           expect(value.fontSize).toBe(preset.compact ? '12px' : '14px');
@@ -69,6 +70,7 @@ for (const preset of presets) {
         await page.getByLabel('Narrow Breadcrumb', { exact: true }).check();
 
         const wrapped = await textMetrics(root);
+
         expect(new Set(wrapped.map(value => value.row)).size).toBeGreaterThan(1);
         expect(wrapped.some(item => wrapped.filter(peer => Math.abs(item.row - peer.row) < 0.1)
           .length > 1)).toBe(true);
@@ -83,7 +85,8 @@ for (const preset of presets) {
           await root.getByRole('link').first().focus();
           await page.keyboard.press('Tab');
           await expect(trigger).toBeFocused();
-        } else {
+        }
+        else {
           await trigger.focus();
         }
         await page.keyboard.press('ArrowDown');
@@ -91,8 +94,10 @@ for (const preset of presets) {
 
         await expect(menu.getByRole('menuitem', { name: 'Компоненты', exact: true })).toBeFocused();
         await page.keyboard.press('ArrowDown');
+
         await expect(menu.getByRole('menuitem', { name: 'Темы', exact: true })).toBeFocused();
         await page.keyboard.press('Escape');
+
         await expect(menu).toBeHidden();
         await expect(trigger).toBeFocused();
         await expect(page.getByLabel('Breadcrumb submissions', { exact: true })).toHaveText('0');

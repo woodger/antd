@@ -27,7 +27,8 @@
     const id = request++;
     try {
       await form.validateFields([name], options);
-    } catch (error) {
+    }
+    catch (error) {
       if (!(error instanceof FormValidationError)) throw error;
     }
     finished.push(id);

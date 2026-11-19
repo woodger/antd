@@ -17,17 +17,22 @@ async function drain(page: Page) {
 
 test.use({ viewport: { width: 1200, height: 800 } });
 
-test('TreeSelect closes an offscreen Native popup without a CSS end and reopens the retained panel', async ({ page }, testInfo) => {
+test('TreeSelect closes an offscreen Native popup without a CSS end and reopens the retained panel', async (
+  { page },
+  testInfo
+) => {
   await page.addInitScript(installTreeSelectMotionClock);
   await page.goto('/?fixture=tree-select-motion');
   await page.getByRole('combobox', { name: 'TreeSelect motion sample', exact: true })
     .selectOption('custom-animation');
   await page.mouse.move(0, 0);
+
   await expect(page.locator('[data-motion-case]')).toHaveAttribute('data-motion-bound', 'true');
   await drain(page);
   await actTreeSelectMotion(page, { type: 'click' });
   await actTreeSelectMotion(page, { type: 'frame', count: 6 });
   await drain(page);
+
   expect((await page.evaluate(readTreeSelectMotion)).view.popup?.motionClasses)
     .toEqual(['audit-custom-appear', 'audit-custom-appear-active', 'audit-custom']);
   const identity = await page.evaluateHandle(() => {
@@ -35,7 +40,13 @@ test('TreeSelect closes an offscreen Native popup without a CSS end and reopens 
     const editor = root.querySelector<HTMLInputElement>('input[role="combobox"]')!;
     const popup = document.querySelector<HTMLElement>('.motion-audit-popup')!;
     const draft = popup.querySelector<HTMLInputElement>('[data-motion-draft]')!;
-    return { root, editor, popup, draft, animations: new Set(popup.getAnimations({ subtree: false })) };
+    return {
+      root,
+      editor,
+      popup,
+      draft,
+      animations: new Set(popup.getAnimations({ subtree: false }))
+    };
   });
   const trace: unknown[] = [];
   const ledger = [['focus'], ['open', true]];
@@ -67,7 +78,10 @@ test('TreeSelect closes an offscreen Native popup without a CSS end and reopens 
     trace.push(result);
     expect(identities, action).toEqual({ root: true, editor: true, popup: true, draft: true });
     expect(projection.view.events, action).toEqual(ledger);
-    expect(projection.view.popup?.draft, action).toEqual({ value: 'Panel draft', selection: [11, 11] });
+    expect(projection.view.popup?.draft, action).toEqual({
+      value: 'Panel draft',
+      selection: [11, 11]
+    });
     return result;
   };
   const closed = async (action: string, rootOffscreen: boolean) => {
@@ -143,7 +157,10 @@ test('TreeSelect closes an offscreen Native popup without a CSS end and reopens 
     // Dispose the pending enter through the existing keyed fixture selector, without a runtime hook.
     await page.getByRole('combobox', { name: 'TreeSelect motion sample', exact: true })
       .selectOption('transition-empty');
-    await expect(page.locator('[data-motion-case]')).toHaveAttribute('data-motion-case', 'transition-empty');
+    await expect(page.locator('[data-motion-case]')).toHaveAttribute(
+      'data-motion-case',
+      'transition-empty'
+    );
     await expect(page.locator('[data-motion-case]')).toHaveAttribute('data-motion-bound', 'true');
     await actTreeSelectMotion(page, { type: 'frame', count: 4 });
     await drain(page);

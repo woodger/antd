@@ -4,6 +4,7 @@ import validatingReference from './fixtures/ant-design-form-aggregate-validating
 
 test('Form aggregate touched queries match source groups, bindings, empty selections and lists', async ({ page }) => {
   await page.goto('/?fixture=form-aggregate');
+
   await expect(page.locator('#form-aggregate-fixture')).toBeVisible();
   const actions: Record<string, string> = {
     name: 'Touch name', role: 'Touch role', literal: 'Touch literal',
@@ -23,7 +24,11 @@ test('Form aggregate touched queries match source groups, bindings, empty select
         name: 'Aggregate touched', exact: true
       }).textContent())!);
       const { rootAny: root, rootAll: allRoot, undefinedAll: noNames, ...rest } = actual;
-      return { ...rest, rootSafe: root === actual.any && allRoot === actual.any, overloadSafe: noNames === actual.all };
+      return {
+        ...rest,
+        rootSafe: root === actual.any && allRoot === actual.any,
+        overloadSafe: noNames === actual.all
+      };
     }).toEqual({ ...expected, rootSafe: true, overloadSafe: true });
     await expect(page.getByRole('status', { name: 'Aggregate validating', exact: true }))
       .toHaveText(String(sample.validating));
@@ -42,6 +47,7 @@ test('Form aggregate touched queries match source groups, bindings, empty select
 
 test('Form aggregate all tracks actual bindings and resets after native child blur', async ({ page }) => {
   await page.goto('/?fixture=form-aggregate');
+
   await expect(page.locator('#form-aggregate-fixture')).toBeVisible();
   await page.getByLabel('User name', { exact: true }).focus();
   await page.getByLabel('User name', { exact: true }).blur();
@@ -51,6 +57,7 @@ test('Form aggregate all tracks actual bindings and resets after native child bl
   }).textContent())!)).toMatchObject({ any: true, all: false, userAll: true, leavesAll: false });
 
   await page.getByRole('button', { name: 'Reset aggregate', exact: true }).click();
+
   await expect.poll(async () => JSON.parse((await page.getByRole('status', {
     name: 'Aggregate touched', exact: true
   }).textContent())!)).toMatchObject({ any: false, all: false, userAll: false });
@@ -58,6 +65,7 @@ test('Form aggregate all tracks actual bindings and resets after native child bl
 
 test('Form aggregate validating matches source exact paths, silent requests, reset and unmount', async ({ page }) => {
   await page.goto('/?fixture=form-validating-aggregate');
+
   await expect(page.locator('#form-validating-aggregate-fixture')).toBeVisible();
   const actions: Record<string, string> = {
     'ruleless-pending': 'Check bare aggregate', 'nested-pending': 'Validate nested aggregate',

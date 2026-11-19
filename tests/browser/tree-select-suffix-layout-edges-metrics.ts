@@ -30,7 +30,10 @@ export function readTreeSelectSuffixLayoutEdges() {
     tags: tags.map(node => ({ visible: visible(node), box: box(node), text: node.textContent })),
     renderedTags: tags.length, visibleTags: tags.filter(visible).length,
     rest: rest ? { visible: visible(rest), box: box(rest), text: rest.textContent } : null,
-    popup: popup ? { box: box(popup), gap: precision(popup.getBoundingClientRect().top - root.getBoundingClientRect().bottom) } : null,
+    popup: popup ? {
+      box: box(popup),
+      gap: precision(popup.getBoundingClientRect().top - root.getBoundingClientRect().bottom)
+    } : null,
     query: editor.value, focused: document.activeElement === editor,
     selection: [editor.selectionStart, editor.selectionEnd],
     variable: editor.style.getPropertyValue('--select-input-width'),

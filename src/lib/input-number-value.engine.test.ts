@@ -57,7 +57,12 @@ describe('InputNumber value modes', () => {
   it(
     'does not block a string draft outside its bounds and clamps only when committed',
     () => {
-      const options = resolveInputNumberValueOptions({ stringMode: true, min: '0', max: '3.8', precision: 0 });
+      const options = resolveInputNumberValueOptions({
+        stringMode: true,
+        min: '0',
+        max: '3.8',
+        precision: 0
+      });
       const decimal = parseInputNumberValue('4', { stringMode: true });
 
       expect(commitInputNumberValue(decimal, options, true)).toBeUndefined();

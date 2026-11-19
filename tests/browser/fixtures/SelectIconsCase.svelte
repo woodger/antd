@@ -14,7 +14,11 @@
     suffix?: RenderNode; menuItemSelectedIcon?: RenderNode;
     removeIcon?: RenderNode;
     allowClear?: boolean | { clearIcon?: RenderEmptyContent; label?: string | null };
-    showSearch?: boolean | { filterOption?: boolean; searchIcon?: RenderEmptyContent; onSearch?: (value: string) => void };
+    showSearch?: boolean | {
+      filterOption?: boolean;
+      searchIcon?: RenderEmptyContent;
+      onSearch?: (value: string) => void
+    };
   };
   type AuthoredKeys = 'id' | 'class' | 'style' | 'options' | 'value' | 'open' | 'listHeight' | 'virtual' | 'placeholder'
     | 'aria-label' | 'onChange' | 'onSelect' | 'onDeselect' | 'onClear' | 'onOpenChange' | 'disabled' | 'title' | 'classNames' | 'styles';
@@ -22,7 +26,11 @@
     & { onInputKeyDown: (event: KeyboardEvent) => void };
   type CompletionProps = Pick<AutoCompleteProps<Data>, AuthoredKeys | 'onInputKeyDown'> & NextIconProps;
   let { sample, capture }: { sample: SelectIconSample;
-    capture?: { read?: () => ReturnType<typeof read>; readRefs?: () => ReturnType<typeof readRefs>; update?: (action: SelectIconAction, index?: number) => void } } = $props();
+    capture?: {
+      read?: () => ReturnType<typeof read>;
+      readRefs?: () => ReturnType<typeof readRefs>;
+      update?: (action: SelectIconAction, index?: number) => void
+    } } = $props();
   const initial = untrack(() => sample);
   const feedbackForm = createForm({ initialValues: {} });
   const Choice = Select<SelectIconValue, 'multiple' | 'tags' | undefined, Data>;
@@ -30,9 +38,19 @@
   const recorder = createSelectSurfaceRecorder(), events: unknown[] = [], rawEvents: unknown[] = [], lifecycle: unknown[] = [];
   const nativeRemountClosures: Array<{ actionIndex: number; eventIndex: number; rawEventIndex: number;
     before: boolean; after: boolean; wasFocused: boolean; connected: boolean }> = [];
-  let retiringProvider: { actionIndex: number; before: boolean; after: boolean; editor: HTMLInputElement | HTMLTextAreaElement } | undefined;
+  let retiringProvider: {
+    actionIndex: number;
+    before: boolean;
+    after: boolean;
+    editor: HTMLInputElement | HTMLTextAreaElement
+  } | undefined;
   const nodes = new Map<string, Snippet>(), literalNodes = new Map<string, readonly Snippet[]>(), renderers = new Map<string, Producer>();
-  const nodeSpecifications = new Map<string, { type: string; key: string; ref: null; props: Record<string, unknown> }>();
+  const nodeSpecifications = new Map<string, {
+    type: string;
+    key: string;
+    ref: null;
+    props: Record<string, unknown>
+  }>();
   let settings = $state.raw<SelectIconSettings>({ ...initial.settings });
   let model = $state.raw<Model>(Object.hasOwn(initial.settings, 'value') ? initial.settings.value : initial.settings.mode ? ['a', 'locked'] : 'a');
   let open = $state(Boolean(initial.settings.open)), query = $state('');
@@ -42,16 +60,34 @@
   let lastAuthored: { authoredProps: unknown; rawAuthoredProps: unknown; authoredProvider: unknown; rawAuthoredProvider: unknown;
     authoredInnerProvider: unknown; rawAuthoredInnerProvider: unknown } | undefined;
   onDestroy(() => { alive = false; });
-  const event = (...args: unknown[]) => { events.push(recorder.encode(args)); rawEvents.push(recorder.raw(args)); };
-  const handler = <Value,>(name: string, fn: Value): Value => recorder.register(fn, { callback: 'icons-' + name });
+  const event = (...args: unknown[]) => {
+    events.push(recorder.encode(args));
+    rawEvents.push(recorder.raw(args));
+  };
+  const handler = <Value,>(name: string, fn: Value): Value => recorder.register(
+    fn,
+    { callback: 'icons-' + name }
+  );
   const project = (input: Event) => ({ type: input.type, key: (input as KeyboardEvent).key,
     defaultPrevented: input.defaultPrevented, propagationStopped: input.cancelBubble,
     target: (input.target as Element | null)?.tagName, currentTarget: (input.currentTarget as Element | null)?.tagName });
-  const onChange = handler('change', (value: Model, option: unknown) => { model = value; event('change', value, option); });
-  const onSelect = handler('select', (value: SelectIconValue, option: unknown) => event('select', value, option));
-  const onDeselect = handler('deselect', (value: SelectIconValue, option: unknown) => event('deselect', value, option));
+  const onChange = handler('change', (value: Model, option: unknown) => {
+    model = value;
+    event('change', value, option);
+  });
+  const onSelect = handler(
+    'select',
+    (value: SelectIconValue, option: unknown) => event('select', value, option)
+  );
+  const onDeselect = handler(
+    'deselect',
+    (value: SelectIconValue, option: unknown) => event('deselect', value, option)
+  );
   const onClear = handler('clear', () => event('clear'));
-  const onSearch = handler('search', (value: string) => { query = value; event('search', value); });
+  const onSearch = handler('search', (value: string) => {
+    query = value;
+    event('search', value);
+  });
   const onOpenChange = handler('open', (value: boolean) => {
     const retiring = retiringProvider;
     if (!value && retiring?.editor.isConnected && document.activeElement !== retiring.editor) {
@@ -62,17 +98,33 @@
         rawEventIndex: rawEvents.length, before: retiring.before, after: retiring.after,
         wasFocused: true, connected: retiring.editor.isConnected });
       retiringProvider = undefined;
-    } else open = value;
+    }
+    else open = value;
     event('open', value);
   });
-  const onInputKeyDown = handler('input-keydown', (input: KeyboardEvent) => event('input-keydown', project(input)));
-  const iconClick = handler('authored-icon-click', (input: Event) => event('authored-icon-click', project(input)));
-  const iconMouseDown = handler('authored-icon-mousedown', (input: Event) => event('authored-icon-mousedown', project(input)));
+  const onInputKeyDown = handler(
+    'input-keydown',
+    (input: KeyboardEvent) => event('input-keydown', project(input))
+  );
+  const iconClick = handler(
+    'authored-icon-click',
+    (input: Event) => event('authored-icon-click', project(input))
+  );
+  const iconMouseDown = handler(
+    'authored-icon-mousedown',
+    (input: Event) => event('authored-icon-mousedown', project(input))
+  );
   const options = recorder.register([
     { value: 'a', label: 'Alpha' }, { value: 1, label: 'Number one' },
     { value: '1', label: 'String one' }, { value: 'locked', label: 'Locked', disabled: true }
   ], { dataset: 'select-icons-values' });
-  const escape = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+  const escape = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll(
+    '>',
+    '&gt;'
+  ).replaceAll(
+    '"',
+    '&quot;'
+  );
   function node(token: string): Snippet {
     if (!nodes.has(token)) {
       const text = token.includes('clear') ? 'C' : token.includes('remove') ? 'R' : token.includes('item') ? 'M'
@@ -83,8 +135,12 @@
       const rendered = createRawSnippet(() => ({
         render: () => '<span data-select-icons-node="' + escape(token) + '" style="display: inline-block; width: 12px; height: 12px; line-height: 12px; font-size: 10px;">' + escape(text) + '</span>',
         setup(element) {
-          element.addEventListener('mousedown', iconMouseDown); element.addEventListener('click', iconClick);
-          return () => { element.removeEventListener('mousedown', iconMouseDown); element.removeEventListener('click', iconClick); };
+          element.addEventListener('mousedown', iconMouseDown);
+          element.addEventListener('click', iconClick);
+          return () => {
+            element.removeEventListener('mousedown', iconMouseDown);
+            element.removeEventListener('click', iconClick);
+          };
         }
       }));
       nodes.set(token, recorder.register(rendered, { node: 'icon-' + token }));
@@ -119,7 +175,10 @@
       if (['suffix', 'menuItemSelectedIcon', 'removeIcon'].includes(slot)) {
         // Явный static content сохраняет Source visibility: function-иконка
         // вызывается и у unselected rows, статическая — только у selected.
-        if (!literalNodes.has(token)) literalNodes.set(token, recorder.register([snippet], { node: 'icon-' + token }));
+        if (!literalNodes.has(token)) literalNodes.set(
+          token,
+          recorder.register([snippet], { node: 'icon-' + token })
+        );
         return literalNodes.get(token);
       }
       return snippet;
@@ -132,7 +191,11 @@
     if ((spec as { kind?: string } | null)?.kind === 'undefined') return undefined;
     if (spec && typeof spec === 'object') {
       const config = { ...spec, onSearch } as Record<string, unknown>;
-      if (Object.hasOwn(spec, 'searchIcon')) config.searchIcon = resolve(Reflect.get(spec, 'searchIcon'), 'searchIcon', side);
+      if (Object.hasOwn(spec, 'searchIcon')) config.searchIcon = resolve(
+        Reflect.get(spec, 'searchIcon'),
+        'searchIcon',
+        side
+      );
       return config;
     }
     return spec;
@@ -141,7 +204,11 @@
     if ((spec as { kind?: string } | null)?.kind === 'undefined') return undefined;
     if (!spec || typeof spec !== 'object') return spec;
     const config = { ...spec } as Record<string, unknown>;
-    if (Object.hasOwn(spec, 'clearIcon')) config.clearIcon = resolve(Reflect.get(spec, 'clearIcon'), 'clearIcon', side);
+    if (Object.hasOwn(spec, 'clearIcon')) config.clearIcon = resolve(
+      Reflect.get(spec, 'clearIcon'),
+      'clearIcon',
+      side
+    );
     return config;
   }
   function icons(spec: Record<string, unknown>, side: string) {
@@ -162,7 +229,10 @@
       placeholder: 'Choose icon value', 'aria-label': 'Icon value', onChange, onSelect, onDeselect, onClear,
       onOpenChange, onInputKeyDown, ...icons(settings, 'own') };
     for (const key of ['mode', 'loading', 'disabled', 'title']) if (Object.hasOwn(settings, key)) props[key] = settings[key];
-    if (settings.metadata) { props.classNames = semanticClasses; props.styles = semanticStyles; }
+    if (settings.metadata) {
+      props.classNames = semanticClasses;
+      props.styles = semanticStyles;
+    }
     return props;
   });
   let selectProps = $derived(ownerProps as ChoiceProps), completionProps = $derived(ownerProps as CompletionProps);
@@ -173,16 +243,24 @@
   export function update(action: SelectIconAction, actionIndex = -1) {
     if (action.type === 'model') model = action.value;
     else if (action.type === 'props') {
-      const next = { ...settings, ...action.set }; for (const key of action.drop ?? []) delete next[key]; settings = next;
-    } else if (action.type === 'context') {
-      const config = { ...settings.config, ...action.set }; for (const key of action.drop ?? []) delete config[key]; settings = { ...settings, config };
-    } else if (action.type === 'inner') {
+      const next = { ...settings, ...action.set };
+      for (const key of action.drop ?? []) delete next[key];
+      settings = next;
+    }
+    else if (action.type === 'context') {
+      const config = { ...settings.config, ...action.set };
+      for (const key of action.drop ?? []) delete config[key];
+      settings = { ...settings, config };
+    }
+    else if (action.type === 'inner') {
       const before = inner !== undefined, after = action.value !== 'omitted' && action.value !== undefined;
       const editor = initial.control === 'autocomplete' ? completionEditor : selectEditor;
       if (before !== after && editor?.matches(':focus')) {
         const transition = { actionIndex, before, after, editor };
         retiringProvider = transition;
-        void tick().then(() => { if (retiringProvider === transition) retiringProvider = undefined; });
+        void tick().then(() => {
+          if (retiringProvider === transition) retiringProvider = undefined;
+        });
       }
       settings = { ...settings, inner: action.value };
     }
@@ -198,10 +276,17 @@
     return { model: recorder.encode(model), rawModel: recorder.raw(model), open, query, settings: recorder.encode(settings),
       events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], lifecycle: [...lifecycle],
       nativeRemountClosures: [...nativeRemountClosures], alive, ...lastAuthored,
-      nodeSpecifications: [...nodeSpecifications].map(([token, spec]) => ({ role: { node: 'icon-' + token }, raw: recorder.raw(spec) })) };
+      nodeSpecifications: [...nodeSpecifications].map(([token, spec]) => ({
+        role: { node: 'icon-' + token },
+        raw: recorder.raw(spec)
+      })) };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; initialCapture.update = update; }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+    initialCapture.update = update;
+  }
 </script>
 
 {#snippet choice()}

@@ -198,7 +198,8 @@
           if (fixed[index] === 'end')
             endWidth += widths[index];
           else startWidth += widths[index];
-        } else {
+        }
+        else {
           element.style.removeProperty(property);
         }
       });
@@ -275,7 +276,8 @@
 
     if (Object.hasOwn(active, columnKey)) {
       next[columnKey] = active[columnKey];
-    } else {
+    }
+    else {
       delete next[columnKey];
     }
 

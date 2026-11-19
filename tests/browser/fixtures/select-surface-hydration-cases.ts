@@ -7,8 +7,16 @@ export interface SelectSurfaceHydrationSample {
   producers: boolean;
 }
 export const selectSurfaceHydrationSamples: readonly SelectSurfaceHydrationSample[] = selectSurfaceStyleHistorySamples.flatMap(sample => [
-  { ...sample, id: sample.id.replace('style-history-', 'style-history-hydration-'), producers: false },
-  { ...sample, id: sample.id.replace('style-history-', 'style-history-hydration-') + '-producers', producers: true }
+  {
+    ...sample,
+    id: sample.id.replace('style-history-', 'style-history-hydration-'),
+    producers: false
+  },
+  {
+    ...sample,
+    id: sample.id.replace('style-history-', 'style-history-hydration-') + '-producers',
+    producers: true
+  }
 ]);
 export const selectSurfaceHydrationActions = [...selectSurfaceStyleHistoryActions,
   { type: 'click' as const }, { type: 'outside' as const }];

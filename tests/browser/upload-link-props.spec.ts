@@ -56,5 +56,6 @@ test('Upload linkProps updates preserve the filename, file input and outside edi
         [node.selectionStart, node.selectionEnd, node.selectionDirection])).toEqual([1, 5, 'backward']);
     }
     await page.getByRole('checkbox', { name: 'Mount Upload link props', exact: true }).uncheck();
+
     await expect(item).toHaveCount(0);
   });

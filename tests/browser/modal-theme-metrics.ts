@@ -24,7 +24,10 @@ export function snapshotModalTheme() {
     mask: maskStyle ? { background: maskStyle.backgroundColor } : null,
     container: css(root.querySelector('.ant-modal-container'), [...typography, ...box]),
     header: css(root.querySelector('.ant-modal-header'), [...typography, ...box, 'margin-bottom']),
-    title: css(root.querySelector('.ant-modal-title'), [...typography, 'margin-top', 'margin-bottom']),
+    title: css(
+      root.querySelector('.ant-modal-title'),
+      [...typography, 'margin-top', 'margin-bottom']
+    ),
     close: css(root.querySelector('.ant-modal-close'), [
       ...typography, ...box, 'top', 'inset-inline-end', 'z-index'
     ]),

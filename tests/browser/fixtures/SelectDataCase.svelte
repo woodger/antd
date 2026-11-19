@@ -7,7 +7,11 @@
     type SelectDataSample, type SelectDataSettings } from './select-data-cases';
 
   type RawOption = Record<string, unknown>;
-  let { sample, named = false, groupAttributes = false }: { sample: SelectDataSample; named?: boolean; groupAttributes?: boolean } = $props();
+  let { sample, named = false, groupAttributes = false }: {
+    sample: SelectDataSample;
+    named?: boolean;
+    groupAttributes?: boolean
+  } = $props();
   const DataSelect = Select<string, 'multiple' | 'tags' | undefined, RawOption>;
   const DataAutoComplete = AutoComplete<RawOption>;
   const theme = { token: { motion: false }, cssVar: { key: 'select-data' } };
@@ -15,8 +19,16 @@
   const datasets = new Map<SelectDataDataset, RawOption[]>();
   const mappings = new Map<SelectDataMapping, ReturnType<typeof selectDataFieldNames>>();
   const originals = new Map<string, RawOption>();
-  const producerCalls: Record<'filter' | 'sort' | 'render', unknown[]> = { filter: [], sort: [], render: [] };
-  const semantic = { filter: new Map<string, unknown>(), sort: new Map<string, unknown>(), render: new Map<string, unknown>() };
+  const producerCalls: Record<'filter' | 'sort' | 'render', unknown[]> = {
+    filter: [],
+    sort: [],
+    render: []
+  };
+  const semantic = {
+    filter: new Map<string, unknown>(),
+    sort: new Map<string, unknown>(),
+    render: new Map<string, unknown>()
+  };
   const rawEvents: unknown[][] = [];
   let events = $state.raw<unknown[][]>([]);
   let offsets = $state.raw<unknown[]>([]);
@@ -42,7 +54,10 @@
   function register(value: unknown) {
     if (!value || typeof value !== 'object') return;
     const own = Object.getOwnPropertyDescriptors(value);
-    if (typeof own.auditToken?.value === 'string') originals.set(own.auditToken.value, value as RawOption);
+    if (typeof own.auditToken?.value === 'string') originals.set(
+      own.auditToken.value,
+      value as RawOption
+    );
     for (const descriptor of Object.values(own)) if ('value' in descriptor) register(descriptor.value);
   }
   function data(dataset: SelectDataDataset) {
@@ -56,7 +71,8 @@
           'data-group-extra': 'Authored group data', 'aria-label': 'Authored group aria', role: 'alert'
         });
       }
-      register(records); datasets.set(dataset, records);
+      register(records);
+      datasets.set(dataset, records);
     }
     return records;
   }
@@ -78,7 +94,14 @@
     const common = { data: encodeSelectData(value), enumerableKeys: value && typeof value === 'object' ? Object.keys(value) : [],
       originalToken: token, sameOriginal: Boolean(original && original === value),
       nestedMetaSame: Boolean(original && descriptors.meta?.value === originalDescriptors.meta?.value) };
-    return { common, raw: { ...common, ownProperties: selectDataOwn(value), originalOwnProperties: selectDataOwn(original) } };
+    return {
+      common,
+      raw: {
+        ...common,
+        ownProperties: selectDataOwn(value),
+        originalOwnProperties: selectDataOwn(original)
+      }
+    };
   }
   function producer(kind: keyof typeof producerCalls, receipt: unknown, rawReceipt = receipt) {
     producerCalls[kind].push(rawReceipt);
@@ -90,7 +113,10 @@
     producer('render', receipt, { ...receipt, data: option(flat.data).raw });
     return info.index;
   }
-  function record(...event: unknown[]) { events = [...events, event]; rawEvents.push(event); }
+  function record(...event: unknown[]) {
+    events = [...events, event];
+    rawEvents.push(event);
+  }
   function recordOption(kind: string, value: unknown, argument: unknown) {
     const receipt = Array.isArray(argument) ? argument.map(option) : option(argument);
     events = [...events, [kind, encodeSelectData(value), Array.isArray(receipt) ? receipt.map(item => item.common) : receipt.common]];
@@ -102,9 +128,17 @@
     recordOption('change', value, argument);
   }
   function selected(value: unknown, argument: unknown) { recordOption('select', value, argument); }
-  function deselected(value: unknown, argument: unknown) { recordOption('deselect', value, argument); }
-  function searched(text: string) { query = text; record('search', text); }
-  function opening(value: boolean) { open = value; record('open', value); }
+  function deselected(value: unknown, argument: unknown) {
+    recordOption('deselect', value, argument);
+  }
+  function searched(text: string) {
+    query = text;
+    record('search', text);
+  }
+  function opening(value: boolean) {
+    open = value;
+    record('open', value);
+  }
   function active(value: string | null) { record('active', encodeSelectData(value)); }
   function cleared() { record('clear'); }
   function scrolled(event: UIEvent & { currentTarget: EventTarget & HTMLDivElement }) {
@@ -140,14 +174,19 @@
       sameOriginal: Object.is(passed.fieldNames, mapping(settings.mapping)) },
     options: { sameOriginal: passedOptions === data(settings.dataset), data: encodeSelectData(passedOptions),
       rows: [...originals.values()].filter(item => String(item.auditToken).startsWith(settings.dataset + ':')).map(option) },
-    mode: encodeSelectData(sample.mode), virtual: { present: Object.hasOwn(passed, 'virtual'), value: encodeSelectData(passed.virtual) },
+    mode: encodeSelectData(sample.mode), virtual: {
+      present: Object.hasOwn(passed, 'virtual'),
+      value: encodeSelectData(passed.virtual)
+    },
     searchOwner: { whileOpenCallback: true, whileClosedOwnUndefined: true } };
   }
   export function update(action: SelectDataAction) {
     if (action.type === 'props') settings = { ...settings, ...action.set };
     else if (action.type === 'open') open = action.value;
-    else if (action.type === 'value') { model = action.value;
-      if (sample.family === 'auto-complete') query = String(action.value ?? ''); }
+    else if (action.type === 'value') {
+      model = action.value;
+      if (sample.family === 'auto-complete') query = String(action.value ?? '');
+    }
     else if (action.type === 'query') query = action.text;
     else if (action.type === 'ref') control?.scrollTo(scrollTarget(action));
   }

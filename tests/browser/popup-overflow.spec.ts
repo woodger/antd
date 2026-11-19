@@ -43,12 +43,18 @@ test.beforeAll(() => {
 for (const entry of entries) {
   test(`ConfigProvider popupOverflow matches Source for ${entry.id}`, async ({ page }) => {
     const sample = popupOverflowAllSamples.find(sample => sample.id === entry.id)!;
+
     expect(sample).toBeDefined();
     await page.goto('/?fixture=popup-overflow');
     await page.getByRole('combobox', { name: 'Popup overflow sample', exact: true }).selectOption(entry.id);
-    await expect(page.locator('[data-overflow-case]')).toHaveAttribute('data-overflow-bound', 'true');
+
+    await expect(page.locator('[data-overflow-case]')).toHaveAttribute(
+      'data-overflow-bound',
+      'true'
+    );
     await preparePopupOverflow(page, sample);
     const initial = await settle(page);
+
     expect(initial.view).toEqual(entry.initial.view);
     expect(initial.view.leaks).toEqual([]);
     await expect(page.locator('[data-overflow-case] [placement]')).toHaveCount(0);
@@ -119,7 +125,8 @@ for (const entry of entries) {
         expect(initial.raw.methods).toEqual({ focus: true, blur: true, scrollTo: true });
         expect(initial.raw.publicRoot).toBeNull();
         expect(initial.raw.publicEditor).toBeNull();
-      } else {
+      }
+      else {
         expect(initial.raw.methods.focus).toBe(true);
         expect(initial.raw.methods.blur).toBe(true);
         expect(initial.raw.publicRoot).not.toBeNull();

@@ -3,6 +3,7 @@ import tokenReference from './fixtures/ant-design-wave-token-keys-reference.json
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=wave');
+
   await expect(page.getByRole('heading', { name: 'Source Wave', exact: true })).toBeVisible();
 });
 
@@ -10,10 +11,12 @@ test('ordinary Wave follows source geometry and ends only on its opacity transit
   const button = page.locator('#wave-primary');
   await button.click();
   const wave = button.locator('.ant-wave');
+
   await expect(wave).toHaveClass(/wave-motion-appear-active/);
   await expect(wave).toHaveCSS('pointer-events', 'none');
   await expect(wave).toHaveCSS('transition-duration', '0.4s, 2s');
   const width = await button.evaluate((element: HTMLButtonElement) => element.offsetWidth);
+
   await expect(wave).toHaveCSS('width', `${width}px`);
   await expect(wave).toHaveCSS('left', '-1px');
   await expect(wave).toHaveCSS('top', '-1px');
@@ -36,6 +39,7 @@ test('source fallback color and live resize metrics come from the target', async
   const button = page.locator('#wave-white');
   await button.click();
   const wave = button.locator('.ant-wave');
+
   await expect(wave).toHaveClass(/wave-motion-appear-active/);
   await expect(wave).toHaveCSS('color', 'rgb(255, 0, 0)');
 
@@ -56,6 +60,7 @@ test('Checkbox uses its quick target when checked and skips the default effect o
   const input = page.getByLabel('Wave checkbox', { exact: true });
   await input.check();
   const wave = input.locator('..').locator('.ant-wave');
+
   await expect(wave).toHaveClass(/wave-quick/);
   await expect(wave).toHaveClass(/wave-motion-appear-active/);
   await expect(wave).toHaveCSS('transition-duration', '0.3s, 0.3s');
@@ -73,17 +78,22 @@ test('Checkbox uses its quick target when checked and skips the default effect o
 
 test('Radio, RadioButton, Switch and Steps select their source targets', async ({ page }) => {
   await page.getByLabel('Wave radio', { exact: true }).check();
+
   await expect(page.locator('#wave-radio').locator('..').locator('.ant-wave'))
     .toHaveClass(/wave-quick/);
   await page.locator('#wave-radio-buttons').getByText('two', { exact: true }).click();
+
   await expect(page.locator('#wave-radio-buttons .ant-radio-button-wrapper-checked .ant-wave'))
     .toHaveClass(/wave-motion-appear-active/);
   await expect(page.locator('#wave-radio-buttons .ant-wave')).not.toHaveClass(/wave-quick/);
   await page.getByRole('switch', { name: 'Wave switch', exact: true }).click();
+
   await expect(page.locator('#wave-switch > div > .ant-wave')).toHaveCount(1);
   await page.locator('#wave-steps').getByRole('button', { name: 'Wave second', exact: true }).click();
+
   await expect(page.locator('#wave-steps .ant-steps-item-icon > div > .ant-wave')).toHaveCount(1);
   await page.locator('#wave-readonly-steps').dispatchEvent('click');
+
   await expect(page.locator('#wave-readonly-steps .ant-wave')).toHaveCount(0);
 });
 
@@ -107,8 +117,10 @@ test('custom effect receives full current tokens, native events and the chosen t
   await page.locator('#wave-primary').click();
 
   const output = page.getByLabel('Wave callback reports', { exact: true });
+
   await expect(output).toContainText('"component":"Button"');
   const [report] = JSON.parse(await output.innerText());
+
   expect(report).toMatchObject({ target: 'wave-primary', event: 'click', primary: '#1677ff',
     fontSize: 17, buttonPrimary: '#ff0000', colorSource: null, receiver: 'undefined' });
   expect(report.tokenKeys).toEqual(tokenKeys);
@@ -122,6 +134,7 @@ test('custom effect receives full current tokens, native events and the chosen t
 
   await expect(output).toContainText('"primary":"#00b96b"');
   const next = JSON.parse(await output.innerText()).at(-1);
+
   expect(next.className).toBe('ant-wave');
   expect(next.hashId).toBe('');
   expect(next.tokenKeys).toEqual(tokenKeys);
@@ -131,8 +144,10 @@ test('custom Checkbox effect also receives uncheck and Steps exposes its color s
   await page.getByLabel('Custom wave effect', { exact: true }).check();
   const checkbox = page.getByLabel('Wave checkbox', { exact: true });
   await checkbox.check();
+
   await expect(page.getByLabel('Wave callback reports', { exact: true })).toContainText('"checked":true');
   await checkbox.uncheck();
+
   await expect(page.getByLabel('Wave callback reports', { exact: true })).toContainText('"checked":false');
   await page.locator('#wave-steps').getByRole('button', { name: 'Wave second', exact: true }).click();
 
@@ -151,8 +166,10 @@ for (const trigger of ['click', 'mousedown', 'mouseup', 'pointerdown', 'pointeru
     }, trigger);
 
     const output = page.getByLabel('Wave callback reports', { exact: true });
+
     await expect(output).toContainText('"detail":2');
     const reports = JSON.parse(await output.innerText());
+
     expect(reports).toHaveLength(1);
     expect(reports[0].event).toBe(trigger);
   });
@@ -189,12 +206,14 @@ test('disabled, hidden, leaving and unbordered roots do not invoke the custom ef
   await page.locator('#wave-primary').evaluate(element => { element.style.display = ''; });
   await page.getByLabel('Wave root class', { exact: true }).selectOption('disabled:sample');
   await page.locator('#wave-primary').click();
+
   await expect(page.getByLabel('Wave callback reports', { exact: true })).toContainText('"component":"Button"');
 });
 
 test('nested wave records inherit when omitted and replace rather than merge when explicit', async ({ page }) => {
   await page.getByLabel('Custom wave effect', { exact: true }).check();
   await page.locator('#wave-child').click();
+
   await expect(page.getByLabel('Wave callback reports', { exact: true })).toContainText('"target":"wave-child"');
   await page.getByRole('button', { name: 'Clear wave reports', exact: true }).click();
   await page.getByLabel('Replace child wave config', { exact: true }).check();
@@ -207,6 +226,7 @@ test('nested wave records inherit when omitted and replace rather than merge whe
 test('synchronous unmount cancels a pending custom effect and closing a Tag keeps its callback stopped', async ({ page }) => {
   await page.getByLabel('Custom wave effect', { exact: true }).check();
   await page.locator('#wave-close-tag').getByRole('button').click();
+
   await expect(page.locator('#wave-close-tag')).toHaveCount(0);
   await expect(page.getByLabel('Wave control changes', { exact: true })).toHaveText('0');
   await page.getByLabel('Remove controls during click', { exact: true }).check();
@@ -225,10 +245,12 @@ test('the source deadline removes a zero-duration quick effect and ordinary moti
   await page.getByLabel('Wave checkbox', { exact: true }).check();
   await page.clock.runFor(200);
   const quick = page.locator('#wave-checkbox').locator('..').locator('.ant-wave');
+
   await expect(quick).toHaveClass(/wave-motion-appear-active/);
   await expect(quick).toHaveCSS('transition-duration', '0s, 0s');
   await page.locator('#wave-primary').click();
   await page.clock.runFor(200);
+
   await expect(page.locator('#wave-primary .ant-wave')).toHaveCSS('transition-duration', '0.4s, 2s');
 
   await page.clock.runFor(5000);
@@ -260,8 +282,10 @@ test('repeated effects own their observers and disconnect all of them when the c
     };
   });
   await page.locator('#wave-primary').click();
+
   await expect(page.locator('#wave-primary .ant-wave')).toHaveCount(1);
   await page.locator('#wave-primary').click();
+
   await expect(page.locator('#wave-primary .ant-wave')).toHaveCount(2);
   expect(await page.evaluate(() => Reflect.get(window, 'waveObserverState').active)).toBe(2);
 
@@ -295,6 +319,7 @@ for (const kind of ['handler', 'link']) {
     await tag.click();
     await page.clock.runFor(200);
     const wave = tag.locator('.ant-wave');
+
     await expect(wave).toHaveClass(/wave-motion-appear-active/);
     await wave.evaluate(element => element.getAnimations().forEach(animation => animation.pause()));
 

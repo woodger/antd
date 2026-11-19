@@ -58,9 +58,11 @@ test('TreeSelect hydrates bound summary labels in place with context, head, draf
   await expect(page.locator('[data-tree-label-intro-count]')).toHaveText('0');
   const rich = page.locator('[data-render-label][data-render-value="0"]');
   await rich.getByRole('button', { name: 'Count 0', exact: true }).click();
+
   await expect(rich.getByRole('button', { name: 'Count 1', exact: true })).toBeVisible();
   expect(await page.getByRole('form', { name: 'Renderer form' }).evaluate((form: HTMLFormElement) =>
     new FormData(form).getAll('renderer-value'))).toEqual(['0', '1']);
   await page.evaluate(() => window.treeLabelHydration!.dispose());
+
   await expect(page.locator('[data-tree-label-head]')).toHaveCount(0);
 });

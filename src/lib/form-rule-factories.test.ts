@@ -52,7 +52,10 @@ describe('Form rule factories', () => {
     let calls = 0;
     const form = createForm({
       initialValues: { field: 'abc' },
-      rules: { field: [() => { calls++; return { required: true }; }] }
+      rules: { field: [() => {
+        calls++;
+        return { required: true };
+      }] }
     });
 
     expect(form.getFieldsValue()).toEqual({ field: 'abc' });
@@ -71,7 +74,10 @@ describe('Form rule factories', () => {
       name: 'field', validateFirst: true,
       rules: [{ required: true, message: 'Required' }, () => {
         calls.push('factory');
-        return { validator: () => { calls.push('validator'); return 'Other'; } };
+        return { validator: () => {
+          calls.push('validator');
+          return 'Other';
+        } };
       }]
     });
 
@@ -89,7 +95,10 @@ describe('Form rule factories', () => {
     const form = createForm({ initialValues: { field: 'ab' } });
     const remove = getFormHooks(form)!.registerField({
       name: 'field', validateDebounce: 100,
-      rules: [() => { calls++; return { min: minimum, message: 'Minimum' }; }]
+      rules: [() => {
+        calls++;
+        return { min: minimum, message: 'Minimum' };
+      }]
     });
     try {
       form.touchField('field');
@@ -119,6 +128,7 @@ describe('Form rule factories', () => {
     await expect(form.validateFields()).rejects.toThrow('Factory failed');
     expect(form.isFieldValidating('field')).toBe(false);
     broken = false;
+
     await expect(form.validateFields()).resolves.toEqual({ field: 'abc' });
     expect(form.isFieldValidating('field')).toBe(false);
   });

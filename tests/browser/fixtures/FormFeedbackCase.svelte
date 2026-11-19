@@ -42,7 +42,10 @@
         : selectedMode === 'true' ? true : selectedMode === 'empty-array' ? []
           : selectedMode === 'array' ? ['[', content(label, info), ']'] : content(label, info) };
   }
-  let hasFeedback = $derived<FormItemProps['hasFeedback']>(feedback ? mode ? { icons: icons('local', mode) } : true : false);
+  let hasFeedback = $derived<FormItemProps['hasFeedback']>(feedback ? mode ? { icons: icons(
+    'local',
+    mode
+  ) } : true : false);
   let globalIcons = $derived(sample.formIcons ? icons('form', 'custom') : undefined);
   async function validate() {
     await model.validateFields(['node']).catch(() => {});
@@ -57,9 +60,25 @@
     if (action === 'hide-icon') mode = 'false';
     if (action === 'show-icon') mode = 'custom';
     if (action === 'change-prefix') changedPrefix = true;
-    if (action === 'errors') model.setFields([{ name: 'node', errors: ['Invalid <node>'], warnings: [], touched: false }]);
-    if (action === 'warnings') model.setFields([{ name: 'node', errors: [], warnings: ['Check node'], touched: false }]);
-    if (action === 'validated') model.setFields([{ name: 'node', errors: [], warnings: [], validating: false, touched: false }]);
+    if (action === 'errors') model.setFields([{
+      name: 'node',
+      errors: ['Invalid <node>'],
+      warnings: [],
+      touched: false
+    }]);
+    if (action === 'warnings') model.setFields([{
+      name: 'node',
+      errors: [],
+      warnings: ['Check node'],
+      touched: false
+    }]);
+    if (action === 'validated') model.setFields([{
+      name: 'node',
+      errors: [],
+      warnings: [],
+      validating: false,
+      touched: false
+    }]);
     if (action === 'validate') void validate();
     if (action === 'resolve') pending?.resolve();
     if (action === 'reject') pending?.reject(new Error('Rejected node'));

@@ -39,7 +39,10 @@ describe('Tooltip arrow and overflow against official UMD', () => {
           values.adjust ?? true,
           undefined,
           sample.gap,
-          { flips: previous, source: getTooltipPlacementConfig(values.arrow ?? true, sample.tokens) }
+          {
+            flips: previous,
+            source: getTooltipPlacementConfig(values.arrow ?? true, sample.tokens)
+          }
         );
 
         expect(result.placement).toBe(snapshot.placement);

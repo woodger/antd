@@ -99,7 +99,10 @@ for (const variant of reference.variants) {
 }
 
 test('theme updates retain native links, focus, navigation and callbacks', async ({ page }) => {
-  const link = page.locator('.breadcrumb-token-main').getByRole('link', { name: 'Home', exact: true });
+  const link = page.locator('.breadcrumb-token-main').getByRole(
+    'link',
+    { name: 'Home', exact: true }
+  );
   await link.focus();
   const original = await link.elementHandle();
 
@@ -159,6 +162,7 @@ test('semantic and plain spacing keep priority during source updates', async ({ 
   const root = page.locator('.breadcrumb-token-main');
   const separator = root.locator('.ant-breadcrumb-separator').first();
   const arrow = root.locator('.breadcrumb-arrow');
+
   await expect(separator).toHaveCSS('margin-inline-start', '27px');
   await expect(arrow).toHaveCSS('color', 'rgb(0, 170, 17)');
 
@@ -244,6 +248,7 @@ test('custom prefix and narrow RTL keep wrapping, keyboard return and scope clea
   expect(await root.evaluate(element =>
     [...element.classList].some(name => name.startsWith('css-')))).toBe(false);
   const bounds = (await root.boundingBox())!;
+
   expect(bounds.x).toBeGreaterThanOrEqual(0);
   expect(bounds.x + bounds.width).toBeLessThanOrEqual(320);
   await page.keyboard.press('Escape');

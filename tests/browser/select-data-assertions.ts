@@ -20,16 +20,26 @@ export async function settleSelectData(page: Page) {
 }
 function rawCopyReceipt(value: unknown) {
   if (!value || typeof value !== 'object') throw Error('Missing actual raw option receipt');
-  const receipt = value as { ownProperties: Array<Record<string, unknown>>; originalOwnProperties: Array<Record<string, unknown>> };
+  const receipt = value as {
+    ownProperties: Array<Record<string, unknown>>;
+    originalOwnProperties: Array<Record<string, unknown>>
+  };
   const compatibility = receipt.ownProperties.find(property => property.key === 'props');
   if (!compatibility) return value;
   expect(compatibility).toEqual({ key: 'props', enumerable: false, configurable: false,
     kind: 'accessor', get: true, set: false });
   expect(receipt.originalOwnProperties.some(property => property.key === 'props')).toBe(false);
   // Только явно исключённый deprecated getter; данные и остальные descriptors проверяются целиком.
-  return { ...receipt, ownProperties: receipt.ownProperties.filter(property => property.key !== 'props') };
+  return {
+    ...receipt,
+    ownProperties: receipt.ownProperties.filter(property => property.key !== 'props')
+  };
 }
-function verifyArguments(actual: ReturnType<typeof readSelectData>, source: SelectDataSnapshot, label: string) {
+function verifyArguments(
+  actual: ReturnType<typeof readSelectData>,
+  source: SelectDataSnapshot,
+  label: string
+) {
   const current = actual.raw.eventArguments as unknown[][];
   const expected = source.raw.eventArguments as unknown[][];
   expect(current.length, `${label}: complete raw callback count`).toBe(expected.length);
@@ -42,7 +52,12 @@ function verifyArguments(actual: ReturnType<typeof readSelectData>, source: Sele
     expect(current[index], `${label}: shallow raw option ${index}`).toEqual([event[0], event[1], argument]);
   }
 }
-export function verifySelectData(actual: ReturnType<typeof readSelectData>, source: SelectDataSnapshot, sample: SelectDataSample, label: string) {
+export function verifySelectData(
+  actual: ReturnType<typeof readSelectData>,
+  source: SelectDataSnapshot,
+  sample: SelectDataSample,
+  label: string
+) {
   for (const correction of selectDataMappedAriaFields(source.view, sample)) {
     const original = source.view.popup!.viewport.aria.find(listbox => listbox.id === correction.listbox)!
       .options.find(option => option.id === correction.id)!;
@@ -51,7 +66,10 @@ export function verifySelectData(actual: ReturnType<typeof readSelectData>, sour
     expect(original.selected, `${label}: pinned Source mapped-ARIA contradiction`).toBe('false');
     expect(native?.selected, `${label}: Native logical mapped aria-selected ${correction.id}`).toBe('true');
   }
-  expect(actual.view, `${label}: full Source view with explicit proven Native fields`).toEqual(selectDataNativeView(source.view, sample));
+  expect(actual.view, `${label}: full Source view with explicit proven Native fields`).toEqual(selectDataNativeView(
+    source.view,
+    sample
+  ));
   expect(actual.view.leaks).toEqual([]);
   expect(actual.raw.methods).toEqual({ focus: true, blur: true, scrollTo: true });
   expect(actual.raw.publicRoot).toEqual({ tag: 'DIV', sameRoot: true });

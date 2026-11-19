@@ -49,6 +49,7 @@ describe('createForm validateFields options', () => {
     expect(form.isFieldValidating('name')).toBe(false);
     expect(form.getFieldsError()).toEqual(before);
     pending.resolve();
+
     await expect(validation).resolves.toEqual({ name: 'Anna' });
     expect(form.getFieldsError()).toEqual(before);
   });
@@ -96,7 +97,10 @@ describe('createForm validateFields options', () => {
 
   it('keeps validated fields dirty and clears that state on reset', async () => {
     const validator = vi.fn(() => 'Fresh');
-    const form = createForm<{ fresh?: string }>({ initialValues: {}, rules: { fresh: [{ validator }] } });
+    const form = createForm<{ fresh?: string }>({
+      initialValues: {},
+      rules: { fresh: [{ validator }] }
+    });
     await form.validateFields().catch(() => {});
     validator.mockClear();
 
@@ -106,12 +110,16 @@ describe('createForm validateFields options', () => {
     form.resetFields();
     validator.mockClear();
     await form.validateFields({ dirty: true });
+
     expect(validator).not.toHaveBeenCalled();
   });
 
   it('marks a same-value setFieldValue dirty without changing the existing touched contract', async () => {
     const validator = vi.fn(() => 'Fresh');
-    const form = createForm<{ fresh?: string }>({ initialValues: {}, rules: { fresh: [{ validator }] } });
+    const form = createForm<{ fresh?: string }>({
+      initialValues: {},
+      rules: { fresh: [{ validator }] }
+    });
 
     form.setFieldValue('fresh', undefined);
     await form.validateFields({ dirty: true }).catch(() => {});
@@ -122,13 +130,17 @@ describe('createForm validateFields options', () => {
 
   it('marks changed merged values dirty while ignoring an equal undefined write', async () => {
     const validator = vi.fn(() => 'Fresh');
-    const form = createForm<{ fresh?: string }>({ initialValues: {}, rules: { fresh: [{ validator }] } });
+    const form = createForm<{ fresh?: string }>({
+      initialValues: {},
+      rules: { fresh: [{ validator }] }
+    });
     form.setFieldsValue({ fresh: undefined });
     await form.validateFields({ dirty: true });
 
     expect(validator).not.toHaveBeenCalled();
     form.setFieldsValue({ fresh: 'Changed' });
     await form.validateFields({ dirty: true }).catch(() => {});
+
     expect(validator).toHaveBeenCalledTimes(1);
   });
 
@@ -144,6 +156,7 @@ describe('createForm validateFields options', () => {
     expect(validator).not.toHaveBeenCalled();
     form.setFieldsValue({ parent: { payload: { count: 2 } } });
     await form.validateFields({ dirty: true }).catch(() => {});
+
     expect(validator).toHaveBeenCalledTimes(1);
   });
 
@@ -168,18 +181,24 @@ describe('createForm validateFields options', () => {
       ['user.name', 'Literal'], [['rows', 0, 'name'], 'Numeric'], [['rows', '0', 'name'], 'String']
     ];
     for (const [name, label] of definitions) {
-      getFormHooks(form)!.registerField({ name, rules: [{ validator: () => { calls.push(label); } }] });
+      getFormHooks(form)!.registerField({ name, rules: [{ validator: () => {
+        calls.push(label);
+      } }] });
     }
 
     await form.validateFields([['user']]);
+
     expect(calls).toEqual([]);
     await form.validateFields([['user'], ['user', 'name']], { recursive: true });
+
     expect(calls).toEqual(['User name', 'User role']);
     calls.length = 0;
     await form.validateFields([['rows', 0]], { recursive: true, validateOnly: true });
+
     expect(calls).toEqual(['Numeric']);
     calls.length = 0;
     await form.validateFields(['user.name'], { recursive: true });
+
     expect(calls).toEqual(['Literal']);
   });
 
@@ -211,6 +230,7 @@ describe('createForm validateFields options', () => {
     const silent = form.validateFields({ validateOnly: true }).catch((error: unknown) => error);
 
     second.resolve('Silent error');
+
     expect(await silent).toMatchObject({ outOfDate: false });
     expect(form.isFieldValidating('name')).toBe(true);
     expect(form.getFieldError('name')).toEqual([]);
@@ -229,15 +249,18 @@ describe('createForm validateFields options', () => {
       validator: () => ++count === 1 ? first.promise : second.promise
     }] } });
     const silent = form.validateFields({ validateOnly: true }).catch((error: unknown) => error);
+
     expect(form.isFieldValidating('name')).toBe(false);
     const visible = form.validateFields().catch((error: unknown) => error);
 
     first.resolve('Old silent error');
+
     expect(await silent).toMatchObject({ outOfDate: true });
     expect(form.isFieldValidating('name')).toBe(true);
     expect(form.getFieldError('name')).toEqual([]);
     second.resolve('Current error');
     await visible;
+
     expect(form.getFieldError('name')).toEqual(['Current error']);
   });
 
@@ -256,6 +279,7 @@ describe('createForm validateFields options', () => {
       else unregister();
 
       pending.resolve('Stale error');
+
       expect(await validation).toMatchObject({ outOfDate: true });
       expect(form.getFieldError('name')).toEqual([]);
       expect(form.isFieldValidating('name')).toBe(false);

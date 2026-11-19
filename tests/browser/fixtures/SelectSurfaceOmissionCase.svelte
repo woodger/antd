@@ -16,12 +16,22 @@
   const recorder = createSelectSurfaceRecorder();
   const events: unknown[] = [], rawEvents: unknown[] = [], lifecycle: Array<Record<string, unknown>> = [];
   const options = [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }];
-  const classes = { root: 'surface-omission-root', input: 'surface-omission-input', popup: { root: 'surface-omission-popup' } };
+  const classes = {
+    root: 'surface-omission-root',
+    input: 'surface-omission-input',
+    popup: { root: 'surface-omission-popup' }
+  };
   const sampleAxis = untrack(() => sample.axis);
   const isAutoComplete = untrack(() => sample.control === 'autocomplete');
   const isWidth = sampleAxis === 'width';
   const isOpenWidth = untrack(() => sample.id === 'select-surface-omission-width-open');
-  const provider = { theme: { token: { motion: false }, cssVar: { key: isOpenWidth ? 'select-surface-omission-width' : 'select-surface-omission' } }, popupOverflow: 'viewport' as const };
+  const provider = {
+    theme: {
+      token: { motion: false },
+      cssVar: { key: isOpenWidth ? 'select-surface-omission-width' : 'select-surface-omission' }
+    },
+    popupOverflow: 'viewport' as const
+  };
   let popup = $state<'wrapped' | 'omitted'>(untrack(() => sample.initialPopup ?? 'wrapped'));
   let model = $state.raw<string | string[] | undefined>(untrack(() => typeof sample.initialValue === 'string' ? sample.initialValue : [...sample.initialValue]));
   let open = $state(untrack(() => Boolean(sample.initialOpen)));
@@ -41,20 +51,43 @@
   function callback<Value>(name: string, value: Value): Value {
     return recorder.register(value, { callback: (isOpenWidth ? 'width-' : 'omission-') + name });
   }
-  function event(...args: unknown[]) { events.push(recorder.encode(args)); rawEvents.push(recorder.raw(args)); revision += 1; }
-  function trace(kind: string, details: Record<string, unknown> = {}) { lifecycle.push({ index: lifecycle.length, action, kind, ...details }); }
-  const onOpenChange = callback('open', (value: boolean) => { open = value; event('open', value); });
-  const onChange = callback('change', (value: string | string[] | undefined, option: unknown) => { model = value; event('change', value, option); });
-  const onSelect = callback('select', (value: string, option: unknown) => event('select', value, option));
-  const onDeselect = callback('deselect', (value: string, option: unknown) => event('deselect', value, option));
+  function event(...args: unknown[]) {
+    events.push(recorder.encode(args));
+    rawEvents.push(recorder.raw(args));
+    revision += 1;
+  }
+  function trace(kind: string, details: Record<string, unknown> = {}) {
+    lifecycle.push({ index: lifecycle.length, action, kind, ...details });
+  }
+  const onOpenChange = callback('open', (value: boolean) => {
+    open = value;
+    event('open', value);
+  });
+  const onChange = callback('change', (value: string | string[] | undefined, option: unknown) => {
+    model = value;
+    event('change', value, option);
+  });
+  const onSelect = callback(
+    'select',
+    (value: string, option: unknown) => event('select', value, option)
+  );
+  const onDeselect = callback(
+    'deselect',
+    (value: string, option: unknown) => event('deselect', value, option)
+  );
   const onClear = callback('clear', () => event('clear'));
-  const onSearch = callback('search', (value: string) => { if (isWidth) query = value; event('search', value); });
+  const onSearch = callback('search', (value: string) => {
+    if (isWidth) query = value;
+    event('search', value);
+  });
   const onFooterInput = callback('footer-input', (value: string) => event('footer-input', value));
   const footerRef = callback('footer-ref', (node: HTMLInputElement | null) => {
-    footerNode = node; trace('footer-ref', { attached: Boolean(node), connected: node ? node.isConnected : null });
+    footerNode = node;
+    trace('footer-ref', { attached: Boolean(node), connected: node ? node.isConnected : null });
   });
   const wrapRef = callback('wrap-ref', (node: HTMLDivElement | null) => {
-    wrapNode = node; trace('wrap-ref', { attached: Boolean(node), connected: node ? node.isConnected : null });
+    wrapNode = node;
+    trace('wrap-ref', { attached: Boolean(node), connected: node ? node.isConnected : null });
   });
   recorder.register(SelectSurfaceOmissionFooter, { component: 'omission-footer' });
   recorder.register(wrapped, { node: 'popup-wrap', origin: 'same-argument' });
@@ -65,11 +98,18 @@
   });
   let ownerProps = $derived.by(() => {
     void revision;
-    const search = { filterOption: false as const, onSearch, ...(isWidth ? { searchValue: query } : {}) };
+    const search = {
+      filterOption: false as const,
+      onSearch,
+      ...(isWidth ? { searchValue: query } : {})
+    };
     const props: Record<string, unknown> = {
       id: isOpenWidth ? 'surface-omission-width-field' : 'surface-omission-field', class: 'surface-control', style: { width: '100%' },
       classNames: classes, styles: isWidth ? { input: { fontSize } }
-        : { root: { borderColor: 'rgb(31, 171, 61)' }, popup: { root: { border: '1px solid rgb(21, 31, 41)' } } },
+        : {
+          root: { borderColor: 'rgb(31, 171, 61)' },
+          popup: { root: { border: '1px solid rgb(21, 31, 41)' } }
+        },
       options, value: model, open, listHeight: 140, placeholder: isOpenWidth ? 'Width query' : 'Omission value',
       'aria-label': isOpenWidth ? 'Surface width value' : 'Surface omission value', 'data-parent-revision': unrelated,
       showSearch: search, onOpenChange, onChange, onSelect, onDeselect, onClear,
@@ -86,7 +126,10 @@
     else if (next.type === 'popup-restore') popup = 'wrapped';
     else if (next.type === 'font') fontSize = next.fontSize;
     else if (next.type === 'unrelated') unrelated = next.value;
-    else if (next.type === 'font-query') { fontSize = next.fontSize; query = next.query; }
+    else if (next.type === 'font-query') {
+      fontSize = next.fontSize;
+      query = next.query;
+    }
   }
   export function setAction(next: unknown) { action = next; }
   export function readRefs() {
@@ -107,7 +150,11 @@
       events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], lifecycle: [...lifecycle], ...authored };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; initialCapture.setAction = setAction; }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+    initialCapture.setAction = setAction;
+  }
 </script>
 
 {#snippet wrapped(origin: Snippet)}<div data-surface-popup="wrap" data-surface-omission-wrap

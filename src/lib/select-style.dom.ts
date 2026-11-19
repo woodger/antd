@@ -15,7 +15,11 @@ export function copySelectStyle(source: SelectStyleSnapshot, target: SelectStyle
     ? new Set([...declarations.map(({ property }) => property), ...Object.keys(managed).map(selectStyleName)])
     : new Set(target);
   for (const property of removed) target.removeProperty(property);
-  for (const { property, value, priority } of declarations) target.setProperty(property, value, priority);
+  for (const { property, value, priority } of declarations) target.setProperty(
+    property,
+    value,
+    priority
+  );
 }
 
 /** История хранит logical props отдельно от принятого браузером CSSOM. */
@@ -37,7 +41,11 @@ export function createSelectStyleWriter(initialTarget: SelectStyleTarget, initia
   let previous = legacy(initial);
 
   function set(property: string, value: string, priority: '' | 'important') {
-    if (property.startsWith('--') || priority) target.setProperty(selectStyleName(property), value, priority);
+    if (property.startsWith('--') || priority) target.setProperty(
+      selectStyleName(property),
+      value,
+      priority
+    );
     else Reflect.set(target, property === 'float' ? 'cssFloat' : property, value);
   }
 

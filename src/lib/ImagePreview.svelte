@@ -107,12 +107,14 @@
         releaseLayer = registerImagePreview(root);
         previousOpen = true;
         preview.afterOpenChange?.(true);
-      } else if (next && root.open && root.matches(':modal') !== trap) {
+      }
+      else if (next && root.open && root.matches(':modal') !== trap) {
         root.close();
         if (trap)
           root.showModal(); else root.show();
         root.focus({ preventScroll: true });
-      } else if (!next && root.open) {
+      }
+      else if (!next && root.open) {
         root.close();
         releaseLayer?.();
         releaseLayer = undefined;

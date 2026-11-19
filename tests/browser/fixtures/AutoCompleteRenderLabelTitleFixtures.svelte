@@ -6,7 +6,10 @@
   let selected = $state(labelTitleSamples[0].id);
   let sample = $derived(labelTitleSamples.find(s => s.id === selected)!);
   let mounted = $state(true);
-  let capture = $derived.by(() => { void selected; return {} as Capture; });
+  let capture = $derived.by(() => {
+    void selected;
+    return {} as Capture;
+  });
 </script>
 <section>
   <label id="autocomplete-render-label-title-fixture" style="position:fixed;left:0;top:0;z-index:1">AutoComplete label title sample<select bind:value={selected} onchange={() => { mounted = true; }}>

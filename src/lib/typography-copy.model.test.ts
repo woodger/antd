@@ -20,6 +20,7 @@ describe('Typography copy lifecycle', () => {
     });
 
     const pending = copy.copy();
+
     expect(copy.loading).toBe(true);
     complete('remote');
     await pending;
@@ -29,8 +30,10 @@ describe('Typography copy lifecycle', () => {
     expect(copy.copied).toBe(true);
     expect(actions).toEqual(['copied']);
     await vi.advanceTimersByTimeAsync(2999);
+
     expect(copy.copied).toBe(true);
     await vi.advanceTimersByTimeAsync(1);
+
     expect(copy.copied).toBe(false);
     copy.destroy();
   });

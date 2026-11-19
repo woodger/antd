@@ -15,6 +15,7 @@ for (const entry of reference.cases) {
     await page.getByRole('combobox', { name: 'TreeSelect motion sample', exact: true })
       .selectOption(entry.id);
     await page.mouse.move(0, 0);
+
     await expect(page.locator('[data-motion-case]')).toHaveAttribute('data-motion-bound', 'true');
     const drain = async () => {
       await page.evaluate(advanceTreeSelectMotionFrames, 0);
@@ -22,6 +23,7 @@ for (const entry of reference.cases) {
       await page.evaluate(advanceTreeSelectMotionFrames, 0);
     };
     await drain();
+
     expect((await page.evaluate(readTreeSelectMotion)).view).toEqual(entry.initial.view);
     const identity = await page.evaluateHandle(() => {
       const root = document.querySelector('[data-motion-root]')!;

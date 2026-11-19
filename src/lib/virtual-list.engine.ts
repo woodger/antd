@@ -85,7 +85,10 @@ export function virtualListScrollStep<Row, Key>(
   let unknown = false;
   for (let cursor = target; cursor >= 0; cursor--) {
     const measured = heights.get(getKey(rows[cursor]));
-    if (measured === undefined) { unknown = true; break; }
+    if (measured === undefined) {
+      unknown = true;
+      break;
+    }
     remaining -= measured;
     if (remaining <= 0) break;
   }

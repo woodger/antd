@@ -27,6 +27,7 @@ test('Changing the inherited target retains consumer DOM, focus, form values and
     const content = normal.locator('.target-affix > div').last();
     const input = normal.getByRole('textbox', { name: 'Target draft normal', exact: true });
     const link = normal.getByRole('link', { name: 'One', exact: true });
+
     await expect(content).toHaveCSS('position', 'fixed');
     const oldContent = await content.elementHandle();
     const oldInput = await input.elementHandle();
@@ -59,8 +60,10 @@ test('Affix detaches the previous inherited target and measures only after the c
   async ({ page }) => {
     await page.goto('/?fixture=target-container');
     const normal = page.locator('[data-target-consumer="normal"] .target-affix > div').last();
+
     await expect(normal).toHaveCSS('top', '507px');
     await page.getByRole('button', { name: 'Use target B', exact: true }).dispatchEvent('click');
+
     await expect(normal).toHaveCSS('top', '807px');
     await page.evaluate(async () => {
       document.getElementById('target-b')!.style.top = '820px';
@@ -92,8 +95,12 @@ test('Anchor scrolls the inherited container and releases consumers after switch
     expect(await page.locator('#target-b').evaluate(node => node.scrollTop)).toBe(0);
     await page.getByRole('button', { name: 'Use window target', exact: true }).dispatchEvent('click');
 
-    await expect(normal.getByRole('link', { name: 'One', exact: true })).toHaveAttribute('href', '#window-1');
+    await expect(normal.getByRole('link', { name: 'One', exact: true })).toHaveAttribute(
+      'href',
+      '#window-1'
+    );
     const content = normal.locator('.target-affix > div').last();
+
     await expect(content).toHaveCSS('position', 'static');
     const previous = await content.elementHandle();
     await page.getByLabel('Mount target consumers', { exact: true }).dispatchEvent('click');

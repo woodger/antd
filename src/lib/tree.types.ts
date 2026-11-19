@@ -238,7 +238,11 @@ export interface TreeProps<Data extends object = TreeDataNode> extends Omit<
   loadData?: (node: TreeEventNode<Data>) => PromiseLike<unknown>;
   onExpand?: (
     keys: TreeKey[],
-    info: { expanded: boolean; node: TreeEventNode<Data>; nativeEvent?: MouseEvent | KeyboardEvent; }
+    info: {
+      expanded: boolean;
+      node: TreeEventNode<Data>;
+      nativeEvent?: MouseEvent | KeyboardEvent;
+    }
   ) => void;
   onSelect?: (
     keys: TreeKey[],

@@ -7,7 +7,15 @@
     type QRCodeThemeSample
   } from './qrcode-theme-presets';
 
-  let { sample, mounted = true, enabled = true, textColor, coverBackground, padding, inherit = true }: {
+  let {
+    sample,
+    mounted = true,
+    enabled = true,
+    textColor,
+    coverBackground,
+    padding,
+    inherit = true
+  }: {
     sample: QRCodeThemeSample;
     mounted?: boolean;
     enabled?: boolean;

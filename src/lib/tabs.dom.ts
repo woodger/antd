@@ -48,7 +48,8 @@ export function revealTab(viewport: HTMLElement, tab: HTMLElement, vertical: boo
       viewport.scrollTop += bounds.top - view.top;
     else if (bounds.bottom > view.bottom)
       viewport.scrollTop += bounds.bottom - view.bottom;
-  } else {
+  }
+  else {
     if (bounds.width > view.width) {
       const rtl = viewport
         .ownerDocument
@@ -56,7 +57,8 @@ export function revealTab(viewport: HTMLElement, tab: HTMLElement, vertical: boo
         .getComputedStyle(viewport)
         .direction === 'rtl';
       viewport.scrollLeft += rtl ? bounds.right - view.right : bounds.left - view.left;
-    } else if (bounds.left < view.left)
+    }
+    else if (bounds.left < view.left)
       viewport.scrollLeft += bounds.left - view.left;
     else if (bounds.right > view.right)
       viewport.scrollLeft += bounds.right - view.right;

@@ -345,6 +345,7 @@ test(
     );
 
     await region.getByRole('button', { name: 'Раскрыть строку 0', exact: true }).click();
+
     await expect.poll(
       () =>
         region.locator('thead th').evaluateAll(
@@ -359,6 +360,7 @@ test(
     )
       .toBeLessThan(1.5);
     await region.evaluate((element) => { element.scrollTo({ left: 200, top: 40 }); });
+
     await expect.poll(() => region.evaluate((element) => {
       const cells = [...element.querySelectorAll('thead th')]
         .map((cell) => cell.getBoundingClientRect());
@@ -420,6 +422,7 @@ test(
 
     await fixture.getByRole('region', { name: 'Expandable people', exact: true })
       .evaluate((element) => { element.scrollLeft = -200; });
+
     await expect.poll(
       () =>
         table.locator('.expanded-content').evaluate(
@@ -450,6 +453,7 @@ test.describe('mobile expanded table', () => {
       await expect(region.locator('.ant-table-expanded-row td')).toHaveCSS('padding', '0px');
 
       await region.evaluate((element) => { element.scrollLeft = element.scrollWidth; });
+
       await expect.poll(
         () =>
           page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)

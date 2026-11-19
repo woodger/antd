@@ -3,6 +3,7 @@ import reference from './fixtures/ant-design-form-name-paths-observation.json' w
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=form-paths');
+
   await expect(page.locator('#form-paths-fixture')).toBeVisible();
 });
 
@@ -14,11 +15,14 @@ test('Form follows pinned source NamePath, merge, array replacement and reset', 
 
     if (sample.id === 'nested-write') {
       await page.getByRole('button', { name: 'Set nested name', exact: true }).click();
-    } else if (sample.id === 'merge-and-array-replacement') {
+    }
+    else if (sample.id === 'merge-and-array-replacement') {
       await page.getByRole('button', { name: 'Merge nested values', exact: true }).click();
-    } else if (sample.id === 'numeric-segments') {
+    }
+    else if (sample.id === 'numeric-segments') {
       await page.getByRole('button', { name: 'Create numeric paths', exact: true }).click();
-    } else if (sample.id === 'reset') {
+    }
+    else if (sample.id === 'reset') {
       await page.getByRole('button', { name: 'Reset nested form', exact: true }).click();
     }
 
@@ -31,6 +35,7 @@ test('Form connects nested errors, labels and native names without conflating li
 
   await title.fill('');
   await title.blur();
+
   await expect(title).toHaveAccessibleDescription('Title required');
   await page.getByRole('button', { name: 'Submit nested form', exact: true }).click();
 
@@ -38,6 +43,7 @@ test('Form connects nested errors, labels and native names without conflating li
   await expect(title).toHaveAccessibleDescription('Title required');
   await expect(title).toHaveAttribute('name', 'rows_0_title');
   const sample = reference.cases.find((entry) => entry.id === 'nested-errors')!;
+
   await expect.poll(async () => JSON.parse((await page.getByRole('status', {
     name: 'Nested errors', exact: true
   }).textContent())!)).toEqual(sample.errorFields);
@@ -79,10 +85,12 @@ test('Form discards async errors after a registered field is removed', async ({ 
   const title = page.getByLabel('Row title', { exact: true });
   await title.fill('Pending');
   await title.blur();
+
   await expect(page.getByRole('status', { name: 'Pending title validations', exact: true })).toHaveText('1');
 
   await page.getByRole('button', { name: 'Toggle row field', exact: true }).click();
   await page.getByRole('button', { name: 'Reject pending title', exact: true }).click();
+
   await expect(page.getByRole('status', { name: 'Pending title validations', exact: true })).toHaveText('0');
   await page.getByRole('checkbox', { name: 'Hold title validation', exact: true }).uncheck();
   await page.getByRole('button', { name: 'Toggle row field', exact: true }).click();
@@ -116,8 +124,10 @@ test('Form retains model rules when an initial field leaves the DOM', async ({ p
   const literal = page.getByLabel('Literal name', { exact: true });
   await literal.fill('');
   await literal.blur();
+
   await expect(literal).toHaveAccessibleDescription('Literal required');
   await page.getByRole('button', { name: 'Toggle literal field', exact: true }).click();
+
   await expect(literal).toHaveCount(0);
   await page.getByRole('button', { name: 'Submit nested form', exact: true }).click();
 
@@ -142,6 +152,7 @@ test('Form keeps model errors on their names when a field switches between flat 
   const id = await field.getAttribute('id');
   await field.focus();
   await field.blur();
+
   await expect(field).toHaveAccessibleDescription('First required');
   await page.getByRole('button', { name: 'Switch model field', exact: true }).click();
 

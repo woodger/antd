@@ -134,11 +134,20 @@ export interface MaskSourceCase {
   producerParts: MaskSourceProducerReference[]; producerFinalCount: number;
   beforeUnmount: MaskSourceReference; cleanup: MaskSourceReference; late: MaskSourceReference;
   failure: null; interruptedAction: null; interruptedSubstep: null; observationErrors: unknown[];
-  network: { requests: unknown[]; responses: Array<{ url: string; status: number; }>; failures: unknown[]; };
+  network: {
+    requests: unknown[];
+    responses: Array<{ url: string; status: number; }>;
+    failures: unknown[];
+  };
 }
 interface MaskSourceCaptureHeader {
   status: string; variant: MaskSourceVariant;
-  sourceProtocol: { file: string; sha256: string; reviewedProposalSHA256: string; rootLease: string; };
+  sourceProtocol: {
+    file: string;
+    sha256: string;
+    reviewedProposalSHA256: string;
+    rootLease: string;
+  };
   terminalInputVerification: { unchanged: boolean; sha256: string; }; diagnostics: unknown[];
 }
 export interface MaskSourceCSRManifest extends MaskSourceCaptureHeader {
@@ -167,19 +176,72 @@ export function readMaskSourceCase(id: MaskOwner, variant?: MaskSourceVariant): 
 export function readMaskSourcePart<Value = unknown>(reference: MaskSourceReference | MaskSourceRawPart): Value;
 export function readMaskSourceInitial(id: MaskOwner, variant?: MaskSourceVariant): MaskSourcePoint;
 export function readMaskSourceStep(id: MaskOwner, index: number, variant?: MaskSourceVariant): MaskSourceStep;
-export function readMaskSourceSubstep(id: MaskOwner, index: number, substepIndex: number, variant?: MaskSourceVariant): MaskSourceSubstep;
+export function readMaskSourceSubstep(
+  id: MaskOwner,
+  index: number,
+  substepIndex: number,
+  variant?: MaskSourceVariant
+): MaskSourceSubstep;
 export function readMaskSourceClosed(id: MaskOwner, index: number, variant?: MaskSourceVariant): MaskSourceClosed;
-export function readMaskSourceCleanup(id: MaskOwner, phase?: 'beforeUnmount' | 'cleanup' | 'late', variant?: MaskSourceVariant): MaskSourcePoint;
+export function readMaskSourceCleanup(
+  id: MaskOwner,
+  phase?: 'beforeUnmount' | 'cleanup' | 'late',
+  variant?: MaskSourceVariant
+): MaskSourcePoint;
 export function readMaskSourceProducerChunks(id: MaskOwner, variant?: MaskSourceVariant): MaskSourceProducerReference[];
-export function readMaskSourceProducerChunk(id: MaskOwner, index: number, variant?: MaskSourceVariant): MaskSourceProducerChunk;
-export function readMaskSourceSSR(id: MaskOwner, formatProfile: MaskFormatProfile, method: MaskSourceSerializer, variant?: MaskSourceVariant): MaskSourceSSR;
-export function verifyMaskSourceManifest(value: unknown, kind?: MaskSourceCaptureKind, variant?: MaskSourceVariant): void;
+export function readMaskSourceProducerChunk(
+  id: MaskOwner,
+  index: number,
+  variant?: MaskSourceVariant
+): MaskSourceProducerChunk;
+export function readMaskSourceSSR(
+  id: MaskOwner,
+  formatProfile: MaskFormatProfile,
+  method: MaskSourceSerializer,
+  variant?: MaskSourceVariant
+): MaskSourceSSR;
+export function verifyMaskSourceManifest(
+  value: unknown,
+  kind?: MaskSourceCaptureKind,
+  variant?: MaskSourceVariant
+): void;
 export function verifyMaskSourcePoint(value: unknown): void;
 export function verifyMaskSourceRows(value: unknown): void;
-export function verifyMaskSourceStep(value: unknown, id: MaskOwner, index: number, variant?: MaskSourceVariant): void;
-export function verifyMaskSourceSubstep(value: unknown, id: MaskOwner, index: number, substepIndex: number): void;
-export function verifyMaskSourceProducerChunk(value: unknown, envelope?: Pick<MaskSourceProducerReference, 'phase' | 'cursor' | 'next'>): void;
-export function verifyMaskSourceSSR(value: unknown, id: MaskOwner, formatProfile: MaskFormatProfile, method: MaskSourceSerializer): void;
-export function verifyMaskSourcePartBinding(reference: MaskSourceReference | MaskSourceRawPart, kind: MaskSourceCaptureKind, variant?: MaskSourceVariant, expectedFile?: string): unknown;
-export function verifyMaskSourceStoredBytes(reference: MaskSourceReference | MaskSourceRawPart, stored: Uint8Array): Uint8Array;
-export function verifyMaskSourceStoredParts(): { sourceOnly: true; captures: 4; originalParts: 1618; wholeBlobs: number; };
+export function verifyMaskSourceStep(
+  value: unknown,
+  id: MaskOwner,
+  index: number,
+  variant?: MaskSourceVariant
+): void;
+export function verifyMaskSourceSubstep(
+  value: unknown,
+  id: MaskOwner,
+  index: number,
+  substepIndex: number
+): void;
+export function verifyMaskSourceProducerChunk(
+  value: unknown,
+  envelope?: Pick<MaskSourceProducerReference, 'phase' | 'cursor' | 'next'>
+): void;
+export function verifyMaskSourceSSR(
+  value: unknown,
+  id: MaskOwner,
+  formatProfile: MaskFormatProfile,
+  method: MaskSourceSerializer
+): void;
+export function verifyMaskSourcePartBinding(
+  reference: MaskSourceReference | MaskSourceRawPart,
+  kind: MaskSourceCaptureKind,
+  variant?: MaskSourceVariant,
+  expectedFile?: string
+): unknown;
+export function verifyMaskSourceStoredBytes(
+  reference: MaskSourceReference | MaskSourceRawPart,
+  stored: Uint8Array
+): Uint8Array;
+export function verifyMaskSourceStoredParts(): {
+  sourceOnly: true;
+  captures: 4;
+  originalParts: 1618;
+  wholeBlobs: number;
+};

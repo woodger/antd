@@ -34,6 +34,7 @@ test('Tree keeps zero horizontal offset when scrollWidth is smaller than the vie
   await expect(inner(page)).toHaveCSS('margin-left', '0px');
   await expect(host(page).locator('.ant-tree-list-scrollbar-horizontal')).toHaveCount(0);
   await holder(page).dispatchEvent('wheel', { deltaX: 100, deltaY: 0 });
+
   await expect(inner(page)).toHaveCSS('margin-left', '0px');
 });
 
@@ -50,6 +51,7 @@ test('Tree refreshes the estimate without cloning data or losing DOM, selection 
     if (!(node instanceof HTMLInputElement)) throw Error('Expected input');
     node.setSelectionRange(2, 7);
   });
+
   await expect(holder(page).locator(':scope > div')).toHaveCSS('height', '1942px');
 
   await button(page, 'Update virtual tree').evaluate(node => {
@@ -73,6 +75,7 @@ test('Tree clears a virtualized-away active descendant and restores it on keyboa
   await sample(page, 'active-missing-observation');
   const tree = page.getByRole('tree', { name: 'Virtual tree', exact: true });
   await tree.press('End');
+
   await expect.poll(() => activeTitle(page)).toBe('Item 63');
 
   await page.getByRole('combobox', { name: 'Tree virtual action', exact: true }).selectOption('1');
@@ -80,6 +83,7 @@ test('Tree clears a virtualized-away active descendant and restores it on keyboa
 
   await expect(tree).not.toHaveAttribute('aria-activedescendant');
   await tree.press('ArrowUp');
+
   await expect.poll(() => activeTitle(page)).toBe('Item 62');
   await expect(tree).toBeFocused();
 });
@@ -96,6 +100,7 @@ for (const rtl of [false, true]) {
     await sample(page, rtl ? 'horizontal-rtl-observation' : 'horizontal');
     const margin = rtl ? 'margin-right' : 'margin-left';
     const thumb = host(page).locator('.ant-tree-list-scrollbar-horizontal .ant-tree-list-scrollbar-thumb');
+
     await expect(thumb).toHaveCSS(rtl ? 'right' : 'left', '0px');
     await expect(host(page).locator('.ant-tree-list-scrollbar-vertical'))
       .toHaveCSS(rtl ? 'left' : 'right', '0px');
@@ -125,6 +130,7 @@ for (const rtl of [false, true]) {
 
     await expect(inner(page)).toHaveCSS(rtl ? 'margin-right' : 'margin-left', '-210px');
     await page.mouse.up();
+
     await expect(holder(page)).toHaveCSS('pointer-events', 'auto');
   });
 
@@ -150,6 +156,7 @@ for (const rtl of [false, true]) {
     await page.getByRole('checkbox', { name: 'Mount virtual tree', exact: true }).uncheck();
     const calls = await page.locator('[data-tree-virtual-scroll-events]').textContent();
     await page.clock.runFor(4000);
+
     await expect(page.locator('[data-tree-virtual-scroll-events]')).toHaveText(calls!);
     await expect(host(page).locator('[role="tree"]')).toHaveCount(0);
   });
@@ -177,6 +184,7 @@ test('Tree drags its vertical scrollbar and restores the holder after release', 
 
   await expect.poll(() => holder(page).evaluate(node => node.scrollTop)).toBe(840);
   await page.mouse.up();
+
   await expect(holder(page)).toHaveCSS('pointer-events', 'auto');
 });
 
@@ -193,6 +201,7 @@ test('Tree responds to height, width and controlled active updates while keeping
   await sample(page, 'live-viewport');
   const before = await page.getByRole('tree', { name: 'Virtual tree', exact: true }).elementHandle();
   await button(page, 'Scroll virtual tree').click();
+
   await expect(inner(page)).toHaveCSS('margin-left', '-420px');
 
   await button(page, 'Update virtual tree').click();
@@ -209,6 +218,7 @@ test('Tree only starts lazy loads for mounted rows and ignores pending results a
   await page.clock.install();
   await sample(page, 'lazy-window');
   const calls = page.locator('[data-tree-virtual-load-calls]');
+
   await expect(calls).toHaveText('["first",1,2,3,4,5]');
 
   await button(page, 'Scroll virtual tree').click();
@@ -216,6 +226,7 @@ test('Tree only starts lazy loads for mounted rows and ignores pending results a
   await expect(calls).toContainText('40');
   const before = await calls.textContent();
   await page.getByRole('checkbox', { name: 'Mount virtual tree', exact: true }).uncheck();
+
   await expect(page.locator('[data-tree-virtual-ref]')).toHaveText('none');
   const scrolls = await page.locator('[data-tree-virtual-scroll-events]').textContent();
   await button(page, 'Resolve virtual loads').click();

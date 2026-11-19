@@ -28,7 +28,14 @@ outside?.setSelectionRange(2, 8);
 input?.focus();
 if (input) input.value = 'Hydration draft';
 input?.setSelectionRange(1, 6);
-window.treeTagsHydration = { root, input, tag, outside, focusedBefore: document.activeElement === input, ready: false };
+window.treeTagsHydration = {
+  root,
+  input,
+  tag,
+  outside,
+  focusedBefore: document.activeElement === input,
+  ready: false
+};
 hydrate(TreeSelectTagsScope, { target: document.getElementById('root')!, props: { sample } });
 await tick();
 window.treeTagsHydration.ready = true;

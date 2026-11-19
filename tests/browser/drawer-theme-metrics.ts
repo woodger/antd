@@ -20,10 +20,16 @@ export function snapshotDrawerTheme() {
     mask: css(root.querySelector('.ant-drawer-mask'), [
       'z-index', 'background-color', 'backdrop-filter'
     ]),
-    wrapper: css(root.querySelector('.ant-drawer-content-wrapper'), ['width', 'height', 'box-shadow']),
+    wrapper: css(
+      root.querySelector('.ant-drawer-content-wrapper'),
+      ['width', 'height', 'box-shadow']
+    ),
     section: css(root.querySelector('.ant-drawer-section'), [...typography, 'background-color']),
     header: css(root.querySelector('.ant-drawer-header'), [...typography, ...box]),
-    title: css(root.querySelector('.ant-drawer-title'), [...typography, 'margin-top', 'margin-bottom']),
+    title: css(
+      root.querySelector('.ant-drawer-title'),
+      [...typography, 'margin-top', 'margin-bottom']
+    ),
     close: css(root.querySelector('.ant-drawer-close'), [
       ...typography, ...box, 'margin-left', 'margin-right'
     ]),

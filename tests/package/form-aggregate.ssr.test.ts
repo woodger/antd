@@ -13,6 +13,7 @@ describe('Form aggregate metadata public package', () => {
     });
     expect(validatingReference.reference).toEqual(touchedReference.reference);
     const initial = touchedReference.cases.find(({ id }) => id === 'initial')!;
+
     expect(initial.touched.rootAny.error).toContain('not iterable');
     expect(initial.touched.undefinedAll.error).toContain('map');
   });
@@ -54,9 +55,11 @@ describe('Form aggregate metadata public package', () => {
     expect(form.isFieldsValidating(['unknown'])).toBe(false);
     expect(form.getFieldsError()).toEqual(before);
     const validation = form.validateFields();
+
     expect(form.isFieldsValidating()).toBe(false);
     expect(form.isFieldValidating('name')).toBe(false);
     await validation;
+
     expect(form.isFieldsValidating()).toBe(false);
   });
 
@@ -77,9 +80,11 @@ describe('Form aggregate metadata public package', () => {
     expect(form.isFieldsValidating([])).toBe(false);
     completeSecond();
     await silent;
+
     expect(form.isFieldsValidating()).toBe(true);
     completeFirst();
     await visible;
+
     expect(form.isFieldsValidating()).toBe(false);
   });
 });

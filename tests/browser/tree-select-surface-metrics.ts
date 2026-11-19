@@ -32,7 +32,10 @@ export function readTreeSelectSurface() {
     suffixLoading: part('suffix')?.classList.contains(`${prefix}-suffix-loading`) ?? false,
     info: info ? JSON.parse(info.getAttribute('data-surface-suffix-info')!) : null,
     clear: clear && { ...affix(clear), label: clear.getAttribute('aria-label'), tag: clear.tagName },
-    remove: Array.from(control.querySelectorAll(`[class~="${prefix}-selection-item-remove"]`), affix),
+    remove: Array.from(
+      control.querySelectorAll(`[class~="${prefix}-selection-item-remove"]`),
+      affix
+    ),
     tag: control.querySelector('[data-surface-tag]')?.textContent ?? null,
     popup: popup && {
       visible: !popup.hidden && popup.getClientRects().length > 0,

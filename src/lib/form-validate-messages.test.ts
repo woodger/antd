@@ -51,21 +51,30 @@ describe('Form validation message templates', () => {
   });
 
   it('releases template providers without leaking their messages into the same model or its sibling', async () => {
-    const first = createForm({ initialValues: { field: '' }, rules: { field: [{ required: true }] } });
-    const sibling = createForm({ initialValues: { field: '' }, rules: { field: [{ required: true }] } });
+    const first = createForm({
+      initialValues: { field: '' },
+      rules: { field: [{ required: true }] }
+    });
+    const sibling = createForm({
+      initialValues: { field: '' },
+      rules: { field: [{ required: true }] }
+    });
     const hooks = getFormHooks(first)!;
     const removeOuter = hooks.registerValidateMessages(() => ({ required: 'Outer' }));
     const removeInner = hooks.registerValidateMessages(() => ({ required: 'Inner' }));
 
     await first.validateFields().catch(() => {});
     await sibling.validateFields().catch(() => {});
+
     expect(first.getFieldError('field')).toEqual(['Inner']);
     expect(sibling.getFieldError('field')).toEqual(['Заполните это поле.']);
     removeInner();
     await first.validateFields().catch(() => {});
+
     expect(first.getFieldError('field')).toEqual(['Outer']);
     removeOuter();
     await first.validateFields().catch(() => {});
+
     expect(first.getFieldError('field')).toEqual(['Заполните это поле.']);
   });
 
@@ -103,7 +112,10 @@ describe('Form validation message templates', () => {
       { validator: () => { throw null; }, message: 'Rule' }
     ], false, context);
 
-    expect(messages).toEqual({ errors: ['Default field', 'Explicit', 'Returned', 'Rule'], warnings: [] });
+    expect(messages).toEqual({
+      errors: ['Default field', 'Explicit', 'Returned', 'Rule'],
+      warnings: []
+    });
   });
 
   it('preserves printf argument order, remaining placeholders, circular JSON and literal rule messages', async () => {

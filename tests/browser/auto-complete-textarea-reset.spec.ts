@@ -3,22 +3,55 @@ import { drainSelectSurface } from './select-surface-driver';
 import type { SelectRef } from 'antd-svelte';
 
 interface Capture {
-  read: () => { model: string | undefined | null; changes: Array<string | undefined>; resets: number; prevented: boolean; mounted: boolean };
-  readRefs: () => { form?: HTMLFormElement; control?: SelectRef; root?: HTMLDivElement; editor?: HTMLInputElement | HTMLTextAreaElement };
+  read: () => {
+    model: string | undefined | null;
+    changes: Array<string | undefined>;
+    resets: number;
+    prevented: boolean;
+    mounted: boolean
+  };
+  readRefs: () => {
+    form?: HTMLFormElement;
+    control?: SelectRef;
+    root?: HTMLDivElement;
+    editor?: HTMLInputElement | HTMLTextAreaElement
+  };
   dispose: () => void;
 }
 const cases = [
-  { id: 'uncontrolled', label: 'Uncontrolled textarea completion', resetValue: 'seed', model: null, prevented: false },
-  { id: 'controlled', label: 'Controlled textarea completion', resetValue: 'draft', model: 'draft', prevented: false },
-  { id: 'cancelled', label: 'Cancelled textarea completion', resetValue: 'draft', model: null, prevented: true }
+  {
+    id: 'uncontrolled',
+    label: 'Uncontrolled textarea completion',
+    resetValue: 'seed',
+    model: null,
+    prevented: false
+  },
+  {
+    id: 'controlled',
+    label: 'Controlled textarea completion',
+    resetValue: 'draft',
+    model: 'draft',
+    prevented: false
+  },
+  {
+    id: 'cancelled',
+    label: 'Cancelled textarea completion',
+    resetValue: 'draft',
+    model: null,
+    prevented: true
+  }
 ] as const;
 for (const sample of cases) test(`AutoComplete custom textarea preserves ${sample.id} form reset`, async ({ page }) => {
   await page.goto('/?fixture=autocomplete-textarea-reset');
   const editor = page.getByRole('combobox', { name: sample.label, exact: true });
+
   await expect(editor).toHaveValue('seed');
   const capture = await page.evaluateHandle(id => {
     const detail = { id } as Capture & { id: string };
-    document.querySelector('[data-textarea-reset-command]')!.dispatchEvent(new CustomEvent('textarearesetcapture', { detail }));
+    document.querySelector('[data-textarea-reset-command]')!.dispatchEvent(new CustomEvent(
+      'textarearesetcapture',
+      { detail }
+    ));
     return detail;
   }, sample.id);
   const retained = await capture.evaluateHandle(owner => {
@@ -38,13 +71,30 @@ for (const sample of cases) test(`AutoComplete custom textarea preserves ${sampl
         blur: current.control?.blur === old.blur, scrollTo: current.control?.scrollTo === old.scrollTo },
       refsCleared: current.control == null && current.root == null && current.editor == null };
   });
-  const stable = async () => { await drainSelectSurface(page); return read(); };
-  const same = { form: true, root: true, editor: true, control: true, focus: true, blur: true, scrollTo: true };
+  const stable = async () => {
+    await drainSelectSurface(page);
+    return read();
+  };
+  const same = {
+    form: true,
+    root: true,
+    editor: true,
+    control: true,
+    focus: true,
+    blur: true,
+    scrollTo: true
+  };
   try {
     const initial = await stable();
     expect(initial).toMatchObject({ tag: 'TEXTAREA', connected: true, rootConnected: true, value: 'seed', defaultValue: 'seed', text: 'seed',
       classes: ['ant-select-input'], formData: [['query', 'seed']], same,
-      owner: { model: sample.id === 'controlled' ? 'seed' : null, changes: [], resets: 0, prevented: false, mounted: true } });
+      owner: {
+        model: sample.id === 'controlled' ? 'seed' : null,
+        changes: [],
+        resets: 0,
+        prevented: false,
+        mounted: true
+      } });
     expect(await retained.evaluate(old => [typeof old.focus, typeof old.blur, typeof old.scrollTo])).toEqual(['function', 'function', 'function']);
     await editor.fill('draft');
     await editor.evaluate((node: HTMLTextAreaElement) => node.setSelectionRange(1, 4, 'backward'));
@@ -58,7 +108,13 @@ for (const sample of cases) test(`AutoComplete custom textarea preserves ${sampl
     expect(reset).toMatchObject({ tag: 'TEXTAREA', connected: true, rootConnected: true, value: sample.resetValue,
       defaultValue: sample.resetValue, text: sample.resetValue, formData: [['query', sample.resetValue]],
       classes: ['ant-select-input'], same, focus: true, refsCleared: false,
-      owner: { model: sample.model, changes: ['draft'], resets: 1, prevented: sample.prevented, mounted: true } });
+      owner: {
+        model: sample.model,
+        changes: ['draft'],
+        resets: 1,
+        prevented: sample.prevented,
+        mounted: true
+      } });
     if (sample.id !== 'uncontrolled') expect(reset.caret).toEqual(edited.caret);
     else {
       expect(reset.caret[0]).toBeGreaterThanOrEqual(0);
@@ -72,5 +128,8 @@ for (const sample of cases) test(`AutoComplete custom textarea preserves ${sampl
       owner: { ...reset.owner, mounted: false } });
     await page.waitForTimeout(1000);
     expect(await stable()).toEqual(disposed);
-  } finally { await retained.dispose(); await capture.dispose(); }
+  } finally {
+    await retained.dispose();
+    await capture.dispose();
+  }
 });

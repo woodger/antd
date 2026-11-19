@@ -78,6 +78,7 @@ describe('Ant Design 6.6.8 official UMD design-token conformance', () => {
       for (const algorithm of algorithms) map = algorithm(seed, map);
 
       const expectedMap = decode(sample.map);
+
       expect(map).toStrictEqual(expectedMap);
       if (map && expectedMap && typeof expectedMap === 'object') {
         expect(Object.keys(map)).toStrictEqual(Object.keys(expectedMap));
@@ -91,7 +92,8 @@ describe('Ant Design 6.6.8 official UMD design-token conformance', () => {
       if (sample.error) {
         expect(() => theme.getDesignToken(config)).toThrowError(sample.error.message);
         expect(() => theme.getDesignToken(config)).toThrowError(TypeError);
-      } else {
+      }
+      else {
         const token = theme.getDesignToken(config);
         const expected = decode(sample.alias);
 

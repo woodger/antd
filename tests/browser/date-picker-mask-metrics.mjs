@@ -101,5 +101,9 @@ export function readNativeMask() {
       timers: null, frames: null, observers: null,
       note: 'Private resource counters unmeasured. One removable document capture observer; no global timer/frame/observer hooks.' } };
 }
-export function readNativeMaskProducers(cursor = 0) { return window.nativeMask.readProducers(cursor); }
-export function readNativeMaskCallbacks(cursor = 0) { return window.nativeMask.readCallbacks(cursor); }
+export function readNativeMaskProducers(cursor = 0) {
+  return window.nativeMask.readProducers(cursor);
+}
+export function readNativeMaskCallbacks(cursor = 0) {
+  return window.nativeMask.readCallbacks(cursor);
+}

@@ -57,11 +57,13 @@ export function resolveValidationMessage<Values extends FormValues>(
 
       try {
         return JSON.stringify(value) ?? 'undefined';
-      } catch {
+      }
+      catch {
         return '[Circular]';
       }
     });
-  } catch {
+  }
+  catch {
     // Ошибка template не должна ломать validation или создавать source console/page errors.
     return fallback;
   }
@@ -92,7 +94,8 @@ export function formatValidationMessages<Values extends FormValues>(
     const value = Object.hasOwn(variables, key) ? variables[key] : undefined;
     try {
       return String(value);
-    } catch {
+    }
+    catch {
       return 'undefined';
     }
   }));

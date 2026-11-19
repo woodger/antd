@@ -20,11 +20,17 @@
       keys: Object.keys(info), argumentCount: arguments.length });
     return null;
   }
-  function onChange(value: string | string[] | undefined) { events.push(['change', value]); model = value; }
+  function onChange(value: string | string[] | undefined) {
+    events.push(['change', value]);
+    model = value;
+  }
   const onSelect = (value: string) => { events.push(['select', value]); };
   const onSearch = (value: string) => { events.push(['search', value]); };
   const onClear = () => { events.push(['clear']); };
-  function onOpenChange(value: boolean) { events.push(['open', value]); if (!initial.rejectOpen) open = value; }
+  function onOpenChange(value: boolean) {
+    events.push(['open', value]);
+    if (!initial.rejectOpen) open = value;
+  }
   function onInputKeyDown(event: KeyboardEvent) {
     events.push(['keydown', event.key, event.defaultPrevented]);
     if (initial.prevent) event.preventDefault();

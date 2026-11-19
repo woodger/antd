@@ -22,7 +22,8 @@ export function connectStepsFocus(root: HTMLElement) {
       )) {
       focused = node;
       keys = buttons().map(button => button.dataset.stepsKey!);
-    } else if (node !== document.body) {
+    }
+    else if (node !== document.body) {
       focused = undefined;
       keys = [];
     }

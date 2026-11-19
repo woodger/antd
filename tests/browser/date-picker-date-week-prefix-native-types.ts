@@ -25,7 +25,11 @@ export interface DateWeekPrefixOwnerRead {
 export interface DateWeekPrefixCapture {
   recorder?: ReturnType<typeof createDatePickerPresetsRecorder>;
   setActionIndex?: (index: number) => void;
-  readRefs?: () => { owner: HTMLElement | null; control: DateWeekPrefixControl | null; root: HTMLDivElement | null };
+  readRefs?: () => {
+    owner: HTMLElement | null;
+    control: DateWeekPrefixControl | null;
+    root: HTMLDivElement | null
+  };
   read?: () => DateWeekPrefixOwnerRead;
   readCallbacks?: (cursor?: number) => DateWeekPrefixCursorDelta;
   readProducers?: (cursor?: number) => DateWeekPrefixCursorDelta;

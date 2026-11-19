@@ -24,6 +24,7 @@ test.beforeEach(async ({ page }) => {
 test('Tabs medium overrides provider size and preserves geometry across provider changes',
   async ({ page }) => {
     await page.getByLabel('Tabs provider size', { exact: true }).selectOption('small');
+
     await expect(root(page)).toHaveClass(/ant-tabs-small/);
     await expect(tab(page, 'Alpha')).toHaveCSS('padding-top', '8px');
     await page.getByLabel('Tabs layout size', { exact: true }).selectOption('medium');
@@ -33,6 +34,7 @@ test('Tabs medium overrides provider size and preserves geometry across provider
     await expect(root(page)).not.toHaveClass(/ant-tabs-(small|large|medium)/);
     const medium = await tab(page, 'Alpha').boundingBox();
     await page.getByLabel('Tabs provider size', { exact: true }).selectOption('large');
+
     await expect.poll(() => tab(page, 'Alpha').boundingBox()).toEqual(medium);
 
     await expect(tab(page, 'Alpha')).toHaveCSS('font-size', '14px');

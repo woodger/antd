@@ -176,7 +176,8 @@ export function changeTableSelection(
   for (const key of changedKeys) {
     if (checked) {
       selected.add(key);
-    } else {
+    }
+    else {
       selected.delete(key);
     }
   }

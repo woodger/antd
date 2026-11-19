@@ -161,7 +161,8 @@ export function createNoticeQueue<Config extends NoticeConfig>(
       entry.onClose = undefined;
       try {
         callback?.();
-      } catch (error) {
+      }
+      catch (error) {
         errors.push(error);
       }
       finally {

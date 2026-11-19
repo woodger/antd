@@ -7,7 +7,10 @@
   const caller = getContext<TagCloseHandlesContext>(tagCloseHandlesContext);
   const geometry = selectTagCloseHandleGeometry.tag;
   function observe(content: Snippet) {
-    caller.bodyActivity.push({ info: caller.recorder.encode(info), rawInfo: caller.recorder.raw(info) });
+    caller.bodyActivity.push({
+      info: caller.recorder.encode(info),
+      rawInfo: caller.recorder.raw(info)
+    });
     caller.recorder.register(content, { node: 'handles-tag-body-' + info.value });
     return caller.recorder.record('tagBody', 'own', info, content);
   }

@@ -37,7 +37,8 @@ export class BigIntDecimal implements MiniDecimal {
       this.integer = BigInt(parts[0]);
       this.decimal = BigInt(decimal);
       this.decimalLen = decimal.length;
-    } else this.nan = true;
+    }
+    else this.nan = true;
   }
 
   private getMark() {

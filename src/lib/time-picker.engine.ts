@@ -182,7 +182,8 @@ export function timePickerPanel(
     const source = value || pickerValue!;
     template = template.hour(source.hour()).minute(source.minute())
       .second(source.second()).millisecond(source.millisecond());
-  } else if (hour !== undefined) {
+  }
+  else if (hour !== undefined) {
     template = template.hour(hour).minute(minute!).second(second!).millisecond(millisecond!);
   }
 

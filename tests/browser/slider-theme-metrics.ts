@@ -17,7 +17,11 @@ export function snapshotSliderTheme(id: string) {
     rail: select(rail, [vertical ? 'width' : 'height', 'background-color', 'border-radius']),
     track: select(track, [vertical ? 'width' : 'height', 'background-color']),
     handle: select(handle, ['width', 'height']),
-    before: select(handle, ['width', 'height', 'inset-inline-start', 'inset-block-start'], '::before'),
+    before: select(
+      handle,
+      ['width', 'height', 'inset-inline-start', 'inset-block-start'],
+      '::before'
+    ),
     after: select(handle, ['width', 'height', 'background-color', 'box-shadow',
       'outline-width', 'outline-color', 'inset-inline-start', 'inset-block-start'], '::after'),
     dot: dot ? select(dot, ['width', 'height', 'border-color']) : null,

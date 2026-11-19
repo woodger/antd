@@ -14,11 +14,13 @@ it('pins independent custom input captures for refs, textarea navigation, own ha
   expect(reference.cases.reduce((count, entry) => count + entry.steps.length, 0)).toBe(144);
   expect(reference.ssr).toHaveLength(14);
   const component = reference.cases.find(entry => entry.id === 'component-input')!;
+
   expect(component.initial.props?.keys.some(key => key === 'key' || key === 'ref' || key === 'placeholder')).toBe(false);
   expect(component.initial.props?.callbacks).toEqual(['onBlur', 'onChange', 'onCompositionEnd', 'onCompositionStart', 'onKeyDown', 'onPaste']);
   expect(component.initial.view.label).toBe('Alpha');
   expect(component.initial.view.value).toBe('');
   const own = reference.cases.find(entry => entry.id === 'own-input-callbacks')!;
+
   expect(own.steps[1].view.events.slice(-4)).toEqual([
     ['own', 'keydown', '', 'ArrowDown', true], ['generated', 'inputkeydown', '', 'ArrowDown', true],
     ['open', true], ['generated', 'keydown', '', 'ArrowDown', true]
@@ -26,10 +28,21 @@ it('pins independent custom input captures for refs, textarea navigation, own ha
   expect(reference.cases.find(entry => entry.id === 'intrinsic-textarea')!.steps[1].view.open).toBe(false);
   expect(reference.cases.find(entry => entry.id === 'composite-textarea')!.steps[1].view.open).toBe(true);
   const attrs = reference.cases.find(entry => entry.id === 'own-input-attrs')!.initial.view;
-  expect(attrs).toMatchObject({ disabled: false, readonly: false, classes: ['own-input'], style: { backgroundColor: '' } });
+
+  expect(attrs).toMatchObject({
+    disabled: false,
+    readonly: false,
+    classes: ['own-input'],
+    style: { backgroundColor: '' }
+  });
   expect(reference.cases.every(entry => entry.initial.refs.nativeTag === 'DIV' && entry.initial.refs.nativeContainsEditor)).toBe(true);
   const uncontrolled = reference.cases.find(entry => entry.id === 'own-input-value-undefined')!;
-  expect(uncontrolled.steps[2].view).toMatchObject({ value: 'Alpha,Beta', controlled: '', open: false });
+
+  expect(uncontrolled.steps[2].view).toMatchObject({
+    value: 'Alpha,Beta',
+    controlled: '',
+    open: false
+  });
   expect(reference.cases.find(entry => entry.id === 'own-input-value')!.steps[1].view.value).toBe('Own');
   for (const id of ['empty-label', 'blank-label']) {
     const entry = reference.cases.find(entry => entry.id === id)!;

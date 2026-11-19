@@ -8,7 +8,12 @@
   let { sample }: { sample: TreeSelectInputSample } = $props();
   let selected = $state<TreeSelectValue>(untrack(() => Array.isArray(sample.selected) ? [...sample.selected] : sample.selected));
   let search = $state(untrack(() => sample.initialSearch ?? ''));
-  let options = $state(untrack(() => ({ searchable: sample.searchable !== false, disabled: sample.disabled ?? false, tabIndex: 3, ownPhase: 0 })));
+  let options = $state(untrack(() => ({
+    searchable: sample.searchable !== false,
+    disabled: sample.disabled ?? false,
+    tabIndex: 3,
+    ownPhase: 0
+  })));
   let events = $state<unknown[][]>([]);
   let control = $state<TreeSelectRef>();
   let root = $state<HTMLDivElement>();
@@ -40,7 +45,10 @@
         class: 'own-input', style: 'color:rgb(120,10,20)', disabled: false, readonly: false, autofocus: false
       } : {}),
       ...(sample.own === 'value' ? { value: 'Own', placeholder: 'Own placeholder' } : {}),
-      ...(sample.own === 'value-undefined' ? { value: undefined, placeholder: 'Uncontrolled own placeholder' } : {}),
+      ...(sample.own === 'value-undefined' ? {
+        value: undefined,
+        placeholder: 'Uncontrolled own placeholder'
+      } : {}),
       ...(sample.own === 'live' ? {
         id: options.ownPhase ? 'own-live-after' : 'own-live-before',
         placeholder: options.ownPhase ? 'After placeholder' : 'Before placeholder', tabindex: options.ownPhase ? 8 : 6,
@@ -49,7 +57,10 @@
       } : {})
     };
   }
-  let inputOwn = $derived({ ...ownProps(), ...(sample.own === 'attrs' ? { type: 'search' as const } : {}) } satisfies HTMLInputAttributes);
+  let inputOwn = $derived({
+    ...ownProps(),
+    ...(sample.own === 'attrs' ? { type: 'search' as const } : {})
+  } satisfies HTMLInputAttributes);
   let textareaOwn = $derived(ownProps() satisfies HTMLTextareaAttributes | undefined);
   let common = $derived({
     id: 'tree-select-input-control', value: selected, multiple: sample.multiple,
@@ -57,17 +68,50 @@
     tabIndex: options.tabIndex, placeholder: 'Generated placeholder', maxLength: 2,
     'aria-label': 'Generated input', 'aria-required': true,
     classNames: { input: 'semantic-input' }, styles: { input: 'color:rgb(20,70,90);background-color:rgb(230,240,250)' },
-    style: 'width:380px', treeData: [{ value: 'a', title: sample.label ?? 'Alpha' }, { value: 'b', title: 'Beta' }],
+    style: 'width:380px', treeData: [{ value: 'a', title: sample.label ?? 'Alpha' }, {
+      value: 'b',
+      title: 'Beta'
+    }],
     tokenSeparators: sample.separators,
     showSearch: options.searchable ? { searchValue: sample.controlled ? search : undefined, autoClearSearchValue: sample.autoClear, filterTreeNode: false as const,
-      onSearch: (text: string) => { record('search', text); if (sample.controlled === 'accept') search = text; } } : false as const,
-    onChange: (next: TreeSelectValue) => { selected = next; record('change', next); },
+      onSearch: (text: string) => {
+        record('search', text);
+        if (sample.controlled === 'accept') search = text;
+      } } : false as const,
+    onChange: (next: TreeSelectValue) => {
+      selected = next;
+      record('change', next);
+    },
     onSelect: (next: string | number) => record('select', next),
     onOpenChange: (next: boolean) => record('open', next),
-    onInputKeyDown: (event: KeyboardEvent) => record('generated', 'inputkeydown', (event.currentTarget as HTMLInputElement | HTMLTextAreaElement).value, event.key, event.defaultPrevented),
-    onKeyDown: (event: KeyboardEvent) => record('generated', 'keydown', (event.target as HTMLInputElement | HTMLTextAreaElement).value, event.key, event.defaultPrevented),
-    onFocus: (event: FocusEvent) => record('generated', 'focus', (event.target as HTMLInputElement | HTMLTextAreaElement).value, null, event.defaultPrevented),
-    onBlur: (event: FocusEvent) => record('generated', 'blur', (event.target as HTMLInputElement | HTMLTextAreaElement).value, null, event.defaultPrevented)
+    onInputKeyDown: (event: KeyboardEvent) => record(
+      'generated',
+      'inputkeydown',
+      (event.currentTarget as HTMLInputElement | HTMLTextAreaElement).value,
+      event.key,
+      event.defaultPrevented
+    ),
+    onKeyDown: (event: KeyboardEvent) => record(
+      'generated',
+      'keydown',
+      (event.target as HTMLInputElement | HTMLTextAreaElement).value,
+      event.key,
+      event.defaultPrevented
+    ),
+    onFocus: (event: FocusEvent) => record(
+      'generated',
+      'focus',
+      (event.target as HTMLInputElement | HTMLTextAreaElement).value,
+      null,
+      event.defaultPrevented
+    ),
+    onBlur: (event: FocusEvent) => record(
+      'generated',
+      'blur',
+      (event.target as HTMLInputElement | HTMLTextAreaElement).value,
+      null,
+      event.defaultPrevented
+    )
   });
   function update(patch: TreeSelectInputUpdate) {
     if (Object.hasOwn(patch, 'search')) search = patch.search!;

@@ -29,6 +29,7 @@ test('Descriptions token updates apply current queries while retaining the first
     await input.evaluate((node: HTMLInputElement) => node.setSelectionRange(1, 5, 'backward'));
     const oldRoot = await root.elementHandle();
     const oldInput = await input.elementHandle();
+
     await expect.poll(() => page.evaluate(snapshotDescriptionsBreakpoints))
       .toEqual(reference.live.initial);
 
@@ -99,6 +100,7 @@ test('Descriptions replaces custom queries and removes all media listeners after
     const count = () => page.evaluate(() => (window as unknown as {
       descriptionsMedia: { count: () => number };
     }).descriptionsMedia.count());
+
     await expect.poll(count).toBe(7);
     await page.getByRole('checkbox', { name: 'Live Descriptions breakpoints', exact: true }).check();
     await page.getByRole('button', { name: 'Update Descriptions breakpoints', exact: true }).click();
@@ -106,14 +108,17 @@ test('Descriptions replaces custom queries and removes all media listeners after
     await expect.poll(count).toBe(7);
     await page.getByRole('checkbox', { name: 'Source Descriptions breakpoints', exact: true })
       .uncheck();
+
     await expect.poll(count).toBe(7);
     await page.getByRole('checkbox', { name: 'Mount responsive Descriptions', exact: true })
       .uncheck();
 
     await expect.poll(count).toBe(0);
     await page.setViewportSize({ width: 639, height: 1200 });
+
     await expect(page.locator('.fixture-descriptions-breakpoints')).toHaveCount(0);
     await page.getByRole('checkbox', { name: 'Mount responsive Descriptions', exact: true }).check();
+
     await expect.poll(count).toBe(7);
     await expect(page.getByRole('textbox', { name: 'Descriptions responsive draft', exact: true }))
       .toHaveValue('Draft');

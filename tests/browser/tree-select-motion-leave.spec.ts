@@ -14,6 +14,7 @@ test.use({ viewport: reference.reference.viewport });
 for (const entry of reference.cases) {
   test(`TreeSelect keeps rendered leave DOM until Source activation after early own end for ${entry.id}`, async ({ page }) => {
     const sample = treeSelectMotionLeaveSamples.find(sample => sample.id === entry.id)!;
+
     expect(entry.steps.map(step => step.action)).toEqual(treeSelectMotionLeaveActions(sample));
     // These are independently observed Source facts: own end in ACTIVE precedes render-ready ACTIVATED.
     expect(entry.steps[7].view.popup?.hidden).toBe(false);
@@ -24,6 +25,7 @@ for (const entry of reference.cases) {
     await page.getByRole('combobox', { name: 'TreeSelect motion sample', exact: true })
       .selectOption(sample.fixtureId);
     await page.mouse.move(0, 0);
+
     await expect(page.locator('[data-motion-case]')).toHaveAttribute('data-motion-bound', 'true');
     const drain = async () => {
       await page.evaluate(advanceTreeSelectMotionFrames, 0);
@@ -31,6 +33,7 @@ for (const entry of reference.cases) {
       await page.evaluate(advanceTreeSelectMotionFrames, 0);
     };
     await drain();
+
     expect((await page.evaluate(readTreeSelectMotion)).view).toEqual(entry.initial.view);
     const identity = await page.evaluateHandle(() => {
       const host = document.querySelector('[data-motion-host]')!;

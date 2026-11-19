@@ -11,12 +11,18 @@ describe('Form validation rule transform', () => {
       const calls: FormTransformCall[] = [];
       const { sample } = entry;
       const rules = formTransformRules(sample, call => calls.push(call));
-      const result = await validateFieldValue(sample.value, { field: sample.value }, rules, sample.first);
+      const result = await validateFieldValue(
+        sample.value,
+        { field: sample.value },
+        rules,
+        sample.first
+      );
 
       if (sample.kind === 'throw') {
         expect(entry.valid).toBe(true);
         expect(result).toEqual({ errors: ['Rejected'], warnings: [] });
-      } else expect(result).toEqual({ errors: entry.errors, warnings: entry.warnings });
+      }
+      else expect(result).toEqual({ errors: entry.errors, warnings: entry.warnings });
       expect(JSON.parse(JSON.stringify(calls))).toEqual(entry.calls);
     });
   }
@@ -36,6 +42,7 @@ describe('Form validation rule transform', () => {
 
   it('reports thrown transform errors and preserves warning-only and literal messages', async () => {
     const failed = () => { throw Error('Transform failed'); };
+
     expect(await validateFieldValue('abc', {}, [{ transform: failed }]))
       .toEqual({ errors: ['Transform failed'], warnings: [] });
     expect(await validateFieldValue('abc', {}, [{ transform: failed, warningOnly: true }]))
@@ -53,11 +60,14 @@ describe('Form validation rule transform', () => {
     });
     let payload: unknown;
 
-    await expect(form.submit(values => { payload = values; })).resolves.toEqual({ status: 'success' });
+    await expect(form.submit(values => {
+      payload = values;
+    })).resolves.toEqual({ status: 'success' });
     expect(payload).toEqual({ field: '  abc  ' });
     expect(form.values.field).toBe('  abc  ');
     form.setFieldValue('field', 'Other');
     form.resetFields();
+
     expect(form.values.field).toBe('  abc  ');
   });
 

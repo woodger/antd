@@ -17,8 +17,20 @@ export const treeSelectSuffixLayoutEdgeSamples: readonly TreeSelectSuffixLayoutE
   { id: 'static-narrow-initial-one', width: 9, initialCount: 1, direction: 'ltr' },
   { id: 'static-narrow-history-two', width: 9, initialCount: 2, direction: 'ltr' },
   { id: 'static-fit-growth', width: 200, initialCount: 2, direction: 'ltr' },
-  { id: 'containing-will-change-ltr', width: 200, initialCount: 4, direction: 'ltr', willChange: true },
-  { id: 'containing-will-change-rtl', width: 200, initialCount: 4, direction: 'rtl', willChange: true }
+  {
+    id: 'containing-will-change-ltr',
+    width: 200,
+    initialCount: 4,
+    direction: 'ltr',
+    willChange: true
+  },
+  {
+    id: 'containing-will-change-rtl',
+    width: 200,
+    initialCount: 4,
+    direction: 'rtl',
+    willChange: true
+  }
 ];
 
 export function treeSelectSuffixLayoutEdgeActions(sample: TreeSelectSuffixLayoutEdgeSample): readonly TreeSelectSuffixLayoutEdgeAction[] {

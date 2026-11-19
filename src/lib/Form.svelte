@@ -208,13 +208,15 @@
               block: 'nearest', ...(typeof scroll === 'object' ? scroll : {})
             });
           }
-        } else {
+        }
+        else {
           element.querySelector<HTMLElement>(
             '[data-ant-form-invalid="true"], [aria-invalid="true"]'
           )?.focus();
         }
       }
-    } else if (result.status === 'failed') {
+    }
+    else if (result.status === 'failed') {
       onError?.(result.error);
     }
   }

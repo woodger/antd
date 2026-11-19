@@ -13,12 +13,21 @@
   type CompatibleProps = AutoCompleteProps<Data> & { optionRender?: OptionRenderer; labelRender?: LabelRenderer;
     tagRender?: Snippet<[SelectTagInfo<string>]>; components?: { input: string } };
   let { sample, capture }: { sample: AutocompleteRenderSample;
-    capture?: { read?: () => ReturnType<typeof read>; readRefs?: () => ReturnType<typeof readRefs>; update?: (action: AutocompleteRenderAction) => void } } = $props();
+    capture?: {
+      read?: () => ReturnType<typeof read>;
+      readRefs?: () => ReturnType<typeof readRefs>;
+      update?: (action: AutocompleteRenderAction) => void
+    } } = $props();
   const initial = untrack(() => sample);
   const Completion = AutoComplete<Data>;
   const recorder = createSelectSurfaceRecorder();
   const events: unknown[] = [], rawEvents: unknown[] = [];
-  const lifecycle: Array<{ kind: string; attached: boolean; tag: string | null; value: string | null }> = [];
+  const lifecycle: Array<{
+    kind: string;
+    attached: boolean;
+    tag: string | null;
+    value: string | null
+  }> = [];
   const datasets = new Map<string, Data[]>(), nodes = new Map<string, Snippet>();
   const descriptions = new Map<Snippet, unknown>();
   let settings = $state.raw<AutocompleteRenderSettings>({ ...initial, revision: 0 });
@@ -32,32 +41,77 @@
   let lastAuthored: { authoredProps: unknown; rawAuthoredProps: unknown; authoredProvider: unknown; rawAuthoredProvider: unknown;
     rawChildSpecification: unknown } | undefined;
   onDestroy(() => { alive = false; });
-  const callback = <Value,>(name: string, value: Value): Value => recorder.register(value, { callback: 'autocomplete-render-' + name });
-  const event = (...args: unknown[]) => { events.push(recorder.encode(args)); rawEvents.push(recorder.raw(args)); };
-  const onChange = callback('change', (value: string | undefined, option: unknown) => { model = value; event('change', value, option); });
-  const onSelect = callback('select', (value: string, option: unknown) => event('select', value, option));
-  const onDeselect = callback('deselect', (value: string, option: unknown) => event('deselect', value, option));
-  const onOpenChange = callback('open', (value: boolean) => { open = value; event('open', value); });
+  const callback = <Value,>(name: string, value: Value): Value => recorder.register(
+    value,
+    { callback: 'autocomplete-render-' + name }
+  );
+  const event = (...args: unknown[]) => {
+    events.push(recorder.encode(args));
+    rawEvents.push(recorder.raw(args));
+  };
+  const onChange = callback('change', (value: string | undefined, option: unknown) => {
+    model = value;
+    event('change', value, option);
+  });
+  const onSelect = callback(
+    'select',
+    (value: string, option: unknown) => event('select', value, option)
+  );
+  const onDeselect = callback(
+    'deselect',
+    (value: string, option: unknown) => event('deselect', value, option)
+  );
+  const onOpenChange = callback('open', (value: boolean) => {
+    open = value;
+    event('open', value);
+  });
   const onSearch = callback('search', (value: string) => event('search', value));
   const onClear = callback('clear', () => event('clear'));
   const childChange = callback('child-change', (input: Event) => {
     const node = input.currentTarget as HTMLInputElement | HTMLTextAreaElement;
-    event('child-change', { value: node.value, tag: node.tagName, defaultPrevented: input.defaultPrevented });
+    event(
+      'child-change',
+      { value: node.value, tag: node.tagName, defaultPrevented: input.defaultPrevented }
+    );
   });
   const childKey = callback('child-key', (input: KeyboardEvent) => {
     const node = input.currentTarget as HTMLInputElement | HTMLTextAreaElement;
-    event('child-key', { key: input.key, value: node.value, tag: node.tagName, defaultPrevented: input.defaultPrevented });
+    event(
+      'child-key',
+      {
+        key: input.key,
+        value: node.value,
+        tag: node.tagName,
+        defaultPrevented: input.defaultPrevented
+      }
+    );
   });
   const childRefCallback = callback('child-ref', (node: HTMLInputElement | HTMLTextAreaElement | null) => {
     childNode = node ?? undefined;
-    lifecycle.push({ kind: 'child-ref', attached: Boolean(node), tag: node?.tagName ?? null, value: node?.value ?? null });
+    lifecycle.push({
+      kind: 'child-ref',
+      attached: Boolean(node),
+      tag: node?.tagName ?? null,
+      value: node?.value ?? null
+    });
   });
-  function childRegistration(node: HTMLInputElement | HTMLTextAreaElement, register: AutoCompleteInput['register']) {
+  function childRegistration(
+    node: HTMLInputElement | HTMLTextAreaElement,
+    register: AutoCompleteInput['register']
+  ) {
     const registration = register(node);
     childRefCallback(node);
-    return { destroy() { registration.destroy(); childRefCallback(null); } };
+    return { destroy() {
+      registration.destroy();
+      childRefCallback(null);
+    } };
   }
-  function escape(text: string) { return text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;'); }
+  function escape(text: string) {
+    return text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll(
+      '"',
+      '&quot;'
+    );
+  }
   function describe(value: unknown): unknown {
     if (typeof value === 'function') {
       const description = descriptions.get(value as Snippet);
@@ -78,8 +132,20 @@
         const attributes = falsyArray ? ' data-ac-render-result="array"' : ' data-ac-render-result="' + kind + '" data-ac-render-index="' + info.index + '"';
         const node = createRawSnippet(() => ({ render: () => '<strong' + attributes + '>' + escape(text) + '</strong>' }));
         descriptions.set(node, { node: { type: 'strong', key: falsyArray ? 'array' : null,
-          props: { 'data-ac-render-result': falsyArray ? 'array' : kind, ...(!falsyArray ? { 'data-ac-render-index': info.index } : {}), children: text } } });
-        if (!falsyArray) recorder.register(node, { node: 'autocomplete-render-option', renderer: kind, index: info.index, value: option.value });
+          props: {
+            'data-ac-render-result': falsyArray ? 'array' : kind,
+            ...(!falsyArray ? { 'data-ac-render-index': info.index } : {}),
+            children: text
+          } } });
+        if (!falsyArray) recorder.register(
+          node,
+          {
+            node: 'autocomplete-render-option',
+            renderer: kind,
+            index: info.index,
+            value: option.value
+          }
+        );
         nodes.set(token, node);
       }
       const node = nodes.get(token)!;
@@ -94,13 +160,32 @@
   function labelValue(kind: AutocompleteLabelKind, info: SelectLabelRenderInfo<string>) {
     const result = kind === 'zero' ? 0 : kind === 'null' ? null : labelNode;
     if (typeof result === 'function') {
-      recorder.register(result, { node: 'autocomplete-render-label', renderer: kind, value: info.value });
-      descriptions.set(result, { node: { type: 'em', key: null, props: { 'data-ac-render-label': '', children: 'Display ' + String(info.value) } } });
+      recorder.register(
+        result,
+        { node: 'autocomplete-render-label', renderer: kind, value: info.value }
+      );
+      descriptions.set(
+        result,
+        { node: {
+          type: 'em',
+          key: null,
+          props: { 'data-ac-render-label': '', children: 'Display ' + String(info.value) }
+        } }
+      );
     }
-    return recorder.record('labelRender', 'own', info, result, { renderer: kind, resultDescription: describe(result) });
+    return recorder.record(
+      'labelRender',
+      'own',
+      info,
+      result,
+      { renderer: kind, resultDescription: describe(result) }
+    );
   }
   const labelRenderers = new Map<AutocompleteLabelKind, LabelRenderer>();
-  for (const kind of ['rich', 'zero', 'null'] as const) labelRenderers.set(kind, callback('label-' + kind, info => labelValue(kind, info)));
+  for (const kind of ['rich', 'zero', 'null'] as const) labelRenderers.set(
+    kind,
+    callback('label-' + kind, info => labelValue(kind, info))
+  );
   const optionRenderers = new Map<AutocompleteRenderKind, OptionRenderer>();
   for (const [kind, renderer] of [['rich', rich], ['array', array], ['null', empty], ['scalar', scalar], ['falsy', falsy]] as const)
     optionRenderers.set(kind, callback('option-' + kind, renderer));
@@ -118,29 +203,67 @@
       let result: Data[];
       if (kind === 'mapped') result = [
         { key: 'group-key', heading: label('Mapped group'), children: [
-          { code: 'Alpha-key', text: label('Alpha raw'), title: 'Alpha title', extra: { role: 'alpha-extra' } },
-          { code: 'Disabled-key', text: label('Disabled raw'), disabled: true, title: 'Disabled title' },
-          { code: 'Beta-key', text: label('Beta raw'), title: 'Beta title', extra: { role: 'beta-extra' } }
+          {
+            code: 'Alpha-key',
+            text: label('Alpha raw'),
+            title: 'Alpha title',
+            extra: { role: 'alpha-extra' }
+          },
+          {
+            code: 'Disabled-key',
+            text: label('Disabled raw'),
+            disabled: true,
+            title: 'Disabled title'
+          },
+          {
+            code: 'Beta-key',
+            text: label('Beta raw'),
+            title: 'Beta title',
+            extra: { role: 'beta-extra' }
+          }
         ] }, { code: 'Gamma-key', text: label('Gamma raw'), title: 'Gamma title' }
       ];
-      else if (kind === 'falsy') result = [{ value: 'zero', label: 0 }, { value: 'false', label: false }, { value: 'null', label: null },
-        { value: 'undefined', label: undefined }, { value: 'empty', label: '' }, { value: 'array', label: 'Array raw' }];
+      else if (kind === 'falsy') result = [{ value: 'zero', label: 0 }, {
+        value: 'false',
+        label: false
+      }, {
+        value: 'null',
+        label: null
+      },
+        { value: 'undefined', label: undefined }, { value: 'empty', label: '' }, {
+          value: 'array',
+          label: 'Array raw'
+        }];
       else if (kind === 'virtual') result = Array.from({ length: 120 }, (_, index) => ({ value: 'item-' + index,
         label: label('Item ' + index), key: 'virtual-key-' + index, title: 'Title ' + index, extra: { index } }));
-      else result = [{ value: 'a', label: label('Alpha raw'), title: 'Alpha title', extra: { role: 'alpha-extra' } },
+      else result = [{
+        value: 'a',
+        label: label('Alpha raw'),
+        title: 'Alpha title',
+        extra: { role: 'alpha-extra' }
+      },
         { value: 'disabled', label: label('Disabled raw'), disabled: true, title: 'Disabled title' },
         { value: 'b', label: label('Beta raw'), title: 'Beta title', extra: { role: 'beta-extra' } }];
       for (const item of result) {
         recorder.register(item, { data: kind, revision, key: item.key ?? item.value ?? item.code });
-        for (const nested of item.children as Data[] | undefined ?? []) recorder.register(nested, { data: kind, revision, key: nested.code });
+        for (const nested of item.children as Data[] | undefined ?? []) recorder.register(
+          nested,
+          { data: kind, revision, key: nested.code }
+        );
       }
       datasets.set(key, result);
     }
     return datasets.get(key)!;
   }
-  const provider = { theme: { token: { motion: false }, cssVar: { key: 'autocomplete-render' } }, popupOverflow: 'viewport' as const };
+  const provider = {
+    theme: { token: { motion: false }, cssVar: { key: 'autocomplete-render' } },
+    popupOverflow: 'viewport' as const
+  };
   const childSpecification = initial.input ? { ref: childRefCallback, 'data-ac-render-child': initial.input,
-    'aria-label': 'Surface value', className: 'ac-render-child', style: { color: 'rgb(9, 31, 57)', fontSize: 15 },
+    'aria-label': 'Surface value', className: 'ac-render-child', style: {
+      color: 'rgb(9, 31, 57)',
+      fontSize: 15
+    },
     onChange: childChange, onKeyDown: childKey, ...(initial.input === 'textarea' ? { rows: 2 } : {}) } : undefined;
   let ownerProps = $derived.by(() => {
     const props: Record<string, unknown> = { id: 'autocomplete-render-field', class: 'surface-control ac-render-owner',
@@ -148,7 +271,12 @@
       'aria-label': 'Surface value', placeholder: 'AutoComplete render placeholder', listHeight: 140,
       showSearch: { filterOption: settings.filter, onSearch }, tagRender: tag, onChange, onSelect, onDeselect, onOpenChange, onClear,
       ...(settings.virtual ? { virtual: true, listItemHeight: 32 } : { virtual: false }) };
-    if (settings.dataset === 'mapped') props.fieldNames = { value: 'code', label: 'text', options: 'children', groupLabel: 'heading' };
+    if (settings.dataset === 'mapped') props.fieldNames = {
+      value: 'code',
+      label: 'text',
+      options: 'children',
+      groupLabel: 'heading'
+    };
     if (settings.renderer !== 'omitted') props.optionRender = optionRenderers.get(settings.renderer);
     if (settings.labelRenderer !== 'omitted') props.labelRender = labelRenderers.get(settings.labelRenderer);
     if (settings.componentInput) props.components = { input: settings.componentInput };
@@ -169,7 +297,11 @@
       events: [...events], rawEvents: [...rawEvents], calls: [...recorder.calls], lifecycle: [...lifecycle], ...lastAuthored };
   }
   const initialCapture = untrack(() => capture);
-  if (initialCapture) { initialCapture.read = read; initialCapture.readRefs = readRefs; initialCapture.update = update; }
+  if (initialCapture) {
+    initialCapture.read = read;
+    initialCapture.readRefs = readRefs;
+    initialCapture.update = update;
+  }
 </script>
 
 {#snippet rendered(value: RenderEmptyContent)}{#if Array.isArray(value)}{#each value as item}{@render rendered(item)}{/each}{:else if typeof value === 'function'}{@render value()}{:else if typeof value !== 'boolean'}{value}{/if}{/snippet}

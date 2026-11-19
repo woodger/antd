@@ -69,9 +69,14 @@ for (const controlled of [true, false]) {
       await prepare(page, controlled);
       if (draft === 'invalid input') {
         await start(page).fill('draft');
-        await start(page).evaluate((input: HTMLInputElement) => input.setSelectionRange(1, 4, 'backward'));
+        await start(page).evaluate((input: HTMLInputElement) => input.setSelectionRange(
+          1,
+          4,
+          'backward'
+        ));
         expect(await selection(start(page))).toEqual([1, 4, 'backward']);
-      } else {
+      }
+      else {
         await unit(page, 'minute 35').click();
         await page.mouse.move(1270, 890);
         await expect(start(page)).toHaveValue('10:35');
@@ -106,6 +111,7 @@ test('TimeRangePicker resyncs a valid draft when the owner supplies a new array 
   await prepare(page, true);
   await start(page).fill('12:35');
   await page.mouse.move(1270, 890);
+
   await expect(start(page)).toHaveValue('12:35');
   await expect(unit(page, 'hour 12')).toHaveAttribute('aria-pressed', 'true');
   await expect(unit(page, 'minute 35')).toHaveAttribute('aria-pressed', 'true');

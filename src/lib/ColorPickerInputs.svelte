@@ -32,7 +32,8 @@
   function handleChannel(channel: 'r' | 'g' | 'b' | 'h' | 's', number: number | null) {
     if (colorFormat === 'rgb') {
       onChange(generateColor({ ...value.toRgb(), [channel]: number || 0 }));
-    } else {
+    }
+    else {
       onChange(generateColor({ ...value.toHsb(),
         [channel]: channel === 'h' ? number || 0 : (number || 0) / 100 }));
     }

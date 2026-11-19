@@ -17,6 +17,7 @@ describe('Tree title expansion SSR', () => {
     }
     expect(reference.cases).toHaveLength(22);
     const rapid = reference.cases.find(entry => entry.sample.id === 'click-double')!;
+
     expect(rapid.result.expanded).toBe('false');
     expect(rapid.result.events.filter(event => event.kind === 'expand')).toHaveLength(1);
     expect(settled.cases[0].result.events.filter(event => event.kind === 'expand')).toHaveLength(2);

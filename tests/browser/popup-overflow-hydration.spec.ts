@@ -32,7 +32,10 @@ let server: ViteDevServer;
 let cache: string;
 test.use({ viewport: reference.reference.viewport });
 test.beforeAll(async () => {
-  cache = await mkdtemp(join(fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)), 'popup-overflow-hydration-'));
+  cache = await mkdtemp(join(
+    fileURLToPath(new URL('../../.upstream/artifacts/', import.meta.url)),
+    'popup-overflow-hydration-'
+  ));
   server = await createServer({
     configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
     server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
@@ -61,7 +64,10 @@ async function settle(page: Parameters<typeof actPopupOverflow>[0]) {
 for (const sample of popupOverflowSamples.filter(sample => sample.live)) {
   test(`${sample.family} strictly hydrates live popupOverflow and preserves its public controls`, async ({ page }) => {
     const source = reference.cases.find(entry => entry.id === sample.id)!;
-    const module = await server.ssrLoadModule(fileURLToPath(new URL('./fixtures/popup-overflow-hydration.server.ts', import.meta.url)));
+    const module = await server.ssrLoadModule(fileURLToPath(new URL(
+      './fixtures/popup-overflow-hydration.server.ts',
+      import.meta.url
+    )));
     const rendered = module.renderPopupOverflow(sample.id);
     await page.goto(`/popup-overflow-hydration.html?sample=${sample.id}`);
     await page.addScriptTag({ type: 'module', url: '/popup-overflow-styles.client.ts' });
@@ -75,35 +81,65 @@ for (const sample of popupOverflowSamples.filter(sample => sample.live)) {
       const Mutation = window.MutationObserver;
       window.ResizeObserver = class extends Resize {
         targets = new Set<Element>();
-        constructor(callback: ResizeObserverCallback) { super(callback); observers.add(this.targets); }
-        observe(target: Element, options?: ResizeObserverOptions) { this.targets.add(target); super.observe(target, options); }
-        unobserve(target: Element) { this.targets.delete(target); super.unobserve(target); }
-        disconnect() { this.targets.clear(); super.disconnect(); }
+        constructor(callback: ResizeObserverCallback) {
+          super(callback);
+          observers.add(this.targets);
+        }
+        observe(target: Element, options?: ResizeObserverOptions) {
+          this.targets.add(target);
+          super.observe(target, options);
+        }
+        unobserve(target: Element) {
+          this.targets.delete(target);
+          super.unobserve(target);
+        }
+        disconnect() {
+          this.targets.clear();
+          super.disconnect();
+        }
       };
       window.MutationObserver = class extends Mutation {
-        observe(target: Node, options?: MutationObserverInit) { mutations.add(this); super.observe(target, options); }
-        disconnect() { mutations.delete(this); super.disconnect(); }
+        observe(target: Node, options?: MutationObserverInit) {
+          mutations.add(this);
+          super.observe(target, options);
+        }
+        disconnect() {
+          mutations.delete(this);
+          super.disconnect();
+        }
       };
       const frames = new Set<number>();
       const request = window.requestAnimationFrame.bind(window);
       const cancel = window.cancelAnimationFrame.bind(window);
       window.requestAnimationFrame = callback => {
-        const frame = request(time => { frames.delete(frame); callback(time); });
+        const frame = request(time => {
+          frames.delete(frame);
+          callback(time);
+        });
         frames.add(frame);
         return frame;
       };
-      window.cancelAnimationFrame = frame => { frames.delete(frame); cancel(frame); };
+      window.cancelAnimationFrame = frame => {
+        frames.delete(frame);
+        cancel(frame);
+      };
       const timers = new Set<number>();
       const browser: Window = window;
       const schedule = browser.setTimeout.bind(browser);
       const clear = browser.clearTimeout.bind(browser);
       browser.setTimeout = (handler, timeout, ...args) => {
         if (typeof handler !== 'function') throw Error('Expected a function hydration timer');
-        const timer = schedule(() => { timers.delete(timer); handler(...args); }, timeout);
+        const timer = schedule(() => {
+          timers.delete(timer);
+          handler(...args);
+        }, timeout);
         timers.add(timer);
         return timer;
       };
-      browser.clearTimeout = timer => { if (timer !== undefined) timers.delete(timer); clear(timer); };
+      browser.clearTimeout = timer => {
+        if (timer !== undefined) timers.delete(timer);
+        clear(timer);
+      };
       window.popupOverflowHydrationResources = {
         observers: () => [...observers].reduce((sum, targets) => sum + targets.size, 0),
         mutations: () => mutations.size, frames: () => frames.size, timers: () => timers.size
@@ -114,7 +150,11 @@ for (const sample of popupOverflowSamples.filter(sample => sample.live)) {
     }, { head: rendered.head, body: rendered.body });
     await page.addScriptTag({ type: 'module', url: '/popup-overflow-hydration.client.ts' });
     await page.waitForFunction(() => window.popupOverflowHydration);
-    await expect(page.locator('[data-overflow-case]')).toHaveAttribute('data-overflow-bound', 'true');
+
+    await expect(page.locator('[data-overflow-case]')).toHaveAttribute(
+      'data-overflow-bound',
+      'true'
+    );
     await preparePopupOverflow(page, sample);
     const identity = await page.evaluateHandle(() => {
       const state = window.popupOverflowHydration!;
@@ -148,12 +188,20 @@ for (const sample of popupOverflowSamples.filter(sample => sample.live)) {
       expect(await bindings()).toEqual(expectedBindings(''));
       for (const step of source.steps) {
         await actPopupOverflow(page, step.action as PopupOverflowAction);
-        const expected = popupOverflowNativeView(step.view, sample.id, step.action as PopupOverflowAction);
+        const expected = popupOverflowNativeView(
+          step.view,
+          sample.id,
+          step.action as PopupOverflowAction
+        );
         expect((await settle(page)).view, JSON.stringify(step.action)).toEqual(expected);
         expect(await bindings()).toEqual(expectedBindings(expected.query));
       }
       const last = source.steps.at(-1)!;
-      const events = popupOverflowNativeView(last.view, sample.id, last.action as PopupOverflowAction).events;
+      const events = popupOverflowNativeView(
+        last.view,
+        sample.id,
+        last.action as PopupOverflowAction
+      ).events;
       expect(await page.evaluate(() => window.popupOverflowHydration!.events())).toEqual(events);
       expect(await page.evaluate(() => window.popupOverflowHydration!.editor.getAttribute('aria-expanded'))).toBe('true');
       const focused = await page.evaluate(() => document.activeElement === window.popupOverflowHydration!.editor);
@@ -185,9 +233,19 @@ for (const sample of popupOverflowSamples.filter(sample => sample.live)) {
       });
       await expect(page.locator('[data-overflow-case]')).toHaveCount(0);
       await expect(page.locator('[popover]')).toHaveCount(0);
-      const disposed = { events: disposedEvents, rootConnected: false, editorConnected: false, ownerConnected: false };
+      const disposed = {
+        events: disposedEvents,
+        rootConnected: false,
+        editorConnected: false,
+        ownerConnected: false
+      };
       expect(await page.evaluate(() => window.popupOverflowHydrationDisposal!.trace)).toEqual({
-        phase: 'disposed', before: { events, rootConnected: true, editorConnected: true, ownerConnected: true },
+        phase: 'disposed', before: {
+          events,
+          rootConnected: true,
+          editorConnected: true,
+          ownerConnected: true
+        },
         afterCall: disposed, afterAwait: disposed,
         probes: focused ? ['blur', 'focusout'].map(type => ({
           events: type === 'focusout' ? disposedEvents : events, rootConnected: true,
@@ -195,14 +253,24 @@ for (const sample of popupOverflowSamples.filter(sample => sample.live)) {
           trusted: true, relatedTarget: null })) : []
       });
       await page.setViewportSize({ width: 1120, height: 860 });
-      await page.evaluate(() => { window.dispatchEvent(new Event('resize')); window.dispatchEvent(new Event('scroll')); });
+      await page.evaluate(() => {
+        window.dispatchEvent(new Event('resize'));
+        window.dispatchEvent(new Event('scroll'));
+      });
       await page.waitForTimeout(1000);
       expect(await page.evaluate(() => ({
         cleaned: window.popupOverflowHydration!.cleaned,
         observers: window.popupOverflowHydrationResources!.observers(), mutations: window.popupOverflowHydrationResources!.mutations(),
         frames: window.popupOverflowHydrationResources!.frames(), timers: window.popupOverflowHydrationResources!.timers(),
         events: window.popupOverflowHydration!.events()
-      }))).toEqual({ cleaned: { root: true, anchor: true, editor: true, control: true, publicRoot: true, publicEditor: true },
+      }))).toEqual({ cleaned: {
+        root: true,
+        anchor: true,
+        editor: true,
+        control: true,
+        publicRoot: true,
+        publicEditor: true
+      },
         observers: 0, mutations: 0, frames: 0, timers: 0, events: disposedEvents });
     } finally {
       await identity.dispose();

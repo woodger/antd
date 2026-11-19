@@ -2,6 +2,7 @@ import { test, expect } from './test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/?fixture=theme-tokens');
+
   await expect(page.getByRole('heading', { name: 'Source design tokens', exact: true }))
     .toBeVisible();
 });
@@ -12,7 +13,10 @@ test(
     await expect(page.getByLabel('Token primary result', { exact: true })).toHaveText('#1677ff');
     await expect(page.getByLabel('Token font result', { exact: true })).toHaveText('14');
     await expect(page.getByLabel('Token height result', { exact: true })).toHaveText('32');
-    await expect(page.getByTestId('token-preview')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+    await expect(page.getByTestId('token-preview')).toHaveCSS(
+      'background-color',
+      'rgb(255, 255, 255)'
+    );
 
     const full = JSON.parse(await page.getByLabel('Full design tokens', { exact: true }).innerText());
 
