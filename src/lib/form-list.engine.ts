@@ -35,17 +35,16 @@ export function changeFormList(
   if (action.type === 'add') {
     const index = action.index;
     const insert = index !== undefined && index >= 0 && index <= values.length;
+    const nextValues = insert
+      ? [...values.slice(0, index), action.value, ...values.slice(index)]
+      : [...values, action.value];
+    const nextKeys = insert
+      ? [...state.keys.slice(0, index), state.nextKey, ...state.keys.slice(index)]
+      : [...state.keys, state.nextKey];
 
     return {
-      values: insert
-        ? [...values.slice(0, index), action.value, ...values.slice(index)]
-        : [...values, action.value],
-      state: {
-        keys: insert
-          ? [...state.keys.slice(0, index), state.nextKey, ...state.keys.slice(index)]
-          : [...state.keys, state.nextKey],
-        nextKey: state.nextKey + 1
-      }
+      values: nextValues,
+      state: { keys: nextKeys, nextKey: state.nextKey + 1 }
     };
   }
 
@@ -72,8 +71,11 @@ export function changeFormList(
 
   const movedValues = [...values];
   const movedKeys = [...state.keys];
-  movedValues.splice(to, 0, movedValues.splice(from, 1)[0]);
-  movedKeys.splice(to, 0, movedKeys.splice(from, 1)[0]);
+  const [movedValue] = movedValues.splice(from, 1);
+  movedValues.splice(to, 0, movedValue);
+
+  const [movedKey] = movedKeys.splice(from, 1);
+  movedKeys.splice(to, 0, movedKey);
 
   return { values: movedValues, state: { keys: movedKeys, nextKey: state.nextKey } };
 }

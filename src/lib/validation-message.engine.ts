@@ -27,6 +27,16 @@ export function mergeValidationMessages(
   return merged;
 }
 
+// Ограничивает fallback сериализацией %j. Ошибки всего шаблона обрабатываются вызывающим кодом.
+function serializeMessageValue(value: unknown): string {
+  try {
+    return JSON.stringify(value) ?? 'undefined';
+  }
+  catch {
+    return '[Circular]';
+  }
+}
+
 /** Template formatting адаптирован из async-validator; MIT: vendor/LICENSE.rc-async-validator. */
 export function resolveValidationMessage<Values extends FormValues>(
   rule: ValidationRule<Values>,
@@ -54,6 +64,7 @@ export function resolveValidationMessage<Values extends FormValues>(
     }
 
     let index = 0;
+    // Только неэкранированный placeholder потребляет следующий аргумент.
     return template.replace(/%[sdj%]/g, placeholder => {
       if (placeholder === '%%') {
         return '%';
@@ -69,12 +80,7 @@ export function resolveValidationMessage<Values extends FormValues>(
         return String(Number(value));
       }
 
-      try {
-        return JSON.stringify(value) ?? 'undefined';
-      }
-      catch {
-        return '[Circular]';
-      }
+      return serializeMessageValue(value);
     });
   }
   catch {
@@ -102,7 +108,10 @@ export function formatValidationMessages<Values extends FormValues>(
     ...context?.variables
   };
 
-  return messages.map(message => message.replace(/\\?\$\{\w+\}/g, (placeholder) => {
+  return messages.map(message => message.replace(/\\?\$\{\w+\}/g, substituteVariable));
+
+  // Подставляет только собственные переменные контекста. Backslash сохраняет литерал.
+  function substituteVariable(placeholder: string) {
     if (placeholder.startsWith('\\')) {
       return placeholder.slice(1);
     }
@@ -116,5 +125,5 @@ export function formatValidationMessages<Values extends FormValues>(
     catch {
       return 'undefined';
     }
-  }));
+  }
 }

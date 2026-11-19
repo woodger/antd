@@ -90,21 +90,32 @@ export async function validateNestedRule<Values extends FormValues>(
 
   // Schema.fields source сообщает результаты по завершении child promises.
   const children: ValidationMessages[] = [];
-  await Promise.all([...fields].map(async ([key, child]) => {
-    children.push(await validate(ownValue(value, key), Array.isArray(child)
-      ? child : [child as ValidationRule<Values>], current, key));
-  }));
+  const checks = [...fields].map(validateField);
+  await Promise.all(checks);
 
   if (rule.type === 'array' && rule.defaultField && Array.isArray(value)
     && !own.length && !children.some(child => child.errors.length)) {
     // Rc-form defaultField обходит все элементы после explicit fields; sparse holes не являются данными.
     const keys = Object.keys(value).filter(key => /^(?:0|[1-9]\d*)$/.test(key)
       && Number(key) < value.length);
-    const defaults = await Promise.all(keys.map(key => validate(
-      ownValue(value, key), [rule.defaultField!], current, key
-    )));
+    const checks = keys.map(key => {
+      const item = ownValue(value, key);
+      // Правило 2: ветка проверяет defaultField. Значение читается заново для каждого элемента.
+      return validate(item, [rule.defaultField!], current, key);
+    });
+    const defaults = await Promise.all(checks);
     children.push(...defaults);
   }
 
   return collectValidationMessages(rule, own, children);
+
+  // Записывает результат поля по завершении, сохраняя порядок готовности сообщений.
+  async function validateField(
+    [key, child]: [string, ValidationRule<Values> | readonly ValidationRule<Values>[]]
+  ) {
+    const childValue = ownValue(value, key);
+    const childRules = Array.isArray(child) ? child : [child as ValidationRule<Values>];
+    const result = await validate(childValue, childRules, current, key);
+    children.push(result);
+  }
 }
