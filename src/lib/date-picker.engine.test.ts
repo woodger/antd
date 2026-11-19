@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/en-gb.js';
+import 'dayjs/locale/zh-cn.js';
 import utc from 'dayjs/plugin/utc.js';
 import { describe, expect, it } from 'vitest';
 import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
@@ -127,6 +128,24 @@ describe('DatePicker date adapter and input', () => {
     expect(pickerDateDisabled(dayjs('2021-01-10'), { minDate, maxDate }, 'week', 'en_GB')).toBe(false);
     expect(pickerDateDisabled(dayjs('2021-01-10'), { minDate, maxDate }, 'week', 'en_US')).toBe(true);
     expect(pickerDateDisabled(dayjs('2021-01-11'), { minDate, maxDate }, 'week', 'en_GB')).toBe(true);
+  });
+  it.each([
+    ['ru_RU', '2024-01-03', '2024-12-30'],
+    ['zh_CN', '2024-01-03', '2024-12-30'],
+    ['en_US', '2023-01-03', '2023-12-31']
+  ])('rejects a different week with the same number outside either bound in %s', (
+    locale,
+    earlierDate,
+    laterDate
+  ) => {
+    const earlierWeek = dayjs(earlierDate);
+    const laterWeek = dayjs(laterDate);
+
+    const beforeMin = pickerDateDisabled(earlierWeek, { minDate: laterWeek }, 'week', locale);
+    const afterMax = pickerDateDisabled(laterWeek, { maxDate: earlierWeek }, 'week', locale);
+
+    expect(beforeMin).toBe(true);
+    expect(afterMax).toBe(true);
   });
   it('formats and parses terminal quarters with existing Dayjs support and locale overrides', () => {
     const value = dayjs.utc('2024-05-20T16:37:59.456Z');

@@ -85,10 +85,14 @@ export function pickerCalendarValue(value: Dayjs, template?: Dayjs): Dayjs {
 export function samePickerQuarter(a: Dayjs, b: Dayjs): boolean {
   return a.year() === b.year() && Math.floor(a.month() / 3) === Math.floor(b.month() / 3);
 }
-// Сравнивает номер недели и год её первого дня по границам текущей локали.
+// Сравнивает календарные даты начала недели в локали поля с точностью до дня.
 export function samePickerWeek(a: Dayjs, b: Dayjs, locale: string): boolean {
-  return date.locale.getWeekFirstDate(locale, a).year() === date.locale.getWeekFirstDate(locale, b).year()
-    && date.locale.getWeek(locale, a) === date.locale.getWeek(locale, b);
+  const firstWeekStart = date.locale.getWeekFirstDate(locale, a);
+  const secondWeekStart = date.locale.getWeekFirstDate(locale, b);
+
+  return firstWeekStart.year() === secondWeekStart.year()
+    && firstWeekStart.month() === secondWeekStart.month()
+    && firstWeekStart.date() === secondWeekStart.date();
 }
 // rc-picker compares date panels by Y/M/D and datetime panels by all wall fields.
 export function samePickerPanelValue(
