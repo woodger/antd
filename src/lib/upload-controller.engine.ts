@@ -1,3 +1,5 @@
+// Координирует подготовку, публикацию списка и lifecycle транспорта Upload.
+// Реестр связывает uid файла с транспортом для последующей отмены.
 import type {
   UploadFile,
   UploadProps,
@@ -25,6 +27,7 @@ export function createUploadController<T = unknown>(
 ) {
   let disposed = false;
   const requests = new Map<string, UploadRequest | void>();
+  // Ограничение maxCount определяет отдельно список и необходимость onChange.
   const publish = (
     file: UploadFile<T> | UploadRcFile,
     list: readonly UploadFile<T>[],
@@ -35,6 +38,7 @@ export function createUploadController<T = unknown>(
     if (result.notify)
       options.props().onChange?.({ file, fileList: result.list, ...(event ? { event } : {}) });
   };
+  // Не публикует сетевой ответ для удалённого файла или уничтоженного Upload.
   const update = (
     file: UploadRcFile,
     patch: Partial<UploadFile<T>>,
@@ -44,11 +48,14 @@ export function createUploadController<T = unknown>(
       return;
     }
     const item = { ...uploadFileObject<T>(file), ...patch };
-    publish(item, updateUploadList(item, options.files()), event);
+    const list = updateUploadList(item, options.files());
+    publish(item, list, event);
   };
+  // Сохраняет исходный progress event для публичного onChange.
   const onProgress: UploadRef<T>['onProgress'] = (event, file) => {
     update(file, { status: 'uploading', percent: event.percent }, event);
   };
+  // Сохраняет непрозрачный ответ сервера, если строка не является JSON.
   const onSuccess: UploadRef<T>['onSuccess'] = (response, file, xhr) => {
     let parsed: unknown = response;
     try {
@@ -57,9 +64,11 @@ export function createUploadController<T = unknown>(
     catch { /* upstream сохраняет не-JSON строку */ }
     update(file, { status: 'done', percent: 100, response: parsed as T, xhr });
   };
+  // Переводит актуальную строку в error, передавая обе части ответа.
   const onError: UploadRef<T>['onError'] = (error, response, file) => {
     update(file, { status: 'error', error, response });
   };
+  // Строит общий список партии до первого уведомления. Callback может удалить Upload.
   const onBatchStart: UploadRef<T>['onBatchStart'] = batch => {
     if (disposed) {
       return;
@@ -85,17 +94,20 @@ export function createUploadController<T = unknown>(
       }
     });
   };
+  // Удаляет handle из реестра до вызова abort, который может синхронно вызвать callbacks.
   const abort = (file?: UploadFile<T> | string) => {
-    const ids = file === undefined
+    const fileUids = file === undefined
       ? [...requests.keys()]
       : [typeof file === 'string' ? file : file.uid];
-    for (const id of ids) {
-      const request = requests.get(id);
-      requests.delete(id);
-      request?.abort?.();
+    for (const fileUid of fileUids) {
+      const transport = requests.get(fileUid);
+      requests.delete(fileUid);
+      transport?.abort?.();
     }
   };
-  const process = async (file: UploadRcFile, batch: UploadRcFile[]) => {
+
+  // Разрешает beforeUpload до чтения action и data. Запрет и LIST_IGNORE различаются.
+  async function prepareUploadFile(file: UploadRcFile, batch: UploadRcFile[]) {
     let result: Awaited<ReturnType<NonNullable<UploadProps<T>['beforeUpload']>>>;
     try {
       result = await options.props().beforeUpload?.(file, batch);
@@ -125,48 +137,63 @@ export function createUploadController<T = unknown>(
       : Object.assign(new File([transformed], file.name, { type: file.type }), { uid: file.uid });
     parsed.uid = file.uid;
     return { origin: file, parsed, ignored: false, action, data };
-  };
+  }
+
+  // Уведомляет о готовой партии и запускает транспорт только для принятых файлов.
   async function upload(files: readonly File[]) {
     const batch = files.map(file => Object.assign(file, { uid: options.uid() }));
-    const ready = await Promise.all(batch.map(file => process(file, batch)));
+    const ready = await Promise.all(batch.map(file => prepareUploadFile(file, batch)));
     if (disposed) {
       return;
     }
     const accepted = ready.filter(item => !item.ignored);
     onBatchStart(accepted.map(item => ({ file: item.origin, parsedFile: item.parsed })));
     for (const item of accepted) {
-      if (!item.parsed || disposed)
-        continue;
-      const props = options.props();
-      const file = item.parsed;
-      let completed = false;
-      const requestOptions: UploadRequestOptions<T> = {
-        action: item.action,
-        data: item.data,
-        file,
-        filename: props.name ?? 'file',
-        method: props.method ?? 'post',
-        headers: props.headers,
-        withCredentials: props.withCredentials,
-        onProgress: event => onProgress(event, file),
-        onSuccess: (response, xhr) => {
-          completed = true;
-          requests.delete(file.uid);
-          onSuccess(response, file, xhr);
-        },
-        onError: (error, response) => {
-          completed = true;
-          requests.delete(file.uid);
-          onError(error, response, file);
-        }
-      };
-      const request = props.customRequest
-        ? props.customRequest(requestOptions, { defaultRequest: options.defaultRequest })
-        : options.defaultRequest(requestOptions);
-      if (!completed)
-        requests.set(file.uid, request);
+      startRequest(item);
     }
   }
+
+  // Синхронное завершение customRequest не оставляет handle в реестре отмены.
+  function startRequest(item: Awaited<ReturnType<typeof prepareUploadFile>>) {
+    if (!item.parsed || disposed) {
+      return;
+    }
+
+    const props = options.props();
+    const file = item.parsed;
+    let completed = false;
+    const requestOptions: UploadRequestOptions<T> = {
+      action: item.action,
+      data: item.data,
+      file,
+      filename: props.name ?? 'file',
+      method: props.method ?? 'post',
+      headers: props.headers,
+      withCredentials: props.withCredentials,
+      // Progress публикуется с текущим uid и не закрывает транспорт.
+      onProgress: event => onProgress(event, file),
+      // Убирает транспорт до пользовательского уведомления об успехе.
+      onSuccess: (response, xhr) => {
+        completed = true;
+        requests.delete(file.uid);
+        onSuccess(response, file, xhr);
+      },
+      // Ошибка завершает транспорт так же, как успех, и сохраняет ответ.
+      onError: (error, response) => {
+        completed = true;
+        requests.delete(file.uid);
+        onError(error, response, file);
+      }
+    };
+    const transport = props.customRequest
+      ? props.customRequest(requestOptions, { defaultRequest: options.defaultRequest })
+      : options.defaultRequest(requestOptions);
+    if (!completed) {
+      requests.set(file.uid, transport);
+    }
+  }
+
+  // Ждёт разрешения на удаление до отмены транспорта и публикации списка.
   async function remove(file: UploadFile<T>) {
     const result = await options.props().onRemove?.(file);
     if (disposed || result === false) {
@@ -192,6 +219,7 @@ export function createUploadController<T = unknown>(
     onProgress,
     onSuccess,
     onError,
+    // Блокирует публикацию до отмены активных транспортов.
     dispose: () => {
       disposed = true;
       abort();

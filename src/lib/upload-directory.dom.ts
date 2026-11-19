@@ -1,4 +1,24 @@
+// Обходит перетаскиваемые каталоги для Upload. Чтение каталога продолжается
+// до пустой порции, а путь сохраняется у принятого файла.
 // Ant Design 6.6.8 / rc-upload 1.1.1 traverseFileTree; MIT, vendor/LICENSE.rc-upload.
+
+// Пропускает недоступный файл. Source оставляет Promise незавершённым при ошибке.
+function readDirectoryFile(entry: FileSystemFileEntry): Promise<File | undefined> {
+  return new Promise(resolve => {
+    // Сигнализирует обходу, что файл следует пропустить.
+    const skipFile = () => resolve(undefined);
+    entry.file(resolve, skipFile);
+  });
+}
+
+// Сбой чтения завершает текущий каталог так же, как последняя пустая порция.
+function readDirectoryEntries(reader: FileSystemDirectoryReader): Promise<FileSystemEntry[]> {
+  return new Promise(resolve => {
+    // Пустая порция останавливает чтение этого каталога.
+    const finishDirectory = () => resolve([]);
+    reader.readEntries(resolve, finishDirectory);
+  });
+}
 
 /** Обходит FileSystemEntry в ширину, читая все порции directory reader. */
 export async function collectUploadDirectoryFiles(
@@ -14,10 +34,7 @@ export async function collectUploadDirectoryFiles(
 
     if (entry.isFile) {
       const fileEntry = entry as FileSystemFileEntry;
-      // Source не передаёт error callback и оставляет Promise незавершённым при ошибке.
-      const file = await new Promise<File | undefined>(resolve => {
-        fileEntry.file(resolve, () => resolve(undefined));
-      });
+      const file = await readDirectoryFile(fileEntry);
       if (!file || !isAccepted(file)) continue;
 
       if (entry.fullPath && !file.webkitRelativePath) {
@@ -30,9 +47,7 @@ export async function collectUploadDirectoryFiles(
     else if (entry.isDirectory) {
       const reader = (entry as FileSystemDirectoryEntry).createReader();
       while (true) {
-        const entries = await new Promise<FileSystemEntry[]>(resolve => {
-          reader.readEntries(resolve, () => resolve([]));
-        });
+        const entries = await readDirectoryEntries(reader);
         if (!entries.length) break;
 
         pending.push(...entries);
