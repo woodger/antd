@@ -1,4 +1,6 @@
-// rc-cascader 1.22.0; MIT, vendor/LICENSE.rc-cascader. Путь — identity узла.
+// Собирает индекс и выбор Cascader. Узел определяется полным путём, а
+// отсутствующие в текущих options значения хранятся отдельно от checked.
+// rc-cascader 1.22.0; MIT, vendor/LICENSE.rc-cascader.
 import type {
   CascaderContent,
   CascaderFieldNames,
@@ -141,6 +143,24 @@ export function cascaderStrategy(
   });
 }
 
+// Переводит checked из дерева в пути, учитывая только выбранную стратегию отображения.
+export function cascaderCheckedPaths(
+  checked: readonly string[],
+  strategy: CascaderStrategy,
+  index: CascaderIndex
+): CascaderPath[] {
+  const visibleKeys = cascaderStrategy(checked, strategy, index);
+  return visibleKeys.map(readPath);
+
+  // Правило 2: допустимые checked сформированы из того же индекса, что и paths.
+  // Для нарушения этого входного контракта сохраняется исходное обращение к записи.
+  function readPath(key: string): CascaderPath {
+    const entry = index.paths.get(key);
+    return entry!.path;
+  }
+}
+
+// Пересчитывает conduction после выбора или убирает ранее исчезнувший путь.
 export function toggleCascader(
   path: CascaderPath,
   checks: ReturnType<typeof cascaderChecks>,
@@ -152,18 +172,14 @@ export function toggleCascader(
   if (!checked && checks.missing.some(path => cascaderPathKey(path) === key)) {
     return [
       ...checks.missing.filter(path => cascaderPathKey(path) !== key),
-      ...cascaderStrategy(checks.checked, strategy, index).map(key => index.paths.get(key)!.path)
+      ...cascaderCheckedPaths(checks.checked, strategy, index)
     ];
   }
 
   const keys = checked ? checks.checked.filter(value => value !== key) : [...checks.checked, key];
   const next = conductTreeCheck(keys, index.tree, checked ? checks.half : undefined);
-  return [
-    ...checks.missing,
-    ...cascaderStrategy(next.checked.map(String), strategy, index).map(
-      key => index.paths.get(key)!.path
-    )
-  ];
+  const checkedKeys = next.checked.map(String);
+  return [...checks.missing, ...cascaderCheckedPaths(checkedKeys, strategy, index)];
 }
 
 export function cascaderDisplay<OptionType extends CascaderOption>(

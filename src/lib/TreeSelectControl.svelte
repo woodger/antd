@@ -1031,17 +1031,22 @@
     deferClose = false
   ) {
     const node = index.values.get(raw);
-    if (blocked
-      || source === 'option'
-      && (!node
-        || Reflect.get(node, 'disabled')
-        || limit.disabled.has(raw)
-        || checkable
-        && treeCheckDisabled(
-          index.entities.get(String(raw))!.node
-        ))) {
+    if (blocked) {
       return;
     }
+    if (source === 'option') {
+      if (!node || Reflect.get(node, 'disabled') || limit.disabled.has(raw)) {
+        return;
+      }
+      if (checkable) {
+        // Правило 2: исходная запись и Tree entity индексируются одним ключом в treeSelectIndex.
+        const entity = index.entities.get(String(raw));
+        if (treeCheckDisabled(entity!.node)) {
+          return;
+        }
+      }
+    }
+
     const selected = source === 'selection' ? false : !isMultiple || !checks.checked.includes(raw);
     const next = isMultiple
       ? toggleTreeSelect(raw, selected, items, checks, conduction, index)

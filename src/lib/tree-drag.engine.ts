@@ -40,9 +40,11 @@ export function resolveTreeDrop<Data extends object>(options: TreeDropOptions<Da
   }
 
   const rawLevelOffset = ((rtl ? -1 : 1) * (startX - clientX) - 12) / indent;
-  const expanded = new Set(options.expandedKeys.filter(
-    key => index.entities.get(String(key))?.children.length
-  ));
+  const expandableKeys = options.expandedKeys.filter(key => {
+    const entry = index.entities.get(String(key));
+    return entry?.children.length;
+  });
+  const expanded = new Set(expandableKeys);
   const firstHalf = clientY < rect.top + rect.height / 2;
   if (firstHalf) {
     const position = visible.findIndex(entry => entry.key === targetKey);

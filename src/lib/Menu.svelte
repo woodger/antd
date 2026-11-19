@@ -212,8 +212,12 @@
   }
 
   function available(entry: MenuEntry) {
-    return !disabled && !('disabled' in entry.item && entry.item.disabled)
-      && Boolean(elements.get(entry.key)?.getClientRects().length);
+    if (disabled || ('disabled' in entry.item && entry.item.disabled)) {
+      return false;
+    }
+
+    const element = elements.get(entry.key);
+    return Boolean(element?.getClientRects().length);
   }
 
   async function keyboard(entry: MenuEntry | null, event: KeyboardEvent) {
@@ -350,9 +354,11 @@
     handledKeys.add(event);
     const target = event.composedPath().find((node): node is Element =>
       node instanceof Element && node.hasAttribute('data-menu-id'));
-    const key = [...elements].find(([, element]) => element === target
-      || target && element.id === target.id)?.[0];
-    void keyboard(key ? model.entries.get(key) ?? null : null, event);
+    const match = [...elements].find(([, element]) => element === target
+      || target && element.id === target.id);
+    const key = match?.[0];
+    const entry = key ? model.entries.get(key) ?? null : null;
+    void keyboard(entry, event);
     onkeydown?.(event);
   }
 

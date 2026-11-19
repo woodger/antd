@@ -23,7 +23,7 @@
     cascaderPathKey,
     cascaderPathOptions,
     cascaderRawValues,
-    cascaderStrategy,
+    cascaderCheckedPaths,
     mergeCascaderSlots,
     navigateCascader,
     searchCascader,
@@ -159,9 +159,7 @@
   let checks = $derived(cascaderChecks(paths, isMultiple, options, fields, index));
   let displayPaths = $derived([
     ...checks.missing,
-    ...cascaderStrategy(checks.checked, showCheckedStrategy, index).map(
-      key => index.paths.get(key)!.path
-    )
+    ...cascaderCheckedPaths(checks.checked, showCheckedStrategy, index)
   ]);
   let display = $derived(cascaderDisplay(displayPaths, options, fields, isMultiple));
   let context = $derived(config.cascader);
@@ -330,7 +328,8 @@
   $effect(() => {
     void index;
     const pending = loadingKeys.filter(key => {
-      const option = index.paths.get(key)?.options.at(-1);
+      const entry = index.paths.get(key);
+      const option = entry?.options.at(-1);
       return option && !option[fields.children] && !option.isLeaf;
     });
     if (pending.length !== loadingKeys.length) loadingKeys = pending;

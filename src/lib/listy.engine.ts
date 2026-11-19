@@ -1,3 +1,5 @@
+// Формирует плоское окно Listy из элементов и заголовков групп. Ключ
+// логической строки используется при scroll, renderKey различает дубли в Svelte.
 import type { ListyGroup, ListyKey, ListyProps, ListyScrollAlign } from './listy.types';
 import type { GlobalToken } from './theme-component-token.types';
 import { virtualListScrollStep, virtualListSizes, virtualListWindow } from './virtual-list.engine';
@@ -28,10 +30,12 @@ export interface ListyHeader<T, K extends ListyKey> {
 export type ListyRow<T, K extends ListyKey> = ListyItem<T> | ListyHeader<T, K>;
 export type ListyHeights = ReadonlyMap<string, number>;
 
+// Группа и элемент с одинаковым key занимают разные позиции в таблице размеров.
 export function listyTag(key: unknown, type: 'item' | 'group') {
   return `${type}:${String(key)}`;
 }
 
+// Сохраняет порядок первого появления групп и исходный индекс каждого элемента.
 export function listyRows<T, K extends ListyKey>(
   items: readonly T[],
   rowKey: ListyProps<T, K>['rowKey'],
@@ -41,13 +45,14 @@ export function listyRows<T, K extends ListyKey>(
   const rows: ListyRow<T, K>[] = [];
   const occurrences = new Map<string, number>();
 
+  // React сохраняет записи с одинаковыми ключами, Svelte требует разные renderKey.
   function identity(taggedKey: string) {
     const occurrence = occurrences.get(taggedKey) ?? 0;
     occurrences.set(taggedKey, occurrence + 1);
-    // React предупреждает о duplicate keys, но не удаляет записи; Svelte требует уникальность.
     return JSON.stringify([taggedKey, occurrence]);
   }
 
+  // Заголовок хранит те же объекты строк, которые попадают в плоский список.
   function append(item: T, index: number) {
     const key = typeof rowKey === 'function' ? rowKey(item) : item[rowKey];
     const taggedKey = listyTag(key, 'item');
@@ -81,7 +86,10 @@ export function listyRows<T, K extends ListyKey>(
         renderKey: identity(taggedKey)
       };
       rows.push(header);
-      segment.forEach(entry => header.children.push(append(entry.item, entry.index)));
+      for (const entry of segment) {
+        const row = append(entry.item, entry.index);
+        header.children.push(row);
+      }
     }
   }
   else {
@@ -91,6 +99,7 @@ export function listyRows<T, K extends ListyKey>(
   return rows;
 }
 
+// Передаёт общему алгоритму виртуализации размеры по логическим ключам Listy.
 export function listyWindow(
   rows: readonly { taggedKey: string; }[],
   heights: ListyHeights,
@@ -104,6 +113,7 @@ export function listyWindow(
   );
 }
 
+// Считает границы строк, используя estimate до реального измерения.
 export function listySizes(
   rows: readonly { taggedKey: string; }[],
   heights: ListyHeights,
@@ -112,6 +122,7 @@ export function listySizes(
   return virtualListSizes(rows, row => row.taggedKey, heights, estimate);
 }
 
+// Бинарным поиском выбирает текущий заголовок. Следующая группа сдвигает его вверх.
 export function listySticky<T, K extends ListyKey>(
   headers: readonly ListyHeader<T, K>[],
   sizes: ReadonlyMap<string, { top: number; bottom: number; }>,
@@ -125,7 +136,10 @@ export function listySticky<T, K extends ListyKey>(
   let active = 0;
   while (left <= right) {
     const middle = Math.floor((left + right) / 2);
-    if ((sizes.get(headers[middle].taggedKey)?.top ?? 0) <= scrollTop + 1) {
+    const header = headers[middle];
+    const bounds = sizes.get(header.taggedKey);
+    const headerTop = bounds?.top ?? 0;
+    if (headerTop <= scrollTop + 1) {
       active = middle;
       left = middle + 1;
     }
@@ -138,12 +152,13 @@ export function listySticky<T, K extends ListyKey>(
   const current = sizes.get(row.taggedKey);
   const next = headers[active + 1];
   const headerHeight = current ? current.bottom - current.top : 0;
-  const top = next
-    ? Math.min(0, (sizes.get(next.taggedKey)?.top ?? 0) - headerHeight - scrollTop)
-    : 0;
+  const nextBounds = next ? sizes.get(next.taggedKey) : undefined;
+  const nextTop = nextBounds?.top ?? 0;
+  const top = next ? Math.min(0, nextTop - headerHeight - scrollTop) : 0;
   return { row, top };
 }
 
+// Сохраняет контракт общего алгоритма scrollTo и передаёт ключи строк и групп.
 export function listyScrollStep(
   rows: readonly { taggedKey: string; }[],
   heights: ListyHeights,

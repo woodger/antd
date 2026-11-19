@@ -1,3 +1,5 @@
+// Готовит индекс узлов, расчёт checked, фильтрацию и подписи TreeSelect.
+// Исходные узлы сохраняются отдельно от TreeDataNode для пользовательских callbacks.
 import { buildTreeEntities, conductTreeCheck, treeCheckDisabled } from './tree.engine';
 import type { TreeBasicDataNode, TreeDataNode, TreeKey } from './tree.types';
 import { treeSelectChildren, treeSelectFields, treeSelectNodeLabel, treeSelectNodeValue } from './tree-select-data.engine';
@@ -15,6 +17,8 @@ import type {
 export const TREE_SELECT_SHOW_ALL = 'SHOW_ALL';
 export const TREE_SELECT_SHOW_PARENT = 'SHOW_PARENT';
 export const TREE_SELECT_SHOW_CHILD = 'SHOW_CHILD';
+
+// Индексирует значения и адаптирует узлы к контракту Tree, сохраняя их порядок.
 export function treeSelectIndex<Data extends object>(
   nodes: readonly Data[],
   fieldNames?: TreeSelectFieldNames,
@@ -22,33 +26,38 @@ export function treeSelectIndex<Data extends object>(
 ) {
   const fields = treeSelectFields(fieldNames);
   const values = new Map<TreeSelectRawValue, Data>();
-  function map(list: readonly Data[]): TreeDataNode[] {
-    return list.map(node => {
-      const value = treeSelectNodeValue(node, fields);
-      const children = treeSelectChildren(node, fields);
-      const className = (Reflect.get(node, 'class') ?? Reflect.get(node, 'className')) as string | undefined;
-      values.set(value, node);
-      return {
-        ...node,
-        ...(className !== undefined ? { class: className } : {}),
-        ...(renderers && Reflect.get(node, 'icon') ? { icon: renderers.icon } : {}),
-        ...(renderers && Reflect.get(node, 'switcherIcon') ? { switcherIcon: renderers.switcherIcon } : {}),
-        key: value,
-        title: treeSelectNodeLabel(node, fields),
-        children: Reflect.get(node, fields.children) ? map(children) : undefined
-      };
-    });
+  const data = nodes.map(indexNode);
+  const tree = buildTreeEntities(data);
+  return { ...tree, data, values, fields };
+
+  // Регистрирует родителя раньше потомков, не меняя исходную запись.
+  function indexNode(node: Data): TreeDataNode {
+    const value = treeSelectNodeValue(node, fields);
+    const children = treeSelectChildren(node, fields);
+    const className = (Reflect.get(node, 'class') ?? Reflect.get(node, 'className')) as string | undefined;
+    values.set(value, node);
+
+    return {
+      ...node,
+      ...(className !== undefined ? { class: className } : {}),
+      ...(renderers && Reflect.get(node, 'icon') ? { icon: renderers.icon } : {}),
+      ...(renderers && Reflect.get(node, 'switcherIcon') ? { switcherIcon: renderers.switcherIcon } : {}),
+      key: value,
+      title: treeSelectNodeLabel(node, fields),
+      children: Reflect.get(node, fields.children) ? children.map(indexNode) : undefined
+    };
   }
-  const data = map(nodes);
-  return { ...buildTreeEntities(data), data, values, fields };
 }
 export type TreeSelectIndex<Data extends object = TreeSelectNode> = ReturnType<typeof treeSelectIndex<Data>>;
+
+// Сохраняет переданный label и halfChecked при копировании объекта значения.
 export function treeSelectLabeled(value: TreeSelectValue): TreeSelectLabeledValue[] {
   const values = value === undefined || value === null
     ? []
     : Array.isArray(value) ? value : [value];
   return values.map(item => typeof item === 'object' ? { ...item } : { value: item });
 }
+// Дополняет ручной выбор результатом conduction и сохраняет отсутствующие ключи.
 export function treeSelectChecks(
   items: readonly TreeSelectLabeledValue[],
   conduction: boolean,
@@ -62,15 +71,13 @@ export function treeSelectChecks(
     };
   }
   const checked = conductTreeCheck(raw, index);
+  const missing = raw.filter(value => !index.values.has(value));
   return {
-    checked: [...new Set([...raw
-      .filter(value => !index
-        .values
-        .has(value)), ...checked
-          .checked])] as TreeSelectRawValue[],
+    checked: [...new Set([...missing, ...checked.checked])] as TreeSelectRawValue[],
     halfChecked: checked.halfChecked as TreeSelectRawValue[]
   };
 }
+// Скрывает теги по стратегии показа. Список checked остаётся прежним.
 export function treeSelectStrategy(
   values: readonly TreeSelectRawValue[],
   strategy: TreeSelectStrategy,
@@ -101,6 +108,7 @@ export function treeSelectStrategy(
     return true;
   });
 }
+// Дополняет подписи выбранных значений текущим узлом или предыдущим снимком.
 export function treeSelectLabels<Data extends object>(
   items: readonly TreeSelectLabeledValue[],
   index: TreeSelectIndex<Data>,
@@ -108,18 +116,32 @@ export function treeSelectLabels<Data extends object>(
   previous: readonly TreeSelectLabeledValue[] = items,
   renderLabel?: (node: Data, fallback: TreeSelectLabel) => TreeSelectLabel
 ): TreeSelectLabeledValue[] {
-  return items.map(item => {
+  return items.map(createLabel);
+
+  // Приоритет переданного label сохраняется для пустой строки и числового 0.
+  function createLabel(item: TreeSelectLabeledValue): TreeSelectLabeledValue {
     const node = index.values.get(item.value);
-    const label = item.label ?? (node ? treeSelectNodeLabel(node, index.fields, labelProp)
-      : previous.find(old => old.value === item.value)?.label);
+    let label = item.label;
+    if (label == null) {
+      if (node) {
+        label = treeSelectNodeLabel(node, index.fields, labelProp);
+      }
+      else {
+        const previousItem = previous.find(old => old.value === item.value);
+        label = previousItem?.label;
+      }
+    }
+
     return {
       label: node && renderLabel ? renderLabel(node, label) : label,
       value: item.value,
       halfChecked: item.halfChecked,
       disabled: node ? Reflect.get(node, 'disabled') as boolean | undefined : undefined
     };
-  });
+  }
 }
+
+// Сохраняет ветку целиком, если фильтр принимает её родителя.
 export function filterTreeSelect<Data extends object>(
   nodes: readonly Data[],
   search: string,
@@ -136,6 +158,7 @@ export function filterTreeSelect<Data extends object>(
         text.toUpperCase()
       );
   const fields = treeSelectFields(fieldNames);
+  // Копирует только отображаемые узлы и заменяет их список детей отфильтрованной версией.
   function visit(list: readonly Data[], keepAll = false): Data[] {
     return list.flatMap(node => {
       const match = keepAll || filter(search, { ...node });
@@ -145,6 +168,7 @@ export function filterTreeSelect<Data extends object>(
   }
   return visit(nodes);
 }
+// Вычисляет новый набор checked, оставляя отсутствующие в дереве значения в начале.
 export function toggleTreeSelect(
   value: TreeSelectRawValue,
   selected: boolean,

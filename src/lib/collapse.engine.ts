@@ -60,7 +60,7 @@ export function getCollapseFocusKey(
 
   const requestedItem = available.find((item) => item.key === requested);
   const requestedKey = requestedItem?.key;
-  if (requestedKey !== undefined) {
+  if (requestedKey != null) {
     return requestedKey;
   }
 
