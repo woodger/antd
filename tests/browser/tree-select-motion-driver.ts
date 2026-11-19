@@ -1,33 +1,43 @@
+// Выполняет DOM-действия и явные шаги времени для сравнения motion TreeSelect.
+// Действия используют текущий редактор после замены корня.
 import type { Page } from '@playwright/test';
 import type { TreeSelectMotionRootSwapAction } from './fixtures/tree-select-motion-root-swap-cases';
 import { advanceTreeSelectMotionFrames, setTreeSelectMotionTime } from './tree-select-motion-metrics';
 
-async function field(page: Page) {
+// Ищет редактор при каждом действии. Если его нет, использует текущий root.
+async function findMotionField(page: Page) {
   const editor = page.locator('[data-motion-case] [data-motion-editor],'
     + '[data-motion-case] input[role="combobox"],'
     + '[data-motion-case] textarea[role="combobox"]');
-  return await editor.count() ? editor.first() : page.locator('[data-motion-root]').first();
+  const editorCount = await editor.count();
+  return editorCount ? editor.first() : page.locator('[data-motion-root]').first();
 }
 
-/** The Source and Native captures run the same public DOM actions and explicit phase steps. */
+/** Запускает одно действие, не продвигая время помимо заданных шагов frame и clock. */
 export async function actTreeSelectMotion(page: Page, action: TreeSelectMotionRootSwapAction) {
   if (action.type === 'click') {
-    await (await field(page)).click();
+    const editor = await findMotionField(page);
+    await editor.click();
   }
   else if (action.type === 'focus') {
-    await (await field(page)).focus();
+    const editor = await findMotionField(page);
+    await editor.focus();
   }
   else if (action.type === 'outside') {
     await page.locator('[data-motion-outside]').click();
   }
   else if (action.type === 'escape') {
-    await (await field(page)).press('Escape');
+    const editor = await findMotionField(page);
+    await editor.press('Escape');
   }
   else if (action.type === 'fill') {
-    await (await field(page)).fill(action.text);
+    const editor = await findMotionField(page);
+    await editor.fill(action.text);
   }
   else if (action.type === 'caret') {
-    await (await field(page)).evaluate((node, range) => {
+    const editor = await findMotionField(page);
+    // Устанавливает выделение на текущем редакторе внутри browser realm.
+    await editor.evaluate((node, range) => {
       if (!(node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement)) {
         throw Error('Expected an editable motion field');
       }
@@ -35,6 +45,7 @@ export async function actTreeSelectMotion(page: Page, action: TreeSelectMotionRo
     }, action);
   }
   else if (action.type === 'draft') {
+    // Общая панель motion сохраняет оба значения: текст и положение caret.
     await page.locator('[data-motion-draft]').evaluate((node, draft) => {
       if (!(node instanceof HTMLInputElement)) {
         throw Error('Expected a motion panel draft');
@@ -65,6 +76,7 @@ export async function actTreeSelectMotion(page: Page, action: TreeSelectMotionRo
     await page.evaluate(setTreeSelectMotionTime, action.time);
   }
   else if (action.type === 'end') {
+    // Отправляет событие от выбранной цели, чтобы проверить фильтр motion-событий.
     await page.locator('.motion-audit-popup').evaluate((popup, end) => {
       const node = end.target === 'child' ? popup.querySelector('[data-motion-panel]') : popup;
       if (!node) {

@@ -1,16 +1,21 @@
+// Выполняет сценарии прокрутки колонок времени через реальный ввод Playwright.
+// Снимки отличают позицию до жеста, после wheel и после удаления компонента.
 import assert from 'node:assert/strict';
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import type { ScrollAction, ScrollSample } from './date-picker-time-scroll-native-types';
 import { readNativeTimeScroll } from './date-picker-time-scroll-metrics.mjs';
 
+// Снимает метрики в browser realm вместе с идентификаторами колонок.
 export const readTimeScroll = (page: Page) => page.evaluate(readNativeTimeScroll);
 
+// Пропускает два кадра и даёт завершиться краткому отложенному scroll.
 export function drainTimeScroll(page: Page) {
   return page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => {
     requestAnimationFrame(() => setTimeout(resolve, 25));
   })));
 }
 
+// Считает состояние устойчивым после четырёх одинаковых повторных снимков.
 export async function settleTimeScroll(page: Page) {
   let previous = '';
   let stable = 0;
@@ -27,6 +32,7 @@ export async function settleTimeScroll(page: Page) {
   throw Error('Actual compact Native scroll owner did not settle');
 }
 
+// Настраивает viewport и убирает указатель от колонки до первого измерения.
 export async function openTimeScroll(page: Page, sample: ScrollSample) {
   await page.setViewportSize(sample.viewport);
   await page.goto('/date-picker-time-scroll.html?sample=' + encodeURIComponent(sample.id));
@@ -35,6 +41,7 @@ export async function openTimeScroll(page: Page, sample: ScrollSample) {
   await page.mouse.move(1100, 750);
 }
 
+// Отмечает шаг в журнале и отправляет требуемое действие в browser realm.
 export async function actTimeScroll(page: Page, action: ScrollAction, index: number) {
   await page.evaluate(index => window.nativeTimeScroll.setActionIndex(index), index);
   if (action.type === 'input-open') {
@@ -53,13 +60,48 @@ export async function actTimeScroll(page: Page, action: ScrollAction, index: num
   }
   const column = page.locator('.ant-picker-dropdown:visible '
     + 'ul.ant-picker-time-panel-column[aria-label="' + action.column + '"]');
-  const before = await column.evaluate(node => ({
+  const before = await measureWheelColumn(column);
+  await recordNextWheel(column);
+
+  const bounds = await column.boundingBox();
+  assert(bounds && bounds.width > 0 && bounds.height > 0, 'Real wheel needs visible column');
+  const pointer = {
+    x: bounds.x + bounds.width / 2,
+    y: bounds.y + Math.min(12, bounds.height / 2)
+  };
+  await page.mouse.move(pointer.x, pointer.y);
+  await page.mouse.wheel(0, action.deltaY);
+  await drainTimeScroll(page);
+  const afterWheel = await column.evaluate(node => ({
+    scrollTop: node.scrollTop,
+    scrollHeight: node.scrollHeight,
+    clientHeight: node.clientHeight
+  }));
+  await page.mouse.move(1100, 750);
+
+  const observed = await page.evaluate(index => window.nativeTimeScrollObservation.wheels.filter(
+    wheel => typeof wheel === 'object' && wheel !== null
+      && 'actionIndex' in wheel && wheel.actionIndex === index
+  ), index);
+  assert.equal(observed.length, 1, 'Exactly one actually dispatched trusted wheel');
+  assert.equal(afterWheel.scrollTop, 0, 'No scrollTop assignment fallback is allowed');
+  return { before, pointer, observed, afterWheel, pointerLeftTo: { x: 1100, y: 750 } };
+}
+
+// Запоминает исходную позицию и identity колонки перед жестом.
+function measureWheelColumn(column: Locator) {
+  return column.evaluate(node => ({
     scrollTop: node.scrollTop,
     scrollHeight: node.scrollHeight,
     clientHeight: node.clientHeight,
     identity: window.nativeTimeScroll.getRecorder().identity(node)
   }));
-  await column.evaluate(node => {
+}
+
+// Перехватывает единственное фактическое wheel-событие, включая обе DOM-цели.
+function recordNextWheel(column: Locator) {
+  return column.evaluate(node => {
+    // Записывает исходные данные события до удаления одноразового слушателя.
     node.addEventListener('wheel', event => {
       const wheel = event as WheelEvent;
       if (wheel.target === null || wheel.currentTarget === null) {
@@ -79,30 +121,9 @@ export async function actTimeScroll(page: Page, action: ScrollAction, index: num
       });
     }, { once: true, capture: true, passive: true });
   });
-  const bounds = await column.boundingBox();
-  assert(bounds && bounds.width > 0 && bounds.height > 0, 'Real wheel needs visible column');
-  const pointer = {
-    x: bounds.x + bounds.width / 2,
-    y: bounds.y + Math.min(12, bounds.height / 2)
-  };
-  await page.mouse.move(pointer.x, pointer.y);
-  await page.mouse.wheel(0, action.deltaY);
-  await drainTimeScroll(page);
-  const afterWheel = await column.evaluate(node => ({
-    scrollTop: node.scrollTop,
-    scrollHeight: node.scrollHeight,
-    clientHeight: node.clientHeight
-  }));
-  await page.mouse.move(1100, 750);
-  const observed = await page.evaluate(index => window.nativeTimeScrollObservation.wheels.filter(
-    wheel => typeof wheel === 'object' && wheel !== null
-      && 'actionIndex' in wheel && wheel.actionIndex === index
-  ), index);
-  assert.equal(observed.length, 1, 'Exactly one actually dispatched trusted wheel');
-  assert.equal(afterWheel.scrollTop, 0, 'No scrollTop assignment fallback is allowed');
-  return { before, pointer, observed, afterWheel, pointerLeftTo: { x: 1100, y: 750 } };
 }
 
+// Снимает состояние до unmount, после cleanup и через секунду для проверки поздних эффектов.
 export async function disposeTimeScroll(page: Page) {
   const trace: string[] = [];
   const beforeUnmount = await readTimeScroll(page);

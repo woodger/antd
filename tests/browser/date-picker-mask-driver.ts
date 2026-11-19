@@ -1,3 +1,5 @@
+// Воспроизводит физические действия для маски DatePicker. Журнал различает
+// состояние сразу после каждого подшага и после стабилизации страницы.
 import assert from 'node:assert/strict';
 import type { Page } from '@playwright/test';
 import { expandAction } from './date-picker-mask-cases.mjs';
@@ -5,29 +7,40 @@ import type { MaskAction, MaskSample, MaskSubstepCommand } from './date-picker-m
 import { readNativeMask, readNativeMaskProducers } from './date-picker-mask-metrics.mjs';
 import { readNativeMaskPoint, type NativeMaskPoint } from './date-picker-mask-assertions';
 
-export const readMask = async (page: Page) => readNativeMaskPoint(await page.evaluate(readNativeMask));
+// Преобразует снимок browser realm после проверки его формы.
+export const readMask = async (page: Page) => {
+  const snapshot = await page.evaluate(readNativeMask);
+  return readNativeMaskPoint(snapshot);
+};
+
+// Считывает события после cursor из глобального журнала fixture.
 export const readMaskProducers = (page: Page, cursor: number) => page.evaluate(
   readNativeMaskProducers,
   cursor
 );
+// Даёт выполниться двум кадрам и коротким таймерам обновления выделения.
 async function drainMask(page: Page) {
   await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => {
     requestAnimationFrame(() => setTimeout(resolve, 25));
   })));
 }
+// Ждёт несколько последовательных повторов того же состояния.
 export async function settleMask(page: Page) {
-  let previous = '', stable = 0;
+  let previous = '';
+  let stable = 0;
   for (let attempt = 0; attempt < 70; attempt++) {
     await drainMask(page);
-    const actual = await readMask(page), value = JSON.stringify(actual);
-    stable = value === previous ? stable + 1 : 0;
+    const actual = await readMask(page);
+    const encoded = JSON.stringify(actual);
+    stable = encoded === previous ? stable + 1 : 0;
     if (stable >= 4) {
       return actual;
     }
-    previous = value;
+    previous = encoded;
   }
   throw Error('Complete Native mask scoped observation did not settle');
 }
+// Фиксирует дату и viewport до загрузки каждой вариации ввода.
 export async function openMask(page: Page, sample: MaskSample) {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.clock.setFixedTime(new Date('2024-06-10T08:23:45.678Z'));
@@ -37,14 +50,30 @@ export async function openMask(page: Page, sample: MaskSample) {
   await page.mouse.move(1200, 800);
 }
 export interface MaskSubstepRead {
-  index: number; substepIndex: number; command: MaskSubstepCommand; evidence: unknown;
-  before: NativeMaskPoint; afterCall: NativeMaskPoint; actual: NativeMaskPoint;
+  index: number;
+  substepIndex: number;
+  command: MaskSubstepCommand;
+  evidence: unknown;
+  before: NativeMaskPoint;
+  afterCall: NativeMaskPoint;
+  actual: NativeMaskPoint;
 }
-export async function actMask(page: Page, action: MaskAction, index: number, hooks?: {
-  beforeMacro?: (point: NativeMaskPoint) => void | Promise<void>;
-  beforeSubstep?: (point: NativeMaskPoint, substepIndex: number, command: MaskSubstepCommand) => void | Promise<void>;
-  afterSubstep?: (step: MaskSubstepRead) => void | Promise<void>;
-}) {
+
+// Исполняет физические команды в порядке сценария и связывает итог с последним подшагом.
+export async function actMask(
+  page: Page,
+  action: MaskAction,
+  index: number,
+  hooks?: {
+    beforeMacro?: (point: NativeMaskPoint) => void | Promise<void>;
+    beforeSubstep?: (
+      point: NativeMaskPoint,
+      substepIndex: number,
+      command: MaskSubstepCommand
+    ) => void | Promise<void>;
+    afterSubstep?: (step: MaskSubstepRead) => void | Promise<void>;
+  }
+) {
   await page.evaluate(index => window.nativeMask.setActionIndex(index), index);
   const before = await readMask(page);
   await hooks?.beforeMacro?.(before);
@@ -65,14 +94,7 @@ export async function actMask(page: Page, action: MaskAction, index: number, hoo
     if (command.type === 'mouse-move-input') {
       const target = page.locator(command.index === 1 ? '#mask-end' : '#mask-input');
       assert.equal(await target.count(), 1);
-      const geometry = await target.evaluate(node => {
-        const box = node.getBoundingClientRect(), css = getComputedStyle(node);
-        return { identity: window.nativeMask.getRecorder().identity(node), tag: node.tagName,
-          html: node.outerHTML, attributes: [...node.attributes].map(a => [a.name, a.value]),
-          x: box.x, y: box.y, width: box.width, height: box.height,
-          css: { paddingLeft: css.paddingLeft, borderLeftWidth: css.borderLeftWidth,
-            textIndent: css.textIndent, direction: css.direction, font: css.font, display: css.display } };
-      });
+      const geometry = await target.evaluate(readEditorGeometry);
       assert(geometry.width > 0 && geometry.height > 0);
       const offset = command.anchor === 'text-start'
         ? (parseFloat(geometry.css.borderLeftWidth) || 0) + (parseFloat(geometry.css.paddingLeft) || 0)
@@ -128,7 +150,8 @@ export async function actMask(page: Page, action: MaskAction, index: number, hoo
     else {
       throw Error('Undeclared physical command');
     }
-    const immediate = await readMask(page), actual = await settleMask(page);
+    const immediate = await readMask(page);
+    const actual = await settleMask(page);
     const child = {
       index,
       substepIndex,
@@ -146,9 +169,36 @@ export async function actMask(page: Page, action: MaskAction, index: number, hoo
   }
   await page.evaluate(() => window.nativeMask.setSubstepIndex(-1));
   assert(afterCall && afterCallSource);
-  return { scope: 'macro' as const, index, action, before, substeps, afterCall, afterCallSource,
-    actual: await settleMask(page) };
+
+  const actual = await settleMask(page);
+  return { scope: 'macro' as const, index, action, before, substeps, afterCall, afterCallSource, actual };
 }
+
+// Снимает координаты и отступы прямо в browser realm для точного hit-test.
+function readEditorGeometry(node: Element) {
+  const box = node.getBoundingClientRect();
+  const css = getComputedStyle(node);
+  return {
+    identity: window.nativeMask.getRecorder().identity(node),
+    tag: node.tagName,
+    html: node.outerHTML,
+    attributes: [...node.attributes].map(a => [a.name, a.value]),
+    x: box.x,
+    y: box.y,
+    width: box.width,
+    height: box.height,
+    css: {
+      paddingLeft: css.paddingLeft,
+      borderLeftWidth: css.borderLeftWidth,
+      textIndent: css.textIndent,
+      direction: css.direction,
+      font: css.font,
+      display: css.display
+    }
+  };
+}
+
+// Фиксирует состояние до и после teardown, затем снимает наблюдение за событиями.
 export async function disposeMask(page: Page, hooks?: {
   beforeUnmount?: (point: NativeMaskPoint) => void | Promise<void>;
   afterCleanup?: (point: NativeMaskPoint) => void | Promise<void>;
