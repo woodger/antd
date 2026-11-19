@@ -57,6 +57,22 @@ describe('DatePicker date adapter and input', () => {
     expect(value.locale()).toBe('en');
     expect(dayjs.locale()).toBe('en');
   });
+  it('parses the requested Russian week year and rejects a week absent from that year', () => {
+    const formats = pickerFormats({ picker: 'week' });
+
+    const lastWeek = parsePicker('2023-52', 'ru_RU', formats);
+    const week53 = parsePicker('2020-53', 'ru_RU', formats);
+
+    expect(lastWeek?.format('gggg-wo')).toBe('2023-52');
+    expect(lastWeek?.format('YYYY-MM-DD')).toMatch(/^2023-12-(2[5-9]|3[01])$/);
+    expect(week53?.format('gggg-wo')).toBe('2020-53');
+    expect(parsePicker('2021-53', 'ru_RU', formats)).toBeNull();
+  });
+  it('retains calendar-year input when the format uses YYYY with an ordinal week', () => {
+    const value = parsePicker('2021-53', 'ru_RU', ['YYYY-wo']);
+
+    expect(value?.format('YYYY-MM-DD')).toBe('2021-01-01');
+  });
   it('aligns six week rows with the requested locale without changing candidate own locale', () => {
     const panel = dayjs('2020-12-31T16:37:59.456');
     const us = calendarCells(pickerCalendarValue(panel), 'week', 'en_US');

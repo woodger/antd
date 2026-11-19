@@ -56,11 +56,18 @@ export function parseDayjsInput(
   for (const format of formats) {
     if (format.includes('wo') || format.includes('Wo')) {
       const [year, week] = text.split('-');
+      const requestedYear = Number(year);
+      const usesWeekYear = format.replace(/\[[^\]]*\]/g, '').includes('gggg');
       const first = dayjs(year, 'YYYY').startOf('year').locale(localeName(locale));
       for (let n = 0; n <= 52; n++) {
-        const date = first.add(n, 'week');
-        if (date.format('Wo') === week) {
-          return { value: date, format };
+        const candidate = first.add(n, 'week');
+        if (candidate.format('Wo') !== week) {
+          continue;
+        }
+
+        // Январская дата может относиться к последней неделе предыдущего года.
+        if (!usesWeekYear || candidate.weekYear() === requestedYear) {
+          return { value: candidate, format };
         }
       }
       return null;
