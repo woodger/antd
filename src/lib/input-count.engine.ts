@@ -41,17 +41,24 @@ export function inputCountInfo(
     count: config.strategy(value),
     maxLength: count?.max ?? maxLength
   };
-  const content = config.show
-    ? config.formatter
-      ? config.formatter(info)
-      : `${info.count}${Number(info.maxLength) > 0 ? ` / ${info.maxLength}` : ''}`
-    : undefined;
+  let content: ReturnType<NonNullable<typeof config.formatter>> | undefined;
+  if (config.show) {
+    if (config.formatter) {
+      content = config.formatter(info);
+    }
+    else {
+      const suffix = Number(info.maxLength) > 0 ? ` / ${info.maxLength}` : '';
+      content = `${info.count}${suffix}`;
+    }
+  }
+
+  const maximum = info.maxLength;
 
   return {
     info,
     content,
     show: config.show,
-    exceeded: Boolean(info.maxLength) && info.count > info.maxLength!
+    exceeded: !!maximum && info.count > maximum
   };
 }
 
