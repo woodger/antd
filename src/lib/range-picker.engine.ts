@@ -1,10 +1,14 @@
+// Нормализует пары DateRangePicker и проверяет их перед подтверждением. Сортировка и проверка
+// границ учитывают order и disabled.
 import type { Dayjs } from 'dayjs';
 import type { RangePickerInputValue, RangePickerValue } from './range-picker.types';
 import type { DatePickerPicker } from './date-picker.types';
 import { samePickerQuarter, samePickerWeek } from './date-picker.engine';
+// Заполняет отсутствующие концы диапазона значением null, сохраняя ссылки на даты.
 export function rangePair(value: RangePickerInputValue | null | undefined): RangePickerValue {
   return [value?.[0] ?? null, value?.[1] ?? null];
 }
+// Применяет скалярный флаг к обоим полям. Массив задаёт первый и второй флаг независимо.
 export function rangeFlags(
   value: boolean | readonly boolean[] | undefined,
   fallback = false
@@ -13,9 +17,11 @@ export function rangeFlags(
     ? [Boolean(value[0]), Boolean(value[1])]
     : [value ?? fallback, value ?? fallback] as [boolean, boolean];
 }
+// Сравнивает timestamp соответствующих границ и учитывает отсутствующие значения.
 export function sameRange(a: RangePickerValue, b: RangePickerValue): boolean {
   return a.every((date, index) => date?.valueOf() === b[index]?.valueOf());
 }
+// Выбирает первое заполненное из уже затронутых полей, если оно отличается от активного.
 export function rangeFrom(
   values: RangePickerValue,
   triggered: readonly number[],
@@ -24,6 +30,8 @@ export function rangeFrom(
   const first = triggered.find(index => values[index]);
   return first !== undefined && first !== active ? values[first] ?? undefined : undefined;
 }
+// Возвращает новую пару. Меняет границы местами только при разрешённой сортировке и двух
+// доступных полях.
 export function orderedRange(
   value: RangePickerValue,
   order: boolean,
@@ -33,6 +41,8 @@ export function orderedRange(
     ? [value[1], value[0]]
     : [...value];
 }
+// Проверяет наличие границ и допустимый порядок календарных периодов до вызова invalid для
+// доступных полей.
 export function validRange(
   value: RangePickerValue,
   allowEmpty: readonly boolean[],

@@ -205,6 +205,8 @@ export function timePickerPanel(
 
   return {
     template,
+    // Выравнивает новое значение тем же набором динамических ограничений, что использует этот
+    // снимок панели.
     align: (candidate: Dayjs) => validPickerTime(candidate, config, () => dynamic),
     columns: [
       { type: 'hour' as const, shown: config.showHour, options: config.use12Hours
@@ -274,10 +276,12 @@ export function timePickerSameValue(a: Dayjs | null, b: Dayjs | null) {
     && a.millisecond() === b.millisecond();
 }
 
+// Применяет disabledDate и затем границы дат, разрешая совпадение времени в пределах секунды.
 export function timePickerDateDisabled(
   value: Dayjs,
   props: Pick<TimePickerProps, 'disabledDate' | 'minDate' | 'maxDate'>
 ) {
+  // Сопоставляет с границей только часы, минуты и секунды для выбора time.
   const sameTime = (other: Dayjs) => value.hour() === other.hour()
     && value.minute() === other.minute() && value.second() === other.second();
 
