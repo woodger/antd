@@ -9,6 +9,7 @@ import {
   verifyArchive
 } from './ant-design-css-core.mjs';
 
+// Даёт минимальный CSS-рецепт, чтобы каждый сценарий менял только свой параметр.
 const recipe = (extra = {}) => ({
   include: ['\\.ant-test(?![\\w])'],
   exclude: ['ant-other'],

@@ -1,3 +1,5 @@
+// Проверяет границу тестового стенда по исходным импортам. Компоненты
+// загружаются через публичный пакет, сценарии остаются в дереве tests.
 import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -16,32 +18,43 @@ const publicEntries = new Set(Object.keys(metadata.exports).map(entry =>
   entry === '.' ? metadata.name : metadata.name + entry.slice(1)
 ));
 
+// Обходит только файлы, в которых стенд объявляет импорты JavaScript и Svelte.
 function sourceFiles(directory) {
-  return readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
+  const entries = readdirSync(directory, { withFileTypes: true });
+  const sources = [];
+  for (const entry of entries) {
     const file = join(directory, entry.name);
-    if (entry.isDirectory()) return sourceFiles(file);
-    return /\.(?:ts|mjs|svelte)$/.test(entry.name) ? [file] : [];
-  });
+    if (entry.isDirectory()) {
+      sources.push(...sourceFiles(file));
+    }
+    else if (/\.(?:ts|mjs|svelte)$/.test(entry.name)) {
+      sources.push(file);
+    }
+  }
+  return sources;
 }
 
+// Возвращает оба script-блока компонента в порядке проверки, module затем instance.
+function componentScripts(source) {
+  const component = parse(source, { modern: true });
+  const blocks = [component.module, component.instance].filter(Boolean);
+  return blocks.map(block => source.slice(block.content.start, block.content.end));
+}
+
+// Берёт статические import и export из AST, не вычисляя содержимое файлов.
 function imports(file) {
   const source = readFileSync(file, 'utf8');
-  const scripts = file.endsWith('.svelte')
-    ? (() => {
-      const component = parse(source, { modern: true });
-      return [component.module, component.instance].filter(Boolean).map(block =>
-        source.slice(block.content.start, block.content.end)
-      );
-    })()
-    : [source];
-  return scripts.flatMap(script => {
+  const scripts = file.endsWith('.svelte') ? componentScripts(source) : [source];
+  const dependencies = [];
+  for (const script of scripts) {
     const ast = ts.createSourceFile(file, script, ts.ScriptTarget.Latest, true);
-    return ast.statements.flatMap(node =>
-      (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier
-        ? [node.moduleSpecifier.text]
-        : []
-    );
-  });
+    for (const node of ast.statements) {
+      if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier) {
+        dependencies.push(node.moduleSpecifier.text);
+      }
+    }
+  }
+  return dependencies;
 }
 
 describe('Package test import boundaries', () => {

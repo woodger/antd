@@ -1,3 +1,5 @@
+// Описывает параметры служебного CLI и связывает проверенный ввод с командами.
+// Справка строится из тех же определений и доступна без чтения файлов проекта.
 import { createCommand, CliUsageError } from 'icore';
 import { projectRoot } from './ant-design-common.mjs';
 import { runRegistry } from './ant-design-registry.mjs';
@@ -7,6 +9,7 @@ const command = createCommand();
 const helpOption = { type: 'boolean', alias: 'h', syntax: 'flag' };
 const flag = { type: 'boolean', syntax: 'flag' };
 
+// Выводит общую справку или поддерево команд с указанным префиксом.
 function writeHelp(context, prefix = []) {
   const definitions = commands.definitions.filter(
     definition => prefix.every((part, index) => definition.path[index] === part)
@@ -27,21 +30,23 @@ function writeHelp(context, prefix = []) {
   context.stdout.write(lines.join('\n'));
 }
 
+// Регистрирует команду реестра с общими флагами и отдельным аргументом для show.
 function registryCommand(action, description) {
   return command.define({
     path: ['registry', action],
     options: { upstream: flag, help: helpOption },
     allowExtraPositionals: action === 'show',
     metadata: { description, argument: action === 'show' ? '<component>' : '' },
+    // Проверяет обязательный идентификатор до чтения реестра.
     handle({ options, positionals, context }) {
       if (options.help) {
         writeHelp(context, ['registry', action]);
         return;
       }
-      if (action === 'show'
-        && positionals.length !== 1) throw new CliUsageError(
-          'registry show requires exactly one component identifier'
-        );
+      if (action === 'show' && positionals.length !== 1) {
+        throw new CliUsageError('registry show requires exactly one component identifier');
+      }
+
       return runRegistry(
         action,
         { component: positionals[0], upstream: options.upstream },
@@ -56,6 +61,7 @@ const commands = command.registry([
     path: ['help'],
     options: {},
     metadata: { description: 'Show all commands' },
+    // Показывает справку по всем командам из единого реестра.
     handle({ context }) {
       writeHelp(context);
     }
@@ -64,6 +70,7 @@ const commands = command.registry([
     path: ['registry'],
     options: { help: helpOption },
     metadata: { description: 'Show registry commands' },
+    // Ограничивает справку командами реестра.
     handle({ context }) {
       writeHelp(context, ['registry']);
     }
@@ -86,6 +93,7 @@ const commands = command.registry([
       description: 'Extract, compare or write pinned upstream CSS',
       argument: '[recipe|all]'
     },
+    // Разделяет режим списка и операции над выбранным CSS-рецептом.
     handle({ options, provided, positionals, context }) {
       if (options.help) {
         writeHelp(context, ['css']);
@@ -93,19 +101,20 @@ const commands = command.registry([
       }
       if (options.list) {
         if (positionals.length
-          || ['check', 'write', 'fetch', 'archive']
-            .some(name => provided[name])) throw new CliUsageError(
-              'css --list cannot be combined with a recipe or extraction options'
-            );
+          || ['check', 'write', 'fetch', 'archive'].some(name => provided[name])) {
+          throw new CliUsageError('css --list cannot be combined with a recipe or extraction options');
+        }
       }
-      else if (positionals.length !== 1) throw new CliUsageError(
-        'css requires exactly one recipe or all; use --list to list recipes'
-      );
+      else if (positionals.length !== 1) {
+        throw new CliUsageError('css requires exactly one recipe or all; use --list to list recipes');
+      }
+
       return runCss({ ...options, recipe: positionals[0] }, context);
     }
   })
 ]);
 
+// Запускает CLI со строгой проверкой аргументов и подменяемыми вводом и выводом.
 export async function runCommands(
   args,
   {

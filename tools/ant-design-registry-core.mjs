@@ -1,3 +1,5 @@
+// Проверяет реестр относительно его схемы, экспортов пакета и локального
+// upstream checkout. Не выполняет тесты, на которые ссылаются записи реестра.
 import { access, readFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import ts from 'typescript';
@@ -6,8 +8,10 @@ import { projectPath, readJson, registryFile } from './ant-design-common.mjs';
 export const featureStates = ['unreviewed', 'missing', 'partial', 'supported'];
 export const integrationPrefix = 'integration:';
 const scopes = ['target', 'candidate', 'excluded'];
+// Отсутствие доступа трактуется как отсутствие проверяемого пути.
 const exists = path => access(path).then(() => true, () => false);
 
+// Читает имена экспортов значений из barrel без загрузки компонентов.
 export function publicExports(source) {
   const ast = ts.createSourceFile('index.ts', source, ts.ScriptTarget.Latest, true);
   const exports = new Map();
@@ -15,10 +19,9 @@ export function publicExports(source) {
     if (!ts.isExportDeclaration(node)
       || node.isTypeOnly
       || !node.exportClause
-      || !ts.isNamedExports(
-        node.exportClause
-      ))
+      || !ts.isNamedExports(node.exportClause)) {
       continue;
+    }
     for (const item of node.exportClause.elements) {
       if (!item.isTypeOnly)
         exports.set(item.name.text, node.moduleSpecifier?.text ?? null);
@@ -27,27 +30,35 @@ export function publicExports(source) {
   return exports;
 }
 
+// Считает именованные реэкспорты default только из модулей компонентов.
 export function componentExportNames(source) {
   const ast = ts.createSourceFile('index.ts', source, ts.ScriptTarget.Latest, true);
-  return ast.statements.flatMap(
-    node => ts.isExportDeclaration(node)
-      && !node.isTypeOnly
-      && /\.(svelte|component)(\.js)?$/.test(node.moduleSpecifier?.text ?? '')
-      && node.exportClause
-      && ts.isNamedExports(
-        node.exportClause
-      )
-      ? node.exportClause.elements.filter(
-        item => !item.isTypeOnly && item.propertyName?.text === 'default'
-      ).map(
-        item => item.name.text
-      )
-      : []
-  );
+  const names = [];
+  for (const node of ast.statements) {
+    if (!ts.isExportDeclaration(node) || node.isTypeOnly) {
+      continue;
+    }
+
+    const moduleName = node.moduleSpecifier?.text ?? '';
+    const clause = node.exportClause;
+    if (!/\.(svelte|component)(\.js)?$/.test(moduleName) || !clause || !ts.isNamedExports(clause)) {
+      continue;
+    }
+
+    for (const item of clause.elements) {
+      if (!item.isTypeOnly && item.propertyName?.text === 'default') {
+        names.push(item.name.text);
+      }
+    }
+  }
+  return names;
 }
 
+// Накапливает нарушения схемы в порядке обхода. Межзаписочные проверки идут
+// после проверки записей, когда уже известны идентификаторы и экспорты.
 export function validateRegistry(data) {
   const errors = [];
+  // Позволяет вернуть все нарушения текущего раздела одним списком.
   const require = (condition, message) => {
     if (!condition)
       errors.push(message);
@@ -59,17 +70,15 @@ export function validateRegistry(data) {
   );
   require(/^[a-f0-9]{40}$/.test(data?.upstream?.revision ?? ''), 'Invalid upstream revision');
   require(/^[a-f0-9]{64}$/.test(data?.upstream?.archiveSha256 ?? ''), 'Invalid archive SHA-256');
-  require(
-    data
-      ?.upstream
-      ?.archiveUrl === `https://registry.npmjs.org/antd/-/antd-${data
-        ?.upstream
-        ?.version}.tgz`,
-    'Archive URL must identify the pinned official antd package'
-  );
+  const archiveUrl = data?.upstream?.archiveUrl;
+  const officialUrl = `https://registry.npmjs.org/antd/-/antd-${data?.upstream?.version}.tgz`;
+  require(archiveUrl === officialUrl, 'Archive URL must identify the pinned official antd package');
   require(Array.isArray(data?.components), 'components must be an array');
   require(Array.isArray(data?.supportingExports), 'supportingExports must be an array');
-  if (errors.length) return errors;
+  if (errors.length) {
+    return errors;
+  }
+
   require(
     data.supportingExports.every(name => typeof name === 'string' && name.length > 0),
     'supportingExports must contain nonempty strings'
@@ -80,10 +89,12 @@ export function validateRegistry(data) {
   );
   const ids = new Set();
   const localNames = new Set(data.supportingExports);
-  for (const item of data.components) {
+
+  // Проверяет одну запись, пополняя множества имён для поиска дубликатов.
+  function validateComponent(item) {
     if (!item || typeof item !== 'object' || Array.isArray(item)) {
       errors.push('Component must be an object');
-      continue;
+      return;
     }
     const label = item?.id ?? '<missing id>';
     require(
@@ -136,8 +147,10 @@ export function validateRegistry(data) {
     catch (error) {
       errors.push(`${label}: ${error.message}`);
     }
-    if (!Array.isArray(item.exports) || !Array.isArray(item.features))
-      continue;
+    if (!Array.isArray(item.exports) || !Array.isArray(item.features)) {
+      return;
+    }
+
     for (const entry of item.exports) {
       require(
         typeof entry?.upstream === 'string' && Array.isArray(entry.local) && entry.local.length > 0,
@@ -197,34 +210,49 @@ export function validateRegistry(data) {
       `${label}: missing v1 criteria`
     );
   }
-  for (const item of data.components)
-    if (Array.isArray(item?.dependencies))
-      for (const dependency of item.dependencies)
-        require(
-          ids.has(dependency) && dependency !== item.id,
-          `${item.id}: invalid dependency ${dependency}`
-        );
+  for (const item of data.components) {
+    validateComponent(item);
+  }
+
+  for (const item of data.components) {
+    if (!Array.isArray(item?.dependencies)) {
+      continue;
+    }
+    for (const dependency of item.dependencies) {
+      require(ids.has(dependency) && dependency !== item.id, `${item.id}: invalid dependency ${dependency}`);
+    }
+  }
+
   const visiting = new Set();
   const visited = new Set();
-  function visit(id) {
-    if (visiting.has(id)) {
-      errors.push(`Dependency cycle: ${id}`);
+  // Сохраняет текущий путь рекурсии отдельно от уже проверенных записей.
+  function visit(componentId) {
+    if (visiting.has(componentId)) {
+      errors.push(`Dependency cycle: ${componentId}`);
       return;
     }
-    if (visited.has(id)) return;
-    visiting.add(id);
-    const dependencies = data.components.find(item => item?.id === id)?.dependencies;
-    for (const next of Array.isArray(dependencies) ? dependencies : [])
-      if (ids.has(next))
-        visit(next);
-    visiting.delete(id);
-    visited.add(id);
+    if (visited.has(componentId)) {
+      return;
+    }
+
+    visiting.add(componentId);
+    const record = data.components.find(item => item?.id === componentId);
+    const dependencies = record?.dependencies;
+    for (const dependency of Array.isArray(dependencies) ? dependencies : []) {
+      if (ids.has(dependency)) {
+        visit(dependency);
+      }
+    }
+
+    visiting.delete(componentId);
+    visited.add(componentId);
   }
   for (const id of ids)
     visit(id);
   return errors;
 }
 
+// Оценивает обязательный для v1 объём на конкретной ревизии upstream.
 export function coverage(item, revision) {
   if (!item.exports.length) return 'not-started';
   const required = item.features.filter(feature => feature.requiredForV1);
@@ -233,6 +261,8 @@ export function coverage(item, revision) {
   return required.every(feature => feature.state === 'supported') ? 'v1-ready' : 'partial';
 }
 
+// Сверяет метаданные с локальными файлами. При отсутствии checkout доступны
+// локальные проверки, если вызывающий код не потребовал upstream явно.
 export async function inspectRegistry(root, { requireUpstream = false } = {}) {
   const data = await readJson(projectPath(root, registryFile));
   const errors = validateRegistry(data);
@@ -260,10 +290,10 @@ export async function inspectRegistry(root, { requireUpstream = false } = {}) {
     const candidates = ['', '.ts', '.svelte.ts', '/index.ts'].map(suffix => base + suffix);
     if (base.endsWith('.js'))
       candidates.push(base.slice(0, -3) + '.ts');
-    if (!(await Promise.all(candidates.map(path => exists(projectPath(root, path))))).some(
-      Boolean
-    ))
+    const present = await Promise.all(candidates.map(path => exists(projectPath(root, path))));
+    if (!present.some(Boolean)) {
       errors.push(`Missing source for export: ${name}`);
+    }
   }
   const integrationEvidence = new Set();
   const upstreamRoot = projectPath(root, '.upstream/ant-design');
@@ -344,8 +374,26 @@ const states = {
   'v1-ready': 'Согласованный v1 покрыт',
   partial: 'Частично покрыт v1'
 };
+// Экранирует разделитель таблицы и сохраняет строку отчёта однострочной.
 const escape = text => String(text).replaceAll('|', '\\|').replaceAll('\n', ' ');
 
+// Собирает строку таблицы из публичных экспортов, покрытия и оставшихся пробелов.
+function renderComponentRow(item, revision) {
+  const source = `https://github.com/ant-design/ant-design/tree/${revision}/${item.upstreamPath}`;
+  const gaps = item.features.filter(feature => feature.state !== 'supported')
+    .map(feature => `${feature.title} (${feature.state})`)
+    .join('; ');
+  const name = escape(item.name);
+  const category = escape(item.category);
+  const scope = item.scope;
+  const names = item.exports.flatMap(entry => entry.local).join(', ') || '—';
+  const status = states[coverage(item, revision)];
+  const remaining = escape(gaps);
+
+  return `| [${name}](${source}) | ${category} | ${scope} | ${names} | ${status} | ${remaining} |`;
+}
+
+// Формирует детерминированный Markdown из состояния реестра и числа компонентов.
 export function renderReport(data, componentExports) {
   const counts = Object.fromEntries(
     Object.keys(states).map(
@@ -355,6 +403,8 @@ export function renderReport(data, componentExports) {
       ]
     )
   );
+  const familyCount = data.components.length;
+  const implementedCount = data.components.length - counts['not-started'];
   const lines = [
     '# Покрытие переноса Ant Design',
     '',
@@ -364,14 +414,9 @@ export function renderReport(data, componentExports) {
     '',
     `Эталон: Ant Design ${data.upstream.version}, commit \`${data.upstream.revision}\`.`,
     '',
-    `Каталог: **${data
-      .components
-      .length} семейств**, публичных Svelte-компонентов: **${componentExports}**.`,
-    `Есть публичная реализация у **${data
-      .components
-      .length - counts['not-started']}** семейств; отсутствует у **${counts['not-started']}**.`,
-    `Проверенный объём v1 покрыт у **${counts['v1-ready']}**; требуется аудит у **${counts['needs-review']}**; частично покрыт у **${counts
-      .partial}**.`,
+    `Каталог: **${familyCount} семейств**, публичных Svelte-компонентов: **${componentExports}**.`,
+    `Есть публичная реализация у **${implementedCount}** семейств; отсутствует у **${counts['not-started']}**.`,
+    `Проверенный объём v1 покрыт у **${counts['v1-ready']}**; требуется аудит у **${counts['needs-review']}**; частично покрыт у **${counts.partial}**.`,
     '',
     'Наличие экспорта, полнота согласованного v1 и результаты тестов учитываются отдельно.',
     'Candidate означает запись каталога, для которой целевой объём ещё не согласован.',
@@ -380,33 +425,7 @@ export function renderReport(data, componentExports) {
     '| --- | --- | --- | --- | --- | --- |'
   ];
   for (const item of data.components) {
-    const source = `https://github.com/ant-design/ant-design/tree/${data
-      .upstream
-      .revision}/${item
-        .upstreamPath}`;
-    const gaps = item.features.filter(feature => feature.state !== 'supported').map(
-      feature => `${feature.title} (${feature.state})`
-    ).join(
-      '; '
-    );
-    lines.push(
-      `| [${escape(item
-        .name)}](${source}) | ${escape(item
-          .category)} | ${item
-            .scope} | ${item
-              .exports
-              .flatMap(
-                entry => entry.local
-              ).join(
-                ', '
-              )
-            || '—'} | ${states[coverage(
-              item,
-              data.upstream.revision
-            )]} | ${escape(
-              gaps
-            )} |`
-    );
+    lines.push(renderComponentRow(item, data.upstream.revision));
   }
   return `${lines.join('\n')}\n`;
 }

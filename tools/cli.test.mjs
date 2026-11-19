@@ -10,12 +10,15 @@ import { registryFile, reportFile } from './ant-design-common.mjs';
 import { runCommands } from './cli-core.mjs';
 
 const roots = [];
+// Убирает только каталоги, созданные для завершившегося сценария CLI.
 afterEach(async () => {
   await Promise.all(roots.splice(0).map(root => rm(root, { recursive: true, force: true })));
 });
 
+// Записывает вывод отдельно по потокам и отклоняет непредусмотренный сетевой вызов.
 function output(root) {
   let stdout = '', stderr = '';
+  // Базовый сценарий не разрешает скачивание. Сетевой тест подменяет эту функцию.
   const fetch = vi.fn(async () => {
     throw new Error('Unexpected network request');
   });
@@ -23,20 +26,24 @@ function output(root) {
     context: {
       root,
       stdout: {
+        // Хранит порядок сообщений, переданных в stdout.
         write: chunk => {
           stdout += chunk;
         }
       },
       stderr: {
+        // Хранит диагностику отдельно от данных команды.
         write: chunk => {
           stderr += chunk;
         }
       },
       fetch
     },
+    // Возвращает текст, записанный с момента создания экземпляра.
     get stdout() {
       return stdout;
     },
+    // Возвращает накопленную диагностику, включая запись после await.
     get stderr() {
       return stderr;
     },
@@ -44,9 +51,11 @@ function output(root) {
   };
 }
 
+// Создаёт изолированный проект с проверяемым архивом и ожидаемым CSS.
 async function fixture() {
   const root = await mkdtemp(join(tmpdir(), 'antd-cli-'));
   roots.push(root);
+  // Пишет данные теста, сохраняя подготовленные байты архива без перекодирования.
   const put = async (path, content) => {
     const target = join(root, path);
     await mkdir(dirname(target), { recursive: true });
