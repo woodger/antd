@@ -1,3 +1,5 @@
+// Объединяет настройки наследования темы и вычисляет токены из алгоритмов.
+// Компонентные токены получают собственный алгоритм или используют общий результат.
 import defaultSeed from './theme-seed';
 import { defaultAlgorithm, darkAlgorithm, compactAlgorithm } from './theme-algorithms.engine';
 import { createDerivativeTheme } from './theme-cache';
@@ -14,9 +16,11 @@ import type { ResolvedThemeConfig, ThemeConfig } from './types';
 export const defaultThemeConfig: ResolvedThemeConfig = {
   mode: 'light', primary: 'blue', compact: false, hashed: true
 };
+// Правило 2: передаётся один алгоритм, пустая цепочка здесь невозможна.
 const defaultTheme = createDerivativeTheme(defaultAlgorithm)!;
 const sourceConfigKeys = ['token', 'algorithm', 'components', 'inherit', 'hashed', 'cssVar', 'zeroRuntime'];
 
+// Отличает расширенную тему по наличию ключей, включая явно переданный undefined.
 export function hasSourceTheme(config?: ThemeConfig): boolean {
   return !!config && sourceConfigKeys.some(key => key in config);
 }
@@ -59,6 +63,7 @@ export function mergeThemeConfig(
 
 type ParsedComponent = Record<string, unknown> & { theme?: DerivativeTheme; };
 
+// Применяет общий алгоритм и вычисляет независимые токены компонентов поверх результата.
 function computeToken(
   seed: SeedToken,
   override: Partial<AliasToken>,
@@ -79,11 +84,8 @@ function computeToken(
   return merged;
 }
 
-/** Runtime [] использует defaultTheme; component algorithm=true наследует общий Theme. */
-export function createDesignTokenState(
-  config: ResolvedThemeConfig,
-  prefixCls = 'ant'
-): DesignTokenState {
+// Выбирает цепочку алгоритмов. Пустой явный массив использует тему по умолчанию.
+function resolveDerivativeTheme(config: ResolvedThemeConfig): DerivativeTheme {
   let algorithm = config.algorithm;
   if (!algorithm) {
     const native: MappingAlgorithm[] = [];
@@ -92,8 +94,19 @@ export function createDesignTokenState(
     algorithm = native.length ? native : defaultAlgorithm;
   }
 
-  const theme = typeof algorithm === 'function' || algorithm.length
-    ? createDerivativeTheme(algorithm)! : defaultTheme;
+  if (typeof algorithm !== 'function' && !algorithm.length) {
+    return defaultTheme;
+  }
+
+  // Правило 2: после проверки передаётся один алгоритм или непустая цепочка.
+  return createDerivativeTheme(algorithm)!;
+}
+
+// Отделяет algorithm от токенов компонента. Значение true наследует общий Theme.
+function parseComponentTokens(
+  config: ResolvedThemeConfig,
+  theme: DerivativeTheme
+): Record<string, ParsedComponent> {
   const components: Record<string, ParsedComponent> = {};
   for (const [name, component] of Object.entries(config.components ?? {})) {
     const parsed: ParsedComponent = { ...component };
@@ -110,6 +123,16 @@ export function createDesignTokenState(
     }
     components[name] = parsed;
   }
+  return components;
+}
+
+/** Runtime [] использует defaultTheme; component algorithm=true наследует общий Theme. */
+export function createDesignTokenState(
+  config: ResolvedThemeConfig,
+  prefixCls = 'ant'
+): DesignTokenState {
+  const theme = resolveDerivativeTheme(config);
+  const components = parseComponentTokens(config, theme);
 
   const nativePrimary = {
     blue: defaultSeed.colorPrimary,
@@ -122,6 +145,7 @@ export function createDesignTokenState(
     ...config.token
   };
   const merged = computeToken(seed, seed, components, theme);
+
   const actualToken = { ...merged };
   const prefix = config.cssVar?.prefix ?? prefixCls;
   const key = config.cssVar?.key ?? 'css-var-root';
