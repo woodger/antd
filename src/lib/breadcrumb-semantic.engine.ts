@@ -1,6 +1,7 @@
 import type { BreadcrumbConfig, BreadcrumbProps, BreadcrumbSlots } from './breadcrumb.types';
 import { mergeComponentSemantics } from './semantic-style.engine';
 
+// Применяет семантику к корню, пунктам и разделителям с типом параметров экземпляра.
 export function breadcrumbSemantics<Params extends Record<string, unknown>>(
   context: BreadcrumbConfig | undefined,
   props: BreadcrumbProps<Params>

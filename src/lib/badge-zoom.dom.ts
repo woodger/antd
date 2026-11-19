@@ -1,3 +1,5 @@
+// Синхронизирует DOM Badge с фазами CSSMotion. Ревизия кадра ограничивает работу устаревших
+// переходов.
 export interface BadgeZoomState {
   rendered: boolean;
   className?: string;
@@ -22,6 +24,7 @@ export function createBadgeZoom(
   let revision = 0;
   let alive = true;
 
+  // Публикует наличие узла и классы текущего перехода. После start используются active-классы.
   function update() {
     publish({
       rendered,
@@ -31,12 +34,15 @@ export function createBadgeZoom(
     });
   }
 
+  // Отменяет запланированный кадр и инвалидирует callbacks очереди перехода.
   function cancelFrame() {
     revision++;
     if (frame !== undefined) view.cancelAnimationFrame(frame);
     frame = undefined;
   }
 
+  // Ожидает два кадра, чтобы разделить смену CSS-классов. В каждом кадре учитывает текущую
+  // ревизию.
   function nextFrame(callback: () => void) {
     const current = revision;
     frame = view.requestAnimationFrame(() => {
@@ -51,12 +57,14 @@ export function createBadgeZoom(
     });
   }
 
+  // Снимает оба события завершения с ранее привязанного узла.
   function unbind() {
     bound?.removeEventListener('animationend', handleEnd);
     bound?.removeEventListener('transitionend', handleEnd);
     bound = undefined;
   }
 
+  // Сбрасывает переход и передаёт фактическую видимость в состояние рендера.
   function finish() {
     cancelFrame();
     status = undefined;
@@ -66,6 +74,8 @@ export function createBadgeZoom(
     update();
   }
 
+  // Обрабатывает события самого Badge. Раннее завершение откладывает удаление узла до нужного
+  // кадра.
   function handleEnd(event: Event) {
     if (!alive || !status || !step || step === 'start' || ending
       || event.target !== getElement()) {
@@ -83,6 +93,7 @@ export function createBadgeZoom(
     nextFrame(finish);
   }
 
+  // Завершает активный переход при включении reduced motion.
   function reduce() {
     if (reduced.matches && status) finish();
   }
@@ -90,6 +101,7 @@ export function createBadgeZoom(
   reduced.addEventListener('change', reduce);
 
   return {
+    // Синхронизирует режим и видимость. Обычный повтор значения не запускает ещё одну анимацию.
     sync(next: boolean, enabled: boolean, normal = true) {
       if (!alive) {
         return;
@@ -145,6 +157,7 @@ export function createBadgeZoom(
         });
       });
     },
+    // Освобождает кадр, deadline, DOM listeners и media listener при уничтожении компонента.
     destroy() {
       alive = false;
       cancelFrame();

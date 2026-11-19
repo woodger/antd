@@ -1,3 +1,4 @@
+// Выбирает пару color и variant, начальную фазу loading и форматирование короткого текста Button.
 import type {
   ButtonColor,
   ButtonConfig,
@@ -13,6 +14,8 @@ const types: Record<ButtonType, readonly [ButtonColor | 'link', ButtonVariant]> 
   text: ['default', 'text'],
   link: ['link', 'link']
 };
+// Применяет явную пару до type и danger, затем учитывает контекст. Ghost переводит solid в
+// outlined.
 export function buttonAppearance(
   type?: ButtonType,
   danger = false,
@@ -43,6 +46,7 @@ export function buttonAppearance(
   }
   return { color: parsed[0], variant: ghost && parsed[1] === 'solid' ? 'outlined' : parsed[1] };
 }
+// Отделяет отложенное включение индикатора от режима, в котором он показывается сразу.
 export function buttonLoading(loading: ButtonLoading): { loading: boolean; delay: number; } {
   if (typeof loading === 'object' && loading !== null) {
     const delay = typeof loading.delay === 'number' ? loading.delay : 0;
@@ -50,12 +54,15 @@ export function buttonLoading(loading: ButtonLoading): { loading: boolean; delay
   }
   return { loading: Boolean(loading), delay: 0 };
 }
+// Считает число 0 содержимым, сохраняя пустыми отсутствующие значения и false.
 export function buttonHasContent(content: ButtonContent): boolean {
   return content !== undefined && content !== null && content !== false && content !== '';
 }
+// Распознаёт ровно два иероглифа в поддерживаемом диапазоне для правила autoInsertSpace.
 export function buttonTwoCN(value: string): boolean {
   return /^[\u4E00-\u9FA5]{2}$/.test(value);
 }
+// Вставляет пробел только для двух иероглифов при включённом режиме.
 export function buttonText(value: string, insert: boolean): string {
   return insert && buttonTwoCN(value) ? value.split('').join(' ') : value;
 }

@@ -1,6 +1,10 @@
+// Извлекает непустой fragment из href без декодирования имени цели.
+// Разбирает адреса и определяет текущую секцию Anchor по координатам. Измерения выполняет
+// DOM-адаптер.
 export function anchorTargetId(href: string | null | undefined): string | undefined {
   return /#([^\t\r\n\f\v]+)$/.exec(href?.toString() ?? '')?.[1];
 }
+// Выбирает ближайшую секцию на уровне порога или выше. При совпадении координат остаётся первая.
 export function anchorSection(
   sections: readonly { href: string; top: number; targetOffset?: number; }[],
   offset: number,

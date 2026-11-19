@@ -1,3 +1,5 @@
+// Формирует CSS для декоративных слоёв BorderBeam. Имя переменных зависит от prefix, а задержка
+// от порядкового номера слоя.
 import type { BorderBeamColor, BorderBeamProps } from './border-beam.types';
 
 export type BorderBeamBorderWidth = readonly [number, number, number, number];
@@ -14,12 +16,14 @@ export interface BorderBeamRuntimeOptions extends Pick<
   contextStyle?: string;
 }
 
+// Для конечного count ≥ 1 берёт целую часть. Остальные значения дают один слой.
 export function getBorderBeamCount(count?: number) {
   return typeof count === 'number' && Number.isFinite(count) && count >= 1
     ? Math.floor(count)
     : 1;
 }
 
+// Распределяет стопы в первых 70% градиента, оставляя место для затухания до прозрачности.
 export function getBorderBeamGradient(color?: BorderBeamColor) {
   const items = typeof color === 'string' ? [{ color, percent: 0 }] : color ?? [];
   const last = items[items.length - 1];
@@ -38,6 +42,8 @@ export function getBorderBeamGradient(color?: BorderBeamColor) {
   return `linear-gradient(to left, ${colors.join(', ')}, transparent)`;
 }
 
+// Накладывает настройки экземпляра после темы и контекста. Без outset использует ширины границ
+// host.
 export function getBorderBeamStyle(
   options: BorderBeamRuntimeOptions,
   borderWidth: BorderBeamBorderWidth,
@@ -47,7 +53,9 @@ export function getBorderBeamStyle(
   const variablePrefix = `--${(options.rootPrefix ?? 'ant').replace(/\./g, '')}-border-beam-`;
   const gradient = getBorderBeamGradient(color);
   const validDuration = typeof duration === 'number' && !Number.isNaN(duration) && duration > 0;
+  // Добавляет px только к числовому размеру, оставляя строки пригодными для CSS.
   const unit = (value: number | string) => typeof value === 'number' ? `${value}px` : value;
+  // Формирует отрицательное смещение с учётом CSS-единиц и выражений.
   const inset = (value: number | string) => typeof value === 'string'
     ? `calc(-1 * ${value})`
     : `-${value}px`;

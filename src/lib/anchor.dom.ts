@@ -1,3 +1,5 @@
+// Связывает активную ссылку Anchor с прокруткой контейнера. Во время собственной анимации scroll
+// listener не определяет ссылку заново.
 import { anchorScrollFrame, anchorSection, anchorTargetId } from './anchor.engine';
 import type { AnchorContainer, AnchorProps } from './anchor.types';
 
@@ -10,6 +12,8 @@ export interface AnchorRuntimeOptions {
   getCurrentAnchor?: AnchorProps['getCurrentAnchor'];
   onChange?: AnchorProps['onChange'];
 }
+// Удерживает исходный href отдельно от значения getCurrentAnchor и привязывает работу к окну узла
+// Anchor.
 export function createAnchorRuntime(root: HTMLElement, notify: (href: string) => void) {
   const view = root.ownerDocument.defaultView!;
   let options: AnchorRuntimeOptions;
@@ -20,6 +24,7 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
   let animating = false;
   let frame: number | undefined;
   let generation = 0;
+  // Измеряет секцию относительно scroll container. Скрытый элемент даёт нулевой отступ.
   function offset(node: HTMLElement, target: AnchorContainer) {
     if (!node.getClientRects().length) {
       return 0;
@@ -33,6 +38,8 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
     }
     return rect.top;
   }
+  // Публикует отображаемую ссылку и передаёт onChange исходный href с учётом принудительного
+  // уведомления.
   function setCurrent(href: string, force = false) {
     raw = href;
     const next = options.getCurrentAnchor ? options.getCurrentAnchor(href) : href;
@@ -45,6 +52,7 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
     }
     options.onChange?.(href);
   }
+  // Собирает координаты существующих целей и ищет секцию на границе активной области.
   function handleScroll() {
     if (!active || animating) {
       return;
@@ -66,6 +74,7 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
       )
     );
   }
+  // Инвалидирует все кадры прежней анимации, освобождая состояние для обычного scroll listener.
   function cancel() {
     generation++;
     if (frame !== undefined)
@@ -74,6 +83,8 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
     animating = false;
   }
   return {
+    // Переносит scroll listener на новый контейнер и пересчитывает ссылку при изменении функции
+    // отображения.
     configure(next: AnchorRuntimeOptions) {
       if (!active) {
         return;
@@ -90,6 +101,8 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
       if (options.getCurrentAnchor && previousMapping !== options.getCurrentAnchor)
         setCurrent(raw || '');
     },
+    // Вначале уведомляет о выборе ссылки. Для существующей цели начинает анимацию с действующим
+    // приоритетом отступов.
     scrollTo(href: string, targetOffset?: number) {
       if (!active) {
         return;
@@ -117,6 +130,7 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
       const started = Date.now();
       const ownGeneration = generation;
       animating = true;
+      // Обновляет один кадр окна или элемента, пока актуальна ревизия этой анимации.
       const step = () => {
         if (!active || generation !== ownGeneration) {
           return;
@@ -139,6 +153,7 @@ export function createAnchorRuntime(root: HTMLElement, notify: (href: string) =>
       };
       frame = view.requestAnimationFrame(step);
     },
+    // Блокирует дальнейшие обновления перед снятием слушателя и отменой кадра.
     destroy() {
       active = false;
       cancel();

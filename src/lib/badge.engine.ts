@@ -1,3 +1,5 @@
+// Определяет представление счётчика, статуса и точки Badge. Значения для визуального текста и
+// атрибутов вычисляются отдельно.
 import type { BadgeOffset, BadgeProps } from './badge.types';
 
 type BadgeOptions = Pick<
@@ -7,6 +9,8 @@ type BadgeOptions = Pick<
   hasChildren?: boolean;
 };
 
+// Применяет showZero, dot и overflowCount, учитывая custom count и отдельный статус рядом с
+// children.
 export function getBadgeState(
   {
     count: sourceCount,
@@ -60,6 +64,7 @@ export function getBadgeState(
   };
 }
 
+// Нормализует первое смещение к числу, а второму разрешает оставаться CSS-значением.
 export function normalizeBadgeOffset(
   offset: BadgeOffset | undefined
 ): readonly [number, number | string] | undefined {

@@ -1,5 +1,9 @@
+// Определяет, достиг ли Affix края контейнера. Размеры берутся из placeholder, который остаётся в
+// потоке документа.
 import type { AffixPosition } from './affix.types';
 
+// Сравнивает округлённые координаты. По умолчанию проверяет верхний край, при двух настройках он
+// имеет приоритет.
 export function affixPosition(
   placeholder: Pick<DOMRect, 'top' | 'bottom' | 'width' | 'height'>,
   target: Pick<DOMRect, 'top' | 'bottom'>,

@@ -1,3 +1,5 @@
+// Управляет декоративными слоями BorderBeam внутри host. Измеренные границы принадлежат этому
+// узлу, CSS-переменные обновляются от theme origin.
 import {
   getBorderBeamCount,
   getBorderBeamStyle,
@@ -5,10 +7,12 @@ import {
   type BorderBeamRuntimeOptions
 } from './border-beam.engine';
 
+// Снимает исходные размеры границ host и создаёт контроллер его декоративных слоёв.
 export function createBorderBeamRuntime(host: HTMLElement) {
   const document = host.ownerDocument;
   const view = document.defaultView!;
   const computed = view.getComputedStyle(host);
+  // Считывает computed border width как число. Неразбираемое значение даёт ноль.
   const parseWidth = (value: string) => {
     const width = parseFloat(value);
 
@@ -27,6 +31,8 @@ export function createBorderBeamRuntime(host: HTMLElement) {
   let origin: HTMLElement | undefined;
   let observer: MutationObserver | undefined;
 
+  // Наследует CSS-переменные темы, корректирует число слоёв и обновляет атрибуты существующих
+  // элементов.
   function sync() {
     if (!active || !current) {
       return;
@@ -78,6 +84,8 @@ export function createBorderBeamRuntime(host: HTMLElement) {
   }
 
   return {
+    // Переподключает наблюдение только при смене источника темы, затем применяет переданные
+    // настройки.
     configure(options: BorderBeamRuntimeOptions) {
       if (!active) {
         return;
@@ -95,6 +103,7 @@ export function createBorderBeamRuntime(host: HTMLElement) {
       }
       sync();
     },
+    // Снимает наблюдение и удаляет принадлежащие этому контроллеру слои.
     destroy() {
       active = false;
       observer?.disconnect();

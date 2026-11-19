@@ -9,6 +9,7 @@ export function cardSemantics(context: CardConfig | undefined, props: CardProps)
     ['root', 'header', 'body', 'title', 'extra', 'actions', 'cover']);
 }
 
+// Объединяет стили и классы пяти слотов Card.Meta из контекста и локальных props.
 export function cardMetaSemantics(context: CardMetaConfig | undefined, props: CardMetaProps) {
   return mergeComponentSemantics<keyof CardMetaSlots, CardMetaProps>(context, props,
     ['root', 'section', 'avatar', 'title', 'description']);

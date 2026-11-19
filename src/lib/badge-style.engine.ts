@@ -7,6 +7,7 @@ export { getInlineStyleDeclarations as getBadgeStyleDeclarations } from './inlin
 export type { InlineStyleLayer as BadgeStyleLayer } from './inline-style.engine';
 export { serializeInlineStyleLayers as serializeBadgeStyleLayers } from './inline-style.engine';
 
+// Ищет победившее значение CSS-свойства. При одинаковом приоритете выигрывает поздняя декларация.
 export function getBadgeStyleValue(layers: readonly BadgeStyleLayer[], property: string) {
   let result: string | undefined;
   let important = false;
