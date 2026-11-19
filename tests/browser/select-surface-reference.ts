@@ -58,6 +58,7 @@ function guard(condition: unknown, message: string): asserts condition {
     throw Error(`Invalid independent Select surface Source: ${message}`);
   }
 }
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 function sha256(bytes: Uint8Array) { return createHash('sha256').update(bytes).digest('hex'); }
 const stored = readFileSync(new URL(
   './fixtures/ant-design-select-surface-reference.json.gz',

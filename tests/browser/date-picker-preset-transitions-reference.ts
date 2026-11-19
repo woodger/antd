@@ -103,12 +103,16 @@ const authoredDateNames = ['initialValue', 'defaultPickerValue', 'initialPickerV
   'initialMinDate', 'updatedMinDate', 'maxDate', 'presetValue'] as const;
 const counters = { measured: false, observers: null, mutations: null, frames: null,
   timers: null, ports: null };
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const hash = (value: Uint8Array | string) => createHash('sha256').update(value).digest('hex');
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
 const record = (value: unknown): Record<string, unknown> => {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Record<string, unknown>;
 };
+// Подтверждает форму массива, оставляя его элементы неизвестными до отдельной проверки.
 const array = (value: unknown): unknown[] => {
   assert(Array.isArray(value));
   return value;

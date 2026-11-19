@@ -22,7 +22,10 @@ interface RawCase {
 }
 interface RawSource { kind: string; reference: Record<string, unknown>; cases: RawCase[] }
 const prefix = 'ant-design-select-components-tag-close-key-counter-';
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 const pins = {
   first: {

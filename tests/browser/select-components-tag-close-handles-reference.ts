@@ -172,7 +172,10 @@ interface Protocol { status: string; source: {
 const prefix = 'ant-design-select-components-tag-close-handles-';
 const sourceBase = '.upstream/artifacts/select-components-tag-close-handles-source-v1/';
 const protocolSHA = 'b1678a2f9ea70c1b9cff69534e0f36348ba6eec90b4087f24832ba5543b6eb96';
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const hash = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
 const equalLiteral = (actual: unknown, expected: unknown, label: string) => assert.equal(
   JSON.stringify(actual),
@@ -266,6 +269,7 @@ export function readSelectTagCloseHandlesManifest() {
   protocolCache = protocol;
   return manifestCache = manifest;
 }
+// Сужает неизвестное значение до записи. null и массивы приводят к ошибке проверки.
 function object(value: unknown, label: string): Record<string, unknown> {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value), label);
   return value as Record<string, unknown>;
@@ -286,6 +290,7 @@ export function readTagCloseHandleSourceArray(value: unknown) {
   );
   return rows.slice(0, -1).map(row => row.value);
 }
+// Ищет исходный объект по идентификатору. Ссылка без объекта прерывает проверку снимка.
 function rawNode(graph: RawGraph, reference: unknown) {
   const ref = object(reference, 'Actual raw Source reference');
   assert.equal(typeof ref.ref, 'number');

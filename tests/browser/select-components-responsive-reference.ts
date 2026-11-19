@@ -19,7 +19,10 @@ interface Header { axis: string; mode: 'csr' | 'ssr'; status: string; version: s
 interface Source<Value> { reference: Header; cases: Value[] }
 interface Copy { path: string; storageBytes: number; storageSha256: string; decodedBytes: number; decodedSha256: string;
   repeatBytes: number; repeatSha256: string; wholePairByteEqual: boolean }
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const hash = (value: Uint8Array) => createHash('sha256').update(value).digest('hex');
 const protocol = '1b0dd23f2ef35ee069acb02e6398a595a81e79acdb2b4d987a1e785a34295348';
 const manifest = JSON.parse(readFileSync(

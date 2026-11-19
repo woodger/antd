@@ -41,6 +41,8 @@ interface SourceHeader {
   inputPins: Record<string, Pin>; originalSourcePins: Record<string, Pin>; preservedEvidence: Record<string, Pin>;
   errors: unknown[]; diagnostics: unknown[];
 }
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
 export const componentsHydrationHash = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
 const manifest = JSON.parse(readFileSync(

@@ -44,6 +44,7 @@ export interface LabelTitleSSRCase {
 interface Header { mode: string; version: string; react: string; revision: string; protocolSha256: string;
   preservedReferences: number; inputPins: Record<string, string>; errors: unknown[]; diagnostics: unknown[];
   archives: Array<{ sha256: string; archiveSha256: string; byteEqual: boolean }> }
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const hash = (b: Uint8Array) => createHash('sha256').update(b).digest('hex');
 function load<Value>(path: string, bytes: number, sha: string): Value {
   const data = readFileSync(new URL('./fixtures/' + path, import.meta.url));

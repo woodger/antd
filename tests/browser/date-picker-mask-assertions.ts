@@ -10,30 +10,36 @@ import type { MaskSourcePoint, MaskSourceOwner, MaskSourceDate, MaskSourceInvoca
   from './date-picker-mask-reference.mjs';
 
 type Data = Record<string, unknown>;
+// Сужает неизвестное значение до записи. null и массивы приводят к ошибке проверки.
 const object = (value: unknown): Data => {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Data;
 };
+// Подтверждает форму массива, оставляя его элементы неизвестными до отдельной проверки.
 const array = (value: unknown): unknown[] => {
   assert(Array.isArray(value));
   return value;
 };
+// Читает собственные свойства сериализованного объекта и проверяет форму каждой строки.
 const properties = (value: unknown) => array(object(value).properties).map(object);
 const encoded = (value: unknown, key: string) => {
   const entry = properties(value).find(row => row.key === key);
   assert(entry, 'Complete encoded key ' + key);
   return entry.value;
 };
+// Ищет исходный объект по идентификатору. Ссылка без объекта прерывает проверку снимка.
 const rawNode = (graph: unknown, ref: unknown) => {
   const node = array(object(graph).objects).map(object).find(node => node.id === ref);
   assert(node, 'Raw node exists');
   return node;
 };
+// Проходит путь от корня сериализованного графа, разрешая ссылки на каждом шаге.
 const rawAt = (graph: unknown, path: Array<string | number>) => {
   let value = object(graph).root;
   for (const key of path) value = encoded(rawNode(graph, object(value).ref), String(key));
   return value;
 };
+// Ищет атрибут по имени. Отсутствующий атрибут остаётся null для сравнения снимков.
 const attr = (surface: MaskSourceSurface, name: string) => surface.attributes.find(row => row[0] === name)?.[1] ?? null;
 const roles = ['initialStart', 'initialEnd'] as const;
 export interface MaskDifference { label: string; variant?: MaskSourceVariant; field: string; message: string; }

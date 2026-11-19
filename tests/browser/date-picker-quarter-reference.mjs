@@ -9,7 +9,10 @@ const source = '.upstream/artifacts/date-picker-quarter-source-proposal-v1/';
 const protocolSHA = 'ee43854db3b3606e976375467ffa174c7053ad9ebe069a2066705cad80bd2e87';
 const authoredNames = ['initialStart', 'initialEnd', 'minDate', 'maxDate',
   'presetA', 'presetB', 'witnessStart', 'witnessEnd'];
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = file => new URL('./fixtures/' + file, import.meta.url);
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const metadataBytes = fs.readFileSync(fixture(prefix + 'source-manifest.json'));
 assert.equal(sha(metadataBytes), '4e572afcf77aca2e3e288f1e1ec3dc9192eacca3c0e882c4f97d58bed4ce891e');
@@ -30,6 +33,7 @@ assert.equal(metadata.serialization.completeOriginalManifests, 4);
 assert.equal(Object.keys(metadata.parts).length, 456);
 assert.equal(metadata.serialization.originalStoredGzipBytesCopiedExactly, true);
 
+// Читает один документ захвата и сверяет исходный размер и хеш до возврата байтов.
 export function readQuarterSourceEvidence(name) {
   const entry = metadata.documents[name];
   assert(entry, 'Unknown original Source evidence document');
@@ -68,11 +72,14 @@ for (const run of release.runs) {
   assert.equal(run.terminalPinsUnchanged, true);
 }
 
+// Определяет исходный манифест отдельно для CSR и SSR и для каждого независимого прогона.
 function scope(kind, variant) {
   assert(['csr', 'ssr'].includes(kind), 'Unknown Source capture kind');
   assert(['first', 'repeat'].includes(variant), 'Unknown independent Source capture');
   return source + kind + '-source-' + variant + '.json';
 }
+// Проверяет размеры и хеши сжатых и исходных байтов. Распаковка происходит между этими
+// проверками.
 function decodeStored(entry, stored) {
   const original = entry.original;
   assert.match(entry.fixture, new RegExp('^' + prefix + 'parts/[0-9a-f]{64}\\.json\\.gz$'));
@@ -85,9 +92,12 @@ function decodeStored(entry, stored) {
   assert.equal(sha(bytes), original.sha256);
   return bytes;
 }
+// Читает одну часть и разбирает JSON после сверки с исходной записью манифеста.
 function decode(entry) {
   return JSON.parse(decodeStored(entry, fs.readFileSync(fixture(entry.fixture))));
 }
+// Проверяет привязку части к конкретному прогону и исходным метаданным. При заданном пути сверяет
+// и слот действия.
 export function verifyQuarterSourcePartBinding(reference, kind, variant = 'first', expectedFile) {
   const original = reference.rawJSONPart ?? reference;
   const capture = scope(kind, variant);
@@ -105,6 +115,7 @@ export function verifyQuarterSourcePartBinding(reference, kind, variant = 'first
   assert.deepEqual(entry.original, original, 'Exact original raw/stored metadata');
   return entry;
 }
+// Находит прогон, которому принадлежит исходная часть по зафиксированному имени файла.
 function partScope(reference) {
   const original = reference.rawJSONPart ?? reference;
   for (const kind of ['csr', 'ssr']) {
@@ -116,10 +127,12 @@ function partScope(reference) {
   }
   throw Error('Part does not belong to this independent Source corpus');
 }
+// Сверяет переданные сжатые байты с записью исходного прогона перед распаковкой.
 export function verifyQuarterSourceStoredBytes(reference, stored) {
   const { kind, variant } = partScope(reference);
   return decodeStored(verifyQuarterSourcePartBinding(reference, kind, variant), stored);
 }
+// Выбирает привязку по ссылке на захват и читает одну проверенную часть.
 export function readQuarterSourcePart(reference) {
   const { kind, variant } = partScope(reference);
   return decode(verifyQuarterSourcePartBinding(reference, kind, variant));
@@ -165,6 +178,7 @@ export function verifyQuarterSourceManifest(value, kind = 'csr', variant = 'firs
     assert.deepEqual(row.observationErrors, []);
     assert.deepEqual(row.network.failures, []);
     assert(row.network.responses.every(response => response.status < 400));
+    // Привязывает часть к конкретному owner и фазе действия в исходном прогоне.
     const bind = (ref, phase) => verifyQuarterSourcePartBinding(ref, kind, variant,
       file + '.parts/' + row.id + '-' + phase + '.json');
     bind(row.initial, 'initial');
@@ -210,6 +224,8 @@ export function readQuarterSourceCase(id, variant = 'first') {
   assert(row, 'Unknown public Source quarter owner');
   return row;
 }
+// Разрешает идентификатор объекта и имя его свойства. Сохраняет сериализованное значение без
+// преобразования.
 function property(graph, identity, key) {
   const node = graph.objects.find(node => node.id === identity);
   assert(node, 'Missing actual raw object identity');
@@ -217,6 +233,7 @@ function property(graph, identity, key) {
   assert(found && Object.hasOwn(found, 'value'), 'Missing original data property ' + key);
   return found.value;
 }
+// Сверяет поля и identity даты с исходным графом и привязками к переданным значениям.
 function dateSnapshot(value, authored) {
   assert.equal(value.raw.root.ref, value.identity);
   const fields = ['$y', '$M', '$D', '$H', '$m', '$s', '$ms'];
@@ -232,6 +249,8 @@ function dateSnapshot(value, authored) {
     assert.equal(value.sameAsAuthored[name], value.identity === authored[name].identity);
   }
 }
+// Проверяет порядковый индекс и число фактических аргументов вызова, сохраняя исходный снимок
+// аргументов.
 function invocation(call, index, authored) {
   assert.equal(call.index, index, 'Monotonic invocation index');
   const matchingProperty = call.encodedArguments.properties.find(row => row.key === 'length');

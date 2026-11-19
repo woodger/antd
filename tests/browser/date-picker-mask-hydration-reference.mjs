@@ -4,7 +4,10 @@ import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
 
 const prefix = 'ant-design-date-picker-mask-hydration-';
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = file => new URL('./fixtures/' + file, import.meta.url);
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const metadataBytes = fs.readFileSync(fixture(prefix + 'source-manifest.json'));
 assert.equal(sha(metadataBytes), 'be9f73aecbcd370e59dc34afb300cfa0924f4cf99ec8fc3c9f3119a372665486');
@@ -19,6 +22,7 @@ for (const field of ['rawFieldsDropped', 'rawFieldsRewritten', 'normalizedFields
 assert.equal(metadata.profiles.length, 30);
 
 export function readMaskHydrationSourceManifest() { return structuredClone(metadata); }
+// Читает один документ захвата и сверяет исходный размер и хеш до возврата байтов.
 export function readMaskHydrationSourceEvidence(name) {
   const entry = metadata.documents[name];
   assert(entry, 'Unknown hydration Source evidence');

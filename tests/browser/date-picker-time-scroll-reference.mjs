@@ -3,7 +3,10 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
 
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = name => new URL('./fixtures/' + name, import.meta.url);
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const sha = value => createHash('sha256').update(value).digest('hex');
 const file = 'ant-design-date-picker-time-scroll-source-manifest.json';
 const bytes = readFileSync(fixture(file));

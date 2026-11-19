@@ -49,7 +49,10 @@ interface RepeatProof { mode: OwnStyleInitMode; path: string; bytes: number; sha
   first: { bytes: number; sha256: string }; repeat: { bytes: number; sha256: string };
   totalComputedArrays: number; customOrderPermutations: number; otherRawDifferences: number;
   allStandardNamesValuesPrioritiesAndOrderEqual: boolean; allCustomNamesValuesAndPrioritiesEqual: boolean }
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const hash = (value: Uint8Array) => createHash('sha256').update(value).digest('hex');
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
 const protocol = '345e89218b2c7a76172070d95cfa58d815db579997f65ded00596bf57b8b8351';
 const manifestBytes = readFileSync(fixture('ant-design-select-components-own-style-init-source-manifest.json'));

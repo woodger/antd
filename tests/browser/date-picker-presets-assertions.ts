@@ -45,6 +45,7 @@ function record(value: unknown): Dictionary {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Dictionary;
 }
+// Подтверждает форму массива, оставляя его элементы неизвестными до отдельной проверки.
 function array(value: unknown): unknown[] {
   assert(Array.isArray(value));
   return value;
@@ -52,6 +53,7 @@ function array(value: unknown): unknown[] {
 function property(graph: unknown, key: string) {
   return array(rawRoot(graph).properties).map(record).find(row => row.key === key)?.value;
 }
+// Ищет атрибут по имени. Отсутствующий атрибут остаётся null для сравнения снимков.
 function attribute(node: Pick<DatePickerPresetNode, 'attributes'> | null, name: string) {
   return node?.attributes.find(([key]) => key === name)?.[1] ?? null;
 }

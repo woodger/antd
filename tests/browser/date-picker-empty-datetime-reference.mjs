@@ -7,7 +7,10 @@ import { samples, counts } from './date-picker-empty-datetime-cases.mjs';
 const source = '.upstream/artifacts/date-picker-empty-datetime-proposal-v2/';
 const prefix = 'ant-design-date-picker-empty-datetime-';
 const protocolSHA = '5214ca6f831ded7c015998f8f119129aea1499d7124754b763977415602fc1d1';
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = name => new URL('./fixtures/' + name, import.meta.url);
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const metadataBytes = fs.readFileSync(fixture(prefix + 'source-manifest.json'));
 assert.equal(metadataBytes.length, 73371);
@@ -26,6 +29,8 @@ assert.equal(metadata.serialization.oneCompletePartAtATime, true);
 assert.equal(metadata.serialization.completeOriginalParts, 68);
 assert.equal(metadata.serialization.wholeManifestOrAfterCallByteEqualityClaimed, false);
 
+// Проверяет размеры и хеши сжатых и исходных байтов. Распаковка происходит между этими
+// проверками.
 function decodeStored(entry, stored) {
   assert.match(entry.fixture, new RegExp('^' + prefix + 'parts/[0-9a-f]{64}\\.json\\.gz$'));
   assert.equal(stored.length, entry.stored.bytes, 'Stored gzip byte count');
@@ -59,6 +64,8 @@ const scope = variant => {
   assert(['first', 'repeat'].includes(variant), 'Unknown independent Source capture');
   return source + 'csr-source-' + variant + '.json';
 };
+// Проверяет привязку части к конкретному прогону и исходным метаданным. При заданном пути сверяет
+// и слот действия.
 export function verifyEmptyDatetimeSourcePartBinding(reference, variant = 'first', expectedFile) {
   const base = scope(variant);
   assert.deepEqual(Object.keys(reference), ['rawJSONPart']);
@@ -113,6 +120,8 @@ export function verifyEmptyDatetimeSourceManifest(value, variant = 'first') {
     bind(row.late, 'late');
   }
 }
+// Разрешает идентификатор объекта и имя его свойства. Сохраняет сериализованное значение без
+// преобразования.
 function property(graph, ref, key) {
   const node = graph.objects.find(node => node.id === ref?.ref);
   assert(node, 'Actual raw object reference absent');

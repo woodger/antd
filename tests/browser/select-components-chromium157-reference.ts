@@ -18,8 +18,11 @@ interface Header { axis: string; mode: string; chromium: string; version: string
   protocolSha256: string; preservedReferences: number; status: string; errors: unknown[]; diagnostics: unknown[];
   archives: Array<{ byteEqual: boolean }> }
 export interface Chromium157Source<Value> { reference: Header; cases: Value[] }
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const hash = (value: Uint8Array | string) => createHash('sha256').update(value).digest('hex');
 export const selectComponentsSourceCaseSHA256 = (value: unknown) => hash(JSON.stringify(value));
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = (name: string) => new URL('./fixtures/' + name, import.meta.url);
 const manifestBytes = readFileSync(fixture('ant-design-select-components-chromium157-source-manifest.json'));
 export const selectComponentsChromium157ManifestSHA256 = 'f051a2c49a863bd30b9fbf7e6e5dd4605ce9ba486610ec65c7576b203c9b66cd';

@@ -19,10 +19,12 @@ export interface NativeEmptyDatetimePoint extends Pick<EmptyDatetimeSourcePoint,
   sameOwnerAsInitial: boolean;
 }
 
+// Сужает неизвестное значение до записи. null и массивы приводят к ошибке проверки.
 const object = (value: unknown): Record<string, unknown> => {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Record<string, unknown>;
 };
+// Подтверждает форму массива, оставляя его элементы неизвестными до отдельной проверки.
 const array = (value: unknown): unknown[] => {
   assert(Array.isArray(value));
   return value;

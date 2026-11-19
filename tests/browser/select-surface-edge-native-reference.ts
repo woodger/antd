@@ -44,6 +44,7 @@ interface Header {
   errors: unknown[];
   diagnostics: unknown[];
 }
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 const bytes = readFileSync(new URL(
   './fixtures/ant-design-select-surface-edge-reference.json',

@@ -3,7 +3,10 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
 
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = name => new URL('./fixtures/' + name, import.meta.url);
+// Возвращает SHA-256 в шестнадцатеричном виде для сверки зафиксированных данных.
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const rawMetadata = fs.readFileSync(fixture('ant-design-date-picker-render-hooks-source-manifest.json'));
 assert.equal(sha(rawMetadata), '4df99573380db77921cf00576aaaf04f66bee771315966792a0aa8f70d84aa1b');
@@ -82,6 +85,7 @@ function elementShape(encoded, depth = 0) {
     children: depth < 2 ? children.map(value => elementShape(value, depth + 1))
       : 'Whole descendant values retained in original raw argument graph.' };
 }
+// Ищет атрибут по имени. Отсутствующий атрибут остаётся null для сравнения снимков.
 const attr = (node, name) => node.attributes.find(row => row[0] === name)?.[1] ?? null;
 const hasClass = (node, name) => (attr(node, 'class') ?? '').split(' ').includes(name);
 export function deriveRenderHooksSourceFacts(point, tape) {

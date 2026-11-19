@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 
+// Ищет атрибут по имени. Отсутствующий атрибут остаётся null для сравнения снимков.
 const attr = (node, name) => node.attributes.find(row => row[0] === name)?.[1] ?? null;
 const props = value => Object.fromEntries(value.properties.map(row => [row.key, row.value]));
 const nonFocus = calls => calls.filter(call => !['focus', 'blur'].includes(call.name));

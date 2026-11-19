@@ -73,6 +73,7 @@ function record(value: unknown): Dictionary {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Dictionary;
 }
+// Подтверждает форму массива, оставляя его элементы неизвестными до отдельной проверки.
 function array(value: unknown): unknown[] {
   assert(Array.isArray(value));
   return value;

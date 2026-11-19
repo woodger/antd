@@ -4,6 +4,8 @@ import { gunzipSync } from 'node:zlib';
 import { digest, locateJSONRanges, extractFact, pointPaths, factLeaves } from './date-picker-mask-hydration-prefix-json.mjs';
 
 const prefix = 'ant-design-date-picker-mask-hydration-prefix-';
+// Разрешает путь к локальному снимку относительно модуля. Текущий рабочий каталог не влияет на
+// результат.
 const fixture = name => new URL('./fixtures/' + name, import.meta.url);
 const metadataBytes = fs.readFileSync(fixture(prefix + 'source-manifest.json'));
 assert.equal(
@@ -27,6 +29,7 @@ for (const field of ['rawFieldsDropped', 'rawFieldsRewritten', 'normalizedFields
   );
 }
 export function readMaskHydrationPrefixSourceManifest() { return structuredClone(metadata); }
+// Читает один документ захвата и сверяет исходный размер и хеш до возврата байтов.
 export function readMaskHydrationPrefixSourceEvidence(name) {
   const entry = metadata.documents[name];
   assert(entry, 'Unknown Source prefix evidence');

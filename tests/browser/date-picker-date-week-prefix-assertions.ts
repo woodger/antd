@@ -32,30 +32,37 @@ export const dateWeekPrefixBoundaries = Object.freeze({
   todayControl: 'Existing Native full-button calendar: Source Today A retains disabled:null and aria/class availability; Native Today BUTTON retains real disabled and accessible-name checks.'
 });
 const authoredNames: DateWeekPrefixAuthoredDateName[] = ['initialStart', 'initialEnd'];
+// Сужает неизвестное значение до записи. null и массивы приводят к ошибке проверки.
 const object = (value: unknown): Record<string, unknown> => {
   assert(value !== null && typeof value === 'object' && !Array.isArray(value));
   return value as Record<string, unknown>;
 };
+// Подтверждает форму массива, оставляя его элементы неизвестными до отдельной проверки.
 const array = (value: unknown): unknown[] => {
   assert(Array.isArray(value));
   return value;
 };
+// Читает собственные свойства сериализованного объекта и проверяет форму каждой строки.
 const properties = (value: unknown) => array(object(value).properties).map(object);
+// Извлекает значение по имени свойства. Отсутствующая запись считается неполным снимком.
 const property = (value: unknown, key: string) => {
   const row = properties(value).find(row => row.key === key);
   assert(row, 'Complete observed property ' + key);
   return row.value;
 };
+// Ищет исходный объект по идентификатору. Ссылка без объекта прерывает проверку снимка.
 const rawNode = (graph: unknown, ref: unknown) => {
   const node = array(object(graph).objects).map(object).find(node => node.id === ref);
   assert(node, 'Actual raw node binding');
   return node;
 };
+// Проходит путь от корня сериализованного графа, разрешая ссылки на каждом шаге.
 function rawAt(graph: unknown, path: Array<string | number>) {
   let value: unknown = object(graph).root;
   for (const key of path) value = property(rawNode(graph, object(value).ref), String(key));
   return value;
 }
+// Ищет атрибут по имени. Отсутствующий атрибут остаётся null для сравнения снимков.
 const attr = (surface: DateWeekPrefixSourceSurface, name: string) =>
   surface.attributes.find(row => row[0] === name)?.[1] ?? null;
 
@@ -85,6 +92,8 @@ export function createDateWeekPrefixProof() {
     variants: new Map<DateWeekPrefixSourceVariant, IdentityProof>(), points: 0,
     boundaries: dateWeekPrefixBoundaries, observations: [] as unknown[] };
 }
+// Проверяет соответствие identity в обе стороны, исключая слияние разных объектов в одной паре
+// снимков.
 function bindIdentity(
   actual: number,
   source: number,
