@@ -1,4 +1,6 @@
+// Разбирает десятичные строки, вычисляет точность и сохраняет числовые форматы MiniDecimal.
 // Числовые преобразования mini-decimal 1.0.1; MIT, LICENSE.rc-mini-decimal.
+// Отделяет знак и части числа, нормализуя отрицательный ноль.
 export function trimNumber(number: string) {
   let text = number.trim();
   let negative = text.startsWith('-');
@@ -20,12 +22,14 @@ export function trimNumber(number: string) {
   return { negative, negativeStr, trimStr, integerStr, decimalStr, fullStr: negativeStr + trimStr };
 }
 
+// Проверяет допустимую числовую строку с обозначением степени.
 export function isScientificNumber(number: string | number) {
   const text = String(number);
 
   return !Number.isNaN(Number(text)) && text.includes('e');
 }
 
+// Учитывает десятичные знаки и показатель степени при оценке точности.
 export function getNumberPrecision(number: string | number | undefined) {
   const text = String(number);
 
@@ -41,6 +45,7 @@ export function getNumberPrecision(number: string | number | undefined) {
   return text.includes('.') && validateNumber(text) ? text.length - text.indexOf('.') - 1 : 0;
 }
 
+// Разворачивает экспоненциальное представление и применяет безопасный fallback без BigInt.
 export function numberToString(number: number) {
   let text = String(number);
 
@@ -58,6 +63,7 @@ export function numberToString(number: number) {
   return trimNumber(text).fullStr;
 }
 
+// Допускает редактируемые формы с ведущей или конечной десятичной точкой.
 export function validateNumber(number: string | number | null | undefined) {
   if (typeof number === 'number') {
     return !Number.isNaN(number);
@@ -71,10 +77,12 @@ export function validateNumber(number: string | number | null | undefined) {
     || /^\s*-?\.\d+\s*$/.test(number);
 }
 
+// Отличает пустой ввод от нуля и значения NaN.
 export function isEmptyDecimal(value: string | number | null | undefined) {
   return !value && value !== 0 && !Number.isNaN(value) || !String(value).trim();
 }
 
+// Увеличивает шаг Shift на порядок через десятичную строку.
 export function getDecupleSteps(step: string | number) {
   const text = typeof step === 'number' ? numberToString(step) : trimNumber(step).fullStr;
 

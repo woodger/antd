@@ -1,3 +1,5 @@
+// Преобразует цвета между RGB, HSL, HSV и строками CSS. Вычисляемые свойства кэшируются на
+// экземпляре.
 import { colorNames } from './color-names';
 
 export interface ColorRgb { r: number; g: number; b: number; a: number; }
@@ -7,10 +9,12 @@ type OptionalAlpha<T extends { a: number; }> = Omit<T, 'a'> & { a?: number; };
 export type FastColorInput = string | OptionalAlpha<ColorRgb> | OptionalAlpha<ColorHsv>
   | OptionalAlpha<ColorHsl> | FastColor | null | undefined;
 
+// Ограничивает каналы RGB и alpha их собственным диапазоном.
 function limit(value: number, max = 255) {
   return value > max ? max : value < 0 ? 0 : value;
 }
 
+// Разбирает аргументы CSS-функции и делегирует первые три канала выбранной цветовой модели.
 function splitColor(value: string, parse: (number: number, text: string, index: number) => number) {
   const parts = value.replace(/^[^(]*\((.*)/, '$1').replace(/\).*/, '')
     .match(/\d*\.?\d+%?/g) || [];
@@ -37,6 +41,7 @@ export class FastColor {
   private maximum?: number;
   private minimum?: number;
 
+  // Принимает строки и поддерживаемые цветовые модели, копируя каналы и доступные метаданные.
   constructor(input: FastColorInput) {
     if (!input) {
       return;
@@ -94,20 +99,24 @@ export class FastColor {
     }
   }
 
+  // Создаёт копию того же подкласса и переносит доступные кэши цвета.
   clone(): this {
     return new (this.constructor as typeof FastColor)(this) as this;
   }
 
+  // Меняет прозрачность копии с ограничением alpha от нуля до единицы.
   setA(value: number): this {
     const result = this.clone();
     result.a = limit(value, 1);
     return result;
   }
 
+  // Строит новый цвет из прежних HSV с заменой hue.
   setHue(value: number): this {
     return new (this.constructor as typeof FastColor)({ ...this.toHsv(), h: value }) as this;
   }
 
+  // Вычисляет сектор hue по максимальному каналу. У серого цвета угол равен нулю.
   getHue(): number {
     if (this.hue === undefined) {
       const delta = this.getMax() - this.getMin();
@@ -119,6 +128,7 @@ export class FastColor {
     return this.hue;
   }
 
+  // Кэширует насыщенность HSV относительно максимального RGB-канала.
   getHSVSaturation(): number {
     if (this.hsvSaturation === undefined) {
       const delta = this.getMax() - this.getMin();
@@ -127,6 +137,7 @@ export class FastColor {
     return this.hsvSaturation;
   }
 
+  // Кэширует насыщенность HSL с поправкой на светлоту.
   getHSLSaturation(): number {
     if (this.hslSaturation === undefined) {
       const delta = this.getMax() - this.getMin();
@@ -135,10 +146,12 @@ export class FastColor {
     return this.hslSaturation;
   }
 
+  // Возвращает нормализованное среднее крайних RGB-каналов.
   getLightness(): number {
     return this.lightness ??= (this.getMax() + this.getMin()) / 510;
   }
 
+  // Возвращает яркость HSV из наибольшего RGB-канала.
   getValue(): number {
     return this.value ??= this.getMax() / 255;
   }
@@ -153,6 +166,7 @@ export class FastColor {
     return new (this.constructor as typeof FastColor)({ h, s, l, a: this.a }) as this;
   }
 
+  // Увеличивает светлоту до единицы, сохраняя исходный переход HSV saturation в HSL.
   lighten(amount = 10): this {
     const h = this.getHue();
     const s = this.getHSVSaturation();
@@ -162,9 +176,11 @@ export class FastColor {
     return new (this.constructor as typeof FastColor)({ h, s, l, a: this.a }) as this;
   }
 
+  // Интерполирует каналы с отдельным округлением alpha до сотых.
   mix(input: FastColorInput, amount = 50): this {
     const color = new (this.constructor as typeof FastColor)(input);
     const ratio = amount / 100;
+    // Интерполирует один канал с тем же коэффициентом, что и остальные.
     const calc = (key: keyof ColorRgb) => (color[key] - this[key]) * ratio + this[key];
     return new (this.constructor as typeof FastColor)({
       r: Math.round(calc('r')),
@@ -174,9 +190,11 @@ export class FastColor {
     }) as this;
   }
 
+  // Вычисляет результат альфа-композиции поверх переданного фонового цвета.
   onBackground(input: FastColorInput): this {
     const color = new (this.constructor as typeof FastColor)(input);
     const alpha = this.a + color.a * (1 - this.a);
+    // Вычисляет канал результата с учётом alpha исходного и фонового цветов.
     const calc = (key: 'r' | 'g' | 'b') =>
       Math.round((this[key] * this.a + color[key] * color.a * (1 - this.a)) / alpha);
     return new (this.constructor as typeof FastColor)({
@@ -184,6 +202,8 @@ export class FastColor {
     }) as this;
   }
 
+  // Добавляет канал alpha, когда его числовое значение находится в диапазоне от 0 до 1 без
+  // верхней границы.
   toHexString(): string {
     let result = '#';
     for (const channel of [this.r, this.g, this.b]) {
@@ -197,33 +217,41 @@ export class FastColor {
     return result;
   }
 
+  // Собирает HSV и исходную прозрачность, используя кэш экземпляра.
   toHsv(): ColorHsv {
     return { h: this.getHue(), s: this.getHSVSaturation(), v: this.getValue(), a: this.a };
   }
 
+  // Собирает HSL и исходную прозрачность, используя кэш экземпляра.
   toHsl(): ColorHsl {
     return { h: this.getHue(), s: this.getHSLSaturation(), l: this.getLightness(), a: this.a };
   }
 
+  // Возвращает независимую запись каналов без вычисления других моделей.
   toRgb(): ColorRgb {
     return { r: this.r, g: this.g, b: this.b, a: this.a };
   }
 
+  // Использует rgba при alpha, отличной от единицы.
   toRgbString(): string {
     return this.a !== 1 ? `rgba(${this.r},${this.g},${this.b},${this.a})`
       : `rgb(${this.r},${this.g},${this.b})`;
   }
 
+  // Кэширует максимальный канал для производных HSV и HSL.
   private getMax(): number {
     return this.maximum ??= Math.max(this.r, this.g, this.b);
   }
 
+  // Кэширует минимальный канал для расчёта размаха RGB.
   private getMin(): number {
     return this.minimum ??= Math.min(this.r, this.g, this.b);
   }
 
+  // Читает короткие и полные HEX-каналы, включая необязательную прозрачность.
   private fromHex(text: string) {
     const hex = text.replace('#', '');
+    // Собирает байт из пары цифр. Для краткой формы повторяет одну цифру.
     const connect = (first: number, second?: number) =>
       parseInt(hex[first] + hex[second || first], 16);
     if (hex.length < 6) {
@@ -240,6 +268,7 @@ export class FastColor {
     }
   }
 
+  // Нормализует hue по кругу и пересчитывает RGB с округлением каналов.
   private fromHsl({ h: raw, s, l, a }: OptionalAlpha<ColorHsl>) {
     const h = (raw % 360 + 360) % 360;
     this.hue = h;
@@ -286,6 +315,7 @@ export class FastColor {
     this.b = Math.round((b + correction) * 255);
   }
 
+  // Пересчитывает RGB из сектора HSV и сохраняет исходные насыщенность и яркость.
   private fromHsv({ h: raw, s, v, a }: OptionalAlpha<ColorHsv>) {
     const h = (raw % 360 + 360) % 360;
     this.hue = h;

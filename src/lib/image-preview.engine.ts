@@ -1,5 +1,8 @@
+// Вычисляет масштабирование и границы положения viewer. Входные размеры приходят из измерений
+// DOM.
 import type { ImageTransform } from './image.types';
 
+// Создаёт независимое исходное положение без зума, вращения и отражения.
 export function initialImageTransform(): ImageTransform {
   return { x: 0, y: 0, rotate: 0, scale: 1, flipX: false, flipY: false };
 }
@@ -12,6 +15,8 @@ export interface ImageGeometry {
   offsetTop: number;
 }
 
+// Сохраняет точку zoom относительно viewport. Touch допускает промежуточный масштаб ниже
+// minScale.
 export function zoomImage(
   transform: ImageTransform,
   ratio: number,
@@ -47,11 +52,13 @@ export function zoomImage(
   return { ...transform, x: nextX, y: nextY, scale };
 }
 
+// Переводит wheel delta в ограниченный множитель с направлением увеличения.
 export function imageWheelRatio(deltaY: number, step: number) {
   const ratio = 1 + Math.min(Math.abs(deltaY / 100), 1) * step;
   return deltaY > 0 ? 1 / ratio : ratio;
 }
 
+// Корректирует смещение после жеста, возвращая полностью помещающееся изображение к центру.
 export function fixImagePosition(
   width: number,
   height: number,
@@ -62,6 +69,7 @@ export function fixImagePosition(
   if (width <= viewport.width && height <= viewport.height) {
     return { x: 0, y: 0 };
   }
+  // Ограничивает смещение по одной оси с учётом размера ближайшей границы.
   function fix(key: 'x' | 'y', start: number, size: number, client: number) {
     const offset = (size - client) / 2;
     if (size > client) {
@@ -84,10 +92,12 @@ export interface ImagePoint {
   x: number;
   y: number;
 }
+// Считает масштаб по расстоянию пальцев и выбирает взвешенную точку привязки.
 export function imageTouchZoom(
   old: readonly [ImagePoint, ImagePoint],
   next: readonly [ImagePoint, ImagePoint]
 ) {
+  // Измеряет расстояние в координатах viewport, общих для обеих точек жеста.
   const distance = (a: ImagePoint, b: ImagePoint) => Math.hypot(a.x - b.x, a.y - b.y);
   const first = distance(old[0], next[0]);
   const second = distance(old[1], next[1]);

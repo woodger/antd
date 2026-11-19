@@ -1,8 +1,11 @@
+// Раскладывает записи Transfer по ключам, подготавливает отображение и вычисляет новые наборы
+// selection.
 import type {
   TransferContent, TransferDirection, TransferKey, TransferRenderedItem, TransferRenderResult
 } from './transfer.types';
 import { getPaginationItems } from './pagination.engine';
 
+// Принимает только поддерживаемые ключи и сообщает об отсутствии rowKey для остальных записей.
 export function transferKey(record: object): TransferKey {
   if ('key' in record && ['string', 'number', 'bigint'].includes(typeof record.key)) {
     return record.key as TransferKey;
@@ -11,10 +14,12 @@ export function transferKey(record: object): TransferKey {
   throw new TypeError('Transfer records require a string, number or bigint key, or rowKey.');
 }
 
+// Использует флаг самой записи для исключения из переносимых элементов.
 export function transferDisabled(record: object): boolean {
   return 'disabled' in record && Boolean(record.disabled);
 }
 
+// Сохраняет исходный порядок левого списка и порядок targetKeys справа.
 export function transferData<RecordType extends object>(
   dataSource: readonly RecordType[],
   targetKeys: readonly TransferKey[],
@@ -39,6 +44,7 @@ export function transferData<RecordType extends object>(
   return { all, left, right: right.filter((record): record is RecordType => record !== undefined) };
 }
 
+// Сохраняет только выбранные ключи, относящиеся к переданной стороне.
 export function transferSelection(
   selectedKeys: readonly TransferKey[],
   records: readonly object[]
@@ -47,6 +53,7 @@ export function transferSelection(
   return selectedKeys.filter(key => keys.has(key));
 }
 
+// Готовит независимые значения для отображения и поиска с приоритетом filterOption.
 export function transferRender<RecordType extends object>(
   records: readonly RecordType[],
   render?: (record: RecordType) => TransferRenderResult<RecordType>,
@@ -82,6 +89,7 @@ export function transferRender<RecordType extends object>(
   return result;
 }
 
+// Передаёт moveKeys в порядке выбора и пропускает disabled записи.
 export function transferMove(
   targetKeys: readonly TransferKey[],
   selectedKeys: readonly TransferKey[],
@@ -100,6 +108,7 @@ export function transferMove(
   };
 }
 
+// Заменяет, добавляет или удаляет ровно переданные ключи.
 export function transferSelectAll(
   selected: readonly TransferKey[],
   keys: readonly TransferKey[],

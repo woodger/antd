@@ -1,3 +1,4 @@
+// Выбирает реализацию MiniDecimal и выполняет округление при записи значения InputNumber.
 import { BigIntDecimal } from './decimal-bigint.engine';
 import { NumberDecimal } from './decimal-number.engine';
 import { trimNumber } from './decimal-format.engine';
@@ -15,6 +16,7 @@ export interface MiniDecimal {
   toString(safe?: boolean): string;
 }
 
+// Предпочитает точную реализацию BigInt при наличии поддержки runtime.
 export function getMiniDecimal(value: DecimalValue): MiniDecimal {
   return typeof BigInt === 'function' ? new BigIntDecimal(value) : new NumberDecimal(value);
 }

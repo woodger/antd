@@ -1,3 +1,6 @@
+// Передаёт фокус доступному соседу, только когда уведомление ещё владело им.
+// Управляет popup-поверхностью уведомлений, её motion и возвратом фокуса. Наблюдение привязано к
+// документу владельца.
 export function focusAfterNotice(root: HTMLElement, ownedFocus: boolean) {
   if (!ownedFocus) {
     return;
@@ -45,6 +48,7 @@ export function focusAfterNotice(root: HTMLElement, ownedFocus: boolean) {
   (next ?? previous ?? dialog)?.focus({ preventScroll: true });
 }
 
+// Подключает видимость и viewport к состоянию anchor и top-layer диалога.
 export function connectNoticeSurface(
   surface: HTMLElement,
   anchor: HTMLElement,
@@ -56,6 +60,7 @@ export function connectNoticeSurface(
   let disposed = false;
   let shown = false;
 
+  // Измеряет доступность anchor и уведомляет только об изменении видимости.
   function update() {
     if (disposed) {
       return;
@@ -106,6 +111,7 @@ export function connectNoticeSurface(
     }
   }
 
+  // Объединяет browser callbacks в один animation frame.
   function schedule() {
     if (!disposed && !frame) {
       frame = view.requestAnimationFrame(() => {
@@ -157,6 +163,7 @@ export function connectNoticeSurface(
   };
 }
 
+// Запускает motion с вычисленной длительностью и поддержкой reduced motion.
 export function animateNotice(
   node: HTMLElement,
   leaving: boolean,
@@ -173,18 +180,21 @@ export function animateNotice(
   let motion: Animation | undefined;
   let disposed = false;
 
+  // Отменяет анимацию и снимает слушатель изменения reduced motion.
   function dispose() {
     disposed = true;
     reducedMotion.removeEventListener('change', reduce);
     motion?.cancel();
     motion = undefined;
   }
+  // Завершает активную анимацию перед вызовом callback владельца.
   function finish() {
     if (!disposed) {
       dispose();
       complete();
     }
   }
+  // При включении reduced motion переводит текущую анимацию в конечное состояние.
   function reduce() {
     if (reducedMotion.matches)
       motion?.finish();

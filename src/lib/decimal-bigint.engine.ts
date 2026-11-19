@@ -1,3 +1,5 @@
+// Хранит знак, целую и дробную части MiniDecimal раздельно. Общий scale используется только для
+// выполнения арифметики.
 import { isEmptyDecimal, isScientificNumber, numberToString, trimNumber,
   validateNumber } from './decimal-format.engine';
 import type { DecimalValue, MiniDecimal } from './mini-decimal.engine';
@@ -12,6 +14,8 @@ export class BigIntDecimal implements MiniDecimal {
   empty?: boolean;
   nan?: boolean;
 
+  // Отделяет пустое значение от невалидного. Целая и дробная части читаются после нормализации
+  // строки.
   constructor(value: DecimalValue) {
     if (isEmptyDecimal(value)) {
       this.empty = true;
@@ -43,22 +47,27 @@ export class BigIntDecimal implements MiniDecimal {
     }
   }
 
+  // Добавляет знак только для отрицательно представленного значения.
   private getMark() {
     return this.negative ? '-' : '';
   }
 
+  // Сериализует целую часть экземпляра после проверки его валидности.
   private getIntegerStr() {
     return this.integer!.toString();
   }
 
+  // Восстанавливает ведущие нули дробной части по сохранённому scale.
   private getDecimalStr() {
     return this.decimal!.toString().padStart(this.decimalLen!, '0');
   }
 
+  // Переводит значение в целое число с общим scale, дополняя дробь справа.
   private alignDecimal(length: number) {
     return BigInt(this.getMark() + this.getIntegerStr() + this.getDecimalStr().padEnd(length, '0'));
   }
 
+  // Копирует нормализованную запись и инвертирует знак, не изменяя получателя.
   negate() {
     const clone = new BigIntDecimal(this.toString());
     clone.negative = !clone.negative;
@@ -66,6 +75,7 @@ export class BigIntDecimal implements MiniDecimal {
     return clone;
   }
 
+  // Складывает целые с общим scale и восстанавливает положение дробной точки.
   add(value: DecimalValue): BigIntDecimal {
     if (this.isInvalidate()) {
       return new BigIntDecimal(value);
@@ -84,30 +94,37 @@ export class BigIntDecimal implements MiniDecimal {
     return new BigIntDecimal(`${hydrated.slice(0, -length)}.${hydrated.slice(-length)}`);
   }
 
+  // Обозначает отсутствие введённого значения независимо от результата parse.
   isEmpty() {
     return this.empty;
   }
 
+  // Обозначает ошибку разбора в отдельном флаге.
   isNaN() {
     return this.nan;
   }
 
+  // Проверяет состояния, для которых части числа не были созданы.
   isInvalidate() {
     return this.isEmpty() || this.isNaN();
   }
 
+  // Сравнивает нормализованные десятичные строки без потери точности через number.
   equals(target: MiniDecimal | null | undefined) {
     return this.toString() === target?.toString();
   }
 
+  // Сравнивает знак разности, вычисленной с общим scale.
   lessEquals(target: MiniDecimal) {
     return this.add(target.negate().toString()).toNumber() <= 0;
   }
 
+  // Преобразует нормализованную строку в число и сохраняет NaN для ошибки разбора.
   toNumber() {
     return this.isNaN() ? NaN : Number(this.toString());
   }
 
+  // Возвращает исходный текст в raw-режиме и убирает незначащие нули в safe-режиме.
   toString(safe = true) {
     if (!safe) {
       return this.origin;

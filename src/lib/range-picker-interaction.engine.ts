@@ -1,3 +1,5 @@
+// Ведёт состояние взаимодействия с полями диапазона. Решение о переходе отделено от публикации,
+// фокуса и сброса.
 // Переходы useRangeValueChange из rc-picker 1.12.2; MIT, vendor/LICENSE.rc-picker.
 export type RangeInteractionSource =
   'field-switch'
@@ -10,6 +12,7 @@ export type RangeInteractionSource =
   | 'remove'
   | 'popupClose'
   | 'esc';
+// Создаёт отдельное состояние редактирования для одного RangePicker.
 export function createRangeInteraction<Value>(options: {
   fieldCount: () => number;
   needConfirm: () => boolean;
@@ -26,17 +29,21 @@ export function createRangeInteraction<Value>(options: {
   let isLastInput = false;
   let current: number | null = null;
   let lastValid = 0;
+  // Читает редактируемое поле. Null используется между взаимодействиями.
   const getCurrentIndex = () => current;
+  // Сохраняет последнюю реальную позицию даже после сброса текущего поля.
   const setCurrentIndex = (value: number | null) => {
     current = value;
     if (value !== null)
       lastValid = value;
   };
   let forceFocus = false;
+  // Запоминает необходимость перевести фокус после перехода.
   const setForceFocus = (value: boolean) => {
     forceFocus = value;
   };
 
+  // Сбрасывает состояние взаимодействия и подтверждения, сохраняя последнюю реальную позицию.
   const reset = () => {
     triggeredFields = [];
     confirmedIndex = null;
@@ -44,6 +51,7 @@ export function createRangeInteraction<Value>(options: {
     setCurrentIndex(null);
     setForceFocus(false);
   };
+  // Добавляет поле в порядке действий или обновляет его modified-флаг.
   const recordTriggeredField = (index: number, modified?: boolean) => {
     const field = triggeredFields.find(item => item.index === index);
     if (field) {
@@ -58,6 +66,7 @@ export function createRangeInteraction<Value>(options: {
       }];
     }
   };
+  // Публикует выбранное поле и завершает взаимодействие, когда обработаны все поля.
   const submitField = (index: number) => {
     recordTriggeredField(index);
     const allFieldsTriggered = triggeredFields.length >= options.fieldCount();
@@ -67,6 +76,7 @@ export function createRangeInteraction<Value>(options: {
     }
     return allFieldsTriggered;
   };
+  // Выбирает команду по источнику действия, пустому значению и needConfirm.
   const resolveAction = (
     currentIndex: number | null,
     index: number,
@@ -143,6 +153,7 @@ export function createRangeInteraction<Value>(options: {
     }
     return 'abort';
   };
+  // Применяет команду к текущему взаимодействию, публикуя draft до перехода фокуса.
   const triggerChange = (index: number, source: RangeInteractionSource, value?: Value | null) => {
     let currentIndex = getCurrentIndex();
     if (source !== 'popupClose') {
@@ -246,15 +257,19 @@ export function createRangeInteraction<Value>(options: {
   };
 
   return {
+    // Сообщает текущее поле, пока идёт взаимодействие.
     get currentIndex() {
       return current;
     },
+    // Сохраняет индекс для панели и после закрытия текущего взаимодействия.
     get activeIndex() {
       return current ?? lastValid;
     },
+    // Сообщает владельцу, требуется ли явный фокус при автоматическом переходе.
     get forceFocus() {
       return forceFocus;
     },
+    // Возвращает индексы без внутренних признаков modified.
     get triggeredFields() {
       return triggeredFields.map(field => field.index);
     },

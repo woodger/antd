@@ -1,3 +1,5 @@
+// Индексирует пункты Menu и вычисляет команды навигации. Группы влияют на оформление, ключи
+// действий относятся к пунктам и подменю.
 import type { MenuItemType, MenuItem, MenuSubMenu, MenuMode } from './menu.types';
 
 export interface MenuEntry {
@@ -10,9 +12,11 @@ export interface MenuEntry {
   children: MenuEntry[];
 }
 
+// Строит дерево и карту ключей действий для событий и поиска родителей.
 export function buildMenuEntries(items: readonly MenuItemType[]) {
   const entries = new Map<string, MenuEntry>();
 
+  // Разворачивает путь пункта, исключая группу из цепочки родителей её элементов.
   function build(list: readonly MenuItemType[], parent?: MenuEntry): MenuEntry[] {
     return list.flatMap((item, index) => {
       if (!item) {
@@ -44,6 +48,7 @@ export function buildMenuEntries(items: readonly MenuItemType[]) {
   return { roots, entries };
 }
 
+// Собирает один уровень навигации, разворачивая группы и пропуская разделители.
 export function menuLevel(items: readonly MenuEntry[]): MenuEntry[] {
   return items.flatMap(
     entry => entry.kind === 'group'
@@ -52,6 +57,7 @@ export function menuLevel(items: readonly MenuEntry[]): MenuEntry[] {
   );
 }
 
+// Включает потомков открытых inline веток в порядок клавиатуры.
 export function menuVisible(
   items: readonly MenuEntry[],
   open: readonly string[],
@@ -65,6 +71,7 @@ export function menuVisible(
   );
 }
 
+// Удаляет ключи дочерних popup при закрытии ветки вне inline.
 export function menuOpenKeys(
   keys: readonly string[],
   entry: MenuEntry,
@@ -81,12 +88,14 @@ export function menuOpenKeys(
   return next;
 }
 
+// Проверяет принадлежность ключа одному из вложенных подменю.
 function isMenuDescendant(key: string, entry: MenuEntry): boolean {
   return entry.children.some(
     child => (child.key === key && child.kind === 'submenu') || isMenuDescendant(key, child)
   );
 }
 
+// Выбирает новый набор ключей и отмечает повторное действие над выбранным пунктом.
 export function menuSelection(keys: readonly string[], key: string, multiple: boolean) {
   const existing = keys.includes(key);
   return {
@@ -95,6 +104,7 @@ export function menuSelection(keys: readonly string[], key: string, multiple: bo
   };
 }
 
+// Сопоставляет клавишу с действием режима Menu с учётом направления RTL.
 export function menuKeyboardAction(
   mode: MenuMode,
   root: boolean,
@@ -126,9 +136,11 @@ export function menuKeyboardAction(
         : key === 'Enter' ? 'children' : key === 'Escape' ? 'parent' : null;
 }
 
+// Переводит индексированную запись kind=item в контракт элемента.
 export function menuItem(entry: MenuEntry): MenuItem {
   return entry.item as MenuItem;
 }
+// Переводит индексированную запись kind=submenu в контракт подменю.
 export function menuSubMenu(entry: MenuEntry): MenuSubMenu {
   return entry.item as MenuSubMenu;
 }
