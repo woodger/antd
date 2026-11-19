@@ -6,6 +6,9 @@ import {
   calendarCells,
   pickerCalendarValue,
   samePickerPanelValue,
+  offsetPickerPanel,
+  samePickerPanel,
+  pickerPanelDateDisabled,
   pickerFormats,
   parsePicker,
   formatPicker,
@@ -16,6 +19,56 @@ import {
 } from './date-picker.engine';
 dayjs.extend(utc);
 describe('DatePicker date adapter and input', () => {
+  it('uses terminal period defaults and preserves explicit formats', () => {
+    expect(pickerFormats({ picker: 'month', showTime: true })).toEqual(['YYYY-MM']);
+    expect(pickerFormats({ picker: 'year', showTime: true })).toEqual(['YYYY']);
+    expect(pickerFormats({ picker: 'month' }, { fieldMonthFormat: 'YYYY/MM' }))
+      .toEqual(['YYYY/MM']);
+    expect(pickerFormats({ picker: 'year' }, { fieldYearFormat: '[Y ]YYYY' }))
+      .toEqual(['[Y ]YYYY']);
+    expect(pickerFormats({ picker: 'month', format: 'MM/YYYY' })).toEqual(['MM/YYYY']);
+  });
+  it('compares picker values by terminal grain while retaining complete timestamps', () => {
+    const value = dayjs.utc('2024-05-20T16:37:59.456Z');
+    const earlier = value.date(10).hour(8);
+
+    expect(samePickerPanelValue(value, earlier, false, 'month')).toBe(true);
+    expect(samePickerPanelValue(value, earlier.month(1), false, 'year')).toBe(true);
+    expect(samePickerPanelValue(value, earlier, false)).toBe(false);
+    expect(samePickerPanelValue(value, value.add(1, 'year'), false, 'year')).toBe(false);
+    expect(value.toISOString()).toBe('2024-05-20T16:37:59.456Z');
+  });
+  it('offsets terminal panels by a month, year or decade without clearing hidden fields', () => {
+    const value = dayjs.utc('2024-02-29T16:37:59.456Z');
+
+    expect(offsetPickerPanel(value, 'date', 1).toISOString()).toBe('2024-03-29T16:37:59.456Z');
+    expect(offsetPickerPanel(value, 'month', 1).toISOString()).toBe('2025-02-28T16:37:59.456Z');
+    expect(offsetPickerPanel(value, 'year', 1).toISOString()).toBe('2034-02-28T16:37:59.456Z');
+    expect(samePickerPanel(value, value.month(11), 'month')).toBe(true);
+    expect(samePickerPanel(value, value.year(2029), 'year')).toBe(true);
+    expect(samePickerPanel(value, value.year(2030), 'year')).toBe(false);
+    expect(value.toISOString()).toBe('2024-02-29T16:37:59.456Z');
+  });
+  it('disables a whole period only when both boundary probes reject it', () => {
+    const value = dayjs('2024-02-29T00:00:00.000');
+    const calls: string[] = [];
+    const reject = (date: typeof value) => {
+      calls.push(date.format('YYYY-MM-DD'));
+      return true;
+    };
+
+    expect(pickerPanelDateDisabled(value, { disabledDate: reject }, 'month')).toBe(true);
+    expect(calls).toEqual(['2024-02-01', '2024-02-29']);
+    calls.length = 0;
+    expect(pickerPanelDateDisabled(value, { disabledDate: date => {
+      calls.push(date.format('YYYY-MM-DD'));
+      return false;
+    } }, 'year')).toBe(false);
+    expect(calls).toEqual(['2024-01-01']);
+    expect(pickerDateDisabled(value.date(1), { minDate: value.date(15) }, 'month')).toBe(false);
+    expect(pickerPanelDateDisabled(value, { minDate: value.year(2022) }, 'decade')).toBe(false);
+  });
+
   it('strictly parses configured formats and rejects overflow, including leap days', () => {
     expect(parsePicker('2024-02-29', 'en_US', ['YYYY-MM-DD'])?.date()).toBe(29);
     expect(parsePicker('2025-02-29', 'en_US', ['YYYY-MM-DD'])).toBeNull();

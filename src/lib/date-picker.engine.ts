@@ -3,15 +3,18 @@ import { dayjsGenerateConfig as date } from './date-picker-dayjs.engine';
 import type {
   DatePickerFormat,
   DatePickerMode,
+  DatePickerPicker,
   DatePickerProps,
   DatePickerTimeConfig
 } from './date-picker.types';
 
 export function pickerFormats(
-  props: Pick<DatePickerProps, 'format' | 'showTime'>,
+  props: Pick<DatePickerProps, 'format' | 'showTime' | 'picker'>,
   locale: NonNullable<DatePickerProps['locale']>['lang'] = {}
 ): DatePickerFormat[] {
   if (props.format) return Array.isArray(props.format) ? props.format : [props.format];
+  if (props.picker === 'month') return [locale.fieldMonthFormat ?? 'YYYY-MM'];
+  if (props.picker === 'year') return [locale.fieldYearFormat ?? 'YYYY'];
   if (!props.showTime) return [locale.fieldDateFormat ?? 'YYYY-MM-DD'];
   const config = typeof props.showTime === 'object' ? props.showTime : {};
   const columns = timeColumns(config, 'HH:mm:ss');
@@ -52,10 +55,22 @@ export function pickerCalendarValue(value: Dayjs, template?: Dayjs): Dayjs {
     .second(template?.second() ?? 0).millisecond(template?.millisecond() ?? 0);
 }
 // rc-picker compares date panels by Y/M/D and datetime panels by all wall fields.
-export function samePickerPanelValue(a: Dayjs, b: Dayjs, datetime: boolean): boolean {
+export function samePickerPanelValue(
+  a: Dayjs, b: Dayjs, datetime: boolean, picker: DatePickerPicker = 'date'
+): boolean {
+  if (picker === 'year') return a.year() === b.year();
+  if (picker === 'month') return a.year() === b.year() && a.month() === b.month();
   return a.year() === b.year() && a.month() === b.month() && a.date() === b.date()
     && (!datetime || a.hour() === b.hour() && a.minute() === b.minute()
       && a.second() === b.second() && a.millisecond() === b.millisecond());
+}
+export function offsetPickerPanel(value: Dayjs, picker: DatePickerPicker, amount: number): Dayjs {
+  return picker === 'date' ? value.add(amount, 'month')
+    : value.add(amount * (picker === 'month' ? 1 : 10), 'year');
+}
+export function samePickerPanel(a: Dayjs, b: Dayjs, picker: DatePickerPicker): boolean {
+  return picker === 'year' ? Math.floor(a.year() / 10) === Math.floor(b.year() / 10)
+    : a.isSame(b, picker === 'month' ? 'year' : 'month');
 }
 export function calendarCells(panel: Dayjs, mode: DatePickerMode, locale: string): Dayjs[] {
   if (mode === 'date') {
@@ -75,11 +90,15 @@ export function pickerDateDisabled(
   mode: DatePickerMode = 'date'
 ): boolean {
   const unit = mode === 'date' ? 'day' : mode === 'month' ? 'month' : 'year';
+  const period = mode === 'decade' ? value.year(Math.floor(value.year() / 10) * 10) : value;
+  const first = period.startOf(unit);
+  const last = mode === 'decade' ? first.add(10, 'year').add(-1, 'millisecond')
+    : period.endOf(unit);
   return Boolean(
     props.minDate
-    && value.endOf(unit).isBefore(props.minDate.startOf('day'))
+    && last.isBefore(props.minDate.startOf('day'))
     || props.maxDate
-    && value.startOf(unit).isAfter(
+    && first.isAfter(
       props.maxDate.endOf('day')
     )
     || props.disabledDate?.(
@@ -87,6 +106,19 @@ export function pickerDateDisabled(
       { type: mode }
     )
   );
+}
+export function pickerPanelDateDisabled(
+  value: Dayjs,
+  props: Pick<DatePickerProps, 'minDate' | 'maxDate' | 'disabledDate'>,
+  mode: DatePickerMode
+): boolean {
+  if (mode === 'date') return pickerDateDisabled(value, props, mode);
+  const start = mode === 'month' ? value.date(1)
+    : value.month(0).date(1).year(mode === 'decade'
+      ? Math.floor(value.year() / 10) * 10 : value.year());
+  const end = mode === 'month' ? start.add(1, 'month').add(-1, 'day')
+    : start.add(mode === 'decade' ? 10 : 1, 'year').add(-1, 'day');
+  return pickerDateDisabled(start, props, mode) && pickerDateDisabled(end, props, mode);
 }
 export function pickerTimeDisabled(
   value: Dayjs,

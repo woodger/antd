@@ -6171,7 +6171,7 @@
       "name": "DatePicker",
       "category": "data-entry",
       "scope": "target",
-      "scopeReason": "Single DatePicker и RangePicker date/showTime по контракту Dayjs и исходной машине rc-picker; дополнительные picker/config API отмечены отдельно.",
+      "scopeReason": "DatePicker и RangePicker date/showTime/month/year с Dayjs по исходной машине rc-picker; остальные picker/config API отмечены отдельно.",
       "upstreamPath": "components/date-picker",
       "reviewedRevision": "984592267de88fbf9cdaecc96a56629e721c709d",
       "exports": [
@@ -6396,6 +6396,32 @@
           "note": "Никакой принудительной UTC/ISO сериализации. Адаптер сохраняет режим входного Dayjs; parser локальный как rc-picker. Panel selection выравнивает скрытые units с default millisecondStep=100; явный step=1 и ввод SSS поддержаны. Date/time ограничения, Now, needConfirm и draft/cancel. При пустом datetime UI берёт дату панели, время defaultOpenValue либо нули; шаблон не переносит свой год/день в выбранное значение. Raw defaultPickerValue/reset payload сохраняет исходное время и alias. Range time hover использует общий preview. Независимые Source first/repeat сохраняют по2 owners/22actions/24settled points/4Escape+1000/2unmount+late; все68 полных raw parts доступны lossless без нормализации. Native regression сравнивает отображаемое время, time rows/scroll и полный callback ledger с Source first/repeat: names/order/action binding/arity, encoded payloads/picker info own-key order, temporal/ISO/epoch/aliases и sharing Dayjs между calendar/picker calls. Именованные проверки сохраняют три Native boundary: props receiver, Single calendar info {source} и empty reset null/пустая строка вместо Source undefined/undefined. Calendar selection сообщает picker-value(panel), reset следует фактическому открытию и подавляет равные raw значения; input Escape сообщает об отмене обычного Single draft до close. Немедленный afterCall отделён от settled pointer/scroll preview; focus/ref surfaces, date-cell classes и retained popup не объявляются равными Source. Public-package production consumer повторяет оба сценария на minified client/SSR; strict hydrate(recover:false) сохраняет parsed owner/root/input nodes, actual unmount и quiet1000 проверяют отсоединение DOM и отсутствие поздних callbacks. Source facts/React/HMR/src/tests не входят в runtime graph; browser timer/observer counts не измерялись."
         },
         {
+          "id": "month-year-pickers",
+          "title": "Публичные picker month/year для Single и Range",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/date-picker.types.ts",
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "src/lib/DatePickerCalendar.svelte",
+            "src/lib/date-picker.engine.test.ts",
+            "src/lib/range-picker.engine.test.ts",
+            "tests/browser/fixtures/DatePickerMonthYearCase.svelte",
+            "tests/browser/fixtures/date-picker-month-year.types.ts",
+            "tests/browser/date-picker-period-mode.spec.ts",
+            "tests/browser/date-picker-month-year.spec.ts",
+            "tests/browser/date-picker-month-year-driver.ts",
+            "tests/browser/date-picker-month-year-assertions.ts",
+            "tests/browser/date-picker-month-year-reference.mjs",
+            "tests/browser/fixtures/ant-design-date-picker-month-year-source-manifest.json",
+            "tests/browser/fixtures/ant-design-date-picker-month-year-semantic-review.json",
+            "tests/package/date-picker-month-year-source.test.ts",
+            "tests/package/date-picker-month-year.ssr.test.ts"
+          ],
+          "note": "DatePickerPicker=date/month/year отделён от panel mode с decade и исключён из Time-only props. Форматы/placeholder следуют выбранному периоду и locale; showTime игнорируется, needConfirm default false. Month/year terminal selection сохраняет/clamp скрытые поля Dayjs, calendar time нулевое, presets сохраняют полный timestamp/alias. Range показывает соседние годы/десятилетия; upper mode один panel, mode tuple меняется только для активной границы. First/last disabled probes, period min/max/validation, timestamp sorting и disabled-boundary same-period reverse сохранены. Source upper cell исполняет два настоящих setter routes с прежним event snapshot, onOk предшествует change. Controlled value guard сохраняет draft при новых props с прежним value и сбрасывает его при фактической замене массива. Независимые React6.6.8 first/repeat: по4 owners/160 actions/164 initial+settled/22 Escape+1000/4 unmount+late и8 closedSSR serializers. Все816 original parts/4 manifests сохранены в528 целых lossless gzip blobs (38.5MB, максимум272KB), без нормализации raw аргументов. Независимая Node-проверка полного Native counter с фактическим public dist сверяет whole callback payloads/arity/order, Dayjs и mode-array sharing, inputs/model и visible panel/cell states с обоими Source runs; renderer/focus/ref/retained-popup boundaries отделены явно. AfterCall scheduler variances сохраняются отдельно; pure producer counts не объявляются равными Native, browser resource counters не измерялись. Реактивная смена picker проверена шестью browser cases, включая возврат month/year→date с временем: DOM, фокус, модель и callback ledger сохраняются. Production public-dist consumer прошёл4 сценария/160 действий: closedSSR, strict hydration с прежними DOM nodes, unmount/+1000 и чистые client/SSR module graphs. Полный API семейства не заявляется."
+        },
+        {
           "id": "keyboard",
           "title": "Клавиатура, native focus, локали, SSR и формы",
           "state": "supported",
@@ -6455,7 +6481,7 @@
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет публичных week/month/quarter/year picker, multiple, generatePicker factory, mask format и полного набора semantic slots/events. RangePicker presets/previewValue перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно; остальные события семейства ещё не покрыты полностью. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
+          "note": "Нет публичных week/quarter picker, multiple, generatePicker factory, mask format и полного набора semantic slots/events. Month/year и RangePicker presets/previewValue перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно; остальные события семейства ещё не покрыты полностью. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
         },
         {
           "id": "global-parity",

@@ -72,7 +72,7 @@ export interface TimePickerProps extends Omit<
   DatePickerProps,
   'showTime' | 'allowClear' | 'status' | 'onCalendarChange' | 'classNames'
     | 'onPanelChange' | 'onPickerValueChange' | 'disabledDate' | 'onChange'
-    | 'prefix' | 'onclick' | 'multiple' | 'cellRender'
+    | 'prefix' | 'onclick' | 'multiple' | 'cellRender' | 'picker'
 >, Omit<DatePickerTimeConfig, 'format'> {
   /** На этом этапе поддерживается один Dayjs; multiple следует отдельным переносом. */
   multiple?: false;

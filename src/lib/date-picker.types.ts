@@ -10,6 +10,8 @@ export type DatePickerLocale = {
   timePickerLocale?: { placeholder?: string; rangePlaceholder?: [string, string]; };
 };
 export type DatePickerMode = 'date' | 'month' | 'year' | 'decade';
+/** Терминальный выбор; decade остаётся только режимом навигации панели. */
+export type DatePickerPicker = 'date' | 'month' | 'year';
 export type DatePickerFormat = string | ((value: Dayjs) => string);
 /** Быстрый выбор одной даты: готовое или лениво вычисляемое значение. */
 export interface DatePickerPreset {
@@ -60,13 +62,15 @@ export interface DatePickerProps extends Omit<
   HTMLInputAttributes,
   'value' | 'defaultValue' | 'size' | 'type' | 'children' | 'onchange' | 'oninput' | 'onselect'
 > {
+  /** Выбор даты, месяца или года. @defaultValue 'date' */
+  picker?: DatePickerPicker;
   /** Управляемый Dayjs или null; компонент не вводит прикладную UTC-сериализацию. */
   value?: Dayjs | null;
   /** Начальная дата локального состояния при отсутствии value. */
   defaultValue?: Dayjs;
   /** Локальный picker owner перекрывает ConfigProvider.prefixCls для поля и panel. */
   prefixCls?: string;
-  /** @defaultValue false */
+  /** Колонки времени для picker=date; month/year игнорируют настройку. @defaultValue false */
   showTime?: boolean | DatePickerTimeConfig;
   /** Первый формат используется для вывода; дополнительные строки допускаются при разборе ввода. */
   format?: DatePickerFormat | DatePickerFormat[];

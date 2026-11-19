@@ -53,7 +53,8 @@
     time,
     value,
     defaultValue,
-    showTime = false,
+    showTime: providedShowTime = false,
+    picker = 'date',
     format,
     pickerValue,
     defaultPickerValue,
@@ -131,8 +132,9 @@
   let actualLocale = $derived(
     { ...datePickerEnUS.lang, ...config.locale.datePicker?.lang, ...locale?.lang }
   );
+  let showTime = $derived(time || picker === 'date' ? providedShowTime : false);
   let formats = $derived(time ? timePickerFormats(time, actualLocale)
-    : pickerFormats({ format, showTime }, actualLocale));
+    : pickerFormats({ format, showTime, picker }, actualLocale));
   let readOnly = $derived(
     time && typeof formats[0] === 'function'
       || (inputReadOnly ?? (attributes.readonly || formats.every(item => typeof item === 'function')))
@@ -150,7 +152,14 @@
     )
   );
   let panel = $derived(pickerValue ?? internalPanel);
-  let mode = $state<DatePickerMode>('date');
+  let mode = $state<DatePickerMode>(untrack(() => picker));
+  let previousPickerMode = untrack(() => ({ picker, open: visible }));
+  $effect(() => {
+    const current = { picker, open: visible };
+    if (!time && current.open && (picker !== previousPickerMode.picker
+      || picker !== 'date' && !previousPickerMode.open)) mode = picker;
+    previousPickerMode = current;
+  });
   let text = $state(
     untrack(
       () => formatPicker(
@@ -221,7 +230,8 @@
     ? attributes.placeholder ?? locale?.timePickerLocale?.placeholder
       ?? config.locale.datePicker?.timePickerLocale?.placeholder
       ?? datePickerEnUS.timePickerLocale.placeholder
-    : attributes.placeholder ?? actualLocale.placeholder);
+    : attributes.placeholder ?? (picker === 'month' ? actualLocale.monthPlaceholder
+      : picker === 'year' ? actualLocale.yearPlaceholder : actualLocale.placeholder));
   let displayText = $derived(hoverValue
     ? formatPicker(hoverValue, actualLocale.locale, formats) : text);
   let formattedTimeDraft = $derived(time
@@ -419,7 +429,7 @@
       && !pickerTimeDisabled(next, { showTime: clock, disabledTime }));
     return Boolean(
       next?.isValid()
-      && !pickerDateDisabled(next, { minDate, maxDate, disabledDate })
+      && !pickerDateDisabled(next, { minDate, maxDate, disabledDate }, picker)
       && !pickerTimeDisabled(
         next,
         { showTime, disabledTime }
@@ -431,7 +441,7 @@
     if (next) {
       now = adapter.getNow();
       if (!time && !retainedDatePreset) draft = mergedValue;
-      mode = 'date';
+      mode = picker;
       if (time) timeInteraction.trigger(0, 'field-switch');
     }
     if (open === undefined)
@@ -481,6 +491,13 @@
       datePresetInteraction.trigger(0, 'confirm');
       return;
     }
+    if (confirmed && picker !== 'date') {
+      if (!valid(draft)) return;
+      if (draft) onOk?.(draft);
+      if (!commit(draft)) return;
+      requestOpen(false);
+      return;
+    }
     if (confirmed) {
       if (!valid(draft) || !commit(draft)) return;
       if (draft)
@@ -509,13 +526,19 @@
     }
     setDatePanel(next, 'reset');
   }
-  function setDatePanel(next: Dayjs, source: 'reset' | 'panel') {
-    const previous = panel;
+  function setDatePanel(next: Dayjs, source: 'reset' | 'panel',
+    event?: { previous: Dayjs; mode: DatePickerMode }) {
+    const previous = event?.previous ?? panel;
     if (pickerValue === undefined) internalPanel = next;
-    if (!samePickerPanelValue(previous, next, Boolean(showTime)))
-      onPickerValueChange?.(next, { source, mode });
+    if (!samePickerPanelValue(previous, next, Boolean(showTime), picker))
+      onPickerValueChange?.(next, { source, mode: event?.mode ?? mode });
   }
   function navigate(next: Dayjs) {
+    if (picker !== 'date') {
+      setDatePanel(next, 'panel');
+      onPanelChange?.(next, mode);
+      return;
+    }
     const target = minDate && next.endOf('month').isBefore(minDate)
       ? minDate
       : maxDate && next.startOf('month').isAfter(maxDate) ? maxDate : next;
@@ -524,14 +547,31 @@
     onPickerValueChange?.(target, { source: 'panel', mode });
     onPanelChange?.(target, mode);
   }
-  function changeMode(next: DatePickerMode) {
+  function changeMode(next: DatePickerMode, viewDate?: Dayjs) {
     mode = next;
-    onPanelChange?.(panel, mode);
+    onPanelChange?.(picker === 'date' ? panel : viewDate ?? datePanelValue, mode);
+  }
+  function selectPanelMode(next: DatePickerMode, date: Dayjs,
+    event: { previous: Dayjs; mode: DatePickerMode }) {
+    // PickerPanel.triggerModeChange(viewDate) повторно задаёт view до события mode.
+    setDatePanel(date, 'panel', event);
+    changeMode(next, date);
   }
   function selectDate(next: Dayjs) {
+    const event = picker !== 'date' ? { previous: panel, mode } : undefined;
     retainedDatePreset = false;
     datePresetInteraction.trigger(0, 'panel-intermediate');
-    if (mode !== 'date') {
+    if (picker !== 'date' && mode !== picker) {
+      draftSource = 'panel';
+      setDraft(next, 'date');
+      text = formatPicker(next, actualLocale.locale, formats);
+      dirty = true;
+      // onPanelValueSelect и triggerModeChange используют один React batch snapshot.
+      setDatePanel(next, 'panel', event);
+      selectPanelMode(mode === 'decade' ? 'year' : 'month', next, event!);
+      return;
+    }
+    if (picker === 'date' && mode !== 'date') {
       internalPanel = next;
       onPickerValueChange?.(next, { source: 'panel', mode });
       changeMode(mode === 'decade' ? 'year' : mode === 'year' ? 'month' : 'date');
@@ -545,16 +585,16 @@
         disabledTime
       )
       : next;
-    if (pickerDateDisabled(candidate, restrictions)) return;
+    if (pickerDateDisabled(candidate, restrictions, picker)) return;
     draftSource = 'panel';
     setDraft(candidate, 'date');
     text = formatPicker(candidate, actualLocale.locale, formats);
     dirty = true;
     if (!confirm && !showTime && commit(candidate)) {
       requestOpen(false);
-      input?.focus();
+      if (picker === 'date') input?.focus();
     }
-    setDatePanel(candidate, 'panel');
+    setDatePanel(candidate, 'panel', event);
   }
   function selectTime(value: Dayjs) {
     if (time) {
@@ -628,7 +668,7 @@
         requestOpen(true);
       } else {
         const next = text
-          ? readOnly || draftSource === 'panel'
+          ? picker !== 'date' || readOnly || draftSource === 'panel'
             ? draft
             : parsePicker(text, actualLocale.locale, formats)
           : null;
@@ -637,7 +677,7 @@
           requestOpen(false);
         }
       }
-    } else if (event.key === 'ArrowDown') {
+    } else if (event.key === 'ArrowDown' && picker === 'date') {
       event.preventDefault();
       if (!visible)
         requestOpen(true);
@@ -735,8 +775,8 @@
   function submitDatePresetValue(next: Dayjs) {
     // Preset меняет calendar до validation; popupClose управляет сессией отдельно.
     if (!timePickerSameValue(next, draft)) setDraft(next, 'date');
-    if (!next.isValid() || disabledDate?.(next, { type: 'date' })
-      || pickerDateDisabled(next, { minDate, maxDate })
+    if (!next.isValid() || disabledDate?.(next, { type: picker })
+      || pickerDateDisabled(next, { minDate, maxDate }, picker)
       || pickerTimeDisabled(next, { showTime, disabledTime })) return false;
     const changed = !timePickerSameValue(next, mergedValue);
     if (value === undefined) internalValue = next;
@@ -787,7 +827,7 @@
         <div class={showTime && mode === 'date'
             ? `${prefix}-datetime-panel`
             : undefined}>
-          <DatePickerCalendar prefixCls={prefix} {panel} timeTemplate={clock.defaultOpenValue} selected={draft} hovered={hoverValue ?? draft} onHover={handleDateCellHover} preserveDisabledHover direction={config.direction} {mode} locale={panelLocale} {cellRender} {restrictions} {now} onSelect={selectDate} onNavigate={navigate} onModeChange={changeMode} />
+          <DatePickerCalendar {picker} prefixCls={prefix} {panel} timeTemplate={clock.defaultOpenValue} selected={draft} hovered={hoverValue ?? draft} onHover={handleDateCellHover} preserveDisabledHover direction={config.direction} {mode} locale={panelLocale} {cellRender} {restrictions} {now} onSelect={selectDate} onNavigate={navigate} onModeChange={changeMode} />
           {#if showTime && mode === 'date'}<DatePickerTimePanel bind:this={dateTimePanel} scrollMemory={dateTimeScroll} prefixCls={prefix} value={draft ?? datePanelValue} selectedValue={draft} config={clock} format={timeFormat} locale={panelLocale} {now} {cellRender} {disabledTime} onSelect={selectTime} onHover={handleDateHover} />{/if}
         </div></div>
         {#if renderExtraFooter || confirm || mode === 'date' && showNow}<div class={`${prefix}-footer`}>
@@ -997,7 +1037,7 @@
             timeInteraction.trigger(0, 'input', parsed?.isValid() ? [parsed] : undefined);
           } else if (valid(parsed)) {
             setDraft(parsed, 'date');
-            internalPanel = parsed!;
+            if (picker === 'date') internalPanel = parsed!;
           }
         }}
       onclick={() => { if (!time) requestOpen(true); }} onkeydown={keyboard} onfocus={event => {

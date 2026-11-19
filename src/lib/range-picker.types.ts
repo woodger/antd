@@ -59,7 +59,7 @@ export interface RangePickerProps extends Omit<
   order?: boolean;
   id?: string | { start?: string; end?: string; };
   placeholder?: [string, string];
-  /** @defaultValue false */
+  /** Колонки времени для picker=date; month/year игнорируют настройку. @defaultValue false */
   showTime?: boolean | RangePickerTimeConfig;
   disabledDate?: (date: Dayjs, info: { type: DatePickerMode; from?: Dayjs; }) => boolean;
   disabledTime?: (

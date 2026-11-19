@@ -2,11 +2,16 @@
   import type { Dayjs } from 'dayjs';
   import { tick, type Snippet } from 'svelte';
   import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
-  import { calendarCells, pickerCalendarValue, pickerDateDisabled } from './date-picker.engine';
-  import type { DatePickerMode, DatePickerProps, DatePickerCellRenderInfo } from './date-picker.types';
+  import {
+    calendarCells, pickerCalendarValue, pickerDateDisabled, pickerPanelDateDisabled
+  } from './date-picker.engine';
+  import type {
+    DatePickerMode, DatePickerPicker, DatePickerProps, DatePickerCellRenderInfo
+  } from './date-picker.types';
   import type { PickerLocale } from './picker-locale.types';
   let {
     prefixCls,
+    picker = 'date',
     panel,
     timeTemplate,
     selected,
@@ -28,6 +33,7 @@
     onModeChange
   }: {
     prefixCls: string;
+    picker?: DatePickerPicker;
     panel: Dayjs;
     timeTemplate?: Dayjs;
     selected: Dayjs | null;
@@ -46,10 +52,11 @@
     now: Dayjs;
     onSelect: (value: Dayjs) => void;
     onNavigate: (value: Dayjs) => void;
-    onModeChange: (mode: DatePickerMode) => void;
+    onModeChange: (mode: DatePickerMode, viewDate?: Dayjs) => void;
   } = $props();
   let renderToday = $derived.by(() => {
     void prefixCls;
+    void picker;
     void mode;
     void panel;
     void timeTemplate;
@@ -84,7 +91,11 @@
     return { prefixCls, originNode, today: renderToday, type: mode, locale, range: cellRange };
   }
   function label(date: Dayjs) {
-    return date.format(mode === 'date' ? 'YYYY-MM-DD' : mode === 'month' ? 'YYYY-MM' : 'YYYY');
+    const format = mode === 'month' ? locale.fieldMonthFormat ?? 'YYYY-MM'
+      : mode === 'year' ? locale.fieldYearFormat ?? 'YYYY' : undefined;
+    return format && picker !== 'date'
+      ? adapter.locale.format(locale.locale, date, format)
+      : date.format(mode === 'date' ? 'YYYY-MM-DD' : mode === 'month' ? 'YYYY-MM' : 'YYYY');
   }
   function cellText(date: Dayjs) {
     if (mode === 'month' && !locale.monthFormat) return months[date.month()];
@@ -107,6 +118,25 @@
         ? Math.floor(selected.year() / 10) === Math.floor(date.year() / 10)
         : selected.isSame(date, unit)
       : false;
+  }
+  function sameCell(value: Dayjs | null | undefined, date: Dayjs) {
+    return value && (picker !== 'date' && mode === 'decade'
+      ? Math.floor(value.year() / 10) === Math.floor(date.year() / 10)
+      : value.isSame(date, unit));
+  }
+  function unavailable(date: Dayjs) {
+    return picker === 'date' ? pickerDateDisabled(date, restrictions, mode)
+      : pickerPanelDateDisabled(date, restrictions, mode);
+  }
+  function headerDisabled(amount: number) {
+    if (picker === 'date' || mode === 'date') return false;
+    const target = cellPanel.add(amount * (mode === 'month' ? 1 : mode === 'year' ? 10 : 100), 'year');
+    const size = mode === 'month' ? 1 : mode === 'year' ? 10 : 100;
+    const first = Math.floor(target.year() / size) * size;
+    const last = first + size - 1;
+    return amount < 0
+      ? !!restrictions.minDate && last < restrictions.minDate.year()
+      : !!restrictions.maxDate && first > restrictions.maxDate.year();
   }
   async function key(event: KeyboardEvent, date: Dayjs) {
     let next: Dayjs;
@@ -142,7 +172,7 @@
     else return;
     event.preventDefault();
     const sign = next.isBefore(date) ? -1 : 1;
-    for (let n = 0; n < 3660 && pickerDateDisabled(next, restrictions, mode); n++) {
+    for (let n = 0; n < 3660 && unavailable(next); n++) {
       if (sign > 0
         && restrictions.maxDate
         && next.startOf(unit).isAfter(
@@ -155,7 +185,7 @@
         )) return;
       next = next.add(sign * step, unit);
     }
-    if (pickerDateDisabled(next, restrictions, mode)) return;
+    if (unavailable(next)) return;
     onNavigate(next);
     await tick();
     root.querySelector<HTMLButtonElement>(`[data-picker-date="${label(next)}"]`)?.focus();
@@ -167,14 +197,14 @@
 </style>
 <div bind:this={root} class={`${prefixCls}-${mode}-panel`}>
   <div class={`${prefixCls}-header`}>
-    <button type="button" tabindex="-1" class={`${prefixCls}-header-super-prev-btn`} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousYear} onclick={() => move(-1, true)}><span class={`${prefixCls}-super-prev-icon`}></span></button>
+    <button type="button" tabindex="-1" class={[`${prefixCls}-header-super-prev-btn`, headerDisabled(-1) && `${prefixCls}-header-super-prev-btn-disabled`]} disabled={headerDisabled(-1)} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousYear} onclick={() => move(-1, true)}><span class={`${prefixCls}-super-prev-icon`}></span></button>
     {#if mode === 'date'}<button type="button" tabindex="-1" class={`${prefixCls}-header-prev-btn`} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousMonth} onclick={() => move(-1)}><span class={`${prefixCls}-prev-icon`}></span></button>{/if}
     <div class={`${prefixCls}-header-view`}>
-      {#if mode === 'date'}<button type="button" tabindex="-1" class={`${prefixCls}-month-btn`} aria-label={locale.monthSelect} onclick={() => onModeChange('month')}>{locale.monthFormat
-          ? adapter.locale.format(locale.locale, panel, locale.monthFormat) : months[panel.month()]}</button>{/if}<button type="button" tabindex="-1" class={`${prefixCls}-year-btn`} aria-label={mode === 'year' || mode === 'decade'
+      {#if mode === 'date'}<button type="button" tabindex="-1" class={`${prefixCls}-month-btn`} aria-label={locale.monthSelect} onclick={() => onModeChange('month', cellPanel)}>{locale.monthFormat
+          ? adapter.locale.format(locale.locale, panel, locale.monthFormat) : months[panel.month()]}</button>{/if}{#if picker !== 'date' && mode === 'decade'}{adapter.locale.format(locale.locale, panel.year(Math.floor(panel.year() / 100) * 100), locale.yearFormat ?? 'YYYY')}-{adapter.locale.format(locale.locale, panel.year(Math.floor(panel.year() / 100) * 100 + 99), locale.yearFormat ?? 'YYYY')}{:else}<button type="button" tabindex="-1" class={`${prefixCls}-${picker !== 'date' && mode === 'year' ? 'decade' : 'year'}-btn`} aria-label={mode === 'year' || mode === 'decade'
           ? locale.decadeSelect
           : locale.yearSelect} onclick={() => onModeChange(
-              mode === 'date' || mode === 'month' ? 'year' : 'decade'
+              mode === 'date' || mode === 'month' ? 'year' : 'decade', cellPanel
             )}>{mode === 'year'
             ? `${Math.floor(panel.year() / 10) * 10}-${Math.floor(panel.year() / 10) * 10 + 9}`
             : mode === 'decade'
@@ -183,10 +213,10 @@
                   .year() / 100) * 100}-${Math
                     .floor(panel
                       .year() / 100) * 100 + 99}`
-              : adapter.locale.format(locale.locale, panel, locale.yearFormat ?? 'YYYY')}</button>
+              : adapter.locale.format(locale.locale, panel, locale.yearFormat ?? 'YYYY')}</button>{/if}
     </div>
     {#if mode === 'date'}<button type="button" tabindex="-1" class={`${prefixCls}-header-next-btn`} style:visibility={showNext ? undefined : 'hidden'} aria-label={locale.nextMonth} onclick={() => move(1)}><span class={`${prefixCls}-next-icon`}></span></button>{/if}
-    <button type="button" tabindex="-1" class={`${prefixCls}-header-super-next-btn`} style:visibility={showNext ? undefined : 'hidden'} aria-label={locale.nextYear} onclick={() => move(1, true)}><span class={`${prefixCls}-super-next-icon`}></span></button>
+    <button type="button" tabindex="-1" class={[`${prefixCls}-header-super-next-btn`, headerDisabled(1) && `${prefixCls}-header-super-next-btn-disabled`]} disabled={headerDisabled(1)} style:visibility={showNext ? undefined : 'hidden'} aria-label={locale.nextYear} onclick={() => move(1, true)}><span class={`${prefixCls}-super-next-icon`}></span></button>
   </div>
   <div class={`${prefixCls}-body`}>
     <table class={`${prefixCls}-content`} role="grid" aria-label={panel.format('YYYY-MM')}>
@@ -194,27 +224,27 @@
       <tbody>
         {#each Array.from({ length: cells.length / width }, (_, n) => n) as row}
           <tr>{#each cells.slice(row * width, (row + 1) * width) as date (label(date))}
-            {@const unavailable = pickerDateDisabled(date, restrictions, mode)}
+            {@const disabled = unavailable(date)}
             {@const inView = mode === 'date' ? date.month() === panel.month() : mode === 'month' ? true : date.year() >= Math.floor(panel.year() / (mode === 'year' ? 10 : 100)) * (mode === 'year' ? 10 : 100) && date.year() < Math.floor(panel.year() / (mode === 'year' ? 10 : 100)) * (mode === 'year' ? 10 : 100) + (mode === 'year' ? 10 : 100)}
-            <td onclick={cellRender ? () => { if (!unavailable) onSelect(date); } : undefined}
+            <td onclick={cellRender ? () => { if (!disabled) onSelect(date); } : undefined}
               onkeydown={cellRender ? event => {
                 const target = event.target;
                 if (target instanceof HTMLButtonElement && target.hasAttribute('data-picker-date'))
                   key(event, date);
               } : undefined}
               onpointerenter={event => {
-                if (!unavailable && event.pointerType !== 'touch')
+                if (!disabled && event.pointerType !== 'touch')
                   onHover?.(date);
               }} onpointerleave={() => {
-                if (!preserveDisabledHover || !unavailable) onHover?.(null);
-              }} aria-selected={selectedCell(date)} aria-disabled={unavailable || undefined} title={label(date)} class={[
+                if (!preserveDisabledHover || !disabled) onHover?.(null);
+              }} aria-selected={selectedCell(date)} aria-disabled={disabled || undefined} title={picker !== 'date' && mode === 'decade' ? undefined : label(date)} class={[
                   `${prefixCls}-cell`,
                   inView && `${prefixCls}-cell-in-view`,
-                  unavailable && `${prefixCls}-cell-disabled`,
-                  hovered?.isSame(date, unit) && `${prefixCls}-cell-hover`,
+                  disabled && `${prefixCls}-cell-disabled`,
+                  sameCell(hovered, date) && `${prefixCls}-cell-hover`,
                   !range && selectedCell(date) && `${prefixCls}-cell-selected`,
-                  range?.[0]?.isSame(date, unit) && `${prefixCls}-cell-range-start`,
-                  range?.[1]?.isSame(date, unit) && `${prefixCls}-cell-range-end`,
+                  sameCell(range?.[0], date) && `${prefixCls}-cell-range-start`,
+                  sameCell(range?.[1], date) && `${prefixCls}-cell-range-end`,
                   range?.[0]
                   && range[1]
                   && date.isAfter(range[0], unit)
@@ -226,7 +256,7 @@
                   mode === 'date' && renderToday.isSame(date, 'day') && `${prefixCls}-cell-today`
                 ]}>
               {#snippet originNode()}
-              <button type="button" data-picker-date={label(date)} aria-label={label(date)} disabled={unavailable} tabindex={date.isSame(panel, unit) ? 0 : -1} class={`${prefixCls}-cell-inner date-cell`} onclick={cellRender ? undefined : () => onSelect(date)} onkeydown={cellRender ? undefined : event => key(event, date)}>{cellText(date)}</button>
+              <button type="button" data-picker-date={label(date)} aria-label={label(date)} disabled={disabled} tabindex={date.isSame(panel, unit) ? 0 : -1} class={`${prefixCls}-cell-inner date-cell`} onclick={cellRender ? undefined : () => onSelect(date)} onkeydown={cellRender ? undefined : event => key(event, date)}>{cellText(date)}</button>
               {/snippet}
               {#if cellRender}{@render cellRender(date, cellInfo(originNode))}
               {:else}{@render originNode()}{/if}

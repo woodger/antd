@@ -9,6 +9,23 @@ import {
   rangeFrom
 } from './range-picker.engine';
 describe('RangePicker source value semantics', () => {
+  it('permits reversed hidden values in the same terminal period with a disabled field', () => {
+    const later = dayjs('2024-05-20T16:37:59.456');
+    const earlier = dayjs('2024-05-10T08:23:45.678');
+    const pair: [typeof later, typeof earlier] = [later, earlier];
+
+    expect(orderedRange(pair, true, [true, false])).toEqual(pair);
+    expect(validRange(pair, [false, false], true, [true, false], () => false, 'month')).toBe(true);
+    expect(validRange(pair, [false, false], true, [true, false], () => false)).toBe(false);
+    expect(validRange([later, earlier.month(1)], [false, false], true,
+      [true, false], () => false, 'year')).toBe(true);
+    expect(validRange([later, earlier.year(2023)], [false, false], true,
+      [true, false], () => false, 'year')).toBe(false);
+    expect(validRange([later, earlier.year(2023)], [false, false], false,
+      [false, false], () => false, 'year')).toBe(true);
+    expect(orderedRange(pair, true, [false, false])).toEqual([earlier, later]);
+  });
+
   const start = dayjs('2026-10-10T12:30');
   const end = dayjs('2026-10-20T08:30');
   it('normalizes missing boundaries to null and retains Dayjs identity', () => {

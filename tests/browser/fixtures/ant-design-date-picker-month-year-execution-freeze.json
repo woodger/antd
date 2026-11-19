@@ -1,0 +1,7 @@
+{
+  "file": ".upstream/artifacts/date-picker-month-year-source-proposal-v1/protocol-freeze.json",
+  "sha256": "166488b125f669da33f0f270fc4b205f6de830b0fe263ff2be0d9c79754ca4c0",
+  "proposalSHA256": "465f20368f0a2829208c156ad224a7bfff88bcb991601a674282d563cabe32ff",
+  "rootLease": "month-year-20261119-01",
+  "frozenBeforeSourceExecution": true
+}

@@ -5029,7 +5029,7 @@ Semantic root styles и plain style сохраняют приоритет. Custo
 
 ## DatePicker
 
-DatePicker переносит single date/showTime из Ant Design 6.6.8 и rc-picker 1.12.2.
+DatePicker переносит выбор даты, datetime, месяца и года из Ant Design 6.6.8 и rc-picker 1.12.2.
 Public value — Dayjs или null при очистке; undefined включает внутреннее состояние
 с defaultValue. OnChange(value, dateString) получает объект даты и отображаемую
 строку. Это не контракт ISO/timestamp. Day.js 1.11.23 установлен в стенде; пакет
@@ -5052,9 +5052,8 @@ Public value — Dayjs или null при очистке; undefined включа
 Value/open/pickerValue — controlled props с callbacks: владелец может отклонить
 изменение; component сам не переписывает переданный value. Без value/open
 используются defaultValue/defaultOpen и внутреннее состояние. DefaultPickerValue
-задаёт исходный месяц при каждом открытии. Навигация date/month/year/decade
-относится к выбору одной даты; отдельные picker="month" и другие режимы ещё не
-перенесены. NativeElement с bind указывает на root div; bind:this даёт методы
+задаёт исходную дату панели при каждом открытии. `picker` выбирает date, month или year;
+decade служит экраном навигации. NativeElement с bind указывает на root div; bind:this даёт методы
 focus({preventScroll,cursor:'start'|'end'|'all'}) и blur().
 
 Format принимает строку, массив допустимых форматов или display callback; input
@@ -5063,6 +5062,30 @@ showTime — YYYY-MM-DD HH:mm:ss. Разбор строгий: переполн�
 дни не нормализуются. Невалидный текст не меняет value и при blur восстанавливается;
 preserveInvalidOnBlur сохраняет его. InputReadOnly блокирует текстовый ввод, но
 сохраняет календарь и очистку. AllowClear=true по умолчанию.
+
+`picker="month"` и `picker="year"` поддержаны у DatePicker и RangePicker.
+Их форматы по умолчанию — YYYY-MM и YYYY; placeholder и формат берутся из
+соответствующих полей locale. Явный format сохраняет приоритет. ShowTime для этих
+двух режимов не применяется, needConfirm по умолчанию false. При явном подтверждении
+onOk вызывается до onChange. Выбор периода сохраняет скрытые день и месяц Dayjs с
+исходным округлением: например, 31 января даёт 29 февраля в високосном году.
+Календарная ячейка получает нулевое время; presets сохраняют полный timestamp и alias.
+Реактивная смена `picker` обновляет формат и экран открытой панели, сохраняя поле,
+фокус и выбранное значение.
+
+```svelte
+<script lang="ts">
+  import { DatePicker, RangePicker } from 'antd-svelte';
+</script>
+<DatePicker picker="month" />
+<RangePicker picker="year" />
+```
+
+Range показывает соседние годы для month и соседние десятилетия для year;
+переход на верхний экран оставляет одну панель. Disabled ячейки проверяют начало
+и конец периода, min/max и валидация учитывают выбранный период. Сортировка по-прежнему
+сравнивает полные timestamps; при заблокированной границе она не переставляет значения,
+а допустимый обратный порядок скрытых дат внутри одного периода сохраняется.
 
 ShowTime=true или объект добавляет time columns. Поддержаны format, видимость
 units, шаги, use12Hours, hideDisabledOptions и defaultOpenValue. Ограничения
@@ -5081,6 +5104,7 @@ onOk. Escape/внешний клик отменяют неподтверждён
 Выбор ячейки календаря или пункта времени сначала вызывает `onCalendarChange`, затем сообщает
 изменившуюся дату панели через `onPickerValueChange` с `source: 'panel'`.
 Сравнение учитывает год, месяц и день, а для datetime также все разряды времени.
+Для picker month сравниваются год/месяц, для year — год; calendar/change сохраняют полное значение.
 Повторное открытие сначала сообщает об открытии, затем о фактическом сбросе
 панели; отклонённое controlled-открытие её не сбрасывает. Escape в поле DatePicker
 сообщает об отмене изменённого черновика до закрытия, сохраняя публичные null/пустую
