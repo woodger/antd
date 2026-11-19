@@ -63,14 +63,13 @@ export function connectFeedbackFocus(
       }
     }
     else {
-      candidates.find(
+      const next = candidates.find(
         node => available(node)
           || node instanceof HTMLDialogElement
           && node.open
           && node.getClientRects().length > 0
-      )?.focus(
-        { preventScroll: true }
       );
+      next?.focus({ preventScroll: true });
     }
   }
 

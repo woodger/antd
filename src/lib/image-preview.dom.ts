@@ -160,5 +160,6 @@ export function registerImagePreview(dialog: HTMLDialogElement) {
   };
 }
 export function isTopImagePreview(dialog: HTMLDialogElement) {
-  return layers.get(dialog.ownerDocument)?.at(-1) === dialog;
+  const stack = layers.get(dialog.ownerDocument);
+  return stack?.at(-1) === dialog;
 }

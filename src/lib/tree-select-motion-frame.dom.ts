@@ -1,3 +1,5 @@
+// Снимает положение TreeSelect с кадра CSS motion. Измерения через proxy
+// повторяют clocks исходной поверхности, чтобы popup и стрелка двигались вместе.
 export interface TreeSelectMotionFrameState {
   revision: number;
   status?: 'appear' | 'enter' | 'leave';
@@ -43,7 +45,7 @@ interface TransitionClock {
 }
 const frames = new WeakMap<HTMLElement, ReturnType<typeof createMotionFrame>>();
 
-/** A comma in a timing function is not a CSS-list separator. */
+/** Разбивает список CSS, сохраняя запятые внутри timing functions. */
 function list(value: string) {
   const result: string[] = [];
   let depth = 0;
@@ -63,6 +65,16 @@ function list(value: string) {
   }
   result.push(value.slice(start).trim());
   return result;
+}
+
+// Typed OM сохраняет операции transform. Строка остаётся fallback для браузеров без Typed OM.
+function readMotionProperty(
+  name: string,
+  typed: StylePropertyMapReadOnly | undefined,
+  computed: CSSStyleDeclaration
+) {
+  const value = typed?.get(name);
+  return value?.toString() ?? computed.getPropertyValue(name);
 }
 
 /** Keep projection writes out of real CSS transitions; other properties retain native clocks/events. */
@@ -182,10 +194,10 @@ function createMotionFrame(popup: HTMLElement) {
     const underlying = view.getComputedStyle(proxy);
     const typed = proxy.computedStyleMap?.();
     const style: SourceStyle = {
-      // Typed OM preserves transform operations (rotate(270deg), percentages, etc.). A matrix
-      // serialization would change CSS interpolation to a shortest-path matrix decomposition.
-      values: Object.fromEntries(properties.map(name => [name,
-        typed?.get(name)?.toString() ?? underlying.getPropertyValue(name)])),
+      // Матрица вместо Typed OM изменила бы способ интерполяции CSS transform.
+      values: Object.fromEntries(properties.map(name => [
+        name, readMotionProperty(name, typed, underlying)
+      ])),
       transition
     };
     const mirrors: Animation[] = [];
@@ -208,8 +220,8 @@ function createMotionFrame(popup: HTMLElement) {
       const observed = proxy.computedStyleMap?.();
       const computed = view.getComputedStyle(proxy);
       const target = { key: animationKey, values: Object.fromEntries(properties
-        .filter(name => animated.has(name)).map(name => [name,
-          observed?.get(name)?.toString() ?? computed.getPropertyValue(name)])) };
+        .filter(name => animated.has(name))
+        .map(name => [name, readMotionProperty(name, observed, computed)])) };
       if (capture) animationTargets = target;
       Object.assign(style.values, target.values);
     }
@@ -259,7 +271,8 @@ function createMotionFrame(popup: HTMLElement) {
           origins.set(animation, origin);
         }
         const key = `${origin.id}:${animation.transitionProperty}`;
-        const clock = clocks.get(key)?.animation;
+        const entry = clocks.get(key);
+        const clock = entry?.animation;
         const end = animation.effect?.getComputedTiming().endTime;
         const elapsed = next ? next.previous[key] ?? next.time - origin.time
           : clock ? clock.playState === 'idle' && typeof end === 'number'

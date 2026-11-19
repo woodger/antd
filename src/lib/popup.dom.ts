@@ -1,3 +1,5 @@
+// Подключает popover к anchor и управляет его положением, видимостью и dismiss.
+// Стек взаимодействий принадлежит document. Владелец соединения защищает retarget.
 import {
   getTooltipPosition,
   type TooltipPosition,
@@ -16,11 +18,13 @@ export interface PopupConnection {
   forceAlign: () => void;
 }
 
+// Учитывает активный узел в ShadowRoot до перехода к документу.
 export function getPopupActiveElement(element: Element) {
   const root = element.getRootNode() as Document | ShadowRoot;
   return root.activeElement ?? element.ownerDocument.activeElement;
 }
 
+// Начинает измерения и возвращает единый handle обновления и очистки popup.
 export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   trigger?: Element;
   placement: TooltipPlacement;
@@ -52,23 +56,26 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   onVisibilityChange?: (visible: boolean) => void;
 }): PopupConnection {
   const document = anchor.ownerDocument;
+  // Правило 2: подключение popup выполняется только в browser lifecycle.
   const view = document.defaultView!;
   const owner = {};
   popupConnections.set(popup, owner);
   let frame = 0;
   let shown = false;
   let disposed = false;
-  let alignRequest = 0;
+  let alignmentRevision = 0;
   let lastPosition = '';
   let lastAlignment = '';
   let flips: PopupFlipCache | undefined;
 
+  // Убирает popup из стека взаимодействий перед уведомлением и скрытием.
   function hide() {
     const stack = openPopups.get(document);
     const index = stack?.indexOf(popup) ?? -1;
 
-    if (index !== -1)
-      stack!.splice(index, 1);
+    if (stack && index !== -1) {
+      stack.splice(index, 1);
+    }
     if (shown)
       options.onVisibilityChange?.(false);
     if (popup.matches(':popover-open'))
@@ -77,6 +84,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     shown = false;
   }
 
+  // Проверяет доступность anchor, измеряет popup и публикует изменившуюся позицию.
   function update(manual = false) {
     if (disposed) {
       return;
@@ -200,19 +208,33 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
       options.onVisibilityChange?.(true);
   }
 
+  // Измеряет каждый кадр, включая перемещения anchor без изменения размеров.
   function tick() {
     update();
     if (!disposed)
       frame = view.requestAnimationFrame(tick);
   }
 
+  // Объединяет ручные запросы измерения в одну микрозадачу.
   function forceAlign() {
-    const request = ++alignRequest;
+    const scheduledRevision = ++alignmentRevision;
     Promise.resolve().then(() => {
-      if (request === alignRequest) update(true);
+      if (scheduledRevision === alignmentRevision) update(true);
     });
   }
 
+  // Читает актуальный стек при каждой проверке, в том числе после callbacks.
+  function isTopInteractivePopup() {
+    if (!shown || options.interactive === false || anchor.closest('[inert]')) {
+      return false;
+    }
+
+    const stack = openPopups.get(document);
+    const top = stack?.findLast(element => !element.inert);
+    return top === popup;
+  }
+
+  // Верхний доступный popup обрабатывает клавиши и закрытие Escape.
   function handleKeydown(event: KeyboardEvent) {
     const dialog = getPopupActiveElement(popup)?.closest('dialog[open]');
     // Вложенный native dialog получает свои keys раньше содержащего его popup.
@@ -220,14 +242,10 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
       return;
     }
 
-    const current = shown && options.interactive !== false && !anchor.closest('[inert]')
-      && openPopups.get(document)?.findLast(element => !element.inert) === popup;
+    const current = isTopInteractivePopup();
     if (current && !event.defaultPrevented && event.key !== 'Escape')
       options.onKeydown?.(event);
-    if (shown
-      && options.interactive !== false
-      && !anchor.closest('[inert]')
-      && openPopups.get(document)?.findLast(element => !element.inert) === popup
+    if (isTopInteractivePopup()
       && options.dismissOnEscape !== false
       && event.key === 'Escape'
       && !event.defaultPrevented) {
@@ -237,6 +255,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     }
   }
 
+  // Считает trigger, popup и их Shadow DOM hosts частью одной поверхности взаимодействия.
   function handleOutside(event: MouseEvent | PointerEvent) {
     const target = event.composedPath()[0] ?? event.target;
     const popupRoot = popup.getRootNode();
@@ -256,14 +275,17 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     }
   }
 
+  // По умолчанию outside определяется pointerdown, включая touch и pen.
   function handlePointerdown(event: PointerEvent) {
     if (options.outsideEvents !== 'mouse') handleOutside(event);
   }
 
+  // Режим mouse использует события мыши и контекстного меню.
   function handleMousedown(event: MouseEvent) {
     if (options.outsideEvents === 'mouse') handleOutside(event);
   }
 
+  // Позволяет редактору сохранить фокус при клике в popup.
   function preserveFocus(event: PointerEvent) {
     if (typeof options.preserveFocus !== 'function' || options.preserveFocus(event))
       event.preventDefault();
@@ -278,7 +300,10 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   if (options.preserveFocus !== false)
     popup.addEventListener('pointerdown', preserveFocus);
 
-  return Object.assign((retainSurface = false) => {
+  return Object.assign(disconnect, { forceAlign });
+
+  // Снимает слушатели сразу. При retarget может отложить освобождение DOM-поверхности.
+  function disconnect(retainSurface = false) {
     disposed = true;
     view.cancelAnimationFrame(frame);
     document.removeEventListener('keydown', handleKeydown);
@@ -286,6 +311,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     view.removeEventListener('mousedown', handleMousedown, true);
     view.removeEventListener('contextmenu', handleMousedown, true);
     popup.removeEventListener('pointerdown', preserveFocus);
+    // Поверхность остаётся открыта, если к ней уже подключился новый владелец.
     const release = () => {
       if (popupConnections.get(popup) !== owner) {
         return;
@@ -293,12 +319,12 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
       popupConnections.delete(popup);
       hide();
     };
-    // Custom trigger registrations can be briefly empty during a same-flush retarget.
+    // При retarget в одном flush регистрация триггера может временно исчезнуть.
     if (retainSurface) {
       queueMicrotask(release);
     }
     else {
       release();
     }
-  }, { forceAlign });
+  }
 }

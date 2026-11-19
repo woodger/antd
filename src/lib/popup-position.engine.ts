@@ -337,9 +337,11 @@ export function getPopupPlacement(
   align: PopupSourceAlign,
   alignPoint = false
 ) {
-  return Object.entries(placements).find(([, item]) =>
+  const entries = Object.entries(placements);
+  const matchingPlacement = entries.find(([, item]) =>
     (item.points?.[0] || '') === (align.points?.[0] || '')
-      && (alignPoint || (item.points?.[1] || '') === (align.points?.[1] || '')))?.[0];
+      && (alignPoint || (item.points?.[1] || '') === (align.points?.[1] || '')));
+  return matchingPlacement?.[0];
 }
 
 export function getPopupArrowStyle(position: {

@@ -108,8 +108,9 @@ export function createMasonryRuntime<Data>(
 
       const next = items.map<MasonryHeight>((item, index) => {
         const key = item.key ?? index;
-
-        return [key, elements.get(key)?.getBoundingClientRect().height ?? 0, item.column];
+        const element = elements.get(key);
+        const height = element?.getBoundingClientRect().height ?? 0;
+        return [key, height, item.column];
       });
 
       if (!equalMasonryData(snapshot, next)) {
