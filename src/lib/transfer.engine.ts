@@ -1,7 +1,7 @@
 // Раскладывает записи Transfer по ключам, подготавливает отображение и вычисляет новые наборы
 // selection.
 import type {
-  TransferContent, TransferDirection, TransferKey, TransferRenderedItem, TransferRenderResult
+  TransferDirection, TransferKey, TransferRenderedItem, TransferRenderResult
 } from './transfer.types';
 import { getPaginationItems } from './pagination.engine';
 
@@ -31,13 +31,14 @@ export function transferData<RecordType extends object>(
   const right: (RecordType | undefined)[] = Array.from({ length: targetKeys.length });
 
   for (const record of all) {
-    const index = targets.get(transferKey(record));
+    const key = transferKey(record);
+    const targetIndex = targets.get(key);
 
-    if (index === undefined) {
+    if (targetIndex === undefined) {
       left.push(record);
     }
     else {
-      right[index] = record;
+      right[targetIndex] = record;
     }
   }
 
@@ -64,21 +65,7 @@ export function transferRender<RecordType extends object>(
   const result: TransferRenderedItem<RecordType>[] = [];
 
   for (const item of records) {
-    const rendered = render?.(item) ?? null;
-    let renderedEl: TransferContent<[RecordType]>;
-    let renderedText: string;
-
-    if (typeof rendered === 'object' && rendered !== null) {
-      renderedEl = rendered.label;
-      renderedText = rendered.value;
-    }
-    else {
-      renderedEl = rendered;
-      const text = [rendered, 'title' in item ? item.title : undefined, transferKey(item)]
-        .find(value => typeof value === 'string' || typeof value === 'number');
-      renderedText = text === undefined ? '' : String(text);
-    }
-
+    const { renderedEl, renderedText } = renderRecord(item);
     if (!search || (filterOption
       ? filterOption(search, item, direction)
       : renderedText.includes(search))) {
@@ -87,6 +74,22 @@ export function transferRender<RecordType extends object>(
   }
 
   return result;
+
+  // Сохраняет различие между отображаемым label и строкой для поиска.
+  function renderRecord(item: RecordType) {
+    const rendered = render?.(item) ?? null;
+    if (typeof rendered === 'object' && rendered !== null) {
+      return { renderedEl: rendered.label, renderedText: rendered.value };
+    }
+
+    const title = 'title' in item ? item.title : undefined;
+    const key = transferKey(item);
+    const searchText = [rendered, title, key].find(
+      value => typeof value === 'string' || typeof value === 'number'
+    );
+    const renderedText = searchText === undefined ? '' : String(searchText);
+    return { renderedEl: rendered, renderedText };
+  }
 }
 
 // Передаёт moveKeys в порядке выбора и пропускает disabled записи.
