@@ -46,8 +46,11 @@ export function getGradientPercentColor(
       if (distance === 0) {
         return start.color;
       }
-      return new ColorCore(start.color).mix(new ColorCore(end.color),
-        (percent - start.percent) / distance * 100).toRgbString();
+      const startColor = new ColorCore(start.color);
+      const endColor = new ColorCore(end.color);
+      const ratio = (percent - start.percent) / distance * 100;
+      const mixedColor = startColor.mix(endColor, ratio);
+      return mixedColor.toRgbString();
     }
   }
   return '';
@@ -77,22 +80,27 @@ export function fillPickerColor(
   next: AggregationColor | ColorCore,
   info?: { type?: 'hue' | 'alpha'; value?: number; }
 ): AggregationColor {
-  let submit = generateColor(next);
+  let submittedColor = generateColor(next);
   if (current.cleared) {
-    const rgb = submit.toRgb();
+    const rgb = submittedColor.toRgb();
     if (!rgb.r && !rgb.g && !rgb.b && info) {
-      submit = generateColor({ h: info.type === 'hue' ? info.value ?? 0 : 0,
-        s: 1, b: 1, a: info.type === 'alpha' ? (info.value ?? 0) / 100 : 1 });
+      submittedColor = generateColor({
+        h: info.type === 'hue' ? info.value ?? 0 : 0,
+        s: 1,
+        b: 1,
+        a: info.type === 'alpha' ? (info.value ?? 0) / 100 : 1
+      });
     }
     else {
-      submit = genAlphaColor(submit);
+      submittedColor = genAlphaColor(submittedColor);
     }
   }
   if (mode === 'single') {
-    return submit;
+    return submittedColor;
   }
+
   const colors = [...getPickerColors(current)];
-  colors[active] = { ...colors[active], color: submit };
+  colors[active] = { ...colors[active], color: submittedColor };
   return generateColor(colors);
 }
 
