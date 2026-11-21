@@ -1,0 +1,67 @@
+# RangePicker (DatePicker.RangePicker)
+
+Отдельный экспорт RangePicker использует общий Day.js adapter, календарь, time
+panel и извлечённый CSS DatePicker. Переходы выбора перенесены из
+useRangeValueChange rc-picker: calendar draft, подтверждённые границы и
+принятое владельцем value хранятся отдельно.
+
+RangePickerCore также используется TimeRangePicker. ConfigProvider.rangePicker
+задаёт общий variant/class/style/separator; локальные props имеют приоритет.
+Объект вложенного провайдера заменяет родительский целиком.
+
+```svelte
+<script lang="ts">
+  import dayjs from 'dayjs';
+  import { RangePicker, type RangePickerValue } from 'antd-svelte';
+  let period = $state<RangePickerValue | null>([dayjs('2026-10-10'), dayjs('2026-10-20')]);
+</script>
+<label for="period-start">Начало</label><label for="period-end">Конец</label>
+<RangePicker id={{start:'period-start',end:'period-end'}} name="period"
+  value={period} onChange={next => { period = next; }} />
+```
+
+Value/defaultValue — пара Dayjs|null|undefined; отсутствующие границы внутри
+нормализуются в null. Value=null очищает обе границы, undefined включает внутреннее
+состояние. OnChange получает пару Dayjs|null либо null при полной очистке.
+Второй аргумент — пара отображаемых строк либо null при полной очистке: это
+фактическое поведение rc-picker 1.12.2, хотя его declaration обещает только tuple.
+OnCalendarChange всегда получает пару значений, пару строк и {range:'start'|'end'}
+для первой изменённой границы. OnOk получает текущую календарную пару после
+подтверждения каждой границы; первое подтверждение ещё не означает onChange.
+
+Date показывает два соседних календаря, showTime — календарь и время активной
+границы. Переход к следующему полю, Tab, Enter, OK, Escape и закрытие снаружи
+различаются как в исходной машине переходов. NeedConfirm по умолчанию включён
+для datetime. Неподтверждённые изменения отменяются; controlled value/open могут
+отклонить предложение компонента. DefaultPickerValue/pickerValue принимают дату
+или пару дат панели; onPickerValueChange сообщает range/source/mode.
+
+Order=true сортирует отправляемую пару, если обе границы доступны. Order=false
+сохраняет позиции. Disabled принимает boolean либо [start,end], allowEmpty —
+boolean либо [start,end]. Очистка сохраняет заблокированную границу. DisabledDate
+получает {type,from}, disabledTime — (date,'start'|'end',{from}); from зависит от
+порядка посещения полей, как в rc-picker. Проверяются границы диапазона:
+запрещённая дата внутри него сама по себе не запрещает диапазон. MinDate/maxDate
+ограничивают выбор и навигацию. Presets принимают пару либо фабрику, previewValue
+по умолчанию 'hover'; false отключает предварительный просмотр. ShowNow
+по умолчанию выключен для диапазона; явное включение подтверждает текущую границу.
+
+Format, showTime units/steps/defaultOpenValue, inputReadOnly,
+preserveInvalidOnBlur, size/status/variant/Compact, локали, тема и RTL используют
+общие механизмы DatePicker. ShowTime.defaultOpenValue принимает пару дат времени.
+CellRender, panelRender и renderExtraFooter используют тот же Snippet-контракт,
+что DatePicker; footer получает один режим, cell info.range — активную границу.
+Календарные операции сохраняют режим входного Dayjs; UTC и wire-сериализация не
+навязываются. Native FormData.getAll(name) содержит две отображаемые строки под
+одним name. Form хранит пару объектов Dayjs, копирует tuple при snapshot и
+восстанавливает исходные даты при reset. Id-строка относится к первому полю,
+id={{start,end}} задаёт оба. Bind:nativeElement/startInput/endInput возвращают DOM;
+bind:this даёт focus({index:0|1,preventScroll,cursor}) и blur(). Native onfocus/onblur
+относятся к input; полный semantic event API upstream ещё не перенесён.
+
+Подтверждены SSR без browser APIs, ввод/ошибки/очистка, переходы фокуса,
+подтверждение времени, ограничения/from, nullable границы, controlled rejection,
+Form/нативная отправка и UTC в разных browser zones. Остальные picker modes,
+mask, полный semantic/config/motion API остаются пробелами
+семейства; наличие RangePicker не означает полного покрытия React DatePicker.
+

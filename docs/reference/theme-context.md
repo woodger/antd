@@ -376,7 +376,7 @@ Native reduced motion и живое отключение завершают те
 задачей. Общий getPopupContainer наследуется из ConfigProvider при отсутствии корневого
 prop Tabs; явный undefined и more overrides перекрывают его. ColorPicker использует
 локальную функцию или provider fallback. Точные приоритеты и текущие потребители
-описаны в [readme](../../readme.md#темы-и-локализация).
+описаны в [справочнике тем](themes.md).
 
 ## Настройки Flex
 
@@ -447,7 +447,7 @@ borderlessContentBg — transparent. Числовые размеры сериа�
 Переменные вычисляются для компонента до semantic/root styles. Поддержаны aliases,
 component algorithm, dark/compact и cssVar prefix/key. ConfigProvider.collapse
 управляет defaults стрелки и оформления; root/header/title/body/icon slots и item
-приоритеты описаны в [Collapse](../../readme.md#collapse). Native button получает
+приоритеты описаны в [Collapse](components/collapse.md). Native button получает
 header styles и полную область нажатия; высота панели меняется без React motion.
 
 ## Токены Card
@@ -608,7 +608,7 @@ preview.zIndex перекрывает токен viewer. Aliases, component algo
 
 ProgressAnimationDuration проверяется как CSS variable: placeholder.progress/render
 и исходная анимация ещё отсутствуют. Остальные ограничения Image перечислены в
-[README](../../readme.md#image).
+[Image](components/image.md).
 
 ## Токены Alert
 
@@ -629,7 +629,7 @@ Alert получает четыре component defaults:
 ConfigProvider.alert задаёт variant, closable/closeIcon, status icons, class/style
 и object/function semantic slots. Root styles: provider slots → provider style →
 local slots → local style. Нормализованные callback props и приоритеты закрытия
-описаны в [Alert](../../readme.md#alert). Source theme также использует fitted
+описаны в [Alert](components/alert.md). Source theme также использует fitted
 viewBox пяти filled status icons из icons-svg 4.6.0; legacy viewport сохранён.
 
 [110 UMD-сценариев](../../tests/browser/fixtures/ant-design-alert-reference.json),
