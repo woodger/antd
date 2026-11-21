@@ -37,4 +37,4 @@ dist/          результат svelte-package; не хранится в Git
 
 `src/lib/architecture.test.ts` защищает независимость runtime-импортов.
 Направление зависимостей описано в [UI Architecture](ui.md), команды —
-в [руководстве по разработке](../reference/development.md), правила — в [политиках](../policy/index.md).
+в [readme](../../readme.md), правила — в [политиках](../policy/index.md).
