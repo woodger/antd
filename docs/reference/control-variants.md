@@ -64,8 +64,8 @@ Theme.inherit=false сбрасывает тему, сохраняя настро
 
 ConfigProvider.select/datePicker/mentions на этом этапе принимают
 только variant. Их остальные исходные component config props пока не перенесены.
-TreeSelect также поддерживает [classNames, styles и switcherIcon](../../readme.md#treeselect).
-Card и Meta также поддерживают [class/style и semantic config](../../readme.md#card).
+TreeSelect также поддерживает [classNames, styles и switcherIcon](components/data-entry.md#treeselect).
+Card и Meta также поддерживают [class/style и semantic config](components/data-display.md#card).
 MentionsComponentConfig относится к provider; прежний MentionsConfig остаётся
 настройкой функции getMentions. Form component поддерживает form/false;
 произвольные wrapper tags остаются отдельным пробелом.
