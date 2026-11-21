@@ -56,7 +56,7 @@ help; отдельный полный каталог всех параметро
 ```text
 readme.md                 быстрый старт и основные ссылки
 CHANGELOG.md              история заметных изменений
-docs/README.md            карта документации
+docs/readme.md            карта документации
 docs/architecture/        текущие system boundaries
 docs/reference/           точные форматы и configuration
 docs/deployment/          deployment guides
@@ -65,7 +65,7 @@ docs/policy/              нормативные правила разработ
 
 Корневой файл намеренно называется `readme.md`. Отдельный `CONTRIBUTING.md` не
 используется: полный набор правил находится в `docs/policy`, а readme и
-`docs/README.md` ссылаются на policy index.
+`docs/readme.md` ссылаются на policy index.
 
 Новая верхнеуровневая категория `docs` создаётся только для новой устойчивой
 роли документа, а не ради одного файла.

@@ -23,8 +23,8 @@ npm exec -- vite --config tests/browser/vite.config.ts
 
 ## Где документация?
 
-Начните с [оглавления по ролям](docs/README.md). Если у вас только собранный пакет, откройте
-[оглавление на GitHub](https://github.com/woodger/antd-svelte/blob/develop/docs/README.md).
+Начните с [оглавления по ролям](docs/readme.md). Если у вас только собранный пакет, откройте
+[оглавление на GitHub](https://github.com/woodger/antd-svelte/blob/develop/docs/readme.md).
 Посмотреть компоненты в действии можно в [галерее примеров](https://woodger.org/ant-design).
 
 ## Какие основные точки входа?
