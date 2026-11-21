@@ -5,9 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#лицензия-и-источники)
 
 Библиотека компонентов Ant Design для Svelte и TypeScript: элементы интерфейса,
-модели форм, темы и локализация. Компоненты не требуют React или API SvelteKit.
+модели форм, темы и локализация.
 
-Это независимый community-перенос; работа над совместимостью продолжается.
 Поддержанные возможности и известные отличия собраны в [реестре покрытия](docs/reference/ant-design-porting/status.md).
 
 [Примеры компонентов](https://woodger.org/ant-design) · [Документация](docs/README.md) · [Каталог компонентов](docs/reference/components/README.md)
