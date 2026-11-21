@@ -59,11 +59,6 @@ Value поддерживает binding, defaultValue читается при с�
 onChange; checked после reset приводится к текущему value. Интеграция с FormItem
 и сериализация option.value не добавляются скрыто.
 
-Галерея — `/ant-design#segmented`, фикстура — `?fixture=segmented`.
-Рецепт segmented воспроизводит 38 правил vendor/segmented.css; цвета адаптированы
-к существующим темам, размеры используют токены controls. Изучена зависимость
-@rc-component/segmented 1.4.0 (commit 8cbec0b3a0a4097b683a55b39b565ea1e249b47f),
-её npm-архив сверяется по опубликованному SHA-512 и хранится только в .upstream.
 При смене значения между существующими видимыми options создаётся штатный thumb.
 Layout-геометрия labels (offset/client, без повторного применения CSS scale)
 измеряется после обновления DOM; Web Animations API перемещает

@@ -1,9 +1,8 @@
 # Calendar
 
-Calendar переносит самостоятельную панель из Ant Design и
-@rc-component/picker. По умолчанию отображает полный месяц с шестью
-строками дат; fullscreen={false} включает мини-календарь. Режим year показывает
-12 месяцев и сохраняется после выбора месяца.
+Calendar по умолчанию показывает полный месяц с шестью строками дат;
+`fullscreen={false}` включает мини-календарь. Режим year показывает 12 месяцев
+и сохраняется после выбора месяца.
 
 ```svelte
 <script lang="ts">
@@ -108,12 +107,6 @@ inherit reset и возврате к оформлению по умолчани�
 [unit-набором](../../../src/lib/theme-calendar-tokens-reference.test.ts),
 [SSR](../../../tests/package/calendar-theme.ssr.test.ts) не создаёт browser resources.
 
-Проверки: [engine](../../../src/lib/calendar.engine.test.ts),
-[SSR](../../../src/lib/calendar.ssr.test.ts),
-[public package](../../../tests/package/calendar.ssr.test.ts),
-[browser](../../../tests/browser/calendar.spec.ts) и `?fixture=calendar`, включая
-фабрику с собственным UTC Date adapter.
-
 Calendar принимает локальный `prefixCls` для Picker и добавляет `-calendar` к
 корневому классу; без override использует ConfigProvider.prefixCls. Ячейки,
 originNode и `cellRender.info.prefixCls` следуют тому же Picker prefix, а Select/Radio
@@ -135,4 +128,3 @@ Native input проверяются по собственному существ
 
 Полный каталог locales, React warnings и неперенесённые возможности используемых
 Select/Radio остаются за пределами подтверждённого объёма этого этапа.
-

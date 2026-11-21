@@ -139,13 +139,3 @@ primary-hover, disabled — disabled-цвет. Переменные цветов
 `styles.item` и inline-цвет custom `itemRender` сохраняют приоритет. Эти состояния
 проверяет [регрессионный тест](../../../tests/browser/pagination-color.spec.ts)
 в светлой и тёмной теме, LTR и RTL; существующая native-палитра `primary` сохраняется.
-
-Проверки: [engine](../../../src/lib/pagination.engine.test.ts),
-[SSR](../../../src/lib/pagination.ssr.test.ts),
-[package](../../../tests/package/pagination.ssr.test.ts),
-[browser](../../../tests/browser/pagination-features.spec.ts), прежние
-[binding/normalization tests](../../../tests/browser/checkbox-pagination.spec.ts)
-и `?fixture=pagination-features`. [CSS](../../../src/lib/vendor/pagination.css)
-воспроизводится рецептом pagination: 115 правил, включая два media rules;
-алгоритм страниц использует [MIT rc-pagination](../../../src/lib/vendor/LICENSE.rc-pagination).
-

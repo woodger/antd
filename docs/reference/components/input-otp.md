@@ -1,9 +1,8 @@
 # InputOTP (Input.OTP)
 
-InputOTP переносит OTP/index.tsx и OTPInput.tsx Ant Design. Каждая ячейка
-использует Input; группа сохраняет role=group, классы ant-otp и исходные labels
-«OTP Input 1», «OTP Input 2» и далее. Точные Props и настройки находятся в
-[исходных типах](../../../src/lib/input-otp.types.ts).
+InputOTP разбивает код на отдельные ячейки Input. Группа имеет role=group;
+имена ячеек по умолчанию — «OTP Input 1», «OTP Input 2» и далее. Props и
+настройки описаны в [исходных типах](../../../src/lib/input-otp.types.ts).
 
 ```svelte
 <script lang="ts">

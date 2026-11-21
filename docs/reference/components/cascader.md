@@ -1,12 +1,8 @@
 # Cascader / CascaderPanel
 
-Cascader переносит Ant Design и @rc-component/cascader.
-Selector сверён с @rc-component/select, каскадные checkbox — с
-@rc-component/tree. Чистая логика путей и поиска находится в
-[cascader.engine.ts](../../../src/lib/cascader.engine.ts), публичные типы и defaults — в
-[cascader.types.ts](../../../src/lib/cascader.types.ts).
-React-зависимости не устанавливаются. [Лицензия rc-cascader](../../../src/lib/vendor/LICENSE.rc-cascader)
-включена в пакет; CSS-рецепт извлекает 108 правил selector/columns/checkbox/Panel/RTL.
+Cascader позволяет выбрать путь в иерархическом списке; CascaderPanel показывает
+те же варианты без всплывающей панели. Публичные типы и значения по умолчанию —
+в [cascader.types.ts](../../../src/lib/cascader.types.ts).
 
 ```svelte
 <script lang="ts">
@@ -143,10 +139,3 @@ control остаётся raw. У Panel прежний Native root dir=rtl так
 задаёт RTL колонкам, оставляя корень LTR. Raw root direction и отдельный public
 counterpart с обычной HTML-обёрткой `dir="rtl"` записаны раздельно. Сам Source Panel
 не передаёт dir на свой корень. Эти границы не означают одинаковый DOM.
-
-Проверки: [engine](../../../src/lib/cascader.engine.test.ts),
-[SSR](../../../src/lib/cascader.ssr.test.ts),
-[public package](../../../tests/package/cascader.ssr.test.ts),
-[browser](../../../tests/browser/cascader.spec.ts),
-[source theme](../../../tests/browser/cascader-theme.spec.ts) и `?fixture=cascader`.
-

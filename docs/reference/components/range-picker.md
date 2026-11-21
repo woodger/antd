@@ -1,9 +1,7 @@
 # RangePicker (DatePicker.RangePicker)
 
-Отдельный экспорт RangePicker использует общий Day.js adapter, календарь, time
-panel и извлечённый CSS DatePicker. Переходы выбора перенесены из
-useRangeValueChange rc-picker: calendar draft, подтверждённые границы и
-принятое владельцем value хранятся отдельно.
+RangePicker позволяет выбрать диапазон дат и времени. Черновой выбор,
+подтверждённые границы и принятое владельцем значение хранятся отдельно.
 
 RangePickerCore также используется TimeRangePicker. ConfigProvider.rangePicker
 задаёт общий variant/class/style/separator; локальные props имеют приоритет.

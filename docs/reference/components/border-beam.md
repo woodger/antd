@@ -1,10 +1,8 @@
 # BorderBeam
 
-BorderBeam переносит декоративные слои Ant Design: BorderBeam/BorderBeamEffect,
-useBorderSize, util и style. Изучены @ant-design/cssinjs и
-@rc-component/util. Компонент не создаёт обёртку: слои добавляются
-непосредственно в контейнер и скрыты от accessibility tree.
-Точные Props и defaults — в [исходных типах](../../../src/lib/border-beam.types.ts).
+BorderBeam добавляет декоративные слои к указанному контейнеру без дополнительной
+обёртки. Слои скрыты от accessibility tree. Точные props и значения по умолчанию —
+в [исходных типах](../../../src/lib/border-beam.types.ts).
 
 В Svelte target явно связывает контейнер с эффектом. Это заменяет клонирование
 React child с составным ref; существующий ref вызывающего кода сохраняется.
@@ -84,9 +82,4 @@ namespace родителя: у вложенного луча теряются ou
 сверяется с этими изолированными исходными результатами. Дефект кэша не перенесён;
 raw наблюдение остаётся для отдельного разбора. Слои, target, border snapshot,
 draft/focus/selection и reduced motion сохраняются.
-Автоматический поиск host через React child/ref заменён описанным target API;
-прикладные обёртки и runtime React dependencies не добавляются. Fixture
-`?fixture=border-beam`, engine/SSR, package SSR и браузерные проверки принадлежат
-библиотеке. Source aliases, scopes и reactive cleanup дополнительно проверяются
-через `?fixture=border-beam-theme`; пример выше не требует изменения сайта-потребителя.
 

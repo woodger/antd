@@ -97,12 +97,6 @@ Native form/reset/hidden field, отменяемый onclick, скрытые о�
 algorithms применяются к обоим размерам; native-only темы сохраняют прежнее
 оформление. Local/shared prefix CSS и Wave подключены; React diagnostics/statics пока не перенесены.
 
-Изучены Ant Design 6.6.8, @rc-component/switch 1.0.3 и @rc-component/util 1.14.0.
-Рецепт switch побайтно воспроизводит прежние 47 правил vendor CSS, включая reduced
-motion; keyframes не добавляются. Типы — [switch.types.ts](../../../src/lib/switch.types.ts),
-проверки — [browser](../../../tests/browser/switch-features.spec.ts) и
-[package SSR](../../../tests/package/switch-features.ssr.test.ts).
-
 Switch поддерживает local/shared prefixCls для root, checked/loading/disabled/size/RTL,
 ручки, подписей и loading icon. Empty/undefined наследуют ConfigProvider; непустой
 local prefix имеет приоритет. Canonical token variables и внешний anticon

@@ -1,9 +1,8 @@
 # ColorPicker
 
-ColorPicker переносит Ant Design, @rc-component/color-picker,
-FastColor и gradient slider. Точные props и snippets описаны в
-[color-picker.types.ts](../../../src/lib/color-picker.types.ts); методы Color — в
-[color.ts](../../../src/lib/color.ts). React runtime в пакет не добавляется.
+ColorPicker выбирает цвет или градиент. Props и snippets описаны в
+[color-picker.types.ts](../../../src/lib/color-picker.types.ts), методы Color —
+в [color.ts](../../../src/lib/color.ts).
 
 ```svelte
 <script lang="ts">

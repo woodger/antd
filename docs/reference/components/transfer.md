@@ -1,8 +1,8 @@
 # Transfer
 
-Transfer переносит списки и логику Ant Design. `targetKeys` всегда задаёт
-владелец; `onChange(nextKeys, direction, moveKeys)` предлагает перенос. Измените
-targetKeys в callback, чтобы его принять. Локального defaultTargetKeys нет.
+Transfer показывает два списка для переноса элементов. `targetKeys` всегда
+задаёт владелец; `onChange(nextKeys, direction, moveKeys)` предлагает перенос.
+Измените targetKeys в callback, чтобы его принять. Локального defaultTargetKeys нет.
 
 ```svelte
 <script lang="ts">
@@ -149,15 +149,3 @@ Native сохраняет поле и введённую строку. Для CS
 Декларации сверяются с UMD отдельным
 [unit-набором](../../../src/lib/theme-transfer-tokens-reference.test.ts),
 [SSR](../../../tests/package/transfer-theme.ssr.test.ts) не создаёт браузерные ресурсы.
-
-Проверки: [engine](../../../src/lib/transfer.engine.test.ts),
-[SSR](../../../src/lib/transfer.ssr.test.ts),
-[public package](../../../tests/package/transfer.ssr.test.ts),
-[browser](../../../tests/browser/transfer.spec.ts) и `?fixture=transfer`.
-Оформление: [54 исходных CSS rules](../../../src/lib/vendor/transfer.css),
-[рецепт](../../../tools/ant-design-css-recipes.json); legacy defaults остаются в theme.css.
-Числовая/simple пагинация сверена с @rc-component/pagination 1.4.0;
-алгоритм страниц включён с [MIT-лицензией](../../../src/lib/vendor/LICENSE.rc-pagination).
-Delete icon перенесён из @ant-design/icons-svg 4.6.0 под существующей
-[MIT-лицензией](../../../src/lib/vendor/LICENSE.ant-design-icons).
-

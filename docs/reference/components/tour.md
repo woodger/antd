@@ -1,8 +1,7 @@
 # Tour
 
-Tour переносит Ant Design и @rc-component/tour. Состояния, маска и
-панель сверены с исходниками; выравнивание использует алгоритм rc-trigger 3.10.1.
-Точные Props/snippets описаны в [tour.types.ts](../../../src/lib/tour.types.ts).
+Tour проводит пользователя по шагам интерфейса. Props и snippets описаны
+в [tour.types.ts](../../../src/lib/tour.types.ts).
 
 ```svelte
 <script lang="ts">
@@ -95,8 +94,7 @@ Runtime `zIndex` имеет приоритет над CSS token `zIndexPopup`: �
 подтверждённое [raw observation](../../../tests/browser/fixtures/ant-design-tour-z-index-observation.json).
 Для изменения фактического слоя используйте prop `zIndex`; его default сохранён.
 
-Общий zIndex context всех popup families остаётся вне этого этапа.
-React private PurePanel и development diagnostics не экспортируются.
+Общий zIndex context всех popup пока не поддерживается.
 
 Проверки: [engine](../../../src/lib/tour.engine.test.ts),
 [public package SSR](../../../tests/package/tour.ssr.test.ts),

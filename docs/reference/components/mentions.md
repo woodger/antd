@@ -1,10 +1,6 @@
 # Mentions
 
-Первый этап следует Ant Design / @rc-component/mentions.
-Правила поиска/замены перенесены в mentions.engine.ts, autoSize следует
-calculateNodeHeight из @rc-component/input. Лицензии
-[rc-mentions](../../../src/lib/vendor/LICENSE.rc-mentions) и [rc-input](../../../src/lib/vendor/LICENSE.rc-input)
-включены в пакет; React runtime не устанавливается.
+Mentions предлагает варианты упоминаний при вводе текста.
 
 ```svelte
 <script lang="ts">
@@ -94,8 +90,7 @@ PopupRender — Snippet со стандартным menu Snippet. Можно д�
 
 AutoSize принимает boolean/{minRows,maxRows}, измеряет содержимое с теми же
 font/padding/box-sizing, что и textarea. Shadow node, ResizeObserver, frames и
-listeners удаляются при unmount. OnResize получает {width,height}. Это API Mentions;
-существующий TextArea этим этапом не расширяется. Rows по умолчанию 1.
+listeners удаляются при unmount. OnResize получает {width,height}. Rows по умолчанию 1.
 
 AllowClear — boolean/{clearIcon,disabled}; очистка вызывает change(''), затем
 onClear. Size/status/variant, native name/required/maxlength, FormItem/validation/

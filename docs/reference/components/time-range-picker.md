@@ -1,8 +1,6 @@
 # TimeRangePicker (TimePicker.RangePicker)
 
-TimeRangePicker переносит picker=time из общего RangePicker Ant Design /
-rc-picker. Он использует RangePickerCore, nullable time columns и CSS
-DatePicker; существующие контракты календарного RangePicker сохраняются.
+TimeRangePicker позволяет выбрать диапазон времени.
 
 ```svelte
 <script lang="ts">

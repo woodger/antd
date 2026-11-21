@@ -1,8 +1,7 @@
 # ImagePreviewGroup (Image.PreviewGroup)
 
-ImagePreviewGroup соответствует React Image.PreviewGroup, отдельный Svelte export
-относится к тому же семейству Image. Он предоставляет контекст дочерним Image и
-общий viewer; своей DOM-обёртки вокруг children нет.
+ImagePreviewGroup предоставляет дочерним Image общий просмотрщик. Компонент
+не добавляет DOM-обёртку вокруг children.
 
 ```svelte
 <script lang="ts">

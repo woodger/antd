@@ -717,10 +717,6 @@ Blur добавляет trimmed строку без дубликата; Escape �
 ShowSearch.autoClearSearchValue=false сохраняет поиск при выборе и Escape в
 multiple/tags. Blur multiple очищает локальный поиск без callback, blur tags
 завершает ввод. Остальные selection/blur/reset пути не вызывают onSearch.
-Сверка с [исходными options](../../../tests/browser/fixtures/ant-design-select-tags-options-reference.json)
-и [событиями](../../../tests/browser/fixtures/ant-design-select-tags-interaction-reference.json)
-использует неизменённый UMD 6.6.8; логика изучена по @rc-component/select 1.10.1,
-его MIT-лицензия уже включена в пакет.
 
 ## Разделители ввода
 

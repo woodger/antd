@@ -1,10 +1,7 @@
 # Tree
 
-Tree переносит Ant Design и @rc-component/tree. Чистые engines отвечают
-за flatten/родителей, исходную checkbox conduction и async load lifecycle.
-React/rc-tree runtime не устанавливаются; лицензия сохранена в vendor/LICENSE.rc-tree.
-CSS-рецепт извлекает 99 правил, включая collapse motion, и keyframe drag feedback
-из закреплённого antd.css, исключая TreeSelect. Иконки соответствуют @ant-design/icons-svg.
+Tree отображает иерархические данные и поддерживает раскрытие, выбор и отметку
+узлов.
 
 ```svelte
 <script lang="ts">

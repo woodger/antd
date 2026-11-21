@@ -1,14 +1,7 @@
 # Upload / UploadDragger
 
-Upload переносит Ant Design и AjaxUploader/request из @rc-component/upload.
-UploadDragger соответствует Upload.Dragger; UPLOAD_LIST_IGNORE — отдельный
-экспорт аналога Upload.LIST_IGNORE. React и rc-upload runtime не устанавливаются.
-Лицензия rc-upload сохранена в vendor/LICENSE.rc-upload; CSS-рецепт извлекает
-91 правило и четыре keyframes из закреплённого antd.css; неиспользуемые collapse
-selectors исключены.
-Отдельный рецепт `upload-link-reset` добавляет 14 исходных общих правил ссылок
-внутри Upload; цвета error rows сохраняют приоритет.
-Иконки взяты из закреплённого @ant-design/icons-svg с существующей лицензией.
+Upload позволяет выбирать и загружать файлы; UploadDragger добавляет выбор
+перетаскиванием. `UPLOAD_LIST_IGNORE` исключает файл из списка.
 
 `prefixCls` задаёт namespace Upload/Dragger, списка и всех состояний; пустая строка
 наследует ConfigProvider.prefixCls. Canonical variables и link reset сохранены,

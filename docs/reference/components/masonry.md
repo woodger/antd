@@ -1,14 +1,7 @@
 # Masonry
 
-Masonry переносит Ant Design: Masonry/MasonryItem, usePositions/useDelay/
-useRefs и style. Изучены @rc-component/motion,
-@rc-component/resize-observer и @rc-component/util.
-Используются native ResizeObserver/RAF и CSS transitions без React dependencies;
-[лицензии motion](../../../src/lib/vendor/LICENSE.rc-motion),
-[resize-observer](../../../src/lib/vendor/LICENSE.rc-resize-observer) и
-[util](../../../src/lib/vendor/LICENSE.rc-util) включены в пакет.
-Точные Props, semantic callbacks и тип данных — в
-[исходных объявлениях](../../../src/lib/masonry.types.ts).
+Masonry размещает элементы в колонках с учётом их высоты. Props, semantic
+callbacks и тип данных описаны в [исходных объявлениях](../../../src/lib/masonry.types.ts).
 
 ```svelte
 <script lang="ts">

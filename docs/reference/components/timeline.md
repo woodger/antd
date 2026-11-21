@@ -34,8 +34,6 @@ Loading задаёт process и добавляет spinner только при f
 остальные элементы имеют finish. Ожидание показывается отдельным loading-элементом
 в items. Reverse разворачивает весь массив событий.
 В reverse линия наследует статус предыдущего события, иначе — следующего.
-SVG LoadingOutlined перенесён точно из @ant-design/icons-svg 4.6.0 под уже
-включённой MIT-лицензией; React-зависимости не добавлены.
 
 Preset colors — blue/red/green/gray; произвольный CSS color задаёт переменную
 item icon, item.style перекрывает её. ClassNames/styles имеют root/item/itemWrapper/

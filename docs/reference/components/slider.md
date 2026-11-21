@@ -243,11 +243,3 @@ Scalar source API: [SSR](../../../tests/package/slider-scalar.ssr.test.ts),
 [эталон официального UMD](../../../tests/browser/fixtures/ant-design-slider-scalar-reference.json),
 маршрут `?fixture=slider-scalar`. Проверяются также semantic config, ARIA, native
 focus/form/reset и отсутствие callbacks при обновлении marks.
-
-Проверки: [engine](../../../src/lib/slider-range.engine.test.ts),
-[public SSR](../../../tests/package/slider-range.ssr.test.ts),
-[browser](../../../tests/browser/slider-range.spec.ts) и `?fixture=slider-range`.
-Новый [CSS](../../../src/lib/vendor/slider-range.css) воспроизводится рецептом из 54 правил;
-прежний [slider.css](../../../src/lib/vendor/slider.css) сохранён. Перенесённая логика
-снабжена [MIT rc-slider](../../../src/lib/vendor/LICENSE.rc-slider).
-

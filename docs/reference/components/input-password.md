@@ -1,9 +1,8 @@
 # InputPassword (Input.Password)
 
-Переключатель видимости перенесён из Password.tsx и его тестов Ant Design.
-InputPassword использует существующий Input: bind:value, defaultValue, native
-атрибуты и события, clear/count, affixes, FormItem, Compact и методы refs
-сохраняют его контракт. Точные настройки описаны в
+InputPassword добавляет к Input переключение видимости пароля. Он поддерживает
+bind:value, defaultValue, нативные атрибуты и события, clear/count, affixes,
+FormItem, Compact и методы refs. Настройки описаны в
 [исходных типах](../../../src/lib/input-password.types.ts).
 
 ```svelte

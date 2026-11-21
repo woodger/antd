@@ -1,9 +1,7 @@
 # InputSearch (Input.Search)
 
-InputSearch переносит Search.tsx Ant Design: Input и кнопка являются
-соседними элементами SpaceCompact. Стили Search уже входят в vendor/antd.css;
-геометрия SearchOutlined взята из @ant-design/icons-svg с сохранением MIT.
-Публичный контракт находится в [исходных типах](../../../src/lib/input-search.types.ts).
+InputSearch объединяет Input и кнопку поиска в SpaceCompact. Публичные типы
+описаны в [исходных объявлениях](../../../src/lib/input-search.types.ts).
 
 ```svelte
 <script lang="ts">

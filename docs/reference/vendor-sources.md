@@ -1,5 +1,7 @@
 # Источник и лицензия
 
+Тексты лицензий сторонних компонентов находятся в [каталоге vendor](../../src/lib/vendor/).
+
 Статический theme API использует algorithms/alias Ant Design 6.6.8,
 палитры @ant-design/colors 8.0.1, семантику getComputedToken из cssinjs 2.1.2
 и FastColor 3.0.1. Сохранены лицензии

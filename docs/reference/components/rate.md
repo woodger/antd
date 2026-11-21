@@ -1,9 +1,6 @@
 # Rate
 
-Rate следует Ant Design и @rc-component/rate.
-Изучены wrapper, style, demo, tests и делегированные Rate/Star/util.
-[MIT-лицензия rc-rate](../../../src/lib/vendor/LICENSE.rc-rate) включена в пакет;
-React runtime и новые npm dependencies не добавляются.
+Rate позволяет выбрать оценку, в том числе с шагом в половину значения.
 
 ```svelte
 <script lang="ts">

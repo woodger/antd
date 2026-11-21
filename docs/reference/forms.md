@@ -1082,8 +1082,6 @@ UMD `move(0.5, 1)` теряет первую строку и вставляет 
 сохранён как отдельное наблюдение в [raw reference](../../tests/browser/fixtures/ant-design-form-list-observation.json).
 Остальные операции сверены [в браузере](../../tests/browser/form-list.spec.ts),
 вложенность и initialValue — также [через SSR](../../tests/package/form-list.ssr.test.ts).
-Логика ключей адаптирована из @rc-component/form 1.8.6; [MIT-лицензия](../../src/lib/vendor/LICENSE.rc-form)
-включена в пакет. React runtime не добавлен.
 
 ## FormErrorList
 

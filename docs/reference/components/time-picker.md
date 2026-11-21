@@ -1,8 +1,6 @@
 # TimePicker
 
-TimePicker переносит выбор одного времени из Ant Design и rc-picker.
-Он использует общий SinglePicker, Day.js adapter и CSS DatePicker. Существующие
-публичные контракты DatePicker и RangePicker сохраняются.
+TimePicker позволяет выбрать время.
 
 ```svelte
 <script lang="ts">

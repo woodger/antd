@@ -32,13 +32,6 @@ textarea; autoSize сам по себе wrapper не добавляет. Счё�
 <TextArea id="description" name="description" rows={4} maxlength={2000} required bind:value={description} />
 ```
 
-Расширенный объём следует Ant Design 6.6.8 / @rc-component/input 1.3.1 (~1.3.1):
-изучены TextArea/BaseInput/ResizableTextArea, calculateNodeHeight, useCount,
-useCountDisplay/useCountExceed, resolveOnChange, Ant wrapper/style/tests и
-@rc-component/resize-observer 1.1.2. Используются существующие CSS Input/TextArea
-из [vendor/antd.css](../../../src/lib/vendor/antd.css) и [лицензия rc-input](../../../src/lib/vendor/LICENSE.rc-input).
-Новые npm dependencies не добавляются.
-
 AutoSize=true измеряет значение либо placeholder; {minRows,maxRows} ограничивает
 высоту. Измерение учитывает box-sizing, padding/border, шрифты, ширину и wrap.
 При maxRows появляется vertical scroll; без превышения maxRows overflowY=hidden.

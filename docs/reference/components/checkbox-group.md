@@ -113,6 +113,5 @@ Local/shared prefix CSS и Wave подключены; React diagnostics/statics 
 [checkbox-group.types.ts](../../../src/lib/checkbox-group.types.ts); проверки —
 [browser](../../../tests/browser/checkbox-features.spec.ts),
 [package SSR](../../../tests/package/checkbox-features.ssr.test.ts) и
-[engine](../../../src/lib/checkbox-group.engine.test.ts). Изучены @rc-component/checkbox
-2.0.0 и @rc-component/util 1.14.0; runtime React dependencies не добавлены.
+[engine](../../../src/lib/checkbox-group.engine.test.ts).
 

@@ -1,9 +1,7 @@
 # Listy
 
-Listy переносит Ant Design, @rc-component/listy и
-@rc-component/virtual-list. Последняя версия удовлетворяет runtime range
-`^1.4.0` Listy и соответствует dev-зависимости закреплённого Ant Design и коду
-его официального browser bundle. React runtime не добавляется в пакет.
+Listy отображает список с группировкой, закреплёнными заголовками и
+виртуальной прокруткой.
 
 ```svelte
 <script lang="ts">

@@ -1,8 +1,7 @@
 # Carousel
 
-Carousel переносит Ant Design и @ant-design/react-slick без React
-runtime. Геометрия, клоны и переходы следуют исходному Slick. Публичные Props,
-render snippets и refs описаны в [carousel.types.ts](../../../src/lib/carousel.types.ts).
+Carousel отображает слайды с поддержкой прокрутки и автоматического переключения.
+Props, snippets и refs описаны в [carousel.types.ts](../../../src/lib/carousel.types.ts).
 
 ```svelte
 <script lang="ts">
@@ -94,11 +93,3 @@ SSR выводит исходную процентную либо variable-width
 без DOM, callbacks, timers или media queries. При уничтожении очищаются timers,
 ResizeObserver, image/focus/touch/media listeners и refs; поздние callbacks не
 вызываются. React development diagnostics и устаревшие IE fallbacks не воспроизводятся.
-
-Проверки: [engine](../../../src/lib/carousel.engine.test.ts),
-[public package SSR](../../../tests/package/carousel.ssr.test.ts),
-[browser](../../../tests/browser/carousel.spec.ts) и `?fixture=carousel`.
-[CSS](../../../src/lib/vendor/carousel.css) воспроизводится рецептом: 58 правил и два
-keyframes. Перенесённая логика снабжена [MIT react-slick](../../../src/lib/vendor/LICENSE.react-slick),
-стили — существующей [MIT Ant Design](../../../src/lib/vendor/LICENSE.ant-design).
-

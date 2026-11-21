@@ -1,10 +1,6 @@
 # AutoComplete
 
-Первый этап следует Ant Design и @rc-component/select.
-Combobox-логика находится в AutoComplete и его engine; существующие single/multiple
-контракты Select сохранены. Как upstream, оформление переиспользует CSS Select
-из vendor/antd.css; отдельного upstream style-модуля AutoComplete нет.
-[MIT-лицензия rc-select](../../../src/lib/vendor/LICENSE.rc-select) включена в пакет.
+AutoComplete позволяет вводить произвольный текст и выбирать подсказки из списка.
 
 ```svelte
 <script lang="ts">
@@ -119,6 +115,5 @@ allowClear описаны в [общем разделе иконок](select.md#
 `components.root/input` используют [общий API замены поля](select.md#замена-root-и-input-select).
 `children(control)` сохраняет приоритет над `components.input`; `components.root`
 полностью заменяет поле и не вызывает оба editor renderers. Исходный motion пока отсутствует.
-Deprecated dataSource/Option
-и dropdown aliases исключены из переноса. Generic numeric/object values не входят в первый этап.
+Generic numeric/object values не поддерживаются.
 

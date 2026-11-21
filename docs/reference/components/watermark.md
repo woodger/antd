@@ -1,10 +1,6 @@
 # Watermark
 
-Watermark переносит Ant Design: index/useClips/useWatermark/context/utils,
-useSingletonCache и leading RAF debounce. Изучен также
-@rc-component/mutate-observer и @rc-component/util;
-[лицензия observer](../../../src/lib/vendor/LICENSE.rc-mutate-observer) сохранена.
-Используются native Canvas/MutationObserver/Image без React dependencies.
+Watermark добавляет повторяющийся текст или изображение поверх содержимого.
 
 ```svelte
 <script lang="ts">

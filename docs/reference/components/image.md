@@ -1,10 +1,7 @@
 # Image
 
-Первый этап следует Ant Design / @rc-component/image.
-[MIT-лицензия rc-image](../../../src/lib/vendor/LICENSE.rc-image) сохранена; React runtime не
-устанавливается. Геометрия перенесена в image-preview.engine.ts, browser
-listeners/probes — в соответствующие DOM-модули. ImagePreviewGroup использует тот же
-ImagePreview для групповой навигации.
+Image показывает изображение и поддерживает предварительный просмотр. Для
+группового просмотра используйте ImagePreviewGroup.
 
 ```svelte
 <script lang="ts">

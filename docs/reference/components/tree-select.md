@@ -1,12 +1,7 @@
 # TreeSelect
 
-TreeSelect переносит Ant Design / rc-tree-select поэтапно.
-Панель использует существующий Tree; checkbox conduction считается по полному
-дереву, а display values и фильтрованная панель вычисляются отдельно.
-React-зависимости не устанавливаются. Лицензия сохранена в
-vendor/LICENSE.rc-tree-select. Рецепт CSS извлекает 92 правила dropdown/checkbox/RTL;
-внутренний prefix .ant-select-tree нормализован к общему .ant-tree. Selector
-использует существующие стили Select и theme aliases.
+TreeSelect позволяет выбирать значения в иерархическом списке. Состояние
+флажков рассчитывается по полному дереву, включая скрытые фильтром узлы.
 
 ```svelte
 <script lang="ts">

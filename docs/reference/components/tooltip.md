@@ -303,16 +303,9 @@ Root styles имеют приоритет над вычисленными коо
 Tooltip Typography. У Typography без config сохраняется исходный hover trigger;
 его Tooltip создаётся лениво после DOM-измерения и не вызывает semantic callbacks при SSR.
 
-Проверки конфигурации:
-[60 UMD-сценариев и 18 последовательностей событий](../../../tests/browser/fixtures/ant-design-overlay-config-reference.json),
-[SSR](../../../tests/package/overlay-config.ssr.test.ts) и
-[browser](../../../tests/browser/overlay-config.spec.ts).
-Без component config поведение пустого trigger дополнительно сверяется с
-[10 UMD-последовательностями / 130 кадрами](../../../tests/browser/fixtures/ant-design-overlay-empty-trigger-reference.json)
-для controlled/default open и удаления focused содержимого:
-[browser](../../../tests/browser/overlay-empty-trigger.spec.ts).
-Tooltip.unique, motion, source zIndex context и остальные delegated rc-trigger props
-ещё требуют переноса. Границы fresh cache для Snippet и CSS-transform/clipping описаны выше.
+Tooltip.unique, motion, общий zIndex context и остальные delegated rc-trigger props
+пока не поддерживаются. Границы fresh cache для Snippet и CSS-transform/clipping
+описаны выше.
 
 ## Цвет Tooltip, Popover и Popconfirm
 
@@ -348,11 +341,6 @@ background, как React style setter; удаление shorthand сохраня
 Tooltip без getter. Явный контейнер внутри родительской панели наследует его,
 как исходный getPopupContainer.
 
-Проверки цвета: [129 UMD-сценариев и 12 вложенных поверхностей](../../../tests/browser/fixtures/ant-design-overlay-color-reference.json),
-[engine](../../../src/lib/tooltip-color.engine.test.ts), [SSR](../../../tests/package/overlay-color.ssr.test.ts)
-и [browser](../../../tests/browser/overlay-color.spec.ts). Эталоны цвета задают явные размеры
-popup/anchor; геометрия проверяется отдельными наборами выше.
-
 ## Локальные префиксы и классы открытого trigger
 
 `prefixCls` меняет классы Tooltip/Popover, их slots, placements и preset colors.
@@ -383,14 +371,4 @@ Typography. Последний передаёт color и semantic styles общ�
 Смена prefix сохраняет DOM, ввод, выделение и фокус; stylesheet удаляется вместе
 с владельцем. Portal и native ограничения viewport остаются прежними, включая
 заголовок Popover на узком экране и восстановление фокуса AvatarGroup.
-
-Источник CSS — отдельные templates Tooltip (58 rules), Popover (72) и Popconfirm
-(11); motion/unique этим этапом не переносились. Проверки:
-[123 UMD-сценария / 172 кадра](../../../tests/browser/fixtures/ant-design-overlay-prefix-reference.json),
-[CSS engine](../../../src/lib/overlay-prefix.engine.test.ts),
-[SSR](../../../tests/package/overlay-prefix.ssr.test.ts) и
-[browser](../../../tests/browser/overlay-prefix.spec.ts). UMD сам генерирует runtime CSS;
-статический antd.css в этой сверке не подключается. Явные размеры popup/anchor
-изолируют классы и оформление от измерения содержимого; trigger classes проверяются
-также при закрытии. Точный React DOM и Svelte markers не сравниваются.
 

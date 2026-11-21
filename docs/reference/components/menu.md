@@ -1,7 +1,6 @@
 # Menu
 
-Menu следует Ant Design и @rc-component/menu. React/rc-menu runtime не устанавливается;
-[MIT-лицензия rc-menu](../../../src/lib/vendor/LICENSE.rc-menu) сохранена в пакете.
+Menu отображает команды, группы и подменю с поддержкой клавиатуры.
 
 PrefixCls задаёт локальный namespace Menu, его пунктов, групп, Divider и подменю.
 Пустая строка наследует ConfigProvider.prefixCls. Popup и inline-списки сохраняют
@@ -13,7 +12,7 @@ Canonical variables/link reset и @scope границы тем сохранен�
 У upstream dashed Divider пропускает локальный префикс владельца. [Raw измерения и
 public per-divider prefixCls counterparts](../../../tests/browser/fixtures/ant-design-menu-prefix-reference.json)
 сохранены отдельно; Svelte наследует согласованный prefix Menu и сохраняет dashed.
-Независимый per-divider prefixCls этим этапом не добавляется.
+Независимый prefixCls для отдельного Divider не поддерживается.
 
 ```svelte
 <script lang="ts">
@@ -133,9 +132,9 @@ Source compact использует itemHeight=35px и collapsedWidth=70px.
 Form.disabled и ConfigProvider.componentDisabled не отключают навигацию.
 Галерея — `/ant-design#menu`, изолированная фикстура — `?fixture=menu`.
 
-Первый этап не включает responsive horizontal overflow/overflowedIndicator,
+Пока не поддерживаются responsive horizontal overflow/overflowedIndicator,
 исходные popup/collapse motion, controlled activeKey/defaultActiveFirst,
-component config вне темы, semantic classNames/styles, prefixCls, render hooks,
+component config вне темы, semantic classNames/styles, render hooks,
 placements/offset и overrides expandIcon/itemIcon. Deprecated
 Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса; данные
 задаются items. Standalone Menu пока не расширяет существующий контракт Dropdown.

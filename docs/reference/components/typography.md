@@ -113,15 +113,6 @@ Native обновляет классы действий вместе с корн
 Проверки prefix: [браузер](../../../tests/browser/typography-prefix.spec.ts) и
 [SSR](../../../tests/package/typography-prefix.ssr.test.ts), `?fixture=typography-prefix`.
 
-Проверки: [engine](../../../src/lib/typography.engine.test.ts),
-[copy lifecycle](../../../src/lib/typography-copy.model.test.ts),
-[public package SSR](../../../tests/package/typography.ssr.test.ts),
-[browser](../../../tests/browser/typography.spec.ts), `?fixture=typography`.
-Темы сверяются с [официальным UMD](../../../tests/browser/fixtures/ant-design-typography-theme-reference.json)
-в [unit](../../../src/lib/theme-typography-tokens-reference.test.ts),
-[SSR](../../../tests/package/typography-theme.ssr.test.ts) и
-[браузере](../../../tests/browser/typography-theme.spec.ts), `?fixture=typography-theme`.
-
 Ширина actions сверяется с
 [DOM/CSS-снимком Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-typography-actions-reference.json)
 в изолированном ShadowRoot. Так сравнение использует одинаковые шрифты текущего
@@ -137,4 +128,3 @@ native overflow измеряется под trigger=[] до записи пос�
 [рецептом](../../../tools/ant-design-css-recipes.json). Иконки взяты из
 @ant-design/icons-svg 4.6.0 под существующей
 [MIT-лицензией](../../../src/lib/vendor/LICENSE.ant-design-icons).
-

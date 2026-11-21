@@ -1,13 +1,7 @@
 # QRCode
 
-QRCode переносит canvas/SVG и статусы Ant Design с encoder из
-@rc-component/qrcode. TypeScript-алгоритм Project Nayuki сохранён
-с исходными таблицами, сегментацией, выбором версии/маски и Reed–Solomon.
-Runtime React dependencies не добавлены. В пакет включены лицензии
-[rc-qrcode](../../../src/lib/vendor/LICENSE.rc-qrcode),
-[Nayuki](../../../src/lib/vendor/LICENSE.qrcodegen) и
-[qrcode.react](../../../src/lib/vendor/LICENSE.qrcode-react).
-Точные Props, status snippet и semantic/config — в
+QRCode показывает код на canvas или в SVG и поддерживает состояния загрузки
+и ошибки. Props, status snippet и semantic/config описаны в
 [исходных объявлениях](../../../src/lib/qrcode.types.ts).
 
 ```svelte

@@ -1,11 +1,7 @@
 # Input
 
-Расширение Input перенесено из
-[woodger/ant-design@cf3e20c](https://github.com/woodger/ant-design/commit/cf3e20c829cdbcfa46232ea126606dbe853bbcd5).
-Эталон исходной реализации — Ant Design / @rc-component/input.
-Стили находятся
-в [vendor/antd.css](../../../src/lib/vendor/antd.css), [MIT-лицензия rc-input](../../../src/lib/vendor/LICENSE.rc-input)
-сохранена. React runtime и новые dependencies не добавлены.
+Input — текстовое поле с поддержкой привязки значения, префикса, суффикса
+и очистки.
 
 ```svelte
 <script lang="ts">

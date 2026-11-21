@@ -1,14 +1,9 @@
 # DatePicker
 
-DatePicker переносит выбор даты, datetime, недели, месяца, квартала и года из Ant Design и rc-picker.
-Public value — Dayjs или null при очистке; undefined включает внутреннее состояние
-с defaultValue. OnChange(value, dateString) получает объект даты и отображаемую
-строку. Это не контракт ISO/timestamp. Day.js 1.11.23 установлен в стенде; пакет
-компонентов объявляет peer dayjs ^1.11.11 наряду со Svelte. React/rc-picker runtime
-не устанавливаются. CSS-рецепт извлекает 262 правила из
-[закреплённого npm-архива](https://registry.npmjs.org/antd/-/antd-6.6.8.tgz);
-глобальный Calendar CSS исключён, корни DatePicker ограничены собственным marker. Чистый GenerateConfig и Day.js adapter перенесены отдельно;
-лицензия rc-picker сохранена в vendor/LICENSE.rc-picker.
+DatePicker позволяет выбрать дату, дату со временем, неделю, месяц, квартал
+или год. Значение — Dayjs; при очистке возвращается null. Undefined включает
+внутреннее состояние с defaultValue. OnChange(value, dateString) получает объект
+даты и отображаемую строку, а не ISO-строку или timestamp.
 
 ```svelte
 <script lang="ts">
