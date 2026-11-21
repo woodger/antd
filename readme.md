@@ -53,7 +53,7 @@
 - [Клавиатура и фокус](docs/reference/keyboard.md) — управление компонентами и доступность.
 - [Покрытие Ant Design](docs/reference/ant-design-porting/status.md) — реализованные возможности и оставшиеся отличия.
 
-Точные типы props, callbacks, snippets и refs находятся в исходных объявлениях
+Точные типы `props`, `callbacks`, `snippets` и `refs` находятся в исходных объявлениях
 компонентов и экспортируются через [публичную точку входа](src/lib/index.ts).
 
 ## Разработка
