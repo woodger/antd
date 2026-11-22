@@ -11,10 +11,20 @@
 
 ## Подключение
 
-Компоненты импортируются из `antd-svelte`. `ConfigProvider` подключает стили;
-если компоненты используются без него, импортируйте стили один раз в точке входа
-приложения или в корневом компоненте. В SvelteKit это можно сделать в `<script>`
-корневого layout `src/routes/+layout.svelte`:
+Импортируйте нужные компоненты из `antd-svelte`:
+
+```svelte
+<script lang="ts">
+  import { Button, Input } from 'antd-svelte';
+</script>
+```
+
+## Стили
+
+`ConfigProvider` подключает стили библиотеки. Если компоненты используются без
+него, импортируйте стили один раз в точке входа приложения или в корневом
+компоненте. В SvelteKit это можно сделать в `<script>` корневого layout
+`src/routes/+layout.svelte`:
 
 ```ts
 import 'antd-svelte/styles.css';
