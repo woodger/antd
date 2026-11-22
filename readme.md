@@ -4,7 +4,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-types-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#лицензия)
 
-Библиотека компонентов Ant Design для Svelte и TypeScript: элементы интерфейса,
+Библиотека компонентов [Ant Design](https://ant.design/) для Svelte и TypeScript: элементы интерфейса,
 модели форм, темы и локализация.
 
 [Примеры компонентов](https://woodger.org/ant-design) · [Документация](#документация)
