@@ -55,6 +55,11 @@ npm pack --ignore-scripts
 Его исходные файлы и фикстуры проверяются его собственным инструментом; проверка
 реестра не подтверждает выполнение тестов; их команды запускаются отдельно.
 
-Подробности о [локальном эталоне Ant Design](reference/ant-design-porting/upstream.md),
-[реестре и CSS-инструментах](reference/ant-design-porting/readme.md),
-[политиках проекта](policy/index.md) и [архитектуре](architecture/overview.md).
+## Разработка библиотеки
+
+- [Архитектура](architecture/overview.md) — устройство репозитория.
+- [UI Architecture](architecture/ui.md) — направление зависимостей и владельцы контрактов.
+- [Реестр и CSS-инструменты](reference/ant-design-porting/readme.md) — покрытие и извлечение стилей.
+- [Локальный эталон Ant Design](reference/ant-design-porting/upstream.md) — исходники для сверки.
+- [Политики разработки](policy/index.md) — правила проекта.
+- [История изменений](../CHANGELOG.md).
