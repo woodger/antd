@@ -13,11 +13,12 @@
 
 Чтобы использовать `antd-svelte` в своём проекте, выполните:
 
-```svelte
-<script lang="ts">
-  import { Button, Input } from 'antd-svelte';
-</script>
+```sh
+npm install antd-svelte
 ```
+
+Сейчас в npm под этим именем находится другой пакет; эта команда пока не
+устанавливает данную библиотеку.
 
 ## Стили
 
