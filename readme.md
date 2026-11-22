@@ -2,7 +2,7 @@
 
 [![Svelte 5](https://img.shields.io/badge/Svelte-5-FF3E00?logo=svelte&logoColor=white)](https://svelte.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-types-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#лицензия-и-источники)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#лицензия)
 
 Библиотека компонентов Ant Design для Svelte и TypeScript: элементы интерфейса,
 модели форм, темы и локализация.
@@ -140,7 +140,6 @@ npm run build
 Команды проверки собранного пакета, браузерных сценариев и реестра описаны в
 [руководстве разработчика](docs/development.md).
 
-## Лицензия и источники
+## Лицензия
 
-Проект распространяется под MIT. Сведения о стороннем коде, стилях и лицензиях
-приведены в [описании источников](docs/reference/vendor-sources.md).
+Проект распространяется под MIT.

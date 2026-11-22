@@ -4,7 +4,6 @@
 - [Каталог компонентов](reference/components/README.md) — API, примеры и ограничения.
 - [Формы и валидация](reference/forms.md), [темы и локализация](reference/themes.md), [клавиатура и фокус](reference/keyboard.md).
 - [Разработка библиотеки](development.md) — сборка, тесты и служебные инструменты.
-- [Источники и лицензии](reference/vendor-sources.md).
 - [Архитектура](architecture/overview.md) — границы самостоятельного репозитория.
 - [UI Architecture](architecture/ui.md) — направление зависимостей и владельцы контрактов.
 - [Реестр переноса и CSS-инструменты](reference/ant-design-porting/readme.md).
