@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { StatisticTimer, type StatisticTimerType } from 'antd-svelte';
+  import { StatisticTimer, type StatisticTimerType } from '@woodger/antd-svelte';
 
   let target = $state<number | undefined>(Date.now() + 10000);
   let type = $state<StatisticTimerType>('countdown');

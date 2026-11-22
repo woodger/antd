@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { ConfigProvider, Skeleton, SkeletonAvatar, theme } from 'antd-svelte';
+  import { ConfigProvider, Skeleton, SkeletonAvatar, theme } from '@woodger/antd-svelte';
   import type {
     SkeletonProps, SkeletonConfig, SkeletonSemanticInfo, SkeletonSemanticSlots,
     SkeletonRef, ThemeConfig
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   export interface SkeletonMainSample {
     name: string;

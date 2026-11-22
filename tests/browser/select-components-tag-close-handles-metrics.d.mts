@@ -1,4 +1,4 @@
-import type { SelectRef } from 'antd-svelte';
+import type { SelectRef } from '@woodger/antd-svelte';
 import type { SelectSurfaceProducerCall } from './select-surface-producers.mjs';
 export interface SelectTagCloseHandleOwner {
   model: unknown; rawModel: unknown; options: unknown; rawOptions: unknown;

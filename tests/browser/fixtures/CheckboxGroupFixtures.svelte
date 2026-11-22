@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, CheckboxGroup, ConfigProvider, Form, FormItem } from 'antd-svelte';
+  import { Button, CheckboxGroup, ConfigProvider, Form, FormItem } from '@woodger/antd-svelte';
   import { createCheckboxGroups } from './checkbox-group.model.svelte';
 
   const groups = createCheckboxGroups();

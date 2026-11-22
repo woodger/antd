@@ -1,6 +1,6 @@
 <script lang="ts">
   import dayjs from 'dayjs';
-  import { Calendar, ConfigProvider, enUS, type CalendarMode } from 'antd-svelte';
+  import { Calendar, ConfigProvider, enUS, type CalendarMode } from '@woodger/antd-svelte';
 
   let {
     id,

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, ConfigProvider, Input, InputNumber, SpaceAddon, TextArea } from 'antd-svelte';
+  import { Button, ConfigProvider, Input, InputNumber, SpaceAddon, TextArea } from '@woodger/antd-svelte';
   let { native = false }: { native?: boolean; } = $props();
 </script>
 

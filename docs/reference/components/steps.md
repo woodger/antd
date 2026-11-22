@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Steps } from 'antd-svelte';
+  import { Steps } from '@woodger/antd-svelte';
   let current = $state(0);
 </script>
 

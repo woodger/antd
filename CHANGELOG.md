@@ -7,6 +7,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Имя пакета изменено на `@woodger/antd-svelte`; импорты и публичные подмодули используют новое имя.
+
 ### Added
 
 - DatePicker, RangePicker, TimePicker и TimeRangePicker поддерживают объектный

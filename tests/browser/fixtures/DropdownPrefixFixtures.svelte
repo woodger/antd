@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import DropdownPrefixScope, { type DropdownPrefixSample } from './DropdownPrefixScope.svelte';
   import reference from './ant-design-dropdown-prefix-reference.json';
 

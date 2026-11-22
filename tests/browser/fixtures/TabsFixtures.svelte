@@ -8,7 +8,7 @@
     type TabsItem,
     type TabsPlacement,
     type TabsType
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import TabsContent from './TabsContent.svelte';
 
   let activeKey = $state<string | undefined>();

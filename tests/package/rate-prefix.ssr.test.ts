@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Rate, type RateProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Rate, type RateProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-rate-prefix-reference.json';
 import RatePrefixSSRFixtures from '../browser/fixtures/RatePrefixSSRFixtures.svelte';
 

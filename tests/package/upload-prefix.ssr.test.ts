@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Upload, type UploadProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Upload, type UploadProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-upload-prefix-reference.json';
 import UploadPrefixSSRFixtures from '../browser/fixtures/UploadPrefixSSRFixtures.svelte';
 

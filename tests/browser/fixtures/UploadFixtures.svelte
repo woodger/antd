@@ -9,7 +9,7 @@
     type UploadFile,
     type UploadChangeParam,
     type UploadRequestOptions
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   const form = createForm({ initialValues: {} });
   let files = $state.raw<UploadFile[]>([]);

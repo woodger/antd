@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Tabs, type TabsIndicatorSize, type TabsScrollInfo } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Tabs, type TabsIndicatorSize, type TabsScrollInfo } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-tabs-indicator-metrics.json';
 
 describe('Tabs indicator SSR', () => {

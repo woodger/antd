@@ -1,5 +1,5 @@
 <script module lang="ts">
-  import type { ColorPickerProps } from 'antd-svelte';
+  import type { ColorPickerProps } from '@woodger/antd-svelte';
 
   export interface ColorPickerPrefixSample {
     id: string;
@@ -26,7 +26,7 @@
 </script>
 
 <script lang="ts">
-  import { ColorPicker, type ColorValue } from 'antd-svelte';
+  import { ColorPicker, type ColorValue } from '@woodger/antd-svelte';
 
   let { sample, rootPrefix, local = true }: {
     sample: ColorPickerPrefixSample;

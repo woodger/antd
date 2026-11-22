@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Tree, type TreeDataNode, type TreeKey } from 'antd-svelte';
+  import { Tree, type TreeDataNode, type TreeKey } from '@woodger/antd-svelte';
 
   export interface TreePrefixSample {
     id: string;

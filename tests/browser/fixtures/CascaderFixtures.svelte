@@ -4,7 +4,7 @@
     Cascader, CascaderPanel, ConfigProvider, Form, FormItem, createForm, SpaceCompact, Button,
     type CascaderContent, type CascaderOption, type CascaderPath, type CascaderRenderInfo,
     type CascaderTagInfo, type CascaderTriggerInfo, type CascaderOmittedTag
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   function initialOptions(): CascaderOption[] {
     return [

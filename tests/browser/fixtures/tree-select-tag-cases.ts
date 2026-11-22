@@ -1,4 +1,4 @@
-import type { TreeSelectRawValue, TreeSelectValue, TreeSelectStrategy } from 'antd-svelte';
+import type { TreeSelectRawValue, TreeSelectValue, TreeSelectStrategy } from '@woodger/antd-svelte';
 
 export type TreeTagAction =
   | { kind: 'open' | 'update-data' | 'update-count' | 'update-length' | 'clear'; }

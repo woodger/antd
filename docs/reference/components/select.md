@@ -23,7 +23,7 @@ FieldNames задаёт value, label, options и groupLabel. Пустые име
 
 ```svelte
 <script lang="ts">
-  import { Select } from 'antd-svelte';
+  import { Select } from '@woodger/antd-svelte';
   interface Entry {
     key?: string;
     uid?: string;
@@ -99,7 +99,7 @@ boolean, массивом содержимого или Svelte Snippet. Явны
 
 ```svelte
 <script lang="ts">
-  import { Select, type SelectLabelValue } from 'antd-svelte';
+  import { Select, type SelectLabelValue } from '@woodger/antd-svelte';
   const options = [{ value: 0, label: 'Zero', alternate: 'Number zero' }];
   let value = $state<SelectLabelValue<number> | undefined>();
 </script>
@@ -157,7 +157,7 @@ undefined наследует `ConfigProvider.prefixCls`. CSS scope раздел�
 
 ```svelte
 <script lang="ts">
-  import { Select } from 'antd-svelte';
+  import { Select } from '@woodger/antd-svelte';
 
   const options = [
     { value: 0, label: 'Разработка' },
@@ -281,7 +281,7 @@ onOpenChange сообщает запрос, который владелец мо
 
 ```svelte
 <script lang="ts">
-  import { Select } from 'antd-svelte';
+  import { Select } from '@woodger/antd-svelte';
   let open = $state(false);
   const options = [{ value: 'a', label: 'Alpha' }];
 </script>
@@ -325,7 +325,7 @@ Key следует правилам общего слоя данных. Допо
 
 ```svelte
 <script lang="ts">
-  import { Select, type SelectFlattenOption } from 'antd-svelte';
+  import { Select, type SelectFlattenOption } from '@woodger/antd-svelte';
   const options = [{ value: 'happy', label: 'Happy', emoji: '😄' }];
 </script>
 
@@ -360,7 +360,7 @@ Native value keys и оформление пунктов сохранены. Gro
 ```svelte
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { Select } from 'antd-svelte';
+  import { Select } from '@woodger/antd-svelte';
   const options = [{ value: 'reader', label: 'Reader' }];
 </script>
 
@@ -438,7 +438,7 @@ provider suffixIcon или стрелка. Локальный `suffixIcon={null}
 
 ```svelte
 <script lang="ts">
-  import { Select, type SelectSuffixInfo } from 'antd-svelte';
+  import { Select, type SelectSuffixInfo } from '@woodger/antd-svelte';
   let value = $state('a');
   const options = [{ value: 'a', label: 'Alpha' }];
 </script>
@@ -504,7 +504,7 @@ Svelte DOM: `class`, `oninput`, `onkeydown`, `onfocusin`/`onfocusout` и стр�
 
 ```svelte
 <script lang="ts">
-  import { Select, type SelectInputContext } from 'antd-svelte';
+  import { Select, type SelectInputContext } from '@woodger/antd-svelte';
   const options = [{ value: 'a', label: 'Alpha' }];
 </script>
 {#snippet editor({ attributes, register }: SelectInputContext<HTMLTextAreaElement>)}
@@ -670,7 +670,7 @@ tagRender, но не монтирует его body/DOM. Неисполняем�
 
 ```svelte
 <script lang="ts">
-  import { Select } from 'antd-svelte';
+  import { Select } from '@woodger/antd-svelte';
   let tags = $state<string[]>([]);
 </script>
 
@@ -772,7 +772,7 @@ Snippet управляет своим содержимым. Single игнори�
 
 ```svelte
 <script lang="ts">
-  import { Select, type SelectOmittedTag } from 'antd-svelte';
+  import { Select, type SelectOmittedTag } from '@woodger/antd-svelte';
   let tags = $state<string[]>([]);
 </script>
 
@@ -810,7 +810,7 @@ renderer. Исходные selected values и поля формы сохраня
 
 ```svelte
 <script lang="ts">
-  import { Select, Tag, type SelectTagInfo } from 'antd-svelte';
+  import { Select, Tag, type SelectTagInfo } from '@woodger/antd-svelte';
   let values = $state<string[]>(['a']);
 </script>
 

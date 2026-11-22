@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AvatarGroup, ConfigProvider } from 'antd-svelte';
+  import { AvatarGroup, ConfigProvider } from '@woodger/antd-svelte';
   import type { AvatarGroupMaxCase as Sample, AvatarGroupMaxValues } from './avatar-group-max-presets';
 
   let { sample, changed = false }: { sample: Sample; changed?: boolean } = $props();

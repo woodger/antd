@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Result } from 'antd-svelte';
+import { Result } from '@woodger/antd-svelte';
 import ResultSourceCase from '../browser/fixtures/ResultSourceCase.svelte';
 
 describe('Result public package SSR', () => {

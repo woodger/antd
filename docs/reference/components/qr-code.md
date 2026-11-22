@@ -6,7 +6,7 @@ QRCode показывает код на canvas или в SVG и поддержи
 
 ```svelte
 <script lang="ts">
-  import { QRCode } from 'antd-svelte';
+  import { QRCode } from '@woodger/antd-svelte';
 </script>
 
 <QRCode

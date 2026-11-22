@@ -1,4 +1,4 @@
-import { Select, type SelectSearchConfig } from 'antd-svelte';
+import { Select, type SelectSearchConfig } from '@woodger/antd-svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-select-sort-reference.json';

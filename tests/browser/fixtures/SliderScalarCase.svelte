@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, Slider, type SliderSingleProps, type SliderRef } from 'antd-svelte';
+  import { ConfigProvider, Slider, type SliderSingleProps, type SliderRef } from '@woodger/antd-svelte';
   import { scalarClasses, scalarProvider, scalarStyles, sliderScalarCases }
     from './slider-scalar-cases';
 

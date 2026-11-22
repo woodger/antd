@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { InputOTP, type ComponentSize, type InputVariant } from 'antd-svelte';
+  import { InputOTP, type ComponentSize, type InputVariant } from '@woodger/antd-svelte';
 
   export interface OTPPrefixSample {
     id: string;

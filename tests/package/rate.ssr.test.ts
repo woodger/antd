@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Rate } from 'antd-svelte';
+import { Rate } from '@woodger/antd-svelte';
 import RateFixtures from '../browser/fixtures/RateFixtures.svelte';
 
 describe('Rate SSR', () => {

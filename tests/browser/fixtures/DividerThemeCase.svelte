@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { ConfigProvider, Divider, Input } from 'antd-svelte';
-  import type { DividerProps, ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, Divider, Input } from '@woodger/antd-svelte';
+  import type { DividerProps, ThemeConfig } from '@woodger/antd-svelte';
   import { dividerThemePresets } from './divider-theme-presets';
 
   let {

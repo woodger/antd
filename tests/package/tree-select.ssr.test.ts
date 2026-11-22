@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, it, expect, vi } from 'vitest';
-import { TreeSelect } from 'antd-svelte';
+import { TreeSelect } from '@woodger/antd-svelte';
 import TreeSelectFixtures from '../browser/fixtures/TreeSelectFixtures.svelte';
 
 describe('TreeSelect SSR', () => {

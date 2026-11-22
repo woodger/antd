@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { Button, ConfigProvider, SpaceCompact } from 'antd-svelte';
+  import { Button, ConfigProvider, SpaceCompact } from '@woodger/antd-svelte';
   import type {
     ButtonColor,
     ButtonType,
     ButtonVariant,
     ButtonShape,
     ButtonLoading
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let type = $state<ButtonType | undefined>();
   let color = $state<ButtonColor | undefined>();

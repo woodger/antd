@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Badge, ConfigProvider, Radio, RadioButton, RadioGroup } from 'antd-svelte';
+  import { Badge, ConfigProvider, Radio, RadioButton, RadioGroup } from '@woodger/antd-svelte';
 
   let size = $state<'small' | 'medium' | 'large' | 'inherit'>('inherit');
   let parentSize = $state<'small' | 'medium' | 'large'>('medium');

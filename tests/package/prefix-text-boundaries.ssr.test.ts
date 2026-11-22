@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import * as UI from 'antd-svelte';
+import * as UI from '@woodger/antd-svelte';
 
 const content = createRawSnippet(() => ({ render: () => '<span>Content</span>' }));
 const cases: Record<string, (prefixCls?: string) => ReturnType<typeof render>> = {

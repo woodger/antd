@@ -17,7 +17,7 @@ snippet; style остаётся CSS-строкой, как в остальных
 
 ```svelte
 <script lang="ts">
-  import { RadioGroup } from 'antd-svelte';
+  import { RadioGroup } from '@woodger/antd-svelte';
 
   const options = [
     { value: 0, label: 'Базовый' },
@@ -83,7 +83,7 @@ RadioGroup также принимает children со вложенными Radi
 
 ```svelte
 <script lang="ts">
-  import { RadioButton, RadioGroup } from 'antd-svelte';
+  import { RadioButton, RadioGroup } from '@woodger/antd-svelte';
 
   let mode = $state('month');
 </script>

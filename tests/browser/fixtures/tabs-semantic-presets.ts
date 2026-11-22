@@ -6,7 +6,7 @@ import type {
   TabsIndicatorSize,
   TabsSemanticProps,
   TabsSlots
-} from 'antd-svelte';
+} from '@woodger/antd-svelte';
 
 interface UndefinedMarker { $type: string; }
 interface SourceMore extends Omit<TabsMoreProps, 'icon' | 'overlayStyle' | 'overlayClassName'> {

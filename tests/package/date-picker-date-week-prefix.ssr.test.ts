@@ -1,7 +1,7 @@
 import dayjs, { type Dayjs } from 'dayjs';
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
-import { DatePicker, RangePicker, enUS } from 'antd-svelte';
+import { DatePicker, RangePicker, enUS } from '@woodger/antd-svelte';
 
 for (const kind of ['single', 'range'] as const) {
   it(`validates the closed ${kind} date field with the original model references`, () => {

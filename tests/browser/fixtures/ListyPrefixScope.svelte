@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Listy, type ListyRef } from 'antd-svelte';
+  import { Listy, type ListyRef } from '@woodger/antd-svelte';
 
   export interface ListyPrefixSample {
     id: string;

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { AutoComplete, ConfigProvider, Select, type SelectSuffixInfo } from 'antd-svelte';
+  import { AutoComplete, ConfigProvider, Select, type SelectSuffixInfo } from '@woodger/antd-svelte';
 
   type Sample = { id: string; control: string; mode?: 'tags' | 'multiple'; showSearch?: boolean;
     query?: string; rejectOpen?: boolean; key?: string; prevent?: boolean; initialOpen?: boolean; stop?: boolean; menu?: boolean;

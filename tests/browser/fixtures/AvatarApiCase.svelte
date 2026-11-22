@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Avatar, AvatarGroup, ConfigProvider } from 'antd-svelte';
-  import type { AvatarGroupItem } from 'antd-svelte';
+  import { Avatar, AvatarGroup, ConfigProvider } from '@woodger/antd-svelte';
+  import type { AvatarGroupItem } from '@woodger/antd-svelte';
   import { avatarApiImage, type AvatarApiCase, type AvatarApiValues } from './avatar-api-presets';
 
   let { sample, changed = false, aliases = false }: {

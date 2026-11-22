@@ -1,4 +1,4 @@
-import { createForm } from 'antd-svelte';
+import { createForm } from '@woodger/antd-svelte';
 
 export function createCheckboxPaginationControls() {
   let checked = $state<boolean | undefined>();

@@ -9,7 +9,7 @@
     type TextAreaCountInfo,
     type TextAreaVariant,
     type TextAreaAllowClear
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let value = $state('Initial 😀\ntext');
   let mounted = $state(true);

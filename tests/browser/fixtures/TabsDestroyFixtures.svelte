@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Tabs } from 'antd-svelte';
+  import { Tabs } from '@woodger/antd-svelte';
   import TabsContent from './TabsContent.svelte';
   import reference from './ant-design-tabs-destroy-reference.json';
 

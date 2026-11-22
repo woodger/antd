@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import TreeSelectAlignCase from '../browser/fixtures/TreeSelectAlignCase.svelte';
 import { treeSelectAlignSamples } from '../browser/fixtures/tree-select-align-cases';
 import reference from '../browser/fixtures/ant-design-tree-select-align-ssr-reference.json';

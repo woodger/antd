@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext, type Snippet } from 'svelte';
-  import type { SelectTagInfo } from 'antd-svelte';
+  import type { SelectTagInfo } from '@woodger/antd-svelte';
   import { selectTagCloseHandleGeometry } from '../select-components-tag-close-handles-cases.mjs';
   import { tagCloseHandlesContext, type TagCloseHandlesContext } from '../select-components-tag-close-handles-context';
   let { info }: { info: SelectTagInfo<string> } = $props();

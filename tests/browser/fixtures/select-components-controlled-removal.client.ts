@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { mount, hydrate, tick, flushSync, unmount } from 'svelte';
 import Owner from './SelectComponentsControlledRemovalCase.svelte';
 import { readControlledRemovalNode, type ControlledRemovalCapture, type ControlledRemovalPoint,

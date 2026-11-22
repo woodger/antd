@@ -1,4 +1,4 @@
-import type { FormValues, NamePath, RenderEmptyContent, ValidationRule } from 'antd-svelte';
+import type { FormValues, NamePath, RenderEmptyContent, ValidationRule } from '@woodger/antd-svelte';
 
 export interface FormMessageVariablesSample {
   id: string;

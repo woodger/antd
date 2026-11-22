@@ -10,7 +10,7 @@
     type CalendarHeaderRenderInfo,
     type CalendarMode,
     type CalendarSelectInfo
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { calendarDateAdapter } from './calendar-date-adapter';
 
   dayjs.extend(utc);

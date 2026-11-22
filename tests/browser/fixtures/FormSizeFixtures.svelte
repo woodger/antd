@@ -4,7 +4,7 @@
   import {
     Button, ConfigProvider, DatePicker, Divider, Form, FormItem, Input, InputNumber,
     Select, SpaceCompact, Switch, createForm, type ComponentSize, type FormSemantic
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-form-size-reference.json';
 
   interface Sample {

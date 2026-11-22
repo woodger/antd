@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { hydrate, tick, unmount, type ComponentProps } from 'svelte';
 import SelectSurfaceHydrationCase from './SelectSurfaceHydrationCase.svelte';
 import { selectSurfaceHydrationSamples } from './select-surface-hydration-cases';

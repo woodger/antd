@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Affix, Anchor, type GetTargetContainer } from 'antd-svelte';
+  import { Affix, Anchor, type GetTargetContainer } from '@woodger/antd-svelte';
 
   let { id, target, index, resolve, explicit = false }: {
     id: string;

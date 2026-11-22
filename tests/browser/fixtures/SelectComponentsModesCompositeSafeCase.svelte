@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Select, type SelectInputContext, type SelectRef } from 'antd-svelte';
+  import { Select, type SelectInputContext, type SelectRef } from '@woodger/antd-svelte';
   let { mode }: { mode: 'multiple' | 'tags' } = $props();
   const initial = untrack(() => mode), options = [{ value: 'a', label: 'Alpha' }];
   let value = $state(['a']), query = $state('');

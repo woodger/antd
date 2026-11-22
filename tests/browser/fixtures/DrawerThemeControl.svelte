@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Drawer, Input, type DrawerPlacement } from 'antd-svelte';
+  import { Button, Drawer, Input, type DrawerPlacement } from '@woodger/antd-svelte';
 
   let {
     mode = 'default',

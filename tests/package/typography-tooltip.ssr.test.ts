@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import OverlayConfigCase from '../browser/fixtures/OverlayConfigCase.svelte';
 import reference from '../browser/fixtures/ant-design-typography-tooltip-reference.json';
 import type { OverlayConfigCase as Sample } from '../browser/fixtures/overlay-config-presets';

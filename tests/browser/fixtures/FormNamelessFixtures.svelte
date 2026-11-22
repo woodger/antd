@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import {
     ConfigProvider, Form, FormItem, Input, createForm, type ComponentSize, type Variant
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-form-nameless-reference.json';
 
   interface Sample {

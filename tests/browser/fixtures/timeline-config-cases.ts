@@ -1,6 +1,6 @@
 import type {
   TimelineConfig, TimelineItem, TimelineProps, TimelineSlots, ThemeConfig
-} from 'antd-svelte';
+} from '@woodger/antd-svelte';
 
 interface TimelineConfigDescriptor {
   className?: string;

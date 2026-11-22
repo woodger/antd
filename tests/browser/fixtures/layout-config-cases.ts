@@ -1,4 +1,4 @@
-import type { LayoutConfig, LayoutSiderProps, ThemeConfig } from 'antd-svelte';
+import type { LayoutConfig, LayoutSiderProps, ThemeConfig } from '@woodger/antd-svelte';
 
 export interface LayoutConfigDescriptor {
   className?: string;

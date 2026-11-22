@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, InputNumber } from 'antd-svelte';
+  import { ConfigProvider, InputNumber } from '@woodger/antd-svelte';
   import InputNumberPrefixScope, {
     type NumberPrefixSample
   } from './InputNumberPrefixScope.svelte';

@@ -5,7 +5,7 @@ Image показывает изображение и поддерживает п
 
 ```svelte
 <script lang="ts">
-  import { Image } from 'antd-svelte';
+  import { Image } from '@woodger/antd-svelte';
   let open = $state(false);
 </script>
 <Image src="/photo.jpg" alt="Фотография" width={240}

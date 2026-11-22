@@ -1,4 +1,4 @@
-import type { ValidateMessages, ValidationRule } from 'antd-svelte';
+import type { ValidateMessages, ValidationRule } from '@woodger/antd-svelte';
 
 export interface FormMessagesDescriptor {
   readonly [key: string]: string | FormMessagesDescriptor;

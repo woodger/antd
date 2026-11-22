@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button, ConfigProvider, Input, InputNumber, InputPassword, InputSearch, InputOTP,
-    SpaceAddon, TextArea, theme, type ThemeConfig } from 'antd-svelte';
+    SpaceAddon, TextArea, theme, type ThemeConfig } from '@woodger/antd-svelte';
 
   let mounted = $state(true);
   let enabled = $state(true);

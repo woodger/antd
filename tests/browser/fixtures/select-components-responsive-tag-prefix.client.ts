@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { mount, tick, unmount, flushSync } from 'svelte';
 import Case from './SelectComponentsResponsiveTagPrefixCase.svelte';
 import { selectCustomTagPrefixSamples } from '../select-components-responsive-tag-prefix-cases.mjs';

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { TreeSelect } from 'antd-svelte';
-  import type { TreeSelectRef, TreeSelectRootContext } from 'antd-svelte';
+  import { TreeSelect } from '@woodger/antd-svelte';
+  import type { TreeSelectRef, TreeSelectRootContext } from '@woodger/antd-svelte';
   let custom = $state(true);
   let active = $state(true);
   let revision = $state(0);

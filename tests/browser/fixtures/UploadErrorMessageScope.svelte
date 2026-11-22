@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts">
-  import { ConfigProvider, Upload, enUS, type UploadFile } from 'antd-svelte';
+  import { ConfigProvider, Upload, enUS, type UploadFile } from '@woodger/antd-svelte';
 
   let { sample }: { sample: UploadErrorSample } = $props();
   let error = $derived.by<UploadFile['error']>(() => {

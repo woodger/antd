@@ -1,6 +1,6 @@
-import { createForm, type NamePath } from 'antd-svelte';
+import { createForm, type NamePath } from '@woodger/antd-svelte';
 import { describe, expect, it } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-form-touched-paths-observation.json';
 
 describe('Form touched paths public package', () => {

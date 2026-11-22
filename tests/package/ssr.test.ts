@@ -2,11 +2,11 @@ import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 
-import { Input } from 'antd-svelte';
-import { Select } from 'antd-svelte';
-import { Modal } from 'antd-svelte';
-import { Checkbox } from 'antd-svelte';
-import { Pagination } from 'antd-svelte';
+import { Input } from '@woodger/antd-svelte';
+import { Select } from '@woodger/antd-svelte';
+import { Modal } from '@woodger/antd-svelte';
+import { Checkbox } from '@woodger/antd-svelte';
+import { Pagination } from '@woodger/antd-svelte';
 
 describe('Ant Design server rendering', () => {
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Card, Input, theme, type AliasToken } from 'antd-svelte';
+  import { Button, Card, Input, theme, type AliasToken } from '@woodger/antd-svelte';
 
   let { id }: { id: string; } = $props();
   const current = theme.useToken();

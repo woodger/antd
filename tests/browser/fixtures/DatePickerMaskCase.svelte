@@ -3,7 +3,7 @@
   import dayjs, { type Dayjs } from 'dayjs';
   import { ConfigProvider, DatePicker, RangePicker, TimePicker, TimeRangePicker, enUS,
     type DatePickerProps, type RangePickerProps, type RangePickerValue,
-    type TimePickerProps, type TimeRangePickerProps, type DatePickerDisabledTime } from 'antd-svelte';
+    type TimePickerProps, type TimeRangePickerProps, type DatePickerDisabledTime } from '@woodger/antd-svelte';
   import { createDatePickerPresetsRecorder } from '../date-picker-presets-recorder.mjs';
   import { samples } from '../date-picker-mask-cases.mjs';
   import type { MaskAuthoredDateName, MaskControlName, MaskFormatProfile }

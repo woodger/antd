@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-picker-container-reference.json';
 import PickerContainerCase from '../browser/fixtures/PickerContainerCase.svelte';
 import type { PickerContainerCase as ContainerCase } from '../browser/fixtures/picker-container-presets';

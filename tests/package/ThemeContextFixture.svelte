@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, theme } from 'antd-svelte';
+  import { ConfigProvider, theme } from '@woodger/antd-svelte';
   import ThemeContextConsumer from './ThemeContextConsumer.svelte';
 
   let { kind = 'source' }: { kind?: string; } = $props();

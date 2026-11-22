@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TextArea, Form, FormItem, createForm } from 'antd-svelte';
+  import { TextArea, Form, FormItem, createForm } from '@woodger/antd-svelte';
 
   let value = $state<string | undefined>('Initial\ntext');
   let readonly = $state(false);

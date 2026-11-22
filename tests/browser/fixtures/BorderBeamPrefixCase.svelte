@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import { resolveBorderBeamTheme } from './border-beam-theme-presets';
   import BorderBeamThemeControl from './BorderBeamThemeControl.svelte';
 

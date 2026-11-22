@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Tabs, type TabsPlacement } from 'antd-svelte';
+  import { ConfigProvider, Tabs, type TabsPlacement } from '@woodger/antd-svelte';
   import reference from '../browser/fixtures/ant-design-tabs-motion-reference.json';
   import { tabsMotionSettings, type TabsMotionCase } from '../browser/fixtures/tabs-motion-presets';
 

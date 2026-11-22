@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from 'antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
   import PickerPrefixScope, {
     type PickerPrefixKind, type PickerPrefixSample
   } from './PickerPrefixScope.svelte';

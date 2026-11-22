@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { hydrate, tick, unmount } from 'svelte';
 import SelectVirtualHydration from './SelectVirtualHydration.svelte';
 import { selectVirtualSamples } from './select-virtual-cases';

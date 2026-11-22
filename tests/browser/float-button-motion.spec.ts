@@ -1,6 +1,6 @@
 import type { Locator } from '@playwright/test';
 import { test, expect } from './test';
-import registry from 'antd-svelte/porting/registry.json' with { type: 'json' };
+import registry from '@woodger/antd-svelte/porting/registry.json' with { type: 'json' };
 import reference from './fixtures/ant-design-float-back-top-motion-reference.json' with {
   type: 'json'
 };

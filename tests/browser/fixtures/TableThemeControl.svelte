@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Table, type TableColumn, type TableKey, type TableSorter } from 'antd-svelte';
+  import { Table, type TableColumn, type TableKey, type TableSorter } from '@woodger/antd-svelte';
 
   let { mode = 'default' }: { mode?: string; } = $props();
   let selected = $state<TableKey[]>([1]);

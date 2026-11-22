@@ -10,7 +10,7 @@ RangePickerCore также используется TimeRangePicker. ConfigProvi
 ```svelte
 <script lang="ts">
   import dayjs from 'dayjs';
-  import { RangePicker, type RangePickerValue } from 'antd-svelte';
+  import { RangePicker, type RangePickerValue } from '@woodger/antd-svelte';
   let period = $state<RangePickerValue | null>([dayjs('2026-10-10'), dayjs('2026-10-20')]);
 </script>
 <label for="period-start">Начало</label><label for="period-end">Конец</label>

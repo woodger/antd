@@ -7,7 +7,7 @@ InputNumber редактирует `number | null` через `bind:value` и
 
 ```svelte
 <script lang="ts">
-  import { InputNumber } from 'antd-svelte';
+  import { InputNumber } from '@woodger/antd-svelte';
 
   let quantity = $state<number | null>(2);
 </script>
@@ -88,7 +88,7 @@ mini-decimal использует обычный Number с его огранич
 
 ```svelte
 <script lang="ts">
-  import { InputNumber } from 'antd-svelte';
+  import { InputNumber } from '@woodger/antd-svelte';
   let amount = $state<string | null>('1');
 </script>
 

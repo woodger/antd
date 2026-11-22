@@ -2,7 +2,7 @@
   import {
     Form, FormItem, FormValidationError, Input, createForm,
     type FieldError, type FormValidateOptions, type NamePath
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   interface Outcome {
     id: number;

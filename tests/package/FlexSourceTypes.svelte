@@ -5,7 +5,7 @@
     type FlexConfig,
     type FlexProps,
     type FlexComponentProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import FlexCustomRoot from '../browser/fixtures/FlexCustomRoot.svelte';
   import FlexNoRefRoot from '../browser/fixtures/FlexNoRefRoot.svelte';
 

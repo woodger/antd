@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { FloatButton, FloatButtonGroup, FloatButtonBackTop } from 'antd-svelte';
-  import type { FloatButtonPlacement, FloatButtonShape } from 'antd-svelte';
+  import { FloatButton, FloatButtonGroup, FloatButtonBackTop } from '@woodger/antd-svelte';
+  import type { FloatButtonPlacement, FloatButtonShape } from '@woodger/antd-svelte';
 
   export interface FloatButtonPrefixSample {
     id: string;

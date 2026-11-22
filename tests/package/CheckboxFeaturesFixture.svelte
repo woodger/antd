@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Checkbox, CheckboxGroup, Col, ConfigProvider, Row } from 'antd-svelte';
+  import { Checkbox, CheckboxGroup, Col, ConfigProvider, Row } from '@woodger/antd-svelte';
 </script>
 
 {#snippet rich()}<strong>Rich option</strong>{/snippet}

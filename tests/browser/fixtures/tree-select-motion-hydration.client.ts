@@ -1,6 +1,6 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { hydrate, tick, unmount } from 'svelte';
-import type { TreeSelectRef } from 'antd-svelte';
+import type { TreeSelectRef } from '@woodger/antd-svelte';
 import TreeSelectMotionHydration from './TreeSelectMotionHydration.svelte';
 import {
   treeSelectMotionSamples, type TreeSelectMotionAction

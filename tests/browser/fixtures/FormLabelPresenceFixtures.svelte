@@ -3,7 +3,7 @@
   import {
     ConfigProvider, Form, FormItem, Input, createForm,
     type FormProps, type FormItemProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-form-label-presence-reference.json';
 
   interface Sample {

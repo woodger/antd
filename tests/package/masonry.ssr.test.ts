@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Masonry, type MasonryProps } from 'antd-svelte';
+import { Masonry, type MasonryProps } from '@woodger/antd-svelte';
 import MasonryFixtures from '../browser/fixtures/MasonryFixtures.svelte';
 
 describe('Masonry package SSR', () => {

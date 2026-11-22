@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS, type ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd-svelte';
   import DrawerThemeControl from './DrawerThemeControl.svelte';
   import { resolveDrawerTheme, type DrawerThemeSample } from './drawer-theme-presets';
 

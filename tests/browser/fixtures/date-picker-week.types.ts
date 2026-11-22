@@ -1,7 +1,7 @@
 import type {
   DatePickerMode, DatePickerPicker, DatePickerProps, RangePickerProps,
   TimePickerProps, TimeRangePickerProps
-} from 'antd-svelte';
+} from '@woodger/antd-svelte';
 
 export const picker: DatePickerPicker = 'week';
 export const mode: DatePickerMode = 'week';

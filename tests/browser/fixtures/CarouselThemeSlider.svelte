@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Carousel, type CarouselProps } from 'antd-svelte';
+  import { Carousel, type CarouselProps } from '@woodger/antd-svelte';
 
   let { id, placement = 'bottom', priority = false }: {
     id: string;

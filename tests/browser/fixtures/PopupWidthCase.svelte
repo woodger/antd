@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { AutoComplete, ConfigProvider, Select, TreeSelect } from 'antd-svelte';
+  import { AutoComplete, ConfigProvider, Select, TreeSelect } from '@woodger/antd-svelte';
   import {
     popupWidthData, popupWidthGeometry, popupWidthProps, popupWidthReceipt,
     type PopupWidthAction, type PopupWidthSample

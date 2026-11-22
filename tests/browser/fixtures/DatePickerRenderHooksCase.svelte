@@ -2,7 +2,7 @@
   import { untrack, type Snippet } from 'svelte';
   import dayjs, { type Dayjs } from 'dayjs';
   import { ConfigProvider, DatePicker, RangePicker, enUS,
-    type DatePickerCellRenderInfo, type DatePickerMode } from 'antd-svelte';
+    type DatePickerCellRenderInfo, type DatePickerMode } from '@woodger/antd-svelte';
   import type { RenderHooksCapture, RenderHooksCellObservation, RenderHooksOwner }
     from '../date-picker-render-hooks-native';
 

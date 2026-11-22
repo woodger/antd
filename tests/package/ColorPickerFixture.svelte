@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, ColorPicker, enUS } from 'antd-svelte';
+  import { ConfigProvider, ColorPicker, enUS } from '@woodger/antd-svelte';
 </script>
 
 <ConfigProvider locale={enUS} direction="rtl" componentSize="large"

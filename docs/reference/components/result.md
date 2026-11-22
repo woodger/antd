@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Button, Result } from 'antd-svelte';
+  import { Button, Result } from '@woodger/antd-svelte';
   let { edit }: { edit: () => void } = $props();
 </script>
 

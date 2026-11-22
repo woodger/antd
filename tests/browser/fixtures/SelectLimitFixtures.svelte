@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Select } from 'antd-svelte';
+  import { Select } from '@woodger/antd-svelte';
   import reference from './ant-design-select-max-count-reference.json';
   import SelectTagsCase from './SelectTagsCase.svelte';
   import { getSelectCountLimit, type SelectLimitSample } from './select-limit-cases';

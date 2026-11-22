@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TreeSelectRef } from 'antd-svelte';
+  import type { TreeSelectRef } from '@woodger/antd-svelte';
   import TreeSelectAlignCase from './TreeSelectAlignCase.svelte';
   import type { TreeSelectAlignAction, TreeSelectAlignSample } from './tree-select-align-cases';
   let { sample }: { sample: TreeSelectAlignSample } = $props();

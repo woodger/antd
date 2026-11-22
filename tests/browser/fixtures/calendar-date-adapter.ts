@@ -1,4 +1,4 @@
-import type { CalendarGenerateConfig } from 'antd-svelte';
+import type { CalendarGenerateConfig } from '@woodger/antd-svelte';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];

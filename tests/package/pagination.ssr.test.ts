@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Pagination, type PaginationProps } from 'antd-svelte';
+import { Pagination, type PaginationProps } from '@woodger/antd-svelte';
 import PaginationFeatures from '../browser/fixtures/PaginationFeaturesFixtures.svelte';
 
 describe('Pagination source public package', () => {

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Switch, type SwitchSize } from 'antd-svelte';
+  import { Switch, type SwitchSize } from '@woodger/antd-svelte';
 
   export interface SwitchPrefixSample {
     id: string;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, InputOTP } from 'antd-svelte';
+  import { ConfigProvider, InputOTP } from '@woodger/antd-svelte';
   import InputOTPPrefixScope, { type OTPPrefixSample } from './InputOTPPrefixScope.svelte';
   import reference from './ant-design-input-otp-prefix-reference.json';
 

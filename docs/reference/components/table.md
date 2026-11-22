@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Table, type TableColumn, type TableKey, type TableSorter } from 'antd-svelte';
+  import { Table, type TableColumn, type TableKey, type TableSorter } from '@woodger/antd-svelte';
 
   interface Person { id: number; name: string; score: number }
 
@@ -118,7 +118,7 @@ disabled-строки при расчёте checked/indeterminate и отклю�
 
 ```svelte
 <script lang="ts">
-  import { Button, Table, type TableColumn, type TableKey } from 'antd-svelte';
+  import { Button, Table, type TableColumn, type TableKey } from '@woodger/antd-svelte';
 
   interface Person { key: number; name: string; email: string; active: boolean }
   const people: Person[] = [
@@ -330,7 +330,7 @@ Pagination находится снаружи этой области. Без scr
 
 ```svelte
 <script lang="ts">
-  import { Table, type TableColumn } from 'antd-svelte';
+  import { Table, type TableColumn } from '@woodger/antd-svelte';
 
   interface Person { key: number; name: string; team: string; tasks: number }
   const people: Person[] = Array.from({ length: 30 }, (_, index) => ({
@@ -377,7 +377,7 @@ Table с API.
 
 ```svelte
 <script lang="ts">
-  import { Table, type TableColumn, type TableFilters } from 'antd-svelte';
+  import { Table, type TableColumn, type TableFilters } from '@woodger/antd-svelte';
 
   interface Person { key: number; name: string; active: boolean }
 
@@ -478,7 +478,7 @@ dataSource владельцем. Внешние обновления props не 
 ```svelte
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Button, Table, type TableColumn } from 'antd-svelte';
+  import { Button, Table, type TableColumn } from '@woodger/antd-svelte';
   import { createRemoteTable } from '$lib/presentation/ant-design/remote-table.model.svelte';
   import { createMemberSource, type RemoteMember } from '$lib/presentation/ant-design/remote-members';
 

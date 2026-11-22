@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Anchor } from 'antd-svelte';
-  import type { AnchorItem } from 'antd-svelte';
+  import { Anchor } from '@woodger/antd-svelte';
+  import type { AnchorItem } from '@woodger/antd-svelte';
 
   let container = $state<HTMLDivElement>();
   let horizontal = $state(false);

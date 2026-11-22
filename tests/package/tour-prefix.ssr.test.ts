@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Tour, type TourProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Tour, type TourProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-tour-prefix-reference.json';
 import TourPrefixSSRFixtures from '../browser/fixtures/TourPrefixSSRFixtures.svelte';
 

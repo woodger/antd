@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { AvatarGroup, ConfigProvider, Popover } from 'antd-svelte';
-  import type { AvatarGroupMax, ConfigProviderProps } from 'antd-svelte';
+  import { AvatarGroup, ConfigProvider, Popover } from '@woodger/antd-svelte';
+  import type { AvatarGroupMax, ConfigProviderProps } from '@woodger/antd-svelte';
   import type {
     AvatarGroupPopoverCase as Sample,
     AvatarGroupPopoverValues

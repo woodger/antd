@@ -6,7 +6,7 @@ Transfer показывает два списка для переноса эле
 
 ```svelte
 <script lang="ts">
-  import { Transfer, type TransferKey } from 'antd-svelte';
+  import { Transfer, type TransferKey } from '@woodger/antd-svelte';
 
   const dataSource = [
     { key: 'a', title: 'Alpha' },

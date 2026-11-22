@@ -1,4 +1,4 @@
-import type { SelectRef } from 'antd-svelte';
+import type { SelectRef } from '@woodger/antd-svelte';
 import type { HydrationOwnershipOwnerKey, HydrationOwnershipScenario, HydrationOwnershipTag, HydrationOwnershipUpdate } from './select-components-hydration-ownership-cases.mjs';
 export interface HydrationOwnershipLocalRoot { identity: number; nodeType: number; name: string; mode: 'open' | 'closed' | null; hostIdentity: number | null }
 export interface HydrationOwnershipNode {

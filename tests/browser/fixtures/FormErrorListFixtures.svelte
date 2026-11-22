@@ -2,7 +2,7 @@
   import {
     ConfigProvider, Form, FormErrorList, FormItem, FormList, createForm,
     type FormErrorListProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { onDestroy, untrack } from 'svelte';
 
   let { initial }: { initial?: FormErrorListProps } = $props();

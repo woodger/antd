@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Avatar, ConfigProvider } from 'antd-svelte';
+  import { Avatar, ConfigProvider } from '@woodger/antd-svelte';
   import AvatarApiCase from './AvatarApiCase.svelte';
   import reference from './ant-design-avatar-prefix-reference.json';
   import type { AvatarApiCase as Sample } from './avatar-api-presets';

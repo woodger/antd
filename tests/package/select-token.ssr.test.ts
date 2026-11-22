@@ -1,4 +1,4 @@
-import { Select, type SelectProps, type SelectTokenSeparators } from 'antd-svelte';
+import { Select, type SelectProps, type SelectTokenSeparators } from '@woodger/antd-svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-select-token-separators-reference.json';

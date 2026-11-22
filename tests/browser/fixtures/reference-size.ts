@@ -1,4 +1,4 @@
-import type { ComponentSize } from 'antd-svelte';
+import type { ComponentSize } from '@woodger/antd-svelte';
 
 /** Raw эталоны подписывают обычный размер middle; это метка замера, а не prop. */
 export function referenceSizeLabel(size: ComponentSize) {

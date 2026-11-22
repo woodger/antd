@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createRawSnippet, onDestroy, tick, untrack, type Snippet } from 'svelte';
   import { Select, AutoComplete, ConfigProvider, Form, FormItem, createForm, type RenderEmptyContent,
-    type SelectProps, type AutoCompleteProps, type SelectConfig, type SelectRef } from 'antd-svelte';
+    type SelectProps, type AutoCompleteProps, type SelectConfig, type SelectRef } from '@woodger/antd-svelte';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import type { SelectIconSample, SelectIconSettings, SelectIconAction, SelectIconValue } from '../select-icons-cases.mjs';
 

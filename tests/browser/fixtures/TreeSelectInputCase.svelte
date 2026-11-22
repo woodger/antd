@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import type { HTMLInputAttributes, HTMLTextareaAttributes } from 'svelte/elements';
-  import { ConfigProvider, TreeSelect, type TreeSelectInputContext, type TreeSelectRef, type TreeSelectValue } from 'antd-svelte';
+  import { ConfigProvider, TreeSelect, type TreeSelectInputContext, type TreeSelectRef, type TreeSelectValue } from '@woodger/antd-svelte';
   import TreeSelectInputEditor from './TreeSelectInputEditor.svelte';
   import TreeSelectTextareaEditor from './TreeSelectTextareaEditor.svelte';
   import type { TreeSelectInputSample, TreeSelectInputUpdate } from './tree-select-input-cases';

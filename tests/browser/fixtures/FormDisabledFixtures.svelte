@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import {
     Button, ConfigProvider, Form, FormItem, Input, Select, Tag, createForm
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-form-disabled-reference.json';
 
   interface Sample {

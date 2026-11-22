@@ -1,4 +1,4 @@
-import type { SegmentedConfig, SegmentedSemanticSlots } from 'antd-svelte';
+import type { SegmentedConfig, SegmentedSemanticSlots } from '@woodger/antd-svelte';
 import reference from './ant-design-segmented-config-reference.json';
 
 export type SegmentedConfigSample = typeof reference.cases[number];

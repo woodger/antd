@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Slider } from 'antd-svelte';
+  import { Slider } from '@woodger/antd-svelte';
   import OverlayCornerCase from './OverlayCornerCase.svelte';
   import reference from './ant-design-overlay-options-reference.json';
   import type { OverlayCornerCase as Sample } from './overlay-corner-presets';

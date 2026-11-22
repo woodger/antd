@@ -4,7 +4,7 @@ Watermark добавляет повторяющийся текст или изо
 
 ```svelte
 <script lang="ts">
-  import { Watermark } from 'antd-svelte';
+  import { Watermark } from '@woodger/antd-svelte';
 </script>
 <Watermark content={['Ant Design', { text: 'Svelte 5', font: { fontSize: 12 } }]}>
   <p>Содержимое страницы</p>

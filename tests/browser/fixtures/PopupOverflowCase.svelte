@@ -3,7 +3,7 @@
   import {
     AutoComplete, Cascader, ConfigProvider, Select, TreeSelect,
     type CascaderTriggerInfo, type ConfigProviderProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import {
     popupOverflowData, popupOverflowGeometry,
     type PopupOverflowAction, type PopupOverflowDescriptor, type PopupOverflowSample

@@ -5,7 +5,7 @@ callbacks и тип данных описаны в [исходных объяв�
 
 ```svelte
 <script lang="ts">
-  import { Masonry } from 'antd-svelte';
+  import { Masonry } from '@woodger/antd-svelte';
 
   const items = [100, 60, 120, 80].map((height, index) => ({ key: index, data: height }));
 </script>

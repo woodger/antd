@@ -2,7 +2,7 @@
   import { onMount, tick, untrack } from 'svelte';
   import {
     ConfigProvider, Form, FormItem, FormList, FormErrorList, Input, createForm
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-form-semantic-reference.json';
   import { formSemanticSettings, type FormSemanticSettings } from './form-semantic-settings';
 

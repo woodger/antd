@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { ConfigProvider, DirectoryTree, Tree, theme,
-    type TreeKey, type TreeMotionConfig, type TreeMotionEvent, type TreeRef } from 'antd-svelte';
+    type TreeKey, type TreeMotionConfig, type TreeMotionEvent, type TreeRef } from '@woodger/antd-svelte';
   import { treeMotionData, type TreeMotionSample } from './tree-motion-cases';
 
   let { sample }: { sample: TreeMotionSample } = $props();

@@ -1,7 +1,7 @@
 <script lang="ts">
   import dayjs, { type Dayjs } from 'dayjs';
   import utc from 'dayjs/plugin/utc.js';
-  import { DatePicker, ConfigProvider, Form, FormItem, createForm, enUS } from 'antd-svelte';
+  import { DatePicker, ConfigProvider, Form, FormItem, createForm, enUS } from '@woodger/antd-svelte';
 
   dayjs.extend(utc);
   let value = $state<Dayjs | null>(dayjs('2026-10-15T10:20:30.123'));

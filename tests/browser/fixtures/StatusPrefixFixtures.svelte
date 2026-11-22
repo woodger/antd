@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import StatusPrefixScope, { type StatusPrefixSample } from './StatusPrefixScope.svelte';
   import reference from './ant-design-status-prefix-reference.json';
 

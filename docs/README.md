@@ -1,3 +1,3 @@
-# Документация antd-svelte
+# Документация @woodger/antd-svelte
 
 [Карта документации](../readme.md#документация) · [Политики разработки](policy/index.md)

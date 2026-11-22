@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AvatarGroup, Popover, Popconfirm, type TooltipAlignConfig } from 'antd-svelte';
+  import { AvatarGroup, Popover, Popconfirm, type TooltipAlignConfig } from '@woodger/antd-svelte';
   import type { PopoverAlignmentCase } from './popover-align.types';
 
   let { sample, onAlign }: {

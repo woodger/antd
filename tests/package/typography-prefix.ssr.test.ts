@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { TypographyParagraph, type TypographyParagraphProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { TypographyParagraph, type TypographyParagraphProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-typography-prefix-reference.json';
 import TypographyPrefixSSRFixtures from '../browser/fixtures/TypographyPrefixSSRFixtures.svelte';
 

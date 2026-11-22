@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AutoComplete, ConfigProvider } from 'antd-svelte';
+  import { AutoComplete, ConfigProvider } from '@woodger/antd-svelte';
 
   const options = [{ value: 'a', label: 'Alpha' }];
 </script>

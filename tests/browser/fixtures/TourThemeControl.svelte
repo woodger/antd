@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Tour } from 'antd-svelte';
+  import { Tour } from '@woodger/antd-svelte';
 
   let {
     mode = 'default',

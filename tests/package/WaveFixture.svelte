@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button, Checkbox, ConfigProvider, Radio, Steps, Switch, Tag,
-    type WaveConfig } from 'antd-svelte';
+    type WaveConfig } from '@woodger/antd-svelte';
   let { wave }: { wave?: WaveConfig; } = $props();
 </script>
 

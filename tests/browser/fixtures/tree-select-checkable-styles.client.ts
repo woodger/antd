@@ -1,1 +1,1 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';

@@ -5,7 +5,7 @@
     type BadgeColor,
     type BadgeSize,
     type BadgeStatus
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   const statuses: BadgeStatus[] = ['success', 'processing', 'default', 'error', 'warning'];
   const colors: BadgeColor[] = [

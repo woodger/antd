@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Progress } from 'antd-svelte';
+import { Progress } from '@woodger/antd-svelte';
 import ProgressCirclePair from './ProgressCirclePair.svelte';
 import ProgressCircleCase from '../browser/fixtures/ProgressCircleCase.svelte';
 

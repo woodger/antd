@@ -1,6 +1,6 @@
 <script lang="ts">
   import dayjs, { type Dayjs } from 'dayjs';
-  import { ConfigProvider, DatePicker, RangePicker, enUS } from 'antd-svelte';
+  import { ConfigProvider, DatePicker, RangePicker, enUS } from '@woodger/antd-svelte';
   let { kind }: { kind: 'single' | 'range' } = $props();
   const start = dayjs('2024-01-31T16:37:59.456');
   const end = dayjs('2024-11-20T09:12:34.567');

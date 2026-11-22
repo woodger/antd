@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from 'antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
   import ColorPickerPrefixScope, {
     type ColorPickerPrefixSample
   } from './ColorPickerPrefixScope.svelte';

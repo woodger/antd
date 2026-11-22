@@ -2,7 +2,7 @@
   import { createRawSnippet, onDestroy, untrack, type Snippet } from 'svelte';
   import { Select, AutoComplete, ConfigProvider, enUS, type ComponentSize,
     type SelectProps, type AutoCompleteProps, type SelectConfig,
-    type SelectRef, type SelectPopupContent, type SelectPopupRender } from 'antd-svelte';
+    type SelectRef, type SelectPopupContent, type SelectPopupRender } from '@woodger/antd-svelte';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import { selectSurfaceData, selectSurfaceGeometry, selectSurfaceRootStyle, selectSurfaceSemantic,
     type SelectSurfaceSample, type SelectSurfaceAction, type SelectSurfaceSemantic } from './select-surface-cases';

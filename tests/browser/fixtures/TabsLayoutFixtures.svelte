@@ -5,7 +5,7 @@
     type ComponentSize,
     type TabsPlacement,
     type TabsType
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-tabs-layout-metrics.json';
 
   let sample = $state(reference.cases[0].name);

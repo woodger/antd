@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Row, Col } from 'antd-svelte';
+  import { ConfigProvider, Row, Col } from '@woodger/antd-svelte';
   import reference from './ant-design-grid-theme-reference.json';
   import GridThemeCase from './GridThemeCase.svelte';
 

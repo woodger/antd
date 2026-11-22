@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, type ThemeConfig } from '@woodger/antd-svelte';
   import WatermarkThemeControl from './WatermarkThemeControl.svelte';
   import { resolveWatermarkTheme, type WatermarkThemeSample } from './watermark-theme-presets';
 

@@ -1,4 +1,4 @@
-import type { AvatarSize } from 'antd-svelte';
+import type { AvatarSize } from '@woodger/antd-svelte';
 export interface AvatarSourceCase {
   name: string;
   kind: 'raw' | 'empty' | 'stateful' | 'image';

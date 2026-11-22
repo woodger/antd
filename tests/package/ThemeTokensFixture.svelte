@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { theme } from 'antd-svelte';
+  import { theme } from '@woodger/antd-svelte';
 
   const token = theme.getDesignToken({
     algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],

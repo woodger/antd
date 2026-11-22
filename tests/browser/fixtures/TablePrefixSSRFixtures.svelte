@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Table } from 'antd-svelte';
+  import { ConfigProvider, Table } from '@woodger/antd-svelte';
   const rows = [{ key: 'one', name: 'One' }];
   const columns = [{ key: 'name', title: 'Name', dataIndex: 'name' as const }];
 </script>

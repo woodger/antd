@@ -1,4 +1,4 @@
-import { Select, type SelectProps } from 'antd-svelte';
+import { Select, type SelectProps } from '@woodger/antd-svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import reference from '../browser/fixtures/ant-design-select-open-reference.json';

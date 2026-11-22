@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Input, Modal } from 'antd-svelte';
+  import { Button, Input, Modal } from '@woodger/antd-svelte';
 
   let { mode = 'default' }: { mode?: string; } = $props();
   let open = $state(true);

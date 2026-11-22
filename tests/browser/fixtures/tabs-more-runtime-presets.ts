@@ -1,4 +1,4 @@
-import type { TabsMoreProps } from 'antd-svelte';
+import type { TabsMoreProps } from '@woodger/antd-svelte';
 
 export interface TabsMoreRuntimeCase {
   name: string;

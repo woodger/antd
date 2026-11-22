@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { mount, tick, unmount, flushSync } from 'svelte';
 import Case from './DatePickerDateWeekPrefixCase.svelte';
 import type { DateWeekPrefixCapture, DateWeekPrefixOwner } from '../date-picker-date-week-prefix-native-types';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy, untrack } from 'svelte';
-  import { AutoComplete, ConfigProvider, type AutoCompleteProps, type SelectFlattenOption, type SelectRef } from 'antd-svelte';
+  import { AutoComplete, ConfigProvider, type AutoCompleteProps, type SelectFlattenOption, type SelectRef } from '@woodger/antd-svelte';
   import AutoCompleteCloseFixtures from './AutoCompleteCloseFixtures.svelte';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import type { AutocompleteCloseSample } from '../autocomplete-close-reference';

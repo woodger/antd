@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import BreadcrumbPrefixScope from './BreadcrumbPrefixScope.svelte';
 </script>
 

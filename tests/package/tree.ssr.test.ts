@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Tree } from 'antd-svelte';
+import { Tree } from '@woodger/antd-svelte';
 import TreeFixtures from '../browser/fixtures/TreeFixtures.svelte';
 
 describe('Tree SSR', () => {

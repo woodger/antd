@@ -7,7 +7,7 @@
     type TourProps,
     type TourStepProps,
     type TourPlacement
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let open = $state<boolean | undefined>(false);
   let current = $state<number | undefined>(0);
@@ -151,7 +151,7 @@
     record('skip');
   }}>Skip {info.current + 1}</button>{@render original()}
 {/snippet}
-{#snippet panel(info: import('antd-svelte').TourPanelInfo, index: number)}
+{#snippet panel(info: import('@woodger/antd-svelte').TourPanelInfo, index: number)}
   <div class="custom-panel">Custom panel {index + 1}<button type="button" onclick={info.onNext}>Custom next</button></div>
 {/snippet}
 

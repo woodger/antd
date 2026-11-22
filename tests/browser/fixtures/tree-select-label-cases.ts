@@ -1,4 +1,4 @@
-import type { TreeSelectValue } from 'antd-svelte';
+import type { TreeSelectValue } from '@woodger/antd-svelte';
 import { treeTagData, type TreeTagSample } from './tree-select-tag-cases.ts';
 
 export type TreeLabelAction =

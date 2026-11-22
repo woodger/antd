@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, it, expect, vi } from 'vitest';
-import { Image } from 'antd-svelte';
+import { Image } from '@woodger/antd-svelte';
 import ImageFixtures from '../browser/fixtures/ImageFixtures.svelte';
 
 describe('Image SSR', () => {

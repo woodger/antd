@@ -3,8 +3,8 @@ import { createRawSnippet } from 'svelte';
 import { describe, expect, it, vi } from 'vitest';
 import {
   Cascader, CascaderPanel, type CascaderFieldNames, type CascaderOption, type CascaderProps
-} from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+} from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-cascader-prefix-reference.json';
 import CascaderPrefixSSRFixtures from '../browser/fixtures/CascaderPrefixSSRFixtures.svelte';
 

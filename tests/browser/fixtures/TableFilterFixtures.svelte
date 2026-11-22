@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Modal, Table, type TableColumn } from 'antd-svelte';
+  import { ConfigProvider, Modal, Table, type TableColumn } from '@woodger/antd-svelte';
   import { createTableFilterControls, type FilterPerson } from './table-filter.model.svelte';
 
   const controls = createTableFilterControls();

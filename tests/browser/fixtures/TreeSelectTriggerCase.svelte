@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { TreeSelect } from 'antd-svelte';
-  import type { TreeSelectRef } from 'antd-svelte';
+  import { TreeSelect } from '@woodger/antd-svelte';
+  import type { TreeSelectRef } from '@woodger/antd-svelte';
   import type { TreeSelectTriggerAction, TreeSelectTriggerSample } from './tree-select-trigger-cases';
   let { sample }: { sample: TreeSelectTriggerSample } = $props();
   let actions = $state(untrack(() => sample.showAction));

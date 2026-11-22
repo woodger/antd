@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, theme, type AliasToken } from 'antd-svelte';
+  import { Button, theme, type AliasToken } from '@woodger/antd-svelte';
   const current = theme.useToken();
   const inputTokens = $derived(current.token.Input as Partial<AliasToken> | undefined);
 </script>

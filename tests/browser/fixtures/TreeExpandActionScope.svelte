@@ -24,7 +24,7 @@
 <script lang="ts">
   import { flushSync, untrack } from 'svelte';
   import { ConfigProvider, Tree, type TreeKey, type TreeEventNode,
-    type TreeExpandAction } from 'antd-svelte';
+    type TreeExpandAction } from '@woodger/antd-svelte';
 
   let { sample }: { sample: TreeExpandActionSample } = $props();
   let rootKey = $derived<TreeKey>(sample.zero ? 0 : 'root');

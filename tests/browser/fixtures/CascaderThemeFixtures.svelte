@@ -6,7 +6,7 @@
     ConfigProvider,
     type CascaderPath,
     type ThemeConfig
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { cascaderThemePresets } from './cascader-theme-presets';
 
   let preset = $state('default');

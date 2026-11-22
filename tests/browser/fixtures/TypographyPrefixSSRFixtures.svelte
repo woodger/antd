@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, TypographyParagraph } from 'antd-svelte';
+  import { ConfigProvider, TypographyParagraph } from '@woodger/antd-svelte';
   import TypographyPrefixScope from './TypographyPrefixScope.svelte';
 </script>
 

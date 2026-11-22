@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import {
     TreeSelect, type TreeKey, type TreeSelectNode, type TreeSelectProps, type TreeSelectValue
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   export interface TreeSelectPrefixSample {
     id: string;

@@ -1,4 +1,4 @@
-import { Select } from 'antd-svelte';
+import { Select } from '@woodger/antd-svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-select-max-count-reference.json';

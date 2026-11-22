@@ -2,7 +2,7 @@
   import {
     ConfigProvider, Form, FormItem, Input, createForm, theme,
     type FormItemProps, type FormProps, type ThemeConfig
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-form-layout-reference.json';
 
   const form = createForm({

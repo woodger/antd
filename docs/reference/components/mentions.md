@@ -4,7 +4,7 @@ Mentions предлагает варианты упоминаний при вв�
 
 ```svelte
 <script lang="ts">
-  import { Mentions, getMentions } from 'antd-svelte';
+  import { Mentions, getMentions } from '@woodger/antd-svelte';
   let value = $state('');
 </script>
 <Mentions {value} options={[{ value: 'alice', label: 'Alice' }]}
@@ -78,7 +78,7 @@ PopupRender — Snippet со стандартным menu Snippet. Можно д�
 ```svelte
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { Mentions } from 'antd-svelte';
+  import { Mentions } from '@woodger/antd-svelte';
 </script>
 {#snippet popup(menu: Snippet)}
   <strong>Участники</strong>

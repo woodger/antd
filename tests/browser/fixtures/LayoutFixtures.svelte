@@ -8,7 +8,7 @@
     LayoutSider,
     type GridBreakpoint,
     type LayoutCollapseType
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let collapsed = $state<boolean>();
   let width = $state('200');

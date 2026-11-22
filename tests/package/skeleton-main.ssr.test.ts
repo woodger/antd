@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Skeleton } from 'antd-svelte';
+import { Skeleton } from '@woodger/antd-svelte';
 import SkeletonMainCase from '../browser/fixtures/SkeletonMainCase.svelte';
 
 describe('Skeleton main public package SSR', () => {

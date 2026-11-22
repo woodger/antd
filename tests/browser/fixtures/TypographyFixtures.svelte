@@ -10,7 +10,7 @@
     type TypographyEditConfig,
     type TypographyEllipsisConfig,
     type TypographyType
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let variant = $state('paragraph');
   let contentMode = $state('scalar');

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import SwitchPrefixScope, { type SwitchPrefixSample } from './SwitchPrefixScope.svelte';
   import reference from './ant-design-switch-prefix-reference.json';
 

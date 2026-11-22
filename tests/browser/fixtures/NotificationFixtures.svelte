@@ -10,7 +10,7 @@
     type NotificationConfig,
     type NotificationPlacement,
     type NotificationType
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let notification = $state.raw(createNotification({ maxCount: 3 }));
   const secondary = createNotification({ duration: 0 });

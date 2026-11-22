@@ -4,7 +4,7 @@
     ConfigProvider, TreeSelect, type TreeSelectInputContext, type TreeSelectLabeledValue,
     type TreeSelectProps, type TreeSelectRef, type TreeSelectRootContext, type TreeSelectStyles,
     type TreeSelectTagInfo, type TreeSelectValue
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import TreeSelectAlignCompositeRoot from './TreeSelectAlignCompositeRoot.svelte';
   import type { TreeSelectAlignAction, TreeSelectAlignSample, TreeSelectAlignSettings } from './tree-select-align-cases';
   let { sample, baselineNoAlignment = false }: {

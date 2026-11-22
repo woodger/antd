@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ColorPicker, ConfigProvider } from 'antd-svelte';
+  import { ColorPicker, ConfigProvider } from '@woodger/antd-svelte';
 
   const presets = [{ label: 'Stored colors', colors: ['#1677ff'] }];
 </script>

@@ -6,7 +6,7 @@
     type TabsIndicatorSize,
     type TabsPlacement,
     type TabsScrollInfo
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-tabs-indicator-metrics.json';
 
   let name = $state(reference.cases[0].name);

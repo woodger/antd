@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { AvatarGroup, ConfigProvider, Popover, Popconfirm, enUS, type PopoverRef }
-    from 'antd-svelte';
+    from '@woodger/antd-svelte';
   import type { PopoverLifecycleCase } from './popover-lifecycle.types';
   import PopoverLifecycleWidget from './PopoverLifecycleWidget.svelte';
 

@@ -6,7 +6,7 @@
     type PaginationItemInfo,
     type PaginationItemType,
     type ThemeConfig
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import type { Snippet } from 'svelte';
 
   let source = $state(false);

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Mentions, type MentionsProps } from 'antd-svelte';
+  import { Mentions, type MentionsProps } from '@woodger/antd-svelte';
 
   export interface MentionsPrefixSample {
     id: string;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     ConfigProvider, Table, enUS, type TableColumn, type TableKey, type ThemeConfig
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { resolveTableRowTheme, type TableRowSample } from './table-row-presets';
 
   let {

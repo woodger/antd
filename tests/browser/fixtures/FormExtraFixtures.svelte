@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import {
     ConfigProvider, Form, FormItem, Input, createForm, type RenderEmptyContent
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-form-extra-reference.json';
 
   let { initialMode = 'missing' }: { initialMode?: string } = $props();

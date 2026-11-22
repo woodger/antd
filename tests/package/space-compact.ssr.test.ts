@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { SpaceCompact } from 'antd-svelte';
-import { SpaceAddon } from 'antd-svelte';
+import { SpaceCompact } from '@woodger/antd-svelte';
+import { SpaceAddon } from '@woodger/antd-svelte';
 import Fixtures from '../browser/fixtures/SpaceCompactFixtures.svelte';
 
 function inputTag(body: string, label: string) {

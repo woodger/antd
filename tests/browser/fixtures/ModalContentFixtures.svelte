@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Modal } from 'antd-svelte';
+  import { Modal } from '@woodger/antd-svelte';
   import reference from './ant-design-modal-content-reference.json';
 
   interface Sample {

@@ -6,7 +6,7 @@
     type ModalConfirmConfig,
     type ModalConfirmHandle,
     type ModalConfirmType
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-modal-controller-reference.json';
 
   interface Sample {

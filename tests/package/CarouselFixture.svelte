@@ -4,7 +4,7 @@
     ConfigProvider,
     type CarouselArrowProps,
     type CarouselDotsProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import type { Snippet } from 'svelte';
 </script>
 

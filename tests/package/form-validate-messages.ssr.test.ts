@@ -1,7 +1,7 @@
 import {
   createForm, type FormConfig, type FormProps, type FormLocale, type ValidateMessages
-} from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+} from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-form-validate-messages-reference.json';

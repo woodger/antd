@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Tag, enUS, type TagClosable } from 'antd-svelte';
+  import { ConfigProvider, Tag, enUS, type TagClosable } from '@woodger/antd-svelte';
   import type { TagCloseCase, TagCloseValues } from './tag-close-presets';
 
   let { sample, changed = false, closeLabel, focusable = false }: {

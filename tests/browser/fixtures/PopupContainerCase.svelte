@@ -9,7 +9,7 @@
     type TabsDefaultTabBar,
     type TabsTabBarProps,
     type TabsMoreProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import type { PopupContainerCase } from './popup-container-presets';
   import PopupContainerContent from './PopupContainerContent.svelte';
 

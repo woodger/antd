@@ -12,7 +12,7 @@
   import {
     ConfigProvider, Upload, UploadDragger, UPLOAD_LIST_IGNORE,
     type UploadRef, type UploadFile, type UploadRcFile, type UploadRequestOptions
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { describeUploadRefFile, describeUploadRefChange } from '../upload-ref-metrics';
 
   let { sample }: { sample: UploadRefSample } = $props();

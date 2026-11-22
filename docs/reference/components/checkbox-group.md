@@ -9,7 +9,7 @@ snippet; style — CSS-строка. Nullish entries/values пропускают
 
 ```svelte
 <script lang="ts">
-  import { Checkbox, CheckboxGroup } from 'antd-svelte';
+  import { Checkbox, CheckboxGroup } from '@woodger/antd-svelte';
 
   const options = [
     { value: 'read', label: 'Просмотр' },

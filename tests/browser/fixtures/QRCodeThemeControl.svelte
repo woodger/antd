@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, QRCode, type StatusRenderInfo } from 'antd-svelte';
+  import { ConfigProvider, QRCode, type StatusRenderInfo } from '@woodger/antd-svelte';
 
   let { id, priority = false }: { id: string; priority?: boolean; } = $props();
   let nativeElement = $state<HTMLDivElement>();

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, ConfigProvider, Form, FormItem, Switch } from 'antd-svelte';
+  import { Button, ConfigProvider, Form, FormItem, Switch } from '@woodger/antd-svelte';
   import { createSwitchControls } from './switch.model.svelte';
 
   const controls = createSwitchControls();

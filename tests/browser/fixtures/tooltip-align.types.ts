@@ -1,4 +1,4 @@
-import type { TooltipAlignConfig, TooltipProps, TooltipRef } from 'antd-svelte';
+import type { TooltipAlignConfig, TooltipProps, TooltipRef } from '@woodger/antd-svelte';
 import type reference from './ant-design-tooltip-align-reference.json';
 
 type AlignmentOptions = Pick<TooltipProps,

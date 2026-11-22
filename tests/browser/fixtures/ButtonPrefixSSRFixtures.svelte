@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import ButtonPrefixScope from './ButtonPrefixScope.svelte';
 </script>
 

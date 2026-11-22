@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from 'antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
   import CalendarPrefixScope, { type CalendarPrefixSample } from './CalendarPrefixScope.svelte';
   import reference from './ant-design-calendar-prefix-reference.json';
 

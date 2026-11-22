@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { createTree, type TreeFieldNames } from 'antd-svelte';
+  import { createTree, type TreeFieldNames } from '@woodger/antd-svelte';
   import reference from './ant-design-tree-data-model-reference.json';
 
   let {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TreeSelectRef } from 'antd-svelte';
+  import type { TreeSelectRef } from '@woodger/antd-svelte';
   import TreeSelectSuffixLayoutCase from './TreeSelectSuffixLayoutCase.svelte';
   import type { TreeSelectSuffixLayoutSample } from './tree-select-suffix-layout-cases';
   let { sample }: { sample: TreeSelectSuffixLayoutSample } = $props();

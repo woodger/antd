@@ -11,7 +11,7 @@ callbacks, формы и порядок фокуса сохраняются. Э�
 
 ```svelte
 <script lang="ts">
-  import { Button, ConfigProvider } from 'antd-svelte';
+  import { Button, ConfigProvider } from '@woodger/antd-svelte';
 </script>
 
 <ConfigProvider wave={{ triggerType: 'pointerdown' }}>

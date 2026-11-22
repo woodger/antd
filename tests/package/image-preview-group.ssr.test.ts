@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, it, expect, vi } from 'vitest';
-import { ImagePreviewGroup } from 'antd-svelte';
+import { ImagePreviewGroup } from '@woodger/antd-svelte';
 import ImageGroupFixtures from '../browser/fixtures/ImageGroupFixtures.svelte';
 
 describe('ImagePreviewGroup SSR', () => {

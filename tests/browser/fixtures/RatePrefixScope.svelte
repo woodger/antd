@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Rate, type RateCharacterInfo, type RateProps } from 'antd-svelte';
+  import { Rate, type RateCharacterInfo, type RateProps } from '@woodger/antd-svelte';
   import type { Snippet } from 'svelte';
 
   export interface RatePrefixSample {

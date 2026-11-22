@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { MessageHolder, type MessageInstance, type MessageType } from 'antd-svelte';
+  import { MessageHolder, type MessageInstance, type MessageType } from '@woodger/antd-svelte';
 
   export interface MessagePrefixSample {
     id: string;

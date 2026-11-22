@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { QRCode, type QRCodeProps } from 'antd-svelte';
+import { QRCode, type QRCodeProps } from '@woodger/antd-svelte';
 import QRCodeFixtures from '../browser/fixtures/QRCodeFixtures.svelte';
 
 describe('QRCode package SSR', () => {

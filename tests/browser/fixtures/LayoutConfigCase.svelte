@@ -2,7 +2,7 @@
   import {
     ConfigProvider, Layout, LayoutHeader, LayoutContent, LayoutFooter, LayoutSider,
     type LayoutCollapseType
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import {
     layoutConfigRecord, layoutSiderLocalProps, type LayoutConfigSample
   } from './layout-config-cases';

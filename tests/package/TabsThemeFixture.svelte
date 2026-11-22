@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Tabs } from 'antd-svelte';
+  import { ConfigProvider, Tabs } from '@woodger/antd-svelte';
   import { tabsThemePresets } from '../browser/fixtures/tabs-theme-presets';
 
   let { preset = 'default', native = false, override = false }: {

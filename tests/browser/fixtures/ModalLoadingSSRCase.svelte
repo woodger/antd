@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Modal } from 'antd-svelte';
+  import { ConfigProvider, Modal } from '@woodger/antd-svelte';
   import Body from './ModalLoadingBody.svelte';
   import Footer from './ModalLoadingFooter.svelte';
   import type { ModalLoadingSample } from '../modal-loading-cases.mjs';

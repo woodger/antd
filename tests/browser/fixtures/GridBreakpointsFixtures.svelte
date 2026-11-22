@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Row, Col } from 'antd-svelte';
+  import { ConfigProvider, Row, Col } from '@woodger/antd-svelte';
   import GridBreakpointsCase from './GridBreakpointsCase.svelte';
   import { gridBreakpointsSampleKey, gridBreakpointsSamples } from './grid-breakpoints-presets';
 

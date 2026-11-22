@@ -4,7 +4,7 @@
     Pagination,
     type PaginationProps,
     type ThemeConfig
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { paginationThemePresets } from './pagination-theme-presets';
   import reference from './ant-design-pagination-metrics.json';
   import { currentReferenceSize } from './reference-size';

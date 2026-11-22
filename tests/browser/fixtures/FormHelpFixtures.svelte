@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, Form, FormItem, Input, createForm, type RenderEmptyContent } from 'antd-svelte';
+  import { ConfigProvider, Form, FormItem, Input, createForm, type RenderEmptyContent } from '@woodger/antd-svelte';
   import Counter from './FormExplanationCounter.svelte';
   import reference from './ant-design-form-help-reference.json';
 

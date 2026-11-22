@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Slider, type SliderRangeProps, type SliderProps } from 'antd-svelte';
+import { Slider, type SliderRangeProps, type SliderProps } from '@woodger/antd-svelte';
 import SliderRangeFixture from './SliderRangeFixture.svelte';
 
 describe('Slider range public package', () => {

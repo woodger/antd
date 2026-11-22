@@ -14,7 +14,7 @@ Button/Progress/Tooltip используют свои namespaces. CSS-рецеп
 
 ```svelte
 <script lang="ts">
-  import { Upload, Button, UPLOAD_LIST_IGNORE, type UploadFile } from 'antd-svelte';
+  import { Upload, Button, UPLOAD_LIST_IGNORE, type UploadFile } from '@woodger/antd-svelte';
   let files = $state.raw<UploadFile[]>([]);
 </script>
 <Upload fileList={files} multiple action="/api/upload" name="attachment"

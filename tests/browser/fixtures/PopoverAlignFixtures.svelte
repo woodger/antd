@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import reference from './ant-design-popover-align-reference.json';
   import type { PopoverAlignmentCase } from './popover-align.types';
   import PopoverAlignCase from './PopoverAlignCase.svelte';

@@ -2,7 +2,7 @@
   import { untrack, type Snippet } from 'svelte';
   import { ConfigProvider, Form, FormItem, SpaceCompact, TreeSelect, createForm, enUS,
     type TreeSelectLabel, type TreeSelectProps, type TreeSelectSuffix, type TreeSelectSuffixInfo,
-    type TreeSelectTagInfo, type TreeSelectValue } from 'antd-svelte';
+    type TreeSelectTagInfo, type TreeSelectValue } from '@woodger/antd-svelte';
   import { treeSelectSurfaceData, type TreeSelectSurfaceContent, type TreeSelectSurfaceSample }
     from './tree-select-surface-cases';
   import TreeSelectSurfacePopup from './TreeSelectSurfacePopup.svelte';

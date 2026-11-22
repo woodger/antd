@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
-import { Slider, type SliderProps, type SliderRangeProps } from 'antd-svelte';
+import { Slider, type SliderProps, type SliderRangeProps } from '@woodger/antd-svelte';
 import SliderScalarCase from '../browser/fixtures/SliderScalarCase.svelte';
 import SliderScalarTypes from './SliderScalarTypes.svelte';
 

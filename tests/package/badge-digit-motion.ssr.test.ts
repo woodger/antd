@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-badge-digit-motion-reference.json';
 import BadgeDigitCase from '../browser/fixtures/BadgeDigitCase.svelte';
 import type { BadgeDigitCase as Sample } from '../browser/fixtures/badge-digit-motion-presets';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Form, FormItem, Input, Modal, Select } from 'antd-svelte';
+  import { Button, Form, FormItem, Input, Modal, Select } from '@woodger/antd-svelte';
   import { createControls } from './controls.model.svelte';
 
   let { kind, controls = createControls(), rootIdPrefix = '' }: {

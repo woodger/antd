@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, TypographyParagraph } from 'antd-svelte';
+  import { ConfigProvider, TypographyParagraph } from '@woodger/antd-svelte';
   import OverlayConfigCase from './OverlayConfigCase.svelte';
   import { buildOverlayProvider } from './overlay-config-presets';
   import reference from './ant-design-typography-tooltip-reference.json';

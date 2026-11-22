@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Progress } from 'antd-svelte';
+import { Progress } from '@woodger/antd-svelte';
 import ProgressLineCase from '../browser/fixtures/ProgressLineCase.svelte';
 
 describe('Progress line public package SSR', () => {

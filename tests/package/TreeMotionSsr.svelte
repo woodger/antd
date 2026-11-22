@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, DirectoryTree, Tree, type TreeMotionConfig, type TreeProps } from 'antd-svelte';
+  import { ConfigProvider, DirectoryTree, Tree, type TreeMotionConfig, type TreeProps } from '@woodger/antd-svelte';
   import { treeMotionData, type TreeMotionSample } from '../browser/fixtures/tree-motion-cases';
   let { sample, onSemantic, onCallback }: {
     sample: TreeMotionSample;

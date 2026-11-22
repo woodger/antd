@@ -1,4 +1,4 @@
-import type { AvatarGroupMax } from 'antd-svelte';
+import type { AvatarGroupMax } from '@woodger/antd-svelte';
 
 export interface AvatarGroupPopoverValues {
   options?: AvatarGroupMax['popover'];

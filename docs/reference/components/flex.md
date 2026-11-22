@@ -47,7 +47,7 @@ FlexComponentProps; FlexProps остаётся расширяемым интер
 ```svelte
 <!-- CustomRoot.svelte -->
 <script lang="ts">
-  import type { FlexRootProps } from 'antd-svelte';
+  import type { FlexRootProps } from '@woodger/antd-svelte';
   let { children, nativeElement = $bindable(), ...rest }: FlexRootProps = $props();
 </script>
 

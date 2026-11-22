@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Drawer, type DrawerPlacement, type DrawerSize } from 'antd-svelte';
+  import { Button, Drawer, type DrawerPlacement, type DrawerSize } from '@woodger/antd-svelte';
 
   export interface DrawerPrefixSample {
     id: string;

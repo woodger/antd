@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { ConfigProvider, Tabs, type TabsPlacement, type TabsType } from 'antd-svelte';
+  import { ConfigProvider, Tabs, type TabsPlacement, type TabsType } from '@woodger/antd-svelte';
   import { tabsThemePresets } from './tabs-theme-presets';
   import reference from './ant-design-tabs-theme-metrics.json';
 

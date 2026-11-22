@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ConfigProvider, Tooltip, Popover, Popconfirm, AvatarGroup, Slider,
-    TypographyText } from 'antd-svelte';
+    TypographyText } from '@woodger/antd-svelte';
   import { buildOverlayConfig, buildOverlayProvider } from './overlay-config-presets';
   import type { OverlayConfigCase as Sample, OverlayConfigValues } from './overlay-config-presets';
 

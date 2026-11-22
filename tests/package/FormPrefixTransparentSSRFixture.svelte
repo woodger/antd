@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Form, FormItem, Input, createForm } from 'antd-svelte';
+  import { Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
 
   let { prefixCls }: { prefixCls?: string } = $props();
   const form = createForm({ initialValues: { draft: 'Draft' } });

@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { CollapseItem, CollapseProps, ComponentSize } from 'antd-svelte';
+  import type { CollapseItem, CollapseProps, ComponentSize } from '@woodger/antd-svelte';
 
   export interface CollapseSourceSample {
     name: string;
@@ -18,11 +18,11 @@
 </script>
 
 <script lang="ts">
-  import { Collapse, ConfigProvider, theme } from 'antd-svelte';
+  import { Collapse, ConfigProvider, theme } from '@woodger/antd-svelte';
   import type {
     CollapseConfig, CollapseExpandIconInfo, CollapseSemanticInfo, CollapseSemanticSlots,
     ThemeConfig
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let { sample, mounted = true }: { sample: CollapseSourceSample; mounted?: boolean; } = $props();
   let nativeElement = $state<HTMLDivElement>();

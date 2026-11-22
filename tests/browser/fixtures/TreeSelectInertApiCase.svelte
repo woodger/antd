@@ -3,7 +3,7 @@
   import {
     ConfigProvider, TreeSelect, type TreeSelectInputContext, type TreeSelectProps,
     type TreeSelectRef, type TreeSelectRootContext, type TreeSelectStyles, type TreeSelectValue
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { treeSelectInertApiPropSpec, type TreeSelectInertApiMode, type TreeSelectInertApiSample } from './tree-select-inert-api-cases';
   let { sample, initialMode = 'provided' }: {
     sample: TreeSelectInertApiSample;

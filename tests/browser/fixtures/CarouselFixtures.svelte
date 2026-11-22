@@ -9,7 +9,7 @@
     type CarouselLazyLoad,
     type CarouselArrowProps,
     type CarouselDotsProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import type { Snippet } from 'svelte';
 
   let ref = $state<CarouselRef>();

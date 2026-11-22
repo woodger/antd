@@ -5,7 +5,7 @@ Listy отображает список с группировкой, закре�
 
 ```svelte
 <script lang="ts">
-  import { Listy, type ListyRef } from 'antd-svelte';
+  import { Listy, type ListyRef } from '@woodger/antd-svelte';
   const items = [
     { id: 'one', team: 'A', name: 'Alpha' },
     { id: 'two', team: 'B', name: 'Beta' },

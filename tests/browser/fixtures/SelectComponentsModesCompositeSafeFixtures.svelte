@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import SelectComponentsModesCompositeSafeCase from './SelectComponentsModesCompositeSafeCase.svelte';
 </script>
 <section id="select-components-modes-composite-safe-fixture">

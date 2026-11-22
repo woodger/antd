@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { hydrate, tick, unmount } from 'svelte';
 import PopupOverflowHydration from './PopupOverflowHydration.svelte';
 import { popupOverflowSamples } from './popup-overflow-cases';

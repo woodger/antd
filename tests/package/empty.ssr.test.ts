@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Empty } from 'antd-svelte';
+import { Empty } from '@woodger/antd-svelte';
 import EmptySourceCase from '../browser/fixtures/EmptySourceCase.svelte';
 
 describe('Empty public package SSR', () => {

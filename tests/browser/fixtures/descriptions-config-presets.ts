@@ -1,4 +1,4 @@
-import type { DescriptionsConfig } from 'antd-svelte';
+import type { DescriptionsConfig } from '@woodger/antd-svelte';
 
 export function descriptionsConfigProfile(
   name: string | undefined,

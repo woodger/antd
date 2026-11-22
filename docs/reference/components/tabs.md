@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Input, Tabs } from 'antd-svelte';
+  import { Input, Tabs } from '@woodger/antd-svelte';
 
   let activeKey = $state<string | undefined>('profile');
 </script>
@@ -226,7 +226,7 @@ Locale.dropdownAriaLabel именует listbox скрытых вкладок, �
 
 ```svelte
 <script lang="ts">
-  import { Tabs, type TabsItem } from 'antd-svelte';
+  import { Tabs, type TabsItem } from '@woodger/antd-svelte';
 
   let items = $state<TabsItem[]>([{ key: 'first', label: 'Первая вкладка' }]);
   let next = 1;
@@ -359,7 +359,7 @@ aria-hidden/inert и не перехватывает Escape у следующе�
 ```svelte
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { Tabs, type TabsMoreRenderInfo } from 'antd-svelte';
+  import { Tabs, type TabsMoreRenderInfo } from '@woodger/antd-svelte';
 
   const items = Array.from({ length: 12 }, (_, index) => ({
     key: String(index),
@@ -379,7 +379,7 @@ aria-hidden/inert и не перехватывает Escape у следующе�
 
 ```svelte
 <script lang="ts">
-  import { Tabs, type TabsDefaultTabBar, type TabsTabBarProps } from 'antd-svelte';
+  import { Tabs, type TabsDefaultTabBar, type TabsTabBarProps } from '@woodger/antd-svelte';
 
   const items = [{ key: 'profile', label: 'Профиль' }, { key: 'history', label: 'История' }];
 </script>

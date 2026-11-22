@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { CheckableTagGroup, ConfigProvider } from 'antd-svelte';
-  import type { CheckableTagGroupProps, CheckableTagGroupSemantic } from 'antd-svelte';
+  import { CheckableTagGroup, ConfigProvider } from '@woodger/antd-svelte';
+  import type { CheckableTagGroupProps, CheckableTagGroupSemantic } from '@woodger/antd-svelte';
   import type { TagGroupCase, TagGroupSelection } from './tag-group-presets';
 
   let { sample, changed = false }: { sample: TagGroupCase; changed?: boolean } = $props();

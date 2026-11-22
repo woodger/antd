@@ -7,7 +7,7 @@
     type PaginationItemInfo,
     type PaginationItemType,
     type PaginationSizeChangerInfo
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import type { Snippet } from 'svelte';
 
   let current = $state(6);

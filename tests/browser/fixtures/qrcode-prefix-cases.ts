@@ -1,4 +1,4 @@
-import type { QRCodeProps, ThemeConfig } from 'antd-svelte';
+import type { QRCodeProps, ThemeConfig } from '@woodger/antd-svelte';
 
 export interface QRCodePrefixSample {
   id: string;

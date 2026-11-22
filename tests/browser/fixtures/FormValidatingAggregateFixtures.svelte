@@ -2,7 +2,7 @@
   import {
     Form, FormItem, FormValidationError, Input, createForm,
     type NamePath, type FormValidateOptions
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   const form = createForm({ initialValues: {
     user: { name: 'Anna' }, 'user.name': 'Literal', rows: [{ name: 'Row' }], bare: 'Value'

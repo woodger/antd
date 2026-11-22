@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Carousel, type CarouselProps, type CarouselItem } from 'antd-svelte';
+import { Carousel, type CarouselProps, type CarouselItem } from '@woodger/antd-svelte';
 import CarouselFixture from './CarouselFixture.svelte';
 
 describe('Carousel public package', () => {

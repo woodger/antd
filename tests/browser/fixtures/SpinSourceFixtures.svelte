@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy } from 'svelte';
-  import { Spin } from 'antd-svelte';
+  import { Spin } from '@woodger/antd-svelte';
   import SpinSourceCase from './SpinSourceCase.svelte';
   import SpinThemeScopes from './SpinThemeScopes.svelte';
   import type { SpinSourceSample } from './SpinSourceCase.svelte';

@@ -1,4 +1,4 @@
-import type { ThemeConfig } from 'antd-svelte';
+import type { ThemeConfig } from '@woodger/antd-svelte';
 import reference from './ant-design-segmented-prefix-reference.json';
 import { resolveSegmentedTheme, type SegmentedReferenceTheme } from './segmented-theme-presets';
 

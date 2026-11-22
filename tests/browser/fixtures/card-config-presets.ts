@@ -1,4 +1,4 @@
-import type { CardConfig, CardMetaConfig } from 'antd-svelte';
+import type { CardConfig, CardMetaConfig } from '@woodger/antd-svelte';
 
 function profile(kind: 'card' | 'meta', local: boolean) {
   const prefix = local ? 'local' : 'context';

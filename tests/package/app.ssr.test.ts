@@ -5,7 +5,7 @@ import {
   type AppInstance,
   type AppProps,
   type ConfigProviderProps
-} from 'antd-svelte';
+} from '@woodger/antd-svelte';
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';

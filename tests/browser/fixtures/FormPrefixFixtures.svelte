@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import FormPrefixScope, { type FormPrefixSample } from './FormPrefixScope.svelte';
   import reference from './ant-design-form-prefix-reference.json';
   import FormPrefixNativeOwners from './FormPrefixNativeOwners.svelte';

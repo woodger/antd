@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     Col, Row, Form, FormItem, ConfigProvider, createForm, type ColProps, type FormProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   export interface ColPrefixSample {
     id: string;

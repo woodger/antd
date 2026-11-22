@@ -1,5 +1,5 @@
 import type { Dayjs } from 'dayjs';
-import type { DatePickerTimeConfig } from 'antd-svelte';
+import type { DatePickerTimeConfig } from '@woodger/antd-svelte';
 import type { createDatePickerPresetsRecorder } from './date-picker-presets-recorder.mjs';
 
 export type Recorder = ReturnType<typeof createDatePickerPresetsRecorder>;

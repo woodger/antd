@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createRawSnippet, onDestroy, untrack, type Snippet } from 'svelte';
   import { AutoComplete, ConfigProvider, enUS, type AutoCompleteInput, type AutoCompleteProps,
-    type SelectFlattenOption, type SelectLabelRenderInfo, type SelectRef, type SelectTagInfo, type RenderEmptyContent } from 'antd-svelte';
+    type SelectFlattenOption, type SelectLabelRenderInfo, type SelectRef, type SelectTagInfo, type RenderEmptyContent } from '@woodger/antd-svelte';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import type { AutocompleteRenderSample, AutocompleteRenderSettings, AutocompleteRenderAction,
     AutocompleteRenderKind, AutocompleteLabelKind } from '../autocomplete-render-cases.mjs';

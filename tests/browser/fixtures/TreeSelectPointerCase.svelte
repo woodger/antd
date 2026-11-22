@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack, type Snippet } from 'svelte';
-  import { ConfigProvider, TreeSelect } from 'antd-svelte';
+  import { ConfigProvider, TreeSelect } from '@woodger/antd-svelte';
   import type { TreeSelectPointerSample } from './tree-select-pointer-cases';
   let { sample }: { sample: TreeSelectPointerSample } = $props();
   let open = $state(untrack(() => sample.controlled?.endsWith('-open') ?? false));

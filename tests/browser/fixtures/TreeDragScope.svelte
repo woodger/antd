@@ -3,7 +3,7 @@
   import {
     ConfigProvider, DirectoryTree, Tree,
     type TreeProps, type TreeEventNode, type TreeDragInfo, type TreeKey, type TreeRef
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { treeDragData, type TreeDragSample, type TreeDragData } from './tree-drag-cases';
 
   let { sample }: { sample: TreeDragSample; } = $props();

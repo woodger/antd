@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
-import { Radio, RadioGroup, type RadioChangeEvent, type RadioGroupProps } from 'antd-svelte';
+import { Radio, RadioGroup, type RadioChangeEvent, type RadioGroupProps } from '@woodger/antd-svelte';
 import RadioFeaturesFixture from './RadioFeaturesFixture.svelte';
 
 describe('Radio source package features', () => {

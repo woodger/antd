@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     ConfigProvider, Select, type SelectProps, type SelectTokenSeparators
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { untrack } from 'svelte';
   import { selectTagsBaseOptions, type SelectTagsSample } from './select-tags-cases';
 

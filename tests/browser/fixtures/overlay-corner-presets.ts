@@ -1,4 +1,4 @@
-import type { AdjustOverflow, TooltipArrow, TooltipPlacement, ThemeConfig } from 'antd-svelte';
+import type { AdjustOverflow, TooltipArrow, TooltipPlacement, ThemeConfig } from '@woodger/antd-svelte';
 
 export interface OverlayCornerValues {
   rect: { x: number; y: number; width: number; height: number };

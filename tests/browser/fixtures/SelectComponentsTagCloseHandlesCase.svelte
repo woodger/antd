@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, setContext, untrack, type Snippet } from 'svelte';
-  import { Select, ConfigProvider, type SelectRef, type SelectInputContext, type SelectTagInfo } from 'antd-svelte';
+  import { Select, ConfigProvider, type SelectRef, type SelectInputContext, type SelectTagInfo } from '@woodger/antd-svelte';
   import TagBody from './SelectComponentsTagCloseHandlesTagBody.svelte';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import { selectTagCloseHandleGeometry, type SelectTagCloseHandleSample, type SelectTagCloseHandleOption,

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { useFormItemStatus } from 'antd-svelte';
+  import { useFormItemStatus } from '@woodger/antd-svelte';
 
   let { scope, children }: { scope: string; children?: Snippet } = $props();
   const state = useFormItemStatus();

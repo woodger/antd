@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Form, FormItem, Input, createForm, type FormInstance, type FormValues } from 'antd-svelte';
+  import { Form, FormItem, Input, createForm, type FormInstance, type FormValues } from '@woodger/antd-svelte';
   import { formRuleFactoriesRules, type FormRuleFactoriesSample } from './form-rule-factories-cases';
 
   let { sample }: { sample: FormRuleFactoriesSample } = $props();

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TextArea, type TreeSelectInputContext } from 'antd-svelte';
+  import { TextArea, type TreeSelectInputContext } from '@woodger/antd-svelte';
   import type { TreeSelectInputKind } from './tree-select-input-cases';
   let { context, kind }: {
     context: TreeSelectInputContext<HTMLTextAreaElement>;

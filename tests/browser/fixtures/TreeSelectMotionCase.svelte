@@ -4,7 +4,7 @@
     ConfigProvider, TreeSelect, type ThemeConfig, type TreeSelectInputContext,
     type TreeSelectProps, type TreeSelectRef, type TreeSelectRootContext,
     type TreeSelectStyles, type TreeSelectValue
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import TreeSelectMotionCompositeRoot from './TreeSelectMotionCompositeRoot.svelte';
   import {
     treeSelectMotionCss, type TreeSelectMotionSample,

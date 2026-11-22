@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Pagination } from 'antd-svelte';
+  import { Pagination } from '@woodger/antd-svelte';
 
   let current = $state(1);
   let pageSize = $state(10);

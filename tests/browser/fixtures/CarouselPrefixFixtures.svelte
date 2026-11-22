@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import CarouselPrefixScope from './CarouselPrefixScope.svelte';
   import reference from './ant-design-carousel-prefix-reference.json';
 

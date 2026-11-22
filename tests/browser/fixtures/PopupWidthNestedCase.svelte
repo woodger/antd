@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import dayjs from 'dayjs';
-  import { Calendar, Cascader, ColorPicker, ConfigProvider, Pagination, enUS } from 'antd-svelte';
+  import { Calendar, Cascader, ColorPicker, ConfigProvider, Pagination, enUS } from '@woodger/antd-svelte';
   import {
     popupWidthData, popupWidthGeometry, popupWidthProps, popupWidthReceipt,
     type PopupWidthAction, type PopupWidthNestedSample

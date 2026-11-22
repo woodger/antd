@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { App, ConfigProvider, enUS } from 'antd-svelte';
+  import { App, ConfigProvider, enUS } from '@woodger/antd-svelte';
   import NotificationPrefixScope from './NotificationPrefixScope.svelte';
   import NotificationPrefixApp from './NotificationPrefixApp.svelte';
   import type { NotificationPrefixSample } from './NotificationPrefixControl.svelte';

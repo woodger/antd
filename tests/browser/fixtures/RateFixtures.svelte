@@ -6,7 +6,7 @@
     Rate,
     type RateCharacterInfo,
     type ComponentSize
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { untrack, type Snippet } from 'svelte';
 
   let { initialAutoFocus = false }: { initialAutoFocus?: boolean } = $props();

@@ -1,4 +1,4 @@
-import { createForm, type CheckboxGroupOption, type CheckboxGroupValue } from 'antd-svelte';
+import { createForm, type CheckboxGroupOption, type CheckboxGroupValue } from '@woodger/antd-svelte';
 
 export function createCheckboxGroups() {
   const base: CheckboxGroupOption<number>[] = [

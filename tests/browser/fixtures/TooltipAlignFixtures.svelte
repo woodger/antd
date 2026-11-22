@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import reference from './ant-design-tooltip-align-reference.json';
   import type { TooltipAlignmentCase } from './tooltip-align.types';
   import TooltipAlignCase from './TooltipAlignCase.svelte';

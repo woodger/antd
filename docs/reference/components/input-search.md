@@ -5,7 +5,7 @@ InputSearch объединяет Input и кнопку поиска в SpaceComp
 
 ```svelte
 <script lang="ts">
-  import { InputSearch } from 'antd-svelte';
+  import { InputSearch } from '@woodger/antd-svelte';
   let query = $state('');
 </script>
 
@@ -30,7 +30,7 @@ snippet с InputSearchButtonContext:
 
 ```svelte
 <script lang="ts">
-  import { Button, InputSearch, type InputSearchButtonContext } from 'antd-svelte';
+  import { Button, InputSearch, type InputSearchButtonContext } from '@woodger/antd-svelte';
 </script>
 
 {#snippet searchButton(context: InputSearchButtonContext)}

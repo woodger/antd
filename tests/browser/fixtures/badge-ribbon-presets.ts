@@ -1,4 +1,4 @@
-import type { BadgeRibbonConfig, BadgeRibbonProps, ThemeConfig } from 'antd-svelte';
+import type { BadgeRibbonConfig, BadgeRibbonProps, ThemeConfig } from '@woodger/antd-svelte';
 
 export interface BadgeRibbonCase extends Omit<BadgeRibbonProps, 'text' | 'children'> {
   name: string;

@@ -1,4 +1,4 @@
-import { Select, type SelectOption, type SelectProps } from 'antd-svelte';
+import { Select, type SelectOption, type SelectProps } from '@woodger/antd-svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';
 

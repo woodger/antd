@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Card, CardGrid, CardMeta } from 'antd-svelte';
+  import { ConfigProvider, Card, CardGrid, CardMeta } from '@woodger/antd-svelte';
   import CardPrefixScope from './CardPrefixScope.svelte';
 </script>
 

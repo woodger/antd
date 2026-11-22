@@ -1,4 +1,4 @@
-import type { ComponentSize, TableChange, TableKey, TableSorter } from 'antd-svelte';
+import type { ComponentSize, TableChange, TableKey, TableSorter } from '@woodger/antd-svelte';
 
 export interface FixturePerson {
   id: number;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
   import { ConfigProvider, Form, FormItem, TreeSelect, createForm,
-    type TreeSelectInputContext, type TreeSelectRootContext, type TreeSelectValue } from 'antd-svelte';
+    type TreeSelectInputContext, type TreeSelectRootContext, type TreeSelectValue } from '@woodger/antd-svelte';
   import TreeSelectComponentsFormInput from './TreeSelectComponentsFormInput.svelte';
   import type { TreeSelectComponentsFormSample } from './tree-select-components-form-cases';
   let { sample }: { sample: TreeSelectComponentsFormSample } = $props();

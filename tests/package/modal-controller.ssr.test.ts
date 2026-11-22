@@ -4,7 +4,7 @@ import {
   type ModalConfirmConfig,
   type ModalConfirmHandle,
   type ModalInstance
-} from 'antd-svelte';
+} from '@woodger/antd-svelte';
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';

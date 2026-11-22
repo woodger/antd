@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { BorderBeam } from 'antd-svelte';
+  import { BorderBeam } from '@woodger/antd-svelte';
 
   export interface BeamGlobalSample {
     id: string;

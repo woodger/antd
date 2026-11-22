@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS, type ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd-svelte';
   import TableThemeControl from './TableThemeControl.svelte';
   import { resolveTableTheme, type TableThemeSample } from './table-theme-presets';
 

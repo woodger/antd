@@ -1,6 +1,6 @@
 <script lang="ts">
   import { referenceSizeLabel } from './reference-size';
-  import { ConfigProvider, Select, type ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, Select, type ThemeConfig } from '@woodger/antd-svelte';
   import { selectThemePresets } from './select-theme-presets';
 
   let preset = $state('default');

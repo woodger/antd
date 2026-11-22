@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Collapse } from 'antd-svelte';
+import { Collapse } from '@woodger/antd-svelte';
 import CollapseSourceCase from '../browser/fixtures/CollapseSourceCase.svelte';
 
 const items = [{ key: 1, label: 'First title', children: 'First body' }];

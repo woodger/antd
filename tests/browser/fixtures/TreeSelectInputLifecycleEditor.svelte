@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TreeSelectInputContext } from 'antd-svelte';
+  import type { TreeSelectInputContext } from '@woodger/antd-svelte';
   let { context, revision, release }: {
     context: TreeSelectInputContext<HTMLInputElement>;
     revision: number;

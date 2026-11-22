@@ -2,7 +2,7 @@
   import {
     Select, AutoComplete, type SelectInputContext, type SelectLabelValue,
     type SelectRef, type SelectRootContext, type AutoCompleteInput, type SelectInputOwnProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   interface Entry { value: number; label: string; audit: { owner: string }; }
   interface CompletionEntry { value: string; label: string; audit: { owner: string }; }

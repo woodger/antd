@@ -3,7 +3,7 @@
   import {
     ConfigProvider, Form, FormItem, Input, createForm,
     type FormConfig, type FormRequiredMark, type FormRequiredMarkInfo, type Locale
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-form-required-mark-reference.json';
 
   type Mark = boolean | 'optional' | 'custom';

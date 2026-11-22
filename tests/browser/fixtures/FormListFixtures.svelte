@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Button, Form, FormItem, FormList, Input, createForm } from 'antd-svelte';
+  import { Button, Form, FormItem, FormList, Input, createForm } from '@woodger/antd-svelte';
 
   let { sparse = false, rootId = 'form-list-fixture' }: {
     sparse?: boolean;

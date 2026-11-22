@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Mentions } from 'antd-svelte';
+  import { Mentions } from '@woodger/antd-svelte';
 
   let {
     mode = 'default',

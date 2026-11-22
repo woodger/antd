@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type SegmentedConfig } from 'antd-svelte';
+  import { ConfigProvider, type SegmentedConfig } from '@woodger/antd-svelte';
   import SegmentedConfigControl from './SegmentedConfigControl.svelte';
   import { segmentedConfigRecord, type SegmentedConfigSample } from './segmented-config-presets';
 

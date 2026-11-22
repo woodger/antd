@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import StructurePrefixScope, { type StructurePrefixSample } from './StructurePrefixScope.svelte';
   import reference from './ant-design-structure-prefix-reference.json';
 

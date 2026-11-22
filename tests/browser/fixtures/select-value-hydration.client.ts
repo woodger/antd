@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { hydrate, tick, unmount, type ComponentProps } from 'svelte';
 import SelectValueCase from './SelectValueCase.svelte';
 import { selectValueSamples } from './select-value-cases';

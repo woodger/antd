@@ -7,7 +7,7 @@ Switch переключает boolean-состояние через `bind:checke
 
 ```svelte
 <script lang="ts">
-  import { Switch } from 'antd-svelte';
+  import { Switch } from '@woodger/antd-svelte';
 
   let notifications = $state(false);
 </script>

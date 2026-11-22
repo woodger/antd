@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ColorPicker, ConfigProvider, enUS, type ColorValue } from 'antd-svelte';
+  import { ColorPicker, ConfigProvider, enUS, type ColorValue } from '@woodger/antd-svelte';
 
   let { id, prefix = 'ant', priority = false, opened = '' }: {
     id: string;

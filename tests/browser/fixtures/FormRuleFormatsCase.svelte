@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Form, FormItem, Input, createForm } from 'antd-svelte';
+  import { Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
   import {
     formRuleFormatsRule, formRuleFormatsValue, type FormRuleFormatsSample
   } from './form-rule-formats-cases';

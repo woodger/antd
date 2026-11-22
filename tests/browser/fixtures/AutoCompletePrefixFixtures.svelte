@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from 'antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
   import AutoCompletePrefixScope, { type AutoCompletePrefixSample } from './AutoCompletePrefixScope.svelte';
   import reference from './ant-design-auto-complete-prefix-reference.json';
 

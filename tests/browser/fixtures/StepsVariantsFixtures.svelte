@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { Steps, ConfigProvider } from 'antd-svelte';
+  import { Steps, ConfigProvider } from '@woodger/antd-svelte';
   import type {
     StepsDataItem,
     StepsType,
     StepsIconRender
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let type = $state<StepsType>('default');
   let variant = $state<'filled' | 'outlined'>('filled');

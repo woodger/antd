@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Transfer, type TransferKey, type TransferProps } from 'antd-svelte';
+  import { Transfer, type TransferKey, type TransferProps } from '@woodger/antd-svelte';
 
   export interface TransferPrefixSample {
     id: string;

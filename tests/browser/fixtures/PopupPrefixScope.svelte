@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Tooltip, Popover, Popconfirm, Slider } from 'antd-svelte';
+  import { ConfigProvider, Tooltip, Popover, Popconfirm, Slider } from '@woodger/antd-svelte';
 
   export type PopupPrefixKind = 'tooltip' | 'popover' | 'popconfirm' | 'single' | 'range';
   export interface PopupPrefixSample {

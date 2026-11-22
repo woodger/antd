@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Radio, RadioButton, type RadioProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Radio, RadioButton, type RadioProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-radio-prefix-reference.json';
 import RadioPrefixSSRFixtures from '../browser/fixtures/RadioPrefixSSRFixtures.svelte';
 

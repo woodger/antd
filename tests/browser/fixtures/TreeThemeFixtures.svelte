@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, TreeSelect } from 'antd-svelte';
+  import { ConfigProvider, TreeSelect } from '@woodger/antd-svelte';
   import reference from './ant-design-tree-theme-reference.json';
   import TreeThemeCase from './TreeThemeCase.svelte';
 

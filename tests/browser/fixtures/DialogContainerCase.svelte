@@ -6,7 +6,7 @@
     Modal,
     type ConfigProviderProps,
     type GetContainer
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import type { DialogContainerCase } from './dialog-container-presets';
   import DialogContainerContents from './DialogContainerContents.svelte';
 

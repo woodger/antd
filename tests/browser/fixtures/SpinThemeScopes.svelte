@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Spin } from 'antd-svelte';
+  import { ConfigProvider, Spin } from '@woodger/antd-svelte';
 
   let { tokenSize = 30 }: { tokenSize?: number; } = $props();
 </script>

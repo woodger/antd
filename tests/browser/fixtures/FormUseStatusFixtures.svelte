@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import {
     ConfigProvider, Form, FormItem, Input, InputOTP, createForm, type FormValidateStatus
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-form-use-status-reference.json';
   import FormStatusReadout from './FormStatusReadout.svelte';
 

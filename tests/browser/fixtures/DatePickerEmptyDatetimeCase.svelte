@@ -2,7 +2,7 @@
   import { onMount, untrack } from 'svelte';
   import dayjs, { type Dayjs } from 'dayjs';
   import { ConfigProvider, DatePicker, RangePicker, enUS,
-    type DatePickerProps, type RangePickerProps } from 'antd-svelte';
+    type DatePickerProps, type RangePickerProps } from '@woodger/antd-svelte';
   import { createDatePickerPresetsRecorder }
     from '../date-picker-presets-recorder.mjs';
   import { authoring } from '../date-picker-empty-datetime-cases.mjs';

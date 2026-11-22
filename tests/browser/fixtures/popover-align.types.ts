@@ -1,4 +1,4 @@
-import type { PopoverProps, TooltipAlignConfig } from 'antd-svelte';
+import type { PopoverProps, TooltipAlignConfig } from '@woodger/antd-svelte';
 import type reference from './ant-design-popover-align-reference.json';
 
 type AlignmentOptions = Pick<PopoverProps,

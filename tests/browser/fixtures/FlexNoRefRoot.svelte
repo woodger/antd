@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { FlexRootProps } from 'antd-svelte';
+  import type { FlexRootProps } from '@woodger/antd-svelte';
 
   let { children, ...rest }: FlexRootProps = $props();
 </script>

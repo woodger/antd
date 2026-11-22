@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS, type ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd-svelte';
   import UploadThemeControl from './UploadThemeControl.svelte';
   import { resolveUploadTheme, type UploadThemeSample } from './upload-theme-presets';
 

@@ -1,4 +1,4 @@
-import type { ThemeConfig } from 'antd-svelte';
+import type { ThemeConfig } from '@woodger/antd-svelte';
 
 export interface LayoutSectionPrefixSample {
   id: string;

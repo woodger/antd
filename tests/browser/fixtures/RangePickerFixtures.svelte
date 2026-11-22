@@ -1,7 +1,7 @@
 <script lang="ts">
   import dayjs from 'dayjs';
   import utc from 'dayjs/plugin/utc.js';
-  import { RangePicker, Form, FormItem, createForm, type RangePickerValue } from 'antd-svelte';
+  import { RangePicker, Form, FormItem, createForm, type RangePickerValue } from '@woodger/antd-svelte';
 
   dayjs.extend(utc);
   let value = $state<RangePickerValue | null>([dayjs('2026-10-10'), dayjs('2026-10-20')]);

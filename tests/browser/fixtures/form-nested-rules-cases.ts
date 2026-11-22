@@ -1,4 +1,4 @@
-import type { ValidationRule, ValidationRuleType } from 'antd-svelte';
+import type { ValidationRule, ValidationRuleType } from '@woodger/antd-svelte';
 
 export interface NestedRuleDescriptor {
   type?: string;

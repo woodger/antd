@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type GetTargetContainer } from 'antd-svelte';
+  import { ConfigProvider, type GetTargetContainer } from '@woodger/antd-svelte';
   import TargetContainerControl from './TargetContainerControl.svelte';
 
   let { sample, mounted = true, override, getTargetContainer }: {

@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     ConfigProvider, Table, enUS, type TableColumn, type TableFilters, type TableKey, type TableSorter
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-table-column-hidden-reference.json' with { type: 'json' };
 
   let { sample }: { sample?: typeof reference.cases[number]; } = $props();

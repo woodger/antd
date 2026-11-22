@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Menu, type MenuMode } from 'antd-svelte';
+  import { ConfigProvider, Menu, type MenuMode } from '@woodger/antd-svelte';
 
   let source = $state(false);
   let dark = $state(false);

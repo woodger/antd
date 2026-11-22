@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Tour } from 'antd-svelte';
+  import { ConfigProvider, Tour } from '@woodger/antd-svelte';
 </script>
 
 <ConfigProvider prefixCls="suite" theme={{ cssVar: {} }}>

@@ -3,7 +3,7 @@
   import {
     Button, NotificationHolder, type NotificationInstance,
     type NotificationType, type NotificationPlacement
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   export interface NotificationPrefixSample {
     id: string;

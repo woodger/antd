@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { NotificationHolder, createNotification, type NotificationHolderProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { NotificationHolder, createNotification, type NotificationHolderProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-notification-prefix-reference.json';
 import NotificationPrefixSSRFixtures from '../browser/fixtures/NotificationPrefixSSRFixtures.svelte';
 

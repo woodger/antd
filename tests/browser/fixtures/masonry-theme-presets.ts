@@ -1,4 +1,4 @@
-import { theme, type ThemeConfig } from 'antd-svelte';
+import { theme, type ThemeConfig } from '@woodger/antd-svelte';
 import reference from './ant-design-masonry-theme-reference.json';
 
 export interface MasonryReferenceTheme {

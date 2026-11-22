@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Cascader, CascaderPanel, ConfigProvider } from 'antd-svelte';
+  import { Cascader, CascaderPanel, ConfigProvider } from '@woodger/antd-svelte';
   import { cascaderThemePresets } from '../browser/fixtures/cascader-theme-presets';
 
   let { preset = 'default', native = false, panelOnly = false }: {

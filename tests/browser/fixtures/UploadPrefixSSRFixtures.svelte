@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, ConfigProvider, Upload, UploadDragger } from 'antd-svelte';
+  import { Button, ConfigProvider, Upload, UploadDragger } from '@woodger/antd-svelte';
 
   const files = [{ uid: 'one', name: 'note.txt', status: 'done' as const }];
 </script>

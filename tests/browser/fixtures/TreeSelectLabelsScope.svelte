@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { ConfigProvider, TreeSelect, type TreeSelectLabel, type TreeSelectLabeledValue,
-    type TreeSelectTagInfo, type TreeSelectValue } from 'antd-svelte';
+    type TreeSelectTagInfo, type TreeSelectValue } from '@woodger/antd-svelte';
   import TreeSelectRichLabel from './TreeSelectRichLabel.svelte';
   import { treeLabelData, treeLabelValues, type TreeLabelSample } from './tree-select-label-cases';
 

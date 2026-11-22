@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Row, Col } from 'antd-svelte';
+  import { Row, Col } from '@woodger/antd-svelte';
 
   let { mode = 'default', prefix = 'ant' }: { mode?: string; prefix?: string; } = $props();
   let rowElement = $state<HTMLDivElement>();

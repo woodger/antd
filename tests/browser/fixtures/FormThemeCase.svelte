@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, type ThemeConfig } from '@woodger/antd-svelte';
   import FormThemeControl from './FormThemeControl.svelte';
   import { resolveFormTheme, type FormThemeSample } from './form-theme-presets';
 

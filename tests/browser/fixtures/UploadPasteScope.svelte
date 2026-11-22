@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-  import { ConfigProvider, Upload, UploadDragger, type UploadProps } from 'antd-svelte';
+  import { ConfigProvider, Upload, UploadDragger, type UploadProps } from '@woodger/antd-svelte';
 
   let { sample, dragger = false, manual = true }: {
     sample: UploadPasteSample;

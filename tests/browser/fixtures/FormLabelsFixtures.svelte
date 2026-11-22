@@ -3,7 +3,7 @@
   import {
     ConfigProvider, Form, FormItem, Input, createForm,
     type FormConfig, type FormItemProps, type FormProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import reference from './ant-design-form-labels-reference.json';
 
   let { initialCase = 'default-ltr' }: { initialCase?: string } = $props();

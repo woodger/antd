@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { hydrate, tick, unmount } from 'svelte';
 import TreeSelectInputCase from './TreeSelectInputCase.svelte';
 import { treeSelectInputSamples } from './tree-select-input-cases';

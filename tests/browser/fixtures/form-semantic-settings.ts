@@ -1,6 +1,6 @@
 import type {
   FormConfig, FormProps, FormSemantic, FormSemanticSlots, FormValues
-} from 'antd-svelte';
+} from '@woodger/antd-svelte';
 
 export interface FormSemanticSettings extends Omit<FormConfig, 'classNames' | 'styles'> {
   classNames?: FormSemanticSlots | 'callback' | 'empty';

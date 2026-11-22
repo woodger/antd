@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-anchor-config-reference.json';
 import AnchorConfigFixtures from '../browser/fixtures/AnchorConfigFixtures.svelte';
 

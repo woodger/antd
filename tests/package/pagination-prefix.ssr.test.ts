@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Pagination, type PaginationProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Pagination, type PaginationProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-pagination-prefix-reference.json';
 import PaginationPrefixSSRFixtures from '../browser/fixtures/PaginationPrefixSSRFixtures.svelte';
 

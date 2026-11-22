@@ -3,7 +3,7 @@
   import {
     Form, FormItem, Input, createForm, FormValidationError,
     type FieldError, type ValidationRule
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   interface RuleSpec {
     id: string;

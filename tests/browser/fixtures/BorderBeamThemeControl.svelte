@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { BorderBeam, ConfigProvider } from 'antd-svelte';
+  import { BorderBeam, ConfigProvider } from '@woodger/antd-svelte';
 
   let { id, priority, prefix = 'ant', prefixCls, externalTarget }: {
     id: string;

@@ -7,7 +7,7 @@
     createForm,
     getMentions,
     type MentionsOption
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let value = $state('');
   let showAutosize = $state(true);

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Badge, ConfigProvider } from 'antd-svelte';
-  import type { BadgeContext, BadgeCountContext } from 'antd-svelte';
+  import { Badge, ConfigProvider } from '@woodger/antd-svelte';
+  import type { BadgeContext, BadgeCountContext } from '@woodger/antd-svelte';
   import type { BadgeZoomCase, BadgeZoomValues } from './badge-zoom-presets';
 
   let { sample, interactive = false, fast = false }: {

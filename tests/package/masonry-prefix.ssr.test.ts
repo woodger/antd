@@ -1,8 +1,8 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Masonry, type MasonryProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Masonry, type MasonryProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-masonry-prefix-reference.json';
 import isolated from '../browser/fixtures/ant-design-masonry-prefix-isolated.json';
 import MasonryPrefixSSRFixtures from '../browser/fixtures/MasonryPrefixSSRFixtures.svelte';

@@ -1,4 +1,4 @@
-import type { DatePickerTimeConfig } from 'antd-svelte';
+import type { DatePickerTimeConfig } from '@woodger/antd-svelte';
 export type DatePickerPresetAction = { type: 'open' | 'leave' | 'escape' | 'outside' | 'clear' }
   | { type: 'preset-hover' | 'preset-click' | 'cell-hover'; value: string }
   | { type: 'preview'; value: 'hover' | false };

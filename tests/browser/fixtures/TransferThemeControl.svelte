@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Transfer, type TransferKey, type TransferSlots } from 'antd-svelte';
+  import { ConfigProvider, Transfer, type TransferKey, type TransferSlots } from '@woodger/antd-svelte';
 
   let {
     id,

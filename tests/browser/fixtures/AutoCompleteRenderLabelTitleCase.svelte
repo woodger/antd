@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, untrack, type Snippet } from 'svelte';
   import { AutoComplete, ConfigProvider, enUS, type AutoCompleteInput, type AutoCompleteProps,
-    type SelectLabelRenderInfo, type SelectRef } from 'antd-svelte';
+    type SelectLabelRenderInfo, type SelectRef } from '@woodger/antd-svelte';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import type { LabelTitleSample, LabelTitleAction } from '../autocomplete-render-label-title-cases.mjs';
   let { sample, capture }: { sample: LabelTitleSample; capture?: { read?: () => ReturnType<typeof read>;

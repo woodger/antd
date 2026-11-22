@@ -1,8 +1,8 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Tabs } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Tabs } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-tabs-destroy-reference.json';
 
 describe('Tabs destruction SSR', () => {

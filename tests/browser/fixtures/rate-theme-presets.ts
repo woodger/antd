@@ -1,4 +1,4 @@
-import { theme, type ThemeConfig } from 'antd-svelte';
+import { theme, type ThemeConfig } from '@woodger/antd-svelte';
 import reference from './ant-design-rate-theme-reference.json';
 
 type AlgorithmName = 'defaultAlgorithm' | 'darkAlgorithm' | 'compactAlgorithm';

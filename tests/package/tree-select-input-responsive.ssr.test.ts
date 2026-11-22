@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-tree-select-input-responsive-reference.json';
 import TreeSelectInputResponsiveCase from '../browser/fixtures/TreeSelectInputResponsiveCase.svelte';
 import { treeSelectInputResponsiveSamples } from '../browser/fixtures/tree-select-input-responsive-cases';

@@ -12,7 +12,7 @@
     type CascaderTriggerInfo,
     type ConfigProviderProps,
     type TreeSelectNode
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import type { ChoiceContainerCase } from './choice-container-presets';
   import ChoiceContainerContent from './ChoiceContainerContent.svelte';
 

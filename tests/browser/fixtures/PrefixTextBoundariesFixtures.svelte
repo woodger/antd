@@ -2,7 +2,7 @@
   import {
     Avatar, AvatarGroup, Button, Checkbox, ConfigProvider, InputPassword, InputSearch,
     InputOTP, Radio, Switch, Tag, DatePicker, RangePicker, TimePicker, TimeRangePicker
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let prefix = $state('suite');
 </script>

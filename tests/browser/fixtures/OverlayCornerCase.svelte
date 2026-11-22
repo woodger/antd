@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Tooltip, Popover, Popconfirm, AvatarGroup, Slider } from 'antd-svelte';
+  import { ConfigProvider, Tooltip, Popover, Popconfirm, AvatarGroup, Slider } from '@woodger/antd-svelte';
   import type { OverlayCornerCase as Sample, OverlayCornerValues } from './overlay-corner-presets';
 
   let { sample, step = 0, native = false }: {

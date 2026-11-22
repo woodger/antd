@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Button, Tooltip, type TooltipRef } from 'antd-svelte';
+  import { Button, Tooltip, type TooltipRef } from '@woodger/antd-svelte';
 
   let open = $state(false);
   let tooltipRef = $state<TooltipRef>();

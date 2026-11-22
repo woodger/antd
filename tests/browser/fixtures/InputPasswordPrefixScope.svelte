@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { InputPassword, type ComponentSize, type InputVariant } from 'antd-svelte';
+  import { InputPassword, type ComponentSize, type InputVariant } from '@woodger/antd-svelte';
 
   export interface PasswordPrefixSample {
     id: string;

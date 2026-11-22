@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import { TreeSelect, TreeSelectTreeNode, TREE_SELECT_SHOW_ALL, TREE_SELECT_SHOW_CHILD, TREE_SELECT_SHOW_PARENT } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { TreeSelect, TreeSelectTreeNode, TREE_SELECT_SHOW_ALL, TREE_SELECT_SHOW_CHILD, TREE_SELECT_SHOW_PARENT } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import TreeSelectNodesCase from '../browser/fixtures/TreeSelectNodesCase.svelte';
 import { treeSelectNodesSamples } from '../browser/fixtures/tree-select-nodes-cases';
 import reference from '../browser/fixtures/ant-design-tree-select-nodes-reference.json';

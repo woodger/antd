@@ -5,7 +5,7 @@
     InputNumber, InputOTP, InputPassword, InputSearch, Mentions, Radio, RadioGroup,
     RangePicker, Select, Slider, Switch, TextArea, Transfer, TreeSelect, createForm,
     type FormValidateStatus
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let { initialErrors = false }: { initialErrors?: boolean } = $props();
   const names = [

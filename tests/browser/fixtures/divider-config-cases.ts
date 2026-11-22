@@ -5,7 +5,7 @@ import {
   type DividerSemanticInfo,
   type ThemeConfig,
   type ComponentSize
-} from 'antd-svelte';
+} from '@woodger/antd-svelte';
 import reference from './ant-design-divider-config-reference.json';
 
 interface DividerConfigCase {

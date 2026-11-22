@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createRawSnippet, untrack } from 'svelte';
-  import { ConfigProvider, Progress } from 'antd-svelte';
-  import type { ProgressStatus } from 'antd-svelte';
+  import { ConfigProvider, Progress } from '@woodger/antd-svelte';
+  import type { ProgressStatus } from '@woodger/antd-svelte';
   import reference from './ant-design-progress-mini-tooltip-reference.json';
 
   const samples = reference.cases as readonly {

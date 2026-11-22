@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, QRCode, type QRStatus, type StatusRenderInfo } from 'antd-svelte';
+  import { ConfigProvider, QRCode, type QRStatus, type StatusRenderInfo } from '@woodger/antd-svelte';
 
   const iconData = 'data:image/svg+xml,' + encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="10"><rect width="20" height="10" fill="red"/></svg>'

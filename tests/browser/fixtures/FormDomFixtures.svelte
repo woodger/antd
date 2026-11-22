@@ -6,7 +6,7 @@
     RangePicker, Rate, Mentions, AutoComplete, TreeSelect, Cascader,
     CheckboxGroup, RadioGroup, TimePicker, TimeRangePicker, Transfer,
     type CheckboxRef, type RadioRef, type InputNumberRef, type SliderRef, type NamePath
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   const names: { tag: string; name: NamePath }[] = [
     ...['input', 'password', 'search', 'textarea', 'number', 'checkbox', 'radio', 'switch',

@@ -8,7 +8,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Slider } from 'antd-svelte';
+  import { Slider } from '@woodger/antd-svelte';
 
   let volume = $state(40);
 </script>
@@ -145,7 +145,7 @@ native events и reset сохраняются. Точные интерфейсы
 
 ```svelte
 <script lang="ts">
-  import { Slider, type SliderRef } from 'antd-svelte';
+  import { Slider, type SliderRef } from '@woodger/antd-svelte';
 
   let interval = $state([20, 80]);
   let slider = $state<SliderRef>();

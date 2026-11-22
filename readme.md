@@ -11,14 +11,13 @@
 
 ## Подключение
 
-Чтобы использовать `antd-svelte` в своём проекте, выполните:
+Чтобы использовать `@woodger/antd-svelte` в своём проекте, выполните:
 
 ```sh
-npm install antd-svelte
+npm install @woodger/antd-svelte
 ```
 
-Сейчас в npm под этим именем находится другой пакет; эта команда пока не
-устанавливает данную библиотеку.
+Пакет пока не опубликован в публичном npm-реестре.
 
 ## Стили
 
@@ -28,14 +27,14 @@ npm install antd-svelte
 `src/routes/+layout.svelte`:
 
 ```ts
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 ```
 
 ## Быстрый старт
 
 ```svelte
 <script lang="ts">
-  import { Button, ConfigProvider, Input, Select } from 'antd-svelte';
+  import { Button, ConfigProvider, Input, Select } from '@woodger/antd-svelte';
 
   let name = $state('');
   let role = $state<string | undefined>('developer');

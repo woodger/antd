@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createRawSnippet, untrack } from 'svelte';
   import { ConfigProvider, Form, FormItem, Mentions, Transfer, createForm,
-    type FormFeedbackIcons, type FormItemProps, type FormValidateStatus } from 'antd-svelte';
+    type FormFeedbackIcons, type FormItemProps, type FormValidateStatus } from '@woodger/antd-svelte';
   import FormStatusReadout from './FormStatusReadout.svelte';
   import { feedbackCaption, type FeedbackMode } from './form-feedback-cases';
   import type { MentionsFeedbackAction, MentionsFeedbackSample } from './form-feedback-mentions-cases';

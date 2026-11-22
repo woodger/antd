@@ -1,5 +1,5 @@
-import { createForm, type FormRule, type ValidationRuleFactory } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { createForm, type FormRule, type ValidationRuleFactory } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-form-rule-factories-reference.json';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Form, FormItem, Input, createForm, type FormScrollOptions } from 'antd-svelte';
+  import { Form, FormItem, Input, createForm, type FormScrollOptions } from '@woodger/antd-svelte';
 
   const form = createForm({ initialValues: {} });
   const neighbor = createForm({ initialValues: {} });

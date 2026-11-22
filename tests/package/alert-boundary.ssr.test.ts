@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Alert } from 'antd-svelte';
+import { Alert } from '@woodger/antd-svelte';
 import AlertBoundaryCase from '../browser/fixtures/AlertBoundaryCase.svelte';
 
 describe('Alert.ErrorBoundary public package SSR', () => {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Image, ImagePreviewGroup } from 'antd-svelte';
+  import { ConfigProvider, Image, ImagePreviewGroup } from '@woodger/antd-svelte';
 </script>
 
 <ConfigProvider prefixCls="suite" theme={{ cssVar: {} }}>

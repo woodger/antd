@@ -1,4 +1,4 @@
-import type { ValidationRule } from 'antd-svelte';
+import type { ValidationRule } from '@woodger/antd-svelte';
 
 export interface FormTransformSample {
   id: string;

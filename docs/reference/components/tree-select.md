@@ -5,7 +5,7 @@ TreeSelect позволяет выбирать значения в иерарх�
 
 ```svelte
 <script lang="ts">
-  import { TreeSelect } from 'antd-svelte';
+  import { TreeSelect } from '@woodger/antd-svelte';
   const data = [{value:'docs',title:'Документы',children:[{value:'intro',title:'Введение'}]}];
   let value = $state<string[]>([]);
 </script>
@@ -426,7 +426,7 @@ preventDefault. Нативный `onkeydown` самого TreeSelect сохра�
 
 ```svelte
 <script lang="ts">
-  import { TreeSelect, type TreeSelectInputContext } from 'antd-svelte';
+  import { TreeSelect, type TreeSelectInputContext } from '@woodger/antd-svelte';
   let editor = $state<HTMLInputElement | HTMLTextAreaElement>();
 </script>
 
@@ -456,7 +456,7 @@ Disabled TreeSelect управляет popup, собственный DOM disable
 
 ```svelte
 <script lang="ts">
-  import { TreeSelect, type TreeSelectRootContext } from 'antd-svelte';
+  import { TreeSelect, type TreeSelectRootContext } from '@woodger/antd-svelte';
 </script>
 
 {#snippet response({ attributes, register }: TreeSelectRootContext<HTMLButtonElement>)}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Card, CardGrid, CardMeta, ConfigProvider } from 'antd-svelte';
+  import { Card, CardGrid, CardMeta, ConfigProvider } from '@woodger/antd-svelte';
 
   let loading = $state(false);
   let small = $state(false);

@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { mount, tick, unmount, flushSync } from 'svelte';
 import Case from './DatePickerMaskCase.svelte';
 import { samples } from '../date-picker-mask-cases.mjs';

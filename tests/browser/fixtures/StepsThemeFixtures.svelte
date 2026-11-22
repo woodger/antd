@@ -7,7 +7,7 @@
     type StepsProps,
     type ThemeConfig,
     type TimelineItem
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { stepsThemePresets } from './steps-theme-presets';
   import reference from './ant-design-steps-metrics.json';
 

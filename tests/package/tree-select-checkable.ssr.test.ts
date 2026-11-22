@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import TreeSelectCheckableCase from '../browser/fixtures/TreeSelectCheckableCase.svelte';
 import { treeSelectCheckableSamples } from '../browser/fixtures/tree-select-checkable-cases';
 import reference from '../browser/fixtures/ant-design-tree-select-checkable-ssr-reference.json';

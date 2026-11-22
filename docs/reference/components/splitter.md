@@ -6,7 +6,7 @@ Splitter поддерживает размеры панелей, drag/lazy, coll
 
 ```svelte
 <script lang="ts">
-  import { Splitter } from 'antd-svelte';
+  import { Splitter } from '@woodger/antd-svelte';
 </script>
 
 {#snippet navigation()}<nav>Разделы</nav>{/snippet}

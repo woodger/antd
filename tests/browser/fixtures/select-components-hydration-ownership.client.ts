@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { hydrate, tick, unmount, flushSync } from 'svelte';
 import Owner from './SelectComponentsHydrationOwnershipCase.svelte';
 import { ownershipOwnerSample, type HydrationOwnershipOwnerKey, type HydrationOwnershipUpdate } from '../select-components-hydration-ownership-cases.mjs';

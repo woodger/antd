@@ -6,7 +6,7 @@
     Modal,
     type DropdownItem,
     type DropdownPlacement
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let open = $state(false);
   let disabled = $state(false);

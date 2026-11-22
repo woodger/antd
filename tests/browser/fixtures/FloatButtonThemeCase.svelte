@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, type ThemeConfig } from '@woodger/antd-svelte';
   import FloatButtonThemeControl from './FloatButtonThemeControl.svelte';
   import { resolveFloatButtonTheme, type FloatButtonThemeSample } from './float-button-theme-presets';
 

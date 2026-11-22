@@ -30,7 +30,7 @@ Native sibling сравнивается с отдельно измеренным
 
 ```svelte
 <script lang="ts">
-  import { Button, ConfigProvider, Form, FormItem, Input, createForm } from 'antd-svelte';
+  import { Button, ConfigProvider, Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
 
   const form = createForm({
     initialValues: { email: '' },
@@ -206,7 +206,7 @@ Destructuring сохраняет snapshot. Массивы сообщений д�
 
 ```svelte
 <script lang="ts">
-  import { useFormItemStatus } from 'antd-svelte';
+  import { useFormItemStatus } from '@woodger/antd-svelte';
   const field = useFormItemStatus();
 </script>
 
@@ -954,7 +954,7 @@ Ant Design в этом случае не переводит фокус. Это �
 
 ```svelte
 <script lang="ts">
-  import { Form, FormItem, Input, createForm } from 'antd-svelte';
+  import { Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
 
   const form = createForm({ initialValues: { title: '' } });
   let controlRef = $state<HTMLInputElement>();

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import AnchorPrefixScope from './AnchorPrefixScope.svelte';
   import reference from './ant-design-anchor-prefix-reference.json';
 

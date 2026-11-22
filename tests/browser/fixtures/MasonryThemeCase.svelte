@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, type ThemeConfig } from '@woodger/antd-svelte';
   import { resolveMasonryTheme, type MasonryThemeSample } from './masonry-theme-presets';
   import MasonryThemeControl from './MasonryThemeControl.svelte';
 

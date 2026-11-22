@@ -1,4 +1,4 @@
-import type { SelectOption } from 'antd-svelte';
+import type { SelectOption } from '@woodger/antd-svelte';
 
 export interface SelectTagCountSample {
   id: string;

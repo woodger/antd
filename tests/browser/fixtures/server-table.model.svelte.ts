@@ -1,4 +1,4 @@
-import type { TableChange, TableFilters, TableKey, TableSorter } from 'antd-svelte';
+import type { TableChange, TableFilters, TableKey, TableSorter } from '@woodger/antd-svelte';
 
 
 export interface ServerPerson {

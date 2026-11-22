@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import { AutoComplete } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { AutoComplete } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-select-container-reference.json';
 import SelectContainerCase from '../browser/fixtures/SelectContainerCase.svelte';
 import type { SelectContainerCase as ContainerCase } from '../browser/fixtures/select-container-presets';

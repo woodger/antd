@@ -1,6 +1,6 @@
-import { createForm } from 'antd-svelte';
+import { createForm } from '@woodger/antd-svelte';
 import { describe, expect, it } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import touchedReference from '../browser/fixtures/ant-design-form-aggregate-touched-observation.json';
 import validatingReference from '../browser/fixtures/ant-design-form-aggregate-validating-observation.json';
 

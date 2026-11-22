@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Form, FormItem, Input, createForm } from 'antd-svelte';
+  import { Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
   import {
     nestedRule, nestedRuleValue, createNestedRuleController, type NestedRuleSample
   } from './form-nested-rules-cases';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TreeSelect, ConfigProvider, type TreeSelectFieldNames, type TreeSelectRawValue } from 'antd-svelte';
+  import { TreeSelect, ConfigProvider, type TreeSelectFieldNames, type TreeSelectRawValue } from '@woodger/antd-svelte';
   interface Node {
     code: number;
     caption: string;

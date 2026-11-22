@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   Cascader, CascaderPanel, CASCADER_SHOW_CHILD, CASCADER_SHOW_PARENT,
   type CascaderProps, type CascaderPanelProps, type CascaderOption
-} from 'antd-svelte';
+} from '@woodger/antd-svelte';
 import CascaderFixtures from '../browser/fixtures/CascaderFixtures.svelte';
 
 describe('Cascader public package SSR', () => {

@@ -4,7 +4,7 @@ AutoComplete позволяет вводить произвольный текс
 
 ```svelte
 <script lang="ts">
-  import { AutoComplete } from 'antd-svelte';
+  import { AutoComplete } from '@woodger/antd-svelte';
   let value = $state('');
   let search = $state('');
   let options = $derived(search ? [{ value: `${search}@example.com` }] : []);

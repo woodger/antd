@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, ConfigProvider, Table, type TableColumn } from 'antd-svelte';
+  import { Button, ConfigProvider, Table, type TableColumn } from '@woodger/antd-svelte';
   import { createTableControls, type FixturePerson } from './table.model.svelte';
 
   const controls = createTableControls();

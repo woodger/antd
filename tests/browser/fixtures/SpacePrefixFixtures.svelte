@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import SpacePrefixScope, { type SpacePrefixSample } from './SpacePrefixScope.svelte';
   import reference from './ant-design-space-prefix-reference.json';
 

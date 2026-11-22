@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import FormFeedbackControlCase from '../browser/fixtures/FormFeedbackControlCase.svelte';
 import { feedbackControlSamples } from '../browser/fixtures/form-feedback-control-cases';
 import reference from '../browser/fixtures/ant-design-form-feedback-control-reference.json';

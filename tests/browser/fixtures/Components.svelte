@@ -17,7 +17,7 @@
   import ImageFixtures from './ImageFixtures.svelte';
   import MentionsFixtures from './MentionsFixtures.svelte';
   import AutoCompleteFixtures from './AutoCompleteFixtures.svelte';
-  import { ConfigProvider, enUS } from 'antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
   import MenuFixtures from './MenuFixtures.svelte';
   import TreeSelectFixtures from './TreeSelectFixtures.svelte';
   import TreeFixtures from './TreeFixtures.svelte';

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, it, expect, vi } from 'vitest';
-import { ColorPicker, InputNumber, type ColorPickerProps, type Color } from 'antd-svelte';
+import { ColorPicker, InputNumber, type ColorPickerProps, type Color } from '@woodger/antd-svelte';
 import ColorPickerFixture from './ColorPickerFixture.svelte';
 
 describe('ColorPicker public package', () => {

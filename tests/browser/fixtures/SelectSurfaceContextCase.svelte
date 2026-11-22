@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, untrack, type Snippet } from 'svelte';
   import { AutoComplete, Button, ConfigProvider, Form, FormItem, Input, Select, SpaceCompact,
-    createForm, enUS, type SelectPopupRender, type SelectRef } from 'antd-svelte';
+    createForm, enUS, type SelectPopupRender, type SelectRef } from '@woodger/antd-svelte';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import { type SelectSurfaceContextAction, type SelectSurfaceContextSample } from '../select-surface-context-cases';
   import SelectSurfaceContextProbe from './SelectSurfaceContextProbe.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Timeline, ConfigProvider } from 'antd-svelte';
-  import type { TimelineMode, TimelineItem } from 'antd-svelte';
+  import { Timeline, ConfigProvider } from '@woodger/antd-svelte';
+  import type { TimelineMode, TimelineItem } from '@woodger/antd-svelte';
 
   let mode = $state<TimelineMode>('start');
   let horizontal = $state(false);

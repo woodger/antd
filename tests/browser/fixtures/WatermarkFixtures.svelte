@@ -6,7 +6,7 @@
     Drawer,
     type WatermarkContent,
     type WatermarkFont
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let visible = $state(true);
   let inherit = $state(true);

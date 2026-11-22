@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { InputSearch, type InputSearchProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { InputSearch, type InputSearchProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-input-search-prefix-reference.json';
 import InputSearchPrefixSSRFixtures from '../browser/fixtures/InputSearchPrefixSSRFixtures.svelte';
 

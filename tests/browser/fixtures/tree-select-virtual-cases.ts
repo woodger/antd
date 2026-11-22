@@ -1,4 +1,4 @@
-import type { ThemeConfig, TreeScrollConfig, TreeSelectNode, TreeSelectProps } from 'antd-svelte';
+import type { ThemeConfig, TreeScrollConfig, TreeSelectNode, TreeSelectProps } from '@woodger/antd-svelte';
 
 type VirtualProps = Pick<TreeSelectProps, 'open' | 'value' | 'multiple' | 'showSearch' | 'virtual'
   | 'listHeight' | 'listItemHeight' | 'listItemScrollOffset' | 'popupMatchSelectWidth'

@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import reference from '../browser/fixtures/ant-design-upload-motion-reference.json';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import UploadMotionScope from '../browser/fixtures/UploadMotionScope.svelte';
 
 describe('Upload list motion SSR', () => {

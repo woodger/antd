@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { hydrate, tick, unmount } from 'svelte';
 import TreeSelectSurfaceScope from './TreeSelectSurfaceScope.svelte';
 import { treeSelectSurfaceSamples } from './tree-select-surface-cases';

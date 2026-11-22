@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Image, type ImageProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Image, type ImageProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-image-independent-preview-reference.json';
 
 describe('Independent Image preview prefix', () => {

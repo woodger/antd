@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-notification-theme-reference.json';
 import backgroundObservation from '../browser/fixtures/ant-design-notification-background-observation.json';
 import widthObservation from '../browser/fixtures/ant-design-notification-width-observation.json';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Splitter, type SplitterPanelProps } from 'antd-svelte';
+  import { ConfigProvider, Splitter, type SplitterPanelProps } from '@woodger/antd-svelte';
 
   type Event = { event: string; sizes?: number[]; collapsed?: boolean[]; index?: number; };
   let preset = $state('half');

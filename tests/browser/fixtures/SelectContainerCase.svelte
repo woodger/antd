@@ -6,7 +6,7 @@
     Select,
     type AutoCompleteInput,
     type ConfigProviderProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import type { SelectContainerCase } from './select-container-presets';
 
   let {

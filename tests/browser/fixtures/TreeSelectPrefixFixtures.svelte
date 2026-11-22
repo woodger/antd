@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from 'antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
   import TreeSelectPrefixScope, { type TreeSelectPrefixSample } from './TreeSelectPrefixScope.svelte';
   import reference from './ant-design-tree-select-prefix-reference.json';
 

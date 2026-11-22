@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Avatar, AvatarGroup, ConfigProvider, theme, type AvatarGroupItem } from 'antd-svelte';
+  import { Avatar, AvatarGroup, ConfigProvider, theme, type AvatarGroupItem } from '@woodger/antd-svelte';
   import type { AvatarResponsiveCase } from './avatar-responsive-presets';
   let {
     sample,

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { InputSearch, type ComponentSize, type InputVariant } from 'antd-svelte';
+  import { InputSearch, type ComponentSize, type InputVariant } from '@woodger/antd-svelte';
 
   export interface SearchPrefixSample {
     id: string;

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import TreeSelectComponentsFormCase from '../browser/fixtures/TreeSelectComponentsFormCase.svelte';
 import { treeSelectComponentsFormSamples } from '../browser/fixtures/tree-select-components-form-cases';
 import reference from '../browser/fixtures/ant-design-tree-select-components-form-reference.json';

@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Mentions, type MentionsProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Mentions, type MentionsProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-mentions-prefix-reference.json';
 import MentionsPrefixSSRFixtures from '../browser/fixtures/MentionsPrefixSSRFixtures.svelte';
 

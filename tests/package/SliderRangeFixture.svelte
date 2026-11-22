@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Slider } from 'antd-svelte';
+  import { ConfigProvider, Slider } from '@woodger/antd-svelte';
 </script>
 
 <ConfigProvider direction="rtl" slider={{ class: 'provider-range', style: 'color:red',

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useFormItemStatus } from 'antd-svelte';
+  import { useFormItemStatus } from '@woodger/antd-svelte';
   import type { SelectSurfaceRecorder } from '../select-surface-producers.mjs';
   let { side, recorder }: { side: 'inside' | 'outside'; recorder: SelectSurfaceRecorder } = $props();
   const status = useFormItemStatus();

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { TextArea } from 'antd-svelte';
+import { TextArea } from '@woodger/antd-svelte';
 import TextAreaFixtures from '../browser/fixtures/TextAreaFixtures.svelte';
 import TextAreaFeaturesFixtures from '../browser/fixtures/TextAreaFeaturesFixtures.svelte';
 

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Alert } from 'antd-svelte';
+import { Alert } from '@woodger/antd-svelte';
 import AlertSourceCase from '../browser/fixtures/AlertSourceCase.svelte';
 
 describe('Alert public package SSR', () => {

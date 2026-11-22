@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { InputPassword } from 'antd-svelte';
+import { InputPassword } from '@woodger/antd-svelte';
 import InputPasswordFixtures from '../browser/fixtures/InputPasswordFixtures.svelte';
 
 describe('InputPassword public package SSR', () => {

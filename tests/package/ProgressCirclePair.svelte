@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Progress } from 'antd-svelte';
+  import { Progress } from '@woodger/antd-svelte';
 </script>
 
 <Progress type="circle" percent={65} strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }} />

@@ -1,4 +1,4 @@
-import type { ConfigProviderProps, PopupOverflow } from 'antd-svelte';
+import type { ConfigProviderProps, PopupOverflow } from '@woodger/antd-svelte';
 
 type Equal<Left, Right> = (<Value>() => Value extends Left ? 1 : 2) extends
   (<Value>() => Value extends Right ? 1 : 2) ? true : false;

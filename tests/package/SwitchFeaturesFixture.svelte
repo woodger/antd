@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Switch } from 'antd-svelte';
+  import { ConfigProvider, Switch } from '@woodger/antd-svelte';
 </script>
 
 {#snippet rich()}<strong>Rich ON</strong>{/snippet}

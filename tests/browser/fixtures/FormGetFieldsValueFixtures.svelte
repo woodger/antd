@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Form, FormItem, FormList, Input, createForm, FormValidationError } from 'antd-svelte';
+  import { Form, FormItem, FormList, Input, createForm, FormValidationError } from '@woodger/antd-svelte';
   import { snapshotFormValues } from './form-value-projection';
 
   type Mode = 'fields' | 'empty' | 'list' | 'empty-list';

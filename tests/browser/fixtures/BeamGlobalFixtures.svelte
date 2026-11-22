@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import BeamGlobalScope, { type BeamGlobalSample } from './BeamGlobalScope.svelte';
   import reference from './ant-design-beam-global-reference.json';
 

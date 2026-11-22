@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Select } from 'antd-svelte';
+  import { ConfigProvider, Select } from '@woodger/antd-svelte';
   import { selectThemePresets } from '../browser/fixtures/select-theme-presets';
 
   let { preset = 'default', native = false }: { preset?: string; native?: boolean; } = $props();

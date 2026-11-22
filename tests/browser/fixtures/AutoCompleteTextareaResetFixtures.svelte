@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AutoComplete, type AutoCompleteProps, type SelectRef } from 'antd-svelte';
+  import { AutoComplete, type AutoCompleteProps, type SelectRef } from '@woodger/antd-svelte';
 
   type ResetId = 'uncontrolled' | 'controlled' | 'cancelled';
   interface Field {

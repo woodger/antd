@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     ConfigProvider, Form, FormItem, Input, createForm, FormValidationError
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   const model = createForm({ initialValues: { name: 'Alpha', other: 'Beta' } });
   let delay = $state(300);

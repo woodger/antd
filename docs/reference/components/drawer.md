@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Button, Drawer, Input } from 'antd-svelte';
+  import { Button, Drawer, Input } from '@woodger/antd-svelte';
 
   let open = $state(false);
 </script>

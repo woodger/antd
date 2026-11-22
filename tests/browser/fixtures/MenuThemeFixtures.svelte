@@ -6,7 +6,7 @@
     type MenuMode,
     type MenuTheme,
     type ThemeConfig
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { menuThemePresets } from './menu-theme-presets';
 
   let preset = $state('default');

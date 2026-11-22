@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createRawSnippet, onMount, tick, untrack } from 'svelte';
   import { AutoComplete, ConfigProvider, Form, FormItem, InputOTP, createForm,
-    type AutoCompleteInput, type FormFeedbackIcons, type FormFeedbackInfo, type FormItemProps, type FormValidateStatus } from 'antd-svelte';
+    type AutoCompleteInput, type FormFeedbackIcons, type FormFeedbackInfo, type FormItemProps, type FormValidateStatus } from '@woodger/antd-svelte';
   import AutoCompletePrefixInput from './AutoCompletePrefixInput.svelte';
   import FormStatusReadout from './FormStatusReadout.svelte';
   import { feedbackCaption, type FeedbackAction, type FeedbackMode } from './form-feedback-cases';

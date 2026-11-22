@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import TreeSelectTokenCase from '../browser/fixtures/TreeSelectTokenCase.svelte';
 import { treeSelectTokenSamples } from '../browser/fixtures/tree-select-token-cases';
 import reference from '../browser/fixtures/ant-design-tree-select-token-reference.json';

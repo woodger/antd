@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Avatar, AvatarGroup, Badge, ConfigProvider, type ThemeConfig } from 'antd-svelte';
+  import { Avatar, AvatarGroup, Badge, ConfigProvider, type ThemeConfig } from '@woodger/antd-svelte';
 
   let { native = false, missing = false, prefix = 'ant', numeric = false, aliases = false }: {
     native?: boolean; missing?: boolean; prefix?: string; numeric?: boolean; aliases?: boolean;

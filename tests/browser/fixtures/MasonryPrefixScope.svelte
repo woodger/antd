@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Masonry } from 'antd-svelte';
-  import type { MasonryItemType, MasonryProps } from 'antd-svelte';
+  import { Masonry } from '@woodger/antd-svelte';
+  import type { MasonryItemType, MasonryProps } from '@woodger/antd-svelte';
 
   export interface MasonryPrefixSample {
     id: string;

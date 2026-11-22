@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { InputNumber, type InputNumberProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { InputNumber, type InputNumberProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-input-number-prefix-reference.json';
 import InputNumberPrefixSSRFixtures from '../browser/fixtures/InputNumberPrefixSSRFixtures.svelte';
 

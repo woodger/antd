@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { ConfigProvider, TreeSelect, type TreeSelectFieldNames, type TreeSelectSimpleMode,
-    type TreeSelectValue } from 'antd-svelte';
+    type TreeSelectValue } from '@woodger/antd-svelte';
   import { treeSelectData, treeSelectAliasFields, type TreeSelectDataSample } from './tree-select-data-cases';
 
   let { sample }: { sample: TreeSelectDataSample } = $props();

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Row, Col, type RowProps } from 'antd-svelte';
+  import { Row, Col, type RowProps } from '@woodger/antd-svelte';
 
   export interface GridRowPrefixSample {
     id: string;

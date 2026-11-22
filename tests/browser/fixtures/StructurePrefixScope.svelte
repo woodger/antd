@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Affix, Alert, Collapse } from 'antd-svelte';
+  import { Affix, Alert, Collapse } from '@woodger/antd-svelte';
 
   export interface StructurePrefixSample {
     id: string;

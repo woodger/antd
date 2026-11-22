@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Form, FormItem, FormList, Input, createForm } from 'antd-svelte';
+  import { Button, Form, FormItem, FormList, Input, createForm } from '@woodger/antd-svelte';
 
   interface Group {
     title: string;

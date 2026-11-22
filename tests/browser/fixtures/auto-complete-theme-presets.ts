@@ -1,4 +1,4 @@
-import type { ThemeConfig } from 'antd-svelte';
+import type { ThemeConfig } from '@woodger/antd-svelte';
 import { selectThemePresets } from './select-theme-presets';
 
 export const autoCompleteThemePresets: Record<string, ThemeConfig> = {

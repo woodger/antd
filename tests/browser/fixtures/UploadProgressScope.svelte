@@ -16,7 +16,7 @@
     type UploadFile,
     type UploadListProgressProps,
     type UploadProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let { sample }: { sample: UploadProgressSample } = $props();
   let listType = $derived<NonNullable<UploadProps['listType']>>(

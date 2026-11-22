@@ -1,8 +1,8 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Splitter, type SplitterProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Splitter, type SplitterProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-splitter-prefix-reference.json';
 import isolated from '../browser/fixtures/ant-design-splitter-prefix-isolated.json';
 import SplitterPrefixSSRFixtures from '../browser/fixtures/SplitterPrefixSSRFixtures.svelte';

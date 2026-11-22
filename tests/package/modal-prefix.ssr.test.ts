@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Modal, type ModalProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Modal, type ModalProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-modal-prefix-reference.json';
 import ModalPrefixSSRFixtures from '../browser/fixtures/ModalPrefixSSRFixtures.svelte';
 

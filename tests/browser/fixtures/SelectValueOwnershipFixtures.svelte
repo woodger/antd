@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { Select, ConfigProvider, enUS, type SelectProps } from 'antd-svelte';
+  import { Select, ConfigProvider, enUS, type SelectProps } from '@woodger/antd-svelte';
 
   const Single = Select<string>;
   const RichSingle = Select<string, undefined, { value: string; label: string | Snippet }>;

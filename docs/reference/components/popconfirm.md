@@ -23,7 +23,7 @@ native shell, focus и ARIA следуют прежним правилам Popov
 
 ```svelte
 <script lang="ts">
-  import { Button, Popconfirm } from 'antd-svelte';
+  import { Button, Popconfirm } from '@woodger/antd-svelte';
 
   let open = $state(false);
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Select, type SelectOmittedTag } from 'antd-svelte';
+  import { ConfigProvider, Select, type SelectOmittedTag } from '@woodger/antd-svelte';
   import { untrack } from 'svelte';
   import { getSelectTagCount, type SelectTagCountSample } from './select-tag-count-cases';
 

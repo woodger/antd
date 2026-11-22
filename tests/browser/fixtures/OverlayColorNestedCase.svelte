@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Tooltip, Popover } from 'antd-svelte';
+  import { ConfigProvider, Tooltip, Popover } from '@woodger/antd-svelte';
   import type { NestedColorCase } from './overlay-color-presets';
 
   let { sample }: { sample: NestedColorCase } = $props();

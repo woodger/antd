@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Input } from 'antd-svelte';
-  import type { InputProps, TreeSelectRootContext, TreeSelectRootRegistration } from 'antd-svelte';
+  import { Input } from '@woodger/antd-svelte';
+  import type { InputProps, TreeSelectRootContext, TreeSelectRootRegistration } from '@woodger/antd-svelte';
   import type { HTMLInputAttributes } from 'svelte/elements';
   let { context, nativeElement = $bindable() }: {
     context: TreeSelectRootContext<HTMLElement>;

@@ -6,7 +6,7 @@
     type TreeFieldDataNode,
     type TreeKey,
     type TreeProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   interface RecordNode {
     id: number;

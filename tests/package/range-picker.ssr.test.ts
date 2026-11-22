@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { RangePicker } from 'antd-svelte';
+import { RangePicker } from '@woodger/antd-svelte';
 import RangePickerFixtures from '../browser/fixtures/RangePickerFixtures.svelte';
 
 describe('RangePicker SSR', () => {

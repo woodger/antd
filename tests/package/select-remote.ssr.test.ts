@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Select } from 'antd-svelte';
+import { Select } from '@woodger/antd-svelte';
 
 describe('remote Select SSR', () => {
   it(

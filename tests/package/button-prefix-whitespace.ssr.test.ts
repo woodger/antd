@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Button } from 'antd-svelte';
+import { Button } from '@woodger/antd-svelte';
 
 describe('Button native text boundaries', () => {
   for (const prefixCls of [undefined, 'action']) {

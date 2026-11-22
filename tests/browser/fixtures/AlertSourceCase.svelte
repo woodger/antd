@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { AlertProps } from 'antd-svelte';
+  import type { AlertProps } from '@woodger/antd-svelte';
 
   export interface AlertSourceSample {
     name: string;
@@ -17,10 +17,10 @@
 </script>
 
 <script lang="ts">
-  import { Alert, ConfigProvider, theme } from 'antd-svelte';
+  import { Alert, ConfigProvider, theme } from '@woodger/antd-svelte';
   import type {
     AlertConfig, AlertRef, AlertSemanticInfo, AlertSemanticSlots, ThemeConfig
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let { sample, mounted = true }: { sample: AlertSourceSample; mounted?: boolean; } = $props();
   let nativeElement = $state<HTMLDivElement>();

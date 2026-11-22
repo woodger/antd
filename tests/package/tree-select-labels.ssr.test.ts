@@ -1,8 +1,8 @@
 import { render } from 'svelte/server';
 import type { Snippet } from 'svelte';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
-import type { TreeSelectProps, TreeSelectValue } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import type { TreeSelectProps, TreeSelectValue } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import source from '../browser/fixtures/ant-design-tree-select-labels-reference.json';
 import reference from '../browser/fixtures/ant-design-tree-select-labels-ssr-reference.json';
 import { treeLabelObservations, treeLabelSamples } from '../browser/fixtures/tree-select-label-cases';

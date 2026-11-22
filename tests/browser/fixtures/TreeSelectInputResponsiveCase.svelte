@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, TreeSelect, type TreeSelectInputContext, type TreeSelectTagInfo } from 'antd-svelte';
+  import { ConfigProvider, TreeSelect, type TreeSelectInputContext, type TreeSelectTagInfo } from '@woodger/antd-svelte';
   import TreeSelectInputResponsiveEditor from './TreeSelectInputResponsiveEditor.svelte';
   import type { TreeSelectInputResponsiveAction, TreeSelectInputResponsiveSample } from './tree-select-input-responsive-cases';
   let { sample }: { sample: TreeSelectInputResponsiveSample } = $props();

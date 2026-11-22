@@ -6,7 +6,7 @@ Cascader позволяет выбрать путь в иерархическо�
 
 ```svelte
 <script lang="ts">
-  import { Cascader, CascaderPanel, type CascaderPath } from 'antd-svelte';
+  import { Cascader, CascaderPanel, type CascaderPath } from '@woodger/antd-svelte';
 
   let path = $state<CascaderPath>([]);
   const options = [

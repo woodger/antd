@@ -1,4 +1,4 @@
-import type { ThemeConfig } from 'antd-svelte';
+import type { ThemeConfig } from '@woodger/antd-svelte';
 import reference from './ant-design-grid-breakpoints-reference.json' with { type: 'json' };
 
 export type GridBreakpointsSample = Omit<typeof reference.cases[number], 'config'> & {

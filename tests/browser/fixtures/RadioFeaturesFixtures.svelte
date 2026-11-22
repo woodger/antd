@@ -8,7 +8,7 @@
     type RadioChangeEvent,
     type RadioRef,
     type RadioValue
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let value = $state<RadioValue | undefined>(0);
   let checked = $state(false);

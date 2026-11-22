@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, TreeSelect, type TreeSelectRef, type TreeSelectValue, type TreeSelectTokenSeparators } from 'antd-svelte';
+  import { ConfigProvider, TreeSelect, type TreeSelectRef, type TreeSelectValue, type TreeSelectTokenSeparators } from '@woodger/antd-svelte';
   import type { TreeSelectTokenSample } from './tree-select-token-cases';
   let { sample }: { sample: TreeSelectTokenSample } = $props();
   let value = $state<TreeSelectValue>(untrack(() => sample.selected ? [...sample.selected] : undefined));

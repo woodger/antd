@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Button, Popover } from 'antd-svelte';
+  import { Button, Popover } from '@woodger/antd-svelte';
 
   let open = $state(false);
 </script>

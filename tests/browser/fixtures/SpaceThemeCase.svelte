@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type SpaceConfig, type ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, type SpaceConfig, type ThemeConfig } from '@woodger/antd-svelte';
   import { resolveSpaceTheme, type SpaceThemeSample } from './space-theme-presets';
   import { sourceSpaceConfig } from './space-provider-presets';
   import SpaceThemeControl from './SpaceThemeControl.svelte';

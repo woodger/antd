@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import TreeSelectSuffixLayoutCase from '../browser/fixtures/TreeSelectSuffixLayoutCase.svelte';
 import { treeSelectSuffixLayoutSamples } from '../browser/fixtures/tree-select-suffix-layout-cases';
 import reference from '../browser/fixtures/ant-design-tree-select-suffix-layout-ssr-reference.json';

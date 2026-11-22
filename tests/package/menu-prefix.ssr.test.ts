@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Menu, type MenuProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Menu, type MenuProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-menu-prefix-reference.json';
 import MenuPrefixSSRFixtures from '../browser/fixtures/MenuPrefixSSRFixtures.svelte';
 

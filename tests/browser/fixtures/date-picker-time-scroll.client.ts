@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { mount, unmount, tick, flushSync } from 'svelte';
 import Case from './DatePickerTimeScrollCase.svelte';
 import { samples } from '../date-picker-time-scroll-cases.mjs';

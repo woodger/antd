@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { BorderBeam, Card, ConfigProvider, type BorderBeamColor } from 'antd-svelte';
+  import { BorderBeam, Card, ConfigProvider, type BorderBeamColor } from '@woodger/antd-svelte';
 
   let host = $state<HTMLDivElement>();
   let cardHost = $state<HTMLDivElement>();

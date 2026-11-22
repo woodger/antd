@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { hydrate, tick, unmount, flushSync } from 'svelte';
 import HydrationCase, { type HydrationCapture, type HydrationSample } from './SelectComponentsHydrationCase.svelte';
 import { selectComponentsHydrationSamples } from './select-components-hydration-cases.mjs';

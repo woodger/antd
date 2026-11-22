@@ -2,8 +2,8 @@ import dayjs, { type Dayjs } from 'dayjs';
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Calendar, type CalendarCellRenderInfo } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Calendar, type CalendarCellRenderInfo } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-calendar-prefix-reference.json';
 import CalendarPrefixSSRFixtures from '../browser/fixtures/CalendarPrefixSSRFixtures.svelte';
 

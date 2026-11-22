@@ -1,5 +1,5 @@
 import { hydrate, tick, unmount } from 'svelte';
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import TreeSelectLabelsScope from './TreeSelectLabelsScope.svelte';
 import { treeLabelSamples } from './tree-select-label-cases';
 

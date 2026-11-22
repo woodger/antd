@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Button } from 'antd-svelte';
+import { Button } from '@woodger/antd-svelte';
 import ButtonFixtures from '../browser/fixtures/ButtonFixtures.svelte';
 
 describe('Button SSR', () => {

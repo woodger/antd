@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TreeSelectRootContext } from 'antd-svelte';
+  import type { TreeSelectRootContext } from '@woodger/antd-svelte';
   let { context, onInput, nativeElement = $bindable(), inputElement = $bindable() }: {
     context: TreeSelectRootContext<HTMLSpanElement>;
     onInput: (text: string) => void;

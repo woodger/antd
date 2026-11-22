@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useApp, type AppInstance } from 'antd-svelte';
+  import { useApp, type AppInstance } from '@woodger/antd-svelte';
   let { scope = 'primary', onApi }: {
     scope?: string;
     onApi?: (api: AppInstance) => void;

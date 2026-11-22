@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, type ThemeConfig } from '@woodger/antd-svelte';
   import TransferThemeControl from './TransferThemeControl.svelte';
   import { resolveTransferTheme, type TransferThemeSample } from './transfer-theme-presets';
 

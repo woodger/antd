@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Divider, type ComponentSize, type DividerProps } from 'antd-svelte';
+  import { ConfigProvider, Divider, type ComponentSize, type DividerProps } from '@woodger/antd-svelte';
 
   let orientation = $state<DividerProps['orientation']>('horizontal');
   let placement = $state<DividerProps['titlePlacement']>('center');

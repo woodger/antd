@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Slider, TypographyText } from 'antd-svelte';
+  import { Slider, TypographyText } from '@woodger/antd-svelte';
 
   let mode = $state('single');
   let fresh = $state(false);

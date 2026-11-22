@@ -3,7 +3,7 @@
   import {
     Form, FormItem, FormList, createForm,
     FormValidationError, type FormFieldMeta, type NamePath
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { encodeFormValues } from './form-value-projection';
   import FormResetControl from './FormResetControl.svelte';
 

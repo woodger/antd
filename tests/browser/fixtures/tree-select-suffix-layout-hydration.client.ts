@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { hydrate, tick, unmount } from 'svelte';
 import TreeSelectSuffixLayoutHydration from './TreeSelectSuffixLayoutHydration.svelte';
 import { treeSelectSuffixLayoutSamples } from './tree-select-suffix-layout-cases';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Tree, type TreeKey, type TreeEventNode } from 'antd-svelte';
+  import { ConfigProvider, Tree, type TreeKey, type TreeEventNode } from '@woodger/antd-svelte';
   interface Node {
     id: TreeKey;
     caption: string;

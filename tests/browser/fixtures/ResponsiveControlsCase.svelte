@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from 'antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
   import ResponsiveControlsScope, { type ResponsiveControlsSample } from './ResponsiveControlsScope.svelte';
 
   let { sample, scope = 'normal', enabled = true, kind }: {

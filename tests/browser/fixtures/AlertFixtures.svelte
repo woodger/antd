@@ -7,7 +7,7 @@
     Modal,
     type AlertType,
     type AlertVariant
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let type = $state<AlertType>('info');
   let variant = $state<AlertVariant>('outlined');

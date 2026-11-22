@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { ConfigProvider, Empty, enUS, theme } from 'antd-svelte';
+  import { ConfigProvider, Empty, enUS, theme } from '@woodger/antd-svelte';
   import type {
     EmptyConfig, EmptyProps, EmptyRef, EmptySemanticSlots, EmptySemanticInfo, ThemeConfig
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   export interface EmptySourceSample {
     name: string;

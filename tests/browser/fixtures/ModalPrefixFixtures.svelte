@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from 'antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
   import ModalPrefixScope, { type ModalPrefixSample } from './ModalPrefixScope.svelte';
   import reference from './ant-design-modal-prefix-reference.json';
 

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import AvatarGroupPopoverCase from '../browser/fixtures/AvatarGroupPopoverCase.svelte';
 import reference from '../browser/fixtures/ant-design-avatar-group-popover-reference.json';
 import type { AvatarGroupPopoverCase as Sample } from '../browser/fixtures/avatar-group-popover-presets';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Form, FormItem, InputNumber, Slider, createForm } from 'antd-svelte';
+  import { ConfigProvider, Form, FormItem, InputNumber, Slider, createForm } from '@woodger/antd-svelte';
 
   let value = $state(20);
   let defaultValue = $state(35);

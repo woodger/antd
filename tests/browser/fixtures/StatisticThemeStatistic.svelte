@@ -3,7 +3,7 @@
     Statistic,
     StatisticTimer,
     type StatisticProps
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let { id, kind = 'normal', priority = false, draft = false }: {
     id: string;

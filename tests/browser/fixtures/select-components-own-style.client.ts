@@ -1,4 +1,4 @@
-import 'antd-svelte/styles.css';
+import '@woodger/antd-svelte/styles.css';
 import { mount, hydrate, tick, unmount, flushSync, type ComponentProps } from 'svelte';
 import OwnStyleCase from './SelectComponentsOwnStyleCase.svelte';
 import { selectOwnStyleInitSamples, selectOwnStyleInitEntryPaths, selectOwnStyleInitClientProfile,

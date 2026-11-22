@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type ThemeConfig } from 'antd-svelte';
+  import { ConfigProvider, type ThemeConfig } from '@woodger/antd-svelte';
   import GridBreakpointsControl from './GridBreakpointsControl.svelte';
   import type { GridBreakpointsSample } from './grid-breakpoints-presets';
 

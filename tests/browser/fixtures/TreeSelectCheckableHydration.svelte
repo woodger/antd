@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TreeSelectRef } from 'antd-svelte';
+  import type { TreeSelectRef } from '@woodger/antd-svelte';
   import TreeSelectCheckableCase from './TreeSelectCheckableCase.svelte';
   import type { TreeSelectCheckableAction, TreeSelectCheckableSample } from './tree-select-checkable-cases';
   let { sample }: { sample: TreeSelectCheckableSample } = $props();

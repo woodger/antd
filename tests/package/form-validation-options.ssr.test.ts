@@ -1,6 +1,6 @@
-import { createForm, FormValidationError } from 'antd-svelte';
+import { createForm, FormValidationError } from '@woodger/antd-svelte';
 import { describe, expect, it } from 'vitest';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-form-validation-options-observation.json';
 import concurrency from '../browser/fixtures/ant-design-form-validation-concurrency-observation.json';
 

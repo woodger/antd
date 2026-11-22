@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Select, enUS, theme, type SelectProps } from 'antd-svelte';
+  import { ConfigProvider, Select, enUS, theme, type SelectProps } from '@woodger/antd-svelte';
   import reference from './ant-design-select-variants-reference.json' with { type: 'json' };
 
   let { sample }: { sample?: typeof reference.cases[number]; } = $props();

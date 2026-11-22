@@ -2,7 +2,7 @@
   import {
     Button, SpaceCompact, type ButtonColor, type ButtonShape, type ButtonType,
     type ButtonVariant, type ComponentSize
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   export interface ButtonPrefixSample {
     id: string;

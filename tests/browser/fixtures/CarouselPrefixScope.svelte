@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Carousel, type CarouselRef, type CarouselProps } from 'antd-svelte';
+  import { Carousel, type CarouselRef, type CarouselProps } from '@woodger/antd-svelte';
 
   export interface CarouselPrefixSample {
     id: string;

@@ -1,4 +1,4 @@
-import type { BreadcrumbConfig, BreadcrumbProps, BreadcrumbSlots } from 'antd-svelte';
+import type { BreadcrumbConfig, BreadcrumbProps, BreadcrumbSlots } from '@woodger/antd-svelte';
 
 export function breadcrumbConfigProfile(
   name?: string,

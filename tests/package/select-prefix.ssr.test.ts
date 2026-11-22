@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Select, type SelectProps } from 'antd-svelte';
-import registry from 'antd-svelte/porting/registry.json';
+import { Select, type SelectProps } from '@woodger/antd-svelte';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-select-prefix-reference.json';
 import SelectPrefixSSRFixtures from '../browser/fixtures/SelectPrefixSSRFixtures.svelte';
 

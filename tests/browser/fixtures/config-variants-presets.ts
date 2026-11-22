@@ -1,4 +1,4 @@
-import type { ConfigProviderProps, Variant } from 'antd-svelte';
+import type { ConfigProviderProps, Variant } from '@woodger/antd-svelte';
 
 export function configVariant(value: unknown): Variant | undefined {
   return value === 'outlined' || value === 'filled' || value === 'borderless' || value === 'underlined'

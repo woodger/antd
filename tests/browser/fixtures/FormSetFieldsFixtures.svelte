@@ -2,7 +2,7 @@
   import {
     Form, FormItem, Input, createForm, FormValidationError,
     type FormFieldData, type FormFieldMeta, type NamePath
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { encodeFormValues } from './form-value-projection';
 
   const names: NamePath[] = [

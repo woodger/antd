@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Breadcrumb, ConfigProvider, type BreadcrumbItem } from 'antd-svelte';
+  import { Breadcrumb, ConfigProvider, type BreadcrumbItem } from '@woodger/antd-svelte';
   import { breadcrumbThemePresets } from '../browser/fixtures/breadcrumb-theme-presets';
 
   let { preset = 'default', native = false, semantic = false }: {

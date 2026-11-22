@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Input, type FormInstance, type NamePath } from 'antd-svelte';
+  import { Input, type FormInstance, type NamePath } from '@woodger/antd-svelte';
 
   let { form, name, tag, onMounted }: {
     form: FormInstance<Record<string, unknown>>;

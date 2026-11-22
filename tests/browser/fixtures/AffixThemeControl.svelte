@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Affix, type AffixUpdatePosition } from 'antd-svelte';
+  import { Affix, type AffixUpdatePosition } from '@woodger/antd-svelte';
 
   let { id, prefixCls, style }: { id: string; prefixCls?: string; style?: string; } = $props();
   let container = $state<HTMLDivElement>();

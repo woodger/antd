@@ -24,7 +24,7 @@
 
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, TreeSelect, type TreeExpandAction, type TreeKey } from 'antd-svelte';
+  import { ConfigProvider, TreeSelect, type TreeExpandAction, type TreeKey } from '@woodger/antd-svelte';
 
   let { sample, initialOpen = false }: {
     sample: TreeSelectExpandActionSample;

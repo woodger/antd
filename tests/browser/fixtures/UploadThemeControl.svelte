@@ -7,7 +7,7 @@
     type UploadFile,
     type UploadProps,
     type UploadRequestOptions
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let {
     mode = 'default',

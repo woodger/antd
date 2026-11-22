@@ -3,7 +3,7 @@ import type {
   AutoCompleteClassNames, AutoCompleteProps, AutoCompleteSemanticInfo, SelectClassNames,
   SelectConfig, SelectCSSProperties, SelectLabelValue, SelectPopupContent, SelectPopupRender, SelectProps,
   SelectSemanticInfo, SelectStyle
-} from 'antd-svelte';
+} from '@woodger/antd-svelte';
 
 type Equal<Left, Right> = (<Value>() => Value extends Left ? 1 : 2) extends
   (<Value>() => Value extends Right ? 1 : 2) ? true : false;
@@ -32,7 +32,7 @@ export type SelectSurfaceContracts = [
   Assert<Equal<SelectSemanticInfo<number>['props']['size'], 'small' | 'medium' | 'large' | undefined>>,
   Assert<Equal<AutoCompleteSemanticInfo<Option>['props']['value'], string | undefined>>,
   Assert<Equal<AutoCompleteSemanticInfo<Option>['props']['popupRender'], SelectPopupRender | undefined>>,
-  Assert<Equal<NonNullable<AutoCompleteProps<Option>['children']>, Snippet<[import('antd-svelte').AutoCompleteInput]>>>
+  Assert<Equal<NonNullable<AutoCompleteProps<Option>['children']>, Snippet<[import('@woodger/antd-svelte').AutoCompleteInput]>>>
 ];
 
 export const popup: SelectPopupRender = origin => [0, false, null, undefined, origin];

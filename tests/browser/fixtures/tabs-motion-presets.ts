@@ -3,7 +3,7 @@ import type {
   TabsMotionEvent,
   TabsPaneMotion,
   ThemeConfig
-} from 'antd-svelte';
+} from '@woodger/antd-svelte';
 
 export interface TabsMotionCase {
   name: string;

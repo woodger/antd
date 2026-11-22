@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Flex, type FlexProps } from 'antd-svelte';
+  import { ConfigProvider, Flex, type FlexProps } from '@woodger/antd-svelte';
 
   let orientation = $state<FlexProps['orientation']>();
   let vertical = $state(false);

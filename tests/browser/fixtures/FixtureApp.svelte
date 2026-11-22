@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Component } from 'svelte';
-  import { ConfigProvider } from 'antd-svelte';
-  import { enUS } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { enUS } from '@woodger/antd-svelte';
   import catalog from './catalog.json';
   import { resolveFixtureRoute } from './fixture-route';
 

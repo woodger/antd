@@ -2,7 +2,7 @@
   import {
     Anchor, ConfigProvider, theme,
     type AnchorConfig, type AnchorDirection, type AnchorItem
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
   import { anchorConfigProfile } from './anchor-config-presets';
   import reference from './ant-design-anchor-config-reference.json' with { type: 'json' };
 

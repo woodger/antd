@@ -1,7 +1,7 @@
 <script lang="ts">
   import RenderEmptyCase from './RenderEmptyCase.svelte';
   import type { RenderEmptySample } from './RenderEmptyCase.svelte';
-  import type { RenderEmptyComponent } from 'antd-svelte';
+  import type { RenderEmptyComponent } from '@woodger/antd-svelte';
   import reference from './ant-design-render-empty-reference.json';
 
   let selected = $state('Select-text');

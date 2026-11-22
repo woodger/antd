@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { Select, AutoComplete, Form, FormItem, createForm, type SelectRef,
-    type SelectInputContext, type SelectRootContext } from 'antd-svelte';
+    type SelectInputContext, type SelectRootContext } from '@woodger/antd-svelte';
 
   let { sample }: { sample: string } = $props();
   const initial = untrack(() => sample), autocomplete = initial.startsWith('ac-');

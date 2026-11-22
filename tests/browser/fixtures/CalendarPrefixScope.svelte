@@ -18,7 +18,7 @@
 
 <script lang="ts">
   import dayjs from 'dayjs';
-  import { Calendar, type CalendarMode } from 'antd-svelte';
+  import { Calendar, type CalendarMode } from '@woodger/antd-svelte';
 
   let { sample, rootPrefix, local = true }: {
     sample: CalendarPrefixSample;

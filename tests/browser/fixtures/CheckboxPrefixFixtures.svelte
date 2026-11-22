@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from 'antd-svelte';
+  import { ConfigProvider } from '@woodger/antd-svelte';
   import CheckboxPrefixScope, { type CheckboxPrefixSample } from './CheckboxPrefixScope.svelte';
   import reference from './ant-design-checkbox-prefix-reference.json';
 

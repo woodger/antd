@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from 'antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
   import TransferPrefixScope, { type TransferPrefixSample } from './TransferPrefixScope.svelte';
   import reference from './ant-design-transfer-prefix-reference.json';
 

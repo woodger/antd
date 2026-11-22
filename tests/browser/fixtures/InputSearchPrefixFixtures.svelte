@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, InputSearch } from 'antd-svelte';
+  import { ConfigProvider, InputSearch } from '@woodger/antd-svelte';
   import InputSearchPrefixScope, {
     type SearchPrefixSample
   } from './InputSearchPrefixScope.svelte';

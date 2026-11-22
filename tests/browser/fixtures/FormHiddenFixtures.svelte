@@ -3,7 +3,7 @@
   import {
     Form, FormItem, Input, createForm, FormValidationError,
     type FormProps, type FieldError
-  } from 'antd-svelte';
+  } from '@woodger/antd-svelte';
 
   let { initialHidden = false }: { initialHidden?: boolean } = $props();
   const form = createForm({ initialValues: { concealed: 'Alpha', sibling: 'Beta' } });

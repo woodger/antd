@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Segmented } from 'antd-svelte';
+  import { ConfigProvider, Segmented } from '@woodger/antd-svelte';
   import type { SegmentedPrefixSample } from './segmented-prefix-presets';
 
   let { id, prefix, sample }: { id: string; prefix?: string; sample: SegmentedPrefixSample; }

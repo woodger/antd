@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { DatePicker } from 'antd-svelte';
+import { DatePicker } from '@woodger/antd-svelte';
 import DatePickerFixtures from '../browser/fixtures/DatePickerFixtures.svelte';
 
 describe('DatePicker SSR', () => {

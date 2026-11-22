@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import registry from 'antd-svelte/porting/registry.json';
+import registry from '@woodger/antd-svelte/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-overlay-container-reference.json';
 import OverlayContainerCase from '../browser/fixtures/OverlayContainerCase.svelte';
 import type { OverlayContainerCase as ContainerCase } from '../browser/fixtures/overlay-container-presets';

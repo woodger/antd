@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button, Checkbox, CheckableTag, ConfigProvider, Radio, RadioGroup, Steps,
-    Switch, Tag, theme, type WaveConfig, type WaveEffectInfo, type WaveTriggerType } from 'antd-svelte';
+    Switch, Tag, theme, type WaveConfig, type WaveEffectInfo, type WaveTriggerType } from '@woodger/antd-svelte';
 
   let mounted = $state(true);
   let disabled = $state(false);
