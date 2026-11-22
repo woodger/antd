@@ -9,6 +9,47 @@
 
 [Примеры компонентов](https://woodger.org/ant-design) · [Документация](docs/README.md) · [Каталог компонентов](docs/reference/components/README.md)
 
+## Подключение
+
+Компоненты импортируются из `antd-svelte`. `ConfigProvider` подключает стили;
+если компоненты используются без него, импортируйте стили один раз в точке входа
+приложения или в корневом компоненте. В SvelteKit это можно сделать в `<script>`
+корневого layout `src/routes/+layout.svelte`:
+
+```ts
+import 'antd-svelte/styles.css';
+```
+
+## Быстрый старт
+
+```svelte
+<script lang="ts">
+  import { Button, ConfigProvider, Input, Select } from 'antd-svelte';
+
+  let name = $state('');
+  let role = $state<string | undefined>('developer');
+</script>
+
+<ConfigProvider theme={{ mode: 'light', primary: 'blue' }}>
+  <label for="name">Имя</label>
+  <Input id="name" bind:value={name} />
+
+  <label for="role">Роль</label>
+  <Select
+    id="role"
+    bind:value={role}
+    options={[
+      { value: 'developer', label: 'Разработчик' },
+      { value: 'designer', label: 'Дизайнер' }
+    ]}
+    showSearch
+    allowClear
+  />
+
+  <Button type="primary" onclick={() => console.log(name, role)}>Сохранить</Button>
+</ConfigProvider>
+```
+
 ## Основные возможности
 
 ### Ввод и выбор данных
@@ -72,47 +113,6 @@ Svelte. `AutoComplete` позволяет вводить произвольны�
 серверный рендеринг, а интерактивные элементы — управление с клавиатуры и работу
 с фокусом. Подробности: [темы и локализация](docs/reference/themes.md),
 [клавиатура и фокус](docs/reference/keyboard.md).
-
-## Подключение
-
-Компоненты импортируются из `antd-svelte`. `ConfigProvider` подключает стили;
-если компоненты используются без него, импортируйте стили один раз в точке входа
-приложения или в корневом компоненте. В SvelteKit это можно сделать в `<script>`
-корневого layout `src/routes/+layout.svelte`:
-
-```ts
-import 'antd-svelte/styles.css';
-```
-
-## Быстрый старт
-
-```svelte
-<script lang="ts">
-  import { Button, ConfigProvider, Input, Select } from 'antd-svelte';
-
-  let name = $state('');
-  let role = $state<string | undefined>('developer');
-</script>
-
-<ConfigProvider theme={{ mode: 'light', primary: 'blue' }}>
-  <label for="name">Имя</label>
-  <Input id="name" bind:value={name} />
-
-  <label for="role">Роль</label>
-  <Select
-    id="role"
-    bind:value={role}
-    options={[
-      { value: 'developer', label: 'Разработчик' },
-      { value: 'designer', label: 'Дизайнер' }
-    ]}
-    showSearch
-    allowClear
-  />
-
-  <Button type="primary" onclick={() => console.log(name, role)}>Сохранить</Button>
-</ConfigProvider>
-```
 
 ## Куда перейти дальше
 
