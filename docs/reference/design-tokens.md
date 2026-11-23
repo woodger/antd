@@ -67,7 +67,7 @@ TypeError; это наблюдаемое поведение закреплённ
 
 Статический расчёт не меняет оформление компонентов и не вычисляет component
 overrides. Runtime token/algorithm/components, наследование, useToken и глобальные
-CSS variables описаны в [справочнике контекста темы](theme-context.md).
+CSS variables описаны в справочнике [Токены темы в ConfigProvider](theme-context.md).
 Применение всех component tokens к CSS и Wave ещё переносится.
 DesignTokenConfig описывает статические token/algorithm; getDesignToken также
 принимает полный [ThemeConfig](../../src/lib/types.ts), игнорируя runtime поля.

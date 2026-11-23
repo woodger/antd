@@ -7,7 +7,7 @@
 Библиотека компонентов [Ant Design](https://ant.design/) для Svelte и TypeScript: элементы интерфейса,
 модели форм, темы и локализация.
 
-[Примеры компонентов](docs/reference/components/README.md) · [Документация](#документация)
+[Каталог компонентов](docs/reference/components/README.md) · [Документация](#документация)
 
 ## Подключение
 
@@ -66,16 +66,16 @@ import '@woodger/antd/styles.css';
 - [Каталог компонентов](docs/reference/components/README.md) — компоненты, примеры и ограничения.
 - [Формы и валидация](docs/reference/forms.md) — модели, поля, правила и отправка.
 - [Темы и локализация](docs/reference/themes.md) — оформление, размеры и язык интерфейса.
-- [Контекст темы](docs/reference/theme-context.md) — настройки `ConfigProvider` и токены компонентов.
-- [Design tokens](docs/reference/design-tokens.md) — расчёт токенов темы.
+- [Токены темы в ConfigProvider](docs/reference/theme-context.md) — наследование темы, настройка компонентов и чтение значений через `theme.useToken()`.
+- [Статический расчёт design tokens](docs/reference/design-tokens.md) — получение цветов, размеров и отступов через `theme.getDesignToken()`.
 - [Размеры компонентов](docs/reference/current-size-observation.md) — локальный размер и наследование от провайдера.
-- [Варианты оформления](docs/reference/control-variants.md) — настройки `ConfigProvider` и `Form`.
-- [Пустые состояния](docs/reference/render-empty.md) — настройка `ConfigProvider.renderEmpty`.
+- [Варианты оформления полей](docs/reference/control-variants.md) — настройки `ConfigProvider` и `Form`.
+- [Пустые состояния ConfigProvider](docs/reference/render-empty.md) — настройка `renderEmpty`.
 - [Всплывающие элементы](docs/reference/popup-settings.md) — контейнер, размещение и ширина списка.
-- [Wave](docs/reference/wave.md) — настройки и поведение эффекта нажатия.
+- [Эффект Wave](docs/reference/wave.md) — настройки и поведение эффекта нажатия.
 - [Клавиатура и фокус](docs/reference/keyboard.md) — управление компонентами и доступность.
 - [Публичные экспорты](src/lib/index.ts) — компоненты, функции и типы.
-- [Покрытие Ant Design](docs/reference/ant-design-porting/status.md) — реализованные возможности и отличия.
+- [Покрытие переноса Ant Design](docs/reference/ant-design-porting/status.md) — реализованные возможности и отличия.
 
 ## Руководство разработчика
 

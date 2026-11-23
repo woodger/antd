@@ -123,7 +123,7 @@ Source `theme.components.Badge` применяет исходные размер
 algorithm; тень использует colorBorderBg. Числовые indicatorZIndex/textFontWeight
 сериализуются с px, как в Ant Design 6.6.8; безразмерные значения задаются строками.
 Настройки доступны при SSR, custom cssVar.prefix и реактивных обновлениях.
-Подробности — [контекст темы](../theme-context.md).
+Подробнее см. [Токены темы в ConfigProvider](../theme-context.md).
 
 Обычный числовой/строковый индикатор скрыт от screen reader. Рядом расположен скрытый
 текст с полным значением, в том числе при `99+` и dot. Children получает

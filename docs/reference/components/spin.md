@@ -92,8 +92,8 @@ Provider styles.root → provider style → local styles.root; для standalone
 PrefixCls меняет BEM classes; undefined/пустая строка наследуют ConfigProvider.prefixCls
 (по умолчанию ant-spin). CSS template из
 35 правил закреплённого архива сохраняет namespace переменных и изолирует root defaults.
-Component tokens, aliases, algorithm и CSS-variable prefix/key/hash работают через общий
-[контекст темы](../theme-context.md#токены-spin).
+Настройки токенов, алиасов, алгоритма и CSS-переменных описаны в разделе
+[Токены Spin](../theme-context.md#токены-spin).
 Сверка 49 Source-профилей и auto timeline принадлежит библиотеке; примеры потребителя
 не заменяют эти проверки. Сохранённые native delay/inert/focus/ARIA и reduced motion — явные
 отличия от React. Общий ConfigProvider prefix поддержан; React development warnings

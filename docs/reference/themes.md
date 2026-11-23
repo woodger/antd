@@ -24,7 +24,7 @@
 например, `theme={{ mode: 'dark', token: { colorPrimary: '#0f766e' } }}`.
 Значение `token.colorPrimary` имеет приоритет над `primary`.
 Настройки отдельных компонентов и чтение текущих цветов через `theme.useToken()`
-описаны в [справочнике контекста темы](theme-context.md).
+описаны в справочнике [Токены темы в ConfigProvider](theme-context.md).
 
 ## Размер и плотность
 
