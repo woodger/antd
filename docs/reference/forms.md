@@ -32,6 +32,7 @@ const form = createForm({
 
 form.setFieldValue(['profile', 'name'], 'Ирина');
 form.setFieldsValue({ profile: { city: 'Омск' } });
+
 form.getFieldValue('profile'); // { name: 'Ирина', city: 'Омск' }
 ```
 
@@ -234,7 +235,9 @@ const result = await form.submit(({ profile }) => {
 
 ```ts
 form.setFieldsValue({ profile: { name: 'Ирина', city: 'Омск' } });
+
 form.resetFields([['profile', 'name']]);
+
 form.getFieldValue('profile'); // { name: 'Анна', city: 'Омск' }
 ```
 
@@ -260,7 +263,15 @@ DOM-обёртку и передаёт в `children` поля, операции 
 
 ```svelte
 <script lang="ts">
-  import { ConfigProvider, Form, FormItem, FormList, FormErrorList, Input, createForm } from '@woodger/antd';
+  import {
+    ConfigProvider,
+    Form,
+    FormItem,
+    FormList,
+    FormErrorList,
+    Input,
+    createForm
+  } from '@woodger/antd';
 
   const form = createForm<{ users: { name: string }[] }>({
     initialValues: { users: [] }
@@ -402,10 +413,15 @@ IPv6-адрес должен быть в скобках. Адрес не нор�
 const form = createForm({
   initialValues: { password: '', confirmation: '' },
   rules: {
-    confirmation: [form => {
-      const password = form.getFieldValue('password');
-      return { validator: value => value === password ? undefined : 'Пароли различаются.' };
-    }]
+    confirmation: [
+      (form) => {
+        const password = form.getFieldValue('password');
+
+        return {
+          validator: (value) => value === password ? undefined : 'Пароли различаются.'
+        };
+      }
+    ]
   }
 });
 ```
@@ -430,9 +446,14 @@ const form = createForm({
 const form = createForm({
   initialValues: { profile: { name: '' } },
   rules: {
-    profile: [{ type: 'object', fields: {
-      name: { required: true, message: 'Введите имя.' }
-    } }]
+    profile: [
+      {
+        type: 'object',
+        fields: {
+          name: { required: true, message: 'Введите имя.' }
+        }
+      }
+    ]
   }
 });
 ```
@@ -476,11 +497,16 @@ const form = createForm({
 `FormItem`. Без `FormItem` подписью служит путь.
 
 ```svelte
-<FormItem name="title" label="Заголовок"
+<FormItem
+  name="title"
+  label="Заголовок"
   messageVariables={{ min: 'трёх' }}
-  rules={[{ min: 3, message: '${label}: минимум ${min} символа.' }]}>
-  <Input value={form.values.title}
-    onValueChange={(value) => form.setFieldValue('title', value)} />
+  rules={[{ min: 3, message: '${label}: минимум ${min} символа.' }]}
+>
+  <Input
+    value={form.values.title}
+    onValueChange={(value) => form.setFieldValue('title', value)}
+  />
 </FormItem>
 ```
 
@@ -504,8 +530,10 @@ const form = createForm({
 ```svelte
 <Form {form} validateMessages={{ string: { min: '${label}: минимум ${min} символа.' } }}>
   <FormItem name="title" label="Заголовок" rules={[{ min: 3 }]}>
-    <Input value={form.values.title}
-      onValueChange={(value) => form.setFieldValue('title', value)} />
+    <Input
+      value={form.values.title}
+      onValueChange={(value) => form.setFieldValue('title', value)}
+    />
   </FormItem>
 </Form>
 ```
@@ -822,10 +850,13 @@ RadioGroup, CheckboxGroup, InputOTP, Slider и стандартный элеме
 ```svelte
 <script lang="ts">
   import { useFormItemStatus } from '@woodger/antd';
+
   const field = useFormItemStatus();
 </script>
 
-{#each field.errors as error}<p>{error}</p>{/each}
+{#each field.errors as error}
+  <p>{error}</p>
+{/each}
 ```
 
 Поле без взаимодействия возвращает `status: ''`, вне `FormItem` статус равен
@@ -911,8 +942,11 @@ RadioGroup, CheckboxGroup, InputOTP, Slider и стандартный элеме
 
 <Form {form}>
   <FormItem name="title" label="Title" {controlRef}>
-    <Input value={form.values.title} onValueChange={(value) => form.setFieldValue('title', value)}
-      bind:inputElement={controlRef} />
+    <Input
+      value={form.values.title}
+      onValueChange={(value) => form.setFieldValue('title', value)}
+      bind:inputElement={controlRef}
+    />
   </FormItem>
 </Form>
 <button onclick={() => form.scrollToField('title', { block: 'center', focus: true })}>
