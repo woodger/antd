@@ -7,7 +7,10 @@
   import { menuSubMenu } from './menu.engine';
   import type { MenuExpandIconInfo, MenuTheme } from './menu.types';
   import { useMenu } from './menu-context';
+  import { getMenuPopupAlignment } from './menu-popup-align.engine';
+  import { createMenuPopupPosition } from './menu-popup-align.dom';
   import { connectPopup } from './popup.dom';
+  import { getPopupPlacement, type PopupSourceAlign } from './popup-position.engine';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { connectInlineStyle } from './inline-style.dom';
   import { getInlineStyleDeclarations, serializeInlineStyleLayers } from './inline-style.engine';
@@ -75,15 +78,29 @@
   let client = $state(false);
   let shown = $state(false);
   let popupPlacement = $state<TooltipPlacement>();
+  let alignedPoints = $state.raw<PopupSourceAlign>();
+  // Контекст вложенного списка может читать объект родителя при разрешении режима.
+  const popupMode = $derived(context.mode);
+  const horizontalPopup = $derived(popupMode === 'horizontal' && !entry.parent);
+  const rtl = $derived(context.direction === 'rtl');
+  const alignment = $derived(getMenuPopupAlignment(
+    horizontalPopup,
+    rtl,
+    context.builtinPlacements,
+    item.popupOffset
+  ));
   const placementClass = $derived.by(() => {
+    if (alignment) {
+      // Карта меняет класс по последним точкам, даже пока координаты ждут нового замера.
+      const name = getPopupPlacement(alignment.placements, alignedPoints ?? alignment.align);
+      return name === undefined ? undefined : `${context.prefixCls}-submenu-placement-${name}`;
+    }
+
     if (!context.componentTheme.className) {
       return undefined;
     }
 
-    const horizontal = context.mode === 'horizontal' && !entry.parent;
-    const side = popupPlacement ?? (horizontal ? 'bottom'
-      : context.direction === 'rtl' ? 'left' : 'right');
-    const rtl = context.direction === 'rtl';
+    const side = popupPlacement ?? (horizontalPopup ? 'bottom' : rtl ? 'left' : 'right');
     const name = side === 'left' ? `${rtl ? 'right' : 'left'}Top`
       : side === 'right' ? `${rtl ? 'left' : 'right'}Top` : `${side}Left`;
 
@@ -125,6 +142,7 @@
   }
 
   function positionPopup(surface: HTMLDivElement, position: TooltipPosition) {
+    alignedPoints = position.sourceAlign;
     // Явные координаты popupStyle и semantic root перекрывают расчёт trigger.
     const properties = untrack(() => popupProperties);
     const hasInset = properties.has('inset');
@@ -198,15 +216,25 @@
   });
   $effect(() => inactive || overflowHidden ? undefined : context.registerHover(entry.key, hover));
   $effect(() => {
-    if (!popupOpen || context.mode === 'inline' || !popup || !title) {
+    if (!popupOpen || popupMode === 'inline' || !popup || !title) {
       return;
     }
 
-    const horizontal = context.mode === 'horizontal' && !entry.parent;
+    const horizontal = horizontalPopup;
+    const anchor = title;
     const surface = popup;
-    return connectPopup(surface, title, {
-      placement: horizontal ? 'bottom' : context.direction === 'rtl' ? 'left' : 'right',
-      align: horizontal ? (context.direction === 'rtl' ? 'right' : 'left') : 'top',
+    const getPosition = createMenuPopupPosition(anchor, () => alignment);
+    // Первый замер выполняется синхронно. Настройки меняются без переподключения popup.
+    return untrack(() => connectPopup(surface, anchor, {
+      get placement() {
+        return horizontal ? 'bottom' : rtl ? 'left' : 'right';
+      },
+      get align() {
+        if (horizontal) {
+          return rtl ? 'right' : 'left';
+        }
+        return 'top';
+      },
       autoAdjustOverflow: true,
       get maxWidth() {
         return untrack(() => popupProperties.has('max-width')) ? false : '100vw';
@@ -219,8 +247,11 @@
       allowZeroSize: () => untrack(() => Boolean(context.componentTheme.className)),
       preserveFocus: false,
       isRelatedTarget: containsPopupTarget,
+      getPosition,
       applyPosition: position => positionPopup(surface, position),
-      onPlacement: next => { popupPlacement = next; },
+      onPlacement: next => {
+        if (!alignment) popupPlacement = next;
+      },
       onVisibilityChange: next => {
         shown = next;
       },
@@ -229,7 +260,7 @@
         if (reason === 'escape')
           context.focusItem(entry.key);
       }
-    });
+    }));
   });
   $effect(() => {
     if (blocked || context.mode === 'inline' || context.trigger !== 'hover')

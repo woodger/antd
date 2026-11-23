@@ -54,6 +54,7 @@
     triggerSubMenuAction = 'hover',
     subMenuOpenDelay = 0.1,
     subMenuCloseDelay = 0.1,
+    builtinPlacements,
     classNames: _classNames,
     styles: _styles,
     expandIcon,
@@ -424,6 +425,7 @@
     get semantics() { return semantics; },
     get expandIcon() { return resolvedExpandIcon; },
     get popupRender() { return popupRender; },
+    get builtinPlacements() { return builtinPlacements; },
     get mode() {
       return actualMode;
     },

@@ -1,9 +1,13 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
+import type { PopupSourceAlign } from './popup-position.engine';
 
 export type MenuMode = 'vertical' | 'horizontal' | 'inline';
 export type MenuTheme = 'light' | 'dark';
 export type MenuContent = string | number | Snippet;
+
+/** Положение поверхности относительно заголовка, включая смещения и обработку краёв. */
+export type MenuPopupAlign = Omit<PopupSourceAlign, '_experimental'>;
 
 export type MenuSubMenuSlots = Partial<Record<
   'item' | 'itemTitle' | 'list' | 'itemIcon' | 'itemContent',
@@ -56,6 +60,8 @@ export interface MenuSubMenu extends MenuCommon {
   disabled?: boolean;
   theme?: MenuTheme;
   popupClassName?: string;
+  /** Смещение [x, y] в пикселях. Заменяет offset выбранной позиции. */
+  popupOffset?: readonly number[];
   /** Стили отдельной поверхности popup; styles.popup.root имеет приоритет. */
   popupStyle?: string;
   /** Переопределяет popupRender Menu для этой ветки. */
@@ -153,6 +159,8 @@ export interface MenuProps extends Omit<
   subMenuOpenDelay?: number;
   /** @defaultValue 0.1 */
   subMenuCloseDelay?: number;
+  /** Заменяет встроенные позиции по имени для подменю и списка переполнения. */
+  builtinPlacements?: Readonly<Record<string, MenuPopupAlign>>;
   /** Семантические классы накапливаются после классов из ConfigProvider.menu. */
   classNames?: MenuSemantic<MenuClassNames>;
   /**

@@ -3362,7 +3362,26 @@
             "tests/package/menu-popup-render.ssr.test.ts",
             "docs/reference/components/menu.md"
           ],
-          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0. Два одинаковых UMD-прогона, восемь профилей, DOM-free SSR, live/retained popup и исходные пути выбора. Настройка ветки выигрывает у Menu только для своей поверхности; More передаёт служебный ключ в корневом порядке keys. Snippet получает исходный список, данные ветки и renderItem для пересборки со штатными refs и событиями. Клавиатура следует DOM-порядку зарегистрированных строк и сохраняет native keyboard произвольных полей в popup. В Source замена origin на ul без data-menu-list даёт TypeError при Home/End/Down; обе исходные проверки сохранены, Native не требует служебного атрибута. Сохраняется жизненный цикл Svelte popup и inline (force render скрытого inline portal требует контейнер), без eager React render callback. Renderer не попадает в HTML attributes. SSR и строгая гидратация сохраняют штатные узлы, порядок и ref; popup motion, placements и общий itemIcon остаются отдельным объёмом."
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0. Два одинаковых UMD-прогона, восемь профилей, DOM-free SSR, live/retained popup и исходные пути выбора. Настройка ветки выигрывает у Menu только для своей поверхности; More передаёт служебный ключ в корневом порядке keys. Snippet получает исходный список, данные ветки и renderItem для пересборки со штатными refs и событиями. Клавиатура следует DOM-порядку зарегистрированных строк и сохраняет native keyboard произвольных полей в popup. В Source замена origin на ul без data-menu-list даёт TypeError при Home/End/Down; обе исходные проверки сохранены, Native не требует служебного атрибута. Сохраняется жизненный цикл Svelte popup и inline (force render скрытого inline portal требует контейнер), без eager React render callback. Renderer не попадает в HTML attributes. SSR и строгая гидратация сохраняют штатные узлы, порядок и ref. Позиции описаны отдельной feature. Popup motion и общий itemIcon остаются в работе."
+        },
+        {
+          "id": "popup-alignment",
+          "title": "Именованные позиции и смещения всплывающих подменю",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Menu.svelte",
+            "src/lib/MenuSubMenu.svelte",
+            "src/lib/menu.types.ts",
+            "src/lib/menu-popup-align.engine.ts",
+            "src/lib/menu-popup-align.dom.ts",
+            "tests/browser/fixtures/ant-design-menu-popup-alignment-reference.json",
+            "tests/browser/fixtures/MenuPopupAlignmentFixtures.svelte",
+            "tests/browser/menu-popup-alignment.spec.ts",
+            "tests/package/menu-popup-alignment.ssr.test.ts",
+            "docs/reference/components/menu.md"
+          ],
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0 и trigger 3.10.1. Два побайтно одинаковых прогона официального UMD, 16 профилей и обновления вложенного popup. BuiltinPlacements заменяет одноимённые записи, popupOffset заменяет offset. Проверены короткий и пустой массив, проценты, targetOffset, переворот, RTL, More и collapsed/inline. Для вертикальных профилей совпадают размеры и координаты. У горизонтальной нативной кнопки и popup сохранены собственные размеры. Сверяются расстояния между соответствующими краями и класс позиции. У More совпадают координаты при других размерах списка. Вложенный popup сохраняет DOM и фокус при смене настроек: класс следует карте, координаты обновляются при следующем замере. Прежнее размещение без настройки, top layer, явные координаты стилей и keyboard/portal cleanup сохранены. SSR использует начальный класс без измерений."
         },
         {
           "id": "component-config",
@@ -3387,11 +3406,11 @@
         },
         {
           "id": "extended-api",
-          "title": "Общий itemIcon, placements и tooltip",
+          "title": "Общий itemIcon и tooltip",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Остаются placements/offset, общий itemIcon, полный Tooltip API свёрнутых пунктов и аудит делегированного API. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса. Интеграция отдельных Dropdown menu props с Menu остаётся отдельным этапом."
+          "note": "Остаются общий itemIcon, полный Tooltip API свёрнутых пунктов и аудит делегированного API. В исходном MenuProps исключены activeKey/defaultActiveFirst. Dropdown.menu объявляет activeKey отдельно, его перенос относится к интеграции Dropdown. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса."
         },
         {
           "id": "link-reset",

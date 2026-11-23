@@ -1268,6 +1268,11 @@
     "root": "menu-popup-render-fixture"
   },
   {
+    "id": "menu-popup-alignment",
+    "module": "./MenuPopupAlignmentFixtures.svelte",
+    "root": "menu-popup-alignment-fixture"
+  },
+  {
     "id": "menu-config",
     "module": "./MenuConfigFixtures.svelte",
     "root": "menu-config-fixture"

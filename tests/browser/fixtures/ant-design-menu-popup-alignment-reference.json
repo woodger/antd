@@ -1,0 +1,628 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "browser": "157.0.8103.78",
+    "react": "18.3.1",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "entrySha256": "be97fafd18723f8f8906faa5b6d7926e56046aa0345677ed90aae64a88fa3b30"
+  },
+  "cases": [
+    {
+      "options": {
+        "id": "vertical-default"
+      },
+      "result": {
+        "anchor": [
+          124,
+          158,
+          97,
+          40
+        ],
+        "popup": [
+          221,
+          158,
+          140,
+          92
+        ],
+        "placement": "ant-menu-submenu-placement-rightTop",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "offset-vertical",
+        "offset": [
+          12,
+          19
+        ]
+      },
+      "result": {
+        "anchor": [
+          124,
+          158,
+          97,
+          40
+        ],
+        "popup": [
+          233,
+          177,
+          140,
+          92
+        ],
+        "placement": "ant-menu-submenu-placement-rightTop",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "offset-rtl",
+        "direction": "rtl",
+        "offset": [
+          12,
+          19
+        ]
+      },
+      "result": {
+        "anchor": [
+          199,
+          158,
+          97,
+          40
+        ],
+        "popup": [
+          71,
+          177,
+          140,
+          92
+        ],
+        "placement": "ant-menu-submenu-placement-rightTop",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "offset-horizontal",
+        "mode": "horizontal",
+        "offset": [
+          -9,
+          16
+        ]
+      },
+      "result": {
+        "anchor": [
+          208,
+          110,
+          73,
+          46
+        ],
+        "popup": [
+          199,
+          172,
+          140,
+          100
+        ],
+        "placement": "ant-menu-submenu-placement-bottomLeft",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "offset-short",
+        "offset": [
+          12
+        ]
+      },
+      "result": {
+        "anchor": [
+          124,
+          158,
+          97,
+          40
+        ],
+        "popup": [
+          233,
+          158,
+          140,
+          92
+        ],
+        "placement": "ant-menu-submenu-placement-rightTop",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "offset-empty",
+        "offset": []
+      },
+      "result": {
+        "anchor": [
+          124,
+          158,
+          97,
+          40
+        ],
+        "popup": [
+          221,
+          158,
+          140,
+          92
+        ],
+        "placement": "ant-menu-submenu-placement-rightTop",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "builtin-offsets",
+        "builtinPlacements": {
+          "rightTop": {
+            "points": [
+              "tl",
+              "tr"
+            ],
+            "offset": [
+              17,
+              23
+            ],
+            "targetOffset": [
+              "10%",
+              "20%"
+            ],
+            "overflow": {
+              "adjustX": 1,
+              "adjustY": 1
+            }
+          }
+        }
+      },
+      "result": {
+        "anchor": [
+          124,
+          158,
+          97,
+          40
+        ],
+        "popup": [
+          228,
+          173,
+          140,
+          92
+        ],
+        "placement": "ant-menu-submenu-placement-rightTop",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "local-offset-priority",
+        "builtinPlacements": {
+          "rightTop": {
+            "points": [
+              "tl",
+              "tr"
+            ],
+            "offset": [
+              17,
+              23
+            ],
+            "targetOffset": [
+              "10%",
+              "20%"
+            ],
+            "overflow": {
+              "adjustX": 1,
+              "adjustY": 1
+            }
+          }
+        },
+        "offset": [
+          5,
+          6
+        ]
+      },
+      "result": {
+        "anchor": [
+          124,
+          158,
+          97,
+          40
+        ],
+        "popup": [
+          216,
+          156,
+          140,
+          92
+        ],
+        "placement": "ant-menu-submenu-placement-rightTop",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "builtin-below",
+        "builtinPlacements": {
+          "rightTop": {
+            "points": [
+              "tl",
+              "bl"
+            ],
+            "offset": [
+              "4%",
+              "9%"
+            ],
+            "overflow": {
+              "adjustX": 0,
+              "adjustY": 0
+            }
+          }
+        }
+      },
+      "result": {
+        "anchor": [
+          124,
+          158,
+          97,
+          40
+        ],
+        "popup": [
+          129,
+          207,
+          140,
+          100
+        ],
+        "placement": "ant-menu-submenu-placement-bottomLeft",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "right-edge-flip",
+        "x": 816,
+        "offset": [
+          13,
+          15
+        ]
+      },
+      "result": {
+        "anchor": [
+          820,
+          158,
+          97,
+          40
+        ],
+        "popup": [
+          667,
+          173,
+          140,
+          92
+        ],
+        "placement": "ant-menu-submenu-placement-leftTop",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "right-edge-no-flip",
+        "x": 816,
+        "builtinPlacements": {
+          "rightTop": {
+            "points": [
+              "tl",
+              "tr"
+            ],
+            "overflow": {
+              "adjustX": 0,
+              "adjustY": 0
+            }
+          }
+        }
+      },
+      "result": {
+        "anchor": [
+          820,
+          158,
+          97,
+          40
+        ],
+        "popup": [
+          680,
+          158,
+          140,
+          92
+        ],
+        "placement": "ant-menu-submenu-placement-leftTop",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "bottom-edge-flip",
+        "mode": "horizontal",
+        "y": 650,
+        "offset": [
+          8,
+          20
+        ]
+      },
+      "result": {
+        "anchor": [
+          208,
+          650,
+          73,
+          46
+        ],
+        "popup": [
+          216,
+          530,
+          140,
+          100
+        ],
+        "placement": "ant-menu-submenu-placement-topLeft",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "collapsed-offset",
+        "mode": "inline",
+        "collapsed": true,
+        "offset": [
+          7,
+          10
+        ]
+      },
+      "result": {
+        "anchor": [
+          124,
+          158,
+          97,
+          40
+        ],
+        "popup": [
+          228,
+          168,
+          140,
+          92
+        ],
+        "placement": "ant-menu-submenu-placement-rightTop",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "inline-offset",
+        "mode": "inline",
+        "builtinPlacements": {
+          "rightTop": {
+            "points": [
+              "tl",
+              "bl"
+            ],
+            "offset": [
+              "4%",
+              "9%"
+            ],
+            "overflow": {
+              "adjustX": 0,
+              "adjustY": 0
+            }
+          }
+        },
+        "offset": [
+          -18,
+          -20
+        ]
+      },
+      "result": {
+        "anchor": [
+          124,
+          158,
+          97,
+          40
+        ],
+        "popup": null,
+        "placement": null,
+        "shown": false,
+        "inlineChildren": 2
+      }
+    },
+    {
+      "options": {
+        "id": "horizontal-rtl-builtin",
+        "mode": "horizontal",
+        "direction": "rtl",
+        "offset": [
+          -8,
+          4
+        ],
+        "builtinPlacements": {
+          "bottomLeft": {
+            "points": [
+              "bl",
+              "tl"
+            ],
+            "offset": [
+              8,
+              -11
+            ],
+            "overflow": {
+              "adjustX": 0,
+              "adjustY": 0
+            }
+          }
+        }
+      },
+      "result": {
+        "anchor": [
+          139,
+          110,
+          73,
+          46
+        ],
+        "popup": [
+          131,
+          14,
+          140,
+          100
+        ],
+        "placement": "ant-menu-submenu-placement-topLeft",
+        "shown": true,
+        "inlineChildren": 0
+      }
+    },
+    {
+      "options": {
+        "id": "overflow-builtin",
+        "mode": "horizontal",
+        "width": 77,
+        "builtinPlacements": {
+          "bottomLeft": {
+            "points": [
+              "bl",
+              "tl"
+            ],
+            "offset": [
+              8,
+              -11
+            ],
+            "overflow": {
+              "adjustX": 0,
+              "adjustY": 0
+            }
+          }
+        }
+      },
+      "result": {
+        "anchor": [
+          136,
+          110,
+          14,
+          46
+        ],
+        "popup": [
+          144,
+          167,
+          160,
+          92
+        ],
+        "shown": true,
+        "inlineChildren": 0
+      }
+    }
+  ],
+  "live": {
+    "live": {
+      "id": "live-nested",
+      "mode": "horizontal",
+      "offset": [
+        3,
+        5
+      ],
+      "innerOffset": [
+        -5,
+        9
+      ],
+      "prefix": "suite",
+      "localPrefix": "nav"
+    },
+    "beforeInner": {
+      "anchor": [
+        208,
+        110,
+        73,
+        46
+      ],
+      "popup": [
+        211,
+        161,
+        140,
+        100
+      ],
+      "placement": "nav-submenu-placement-bottomLeft",
+      "shown": true,
+      "inlineChildren": 0
+    },
+    "before": {
+      "anchor": [
+        215,
+        217,
+        152,
+        40
+      ],
+      "popup": [
+        362,
+        226,
+        140,
+        48
+      ],
+      "placement": "nav-submenu-placement-rightTop",
+      "shown": true,
+      "inlineChildren": 0
+    },
+    "afterOffset": {
+      "anchor": [
+        215,
+        217,
+        152,
+        40
+      ],
+      "popup": [
+        362,
+        226,
+        140,
+        48
+      ],
+      "placement": "nav-submenu-placement-rightTop",
+      "shown": true,
+      "inlineChildren": 0
+    },
+    "afterMapping": {
+      "anchor": [
+        215,
+        217,
+        152,
+        40
+      ],
+      "popup": [
+        362,
+        226,
+        140,
+        48
+      ],
+      "shown": true,
+      "inlineChildren": 0
+    },
+    "resized": {
+      "anchor": [
+        215,
+        217,
+        152,
+        40
+      ],
+      "popup": [
+        225,
+        276,
+        140,
+        56
+      ],
+      "placement": "nav-submenu-placement-bottomLeft",
+      "shown": true,
+      "inlineChildren": 0
+    }
+  }
+}
