@@ -1,7 +1,7 @@
 import type {
   AutoCompleteProps, AutoCompleteRef, SelectProps, SelectRef, SelectScrollAlign, SelectScrollConfig,
   SelectScrollKey, SelectScrollOffset, SelectScrollOffsetInfo
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 export const stringKey: SelectScrollKey = 'k-020';
 export const numberKey: SelectScrollKey = 20;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Slider } from '@woodger/antd-svelte';
+  import { Slider } from '@woodger/antd';
   let changed = $state(0);
 </script>
 

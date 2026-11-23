@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
-import { InputNumber, type InputNumberProps } from '@woodger/antd-svelte';
+import { InputNumber, type InputNumberProps } from '@woodger/antd';
 import InputNumberFeaturesFixture from './InputNumberFeaturesFixture.svelte';
 
 describe('InputNumber source package features', () => {

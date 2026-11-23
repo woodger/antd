@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, untrack } from 'svelte';
-  import { Select, AutoComplete, ConfigProvider, type SelectRef, type SelectInputComponent } from '@woodger/antd-svelte';
+  import { Select, AutoComplete, ConfigProvider, type SelectRef, type SelectInputComponent } from '@woodger/antd';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import type { HydrationOwnershipOwnerSample, HydrationOwnershipTag, HydrationOwnershipUpdate } from '../select-components-hydration-ownership-cases.mjs';
   import type { HydrationOwnershipCapture } from '../select-components-hydration-ownership-metrics.mjs';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useApp } from '@woodger/antd-svelte';
+  import { useApp } from '@woodger/antd';
   import MessagePrefixControl, { type MessagePrefixSample } from './MessagePrefixControl.svelte';
 
   let { sample }: { sample: MessagePrefixSample } = $props();

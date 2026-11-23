@@ -2,7 +2,7 @@
   import {
     Breadcrumb, ConfigProvider, theme,
     type BreadcrumbConfig, type BreadcrumbItem
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import { breadcrumbConfigProfile } from './breadcrumb-config-presets';
   import reference from './ant-design-breadcrumb-config-reference.json' with { type: 'json' };
 

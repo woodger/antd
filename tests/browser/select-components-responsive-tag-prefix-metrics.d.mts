@@ -1,4 +1,4 @@
-import type { SelectRef } from '@woodger/antd-svelte';
+import type { SelectRef } from '@woodger/antd';
 import type { SelectSurfaceProducerCall } from './select-surface-producers.mjs';
 import type { SelectComponentsResponsiveDOM, SelectComponentsResponsiveOverflow, SelectComponentsResponsiveBox } from './select-components-responsive-metrics.mjs';
 import type { SelectCustomTagPrefixUpdate } from './select-components-responsive-tag-prefix-cases.mjs';

@@ -5,7 +5,7 @@ ImagePreviewGroup предоставляет дочерним Image общий �
 
 ```svelte
 <script lang="ts">
-  import { Image, ImagePreviewGroup } from '@woodger/antd-svelte';
+  import { Image, ImagePreviewGroup } from '@woodger/antd';
 </script>
 <ImagePreviewGroup>
   <Image src="/first.jpg" alt="Первое изображение" width={160} />

@@ -7,7 +7,7 @@
 </script>
 
 <script lang="ts">
-  import { ConfigProvider, Upload, enUS, type UploadFile, type UploadProps } from '@woodger/antd-svelte';
+  import { ConfigProvider, Upload, enUS, type UploadFile, type UploadProps } from '@woodger/antd';
 
   let { sample }: { sample: UploadThumbnailSample } = $props();
   let calls = $state(0);

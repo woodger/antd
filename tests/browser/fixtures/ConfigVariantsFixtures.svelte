@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Form, Input, createForm, enUS, theme } from '@woodger/antd-svelte';
+  import { ConfigProvider, Form, Input, createForm, enUS, theme } from '@woodger/antd';
   import ConfigVariantControls from './ConfigVariantControls.svelte';
   import { configVariant, configVariantProps } from './config-variants-presets';
   import reference from './ant-design-config-variants-reference.json' with { type: 'json' };

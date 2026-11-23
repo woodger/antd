@@ -1,4 +1,4 @@
-import type { UploadChangeParam, UploadFile } from '@woodger/antd-svelte';
+import type { UploadChangeParam, UploadFile } from '@woodger/antd';
 
 export function describeUploadRefFile(file: UploadFile) {
   return {

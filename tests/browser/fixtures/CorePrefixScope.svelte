@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Divider, Flex, Segmented } from '@woodger/antd-svelte';
+  import { Divider, Flex, Segmented } from '@woodger/antd';
 
   export interface CorePrefixSample {
     id: string;

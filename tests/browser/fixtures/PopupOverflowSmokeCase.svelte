@@ -4,7 +4,7 @@
   import {
     Calendar, CascaderPanel, ColorPicker, ConfigProvider, DatePicker, Mentions, Pagination,
     Tooltip, enUS, type ConfigProviderProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import {
     popupOverflowData, popupOverflowGeometry,
     type PopupOverflowAction, type PopupOverflowDescriptor, type PopupOverflowSmokeSample

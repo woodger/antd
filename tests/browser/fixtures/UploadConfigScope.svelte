@@ -18,7 +18,7 @@
     type UploadConfig,
     type UploadProps,
     type UploadRequestOptions
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { sample, requestOnly = false, localRequest = false, hold = false, onEvent }: {
     sample: UploadConfigSample;

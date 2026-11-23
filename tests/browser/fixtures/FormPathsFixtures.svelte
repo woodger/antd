@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Form, FormItem, Input, createForm, type FieldError } from '@woodger/antd-svelte';
+  import { Button, Form, FormItem, Input, createForm, type FieldError } from '@woodger/antd';
   import FormValuesView from './FormValuesView.svelte';
 
   const form = createForm({

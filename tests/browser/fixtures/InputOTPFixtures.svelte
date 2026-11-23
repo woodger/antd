@@ -8,7 +8,7 @@
     createForm,
     type ComponentSize,
     type InputVariant
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let mounted = $state(true);
   let mode = $state<'local' | 'external' | 'linked'>('local');

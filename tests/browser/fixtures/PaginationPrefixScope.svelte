@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Pagination, type ComponentSize } from '@woodger/antd-svelte';
+  import { Pagination, type ComponentSize } from '@woodger/antd';
 
   export interface PaginationPrefixSample {
     id: string;

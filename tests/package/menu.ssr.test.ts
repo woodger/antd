@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, it, expect, vi } from 'vitest';
-import { Menu } from '@woodger/antd-svelte';
+import { Menu } from '@woodger/antd';
 import MenuFixtures from '../browser/fixtures/MenuFixtures.svelte';
 
 describe('Menu SSR', () => {

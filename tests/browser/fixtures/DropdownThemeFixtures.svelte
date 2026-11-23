@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Dropdown, type DropdownPlacement, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, Dropdown, type DropdownPlacement, type ThemeConfig } from '@woodger/antd';
   import { dropdownThemePresets } from './dropdown-theme-presets';
 
   let preset = $state('default');

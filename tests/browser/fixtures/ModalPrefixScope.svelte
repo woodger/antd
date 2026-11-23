@@ -2,7 +2,7 @@
   import {
     Button, Modal, ModalHolder, createModal,
     type ModalConfirmHandle, type ModalConfirmType
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   export interface ModalPrefixSample {
     id: string;

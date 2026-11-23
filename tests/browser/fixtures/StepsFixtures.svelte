@@ -9,7 +9,7 @@
     type StepsOrientation,
     type StepsSize,
     type StepsStatus
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let current = $state<number | undefined>(1);
   let status = $state<StepsStatus>('process');

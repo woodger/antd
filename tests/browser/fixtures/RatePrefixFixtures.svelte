@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import RatePrefixScope, { type RatePrefixSample } from './RatePrefixScope.svelte';
   import reference from './ant-design-rate-prefix-reference.json';
 

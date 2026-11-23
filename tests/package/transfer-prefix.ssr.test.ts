@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Transfer, type TransferProps } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Transfer, type TransferProps } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-transfer-prefix-reference.json';
 import TransferPrefixSSRFixtures from '../browser/fixtures/TransferPrefixSSRFixtures.svelte';
 

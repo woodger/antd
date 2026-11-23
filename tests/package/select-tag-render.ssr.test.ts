@@ -1,4 +1,4 @@
-import { Select, type SelectProps, type SelectTagInfo } from '@woodger/antd-svelte';
+import { Select, type SelectProps, type SelectTagInfo } from '@woodger/antd';
 import { createRawSnippet, type Snippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';

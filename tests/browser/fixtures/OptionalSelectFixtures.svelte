@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Select } from '@woodger/antd-svelte';
+  import { ConfigProvider, Select } from '@woodger/antd';
 
   let remote = $state(false);
   let tags = $state(['seed']);

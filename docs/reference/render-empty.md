@@ -9,7 +9,7 @@ Svelte Snippet или вложенные readonly arrays этих значени
 
 ```svelte
 <script lang="ts">
-  import { ConfigProvider, Select } from '@woodger/antd-svelte';
+  import { ConfigProvider, Select } from '@woodger/antd';
 </script>
 
 {#snippet noData()}<p>Нет подходящих записей.</p>{/snippet}

@@ -4,7 +4,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Progress } from '@woodger/antd-svelte';
+  import { Progress } from '@woodger/antd';
 
   let percent = $state(42.5);
 </script>

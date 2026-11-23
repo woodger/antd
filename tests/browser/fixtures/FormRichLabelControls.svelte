@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     Form, FormItem, RadioGroup, CheckboxGroup, InputOTP, Slider, ColorPicker, createForm
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { caption = 'Choices' }: { caption?: string } = $props();
   const model = createForm({ initialValues: {

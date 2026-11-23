@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-target-container-reference.json';
 import observation from '../browser/fixtures/ant-design-target-shadow-root-observation.json';
 import TargetContainerCase from '../browser/fixtures/TargetContainerCase.svelte';

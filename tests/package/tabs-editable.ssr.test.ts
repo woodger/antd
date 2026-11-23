@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Tabs, type TabsItem, type TabsProps, type TabsType } from '@woodger/antd-svelte';
+import { Tabs, type TabsItem, type TabsProps, type TabsType } from '@woodger/antd';
 import reference from '../browser/fixtures/ant-design-tabs-editable-metrics.json';
 
 const fail = () => { throw new Error('browser only'); };

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Image, ImagePreviewGroup, type ImageTransform } from '@woodger/antd-svelte';
+  import { Image, ImagePreviewGroup, type ImageTransform } from '@woodger/antd';
   import { imageOne, imageTwo } from './image-data';
 
   export interface ImagePrefixSample {

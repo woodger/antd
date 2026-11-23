@@ -1,4 +1,4 @@
-import type { TooltipTrigger } from '@woodger/antd-svelte';
+import type { TooltipTrigger } from '@woodger/antd';
 
 export interface TooltipLifecycleOptions {
   title: string;

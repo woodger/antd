@@ -4,7 +4,7 @@
   import {
     ConfigProvider, DatePicker, RangePicker, enUS,
     type DatePickerLocale, type DatePickerProps, type DatePickerTimeConfig, type RangePickerValue
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import reference from './ant-design-datetime-config-reference.json';
 
   dayjs.extend(utc);

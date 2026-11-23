@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, FloatButton, FloatButtonBackTop, FloatButtonGroup } from '@woodger/antd-svelte';
+  import { ConfigProvider, FloatButton, FloatButtonBackTop, FloatButtonGroup } from '@woodger/antd';
 
   let {
     id,

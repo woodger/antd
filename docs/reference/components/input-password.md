@@ -7,7 +7,7 @@ FormItem, Compact и методы refs. Настройки описаны в
 
 ```svelte
 <script lang="ts">
-  import { InputPassword } from '@woodger/antd-svelte';
+  import { InputPassword } from '@woodger/antd';
   let password = $state('');
   let visible = $state(false);
 </script>

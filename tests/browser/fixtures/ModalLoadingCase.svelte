@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, untrack } from 'svelte';
-  import { ConfigProvider, Modal } from '@woodger/antd-svelte';
+  import { ConfigProvider, Modal } from '@woodger/antd';
   import Body from './ModalLoadingBody.svelte';
   import Footer from './ModalLoadingFooter.svelte';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';

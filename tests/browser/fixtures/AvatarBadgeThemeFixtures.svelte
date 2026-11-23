@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Avatar, AvatarGroup, Badge, ConfigProvider, theme, type ThemeConfig } from '@woodger/antd-svelte';
+  import { Avatar, AvatarGroup, Badge, ConfigProvider, theme, type ThemeConfig } from '@woodger/antd';
 
   const presets: Record<string, ThemeConfig> = {
     default: {},

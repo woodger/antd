@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-listy-prefix-reference.json';
 import ListyPrefixSSRFixtures from '../browser/fixtures/ListyPrefixSSRFixtures.svelte';
 

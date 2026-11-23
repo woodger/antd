@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd';
   import MessageThemeControl from './MessageThemeControl.svelte';
   import { resolveMessageTheme, type MessageThemeSample } from './message-theme-presets';
 

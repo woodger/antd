@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';
 import { theme, type ComponentTokenMap, type ComponentsConfig, type GlobalToken,
-  type ThemeConfig, type ThemeTokenResult } from '@woodger/antd-svelte';
+  type ThemeConfig, type ThemeTokenResult } from '@woodger/antd';
 import ThemeContextFixture from './ThemeContextFixture.svelte';
 
 describe('ConfigProvider source design-token SSR', () => {

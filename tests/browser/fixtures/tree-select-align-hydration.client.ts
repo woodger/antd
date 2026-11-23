@@ -1,6 +1,6 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { hydrate, tick, unmount } from 'svelte';
-import type { TreeSelectRef } from '@woodger/antd-svelte';
+import type { TreeSelectRef } from '@woodger/antd';
 import TreeSelectAlignHydration from './TreeSelectAlignHydration.svelte';
 import { treeSelectAlignSamples, type TreeSelectAlignAction } from './tree-select-align-cases';
 

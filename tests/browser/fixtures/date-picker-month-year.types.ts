@@ -1,7 +1,7 @@
 import type {
   DatePickerMode, DatePickerPicker, DatePickerProps, RangePickerProps,
   TimePickerProps, TimeRangePickerProps
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 export const pickers: DatePickerPicker[] = ['date', 'month', 'year'];
 export const singleMonth = { picker: 'month', needConfirm: true } satisfies DatePickerProps;

@@ -42,7 +42,7 @@ ConfigProvider.space не применяется к Compact/Addon.
 
 ```svelte
 <script lang="ts">
-  import { ConfigProvider, Space } from '@woodger/antd-svelte';
+  import { ConfigProvider, Space } from '@woodger/antd';
 </script>
 
 <ConfigProvider space={{ size: ['small', 'large'], styles: { item: 'color:#531dab' } }}

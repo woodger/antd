@@ -5,7 +5,7 @@ Tree отображает иерархические данные и подде�
 
 ```svelte
 <script lang="ts">
-  import { Tree, type TreeKey, type TreeCheckedKeys } from '@woodger/antd-svelte';
+  import { Tree, type TreeKey, type TreeCheckedKeys } from '@woodger/antd';
   const nodes = [{key:'docs',title:'Документы',children:[{key:'intro',title:'Введение'}]}];
   let expanded = $state<TreeKey[]>(['docs']);
   let checked = $state<TreeKey[] | TreeCheckedKeys>([]);
@@ -112,7 +112,7 @@ ItemHeight переопределяет её; itemHeight=0 отключает в
 
 ```svelte
 <script lang="ts">
-  import { Tree, type TreeRef } from '@woodger/antd-svelte';
+  import { Tree, type TreeRef } from '@woodger/antd';
 
   const nodes = Array.from({ length: 100 }, (_, key) => ({ key, title: `Node ${key}` }));
   let tree = $state<TreeRef>();
@@ -154,7 +154,7 @@ conduction, lazy load, renderers и диапазоны DirectoryTree.
 
 ```svelte
 <script lang="ts">
-  import { Tree } from '@woodger/antd-svelte';
+  import { Tree } from '@woodger/antd';
 
   interface Entry {
     id: number;
@@ -389,7 +389,7 @@ number и bigint использует исходное строковое соп
 
 ```svelte
 <script lang="ts">
-  import { createTree, type TreeFieldNames } from '@woodger/antd-svelte';
+  import { createTree, type TreeFieldNames } from '@woodger/antd';
 
   interface Item {
     id: string;
@@ -435,7 +435,7 @@ lookup отсутствующих constructor/__proto__/toString читает pl
 
 ```svelte
 <script lang="ts">
-  import { DirectoryTree } from '@woodger/antd-svelte';
+  import { DirectoryTree } from '@woodger/antd';
 
   const nodes = [{ key: 'docs', title: 'Документы', children: [
     { key: 'intro', title: 'Введение', isLeaf: true },

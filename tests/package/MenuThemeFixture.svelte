@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Menu, type MenuItemType, type MenuMode } from '@woodger/antd-svelte';
+  import { ConfigProvider, Menu, type MenuItemType, type MenuMode } from '@woodger/antd';
   import { menuThemePresets } from '../browser/fixtures/menu-theme-presets';
 
   let { preset = 'default', native = false, mode = 'vertical', override = false }: {

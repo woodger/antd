@@ -5,7 +5,7 @@ import { expect, expectTypeOf, it, vi } from 'vitest';
 import type {
   DatePickerPreset, DatePickerProps, RangePickerPreset, RangePickerProps,
   TimePickerPreset, TimePickerProps
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 import Case from '../browser/fixtures/DatePickerPresetsCase.svelte';
 import { datePickerPresetSamples } from '../browser/date-picker-presets-cases.mjs';
 import type { DatePickerPresetCapture } from '../browser/date-picker-presets-metrics.mjs';

@@ -2,7 +2,7 @@
   import ResultSourceCase from './ResultSourceCase.svelte';
   import type { ResultSourceSample } from './ResultSourceCase.svelte';
   import reference from './ant-design-result-reference.json';
-  import { ConfigProvider, Result } from '@woodger/antd-svelte';
+  import { ConfigProvider, Result } from '@woodger/antd';
 
   let selected = $state('default');
   let mounted = $state(true);

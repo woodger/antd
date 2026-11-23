@@ -5,7 +5,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Button, NotificationHolder, createNotification } from '@woodger/antd-svelte';
+  import { Button, NotificationHolder, createNotification } from '@woodger/antd';
 
   const notification = createNotification({ maxCount: 3 });
 </script>

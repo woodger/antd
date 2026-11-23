@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, it, expect, vi } from 'vitest';
-import { AutoComplete } from '@woodger/antd-svelte';
+import { AutoComplete } from '@woodger/antd';
 import AutoCompleteFixtures from '../browser/fixtures/AutoCompleteFixtures.svelte';
 
 describe('AutoComplete SSR', () => {

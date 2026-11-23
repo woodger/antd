@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, type ThemeConfig } from '@woodger/antd';
   import AffixThemeControl from './AffixThemeControl.svelte';
   import { resolveAffixTheme, type AffixThemeSample } from './affix-theme-presets';
 

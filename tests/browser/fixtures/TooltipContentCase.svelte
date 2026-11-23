@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Tooltip } from '@woodger/antd-svelte';
+  import { Tooltip } from '@woodger/antd';
   import { tooltipContentValue, type TooltipContentCase } from './tooltip-content-presets';
 
   let { sample }: { sample: TooltipContentCase } = $props();

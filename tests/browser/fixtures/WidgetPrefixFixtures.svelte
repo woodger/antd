@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import WidgetPrefixScope, { type WidgetPrefixSample } from './WidgetPrefixScope.svelte';
   import reference from './ant-design-widget-prefix-reference.json';
 

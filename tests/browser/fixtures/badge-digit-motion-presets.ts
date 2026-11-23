@@ -1,4 +1,4 @@
-import type { BadgeSize, ThemeConfig } from '@woodger/antd-svelte';
+import type { BadgeSize, ThemeConfig } from '@woodger/antd';
 
 export type BadgeDigitStep = { kind: 'value'; value: string | number | boolean; }
   | { kind: 'initial' | 'end' | 'unmount'; }

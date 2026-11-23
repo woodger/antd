@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Checkbox, CheckboxGroup, ConfigProvider, Radio, RadioButton, RadioGroup,
-    Switch, type ThemeConfig } from '@woodger/antd-svelte';
+    Switch, type ThemeConfig } from '@woodger/antd';
 
   let { native = false, missing = false, prefix = 'ant' }: {
     native?: boolean; missing?: boolean; prefix?: string;

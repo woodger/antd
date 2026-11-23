@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TreeSelect, TreeSelectTreeNode, type TreeSelectProps, type TreeSelectTreeNodeProps, type TreeEventNode } from '@woodger/antd-svelte';
+  import { TreeSelect, TreeSelectTreeNode, type TreeSelectProps, type TreeSelectTreeNodeProps, type TreeEventNode } from '@woodger/antd';
 
   interface Entry {
     value: number;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Row, Col, createBreakpoint } from '@woodger/antd-svelte';
+  import { Row, Col, createBreakpoint } from '@woodger/antd';
 
   let horizontal = $state<number | undefined>(16);
   let vertical = $state<number | undefined>(8);

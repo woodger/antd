@@ -1,5 +1,5 @@
-import { type ConfigProviderProps, type TimelineConfig } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { type ConfigProviderProps, type TimelineConfig } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-timeline-config-reference.json';

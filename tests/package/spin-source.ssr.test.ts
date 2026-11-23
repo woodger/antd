@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { Spin, type SpinIndicatorInfo } from '@woodger/antd-svelte';
+import { Spin, type SpinIndicatorInfo } from '@woodger/antd';
 import SpinSourceCase from '../browser/fixtures/SpinSourceCase.svelte';
 
 afterEach(() => Spin.setDefaultIndicator(null));

@@ -13,7 +13,7 @@
 
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, Upload, UploadDragger, enUS, type UploadProps } from '@woodger/antd-svelte';
+  import { ConfigProvider, Upload, UploadDragger, enUS, type UploadProps } from '@woodger/antd';
 
   let { sample, animated = false }: { sample: UploadTriggerSample; animated?: boolean } = $props();
   let shown = $state(untrack(() => sample.children ?? true));

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Select, type SelectFlattenOption, type SelectOption } from '@woodger/antd-svelte';
+  import { Select, type SelectFlattenOption, type SelectOption } from '@woodger/antd';
   const MixedSelect = Select<string | number>;
 
   export interface SelectOptionRenderSample {

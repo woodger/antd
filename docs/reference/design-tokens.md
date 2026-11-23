@@ -9,7 +9,7 @@ runtime. Точные типы принадлежат
 [theme.engine.ts](../../src/lib/theme.engine.ts) и соседним engines.
 
 ```ts
-import { theme, type DesignTokenConfig } from '@woodger/antd-svelte';
+import { theme, type DesignTokenConfig } from '@woodger/antd';
 
 const config: DesignTokenConfig = {
   algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
@@ -50,7 +50,7 @@ MappingAlgorithm получает тот же объект seed на каждо�
 его в текущем проходе.
 
 ```ts
-import { theme, type MappingAlgorithm } from '@woodger/antd-svelte';
+import { theme, type MappingAlgorithm } from '@woodger/antd';
 
 const largeControls: MappingAlgorithm = (seed, map) => ({
   ...(map ?? theme.defaultAlgorithm(seed)),

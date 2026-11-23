@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, type ThemeConfig } from '@woodger/antd';
   import ColorPickerThemeControl from './ColorPickerThemeControl.svelte';
   import { resolveColorPickerTheme, type ColorPickerThemeSample } from './color-picker-theme-presets';
 

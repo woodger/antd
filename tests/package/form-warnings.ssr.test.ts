@@ -1,4 +1,4 @@
-import { createForm } from '@woodger/antd-svelte';
+import { createForm } from '@woodger/antd';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import FormWarningsFixtures from '../browser/fixtures/FormWarningsFixtures.svelte';

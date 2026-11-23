@@ -6,7 +6,7 @@
     type InputCountInfo,
     type InputVariant,
     type InputAllowClear
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let value = $state('😀demo');
   let mounted = $state(true);

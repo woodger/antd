@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { ConfigProvider, Tooltip, Popover, Popconfirm, TypographyText, Slider,
-    AvatarGroup } from '@woodger/antd-svelte';
+    AvatarGroup } from '@woodger/antd';
   import OverlayLifecycleContent from './OverlayLifecycleContent.svelte';
   import type { OverlayLifecycleCase as Sample } from './overlay-lifecycle-presets';
 

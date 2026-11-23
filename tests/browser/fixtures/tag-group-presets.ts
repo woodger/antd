@@ -4,7 +4,7 @@ import type {
   CheckableTagValue,
   TagConfig,
   ThemeConfig
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 export interface TagGroupValues {
   options?: (CheckableTagValue | CheckableTagOption)[];

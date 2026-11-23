@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-table-column-classes-reference.json';
 import TableColumnClassesFixtures from '../browser/fixtures/TableColumnClassesFixtures.svelte';
 

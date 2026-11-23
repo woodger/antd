@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Anchor, type AnchorItem, type AnchorProps } from '@woodger/antd-svelte';
+  import { Anchor, type AnchorItem, type AnchorProps } from '@woodger/antd';
 
   export interface AnchorPrefixSample {
     id: string;

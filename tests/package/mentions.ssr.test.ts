@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, it, expect, vi } from 'vitest';
-import { Mentions } from '@woodger/antd-svelte';
+import { Mentions } from '@woodger/antd';
 import MentionsFixtures from '../browser/fixtures/MentionsFixtures.svelte';
 
 describe('Mentions SSR', () => {

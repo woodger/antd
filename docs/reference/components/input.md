@@ -5,7 +5,7 @@ Input — текстовое поле с поддержкой привязки �
 
 ```svelte
 <script lang="ts">
-  import { Input } from '@woodger/antd-svelte';
+  import { Input } from '@woodger/antd';
   let value = $state('example');
 </script>
 <Input bind:value prefix="https://" suffix=".org" allowClear

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { ConfigProvider, Slider, Input } from '@woodger/antd-svelte';
-  import type { ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, Slider, Input } from '@woodger/antd';
+  import type { ThemeConfig } from '@woodger/antd';
   import { sliderThemePresets } from './slider-theme-presets';
 
   let {

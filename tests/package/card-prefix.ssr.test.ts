@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Card, type CardProps, CardGrid, CardMeta } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Card, type CardProps, CardGrid, CardMeta } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-card-prefix-reference.json';
 import CardPrefixSSRFixtures from '../browser/fixtures/CardPrefixSSRFixtures.svelte';
 

@@ -1,5 +1,5 @@
 import { hydrate, tick } from 'svelte';
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import TreeSelectTagsScope from './TreeSelectTagsScope.svelte';
 import { treeTagSamples } from './tree-select-tag-cases';
 

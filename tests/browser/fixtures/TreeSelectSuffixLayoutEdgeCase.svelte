@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, TreeSelect, type TreeSelectInputContext, type TreeSelectTagInfo } from '@woodger/antd-svelte';
+  import { ConfigProvider, TreeSelect, type TreeSelectInputContext, type TreeSelectTagInfo } from '@woodger/antd';
   import type { TreeSelectSuffixLayoutEdgeSample } from './tree-select-suffix-layout-edge-cases';
   let { sample }: { sample: TreeSelectSuffixLayoutEdgeSample } = $props();
   const keys = ['a', 'b', 'c', 'd'];

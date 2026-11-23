@@ -5,7 +5,7 @@ import type {
   SelectOption,
   SelectProps,
   SelectSearchConfig
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 interface MappedOption {
   uid: string;

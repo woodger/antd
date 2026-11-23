@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Select, type SelectOption } from '@woodger/antd-svelte';
+  import { Select, type SelectOption } from '@woodger/antd';
 
   let options = $state<readonly SelectOption<number>[]>(
     [

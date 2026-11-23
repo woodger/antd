@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Button, createNotification, NotificationHolder, type NotificationType } from '@woodger/antd-svelte';
+  import { Button, createNotification, NotificationHolder, type NotificationType } from '@woodger/antd';
 
   let {
     mode = 'default',

@@ -6,7 +6,7 @@ InputOTP разбивает код на отдельные ячейки Input. �
 
 ```svelte
 <script lang="ts">
-  import { InputOTP } from '@woodger/antd-svelte';
+  import { InputOTP } from '@woodger/antd';
   let code = $state('');
 </script>
 

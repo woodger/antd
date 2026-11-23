@@ -45,7 +45,7 @@
     ConfigProvider, DirectoryTree, Tree, theme,
     type TreeKey, type TreeRef, type TreeScrollAlign, type TreeScrollConfig, type ThemeConfig,
     type TreeEventNode
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   interface Node {
     key?: TreeKey;

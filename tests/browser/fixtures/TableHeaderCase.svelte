@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     ConfigProvider, Table, enUS, type TableColumn, type TableKey
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import { resolveTableHeaderTheme, type TableHeaderSample } from './table-header-presets';
 
   let {

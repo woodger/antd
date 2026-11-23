@@ -9,7 +9,7 @@
     createForm,
     type ConfigProviderProps,
     type MentionsProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import type { MentionsPopupCase } from './mentions-popup-presets';
   import MentionsPopupBody from './MentionsPopupBody.svelte';
 

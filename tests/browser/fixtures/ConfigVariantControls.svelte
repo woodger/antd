@@ -3,7 +3,7 @@
     Input, TextArea, InputPassword, InputSearch, InputOTP, InputNumber, Mentions, Select,
     AutoComplete, TreeSelect, Cascader, DatePicker, TimePicker, RangePicker, TimeRangePicker,
     Card, Pagination, ColorPicker, type Variant, type CardProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { variant, onChanged }: {
     variant?: Variant;

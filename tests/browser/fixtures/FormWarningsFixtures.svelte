@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Form, FormErrorList, FormItem, FormList, Input, createForm } from '@woodger/antd-svelte';
+  import { Button, Form, FormErrorList, FormItem, FormList, Input, createForm } from '@woodger/antd';
 
   let holdName = $state(false);
   const form = createForm({

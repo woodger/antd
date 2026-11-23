@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Collapse, Input, type CollapseActiveKey } from '@woodger/antd-svelte';
+  import { Collapse, Input, type CollapseActiveKey } from '@woodger/antd';
 
   let activeKey = $state<CollapseActiveKey>(['contacts']);
 </script>

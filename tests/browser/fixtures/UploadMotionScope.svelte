@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts">
-  import { ConfigProvider, Upload, enUS, type UploadFile, type UploadProps } from '@woodger/antd-svelte';
+  import { ConfigProvider, Upload, enUS, type UploadFile, type UploadProps } from '@woodger/antd';
 
   let { sample }: { sample: UploadMotionSample } = $props();
   const image = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="8" height="8"/%3E';

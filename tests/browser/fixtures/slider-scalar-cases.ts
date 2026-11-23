@@ -5,7 +5,7 @@ import type {
   SliderSingleProps,
   SliderStyles,
   ThemeConfig
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 import reference from './ant-design-slider-scalar-reference.json';
 
 interface ScalarCase {

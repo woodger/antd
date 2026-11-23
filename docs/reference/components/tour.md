@@ -5,7 +5,7 @@ Tour проводит пользователя по шагам интерфей�
 
 ```svelte
 <script lang="ts">
-  import { Tour } from '@woodger/antd-svelte';
+  import { Tour } from '@woodger/antd';
 
   let open = $state(false);
   let target = $state<HTMLButtonElement>();

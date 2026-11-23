@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Segmented } from '@woodger/antd-svelte';
+  import { Segmented } from '@woodger/antd';
 
   let { id, kind = 'normal', priority = false }: {
     id: string;

@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { CheckableTag, ConfigProvider, Tag } from '@woodger/antd-svelte';
+  import { CheckableTag, ConfigProvider, Tag } from '@woodger/antd';
   let checked = $state(false);
 </script>
 
@@ -132,7 +132,7 @@ label также принимает Snippet. Значения сохраняют
 
 ```svelte
 <script lang="ts">
-  import { CheckableTagGroup } from '@woodger/antd-svelte';
+  import { CheckableTagGroup } from '@woodger/antd';
 
   let selected = $state<string[]>(['Books']);
 </script>

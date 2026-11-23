@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, untrack, type Snippet } from 'svelte';
   import { Select, AutoComplete, ConfigProvider, enUS, type SelectProps, type AutoCompleteProps,
-    type SelectRef, type SelectPopupRender } from '@woodger/antd-svelte';
+    type SelectRef, type SelectPopupRender } from '@woodger/antd';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import type { SelectSurfaceOmissionAction } from '../select-surface-omission-cases.mjs';
   import type { NativeSelectSurfaceOmissionSample } from './select-surface-omission-native-cases';

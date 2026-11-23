@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Space, SpaceCompact, SpaceAddon, Badge } from '@woodger/antd-svelte';
-  import type { SpaceProps, SpaceCompactProps, SpaceAddonProps } from '@woodger/antd-svelte';
+  import { Space, SpaceCompact, SpaceAddon, Badge } from '@woodger/antd';
+  import type { SpaceProps, SpaceCompactProps, SpaceAddonProps } from '@woodger/antd';
 
   export interface SpacePrefixSample {
     id: string;

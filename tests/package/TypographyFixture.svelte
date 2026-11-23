@@ -8,7 +8,7 @@
     TypographyLink,
     type TypographyContent,
     type TypographySemantic
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   let { variant = 'paragraph', semantic }: {
     variant?: string;
     semantic?: TypographySemantic;

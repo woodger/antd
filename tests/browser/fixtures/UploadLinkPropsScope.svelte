@@ -11,7 +11,7 @@
 
 <script lang="ts">
   import type { HTMLAnchorAttributes } from 'svelte/elements';
-  import { ConfigProvider, Upload, enUS, type UploadFile, type UploadProps } from '@woodger/antd-svelte';
+  import { ConfigProvider, Upload, enUS, type UploadFile, type UploadProps } from '@woodger/antd';
 
   let { sample }: { sample: UploadLinkSample } = $props();
   let events = $state<string[]>([]);

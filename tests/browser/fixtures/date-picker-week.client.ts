@@ -1,4 +1,4 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { mount, tick, unmount, flushSync } from 'svelte';
 import Case from './DatePickerWeekCase.svelte';
 import type { WeekCapture, WeekOwner } from '../date-picker-week-native-types';

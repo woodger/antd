@@ -1,8 +1,8 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Tabs, type TabsContent, type TabsMoreProps } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Tabs, type TabsContent, type TabsMoreProps } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-tabs-overflow-metrics.json';
 
 const items = [{ key: '', label: 'Alpha' }, { key: 'beta', label: 'Beta' }];

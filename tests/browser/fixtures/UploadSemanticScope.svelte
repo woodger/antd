@@ -22,7 +22,7 @@
     type UploadProps,
     type UploadSemanticInfo,
     type UploadSemanticSlots
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { sample }: { sample: UploadSemanticSample } = $props();
   let listType = $derived<UploadProps['listType']>(

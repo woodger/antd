@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import TagStyleCase from '../browser/fixtures/TagStyleCase.svelte';
 import reference from '../browser/fixtures/ant-design-tag-style-reference.json';
 import type { TagStyleCase as Sample } from '../browser/fixtures/tag-style-presets';

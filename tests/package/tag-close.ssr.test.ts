@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import TagCloseCase from '../browser/fixtures/TagCloseCase.svelte';
 import reference from '../browser/fixtures/ant-design-tag-close-reference.json';
 import type { TagCloseCase as Sample } from '../browser/fixtures/tag-close-presets';

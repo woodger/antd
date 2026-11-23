@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Breadcrumb, ConfigProvider, Dropdown, theme, type BreadcrumbItem } from '@woodger/antd-svelte';
+  import { Breadcrumb, ConfigProvider, Dropdown, theme, type BreadcrumbItem } from '@woodger/antd';
 
   let id = $state('42');
   let custom = $state(false);

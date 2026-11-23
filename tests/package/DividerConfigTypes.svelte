@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Divider, type DividerConfig, type DividerProps } from '@woodger/antd-svelte';
+  import { ConfigProvider, Divider, type DividerConfig, type DividerProps } from '@woodger/antd';
 
   let nativeElement = $state<HTMLDivElement>();
   const divider: DividerConfig = {

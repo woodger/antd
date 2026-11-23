@@ -1,4 +1,4 @@
-import type { AvatarConfig, AvatarProps, ThemeConfig } from '@woodger/antd-svelte';
+import type { AvatarConfig, AvatarProps, ThemeConfig } from '@woodger/antd';
 
 export interface AvatarApiValues extends Pick<
   AvatarProps,

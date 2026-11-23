@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd';
   import MentionsThemeControl from './MentionsThemeControl.svelte';
   import { resolveMentionsTheme, type MentionsThemeSample } from './mentions-theme-presets';
 

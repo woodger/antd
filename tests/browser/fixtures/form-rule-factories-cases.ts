@@ -1,4 +1,4 @@
-import type { FormInstance, FormRule, FormValues, ValidationRuleFactory } from '@woodger/antd-svelte';
+import type { FormInstance, FormRule, FormValues, ValidationRuleFactory } from '@woodger/antd';
 
 export interface FormRuleFactoriesSample {
   id: string;

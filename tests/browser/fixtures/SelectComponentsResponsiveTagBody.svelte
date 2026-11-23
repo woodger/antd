@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext, type Snippet } from 'svelte';
-  import type { SelectTagInfo } from '@woodger/antd-svelte';
+  import type { SelectTagInfo } from '@woodger/antd';
   import { customTagPrefixContext, type CustomTagPrefixContext } from '../select-components-responsive-tag-prefix-context';
   let { info }: { info: SelectTagInfo<string> } = $props();
   const caller = getContext<CustomTagPrefixContext>(customTagPrefixContext);

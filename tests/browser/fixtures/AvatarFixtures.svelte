@@ -7,7 +7,7 @@
     type AvatarShape,
     type AvatarSize,
     type ComponentSize
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import {
     avatarBrokenImage,
     avatarPortrait

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Breadcrumb, type BreadcrumbItem, type BreadcrumbProps } from '@woodger/antd-svelte';
+  import { Breadcrumb, type BreadcrumbItem, type BreadcrumbProps } from '@woodger/antd';
 
   export interface BreadcrumbPrefixSample {
     id: string;

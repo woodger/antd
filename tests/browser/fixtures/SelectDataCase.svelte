@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, untrack } from 'svelte';
   import { AutoComplete, ConfigProvider, Select, enUS,
-    type SelectFlattenOption, type SelectRef, type SelectScrollConfig, type SelectScrollOffsetInfo } from '@woodger/antd-svelte';
+    type SelectFlattenOption, type SelectRef, type SelectScrollConfig, type SelectScrollOffsetInfo } from '@woodger/antd';
   import { encodeSelectData, selectDataFieldNames, selectDataGeometry, selectDataKeyValue, selectDataOwn,
     selectDataRaw, type SelectDataAction, type SelectDataDataset, type SelectDataMapping,
     type SelectDataSample, type SelectDataSettings } from './select-data-cases';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import reference from './ant-design-form-initial-reference.json';
   import FormInitialCase, { type FormInitialSample } from './FormInitialCase.svelte';
 

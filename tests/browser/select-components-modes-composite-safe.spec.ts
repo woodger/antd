@@ -1,4 +1,4 @@
-import type { SelectRef } from '@woodger/antd-svelte';
+import type { SelectRef } from '@woodger/antd';
 import { test, expect } from './test';
 import { drainSelectSurface } from './select-surface-driver';
 

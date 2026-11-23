@@ -4,7 +4,7 @@
     ConfigProvider, TreeSelect, type TreeSelectCheckableContent, type TreeSelectClassNames,
     type TreeSelectInputContext, type TreeSelectProps, type TreeSelectRef,
     type TreeSelectRootContext, type TreeSelectStyles, type TreeSelectValue
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import {
     treeSelectCheckableData, type TreeSelectCheckableAction, type TreeSelectCheckableDescriptor,
     type TreeSelectCheckableSample, type TreeSelectCheckableSettings

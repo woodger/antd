@@ -3,7 +3,7 @@
   import {
     ConfigProvider, Form, FormItem, Input, createForm,
     type FormConfig, type FormScrollOptions, type NamePath
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import reference from './ant-design-form-scroll-first-reference.json';
 
   interface Sample {

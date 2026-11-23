@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import ImagePrefixScope, { type ImagePrefixSample } from './ImagePrefixScope.svelte';
   import reference from './ant-design-image-prefix-reference.json';
   import independentReference from './ant-design-image-independent-preview-reference.json';

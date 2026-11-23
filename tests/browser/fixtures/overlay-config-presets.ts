@@ -6,7 +6,7 @@ import type {
   TooltipTrigger,
   TooltipColor,
   ThemeConfig
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 interface Slots extends TooltipSlots {
   title?: string;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Tooltip, type TooltipAlignConfig, type TooltipRef } from '@woodger/antd-svelte';
+  import { Tooltip, type TooltipAlignConfig, type TooltipRef } from '@woodger/antd';
   import type { TooltipAlignmentCase } from './tooltip-align.types';
 
   let { sample }: { sample: TooltipAlignmentCase } = $props();

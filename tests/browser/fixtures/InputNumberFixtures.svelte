@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Form, FormItem, InputNumber, createForm } from '@woodger/antd-svelte';
+  import { ConfigProvider, Form, FormItem, InputNumber, createForm } from '@woodger/antd';
 
   let value = $state<number | null>(0);
   let defaultValue = $state(2.5);

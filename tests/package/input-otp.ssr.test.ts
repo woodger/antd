@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { InputOTP } from '@woodger/antd-svelte';
+import { InputOTP } from '@woodger/antd';
 import InputOTPFixtures from '../browser/fixtures/InputOTPFixtures.svelte';
 
 describe('InputOTP public package SSR', () => {

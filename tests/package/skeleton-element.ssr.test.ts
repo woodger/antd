@@ -3,7 +3,7 @@ import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import {
   Skeleton, SkeletonAvatar, SkeletonButton, SkeletonInput, SkeletonImage, SkeletonNode
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 import SkeletonElementCase from '../browser/fixtures/SkeletonElementCase.svelte';
 
 describe('Skeleton primitives public package SSR', () => {

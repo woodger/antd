@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ColorPicker, ConfigProvider, theme, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ColorPicker, ConfigProvider, theme, type ThemeConfig } from '@woodger/antd';
   import ThemeContextConsumer from './ThemeContextConsumer.svelte';
 
   let enabled = $state(true);

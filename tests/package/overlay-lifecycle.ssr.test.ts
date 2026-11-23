@@ -1,8 +1,8 @@
 import { render } from 'svelte/server';
 import { createRawSnippet } from 'svelte';
 import { describe, expect, it, vi } from 'vitest';
-import { Tooltip } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Tooltip } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import OverlayLifecycleCase from '../browser/fixtures/OverlayLifecycleCase.svelte';
 import reference from '../browser/fixtures/ant-design-overlay-lifecycle-reference.json';
 import emptyTrigger from '../browser/fixtures/ant-design-overlay-empty-trigger-reference.json';

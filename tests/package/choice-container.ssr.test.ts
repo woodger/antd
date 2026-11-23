@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import { Cascader, TreeSelect } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Cascader, TreeSelect } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-choice-container-reference.json';
 import ChoiceContainerCase from '../browser/fixtures/ChoiceContainerCase.svelte';
 import type { ChoiceContainerCase as ContainerCase } from '../browser/fixtures/choice-container-presets';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ConfigProvider, Form, FormItem, TreeSelect, createForm,
-    type TreeSelectInputContext, type TreeSelectRef, type TreeSelectValue } from '@woodger/antd-svelte';
+    type TreeSelectInputContext, type TreeSelectRef, type TreeSelectValue } from '@woodger/antd';
   import TreeSelectInputLifecycleEditor from './TreeSelectInputLifecycleEditor.svelte';
   const model = createForm<{ selected: TreeSelectValue }>({ initialValues: { selected: 'a' } });
   let active = $state(true);

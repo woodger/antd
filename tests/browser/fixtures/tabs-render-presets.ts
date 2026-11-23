@@ -6,7 +6,7 @@ import type {
   TabsSlots,
   TabsTabBarProps,
   TabsType
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 export interface TabsRenderCase {
   name: string;

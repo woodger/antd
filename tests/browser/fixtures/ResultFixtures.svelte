@@ -1,6 +1,6 @@
 <script lang="ts">
   import { tick } from 'svelte';
-  import { ConfigProvider, Drawer, Modal, Result, type ResultStatus } from '@woodger/antd-svelte';
+  import { ConfigProvider, Drawer, Modal, Result, type ResultStatus } from '@woodger/antd';
 
   let status = $state('info');
   let numeric = $state(false);

@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { MessageHolder, createMessage, type MessageHolderProps } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { MessageHolder, createMessage, type MessageHolderProps } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-message-prefix-reference.json';
 import MessagePrefixSSRFixtures from '../browser/fixtures/MessagePrefixSSRFixtures.svelte';
 

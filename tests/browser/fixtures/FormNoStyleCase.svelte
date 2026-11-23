@@ -14,8 +14,8 @@
     warnings?: string[];
     parentNamed?: boolean;
     parentErrors?: string[];
-    status?: import('@woodger/antd-svelte').FormValidateStatus;
-    parentStatus?: import('@woodger/antd-svelte').FormValidateStatus;
+    status?: import('@woodger/antd').FormValidateStatus;
+    parentStatus?: import('@woodger/antd').FormValidateStatus;
     pair?: boolean;
     async?: boolean;
   }
@@ -23,7 +23,7 @@
 
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Button, ConfigProvider, Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
+  import { Button, ConfigProvider, Form, FormItem, Input, createForm } from '@woodger/antd';
   import FormStatusReadout from './FormStatusReadout.svelte';
 
   let { sample, initialMetadata = false }: {

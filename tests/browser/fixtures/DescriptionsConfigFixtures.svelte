@@ -2,7 +2,7 @@
   import {
     ConfigProvider, Descriptions, Input, theme,
     type DescriptionsConfig, type DescriptionsItem, type DescriptionsProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import { descriptionsConfigProfile } from './descriptions-config-presets';
   import reference from './ant-design-descriptions-config-reference.json' with { type: 'json' };
 

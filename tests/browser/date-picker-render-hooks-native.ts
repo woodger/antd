@@ -1,4 +1,4 @@
-import type { DatePickerCellRenderInfo } from '@woodger/antd-svelte';
+import type { DatePickerCellRenderInfo } from '@woodger/antd';
 
 export type RenderHooksOwner = 'single-date' | 'single-datetime' | 'range-date' | 'range-datetime';
 export interface RenderHooksCellObservation {

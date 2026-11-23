@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Listy, type ListyRef } from '@woodger/antd-svelte';
+  import { ConfigProvider, Listy, type ListyRef } from '@woodger/antd';
   import ListyThemeRecord, { type ListyThemeRecordData } from './ListyThemeRecord.svelte';
 
   let {

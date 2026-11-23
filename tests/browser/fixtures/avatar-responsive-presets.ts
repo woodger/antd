@@ -1,4 +1,4 @@
-import type { AvatarSize, ComponentSize, DesignTokenConfig } from '@woodger/antd-svelte';
+import type { AvatarSize, ComponentSize, DesignTokenConfig } from '@woodger/antd';
 
 export interface AvatarResponsiveCase {
   name: string;

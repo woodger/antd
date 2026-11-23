@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { AutoComplete, type AutoCompleteProps } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { AutoComplete, type AutoCompleteProps } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-auto-complete-prefix-reference.json';
 import AutoCompletePrefixSSRFixtures from '../browser/fixtures/AutoCompletePrefixSSRFixtures.svelte';
 

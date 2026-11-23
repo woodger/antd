@@ -1,4 +1,4 @@
-import type { PopoverTrigger } from '@woodger/antd-svelte';
+import type { PopoverTrigger } from '@woodger/antd';
 
 export interface PopoverActionOptions {
   title: string;

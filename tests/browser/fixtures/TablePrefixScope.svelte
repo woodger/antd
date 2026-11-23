@@ -15,7 +15,7 @@
 </script>
 
 <script lang="ts">
-  import { Table, type TableColumn, type TableKey, type TableSorter } from '@woodger/antd-svelte';
+  import { Table, type TableColumn, type TableKey, type TableSorter } from '@woodger/antd';
 
   let { sample, rootPrefix, local = true, fixed = false }: {
     sample: TablePrefixSample;

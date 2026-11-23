@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Input, TextArea, type AutoCompleteInput, type AutoCompleteProps } from '@woodger/antd-svelte';
+  import { Input, TextArea, type AutoCompleteInput, type AutoCompleteProps } from '@woodger/antd';
 
   let { control, textarea, variant }: {
     control: AutoCompleteInput;

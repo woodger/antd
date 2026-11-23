@@ -1,6 +1,6 @@
 <script lang="ts">
   import { flushSync } from 'svelte';
-  import { ConfigProvider, Switch, type SwitchEvent, type SwitchSize } from '@woodger/antd-svelte';
+  import { ConfigProvider, Switch, type SwitchEvent, type SwitchSize } from '@woodger/antd';
 
   let checked = $state(false);
   let value = $state(false);

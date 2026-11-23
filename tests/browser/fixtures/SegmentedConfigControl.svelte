@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Segmented } from '@woodger/antd-svelte';
+  import { Segmented } from '@woodger/antd';
   import { segmentedConfigRecord, type SegmentedConfigSample } from './segmented-config-presets';
 
   let { sample, id }: { sample: SegmentedConfigSample; id: string; } = $props();

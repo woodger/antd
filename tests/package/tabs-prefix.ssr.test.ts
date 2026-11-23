@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Tabs, type TabsProps } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Tabs, type TabsProps } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-tabs-prefix-reference.json';
 import TabsPrefixSSRFixtures from '../browser/fixtures/TabsPrefixSSRFixtures.svelte';
 

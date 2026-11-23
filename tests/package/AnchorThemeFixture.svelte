@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Anchor, ConfigProvider } from '@woodger/antd-svelte';
+  import { Anchor, ConfigProvider } from '@woodger/antd';
   import { anchorThemePresets } from '../browser/fixtures/anchor-theme-presets';
 
   let { preset = 'default', native = false, semantic = false, affix = false }: {

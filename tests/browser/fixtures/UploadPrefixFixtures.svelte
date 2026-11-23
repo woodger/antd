@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd';
   import UploadPrefixScope, { type UploadPrefixSample } from './UploadPrefixScope.svelte';
   import reference from './ant-design-upload-prefix-reference.json';
 

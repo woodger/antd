@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Form, FormItem, FormList, Input, createForm } from '@woodger/antd-svelte';
+  import { Form, FormItem, FormList, Input, createForm } from '@woodger/antd';
 
   let { list = false }: { list?: boolean } = $props();
   const model = createForm(untrack(() => ({

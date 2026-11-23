@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Steps, Timeline, type StepsIconInfo } from '@woodger/antd-svelte';
+  import { ConfigProvider, Steps, Timeline, type StepsIconInfo } from '@woodger/antd';
   import type { Snippet } from 'svelte';
   import {
     stepsContextConfig, stepsConfigRecord, stepsLocalProps, stepsConfigItems, stepsTimelineConfig,

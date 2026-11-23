@@ -1,4 +1,4 @@
-import type { AvatarGroupProps } from '@woodger/antd-svelte';
+import type { AvatarGroupProps } from '@woodger/antd';
 
 export type AvatarGroupMaxValues = Pick<
   AvatarGroupProps,

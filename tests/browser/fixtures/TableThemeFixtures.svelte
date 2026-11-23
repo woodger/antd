@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Table } from '@woodger/antd-svelte';
+  import { ConfigProvider, Table } from '@woodger/antd';
   import reference from './ant-design-table-theme-reference.json';
   import TableThemeCase from './TableThemeCase.svelte';
 

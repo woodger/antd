@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Checkbox, CheckboxGroup, ConfigProvider, Radio, RadioButton, RadioGroup,
-    Switch, theme, type ThemeConfig } from '@woodger/antd-svelte';
+    Switch, theme, type ThemeConfig } from '@woodger/antd';
 
   const presets: Record<string, ThemeConfig> = {
     default: {},

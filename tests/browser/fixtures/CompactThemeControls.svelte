@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Input, InputNumber, Select, theme } from '@woodger/antd-svelte';
+  import { Button, Input, InputNumber, Select, theme } from '@woodger/antd';
 
   let { id }: { id: string; } = $props();
   const current = theme.useToken();

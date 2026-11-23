@@ -1,4 +1,4 @@
-import type { ConfigProviderProps } from '@woodger/antd-svelte';
+import type { ConfigProviderProps } from '@woodger/antd';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-config-prefix-reference.json';

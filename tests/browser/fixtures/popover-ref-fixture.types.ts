@@ -1,4 +1,4 @@
-import type { PopoverRef } from '@woodger/antd-svelte';
+import type { PopoverRef } from '@woodger/antd';
 
 export interface PopoverRefFixtureElement extends HTMLElement {
   readonly popupRef: PopoverRef | undefined;

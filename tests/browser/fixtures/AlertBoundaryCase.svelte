@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { AlertErrorBoundaryProps } from '@woodger/antd-svelte';
+  import type { AlertErrorBoundaryProps } from '@woodger/antd';
 
   export interface AlertBoundarySample {
     name: string;
@@ -12,8 +12,8 @@
 </script>
 
 <script lang="ts">
-  import { Alert, ConfigProvider } from '@woodger/antd-svelte';
-  import type { AlertConfig } from '@woodger/antd-svelte';
+  import { Alert, ConfigProvider } from '@woodger/antd';
+  import type { AlertConfig } from '@woodger/antd';
   import BrokenChild from './BrokenChild.svelte';
 
   let {

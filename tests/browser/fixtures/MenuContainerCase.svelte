@@ -6,7 +6,7 @@
     type ConfigProviderProps,
     type MenuItemType,
     type MenuProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import type { MenuContainerCase } from './menu-container-presets';
   import MenuContainerLabel from './MenuContainerLabel.svelte';
 

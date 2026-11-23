@@ -8,7 +8,7 @@
     type TreeSelectValue,
     type TreeSelectNode,
     type TreeKey
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   const initial: TreeSelectNode[] = [
     {

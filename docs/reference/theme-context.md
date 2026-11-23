@@ -19,7 +19,7 @@ Svelte context — [theme-context.svelte.ts](../../src/lib/theme-context.svelte.
 
 ```svelte
 <script lang="ts">
-  import { ConfigProvider, theme } from '@woodger/antd-svelte';
+  import { ConfigProvider, theme } from '@woodger/antd';
   import TokenConsumer from './TokenConsumer.svelte';
 
   let primary = $state('#00b96b');
@@ -37,7 +37,7 @@ TokenConsumer.svelte:
 
 ```svelte
 <script lang="ts">
-  import { theme } from '@woodger/antd-svelte';
+  import { theme } from '@woodger/antd';
   const current = theme.useToken();
 </script>
 
@@ -97,7 +97,7 @@ components.Input.algorithm=true повторно использует общий
 собственный алгоритм компонента. Пересчёт не меняет глобальные и соседние токены.
 
 ```ts
-import { theme, type ThemeConfig } from '@woodger/antd-svelte';
+import { theme, type ThemeConfig } from '@woodger/antd';
 
 const config: ThemeConfig = {
   algorithm: theme.darkAlgorithm,

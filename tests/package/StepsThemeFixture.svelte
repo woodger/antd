@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Steps, Timeline } from '@woodger/antd-svelte';
+  import { ConfigProvider, Steps, Timeline } from '@woodger/antd';
   import { stepsThemePresets } from '../browser/fixtures/steps-theme-presets';
 
   let { preset = 'default', native = false, semantic = false }: {

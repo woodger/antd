@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { AutoComplete, type AutoCompleteProps, type AutoCompleteItem } from '@woodger/antd-svelte';
+  import { AutoComplete, type AutoCompleteProps, type AutoCompleteItem } from '@woodger/antd';
   import AutoCompletePrefixInput from './AutoCompletePrefixInput.svelte';
 
   export interface AutoCompletePrefixSample {
@@ -37,7 +37,7 @@
   let target = $state<HTMLDivElement>();
 </script>
 
-{#snippet custom(control: import('@woodger/antd-svelte').AutoCompleteInput)}
+{#snippet custom(control: import('@woodger/antd').AutoCompleteInput)}
   <AutoCompletePrefixInput {control} textarea={sample.input === 'textarea'}
     variant={sample.inputVariant} />
 {/snippet}

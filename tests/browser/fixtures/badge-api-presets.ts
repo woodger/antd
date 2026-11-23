@@ -1,4 +1,4 @@
-import type { BadgeConfig, BadgeProps, ThemeConfig } from '@woodger/antd-svelte';
+import type { BadgeConfig, BadgeProps, ThemeConfig } from '@woodger/antd';
 
 export interface BadgeApiValues extends Omit<
   BadgeProps, 'children' | 'count' | 'nativeElement' | 'classNames' | 'styles'

@@ -2,7 +2,7 @@
   import { untrack, type Snippet } from 'svelte';
   import { ConfigProvider, Form, FormItem, Input, SpaceCompact, TreeSelect, createForm,
     type TreeEventNode, type TreeSelectConfig, type TreeSelectProps, type TreeSelectStyles,
-    type TreeSelectSwitcherIcon, type TreeSelectTagInfo, type TreeSelectValue } from '@woodger/antd-svelte';
+    type TreeSelectSwitcherIcon, type TreeSelectTagInfo, type TreeSelectValue } from '@woodger/antd';
   import { treeSelectSemanticData, treeSelectSemanticFields, treeSelectSemanticInfo, treeSelectSemanticLayers,
     type SemanticRecord, type SemanticStyles, type SemanticTreeNode, type Switcher, type TreeSelectSemanticSample }
     from './tree-select-semantic-cases';

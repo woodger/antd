@@ -5,7 +5,7 @@
     ImagePreviewGroup,
     type ImagePreviewGroupItem,
     type ImagePreviewRenderInfo
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import { imageOne, imageTwo } from './image-data';
 
   let open = $state(false);

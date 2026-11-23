@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, Flex, Input, type FlexConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, Flex, Input, type FlexConfig } from '@woodger/antd';
   import FlexCustomRoot from './FlexCustomRoot.svelte';
   import FlexNoRefRoot from './FlexNoRefRoot.svelte';
   import { flexSourceCases, flexSourceTheme } from './flex-source-cases';

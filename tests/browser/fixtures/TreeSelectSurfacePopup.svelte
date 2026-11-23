@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, untrack, type Snippet } from 'svelte';
-  import { Input, useFormItemStatus } from '@woodger/antd-svelte';
+  import { Input, useFormItemStatus } from '@woodger/antd';
 
   let { menu, replace = false, onLife }: {
     menu: Snippet;

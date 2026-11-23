@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TreeSelectRef } from '@woodger/antd-svelte';
+  import type { TreeSelectRef } from '@woodger/antd';
   import TreeSelectInertApiCase from './TreeSelectInertApiCase.svelte';
   import type { TreeSelectInertApiMode, TreeSelectInertApiSample } from './tree-select-inert-api-cases';
   let { sample }: { sample: TreeSelectInertApiSample } = $props();

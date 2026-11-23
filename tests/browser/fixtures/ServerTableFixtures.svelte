@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Table, type TableColumn } from '@woodger/antd-svelte';
+  import { Table, type TableColumn } from '@woodger/antd';
   import {
     createServerControls,
     type ServerPerson

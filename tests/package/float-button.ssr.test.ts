@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { FloatButton } from '@woodger/antd-svelte';
-import { FloatButtonBackTop } from '@woodger/antd-svelte';
+import { FloatButton } from '@woodger/antd';
+import { FloatButtonBackTop } from '@woodger/antd';
 import FloatButtonFixtures from '../browser/fixtures/FloatButtonFixtures.svelte';
 
 describe('FloatButton SSR', () => {

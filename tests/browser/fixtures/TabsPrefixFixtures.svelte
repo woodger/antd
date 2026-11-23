@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import TabsPrefixScope from './TabsPrefixScope.svelte';
   import reference from './ant-design-tabs-prefix-reference.json';
 

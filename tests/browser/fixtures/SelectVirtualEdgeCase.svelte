@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { AutoComplete, ConfigProvider, enUS, type AutoCompleteRef, type AutoCompleteItem } from '@woodger/antd-svelte';
+  import { AutoComplete, ConfigProvider, enUS, type AutoCompleteRef, type AutoCompleteItem } from '@woodger/antd';
   import {
     selectVirtualGeometry, selectVirtualProps, selectVirtualProviderProps, selectVirtualReceipts
   } from './select-virtual-cases';

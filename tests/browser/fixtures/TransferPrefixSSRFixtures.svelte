@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Transfer } from '@woodger/antd-svelte';
+  import { ConfigProvider, Transfer } from '@woodger/antd';
 
   const data = [{ key: 'a', title: 'Alpha' }, { key: 'b', title: 'Beta' }];
 </script>

@@ -7,7 +7,7 @@
     type InputNumberRef,
     type InputNumberStepInfo,
     type InputVariant
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   const initialString = '9007199254740993.00000000000001';
   let high = $state<string | null>(initialString);

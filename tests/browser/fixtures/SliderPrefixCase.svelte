@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, Slider, Input } from '@woodger/antd-svelte';
+  import { ConfigProvider, Slider, Input } from '@woodger/antd';
   import { sliderPrefixCases, sliderPrefixTheme } from './slider-prefix-cases';
 
   let { preset = 'tenant-single', mounted = true, portal = false, styled = false }: {

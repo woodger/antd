@@ -1,6 +1,6 @@
 <script lang="ts">
   import { tick } from 'svelte';
-  import { ConfigProvider, Drawer, Empty, Modal } from '@woodger/antd-svelte';
+  import { ConfigProvider, Drawer, Empty, Modal } from '@woodger/antd';
 
   let image = $state<'default' | 'simple' | 'custom' | 'none'>('default');
   let description = $state('No records');

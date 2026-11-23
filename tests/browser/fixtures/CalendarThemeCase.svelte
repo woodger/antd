@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, type ThemeConfig } from '@woodger/antd';
   import CalendarThemeControl from './CalendarThemeControl.svelte';
   import { resolveCalendarTheme, type CalendarThemeSample } from './calendar-theme-presets';
 

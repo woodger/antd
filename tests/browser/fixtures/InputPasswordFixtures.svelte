@@ -7,7 +7,7 @@
     SpaceCompact,
     createForm,
     type InputVariant
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let value = $state('secret');
   let mounted = $state(true);

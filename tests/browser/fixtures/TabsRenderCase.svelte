@@ -11,7 +11,7 @@
     type TabsTabAttributes,
     type TabsTabNode,
     type TabsTabBarProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import { tabsRenderProps, type TabsRenderCase } from './tabs-render-presets';
   import TabsRenderContent from './TabsRenderContent.svelte';
 

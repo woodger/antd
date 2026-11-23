@@ -5,7 +5,7 @@ import {
   DatePicker, RangePicker, TimePicker, TimeRangePicker, enUS,
   type DatePickerFormatConfig, type DatePickerProps, type RangePickerProps,
   type TimePickerProps, type TimeRangePickerProps
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 for (const profile of ['string', 'object', 'mask'] as const) {
   const fieldFormat = (format: string) => profile === 'string' ? format

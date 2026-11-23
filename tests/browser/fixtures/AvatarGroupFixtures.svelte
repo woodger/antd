@@ -10,7 +10,7 @@
     type ComponentSize,
     type PopoverPlacement,
     type PopoverTrigger
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import {
     avatarBrokenImage,
     avatarPortrait

@@ -2,7 +2,7 @@
   import dayjs, { type Dayjs } from 'dayjs';
   import utc from 'dayjs/plugin/utc.js';
   import { ConfigProvider, DatePicker, RangePicker, SpaceCompact, TimePicker, TimeRangePicker,
-    type RangePickerValue } from '@woodger/antd-svelte';
+    type RangePickerValue } from '@woodger/antd';
 
   dayjs.extend(utc);
   const initial = dayjs.utc('2024-09-15T10:23:44.567Z');

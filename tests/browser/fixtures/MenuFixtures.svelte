@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Menu, Button, type MenuItemType, type MenuMode, type MenuTheme } from '@woodger/antd-svelte';
+  import { Menu, Button, type MenuItemType, type MenuMode, type MenuTheme } from '@woodger/antd';
 
   let mode = $state<MenuMode>('inline');
   let theme = $state<MenuTheme>('light');

@@ -1,6 +1,6 @@
 <script lang="ts">
   import dayjs from 'dayjs';
-  import { ConfigProvider, DatePicker, RangePicker, enUS, type DatePickerPicker } from '@woodger/antd-svelte';
+  import { ConfigProvider, DatePicker, RangePicker, enUS, type DatePickerPicker } from '@woodger/antd';
   let picker = $state<DatePickerPicker>('month');
   let showTime = $state(false);
   const date = dayjs('2024-01-31T16:37:59.456');

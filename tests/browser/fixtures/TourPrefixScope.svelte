@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Tour, type TourProps } from '@woodger/antd-svelte';
+  import { Tour, type TourProps } from '@woodger/antd';
 
   export interface TourPrefixSample {
     id: string;

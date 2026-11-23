@@ -15,7 +15,7 @@
 
 <script lang="ts">
   import { untrack, type Snippet } from 'svelte';
-  import { ConfigProvider, DirectoryTree, Tree, type TreeEventNode } from '@woodger/antd-svelte';
+  import { ConfigProvider, DirectoryTree, Tree, type TreeEventNode } from '@woodger/antd';
 
   let { sample }: { sample: TreeNodeRendererSample } = $props();
   let nodeMode = $state(untrack(() => sample.node ?? ''));

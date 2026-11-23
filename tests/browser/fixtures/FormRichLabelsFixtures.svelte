@@ -3,7 +3,7 @@
   import {
     ConfigProvider, Form, FormItem, Input, createForm, enUS,
     type FormRequiredMarkInfo, type RenderEmptyContent
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import reference from './ant-design-form-rich-labels-reference.json';
   import FormLabelCounter from './FormLabelCounter.svelte';
   import FormRichLabelControls from './FormRichLabelControls.svelte';

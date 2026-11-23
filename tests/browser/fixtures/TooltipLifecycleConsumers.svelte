@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Slider, TypographyText } from '@woodger/antd-svelte';
+  import { ConfigProvider, Slider, TypographyText } from '@woodger/antd';
   import type { TooltipLifecycleConsumer } from './tooltip-lifecycle.types';
 
   let { sample, source }: { sample: TooltipLifecycleConsumer; source: boolean } = $props();

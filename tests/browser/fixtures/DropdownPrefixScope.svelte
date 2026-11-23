@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Dropdown, type DropdownPlacement } from '@woodger/antd-svelte';
+  import { Button, Dropdown, type DropdownPlacement } from '@woodger/antd';
 
   export interface DropdownPrefixSample {
     id: string;

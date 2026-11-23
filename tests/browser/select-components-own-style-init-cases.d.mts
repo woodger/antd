@@ -1,4 +1,4 @@
-import type { SelectStyle } from '@woodger/antd-svelte';
+import type { SelectStyle } from '@woodger/antd';
 export type SelectOwnStyleInitProfile = 'same' | 'mismatch';
 export type SelectOwnStyleInitEntryPath = 'csr' | 'hydrate-same' | 'hydrate-mismatch' | 'hydrate-dirty-mismatch';
 export type SelectOwnStyleInitPhase = 'initial' | 'top-green' | 'remove-overlap' | 'restore-overlap' | 'left-logical'

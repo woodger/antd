@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Tag, CheckableTag, CheckableTagGroup } from '@woodger/antd-svelte';
+  import { ConfigProvider, Tag, CheckableTag, CheckableTagGroup } from '@woodger/antd';
   import type { TagPrefixCase, TagPrefixValues } from './tag-prefix-presets';
 
   let { sample, changed = false, nativeTheme = false }: {

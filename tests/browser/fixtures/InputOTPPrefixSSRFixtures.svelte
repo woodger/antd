@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import InputOTPPrefixScope from './InputOTPPrefixScope.svelte';
 </script>
 

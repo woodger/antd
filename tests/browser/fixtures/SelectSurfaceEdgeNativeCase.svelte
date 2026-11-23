@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createRawSnippet, onDestroy, untrack } from 'svelte';
   import { Select, AutoComplete, ConfigProvider, enUS, type SelectProps, type AutoCompleteProps,
-    type SelectRef, type SelectPopupRender } from '@woodger/antd-svelte';
+    type SelectRef, type SelectPopupRender } from '@woodger/antd';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import { selectSurfaceEdgePaintStyles, type SelectSurfaceEdgeSample } from './select-surface-edge-cases';
 

@@ -1,4 +1,4 @@
-import { theme, type FlexConfig, type FlexProps, type ThemeConfig } from '@woodger/antd-svelte';
+import { theme, type FlexConfig, type FlexProps, type ThemeConfig } from '@woodger/antd';
 import reference from './ant-design-flex-source-reference.json';
 
 interface FlexSourceCase {

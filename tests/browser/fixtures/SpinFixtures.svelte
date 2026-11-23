@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Drawer, Modal, Spin, ruRU, type SpinSize } from '@woodger/antd-svelte';
+  import { ConfigProvider, Drawer, Modal, Spin, ruRU, type SpinSize } from '@woodger/antd';
   import SpinContent from './SpinContent.svelte';
 
   let spinning = $state(false);

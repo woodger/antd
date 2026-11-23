@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, ConfigProvider, Form, FormItem, Modal, Select } from '@woodger/antd-svelte';
+  import { Button, ConfigProvider, Form, FormItem, Modal, Select } from '@woodger/antd';
   import { createMultipleControls } from './multiple-select.model.svelte';
 
   const controls = createMultipleControls();

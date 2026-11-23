@@ -1,8 +1,8 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Upload } from '@woodger/antd-svelte';
-import { UploadDragger } from '@woodger/antd-svelte';
-import type { UploadFile } from '@woodger/antd-svelte';
+import { Upload } from '@woodger/antd';
+import { UploadDragger } from '@woodger/antd';
+import type { UploadFile } from '@woodger/antd';
 import UploadFixtures from '../browser/fixtures/UploadFixtures.svelte';
 
 describe('Upload SSR', () => {

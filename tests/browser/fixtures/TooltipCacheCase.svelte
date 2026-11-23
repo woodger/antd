@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Tooltip } from '@woodger/antd-svelte';
+  import { Tooltip } from '@woodger/antd';
   import reference from './ant-design-tooltip-content-reference.json';
 
   let { sample }: { sample: typeof reference.caches[number] } = $props();

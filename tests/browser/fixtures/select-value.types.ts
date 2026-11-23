@@ -5,7 +5,7 @@ import {
   type SelectOption,
   type SelectProps,
   type SelectValueElement
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 import type {
   ComponentProps,
   Snippet

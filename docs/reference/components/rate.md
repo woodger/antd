@@ -4,7 +4,7 @@ Rate позволяет выбрать оценку, в том числе с ш�
 
 ```svelte
 <script lang="ts">
-  import { Rate } from '@woodger/antd-svelte';
+  import { Rate } from '@woodger/antd';
   let value = $state(2.5);
 </script>
 <Rate aria-label="Оценка" {value} allowHalf

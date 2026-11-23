@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts">
-  import { ConfigProvider, type AffixConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, type AffixConfig } from '@woodger/antd';
   import { resolveAffixTheme } from './affix-theme-presets';
   import AffixThemeControl from './AffixThemeControl.svelte';
 

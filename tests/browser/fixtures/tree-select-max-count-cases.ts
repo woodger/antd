@@ -1,6 +1,6 @@
 import type {
   TreeSelectStrategy, TreeSelectValue, TreeSelectRawValue, TreeExpandAction
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 export type TreeSelectMaxCountAction =
   | { kind: 'open' | 'limit' | 'data' | 'clear'; }

@@ -1,4 +1,4 @@
-import type { MenuMode } from '@woodger/antd-svelte';
+import type { MenuMode } from '@woodger/antd';
 
 export interface MenuContainerCase {
   name: string;

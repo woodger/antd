@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import reference from './ant-design-tooltip-ref-reference.json';
   import TooltipRefCase from './TooltipRefCase.svelte';
 

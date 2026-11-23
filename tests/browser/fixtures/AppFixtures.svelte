@@ -5,7 +5,7 @@
     type AppInstance,
     type AppProps,
     type NotificationPlacement
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import AppConsumer from './AppConsumer.svelte';
   import reference from './ant-design-app-reference.json';
 

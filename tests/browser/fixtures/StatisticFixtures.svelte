@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { ConfigProvider, Statistic } from '@woodger/antd-svelte';
+  import { ConfigProvider, Statistic } from '@woodger/antd';
 
   let value = $state('112893.129');
   let precision = $state<number | undefined>();

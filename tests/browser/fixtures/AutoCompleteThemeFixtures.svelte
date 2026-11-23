@@ -2,7 +2,7 @@
   import { referenceSizeLabel } from './reference-size';
   import {
     AutoComplete, ConfigProvider, type AutoCompleteItem, type ThemeConfig
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import CompletionInput from './CompletionInput.svelte';
   import { autoCompleteThemePresets } from './auto-complete-theme-presets';
 

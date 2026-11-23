@@ -12,7 +12,7 @@
     Tooltip,
     type DrawerPlacement,
     type DrawerSize
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import PanelContent from './TabsContent.svelte';
 
   let open = $state(false);

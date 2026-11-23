@@ -8,7 +8,7 @@
 
 ```svelte
 <script lang="ts">
-  import { TypographyTitle, TypographyParagraph, TypographyLink } from '@woodger/antd-svelte';
+  import { TypographyTitle, TypographyParagraph, TypographyLink } from '@woodger/antd';
 
   let text = $state('Длинный текст статьи');
   let expanded = $state(false);

@@ -11,7 +11,7 @@ import {
   type TypographyTitleProps,
   type TypographyLinkProps,
   type TypographySemantic
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 import TypographyFixture from './TypographyFixture.svelte';
 
 describe('Typography public package', () => {

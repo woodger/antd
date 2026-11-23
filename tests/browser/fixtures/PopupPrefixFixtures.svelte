@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import PopupPrefixScope, { type PopupPrefixSample } from './PopupPrefixScope.svelte';
   import reference from './ant-design-popup-prefix-reference.json';
 

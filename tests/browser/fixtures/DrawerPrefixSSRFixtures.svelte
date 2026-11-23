@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Drawer } from '@woodger/antd-svelte';
+  import { ConfigProvider, Drawer } from '@woodger/antd';
 </script>
 
 <ConfigProvider prefixCls="suite" theme={{ cssVar: {} }}>

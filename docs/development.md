@@ -87,4 +87,4 @@ npm run cli -- css all --check
 
 Проверка реестра не запускает тесты. Ссылки `integration:` обозначают проверки
 потребителя, которые выполняются отдельно. Метаданные реестра доступны через
-`@woodger/antd-svelte/porting/registry.json`.
+`@woodger/antd/porting/registry.json`.

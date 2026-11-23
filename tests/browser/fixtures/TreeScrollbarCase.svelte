@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, TreeSelect, type TreeSelectProps, type TreeSelectRef } from '@woodger/antd-svelte';
+  import { ConfigProvider, TreeSelect, type TreeSelectProps, type TreeSelectRef } from '@woodger/antd';
   import { treeScrollbarData, type TreeScrollbarAction, type TreeScrollbarSample } from './tree-scrollbar-cases';
   let { sample }: { sample: TreeScrollbarSample } = $props();
   let mode = $state<TreeSelectProps['showScrollBar']>(untrack(() => sample.mode));

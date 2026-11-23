@@ -5,7 +5,7 @@ TimePicker позволяет выбрать время.
 ```svelte
 <script lang="ts">
   import dayjs, { type Dayjs } from 'dayjs';
-  import { TimePicker } from '@woodger/antd-svelte';
+  import { TimePicker } from '@woodger/antd';
 
   let value = $state<Dayjs | null>(dayjs('2024-09-15T10:30:15'));
 </script>

@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
-import type { PopoverProps, PopconfirmProps, TooltipAlignConfig } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import type { PopoverProps, PopconfirmProps, TooltipAlignConfig } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import PopoverAlignCase from '../browser/fixtures/PopoverAlignCase.svelte';
 import reference from '../browser/fixtures/ant-design-popover-align-reference.json';
 import type { PopoverAlignmentCase } from '../browser/fixtures/popover-align.types';

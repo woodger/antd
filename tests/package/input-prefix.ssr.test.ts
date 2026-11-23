@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Input, TextArea, type InputProps, type TextAreaProps } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Input, TextArea, type InputProps, type TextAreaProps } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-input-prefix-reference.json';
 import InputPrefixSSRFixtures from '../browser/fixtures/InputPrefixSSRFixtures.svelte';
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Slider, TypographyText, type TooltipAlignConfig } from '@woodger/antd-svelte';
+  import { Slider, TypographyText, type TooltipAlignConfig } from '@woodger/antd';
 
   let { mode }: { mode: string } = $props();
   let shifted = $state(false);

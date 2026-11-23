@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { theme } from '@woodger/antd-svelte';
+  import { theme } from '@woodger/antd';
 
   let { node, field, labelField, version, interactive, onLife }: {
     node: Record<string, unknown>;

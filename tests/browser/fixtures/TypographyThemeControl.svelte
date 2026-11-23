@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     ConfigProvider, Typography, TypographyLink, TypographyParagraph, TypographyText, TypographyTitle
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let {
     id,

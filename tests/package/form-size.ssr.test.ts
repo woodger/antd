@@ -1,5 +1,5 @@
-import type { FormProps, FormSemantic } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import type { FormProps, FormSemantic } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-form-size-reference.json';

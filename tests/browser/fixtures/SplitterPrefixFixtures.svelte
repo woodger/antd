@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import SplitterPrefixScope from './SplitterPrefixScope.svelte';
   import reference from './ant-design-splitter-prefix-reference.json';
 

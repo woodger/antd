@@ -19,7 +19,7 @@
     type UploadFile,
     type UploadListOptions,
     type UploadProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { sample }: { sample: UploadActionSample } = $props();
   let events = $state<string[]>([]);

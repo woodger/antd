@@ -3,10 +3,10 @@
   import {
     ConfigProvider, Select, TreeSelect, Cascader, CascaderPanel, Transfer,
     Mentions, Table, AutoComplete, enUS
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import type {
     RenderEmptyComponent, RenderEmptyContent, RenderEmptyHandler, TableColumn
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   export interface RenderEmptySample {
     name: string;

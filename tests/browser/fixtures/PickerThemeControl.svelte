@@ -3,7 +3,7 @@
   import {
     ConfigProvider, DatePicker, RangePicker, TimePicker, TimeRangePicker,
     enUS, type DatePickerProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let {
     id,

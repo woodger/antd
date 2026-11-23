@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, TreeSelect, type TreeSelectValue } from '@woodger/antd-svelte';
+  import { ConfigProvider, TreeSelect, type TreeSelectValue } from '@woodger/antd';
   import type { TreeSelectMaxCountSample } from './tree-select-max-count-cases';
 
   let { sample, initialOpen = false }: {

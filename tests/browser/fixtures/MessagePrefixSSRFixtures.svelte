@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, MessageHolder, createMessage } from '@woodger/antd-svelte';
+  import { ConfigProvider, MessageHolder, createMessage } from '@woodger/antd';
 
   const message = createMessage();
   message.info('First queued message');

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Drawer, Modal, Skeleton, type SkeletonAvatarSize } from '@woodger/antd-svelte';
+  import { ConfigProvider, Drawer, Modal, Skeleton, type SkeletonAvatarSize } from '@woodger/antd';
   import SkeletonContent from './SkeletonContent.svelte';
 
   let loading = $state(false);

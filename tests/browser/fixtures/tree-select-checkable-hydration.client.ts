@@ -1,6 +1,6 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { hydrate, tick, unmount } from 'svelte';
-import type { TreeSelectRef } from '@woodger/antd-svelte';
+import type { TreeSelectRef } from '@woodger/antd';
 import TreeSelectCheckableHydration from './TreeSelectCheckableHydration.svelte';
 import { treeSelectCheckableSamples } from './tree-select-checkable-cases';
 

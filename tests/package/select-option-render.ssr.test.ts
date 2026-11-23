@@ -1,4 +1,4 @@
-import { Select, type SelectFlattenOption, type SelectProps } from '@woodger/antd-svelte';
+import { Select, type SelectFlattenOption, type SelectProps } from '@woodger/antd';
 import { createRawSnippet, type Snippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';

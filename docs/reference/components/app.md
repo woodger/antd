@@ -7,7 +7,7 @@ App объединяет MessageHolder, NotificationHolder и ModalHolder. До�
 ```svelte
 <!-- Application.svelte -->
 <script lang="ts">
-  import { App, ConfigProvider } from '@woodger/antd-svelte';
+  import { App, ConfigProvider } from '@woodger/antd';
   import Actions from './Actions.svelte';
 </script>
 
@@ -21,7 +21,7 @@ App объединяет MessageHolder, NotificationHolder и ModalHolder. До�
 ```svelte
 <!-- Actions.svelte -->
 <script lang="ts">
-  import { App, Button } from '@woodger/antd-svelte';
+  import { App, Button } from '@woodger/antd';
   const { message, notification, modal } = App.useApp();
 
   async function confirm() {

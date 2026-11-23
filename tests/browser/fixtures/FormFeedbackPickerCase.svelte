@@ -2,7 +2,7 @@
   import { createRawSnippet, onMount, tick, untrack } from 'svelte';
   import dayjs, { type Dayjs } from 'dayjs';
   import { ConfigProvider, Form, FormItem, DatePicker, RangePicker, TimePicker, TimeRangePicker, InputOTP, createForm, type RangePickerValue, type FormFeedbackIcons,
-    type FormFeedbackInfo, type FormItemProps, type FormValidateStatus } from '@woodger/antd-svelte';
+    type FormFeedbackInfo, type FormItemProps, type FormValidateStatus } from '@woodger/antd';
   import FormStatusReadout from './FormStatusReadout.svelte';
   import { feedbackCaption, type FeedbackMode } from './form-feedback-cases';
   import type { FeedbackPickerSample, FeedbackPickerAction } from './form-feedback-picker-cases';

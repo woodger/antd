@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { App, ConfigProvider, type AppProps } from '@woodger/antd-svelte';
+  import { App, ConfigProvider, type AppProps } from '@woodger/antd';
   import AppConsumer from './AppConsumer.svelte';
   let { component = 'main' }: Pick<AppProps, 'component'> = $props();
 </script>

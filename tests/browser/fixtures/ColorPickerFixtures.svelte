@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import { ColorPicker, ConfigProvider, type Color, type ColorValue, type ColorFormat,
-    type ColorPickerPlacement, type ComponentSize, InputNumber } from '@woodger/antd-svelte';
+    type ColorPickerPlacement, type ComponentSize, InputNumber } from '@woodger/antd';
   let value = $state<ColorValue>('#1677ff');
   let controlled = $state(true);
   let controlOpen = $state(false);

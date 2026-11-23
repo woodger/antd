@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TreeSelectRootContext } from '@woodger/antd-svelte';
+  import type { TreeSelectRootContext } from '@woodger/antd';
   let { context, button, nativeElement = $bindable() }: {
     context: TreeSelectRootContext<HTMLElement>;
     button: boolean;

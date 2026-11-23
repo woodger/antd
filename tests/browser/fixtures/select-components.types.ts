@@ -5,7 +5,7 @@ import type {
   SelectInputAttributes, SelectInputComponent, SelectInputContext, SelectInputOwnProps, SelectInputRegistration,
   SelectLabelValue, SelectOption, SelectProps, SelectRootAttributes, SelectRootComponent,
   SelectRootContext, SelectRootRegistration, SelectSemanticInfo, SelectStyle
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 type Equal<Left, Right> = (<Value>() => Value extends Left ? 1 : 2) extends
   (<Value>() => Value extends Right ? 1 : 2) ? true : false;

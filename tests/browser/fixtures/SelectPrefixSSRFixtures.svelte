@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Select } from '@woodger/antd-svelte';
+  import { ConfigProvider, Select } from '@woodger/antd';
 
   const options = [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }];
 </script>

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';
-import { theme, type AliasToken, type MappingAlgorithm, type SeedToken } from '@woodger/antd-svelte';
+import { theme, type AliasToken, type MappingAlgorithm, type SeedToken } from '@woodger/antd';
 import ThemeTokensFixture from './ThemeTokensFixture.svelte';
 
 describe('theme design-token package API', () => {

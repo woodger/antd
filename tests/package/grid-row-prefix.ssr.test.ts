@@ -1,8 +1,8 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Row, type RowProps } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Row, type RowProps } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-grid-row-prefix-reference.json';
 import GridRowPrefixSSRFixtures from '../browser/fixtures/GridRowPrefixSSRFixtures.svelte';
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Descriptions, type DescriptionsProps, type ComponentSize } from '@woodger/antd-svelte';
+  import { Descriptions, type DescriptionsProps, type ComponentSize } from '@woodger/antd';
 
   export interface DescriptionsPrefixSample {
     id: string;

@@ -10,7 +10,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Affix, Button } from '@woodger/antd-svelte';
+  import { Affix, Button } from '@woodger/antd';
   let container = $state<HTMLDivElement>();
 </script>
 <div bind:this={container} style="height:200px;overflow:auto">

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { FlexRootProps } from '@woodger/antd-svelte';
+  import type { FlexRootProps } from '@woodger/antd';
 
   let { children, nativeElement = $bindable(), label, ...rest }: FlexRootProps & {
     label: string;

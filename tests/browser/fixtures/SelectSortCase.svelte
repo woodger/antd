@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Select, type SelectOption } from '@woodger/antd-svelte';
+  import { ConfigProvider, Select, type SelectOption } from '@woodger/antd';
   import { untrack } from 'svelte';
   import { getSelectComparator, type SelectSortSample } from './select-sort-cases';
 

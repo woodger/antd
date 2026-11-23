@@ -17,7 +17,7 @@
     Spin,
     Progress,
     Result
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   export interface StatusPrefixSample {
     id: string;

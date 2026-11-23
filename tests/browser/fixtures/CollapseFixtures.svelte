@@ -8,7 +8,7 @@
     type CollapseItem,
     type CollapseTrigger,
     type ComponentSize
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import PanelContent from './TabsContent.svelte';
 
   let activeKey = $state<CollapseActiveKey | undefined>();

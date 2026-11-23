@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Statistic, StatisticTimer, QRCode, Timeline, Steps } from '@woodger/antd-svelte';
+  import { Statistic, StatisticTimer, QRCode, Timeline, Steps } from '@woodger/antd';
 
   export interface WidgetPrefixSample {
     id: string;

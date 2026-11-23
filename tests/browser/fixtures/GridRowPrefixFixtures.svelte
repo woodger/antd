@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import GridRowPrefixScope from './GridRowPrefixScope.svelte';
   import reference from './ant-design-grid-row-prefix-reference.json';
 

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import TreeSelectMotionCase from '../browser/fixtures/TreeSelectMotionCase.svelte';
 import { treeSelectMotionSamples } from '../browser/fixtures/tree-select-motion-cases';
 import reference from '../browser/fixtures/ant-design-tree-select-motion-ssr-reference.json';

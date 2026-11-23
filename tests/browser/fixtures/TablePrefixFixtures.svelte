@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd';
   import TablePrefixScope, { type TablePrefixSample } from './TablePrefixScope.svelte';
   import reference from './ant-design-table-prefix-reference.json';
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Slider, ConfigProvider, type SliderRef, type SliderRangeConfig } from '@woodger/antd-svelte';
+  import { Slider, ConfigProvider, type SliderRef, type SliderRangeConfig } from '@woodger/antd';
   let value = $state<number[] | null>([20, 80]);
   let ref = $state<SliderRef>();
   let mounted = $state(true);

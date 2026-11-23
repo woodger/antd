@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount, untrack, type Component } from 'svelte';
-  import { Select, AutoComplete, ConfigProvider, type SelectRef } from '@woodger/antd-svelte';
+  import { Select, AutoComplete, ConfigProvider, type SelectRef } from '@woodger/antd';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import { createSelectOwnStyleInitFrames } from '../select-components-own-style-init-cases.mjs';
   import type { SelectComponentsOwnStyleSample, SelectComponentsOwnStyleAction } from '../select-components-own-style-init-cases.mjs';

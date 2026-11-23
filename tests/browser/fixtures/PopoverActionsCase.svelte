@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { AvatarGroup, ConfigProvider, Popconfirm, Popover } from '@woodger/antd-svelte';
+  import { AvatarGroup, ConfigProvider, Popconfirm, Popover } from '@woodger/antd';
   import type { PopoverActionCase } from './popover-actions.types';
 
   let { sample, source = true }: { sample: PopoverActionCase; source?: boolean } = $props();

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Affix } from '@woodger/antd-svelte';
-  import type { AffixUpdatePosition } from '@woodger/antd-svelte';
+  import { Affix } from '@woodger/antd';
+  import type { AffixUpdatePosition } from '@woodger/antd';
 
   let container = $state<HTMLDivElement>();
   let instance = $state<{ updatePosition: AffixUpdatePosition }>();

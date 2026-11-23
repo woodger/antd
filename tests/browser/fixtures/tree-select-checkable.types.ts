@@ -2,7 +2,7 @@ import type { Snippet } from 'svelte';
 import type {
   TreeSelectCheckableContent, TreeSelectConfig, TreeSelectInputContext, TreeSelectLabel, TreeSelectProps,
   TreeSelectRootContext, TreeSelectSemanticInfo
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 type Equal<Left, Right> = (<Value>() => Value extends Left ? 1 : 2) extends
   (<Value>() => Value extends Right ? 1 : 2) ? true : false;

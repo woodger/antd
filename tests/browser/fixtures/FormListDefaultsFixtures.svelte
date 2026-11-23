@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Form, FormItem, FormList, Input, createForm } from '@woodger/antd-svelte';
+  import { Button, Form, FormItem, FormList, Input, createForm } from '@woodger/antd';
 
   const form = createForm<{ users?: { name: string }[] }>({ initialValues: {} });
   const empty = createForm({ initialValues: { users: [] as { name: string }[] } });

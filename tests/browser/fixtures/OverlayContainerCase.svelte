@@ -11,7 +11,7 @@
     type ConfigProviderProps,
     type SliderTooltipConfig,
     type TooltipProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import type { OverlayContainerCase } from './overlay-container-presets';
   import OverlayContainerContent from './OverlayContainerContent.svelte';
 

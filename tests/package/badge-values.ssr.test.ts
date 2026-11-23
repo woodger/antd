@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-badge-values-reference.json';
 import BadgeApiCase from '../browser/fixtures/BadgeApiCase.svelte';
 import type { BadgeApiCase as Sample } from '../browser/fixtures/badge-api-presets';

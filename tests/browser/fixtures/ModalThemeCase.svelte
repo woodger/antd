@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd';
   import ModalThemeControl from './ModalThemeControl.svelte';
   import { resolveModalTheme, type ModalThemeSample } from './modal-theme-presets';
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AutoComplete, ConfigProvider } from '@woodger/antd-svelte';
+  import { AutoComplete, ConfigProvider } from '@woodger/antd';
   import { autoCompleteThemePresets } from '../browser/fixtures/auto-complete-theme-presets';
   import CompletionInput from '../browser/fixtures/CompletionInput.svelte';
 

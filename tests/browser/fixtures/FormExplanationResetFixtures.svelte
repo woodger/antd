@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
+  import { ConfigProvider, Form, FormItem, Input, createForm } from '@woodger/antd';
   import Counter from './FormExplanationCounter.svelte';
 
   const fields = ['a', 'b'] as const;

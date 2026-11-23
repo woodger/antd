@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Statistic, StatisticTimer, theme } from '@woodger/antd-svelte';
+  import { ConfigProvider, Statistic, StatisticTimer, theme } from '@woodger/antd';
   import {
     statisticContextConfig, statisticConfigRecord, statisticConfigProps, type StatisticConfigSample
   } from './statistic-config-cases';

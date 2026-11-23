@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { createMessage, MessageHolder, type MessageType } from '@woodger/antd-svelte';
+  import { createMessage, MessageHolder, type MessageType } from '@woodger/antd';
 
   let {
     mode = 'default',

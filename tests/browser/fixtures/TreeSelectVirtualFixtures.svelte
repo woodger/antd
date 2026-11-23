@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack, type Snippet } from 'svelte';
-  import { ConfigProvider, TreeSelect, enUS, type TreeSelectRef } from '@woodger/antd-svelte';
+  import { ConfigProvider, TreeSelect, enUS, type TreeSelectRef } from '@woodger/antd';
   import { treeSelectVirtualData, treeSelectVirtualProps, treeSelectVirtualSamples } from './tree-select-virtual-cases';
 
   let { initialSample = 'default' }: { initialSample?: string } = $props();

@@ -1,8 +1,8 @@
 import { render } from 'svelte/server';
 import type { Snippet } from 'svelte';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
-import type { TreeSelectAllowClear, TreeSelectProps, TreeSelectSuffix, TreeSelectSuffixInfo } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import type { TreeSelectAllowClear, TreeSelectProps, TreeSelectSuffix, TreeSelectSuffixInfo } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import browser from '../browser/fixtures/ant-design-tree-select-surface-reference.json';
 import reference from '../browser/fixtures/ant-design-tree-select-surface-ssr-reference.json';
 import { treeSelectSurfaceSamples } from '../browser/fixtures/tree-select-surface-cases';

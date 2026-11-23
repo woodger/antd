@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Card, CardGrid, CardMeta } from '@woodger/antd-svelte';
+  import { Card, CardGrid, CardMeta } from '@woodger/antd';
 
   let { id, kind = 'normal', priority = false }: {
     id: string;

@@ -1,6 +1,6 @@
 import type {
   StatisticConfig, StatisticProps, StatisticSemanticInfo, StatisticSemanticSlots, ThemeConfig
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 interface StatisticConfigDescriptor {
   className?: string;

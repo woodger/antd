@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Button, Input, Spin } from '@woodger/antd-svelte';
+  import { Button, Input, Spin } from '@woodger/antd';
 
   let loading = $state(false);
   let draft = $state<string | undefined>('Анна');

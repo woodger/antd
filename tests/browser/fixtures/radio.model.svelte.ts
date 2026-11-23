@@ -1,4 +1,4 @@
-import { createForm, type RadioOption, type RadioValue } from '@woodger/antd-svelte';
+import { createForm, type RadioOption, type RadioValue } from '@woodger/antd';
 
 export function createRadios() {
   const base: RadioOption<number>[] = [

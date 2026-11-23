@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Select, AutoComplete } from '@woodger/antd-svelte';
+  import { Select, AutoComplete } from '@woodger/antd';
 
   let { control, kind, capture }: {
     control: 'select' | 'autocomplete';

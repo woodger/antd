@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TreeSelectRef } from '@woodger/antd-svelte';
+  import type { TreeSelectRef } from '@woodger/antd';
   import TreeSelectMotionCase from './TreeSelectMotionCase.svelte';
   import type { TreeSelectMotionAction, TreeSelectMotionSample } from './tree-select-motion-cases';
   let { sample }: { sample: TreeSelectMotionSample } = $props();

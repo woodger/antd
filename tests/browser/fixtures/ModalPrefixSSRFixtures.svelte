@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Modal, ModalHolder, createModal } from '@woodger/antd-svelte';
+  import { ConfigProvider, Modal, ModalHolder, createModal } from '@woodger/antd';
 
   const modal = createModal();
   modal.confirm({ prefixCls: 'window', title: 'Confirmation', content: 'Body' });

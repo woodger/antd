@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     Form, FormItem, Input, createForm, type ComponentSize, type FormProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   export interface FormPrefixSample {
     id: string;

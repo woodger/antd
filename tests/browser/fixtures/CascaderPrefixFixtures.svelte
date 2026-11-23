@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd';
   import CascaderPrefixScope, { type CascaderPrefixSample } from './CascaderPrefixScope.svelte';
   import reference from './ant-design-cascader-prefix-reference.json';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { BadgeRibbon, ConfigProvider, theme } from '@woodger/antd-svelte';
-  import type { BadgeRibbonProps } from '@woodger/antd-svelte';
+  import { BadgeRibbon, ConfigProvider, theme } from '@woodger/antd';
+  import type { BadgeRibbonProps } from '@woodger/antd';
   import type { BadgeRibbonCase } from './badge-ribbon-presets';
   import BadgeRibbonState from './BadgeRibbonState.svelte';
 

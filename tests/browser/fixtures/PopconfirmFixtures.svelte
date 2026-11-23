@@ -6,7 +6,7 @@
     Popconfirm,
     Tooltip,
     type PopoverPlacement
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let open = $state(false);
   let disabled = $state(false);

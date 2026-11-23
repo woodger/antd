@@ -1,4 +1,4 @@
-import { Cascader, Select } from '@woodger/antd-svelte';
+import { Cascader, Select } from '@woodger/antd';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-select-tag-text-reference.json';

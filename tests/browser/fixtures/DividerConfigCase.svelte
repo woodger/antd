@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, Divider, Input, type DividerConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, Divider, Input, type DividerConfig } from '@woodger/antd';
   import {
     dividerConfigCases,
     dividerConfigClasses,

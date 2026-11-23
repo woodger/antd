@@ -5,7 +5,7 @@
     LayoutContent,
     LayoutFooter,
     type ThemeConfig
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import { resolveLayoutTheme, type LayoutThemeSample } from './layout-theme-presets';
   import LayoutThemeControl from './LayoutThemeControl.svelte';
 

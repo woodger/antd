@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, ConfigProvider, Table, type TableColumn } from '@woodger/antd-svelte';
+  import { Button, ConfigProvider, Table, type TableColumn } from '@woodger/antd';
   import { createExpansionControls, type ExpandedPerson } from './expandable-table.model.svelte';
 
   const controls = createExpansionControls();

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Anchor, Breadcrumb, ConfigProvider } from '@woodger/antd-svelte';
+  import { Anchor, Breadcrumb, ConfigProvider } from '@woodger/antd';
 
   let source = $state(false);
   let custom = $state(false);

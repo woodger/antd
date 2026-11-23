@@ -3,7 +3,7 @@
   import {
     Button, Upload, UploadDragger, type UploadFile,
     type UploadProps, type UploadRequestOptions
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   export interface UploadPrefixSample {
     id: string;

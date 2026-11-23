@@ -1,4 +1,4 @@
-import type { TableChange, TableKey, TableSorter } from '@woodger/antd-svelte';
+import type { TableChange, TableKey, TableSorter } from '@woodger/antd';
 
 export interface FixedPerson {
   key: number;

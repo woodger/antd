@@ -1,6 +1,6 @@
 <script lang="ts">
   import { DatePicker, RangePicker, TimePicker, TimeRangePicker,
-    type DatePickerCellRenderInfo, type DatePickerMode } from '@woodger/antd-svelte';
+    type DatePickerCellRenderInfo, type DatePickerMode } from '@woodger/antd';
   import type { Snippet } from 'svelte';
   import type { Dayjs } from 'dayjs';
 </script>

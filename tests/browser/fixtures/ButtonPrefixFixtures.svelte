@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, ConfigProvider } from '@woodger/antd-svelte';
+  import { Button, ConfigProvider } from '@woodger/antd';
   import ButtonPrefixScope, { type ButtonPrefixSample } from './ButtonPrefixScope.svelte';
   import reference from './ant-design-button-prefix-reference.json';
 

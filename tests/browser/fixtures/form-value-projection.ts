@@ -1,4 +1,4 @@
-import type { FormFieldMeta, FormInstance } from '@woodger/antd-svelte';
+import type { FormFieldMeta, FormInstance } from '@woodger/antd';
 
 export function encodeFormValues(value: unknown): unknown {
   if (value === undefined) {

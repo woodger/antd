@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd';
   import PickerPrefixScope, { type PickerPrefixKind } from './PickerPrefixScope.svelte';
   import CalendarPrefixScope from './CalendarPrefixScope.svelte';
   import ColorPickerPrefixScope from './ColorPickerPrefixScope.svelte';

@@ -3,8 +3,8 @@
   import {
     ConfigProvider, Skeleton, SkeletonAvatar, SkeletonButton, SkeletonImage,
     SkeletonInput, SkeletonNode, theme
-  } from '@woodger/antd-svelte';
-  import type { SkeletonAvatarSize, SkeletonElementProps, ThemeConfig } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
+  import type { SkeletonAvatarSize, SkeletonElementProps, ThemeConfig } from '@woodger/antd';
   import SkeletonNodeContent from './SkeletonNodeContent.svelte';
 
   export interface SkeletonElementSample {

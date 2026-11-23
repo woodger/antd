@@ -1,8 +1,8 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Dropdown, type DropdownProps } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Dropdown, type DropdownProps } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-dropdown-prefix-reference.json';
 import DropdownPrefixSSRFixtures from '../browser/fixtures/DropdownPrefixSSRFixtures.svelte';
 

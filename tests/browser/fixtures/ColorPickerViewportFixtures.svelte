@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ColorPicker, ConfigProvider, enUS } from '@woodger/antd-svelte';
+  import { ColorPicker, ConfigProvider, enUS } from '@woodger/antd';
 
   let { kind }: { kind?: string } = $props();
   let top = $state('343.64');

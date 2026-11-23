@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Pagination } from '@woodger/antd-svelte';
+  import { ConfigProvider, Pagination } from '@woodger/antd';
   import { paginationThemePresets } from '../browser/fixtures/pagination-theme-presets';
 
   let { preset = 'default', native = false, semantic = false }: {

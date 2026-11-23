@@ -6,7 +6,7 @@ ColorPicker выбирает цвет или градиент. Props и snippets
 
 ```svelte
 <script lang="ts">
-  import { ColorPicker, type ColorPickerProps } from '@woodger/antd-svelte';
+  import { ColorPicker, type ColorPickerProps } from '@woodger/antd';
   let color = $state<ColorPickerProps['value']>('#1677ff');
 </script>
 

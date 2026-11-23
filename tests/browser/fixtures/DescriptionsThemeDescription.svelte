@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Descriptions, type DescriptionsProps } from '@woodger/antd-svelte';
+  import { Descriptions, type DescriptionsProps } from '@woodger/antd';
 
   let { id, kind = 'bordered', priority = false }: {
     id: string;

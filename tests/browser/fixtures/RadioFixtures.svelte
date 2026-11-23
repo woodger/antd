@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, ConfigProvider, Form, FormItem, Radio, RadioGroup } from '@woodger/antd-svelte';
+  import { Button, ConfigProvider, Form, FormItem, Radio, RadioGroup } from '@woodger/antd';
   import { createRadios } from './radio.model.svelte';
 
   const radios = createRadios();

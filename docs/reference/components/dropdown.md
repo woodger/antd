@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Button, Dropdown } from '@woodger/antd-svelte';
+  import { Button, Dropdown } from '@woodger/antd';
 
   let open = $state(false);
   let lastAction = $state('');

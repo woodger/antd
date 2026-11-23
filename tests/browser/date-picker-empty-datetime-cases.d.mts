@@ -1,4 +1,4 @@
-import type { DatePickerTimeConfig } from '@woodger/antd-svelte';
+import type { DatePickerTimeConfig } from '@woodger/antd';
 import type { EmptyDatetimeOwner } from './date-picker-empty-datetime-native-types';
 export interface EmptyDatetimeAuthoring {
   defaultPickerValue: string; defaultOpenValue: string; format: string; clock: Omit<DatePickerTimeConfig, 'defaultOpenValue'>;

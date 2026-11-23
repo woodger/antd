@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Select, Tag, type SelectTagInfo, type SelectOption } from '@woodger/antd-svelte';
+  import { ConfigProvider, Select, Tag, type SelectTagInfo, type SelectOption } from '@woodger/antd';
   import { untrack } from 'svelte';
   import type { SelectTagRenderSample } from './select-tag-render-cases';
 

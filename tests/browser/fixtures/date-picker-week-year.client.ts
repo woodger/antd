@@ -1,7 +1,7 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { mount } from 'svelte';
 import dayjs, { type Dayjs } from 'dayjs';
-import { DatePicker, RangePicker, ruRU } from '@woodger/antd-svelte';
+import { DatePicker, RangePicker, ruRU } from '@woodger/antd';
 
 const target = document.getElementById('root');
 const model = document.getElementById('week-model');

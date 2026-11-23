@@ -6,7 +6,7 @@
     type TreeDataNode,
     type TreeKey,
     type TreeCheckedKeys
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let data = $state.raw<TreeDataNode[]>(
     [

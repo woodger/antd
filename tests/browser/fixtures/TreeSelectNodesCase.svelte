@@ -3,7 +3,7 @@
   import {
     TreeSelect, ConfigProvider, enUS, type TreeSelectLabel, type TreeSelectNode,
     type TreeSelectTreeNodeProps, type TreeSelectProps, type TreeSelectRef, type TreeEventNode
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import { treeSelectNodeSpecs, type TreeSelectNodesSample } from './tree-select-nodes-cases';
 
   let { sample }: { sample: TreeSelectNodesSample } = $props();

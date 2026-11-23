@@ -3,7 +3,7 @@
   import {
     ConfigProvider, Form, FormItem, Input, Select, createForm,
     type ComponentSize, type Variant
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import reference from './ant-design-form-slot-context-reference.json';
 
   interface Sample {

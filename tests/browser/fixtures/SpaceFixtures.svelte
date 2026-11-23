@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Space } from '@woodger/antd-svelte';
-  import { ConfigProvider } from '@woodger/antd-svelte';
-  import type { SpaceOrientation, SpaceProps, SpaceSize } from '@woodger/antd-svelte';
+  import { Space } from '@woodger/antd';
+  import { ConfigProvider } from '@woodger/antd';
+  import type { SpaceOrientation, SpaceProps, SpaceSize } from '@woodger/antd';
 
   let orientation = $state<SpaceOrientation>('horizontal');
   let preset = $state('small');

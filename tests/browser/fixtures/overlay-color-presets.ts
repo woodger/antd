@@ -1,4 +1,4 @@
-import type { TooltipColor } from '@woodger/antd-svelte';
+import type { TooltipColor } from '@woodger/antd';
 
 export interface NestedColorCase {
   name: string;

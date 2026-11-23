@@ -1,6 +1,6 @@
 import { DatePicker, RangePicker, TimePicker, TimeRangePicker,
   type DatePickerCellRenderInfo, type DatePickerMode,
-  type TimePickerCellRenderInfo, type TimePickerColumnType } from '@woodger/antd-svelte';
+  type TimePickerCellRenderInfo, type TimePickerColumnType } from '@woodger/antd';
 import type { ComponentProps, Snippet } from 'svelte';
 import type { Dayjs } from 'dayjs';
 

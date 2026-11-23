@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Checkbox } from '@woodger/antd-svelte';
+  import { Checkbox } from '@woodger/antd';
 
   let checked = $state(false);
   let indeterminate = $state(true);

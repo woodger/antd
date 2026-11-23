@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Checkbox, ConfigProvider, Form, FormItem, Pagination } from '@woodger/antd-svelte';
+  import { Button, Checkbox, ConfigProvider, Form, FormItem, Pagination } from '@woodger/antd';
   import { createCheckboxPaginationControls } from './checkbox-pagination.model.svelte';
 
   const controls = createCheckboxPaginationControls();

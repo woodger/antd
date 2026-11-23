@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import source from '../browser/fixtures/ant-design-tree-select-data-reference.json';
 import reference from '../browser/fixtures/ant-design-tree-select-data-ssr-reference.json';
 import TreeSelectDataScope from '../browser/fixtures/TreeSelectDataScope.svelte';

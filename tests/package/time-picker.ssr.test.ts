@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { TimePicker, type TimePickerProps } from '@woodger/antd-svelte';
+import { TimePicker, type TimePickerProps } from '@woodger/antd';
 import TimePickerFixtures from '../browser/fixtures/TimePickerFixtures.svelte';
 
 describe('TimePicker public package SSR', () => {

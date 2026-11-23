@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
-import { Switch, type SwitchClickEventHandler } from '@woodger/antd-svelte';
+import { Switch, type SwitchClickEventHandler } from '@woodger/antd';
 import SwitchFeaturesFixture from './SwitchFeaturesFixture.svelte';
 
 describe('Switch source package features', () => {

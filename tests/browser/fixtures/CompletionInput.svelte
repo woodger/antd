@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Input, type AutoCompleteInput } from '@woodger/antd-svelte';
+  import { Input, type AutoCompleteInput } from '@woodger/antd';
 
   let { control }: { control: AutoCompleteInput; } = $props();
   let element = $state<HTMLInputElement>();

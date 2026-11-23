@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, NotificationHolder, createNotification } from '@woodger/antd-svelte';
+  import { ConfigProvider, NotificationHolder, createNotification } from '@woodger/antd';
 
   const notification = createNotification();
   notification.info({ title: 'First queued notification' });

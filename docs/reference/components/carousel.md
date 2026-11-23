@@ -5,7 +5,7 @@ Props, snippets и refs описаны в [carousel.types.ts](../../../src/lib/c
 
 ```svelte
 <script lang="ts">
-  import { Carousel, type CarouselRef } from '@woodger/antd-svelte';
+  import { Carousel, type CarouselRef } from '@woodger/antd';
 
   let carousel = $state<CarouselRef>();
 </script>

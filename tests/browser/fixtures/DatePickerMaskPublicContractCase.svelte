@@ -9,7 +9,7 @@
     TimeRangePicker,
     enUS,
     type DatePickerFormatConfig
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   type Owner = 'date' | 'datetime' | 'range' | 'time' | 'time-range';
   type Scenario = 'mouse' | 'reject-open' | 'plain-switch' | 'cancel-key' | 'reject-typed';

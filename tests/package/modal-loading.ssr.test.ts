@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, expectTypeOf, it, vi } from 'vitest';
-import { Modal, type ModalProps } from '@woodger/antd-svelte';
+import { Modal, type ModalProps } from '@woodger/antd';
 import Case from '../browser/fixtures/ModalLoadingSSRCase.svelte';
 import { modalLoadingSamples } from '../browser/modal-loading-cases.mjs';
 import type { ModalLoadingActivity } from '../browser/modal-loading-metrics.mjs';

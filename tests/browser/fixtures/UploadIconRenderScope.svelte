@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts">
-  import { ConfigProvider, Upload, enUS, type UploadFile, type UploadProps } from '@woodger/antd-svelte';
+  import { ConfigProvider, Upload, enUS, type UploadFile, type UploadProps } from '@woodger/antd';
 
   let { sample }: { sample: UploadIconSample } = $props();
   const thumbnail = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/%3E';

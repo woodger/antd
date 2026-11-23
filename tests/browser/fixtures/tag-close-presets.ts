@@ -1,4 +1,4 @@
-import type { TagConfig, TagProps } from '@woodger/antd-svelte';
+import type { TagConfig, TagProps } from '@woodger/antd';
 
 export interface TagCloseValues extends Pick<
   TagProps, 'closeIcon' | 'closable' | 'href' | 'target' | 'disabled' | 'color'

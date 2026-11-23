@@ -1,4 +1,4 @@
-import type { SpaceConfig } from '@woodger/antd-svelte';
+import type { SpaceConfig } from '@woodger/antd';
 
 export function sourceSpaceConfig(mode?: string): SpaceConfig | undefined {
   if (!mode) {

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createRawSnippet, onDestroy, untrack, type Snippet } from 'svelte';
   import { Select, AutoComplete, ConfigProvider, enUS, type SelectProps, type AutoCompleteProps,
-    type SelectPopupRender, type SelectRef } from '@woodger/antd-svelte';
+    type SelectPopupRender, type SelectRef } from '@woodger/antd';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import { selectSurfaceSemantic } from './select-surface-cases';
   import { selectSurfaceStyleHistoryMaps, type SelectSurfaceStylePhase } from './select-surface-style-history-cases';

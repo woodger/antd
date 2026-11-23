@@ -10,8 +10,8 @@
     Select,
     SpaceAddon,
     SpaceCompact
-  } from '@woodger/antd-svelte';
-  import type { SpaceCompactSize } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
+  import type { SpaceCompactSize } from '@woodger/antd';
 
   let size = $state<SpaceCompactSize | ''>('small');
   let reverse = $state(false);

@@ -7,7 +7,7 @@ Calendar по умолчанию показывает полный месяц с
 ```svelte
 <script lang="ts">
   import dayjs from 'dayjs';
-  import { Calendar } from '@woodger/antd-svelte';
+  import { Calendar } from '@woodger/antd';
 
   let value = $state(dayjs('2024-09-15'));
 </script>

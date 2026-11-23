@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Card, ConfigProvider, Divider, Flex } from '@woodger/antd-svelte';
+  import { Card, ConfigProvider, Divider, Flex } from '@woodger/antd';
 
   let compact = $state(true);
 </script>

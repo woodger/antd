@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Splitter } from '@woodger/antd-svelte';
+  import { ConfigProvider, Splitter } from '@woodger/antd';
 
   let { id, priority = false }: { id: string; priority?: boolean; } = $props();
   let draft = $state('Draft');

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Listy } from '@woodger/antd-svelte';
+  import { ConfigProvider, Listy } from '@woodger/antd';
   let { variant = 'raw' }: { variant?: string; } = $props();
   let items = $derived(Array.from({ length: variant === 'virtual' ? 20 : 3 }, (_, index) => ({
     id: index,

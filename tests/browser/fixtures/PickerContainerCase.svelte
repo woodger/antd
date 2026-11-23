@@ -10,7 +10,7 @@
     type ConfigProviderProps,
     type DatePickerProps,
     type RangePickerValue
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import type { PickerContainerCase } from './picker-container-presets';
   import PickerContainerFooter from './PickerContainerFooter.svelte';
 

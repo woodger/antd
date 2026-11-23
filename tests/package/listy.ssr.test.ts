@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Listy, type ListyProps } from '@woodger/antd-svelte';
+import { Listy, type ListyProps } from '@woodger/antd';
 import ListyFixture from './ListyFixture.svelte';
 
 describe('Listy public package', () => {

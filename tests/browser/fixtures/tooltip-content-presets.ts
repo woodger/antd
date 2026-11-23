@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte';
-import type { TooltipContent } from '@woodger/antd-svelte';
+import type { TooltipContent } from '@woodger/antd';
 import reference from './ant-design-tooltip-content-reference.json' with { type: 'json' };
 
 type ContentValue = string | number | boolean | null | undefined

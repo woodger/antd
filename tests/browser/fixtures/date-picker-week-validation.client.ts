@@ -1,4 +1,4 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { mount } from 'svelte';
 import Case from './DatePickerWeekValidationCase.svelte';
 const target = document.getElementById('root');

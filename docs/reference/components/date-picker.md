@@ -8,7 +8,7 @@ DatePicker позволяет выбрать дату, дату со време�
 ```svelte
 <script lang="ts">
   import dayjs, { type Dayjs } from 'dayjs';
-  import { DatePicker } from '@woodger/antd-svelte';
+  import { DatePicker } from '@woodger/antd';
   let value = $state<Dayjs | null>(dayjs('2026-10-29T10:30:15'));
 </script>
 <label for="when">Дата и время</label>
@@ -53,7 +53,7 @@ onOk вызывается до onChange. Выбор периода сохран�
 
 ```svelte
 <script lang="ts">
-  import { DatePicker, RangePicker } from '@woodger/antd-svelte';
+  import { DatePicker, RangePicker } from '@woodger/antd';
 </script>
 <DatePicker picker="month" />
 <DatePicker picker="quarter" />

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createRawSnippet, onMount, tick, untrack } from 'svelte';
   import { ConfigProvider, Form, FormItem, InputOTP, TreeSelect, createForm,
-    type FormFeedbackIcons, type FormFeedbackInfo, type FormItemProps, type FormValidateStatus } from '@woodger/antd-svelte';
+    type FormFeedbackIcons, type FormFeedbackInfo, type FormItemProps, type FormValidateStatus } from '@woodger/antd';
   import FormStatusReadout from './FormStatusReadout.svelte';
   import { feedbackCaption, type FeedbackAction, type FeedbackMode, type FeedbackSample } from './form-feedback-cases';
   let { sample }: { sample: FeedbackSample } = $props();
@@ -96,7 +96,7 @@
   <FormStatusReadout scope="popup"><TreeSelect aria-label="Feedback popup control" treeData={[]} /></FormStatusReadout>
   {@render menu()}
 {/snippet}
-{#snippet suffix(info: import('@woodger/antd-svelte').TreeSelectSuffixInfo)}<b data-rendered-suffix>{String(info.open)}</b>{/snippet}
+{#snippet suffix(info: import('@woodger/antd').TreeSelectSuffixInfo)}<b data-rendered-suffix>{String(info.open)}</b>{/snippet}
 {#snippet tree()}
   <FormStatusReadout scope="control">
     <div data-feedback-control>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Row, Col } from '@woodger/antd-svelte';
+  import { Row, Col } from '@woodger/antd';
 
   let { stateful = false }: { stateful?: boolean; } = $props();
   let rowElement = $state<HTMLDivElement>();

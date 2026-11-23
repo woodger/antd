@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { BadgeRibbon, Card } from '@woodger/antd-svelte';
+  import { BadgeRibbon, Card } from '@woodger/antd';
 </script>
 
 <BadgeRibbon text="Новинка" color="green" placement="start">

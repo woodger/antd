@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Select, Tooltip } from '@woodger/antd-svelte';
+  import { Select, Tooltip } from '@woodger/antd';
   let { nested = false }: { nested?: boolean; } = $props();
   let count = $state(0);
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Timeline } from '@woodger/antd-svelte';
+  import { ConfigProvider, Timeline } from '@woodger/antd';
   import {
     timelineContextConfig, timelineConfigRecord, timelineLocalProps, timelineConfigItems,
     type TimelineConfigSample

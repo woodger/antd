@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import type { RenderEmptyComponent } from '@woodger/antd-svelte';
+import type { RenderEmptyComponent } from '@woodger/antd';
 import RenderEmptyCase from '../browser/fixtures/RenderEmptyCase.svelte';
 
 describe('ConfigProvider renderEmpty public consumers SSR', () => {

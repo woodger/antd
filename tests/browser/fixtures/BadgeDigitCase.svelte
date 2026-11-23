@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Badge, ConfigProvider } from '@woodger/antd-svelte';
-  import type { BadgeContext } from '@woodger/antd-svelte';
+  import { Badge, ConfigProvider } from '@woodger/antd';
+  import type { BadgeContext } from '@woodger/antd';
   import type { BadgeDigitCase } from './badge-digit-motion-presets';
 
   let { sample, motion = false }: { sample: BadgeDigitCase; motion?: boolean; } = $props();

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Cascader, CascaderPanel, ConfigProvider } from '@woodger/antd-svelte';
+  import { Cascader, CascaderPanel, ConfigProvider } from '@woodger/antd';
 
   const options = [{ value: 'a', label: 'Alpha' }];
 </script>

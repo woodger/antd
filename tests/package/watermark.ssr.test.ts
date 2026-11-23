@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Watermark } from '@woodger/antd-svelte';
+import { Watermark } from '@woodger/antd';
 import WatermarkFixtures from '../browser/fixtures/WatermarkFixtures.svelte';
 
 describe('Watermark SSR', () => {

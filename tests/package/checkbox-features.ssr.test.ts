@@ -6,7 +6,7 @@ import {
   CheckboxGroup,
   type CheckboxGroupProps,
   type CheckboxProps
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 import CheckboxFeaturesFixture from './CheckboxFeaturesFixture.svelte';
 
 describe('Checkbox source package features', () => {

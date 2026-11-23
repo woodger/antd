@@ -5,7 +5,7 @@
     type SegmentedOption,
     type SegmentedValue,
     type ComponentSize
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let value = $state<SegmentedValue>();
   let changes = $state(0);

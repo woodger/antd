@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, InputNumber } from '@woodger/antd-svelte';
+  import { ConfigProvider, InputNumber } from '@woodger/antd';
 </script>
 
 <ConfigProvider direction="rtl" componentSize="small" inputNumber={{

@@ -8,7 +8,7 @@
     Tag,
     type TagColor,
     type TagVariant
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let color = $state<TagColor>('blue');
   let variant = $state<TagVariant>('filled');

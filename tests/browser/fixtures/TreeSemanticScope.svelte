@@ -34,7 +34,7 @@
     type TreeProps,
     type TreeSemanticName,
     type TreeStyles
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { sample }: { sample: TreeSemanticSample } = $props();
   const slots: TreeSemanticName[] = ['root', 'item', 'itemIcon', 'itemTitle', 'itemSwitcher'];

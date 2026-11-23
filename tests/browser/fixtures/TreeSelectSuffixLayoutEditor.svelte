@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TreeSelectInputContext } from '@woodger/antd-svelte';
+  import type { TreeSelectInputContext } from '@woodger/antd';
   import type { TreeSelectSuffixLayoutKind } from './tree-select-suffix-layout-cases';
   let { context, kind, prefixWidth }: {
     context: TreeSelectInputContext<HTMLInputElement>;

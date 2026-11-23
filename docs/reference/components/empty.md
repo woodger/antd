@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Button, Empty } from '@woodger/antd-svelte';
+  import { Button, Empty } from '@woodger/antd';
 
   let hasRecords = $state(false);
 </script>

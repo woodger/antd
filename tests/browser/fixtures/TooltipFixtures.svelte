@@ -7,7 +7,7 @@
     Slider,
     Tooltip,
     type TooltipPlacement
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let open = $state(false);
   let changes = $state<boolean[]>([]);

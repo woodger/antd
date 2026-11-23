@@ -1,6 +1,6 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { hydrate, tick, unmount } from 'svelte';
-import type { TreeSelectRef } from '@woodger/antd-svelte';
+import type { TreeSelectRef } from '@woodger/antd';
 import TreeSelectInertApiHydration from './TreeSelectInertApiHydration.svelte';
 import { treeSelectInertApiSamples, type TreeSelectInertApiMode } from './tree-select-inert-api-cases';
 

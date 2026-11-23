@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ConfigProvider, Form, FormItem, TreeSelect, createForm,
-    type TreeSelectTokenSeparators, type TreeSelectValue } from '@woodger/antd-svelte';
+    type TreeSelectTokenSeparators, type TreeSelectValue } from '@woodger/antd';
   const model = createForm<{ selected: TreeSelectValue }>({ initialValues: { selected: undefined } });
   let active = $state(true);
   let multiple = $state(false);

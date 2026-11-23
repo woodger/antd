@@ -1,6 +1,6 @@
 import {
   Select, type SelectOmittedTag, type SelectProps, type SelectTagPlaceholder
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';

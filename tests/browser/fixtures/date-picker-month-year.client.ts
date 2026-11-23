@@ -1,4 +1,4 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { mount, tick, unmount, flushSync } from 'svelte';
 import Case from './DatePickerMonthYearCase.svelte';
 import type { MonthYearCapture, MonthYearOwner } from '../date-picker-month-year-native-types';

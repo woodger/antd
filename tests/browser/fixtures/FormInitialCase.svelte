@@ -1,5 +1,5 @@
 <script module lang="ts">
-  import type { NamePath } from '@woodger/antd-svelte';
+  import type { NamePath } from '@woodger/antd';
 
   export interface FormInitialSample {
     id: string;
@@ -20,7 +20,7 @@
 
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Form, FormItem, FormList, Input, createForm } from '@woodger/antd-svelte';
+  import { Form, FormItem, FormList, Input, createForm } from '@woodger/antd';
 
   let { sample }: { sample: FormInitialSample } = $props();
   const model = createForm<Record<string, unknown>>({

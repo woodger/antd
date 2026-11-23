@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import MentionsPrefixScope, { type MentionsPrefixSample } from './MentionsPrefixScope.svelte';
   import reference from './ant-design-mentions-prefix-reference.json';
 

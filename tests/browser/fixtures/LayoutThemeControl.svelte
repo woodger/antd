@@ -7,7 +7,7 @@
     LayoutFooter,
     LayoutSider,
     type LayoutCollapseType
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { id, priority, prefix = 'ant' }: {
     id: string;

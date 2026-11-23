@@ -1,5 +1,5 @@
-import { createForm, type FormInstance, type FormScrollOptions } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { createForm, type FormInstance, type FormScrollOptions } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
 import reference from '../browser/fixtures/ant-design-form-dom-observation.json';

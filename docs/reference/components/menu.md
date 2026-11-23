@@ -16,7 +16,7 @@ public per-divider prefixCls counterparts](../../../tests/browser/fixtures/ant-d
 
 ```svelte
 <script lang="ts">
-  import { Menu, type MenuItemType } from '@woodger/antd-svelte';
+  import { Menu, type MenuItemType } from '@woodger/antd';
   let selected = $state<string[]>(['overview']);
   let opened = $state<string[]>(['guides']);
   const items: MenuItemType[] = [

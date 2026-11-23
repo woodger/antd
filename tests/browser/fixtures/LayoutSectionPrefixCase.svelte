@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     ConfigProvider, Layout, LayoutHeader, LayoutContent, LayoutFooter, theme
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import { layoutConfigRecord } from './layout-config-cases';
   import {
     layoutSectionPrefix, type LayoutSectionPrefixSample

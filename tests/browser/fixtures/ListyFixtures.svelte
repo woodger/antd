@@ -5,7 +5,7 @@
     type ListyRef,
     type ListyScrollAlign,
     type ListyScrollToConfig
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let mode = $state('raw');
   let contextVirtual = $state(false);

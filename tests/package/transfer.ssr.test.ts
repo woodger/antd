@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Transfer, type TransferProps, type TransferItem, type TransferKey } from '@woodger/antd-svelte';
+import { Transfer, type TransferProps, type TransferItem, type TransferKey } from '@woodger/antd';
 import TransferFixtures from '../browser/fixtures/TransferFixtures.svelte';
 
 describe('Transfer public package SSR', () => {

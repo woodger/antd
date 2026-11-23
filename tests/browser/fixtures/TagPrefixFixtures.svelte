@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Tag } from '@woodger/antd-svelte';
+  import { Tag } from '@woodger/antd';
   import TagPrefixCase from './TagPrefixCase.svelte';
   import reference from './ant-design-tag-prefix-reference.json';
   import type { TagPrefixCase as Sample } from './tag-prefix-presets';

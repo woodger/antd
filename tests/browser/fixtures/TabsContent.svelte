@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Button, Input } from '@woodger/antd-svelte';
+  import { Button, Input } from '@woodger/antd';
 
   let { name, onLifecycle }: { name: string; onLifecycle: (event: string) => void } = $props();
   let count = $state(0);

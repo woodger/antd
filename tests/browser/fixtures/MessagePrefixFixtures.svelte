@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { App, ConfigProvider, enUS } from '@woodger/antd-svelte';
+  import { App, ConfigProvider, enUS } from '@woodger/antd';
   import MessagePrefixScope from './MessagePrefixScope.svelte';
   import MessagePrefixApp from './MessagePrefixApp.svelte';
   import type { MessagePrefixSample } from './MessagePrefixControl.svelte';

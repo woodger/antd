@@ -1,4 +1,4 @@
-import type { SelectOption, SelectSearchConfig } from '@woodger/antd-svelte';
+import type { SelectOption, SelectSearchConfig } from '@woodger/antd';
 
 export interface SelectSortSample {
   id: string;

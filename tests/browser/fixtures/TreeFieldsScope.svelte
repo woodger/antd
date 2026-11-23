@@ -1,5 +1,5 @@
 <script module lang="ts">
-  import type { TreeFieldNames, TreeKey, TreeTitleContent } from '@woodger/antd-svelte';
+  import type { TreeFieldNames, TreeKey, TreeTitleContent } from '@woodger/antd';
 
   export interface TreeFieldsNode {
     key?: TreeKey;
@@ -42,7 +42,7 @@
     Tree,
     type TreeEventNode,
     type TreeProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { sample }: { sample: TreeFieldsSample } = $props();
   let fields = $state.raw(untrack(() => sample.fields));

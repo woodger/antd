@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Splitter, type SplitterProps } from '@woodger/antd-svelte';
+  import { Splitter, type SplitterProps } from '@woodger/antd';
 
   export interface SplitterPrefixSample {
     id: string;

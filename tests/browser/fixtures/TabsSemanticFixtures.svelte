@@ -4,7 +4,7 @@
     Tabs,
     type ComponentSize,
     type TabsPlacement
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import reference from './ant-design-tabs-semantic-reference.json';
   import {
     tabsSemanticSettings,

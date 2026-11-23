@@ -6,7 +6,7 @@
     Button,
     createForm,
     type AutoCompleteItem
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let value = $state<string | undefined>('');
   let accept = $state(true);

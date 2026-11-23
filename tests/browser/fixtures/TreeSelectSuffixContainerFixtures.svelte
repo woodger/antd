@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TreeSelectRef } from '@woodger/antd-svelte';
+  import type { TreeSelectRef } from '@woodger/antd';
   import TreeSelectSuffixLayoutCase from './TreeSelectSuffixLayoutCase.svelte';
   import { treeSelectSuffixContainerSamples } from './tree-select-suffix-container-cases';
   interface Fixture {

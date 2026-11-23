@@ -14,7 +14,7 @@
 
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, Upload, enUS, type UploadFile, type UploadProps } from '@woodger/antd-svelte';
+  import { ConfigProvider, Upload, enUS, type UploadFile, type UploadProps } from '@woodger/antd';
 
   let { sample }: { sample: UploadProgressMotionSample } = $props();
   let status = $state<'uploading' | 'done'>(untrack(() =>

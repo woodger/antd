@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import FormFeedbackCascaderCase from '../browser/fixtures/FormFeedbackCascaderCase.svelte';
 import { feedbackCascaderSamples } from '../browser/fixtures/form-feedback-cascader-cases';
 import reference from '../browser/fixtures/ant-design-form-feedback-cascader-reference.json';

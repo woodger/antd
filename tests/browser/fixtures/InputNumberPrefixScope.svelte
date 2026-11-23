@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import {
     InputNumber, type ComponentSize, type InputNumberRef, type InputVariant
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   export interface NumberPrefixSample {
     id: string;

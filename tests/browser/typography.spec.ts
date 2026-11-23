@@ -1,6 +1,6 @@
 import { test, expect } from './test';
 import type { Page } from '@playwright/test';
-import registry from '@woodger/antd-svelte/porting/registry.json' with { type: 'json' };
+import registry from '@woodger/antd/porting/registry.json' with { type: 'json' };
 import actionReference from './fixtures/ant-design-typography-actions-reference.json' with { type: 'json' };
 
 const root = (page: Page) => page.locator('#typography-under-test');

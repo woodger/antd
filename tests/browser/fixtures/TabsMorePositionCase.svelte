@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, Tabs, type TabsMoreAlign, type TabsMoreProps } from '@woodger/antd-svelte';
+  import { ConfigProvider, Tabs, type TabsMoreAlign, type TabsMoreProps } from '@woodger/antd';
   import type { TabsMorePositionCase } from './tabs-more-position-presets';
   import TabsMorePositionContent from './TabsMorePositionContent.svelte';
   import './tabs-more-position.css';

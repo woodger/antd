@@ -5,7 +5,7 @@
     TimeRangePicker, ConfigProvider, Form, FormItem, createForm,
     type RangePickerValue, type TimePickerCellRenderInfo,
     type TimeRangePickerFocusOptions, type TimeRangePickerProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   dayjs.extend(utc);
   const initial: RangePickerValue = [

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createRawSnippet, onDestroy, untrack, type Snippet } from 'svelte';
   import { ConfigProvider, Select, enUS, type RenderEmptyContent, type SelectLabelRenderInfo,
-    type SelectLabelValue, type SelectProps, type SelectRef } from '@woodger/antd-svelte';
+    type SelectLabelValue, type SelectProps, type SelectRef } from '@woodger/antd';
   import { encodeSelectValue, materializeSelectValue, selectValueData, selectValueFieldNames,
     selectValueGeometry, selectValueNodeRecipe, selectValueNodeTokens, selectValueOwn, selectValueRender,
     type SelectValueAction, type SelectValueDataset, type SelectValueRenderer,

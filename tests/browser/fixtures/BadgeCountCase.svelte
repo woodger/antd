@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Badge, ConfigProvider, theme } from '@woodger/antd-svelte';
-  import type { BadgeContext, BadgeCountContext } from '@woodger/antd-svelte';
+  import { Badge, ConfigProvider, theme } from '@woodger/antd';
+  import type { BadgeContext, BadgeCountContext } from '@woodger/antd';
   import type { BadgeCountCase } from './badge-count-presets';
   import BadgeCountState from './BadgeCountState.svelte';
 

@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Checkbox, type CheckboxProps } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Checkbox, type CheckboxProps } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-checkbox-prefix-reference.json';
 import CheckboxPrefixSSRFixtures from '../browser/fixtures/CheckboxPrefixSSRFixtures.svelte';
 

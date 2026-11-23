@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, SpaceCompact, Button, enUS } from '@woodger/antd-svelte';
+  import { ConfigProvider, SpaceCompact, Button, enUS } from '@woodger/antd';
   import SelectPrefixScope, { type SelectPrefixSample } from './SelectPrefixScope.svelte';
   import reference from './ant-design-select-prefix-reference.json';
 

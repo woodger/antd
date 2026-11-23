@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Form, FormItem, FormList, Input, createForm, type NamePath } from '@woodger/antd-svelte';
+  import { Form, FormItem, FormList, Input, createForm, type NamePath } from '@woodger/antd';
 
   type Mode = 'fields' | 'empty' | 'list' | 'rows';
   const definitions: { name: NamePath; label: string }[] = [

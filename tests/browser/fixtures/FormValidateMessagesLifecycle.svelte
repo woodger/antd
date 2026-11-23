@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
+  import { Form, FormItem, Input, createForm } from '@woodger/antd';
 
   const first = createForm({ initialValues: { field: '' }, rules: { field: [{ required: true }] } });
   const second = createForm({ initialValues: { field: '' }, rules: { field: [{ required: true }] } });

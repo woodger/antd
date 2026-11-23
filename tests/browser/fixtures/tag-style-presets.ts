@@ -1,4 +1,4 @@
-import type { TagConfig, TagProps, ThemeConfig } from '@woodger/antd-svelte';
+import type { TagConfig, TagProps, ThemeConfig } from '@woodger/antd';
 
 export interface TagStyleValues extends Pick<
   TagProps, 'color' | 'variant' | 'disabled' | 'class' | 'style' | 'rootClassName'

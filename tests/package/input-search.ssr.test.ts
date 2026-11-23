@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { InputSearch } from '@woodger/antd-svelte';
+import { InputSearch } from '@woodger/antd';
 import InputSearchFixtures from '../browser/fixtures/InputSearchFixtures.svelte';
 
 describe('InputSearch public package SSR', () => {

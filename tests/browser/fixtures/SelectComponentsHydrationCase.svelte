@@ -1,5 +1,5 @@
 <script module lang="ts">
-  import type { SelectRef } from '@woodger/antd-svelte';
+  import type { SelectRef } from '@woodger/antd';
   export type HydrationSlot = 'root-string' | 'root-element' | 'input-string' | 'input-element' | 'input-composite';
   export interface HydrationSample { id: string; control: 'select' | 'autocomplete'; initialSlot: HydrationSlot; }
   export interface HydrationAction { type: string; value?: string | boolean; }
@@ -33,7 +33,7 @@
   import { onMount, untrack } from 'svelte';
   import {
     Select, AutoComplete, ConfigProvider, type SelectComponents, type SelectInputContext
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   let { sample, capture }: { sample: HydrationSample; capture: HydrationCapture } = $props();
   const ownerCapture = untrack(() => capture);
   interface Option { value: string; label: string; }

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { RadioButton, type RadioButtonProps } from '@woodger/antd-svelte';
+import { RadioButton, type RadioButtonProps } from '@woodger/antd';
 import RadioButtonFixtures from '../browser/fixtures/RadioButtonFixtures.svelte';
 
 describe('RadioButton package SSR', () => {

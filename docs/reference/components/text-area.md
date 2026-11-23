@@ -25,7 +25,7 @@ textarea; autoSize сам по себе wrapper не добавляет. Счё�
 
 ```svelte
 <script lang="ts">
-  import { TextArea } from '@woodger/antd-svelte';
+  import { TextArea } from '@woodger/antd';
   let description = $state('');
 </script>
 <label for="description">Описание</label>

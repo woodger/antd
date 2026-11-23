@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Checkbox, CheckboxGroup, Row } from '@woodger/antd-svelte';
+  import { Checkbox, CheckboxGroup, Row } from '@woodger/antd';
 
   export interface CheckboxPrefixSample {
     id: string;

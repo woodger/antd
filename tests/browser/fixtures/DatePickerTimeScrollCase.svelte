@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, untrack } from 'svelte';
   import dayjs, { type Dayjs } from 'dayjs';
-  import { ConfigProvider, DatePicker, enUS, type DatePickerProps } from '@woodger/antd-svelte';
+  import { ConfigProvider, DatePicker, enUS, type DatePickerProps } from '@woodger/antd';
   import { createDatePickerPresetsRecorder } from '../date-picker-presets-recorder.mjs';
   import type { DateMap, DateRole, NativeControl, OwnerCapture, ScrollSample } from '../date-picker-time-scroll-native-types';
 

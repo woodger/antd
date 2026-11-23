@@ -4,7 +4,7 @@
     ConfigProvider, Form, FormItem, Input, createForm, enUS,
     type FormConfig, type FormItemTooltip, type FormRequiredMarkInfo,
     type FormTooltipProps, type RenderEmptyContent
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import reference from './ant-design-form-tooltip-reference.json';
 
   type IconName = 'global' | 'local' | 'item';

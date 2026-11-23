@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Form, FormItem, FormList, FormErrorList, createForm } from '@woodger/antd-svelte';
+  import { ConfigProvider, Form, FormItem, FormList, FormErrorList, createForm } from '@woodger/antd';
 
   const model = createForm({ initialValues: { rows: [] } });
   const mediaModel = createForm({ initialValues: {} });

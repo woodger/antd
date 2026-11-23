@@ -11,7 +11,7 @@
     type TabsMoreRenderInfo,
     type TabsPlacement,
     type TabsType
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let type = $state<TabsType>('line');
   let placement = $state<TabsPlacement>('top');

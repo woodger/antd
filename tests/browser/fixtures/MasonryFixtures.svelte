@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Masonry, type MasonryItemType } from '@woodger/antd-svelte';
+  import { ConfigProvider, Masonry, type MasonryItemType } from '@woodger/antd';
 
   type Data = { height: number; label: string; };
   let items = $state<MasonryItemType<Data>[]>([

@@ -1,4 +1,4 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { hydrate, tick, unmount } from 'svelte';
 import FormFeedbackControlCase from './FormFeedbackControlCase.svelte';
 import { feedbackControlSamples } from './form-feedback-control-cases';

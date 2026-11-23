@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Avatar, AvatarGroup, ConfigProvider, Image, theme, type AvatarGroupItem } from '@woodger/antd-svelte';
+  import { Avatar, AvatarGroup, ConfigProvider, Image, theme, type AvatarGroupItem } from '@woodger/antd';
   import type { AvatarSourceCase } from './avatar-source-presets';
   import AvatarSourceState from './AvatarSourceState.svelte';
 

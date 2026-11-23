@@ -4,7 +4,7 @@
     Segmented,
     type SegmentedSemanticInfo,
     type SegmentedValue
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { emptyStyle = false }: { emptyStyle?: boolean; } = $props();
 

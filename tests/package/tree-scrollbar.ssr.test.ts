@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import TreeScrollbarFixtures from '../browser/fixtures/TreeScrollbarFixtures.svelte';
 import reference from '../browser/fixtures/ant-design-tree-scrollbar-reference.json';
 it('pins inherited TreeSelect no-op behavior and keeps a sensitive Select positive control', () => {

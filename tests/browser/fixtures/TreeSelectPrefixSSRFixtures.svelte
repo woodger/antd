@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, TreeSelect } from '@woodger/antd-svelte';
+  import { ConfigProvider, TreeSelect } from '@woodger/antd';
 
   const treeData = [{ value: 'a', title: 'Alpha' }];
 </script>

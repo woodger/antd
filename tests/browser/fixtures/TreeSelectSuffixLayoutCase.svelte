@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { ConfigProvider, TreeSelect, type TreeSelectInputContext, type TreeSelectLabeledValue,
-    type TreeSelectRef, type TreeSelectTagInfo } from '@woodger/antd-svelte';
+    type TreeSelectRef, type TreeSelectTagInfo } from '@woodger/antd';
   import TreeSelectSuffixLayoutEditor from './TreeSelectSuffixLayoutEditor.svelte';
   import type { TreeSelectSuffixLayoutAction, TreeSelectSuffixLayoutSample } from './tree-select-suffix-layout-cases';
   let { sample, popupContainer }: { sample: TreeSelectSuffixLayoutSample;

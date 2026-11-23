@@ -5,7 +5,7 @@ TimeRangePicker позволяет выбрать диапазон времен�
 ```svelte
 <script lang="ts">
   import dayjs from 'dayjs';
-  import { TimeRangePicker, type RangePickerValue } from '@woodger/antd-svelte';
+  import { TimeRangePicker, type RangePickerValue } from '@woodger/antd';
 
   let value = $state<RangePickerValue | null>([
     dayjs('2024-09-15T09:00:00'), dayjs('2024-09-15T18:00:00')

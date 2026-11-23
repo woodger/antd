@@ -4,7 +4,7 @@
   import 'dayjs/locale/en-gb.js';
   import { ConfigProvider, DatePicker, RangePicker, enUS, type DatePickerProps,
     type RangePickerProps, type RangePickerValue, type DatePickerPreset,
-    type RangePickerPreset } from '@woodger/antd-svelte';
+    type RangePickerPreset } from '@woodger/antd';
   import { createDatePickerPresetsRecorder } from '../date-picker-presets-recorder.mjs';
   import { samples } from '../date-picker-week-cases.mjs';
   import type { WeekAuthoredDateName, WeekControlName } from '../date-picker-week-cases.mjs';

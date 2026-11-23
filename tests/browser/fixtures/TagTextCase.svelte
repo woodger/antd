@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Cascader, ConfigProvider, Select, type CascaderValue } from '@woodger/antd-svelte';
+  import { Cascader, ConfigProvider, Select, type CascaderValue } from '@woodger/antd';
   import { getTagTextLimit, type TagTextSample } from './tag-text-cases';
 
   let { sample }: { sample: TagTextSample } = $props();

@@ -4,7 +4,7 @@
     AutoComplete, ConfigProvider, Select, enUS,
     type AutoCompleteItem, type SelectFlattenOption, type SelectRef,
     type SelectScrollConfig, type SelectScrollOffsetInfo
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import {
     selectVirtualChildHeight, selectVirtualData, selectVirtualGeometry, selectVirtualOptions,
     selectVirtualProps, selectVirtualProviderProps, selectVirtualReceipts,

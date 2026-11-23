@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-tabs-semantic-reference.json';
 import type { TabsSemanticTrace } from '../browser/fixtures/tabs-semantic-presets';
 import TabsSemanticFixture from './TabsSemanticFixture.svelte';

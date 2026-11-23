@@ -8,7 +8,7 @@
     Tooltip,
     type PopoverPlacement,
     type PopoverTrigger
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let open = $state(false);
   let changes = $state<boolean[]>([]);

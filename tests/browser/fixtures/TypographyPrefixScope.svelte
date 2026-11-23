@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     Typography, TypographyText, TypographyTitle, TypographyParagraph, TypographyLink
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   export interface TypographyPrefixSample {
     id: string;

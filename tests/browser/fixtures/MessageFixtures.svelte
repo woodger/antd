@@ -8,7 +8,7 @@
     type MessageConfig,
     type MessageHandle,
     type MessageType
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let message = $state.raw(createMessage({ maxCount: 3 }));
   const secondary = createMessage({ duration: 0 });

@@ -1,5 +1,5 @@
 <script module lang="ts">
-  import type { ThemeConfig } from '@woodger/antd-svelte';
+  import type { ThemeConfig } from '@woodger/antd';
 
   export interface ResponsiveControlsSample {
     id: string;
@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-  import { Masonry, Pagination, type MasonryItemType } from '@woodger/antd-svelte';
+  import { Masonry, Pagination, type MasonryItemType } from '@woodger/antd';
 
   let { sample, kind }: { sample: ResponsiveControlsSample; kind?: 'masonry' | 'pagination' } = $props();
   const items: MasonryItemType<{ height: number }>[] = [70, 40, 90, 30, 55]

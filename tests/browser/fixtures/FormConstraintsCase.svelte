@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
+  import { Form, FormItem, Input, createForm } from '@woodger/antd';
   import { formConstraintsRule, type FormConstraintsSample } from './form-constraints-cases';
 
   let { sample }: { sample: FormConstraintsSample } = $props();

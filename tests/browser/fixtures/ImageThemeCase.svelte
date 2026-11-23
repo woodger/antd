@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Image, ImagePreviewGroup, Modal, type ImageTransform } from '@woodger/antd-svelte';
+  import { ConfigProvider, Image, ImagePreviewGroup, Modal, type ImageTransform } from '@woodger/antd';
   import { resolveImageTheme, type ImageThemeSample } from './image-theme-presets';
   import { imageOne, imageTwo } from './image-data';
 

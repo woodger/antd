@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Splitter, type SplitterProps } from '@woodger/antd-svelte';
+import { Splitter, type SplitterProps } from '@woodger/antd';
 import SplitterFixtures from '../browser/fixtures/SplitterFixtures.svelte';
 
 describe('Splitter package SSR', () => {

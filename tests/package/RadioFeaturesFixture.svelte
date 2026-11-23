@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Radio, RadioGroup } from '@woodger/antd-svelte';
+  import { ConfigProvider, Radio, RadioGroup } from '@woodger/antd';
 </script>
 
 {#snippet richLabel()}<strong>Rich option</strong>{/snippet}

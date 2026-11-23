@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, ConfigProvider, Dropdown } from '@woodger/antd-svelte';
+  import { Button, ConfigProvider, Dropdown } from '@woodger/antd';
 
   let { getPopupContainer }: { getPopupContainer?: () => HTMLElement } = $props();
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { theme, type MappingAlgorithm } from '@woodger/antd-svelte';
+  import { theme, type MappingAlgorithm } from '@woodger/antd';
 
   let algorithm = $state('default');
   let colorPrimary = $state('#1677ff');

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy, untrack } from 'svelte';
-  import { Select, ConfigProvider, enUS, type SelectProps, type SelectRef } from '@woodger/antd-svelte';
+  import { Select, ConfigProvider, enUS, type SelectProps, type SelectRef } from '@woodger/antd';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import type { SelectSurfaceInputWidthOwnSample, SelectSurfaceInputWidthOwnAction,
     SelectSurfaceInputWidthKind } from '../select-surface-input-width-own-cases.mjs';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Menu, type MenuItemType } from '@woodger/antd-svelte';
+  import { Menu, type MenuItemType } from '@woodger/antd';
 
   export interface MenuPrefixSample {
     id: string;

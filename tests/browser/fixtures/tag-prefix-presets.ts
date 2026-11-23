@@ -1,4 +1,4 @@
-import type { TagColor, TagVariant, TagConfig, ThemeConfig } from '@woodger/antd-svelte';
+import type { TagColor, TagVariant, TagConfig, ThemeConfig } from '@woodger/antd';
 
 export interface TagPrefixValues {
   prefixCls?: string;

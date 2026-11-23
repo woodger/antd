@@ -3,7 +3,7 @@
     ConfigProvider, Transfer, Form, FormItem, createForm,
     type TransferKey, type TransferItem, type TransferStatus, type TransferActionInfo,
     type TransferListBodyProps, type TransferListProps, type TransferConfig
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   interface Record extends TransferItem {
     key: TransferKey;

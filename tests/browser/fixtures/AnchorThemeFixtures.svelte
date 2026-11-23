@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Anchor, ConfigProvider, type AnchorItem, type ThemeConfig } from '@woodger/antd-svelte';
+  import { Anchor, ConfigProvider, type AnchorItem, type ThemeConfig } from '@woodger/antd';
   import { anchorThemePresets } from './anchor-theme-presets';
 
   let preset = $state('default');

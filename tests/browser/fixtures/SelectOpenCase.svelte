@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Select, type RenderEmptyContent } from '@woodger/antd-svelte';
+  import { Select, type RenderEmptyContent } from '@woodger/antd';
 
   export interface SelectOpenSample {
     id: string;

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Select, type SelectProps } from '@woodger/antd-svelte';
+  import { Select, type SelectProps } from '@woodger/antd';
 
   export interface SelectPrefixSample {
     id: string;

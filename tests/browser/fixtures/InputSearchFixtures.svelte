@@ -9,7 +9,7 @@
     createForm,
     type InputSearchButtonContext,
     type InputVariant
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let value = $state('query');
   let mounted = $state(true);

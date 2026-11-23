@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import MenuPrefixScope, { type MenuPrefixSample } from './MenuPrefixScope.svelte';
   import reference from './ant-design-menu-prefix-reference.json';
 

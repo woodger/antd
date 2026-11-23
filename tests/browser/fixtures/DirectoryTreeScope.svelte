@@ -1,5 +1,5 @@
 <script module lang="ts">
-  import type { TreeKey } from '@woodger/antd-svelte';
+  import type { TreeKey } from '@woodger/antd';
   export interface DirectorySample {
     id: string;
     actions: { title: string; modifier?: string; double?: boolean; }[];
@@ -30,7 +30,7 @@
     DirectoryTree,
     type TreeEventNode,
     type TreeExpandAction
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { sample }: { sample: DirectorySample } = $props();
   let controlled = $state(untrack(() => Boolean(sample.controlled)));

@@ -1,4 +1,4 @@
-import type { BadgeStatus } from '@woodger/antd-svelte';
+import type { BadgeStatus } from '@woodger/antd';
 
 export interface BadgeZoomValues {
   count?: number | string | null;

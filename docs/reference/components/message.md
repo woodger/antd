@@ -5,7 +5,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Button, MessageHolder, createMessage } from '@woodger/antd-svelte';
+  import { Button, MessageHolder, createMessage } from '@woodger/antd';
 
   const message = createMessage({ maxCount: 3 });
 

@@ -1,4 +1,4 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { mount, tick, unmount, flushSync } from 'svelte';
 import Case from './DatePickerEmptyDatetimeCase.svelte';
 import type { EmptyDatetimeCapture, EmptyDatetimeOwner } from '../date-picker-empty-datetime-native-types';

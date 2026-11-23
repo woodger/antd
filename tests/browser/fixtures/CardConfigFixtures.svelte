@@ -2,7 +2,7 @@
   import {
     ConfigProvider, Form, Card, CardMeta, Input, createForm, theme,
     type CardConfig, type CardMetaConfig, type CardProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import { cardConfigProfile, cardMetaConfigProfile } from './card-config-presets';
   import reference from './ant-design-card-config-reference.json' with { type: 'json' };
 

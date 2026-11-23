@@ -2,7 +2,7 @@
   import { untrack } from 'svelte';
   import {
     Cascader, CascaderPanel, type CascaderOption, type CascaderProps, type CascaderValue
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   export interface CascaderPrefixSample {
     id: string;

@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { BorderBeam, type BorderBeamProps } from '@woodger/antd-svelte';
+import { BorderBeam, type BorderBeamProps } from '@woodger/antd';
 import BorderBeamFixtures from '../browser/fixtures/BorderBeamFixtures.svelte';
 
 describe('BorderBeam package SSR', () => {

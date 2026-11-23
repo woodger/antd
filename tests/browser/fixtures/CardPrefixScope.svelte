@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     Card, CardGrid, CardMeta, TypographyTitle, type CardProps, type ComponentSize
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   export interface CardPrefixSample {
     id: string;

@@ -1,4 +1,4 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { mount, tick, unmount } from 'svelte';
 import SelectVirtualEdgeCase from './SelectVirtualEdgeCase.svelte';
 import { selectVirtualEdgeSamples } from './select-virtual-edge-cases';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, TreeSelect } from '@woodger/antd-svelte';
+  import { ConfigProvider, TreeSelect } from '@woodger/antd';
   import { treeSelectThemePresets } from '../browser/fixtures/tree-select-theme-presets';
 
   let { preset = 'default', native = false }: { preset?: string; native?: boolean; } = $props();

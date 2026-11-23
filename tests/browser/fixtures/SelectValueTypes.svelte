@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Select, type SelectLabelValue } from '@woodger/antd-svelte';
+  import { Select, type SelectLabelValue } from '@woodger/antd';
 
   interface Option {
     value: number;

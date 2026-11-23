@@ -3,7 +3,7 @@
     ConfigProvider, Tree,
     type TreeEventNode, type TreeDraggableConfig, type TreeAllowDrop, type TreeDragInfo,
     type TreeDropInfo
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   interface Record {
     id: string | number | bigint;

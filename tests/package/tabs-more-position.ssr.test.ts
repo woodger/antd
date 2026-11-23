@@ -5,8 +5,8 @@ import {
   type TabsMoreAlign,
   type TabsMoreOffset,
   type TabsMorePlacements
-} from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+} from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-tabs-more-position-reference.json';
 import TabsMorePositionCase from '../browser/fixtures/TabsMorePositionCase.svelte';
 import type { TabsMorePositionCase as PositionCase } from '../browser/fixtures/tabs-more-position-presets';

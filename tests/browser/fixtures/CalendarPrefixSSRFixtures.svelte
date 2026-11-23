@@ -1,6 +1,6 @@
 <script lang="ts">
   import dayjs from 'dayjs';
-  import { Calendar, ConfigProvider } from '@woodger/antd-svelte';
+  import { Calendar, ConfigProvider } from '@woodger/antd';
 
   const value = dayjs('2024-09-15T12:34:56.789Z');
 </script>

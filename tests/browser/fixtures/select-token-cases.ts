@@ -1,4 +1,4 @@
-import type { SelectTokenSeparators } from '@woodger/antd-svelte';
+import type { SelectTokenSeparators } from '@woodger/antd';
 import type { SelectTagsSample } from './select-tags-cases';
 
 export interface SelectTokenSample extends SelectTagsSample {

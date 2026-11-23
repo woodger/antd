@@ -1,4 +1,4 @@
-import type { TableChange, TableFilters, TableKey, TableSorter } from '@woodger/antd-svelte';
+import type { TableChange, TableFilters, TableKey, TableSorter } from '@woodger/antd';
 
 export interface FilterPerson {
   key: number;

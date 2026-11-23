@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import { Mentions } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Mentions } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-mentions-popup-reference.json';
 import MentionsPopupCase from '../browser/fixtures/MentionsPopupCase.svelte';
 import type { MentionsPopupCase as PopupCase } from '../browser/fixtures/mentions-popup-presets';

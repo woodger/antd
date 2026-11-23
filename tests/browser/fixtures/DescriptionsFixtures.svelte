@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Descriptions } from '@woodger/antd-svelte';
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { Descriptions } from '@woodger/antd';
+  import { ConfigProvider } from '@woodger/antd';
 
   let bordered = $state(false);
   let vertical = $state(false);

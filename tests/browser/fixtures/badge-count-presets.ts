@@ -1,4 +1,4 @@
-import type { BadgeProps, ThemeConfig } from '@woodger/antd-svelte';
+import type { BadgeProps, ThemeConfig } from '@woodger/antd';
 
 export interface BadgeCountCase extends Omit<BadgeProps, 'count' | 'children'> {
   name: string;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { CheckableTag, ConfigProvider, Tag, type TagSemantic } from '@woodger/antd-svelte';
+  import { CheckableTag, ConfigProvider, Tag, type TagSemantic } from '@woodger/antd';
   import type { TagStyleCase, TagStyleValues } from './tag-style-presets';
 
   let { sample, changed = false }: { sample: TagStyleCase; changed?: boolean } = $props();

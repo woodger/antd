@@ -1,4 +1,4 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { mount, tick, unmount, flushSync } from 'svelte';
 import Case from './SelectComponentsTagCloseHandlesCase.svelte';
 import { selectTagCloseHandleSamples } from '../select-components-tag-close-handles-cases.mjs';

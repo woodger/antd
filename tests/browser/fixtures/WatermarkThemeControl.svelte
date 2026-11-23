@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Watermark, Modal, Drawer, type WatermarkContent } from '@woodger/antd-svelte';
+  import { Watermark, Modal, Drawer, type WatermarkContent } from '@woodger/antd';
 
   let { id }: { id: string; } = $props();
   let nativeElement = $state<HTMLDivElement>();

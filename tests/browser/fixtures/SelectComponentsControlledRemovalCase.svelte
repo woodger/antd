@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, untrack } from 'svelte';
-  import { Select, AutoComplete, ConfigProvider, type SelectRef, type SelectInputOwnProps } from '@woodger/antd-svelte';
+  import { Select, AutoComplete, ConfigProvider, type SelectRef, type SelectInputOwnProps } from '@woodger/antd';
   import { controlledRemovalFrames, readControlledRemovalNode, type ControlledRemovalSample,
     type ControlledRemovalPhase, type ControlledRemovalCapture, type ControlledRemovalNode } from '../select-components-controlled-removal-cases';
   let { sample, capture }: { sample: ControlledRemovalSample; capture: ControlledRemovalCapture } = $props();

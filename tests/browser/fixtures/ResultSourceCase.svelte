@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { ResultProps } from '@woodger/antd-svelte';
+  import type { ResultProps } from '@woodger/antd';
 
   export interface ResultSourceSample {
     name: string;
@@ -16,10 +16,10 @@
 </script>
 
 <script lang="ts">
-  import { ConfigProvider, Result, theme } from '@woodger/antd-svelte';
+  import { ConfigProvider, Result, theme } from '@woodger/antd';
   import type {
     ResultConfig, ResultSemanticInfo, ResultSemanticSlots, ResultRef, ThemeConfig
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { sample, mounted = true }: { sample: ResultSourceSample; mounted?: boolean; } = $props();
   let nativeElement = $state<HTMLDivElement>();

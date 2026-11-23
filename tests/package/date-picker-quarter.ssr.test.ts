@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { render } from 'svelte/server';
 import { expect, it } from 'vitest';
-import { DatePicker, RangePicker, enUS } from '@woodger/antd-svelte';
+import { DatePicker, RangePicker, enUS } from '@woodger/antd';
 
 const start = dayjs('2024-01-31T16:37:59.456');
 const end = dayjs('2026-11-20T09:12:34.567');

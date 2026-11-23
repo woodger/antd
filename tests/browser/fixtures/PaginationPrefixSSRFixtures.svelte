@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Pagination } from '@woodger/antd-svelte';
+  import { ConfigProvider, Pagination } from '@woodger/antd';
 </script>
 
 <ConfigProvider prefixCls="suite" theme={{ cssVar: {} }}>

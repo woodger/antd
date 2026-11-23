@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import MasonryPrefixScope, { type MasonryPrefixSample } from './MasonryPrefixScope.svelte';
   import reference from './ant-design-masonry-prefix-reference.json';
 

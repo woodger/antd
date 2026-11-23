@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, QRCode, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, QRCode, type ThemeConfig } from '@woodger/antd';
   import type { QRCodePrefixSample } from './qrcode-prefix-cases';
 
   let { sample }: { sample: QRCodePrefixSample } = $props();

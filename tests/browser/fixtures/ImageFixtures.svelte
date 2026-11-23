@@ -8,7 +8,7 @@
     type ImageTransformAction,
     type ImagePreviewRenderInfo,
     type ImageInfo
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import { imageOne, imageTwo, imageInvalid } from './image-data';
 
   let open = $state(false);

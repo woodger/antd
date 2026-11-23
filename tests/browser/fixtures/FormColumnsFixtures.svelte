@@ -3,7 +3,7 @@
   import {
     ConfigProvider, Form, FormItem, Input, createForm,
     type FormProps, type FormItemProps
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import reference from './ant-design-form-columns-reference.json';
 
   interface Sample {

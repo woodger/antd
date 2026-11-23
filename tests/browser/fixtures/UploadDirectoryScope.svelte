@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts">
-  import { Upload, UploadDragger, type UploadProps } from '@woodger/antd-svelte';
+  import { Upload, UploadDragger, type UploadProps } from '@woodger/antd';
 
   let { sample, dragger = false, disabled = false, onBefore }: {
     sample: UploadDirectorySample;

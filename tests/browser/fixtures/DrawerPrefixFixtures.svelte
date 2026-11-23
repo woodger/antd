@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd';
   import DrawerPrefixScope, { type DrawerPrefixSample } from './DrawerPrefixScope.svelte';
   import reference from './ant-design-drawer-prefix-reference.json';
 

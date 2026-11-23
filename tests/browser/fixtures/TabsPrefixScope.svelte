@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { Tabs, type TabsItem, type TabsMoreProps, type TabsType, type TabsProps } from '@woodger/antd-svelte';
+  import { Tabs, type TabsItem, type TabsMoreProps, type TabsType, type TabsProps } from '@woodger/antd';
 
   export interface TabsPrefixSample {
     id: string;

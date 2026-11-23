@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, untrack, type Snippet } from 'svelte';
-  import { ConfigProvider, Tabs, Select, type TabsMoreProps } from '@woodger/antd-svelte';
+  import { ConfigProvider, Tabs, Select, type TabsMoreProps } from '@woodger/antd';
   import type { TabsMoreRuntimeCase } from './tabs-more-runtime-presets';
   import TabsMoreRuntimeContent from './TabsMoreRuntimeContent.svelte';
   import './tabs-more-runtime.css';

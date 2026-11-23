@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ConfigProvider, Listy, theme,
-    type ThemeConfig } from '@woodger/antd-svelte';
+    type ThemeConfig } from '@woodger/antd';
   import reference from './ant-design-list-links-reference.json';
 
   let preset = $state('default');

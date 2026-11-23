@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Badge, Radio, RadioButton, RadioGroup, type ComponentSize } from '@woodger/antd-svelte';
+  import { Badge, Radio, RadioButton, RadioGroup, type ComponentSize } from '@woodger/antd';
 
   export interface RadioPrefixSample {
     id: string;

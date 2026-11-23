@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Rate } from '@woodger/antd-svelte';
+  import { ConfigProvider, Rate } from '@woodger/antd';
 
   let { id, priority = false }: { id: string; priority?: boolean; } = $props();
   let value = $state(2.5);

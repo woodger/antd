@@ -1,4 +1,4 @@
-import type { AnchorConfig, AnchorSlots } from '@woodger/antd-svelte';
+import type { AnchorConfig, AnchorSlots } from '@woodger/antd';
 
 export function anchorConfigProfile(name?: string, local = false): AnchorConfig {
   if (!name || name === 'empty') {

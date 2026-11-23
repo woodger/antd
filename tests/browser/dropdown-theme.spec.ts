@@ -1,6 +1,6 @@
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-dropdown-metrics.json' with { type: 'json' };
-import type { DropdownPlacement } from '@woodger/antd-svelte';
+import type { DropdownPlacement } from '@woodger/antd';
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 1400 });

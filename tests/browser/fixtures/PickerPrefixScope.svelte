@@ -1,5 +1,5 @@
 <script module lang="ts">
-  import type { DatePickerProps } from '@woodger/antd-svelte';
+  import type { DatePickerProps } from '@woodger/antd';
 
   export type PickerPrefixKind = 'date' | 'datetime' | 'range' | 'datetime-range'
     | 'time' | 'time-range';
@@ -30,7 +30,7 @@
   import { untrack } from 'svelte';
   import {
     DatePicker, RangePicker, TimePicker, TimeRangePicker
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let { sample, rootPrefix, local = true }: {
     sample: PickerPrefixSample;

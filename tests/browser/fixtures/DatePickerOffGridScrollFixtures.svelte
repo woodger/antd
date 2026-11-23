@@ -1,6 +1,6 @@
 <script lang="ts">
   import dayjs from 'dayjs';
-  import { ConfigProvider, DatePicker, enUS } from '@woodger/antd-svelte';
+  import { ConfigProvider, DatePicker, enUS } from '@woodger/antd';
 
   const value = dayjs('2024-06-13T16:37:00.000');
   const showTime = { format: 'HH:mm', minuteStep: 15, hideDisabledOptions: false };

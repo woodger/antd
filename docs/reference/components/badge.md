@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Badge, Button } from '@woodger/antd-svelte';
+  import { Badge, Button } from '@woodger/antd';
 
   let unread = $state(120);
 </script>
@@ -67,7 +67,7 @@ title продолжает обновляться. Собственный animat
 
 ```svelte
 <script lang="ts">
-  import { Badge, type BadgeCountContext } from '@woodger/antd-svelte';
+  import { Badge, type BadgeCountContext } from '@woodger/antd';
 </script>
 
 {#snippet clock(attributes: BadgeCountContext)}<span {...attributes} aria-label="Ожидает ответа">◷</span>{/snippet}

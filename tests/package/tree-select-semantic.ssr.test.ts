@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
-import type { TreeSelectClassNames, TreeSelectProps, TreeSelectSemanticInfo, TreeSelectStyles } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import type { TreeSelectClassNames, TreeSelectProps, TreeSelectSemanticInfo, TreeSelectStyles } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import browser from '../browser/fixtures/ant-design-tree-select-semantic-reference.json';
 import reference from '../browser/fixtures/ant-design-tree-select-semantic-ssr-reference.json';
 import { treeSelectSemanticSamples } from '../browser/fixtures/tree-select-semantic-cases';

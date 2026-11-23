@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Skeleton } from '@woodger/antd-svelte';
+  import { Skeleton } from '@woodger/antd';
 
   let loading = $state(true);
 </script>

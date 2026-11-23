@@ -1,7 +1,7 @@
-import '@woodger/antd-svelte/styles.css';
+import '@woodger/antd/styles.css';
 import { mount } from 'svelte';
 import dayjs from 'dayjs';
-import { DatePicker, enUS } from '@woodger/antd-svelte';
+import { DatePicker, enUS } from '@woodger/antd';
 
 const value = dayjs('2024-05-20T16:37:59.456');
 const selectionEvents: string[] = [], navigationEvents: string[] = [];

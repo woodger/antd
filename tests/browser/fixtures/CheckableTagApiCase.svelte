@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { CheckableTag } from '@woodger/antd-svelte';
+  import { CheckableTag } from '@woodger/antd';
   import type { CheckableTagApiCase } from './checkable-tag-api-presets';
 
   let { sample, aliases = false, direction }: {

@@ -1,4 +1,4 @@
-import { Modal, type ModalContent, type ModalProps } from '@woodger/antd-svelte';
+import { Modal, type ModalContent, type ModalProps } from '@woodger/antd';
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';

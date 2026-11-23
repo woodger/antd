@@ -1,4 +1,4 @@
-import { createForm, type SelectOption } from '@woodger/antd-svelte';
+import { createForm, type SelectOption } from '@woodger/antd';
 
 export function createMultipleControls() {
   const base: SelectOption<number>[] = [

@@ -1,6 +1,6 @@
 import type {
   StepsConfig, StepsDataItem, StepsProps, StepsSemanticSlots, TimelineConfig, ThemeConfig
-} from '@woodger/antd-svelte';
+} from '@woodger/antd';
 
 interface StepsConfigDescriptor {
   className?: string;

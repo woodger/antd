@@ -9,7 +9,7 @@
     type ProgressLineSize,
     type ProgressStatus,
     type ProgressType
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let type = $state<ProgressType>('line');
   let percent = $state<number | undefined>(42.5);

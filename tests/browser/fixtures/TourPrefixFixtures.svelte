@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS } from '@woodger/antd-svelte';
+  import { ConfigProvider, enUS } from '@woodger/antd';
   import TourPrefixScope, { type TourPrefixSample } from './TourPrefixScope.svelte';
   import reference from './ant-design-tour-prefix-reference.json';
 

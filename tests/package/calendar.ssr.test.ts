@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import { Calendar, generateCalendar, type CalendarProps } from '@woodger/antd-svelte';
+import { Calendar, generateCalendar, type CalendarProps } from '@woodger/antd';
 import dayjs from 'dayjs';
 import CalendarFixtures from '../browser/fixtures/CalendarFixtures.svelte';
 import { calendarDateAdapter } from '../browser/fixtures/calendar-date-adapter';

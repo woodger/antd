@@ -4,7 +4,7 @@
   import {
     TimePicker, ConfigProvider, Form, FormItem, createForm,
     type TimePickerCellRenderInfo, type TimePickerFocusOptions
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   dayjs.extend(utc);
 

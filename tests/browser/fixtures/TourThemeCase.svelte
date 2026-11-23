@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, enUS, type ThemeConfig } from '@woodger/antd';
   import TourThemeControl from './TourThemeControl.svelte';
   import { resolveTourTheme, type TourThemeSample } from './tour-theme-presets';
 

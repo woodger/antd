@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { AvatarGroup, type AvatarGroupItem } from '@woodger/antd-svelte';
+  import { AvatarGroup, type AvatarGroupItem } from '@woodger/antd';
 
   const members: AvatarGroupItem[] = [
     { key: 'anna', label: 'Анна Новикова', text: 'АН', src: '/anna.jpg' },
@@ -82,7 +82,7 @@ defaultOpen читается один раз при создании overflow. �
 
 ```svelte
 <script lang="ts">
-  import { AvatarGroup } from '@woodger/antd-svelte';
+  import { AvatarGroup } from '@woodger/antd';
 
   let open = $state(false);
   const members = [

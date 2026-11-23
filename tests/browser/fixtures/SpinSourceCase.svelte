@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onDestroy, untrack } from 'svelte';
-  import { ConfigProvider, Spin, theme } from '@woodger/antd-svelte';
+  import { ConfigProvider, Spin, theme } from '@woodger/antd';
   import type {
     SpinProps, SpinConfig, SpinIndicatorInfo, SpinSemanticInfo,
     SpinSemanticSlots, SpinRef, ThemeConfig, ComponentSize
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   export interface SpinSourceSample {
     name: string;

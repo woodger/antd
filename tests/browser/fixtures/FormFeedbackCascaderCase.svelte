@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createRawSnippet, onMount, tick, untrack } from 'svelte';
   import { ConfigProvider, Form, FormItem, InputOTP, Cascader, CascaderPanel, Input, createForm,
-    type FormFeedbackIcons, type FormFeedbackInfo, type FormItemProps, type FormValidateStatus, type CascaderValue, type CascaderTriggerInfo } from '@woodger/antd-svelte';
+    type FormFeedbackIcons, type FormFeedbackInfo, type FormItemProps, type FormValidateStatus, type CascaderValue, type CascaderTriggerInfo } from '@woodger/antd';
   import FormStatusReadout from './FormStatusReadout.svelte';
   import { feedbackCaption, type FeedbackAction, type FeedbackMode } from './form-feedback-cases';
   import type { FeedbackCascaderSample } from './form-feedback-cascader-cases';

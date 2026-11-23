@@ -2,7 +2,7 @@
 
 ```svelte
 <script lang="ts">
-  import { Avatar, Badge, Image } from '@woodger/antd-svelte';
+  import { Avatar, Badge, Image } from '@woodger/antd';
 </script>
 
 <Avatar src="/anna.jpg" alt="Анна Новикова">АН</Avatar>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Popover, Popconfirm, type PopoverRef } from '@woodger/antd-svelte';
+  import { Popover, Popconfirm, type PopoverRef } from '@woodger/antd';
   import reference from './ant-design-popover-ref-reference.json';
   import OverlayLifecycleContent from './OverlayLifecycleContent.svelte';
 

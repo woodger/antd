@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Space, SpaceCompact, type SpaceProps } from '@woodger/antd-svelte';
+  import { ConfigProvider, Space, SpaceCompact, type SpaceProps } from '@woodger/antd';
 
   let { id, priority, prefix = 'ant', reversed = false }: {
     id: string;

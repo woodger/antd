@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Tooltip } from '@woodger/antd-svelte';
+  import { ConfigProvider, Tooltip } from '@woodger/antd';
   import OverlayLifecycleContent from './OverlayLifecycleContent.svelte';
 
   let { source }: { source: boolean } = $props();

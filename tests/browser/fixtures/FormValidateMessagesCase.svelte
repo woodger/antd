@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
+  import { ConfigProvider, Form, FormItem, Input, createForm } from '@woodger/antd';
   import {
     buildValidationMessages, buildMessagesRule, type FormValidateMessagesSample
   } from './form-validate-messages-cases';

@@ -1,4 +1,4 @@
-import { theme, type ThemeConfig } from '@woodger/antd-svelte';
+import { theme, type ThemeConfig } from '@woodger/antd';
 import reference from './ant-design-border-beam-theme-reference.json';
 
 export interface BorderBeamReferenceTheme {

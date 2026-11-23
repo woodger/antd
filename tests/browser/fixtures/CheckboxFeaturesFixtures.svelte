@@ -11,7 +11,7 @@
     type CheckboxGroupValue,
     type CheckboxRef,
     type TableKey
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   let owner = $state<CheckboxGroupValue[]>([0]);
   let mounted = $state(true);

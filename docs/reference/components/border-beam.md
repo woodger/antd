@@ -9,7 +9,7 @@ React child с составным ref; существующий ref вызыва
 
 ```svelte
 <script lang="ts">
-  import { BorderBeam, Card } from '@woodger/antd-svelte';
+  import { BorderBeam, Card } from '@woodger/antd';
 
   let container = $state<HTMLDivElement>();
 </script>

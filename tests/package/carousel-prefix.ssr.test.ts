@@ -1,8 +1,8 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Carousel, type CarouselProps } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Carousel, type CarouselProps } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-carousel-prefix-reference.json';
 import CarouselPrefixSSRFixtures from '../browser/fixtures/CarouselPrefixSSRFixtures.svelte';
 

@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Switch, type SwitchProps } from '@woodger/antd-svelte';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import { Switch, type SwitchProps } from '@woodger/antd';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-switch-prefix-reference.json';
 import SwitchPrefixSSRFixtures from '../browser/fixtures/SwitchPrefixSSRFixtures.svelte';
 

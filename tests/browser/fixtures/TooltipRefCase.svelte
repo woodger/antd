@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Tooltip, type TooltipRef } from '@woodger/antd-svelte';
+  import { Tooltip, type TooltipRef } from '@woodger/antd';
   import reference from './ant-design-tooltip-ref-reference.json';
   import OverlayLifecycleContent from './OverlayLifecycleContent.svelte';
 

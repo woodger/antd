@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { isDeepStrictEqual } from 'node:util';
 import type { ComponentProps } from 'svelte';
-import type { SelectRef } from '@woodger/antd-svelte';
+import type { SelectRef } from '@woodger/antd';
 import { test, expect } from './test';
 import { drainSelectSurface } from './select-surface-driver';
 import { normalizedSelectSurfaceAuthoredProps, selectSurfaceEventValue, verifySelectSurfaceEventGraph } from './select-surface-assertions';

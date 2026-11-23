@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { FloatButton, FloatButtonGroup, FloatButtonBackTop, ConfigProvider } from '@woodger/antd-svelte';
-  import type { FloatButtonShape, FloatButtonPlacement } from '@woodger/antd-svelte';
+  import { FloatButton, FloatButtonGroup, FloatButtonBackTop, ConfigProvider } from '@woodger/antd';
+  import type { FloatButtonShape, FloatButtonPlacement } from '@woodger/antd';
 
   let { kind, startOpen = false }: { kind?: string; startOpen?: boolean } = $props();
   let shape = $state<FloatButtonShape>('circle');

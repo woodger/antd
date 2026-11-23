@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { Input, TextArea, type ComponentSize, type InputVariant } from '@woodger/antd-svelte';
+  import { Input, TextArea, type ComponentSize, type InputVariant } from '@woodger/antd';
 
   export interface InputPrefixSample {
     id: string;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Masonry, type MasonryItemType } from '@woodger/antd-svelte';
+  import { ConfigProvider, Masonry, type MasonryItemType } from '@woodger/antd';
 
   let { id, priority, prefix = 'ant', reversed = false, removed = false }: {
     id: string;

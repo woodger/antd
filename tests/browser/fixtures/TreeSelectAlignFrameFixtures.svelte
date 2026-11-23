@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     ConfigProvider, TreeSelect, type TreeSelectRef, type TreeSelectRootContext
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import {
     treeSelectAlignFrameSamples,
     type TreeSelectAlignFrameAction

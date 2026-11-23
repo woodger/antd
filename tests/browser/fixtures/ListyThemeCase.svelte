@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, type ThemeConfig } from '@woodger/antd';
   import ListyThemeControl from './ListyThemeControl.svelte';
   import { resolveListyTheme, type ListyThemeSample } from './listy-theme-presets';
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, TreeSelect } from '@woodger/antd-svelte';
-  import type { TreeSelectRef, TreeSelectRootContext } from '@woodger/antd-svelte';
+  import { ConfigProvider, TreeSelect } from '@woodger/antd';
+  import type { TreeSelectRef, TreeSelectRootContext } from '@woodger/antd';
   import type { TreeSelectRootSample } from './tree-select-root-cases';
   import TreeSelectRootElement from './TreeSelectRootElement.svelte';
   import TreeSelectRootComposite from './TreeSelectRootComposite.svelte';

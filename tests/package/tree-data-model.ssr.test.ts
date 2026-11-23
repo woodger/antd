@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { createTree, type TreeFieldNames, type TreeKey } from '@woodger/antd-svelte';
+import { createTree, type TreeFieldNames, type TreeKey } from '@woodger/antd';
 import reference from '../browser/fixtures/ant-design-tree-data-model-reference.json';
 import TreeDataModelScope from '../browser/fixtures/TreeDataModelScope.svelte';
 

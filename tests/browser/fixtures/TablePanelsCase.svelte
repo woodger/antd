@@ -2,7 +2,7 @@
   import {
     ConfigProvider, Table, enUS, type TableColumn, type TableFilters,
     type TableSorter, type ThemeConfig
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import { resolveTablePanelsTheme, type TablePanelsSample } from './table-panels-presets';
 
   let {

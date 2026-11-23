@@ -1,4 +1,4 @@
-import { createForm } from '@woodger/antd-svelte';
+import { createForm } from '@woodger/antd';
 
 export function createSwitchControls() {
   let checked = $state<boolean | undefined>(false);

@@ -1,6 +1,6 @@
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-badge-count-reference.json';
 import BadgeCountCase from '../browser/fixtures/BadgeCountCase.svelte';
 import type { BadgeCountCase as Sample } from '../browser/fixtures/badge-count-presets';

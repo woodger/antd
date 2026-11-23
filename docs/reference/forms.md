@@ -24,7 +24,7 @@
 и SSR-запросы не разделяли состояние. В примерах ниже профиль хранит имя и город.
 
 ```ts
-import { createForm } from '@woodger/antd-svelte';
+import { createForm } from '@woodger/antd';
 
 const form = createForm({
   initialValues: { profile: { name: 'Анна', city: 'Томск' } }
@@ -162,7 +162,7 @@ form.getFieldValue('profile'); // { name: 'Ирина', city: 'Омск' }
 Например, обработчик кнопки «Проверить имя» может перевести фокус к полю с ошибкой.
 
 ```ts
-import { FormValidationError } from '@woodger/antd-svelte';
+import { FormValidationError } from '@woodger/antd';
 
 async function checkName() {
   const path = ['profile', 'name'] as const;
@@ -253,7 +253,7 @@ DOM-обёртку и передаёт в `children` поля, операции 
 
 ```svelte
 <script lang="ts">
-  import { ConfigProvider, Form, FormItem, FormList, FormErrorList, Input, createForm } from '@woodger/antd-svelte';
+  import { ConfigProvider, Form, FormItem, FormList, FormErrorList, Input, createForm } from '@woodger/antd';
 
   const form = createForm<{ users: { name: string }[] }>({
     initialValues: { users: [] }
@@ -814,7 +814,7 @@ RadioGroup, CheckboxGroup, InputOTP, Slider и стандартный элеме
 
 ```svelte
 <script lang="ts">
-  import { useFormItemStatus } from '@woodger/antd-svelte';
+  import { useFormItemStatus } from '@woodger/antd';
   const field = useFormItemStatus();
 </script>
 
@@ -896,7 +896,7 @@ RadioGroup, CheckboxGroup, InputOTP, Slider и стандартный элеме
 
 ```svelte
 <script lang="ts">
-  import { Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
+  import { Form, FormItem, Input, createForm } from '@woodger/antd';
 
   const form = createForm({ initialValues: { title: '' } });
   let controlRef = $state<HTMLInputElement>();

@@ -1,4 +1,4 @@
-import type { ValidationRule, ValidationRuleType } from '@woodger/antd-svelte';
+import type { ValidationRule, ValidationRuleType } from '@woodger/antd';
 import { formRuleTypesValue } from './form-rule-types-cases';
 
 export interface FormRuleFormatsSample {

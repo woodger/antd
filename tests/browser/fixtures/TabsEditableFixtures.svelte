@@ -7,7 +7,7 @@
     type TabsPlacement,
     type TabsProps,
     type TabsType
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   import reference from './ant-design-tabs-editable-metrics.json';
 
   let sample = $state('default');

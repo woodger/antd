@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import registry from '@woodger/antd-svelte/porting/registry.json';
+import registry from '@woodger/antd/porting/registry.json';
 import reference from '../browser/fixtures/ant-design-popup-container-reference.json';
 import PopupContainerCase from '../browser/fixtures/PopupContainerCase.svelte';
 import type { PopupContainerCase as ContainerCase } from '../browser/fixtures/popup-container-presets';

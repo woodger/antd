@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, untrack } from 'svelte';
   import { Select, AutoComplete, ConfigProvider, enUS, type SelectProps, type AutoCompleteProps,
-    type SelectRef } from '@woodger/antd-svelte';
+    type SelectRef } from '@woodger/antd';
   import { createSelectSurfaceRecorder } from '../select-surface-producers.mjs';
   import { selectSurfaceStyleHistoryMaps, type SelectSurfaceStylePhase } from './select-surface-style-history-cases';
 

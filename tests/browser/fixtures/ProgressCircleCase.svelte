@@ -1,9 +1,9 @@
 <script lang="ts">
   import { createRawSnippet } from 'svelte';
-  import { ConfigProvider, Progress, theme } from '@woodger/antd-svelte';
+  import { ConfigProvider, Progress, theme } from '@woodger/antd';
   import type {
     ProgressProps, ProgressConfig, ProgressSemanticInfo, ProgressSemanticSlots, ThemeConfig
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
 
   export interface ProgressCircleSample {
     name: string;

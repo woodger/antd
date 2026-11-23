@@ -53,7 +53,7 @@ ConfigProvider.getPopupContainer; Modal вызывает глобальный ge
 
 ```svelte
 <script lang="ts">
-  import { Modal } from '@woodger/antd-svelte';
+  import { Modal } from '@woodger/antd';
   let open = $state(false);
 </script>
 
@@ -93,7 +93,7 @@ Holder размещается под нужным ConfigProvider: открыты
 
 ```svelte
 <script lang="ts">
-  import { Button, ModalHolder, createModal } from '@woodger/antd-svelte';
+  import { Button, ModalHolder, createModal } from '@woodger/antd';
   const modal = createModal();
 
   async function confirm() {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, ConfigProvider, Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
+  import { Button, ConfigProvider, Form, FormItem, Input, createForm } from '@woodger/antd';
 
   let {
     id,

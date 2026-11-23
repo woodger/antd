@@ -1,7 +1,7 @@
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it, vi } from 'vitest';
-import { Tour, type TourProps, type TourStepProps } from '@woodger/antd-svelte';
+import { Tour, type TourProps, type TourStepProps } from '@woodger/antd';
 
 describe('Tour public package', () => {
   it.each([undefined, true, false])(

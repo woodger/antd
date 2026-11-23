@@ -2,7 +2,7 @@
   import { createRawSnippet, onMount, tick, untrack } from 'svelte';
   import { ConfigProvider, Form, FormItem, Input, InputNumber, InputOTP, InputPassword,
     InputSearch, TextArea, Select, Calendar, ColorPicker, Mentions, Pagination, createForm, type FormFeedbackIcons,
-    type FormFeedbackInfo, type FormItemProps, type FormValidateStatus } from '@woodger/antd-svelte';
+    type FormFeedbackInfo, type FormItemProps, type FormValidateStatus } from '@woodger/antd';
   import FormStatusReadout from './FormStatusReadout.svelte';
   import { feedbackCaption, type FeedbackAction, type FeedbackMode } from './form-feedback-cases';
   import type { FeedbackControlSample } from './form-feedback-control-cases';

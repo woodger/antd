@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, Input, theme, type ComponentSize, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, Input, theme, type ComponentSize, type ThemeConfig } from '@woodger/antd';
   import CompactThemeControls from './CompactThemeControls.svelte';
 
   let { initialMode = 'native', initialPreset = 'compact', initialSize = 'medium' }: {

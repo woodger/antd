@@ -1,4 +1,4 @@
-import { Select, type SelectProps } from '@woodger/antd-svelte';
+import { Select, type SelectProps } from '@woodger/antd';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';
 import reference from '../browser/fixtures/ant-design-select-responsive-tags-reference.json';

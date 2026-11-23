@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider } from '@woodger/antd-svelte';
+  import { ConfigProvider } from '@woodger/antd';
   import ListyPrefixScope, { type ListyPrefixSample } from './ListyPrefixScope.svelte';
   import reference from './ant-design-listy-prefix-reference.json';
 

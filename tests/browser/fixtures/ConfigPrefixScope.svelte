@@ -7,7 +7,7 @@
     LayoutContent,
     LayoutFooter,
     theme
-  } from '@woodger/antd-svelte';
+  } from '@woodger/antd';
   export interface ConfigPrefixSample {
     id: string;
     prefix?: string;

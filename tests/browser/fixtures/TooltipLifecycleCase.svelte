@@ -1,6 +1,6 @@
 <script lang="ts">
   import { untrack } from 'svelte';
-  import { ConfigProvider, Tooltip, TypographyText, type TooltipRef } from '@woodger/antd-svelte';
+  import { ConfigProvider, Tooltip, TypographyText, type TooltipRef } from '@woodger/antd';
   import type { TooltipLifecycleOptions } from './tooltip-lifecycle.types';
 
   let { sample, source = true, initialStep = 0, kind = 'tooltip' }: {

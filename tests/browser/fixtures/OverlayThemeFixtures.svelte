@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ConfigProvider, Popconfirm, Popover, Tooltip, type ThemeConfig } from '@woodger/antd-svelte';
+  import { ConfigProvider, Popconfirm, Popover, Tooltip, type ThemeConfig } from '@woodger/antd';
   import { overlayThemePresets } from './overlay-theme-presets';
 
   let preset = $state('default');

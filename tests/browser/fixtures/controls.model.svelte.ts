@@ -1,4 +1,4 @@
-import { createForm } from '@woodger/antd-svelte';
+import { createForm } from '@woodger/antd';
 
 interface ValidationRequest {
   id: number;
