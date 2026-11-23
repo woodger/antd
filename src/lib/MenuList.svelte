@@ -9,11 +9,18 @@
   import MenuList from './MenuList.svelte';
   import MenuSubMenu from './MenuSubMenu.svelte';
 
-  let { entries, theme }: { entries: readonly MenuEntry[]; theme: MenuTheme; } = $props();
+  let {
+    entries,
+    theme,
+    overflowCount,
+    inactive = false
+  }: {
+    entries: readonly MenuEntry[];
+    theme: MenuTheme;
+    overflowCount?: number;
+    inactive?: boolean;
+  } = $props();
   const context = useMenu();
-  function register(element: HTMLLIElement, key: string) {
-    return { destroy: context.register(key, element) };
-  }
 
   function connectFocus(element: HTMLLIElement, entry: MenuEntry) {
     function focus() {
@@ -55,28 +62,43 @@
 </style>
 
 {#snippet content(value: MenuContent | undefined)}{#if typeof value === 'function'}{@render value()}{:else}{value ?? ''}{/if}{/snippet}
-{#each entries as entry (entry.key)}
+{#each entries as entry, index (entry.key)}
   {@const semantic = context.semantics}
-  {@const classes = entry.parent ? semantic.classes.subMenu : semantic.classes}
-  {@const styles = entry.parent ? semantic.styles.subMenu : semantic.styles}
+  {@const nested = entry.parent && !entry.parent.overflow}
+  {@const classes = nested ? semantic.classes.subMenu : semantic.classes}
+  {@const styles = nested ? semantic.styles.subMenu : semantic.styles}
+  {@const overflowItem = overflowCount !== undefined}
+  {@const overflowHidden = overflowCount !== undefined && index >= overflowCount}
+  {@const entryInactive = inactive || overflowHidden}
   {#if entry.kind === 'divider'}
-    <li role="separator" class={[
+    <li role="separator" data-menu-overflow-item={overflowItem || undefined}
+      data-menu-overflow-hidden={overflowHidden || undefined}
+      inert={overflowHidden || undefined} aria-hidden={overflowHidden || undefined} class={[
         `${context.prefixCls}-item-divider`,
         'dashed' in entry.item && entry.item.dashed && `${context.prefixCls}-item-divider-dashed`,
         entry.item.class
       ]} style={entry.item.style}></li>
   {:else if entry.kind === 'group'}
-    <li role="presentation" class={[`${context.prefixCls}-item-group`, entry.item.class]} style={entry.item.style}>
+    <li role="presentation" class={[`${context.prefixCls}-item-group`, entry.item.class]}
+      style={entry.item.style} data-menu-overflow-item={overflowItem || undefined}
+      data-menu-overflow-hidden={overflowHidden || undefined}
+      inert={overflowHidden || undefined} aria-hidden={overflowHidden || undefined}>
       <div class={[`${context.prefixCls}-item-group-title`, classes.itemTitle]}
         style={styles.itemTitle} role="presentation">{@render content('label' in entry.item ? entry.item.label : undefined)}</div>
       <ul class={[`${context.prefixCls}-item-group-list`, classes.list]} style={styles.list}
-        role="group"><MenuList entries={entry.children} {theme} /></ul>
+        role="group"><MenuList entries={entry.children} {theme} inactive={entryInactive} /></ul>
     </li>
-  {:else if entry.kind === 'submenu'}<MenuSubMenu {entry} {theme} />
+  {:else if entry.kind === 'submenu'}<MenuSubMenu {entry} {theme} {overflowItem} {overflowHidden}
+      inactive={entryInactive} />
   {:else}
     {@const item = menuItem(entry)}{@const blocked = context.disabled || item.disabled}
-    <li data-ant-menu-item data-ant-menu-item-disabled={blocked || undefined} use:register={entry.key} id={context.id(entry.key)} data-menu-id={context.id(entry.key)} role="menuitem"
-      tabindex={blocked ? undefined : -1} aria-disabled={blocked || undefined}
+    {@const id = entryInactive ? undefined : context.id(entry.key)}
+    <li data-ant-menu-item data-ant-menu-item-disabled={blocked || undefined} {id}
+      data-menu-id={id} role="menuitem" data-menu-overflow-item={overflowItem || undefined}
+      data-menu-overflow-hidden={overflowHidden || undefined}
+      inert={overflowHidden || undefined} aria-hidden={overflowHidden || undefined}
+      {@attach node => entryInactive ? undefined : context.register(entry.key, node)}
+      tabindex={blocked || entryInactive ? undefined : -1} aria-disabled={blocked || undefined}
       title={item.title
           ?? (context.collapsed && typeof item.label === 'string'
             ? item.label
@@ -85,6 +107,7 @@
           ? (item.title ?? (typeof item.label === 'string' ? item.label : undefined))
           : undefined}
       class={[
+          overflowItem && `${context.prefixCls}-overflow-item`,
           `${context.prefixCls}-item`,
           context.active === entry.key && `${context.prefixCls}-item-active`,
           context.selected.includes(entry.key) && `${context.prefixCls}-item-selected`,

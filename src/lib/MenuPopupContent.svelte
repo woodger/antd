@@ -7,15 +7,20 @@
   let {
     entries,
     theme,
-    isInlineCopy
+    isInlineCopy,
+    inOverflow = false
   }: {
     entries: readonly MenuEntry[];
     theme: MenuTheme;
     isInlineCopy: boolean;
+    inOverflow?: boolean;
   } = $props();
   const parent = useMenu();
   // Hidden inline portal не заменяет native refs основного списка; getters остаются реактивными.
   const context: MenuContext = Object.create(parent, {
+    mode: {
+      get: () => inOverflow ? 'vertical' : parent.mode
+    },
     register: {
       value: (key: string, element: HTMLElement) => isInlineCopy
         ? () => {} : parent.register(key, element)

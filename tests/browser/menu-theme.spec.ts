@@ -225,14 +225,13 @@ test('light and dark hover tokens apply without selecting disabled items', async
 test('prerendered horizontal popups stay hidden and leave provider controls accessible', async ({ page }) => {
   const popups = page.locator('.menu-token-horizontal-light .menu-popup, .menu-token-horizontal-dark .menu-popup');
 
-  await expect(popups).toHaveCount(2);
-  await expect(popups.nth(0)).toBeHidden();
-  await expect(popups.nth(1)).toBeHidden();
+  await expect(popups).toHaveCount(4);
+  await expect(popups.filter({ visible: true })).toHaveCount(0);
   await page.getByLabel('Right to left', { exact: true }).check();
   await page.getByLabel('Apply source Menu tokens', { exact: true }).uncheck();
 
-  await expect(popups.nth(0)).toBeHidden();
-  await expect(popups.nth(1)).toBeHidden();
+  await expect(popups).toHaveCount(4);
+  await expect(popups.filter({ visible: true })).toHaveCount(0);
   await page.getByLabel('Right to left', { exact: true }).uncheck();
 });
 

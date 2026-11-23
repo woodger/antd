@@ -3312,15 +3312,38 @@
             "tests/package/menu-container.ssr.test.ts",
             "tests/browser/menu-container.spec.ts"
           ],
-          "note": "Отсутствующий local prop наследует ConfigProvider; собственный undefined отключает global getter. Trigger — согласованный native button заголовка вместо React div; без getter сохраняется native-размещение. Обычный inline не вызывает getter; force render с getter создаёт скрытые popup-копии, не заменяя native refs основного списка. Parameterized getter ждёт trigger; zero-arity при force render может получить undefined. SSR getter не вызывает. Смена функции с тем же target сохраняет DOM/state/draft/selection/focus, смена target пересоздаёт popup contents. Вынесенные уровни сохраняют keyboard, native links, hover path, themes и cleanup; consumer подключает стили ShadowRoot. 32 UMD-снимка сохраняют сырой overflow More; assertions сравнивают реализованные подменю, More относится к missing overflow-motion."
+          "note": "Отсутствующий local prop наследует ConfigProvider; собственный undefined отключает global getter. Trigger — согласованный native button заголовка. Обычный inline не вызывает getter; force render с getter создаёт скрытые popup-копии, включая More в horizontal mode. Parameterized getter ждёт trigger; zero-arity при force render может получить undefined. SSR getter не вызывает. Смена функции с тем же target сохраняет DOM/state/draft/selection/focus, смена target пересоздаёт popup contents. Вынесенные уровни сохраняют клавиатуру, нативные ссылки, hover path, тему и cleanup; потребитель подключает стили ShadowRoot. Сравнение включает скрытую поверхность More и её вызовы getter из исходных UMD-снимков."
+        },
+        {
+          "id": "horizontal-overflow",
+          "title": "Адаптивный горизонтальный ряд и подменю переполнения",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Menu.svelte",
+            "src/lib/MenuList.svelte",
+            "src/lib/MenuSubMenu.svelte",
+            "src/lib/MenuPopupContent.svelte",
+            "src/lib/menu-overflow.dom.ts",
+            "src/lib/menu-overflow.engine.ts",
+            "src/lib/menu.types.ts",
+            "src/lib/popup.dom.ts",
+            "tests/browser/fixtures/MenuOverflowFixtures.svelte",
+            "tests/browser/fixtures/ant-design-menu-overflow-reference.json",
+            "tests/browser/menu-overflow.spec.ts",
+            "tests/browser/menu-container.spec.ts",
+            "tests/package/menu-overflow.ssr.test.ts",
+            "docs/reference/components/menu.md"
+          ],
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0 и rc-overflow 1.0.1. Два одинаковых прогона официального неизменённого UMD, 14 профилей, исходные события и SSR. Совпадают clientWidth/offsetWidth, видимый префикс, скрытые измеряемые строки, состав More, семантика верхнего уровня, keyPath, openKeys, вложенный выбор, custom indicator, отключение переполнения и RTL. Нативный button More имеет доступное имя; скрытые строки inert и не регистрируются для навигации. Raw расхождения: при 8px Source теряет первый пункт из-за preliminary slice, при сужении оставляет фокус на aria-hidden строке, при расширении открытого More теряет фокус, а после уменьшения индикатора 80→32px удерживает устаревший запас. Native сохраняет все пункты при ненулевой ширине, переносит фокус и измеряет текущий индикатор. Группа перемещается целиком с измерением её wrapper; raw Source оставляет заголовок группы и Divider в основном ряду даже когда они также в More. Служебный ключ освобождается суффиксом при коллизии с пользовательским ключом. Popup/inline motion остаётся отдельным этапом."
         },
         {
           "id": "overflow-motion",
-          "title": "Адаптивное horizontal overflow и исходные popup/inline motion",
+          "title": "Исходные popup и inline motion",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет rc-overflow/overflowedIndicator и автоматического скрытия horizontal items; исходные rc-motion collapse/slide/zoom не перенесены. Обычные CSS transitions сохранены."
+          "note": "Исходные rc-motion collapse/slide/zoom остаются пробелом. Адаптивный ряд, overflowedIndicator и подменю More учтены отдельно."
         },
         {
           "id": "component-config",

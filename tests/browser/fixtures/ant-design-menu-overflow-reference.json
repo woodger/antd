@@ -1,0 +1,1958 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "entrySha256": "be97fafd18723f8f8906faa5b6d7926e56046aa0345677ed90aae64a88fa3b30",
+    "react": "18.3.1",
+    "browser": "157.0.8103.78",
+    "repeat": 2,
+    "operation": "Official unmodified Menu UMD. Fixed-width items, native Chromium resize, observer settling, nested mouse and keyboard interactions. Focus and list boundaries are raw observations. The groups and semantic slots are supplemental observations."
+  },
+  "cases": [
+    {
+      "indicator": "default",
+      "name": "wide",
+      "width": 420,
+      "force": true,
+      "result": {
+        "available": 420,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          }
+        ],
+        "rest": {
+          "visible": false,
+          "width": 46,
+          "selected": false,
+          "disabled": true,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "exact",
+      "width": 356,
+      "force": true,
+      "result": {
+        "available": 356,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          }
+        ],
+        "rest": {
+          "visible": false,
+          "width": 46,
+          "selected": false,
+          "disabled": true,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "near",
+      "width": 355,
+      "force": true,
+      "result": {
+        "available": 355,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "branch",
+            "width": 103,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          }
+        ],
+        "rest": {
+          "visible": false,
+          "width": 46,
+          "selected": false,
+          "disabled": true,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "medium",
+      "width": 260,
+      "force": true,
+      "result": {
+        "available": 260,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          }
+        ],
+        "rest": {
+          "visible": true,
+          "width": 46,
+          "selected": true,
+          "disabled": false,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "branch",
+            "last"
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "narrow",
+      "width": 190,
+      "force": true,
+      "result": {
+        "available": 190,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          }
+        ],
+        "rest": {
+          "visible": true,
+          "width": 46,
+          "selected": true,
+          "disabled": false,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "blocked",
+            "branch",
+            "last"
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "minimal",
+      "width": 65,
+      "force": true,
+      "result": {
+        "available": 65,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          }
+        ],
+        "rest": {
+          "visible": true,
+          "width": 46,
+          "selected": true,
+          "disabled": false,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "first",
+            "blocked",
+            "branch",
+            "last"
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "under-ten",
+      "width": 8,
+      "force": true,
+      "result": {
+        "available": 8,
+        "entries": [],
+        "rest": {
+          "visible": true,
+          "width": 46,
+          "selected": true,
+          "disabled": false,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "blocked",
+            "branch",
+            "last"
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "zero",
+      "width": 0,
+      "force": true,
+      "result": {
+        "available": 0,
+        "entries": [],
+        "rest": {
+          "visible": false,
+          "width": 46,
+          "selected": true,
+          "disabled": false,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "custom",
+      "name": "custom",
+      "width": 190,
+      "force": true,
+      "result": {
+        "available": 190,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          }
+        ],
+        "rest": {
+          "visible": true,
+          "width": 80,
+          "selected": true,
+          "disabled": false,
+          "title": "More",
+          "icon": false,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "blocked",
+            "branch",
+            "last"
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "null",
+      "name": "null",
+      "width": 190,
+      "force": true,
+      "result": {
+        "available": 190,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          }
+        ],
+        "rest": {
+          "visible": true,
+          "width": 32,
+          "selected": true,
+          "disabled": false,
+          "title": "",
+          "icon": false,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "blocked",
+            "branch",
+            "last"
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "undefined",
+      "name": "undefined",
+      "width": 190,
+      "force": true,
+      "result": {
+        "available": 190,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          }
+        ],
+        "rest": {
+          "visible": true,
+          "width": 43,
+          "selected": true,
+          "disabled": false,
+          "title": "...",
+          "icon": false,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "blocked",
+            "branch",
+            "last"
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "disabled",
+      "width": 190,
+      "disabledOverflow": true,
+      "force": true,
+      "result": {
+        "available": 190,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": false,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": false,
+            "items": false,
+            "registered": true
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": false,
+            "items": false,
+            "registered": true
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": false,
+            "items": false,
+            "registered": true
+          }
+        ],
+        "rest": null,
+        "popup": null,
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "vertical",
+      "width": 190,
+      "mode": "vertical",
+      "force": true,
+      "result": {
+        "available": 189,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": false,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": false,
+            "items": false,
+            "registered": true
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": false,
+            "items": false,
+            "registered": true
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": false,
+            "items": false,
+            "registered": true
+          }
+        ],
+        "rest": null,
+        "popup": null,
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "rtl",
+      "width": 190,
+      "rtl": true,
+      "prefixed": true,
+      "force": true,
+      "result": {
+        "available": 190,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          }
+        ],
+        "rest": {
+          "visible": true,
+          "width": 46,
+          "selected": true,
+          "disabled": false,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "blocked",
+            "branch",
+            "last"
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    }
+  ],
+  "flows": [
+    {
+      "step": "keyboard-enter",
+      "available": 185,
+      "entries": [
+        {
+          "key": "first",
+          "width": 80,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "blocked",
+          "width": 96,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "branch",
+          "width": 104,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "last",
+          "width": 76,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        }
+      ],
+      "rest": {
+        "visible": true,
+        "width": 46,
+        "selected": true,
+        "disabled": false,
+        "title": "",
+        "icon": true,
+        "open": true
+      },
+      "popup": {
+        "shown": true,
+        "keys": [
+          "blocked",
+          "branch",
+          "last"
+        ],
+        "css": true
+      },
+      "active": "branch",
+      "activeInHiddenRow": false,
+      "events": [
+        [
+          "open",
+          [
+            "rc-menu-more"
+          ]
+        ]
+      ]
+    },
+    {
+      "step": "select-hidden",
+      "available": 185,
+      "entries": [
+        {
+          "key": "first",
+          "width": 80,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "blocked",
+          "width": 96,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "branch",
+          "width": 104,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "last",
+          "width": 76,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        }
+      ],
+      "rest": {
+        "visible": true,
+        "width": 46,
+        "selected": true,
+        "disabled": false,
+        "title": "",
+        "icon": true,
+        "open": false
+      },
+      "popup": {
+        "shown": false,
+        "keys": [
+          "blocked",
+          "branch",
+          "last"
+        ],
+        "css": true
+      },
+      "active": null,
+      "activeInHiddenRow": false,
+      "events": [
+        [
+          "open",
+          [
+            "rc-menu-more"
+          ]
+        ],
+        [
+          "click",
+          "last",
+          [
+            "last",
+            "rc-menu-more"
+          ],
+          "last"
+        ],
+        [
+          "open",
+          []
+        ]
+      ]
+    },
+    {
+      "step": "nested-open",
+      "available": 185,
+      "entries": [
+        {
+          "key": "first",
+          "width": 80,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "blocked",
+          "width": 96,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "branch",
+          "width": 104,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "last",
+          "width": 76,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        }
+      ],
+      "rest": {
+        "visible": true,
+        "width": 46,
+        "selected": true,
+        "disabled": false,
+        "title": "",
+        "icon": true,
+        "open": true
+      },
+      "popup": {
+        "shown": true,
+        "keys": [
+          "blocked",
+          "branch",
+          "last"
+        ],
+        "css": true
+      },
+      "active": "branch",
+      "activeInHiddenRow": false,
+      "events": [
+        [
+          "open",
+          [
+            "rc-menu-more"
+          ]
+        ],
+        [
+          "click",
+          "last",
+          [
+            "last",
+            "rc-menu-more"
+          ],
+          "last"
+        ],
+        [
+          "open",
+          []
+        ],
+        [
+          "open",
+          [
+            "rc-menu-more"
+          ]
+        ],
+        [
+          "open",
+          [
+            "rc-menu-more",
+            "branch"
+          ]
+        ]
+      ]
+    },
+    {
+      "step": "select-hidden-nested",
+      "available": 185,
+      "entries": [
+        {
+          "key": "first",
+          "width": 80,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "blocked",
+          "width": 96,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "branch",
+          "width": 104,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "last",
+          "width": 76,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        }
+      ],
+      "rest": {
+        "visible": true,
+        "width": 46,
+        "selected": true,
+        "disabled": false,
+        "title": "",
+        "icon": true,
+        "open": false
+      },
+      "popup": {
+        "shown": false,
+        "keys": [
+          "blocked",
+          "branch",
+          "last"
+        ],
+        "css": true
+      },
+      "active": null,
+      "activeInHiddenRow": false,
+      "events": [
+        [
+          "open",
+          [
+            "rc-menu-more"
+          ]
+        ],
+        [
+          "click",
+          "last",
+          [
+            "last",
+            "rc-menu-more"
+          ],
+          "last"
+        ],
+        [
+          "open",
+          []
+        ],
+        [
+          "open",
+          [
+            "rc-menu-more"
+          ]
+        ],
+        [
+          "open",
+          [
+            "rc-menu-more",
+            "branch"
+          ]
+        ],
+        [
+          "open",
+          [
+            "rc-menu-more",
+            "branch",
+            "inner"
+          ]
+        ],
+        [
+          "click",
+          "leaf",
+          [
+            "leaf",
+            "inner",
+            "branch",
+            "rc-menu-more"
+          ],
+          "leaf"
+        ],
+        [
+          "select",
+          [
+            "leaf"
+          ]
+        ],
+        [
+          "open",
+          []
+        ]
+      ]
+    },
+    {
+      "step": "shrink-focused",
+      "available": 190,
+      "entries": [
+        {
+          "key": "first",
+          "width": 80,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "blocked",
+          "width": 96,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "branch",
+          "width": 104,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "last",
+          "width": 76,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        }
+      ],
+      "rest": {
+        "visible": true,
+        "width": 46,
+        "selected": true,
+        "disabled": false,
+        "title": "",
+        "icon": true,
+        "open": false
+      },
+      "popup": null,
+      "active": "last",
+      "activeInHiddenRow": true,
+      "events": []
+    },
+    {
+      "step": "grow-focused",
+      "available": 420,
+      "entries": [
+        {
+          "key": "first",
+          "width": 80,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "blocked",
+          "width": 96,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "branch",
+          "width": 104,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "last",
+          "width": 76,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        }
+      ],
+      "rest": {
+        "visible": false,
+        "width": 46,
+        "selected": false,
+        "disabled": true,
+        "title": "",
+        "icon": true,
+        "open": true
+      },
+      "popup": {
+        "shown": false,
+        "keys": [],
+        "css": true
+      },
+      "active": null,
+      "activeInHiddenRow": false,
+      "events": [
+        [
+          "open",
+          [
+            "rc-menu-more"
+          ]
+        ]
+      ]
+    },
+    {
+      "step": "shrink-again",
+      "available": 190,
+      "entries": [
+        {
+          "key": "first",
+          "width": 80,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "blocked",
+          "width": 96,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "branch",
+          "width": 104,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "last",
+          "width": 76,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        }
+      ],
+      "rest": {
+        "visible": true,
+        "width": 46,
+        "selected": true,
+        "disabled": false,
+        "title": "",
+        "icon": true,
+        "open": true
+      },
+      "popup": {
+        "shown": true,
+        "keys": [
+          "blocked",
+          "branch",
+          "last"
+        ],
+        "css": true
+      },
+      "active": null,
+      "activeInHiddenRow": false,
+      "events": [
+        [
+          "open",
+          [
+            "rc-menu-more"
+          ]
+        ]
+      ]
+    }
+  ],
+  "ssr": [
+    {
+      "classes": [
+        "ant-menu-overflow-item",
+        "ant-menu-item",
+        "ant-menu-item-only-child",
+        "sample-first"
+      ],
+      "hidden": null,
+      "text": "First"
+    },
+    {
+      "classes": [
+        "ant-menu-overflow-item",
+        "ant-menu-item",
+        "ant-menu-item-disabled",
+        "ant-menu-item-only-child",
+        "sample-blocked"
+      ],
+      "hidden": null,
+      "text": "Blocked"
+    },
+    {
+      "classes": [
+        "ant-menu-overflow-item",
+        "ant-menu-submenu",
+        "ant-menu-submenu-horizontal",
+        "sample-branch"
+      ],
+      "hidden": null,
+      "text": "Branch"
+    },
+    {
+      "classes": [
+        "ant-menu-overflow-item",
+        "ant-menu-item",
+        "ant-menu-item-selected",
+        "ant-menu-item-only-child",
+        "sample-last"
+      ],
+      "hidden": null,
+      "text": "Last"
+    },
+    {
+      "classes": [
+        "ant-menu-overflow-item",
+        "ant-menu-overflow-item-rest",
+        "ant-menu-submenu",
+        "ant-menu-submenu-horizontal"
+      ],
+      "hidden": "true",
+      "text": null
+    }
+  ],
+  "errors": [],
+  "groupAndSlotObservations": [
+    {
+      "indicator": "default",
+      "name": "group-wide",
+      "grouped": true,
+      "width": 440,
+      "force": true,
+      "result": {
+        "available": 440,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "group",
+            "width": 92,
+            "hidden": false,
+            "items": false,
+            "registered": false
+          },
+          {
+            "key": "divider",
+            "width": 15,
+            "hidden": false,
+            "items": false,
+            "registered": false
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          }
+        ],
+        "rest": {
+          "visible": false,
+          "width": 46,
+          "selected": false,
+          "disabled": true,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [],
+          "slots": [],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "group-medium",
+      "grouped": true,
+      "width": 260,
+      "force": true,
+      "result": {
+        "available": 260,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "group",
+            "width": 73,
+            "hidden": false,
+            "items": false,
+            "registered": false
+          },
+          {
+            "key": "divider",
+            "width": 0,
+            "hidden": false,
+            "items": false,
+            "registered": false
+          },
+          {
+            "key": "branch",
+            "width": 78,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          }
+        ],
+        "rest": {
+          "visible": true,
+          "width": 46,
+          "selected": true,
+          "disabled": false,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "last"
+          ],
+          "slots": [
+            [
+              "last",
+              [
+                "slot-first"
+              ],
+              "rgb(34, 17, 51)",
+              []
+            ]
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "group-narrow",
+      "grouped": true,
+      "width": 185,
+      "force": true,
+      "result": {
+        "available": 185,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "group",
+            "width": 73,
+            "hidden": false,
+            "items": false,
+            "registered": false
+          },
+          {
+            "key": "divider",
+            "width": 0,
+            "hidden": false,
+            "items": false,
+            "registered": false
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          }
+        ],
+        "rest": {
+          "visible": true,
+          "width": 46,
+          "selected": true,
+          "disabled": false,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "branch",
+            "last"
+          ],
+          "slots": [
+            [
+              "branch",
+              [],
+              "",
+              []
+            ],
+            [
+              "last",
+              [
+                "slot-first"
+              ],
+              "rgb(34, 17, 51)",
+              []
+            ]
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "group-tiny",
+      "grouped": true,
+      "width": 65,
+      "force": true,
+      "result": {
+        "available": 65,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "group",
+            "width": 73,
+            "hidden": false,
+            "items": false,
+            "registered": false
+          },
+          {
+            "key": "divider",
+            "width": 0,
+            "hidden": false,
+            "items": false,
+            "registered": false
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          }
+        ],
+        "rest": {
+          "visible": true,
+          "width": 46,
+          "selected": true,
+          "disabled": false,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "first",
+            "group",
+            "divider",
+            "branch",
+            "last"
+          ],
+          "slots": [
+            [
+              "first",
+              [
+                "slot-first"
+              ],
+              "rgb(34, 17, 51)",
+              []
+            ],
+            [
+              "group",
+              [],
+              "",
+              [
+                "ant-menu-item-group-title group-title-first",
+                "ant-menu-item-group-list group-list-first"
+              ]
+            ],
+            [
+              "divider",
+              [],
+              "",
+              []
+            ],
+            [
+              "branch",
+              [],
+              "",
+              []
+            ],
+            [
+              "last",
+              [
+                "slot-first"
+              ],
+              "rgb(34, 17, 51)",
+              []
+            ]
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    },
+    {
+      "indicator": "default",
+      "name": "style-slots",
+      "width": 185,
+      "force": true,
+      "result": {
+        "available": 185,
+        "entries": [
+          {
+            "key": "first",
+            "width": 80,
+            "hidden": false,
+            "items": true,
+            "registered": true
+          },
+          {
+            "key": "blocked",
+            "width": 96,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "branch",
+            "width": 104,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          },
+          {
+            "key": "last",
+            "width": 76,
+            "hidden": true,
+            "items": true,
+            "registered": false
+          }
+        ],
+        "rest": {
+          "visible": true,
+          "width": 46,
+          "selected": true,
+          "disabled": false,
+          "title": "",
+          "icon": true,
+          "open": false
+        },
+        "popup": {
+          "shown": false,
+          "keys": [
+            "blocked",
+            "branch",
+            "last"
+          ],
+          "slots": [
+            [
+              "blocked",
+              [
+                "slot-first"
+              ],
+              "rgb(34, 17, 51)",
+              []
+            ],
+            [
+              "branch",
+              [],
+              "",
+              []
+            ],
+            [
+              "last",
+              [
+                "slot-first"
+              ],
+              "rgb(34, 17, 51)",
+              []
+            ]
+          ],
+          "css": true
+        },
+        "active": null,
+        "activeInHiddenRow": false,
+        "events": []
+      }
+    }
+  ],
+  "indicatorResizeObservation": [
+    {
+      "indicator": "default",
+      "available": 240,
+      "entries": [
+        {
+          "key": "first",
+          "width": 80,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "blocked",
+          "width": 96,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "branch",
+          "width": 104,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "last",
+          "width": 76,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        }
+      ],
+      "rest": {
+        "visible": true,
+        "width": 46,
+        "selected": true,
+        "disabled": false,
+        "title": "",
+        "icon": true,
+        "open": false
+      },
+      "popup": {
+        "shown": false,
+        "keys": [
+          "branch",
+          "last"
+        ],
+        "css": true
+      },
+      "active": null,
+      "activeInHiddenRow": false,
+      "events": []
+    },
+    {
+      "indicator": "custom",
+      "available": 240,
+      "entries": [
+        {
+          "key": "first",
+          "width": 80,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "blocked",
+          "width": 96,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "branch",
+          "width": 104,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "last",
+          "width": 76,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        }
+      ],
+      "rest": {
+        "visible": true,
+        "width": 80,
+        "selected": true,
+        "disabled": false,
+        "title": "More",
+        "icon": false,
+        "open": false
+      },
+      "popup": {
+        "shown": false,
+        "keys": [
+          "blocked",
+          "branch",
+          "last"
+        ],
+        "css": true
+      },
+      "active": null,
+      "activeInHiddenRow": false,
+      "events": []
+    },
+    {
+      "indicator": "null",
+      "available": 240,
+      "entries": [
+        {
+          "key": "first",
+          "width": 80,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "blocked",
+          "width": 96,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "branch",
+          "width": 104,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "last",
+          "width": 76,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        }
+      ],
+      "rest": {
+        "visible": true,
+        "width": 32,
+        "selected": true,
+        "disabled": false,
+        "title": "",
+        "icon": false,
+        "open": false
+      },
+      "popup": {
+        "shown": false,
+        "keys": [
+          "blocked",
+          "branch",
+          "last"
+        ],
+        "css": true
+      },
+      "active": null,
+      "activeInHiddenRow": false,
+      "events": []
+    },
+    {
+      "indicator": "default",
+      "available": 240,
+      "entries": [
+        {
+          "key": "first",
+          "width": 80,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "blocked",
+          "width": 96,
+          "hidden": false,
+          "items": true,
+          "registered": true
+        },
+        {
+          "key": "branch",
+          "width": 104,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        },
+        {
+          "key": "last",
+          "width": 76,
+          "hidden": true,
+          "items": true,
+          "registered": false
+        }
+      ],
+      "rest": {
+        "visible": true,
+        "width": 46,
+        "selected": true,
+        "disabled": false,
+        "title": "",
+        "icon": true,
+        "open": false
+      },
+      "popup": {
+        "shown": false,
+        "keys": [
+          "branch",
+          "last"
+        ],
+        "css": true
+      },
+      "active": null,
+      "activeInHiddenRow": false,
+      "events": []
+    }
+  ]
+}

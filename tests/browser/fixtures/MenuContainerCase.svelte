@@ -97,7 +97,7 @@
         getter,
         args: args.length,
         tag: node?.tagName.toLowerCase() ?? 'none',
-        key: node?.getAttribute('data-menu-id')?.match(/-(p|n)$/)?.[1] ?? null,
+        key: node?.getAttribute('data-menu-id')?.match(/-(p|n|rc-menu-more)$/)?.[1] ?? null,
         title: node?.querySelector('.ant-menu-title-content')?.textContent ?? ''
       });
     });

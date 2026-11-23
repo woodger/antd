@@ -38,6 +38,8 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   /** Внутренний opt-out для поверхности без обработчика Escape, например заменённого Select menu. */
   dismissOnEscape?: boolean;
   outsideEvents?: 'pointer' | 'mouse';
+  /** Учитывает связанные поверхности, вынесенные из DOM popup отдельным portal. */
+  isRelatedTarget?: (target: Node) => boolean;
   onKeydown?: (event: KeyboardEvent) => void;
   preserveFocus?: boolean | ((event: PointerEvent) => boolean);
   maxWidth?: string | false;
@@ -270,7 +272,8 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
       && !popup.contains(target)
       && !('host' in popupRoot && popupRoot.host === target)
       && !trigger.contains(target)
-      && !('host' in triggerRoot && triggerRoot.host === target)) {
+      && !('host' in triggerRoot && triggerRoot.host === target)
+      && !options.isRelatedTarget?.(target)) {
       options.onDismiss('outside');
     }
   }

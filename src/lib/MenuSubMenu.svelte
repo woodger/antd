@@ -16,12 +16,29 @@
   import MenuList from './MenuList.svelte';
   import MenuPopupContent from './MenuPopupContent.svelte';
 
-  let { entry, theme }: { entry: MenuEntry; theme: MenuTheme; } = $props();
+  let {
+    entry,
+    theme,
+    inactive = false,
+    overflowItem = false,
+    overflowHidden = false,
+    accessibleTitle
+  }: {
+    entry: MenuEntry;
+    theme: MenuTheme;
+    inactive?: boolean;
+    overflowItem?: boolean;
+    overflowHidden?: boolean;
+    accessibleTitle?: string;
+  } = $props();
   const context = useMenu();
+  let overflowRest = $derived(entry.overflow === true);
+  let popupPath = $derived(entry.path.map(context.id).join(' '));
   let item = $derived(menuSubMenu(entry));
   let actualTheme = $derived(item.theme ?? theme);
-  let opened = $derived(context.open.includes(entry.key));
-  let blocked = $derived(context.disabled || Boolean(item.disabled));
+  let opened = $derived(!inactive && context.open.includes(entry.key));
+  let popupOpen = $derived(opened && (!overflowRest || entry.children.length > 0));
+  let blocked = $derived(inactive || context.disabled || Boolean(item.disabled));
   let expandIcon = $derived(item.expandIcon === undefined ? context.expandIcon : item.expandIcon);
   let hasArrow = $derived(context.mode !== 'horizontal' || Boolean(entry.parent));
   let iconInfo = $derived<MenuExpandIconInfo>({
@@ -83,15 +100,15 @@
   }
   $effect.pre(() => {
     const getter = context.getPopupContainer;
-    if (!getter) {
+    if (!getter || inactive) {
       popupContainer = undefined;
     }
     // Обычное Menu открывает Trigger после RAF; forceRender допускает первый undefined.
     else if (context.forceRender && !title && !getter.length) resolveContainer(undefined);
   });
   const portal = createPopupContainer(() => ({
-    open: context.mode !== 'inline' && opened || context.forceRender,
-    rendered: popupMounted && (context.mode !== 'inline' || client && containerUsed),
+    open: !inactive && (context.mode !== 'inline' && popupOpen || context.forceRender),
+    rendered: !inactive && popupMounted && (context.mode !== 'inline' || client && containerUsed),
     reference: title,
     getPopupContainer: context.getPopupContainer ? resolveContainer : undefined,
     themeStyle: popupStyle
@@ -129,8 +146,13 @@
   function contains(node: MenuEntry, key: string | null): boolean {
     return key !== null && (node.key === key || node.children.some(child => contains(child, key)));
   }
-  function register(element: HTMLButtonElement) {
-    return { destroy: context.register(entry.key, element) };
+
+  function containsPopupTarget(target: Node) {
+    // Portal отделяет поверхности в DOM, поэтому проверяем путь экземпляра Menu.
+    const element = target instanceof Element ? target : target.parentElement;
+    const owner = element?.closest('[data-menu-popup-path]');
+    const path = owner?.getAttribute('data-menu-popup-path');
+    return path?.split(' ').includes(context.id(entry.key)) ?? false;
   }
   function connectEvents(element: HTMLUListElement) {
     const keyboard = on(element, 'keydown', event => {
@@ -170,9 +192,9 @@
       popupMounted = true;
     }
   });
-  $effect(() => context.registerHover(entry.key, hover));
+  $effect(() => inactive || overflowHidden ? undefined : context.registerHover(entry.key, hover));
   $effect(() => {
-    if (!opened || context.mode === 'inline' || !popup || !title) {
+    if (!popupOpen || context.mode === 'inline' || !popup || !title) {
       return;
     }
 
@@ -192,6 +214,7 @@
       // Исходное Menu оставляет controlled popup открытым даже при itemHeight=0.
       allowZeroSize: () => untrack(() => Boolean(context.componentTheme.className)),
       preserveFocus: false,
+      isRelatedTarget: containsPopupTarget,
       applyPosition: position => positionPopup(surface, position),
       onPlacement: next => { popupPlacement = next; },
       onVisibilityChange: next => {
@@ -238,7 +261,10 @@
   .menu-popup:global(.ant-menu-source-theme) { border-radius: var(--ant-border-radius-lg); }
 </style>
 
-<li data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls} role="none" class={[
+<li data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls}
+  role={overflowHidden ? undefined : 'none'} class={[
+    overflowItem && `${context.prefixCls}-overflow-item`,
+    overflowRest && `${context.prefixCls}-overflow-item-rest`,
     `${context.prefixCls}-submenu`,
     `${context.prefixCls}-submenu-${context.mode}`,
     opened && `${context.prefixCls}-submenu-open`,
@@ -247,6 +273,10 @@
     active && `${context.prefixCls}-submenu-active`,
     item.class
   ]}
+  data-menu-overflow-item={overflowItem || undefined}
+  data-menu-overflow-rest={overflowRest || undefined}
+  data-menu-overflow-hidden={overflowHidden || undefined}
+  inert={overflowHidden || undefined} aria-hidden={overflowHidden || undefined}
   style={item.style} onmouseenter={() => {
       if (!blocked)
         context.activate(entry.key);
@@ -257,16 +287,19 @@
         context.activate(null);
       context.hover(entry, false);
     }}>
-  <button data-ant-menu-submenu-title type="button" disabled={blocked} bind:this={title} use:register id={context.id(entry.key)} data-menu-id={context.id(entry.key)}
+  <button data-ant-menu-submenu-title type="button" disabled={blocked} bind:this={title}
+    {@attach node => inactive || overflowHidden ? undefined : context.register(entry.key, node)}
+    id={inactive ? undefined : context.id(entry.key)}
+    data-menu-id={inactive ? undefined : context.id(entry.key)}
     class={`${context.prefixCls}-submenu-title`} role="menuitem" tabindex={blocked ? undefined : -1} aria-disabled={blocked || undefined}
     aria-haspopup="menu" aria-expanded={opened} aria-controls={`${context.id(entry.key)}-popup`}
     title={item.title
         ?? (context.collapsed && typeof item.label === 'string'
           ? item.label
           : undefined)}
-    aria-label={context.collapsed && !entry.parent
+    aria-label={accessibleTitle ?? (context.collapsed && !entry.parent
         ? (item.title ?? (typeof item.label === 'string' ? item.label : undefined))
-        : undefined}
+        : undefined)}
     style={[
         context.componentTheme.className && (context.mode === 'horizontal' && !entry.parent
           ? 'width:auto;padding-inline:0'
@@ -296,7 +329,7 @@
         aria-hidden="true"></i>{/if}
     {/if}
   </button>
-  {#if mounted}
+  {#if mounted && !inactive}
     {#if context.mode === 'inline'}
       <ul data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls} id={`${context.id(entry.key)}-popup`} role="menu" data-menu-list="true"
         class={[
@@ -308,10 +341,11 @@
         hidden={!opened}><MenuList entries={entry.children} {theme} /></ul>
     {/if}
   {/if}
-  {#if popupMounted && (context.mode !== 'inline' || client && containerUsed)}
+  {#if !inactive && popupMounted && (context.mode !== 'inline' || client && containerUsed)}
     {#key popupContainer}
-      <div data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls} bind:this={popup} role="presentation" popover="manual"
-        hidden={context.mode === 'inline' || !opened || !shown}
+      <div data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls}
+        data-menu-popup-path={popupPath} bind:this={popup} role="presentation" popover="manual"
+        hidden={context.mode === 'inline' || !popupOpen || !shown}
         class={[
             `menu-popup ${context.prefixCls} ant-menu-css-var ${context.prefixCls}-submenu ${context.prefixCls}-submenu-popup`,
             context.componentTheme.className,
@@ -336,7 +370,7 @@
               context.direction === 'rtl' && `${context.prefixCls}-rtl`
             ]} style={nestedStyle} {@attach connectEvents}>
           <MenuPopupContent entries={entry.children} {theme}
-            isInlineCopy={context.mode === 'inline'} />
+            isInlineCopy={context.mode === 'inline'} inOverflow={overflowRest} />
         </ul>
       </div>
     {/key}

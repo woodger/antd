@@ -105,6 +105,12 @@ export interface MenuProps extends Omit<
   theme?: MenuTheme;
   /** @defaultValue false */
   disabled?: boolean;
+  /** Оставляет все пункты в строке горизонтального Menu. */
+  disabledOverflow?: boolean;
+  /** Содержимое кнопки переполнения. Без prop используется значок многоточия. */
+  overflowedIndicator?: MenuContent | false | null;
+  /** Класс всплывающего списка невместившихся пунктов. */
+  overflowedIndicatorPopupClassName?: string;
   selectedKeys?: readonly string[];
   /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
   defaultSelectedKeys?: readonly string[];

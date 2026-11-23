@@ -6,6 +6,7 @@ export interface MenuEntry {
   key: string;
   item: Exclude<MenuItemType, null>;
   kind: 'item' | 'submenu' | 'group' | 'divider';
+  overflow?: true;
   parent?: MenuEntry;
   path: string[];
   level: number;
@@ -89,7 +90,8 @@ export function menuOpenKeys(
   if (open) {
     next.push(entry.key);
   }
-  else if (mode !== 'inline') {
+  // More входит в пути событий, а список его потомков закрывается своими trigger.
+  else if (mode !== 'inline' && !entry.overflow) {
     return next.filter(key => !isMenuDescendant(key, entry));
   }
   return next;

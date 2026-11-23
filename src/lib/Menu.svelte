@@ -19,9 +19,14 @@
   import { useSider } from './layout-context';
   import { useComponentTheme } from './theme-component.svelte';
   import MenuList from './MenuList.svelte';
+  import MenuSubMenu from './MenuSubMenu.svelte';
+  import EllipsisIcon from './TabsMoreIcon.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getMenuPrefixCss } from './menu-prefix.engine';
   import { menuSemantics } from './menu-semantic.engine';
+  import { buildMenuMore, getMenuMoreKey } from './menu-overflow.engine';
+  import { connectMenuOverflow, type MenuOverflowLayout } from './menu-overflow.dom';
+  import { getPopupActiveElement } from './popup.dom';
 
   let { nativeElement = $bindable(), ...menuProps }: MenuProps = $props();
   let {
@@ -30,6 +35,9 @@
     mode = 'vertical',
     theme = 'light',
     disabled = false,
+    disabledOverflow = false,
+    overflowedIndicator,
+    overflowedIndicatorPopupClassName,
     selectedKeys,
     defaultSelectedKeys = [],
     multiple = false,
@@ -86,6 +94,31 @@
   let actualOpen = $derived(openKeys ?? opened);
   let collapsed = $derived(mode !== 'horizontal' && (resolvedCollapse ?? false));
   let actualMode = $derived(collapsed ? 'vertical' : mode);
+  let responsive = $derived(actualMode === 'horizontal' && !disabledOverflow);
+  let overflowLayout = $state.raw<MenuOverflowLayout>();
+  let visibleCount = $derived(overflowLayout?.visibleCount ?? model.roots.length);
+  let omitted = $derived(responsive ? model.roots.slice(visibleCount) : []);
+  let showMore = $derived(responsive && overflowLayout?.hasWidth === true && omitted.length > 0);
+  let indicator = $derived.by(() => {
+    if (!Object.hasOwn(menuProps, 'overflowedIndicator')) {
+      return defaultIndicator;
+    }
+    return overflowedIndicator === false || overflowedIndicator === null
+      ? undefined : overflowedIndicator ?? '...';
+  });
+  let indicatorLabel = $derived(indicator === defaultIndicator || !indicator && indicator !== 0
+    ? 'ellipsis' : undefined);
+  let more = $derived(buildMenuMore({
+    key: getMenuMoreKey(model.entries),
+    label: indicator,
+    disabled: !showMore,
+    popupClassName: overflowedIndicatorPopupClassName,
+    children: omitted.map(entry => entry.item)
+  }, showMore ? omitted : []));
+  let rootEntries = $derived(responsive
+    ? [...model.roots.slice(0, visibleCount), ...showMore ? [more.root] : []]
+    : model.roots);
+
   let active = $state<string | null>(null);
   let rootElement = $state<HTMLUListElement>();
   const elements = new Map<string, HTMLElement>();
@@ -94,8 +127,10 @@
   const frames = new Set<number>();
   let previous = untrack(() => ({ selectedKeys, openKeys, mode: actualMode, collapsed }));
   let inlineCache = untrack(() => [...actualOpen]);
+  let overflowRevision = 0;
 
   onDestroy(() => {
+    overflowRevision++;
     frames.forEach(frame => cancelAnimationFrame(frame));
     frames.clear();
     hoverHandlers.clear();
@@ -105,6 +140,67 @@
     nativeElement = rootElement;
     return () => { nativeElement = undefined; };
   });
+
+  $effect(() => {
+    if (rootElement && responsive) {
+      return connectMenuOverflow(rootElement, updateOverflowLayout);
+    }
+  });
+
+  function focusedEntry() {
+    for (const [key, element] of elements) {
+      const target = getPopupActiveElement(element);
+      if (target && element.contains(target)) {
+        return { key, element, target };
+      }
+    }
+  }
+
+  function updateOverflowLayout(next: MenuOverflowLayout) {
+    if (next.visibleCount === overflowLayout?.visibleCount
+      && next.hasWidth === overflowLayout.hasWidth) {
+      return;
+    }
+
+    const focused = focusedEntry();
+    const revision = ++overflowRevision;
+    overflowLayout = next;
+    if (focused) {
+      void tick().then(() => {
+        if (revision === overflowRevision && responsive) {
+          restoreOverflowFocus(focused);
+        }
+      });
+    }
+  }
+
+  function restoreOverflowFocus(focused: NonNullable<ReturnType<typeof focusedEntry>>) {
+    const current = getPopupActiveElement(focused.element);
+    const document = focused.element.ownerDocument;
+    if (current && current !== focused.target && current !== document.body) {
+      return;
+    }
+
+    const entry = navigationEntry(focused.key);
+    if (entry && available(entry)) {
+      if (current !== focused.target || elements.get(entry.key) !== focused.element) {
+        focusItem(entry.key);
+      }
+    }
+    else if (showMore && available(more.root)) {
+      focusItem(more.root.key);
+    }
+    else {
+      const replacement = menuLevel(rootEntries).find(available);
+      if (replacement) {
+        focusItem(replacement.key);
+      }
+    }
+  }
+
+  function navigationEntry(key: string) {
+    return (showMore ? more.entries.get(key) : undefined) ?? model.entries.get(key);
+  }
 
   $effect(() => {
     const next = { selectedKeys, openKeys, mode: actualMode, collapsed };
@@ -230,7 +326,7 @@
     }
 
     const element = elements.get(entry.key);
-    return Boolean(element?.getClientRects().length);
+    return Boolean(element?.getClientRects().length && !element.closest('[inert]'));
   }
 
   async function keyboard(entry: MenuEntry | null, event: KeyboardEvent) {
@@ -253,8 +349,8 @@
 
     if (boundary || action === 'previous' || action === 'next' || !entry) {
       const candidates = (actualMode === 'inline'
-        ? menuVisible(model.roots, actualOpen, true)
-        : menuLevel(entry?.parent?.children ?? model.roots)).filter(available);
+        ? menuVisible(rootEntries, actualOpen, true)
+        : menuLevel(entry?.parent?.children ?? rootEntries)).filter(available);
       const position = candidates.findIndex(item => item.key === entry?.key);
       const offset = action === 'previous' ? -1 : 1;
       const index = position < 0 ? (offset < 0 ? candidates.length - 1 : 0)
@@ -373,16 +469,16 @@
     const match = [...elements].find(([, element]) => element === target
       || target && element.id === target.id);
     const key = match?.[0];
-    const entry = key ? model.entries.get(key) ?? null : null;
+    const entry = key === undefined ? null : navigationEntry(key) ?? null;
     void keyboard(entry, event);
     onkeydown?.(event);
   }
 
   export function focus(options?: FocusOptions) {
-    const entry = active ? model.entries.get(active) : undefined;
+    const entry = active === null ? undefined : navigationEntry(active);
     const target = entry && available(entry)
       ? entry
-      : menuVisible(model.roots, actualOpen, actualMode === 'inline').find(available);
+      : menuVisible(rootEntries, actualOpen, actualMode === 'inline').find(available);
     if (target) {
       const element = elements.get(target.key);
       const link = element?.querySelector<HTMLAnchorElement>('a[href]');
@@ -396,13 +492,26 @@
   }
 </script>
 
+<style>
+  [data-menu-responsive] > :global([data-menu-overflow-hidden]) {
+    position: absolute !important;
+    inset-inline-start: 0;
+    height: 0 !important;
+    overflow-y: hidden;
+    visibility: hidden;
+    pointer-events: none;
+  }
+</style>
+
+{#snippet defaultIndicator()}<EllipsisIcon />{/snippet}
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`menu-prefix:${componentPrefix}:${rootPrefix}`} />{/if}<ul {...attributes} data-ant-menu-prefix={componentPrefix} data-ant-menu-root-prefix={rootPrefix} bind:this={rootElement} role="menu" tabindex={tabindex} data-menu-list="true" dir={config.direction}
+  data-menu-responsive={responsive || undefined}
   aria-disabled={disabled || undefined} aria-orientation={actualMode === 'horizontal' ? 'horizontal' : 'vertical'}
   style={[componentTheme.style, semantics.styles.root].filter(Boolean).join(';') || undefined} class={[
       `${componentPrefix} ant-menu-css-var ${componentPrefix}-root`,
       componentTheme.className,
       componentTheme.className && 'ant-menu-source-theme',
-      componentTheme.className && actualMode === 'horizontal' && `${componentPrefix}-overflow`,
+      responsive && `${componentPrefix}-overflow`,
       `${componentPrefix}-${actualMode}`,
       `${componentPrefix}-${theme}`,
       collapsed && `${componentPrefix}-inline-collapsed`,
@@ -413,5 +522,9 @@
       semantics.classes.root
     ]}
   onkeydown={keydown}>
-  <MenuList entries={model.roots} {theme} />
+  <MenuList entries={model.roots} {theme} overflowCount={responsive ? visibleCount : undefined} />
+  {#if responsive && model.roots.length}
+    <MenuSubMenu entry={more.root} {theme} overflowItem overflowHidden={!showMore}
+      accessibleTitle={indicatorLabel} />
+  {/if}
 </ul>

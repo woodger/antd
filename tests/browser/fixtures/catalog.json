@@ -1258,6 +1258,11 @@
     "root": "picker-container-fixture"
   },
   {
+    "id": "menu-overflow",
+    "module": "./MenuOverflowFixtures.svelte",
+    "root": "menu-overflow-fixture"
+  },
+  {
     "id": "menu-config",
     "module": "./MenuConfigFixtures.svelte",
     "root": "menu-config-fixture"

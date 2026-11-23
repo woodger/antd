@@ -4,7 +4,7 @@ import reference from './fixtures/ant-design-menu-container-reference.json' with
 
 const surface = '.ant-menu-submenu-popup';
 const menu = (page: Page) => page.getByRole('menu', { name: 'Container menu', exact: true });
-const title = (page: Page) => menu(page).locator(':scope > .ant-menu-submenu > button');
+const title = (page: Page) => menu(page).getByRole('menuitem', { name: 'Projects', exact: true });
 const draft = (page: Page) => page.getByRole('textbox', { name: 'Menu draft', exact: true });
 const parentPopup = (page: Page) => page.locator(`${surface}:has(> ul[id$="-p-popup"])`);
 test.use({ viewport: { width: 1600, height: 1200 } });
@@ -26,14 +26,13 @@ async function check(page: Page, label: string, checked: boolean) {
   }, checked);
 }
 function sourceSnapshot(snapshot: typeof reference.cases[number]['snapshot']) {
-  // Overflow More ещё не перенесён; сырой UMD-снимок сохраняет его для следующего этапа.
   return {
-    calls: snapshot.calls.filter(call => call.key !== 'rc-menu-more').map(call => ({
+    calls: snapshot.calls.map(call => ({
       ...call,
       // Native button заголовка сохраняет согласованную адаптацию доступности Menu.
       tag: call.tag === 'div' ? 'button' : call.tag
     })),
-    popups: snapshot.popups.filter(popup => popup.key !== 'rc-menu-more')
+    popups: snapshot.popups
   };
 }
 async function snapshot(page: Page) {
@@ -56,7 +55,7 @@ async function snapshot(page: Page) {
         const ul = node.querySelector(':scope > ul');
         const input = node.querySelector<HTMLInputElement>('[aria-label="Menu draft"]');
         return {
-          key: ul?.id.match(/-(p|n)-popup$/)?.[1] ?? null,
+          key: ul?.id.match(/-(p|n|rc-menu-more)-popup$/)?.[1] ?? null,
           target: node.getRootNode() instanceof ShadowRoot ? 'shadow'
             : node.closest<HTMLElement>('[data-menu-container]')?.dataset.menuContainer ?? 'default',
           visible: node.getClientRects().length > 0 && getComputedStyle(node).display !== 'none',

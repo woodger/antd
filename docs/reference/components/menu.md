@@ -114,6 +114,30 @@ subMenuCloseDelay — секунды, обе задержки по умолча�
 Single selection закрывает все popup-подменю, multiple сохраняет их.
 Закрытие inline-подменю сохраняет descendant openKeys; закрытие popup удаляет их.
 
+### Горизонтальное переполнение
+
+В режиме `horizontal` Menu оставляет в строке помещающиеся пункты. Кнопка
+с многоточием открывает остальные в исходном порядке. Изменение ширины,
+пунктов или размеров индикатора пересчитывает состав строки. `disabledOverflow`
+выключает это поведение.
+
+`overflowedIndicator` принимает текст, число или snippet. При отсутствии prop
+используется значок Ant Design, явный `undefined` выводит `...`, а `null`
+и `false` оставляют кнопку без видимого содержимого. Для оформления поверхности
+подменю служит `overflowedIndicatorPopupClassName`.
+
+В `openKeys` подменю имеет ключ `rc-menu-more`. При выборе вынесенного
+пункта его `keyPath` заканчивается этим ключом. При коллизии ключ пользователя
+сохраняется, к служебному ключу добавляется дефис до получения свободного ключа.
+Вынесенный пункт первого уровня использует семантические стили первого уровня.
+
+При SSR все пункты остаются в строке, индикатор скрыт до измерения. После
+измерения невместившиеся строки остаются смонтированными для замеров и
+исключаются из навигации. Когда сужение скрывает пункт под фокусом, Menu
+переводит фокус в открытое подменю или на его кнопку. При расширении фокус
+возвращается к тому же пункту в строке. При очень малой ненулевой ширине
+подменю сохраняет все пункты. [Замеры Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-menu-overflow-reference.json).
+
 InlineIndent по умолчанию 24 px. InlineCollapsed переводит inline в vertical;
 при отсутствии prop учитывается LayoutSider.collapsed. Возврат в inline
 восстанавливает кэш uncontrolled openKeys. Controlled openKeys остаются у владельца:
@@ -180,8 +204,7 @@ Source compact использует itemHeight=35px и collapsedWidth=70px.
 Form.disabled и ConfigProvider.componentDisabled не отключают навигацию.
 Фикстура — `?fixture=menu`.
 
-Пока не поддерживаются responsive horizontal overflow/overflowedIndicator,
-исходные popup/collapse motion, controlled activeKey/defaultActiveFirst,
+Пока не поддерживаются исходные popup/collapse motion, controlled activeKey/defaultActiveFirst,
 tooltip для свёрнутого меню, render hooks, placements/offset и общий itemIcon.
 Deprecated
 Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса; данные
