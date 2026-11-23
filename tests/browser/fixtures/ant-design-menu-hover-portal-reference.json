@@ -1,0 +1,2078 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "browser": "157.0.8103.78",
+  "passes": [
+    [
+      {
+        "profile": {
+          "id": "default",
+          "mode": "vertical",
+          "destination": "default"
+        },
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ]
+              },
+              {
+                "kind": "leaf-enter",
+                "key": "4",
+                "type": "mouseenter",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "name": "other-label",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              }
+            ]
+          }
+        ],
+        "data": {
+          "token": "42",
+          "flag": "false",
+          "name": "sample",
+          "customPayload": "[object Object]"
+        },
+        "click": [
+          {
+            "kind": "branch-enter",
+            "key": "branch",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "none"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "leaf-enter",
+            "key": "4",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "menuitem"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "click",
+            "key": "4",
+            "path": [
+              "4",
+              "branch"
+            ],
+            "data": {
+              "key": 4,
+              "className": "extra-raw-leaf",
+              "label": {
+                "type": "span",
+                "key": null,
+                "ref": null,
+                "props": {
+                  "id": "leaf-label",
+                  "children": "Leaf"
+                },
+                "_owner": null
+              },
+              "data-extra-token": 42,
+              "data-extra-flag": false,
+              "data-extra-name": "sample",
+              "customPayload": {
+                "ord": 2
+              }
+            }
+          },
+          {
+            "kind": "openKeys",
+            "keys": []
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "external",
+          "mode": "vertical",
+          "destination": "external"
+        },
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ]
+              },
+              {
+                "kind": "leaf-enter",
+                "key": "4",
+                "type": "mouseenter",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "name": "other-label",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              }
+            ]
+          }
+        ],
+        "data": {
+          "token": "42",
+          "flag": "false",
+          "name": "sample",
+          "customPayload": "[object Object]"
+        },
+        "click": [
+          {
+            "kind": "branch-enter",
+            "key": "branch",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "none"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "leaf-enter",
+            "key": "4",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "menuitem"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "click",
+            "key": "4",
+            "path": [
+              "4",
+              "branch"
+            ],
+            "data": {
+              "key": 4,
+              "className": "extra-raw-leaf",
+              "label": {
+                "type": "span",
+                "key": null,
+                "ref": null,
+                "props": {
+                  "id": "leaf-label",
+                  "children": "Leaf"
+                },
+                "_owner": null
+              },
+              "data-extra-token": 42,
+              "data-extra-flag": false,
+              "data-extra-name": "sample",
+              "customPayload": {
+                "ord": 2
+              }
+            }
+          },
+          {
+            "kind": "openKeys",
+            "keys": []
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "shadow",
+          "mode": "vertical",
+          "destination": "shadow"
+        },
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": null
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "other-label",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              }
+            ]
+          }
+        ],
+        "data": {
+          "token": "42",
+          "flag": "false",
+          "name": "sample",
+          "customPayload": "[object Object]"
+        },
+        "click": [
+          {
+            "kind": "click",
+            "key": "4",
+            "path": [
+              "4",
+              "branch"
+            ],
+            "data": {
+              "key": 4,
+              "className": "extra-raw-leaf",
+              "label": {
+                "type": "span",
+                "key": null,
+                "ref": null,
+                "props": {
+                  "id": "leaf-label",
+                  "children": "Leaf"
+                },
+                "_owner": null
+              },
+              "data-extra-token": 42,
+              "data-extra-flag": false,
+              "data-extra-name": "sample",
+              "customPayload": {
+                "ord": 2
+              }
+            }
+          },
+          {
+            "kind": "openKeys",
+            "keys": []
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "external-nested-rtl",
+          "mode": "vertical",
+          "destination": "external",
+          "nested": true,
+          "direction": "rtl"
+        },
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "nest-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "nest-label",
+                  null
+                ]
+              },
+              {
+                "kind": "nested-enter",
+                "key": "nested",
+                "type": "mouseenter",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "nest-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ]
+              },
+              {
+                "kind": "nested-title-enter",
+                "key": "nested",
+                "type": "mouseenter",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "nest-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "nested-title-leave",
+                "key": "nested",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "nest-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ]
+              },
+              {
+                "kind": "leaf-enter",
+                "key": "4",
+                "type": "mouseenter",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "nest-label",
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "name": "other-label",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              },
+              {
+                "kind": "nested-leave",
+                "key": "nested",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              }
+            ]
+          }
+        ],
+        "data": {
+          "token": "42",
+          "flag": "false",
+          "name": "sample",
+          "customPayload": "[object Object]"
+        },
+        "click": [
+          {
+            "kind": "branch-enter",
+            "key": "branch",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "none"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "nested-enter",
+            "key": "nested",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "none"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "leaf-enter",
+            "key": "4",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "menuitem"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "click",
+            "key": "4",
+            "path": [
+              "4",
+              "nested",
+              "branch"
+            ],
+            "data": {
+              "key": 4,
+              "className": "extra-raw-leaf",
+              "label": {
+                "type": "span",
+                "key": null,
+                "ref": null,
+                "props": {
+                  "id": "leaf-label",
+                  "children": "Leaf"
+                },
+                "_owner": null
+              },
+              "data-extra-token": 42,
+              "data-extra-flag": false,
+              "data-extra-name": "sample",
+              "customPayload": {
+                "ord": 2
+              }
+            }
+          },
+          {
+            "kind": "openKeys",
+            "keys": []
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "inline-disabled",
+          "mode": "inline",
+          "destination": "default",
+          "disabled": true
+        },
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": []
+          },
+          {
+            "name": "other-label",
+            "state": [
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              }
+            ]
+          }
+        ],
+        "data": {
+          "token": "42",
+          "flag": "false",
+          "name": "sample",
+          "customPayload": "[object Object]"
+        },
+        "click": [],
+        "errors": []
+      }
+    ],
+    [
+      {
+        "profile": {
+          "id": "default",
+          "mode": "vertical",
+          "destination": "default"
+        },
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ]
+              },
+              {
+                "kind": "leaf-enter",
+                "key": "4",
+                "type": "mouseenter",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "name": "other-label",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              }
+            ]
+          }
+        ],
+        "data": {
+          "token": "42",
+          "flag": "false",
+          "name": "sample",
+          "customPayload": "[object Object]"
+        },
+        "click": [
+          {
+            "kind": "branch-enter",
+            "key": "branch",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "none"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "leaf-enter",
+            "key": "4",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "menuitem"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "click",
+            "key": "4",
+            "path": [
+              "4",
+              "branch"
+            ],
+            "data": {
+              "key": 4,
+              "className": "extra-raw-leaf",
+              "label": {
+                "type": "span",
+                "key": null,
+                "ref": null,
+                "props": {
+                  "id": "leaf-label",
+                  "children": "Leaf"
+                },
+                "_owner": null
+              },
+              "data-extra-token": 42,
+              "data-extra-flag": false,
+              "data-extra-name": "sample",
+              "customPayload": {
+                "ord": 2
+              }
+            }
+          },
+          {
+            "kind": "openKeys",
+            "keys": []
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "external",
+          "mode": "vertical",
+          "destination": "external"
+        },
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ]
+              },
+              {
+                "kind": "leaf-enter",
+                "key": "4",
+                "type": "mouseenter",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "name": "other-label",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              }
+            ]
+          }
+        ],
+        "data": {
+          "token": "42",
+          "flag": "false",
+          "name": "sample",
+          "customPayload": "[object Object]"
+        },
+        "click": [
+          {
+            "kind": "branch-enter",
+            "key": "branch",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "none"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "leaf-enter",
+            "key": "4",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "menuitem"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "click",
+            "key": "4",
+            "path": [
+              "4",
+              "branch"
+            ],
+            "data": {
+              "key": 4,
+              "className": "extra-raw-leaf",
+              "label": {
+                "type": "span",
+                "key": null,
+                "ref": null,
+                "props": {
+                  "id": "leaf-label",
+                  "children": "Leaf"
+                },
+                "_owner": null
+              },
+              "data-extra-token": 42,
+              "data-extra-flag": false,
+              "data-extra-name": "sample",
+              "customPayload": {
+                "ord": 2
+              }
+            }
+          },
+          {
+            "kind": "openKeys",
+            "keys": []
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "shadow",
+          "mode": "vertical",
+          "destination": "shadow"
+        },
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": null
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "other-label",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              }
+            ]
+          }
+        ],
+        "data": {
+          "token": "42",
+          "flag": "false",
+          "name": "sample",
+          "customPayload": "[object Object]"
+        },
+        "click": [
+          {
+            "kind": "click",
+            "key": "4",
+            "path": [
+              "4",
+              "branch"
+            ],
+            "data": {
+              "key": 4,
+              "className": "extra-raw-leaf",
+              "label": {
+                "type": "span",
+                "key": null,
+                "ref": null,
+                "props": {
+                  "id": "leaf-label",
+                  "children": "Leaf"
+                },
+                "_owner": null
+              },
+              "data-extra-token": 42,
+              "data-extra-flag": false,
+              "data-extra-name": "sample",
+              "customPayload": {
+                "ord": 2
+              }
+            }
+          },
+          {
+            "kind": "openKeys",
+            "keys": []
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "external-nested-rtl",
+          "mode": "vertical",
+          "destination": "external",
+          "nested": true,
+          "direction": "rtl"
+        },
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              },
+              {
+                "kind": "branch-title-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "nest-label",
+            "state": [
+              {
+                "kind": "branch-title-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "nest-label",
+                  null
+                ]
+              },
+              {
+                "kind": "nested-enter",
+                "key": "nested",
+                "type": "mouseenter",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "nest-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ]
+              },
+              {
+                "kind": "nested-title-enter",
+                "key": "nested",
+                "type": "mouseenter",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "nest-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": [
+              {
+                "kind": "nested-title-leave",
+                "key": "nested",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "nest-label",
+                  null
+                ],
+                "current": [
+                  "DIV",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ]
+              },
+              {
+                "kind": "leaf-enter",
+                "key": "4",
+                "type": "mouseenter",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "nest-label",
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "name": "other-label",
+            "state": [
+              {
+                "kind": "leaf-leave",
+                "key": "4",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "menuitem"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              },
+              {
+                "kind": "nested-leave",
+                "key": "nested",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              },
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              }
+            ]
+          }
+        ],
+        "data": {
+          "token": "42",
+          "flag": "false",
+          "name": "sample",
+          "customPayload": "[object Object]"
+        },
+        "click": [
+          {
+            "kind": "branch-enter",
+            "key": "branch",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "none"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "nested-enter",
+            "key": "nested",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "none"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "leaf-enter",
+            "key": "4",
+            "type": "mouseenter",
+            "native": "mouseout",
+            "target": [
+              "SPAN",
+              "leaf-label",
+              null
+            ],
+            "current": [
+              "LI",
+              "",
+              "menuitem"
+            ],
+            "related": [
+              "SPAN",
+              "other-label",
+              null
+            ]
+          },
+          {
+            "kind": "click",
+            "key": "4",
+            "path": [
+              "4",
+              "nested",
+              "branch"
+            ],
+            "data": {
+              "key": 4,
+              "className": "extra-raw-leaf",
+              "label": {
+                "type": "span",
+                "key": null,
+                "ref": null,
+                "props": {
+                  "id": "leaf-label",
+                  "children": "Leaf"
+                },
+                "_owner": null
+              },
+              "data-extra-token": 42,
+              "data-extra-flag": false,
+              "data-extra-name": "sample",
+              "customPayload": {
+                "ord": 2
+              }
+            }
+          },
+          {
+            "kind": "openKeys",
+            "keys": []
+          }
+        ],
+        "errors": []
+      },
+      {
+        "profile": {
+          "id": "inline-disabled",
+          "mode": "inline",
+          "destination": "default",
+          "disabled": true
+        },
+        "steps": [
+          {
+            "name": "branch-label",
+            "state": [
+              {
+                "kind": "branch-enter",
+                "key": "branch",
+                "type": "mouseenter",
+                "native": "mouseover",
+                "target": [
+                  "SPAN",
+                  "branch-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": null
+              }
+            ]
+          },
+          {
+            "name": "leaf-label",
+            "state": []
+          },
+          {
+            "name": "other-label",
+            "state": [
+              {
+                "kind": "branch-leave",
+                "key": "branch",
+                "type": "mouseleave",
+                "native": "mouseout",
+                "target": [
+                  "SPAN",
+                  "leaf-label",
+                  null
+                ],
+                "current": [
+                  "LI",
+                  "",
+                  "none"
+                ],
+                "related": [
+                  "SPAN",
+                  "other-label",
+                  null
+                ]
+              }
+            ]
+          }
+        ],
+        "data": {
+          "token": "42",
+          "flag": "false",
+          "name": "sample",
+          "customPayload": "[object Object]"
+        },
+        "click": [],
+        "errors": []
+      }
+    ]
+  ]
+}

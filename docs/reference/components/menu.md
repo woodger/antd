@@ -42,6 +42,9 @@ Items принимает MenuItemType: обычный пункт, подменю
 Label и extra пункта — string/number/Snippet, icon — Snippet. Поддержаны
 item.disabled/danger/title, class/style; у подменю также theme/popupClassName
 и onTitleClick. Группы не добавляют уровень отступа и не входят в keyPath.
+Пользовательские `data-*` пункта передаются его `li`. Служебные маркеры Menu
+имеют приоритет. Направление меню задаёт `ConfigProvider.direction` независимо
+от унаследованного из rc-menu параметра `direction`.
 Theme подменю меняет только его popup; следующее подменю без собственного theme
 использует тему корневого Menu. Для native popover правила light/dark дополнительно
 ограничены CSS @scope: тема родителя не переходит во вложенный popup. Базовые
@@ -104,6 +107,19 @@ selectable=true, multiple=false. OnClick пункта, его подменю о�
 Повторная активация выбранного single-пункта сохраняет `[key]`, но вызывает
 onDeselect: это поведение rc-menu 1.5.0. В multiple выбранный key удаляется.
 Selectable=false сохраняет onClick и закрытие popup без изменения selection.
+
+### Наведение
+
+`onMouseEnter` и `onMouseLeave` обычного пункта относятся к строке. У подменю
+они относятся ко всей ветке, включая списки в отдельных popup-контейнерах.
+`onTitleMouseEnter` и `onTitleMouseLeave` относятся только к кнопке заголовка.
+Отключение пункта или заголовка отключает его обработчики. События всей ветки
+доступны и у отключённого подменю.
+
+Обработчик получает `{ key, domEvent }`. Ключ всегда строковый. `domEvent` —
+нативный `MouseEvent`, его `currentTarget` на время вызова указывает на строку
+или кнопку заголовка. Переход из заголовка в собственное подменю сохраняет
+наведение на ветку, включая открытый ShadowRoot. [Замеры React 6.6.8](../../../tests/browser/fixtures/ant-design-menu-hover-portal-reference.json).
 
 Mode по умолчанию vertical; поддержаны horizontal и inline. Hover открывает
 popup-подменю; triggerSubMenuAction='click' переключает их по клику. Inline

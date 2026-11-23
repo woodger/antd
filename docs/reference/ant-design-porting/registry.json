@@ -3463,12 +3463,32 @@
           "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-trigger 3.10.1. Два одинаковых UMD-прогона для 13 основных и шести дополнительных сценариев. Владелец Menu определяет title, collapse, настраиваемые события и open, общий Tooltip подключается к нативному li без обёртки. Проверены hover, focus и порядок Tooltip, click, select, пустые title, RTL, nested, Sider, forceRender, semantic slots и portal getter. Семантические callbacks получают getter из конфигурации, при стандартном портале он undefined. Изменение collapse сохраняет строку и фокус, временный aria-describedby удаляется при закрытии. Native сохраняет однократный запрос закрытия там, где исходник на controlled open вызывает pointerleave и mouseleave. Нулевой extra входит в подсказку при сохранении нативного короткого оформления строки. Default portal учитывает нативное модальное окно. Строгая гидратация сохраняет серверные узлы строки и подсказки, фокус и освобождает portal при unmount. Оставшиеся возможности общего Tooltip указаны в его карточке."
         },
         {
+          "id": "row-events",
+          "title": "Наведение пунктов, веток и заголовков, параметры строк",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/MenuItem.svelte",
+            "src/lib/MenuSubMenu.svelte",
+            "src/lib/menu-event.dom.ts",
+            "src/lib/menu.types.ts",
+            "tests/browser/fixtures/ant-design-menu-hover-reference.json",
+            "tests/browser/fixtures/ant-design-menu-hover-portal-reference.json",
+            "tests/browser/fixtures/ant-design-menu-hover-horizontal-reference.json",
+            "tests/browser/fixtures/ant-design-menu-item-ssr-reference.json",
+            "tests/browser/menu-hover.spec.ts",
+            "tests/package/menu-hover.ssr.test.ts",
+            "docs/reference/components/menu.md"
+          ],
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0. Два одинаковых UMD-прогона шести основных, пяти portal-профилей и двух горизонтальных случаев, включая More. Leaf/title hover учитывают disabled, callbacks всей ветки остаются доступны при disabled. Своя панель сохраняет границу ветки, обход идёт от внешней ветки к листу при входе и обратно при выходе. Native использует MouseEvent с currentTarget строки или button заголовка и сохраняет логическое перемещение через открытый ShadowRoot. Raw React теряет enter листа и дважды вызывает leave ветки после пересечения ShadowRoot. Data-* переходит в li и itemData, зарезервированные маркеры принадлежат Menu. Пользовательская запись остаётся в itemData, hover handlers потребляются отдельно. Direction в обеих реализациях задаётся ConfigProvider. В исходном SSR rootClassName ветки выходит HTML-атрибутом. Native принимает поле как часть данных ветки без утечки в DOM, класс задаётся class. Три DOM-free SSR сценария, числовые keys, замена callbacks/атрибутов, физический RTL маршрут и cleanup проверены."
+        },
+        {
           "id": "extended-api",
-          "title": "События строк и интеграция Dropdown",
+          "title": "Интеграция Menu в Dropdown",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Остаются делегированные hover callbacks пунктов и заголовков, а также интеграция Dropdown. В исходном MenuProps исключены activeKey/defaultActiveFirst. Dropdown.menu объявляет activeKey отдельно. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса."
+          "note": "Остаётся общий контракт Dropdown.menu и вложенных панелей. В исходном MenuProps исключены activeKey/defaultActiveFirst. Dropdown.menu объявляет activeKey отдельно. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса."
         },
         {
           "id": "link-reset",

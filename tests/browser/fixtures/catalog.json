@@ -1288,6 +1288,11 @@
     "root": "menu-motion-fixture"
   },
   {
+    "id": "menu-hover",
+    "module": "./MenuHoverFixtures.svelte",
+    "root": "menu-hover-fixture"
+  },
+  {
     "id": "menu-config",
     "module": "./MenuConfigFixtures.svelte",
     "root": "menu-config-fixture"

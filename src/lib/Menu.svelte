@@ -14,7 +14,7 @@
   } from './menu.engine';
   import type { MenuEntry } from './menu.engine';
   import type { MenuProps, MenuClickInfo } from './menu.types';
-  import { provideMenu } from './menu-context';
+  import { provideMenu, type MenuBranchHover } from './menu-context';
   import { useConfig } from './config-context';
   import { useSider } from './layout-context';
   import { useComponentTheme } from './theme-component.svelte';
@@ -34,6 +34,7 @@
     prefixCls: customizePrefixCls,
     items = [],
     mode = 'vertical',
+    direction: _direction,
     theme = 'light',
     disabled = false,
     disabledOverflow = false,
@@ -133,7 +134,7 @@
   let mounted = $state(false);
   let reducedMotion = $state(false);
   const elements = new Map<string, HTMLElement>();
-  const hoverHandlers = new Map<string, (open: boolean) => void>();
+  const hoverHandlers = new Map<string, MenuBranchHover>();
   const handledKeys = new WeakSet<KeyboardEvent>();
   const frames = new Set<number>();
   let previous = untrack(() => ({ selectedKeys, openKeys, mode: actualMode, collapsed }));
@@ -267,7 +268,7 @@
     };
   }
 
-  function registerHover(key: string, handler: (open: boolean) => void) {
+  function registerHover(key: string, handler: MenuBranchHover) {
     hoverHandlers.set(key, handler);
     return () => {
       if (hoverHandlers.get(key) === handler) hoverHandlers.delete(key);
@@ -276,7 +277,18 @@
 
   function hover(entry: MenuEntry, open: boolean) {
     for (let current: MenuEntry | undefined = entry; current; current = current.parent) {
-      hoverHandlers.get(current.key)?.(open);
+      hoverHandlers.get(current.key)?.schedule(open);
+    }
+  }
+
+  // Нативные события идут по физическому DOM. Portal добавляет пропущенные логические ветки.
+  function notifyPopupHover(
+    entry: MenuEntry, event: MouseEvent, entering: boolean, surface: HTMLElement
+  ) {
+    const path = entering ? entry.path : [...entry.path].reverse();
+
+    for (const key of path) {
+      hoverHandlers.get(key)?.notify(event, entering, surface);
     }
   }
 
@@ -292,18 +304,20 @@
   }
 
   function click(entry: MenuEntry, event: MouseEvent | KeyboardEvent) {
-    if (disabled || menuItem(entry).disabled) {
+    const item = menuItem(entry);
+    if (disabled || item.disabled) {
       return;
     }
 
     const before = [...actualSelected];
+    const { onMouseEnter: _enter, onMouseLeave: _leave, ...itemData } = item;
     const info: MenuClickInfo = {
       key: entry.key,
       keyPath: [...entry.path].reverse(),
       domEvent: event,
-      itemData: { ...menuItem(entry) }
+      itemData
     };
-    menuItem(entry).onClick?.(info);
+    item.onClick?.(info);
     for (let parent = entry.parent; parent; parent = parent.parent)
       menuSubMenu(parent).onClick?.(info);
     onClick?.(info);
@@ -507,6 +521,7 @@
     register,
     registerHover,
     hover,
+    notifyPopupHover,
     keydown,
     activate: key => {
       active = key;

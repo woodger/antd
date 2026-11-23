@@ -12,6 +12,7 @@
   import { connectPopup, type PopupConnection } from './popup.dom';
   import { getPopupPlacement, type PopupSourceAlign } from './popup-position.engine';
   import { createPopupContainer } from './popup-container.model.svelte.js';
+  import { getMenuHoverRelatedTarget, withMenuCurrentTarget } from './menu-event.dom';
   import { connectInlineStyle } from './inline-style.dom';
   import { getInlineStyleDeclarations, serializeInlineStyleLayers } from './inline-style.engine';
   import type { TooltipPosition } from './tooltip.engine';
@@ -84,6 +85,7 @@
   let selected = $derived(
     context.selected.some(key => entry.children.some(child => contains(child, key)))
   );
+  let row = $state<HTMLLIElement>();
   let title = $state<HTMLButtonElement>();
   let popup = $state<HTMLDivElement>();
   let positionConnection: PopupConnection | undefined;
@@ -130,6 +132,7 @@
   let popupForced = $state(false);
   let containerUsed = $state(untrack(() => Boolean(context.getPopupContainer)));
   let timer: ReturnType<typeof setTimeout> | undefined;
+  let shadowTransfer: { host: Element; timeStamp: number; } | undefined;
   onMount(() => { client = true; });
 
   const motion = $derived(getMenuPopupMotion(
@@ -240,6 +243,62 @@
     const path = owner?.getAttribute('data-menu-popup-path');
     return path?.split(' ').includes(context.id(entry.key)) ?? false;
   }
+
+  // У ветки одна граница на все её поверхности, даже при разных DOM-родителях.
+  function notifyBranchHover(event: MouseEvent, entering: boolean, surface?: HTMLElement) {
+    if ((!item.onMouseEnter && !item.onMouseLeave) || !row || inactive || context.locked
+      || row.closest('[inert]') || surface && row.contains(surface)) {
+      return;
+    }
+
+    if (entering && shadowTransfer?.host === event.relatedTarget
+      && shadowTransfer.timeStamp === event.timeStamp) {
+      return;
+    }
+    shadowTransfer = undefined;
+
+    const related = getMenuHoverRelatedTarget(event, entering);
+    if (related && (row.contains(related) || containsPopupTarget(related))) {
+      const root = surface?.getRootNode();
+      if (!entering && root instanceof ShadowRoot) {
+        // У mouseenter того же движения relatedTarget будет host предыдущей поверхности.
+        shadowTransfer = { host: root.host, timeStamp: event.timeStamp };
+      }
+      return;
+    }
+
+    const handler = entering ? item.onMouseEnter : item.onMouseLeave;
+    if (handler) {
+      withMenuCurrentTarget(event, row, domEvent => handler({ key: entry.key, domEvent }));
+    }
+  }
+
+  function branchEnter(event: MouseEvent) {
+    if (!blocked) context.activate(entry.key);
+    context.hover(entry, true);
+    notifyBranchHover(event, true);
+  }
+
+  function branchLeave(event: MouseEvent) {
+    if (context.active === entry.key) context.activate(null);
+    context.hover(entry, false);
+    notifyBranchHover(event, false);
+  }
+
+  function titleHover(event: MouseEvent, entering: boolean) {
+    if (blocked || context.locked || title?.closest('[inert]')) return;
+
+    const handler = entering ? item.onTitleMouseEnter : item.onTitleMouseLeave;
+    handler?.({ key: entry.key, domEvent: event });
+  }
+
+  function popupHover(event: MouseEvent, entering: boolean) {
+    if (popupRequested) context.hover(entry, entering);
+    if (popup && !popup.inert && !popup.hidden) {
+      context.notifyPopupHover(entry, event, entering, popup);
+    }
+  }
+
   function connectEvents(element: HTMLElement) {
     const keyboard = on(element, 'keydown', event => {
       const root = context.nativeElement;
@@ -249,18 +308,7 @@
 
       // Portal сохраняет currentTarget корневого callback и исходный target события.
       // Enter может закрыть popup до всплытия того же события к этой поверхности.
-      const descriptor = Object.getOwnPropertyDescriptor(event, 'currentTarget');
-      Object.defineProperty(event, 'currentTarget', { configurable: true, value: root });
-      try {
-        context.keydown(event as KeyboardEvent & { currentTarget: HTMLUListElement; });
-      } finally {
-        if (descriptor) {
-          Object.defineProperty(event, 'currentTarget', descriptor);
-        }
-        else {
-          Reflect.deleteProperty(event, 'currentTarget');
-        }
-      }
+      withMenuCurrentTarget(event, root, context.keydown);
     });
     // Svelte сначала вызывает delegated child handlers внутри ShadowRoot, сохраняя domEvent.target.
     const click = on(element, 'click', () => {});
@@ -274,7 +322,7 @@
     if (context.getPopupContainer) containerUsed = true;
   });
   $effect(() => inactive || overflowHidden || context.locked
-    ? undefined : context.registerHover(entry.key, hover));
+    ? undefined : context.registerHover(entry.key, { schedule: hover, notify: notifyBranchHover }));
   $effect(() => {
     if (!popupPresented || !popup || !title) {
       return;
@@ -364,7 +412,8 @@
   .menu-popup:global(.ant-menu-source-theme) { border-radius: var(--ant-border-radius-lg); }
 </style>
 
-<li data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls}
+<li bind:this={row} data-ant-menu-prefix={context.prefixCls}
+  data-ant-menu-root-prefix={context.rootPrefixCls}
   role={overflowHidden ? undefined : 'none'} class={[
     overflowItem && `${context.prefixCls}-overflow-item`,
     overflowRest && `${context.prefixCls}-overflow-item-rest`,
@@ -380,16 +429,7 @@
   data-menu-overflow-rest={overflowRest || undefined}
   data-menu-overflow-hidden={overflowHidden || undefined}
   inert={overflowHidden || undefined} aria-hidden={overflowHidden || undefined}
-  style={item.style} onmouseenter={() => {
-      if (!blocked)
-        context.activate(entry.key);
-      context.hover(entry, true);
-    }}
-  onmouseleave={() => {
-      if (context.active === entry.key)
-        context.activate(null);
-      context.hover(entry, false);
-    }}>
+  style={item.style} onmouseenter={branchEnter} onmouseleave={branchLeave}>
   <button data-ant-menu-submenu-title type="button" disabled={blocked} bind:this={title}
     {@attach node => inactive || overflowHidden || context.locked
       ? undefined : context.register(entry.key, node)}
@@ -418,6 +458,8 @@
           if (event.key === ' ')
             event.preventDefault();
         }}
+    onmouseenter={event => titleHover(event, true)}
+    onmouseleave={event => titleHover(event, false)}
     onfocus={() => {
         if (!blocked)
           context.activate(entry.key);
@@ -462,8 +504,8 @@
             popupMotion.state.className
           ]}
         style={untrack(() => popupStyle)}
-        onmouseenter={() => { if (popupRequested) context.hover(entry, true); }}
-        onmouseleave={() => { if (popupRequested) context.hover(entry, false); }}
+        onmouseenter={event => popupHover(event, true)}
+        onmouseleave={event => popupHover(event, false)}
         onanimationend={popupMotion.end} ontransitionend={popupMotion.end}
         {@attach portal}
         {@attach connectPopupStyle}

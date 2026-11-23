@@ -8,6 +8,15 @@ export type MenuMode = 'vertical' | 'horizontal' | 'inline';
 export type MenuTheme = 'light' | 'dark';
 export type MenuContent = string | number | Snippet;
 
+/** Событие пересечения границы пункта, заголовка или всей ветки. */
+export interface MenuHoverInfo {
+  /** Строковый ключ Menu, в том числе для пункта с числовым key. */
+  key: string;
+  /** Нативное событие с currentTarget соответствующей строки или заголовка на время вызова. */
+  domEvent: MouseEvent;
+}
+export type MenuHoverEventHandler = (info: MenuHoverInfo) => void;
+
 /** Данные пункта и состояние выбора для значка после подписи. */
 export interface MenuItemIconInfo extends MenuItem {
   eventKey: string;
@@ -56,6 +65,8 @@ interface MenuCommon {
   style?: string;
 }
 export interface MenuItem extends MenuCommon {
+  /** Пользовательские атрибуты пункта. Служебные маркеры Menu имеют приоритет. */
+  [attribute: `data-${string}`]: unknown;
   type?: 'item';
   key: string | number;
   icon?: Snippet;
@@ -66,6 +77,9 @@ export interface MenuItem extends MenuCommon {
   title?: MenuContent | false | null;
   disabled?: boolean;
   danger?: boolean;
+  /** События строки доступны у включённого пункта. */
+  onMouseEnter?: MenuHoverEventHandler;
+  onMouseLeave?: MenuHoverEventHandler;
   onClick?: (info: MenuClickInfo) => void;
 }
 export interface MenuSubMenu extends MenuCommon {
@@ -79,6 +93,8 @@ export interface MenuSubMenu extends MenuCommon {
   disabled?: boolean;
   theme?: MenuTheme;
   popupClassName?: string;
+  /** Поле делегата rc-menu. Для оформления строки используется class. */
+  rootClassName?: string;
   /** Смещение [x, y] в пикселях. Заменяет offset выбранной позиции. */
   popupOffset?: readonly number[];
   /** Стили отдельной поверхности popup; styles.popup.root имеет приоритет. */
@@ -87,6 +103,12 @@ export interface MenuSubMenu extends MenuCommon {
   popupRender?: MenuPopupRender;
   /** Переопределяет значок этого подменю; false и null скрывают его. */
   expandIcon?: MenuExpandIcon;
+  /** Граница ветки включает её списки, даже когда они вынесены в отдельный контейнер. */
+  onMouseEnter?: MenuHoverEventHandler;
+  onMouseLeave?: MenuHoverEventHandler;
+  /** Граница заголовка. События доступны у включённого заголовка. */
+  onTitleMouseEnter?: MenuHoverEventHandler;
+  onTitleMouseLeave?: MenuHoverEventHandler;
   onClick?: (info: MenuClickInfo) => void;
   onTitleClick?: (info: { key: string; domEvent: MouseEvent | KeyboardEvent; }) => void;
 }
@@ -144,6 +166,8 @@ export interface MenuProps extends Omit<
   items?: readonly MenuItemType[];
   /** @defaultValue 'vertical' */
   mode?: MenuMode;
+  /** Как в обёртке Ant Design, фактическое направление задаёт ConfigProvider. */
+  direction?: 'ltr' | 'rtl';
   /** @defaultValue 'light' */
   theme?: MenuTheme;
   /** @defaultValue false */

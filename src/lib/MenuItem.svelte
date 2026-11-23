@@ -15,6 +15,9 @@
   const context = useMenu();
   let element = $state<HTMLLIElement>();
   const item = $derived(menuItem(entry));
+  const dataAttributes = $derived(Object.fromEntries(
+    Object.entries(item).filter(([name]) => name.startsWith('data-'))
+  ));
   const blocked = $derived(context.disabled || item.disabled);
   const nested = $derived(entry.parent && !entry.parent.overflow);
   const semantic = $derived(context.semantics);
@@ -61,6 +64,22 @@
     return on(element, 'focusin', focus);
   }
 
+  function enter(event: MouseEvent) {
+    if (locked || blocked || element?.closest('[inert]')) return;
+
+    const handler = item.onMouseEnter;
+    handler?.({ key: entry.key, domEvent: event });
+    context.activate(entry.key);
+  }
+
+  function leave(event: MouseEvent) {
+    if (locked || element?.closest('[inert]')) return;
+
+    const handler = item.onMouseLeave;
+    if (!blocked) handler?.({ key: entry.key, domEvent: event });
+    if (context.active === entry.key) context.activate(null);
+  }
+
   function activate(event: MouseEvent, entry: MenuEntry) {
     tooltipClick?.(event);
     if (context.locked || context.disabled || menuItem(entry).disabled) {
@@ -94,7 +113,7 @@
 </style>
 
 {#snippet content(value: MenuContent | undefined)}{#if typeof value === 'function'}{@render value()}{:else}{value ?? ''}{/if}{/snippet}
-<li bind:this={element} data-ant-menu-item
+<li {...dataAttributes} bind:this={element} data-ant-menu-item
   data-ant-menu-item-disabled={blocked || undefined} {id}
   data-menu-id={id} role="menuitem" data-menu-overflow-item={overflowItem || undefined}
   data-menu-overflow-hidden={overflowHidden || undefined}
@@ -126,14 +145,7 @@
       ';'
     )}
   onclick={event => activate(event, entry)} onkeydown={event => keyboard(event, entry)}
-  {@attach node => connectFocus(node, entry)} onmouseenter={() => {
-        if (!blocked && !context.locked)
-          context.activate(entry.key);
-      }}
-  onmouseleave={() => {
-      if (!context.locked && context.active === entry.key)
-        context.activate(null);
-    }}>
+  {@attach node => connectFocus(node, entry)} onmouseenter={enter} onmouseleave={leave}>
   <!-- Source icon/label идут подряд; native-тема сохраняет межэлементный пробел. -->
   {#if item.icon}<span class={[`${context.prefixCls}-item-icon`, classes.itemIcon]}
     style={styles.itemIcon}>{@render item.icon()}</span>{#if !context.componentTheme.className}{' '}{/if}{/if}<span class={[

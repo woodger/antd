@@ -82,6 +82,8 @@ export type {
   MenuExpandIconInfo,
   MenuItemIcon,
   MenuItemIconInfo,
+  MenuHoverInfo,
+  MenuHoverEventHandler,
   MenuClickInfo,
   MenuSelectInfo
 } from './menu.types';

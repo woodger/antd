@@ -3,6 +3,11 @@ import type { MenuEntry } from './menu.engine';
 import type { menuSemantics } from './menu-semantic.engine';
 import type { MenuMode, MenuProps, MenuTheme } from './menu.types';
 
+export interface MenuBranchHover {
+  schedule: (entering: boolean) => void;
+  notify: (event: MouseEvent, entering: boolean, surface: HTMLElement) => void;
+}
+
 export interface MenuContext {
   readonly prefixCls: string;
   readonly rootPrefixCls: string;
@@ -42,8 +47,10 @@ export interface MenuContext {
   readonly getPopupContainer: MenuProps['getPopupContainer'];
   id: (key: string) => string;
   register: (key: string, element: HTMLElement) => () => void;
-  registerHover: (key: string, handler: (open: boolean) => void) => () => void;
+  registerHover: (key: string, handler: MenuBranchHover) => () => void;
   hover: (entry: MenuEntry, open: boolean) => void;
+  notifyPopupHover: (entry: MenuEntry, event: MouseEvent, entering: boolean,
+    surface: HTMLElement) => void;
   keydown: NonNullable<MenuProps['onkeydown']>;
   activate: (key: string | null) => void;
   click: (entry: MenuEntry, event: MouseEvent | KeyboardEvent) => void;
