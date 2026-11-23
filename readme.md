@@ -72,6 +72,7 @@ import '@woodger/antd/styles.css';
 - [Размеры компонентов](docs/reference/current-size-observation.md) — размеры и результаты измерений.
 - [Варианты оформления](docs/reference/control-variants.md) — настройки `ConfigProvider` и `Form`.
 - [Пустые состояния](docs/reference/render-empty.md) — настройка `ConfigProvider.renderEmpty`.
+- [Всплывающие элементы](docs/reference/popup-settings.md) — контейнер, размещение и ширина списка.
 - [Wave](docs/reference/wave.md) — настройки и поведение эффекта нажатия.
 - [Клавиатура и фокус](docs/reference/keyboard.md) — управление компонентами и доступность.
 - [Публичные экспорты](src/lib/index.ts) — компоненты, функции и типы.

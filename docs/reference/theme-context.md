@@ -375,8 +375,8 @@ Native reduced motion и живое отключение завершают те
 в стабильном состоянии; phase styles имеют приоритет. Произвольный prefixCls остаётся
 задачей. Общий getPopupContainer наследуется из ConfigProvider при отсутствии корневого
 prop Tabs; явный undefined и more overrides перекрывают его. ColorPicker использует
-локальную функцию или provider fallback. Точные приоритеты и текущие потребители
-описаны в [справочнике тем](themes.md).
+локальную функцию или provider fallback. Выбор контейнера описан в
+[справочнике всплывающих элементов](popup-settings.md#контейнер).
 
 ## Настройки Flex
 
