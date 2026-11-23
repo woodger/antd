@@ -3362,7 +3362,7 @@
             "tests/package/menu-popup-render.ssr.test.ts",
             "docs/reference/components/menu.md"
           ],
-          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0. Два одинаковых UMD-прогона, восемь профилей, DOM-free SSR, live/retained popup и исходные пути выбора. Настройка ветки выигрывает у Menu только для своей поверхности; More передаёт служебный ключ в корневом порядке keys. Snippet получает исходный список, данные ветки и renderItem для пересборки со штатными refs и событиями. Клавиатура следует DOM-порядку зарегистрированных строк и сохраняет native keyboard произвольных полей в popup. В Source замена origin на ul без data-menu-list даёт TypeError при Home/End/Down; обе исходные проверки сохранены, Native не требует служебного атрибута. Сохраняется жизненный цикл Svelte popup и inline (force render скрытого inline portal требует контейнер), без eager React render callback. Renderer не попадает в HTML attributes. SSR и строгая гидратация сохраняют штатные узлы, порядок и ref. Позиции описаны отдельной feature. Popup motion и общий itemIcon остаются в работе."
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0. Два одинаковых UMD-прогона, восемь профилей, DOM-free SSR, live/retained popup и исходные пути выбора. Настройка ветки выигрывает у Menu только для своей поверхности; More передаёт служебный ключ в корневом порядке keys. Snippet получает исходный список, данные ветки и renderItem для пересборки со штатными refs и событиями. Клавиатура следует DOM-порядку зарегистрированных строк и сохраняет native keyboard произвольных полей в popup. В Source замена origin на ul без data-menu-list даёт TypeError при Home/End/Down; обе исходные проверки сохранены, Native не требует служебного атрибута. Сохраняется жизненный цикл Svelte popup и inline (force render скрытого inline portal требует контейнер), без eager React render callback. Renderer не попадает в HTML attributes. SSR и строгая гидратация сохраняют штатные узлы, порядок и ref. Позиции и itemIcon описаны отдельными features. Popup motion остаётся в работе."
         },
         {
           "id": "popup-alignment",
@@ -3405,12 +3405,30 @@
           "note": "Шесть сценариев закреплённого Ant Design 6.6.8, два одинаковых прогона неизменённого UMD. Проверены callback props, базовые, вложенные и popup slots, классы корня на поверхности popup, семантика групп, наследование и сброс record через {}, CSS приоритеты, popupClassName/popupStyle и приоритет значка ветки. Локальные вложенные стили заменяют slot целиком; простые CSS-строки накапливаются. Сохраняются native button заголовка и отдельное наследование цвета/шрифта списка. Snippet получает данные ветки, eventKey, isSubMenu, isOpen и disabled. Обновление стилей и явных координат проверяется на том же открытом DOM и клавиатурном фокусе. Overflow служебные свойства, остальной trigger API и интеграция Dropdown остаются отдельными этапами."
         },
         {
+          "id": "item-icon",
+          "title": "Значки в конце строк Menu",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Menu.svelte",
+            "src/lib/MenuSubMenu.svelte",
+            "src/lib/MenuList.svelte",
+            "src/lib/menu.types.ts",
+            "tests/browser/fixtures/ant-design-menu-item-icon-reference.json",
+            "tests/browser/fixtures/MenuItemIconFixtures.svelte",
+            "tests/browser/menu-item-icon.spec.ts",
+            "tests/package/menu-item-icon.ssr.test.ts",
+            "docs/reference/components/menu.md"
+          ],
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0. 15 профилей в двух побайтно одинаковых UMD-прогонах. ItemIcon следует за подписью и extra. Основной icon и expandIcon работают независимо. SubMenu использует nullish наследование, пункт — truthy приоритет. Проверены inline и More, скаляры, пустые значения, выбранный ключ, локальный disabled в metadata. Глобальная блокировка всех строк сохраняет прежний Native контракт. Обновление Menu.itemIcon сохраняет сфокусированный пункт. Props значка не выводятся в HTML."
+        },
+        {
           "id": "extended-api",
-          "title": "Общий itemIcon и tooltip",
+          "title": "Tooltip свёрнутого меню",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Остаются общий itemIcon, полный Tooltip API свёрнутых пунктов и аудит делегированного API. В исходном MenuProps исключены activeKey/defaultActiveFirst. Dropdown.menu объявляет activeKey отдельно, его перенос относится к интеграции Dropdown. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса."
+          "note": "Остаются полный Tooltip API свёрнутых пунктов и аудит делегированного API. В исходном MenuProps исключены activeKey/defaultActiveFirst. Dropdown.menu объявляет activeKey отдельно, его перенос относится к интеграции Dropdown. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса."
         },
         {
           "id": "link-reset",

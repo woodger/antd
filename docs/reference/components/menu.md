@@ -176,6 +176,19 @@ Escape внутри popup закрывает текущий уровень и в
 изменении геометрии, прокрутке, изменении размера окна или новом открытии.
 [Замеры Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-menu-popup-alignment-reference.json).
 
+### Значок в конце строки
+
+`itemIcon` задаёт содержимое после подписи и `extra`. На уровне Menu
+настройка действует для всех пунктов, в том числе в списке переполнения.
+У подменю она действует на его потомков. `undefined` и `null` наследуют
+настройку родителя, а `false` отключает значок в этой ветке. На самом пункте
+пустое значение, включая `false` и `0`, использует настройку ветки.
+
+Можно передать строку, число или snippet с `MenuItemIconInfo`. Snippet
+получает данные пункта, его строковый `eventKey` и текущее `isSelected`.
+`icon` остаётся значком перед подписью, а `expandIcon` относится к заголовку
+подменю. [Замеры Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-menu-item-icon-reference.json).
+
 ### Содержимое всплывающего подменю
 
 `popupRender` на Menu определяет содержимое всплывающих веток, включая многоточие.
@@ -263,8 +276,7 @@ Source compact использует itemHeight=35px и collapsedWidth=70px.
 Form.disabled и ConfigProvider.componentDisabled не отключают навигацию.
 Фикстура — `?fixture=menu`.
 
-Пока не поддерживаются исходные popup/collapse motion, tooltip для свёрнутого
-меню и общий itemIcon.
+Пока не поддерживаются исходные popup/collapse motion и tooltip для свёрнутого меню.
 Deprecated
 Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса; данные
 задаются items. Standalone Menu пока не расширяет существующий контракт Dropdown.

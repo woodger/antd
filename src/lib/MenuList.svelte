@@ -92,6 +92,8 @@
       inactive={entryInactive} />
   {:else}
     {@const item = menuItem(entry)}{@const blocked = context.disabled || item.disabled}
+    {@const selected = context.selected.includes(entry.key)}
+    {@const trailingIcon = item.itemIcon || context.itemIcon}
     {@const id = entryInactive ? undefined : context.id(entry.key)}
     <li data-ant-menu-item data-ant-menu-item-disabled={blocked || undefined} {id}
       data-menu-id={id} role="menuitem" data-menu-overflow-item={overflowItem || undefined}
@@ -110,7 +112,7 @@
           overflowItem && `${context.prefixCls}-overflow-item`,
           `${context.prefixCls}-item`,
           context.active === entry.key && `${context.prefixCls}-item-active`,
-          context.selected.includes(entry.key) && `${context.prefixCls}-item-selected`,
+          selected && `${context.prefixCls}-item-selected`,
           blocked && `${context.prefixCls}-item-disabled`,
           item.danger && `${context.prefixCls}-item-danger`,
           classes.item,
@@ -149,7 +151,11 @@
         {:else if item.extra !== undefined}
           <span class={`${context.prefixCls}-item-label`}>{@render content(item.label)}</span><span class={`${context.prefixCls}-item-extra`}>{@render content(item.extra)}</span>
         {:else}{@render content(item.label)}{/if}
-      </span>
+      </span>{#if typeof trailingIcon === 'function'}{@render trailingIcon({
+        ...item,
+        eventKey: entry.key,
+        isSelected: selected
+      })}{:else if trailingIcon && typeof trailingIcon !== 'boolean'}{trailingIcon}{/if}
     </li>
   {/if}
 {/each}

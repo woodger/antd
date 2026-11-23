@@ -79,6 +79,8 @@ export type {
   MenuSubMenuSlots,
   MenuExpandIcon,
   MenuExpandIconInfo,
+  MenuItemIcon,
+  MenuItemIconInfo,
   MenuClickInfo,
   MenuSelectInfo
 } from './menu.types';

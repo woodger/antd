@@ -1,0 +1,1426 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "browser": "157.0.8103.78",
+    "react": "18.3.1",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "entrySha256": "be97fafd18723f8f8906faa5b6d7926e56046aa0345677ed90aae64a88fa3b30"
+  },
+  "cases": [
+    {
+      "options": {
+        "id": "root-number",
+        "rootIcon": 7,
+        "leafIcon": ""
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Root7",
+          "last": "7",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtra7",
+          "last": "7",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Other7",
+          "last": "7",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Root7",
+          "last": "7",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtra7",
+          "last": "7",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Other7",
+          "last": "7",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "root-zero",
+        "rootIcon": 0,
+        "branchIcon": "snippet"
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Root",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "leaf",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Root",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "leaf",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "root-boolean",
+        "rootIcon": true
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Root",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtra",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Other",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Root",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtra",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Other",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "branch-null",
+        "rootIcon": "snippet",
+        "branchIcon": null
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "leaf",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "leaf",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "leaf-null",
+        "rootIcon": "snippet",
+        "branchIcon": "snippet",
+        "leafIcon": null
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "leaf",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "leaf",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "inline-branch",
+        "rootIcon": "snippet",
+        "branchIcon": "snippet",
+        "mode": "inline"
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "leaf",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "leaf",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "overflow-branch",
+        "rootIcon": "snippet",
+        "branchIcon": "snippet",
+        "mode": "horizontal"
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "leaf",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "leaf",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "global",
+        "rootIcon": "snippet",
+        "icon": true
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "leadLeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "leaf",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": true
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "leadLeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "leaf",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": true
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "branch",
+        "rootIcon": "snippet",
+        "branchIcon": "snippet",
+        "icon": true
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "leadLeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "leaf",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": true
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "leadLeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "leaf",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": true
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "local",
+        "rootIcon": "snippet",
+        "branchIcon": "snippet",
+        "leafIcon": "snippet",
+        "icon": true
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "leadLeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "leaf",
+            "eventKey": "leaf",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": true
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "leadLeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "leaf",
+            "eventKey": "leaf",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": true
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "branch",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "local-false",
+        "rootIcon": "snippet",
+        "leafIcon": false
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "leaf",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "leaf",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "branch-false",
+        "rootIcon": "snippet",
+        "branchIcon": false
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtra",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Other",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtra",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Other",
+          "last": "SPAN",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "literal",
+        "rootIcon": "snippet",
+        "leafIcon": "Status"
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtraStatus",
+          "last": "Status",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtraStatus",
+          "last": "Status",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "zero",
+        "rootIcon": "snippet",
+        "leafIcon": 0
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "leaf",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "leaf",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    },
+    {
+      "options": {
+        "id": "all-disabled",
+        "rootIcon": "snippet",
+        "disabled": true,
+        "localDisabled": true
+      },
+      "initial": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": "true",
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "leaf",
+            "selected": "true",
+            "disabled": "true"
+          },
+          "ariaDisabled": "true",
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ],
+      "updated": [
+        {
+          "key": "sample-branch",
+          "text": "Branch",
+          "last": "I",
+          "custom": null,
+          "ariaDisabled": "true",
+          "primary": false
+        },
+        {
+          "key": "sample-root",
+          "text": "Rootmark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "root-entry",
+            "selected": "false"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        },
+        {
+          "key": "sample-leaf",
+          "text": "LeafExtramark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "leaf",
+            "selected": "false",
+            "disabled": "true"
+          },
+          "ariaDisabled": "true",
+          "primary": false
+        },
+        {
+          "key": "sample-other",
+          "text": "Othermark",
+          "last": "SPAN",
+          "custom": {
+            "itemIcon": "root",
+            "eventKey": "other",
+            "selected": "true"
+          },
+          "ariaDisabled": null,
+          "primary": false
+        }
+      ]
+    }
+  ]
+}

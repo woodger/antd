@@ -6,7 +6,7 @@
   import type { MenuEntry } from './menu.engine';
   import { menuSubMenu } from './menu.engine';
   import type { MenuExpandIconInfo, MenuTheme } from './menu.types';
-  import { useMenu } from './menu-context';
+  import { provideMenu, useMenu, type MenuContext } from './menu-context';
   import { getMenuPopupAlignment } from './menu-popup-align.engine';
   import { createMenuPopupPosition } from './menu-popup-align.dom';
   import { connectPopup } from './popup.dom';
@@ -38,6 +38,12 @@
   let overflowRest = $derived(entry.overflow === true);
   let popupPath = $derived(entry.path.map(context.id).join(' '));
   let item = $derived(menuSubMenu(entry));
+  // Значок ветки наследуют строки списка, включая их копии во всплывающем More.
+  const itemContext: MenuContext = Object.create(context, {
+    itemIcon: { get: () => item.itemIcon ?? context.itemIcon }
+  });
+  provideMenu(itemContext);
+
   let popupRender = $derived(item.popupRender || context.popupRender);
   let popupId = $derived(`${context.id(entry.key)}-popup`);
   let surfaceId = $derived(`${popupId}-content`);

@@ -58,6 +58,7 @@
     classNames: _classNames,
     styles: _styles,
     expandIcon,
+    itemIcon,
     popupRender,
     class: className = '',
     rootClassName = '',
@@ -424,6 +425,7 @@
     componentTheme,
     get semantics() { return semantics; },
     get expandIcon() { return resolvedExpandIcon; },
+    get itemIcon() { return itemIcon; },
     get popupRender() { return popupRender; },
     get builtinPlacements() { return builtinPlacements; },
     get mode() {

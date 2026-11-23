@@ -6,6 +6,15 @@ export type MenuMode = 'vertical' | 'horizontal' | 'inline';
 export type MenuTheme = 'light' | 'dark';
 export type MenuContent = string | number | Snippet;
 
+/** Данные пункта и состояние выбора для значка после подписи. */
+export interface MenuItemIconInfo extends MenuItem {
+  eventKey: string;
+  isSelected: boolean;
+}
+
+/** Рисует содержимое после подписи и extra. Boolean и null не создают узел. */
+export type MenuItemIcon = Snippet<[MenuItemIconInfo]> | string | number | boolean | null;
+
 /** Положение поверхности относительно заголовка, включая смещения и обработку краёв. */
 export type MenuPopupAlign = Omit<PopupSourceAlign, '_experimental'>;
 
@@ -45,6 +54,8 @@ export interface MenuItem extends MenuCommon {
   type?: 'item';
   key: string | number;
   icon?: Snippet;
+  /** Значок в конце строки. Пустое значение использует настройку ветки или Menu. */
+  itemIcon?: MenuItemIcon;
   extra?: MenuContent;
   title?: string;
   disabled?: boolean;
@@ -56,6 +67,8 @@ export interface MenuSubMenu extends MenuCommon {
   key: string | number;
   children: readonly MenuItemType[];
   icon?: Snippet;
+  /** Значок в конце строк потомков. False отключает наследуемый значок. */
+  itemIcon?: MenuItemIcon;
   title?: string;
   disabled?: boolean;
   theme?: MenuTheme;
@@ -172,6 +185,8 @@ export interface MenuProps extends Omit<
   expandIcon?: MenuExpandIcon;
   /** Оформляет всплывающие подменю, включая список переполнения. */
   popupRender?: MenuPopupRender;
+  /** Общий значок после подписи и extra каждого пункта. */
+  itemIcon?: MenuItemIcon;
   /**
    * Контейнер popup подменю; trigger — native button заголовка.
    * Отсутствующий prop наследует ConfigProvider; собственный undefined отключает его.

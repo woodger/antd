@@ -1273,6 +1273,11 @@
     "root": "menu-popup-alignment-fixture"
   },
   {
+    "id": "menu-item-icon",
+    "module": "./MenuItemIconFixtures.svelte",
+    "root": "menu-item-icon-fixture"
+  },
+  {
     "id": "menu-config",
     "module": "./MenuConfigFixtures.svelte",
     "root": "menu-config-fixture"
