@@ -10,6 +10,8 @@ export interface MenuContext {
   readonly semantics: ReturnType<typeof menuSemantics>;
   readonly expandIcon: MenuProps['expandIcon'];
   readonly itemIcon: MenuProps['itemIcon'];
+  readonly tooltip: MenuProps['tooltip'];
+  readonly tooltipCollapsed: boolean;
   readonly popupRender: MenuProps['popupRender'];
   readonly builtinPlacements: MenuProps['builtinPlacements'];
   readonly componentTheme: {

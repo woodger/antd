@@ -59,6 +59,7 @@
     styles: _styles,
     expandIcon,
     itemIcon,
+    tooltip,
     popupRender,
     class: className = '',
     rootClassName = '',
@@ -426,6 +427,8 @@
     get semantics() { return semantics; },
     get expandIcon() { return resolvedExpandIcon; },
     get itemIcon() { return itemIcon; },
+    get tooltip() { return tooltip; },
+    get tooltipCollapsed() { return Boolean(sider?.collapsed || resolvedCollapse); },
     get popupRender() { return popupRender; },
     get builtinPlacements() { return builtinPlacements; },
     get mode() {

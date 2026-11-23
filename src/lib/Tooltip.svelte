@@ -1,8 +1,26 @@
+<script module lang="ts">
+  import { getContext, setContext } from 'svelte';
+
+  interface TooltipAnchor {
+    element: () => HTMLElement | undefined;
+    enabled: () => boolean;
+    connectClick: (handler: (event: MouseEvent) => void) => () => void;
+  }
+
+  const anchorKey = Symbol('tooltip-anchor');
+
+  /** Подключает Tooltip к существующему элементу без обёртки и изменения публичных props. */
+  export function provideTooltipAnchor(anchor: TooltipAnchor) {
+    setContext(anchorKey, anchor);
+  }
+</script>
+
 <script lang="ts">
   // Координирует задержки открытия Tooltip с событиями trigger. Popup получает уже принятое
   // состояние видимости.
   import NoCompactStyle from './NoCompactStyle.svelte';
   import { onDestroy, onMount, untrack } from 'svelte';
+  import { on } from 'svelte/events';
   import { useConfig } from './config-context';
   import {
     getTooltipActions,
@@ -37,23 +55,30 @@
   } = $derived(props);
 
   const config = useConfig();
+  const external = getContext<TooltipAnchor | undefined>(anchorKey);
+  if (external) {
+    // Tooltip внутри пользовательского содержимого получает собственный trigger.
+    setContext(anchorKey, undefined);
+  }
   // Source config использует hover; без него сохраняется прежний native hover/focus.
   let resolvedTrigger = $derived<TooltipTrigger | readonly TooltipTrigger[]>(
-    trigger || config.tooltip?.trigger || (config.tooltip ? 'hover' : ['hover', 'focus'])
+    trigger || config.tooltip?.trigger || (external || config.tooltip ? 'hover' : ['hover', 'focus'])
   );
   let enterDelay = $derived(mouseEnterDelay ?? config.tooltip?.mouseEnterDelay ?? 0.1);
   let leaveDelay = $derived(mouseLeaveDelay ?? config.tooltip?.mouseLeaveDelay ?? 0.1);
   let actionOverrides = $derived(props.showAction !== undefined || props.hideAction !== undefined);
   let actions = $derived(getTooltipActions(resolvedTrigger, props.showAction, props.hideAction));
-  let sourceTouch = $derived(actionOverrides || Boolean(config.tooltip));
-  let sourceTrigger = $derived(Boolean(config.tooltip) || resolvedTrigger.length === 0
+  let sourceTouch = $derived(actionOverrides || Boolean(external || config.tooltip));
+  let sourceTrigger = $derived(Boolean(external || config.tooltip) || resolvedTrigger.length === 0
     || supports('click') || supports('contextMenu') || actionOverrides);
   const initialDefault = untrack(() => defaultOpen);
   // Отдельный raw state переживает обновление spread props без входного open.
   let uncontrolledOpen = $state(initialDefault);
   let rawOpen = $derived(providedOpen === undefined ? uncontrolledOpen : open ?? initialDefault);
-  let host = $state<HTMLSpanElement>();
-  let anchor = $state<Element>();
+  let wrapper = $state<HTMLSpanElement>();
+  let childAnchor = $state<Element>();
+  let host = $derived(external ? external.element() : wrapper);
+  let anchor = $derived(external ? host : childAnchor);
   let popupController = $state<{
     getPopupElement: () => HTMLSpanElement | undefined;
     forceAlign: () => void;
@@ -69,6 +94,12 @@
   let content = $derived(getTooltipContent(title, overlay));
   let available = $derived(hasTooltipContent(content));
   let visible = $derived(!props.disabled && available && rawOpen);
+  let popupVisited = $state(false);
+  const renderPopup = $derived(!external || props.forceRender || visible || popupVisited);
+
+  $effect.pre(() => {
+    if (external && (visible || props.forceRender)) popupVisited = true;
+  });
 
   onMount(() => {
     ref = {
@@ -81,14 +112,14 @@
   });
 
   $effect(() => {
-    const element = host;
+    const element = wrapper;
 
     if (!element) {
       return;
     }
 
     function update() {
-      anchor = element!.firstElementChild ?? element;
+      childAnchor = element!.firstElementChild ?? element;
     }
 
     update();
@@ -96,6 +127,34 @@
     observer.observe(element, { childList: true });
 
     return () => observer.disconnect();
+  });
+
+  $effect(() => {
+    const element = external?.element();
+    if (!external || !element || !external.enabled()) {
+      return;
+    }
+
+    const disconnect = [
+      on(element, 'pointerenter', handleEnter),
+      on(element, 'pointerleave', handleLeave),
+      on(element, 'focusin', handleFocus),
+      on(element, 'focusout', handleBlur),
+      external.connectClick(handleClick),
+      on(element, 'contextmenu', handleContextMenu),
+      on(element, 'touchstart', handleTouchStart)
+    ];
+
+    return () => {
+      for (const dispose of disconnect) dispose();
+      cancelPending();
+      hovered = false;
+      focused = false;
+      popupHovered = false;
+      clicked = false;
+      dismissed = false;
+      touched = false;
+    };
   });
 
   onDestroy(() => {
@@ -148,8 +207,11 @@
         return;
       }
 
-      uncontrolledOpen = next;
-      open = next;
+      // При подключении к готовому узлу состояние принадлежит его владельцу.
+      if (!external) {
+        uncontrolledOpen = next;
+        open = next;
+      }
       onOpenChange?.(next);
     }
 
@@ -300,8 +362,9 @@
   .ant-tooltip-trigger { display: inline-block; max-width: 100%; vertical-align: middle; }
 </style>
 
-<span bind:this={host} role="presentation" class={['ant-tooltip-trigger', className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} onfocusin={handleFocus} onfocusout={handleBlur} onclick={handleClick} oncontextmenu={handleContextMenu} ontouchstart={handleTouchStart}>{@render children()}</span><NoCompactStyle><TooltipPopup bind:this={popupController} title={content} color={props.color} prefixCls={props.prefixCls} open={visible} {anchor} describe={anchor} trigger={host} {placement} {arrow} {autoAdjustOverflow} {getPopupContainer}
+{#if !external}<span bind:this={wrapper} role="presentation" class={['ant-tooltip-trigger', className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} onfocusin={handleFocus} onfocusout={handleBlur} onclick={handleClick} oncontextmenu={handleContextMenu} ontouchstart={handleTouchStart}>{@render children()}</span>{/if}{#if renderPopup}<NoCompactStyle><TooltipPopup bind:this={popupController} title={content} color={props.color} prefixCls={props.prefixCls} open={visible} {anchor} describe={!external || visible ? anchor : undefined} trigger={host} {placement} {arrow} {autoAdjustOverflow} {getPopupContainer}
+  sourceAnchor={Boolean(external)}
   outsideEvents={actionOverrides ? 'mouse' : undefined}
   semanticProps={{ ...props, open: providedOpen, trigger: resolvedTrigger,
     mouseEnterDelay: enterDelay, mouseLeaveDelay: leaveDelay }}
-  onDismiss={dismiss} onHoverChange={handlePopupHover} /></NoCompactStyle>
+  onDismiss={dismiss} onHoverChange={handlePopupHover} /></NoCompactStyle>{/if}

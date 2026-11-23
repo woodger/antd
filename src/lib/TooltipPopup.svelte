@@ -60,6 +60,7 @@
     getPopupContainer,
     semanticProps,
     ownerClassName,
+    sourceAnchor = false,
     outsideEvents,
     onDismiss,
     onHoverChange
@@ -88,6 +89,7 @@
     getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
     semanticProps?: Omit<TooltipProps, 'children'>;
     ownerClassName?: string;
+    sourceAnchor?: boolean;
     outsideEvents?: 'pointer' | 'mouse';
     onDismiss: (reason: 'escape' | 'outside') => void;
     onHoverChange?: (hovered: boolean) => void;
@@ -111,10 +113,14 @@
   let actualPosition = $state.raw<TooltipPosition>();
   let resolvedAlign = $derived(align ?? semanticProps?.align);
   let configuredPlacements = $derived(builtinPlacements ?? semanticProps?.builtinPlacements);
+  let configuredContainer = $derived(getPopupContainer || config.getPopupContainer);
+  // Fallback встроенной подсказки принадлежит порталу, semantic props отражают конфигурацию.
+  let container = $derived(configuredContainer
+    || (sourceAnchor ? defaultTooltipContainer : undefined));
   let alignCallback = $derived(onPopupAlign ?? semanticProps?.onPopupAlign);
   let customPosition = $derived(Boolean(resolvedAlign || configuredPlacements || alignCallback));
   let arrowConfig = $derived(getTooltipArrow(arrow, config.tooltip?.arrow));
-  let sourcePlacement = $derived(Boolean(config.tooltip) || typeof arrow === 'object'
+  let sourcePlacement = $derived(sourceAnchor || Boolean(config.tooltip) || typeof arrow === 'object'
     || typeof autoAdjustOverflow === 'object' || customPosition);
   let destroy = $derived(destroyOnHidden ?? semanticProps?.destroyOnHidden ?? false);
   let localClassNames = $derived(ownerClassName
@@ -152,7 +158,7 @@
         || (config.tooltip ? 'hover' : ['hover', 'focus']),
       mouseEnterDelay: semanticProps?.mouseEnterDelay ?? config.tooltip?.mouseEnterDelay ?? 0.1,
       mouseLeaveDelay: semanticProps?.mouseLeaveDelay ?? config.tooltip?.mouseLeaveDelay ?? 0.1,
-      getPopupContainer: getPopupContainer || config.getPopupContainer,
+      getPopupContainer: configuredContainer,
       destroyOnHidden: destroy,
       builtinPlacements: configuredPlacements || placements
     };
@@ -207,11 +213,16 @@
   const portal = createPopupContainer(() => ({
     open: force || open && available,
     reference: anchor,
-    getPopupContainer: getPopupContainer || config.getPopupContainer,
+    getPopupContainer: container,
     themeStyle: rootStyle
   }));
 
   onMount(() => { mounted = true; });
+
+  // Встроенная подсказка внутри нативного модального окна остаётся в его top layer.
+  function defaultTooltipContainer(element: HTMLElement) {
+    return element.closest<HTMLDialogElement>('dialog:modal') ?? element.ownerDocument.body;
+  }
 
   $effect.pre(() => {
     // Первый force render получает текущий payload; последующие скрытые updates используют fresh.
@@ -320,7 +331,7 @@
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`tooltip-prefix:${prefix}`} />{/if}<span bind:this={popup} {id} role="tooltip" popover="manual" hidden dir={config.direction}
   data-ant-tooltip="" data-ant-placement={classPlacement}
-  data-ant-tooltip-inline={!callbackProps.getPopupContainer || undefined} class={[
+  data-ant-tooltip-inline={!container || undefined} class={[
     prefix,
     'ant-tooltip-css-var',
     componentTheme.className,

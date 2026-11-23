@@ -1,6 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 import type { PopupSourceAlign } from './popup-position.engine';
+import type { TooltipProps } from './tooltip.types';
 
 export type MenuMode = 'vertical' | 'horizontal' | 'inline';
 export type MenuTheme = 'light' | 'dark';
@@ -17,6 +18,9 @@ export type MenuItemIcon = Snippet<[MenuItemIconInfo]> | string | number | boole
 
 /** Положение поверхности относительно заголовка, включая смещения и обработку краёв. */
 export type MenuPopupAlign = Omit<PopupSourceAlign, '_experimental'>;
+
+/** Параметры подсказок свёрнутого меню. Значение false отключает общий Tooltip. */
+export type MenuTooltip = Omit<TooltipProps, 'children'> | false;
 
 export type MenuSubMenuSlots = Partial<Record<
   'item' | 'itemTitle' | 'list' | 'itemIcon' | 'itemContent',
@@ -57,7 +61,8 @@ export interface MenuItem extends MenuCommon {
   /** Значок в конце строки. Пустое значение использует настройку ветки или Menu. */
   itemIcon?: MenuItemIcon;
   extra?: MenuContent;
-  title?: string;
+  /** Строка также задаёт HTML title. False отключает подсказку для пункта. */
+  title?: MenuContent | false | null;
   disabled?: boolean;
   danger?: boolean;
   onClick?: (info: MenuClickInfo) => void;
@@ -187,6 +192,8 @@ export interface MenuProps extends Omit<
   popupRender?: MenuPopupRender;
   /** Общий значок после подписи и extra каждого пункта. */
   itemIcon?: MenuItemIcon;
+  /** Общие параметры Tooltip для строк свёрнутого меню. */
+  tooltip?: MenuTooltip;
   /**
    * Контейнер popup подменю; trigger — native button заголовка.
    * Отсутствующий prop наследует ConfigProvider; собственный undefined отключает его.

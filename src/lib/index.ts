@@ -74,6 +74,7 @@ export type {
   MenuStyles,
   MenuPopupSlots,
   MenuPopupAlign,
+  MenuTooltip,
   MenuPopupRender,
   MenuPopupRenderInfo,
   MenuSubMenuSlots,

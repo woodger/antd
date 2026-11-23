@@ -142,8 +142,8 @@ InlineIndent по умолчанию 24 px. InlineCollapsed переводит i
 при отсутствии prop учитывается LayoutSider.collapsed. Возврат в inline
 восстанавливает кэш uncontrolled openKeys. Controlled openKeys остаются у владельца:
 если он принял `[]` при сворачивании, компонент не заменяет этот массив кэшем.
-Первый уровень без icon сокращается до первого символа; доступное имя и native
-подсказка title сохраняют текст. Полный Tooltip API для collapsed items пока отсутствует.
+Пункт первого уровня без icon сокращается до первого символа и сохраняет полное
+доступное имя.
 
 Закрытые подменю монтируются при первом открытии; forceSubMenuRender монтирует
 их заранее, сохраняя закрытые popup скрытыми в том числе в horizontal mode.
@@ -153,6 +153,28 @@ popover и общий механизм позиционирования. Бок�
 переворачивается/сдвигается в пределах viewport. Outside click закрывает её;
 Escape внутри popup закрывает текущий уровень и возвращает фокус к родителю.
 Таймеры, listeners и animation frames очищаются при unmount.
+
+### Подсказки в свёрнутом меню
+
+Свёрнутое Menu показывает Tooltip при наведении на пункт. В LTR подсказка
+открывается справа, в RTL — слева. У пункта первого уровня она содержит
+подпись и `extra`. У вложенного пункта содержимое задают `title` или
+`tooltip.title`. Строковый `title` также становится HTML-атрибутом строки.
+`title={false}` убирает подсказку конкретного пункта, если Menu не задаёт
+общее содержимое. `tooltip={false}` отключает подсказки всех пунктов.
+
+Объект `tooltip` принимает настройки [Tooltip](tooltip.md), включая события
+открытия, `placement`, `open`, слоты и `getPopupContainer`. Getter получает
+сам `li`. Класс Menu добавляется к семантическому корню подсказки. В свёрнутом
+LayoutSider подсказки работают и у Menu с `inlineCollapsed={false}`.
+
+При разворачивании открытая подсказка скрывается, а ожидающий hover отменяется.
+Режим `forceRender` сохраняет скрытую поверхность без подписи. Клик сначала
+запрашивает видимость Tooltip, затем вызывает обработчики Menu. Svelte отправляет
+один запрос закрытия при уходе указателя с управляемой подсказки. React 6.6.8
+отправляет два из `pointerleave` и `mouseleave`.
+[Основные замеры](../../../tests/browser/fixtures/ant-design-menu-tooltip-reference.json),
+[замеры настроек](../../../tests/browser/fixtures/ant-design-menu-tooltip-options-reference.json).
 
 ### Размещение всплывающего подменю
 
@@ -276,7 +298,7 @@ Source compact использует itemHeight=35px и collapsedWidth=70px.
 Form.disabled и ConfigProvider.componentDisabled не отключают навигацию.
 Фикстура — `?fixture=menu`.
 
-Пока не поддерживаются исходные popup/collapse motion и tooltip для свёрнутого меню.
+Пока не поддерживаются исходные popup/collapse motion.
 Deprecated
 Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса; данные
 задаются items. Standalone Menu пока не расширяет существующий контракт Dropdown.

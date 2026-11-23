@@ -1278,6 +1278,11 @@
     "root": "menu-item-icon-fixture"
   },
   {
+    "id": "menu-tooltip",
+    "module": "./MenuTooltipFixtures.svelte",
+    "root": "menu-tooltip-fixture"
+  },
+  {
     "id": "menu-config",
     "module": "./MenuConfigFixtures.svelte",
     "root": "menu-config-fixture"

@@ -3270,7 +3270,7 @@
             "tools/ant-design-css-recipes.json",
             "tests/package/menu.ssr.test.ts"
           ],
-          "note": "Controlled/default openKeys, задержки по runtime rc-menu (open/close 0.1 s), ленивый popup и forceSubMenuRender. Native popover с outside/Escape, RTL и верхним выравниванием боковых подменю. Inline сохраняет descendant keys при закрытии, popup удаляет их. InlineCollapsed/Sider переводит меню в vertical и кэширует uncontrolled inline keys; controlled ключи остаются у владельца. Collapsed labels имеют native title вместо исходного Tooltip. SubMenu.theme меняет только собственный popup; nested default использует тему корневого Menu. Дополнительные scoped light/dark rules ограничивают CSS предков в native popover без смены DOM/keyboard/focus; обычные CSS rules остаются fallback без @scope."
+          "note": "Controlled/default openKeys, задержки по runtime rc-menu (open/close 0.1 s), ленивый popup и forceSubMenuRender. Native popover с outside/Escape, RTL и верхним выравниванием боковых подменю. Inline сохраняет descendant keys при закрытии, popup удаляет их. InlineCollapsed/Sider переводит меню в vertical и кэширует uncontrolled inline keys; controlled ключи остаются у владельца. Заголовки свёрнутых подменю сохраняют HTML title, подсказки листовых пунктов описаны в collapsed-tooltip. SubMenu.theme меняет только собственный popup; nested default использует тему корневого Menu. Дополнительные scoped light/dark rules ограничивают CSS предков в native popover без смены DOM/keyboard/focus; обычные CSS rules остаются fallback без @scope."
         },
         {
           "id": "keyboard-contexts",
@@ -3423,12 +3423,32 @@
           "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0. 15 профилей в двух побайтно одинаковых UMD-прогонах. ItemIcon следует за подписью и extra. Основной icon и expandIcon работают независимо. SubMenu использует nullish наследование, пункт — truthy приоритет. Проверены inline и More, скаляры, пустые значения, выбранный ключ, локальный disabled в metadata. Глобальная блокировка всех строк сохраняет прежний Native контракт. Обновление Menu.itemIcon сохраняет сфокусированный пункт. Props значка не выводятся в HTML."
         },
         {
+          "id": "collapsed-tooltip",
+          "title": "Tooltip свёрнутых пунктов Menu",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Menu.svelte",
+            "src/lib/MenuItem.svelte",
+            "src/lib/MenuItemTooltip.svelte",
+            "src/lib/Tooltip.svelte",
+            "src/lib/TooltipPopup.svelte",
+            "tests/browser/fixtures/ant-design-menu-tooltip-reference.json",
+            "tests/browser/fixtures/ant-design-menu-tooltip-options-reference.json",
+            "tests/browser/menu-tooltip.spec.ts",
+            "tests/browser/menu-tooltip-hydration.spec.ts",
+            "tests/package/menu-tooltip.ssr.test.ts",
+            "docs/reference/components/menu.md"
+          ],
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-trigger 3.10.1. Два одинаковых UMD-прогона для 13 основных и шести дополнительных сценариев. Владелец Menu определяет title, collapse, настраиваемые события и open, общий Tooltip подключается к нативному li без обёртки. Проверены hover, focus и порядок Tooltip, click, select, пустые title, RTL, nested, Sider, forceRender, semantic slots и portal getter. Семантические callbacks получают getter из конфигурации, при стандартном портале он undefined. Изменение collapse сохраняет строку и фокус, временный aria-describedby удаляется при закрытии. Native сохраняет однократный запрос закрытия там, где исходник на controlled open вызывает pointerleave и mouseleave. Нулевой extra входит в подсказку при сохранении нативного короткого оформления строки. Default portal учитывает нативное модальное окно. Строгая гидратация сохраняет серверные узлы строки и подсказки, фокус и освобождает portal при unmount. Оставшиеся возможности общего Tooltip указаны в его карточке."
+        },
+        {
           "id": "extended-api",
-          "title": "Tooltip свёрнутого меню",
+          "title": "События строк и интеграция Dropdown",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Остаются полный Tooltip API свёрнутых пунктов и аудит делегированного API. В исходном MenuProps исключены activeKey/defaultActiveFirst. Dropdown.menu объявляет activeKey отдельно, его перенос относится к интеграции Dropdown. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса."
+          "note": "Остаются делегированные hover callbacks пунктов и заголовков, а также интеграция Dropdown. В исходном MenuProps исключены activeKey/defaultActiveFirst. Dropdown.menu объявляет activeKey отдельно. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса."
         },
         {
           "id": "link-reset",
