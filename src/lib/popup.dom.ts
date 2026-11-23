@@ -51,6 +51,8 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   gap?: number | (() => number | undefined);
   allowZeroSize?: boolean | (() => boolean);
   allowOffscreenAnchor?: boolean;
+  /** Удерживает последнюю геометрию окрашенной поверхности во время CSS transform. */
+  pauseAlignment?: () => boolean;
   interactive?: boolean;
   getPosition?: (anchor: DOMRect, popup: DOMRect, viewport: TooltipRect) => TooltipPosition | undefined;
   getAnchorRect?: (current: DOMRect, popup: DOMRect) => DOMRect;
@@ -88,7 +90,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
 
   // Проверяет доступность anchor, измеряет popup и публикует изменившуюся позицию.
   function update(manual = false) {
-    if (disposed) {
+    if (disposed || shown && options.pauseAlignment?.()) {
       return;
     }
 

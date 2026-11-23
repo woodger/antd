@@ -17,10 +17,11 @@ if (!target) {
 }
 const selectors = '[role="menu"], [role="menuitem"], [data-menu-render-owner], input';
 const original = [...target.querySelectorAll(selectors)];
+const enableMotion = new URLSearchParams(location.search).has('motion');
 const instance = hydrate(MenuPopupRenderFixtures, {
   target,
   recover: false,
-  props: { kind: 'replace-origin', initiallyOpen: true }
+  props: { kind: 'replace-origin', initiallyOpen: true, enableMotion }
 });
 await tick();
 

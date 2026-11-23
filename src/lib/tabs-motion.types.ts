@@ -1,14 +1,10 @@
+import type { CssMotionName } from './css-motion.engine';
+
 /** Native событие окончания CSS motion либо исходный deadline без DOM event. */
 export type TabsMotionEvent = Event | { deadline: true; };
 
 /** Имена фаз CSSMotion; string использует suffix appear/enter/leave и start/active. */
-export type TabsMotionName = string | Partial<Record<
-  'appear' | 'enter' | 'leave'
-  | 'appearPrepare' | 'enterPrepare' | 'leavePrepare'
-  | 'appearStart' | 'enterStart' | 'leaveStart'
-  | 'appearActive' | 'enterActive' | 'leaveActive',
-  string
->>;
+export type TabsMotionName = CssMotionName;
 
 type TabsMotionPrepare = (element: HTMLDivElement) => void | Promise<unknown>;
 type TabsMotionStyle = (element: HTMLDivElement, event: null) => string | void;

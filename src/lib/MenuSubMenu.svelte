@@ -9,14 +9,18 @@
   import { provideMenu, useMenu, type MenuContext } from './menu-context';
   import { getMenuPopupAlignment } from './menu-popup-align.engine';
   import { createMenuPopupPosition } from './menu-popup-align.dom';
-  import { connectPopup } from './popup.dom';
+  import { connectPopup, type PopupConnection } from './popup.dom';
   import { getPopupPlacement, type PopupSourceAlign } from './popup-position.engine';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { connectInlineStyle } from './inline-style.dom';
   import { getInlineStyleDeclarations, serializeInlineStyleLayers } from './inline-style.engine';
   import type { TooltipPosition } from './tooltip.engine';
   import type { TooltipPlacement } from './tooltip.types';
-  import MenuList from './MenuList.svelte';
+  import { getMenuMotionStyle } from './menu-motion.dom';
+  import { getMenuPopupMotion } from './menu-motion.engine';
+  import { useMenuMotion } from './menu-motion.svelte';
+  import type { MenuMotion } from './menu-motion.types';
+  import MenuInlineSubMenu from './MenuInlineSubMenu.svelte';
   import MenuPopupContent from './MenuPopupContent.svelte';
 
   let {
@@ -51,6 +55,8 @@
   let actualTheme = $derived(item.theme ?? theme);
   let opened = $derived(!inactive && context.open.includes(entry.key));
   let popupOpen = $derived(opened && (!overflowRest || entry.children.length > 0));
+  let popupRequested = $derived(context.mode !== 'inline' && popupOpen
+    && !overflowHidden && !context.locked);
   let blocked = $derived(inactive || context.disabled || Boolean(item.disabled));
   let expandIcon = $derived(item.expandIcon === undefined ? context.expandIcon : item.expandIcon);
   let hasArrow = $derived(context.mode !== 'horizontal' || Boolean(entry.parent));
@@ -80,6 +86,7 @@
   );
   let title = $state<HTMLButtonElement>();
   let popup = $state<HTMLDivElement>();
+  let positionConnection: PopupConnection | undefined;
   let popupContainer = $state<HTMLElement | ShadowRoot>();
   let client = $state(false);
   let shown = $state(false);
@@ -87,7 +94,13 @@
   let alignedPoints = $state.raw<PopupSourceAlign>();
   // Контекст вложенного списка может читать объект родителя при разрешении режима.
   const popupMode = $derived(context.mode);
-  const horizontalPopup = $derived(popupMode === 'horizontal' && !entry.parent);
+  let lastPopupMode = $state<'horizontal' | 'vertical'>(untrack(() =>
+    context.mode === 'horizontal' ? 'horizontal' : 'vertical'
+  ));
+  let lastPopupMotion = $state.raw<MenuMotion | undefined>();
+  const effectivePopupMode = $derived(popupMode === 'inline' ? lastPopupMode : popupMode);
+  const customMotion = $derived(popupMode === 'inline' ? lastPopupMotion : context.motion);
+  const horizontalPopup = $derived(effectivePopupMode === 'horizontal' && !entry.parent);
   const rtl = $derived(context.direction === 'rtl');
   const alignment = $derived(getMenuPopupAlignment(
     horizontalPopup,
@@ -112,13 +125,53 @@
 
     return `${context.prefixCls}-submenu-placement-${name}`;
   });
-  let mounted = $state(untrack(() => opened || context.forceRender));
-  let popupMounted = $state(untrack(() => context.mode !== 'inline'
-    && (opened || context.forceRender)
-    || context.forceRender && Boolean(context.getPopupContainer)));
+  const titleId = $derived(inactive || context.exiting ? undefined : context.id(entry.key));
+  let popupVisited = $state(untrack(() => popupRequested));
+  let popupForced = $state(false);
   let containerUsed = $state(untrack(() => Boolean(context.getPopupContainer)));
   let timer: ReturnType<typeof setTimeout> | undefined;
   onMount(() => { client = true; });
+
+  const motion = $derived(getMenuPopupMotion(
+    `${context.rootPrefixCls}-${horizontalPopup ? 'slide-up' : 'zoom-big'}`,
+    customMotion,
+    preparePopup
+  ));
+  const allowForcePopup = $derived(!customMotion
+    || !Object.hasOwn(customMotion, 'forceRender') || !!customMotion.forceRender);
+  const forcePopup = $derived(context.forceRender && allowForcePopup);
+  const popupMotion = useMenuMotion(() => context.nativeElement, () => popup, () => ({
+    motion,
+    enabled: context.motionEnabled,
+    present: context.forceRender || popupForced || popupVisited || popupRequested,
+    visible: popupRequested,
+    inactive: inactive || overflowHidden,
+    forced: context.forceRender || popupForced,
+    settleWithoutAnimation: !customMotion
+  }));
+  const popupLeaving = $derived(popupMotion.state.phase === 'leave');
+  const popupPresented = $derived(popupRequested || popupLeaving);
+  const inlineCopy = $derived(popupMode === 'inline' && !popupLeaving);
+  const popupRendered = $derived(!inactive
+    && (popupVisited || popupRequested || forcePopup || popupForced && allowForcePopup)
+    && (!inlineCopy || client && containerUsed));
+  const transitionStyle = $derived(popupMotion.state.phase ? popupMotion.state.style
+    : popupRequested || popupVisited ? getMenuMotionStyle(motion.eventProps?.style) : undefined);
+
+  $effect.pre(() => {
+    if (popupMode !== 'inline') {
+      lastPopupMode = popupMode;
+      lastPopupMotion = context.motion;
+    }
+    if (popupRequested) popupVisited = true;
+    // Скрытые копии сохраняют состояние, если владелец снимает forceSubMenuRender.
+    if (forcePopup && (popupMode !== 'inline' || context.getPopupContainer)) popupForced = true;
+  });
+
+  // Измеряет popup в prepare, пока transform ещё позволяет читать полный размер.
+  function preparePopup() {
+    positionConnection?.forceAlign();
+  }
 
   function resolveContainer(trigger?: HTMLElement) {
     const target = context.getPopupContainer!(trigger!);
@@ -134,8 +187,8 @@
     else if (context.forceRender && !title && !getter.length) resolveContainer(undefined);
   });
   const portal = createPopupContainer(() => ({
-    open: !inactive && (context.mode !== 'inline' && popupOpen || context.forceRender),
-    rendered: !inactive && popupMounted && (context.mode !== 'inline' || client && containerUsed),
+    open: !inactive && (popupPresented || context.forceRender),
+    rendered: popupRendered,
     reference: title,
     getPopupContainer: context.getPopupContainer ? resolveContainer : undefined,
     themeStyle: popupStyle
@@ -144,13 +197,18 @@
   function connectPopupStyle(node: HTMLDivElement) {
     const update = connectInlineStyle(node);
     // Diff семантических слоёв оставляет координаты и токены portal на поверхности.
-    $effect(() => update(popupLayers));
+    $effect(() => update([
+      context.componentTheme.style, transitionStyle, item.popupStyle, context.semantics.styles.popup
+    ]));
   }
 
   function positionPopup(surface: HTMLDivElement, position: TooltipPosition) {
     alignedPoints = position.sourceAlign;
     // Явные координаты popupStyle и semantic root перекрывают расчёт trigger.
-    const properties = untrack(() => popupProperties);
+    const properties = untrack(() => new Set([
+      ...popupProperties,
+      ...Array.from(getInlineStyleDeclarations([transitionStyle]), entry => entry.property)
+    ]));
     const hasInset = properties.has('inset');
     const left = `${position.left}px`;
     const top = `${position.top}px`;
@@ -185,11 +243,12 @@
   function connectEvents(element: HTMLElement) {
     const keyboard = on(element, 'keydown', event => {
       const root = context.nativeElement;
-      if (!root || root.contains(element)) {
+      if (!root || root.contains(element) || element.inert) {
         return;
       }
 
       // Portal сохраняет currentTarget корневого callback и исходный target события.
+      // Enter может закрыть popup до всплытия того же события к этой поверхности.
       const descriptor = Object.getOwnPropertyDescriptor(event, 'currentTarget');
       Object.defineProperty(event, 'currentTarget', { configurable: true, value: root });
       try {
@@ -212,17 +271,12 @@
   }
 
   $effect(() => {
-    if (opened || context.forceRender)
-      mounted = true;
     if (context.getPopupContainer) containerUsed = true;
-    if (context.mode !== 'inline' && (opened || context.forceRender)
-      || context.forceRender && context.getPopupContainer) {
-      popupMounted = true;
-    }
   });
-  $effect(() => inactive || overflowHidden ? undefined : context.registerHover(entry.key, hover));
+  $effect(() => inactive || overflowHidden || context.locked
+    ? undefined : context.registerHover(entry.key, hover));
   $effect(() => {
-    if (!popupOpen || popupMode === 'inline' || !popup || !title) {
+    if (!popupPresented || !popup || !title) {
       return;
     }
 
@@ -231,7 +285,7 @@
     const surface = popup;
     const getPosition = createMenuPopupPosition(anchor, () => alignment);
     // Первый замер выполняется синхронно. Настройки меняются без переподключения popup.
-    return untrack(() => connectPopup(surface, anchor, {
+    const connection = untrack(() => connectPopup(surface, anchor, {
       get placement() {
         return horizontal ? 'bottom' : rtl ? 'left' : 'right';
       },
@@ -251,6 +305,9 @@
       gap: () => untrack(() => context.componentTheme.className ? 0 : undefined),
       // Исходное Menu оставляет controlled popup открытым даже при itemHeight=0.
       allowZeroSize: () => untrack(() => Boolean(context.componentTheme.className)),
+      pauseAlignment: () => popupLeaving
+        || popupMotion.state.step === 'start' || popupMotion.state.step === 'active',
+      get interactive() { return popupRequested; },
       preserveFocus: false,
       isRelatedTarget: containsPopupTarget,
       getPosition,
@@ -267,9 +324,14 @@
           context.focusItem(entry.key);
       }
     }));
+    positionConnection = connection;
+    return () => {
+      if (positionConnection === connection) positionConnection = undefined;
+      connection();
+    };
   });
   $effect(() => {
-    if (blocked || context.mode === 'inline' || context.trigger !== 'hover')
+    if (blocked || context.locked || context.mode === 'inline' || context.trigger !== 'hover')
       cancel();
   });
 
@@ -281,7 +343,7 @@
   function hover(next: boolean) {
     childrenActive = next;
     cancel();
-    if (blocked || context.mode === 'inline' || context.trigger !== 'hover') {
+    if (blocked || context.locked || context.mode === 'inline' || context.trigger !== 'hover') {
       return;
     }
 
@@ -329,9 +391,9 @@
       context.hover(entry, false);
     }}>
   <button data-ant-menu-submenu-title type="button" disabled={blocked} bind:this={title}
-    {@attach node => inactive || overflowHidden ? undefined : context.register(entry.key, node)}
-    id={inactive ? undefined : context.id(entry.key)}
-    data-menu-id={inactive ? undefined : context.id(entry.key)}
+    {@attach node => inactive || overflowHidden || context.locked
+      ? undefined : context.register(entry.key, node)}
+    id={titleId} data-menu-id={titleId}
     class={`${context.prefixCls}-submenu-title`} role="menuitem" tabindex={blocked ? undefined : -1} aria-disabled={blocked || undefined}
     aria-haspopup="menu" aria-expanded={opened} aria-controls={controlledId}
     title={item.title
@@ -349,6 +411,7 @@
           ? 'right' : 'left'}:${entry.level * context.inlineIndent}px`
       ].filter(Boolean).join(';') || undefined}
     onclick={event => {
+        if (context.locked) return;
         cancel();
         context.titleClick(entry, event);
       }} onkeydown={event => {
@@ -370,24 +433,18 @@
         aria-hidden="true"></i>{/if}
     {/if}
   </button>
-  {#if mounted && !inactive}
-    {#if context.mode === 'inline'}
-      <ul data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls} id={popupId} role="menu" data-menu-list="true"
-        class={[
-            `${context.prefixCls} ant-menu-css-var ${context.prefixCls}-sub ${context.prefixCls}-inline`,
-            !opened && `${context.prefixCls}-hidden`,
-            context.direction === 'rtl' && `${context.prefixCls}-rtl`
-          ]}
-        style={nestedStyle}
-        hidden={!opened}><MenuList entries={entry.children} {theme} /></ul>
-    {/if}
+  {#if !inactive && !overflowHidden}
+    <MenuInlineSubMenu {entry} {theme} id={popupId} style={nestedStyle} open={opened} />
   {/if}
-  {#if !inactive && popupMounted && (context.mode !== 'inline' || client && containerUsed)}
+  {#if popupRendered}
     {#key popupContainer}
       <div data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls}
-        data-menu-popup-path={popupPath} id={popupRender ? surfaceId : undefined}
+        data-menu-popup-path={popupPath} id={popupRender && !context.exiting ? surfaceId : undefined}
+        data-ant-menu-motion={context.rootPrefixCls}
         bind:this={popup} role="presentation" popover="manual"
-        hidden={context.mode === 'inline' || !popupOpen || !shown}
+        hidden={!popupPresented || !shown}
+        inert={popupLeaving || context.locked || undefined}
+        aria-hidden={popupLeaving || context.locked || undefined}
         class={[
             `menu-popup ${context.prefixCls} ant-menu-css-var ${context.prefixCls}-submenu ${context.prefixCls}-submenu-popup`,
             context.componentTheme.className,
@@ -398,17 +455,24 @@
             item.popupClassName,
             context.semantics.classes.popup,
             context.rootClassName,
-            context.semantics.classes.root
+            context.semantics.classes.root,
+            !popupPresented && popupVisited && `${context.prefixCls}-submenu-hidden`,
+            !popupMotion.state.phase && (popupRequested || !popupVisited)
+              && motion.eventProps?.className,
+            popupMotion.state.className
           ]}
         style={untrack(() => popupStyle)}
-        onmouseenter={() => context.hover(entry, true)}
-        onmouseleave={() => context.hover(entry, false)}
+        onmouseenter={() => { if (popupRequested) context.hover(entry, true); }}
+        onmouseleave={() => { if (popupRequested) context.hover(entry, false); }}
+        onanimationend={popupMotion.end} ontransitionend={popupMotion.end}
         {@attach portal}
         {@attach connectPopupStyle}
         {@attach connectEvents}>
-        <MenuPopupContent {entry} {theme} {popupRender}
-          id={context.mode === 'inline' && popupRender ? `${surfaceId}-list` : popupId}
-          style={nestedStyle} isInlineCopy={context.mode === 'inline'} />
+        <MenuPopupContent {entry} {theme} {popupRender} isInlineCopy={inlineCopy}
+          mode={inlineCopy ? 'inline' : effectivePopupMode} leaving={popupLeaving}
+          id={popupLeaving && popupMode === 'inline' ? undefined
+            : inlineCopy && popupRender ? `${surfaceId}-list` : popupId}
+          style={nestedStyle} />
       </div>
     {/key}
   {/if}

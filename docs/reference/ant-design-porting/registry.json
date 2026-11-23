@@ -3184,6 +3184,11 @@
           "referenceVersion": "1.5.0"
         },
         {
+          "name": "@rc-component/motion",
+          "range": "^1.3.3",
+          "referenceVersion": "1.3.3"
+        },
+        {
           "name": "@ant-design/fast-color",
           "range": "^3.0.1",
           "referenceVersion": "3.0.1"
@@ -3335,15 +3340,30 @@
             "tests/package/menu-overflow.ssr.test.ts",
             "docs/reference/components/menu.md"
           ],
-          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0 и rc-overflow 1.0.1. Два одинаковых прогона официального неизменённого UMD, 14 профилей, исходные события и SSR. Совпадают clientWidth/offsetWidth, видимый префикс, скрытые измеряемые строки, состав More, семантика верхнего уровня, keyPath, openKeys, вложенный выбор, custom indicator, отключение переполнения и RTL. Нативный button More имеет доступное имя; скрытые строки inert и не регистрируются для навигации. Raw расхождения: при 8px Source теряет первый пункт из-за preliminary slice, при сужении оставляет фокус на aria-hidden строке, при расширении открытого More теряет фокус, а после уменьшения индикатора 80→32px удерживает устаревший запас. Native сохраняет все пункты при ненулевой ширине, переносит фокус и измеряет текущий индикатор. Группа перемещается целиком с измерением её wrapper; raw Source оставляет заголовок группы и Divider в основном ряду даже когда они также в More. Служебный ключ освобождается суффиксом при коллизии с пользовательским ключом. Popup/inline motion остаётся отдельным этапом."
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0 и rc-overflow 1.0.1. Два одинаковых прогона официального неизменённого UMD, 14 профилей, исходные события и SSR. Совпадают clientWidth/offsetWidth, видимый префикс, скрытые измеряемые строки, состав More, семантика верхнего уровня, keyPath, openKeys, вложенный выбор, custom indicator, отключение переполнения и RTL. Нативный button More имеет доступное имя; скрытые строки inert и не регистрируются для навигации. Raw расхождения: при 8px Source теряет первый пункт из-за preliminary slice, при сужении оставляет фокус на aria-hidden строке, при расширении открытого More теряет фокус, а после уменьшения индикатора 80→32px удерживает устаревший запас. Native сохраняет все пункты при ненулевой ширине, переносит фокус и измеряет текущий индикатор. Группа перемещается целиком с измерением её wrapper; raw Source оставляет заголовок группы и Divider в основном ряду даже когда они также в More. Служебный ключ освобождается суффиксом при коллизии с пользовательским ключом."
         },
         {
           "id": "overflow-motion",
-          "title": "Исходные popup и inline motion",
-          "state": "missing",
+          "title": "Анимации inline и popup с сохранённой Svelte-навигацией",
+          "state": "partial",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Исходные rc-motion collapse/slide/zoom остаются пробелом. Адаптивный ряд, overflowedIndicator и подменю More учтены отдельно."
+          "evidence": [
+            "src/lib/MenuInlineSubMenu.svelte",
+            "src/lib/MenuSubMenu.svelte",
+            "src/lib/menu-motion.dom.ts",
+            "src/lib/menu-motion.types.ts",
+            "src/lib/vendor/menu-motion.css",
+            "src/lib/vendor/menu-motion-prefix.css.js",
+            "tests/browser/fixtures/ant-design-menu-motion-reference.json",
+            "tests/browser/fixtures/ant-design-menu-motion-lifecycle-reference.json",
+            "tests/browser/fixtures/ant-design-menu-motion-options-reference.json",
+            "tests/browser/fixtures/ant-design-menu-motion-ssr-reference.json",
+            "tests/browser/menu-motion.spec.ts",
+            "tests/browser/menu-popup-render-hydration.spec.ts",
+            "tests/package/menu-motion.ssr.test.ts",
+            "docs/reference/components/menu.md"
+          ],
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-motion 1.3.3 и rc-menu 1.5.0. Inline collapse меняет высоту и opacity, горизонтальный popup первого уровня и More используют slide-up, боковые и вложенные поверхности — zoom-big. Начальный inline виден без motion. Motion переопределяет фазы и hooks, defaultMotions заменяется картой Menu. Popup готовит позицию перед appear/enter. Отложенная подготовка, собственный end, deadline, флаги видимости и force render сверены с неизменённым UMD в 17 основных профилях, восьми дополнительных конфигурациях и четырёх наблюдениях lifecycle. Семь SSR профилей подтверждают отсутствие фаз и callbacks, Svelte сохраняет скрытые popup shell до гидратации. При смене режима фазы удерживают DOM, позицию и стили. Уходящие строки inert и освобождают refs для клавиатуры. Native учитывает prefers-reduced-motion и не монтирует лишний вложенный popup, замеченный только в одном из двух прогонов при разворачивании. CSSMotion работает с DOM element и CSS string/object, внутренний React ref/render-prop API остаётся у делегата."
         },
         {
           "id": "popup-render",
@@ -3362,7 +3382,7 @@
             "tests/package/menu-popup-render.ssr.test.ts",
             "docs/reference/components/menu.md"
           ],
-          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0. Два одинаковых UMD-прогона, восемь профилей, DOM-free SSR, live/retained popup и исходные пути выбора. Настройка ветки выигрывает у Menu только для своей поверхности; More передаёт служебный ключ в корневом порядке keys. Snippet получает исходный список, данные ветки и renderItem для пересборки со штатными refs и событиями. Клавиатура следует DOM-порядку зарегистрированных строк и сохраняет native keyboard произвольных полей в popup. В Source замена origin на ul без data-menu-list даёт TypeError при Home/End/Down; обе исходные проверки сохранены, Native не требует служебного атрибута. Сохраняется жизненный цикл Svelte popup и inline (force render скрытого inline portal требует контейнер), без eager React render callback. Renderer не попадает в HTML attributes. SSR и строгая гидратация сохраняют штатные узлы, порядок и ref. Позиции и itemIcon описаны отдельными features. Popup motion остаётся в работе."
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-menu 1.5.0. Два одинаковых UMD-прогона, восемь профилей, DOM-free SSR, live/retained popup и исходные пути выбора. Настройка ветки выигрывает у Menu только для своей поверхности; More передаёт служебный ключ в корневом порядке keys. Snippet получает исходный список, данные ветки и renderItem для пересборки со штатными refs и событиями. Клавиатура следует DOM-порядку зарегистрированных строк и сохраняет native keyboard произвольных полей в popup. В Source замена origin на ul без data-menu-list даёт TypeError при Home/End/Down; обе исходные проверки сохранены, Native не требует служебного атрибута. Сохраняется жизненный цикл Svelte popup и inline (force render скрытого inline portal требует контейнер), без eager React render callback. Renderer не попадает в HTML attributes. SSR и строгая гидратация сохраняют штатные узлы, порядок и ref. Позиции и itemIcon описаны отдельными features."
         },
         {
           "id": "popup-alignment",

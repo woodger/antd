@@ -1,0 +1,76 @@
+{
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveHash": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "results": [
+    {
+      "id": "inline-closed",
+      "html": "<ul class=\"ant-menu ant-menu-root ant-menu-inline ant-menu-light css-1y106cm css-var-R0 ant-menu-css-var\" id=\"motion\" role=\"menu\" tabindex=\"0\" data-menu-list=\"true\"><li class=\"ant-menu-submenu ant-menu-submenu-inline\" role=\"none\"><div role=\"menuitem\" style=\"padding-left:24px\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"motion-branch\" aria-expanded=\"false\" aria-haspopup=\"true\" aria-controls=\"motion-branch-popup\"><span class=\"ant-menu-title-content\">Branch</span><i class=\"ant-menu-submenu-arrow\"></i></div></li></ul><div style=\"display:none\" aria-hidden=\"true\"></div>",
+      "events": [],
+      "versions": {
+        "antd": "6.6.8",
+        "React": "18.3.1"
+      },
+      "diagnostics": []
+    },
+    {
+      "id": "inline-open",
+      "html": "<ul class=\"ant-menu ant-menu-root ant-menu-inline ant-menu-light css-1y106cm css-var-R0 ant-menu-css-var\" id=\"motion\" role=\"menu\" tabindex=\"0\" data-menu-list=\"true\"><li class=\"ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open\" role=\"none\"><div role=\"menuitem\" style=\"padding-left:24px\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"motion-branch\" aria-expanded=\"true\" aria-haspopup=\"true\" aria-controls=\"motion-branch-popup\"><span class=\"ant-menu-title-content\">Branch</span><i class=\"ant-menu-submenu-arrow\"></i></div><ul class=\"ant-menu ant-menu-sub ant-menu-inline\" role=\"menu\" id=\"motion-branch-popup\" data-menu-list=\"true\"><li role=\"menuitem\" tabindex=\"-1\" data-menu-id=\"motion-leaf\" style=\"padding-left:48px\" class=\"ant-menu-item ant-menu-item-only-child\"><span class=\"ant-menu-title-content\">Leaf</span></li><li role=\"none\" class=\"ant-menu-submenu ant-menu-submenu-inline\"><div role=\"menuitem\" style=\"padding-left:48px\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"motion-nested\" aria-expanded=\"false\" aria-haspopup=\"true\" aria-controls=\"motion-nested-popup\"><span class=\"ant-menu-title-content\">Nested</span><i class=\"ant-menu-submenu-arrow\"></i></div></li></ul></li></ul><div style=\"display:none\" aria-hidden=\"true\"></div>",
+      "events": [],
+      "versions": {
+        "antd": "6.6.8",
+        "React": "18.3.1"
+      },
+      "diagnostics": []
+    },
+    {
+      "id": "inline-open-nested",
+      "html": "<ul class=\"ant-menu ant-menu-root ant-menu-inline ant-menu-light css-1y106cm css-var-R0 ant-menu-css-var\" id=\"motion\" role=\"menu\" tabindex=\"0\" data-menu-list=\"true\"><li class=\"ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open\" role=\"none\"><div role=\"menuitem\" style=\"padding-left:24px\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"motion-branch\" aria-expanded=\"true\" aria-haspopup=\"true\" aria-controls=\"motion-branch-popup\"><span class=\"ant-menu-title-content\">Branch</span><i class=\"ant-menu-submenu-arrow\"></i></div><ul class=\"ant-menu ant-menu-sub ant-menu-inline\" role=\"menu\" id=\"motion-branch-popup\" data-menu-list=\"true\"><li role=\"menuitem\" tabindex=\"-1\" data-menu-id=\"motion-leaf\" style=\"padding-left:48px\" class=\"ant-menu-item ant-menu-item-only-child\"><span class=\"ant-menu-title-content\">Leaf</span></li><li role=\"none\" class=\"ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open\"><div role=\"menuitem\" style=\"padding-left:48px\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"motion-nested\" aria-expanded=\"true\" aria-haspopup=\"true\" aria-controls=\"motion-nested-popup\"><span class=\"ant-menu-title-content\">Nested</span><i class=\"ant-menu-submenu-arrow\"></i></div><ul class=\"ant-menu ant-menu-sub ant-menu-inline\" role=\"menu\" id=\"motion-nested-popup\" data-menu-list=\"true\"><li role=\"menuitem\" tabindex=\"-1\" data-menu-id=\"motion-deep\" style=\"padding-left:72px\" class=\"ant-menu-item ant-menu-item-only-child\"><span class=\"ant-menu-title-content\">Deep</span></li></ul></li></ul></li></ul><div style=\"display:none\" aria-hidden=\"true\"></div>",
+      "events": [],
+      "versions": {
+        "antd": "6.6.8",
+        "React": "18.3.1"
+      },
+      "diagnostics": []
+    },
+    {
+      "id": "inline-forced",
+      "html": "<ul class=\"ant-menu ant-menu-root ant-menu-inline ant-menu-light css-1y106cm css-var-R0 ant-menu-css-var\" id=\"motion\" role=\"menu\" tabindex=\"0\" data-menu-list=\"true\"><li class=\"ant-menu-submenu ant-menu-submenu-inline\" role=\"none\"><div role=\"menuitem\" style=\"padding-left:24px\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"motion-branch\" aria-expanded=\"false\" aria-haspopup=\"true\" aria-controls=\"motion-branch-popup\"><span class=\"ant-menu-title-content\">Branch</span><i class=\"ant-menu-submenu-arrow\"></i></div><ul class=\"ant-menu ant-menu-sub ant-menu-inline\" role=\"menu\" id=\"motion-branch-popup\" style=\"display:none\" data-menu-list=\"true\"><li role=\"menuitem\" tabindex=\"-1\" data-menu-id=\"motion-leaf\" style=\"padding-left:48px\" class=\"ant-menu-item ant-menu-item-only-child\"><span class=\"ant-menu-title-content\">Leaf</span></li><li role=\"none\" class=\"ant-menu-submenu ant-menu-submenu-inline\"><div role=\"menuitem\" style=\"padding-left:48px\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"motion-nested\" aria-expanded=\"false\" aria-haspopup=\"true\" aria-controls=\"motion-nested-popup\"><span class=\"ant-menu-title-content\">Nested</span><i class=\"ant-menu-submenu-arrow\"></i></div><ul class=\"ant-menu ant-menu-sub ant-menu-inline\" role=\"menu\" id=\"motion-nested-popup\" style=\"display:none\" data-menu-list=\"true\"><li role=\"menuitem\" tabindex=\"-1\" data-menu-id=\"motion-deep\" style=\"padding-left:72px\" class=\"ant-menu-item ant-menu-item-only-child\"><span class=\"ant-menu-title-content\">Deep</span></li></ul></li></ul></li></ul><div style=\"display:none\" aria-hidden=\"true\"></div>",
+      "events": [],
+      "versions": {
+        "antd": "6.6.8",
+        "React": "18.3.1"
+      },
+      "diagnostics": []
+    },
+    {
+      "id": "collapsed",
+      "html": "<ul class=\"ant-menu ant-menu-root ant-menu-vertical ant-menu-light ant-menu-inline-collapsed css-1y106cm css-var-R0 ant-menu-css-var\" id=\"motion\" role=\"menu\" tabindex=\"0\" data-menu-list=\"true\"><li class=\"ant-menu-submenu ant-menu-submenu-vertical ant-menu-submenu-open\" role=\"none\"><div role=\"menuitem\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"motion-branch\" aria-expanded=\"true\" aria-haspopup=\"true\" aria-controls=\"motion-branch-popup\"><div class=\"ant-menu-inline-collapsed-noicon\">B</div><i class=\"ant-menu-submenu-arrow\"></i></div></li></ul><div style=\"display:none\" aria-hidden=\"true\"></div>",
+      "events": [],
+      "versions": {
+        "antd": "6.6.8",
+        "React": "18.3.1"
+      },
+      "diagnostics": []
+    },
+    {
+      "id": "vertical-open",
+      "html": "<ul class=\"ant-menu ant-menu-root ant-menu-vertical ant-menu-light css-1y106cm css-var-R0 ant-menu-css-var\" id=\"motion\" role=\"menu\" tabindex=\"0\" data-menu-list=\"true\"><li class=\"ant-menu-submenu ant-menu-submenu-vertical ant-menu-submenu-open\" role=\"none\"><div role=\"menuitem\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"motion-branch\" aria-expanded=\"true\" aria-haspopup=\"true\" aria-controls=\"motion-branch-popup\"><span class=\"ant-menu-title-content\">Branch</span><i class=\"ant-menu-submenu-arrow\"></i></div></li></ul><div style=\"display:none\" aria-hidden=\"true\"></div>",
+      "events": [],
+      "versions": {
+        "antd": "6.6.8",
+        "React": "18.3.1"
+      },
+      "diagnostics": []
+    },
+    {
+      "id": "horizontal-forced",
+      "html": "<ul class=\"ant-menu-overflow ant-menu ant-menu-root ant-menu-horizontal ant-menu-light css-1y106cm css-var-R0 ant-menu-css-var\" id=\"motion\" role=\"menu\" tabindex=\"0\" data-menu-list=\"true\"><li class=\"ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal\" style=\"opacity:1;order:0\" role=\"none\"><div role=\"menuitem\" class=\"ant-menu-submenu-title\" tabindex=\"-1\" data-menu-id=\"motion-branch\" aria-expanded=\"false\" aria-haspopup=\"true\" aria-controls=\"motion-branch-popup\"><span class=\"ant-menu-title-content\">Branch</span><i class=\"ant-menu-submenu-arrow\"></i></div></li><li class=\"ant-menu-overflow-item ant-menu-overflow-item-rest ant-menu-submenu ant-menu-submenu-horizontal ant-menu-submenu-disabled\" style=\"opacity:0;height:0;overflow-y:hidden;order:9007199254740991;pointer-events:none;position:absolute\" aria-hidden=\"true\" role=\"none\"><div role=\"menuitem\" class=\"ant-menu-submenu-title\" data-menu-id=\"motion-rc-menu-more\" aria-expanded=\"false\" aria-haspopup=\"true\" aria-controls=\"motion-rc-menu-more-popup\" aria-disabled=\"true\"><span role=\"img\" aria-label=\"ellipsis\" class=\"anticon anticon-ellipsis\"><svg viewBox=\"64 64 896 896\" focusable=\"false\" data-icon=\"ellipsis\" width=\"1em\" height=\"1em\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M176 511a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0z\"></path></svg></span><i class=\"ant-menu-submenu-arrow\"></i></div></li></ul><div style=\"display:none\" aria-hidden=\"true\"></div>",
+      "events": [],
+      "versions": {
+        "antd": "6.6.8",
+        "React": "18.3.1"
+      },
+      "diagnostics": []
+    }
+  ]
+}

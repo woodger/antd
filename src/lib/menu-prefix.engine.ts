@@ -1,5 +1,17 @@
 import base from './vendor/menu-prefix.css.js';
 import theme from './vendor/menu-theme-prefix.css.js';
+import motion from './vendor/menu-motion-prefix.css.js';
+
+/** Сохраняет общий namespace motion; ключевые кадры совпадают у всех Menu. */
+export function getMenuMotionCss(rootPrefix: string) {
+  if (rootPrefix === 'ant') {
+    return undefined;
+  }
+
+  return motion.replace(/"ant"|\.ant-(?=motion-collapse|slide-up|slide-down|zoom-big)/g, match =>
+    match === '"ant"' ? JSON.stringify(rootPrefix) : `.${rootPrefix}-`
+  ).replace(/<\/style/gi, '<\\/style');
+}
 
 /** Menu/popup сохраняют canonical variables и scoped темы, Typography использует общий prefix. */
 export function getMenuPrefixCss(prefix: string, rootPrefix: string) {

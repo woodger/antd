@@ -1,4 +1,5 @@
-import type { TabsAnimatedConfig, TabsMotionName } from './tabs-motion.types';
+import type { TabsAnimatedConfig } from './tabs-motion.types';
+export { getCssMotionClassName as getTabsMotionClassName } from './css-motion.engine';
 
 /** Два исходных useAnimateConfig: Ant Design wrapper, затем rc-tabs 1.13.0. */
 export function getTabsAnimation(
@@ -30,21 +31,4 @@ export function getTabsAnimation(
     result.tabPane = false;
 
   return result;
-}
-
-// Поддерживает базовое имя motion и карту классов для отдельных фаз панели.
-export function getTabsMotionClassName(
-  name: TabsMotionName | undefined,
-  status: 'appear' | 'enter' | 'leave',
-  step: 'prepare' | 'start' | 'active'
-) {
-  if (!name) {
-    return undefined;
-  }
-  if (typeof name === 'string') {
-    return `${name}-${status} ${name}-${status}-${step} ${name}`;
-  }
-
-  const suffix = `${status}${step[0].toUpperCase()}${step.slice(1)}` as keyof typeof name;
-  return [name[status], name[suffix]].filter(Boolean).join(' ') || undefined;
 }

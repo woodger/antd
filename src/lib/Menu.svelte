@@ -1,7 +1,7 @@
 <script lang="ts">
   // Владеет состоянием открытых и выбранных пунктов Menu. Клавиатура обрабатывает
   // зарегистрированные видимые элементы.
-  import { onDestroy, tick, untrack } from 'svelte';
+  import { onDestroy, onMount, tick, untrack } from 'svelte';
   import {
     buildMenuEntries,
     menuLevel,
@@ -18,11 +18,12 @@
   import { useConfig } from './config-context';
   import { useSider } from './layout-context';
   import { useComponentTheme } from './theme-component.svelte';
+  import { useToken } from './theme-context.svelte';
   import MenuList from './MenuList.svelte';
   import MenuSubMenu from './MenuSubMenu.svelte';
   import EllipsisIcon from './TabsMoreIcon.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
-  import { getMenuPrefixCss } from './menu-prefix.engine';
+  import { getMenuMotionCss, getMenuPrefixCss } from './menu-prefix.engine';
   import { menuSemantics } from './menu-semantic.engine';
   import { buildMenuMore, getMenuMoreKey } from './menu-overflow.engine';
   import { connectMenuOverflow, type MenuOverflowLayout } from './menu-overflow.dom';
@@ -51,6 +52,8 @@
     inlineIndent = 24,
     inlineCollapsed,
     forceSubMenuRender = false,
+    motion,
+    defaultMotions: _defaultMotions,
     triggerSubMenuAction = 'hover',
     subMenuOpenDelay = 0.1,
     subMenuCloseDelay = 0.1,
@@ -73,6 +76,7 @@
   let componentPrefix = $derived(config.getPrefixCls('menu', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let prefixCss = $derived(getMenuPrefixCss(componentPrefix, rootPrefix));
+  let motionCss = $derived(getMenuMotionCss(rootPrefix));
   let popupContainer = $derived(Object.hasOwn(rest, 'getPopupContainer')
     ? rest.getPopupContainer : config.getPopupContainer);
   let attributes = $derived.by(() => {
@@ -80,6 +84,7 @@
     return attributes;
   });
   const componentTheme = useComponentTheme('Menu');
+  const tokens = useToken();
   const sider = useSider();
   let resolvedCollapse = $derived(inlineCollapsed ?? sider?.collapsed);
   let semantics = $derived(menuSemantics(config.menu, {
@@ -125,6 +130,8 @@
 
   let active = $state<string | null>(null);
   let rootElement = $state<HTMLUListElement>();
+  let mounted = $state(false);
+  let reducedMotion = $state(false);
   const elements = new Map<string, HTMLElement>();
   const hoverHandlers = new Map<string, (open: boolean) => void>();
   const handledKeys = new WeakSet<KeyboardEvent>();
@@ -132,6 +139,21 @@
   let previous = untrack(() => ({ selectedKeys, openKeys, mode: actualMode, collapsed }));
   let inlineCache = untrack(() => [...actualOpen]);
   let overflowRevision = 0;
+
+  onMount(() => { mounted = true; });
+  $effect(() => {
+    const view = rootElement?.ownerDocument.defaultView;
+    if (!view) {
+      return;
+    }
+
+    const preference = view.matchMedia('(prefers-reduced-motion: reduce)');
+    // Один media listener определяет motion для обеих поверхностей каждого подменю.
+    function update() { reducedMotion = preference.matches; }
+    update();
+    preference.addEventListener('change', update);
+    return () => preference.removeEventListener('change', update);
+  });
 
   onDestroy(() => {
     overflowRevision++;
@@ -431,6 +453,11 @@
     get tooltipCollapsed() { return Boolean(sider?.collapsed || resolvedCollapse); },
     get popupRender() { return popupRender; },
     get builtinPlacements() { return builtinPlacements; },
+    get motion() { return mounted ? motion : undefined; },
+    get motionReady() { return mounted; },
+    get motionEnabled() { return mounted && tokens.token.motion && !reducedMotion; },
+    locked: false,
+    exiting: false,
     get mode() {
       return actualMode;
     },
@@ -540,7 +567,7 @@
 </style>
 
 {#snippet defaultIndicator()}<EllipsisIcon />{/snippet}
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`menu-prefix:${componentPrefix}:${rootPrefix}`} />{/if}<ul {...attributes} data-ant-menu-prefix={componentPrefix} data-ant-menu-root-prefix={rootPrefix} bind:this={rootElement} role="menu" tabindex={tabindex} data-menu-list="true" dir={config.direction}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`menu-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#if motionCss}<ThemeScopeStyle css={motionCss} scope={`menu-motion:${rootPrefix}`} />{/if}<ul {...attributes} data-ant-menu-prefix={componentPrefix} data-ant-menu-root-prefix={rootPrefix} bind:this={rootElement} role="menu" tabindex={tabindex} data-menu-list="true" dir={config.direction}
   data-menu-responsive={responsive || undefined}
   aria-disabled={disabled || undefined} aria-orientation={actualMode === 'horizontal' ? 'horizontal' : 'vertical'}
   style={[componentTheme.style, semantics.styles.root].filter(Boolean).join(';') || undefined} class={[

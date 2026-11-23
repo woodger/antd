@@ -1283,6 +1283,11 @@
     "root": "menu-tooltip-fixture"
   },
   {
+    "id": "menu-motion",
+    "module": "./MenuMotionFixtures.svelte",
+    "root": "menu-motion-fixture"
+  },
+  {
     "id": "menu-config",
     "module": "./MenuConfigFixtures.svelte",
     "root": "menu-config-fixture"

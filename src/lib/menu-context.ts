@@ -14,6 +14,12 @@ export interface MenuContext {
   readonly tooltipCollapsed: boolean;
   readonly popupRender: MenuProps['popupRender'];
   readonly builtinPlacements: MenuProps['builtinPlacements'];
+  readonly motion: MenuProps['motion'];
+  readonly motionReady: boolean;
+  readonly motionEnabled: boolean;
+  readonly locked: boolean;
+  /** Уходящая поверхность отдаёт DOM-ID новой копии тех же строк. */
+  readonly exiting: boolean;
   readonly componentTheme: {
     readonly className: string | undefined;
     readonly style: string | undefined;

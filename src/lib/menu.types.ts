@@ -2,6 +2,7 @@ import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 import type { PopupSourceAlign } from './popup-position.engine';
 import type { TooltipProps } from './tooltip.types';
+import type { MenuMotion } from './menu-motion.types';
 
 export type MenuMode = 'vertical' | 'horizontal' | 'inline';
 export type MenuTheme = 'light' | 'dark';
@@ -171,6 +172,10 @@ export interface MenuProps extends Omit<
   inlineCollapsed?: boolean;
   /** @defaultValue false */
   forceSubMenuRender?: boolean;
+  /** Замещает встроенные анимации inline-списков и popup. */
+  motion?: MenuMotion;
+  /** Обёртка Ant Design разрешает карту встроенных фаз сама; для настройки используйте motion. */
+  defaultMotions?: Partial<Record<MenuMode | 'other', MenuMotion>>;
   /** @defaultValue 'hover' */
   triggerSubMenuAction?: 'hover' | 'click';
   /** @defaultValue 0.1 */

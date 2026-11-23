@@ -1,0 +1,252 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "browser": "157.0.8103.78",
+  "passes": [
+    [
+      {
+        "name": "cancel-prepare",
+        "before": {
+          "phases": [
+            "sample-motion-enter",
+            "sample-motion-enter-prepare",
+            "sample-motion"
+          ],
+          "display": "block",
+          "pointer": "auto",
+          "expanded": "true",
+          "focus": "BODY",
+          "events": [
+            "enter-prepare"
+          ]
+        },
+        "after": {
+          "phases": [],
+          "display": "none",
+          "pointer": "auto",
+          "expanded": "false",
+          "focus": "BODY",
+          "events": [
+            "enter-prepare",
+            "leave-prepare",
+            "leave-start",
+            "leave-active",
+            [
+              "leave-end",
+              null,
+              true
+            ],
+            [
+              "visible",
+              false
+            ]
+          ]
+        },
+        "errors": []
+      },
+      {
+        "name": "motion-disabled-active",
+        "before": {
+          "phases": [
+            "sample-motion-enter",
+            "sample-motion-enter-active",
+            "sample-motion"
+          ],
+          "display": "block",
+          "pointer": "auto",
+          "expanded": "true",
+          "focus": "BODY",
+          "events": [
+            "enter-prepare",
+            "enter-start",
+            "enter-active"
+          ]
+        },
+        "after": {
+          "phases": [],
+          "display": "block",
+          "pointer": "auto",
+          "expanded": "true",
+          "focus": "BODY",
+          "events": [
+            "enter-prepare",
+            "enter-start",
+            "enter-active"
+          ]
+        },
+        "errors": []
+      },
+      {
+        "name": "reduced-motion",
+        "before": {
+          "phases": [
+            "ant-zoom-big-appear",
+            "ant-zoom-big-appear-active",
+            "ant-zoom-big"
+          ],
+          "display": "block",
+          "pointer": "auto",
+          "expanded": "true",
+          "focus": "BODY",
+          "events": []
+        },
+        "after": {
+          "phases": [],
+          "display": "block",
+          "pointer": "auto",
+          "expanded": "true",
+          "focus": "BODY",
+          "events": []
+        },
+        "errors": []
+      },
+      {
+        "name": "leave-focus",
+        "before": {
+          "phases": [
+            "ant-zoom-big-leave",
+            "ant-zoom-big-leave-active",
+            "ant-zoom-big"
+          ],
+          "display": "block",
+          "pointer": "none",
+          "expanded": "false",
+          "focus": "motion-leaf",
+          "events": []
+        },
+        "after": {
+          "phases": [],
+          "display": "none",
+          "pointer": "none",
+          "expanded": "false",
+          "focus": "BODY",
+          "events": []
+        },
+        "errors": []
+      }
+    ],
+    [
+      {
+        "name": "cancel-prepare",
+        "before": {
+          "phases": [
+            "sample-motion-enter",
+            "sample-motion-enter-prepare",
+            "sample-motion"
+          ],
+          "display": "block",
+          "pointer": "auto",
+          "expanded": "true",
+          "focus": "BODY",
+          "events": [
+            "enter-prepare"
+          ]
+        },
+        "after": {
+          "phases": [],
+          "display": "none",
+          "pointer": "auto",
+          "expanded": "false",
+          "focus": "BODY",
+          "events": [
+            "enter-prepare",
+            "leave-prepare",
+            "leave-start",
+            "leave-active",
+            [
+              "leave-end",
+              null,
+              true
+            ],
+            [
+              "visible",
+              false
+            ]
+          ]
+        },
+        "errors": []
+      },
+      {
+        "name": "motion-disabled-active",
+        "before": {
+          "phases": [
+            "sample-motion-enter",
+            "sample-motion-enter-active",
+            "sample-motion"
+          ],
+          "display": "block",
+          "pointer": "auto",
+          "expanded": "true",
+          "focus": "BODY",
+          "events": [
+            "enter-prepare",
+            "enter-start",
+            "enter-active"
+          ]
+        },
+        "after": {
+          "phases": [],
+          "display": "block",
+          "pointer": "auto",
+          "expanded": "true",
+          "focus": "BODY",
+          "events": [
+            "enter-prepare",
+            "enter-start",
+            "enter-active"
+          ]
+        },
+        "errors": []
+      },
+      {
+        "name": "reduced-motion",
+        "before": {
+          "phases": [
+            "ant-zoom-big-appear",
+            "ant-zoom-big-appear-active",
+            "ant-zoom-big"
+          ],
+          "display": "block",
+          "pointer": "auto",
+          "expanded": "true",
+          "focus": "BODY",
+          "events": []
+        },
+        "after": {
+          "phases": [],
+          "display": "block",
+          "pointer": "auto",
+          "expanded": "true",
+          "focus": "BODY",
+          "events": []
+        },
+        "errors": []
+      },
+      {
+        "name": "leave-focus",
+        "before": {
+          "phases": [
+            "ant-zoom-big-leave",
+            "ant-zoom-big-leave-active",
+            "ant-zoom-big"
+          ],
+          "display": "block",
+          "pointer": "none",
+          "expanded": "false",
+          "focus": "motion-leaf",
+          "events": []
+        },
+        "after": {
+          "phases": [],
+          "display": "none",
+          "pointer": "none",
+          "expanded": "false",
+          "focus": "BODY",
+          "events": []
+        },
+        "errors": []
+      }
+    ]
+  ]
+}

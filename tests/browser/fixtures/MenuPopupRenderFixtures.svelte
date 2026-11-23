@@ -9,9 +9,10 @@
   } from '@woodger/antd';
   import source from './ant-design-menu-popup-render-reference.json';
 
-  let { kind = 'vertical-initial', initiallyOpen = false }: {
+  let { kind = 'vertical-initial', initiallyOpen = false, enableMotion = false }: {
     kind?: string;
     initiallyOpen?: boolean;
+    enableMotion?: boolean;
   } = $props();
   const samples = source.cases.map(sample => sample.options);
   let sampleId = $state(untrack(() => kind));
@@ -125,7 +126,7 @@
   <button type="button" onclick={() => instance?.findItem({ key: 'child' })?.focus()}>
     Focus rendered Child
   </button>
-  <ConfigProvider theme={{ token: { motion: false } }}>
+  <ConfigProvider theme={{ token: { motion: enableMotion } }}>
     {#key sampleId}
       {#if mounted}
         <Menu {mode} {items} inlineCollapsed={sample.collapsed} forceSubMenuRender={sample.force}

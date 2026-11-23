@@ -22,13 +22,14 @@
   const styles = $derived(nested ? semantic.styles.subMenu : semantic.styles);
   const selected = $derived(context.selected.includes(entry.key));
   const trailingIcon = $derived(item.itemIcon || context.itemIcon);
-  const id = $derived(inactive ? undefined : context.id(entry.key));
+  const locked = $derived(inactive || context.locked);
+  const id = $derived(inactive || context.exiting ? undefined : context.id(entry.key));
   const nativeTitle = $derived(typeof item.title === 'string' ? item.title : undefined);
   const accessibleTitle = $derived(nativeTitle
     ?? (typeof item.label === 'string' ? item.label : undefined));
 
   const tooltip = $derived(context.tooltip || undefined);
-  const showTooltip = $derived(!inactive && context.tooltip !== false
+  const showTooltip = $derived(!locked && context.tooltip !== false
     && (context.tooltipCollapsed || Boolean(tooltip?.forceRender)));
   let tooltipMounted = $state(false);
   let tooltipClick: ((event: MouseEvent) => void) | undefined;
@@ -37,7 +38,7 @@
     if (showTooltip) {
       tooltipMounted = true;
     }
-    else if (inactive || context.tooltip === false) {
+    else if (locked || context.tooltip === false) {
       tooltipMounted = false;
     }
   });
@@ -52,7 +53,9 @@
 
   function connectFocus(element: HTMLLIElement, entry: MenuEntry) {
     function focus() {
-      if (!context.disabled && !menuItem(entry).disabled) context.activate(entry.key);
+      if (!context.locked && !context.disabled && !menuItem(entry).disabled) {
+        context.activate(entry.key);
+      }
     }
     // Переходы между пунктами одного ShadowRoot не доходят до document delegation.
     return on(element, 'focusin', focus);
@@ -60,7 +63,7 @@
 
   function activate(event: MouseEvent, entry: MenuEntry) {
     tooltipClick?.(event);
-    if (context.disabled || menuItem(entry).disabled) {
+    if (context.locked || context.disabled || menuItem(entry).disabled) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -69,7 +72,7 @@
   }
 
   function keyboard(event: KeyboardEvent, entry: MenuEntry) {
-    if (context.disabled || menuItem(entry).disabled) {
+    if (context.locked || context.disabled || menuItem(entry).disabled) {
       if (event.key === 'Enter')
         event.preventDefault();
       return;
@@ -96,8 +99,8 @@
   data-menu-id={id} role="menuitem" data-menu-overflow-item={overflowItem || undefined}
   data-menu-overflow-hidden={overflowHidden || undefined}
   inert={overflowHidden || undefined} aria-hidden={overflowHidden || undefined}
-  {@attach node => inactive ? undefined : context.register(entry.key, node)}
-  tabindex={blocked || inactive ? undefined : -1} aria-disabled={blocked || undefined}
+  {@attach node => locked ? undefined : context.register(entry.key, node)}
+  tabindex={blocked || locked ? undefined : -1} aria-disabled={blocked || undefined}
   title={nativeTitle}
   aria-label={context.collapsed && !entry.parent ? accessibleTitle : undefined}
   class={[
@@ -124,11 +127,11 @@
     )}
   onclick={event => activate(event, entry)} onkeydown={event => keyboard(event, entry)}
   {@attach node => connectFocus(node, entry)} onmouseenter={() => {
-        if (!blocked)
+        if (!blocked && !context.locked)
           context.activate(entry.key);
       }}
   onmouseleave={() => {
-      if (context.active === entry.key)
+      if (!context.locked && context.active === entry.key)
         context.activate(null);
     }}>
   <!-- Source icon/label идут подряд; native-тема сохраняет межэлементный пробел. -->
@@ -147,6 +150,6 @@
     ...item,
     eventKey: entry.key,
     isSelected: selected
-  })}{:else if trailingIcon && typeof trailingIcon !== 'boolean'}{trailingIcon}{/if}{#if !inactive && context.tooltip !== false && (showTooltip || tooltipMounted)}
+  })}{:else if trailingIcon && typeof trailingIcon !== 'boolean'}{trailingIcon}{/if}{#if !locked && context.tooltip !== false && (showTooltip || tooltipMounted)}
   <MenuItemTooltip {element} {item} firstLevel={!entry.parent} {connectClick} />
 {/if}</li>

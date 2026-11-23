@@ -1,6 +1,42 @@
 export type InlineStyleLayer = string | undefined
   | readonly (readonly [string, string, ('' | 'important')?])[];
 
+// Числовые CSS properties без единиц в React DOM 18.3.1, MIT, vendor/LICENSE.react-dom.
+const unitlessNames = [
+  'animationIterationCount', 'aspectRatio', 'borderImageOutset', 'borderImageSlice',
+  'borderImageWidth', 'boxFlex', 'boxFlexGroup', 'boxOrdinalGroup', 'columnCount', 'columns',
+  'flex', 'flexGrow', 'flexPositive', 'flexShrink', 'flexNegative', 'flexOrder', 'gridArea',
+  'gridRow', 'gridRowEnd', 'gridRowSpan', 'gridRowStart', 'gridColumn', 'gridColumnEnd',
+  'gridColumnSpan', 'gridColumnStart', 'fontWeight', 'lineClamp', 'lineHeight', 'opacity',
+  'order', 'orphans', 'tabSize', 'widows', 'zIndex', 'zoom', 'fillOpacity', 'floodOpacity',
+  'stopOpacity', 'strokeDasharray', 'strokeDashoffset', 'strokeMiterlimit', 'strokeOpacity',
+  'strokeWidth'
+];
+const unitless = new Set(unitlessNames);
+
+for (const property of unitlessNames) {
+  for (const prefix of ['Webkit', 'ms', 'Moz', 'O']) {
+    unitless.add(`${prefix}${property[0].toUpperCase()}${property.slice(1)}`);
+  }
+}
+
+/** Преобразует Source CSS object в декларации с единицами React DOM. */
+export function serializeCssProperties(style: object) {
+  const declarations: string[] = [];
+  for (const [property, value] of Object.entries(style)) {
+    if (value == null || typeof value === 'boolean' || value === '') continue;
+
+    const custom = property.startsWith('--');
+    const name = custom ? property : property.replace(/[A-Z]/g, '-$&')
+      .toLowerCase().replace(/^ms-/, '-ms-');
+    const text = !custom && typeof value === 'number' && value !== 0 && !unitless.has(property)
+      ? `${value}px` : String(value).trim();
+    if (text) declarations.push(`${name}:${text}`);
+  }
+
+  return declarations.length ? declarations.join(';') : undefined;
+}
+
 export function serializeInlineStyleLayers(layers: readonly InlineStyleLayer[]) {
   return layers.map(layer => typeof layer === 'string' ? layer
     : layer?.filter(([, value]) => value !== '')

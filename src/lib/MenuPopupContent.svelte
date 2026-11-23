@@ -14,28 +14,33 @@
     id,
     style,
     popupRender,
-    isInlineCopy
+    isInlineCopy,
+    mode,
+    leaving
   }: {
     entry: MenuEntry;
     theme: MenuTheme;
-    id: string;
+    id?: string;
     style?: string;
     popupRender?: MenuPopupRender;
     isInlineCopy: boolean;
+    mode: MenuContext['mode'];
+    leaving: boolean;
   } = $props();
   const parent = useMenu();
   // Hidden inline portal не заменяет native refs основного списка; getters остаются реактивными.
   const context: MenuContext = Object.create(parent, {
     mode: {
-      get: () => entry.overflow ? 'vertical' : parent.mode
+      get: () => entry.overflow ? 'vertical' : mode
     },
-    register: {
-      value: (key: string, element: HTMLElement) => isInlineCopy
-        ? () => {} : parent.register(key, element)
+    locked: {
+      get: () => isInlineCopy || leaving || parent.locked
     },
-    registerHover: {
-      value: (key: string, handler: (open: boolean) => void) => isInlineCopy
-        ? () => {} : parent.registerHover(key, handler)
+    exiting: {
+      get: () => leaving || parent.exiting
+    },
+    open: {
+      get: () => context.locked ? [] : parent.open
     }
   });
   provideMenu(context);
@@ -63,7 +68,7 @@
   <ul data-ant-menu-prefix={parent.prefixCls} data-ant-menu-root-prefix={parent.rootPrefixCls}
     {id} role="menu" data-menu-list="true" class={[
       `${parent.prefixCls} ant-menu-css-var ${parent.prefixCls}-sub`,
-      parent.mode === 'inline' ? `${parent.prefixCls}-inline` : `${parent.prefixCls}-vertical`,
+      mode === 'inline' ? `${parent.prefixCls}-inline` : `${parent.prefixCls}-vertical`,
       parent.direction === 'rtl' && `${parent.prefixCls}-rtl`
     ]} {style}>
     {#key isInlineCopy}

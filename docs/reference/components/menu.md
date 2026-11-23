@@ -6,7 +6,7 @@ PrefixCls задаёт локальный namespace Menu, его пунктов,
 Пустая строка наследует ConfigProvider.prefixCls. Popup и inline-списки сохраняют
 тот же префикс; Typography selectors используют независимый общий namespace.
 Canonical variables/link reset и @scope границы тем сохранены. Шаблоны содержат
-201 базовое и 77 scoped theme rules без motion и deprecated declarations.
+201 базовое и 77 scoped theme rules. Правила анимаций поставляются отдельно.
 Смена префикса сохраняет root/item/title DOM, selection/open state, refs, IDs и фокус.
 
 У upstream dashed Divider пропускает локальный префикс владельца. [Raw измерения и
@@ -154,6 +154,30 @@ popover и общий механизм позиционирования. Бок�
 Escape внутри popup закрывает текущий уровень и возвращает фокус к родителю.
 Таймеры, listeners и animation frames очищаются при unmount.
 
+### Анимации подменю
+
+Inline-список раскрывается по высоте с изменением прозрачности. Начальное
+открытое inline-подменю сразу занимает полную высоту. У всплывающих подменю
+первого уровня горизонтального Menu и списка переполнения используется `slide-up`,
+у боковых и вложенных — `zoom-big`. Первое открытие лениво смонтированного popup
+проходит фазу `appear`, последующие открытия — `enter`.
+
+`motion` принимает [`MenuMotion`](../../../src/lib/menu-motion.types.ts) и заменяет
+встроенную настройку для всех подменю. Входной `defaultMotions` замещается
+встроенной картой Ant Design. Обработчики получают элемент поверхности.
+`on*Prepare` может вернуть Promise, а `on*Start` и `on*Active` — CSS-строку или
+объект стилей. Подготовкой всплывающей панели в `appear` и `enter` управляет
+позиционирование. `motionDeadline` задаёт срок завершения после начала активной
+фазы. Возврат `false` из `on*End` позволяет дождаться следующего события.
+
+При закрытии список остаётся в DOM до конца `leave` и выходит из клавиатурной
+навигации. Смена режима сохраняет прежнюю геометрию закрывающейся поверхности.
+`theme.token.motion=false` и `prefers-reduced-motion: reduce` отключают CSS-фазы.
+При быстром повторном открытии и размонтировании ожидающие кадры и результаты
+прежней подготовки теряют силу.
+[Замеры Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-menu-motion-reference.json),
+[проверки в браузере](../../../tests/browser/menu-motion.spec.ts).
+
 ### Подсказки в свёрнутом меню
 
 Свёрнутое Menu показывает Tooltip при наведении на пункт. В LTR подсказка
@@ -298,7 +322,6 @@ Source compact использует itemHeight=35px и collapsedWidth=70px.
 Form.disabled и ConfigProvider.componentDisabled не отключают навигацию.
 Фикстура — `?fixture=menu`.
 
-Пока не поддерживаются исходные popup/collapse motion.
 Deprecated
 Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса; данные
 задаются items. Standalone Menu пока не расширяет существующий контракт Dropdown.

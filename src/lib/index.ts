@@ -85,6 +85,7 @@ export type {
   MenuClickInfo,
   MenuSelectInfo
 } from './menu.types';
+export type { MenuMotion, MenuMotionEvent, MenuMotionStyle } from './menu-motion.types';
 export { default as TreeSelect } from './tree-select.component.js';
 export { default as TreeSelectTreeNode } from './TreeSelectTreeNode.svelte';
 export {
