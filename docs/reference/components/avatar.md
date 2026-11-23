@@ -111,12 +111,6 @@ Bind:nativeElement даёт текущий span, сохраняется при �
 проверки — [browser](../../../tests/browser/avatar-source.spec.ts) и
 [SSR](../../../tests/package/avatar-source.ssr.test.ts), фикстура — `?fixture=avatar-source`.
 
-Галерея `/ant-design#avatar` переключает содержимое, форму, размер, gap и отмену
-fallback. Отдельный список участников сочетает Avatar с Badge и профилем в
-Drawer. Выбор фото/инициалов/ошибочного источника сохраняется после закрытия
-профиля; сброс восстанавливает участников и не меняет предпросмотр. Пример
-использует локальные data URL без внешней сети и persistence.
-
 AvatarProps, AvatarShape, AvatarSize и AvatarConfig экспортируются через index.ts.
 Локальный prefixCls меняет root/modifier/string classes; отсутствие и пустая строка
 наследуют ConfigProvider.prefixCls (по умолчанию ant-avatar).

@@ -43,8 +43,7 @@ CreateBreakpoint заменяет React Grid.useBreakpoint явной Svelte-м�
 семи запросов; без него используются прежние стандартные пороги Grid.
 
 Оба компонента поддерживают class/style, нативные атрибуты/события,
-bind:nativeElement и RTL без изменения DOM-порядка. Галерея — `/ant-design#grid`,
-фикстура — `?fixture=grid`. Рецепт grid извлекает 1043 правила с исходными media
+bind:nativeElement и RTL без изменения DOM-порядка. Фикстура — `?fixture=grid`. Рецепт grid извлекает 1043 правила с исходными media
 scopes и без keyframes. Unit/SSR/Chromium проверяют gutters, вложенность, ширины,
 границы media, нулевые reset-значения, CSS units, RTL и cleanup.
 Theme.components.Grid применяет aliases и algorithms к Row/Col, включая

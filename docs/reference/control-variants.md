@@ -1,13 +1,18 @@
 # Варианты оформления полей
 
-> Type: Reference. Локальное оформление и наследование через ConfigProvider и Form.
-
 `ConfigProvider.variant` задаёт общее оформление полей: outlined, filled, borderless
 или underlined. `Form.variant` задаёт оформление внутри ближайшего Form.
 Точная форма API принадлежит [ConfigProvider](../../src/lib/ConfigProvider.svelte),
 [FormProps](../../src/lib/form.types.ts) и типам отдельных компонентов.
 
 ```svelte
+<script lang="ts">
+  import { ConfigProvider, createForm, Form, Input, Select } from '@woodger/antd';
+
+  const form = createForm({ initialValues: {} });
+  const options = [{ value: 'editor', label: 'Редактор' }];
+</script>
+
 <ConfigProvider variant="filled" input={{ variant: 'underlined' }}>
   <Input />
   <Form {form} variant="borderless">
@@ -18,7 +23,7 @@
 ```
 
 Первый Input будет underlined, второй — borderless, Select — outlined.
-Без настройки используется outlined. Для текущих props приоритет повторяет Ant Design 6.6.8:
+Без настройки используется outlined. Настройки применяются в следующем порядке, начиная с самой приоритетной:
 
 1. Локальный variant.
 2. Variant ближайшего Form.
@@ -62,8 +67,7 @@ Theme.inherit=false сбрасывает тему, сохраняя настро
 Существующие native events, bindings, semantic styles и theme tokens сохраняют
 свои контракты.
 
-ConfigProvider.select/datePicker/mentions на этом этапе принимают
-только variant. Их остальные исходные component config props пока не перенесены.
+У `Select` и `AutoComplete` общие [настройки провайдера](components/select.md#оформление-и-состояние).
 TreeSelect также поддерживает [classNames, styles и switcherIcon](components/tree-select.md).
 Card и Meta также поддерживают [class/style и semantic config](components/card.md).
 MentionsComponentConfig относится к provider; прежний MentionsConfig остаётся

@@ -172,8 +172,7 @@ snippet, компонент считает содержимое доступны
 Фокус возвращается к trigger перед удалением содержимого. Отложенные открытия отменяются при
 удалении компонента, очистке содержимого и замене trigger.
 
-Галерея `/ant-design#popover` содержит редактор профиля и информационную
-карточку с кнопкой. Arrow и autoAdjustOverflow принимают те же object настройки,
+Arrow и autoAdjustOverflow принимают те же object настройки,
 что Tooltip; они передаются также через Popconfirm и AvatarGroup.max.popover.
 ContextMenu и color поддержаны по общим правилам Tooltip выше.
 

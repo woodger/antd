@@ -118,12 +118,6 @@ Raw замер [width:undefined](../../../tests/browser/fixtures/ant-design-noti
 пустую очередь. Общая модель очереди находится в notice-queue.model.svelte.ts,
 DOM-видимость и фокус — в notice.dom.ts; ими также пользуются Message и Alert.
 
-Галерея `/ant-design#notification` готовит CSV-отчёт, обновляет уведомление по
-ключу, скачивает настоящий файл и предлагает повтор после ошибки. Сброс и
-удаление примера отменяют ожидающий результат и освобождают download URL.
-Подготовка показывает Progress с этапами 0 → 25 → 65 → 90 → 100 и кнопкой
-отмены. Отмена сохраняет достигнутый процент; повтор начинает новую попытку с 0.
-
 Первая версия не поддерживает collapsing stack, showProgress, getContainer,
 глобальный static API/config, onClick на карточке и semantic classNames/styles.
 Устаревшие message/btn заменены title/actions.

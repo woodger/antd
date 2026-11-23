@@ -63,8 +63,7 @@ component tokens и legacy themes сохраняют прежний namespace и
 Enter/leave анимация loading icon пока отсутствует; прежний spinner сохранён.
 Source component tokens и [Wave](../wave.md) подключены.
 Общий механизм тем,
-RTL, Form disabled и Compact остаётся прежним. Фикстура — ?fixture=button;
-расширенный пример — /ant-design#buttons. Unit/SSR/Chromium проверяют приоритеты,
+RTL, Form disabled и Compact остаётся прежним. Фикстура — ?fixture=button. Unit/SSR/Chromium проверяют приоритеты,
 формы/ссылки, delay/cancel, CJK, nested config, Compact и совместимость
 с Popconfirm. Фикстура ?fixture=button-prefix сравнивает оформление с официальным
 UMD и сохраняемое состояние. Default CSS Button входит в vendor/antd.css;

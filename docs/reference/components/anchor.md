@@ -98,7 +98,7 @@ prefix владельца, сохраняя явный item override. В
 без правки официального UMD. Сверка полной геометрии использует matchedItems;
 исходное наблюдение оставлено для отдельного разбора.
 
-Фикстура — `?fixture=anchor`, пример — `/ant-design#anchor`. Unit/SSR/Chromium
+Фикстура — `?fixture=anchor`. Unit/SSR/Chromium
 проверяют приоритеты offsets, callbacks/history, анимацию/cleanup, nested items,
 RTL/indicator и production hydration. Source tokens и метрики проверяются
 [по официальному UMD](../../../src/lib/theme-anchor-tokens-reference.test.ts) и

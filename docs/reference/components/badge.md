@@ -169,12 +169,6 @@ HTMLSpanElement и очищается при unmount. Нативные span attr
 проверки — [browser](../../../tests/browser/badge-api.spec.ts) и
 [SSR](../../../tests/package/badge-api.ssr.test.ts), фикстура — `?fixture=badge-api`.
 
-Галерея `/ant-design#badge` показывает варианты и локальный список уведомлений
-в Drawer. Непрочитанное количество вычисляется из сообщений. Чтение сохраняет
-записи; фокус переходит на прочитанное сообщение или список после «Прочитать все».
-После закрытия Drawer фокус возвращается к прежней кнопке даже при count=0.
-Сброс создаёт исходные сообщения с новыми ключами. Сеть и persistence отсутствуют.
-
 46 вариантов count закреплены в
 [официальных UMD-снимках](../../../tests/browser/fixtures/ant-design-badge-count-reference.json),
 проверки — [browser](../../../tests/browser/badge-count.spec.ts) и

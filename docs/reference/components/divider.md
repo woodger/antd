@@ -33,7 +33,7 @@ ClassNames/styles принимают объект со слотами root/rail/
 CSS-строки, как style остальных Svelte-компонентов. Root style имеет приоритет
 над styles.root; без подписи styles.rail также применяется к корню.
 
-Пример доступен на `/ant-design#divider`, изолированная фикстура — `?fixture=divider`.
+Фикстура — `?fixture=divider`.
 SSR и Chromium-проверки покрывают aliases, ноль, snippets, варианты, размеры,
 semantic slots, геометрию размещения, темы, RTL и узкий экран.
 `ConfigProvider.theme.components.Divider` поддерживает textPaddingInline,

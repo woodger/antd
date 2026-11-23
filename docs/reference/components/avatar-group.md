@@ -134,11 +134,7 @@ aria-describedby описывает корень; id/class/style также от
 аватары получают собственные Avatar tokens.
 Нативный Popover требует Popover API; собственных анимаций группа не добавляет.
 
-Галерея `/ant-design#avatar-group` показывает добавление, удаление, перестановку,
-лимит, размеры и форму команды. Имена выводятся обычными bindings; пустое имя
-не добавляется. Новые и сброшенные участники получают свежие ключи. Фокус
-сохраняется при перестановке и переходит к соседу после удаления. Внешней сети
-и persistence нет. Экспортируются AvatarGroupProps, AvatarGroupItem,
+Экспортируются AvatarGroupProps, AvatarGroupItem,
 AvatarGroupKey, AvatarGroupMax и AvatarGroupLocale. Произвольные компоненты вместо
 Avatar и настройки исходного Popover, ещё отсутствующие в Svelte Popover,
 пока не перенесены: в том числе motion и полная React.memo-заморозка opaque Snippet.

@@ -1,8 +1,25 @@
 # Общий префикс ConfigProvider
 
-PrefixCls задаёт базовый префикс CSS-классов; по умолчанию ant. Undefined и пустая
-строка наследуют родительский prefix. Локальный непустой prefixCls компонента имеет
-приоритет. Сейчас общий prefix подключён к App, Layout, LayoutSider,
+`ConfigProvider.prefixCls` меняет начало имён CSS-классов. По умолчанию библиотека
+использует `ant`. Вложенный провайдер наследует префикс родителя, а локальный
+`prefixCls` компонента задаёт его собственный класс.
+
+```svelte
+<script lang="ts">
+  import { Button, ConfigProvider } from '@woodger/antd';
+</script>
+
+<ConfigProvider prefixCls="suite">
+  <Button>Сохранить</Button>
+</ConfigProvider>
+```
+
+Кнопка получит класс `suite-btn`. Если передать самой кнопке
+`prefixCls="save-button"`, её классом станет `save-button`.
+
+## Компоненты и наследование
+
+Сейчас общий prefix подключён к App, Layout, LayoutSider,
 LayoutHeader/Content/Footer, Statistic/Timer, QRCode, Timeline, Steps, Divider, Flex,
 Segmented, Avatar/AvatarGroup, Badge/BadgeRibbon, Tag/CheckableTag/CheckableTagGroup,
 Empty, Skeleton с primitives, Spin, Progress, Result, Alert, Collapse, Affix,

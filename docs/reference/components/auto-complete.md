@@ -73,7 +73,7 @@ Custom input задаётся `children(control)` Snippet:
 Attributes/register связывают value, ARIA, события и native ref; собственные
 class/style/rows сохраняются. InputElement и nativeElement доступны через bind.
 Native name/required/disabled/readonly, FormItem/status/reset, размеры, variants,
-Compact, темы и RTL поддержаны. Галерея `/ant-design#auto-complete`, фикстура
+Compact, темы и RTL поддержаны. Фикстура
 `?fixture=auto-complete`. При custom input его native constraints задаются на нём.
 
 Source theme использует `components.Select` и общий Select token scope, как

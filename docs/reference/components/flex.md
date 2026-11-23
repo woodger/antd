@@ -26,7 +26,7 @@ Component выбирает нативный HTML-тег (default=div) или Sve
 reset шрифта и обработчики клавиатуры не добавляются. RTL меняет визуальное
 направление, сохраняя DOM-порядок и нативный Tab.
 
-Галерея — `/ant-design#flex`, отдельная фикстура — `?fixture=flex`.
+Фикстура — `?fixture=flex`.
 SSR/Chromium-проверки покрывают структуру, направления, выравнивание, gap/flex,
 перенос строк, пустое содержимое, смену тега, события, фокус, темы и RTL.
 ConfigProvider.flex задаёт vertical/class/style. Undefined наследует record,

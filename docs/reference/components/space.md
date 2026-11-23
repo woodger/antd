@@ -30,7 +30,7 @@ gap. Presets используют общие padding tokens, включая comp
 Root — div с нативными attrs, class/rootClassName/style и bind:nativeElement.
 ClassNames/styles root/item/separator принимают объект либо callback ({ props })
 с разрешёнными size/orientation/align. Space не сбрасывает typography и наследует
-тему/RTL. Галерея — `/ant-design#space`, фикстура — `?fixture=space`. Unit/SSR/
+тему/RTL. Фикстура — `?fixture=space`. Unit/SSR/
 Chromium проверяют gaps, пустые значения, keyed DOM/фокус и production hydration.
 Рецепт space извлекает 16 правил без Compact/Addon, reset и keyframes.
 ConfigProvider.space задаёт size, class/style и object/function classNames/styles
@@ -109,7 +109,7 @@ prefix; [raw](../../../tests/browser/fixtures/ant-design-space-prefix-reference.
 [browser](../../../tests/browser/space-prefix.spec.ts),
 [SSR](../../../tests/package/space-prefix.ssr.test.ts) и fixture `?fixture=space-prefix`.
 
-Фикстура — `?fixture=space-compact`, пример — `/ant-design#space`. Unit/SSR/
+Фикстура — `?fixture=space-compact`. Unit/SSR/
 Chromium проверяют размеры, границы/RTL, вложенность, фокус, Popup isolation,
 variants/status/disabled и hydration. Рецепты space-compact/space-addon/
 input-number-compact извлекают 4/29/8 правил без keyframes. InputSearch использует

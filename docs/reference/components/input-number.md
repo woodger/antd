@@ -126,7 +126,6 @@ Source component tokens и runtime algorithms подключены; native-only 
 не перезаписывая прежние outlined/compact стили; арифметика сопровождается
 [MIT mini-decimal](../../../src/lib/vendor/LICENSE.rc-mini-decimal).
 
-Пример количества, цены и расчёта стоимости доступен на `/ant-design#input-number`.
 Новые сценарии: `?fixture=input-number-features`,
 [browser](../../../tests/browser/input-number-features.spec.ts) и
 [package SSR](../../../tests/package/input-number-features.ssr.test.ts).

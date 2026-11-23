@@ -130,7 +130,7 @@ Plain style имеет приоритет на корневом меню; popup 
 Source compact использует itemHeight=35px и collapsedWidth=70px.
 Как Ant wrapper, Menu учитывает только свой disabled и disabled пунктов:
 Form.disabled и ConfigProvider.componentDisabled не отключают навигацию.
-Галерея — `/ant-design#menu`, изолированная фикстура — `?fixture=menu`.
+Фикстура — `?fixture=menu`.
 
 Пока не поддерживаются responsive horizontal overflow/overflowedIndicator,
 исходные popup/collapse motion, controlled activeKey/defaultActiveFirst,

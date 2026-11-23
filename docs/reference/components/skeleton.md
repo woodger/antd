@@ -81,14 +81,6 @@ Bind:nativeElement указывает на div каркаса, при loading=fa
 доступному сохранённому соседу в текущем dialog/документе. Escape остаётся
 у содержащего Modal/Drawer.
 
-Галерея `/ant-design#skeleton` настраивает каркас и показывает первую загрузку,
-быстрый ответ, ошибки с Alert/retry, отмену и сброс. После получения данных
-обновления используют Spin и сохраняют имя, checkbox, счётчик и DOM карточки.
-Примеры Skeleton и Spin используют одну
-[модель загрузки](https://woodger.org/ant-design#spin),
-которая отменяет ожидание при cancel/reset/unmount и защищает новую попытку
-от старого результата. При retry фокус переходит на постоянную группу карточки.
-
 Самостоятельные `Skeleton.Avatar`, `Skeleton.Button`, `Skeleton.Input`, `Skeleton.Image`
 и `Skeleton.Node` доступны также как SkeletonAvatar/Button/Input/Image/Node. Это одни
 и те же Svelte-компоненты. Avatar/Button/Input наследуют componentSize; локальный size

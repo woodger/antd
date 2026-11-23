@@ -54,6 +54,16 @@ metadata текст поиска берётся из первого string/numbe
 item.title и item.key. Без render видимая подпись пустая, как в upstream.
 
 ```svelte
+<script lang="ts">
+  import { Transfer, type TransferKey } from '@woodger/antd';
+
+  const dataSource = [
+    { key: 'a', title: 'Анна' },
+    { key: 'b', title: 'Борис' }
+  ];
+  let targetKeys = $state<TransferKey[]>([]);
+</script>
+
 {#snippet row(record: { key: string; title: string; })}
   <strong>{record.title}</strong>
 {/snippet}

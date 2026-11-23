@@ -1,11 +1,9 @@
 # Пустые состояния ConfigProvider
 
-> Type: Reference. ConfigProvider.renderEmpty по Ant Design 6.6.8.
-
-Точные типы — [RenderEmptyHandler/RenderEmptyContent](../../src/lib/types.ts).
-Callback получает имя потребителя и возвращает текст, число, boolean, null/undefined,
-Svelte Snippet или вложенные readonly arrays этих значений. Callback создаёт содержимое;
-возвращённый Snippet затем отображается как обычный Svelte UI.
+`ConfigProvider.renderEmpty` задаёт общее содержимое для пустых списков и таблиц.
+Функция получает имя компонента. Верните строку для простого сообщения или
+Svelte-сниппет, если нужна разметка. Все допустимые типы результата перечислены
+в [RenderEmptyContent](../../src/lib/types.ts).
 
 ```svelte
 <script lang="ts">

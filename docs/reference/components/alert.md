@@ -90,10 +90,7 @@ component algorithm применяются перед semantic/user styles. Sour
 fitted viewBox статусных иконок из icons-svg 4.6.0; legacy сохраняет прежний viewport.
 На ширине
 до 575px action переносится на отдельную строку, оставляя место длинному тексту.
-Кнопка закрытия имеет зону не меньше 24px. Галерея `/ant-design#alert` показывает
-настройки сообщения, действие и повторное создание закрытого экземпляра.
-Ошибка загрузки `/ant-design#server-table` использует Alert с прежним retry:
-текущая страница и query сохраняются.
+Кнопка закрытия имеет зону не меньше 24px.
 
 94 официальных UMD-сценария фиксируют API, computed styles, геометрию status icons,
 порядок callbacks и исходные corner cases. Отдельный свежий SSR baseline подтверждает

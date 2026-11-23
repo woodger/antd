@@ -89,13 +89,6 @@ ConfigProvider.disabled не скрывает обратную связь. Id/cl
 к корню. SSR сразу выводит корректные значения и SVG-геометрию без таймеров
 и DOM-измерений; независимые экземпляры не разделяют состояние.
 
-Галерея `/ant-design#progress` связывает line/circle со Slider и InputNumber,
-показывает статусы, размеры и форматирование. `/ant-design#notification`
-использует Progress для экспорта: модель notification-export.model.svelte.ts
-владеет процентом и этапами, отменяет ожидающие callbacks при отмене/сбросе/
-unmount и защищает повтор от результата предыдущей попытки. Скачиваемый CSV
-и успешное завершение через 700ms сохранены.
-
 Line поддерживает success={{ percent, strokeColor? }} как отдельный track поверх основного.
 Наличие success.percent определяет автоматический status вместо общего percent, в том числе
 при success.percent=0. Длины обоих tracks ограничиваются отдельно; success может выходить

@@ -86,7 +86,7 @@ cssVar prefix/key, priority и scopes проверяются через `?fixtur
 Источник алгоритмов покрыт существующей
 [MIT-лицензией Ant Design](../../../src/lib/vendor/LICENSE.ant-design).
 
-Галерея — `/ant-design#watermark`, fixture — `?fixture=watermark`.
+Фикстура — `?fixture=watermark`.
 Unit/SSR проверяют geometry/fonts/draw calls и серверную границу; browser
 проверяет реальные PNG pixels, восстановление DOM, image/cache, DPI и панели.
 

@@ -76,7 +76,6 @@ Refs очищаются при unmount. SSR не вызывает callbacks ил
 inline-block/inline-flex перекрывает его UA display:none; компонент не добавляет
 отдельный скрывающий CSS override.
 
-Галерея `/ant-design#inputs` сохраняет старые примеры и добавляет расширенный.
 Fixture `?fixture=input-features` дополняет прежний Input/Select integration.
 Unit/SSR и browser проверяют count/IME, focus/Enter, clear/event order, refs,
 FormData/FormItem/Compact, variants/semantic styles, темы и RTL.

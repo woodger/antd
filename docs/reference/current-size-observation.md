@@ -1,12 +1,25 @@
-# Текущий medium и устаревшие размеры Ant Design
+# Размеры компонентов
 
-> Type: Reference. Замеры Ant Design 6.6.8 на закреплённом commit
-> 984592267de88fbf9cdaecc96a56629e721c709d.
+`ConfigProvider.componentSize` задаёт общий размер: `small`, `medium` (по
+умолчанию) или `large`. Чтобы изменить размер одного компонента, передайте ему
+`size`. Например, кнопка ниже будет крупнее соседнего поля.
 
-В Svelte используются `small`, `medium` и `large`; обычный размер
-ConfigProvider — `medium`. Значения `middle` и `size="default"` удалены
-из поддерживавших их API. `Row.align="middle"`, CSS vertical-align и
-Skeleton.shape="default" остаются текущими API.
+```svelte
+<script lang="ts">
+  import { Button, ConfigProvider, Input } from '@woodger/antd';
+</script>
+
+<ConfigProvider componentSize="small">
+  <Input aria-label="Название проекта" />
+  <Button size="large">Создать проект</Button>
+</ConfigProvider>
+```
+
+При переносе с прежнего API замените `size="middle"` и `size="default"` на
+`size="medium"`. Значение `middle` у `Row.align` задаёт выравнивание,
+а `default` у `Skeleton.Button.shape` — форму.
+
+## Сравнение с прежними размерами
 
 [Raw замеры](../../tools/fixtures/ant-design-current-size-observation.json) получены
 из неизменённого официального UMD, без статического antd.css: 171 профиль,

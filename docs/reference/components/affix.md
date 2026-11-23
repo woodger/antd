@@ -69,7 +69,7 @@ Affix сразу меняет target/позицию и снимает стары
 Проверки наследования, приоритетов, href updates, refs/focus и cleanup —
 `?fixture=target-container`.
 
-Фикстура — `?fixture=affix`, пример — `/ant-design#affix`. Engine/DOM-тесты
+Фикстура — `?fixture=affix`. Engine/DOM-тесты
 проверяют округление, очереди, смену target и очистку; SSR/Chromium — нативный
 контент, placeholder, размеры, callbacks и hydration. Vendor CSS воспроизводится
 рецептом affix (6 правил) из закреплённого архива. Affix-prefix извлекает те же

@@ -217,7 +217,7 @@ source gap и глобальный borderRadius даже без source-наст�
 Portal переносит наследуемые variables и сохраняет приоритет собственных component tokens.
 Вложенные popup сохраняют собственные координаты и цвет стрелки.
 
-Галерея находится на `/ant-design#tooltip`. Поддерживаются строки, числа и rich snippets.
+Поддерживаются строки, числа и rich snippets.
 Исходные motion/UniqueProvider и оставшиеся delegated props ещё не перенесены.
 AutoAdjustOverflow принимает также `{ adjustX?: 0 | 1, adjustY?: 0 | 1 }`.
 Числовой 0 тоже разрешает flip, как в rc-trigger; отключение обеих коррекций

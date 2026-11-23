@@ -74,7 +74,7 @@ Svelte сохраняет существующий dir=rtl и LTR value; наб�
 [SSR](../../../tests/package/statistic-theme.ssr.test.ts) и
 [browser](../../../tests/browser/statistic-theme.spec.ts), `?fixture=statistic-theme`.
 
-Пример — `/ant-design#statistic`, фикстура — `?fixture=statistic`. Unit/SSR/Chromium
+Фикстура — `?fixture=statistic`. Unit/SSR/Chromium
 проверяют форматирование, loading, snippets, semantic styles, темы, RTL и фокус.
 Рецепт statistic воспроизводит 14 правил vendor/statistic.css из закреплённого
 архива; statistic-prefix выводит те же 14 правил CSS-модулем для локального prefixCls.

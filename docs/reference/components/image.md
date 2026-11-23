@@ -73,8 +73,7 @@ Events/capture заменяют React window mouse/touch handlers с cleanup н�
 
 Темы, RTL, RU/EN accessible labels и reduced motion поддержаны. Рецепт image
 извлекает 48 правил; progress wrapper и rc-motion исключены. Иконки перенесены из
-Ant Design Icons SVG 4.6.0 с существующей MIT-лицензией. Галерея `/ant-design#image`,
-фикстура `?fixture=image`.
+Ant Design Icons SVG 4.6.0 с существующей MIT-лицензией. Фикстура `?fixture=image`.
 
 ConfigProvider.theme.components.Image задаёт zIndexPopup, previewOperationSize,
 previewOperationColor, previewOperationHoverColor, previewOperationColorDisabled

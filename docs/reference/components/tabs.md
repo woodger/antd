@@ -428,8 +428,6 @@ TabNavList закреплённого rc-tabs; они независимы от 
 все типы и положения в LTR/RTL, нулевой отступ и пустой editable список.
 Здесь же проверяются medium, наследование размера и сохранение панелей
 при смене расположения.
-Галерея `/ant-design#tabs`
-показывает профиль, настройки, историю Table, destroyOnHidden и Tabs внутри Modal.
 Фикстура `?fixture=tabs-overflow` сверяет 35 эталонов More из официального UMD:
 скрытые вкладки, CSS метрики, SVG, icon precedence, RTL и locale. Проверяются также
 keyboard, control/owner callbacks, popupRender, portal, вложенные поверхности и focus.

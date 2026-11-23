@@ -60,7 +60,7 @@ viewer. После закрытия фокус возвращается thumbnai
 настройки, но само по себе не отключает открытие из дочернего Image; отключение
 конкретного thumbnail задаётся Image.preview=false.
 
-Fixture — `?fixture=image-preview-group`, галерея — `/ant-design#image`.
+Fixture — `?fixture=image-preview-group`.
 SSR рендерит children без DOM registration и открытого viewer. Ограничения semantic/
 config/container/icons и исходных motion общие с Image и перечислены выше.
 

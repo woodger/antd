@@ -1,6 +1,23 @@
 # Card
 
-Card, CardGrid и CardMeta соответствуют Card/Grid/Meta эталона. Слоты
+Поместите содержимое карточки внутрь `Card`. Для ссылки или другого действия
+рядом с заголовком используйте сниппет `extra`.
+
+```svelte
+<script lang="ts">
+  import { Card } from '@woodger/antd';
+</script>
+
+<Card title="Команда">
+  {#snippet extra()}
+    <a href="/team">Все участники</a>
+  {/snippet}
+
+  <p>Ответственная за проект — Анна.</p>
+</Card>
+```
+
+Слоты
 title/extra/cover/actions и Meta.avatar/title/description принимают text/number/
 boolean/Snippet; 0 и true считаются присутствующими, но boolean не выводит текст.
 Children Card/Grid — Snippet. Все три компонента поддерживают нативные attrs,
@@ -86,7 +103,7 @@ activeTabKey имеет приоритет над tabProps.activeKey. TabBarExtr
 правый слот либо { left, right }. Клавиатура и fallback ключей следуют ранее
 согласованному Svelte Tabs; полный React Tabs API пока не перенесён.
 
-Галерея — `/ant-design#card`, фикстура — `?fixture=card`; unit/SSR/Chromium
+Фикстура — `?fixture=card`; unit/SSR/Chromium
 проверяют стили, слоты, Grid, загрузку/фокус и вкладки. Рецепт card извлекает
 59 правил без keyframes. Компонентные темы отдельно сверяются с UMD 6.6.8 в
 `tests/browser/card-theme.spec.ts`, фикстура — `?fixture=card-theme`.

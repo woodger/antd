@@ -82,7 +82,7 @@ Styles.root/style перекрывают tokens, а titleSpan по-прежне�
 Эталонные метрики обеих ориентаций и обновления темы проверяются также в
 `?fixture=steps-theme`.
 
-Фикстура — ?fixture=timeline, пример — /ant-design#timeline. Engine/SSR/Chromium
+Фикстура — ?fixture=timeline. Engine/SSR/Chromium
 проверяют aliases, порядок/статусы, геометрию titleSpan, темы/RTL, сохранение поля
 и фокуса, а также production hydration. Рецепт timeline воспроизводит 43 правила
 из того же закреплённого CSS-архива; общие Steps не дублируются.

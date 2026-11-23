@@ -7,17 +7,16 @@
 Библиотека компонентов [Ant Design](https://ant.design/) для Svelte и TypeScript: элементы интерфейса,
 модели форм, темы и локализация.
 
-[Примеры компонентов](https://woodger.org/ant-design) · [Документация](#документация)
+[Примеры компонентов](docs/reference/components/README.md) · [Документация](#документация)
 
 ## Подключение
 
-Чтобы использовать `@woodger/antd` в своём проекте, выполните:
+Пока пакет не опубликован в npm, [соберите архив библиотеки](docs/development.md#упаковка).
+Скопируйте полученный файл `.tgz` в каталог своего приложения и установите его:
 
 ```sh
-npm install @woodger/antd
+npm install ./woodger-antd-*.tgz
 ```
-
-Пакет пока не опубликован в публичном npm-реестре.
 
 ## Стили
 
@@ -69,7 +68,7 @@ import '@woodger/antd/styles.css';
 - [Темы и локализация](docs/reference/themes.md) — оформление, размеры и язык интерфейса.
 - [Контекст темы](docs/reference/theme-context.md) — настройки `ConfigProvider` и токены компонентов.
 - [Design tokens](docs/reference/design-tokens.md) — расчёт токенов темы.
-- [Размеры компонентов](docs/reference/current-size-observation.md) — размеры и результаты измерений.
+- [Размеры компонентов](docs/reference/current-size-observation.md) — локальный размер и наследование от провайдера.
 - [Варианты оформления](docs/reference/control-variants.md) — настройки `ConfigProvider` и `Form`.
 - [Пустые состояния](docs/reference/render-empty.md) — настройка `ConfigProvider.renderEmpty`.
 - [Всплывающие элементы](docs/reference/popup-settings.md) — контейнер, размещение и ширина списка.

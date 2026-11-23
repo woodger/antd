@@ -1,5 +1,22 @@
 # Layout
 
+`Layout` объединяет разделы страницы. Если боковая панель видна сразу, задайте
+`hasSider` у окружающего её контейнера, чтобы колонки заняли свои места уже при SSR.
+
+```svelte
+<script lang="ts">
+  import { Layout, LayoutContent, LayoutHeader, LayoutSider } from '@woodger/antd';
+</script>
+
+<Layout>
+  <LayoutHeader>Кабинет проекта</LayoutHeader>
+  <Layout hasSider>
+    <LayoutSider theme="light"><a href="#team">Команда</a></LayoutSider>
+    <LayoutContent><h1 id="team">Участники проекта</h1></LayoutContent>
+  </Layout>
+</Layout>
+```
+
 Layout, LayoutHeader, LayoutContent, LayoutFooter и LayoutSider соответствуют
 Layout и его секциям Header/Content/Footer/Sider. Они сохраняют div/header/main/
 footer/aside без дополнительных контейнеров. Children — Snippet, нативные props,
@@ -41,7 +58,7 @@ media change. ComponentDisabled не отключает навигационны
 токены текущего режима, dark сохраняет #001529. Compact использует меньшие control
 tokens. Trigger поддерживает Enter/Space, aria-expanded/controls и locale.layout
 expand/collapse, с expandLabel/collapseLabel override. Reduced motion отключает
-переходы. Галерея — `/ant-design#layout`, фикстура — `?fixture=layout`; unit/SSR/
+переходы. Фикстура — `?fixture=layout`; unit/SSR/
 Chromium покрывают структуру, SSR без JS, callbacks, размеры, breakpoint/cleanup,
 фокус, locale и темы. Рецепт layout извлекает 35 правил, включая Menu-интеграции.
 ConfigProvider.theme.components.Layout поддерживает 16 актуальных токенов. Aliases, отдельный

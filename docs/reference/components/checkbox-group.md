@@ -62,13 +62,16 @@ options; disabled, отсутствующие и невыбранные вари
 При ошибке или нажатии подписи FormItem фокус переходит к первому доступному
 варианту; пустая группа может получить фокус сама, без дополнительного шага Tab.
 
-Галерея `/ant-design#checkbox` показывает форму выбора прав с общим флажком
-«Все права», промежуточным состоянием, проверкой количества, отправкой и сбросом.
-Общий выбор управляется владельцем через массив, как и в примере Ant Design.
 Непустые нормализованные options имеют приоритет над children; пустые оставляют
 snippet с вложенными Checkbox, включая Row/Col и другие контейнеры:
 
 ```svelte
+<script lang="ts">
+  import { Checkbox, CheckboxGroup } from '@woodger/antd';
+
+  let permissions = $state<string[]>(['read']);
+</script>
+
 <CheckboxGroup bind:value={permissions} name="permissions" aria-label="Права доступа">
   <Checkbox value="read">Просмотр</Checkbox>
   <Checkbox value="edit">Редактирование</Checkbox>

@@ -97,8 +97,7 @@ onClear. Size/status/variant, native name/required/maxlength, FormItem/validatio
 reset, Form/ConfigProvider disabled, locale/themes/compact density/RTL поддержаны.
 Focus/blur и bind:nativeElement предоставляют текущий ref API. Текстовое поле
 доступно через nativeElement.querySelector('textarea'); deprecated textarea ref удалён.
-CSS-рецепт mentions извлекает 102 правила. Галерея `/ant-design#mentions`,
-фикстура `?fixture=mentions`; SSR не измеряет DOM и не ставит таймеры.
+CSS-рецепт mentions извлекает 102 правила. Фикстура `?fixture=mentions`; SSR не измеряет DOM и не ставит таймеры.
 24 эталона официального UMD для контейнеров и popupRender —
 [mentions-popup](../../../tests/browser/mentions-popup.spec.ts), `?fixture=mentions-popup`.
 

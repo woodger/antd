@@ -166,12 +166,23 @@ Today/Now показывается в режиме date; при needConfirm кн
 в hooks получают фокус обычным нажатием мыши.
 
 ```svelte
-{#snippet dateCell(current, info)}
-  <span class="custom-date-cell">{@render info.originNode()}</span>
-{/snippet}
-{#snippet datePanel(content)}<section>{@render content()}</section>{/snippet}
-{#snippet dateFooter(mode)}<small>Режим: {mode}</small>{/snippet}
-<DatePicker cellRender={dateCell} panelRender={datePanel} renderExtraFooter={dateFooter} />
+<script lang="ts">
+  import { DatePicker } from '@woodger/antd';
+</script>
+
+<DatePicker>
+  {#snippet cellRender(current, info)}
+    <span class="custom-date-cell">{@render info.originNode()}</span>
+  {/snippet}
+
+  {#snippet panelRender(content)}
+    <section>{@render content()}</section>
+  {/snippet}
+
+  {#snippet renderExtraFooter(mode)}
+    <small>Режим: {mode}</small>
+  {/snippet}
+</DatePicker>
 ```
 
 [Проверки render hooks](../../../tests/browser/date-picker-render-hooks.spec.ts) сравнивают

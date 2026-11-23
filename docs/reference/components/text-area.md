@@ -91,7 +91,6 @@ Bind:nativeElement по прежнему возвращает HTMLTextAreaElemen
 maxLength/readOnly/autoComplete/autoFocus сохранены на реальном control. SSR не
 создаёт ResizeObserver/shadow и не вызывает resize/change callbacks.
 
-Галерея `/ant-design#textarea` сохраняет старый пример и добавляет расширенный.
 Fixture `?fixture=textarea-features` дополняет `?fixture=textarea`. Unit/SSR и browser
 проверяют count/clear/IME, размер и cleanup, native refs/events/Form, темы и RTL.
 

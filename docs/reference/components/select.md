@@ -269,8 +269,6 @@ disabled control не передаёт значения. Поисковый те
 `onValueChange={(value) => form.setFieldValue('teams', value)}`. Задайте тип
 массива явно, например `createForm<{ teams: number[] }>({ initialValues: { teams: [] } })`.
 `required` отклоняет пустой массив, min/max ограничивают количество элементов.
-Галерея `/ant-design` содержит форму выбора от одной до трёх команд с отправкой
-и сбросом.
 
 ## Видимость списка Select
 
@@ -728,6 +726,12 @@ options с совпавшим label либо явно заданным showSearc
 ключ не совпадает со строкой автоматически; raw пробелы непустых частей сохраняются.
 
 ```svelte
+<script lang="ts">
+  import { Select } from '@woodger/antd';
+
+  let tags = $state<string[]>([]);
+</script>
+
 <Select mode="tags" options={[]} bind:value={tags} tokenSeparators={[',', ';', '\n']} />
 ```
 
@@ -889,22 +893,69 @@ Native input blur-callback остаётся нативным. Для кнопк�
 OnPopupScroll получает native scroll event с currentTarget=listbox; решение о
 следующей странице и объединение options остаются у потребителя.
 
+Например, для поиска по справочнику сотрудников передайте введённую строку
+своему API. В этом примере `/api/members?q=…` возвращает массив объектов
+`{ value: string, label: string }`. При новом вводе или удалении компонента
+Svelte отменяет предыдущий запрос через `getAbortSignal()`.
+
 ```svelte
-<Select options={remote.options} bind:value
-  showSearch={{ searchValue: remote.searchValue, onSearch: remote.search, filterOption: false }}
-  loading={remote.loading} notFoundContent={emptyState}
-  onPopupScroll={event => {
-    const list = event.currentTarget;
-    if (list.scrollTop + list.clientHeight >= list.scrollHeight - 16) remote.more();
-  }} />
+<script lang="ts">
+  import { getAbortSignal } from 'svelte';
+  import { Select } from '@woodger/antd';
+
+  let query = $state('');
+  let options = $state<{ value: string; label: string }[]>([]);
+  let loading = $state(false);
+  let error = $state('');
+
+  $effect(() => {
+    const text = query.trim();
+    const signal = getAbortSignal();
+
+    options = [];
+    error = '';
+    loading = Boolean(text);
+
+    if (text) {
+      void search(text, signal);
+    }
+  });
+
+  async function search(text: string, signal: AbortSignal) {
+    try {
+      const response = await fetch(`/api/members?q=${encodeURIComponent(text)}`, { signal });
+
+      if (!response.ok) {
+        throw new Error(`Ошибка поиска (HTTP ${response.status})`);
+      }
+
+      const matches = await response.json();
+
+      if (!signal.aborted) {
+        options = matches;
+      }
+    }
+    catch (cause) {
+      if (!signal.aborted) {
+        error = cause instanceof Error ? cause.message : 'Не удалось загрузить список';
+      }
+    }
+    finally {
+      if (!signal.aborted) {
+        loading = false;
+      }
+    }
+  }
+</script>
+
+<Select
+  {options}
+  {loading}
+  showSearch={{ searchValue: query, onSearch: text => { query = text; }, filterOption: false }}
+  status={error ? 'error' : undefined}
+  aria-label="Поиск сотрудника"
+/>
+{#if error}
+  <p role="alert">{error}</p>
+{/if}
 ```
-
-Галерея /ant-design#select-remote использует отдельную
-[presentation model](https://woodger.org/ant-design#select-remote)
-с debounce, AbortSignal, защитой от поздних ответов
-уже во время debounce, стабильным объединением страниц по value и повтором
-последнего неудачного cursor. Dispose отменяет таймер/запрос. Источник демонстрационный,
-сетевые API, таймеры и server-specific ошибки не входят в библиотечный Select.
-Пока не перенесены остальные поля showSearch config, оставшиеся render/component
-overrides, icons, motion и общий полный rc-select API.
-

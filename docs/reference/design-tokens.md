@@ -1,12 +1,8 @@
 # Статический расчёт design tokens
 
-> Type: Reference. Статическая часть theme API Ant Design 6.6.8 для Svelte/TypeScript.
-
-Публичный `theme` содержит `defaultSeed`, `defaultAlgorithm`, `darkAlgorithm`,
-`compactAlgorithm` и `getDesignToken`. Они работают без DOM, React и CSS-in-JS
-runtime. Точные типы принадлежат
-[theme-token.types.ts](../../src/lib/theme-token.types.ts), вычисления —
-[theme.engine.ts](../../src/lib/theme.engine.ts) и соседним engines.
+`theme.getDesignToken(config)` вычисляет итоговые цвета, размеры и отступы по заданной
+теме. Его можно вызвать и на сервере. Чтобы получить значения от ближайшего
+`ConfigProvider` внутри компонента, используйте [`theme.useToken()`](theme-context.md#использование).
 
 ```ts
 import { theme, type DesignTokenConfig } from '@woodger/antd';

@@ -1,7 +1,5 @@
 # Эффект Wave
 
-> Type: Reference. Поведение Wave закреплённого Ant Design 6.6.8 в Svelte.
-
 Wave добавляет декоративную волну при взаимодействии с Button, Checkbox, Radio,
 RadioButton, Switch, интерактивным Tag и Steps с onChange. Нативные controls,
 callbacks, формы и порядок фокуса сохраняются. Эффект не создаёт DOM при SSR.

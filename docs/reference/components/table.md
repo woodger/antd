@@ -173,7 +173,7 @@ Snippet создаётся только для видимой раскрытой
 сбрасывают локальное состояние controls. Данные, которые нужно сохранить,
 держите у владельца. SSR сразу отображает переданные раскрытые строки.
 Раскрытие нажатием на всю строку, forceRender и иерархические данные пока не
-поддерживаются. Живой пример карточек участников доступен на `/ant-design`.
+поддерживаются.
 
 ## Видимость заголовка колонок
 
@@ -365,8 +365,7 @@ SSR сохраняет полную разметку, данные и CSS-зак
 закрепление активируется после измерения ширин в браузере; до гидратации
 колонки доступны обычной прокруткой. Изменения layout не вызывают onChange или
 onSelectionChange. Фильтрация, сортировка, выбор и пагинация сохраняют поведение
-в обоих режимах данных. В галерее `/ant-design` переключатель находится в примере
-Table с API.
+в обоих режимах данных.
 
 ## Фильтры колонок
 
@@ -463,42 +462,84 @@ dataSource владельцем. Внешние обновления props не 
 присутствующие в текущем dataSource. Кэш записей других страниц отсутствует.
 Выбор всех действует на доступные строки загруженной страницы.
 
-В приложении [пример удалённой таблицы](https://woodger.org/ant-design#server-table)
-показывает полную связку. [Модель загрузки](https://woodger.org/ant-design#server-table)
-принадлежит presentation и не входит в пакет UI. Её loader получает
-`{ current, pageSize, sorter, filters }` и `AbortSignal`, возвращает
-`Promise<{ rows, total }>`. Модель отменяет предыдущий запрос и игнорирует его
-поздний ответ, даже если источник не поддерживает отмену. Во время загрузки строки
-очищаются; ошибка доступна отдельно, retry повторяет последний запрос. При
-уменьшении total модель запрашивает исправленную страницу перед публикацией строк.
-На unmount вызывается dispose для отмены и блокировки поздних обновлений.
-
-Минимальное подключение модели в этом приложении:
+В примере сервер принимает параметры `page` и `pageSize` и возвращает JSON
+с массивом `rows` и общим количеством записей `total`. Подставьте адрес своего
+API. Когда пользователь меняет страницу, привязки обновляют параметры запроса.
+При смене страницы или удалении компонента предыдущий запрос отменяется.
 
 ```svelte
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { Button, Table, type TableColumn } from '@woodger/antd';
-  import { createRemoteTable } from '$lib/presentation/ant-design/remote-table.model.svelte';
-  import { createMemberSource, type RemoteMember } from '$lib/presentation/ant-design/remote-members';
+  import { Table, type TableColumn } from '@woodger/antd';
 
-  const remote = createRemoteTable(createMemberSource().load);
-  const columns: TableColumn<RemoteMember>[] = [
-    { key: 'name', title: 'Участник', dataIndex: 'name', sorter: true },
-    { key: 'tasks', title: 'Задачи', dataIndex: 'tasks', sorter: true }
+  interface Member {
+    id: number;
+    name: string;
+  }
+
+  const columns: TableColumn<Member>[] = [
+    { key: 'name', title: 'Участник', dataIndex: 'name' }
   ];
-  onMount(() => { void remote.load(); return remote.dispose; });
+  let current = $state(1);
+  let pageSize = $state(10);
+  let rows = $state<Member[]>([]);
+  let total = $state(0);
+  let loading = $state(false);
+  let error = $state('');
+
+  $effect(() => {
+    const controller = new AbortController();
+    const url = `/api/members?page=${current}&pageSize=${pageSize}`;
+
+    async function loadPage() {
+      loading = true;
+      error = '';
+      rows = [];
+
+      try {
+        const response = await fetch(url, { signal: controller.signal });
+
+        if (!response.ok) {
+          throw new Error(`Ошибка загрузки (HTTP ${response.status})`);
+        }
+
+        const page: { rows: Member[]; total: number } = await response.json();
+
+        if (!controller.signal.aborted) {
+          rows = page.rows;
+          total = page.total;
+        }
+      }
+      catch (cause) {
+        if (!controller.signal.aborted) {
+          error = cause instanceof Error ? cause.message : 'Не удалось загрузить страницу';
+        }
+      }
+      finally {
+        if (!controller.signal.aborted) {
+          loading = false;
+        }
+      }
+    }
+
+    void loadPage();
+
+    return () => controller.abort();
+  });
 </script>
 
-{#if remote.error}<p role="alert">{remote.error}</p><Button onclick={remote.retry}>Повторить</Button>{/if}
-<Table mode="server" {columns} dataSource={remote.rows} total={remote.total}
-  bind:current={remote.current} bind:pageSize={remote.pageSize}
-  bind:sorter={remote.sorter} bind:filters={remote.filters}
-  loading={remote.loading} onChange={remote.change} caption="Удалённые участники" />
+{#if error}
+  <p role="alert">{error}</p>
+{/if}
+
+<Table
+  mode="server"
+  rowKey="id"
+  dataSource={rows}
+  {columns}
+  {total}
+  {loading}
+  bind:current
+  bind:pageSize
+  caption="Участники"
+/>
 ```
-
-Источник примера имитирует API в памяти с задержкой и управляемой ошибкой;
-реального endpoint в проекте нет. Для своего API замените loader, передавайте
-signal в fetch и возвращайте строки страницы вместе с общим количеством.
-В примере загрузка начинается на onMount; SSR отображает пустую таблицу без запросов.
-

@@ -108,8 +108,7 @@ corner placements используют исходные arrowOffsetHorizontal. �
 сохраняют DOM, фокус и inline-позицию popup. Native-only оформление и существующие
 bind:open/callback contracts сохранены.
 
-Галерея `/ant-design#dropdown` показывает действия строки Table: открытие Modal,
-копирование и архивирование участника. Первая версия ограничена плоскими командами:
+Первая версия ограничена плоскими командами:
 интеграция standalone Menu, подменю, selectable/checkable items, contextMenu
 и popupRender пока отсутствуют. Пункты с href уже создают нативные ссылки.
 Deprecated Dropdown.Button исключён из переноса; актуальная композиция —

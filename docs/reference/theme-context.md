@@ -1,19 +1,9 @@
 # Токены темы в ConfigProvider
 
-> Type: Reference. Реактивный theme context Ant Design 6.6.8 для Svelte 5.
-
-ConfigProvider принимает source `token`, `algorithm`, `components`, `inherit`,
-`hashed` и `cssVar` вместе с существующими mode/primary/compact. Точные объявления
-находятся в [ThemeConfig](../../src/lib/types.ts),
-[ComponentTokenMap](../../src/lib/theme-component-token.types.ts) и
-[ThemeTokenResult](../../src/lib/theme-context.types.ts).
-
-Расчёт и наследование принадлежат [theme-config.engine.ts](../../src/lib/theme-config.engine.ts),
-Svelte context — [theme-context.svelte.ts](../../src/lib/theme-context.svelte.ts).
-Пакет не зависит от React или CSS-in-JS runtime.
-Публичный theme.cssVar принимает объект { prefix?, key? }, как в Ant Design 6.6.8.
-Эталон использует CSS-переменные постоянно; cssVar=false не входит в его тип
-и при передаче из JavaScript не отключает CSS-переменные.
+`ConfigProvider` передаёт тему всем вложенным компонентам. Через `theme.token`
+можно изменить общий цвет или размер, а через `theme.components` — оформление
+одного семейства компонентов. Чтобы прочитать рассчитанные значения в своём
+компоненте, вызовите `theme.useToken()` при его инициализации.
 
 ## Использование
 

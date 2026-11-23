@@ -90,10 +90,6 @@ Button и Input внутри сохраняют собственные tokens. D
 учитывают типографику внешнего ConfigProvider: в React она задана на статическом
 host через публичный theme.useToken(), в Svelte — на DOM-контейнере provider.
 
-Галерея `/ant-design#drawer` редактирует строку Table через Form с валидацией,
-Tabs и Collapse. Черновик сохраняется при закрытии той же карточки; переход
-к другому участнику создаёт отдельный редактор. DestroyOnHidden пересоздаёт
-редактор из сохранённой строки. Сохранение обновляет Table и закрывает панель.
 Первая версия не поддерживает немодальный режим, mask=false, resizable, push,
 loading/Skeleton, focusable и afterOpenChange.
 

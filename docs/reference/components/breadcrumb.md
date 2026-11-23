@@ -1,5 +1,22 @@
 # Breadcrumb
 
+Для навигации по иерархии страниц передайте `items` в порядке от общего раздела
+к текущей странице. У последней оставьте только название.
+
+```svelte
+<script lang="ts">
+  import { Breadcrumb } from '@woodger/antd';
+
+  const items = [
+    { title: 'Проекты', href: '/projects' },
+    { title: 'Команда', href: '/projects/team' },
+    { title: 'Участники' }
+  ];
+</script>
+
+<Breadcrumb {items} />
+```
+
 Breadcrumb использует nav/ol/li и items: { key?, title?, href?, path?, menu? }.
 Title/separator/dropdownIcon принимают string/number/boolean/Snippet. Snippet
 title должен быть пассивным; для собственных интерактивных элементов используйте
@@ -78,7 +95,7 @@ Semantic root styles и plain style имеют приоритет после com
 Popup использует собственные Dropdown/Menu scopes. Обновление темы сохраняет
 нативные ссылки, фокус, навигацию и callbacks; native-only оформление сохранено.
 
-Галерея — `/ant-design#breadcrumb`, фикстуры — `?fixture=breadcrumb`,
+Фикстуры — `?fixture=breadcrumb`,
 `?fixture=breadcrumb-theme` и `?fixture=breadcrumb-config`.
 Unit/SSR/Chromium покрывают маршруты, параметры, разделители, шаблон, стили,
 меню, отмену перехода и production hydration. Рецепт breadcrumb извлекает 21

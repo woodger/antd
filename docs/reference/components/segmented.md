@@ -1,6 +1,14 @@
 # Segmented
 
+`Segmented` позволяет выбрать один вариант. Храните выбранное значение в состоянии компонента.
+
 ```svelte
+<script lang="ts">
+  import { Segmented } from '@woodger/antd';
+
+  let period = $state('Неделя');
+</script>
+
 <Segmented options={['День', 'Неделя', 'Месяц']} bind:value={period} />
 ```
 

@@ -1,10 +1,23 @@
 # Descriptions
 
-Descriptions отображает items: массив { key?, label?, children?, span? }.
+Передайте в `items` пары из подписи (`label`) и значения (`children`). Например,
+карточка проекта с `column={1}` покажет каждое свойство в отдельной строке.
+
+```svelte
+<script lang="ts">
+  import { Descriptions } from '@woodger/antd';
+
+  const items = [
+    { key: 'owner', label: 'Владелец', children: 'Анна' },
+    { key: 'status', label: 'Статус', children: 'В работе' }
+  ];
+</script>
+
+<Descriptions title="Проект" column={1} {items} />
+```
+
 Label/children/title/extra принимают string, number или Snippet; 0 отображается,
-пустые значения не создают соответствующий wrapper. React Descriptions.Item
-служит только JSX sugar; в Svelte используется items без предварительного
-исполнения snippets. Корень — div, затем view/table/tbody/tr и нативные th/td;
+пустые значения не создают соответствующий wrapper. Корень — div, затем view/table/tbody/tr и нативные th/td;
 bind:nativeElement возвращает div, нативные attrs передаются корню.
 
 Column — число либо responsive map xs–xxxl; по умолчанию xs=1, sm=2,
@@ -78,7 +91,7 @@ itemPaddingBottom/itemPaddingEnd собственными отступами.
 [SSR](../../../tests/package/descriptions-theme.ssr.test.ts) и
 [browser](../../../tests/browser/descriptions-theme.spec.ts), `?fixture=descriptions-theme`.
 
-Галерея — `/ant-design#descriptions`, фикстура — `?fixture=descriptions`.
+Фикстура — `?fixture=descriptions`.
 Unit/SSR/Chromium проверяют раскладку, media, приоритет стилей и вложенность.
 Рецепт descriptions извлекает 40 правил без keyframes, включая две интеграции
 Table expanded-row. Responsive column/span используют глобальные

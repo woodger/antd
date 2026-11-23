@@ -90,7 +90,7 @@ aria-posinset/setsize и отдельные tab stops сохранены. Дек
 npm-архива с проверкой SHA-256; рецепт rate адаптирует >div к >button, declarations
 сохранены. Rate.svelte дополняет native reset styles, focus и reduced motion.
 StarFilled SVG взят из Ant Design Icons SVG 4.6.0 с существующей MIT-лицензией.
-Галерея — `/ant-design#rate`, fixture — `?fixture=rate`; unit/SSR и browser
+Фикстура — `?fixture=rate`; unit/SSR и browser
 сценарии проверяют значения, callbacks, геометрию, контексты и cleanup.
 
 Полный upstream Tooltip API ограничен текущим публичным

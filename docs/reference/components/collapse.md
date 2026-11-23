@@ -102,9 +102,6 @@ component algorithm, cssVar prefix/key, dark и compact используют о�
 все 49 CSS rules воспроизводятся инструментом. Высота содержимого меняется сразу;
 анимируется только стрелка, с учётом reduced motion.
 
-Галерея `/ant-design#collapse` показывает анкету, вложенные панели, сохранение
-черновиков, destroyOnHidden и независимую кнопку сброса в extra. Сброс примера
-пересоздаёт поля с исходными значениями, сохраняя открытые внешние панели.
 Item поддерживает headerClass, HTML attributes, native lowercase events и camelCase
 aliases (включая Capture). Click/capture/bubble/stopPropagation/preventDefault,
 focus/blur, key и mouse traces сверяются с оригиналом. События остаются native DOM:
