@@ -21,7 +21,9 @@
   import MenuList from './MenuList.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getMenuPrefixCss } from './menu-prefix.engine';
+  import { menuSemantics } from './menu-semantic.engine';
 
+  let { nativeElement = $bindable(), ...menuProps }: MenuProps = $props();
   let {
     prefixCls: customizePrefixCls,
     items = [],
@@ -44,14 +46,16 @@
     triggerSubMenuAction = 'hover',
     subMenuOpenDelay = 0.1,
     subMenuCloseDelay = 0.1,
+    classNames: _classNames,
+    styles: _styles,
+    expandIcon,
     class: className = '',
     rootClassName = '',
-    style,
-    nativeElement = $bindable(),
+    style: _style,
     onkeydown,
     tabindex = 0,
     ...rest
-  }: MenuProps = $props();
+  } = $derived(menuProps);
 
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('menu', customizePrefixCls));
@@ -65,15 +69,22 @@
   });
   const componentTheme = useComponentTheme('Menu');
   const sider = useSider();
+  let resolvedCollapse = $derived(inlineCollapsed ?? sider?.collapsed);
+  let semantics = $derived(menuSemantics(config.menu, {
+    ...menuProps,
+    theme,
+    inlineCollapsed: resolvedCollapse
+  }));
+  let resolvedExpandIcon = $derived(
+    expandIcon === undefined ? config.menu?.expandIcon : expandIcon
+  );
   const generated = $props.id();
   let model = $derived(buildMenuEntries(items));
   let selected = $state.raw<string[]>(untrack(() => [...selectedKeys ?? defaultSelectedKeys]));
   let opened = $state.raw<string[]>(untrack(() => [...openKeys ?? defaultOpenKeys]));
   let actualSelected = $derived(selectedKeys ?? selected);
   let actualOpen = $derived(openKeys ?? opened);
-  let collapsed = $derived(
-    mode !== 'horizontal' && (inlineCollapsed ?? sider?.collapsed ?? false)
-  );
+  let collapsed = $derived(mode !== 'horizontal' && (resolvedCollapse ?? false));
   let actualMode = $derived(collapsed ? 'vertical' : mode);
   let active = $state<string | null>(null);
   let rootElement = $state<HTMLUListElement>();
@@ -287,7 +298,10 @@
   provideMenu({
     get prefixCls() { return componentPrefix; },
     get rootPrefixCls() { return rootPrefix; },
+    get rootClassName() { return rootClassName; },
     componentTheme,
+    get semantics() { return semantics; },
+    get expandIcon() { return resolvedExpandIcon; },
     get mode() {
       return actualMode;
     },
@@ -384,7 +398,7 @@
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`menu-prefix:${componentPrefix}:${rootPrefix}`} />{/if}<ul {...attributes} data-ant-menu-prefix={componentPrefix} data-ant-menu-root-prefix={rootPrefix} bind:this={rootElement} role="menu" tabindex={tabindex} data-menu-list="true" dir={config.direction}
   aria-disabled={disabled || undefined} aria-orientation={actualMode === 'horizontal' ? 'horizontal' : 'vertical'}
-  style={[componentTheme.style, style].filter(Boolean).join(';') || undefined} class={[
+  style={[componentTheme.style, semantics.styles.root].filter(Boolean).join(';') || undefined} class={[
       `${componentPrefix} ant-menu-css-var ${componentPrefix}-root`,
       componentTheme.className,
       componentTheme.className && 'ant-menu-source-theme',
@@ -393,8 +407,10 @@
       `${componentPrefix}-${theme}`,
       collapsed && `${componentPrefix}-inline-collapsed`,
       config.direction === 'rtl' && `${componentPrefix}-rtl`,
+      config.menu?.class,
       className,
-      rootClassName
+      rootClassName,
+      semantics.classes.root
     ]}
   onkeydown={keydown}>
   <MenuList entries={model.roots} {theme} />

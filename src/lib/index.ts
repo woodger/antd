@@ -68,6 +68,14 @@ export type {
   MenuMode,
   MenuTheme,
   MenuContent,
+  MenuConfig,
+  MenuSemantic,
+  MenuClassNames,
+  MenuStyles,
+  MenuPopupSlots,
+  MenuSubMenuSlots,
+  MenuExpandIcon,
+  MenuExpandIconInfo,
   MenuClickInfo,
   MenuSelectInfo
 } from './menu.types';

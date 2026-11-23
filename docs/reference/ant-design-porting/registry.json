@@ -3323,12 +3323,33 @@
           "note": "Нет rc-overflow/overflowedIndicator и автоматического скрытия horizontal items; исходные rc-motion collapse/slide/zoom не перенесены. Обычные CSS transitions сохранены."
         },
         {
+          "id": "component-config",
+          "title": "ConfigProvider.menu, семантика пунктов, групп и popup, значок раскрытия",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/ConfigProvider.svelte",
+            "src/lib/Menu.svelte",
+            "src/lib/MenuList.svelte",
+            "src/lib/MenuSubMenu.svelte",
+            "src/lib/menu-semantic.engine.ts",
+            "src/lib/menu.types.ts",
+            "tests/browser/fixtures/MenuConfigFixtures.svelte",
+            "tests/browser/fixtures/ant-design-menu-config-reference.json",
+            "tests/browser/menu-config-metrics.ts",
+            "tests/browser/menu-config.spec.ts",
+            "tests/package/menu-config.ssr.test.ts",
+            "docs/reference/components/menu.md"
+          ],
+          "note": "Шесть сценариев закреплённого Ant Design 6.6.8, два одинаковых прогона неизменённого UMD. Проверены callback props, базовые, вложенные и popup slots, классы корня на поверхности popup, семантика групп, наследование и сброс record через {}, CSS приоритеты, popupClassName/popupStyle и приоритет значка ветки. Локальные вложенные стили заменяют slot целиком; простые CSS-строки накапливаются. Сохраняются native button заголовка и отдельное наследование цвета/шрифта списка. Snippet получает данные ветки, eventKey, isSubMenu, isOpen и disabled. Обновление стилей и явных координат проверяется на том же открытом DOM и клавиатурном фокусе. Overflow служебные свойства, остальной trigger API и интеграция Dropdown остаются отдельными этапами."
+        },
+        {
           "id": "extended-api",
-          "title": "Полный semantic/config, render hooks и tooltip",
+          "title": "Оставшиеся render hooks, placements и tooltip",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет prefixCls/component config вне темы, semantic classNames/styles, popupRender/placements/offset, expandIcon/itemIcon overrides, controlled activeKey/defaultActiveFirst, полного Tooltip API collapsed items. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса. Standalone Menu не меняет существующий Dropdown menu contract; интеграция остаётся отдельным этапом."
+          "note": "Остаются popupRender, placements/offset, общий itemIcon, полный Tooltip API свёрнутых пунктов и аудит делегированного API. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса. Интеграция отдельных Dropdown menu props с Menu остаётся отдельным этапом."
         },
         {
           "id": "link-reset",

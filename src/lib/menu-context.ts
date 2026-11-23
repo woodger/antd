@@ -1,10 +1,14 @@
 import { getContext, setContext } from 'svelte';
 import type { MenuEntry } from './menu.engine';
+import type { menuSemantics } from './menu-semantic.engine';
 import type { MenuMode, MenuProps, MenuTheme } from './menu.types';
 
 export interface MenuContext {
   readonly prefixCls: string;
   readonly rootPrefixCls: string;
+  readonly rootClassName: string;
+  readonly semantics: ReturnType<typeof menuSemantics>;
+  readonly expandIcon: MenuProps['expandIcon'];
   readonly componentTheme: {
     readonly className: string | undefined;
     readonly style: string | undefined;

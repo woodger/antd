@@ -47,6 +47,54 @@ Theme подменю меняет только его popup; следующее 
 ограничены CSS @scope: тема родителя не переходит во вложенный popup. Базовые
 нескопированные правила сохранены для браузеров без поддержки @scope.
 
+## Стили и значки
+
+`ConfigProvider.menu` задаёт общие `class`, `style`, `classNames`, `styles` и
+`expandIcon`. Вложенный провайдер наследует эту настройку при `undefined`.
+Собственный объект, включая `{}`, заменяет её целиком.
+
+`classNames` и `styles` принимают объект или callback с `{ props }`. Поле
+`props.theme` по умолчанию равно `light`, а `props.inlineCollapsed` учитывает
+состояние LayoutSider. Доступны следующие части Menu.
+
+- `root` — корневой список. Семантические классы корня и `rootClassName`
+  также применяются к поверхностям popup.
+- `item`, `itemIcon`, `itemContent` — пункт первого уровня, иконка и содержимое.
+- `itemTitle`, `list` — заголовок и список группы первого уровня.
+- `subMenu` — те же части пунктов и групп внутри подменю. Иконка заголовка
+  раскрываемой ветки использует общий `itemIcon` на любой глубине.
+- `popup.root` — поверхность всплывающего подменю. Для класса можно записать
+  `classNames={{ popup: 'navigation-popup' }}`.
+
+Классы провайдера и экземпляра объединяются. Стили корня применяются в порядке
+`provider.styles.root` → `provider.style` → `styles.root` → `style`. У пунктов
+локальный `item.style` имеет приоритет над семантическим стилем. Локальные
+строки `subMenu.*` и `popup.root` целиком заменяют строки того же slot провайдера.
+Стили поверхности `styles.popup.root` накладываются после `popupStyle` ветки.
+
+```svelte
+<script lang="ts">
+  import { ConfigProvider, Menu, type MenuExpandIconInfo, type MenuItemType } from '@woodger/antd';
+
+  const items: MenuItemType[] = [
+    { key: 'docs', label: 'Документация', children: [{ key: 'api', label: 'API' }] }
+  ];
+</script>
+
+{#snippet expand(info: MenuExpandIconInfo)}{info.isOpen ? '−' : '+'}{/snippet}
+<ConfigProvider menu={{ classNames: { item: 'navigation-item' }, expandIcon: expand }}>
+  <Menu {items} mode="inline" styles={{ subMenu: { item: 'font-weight: 600' } }}
+    aria-label="Разделы документации" />
+</ConfigProvider>
+```
+
+`expandIcon` принимает snippet с данными ветки, её `eventKey` и `isOpen`.
+Приоритет у настройки ветки, затем у Menu и провайдера. `false` или `null`
+скрывают значок. В горизонтальном режиме заголовок первого уровня без значка
+раскрытия. [Замеры Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-menu-config-reference.json).
+
+## Выбор и клавиатура
+
 SelectedKeys/openKeys задают controlled state; defaultSelectedKeys/defaultOpenKeys
 читаются при создании для uncontrolled state. По умолчанию выбран один пункт,
 selectable=true, multiple=false. OnClick пункта, его подменю от ближайшего к корню
@@ -134,8 +182,8 @@ Form.disabled и ConfigProvider.componentDisabled не отключают нав
 
 Пока не поддерживаются responsive horizontal overflow/overflowedIndicator,
 исходные popup/collapse motion, controlled activeKey/defaultActiveFirst,
-component config вне темы, semantic classNames/styles, render hooks,
-placements/offset и overrides expandIcon/itemIcon. Deprecated
+tooltip для свёрнутого меню, render hooks, placements/offset и общий itemIcon.
+Deprecated
 Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса; данные
 задаются items. Standalone Menu пока не расширяет существующий контракт Dropdown.
 

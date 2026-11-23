@@ -56,6 +56,9 @@
 
 {#snippet content(value: MenuContent | undefined)}{#if typeof value === 'function'}{@render value()}{:else}{value ?? ''}{/if}{/snippet}
 {#each entries as entry (entry.key)}
+  {@const semantic = context.semantics}
+  {@const classes = entry.parent ? semantic.classes.subMenu : semantic.classes}
+  {@const styles = entry.parent ? semantic.styles.subMenu : semantic.styles}
   {#if entry.kind === 'divider'}
     <li role="separator" class={[
         `${context.prefixCls}-item-divider`,
@@ -64,8 +67,10 @@
       ]} style={entry.item.style}></li>
   {:else if entry.kind === 'group'}
     <li role="presentation" class={[`${context.prefixCls}-item-group`, entry.item.class]} style={entry.item.style}>
-      <div class={`${context.prefixCls}-item-group-title`} role="presentation">{@render content('label' in entry.item ? entry.item.label : undefined)}</div>
-      <ul class={`${context.prefixCls}-item-group-list`} role="group"><MenuList entries={entry.children} {theme} /></ul>
+      <div class={[`${context.prefixCls}-item-group-title`, classes.itemTitle]}
+        style={styles.itemTitle} role="presentation">{@render content('label' in entry.item ? entry.item.label : undefined)}</div>
+      <ul class={[`${context.prefixCls}-item-group-list`, classes.list]} style={styles.list}
+        role="group"><MenuList entries={entry.children} {theme} /></ul>
     </li>
   {:else if entry.kind === 'submenu'}<MenuSubMenu {entry} {theme} />
   {:else}
@@ -85,6 +90,7 @@
           context.selected.includes(entry.key) && `${context.prefixCls}-item-selected`,
           blocked && `${context.prefixCls}-item-disabled`,
           item.danger && `${context.prefixCls}-item-danger`,
+          classes.item,
           item.class
         ]}
       style={[
@@ -92,6 +98,7 @@
           && `padding-${context.direction === 'rtl'
             ? 'right'
             : 'left'}:${entry.level * context.inlineIndent}px`,
+          styles.item,
           item.style
         ].filter(
           Boolean
@@ -108,10 +115,12 @@
             context.activate(null);
         }}>
       <!-- Source icon/label идут подряд; native-тема сохраняет межэлементный пробел. -->
-      {#if item.icon}<span class={`${context.prefixCls}-item-icon`}>{@render item.icon()}</span>{#if !context.componentTheme.className}{' '}{/if}{/if}<span class={[
+      {#if item.icon}<span class={[`${context.prefixCls}-item-icon`, classes.itemIcon]}
+        style={styles.itemIcon}>{@render item.icon()}</span>{#if !context.componentTheme.className}{' '}{/if}{/if}<span class={[
           `${context.prefixCls}-title-content`,
-          item.extra !== undefined && `${context.prefixCls}-title-content-with-extra`
-        ]}>
+          item.extra !== undefined && `${context.prefixCls}-title-content-with-extra`,
+          classes.itemContent
+        ]} style={styles.itemContent}>
         {#if context.collapsed && !entry.parent && !item.icon && typeof item.label === 'string'}
           <span class={`${context.prefixCls}-inline-collapsed-noicon`}>{item.label.charAt(0)}</span>
         {:else if item.extra !== undefined}

@@ -5,6 +5,32 @@ export type MenuMode = 'vertical' | 'horizontal' | 'inline';
 export type MenuTheme = 'light' | 'dark';
 export type MenuContent = string | number | Snippet;
 
+export type MenuSubMenuSlots = Partial<Record<
+  'item' | 'itemTitle' | 'list' | 'itemIcon' | 'itemContent',
+  string
+>>;
+export type MenuPopupSlots = { root?: string; };
+export type MenuClassNames = MenuSubMenuSlots & {
+  root?: string;
+  popup?: string | MenuPopupSlots;
+  subMenu?: MenuSubMenuSlots;
+};
+export type MenuStyles = MenuSubMenuSlots & {
+  root?: string;
+  popup?: MenuPopupSlots;
+  subMenu?: MenuSubMenuSlots;
+};
+export type MenuSemantic<T> = T | ((info: { props: MenuProps; }) => T | undefined);
+
+/** Настройки Menu в ConfigProvider. Собственный record заменяет родительский. */
+export interface MenuConfig {
+  class?: string;
+  style?: string;
+  classNames?: MenuSemantic<MenuClassNames>;
+  styles?: MenuSemantic<MenuStyles>;
+  expandIcon?: MenuExpandIcon;
+}
+
 interface MenuCommon {
   key?: string | number;
   label?: MenuContent;
@@ -30,6 +56,10 @@ export interface MenuSubMenu extends MenuCommon {
   disabled?: boolean;
   theme?: MenuTheme;
   popupClassName?: string;
+  /** Стили отдельной поверхности popup; styles.popup.root имеет приоритет. */
+  popupStyle?: string;
+  /** Переопределяет значок этого подменю; false и null скрывают его. */
+  expandIcon?: MenuExpandIcon;
   onClick?: (info: MenuClickInfo) => void;
   onTitleClick?: (info: { key: string; domEvent: MouseEvent | KeyboardEvent; }) => void;
 }
@@ -42,6 +72,15 @@ export interface MenuDivider extends Omit<MenuCommon, 'label'> {
   dashed?: boolean;
 }
 export type MenuItemType = MenuItem | MenuSubMenu | MenuGroup | MenuDivider | null;
+
+/** Данные ветки и её текущее состояние при отрисовке значка раскрытия. */
+export interface MenuExpandIconInfo extends MenuSubMenu {
+  eventKey: string;
+  isSubMenu: true;
+  isOpen: boolean;
+  disabled: boolean;
+}
+export type MenuExpandIcon = Snippet<[MenuExpandIconInfo]> | false | null;
 
 export interface MenuClickInfo {
   key: string;
@@ -90,6 +129,15 @@ export interface MenuProps extends Omit<
   subMenuOpenDelay?: number;
   /** @defaultValue 0.1 */
   subMenuCloseDelay?: number;
+  /** Семантические классы накапливаются после классов из ConfigProvider.menu. */
+  classNames?: MenuSemantic<MenuClassNames>;
+  /**
+   * CSS-строки для semantic slots. Для корня порядок слоёв: provider styles.root,
+   * provider style, local styles.root, local style. Вложенные slots заменяются целиком.
+   */
+  styles?: MenuSemantic<MenuStyles>;
+  /** Значок раскрытия подменю. Undefined наследует ConfigProvider.menu. */
+  expandIcon?: MenuExpandIcon;
   /**
    * Контейнер popup подменю; trigger — native button заголовка.
    * Отсутствующий prop наследует ConfigProvider; собственный undefined отключает его.

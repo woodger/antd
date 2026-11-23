@@ -5,11 +5,13 @@
   import { on } from 'svelte/events';
   import type { MenuEntry } from './menu.engine';
   import { menuSubMenu } from './menu.engine';
-  import type { MenuTheme } from './menu.types';
+  import type { MenuExpandIconInfo, MenuTheme } from './menu.types';
   import { useMenu } from './menu-context';
   import { connectPopup } from './popup.dom';
   import { createPopupContainer } from './popup-container.model.svelte.js';
-  import { connectComponentTheme } from './theme-component.dom';
+  import { connectInlineStyle } from './inline-style.dom';
+  import { getInlineStyleDeclarations, serializeInlineStyleLayers } from './inline-style.engine';
+  import type { TooltipPosition } from './tooltip.engine';
   import type { TooltipPlacement } from './tooltip.types';
   import MenuList from './MenuList.svelte';
   import MenuPopupContent from './MenuPopupContent.svelte';
@@ -20,6 +22,23 @@
   let actualTheme = $derived(item.theme ?? theme);
   let opened = $derived(context.open.includes(entry.key));
   let blocked = $derived(context.disabled || Boolean(item.disabled));
+  let expandIcon = $derived(item.expandIcon === undefined ? context.expandIcon : item.expandIcon);
+  let hasArrow = $derived(context.mode !== 'horizontal' || Boolean(entry.parent));
+  let iconInfo = $derived<MenuExpandIconInfo>({
+    ...item,
+    eventKey: entry.key,
+    isSubMenu: true,
+    isOpen: opened,
+    disabled: blocked
+  });
+  let popupLayers = $derived([
+    context.componentTheme.style, item.popupStyle, context.semantics.styles.popup
+  ]);
+  let popupStyle = $derived(serializeInlineStyleLayers(popupLayers));
+  let popupProperties = $derived(new Set(Array.from(
+    getInlineStyleDeclarations([popupStyle]),
+    declaration => declaration.property
+  )));
   let childrenActive = $state(false);
   let active = $derived(!blocked && (context.active === entry.key
     || context.mode !== 'inline' && (childrenActive
@@ -75,8 +94,37 @@
     rendered: popupMounted && (context.mode !== 'inline' || client && containerUsed),
     reference: title,
     getPopupContainer: context.getPopupContainer ? resolveContainer : undefined,
-    themeStyle: context.componentTheme.style
+    themeStyle: popupStyle
   }));
+
+  function connectPopupStyle(node: HTMLDivElement) {
+    const update = connectInlineStyle(node);
+    // Diff семантических слоёв оставляет координаты и токены portal на поверхности.
+    $effect(() => update(popupLayers));
+  }
+
+  function positionPopup(surface: HTMLDivElement, position: TooltipPosition) {
+    // Явные координаты popupStyle и semantic root перекрывают расчёт trigger.
+    const properties = untrack(() => popupProperties);
+    const hasInset = properties.has('inset');
+    const left = `${position.left}px`;
+    const top = `${position.top}px`;
+    const arrowX = `${position.arrowX}px`;
+    const arrowY = `${position.arrowY}px`;
+
+    if (!hasInset && !properties.has('left') && surface.style.left !== left) {
+      surface.style.left = left;
+    }
+    if (!hasInset && !properties.has('top') && surface.style.top !== top) {
+      surface.style.top = top;
+    }
+    if (surface.style.getPropertyValue('--arrow-x') !== arrowX) {
+      surface.style.setProperty('--arrow-x', arrowX);
+    }
+    if (surface.style.getPropertyValue('--arrow-y') !== arrowY) {
+      surface.style.setProperty('--arrow-y', arrowY);
+    }
+  }
 
   function contains(node: MenuEntry, key: string | null): boolean {
     return key !== null && (node.key === key || node.children.some(child => contains(child, key)));
@@ -129,16 +177,22 @@
     }
 
     const horizontal = context.mode === 'horizontal' && !entry.parent;
-    return connectPopup(popup, title, {
+    const surface = popup;
+    return connectPopup(surface, title, {
       placement: horizontal ? 'bottom' : context.direction === 'rtl' ? 'left' : 'right',
       align: horizontal ? (context.direction === 'rtl' ? 'right' : 'left') : 'top',
       autoAdjustOverflow: true,
-      maxWidth: '100vw',
-      matchAnchorWidth: horizontal,
+      get maxWidth() {
+        return untrack(() => popupProperties.has('max-width')) ? false : '100vw';
+      },
+      get matchAnchorWidth() {
+        return horizontal && !untrack(() => popupProperties.has('min-width'));
+      },
       gap: () => untrack(() => context.componentTheme.className ? 0 : undefined),
       // Исходное Menu оставляет controlled popup открытым даже при itemHeight=0.
       allowZeroSize: () => untrack(() => Boolean(context.componentTheme.className)),
       preserveFocus: false,
+      applyPosition: position => positionPopup(surface, position),
       onPlacement: next => { popupPlacement = next; },
       onVisibilityChange: next => {
         shown = next;
@@ -231,10 +285,16 @@
         if (!blocked)
           context.activate(entry.key);
       }}>
-    {#if item.icon}<span class={`${context.prefixCls}-item-icon`}>{@render item.icon()}</span>{#if !context.componentTheme.className}{' '}{/if}{/if}{#if context.collapsed && !entry.parent && !item.icon && typeof item.label === 'string'}
+    {#if item.icon}<span class={[`${context.prefixCls}-item-icon`, context.semantics.classes.itemIcon]}
+      style={context.semantics.styles.itemIcon}>{@render item.icon()}</span>{#if !context.componentTheme.className}{' '}{/if}{/if}{#if context.collapsed && !entry.parent && !item.icon && typeof item.label === 'string'}
       <span class={`${context.prefixCls}-inline-collapsed-noicon`}>{item.label.charAt(0)}</span>
     {:else}<span class={`${context.prefixCls}-title-content`}>{#if typeof item.label === 'function'}{@render item.label()}{:else}{item.label ?? ''}{/if}</span>{/if}
-    {#if context.mode !== 'horizontal' || entry.parent}<i class={`${context.prefixCls}-submenu-arrow`} aria-hidden="true"></i>{/if}
+    {#if hasArrow}
+      {#if typeof expandIcon === 'function'}<span class={`${context.prefixCls}-submenu-expand-icon`}
+        aria-hidden="true">{@render expandIcon(iconInfo)}</span>
+      {:else if expandIcon === undefined}<i class={`${context.prefixCls}-submenu-arrow`}
+        aria-hidden="true"></i>{/if}
+    {/if}
   </button>
   {#if mounted}
     {#if context.mode === 'inline'}
@@ -259,13 +319,16 @@
             placementClass,
             `${context.prefixCls}-${actualTheme}`,
             context.direction === 'rtl' && `${context.prefixCls}-rtl`,
-            item.popupClassName
+            item.popupClassName,
+            context.semantics.classes.popup,
+            context.rootClassName,
+            context.semantics.classes.root
           ]}
-        style={untrack(() => context.componentTheme.style)}
+        style={untrack(() => popupStyle)}
         onmouseenter={() => context.hover(entry, true)}
         onmouseleave={() => context.hover(entry, false)}
         {@attach portal}
-        {@attach node => connectComponentTheme(node, context.componentTheme.style)}>
+        {@attach connectPopupStyle}>
         <ul data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls} id={`${context.id(entry.key)}-popup`} role="menu" data-menu-list="true"
           class={[
               `${context.prefixCls} ant-menu-css-var ${context.prefixCls}-sub`,
