@@ -166,11 +166,18 @@ import { FormValidationError } from '@woodger/antd';
 
 async function checkName() {
   const path = ['profile', 'name'] as const;
+
   try {
     await form.validateFields([path]);
-  } catch (error) {
-    if (!(error instanceof FormValidationError)) throw error;
-    if (!error.outOfDate) form.focusField(path);
+  }
+  catch (error) {
+    if (!(error instanceof FormValidationError)) {
+      throw error;
+    }
+
+    if (!error.outOfDate) {
+      form.focusField(path);
+    }
   }
 }
 ```
