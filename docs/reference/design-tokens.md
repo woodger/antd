@@ -2,7 +2,7 @@
 
 `theme.getDesignToken(config)` вычисляет итоговые цвета, размеры и отступы по заданной
 теме. Его можно вызвать и на сервере. Чтобы получить значения от ближайшего
-`ConfigProvider` внутри компонента, используйте [`theme.useToken()`](theme-context.md#использование).
+`ConfigProvider` внутри компонента, используйте [`theme.useToken()`](theme-context.md#прочитать-токены-в-своём-компоненте).
 
 ```ts
 import { theme, type DesignTokenConfig } from '@woodger/antd';

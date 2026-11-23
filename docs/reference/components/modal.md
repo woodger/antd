@@ -42,7 +42,7 @@ component algorithms, CSS lengths и custom prefix; Button/Input внутри с
 собственные tokens. Source close wrapper задаёт размер иконки; legacy-размер сохранён.
 Тема обновляется без потери модальности, DOM, draft, selection и focus, включая
 getContainer. Нативное центрирование и резерв места title под close сохранены.
-[Сверка с официальным UMD](../theme-context.md#тема-modal) не означает
+[Сверка с официальным UMD](../theme-context.md#проверки-диалогов-и-уведомлений) не означает
 поддержку полного render/config API. Контекстные подтверждения описаны ниже.
 
 GetContainer принимает DOM-узел, DocumentFragment (включая ShadowRoot), CSS-селектор,

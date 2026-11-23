@@ -86,7 +86,7 @@ Button и Input внутри сохраняют собственные tokens. D
 как в upstream, но resize-handle пока не реализован.
 Обновление темы и inherit reset сохраняют модальность, DOM, draft, selection
 и focus, в том числе после переноса через getContainer. Оформление по умолчанию
-сохраняется. [Сверка с UMD и проверки](../theme-context.md#тема-drawer)
+сохраняется. [Сверка с UMD и проверки](../theme-context.md#проверки-диалогов-и-уведомлений)
 учитывают типографику внешнего ConfigProvider: в React она задана на статическом
 host через публичный theme.useToken(), в Svelte — на DOM-контейнере provider.
 
