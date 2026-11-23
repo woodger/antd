@@ -58,6 +58,8 @@ export interface MenuSubMenu extends MenuCommon {
   popupClassName?: string;
   /** Стили отдельной поверхности popup; styles.popup.root имеет приоритет. */
   popupStyle?: string;
+  /** Переопределяет popupRender Menu для этой ветки. */
+  popupRender?: MenuPopupRender;
   /** Переопределяет значок этого подменю; false и null скрывают его. */
   expandIcon?: MenuExpandIcon;
   onClick?: (info: MenuClickInfo) => void;
@@ -72,6 +74,22 @@ export interface MenuDivider extends Omit<MenuCommon, 'label'> {
   dashed?: boolean;
 }
 export type MenuItemType = MenuItem | MenuSubMenu | MenuGroup | MenuDivider | null;
+
+/** Данные всплывающего подменю и доступ к его штатным строкам. */
+export interface MenuPopupRenderInfo {
+  /** Данные ветки, канонический eventKey и непосредственные строки в children. */
+  item: MenuSubMenu & { eventKey: string; };
+  /** Путь от корня до ветки, включая ключ переполнения при его наличии. */
+  keys: readonly string[];
+  /** Выводит строку из item.children со штатными стилями, событиями и ref. */
+  renderItem: Snippet<[child: MenuItemType]>;
+}
+
+/** Рисует popup вокруг исходного списка или заменяет его содержимое. */
+export type MenuPopupRender = Snippet<[
+  originMenu: Snippet<[children?: Snippet]>,
+  info: MenuPopupRenderInfo
+]>;
 
 /** Данные ветки и её текущее состояние при отрисовке значка раскрытия. */
 export interface MenuExpandIconInfo extends MenuSubMenu {
@@ -144,6 +162,8 @@ export interface MenuProps extends Omit<
   styles?: MenuSemantic<MenuStyles>;
   /** Значок раскрытия подменю. Undefined наследует ConfigProvider.menu. */
   expandIcon?: MenuExpandIcon;
+  /** Оформляет всплывающие подменю, включая список переполнения. */
+  popupRender?: MenuPopupRender;
   /**
    * Контейнер popup подменю; trigger — native button заголовка.
    * Отсутствующий prop наследует ConfigProvider; собственный undefined отключает его.

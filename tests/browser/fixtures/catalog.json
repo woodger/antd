@@ -1263,6 +1263,11 @@
     "root": "menu-overflow-fixture"
   },
   {
+    "id": "menu-popup-render",
+    "module": "./MenuPopupRenderFixtures.svelte",
+    "root": "menu-popup-render-fixture"
+  },
+  {
     "id": "menu-config",
     "module": "./MenuConfigFixtures.svelte",
     "root": "menu-config-fixture"

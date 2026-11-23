@@ -73,6 +73,8 @@ export type {
   MenuClassNames,
   MenuStyles,
   MenuPopupSlots,
+  MenuPopupRender,
+  MenuPopupRenderInfo,
   MenuSubMenuSlots,
   MenuExpandIcon,
   MenuExpandIconInfo,

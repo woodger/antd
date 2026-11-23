@@ -35,6 +35,10 @@
   let overflowRest = $derived(entry.overflow === true);
   let popupPath = $derived(entry.path.map(context.id).join(' '));
   let item = $derived(menuSubMenu(entry));
+  let popupRender = $derived(item.popupRender || context.popupRender);
+  let popupId = $derived(`${context.id(entry.key)}-popup`);
+  let surfaceId = $derived(`${popupId}-content`);
+  let controlledId = $derived(context.mode !== 'inline' && popupRender ? surfaceId : popupId);
   let actualTheme = $derived(item.theme ?? theme);
   let opened = $derived(!inactive && context.open.includes(entry.key));
   let popupOpen = $derived(opened && (!overflowRest || entry.children.length > 0));
@@ -154,7 +158,7 @@
     const path = owner?.getAttribute('data-menu-popup-path');
     return path?.split(' ').includes(context.id(entry.key)) ?? false;
   }
-  function connectEvents(element: HTMLUListElement) {
+  function connectEvents(element: HTMLElement) {
     const keyboard = on(element, 'keydown', event => {
       const root = context.nativeElement;
       if (!root || root.contains(element)) {
@@ -292,7 +296,7 @@
     id={inactive ? undefined : context.id(entry.key)}
     data-menu-id={inactive ? undefined : context.id(entry.key)}
     class={`${context.prefixCls}-submenu-title`} role="menuitem" tabindex={blocked ? undefined : -1} aria-disabled={blocked || undefined}
-    aria-haspopup="menu" aria-expanded={opened} aria-controls={`${context.id(entry.key)}-popup`}
+    aria-haspopup="menu" aria-expanded={opened} aria-controls={controlledId}
     title={item.title
         ?? (context.collapsed && typeof item.label === 'string'
           ? item.label
@@ -331,7 +335,7 @@
   </button>
   {#if mounted && !inactive}
     {#if context.mode === 'inline'}
-      <ul data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls} id={`${context.id(entry.key)}-popup`} role="menu" data-menu-list="true"
+      <ul data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls} id={popupId} role="menu" data-menu-list="true"
         class={[
             `${context.prefixCls} ant-menu-css-var ${context.prefixCls}-sub ${context.prefixCls}-inline`,
             !opened && `${context.prefixCls}-hidden`,
@@ -344,7 +348,8 @@
   {#if !inactive && popupMounted && (context.mode !== 'inline' || client && containerUsed)}
     {#key popupContainer}
       <div data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls}
-        data-menu-popup-path={popupPath} bind:this={popup} role="presentation" popover="manual"
+        data-menu-popup-path={popupPath} id={popupRender ? surfaceId : undefined}
+        bind:this={popup} role="presentation" popover="manual"
         hidden={context.mode === 'inline' || !popupOpen || !shown}
         class={[
             `menu-popup ${context.prefixCls} ant-menu-css-var ${context.prefixCls}-submenu ${context.prefixCls}-submenu-popup`,
@@ -362,16 +367,11 @@
         onmouseenter={() => context.hover(entry, true)}
         onmouseleave={() => context.hover(entry, false)}
         {@attach portal}
-        {@attach connectPopupStyle}>
-        <ul data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls} id={`${context.id(entry.key)}-popup`} role="menu" data-menu-list="true"
-          class={[
-              `${context.prefixCls} ant-menu-css-var ${context.prefixCls}-sub`,
-              context.mode === 'inline' ? `${context.prefixCls}-inline` : `${context.prefixCls}-vertical`,
-              context.direction === 'rtl' && `${context.prefixCls}-rtl`
-            ]} style={nestedStyle} {@attach connectEvents}>
-          <MenuPopupContent entries={entry.children} {theme}
-            isInlineCopy={context.mode === 'inline'} inOverflow={overflowRest} />
-        </ul>
+        {@attach connectPopupStyle}
+        {@attach connectEvents}>
+        <MenuPopupContent {entry} {theme} {popupRender}
+          id={context.mode === 'inline' && popupRender ? `${surfaceId}-list` : popupId}
+          style={nestedStyle} isInlineCopy={context.mode === 'inline'} />
       </div>
     {/key}
   {/if}

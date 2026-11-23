@@ -57,6 +57,7 @@
     classNames: _classNames,
     styles: _styles,
     expandIcon,
+    popupRender,
     class: className = '',
     rootClassName = '',
     style: _style,
@@ -329,6 +330,29 @@
     return Boolean(element?.getClientRects().length && !element.closest('[inert]'));
   }
 
+  function visibleLevel(items: MenuEntry[], parent?: MenuEntry) {
+    const visible = items.filter(available);
+    if (parent && (menuSubMenu(parent).popupRender || popupRender)) {
+      // Пользовательский список может переставить строки, сохранив их ключи и пути.
+      visible.sort(comparePopupItems);
+    }
+    return visible;
+  }
+
+  function comparePopupItems(first: MenuEntry, second: MenuEntry) {
+    const left = elements.get(first.key);
+    const right = elements.get(second.key);
+    if (!left || !right) {
+      return 0;
+    }
+
+    const position = left.compareDocumentPosition(right);
+    if (!position || position & Node.DOCUMENT_POSITION_DISCONNECTED) {
+      return 0;
+    }
+    return position & Node.DOCUMENT_POSITION_PRECEDING ? 1 : -1;
+  }
+
   async function keyboard(entry: MenuEntry | null, event: KeyboardEvent) {
     if (event.defaultPrevented || event.isComposing || disabled) {
       return;
@@ -348,9 +372,10 @@
       event.preventDefault();
 
     if (boundary || action === 'previous' || action === 'next' || !entry) {
-      const candidates = (actualMode === 'inline'
-        ? menuVisible(rootEntries, actualOpen, true)
-        : menuLevel(entry?.parent?.children ?? rootEntries)).filter(available);
+      const parent = entry?.parent;
+      const candidates = actualMode === 'inline'
+        ? menuVisible(rootEntries, actualOpen, true).filter(available)
+        : visibleLevel(menuLevel(parent?.children ?? rootEntries), parent);
       const position = candidates.findIndex(item => item.key === entry?.key);
       const offset = action === 'previous' ? -1 : 1;
       const index = position < 0 ? (offset < 0 ? candidates.length - 1 : 0)
@@ -375,7 +400,7 @@
           });
           frames.add(frame);
         });
-        const first = menuLevel(entry.children).find(available);
+        const first = visibleLevel(menuLevel(entry.children), entry)[0];
         if (first && actualOpen.includes(entry.key))
           focusItem(first.key);
       }
@@ -398,6 +423,7 @@
     componentTheme,
     get semantics() { return semantics; },
     get expandIcon() { return resolvedExpandIcon; },
+    get popupRender() { return popupRender; },
     get mode() {
       return actualMode;
     },
@@ -469,8 +495,11 @@
     const match = [...elements].find(([, element]) => element === target
       || target && element.id === target.id);
     const key = match?.[0];
-    const entry = key === undefined ? null : navigationEntry(key) ?? null;
-    void keyboard(entry, event);
+    if (key !== undefined || event.target === rootElement) {
+      // Элементы управления в собственном содержимом popup получают обычные клавиши.
+      const entry = key === undefined ? null : navigationEntry(key) ?? null;
+      void keyboard(entry, event);
+    }
     onkeydown?.(event);
   }
 

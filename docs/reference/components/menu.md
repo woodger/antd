@@ -154,6 +154,44 @@ popover и общий механизм позиционирования. Бок�
 Escape внутри popup закрывает текущий уровень и возвращает фокус к родителю.
 Таймеры, listeners и animation frames очищаются при unmount.
 
+### Содержимое всплывающего подменю
+
+`popupRender` на Menu определяет содержимое всплывающих веток, включая многоточие.
+`popupRender` конкретной ветки имеет приоритет для этой ветки. Вложенные ветки
+выбирают собственную настройку или настройку Menu. Раскрытие обычного inline-списка
+сохраняет штатную разметку. При `inlineCollapsed` применяется настройка popup.
+
+```svelte
+<script lang="ts">
+  import type { Snippet } from 'svelte';
+  import { Menu, type MenuPopupRenderInfo } from '@woodger/antd';
+</script>
+
+{#snippet popup(origin: Snippet<[children?: Snippet]>, info: MenuPopupRenderInfo)}
+  <section>
+    {#if typeof info.item.label === 'string'}<strong>{info.item.label}</strong>{/if}
+    {@render origin()}
+  </section>
+{/snippet}
+
+<Menu popupRender={popup} items={[
+  { key: 'projects', label: 'Проекты', children: [{ key: 'new', label: 'Новый проект' }] }
+]} />
+```
+
+`info.keys` содержит путь от корня до ветки. `info.item` содержит данные ветки,
+её `eventKey` и непосредственные строки в `children`. Чтобы задать порядок строк,
+можно передать в `origin(rows)` snippet, выводящий их через
+`{@render info.renderItem(child)}`. При полной замене списка те же строки можно
+поместить непосредственно в свой `ul`. Пустой snippet оставляет popup без строк.
+
+Строки сохраняют роли, выбор, пути событий и `findItem`. Клавиши входа в подменю,
+Up/Down и Home/End учитывают порядок отрисованных строк. Поля и кнопки рядом со
+списком сохраняют обычную обработку клавиш. `aria-controls` указывает на поверхность
+пользовательского popup. Содержимое создаётся при монтировании поверхности
+и сохраняется после закрытия. `forceSubMenuRender` включает предварительное
+монтирование. [Исходные замеры](../../../tests/browser/fixtures/ant-design-menu-popup-render-reference.json).
+
 GetPopupContainer задаёт HTMLElement или ShadowRoot для popup каждого подменю.
 Без локального prop используется ConfigProvider.getPopupContainer; собственный
 `getPopupContainer={undefined}` отключает это наследование, как Ant wrapper.
@@ -165,9 +203,8 @@ DOM-заголовок; zero-arity getter при force render может сна�
 SSR getter не вызывает. Смена функции с тем же контейнером сохраняет DOM, draft,
 выделение и фокус; смена самого контейнера пересоздаёт popup contents, как React portal.
 Вынесенные подменю сохраняют клавиатуру, hover-задержки, callbacks и theme variables.
-Стили внутри ShadowRoot подключает потребитель. Сверка существующих подменю покрыта
-32 снимками официального UMD и фикстурой `?fixture=menu-container`; горизонтальный
-overflow More в эти гарантии пока не входит и остаётся отдельным этапом.
+Стили внутри ShadowRoot подключает потребитель. Сверка включает обычные подменю
+и список переполнения. Фикстура — `?fixture=menu-container`.
 
 Структура — ul/li с role=menu/menuitem/group/separator. Заголовки подменю используют
 native button, a[href] в label остаётся настоящей ссылкой. Menu не перехватывает
@@ -205,7 +242,7 @@ Form.disabled и ConfigProvider.componentDisabled не отключают нав
 Фикстура — `?fixture=menu`.
 
 Пока не поддерживаются исходные popup/collapse motion, controlled activeKey/defaultActiveFirst,
-tooltip для свёрнутого меню, render hooks, placements/offset и общий itemIcon.
+tooltip для свёрнутого меню, placements/offset и общий itemIcon.
 Deprecated
 Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса; данные
 задаются items. Standalone Menu пока не расширяет существующий контракт Dropdown.

@@ -9,6 +9,7 @@ export interface MenuContext {
   readonly rootClassName: string;
   readonly semantics: ReturnType<typeof menuSemantics>;
   readonly expandIcon: MenuProps['expandIcon'];
+  readonly popupRender: MenuProps['popupRender'];
   readonly componentTheme: {
     readonly className: string | undefined;
     readonly style: string | undefined;
