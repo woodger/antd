@@ -4,45 +4,6 @@
 `FormItem` связывает поле с подписью и сообщениями, а `FormList` помогает
 работать с массивами полей.
 
-## Быстрый старт
-
-Создайте модель внутри компонента или модели представления, чтобы разные формы
-и SSR-запросы не разделяли состояние:
-
-```svelte
-<script lang="ts">
-  import { Button, ConfigProvider, Form, FormItem, Input, createForm } from '@woodger/antd-svelte';
-
-  const form = createForm({
-    initialValues: { email: '' },
-    rules: {
-      email: [
-        { required: true, message: 'Введите email.' },
-        { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Проверьте email.' }
-      ]
-    }
-  });
-</script>
-
-<ConfigProvider>
-  <Form {form} onFinish={(values) => console.log(values.email)}>
-    <FormItem name="email" label="Email">
-      <Input
-        type="email"
-        value={form.values.email}
-        onValueChange={(value) => form.setFieldValue('email', value)}
-      />
-    </FormItem>
-    <Button type="primary" htmlType="submit" loading={form.isSubmitting}>Отправить</Button>
-    <Button htmlType="reset">Сбросить</Button>
-  </Form>
-</ConfigProvider>
-```
-
-В примере значение принадлежит модели: `FormItem` связывает поле с подписью
-и ошибками, а `onValueChange` передаёт новое значение в `setFieldValue()`.
-После успешной проверки `Form` вызывает `onFinish`.
-
 ## Содержание
 
 - [Значения и поля](#значения-и-поля)
@@ -58,6 +19,9 @@
 ## Значения и поля
 
 ### Значения и пути
+
+Создавайте модель внутри компонента или модели представления, чтобы разные формы
+и SSR-запросы не разделяли состояние.
 
 Значения принадлежат модели и обновляются через `setFieldValue` или
 `setFieldsValue`. Свойства `values` и ошибки предназначены для чтения.
