@@ -310,6 +310,37 @@ getPopupContainer с fallback на ConfigProvider.getPopupContainer; undefined
 undefined, затем с root; функция с параметром ждёт DOM ref, как rc-trigger.
 SSR не вызывает getter. Без выбранной функции сохраняется native размещение.
 
+### Редактор и кнопка подтверждения
+
+`components.input` принимает `'input'`, `'textarea'` или Svelte snippet.
+Snippet получает `attributes` поля и `register` для DOM-элемента. Раскройте
+атрибуты на поле и передайте регистрацию через `{@attach register}`. В
+`textarea` передайте `value` отдельным атрибутом, чтобы Svelte записал исходное
+значение в текстовый узел при SSR. При `multiple` сохраняется штатное readonly-поле,
+как в Ant Design React.
+
+```svelte
+<script lang="ts">
+  import { DatePicker, type DatePickerEditorContext } from '@woodger/antd';
+</script>
+
+{#snippet editor({ attributes, register }: DatePickerEditorContext)}
+  <input {...attributes} {@attach register} />
+{/snippet}
+
+<DatePicker components={{ input: editor }} />
+```
+
+`components.button` заменяет кнопку OK в панели с подтверждением. Передайте
+`'button'` для нативной кнопки или snippet с контекстом `DatePickerButtonContext`.
+Контекст содержит `attributes` с `type="button"`, `disabled` и `onclick`, а
+`children` содержит локализованную подпись.
+
+В Ant Design React 6.6.8 Enter вставляет перевод строки в `textarea` и может
+повторно открыть календарь DatePicker либо изменить текст второй границы
+RangePicker. В Svelte Enter подтверждает ввод без перевода строки.
+[Браузерные замеры React](../../../tests/browser/fixtures/ant-design-picker-components-editors.json.gz)
+
 ### Семантическое оформление и настройки провайдера
 
 DatePicker и RangePicker принимают `prefix`, `classNames` и `styles`.

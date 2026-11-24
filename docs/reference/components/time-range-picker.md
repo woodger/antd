@@ -71,6 +71,11 @@ unmount. Focus принимает объект с index/cursor/preventScroll л�
 popover используют согласованную Svelte adaptation; deferred focus, RAF геометрии,
 scroll timers и observers очищаются при удалении.
 
+`components.input` подключает редакторы обеих границ, а
+`components.button` отвечает за OK активной границы. Привязки
+`startInput` и `endInput` сохраняют тип `HTMLInputElement`.
+[Контекст редактора и кнопки](date-picker.md#редактор-и-кнопка-подтверждения)
+
 Popup наследует общий container API DatePicker, сохраняет минимальную ширину selector
 и сдвигает узкую time panel со стрелкой под активное
 поле. В RTL колонки времени сохраняют исходный порядок hours → minutes → seconds,

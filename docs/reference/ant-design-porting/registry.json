@@ -6912,12 +6912,34 @@
           "note": "Ant Design 6.6.8, rc-picker 1.12.2. 15 независимо повторённых браузерных профилей и 92 действия сверяют принятие и отклонение mode, заголовки, активную границу, независимый pickerValue, переходы дат/периодов, time/showTime, multiple и ограничения. onPickerValueChange сохраняет снимок прежних режимов, onPanelChange сообщает предложенный режим. Смена mode оставляет поле, текст, выбор и portal. При снятии mode Native использует picker. Raw Source переключает день на decade после снятия mode у одиночного поля и выбрасывает TypeError у диапазона. Native focus и source в onCalendarChange сохранены. Девять DOM-free SSR профилей сверяют поля, открытый Svelte shell сохраняет свою панель. Strict hydration проверяет оба редактора, каретку, FormData и очистку. Публичные React TimePicker/TimeRangePicker принудительно передают mode=undefined."
         },
         {
+          "id": "component-editors",
+          "title": "Пользовательский редактор и кнопка подтверждения",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/PickerEditor.svelte",
+            "src/lib/PickerConfirmButton.svelte",
+            "src/lib/picker-components.types.ts",
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "docs/reference/components/date-picker.md",
+            "docs/reference/components/range-picker.md",
+            "tests/browser/fixtures/ant-design-picker-components-browser.json.gz",
+            "tests/browser/fixtures/ant-design-picker-components-editors.json.gz",
+            "tests/browser/fixtures/ant-design-picker-components-ssr.json.gz",
+            "tests/browser/picker-components.spec.ts",
+            "tests/browser/picker-components-hydration.spec.ts",
+            "tests/package/picker-components.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 и rc-picker 1.12.2. Семь независимо повторённых браузерных профилей сверяют input, textarea, маску, подтверждение и поведение multiple. Семь SSR-профилей сверяют поля, имя и значение. Svelte snippet использует нативные атрибуты и attachment для регистрации элемента. Смена оформления сохраняет DOM, фокус и выделение. При Enter Native подтверждает текст без перевода строки. У React перевод строки повторно открывает одиночный DatePicker и попадает во второе поле RangePicker. Legacy refs сохраняют тип HTMLInputElement. Замена календарных/временных панелей остаётся в extended-api."
+        },
+        {
           "id": "extended-api",
-          "title": "GeneratePicker, components и оставшиеся события",
+          "title": "GeneratePicker, пользовательские панели и оставшиеся события",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "GeneratePicker factory, замены редактора/панелей через components и часть событий предстоит перенести. Multiple, mode, week/month/year/quarter, showWeek, RangePicker presets/previewValue и семантическое оформление перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
+          "note": "GeneratePicker factory, замены панелей через components и часть событий предстоит перенести. Multiple, mode, week/month/year/quarter, showWeek, RangePicker presets/previewValue и семантическое оформление перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
         },
         {
           "id": "global-parity",
@@ -12627,15 +12649,32 @@
           "note": "Scalar {format,type?:mask} сохраняет primitive/function arrays. Числовые YYYY/MM/DD/HH/mm/ss/SSS, локальный неполный текст, реальный focus/segment/caret и отмена native key обработаны общими engine/controller без замены input. Enter использует сохранённый Dayjs; pristine сохраняет скрытое время, SSS не округляется panel step. Format-only updates сохраняют working range и исходную ссылку owner model. DefaultPickerValue удерживает панель при вводе; DOM value/defaultValue следуют отображению. Исходные React6.6.8 first/repeat:5 owners/75 macros/287 подшагов (272 физических и15 DOM controls)/1036 отдельных чтений на CSR;15 закрытых profiles×2SSR serializers на run. Все1618 original parts и4 manifests сохранены целыми gzip без изменения raw полей. Pure producer count/order не сравниваются; аргументы/возвраты/Dayjs/from и публичные aliases требуют Source witness в наблюдаемом переходе. AfterCall сохраняется отдельно от settled. Native combobox/dialog, button calendar, refs/receiver и pre-first-focus collapsed caret construction остаются явно проверяемыми границами. Clipboard/IME и preserveInvalidOnBlur=true matrix этим срезом не заявлены; полнота семейства не заявляется. Отдельный Source hydrateRoot first/repeat покрывает30 closed profiles/270 snapshots с сохранением parsed owner/root/input и нулевой каретки. Ещё4 исходных range-prefix packets сохраняют фокус/нулевую каретку конца после Enter начала;40 facts для10 точных labels проверяются по полным gzip/raw hashes, JSON paths и byte ranges. Только эти свидетели допускают различие с исходной CSR-кареткой; значения, callbacks, Date/from и producer arguments остаются строгими. Maintained Native browser проверяет15 SSR/hydration profiles, включая этот переход фокуса и unmount/+1000. Production public-dist подтверждён составным прогоном:13 успешных V2 cases, TimeRange V3 и финальный RangeDate V4, при побайтно одинаковых3832 src/dist files. V4 заново рендерит15 closed SSR profiles и проверяет RangeDate15 macros/56children, strict hydrate(recover:false), все actual producer arguments BOTH Source и unmount/+1000. Вызовы чистых ограничений во время unmount сохраняются в ledger; cleanup→late не допускает роста, callbacks и refs проверяются отдельно."
         },
         {
+          "id": "component-editors",
+          "title": "Пользовательский редактор и кнопка подтверждения",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/PickerEditor.svelte",
+            "src/lib/PickerConfirmButton.svelte",
+            "src/lib/picker-components.types.ts",
+            "docs/reference/components/time-picker.md",
+            "docs/reference/components/time-range-picker.md",
+            "tests/browser/fixtures/ant-design-picker-components-editors.json.gz",
+            "tests/browser/picker-components.spec.ts",
+            "tests/package/picker-components.ssr.test.ts"
+          ],
+          "note": "TimePicker и TimeRangePicker используют общий components.input и components.button. Эталон React проверяет ручной ввод в textarea и порядок onOk, onChange и закрытия. Браузерный тест диапазона проверяет подтверждение обеих границ и сохранение их календарных дат; кнопка не отправляет форму. Замена панели time остаётся в advanced-api."
+        },
+        {
           "id": "advanced-api",
-          "title": "GeneratePicker, полный trigger/locale API и diagnostics",
+          "title": "GeneratePicker, пользовательская панель, полный trigger/locale API и diagnostics",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [
             "docs/reference/components/time-picker.md",
             "docs/reference/components/time-range-picker.md"
           ],
-          "note": "На этом этапе только один Dayjs; multiple=true не заявлен в типах. Полный каталог locales, React diagnostics и полный rc-trigger/motion API и retained popup lifecycle остаются следующими этапами. Styles — CSS strings, nodes/renderers — Svelte snippets. Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream."
+          "note": "На этом этапе только один Dayjs; multiple=true не заявлен в типах. Замена панели time через components, полный каталог locales, React diagnostics, полный rc-trigger/motion API и retained popup lifecycle остаются следующими этапами. Styles — CSS strings, nodes/renderers — Svelte snippets. Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream."
         },
         {
           "id": "confirmation-button",

@@ -30,6 +30,9 @@
 - DatePicker и RangePicker поддерживают управляемый `mode`. У диапазона каждая
   граница задаёт свою панель. Смена режима сохраняет поля, черновик и фокус.
 
+- DatePicker, RangePicker, TimePicker и TimeRangePicker принимают пользовательский
+  редактор и кнопку подтверждения через `components.input` и `components.button`.
+
 - Dropdown поддерживает стили `ConfigProvider.dropdown`, `rootClassName`,
   `openClassName` и `bind:ref` на DOM-узел триггера. Управляемый `open` сохраняет
   видимость, если владелец отклонил запрос.

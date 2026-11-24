@@ -5,7 +5,7 @@ export function connectTimeRangePopup(
   root: HTMLElement,
   wrapper: HTMLElement,
   container: HTMLElement,
-  activeInput: () => HTMLInputElement | undefined,
+  activeInput: () => HTMLElement | undefined,
   rtl: () => boolean,
   onPosition: (arrow: number, offset: number) => void
 ) {

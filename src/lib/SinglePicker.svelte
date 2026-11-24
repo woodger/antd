@@ -11,6 +11,10 @@
   import { normalizePickerFieldFormat } from './picker-mask.engine';
   import { createPickerMaskInput, type PickerMaskSharedKey } from './picker-mask-input.model.svelte.js';
   import {
+    createPickerEditor, isPickerInputEvent, pickerEditorMaskEvents, type PickerEditorEvent
+  } from './picker-editor.model.svelte.js';
+  import type { DatePickerEditorAttributes } from './picker-components.types';
+  import {
     pickerFormats,
     pickerCalendarValue,
     samePickerPanelValue,
@@ -40,7 +44,8 @@
     createPickerPopup, focusPickerPanel, getPickerPopupPosition, preservePickerPanelFocus
   } from './picker-popup.model.svelte.js';
   import NoCompactStyle from './NoCompactStyle.svelte';
-  import Button from './Button.svelte';
+  import PickerConfirmButton from './PickerConfirmButton.svelte';
+  import PickerEditor from './PickerEditor.svelte';
   import DatePickerCalendar from './DatePickerCalendar.svelte';
   import DatePickerSelectionTags from './DatePickerSelectionTags.svelte';
   import DatePickerTimePanel, { type DatePickerTimeScrollMemory }
@@ -103,6 +108,7 @@
     onPanelChange,
     renderExtraFooter,
     cellRender,
+    components,
     panelRender,
     placement,
     disabled,
@@ -217,7 +223,9 @@
   let quarterInputValue = $state.raw<Dayjs | null>(null);
   let draftSource = $state<'input' | 'panel'>('input');
   let focused = $state(false);
-  let input = $state<HTMLInputElement>();
+  let nativeInput = $state<HTMLInputElement>();
+  const customInput = createPickerEditor(node => maskInput.attach(node, true));
+  let input = $derived(!multipleOptions && components?.input ? customInput.element : nativeInput);
   let rootElement = $state<HTMLDivElement>();
   let popup = $state<HTMLDivElement>();
   const panelFocus = preservePickerPanelFocus(() => ({
@@ -333,6 +341,7 @@
     acceptInput: next => inputChange(next, true),
     onHelp: () => requestOpen(true, true)
   }));
+  const maskEvents = pickerEditorMaskEvents(maskInput, () => attributes);
   const multiplePicker = createMultiplePicker({
     get props() { return multipleOptions; },
     get local() { return dateValues; },
@@ -893,9 +902,11 @@
       if (picker === 'date' && !defaultPickerValue) internalPanel = parsed!;
     }
   }
-  function keyboard(event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }) {
+  function keyboard(event: PickerEditorEvent<KeyboardEvent>) {
     const shared = (_event: KeyboardEvent, maskKey?: PickerMaskSharedKey) => {
-      onkeydown?.(event);
+      if (isPickerInputEvent(event)) {
+        onkeydown?.(event);
+      }
       if (event.defaultPrevented || event.isComposing || blocked) {
         return false;
       }
@@ -905,7 +916,7 @@
     if (!maskInput.keydown(event, shared)) shared(event);
   }
   async function keyboardAction(
-    event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; },
+    event: PickerEditorEvent<KeyboardEvent>,
     maskKey?: PickerMaskSharedKey
   ) {
     if (time) {
@@ -995,6 +1006,71 @@
       focusPickerPanel(popup, mode, panel.format('YYYY-MM-DD'));
     }
   }
+  function editorInput(event: PickerEditorEvent<Event>) {
+    if (!maskInput.nativeInput(event)) {
+      inputChange(event.currentTarget.value);
+    }
+  }
+  function editorClick() {
+    if (!time) {
+      requestOpen(true);
+    }
+  }
+  function editorFocus(event: PickerEditorEvent<FocusEvent>) {
+    maskInput.focus();
+    focused = true;
+    if (time) {
+      timeInteraction.trigger(0, 'field-switch');
+    }
+    else {
+      dateSelectionInteraction.trigger(0, 'field-switch');
+    }
+    if (isPickerInputEvent(event)) {
+      onfocus?.(event);
+    }
+  }
+  function editorBlur(event: PickerEditorEvent<FocusEvent>) {
+    maskInput.blur();
+    if (isPickerInputEvent(event)) {
+      onblur?.(event);
+    }
+    blurWithin(event);
+  }
+
+  /** Стандартный и пользовательский редакторы используют один набор событий. */
+  function editorAttributes(): DatePickerEditorAttributes {
+    const nativeAttributes: object = attributes;
+    const describedBy = [attributes['aria-describedby'], field?.describedBy].filter(Boolean);
+    return {
+      ...nativeAttributes,
+      id: id ?? field?.id,
+      name: name ?? field?.name,
+      placeholder: placeholderText,
+      type: 'text',
+      role: 'combobox',
+      'aria-haspopup': 'dialog',
+      'aria-expanded': visible,
+      'aria-controls': `ant-picker-${generatedId}`,
+      'aria-invalid': invalid || field?.invalid || resolvedStatus === 'error'
+        || attributes['aria-invalid'] || undefined,
+      'aria-describedby': describedBy.join(' ') || undefined,
+      class: semantic?.classes.input,
+      style: semantic?.styles.input,
+      size: timeInputSize,
+      disabled: blocked,
+      readonly: readOnly,
+      required: attributes.required ?? field?.required,
+      autocomplete: 'off',
+      value: maskInput.value,
+      defaultValue: maskInput.value,
+      oninput: editorInput,
+      ...maskEvents,
+      onclick: editorClick,
+      onkeydown: keyboard,
+      onfocus: editorFocus,
+      onblur: editorBlur
+    };
+  }
   function blurWithin(event?: FocusEvent) {
     if (event?.relatedTarget instanceof Node
       && (rootElement?.contains(event.relatedTarget)
@@ -1004,14 +1080,18 @@
       return;
     }
     queueMicrotask(() => {
-      const active = popup ? getPopupActiveElement(popup) : input?.ownerDocument.activeElement;
-      if (!input?.isConnected
-        || panelFocus.moving && (!active || active === input.ownerDocument.body)
-        || active
-        && (rootElement?.contains(active)
-          || popup?.contains(
-            active
-          ))) {
+      // Удалённый компонент уже не владеет фокусом и derived ref редактора.
+      const root = rootElement;
+      if (!root?.isConnected) {
+        return;
+      }
+      const editor = input;
+      if (!editor?.isConnected) {
+        return;
+      }
+      const active = popup ? getPopupActiveElement(popup) : editor.ownerDocument.activeElement;
+      if (panelFocus.moving && (!active || active === editor.ownerDocument.body)
+        || active && (root.contains(active) || popup?.contains(active))) {
         return;
       }
       focused = false;
@@ -1248,7 +1328,7 @@
                   input?.focus();
                 }
               }}>{showTime ? actualLocale.now : actualLocale.today}</button></li>{/if}
-            {#if confirm}<li class={`${prefix}-ok`}><Button type="primary" size="small"
+            {#if confirm}<li class={`${prefix}-ok`}><PickerConfirmButton component={components?.button}
               disabled={multipleOptions ? !multiplePicker.canConfirm : !valid(draft)} onclick={() => {
                 finish(true);
                 input?.focus();
@@ -1323,9 +1403,7 @@
                 if (commit(next)) requestOpen(false);
               }}
             >{actualLocale.now}</button></li>{/if}
-            {#if confirm}<li class={`${prefix}-ok`}><Button
-              type="primary"
-              size="small"
+            {#if confirm}<li class={`${prefix}-ok`}><PickerConfirmButton component={components?.button}
               disabled={!valid(draft || clock.defaultOpenValue || null)}
               onclick={() => finish(true)}
               children={actualLocale.ok}
@@ -1425,7 +1503,7 @@
   {#if multipleOptions}
     <DatePickerSelectionTags
       {prefix}
-      {input}
+      input={nativeInput}
       values={multiplePicker.values}
       format={multiplePicker.format}
       disabled={blocked}
@@ -1438,7 +1516,7 @@
     />
     <input
       {...attributes}
-      bind:this={input}
+      bind:this={nativeInput}
       id={id ?? field?.id}
       name={name ?? field?.name}
       type="text"
@@ -1471,65 +1549,11 @@
     {@render pickerSuffix()}
   {:else}
   <div class={[`${prefix}-input`, hoverValue && `${prefix}-input-placeholder`]}>
-    <input
-      {...attributes}
-      bind:this={input}
-      id={id ?? field?.id}
-      name={name ?? field?.name}
-      placeholder={placeholderText}
-      type="text"
-      role="combobox"
-      aria-haspopup="dialog"
-      aria-expanded={visible}
-      aria-controls={`ant-picker-${generatedId}`}
-      aria-invalid={invalid
-        || field?.invalid
-        || resolvedStatus === 'error'
-        || attributes['aria-invalid']
-        || undefined} aria-describedby={[attributes['aria-describedby'], field?.describedBy].filter(
-            Boolean
-          )
-            .join(
-              ' '
-            )
-            || undefined}
-      class={semantic?.classes.input}
-      style={semantic?.styles.input}
-      size={timeInputSize}
-      disabled={blocked}
-      readonly={readOnly}
-      required={attributes.required ?? field?.required}
-      autocomplete="off"
-      value={maskInput.value}
-      defaultValue={maskInput.value}
-      {@attach maskInput.attach}
-      oninput={event => {
-          if (!maskInput.nativeInput(event)) inputChange(event.currentTarget.value);
-        }}
-      onmousedown={event => {
-        maskInput.mousedown();
-        attributes.onmousedown?.call(event.currentTarget, event);
-      }}
-      onmouseup={event => {
-        const shared = () => attributes.onmouseup?.call(event.currentTarget, event);
-        if (!maskInput.mouseup(event, shared)) shared();
-      }}
-      onpaste={event => {
-        if (!maskInput.paste(event)) attributes.onpaste?.call(event.currentTarget, event);
-      }}
-      onclick={() => {
-        if (!time) requestOpen(true);
-      }} onkeydown={keyboard} onfocus={event => {
-          maskInput.focus();
-          focused = true;
-          if (time) timeInteraction.trigger(0, 'field-switch');
-          else dateSelectionInteraction.trigger(0, 'field-switch');
-          onfocus?.(event);
-        }} onblur={event => {
-            maskInput.blur();
-            onblur?.(event);
-            blurWithin(event);
-          }} />
+    {#if components?.input}
+      <PickerEditor editor={components.input} attributes={editorAttributes()} register={customInput.register} />
+    {:else}
+      <input {...editorAttributes()} bind:this={nativeInput} {@attach maskInput.attach} />
+    {/if}
     {@render pickerSuffix()}
     {#if time}{@render clearButton()}{/if}
   </div>

@@ -68,6 +68,12 @@ id={{start,end}} задаёт оба. Bind:nativeElement/startInput/endInput в�
 bind:this даёт focus({index:0|1,preventScroll,cursor}) и blur(). Native onfocus/onblur
 относятся к input; полный semantic event API upstream ещё не перенесён.
 
+`components.input` получает `range: 'start' | 'end'` для каждой границы.
+Классы, маска и атрибуты формы передаются в `attributes`. Привязки
+`startInput` и `endInput` по-прежнему возвращают `HTMLInputElement`;
+пользовательский `textarea` подключается через `register`. Кнопку OK можно
+заменить через `components.button`. [Контекст редактора и кнопки](date-picker.md#редактор-и-кнопка-подтверждения)
+
 Подтверждены SSR без browser APIs, ввод/ошибки/очистка, переходы фокуса,
 подтверждение времени, ограничения/from, nullable границы, controlled rejection,
 Form/нативная отправка и UTC в разных browser zones. Состояние переноса остальных

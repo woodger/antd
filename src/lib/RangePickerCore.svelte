@@ -35,6 +35,11 @@
   import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
   import { normalizePickerFieldFormat } from './picker-mask.engine';
   import { createPickerMaskInput, type PickerMaskSharedKey } from './picker-mask-input.model.svelte.js';
+  import {
+    createPickerEditor, isPickerInput, isPickerInputEvent,
+    pickerEditorMaskEvents, type PickerEditorEvent
+  } from './picker-editor.model.svelte.js';
+  import type { DatePickerEditorAttributes } from './picker-components.types';
   import { datePickerEnUS } from './date-picker.locale';
   import { useConfig } from './config-context';
   import { getPickerPrefixCss } from './picker-prefix.engine';
@@ -54,7 +59,8 @@
     createPickerPopup, focusPickerPanel, getPickerPopupPosition, preservePickerPanelFocus
   } from './picker-popup.model.svelte.js';
   import NoCompactStyle from './NoCompactStyle.svelte';
-  import Button from './Button.svelte';
+  import PickerConfirmButton from './PickerConfirmButton.svelte';
+  import PickerEditor from './PickerEditor.svelte';
   import DatePickerCalendar from './DatePickerCalendar.svelte';
   import DatePickerTimePanel from './DatePickerTimePanel.svelte';
   import Icon from './Icon.svelte';
@@ -119,6 +125,7 @@
     onkeydown,
     renderExtraFooter,
     cellRender,
+    components,
     panelRender,
     separator,
     presets,
@@ -259,8 +266,13 @@
   let focused = $state(false);
   let shown = $state(false);
   let rootElement = $state<HTMLDivElement>();
-  let startElement = $state<HTMLInputElement>();
-  let endElement = $state<HTMLInputElement>();
+  let nativeStart = $state<HTMLInputElement>();
+  let nativeEnd = $state<HTMLInputElement>();
+  const customInputs = [0, 1].map(index => createPickerEditor(
+    node => maskInputs[index].attach(node, true)
+  ));
+  let startElement = $derived(components?.input ? customInputs[0].element : nativeStart);
+  let endElement = $derived(components?.input ? customInputs[1].element : nativeEnd);
   let popup = $state<HTMLDivElement>();
   let timeWrapper = $state<HTMLDivElement>();
   let timeContainer = $state<HTMLDivElement>();
@@ -312,6 +324,7 @@
     acceptInput: next => inputChange(index, next, true),
     onHelp: () => requestOpen(true)
   })));
+  const maskEvents = maskInputs.map(mask => pickerEditorMaskEvents(mask, () => attributes));
   $effect(() => { for (const input of maskInputs) input.sync(); });
   let bar = $state({ left: 0, width: 0 });
   let actualPlacement = $derived(
@@ -435,11 +448,11 @@
     return () => { nativeElement = undefined; };
   });
   $effect(() => {
-    startInput = startElement;
+    startInput = isPickerInput(startElement) ? startElement : undefined;
     return () => { startInput = undefined; };
   });
   $effect(() => {
-    endInput = endElement;
+    endInput = isPickerInput(endElement) ? endElement : undefined;
     return () => { endInput = undefined; };
   });
   $effect(() => {
@@ -956,8 +969,10 @@
     if (!time && target !== null && interaction.forceFocus) {
       requestOpen(true);
       void tick().then(() => {
-        if (interaction.currentIndex === target && visible && inputs()[target]?.isConnected)
+        if (rootElement?.isConnected && interaction.currentIndex === target
+          && visible && inputs()[target]?.isConnected) {
           inputs()[target]?.focus();
+        }
       });
     }
   }
@@ -968,14 +983,16 @@
     const accepted = interaction.currentIndex;
     if (accepted !== null && accepted !== index) {
       void tick().then(() => {
-        if (visible && inputs()[index]?.ownerDocument.activeElement === inputs()[index])
+        if (rootElement?.isConnected && visible
+          && inputs()[index]?.ownerDocument.activeElement === inputs()[index]) {
           inputs()[accepted]?.focus();
+        }
       });
     }
   }
   function blurInput(
     index: number,
-    event: FocusEvent & { currentTarget: EventTarget & HTMLInputElement; }
+    event: PickerEditorEvent<FocusEvent>
   ) {
     if (!preserveInvalidOnBlur && (time ? rawInvalid[index] : inputInvalid(index))) {
       const copy: [string, string] = [...texts];
@@ -990,7 +1007,7 @@
     if (time) {
       (time.onblur ?? time.onBlur)?.(event, { range: index === 1 ? 'end' : 'start' });
     }
-    else {
+    else if (isPickerInputEvent(event)) {
       onblur?.(event);
     }
     blurWithin(event);
@@ -1004,15 +1021,18 @@
       return;
     }
     queueMicrotask(() => {
-      const current = popup ? getPopupActiveElement(popup)
-        : startElement?.ownerDocument.activeElement;
-      if (!startElement?.isConnected
-        || panelFocus.moving && (!current || current === startElement.ownerDocument.body)
-        || current
-        && (rootElement?.contains(current)
-          || popup?.contains(
-            current
-          ))) {
+      // Blur при удалении поля может завершиться после уничтожения derived refs.
+      const root = rootElement;
+      if (!root?.isConnected) {
+        return;
+      }
+      const editor = startElement;
+      if (!editor?.isConnected) {
+        return;
+      }
+      const current = popup ? getPopupActiveElement(popup) : editor.ownerDocument.activeElement;
+      if (panelFocus.moving && (!current || current === editor.ownerDocument.body)
+        || current && (root.contains(current) || popup?.contains(current))) {
         return;
       }
       focused = false;
@@ -1162,8 +1182,74 @@
           ))
       );
   }
+  function editorInput(index: number, event: PickerEditorEvent<Event>) {
+    if (!maskInputs[index].nativeInput(event)) {
+      inputChange(index, event.currentTarget.value);
+    }
+  }
+  function editorClick(index: number) {
+    if (!time) {
+      focusField(index);
+      requestOpen(true);
+    }
+  }
+  function editorFocus(index: number, event: PickerEditorEvent<FocusEvent>) {
+    maskInputs[index].focus();
+    focusField(index, true);
+    if (time) {
+      (time.onfocus ?? time.onFocus)?.(event, { range: index === 0 ? 'start' : 'end' });
+    }
+    else if (isPickerInputEvent(event)) {
+      onfocus?.(event);
+    }
+  }
+  function editorBlur(index: number, event: PickerEditorEvent<FocusEvent>) {
+    maskInputs[index].blur();
+    blurInput(index, event);
+  }
+
+  /** Сохраняет отдельную маску, доступность и указатель активной границы. */
+  function editorAttributes(index: 0 | 1): DatePickerEditorAttributes {
+    const nativeAttributes: object = attributes;
+    const describedBy = [attributes['aria-describedby'], field?.describedBy].filter(Boolean);
+    const range = index === 0 ? 'start' : 'end';
+    const fieldId = index === 0
+      ? typeof id === 'string' ? id : id?.start ?? field?.id
+      : typeof id === 'object' ? id.end : undefined;
+    return {
+      ...nativeAttributes,
+      id: fieldId,
+      name: name ?? field?.name,
+      placeholder: time ? timePlaceholder?.[index]
+        : placeholder?.[index] ?? periodPlaceholder[index],
+      type: 'text',
+      role: 'combobox',
+      'aria-haspopup': 'dialog',
+      'aria-expanded': visible && active === index,
+      'aria-controls': `ant-range-picker-${generatedId}`,
+      'aria-invalid': inputInvalid(index) || field?.invalid || resolvedStatus === 'error'
+        || attributes['aria-invalid'] || undefined,
+      'aria-describedby': describedBy.join(' ') || undefined,
+      required: attributes.required ?? field?.required,
+      disabled: blocked[index],
+      readonly: readOnly,
+      autocomplete: 'off',
+      value: maskInputs[index].value,
+      defaultValue: maskInputs[index].value,
+      class: semantic?.classes.input,
+      style: semantic?.styles.input,
+      size: timeInputSize,
+      'data-range': time || components?.input ? range : undefined,
+      ...maskEvents[index],
+      oninput: event => editorInput(index, event),
+      onclick: () => editorClick(index),
+      onfocus: event => editorFocus(index, event),
+      onblur: event => editorBlur(index, event),
+      onkeydown: event => keyboard(event, index)
+    };
+  }
   function keyboard(
-    event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; },
+    event: PickerEditorEvent<KeyboardEvent>,
     index: number
   ) {
     const shared = (_event: KeyboardEvent, maskKey?: PickerMaskSharedKey) => {
@@ -1177,9 +1263,14 @@
           send(active, 'esc');
           requestOpen(false);
         }
-        (time.onkeydown ?? time.onKeyDown)?.(event);
+        if (isPickerInputEvent(event)) {
+          (time.onkeydown ?? time.onKeyDown)?.(event);
+        }
+        else {
+          time.onKeyDown?.(event);
+        }
       }
-      else {
+      else if (isPickerInputEvent(event)) {
         onkeydown?.(event);
       }
       if (event.defaultPrevented || event.isComposing || blocked[index]) {
@@ -1191,7 +1282,7 @@
     if (!maskInputs[index].keydown(event, shared)) shared(event);
   }
   async function keyboardAction(
-    event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; },
+    event: PickerEditorEvent<KeyboardEvent>,
     index: number,
     maskKey?: PickerMaskSharedKey
   ) {
@@ -1479,8 +1570,7 @@
               active,
               'confirm',
               validPickerTime(adapter.getNow(), clock)
-            )}>{showTime ? lang.now : lang.today}</button></li>{/if}{#if confirm}<li class={`${prefix}-ok`}><Button
-              type="primary" size="small" disabled={!calendar[active]
+            )}>{showTime ? lang.now : lang.today}</button></li>{/if}{#if confirm}<li class={`${prefix}-ok`}><PickerConfirmButton component={components?.button} disabled={!calendar[active]
               && !empty[active]
               || Boolean(
                 calendar[active] && invalid(calendar[active]!, active, picker === 'quarter' || picker === 'week' ? undefined : from())
@@ -1550,9 +1640,7 @@
                 adapter.getNow(), clock, timeRestriction
               ))}
             >{lang.now}</button></li>{/if}
-            {#if confirm}<li class={`${prefix}-ok`}><Button
-              type="primary"
-              size="small"
+            {#if confirm}<li class={`${prefix}-ok`}><PickerConfirmButton component={components?.button}
               disabled={!calendar[active] && !clock.defaultOpenValue
                 || !!(calendar[active] || clock.defaultOpenValue)
                   && invalid((calendar[active] || clock.defaultOpenValue)!, active)}
@@ -1606,45 +1694,12 @@
       time && previewValue && (presetHover || hover && active === 0)
         && `${prefix}-input-placeholder`
     ]}>
-    <input {...attributes} bind:this={startElement} id={typeof id === 'string' ? id : id?.start ?? field?.id} name={name ?? field?.name} placeholder={time ? timePlaceholder?.[0] : placeholder?.[0] ?? periodPlaceholder[0]} type="text" role="combobox" aria-haspopup="dialog" aria-expanded={visible && active === 0} aria-controls={`ant-range-picker-${generatedId}`} aria-invalid={inputInvalid(0)
-        || field?.invalid
-        || resolvedStatus === 'error'
-        || attributes['aria-invalid']
-        || undefined} aria-describedby={[attributes['aria-describedby'], field?.describedBy].filter(
-            Boolean
-          )
-            .join(
-              ' '
-            )
-            || undefined} required={attributes.required ?? field?.required} disabled={blocked[0]} readonly={readOnly} autocomplete="off" value={maskInputs[0].value} defaultValue={maskInputs[0].value}
-      {@attach maskInputs[0].attach}
-      class={semantic?.classes.input} style={semantic?.styles.input} size={timeInputSize}
-      data-range={time ? 'start' : undefined}
-      oninput={event => {
-        if (!maskInputs[0].nativeInput(event)) inputChange(0, event.currentTarget.value);
-      }}
-      onmousedown={event => {
-        maskInputs[0].mousedown();
-        attributes.onmousedown?.call(event.currentTarget, event);
-      }}
-      onmouseup={event => {
-        const shared = () => attributes.onmouseup?.call(event.currentTarget, event);
-        if (!maskInputs[0].mouseup(event, shared)) shared();
-      }}
-      onpaste={event => {
-        if (!maskInputs[0].paste(event)) attributes.onpaste?.call(event.currentTarget, event);
-      }} onclick={() => {
-          if (!time) focusField(0);
-          if (!time) requestOpen(true);
-        }} onfocus={event => {
-            maskInputs[0].focus();
-            focusField(0, true);
-            if (time) (time.onfocus ?? time.onFocus)?.(event, { range: 'start' });
-            else onfocus?.(event);
-          }} onblur={event => {
-            maskInputs[0].blur();
-            blurInput(0, event);
-          }} onkeydown={event => keyboard(event, 0)} />
+    {#if components?.input}
+      <PickerEditor editor={components.input} attributes={editorAttributes(0)}
+        register={customInputs[0].register} range="start" />
+    {:else}
+      <input {...editorAttributes(0)} bind:this={nativeStart} {@attach maskInputs[0].attach} />
+    {/if}
   </div>
   <div class={`${prefix}-range-separator`}>{#if !time && typeof resolvedSeparator === 'function'}{@render resolvedSeparator()}{:else}<span class={`${prefix}-separator`} aria-hidden={time && resolvedSeparator !== undefined ? undefined : 'true'}>{#if typeof resolvedSeparator === 'function'}{@render resolvedSeparator()}{:else if resolvedSeparator !== undefined}{resolvedSeparator}{:else}<PickerRangeSeparator />{/if}</span>{/if}</div>
   <div class={[
@@ -1653,45 +1708,12 @@
       time && previewValue && (presetHover || hover && active === 1)
         && `${prefix}-input-placeholder`
     ]}>
-    <input {...attributes} bind:this={endElement} id={typeof id === 'object' ? id.end : undefined} name={name ?? field?.name} placeholder={time ? timePlaceholder?.[1] : placeholder?.[1] ?? periodPlaceholder[1]} type="text" role="combobox" aria-haspopup="dialog" aria-expanded={visible && active === 1} aria-controls={`ant-range-picker-${generatedId}`} aria-invalid={inputInvalid(1)
-        || field?.invalid
-        || resolvedStatus === 'error'
-        || attributes['aria-invalid']
-        || undefined} aria-describedby={[attributes['aria-describedby'], field?.describedBy].filter(
-            Boolean
-          )
-            .join(
-              ' '
-            )
-            || undefined} required={attributes.required ?? field?.required} disabled={blocked[1]} readonly={readOnly} autocomplete="off" value={maskInputs[1].value} defaultValue={maskInputs[1].value}
-      {@attach maskInputs[1].attach}
-      class={semantic?.classes.input} style={semantic?.styles.input} size={timeInputSize}
-      data-range={time ? 'end' : undefined}
-      oninput={event => {
-        if (!maskInputs[1].nativeInput(event)) inputChange(1, event.currentTarget.value);
-      }}
-      onmousedown={event => {
-        maskInputs[1].mousedown();
-        attributes.onmousedown?.call(event.currentTarget, event);
-      }}
-      onmouseup={event => {
-        const shared = () => attributes.onmouseup?.call(event.currentTarget, event);
-        if (!maskInputs[1].mouseup(event, shared)) shared();
-      }}
-      onpaste={event => {
-        if (!maskInputs[1].paste(event)) attributes.onpaste?.call(event.currentTarget, event);
-      }} onclick={() => {
-          if (!time) focusField(1);
-          if (!time) requestOpen(true);
-        }} onfocus={event => {
-            maskInputs[1].focus();
-            focusField(1, true);
-            if (time) (time.onfocus ?? time.onFocus)?.(event, { range: 'end' });
-            else onfocus?.(event);
-          }} onblur={event => {
-            maskInputs[1].blur();
-            blurInput(1, event);
-          }} onkeydown={event => keyboard(event, 1)} />
+    {#if components?.input}
+      <PickerEditor editor={components.input} attributes={editorAttributes(1)}
+        register={customInputs[1].register} range="end" />
+    {:else}
+      <input {...editorAttributes(1)} bind:this={nativeEnd} {@attach maskInputs[1].attach} />
+    {/if}
   </div>
   <div class={`${prefix}-active-bar`} style={`position:absolute;left:${bar.left}px;width:${bar.width}px`}></div>
   {#if suffixContent !== false && suffixContent !== null && suffixContent !== ''}

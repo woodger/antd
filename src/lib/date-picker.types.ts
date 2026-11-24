@@ -6,6 +6,7 @@ import type { ComponentSize } from './types';
 import type { PickerLocale } from './picker-locale.types';
 import type { RangePickerProps } from './range-picker.types';
 import type { TimePickerColumnType } from './time-picker.types';
+import type { DatePickerComponents } from './picker-components.types';
 export type DatePickerLocale = {
   lang: Partial<PickerLocale>;
   timePickerLocale?: { placeholder?: string; rangePlaceholder?: [string, string]; };
@@ -162,6 +163,8 @@ export interface DatePickerProps extends Omit<
   /** Временное отображение даты при наведении; не меняет выбранное value. @defaultValue 'hover' */
   previewValue?: false | 'hover';
   cellRender?: Snippet<[Dayjs | number | 'am' | 'pm', DatePickerCellRenderInfo]>;
+  /** Заменяет отдельные элементы, сохраняя выбор, проверку и подтверждение DatePicker. */
+  components?: DatePickerComponents;
   /** Полная раскладка панели: пресеты, календарь/время и footer. */
   panelRender?: Snippet<[Snippet]>;
   renderExtraFooter?: Snippet<[DatePickerMode]>;

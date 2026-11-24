@@ -233,6 +233,15 @@ export type {
   DatePickerFormatConfig,
   DatePickerMode
 } from './date-picker.types';
+export type {
+  DatePickerComponents,
+  DatePickerEditor,
+  DatePickerEditorAttributes,
+  DatePickerEditorContext,
+  DatePickerEditorElement,
+  DatePickerEditorRegistration,
+  DatePickerButtonContext
+} from './picker-components.types';
 export { default as TextArea } from './TextArea.svelte';
 export type {
   TextAreaProps,

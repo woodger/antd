@@ -1,4 +1,5 @@
 import { untrack } from 'svelte';
+import type { DatePickerEditorElement } from './picker-components.types';
 import {
   createPickerMask, editPickerMask, pickerMaskIndexAt, pickerMaskMatches,
   pickerMaskSelection, type PickerMaskSpec, type PickerMaskState
@@ -27,7 +28,7 @@ export type PickerMaskSharedKeyboard = (event: KeyboardEvent, detail: PickerMask
   => void | boolean;
 interface PendingFrame { window: Window; id: number }
 interface SelectionVersion {
-  input: HTMLInputElement | undefined;
+  input: DatePickerEditorElement | undefined;
   format: string;
   focused: boolean;
   text: string;
@@ -48,7 +49,7 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
   // on an already focused ordinary input does not create a format-focus event.
   let focused = $state(false);
   let mark = $state(0);
-  let input = $state.raw<HTMLInputElement>();
+  let input = $state.raw<DatePickerEditorElement>();
   let mouseDown = false;
   let specFormat: string | undefined, spec: PickerMaskSpec | undefined;
   let selectionVersion: SelectionVersion | undefined;
@@ -126,10 +127,20 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
       }) };
     }
   }
-  function attach(node: HTMLInputElement) {
+  /** Пользовательское поле при hydration уже может быть в фокусе. */
+  function attach(node: DatePickerEditorElement, restoreFocus = false) {
     cancelFrames();
     selectionVersion = undefined;
     input = node;
+    if (restoreFocus) {
+      const format = node.matches(':focus') ? untrack(() => getOptions().mask) : undefined;
+      focused = Boolean(format);
+      if (format) {
+        index = pickerMaskIndexAt(getSpec(format), node.selectionStart ?? 0);
+        cache = '';
+      }
+    }
+
     return () => {
       if (input !== node) {
         return;
@@ -183,7 +194,7 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
     if (!format) {
       return false;
     }
-    const target = event.target as HTMLInputElement;
+    const target = event.target as DatePickerEditorElement;
     index = pickerMaskIndexAt(getSpec(format), target.selectionStart ?? 0);
     mark++;
     shared?.(event);
@@ -192,12 +203,12 @@ export function createPickerMaskInput(getOptions: () => PickerMaskInputOptions) 
   }
   function nativeInput(event: Event) {
     if (!getOptions().mask) {
-      text = (event.target as HTMLInputElement).value;
+      text = (event.target as DatePickerEditorElement).value;
       return false;
     }
     // React restores its controlled value after the otherwise ignored mask input
     // event. Do the same on the real event; never manufacture beforeinput/input.
-    const target = event.target as HTMLInputElement;
+    const target = event.target as DatePickerEditorElement;
     if (target.value !== text) target.value = text;
     return true;
   }
