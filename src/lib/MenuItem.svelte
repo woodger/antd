@@ -4,6 +4,7 @@
   import { menuItem, type MenuEntry } from './menu.engine';
   import type { MenuContent } from './menu.types';
   import { useMenu } from './menu-context';
+  import { getDropdownCommandAttributes, isDropdownMenuKey } from './dropdown.engine';
   import MenuItemTooltip from './MenuItemTooltip.svelte';
 
   let { entry, overflowItem, overflowHidden, inactive }: {
@@ -13,8 +14,10 @@
     inactive: boolean;
   } = $props();
   const context = useMenu();
-  let element = $state<HTMLLIElement>();
+  const dropdown = context.dropdown;
+  let element = $state<HTMLElement>();
   const item = $derived(menuItem(entry));
+  const native = $derived(dropdown ? getDropdownCommandAttributes(item) : undefined);
   const dataAttributes = $derived(Object.fromEntries(
     Object.entries(item).filter(([name]) => name.startsWith('data-'))
   ));
@@ -30,6 +33,45 @@
   const nativeTitle = $derived(typeof item.title === 'string' ? item.title : undefined);
   const accessibleTitle = $derived(nativeTitle
     ?? (typeof item.label === 'string' ? item.label : undefined));
+  const rowClass = $derived([
+    overflowItem && `${context.prefixCls}-overflow-item`,
+    `${context.prefixCls}-item`,
+    context.active === entry.key && `${context.prefixCls}-item-active`,
+    selected && `${context.prefixCls}-item-selected`,
+    blocked && `${context.prefixCls}-item-disabled`,
+    item.danger && `${context.prefixCls}-item-danger`,
+    classes.item,
+    item.class
+  ]);
+  const rowStyle = $derived([
+    context.mode === 'inline'
+      && `padding-${context.direction === 'rtl' ? 'right' : 'left'}:${entry.level * context.inlineIndent}px`,
+    styles.item,
+    item.style
+  ].filter(Boolean).join(';'));
+  const rowAttributes = $derived({
+    ...dataAttributes,
+    id,
+    'data-menu-id': id,
+    'data-menu-overflow-item': overflowItem || undefined,
+    'data-menu-overflow-hidden': overflowHidden || undefined,
+    inert: overflowHidden || undefined,
+    'aria-hidden': overflowHidden || undefined,
+    'data-dropdown-key': dropdown ? entry.key : undefined,
+    'data-dropdown-text': native?.textValue,
+    tabindex: blocked || locked ? (dropdown ? -1 : undefined)
+      : dropdown && context.focusKey === entry.key ? 0 : -1,
+    title: nativeTitle,
+    'aria-label': dropdown ? (typeof item.label === 'function' ? native?.textValue : undefined)
+      : context.collapsed && !entry.parent ? accessibleTitle : undefined,
+    class: rowClass,
+    style: rowStyle,
+    onclick: activate,
+    onkeydown: keyboard,
+    onpointermove: dropdown ? pointerMove : undefined,
+    onmouseenter: enter,
+    onmouseleave: leave
+  });
 
   const tooltip = $derived(context.tooltip || undefined);
   const showTooltip = $derived(!locked && context.tooltip !== false
@@ -54,9 +96,13 @@
     };
   }
 
-  function connectFocus(element: HTMLLIElement, entry: MenuEntry) {
+  function registerRow(element: HTMLElement) {
+    if (!locked) return context.register(entry.key, element);
+  }
+
+  function connectFocus(element: HTMLElement) {
     function focus() {
-      if (!context.locked && !context.disabled && !menuItem(entry).disabled) {
+      if (!context.locked && !blocked) {
         context.activate(entry.key);
       }
     }
@@ -77,12 +123,19 @@
 
     const handler = item.onMouseLeave;
     if (!blocked) handler?.({ key: entry.key, domEvent: event });
-    if (context.active === entry.key) context.activate(null);
+    if (!dropdown && context.active === entry.key) context.activate(null);
   }
 
-  function activate(event: MouseEvent, entry: MenuEntry) {
+  function pointerMove(event: PointerEvent & { currentTarget: HTMLElement; }) {
+    if (!dropdown || blocked || locked || event.pointerType === 'touch') return;
+
+    context.activate(entry.key);
+    if (dropdown.focused) dropdown.focusRow(event.currentTarget);
+  }
+
+  function activate(event: MouseEvent) {
     tooltipClick?.(event);
-    if (context.locked || context.disabled || menuItem(entry).disabled) {
+    if (context.locked || blocked) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -90,10 +143,17 @@
     context.click(entry, event);
   }
 
-  function keyboard(event: KeyboardEvent, entry: MenuEntry) {
-    if (context.locked || context.disabled || menuItem(entry).disabled) {
+  function keyboard(event: KeyboardEvent) {
+    if (context.locked || blocked) {
       if (event.key === 'Enter')
         event.preventDefault();
+      return;
+    }
+    if (dropdown) {
+      if (event.key === ' ' && native?.href !== undefined && isDropdownMenuKey(event)) {
+        event.preventDefault();
+        element?.click();
+      }
       return;
     }
     if (event.key === 'Enter') {
@@ -110,45 +170,24 @@
 <style>
   [data-ant-menu-item]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: -2px; }
   [data-ant-menu-item-disabled] :global(a) { pointer-events: none; cursor: not-allowed; }
+  :where([data-ant-dropdown-item]) { appearance: none; width: 100%; margin: 0; border: 0; background: transparent; color: inherit; text-align: start; font: inherit; }
+  :global([data-ant-dropdown-source-theme]) [data-ant-dropdown-item] { box-sizing: content-box; width: stretch; height: auto; }
+  a[data-ant-dropdown-item] { box-sizing: border-box; text-decoration: none; }
+  [data-ant-dropdown-title] { min-width: 0; white-space: normal; }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global([data-ant-dropdown-prefix][data-ant-dropdown-menu-prefix]) [data-ant-dropdown-item] {
+      animation: none;
+      transition: none;
+    }
+  }
 </style>
 
 {#snippet content(value: MenuContent | undefined)}{#if typeof value === 'function'}{@render value()}{:else}{value ?? ''}{/if}{/snippet}
-<li {...dataAttributes} bind:this={element} data-ant-menu-item
-  data-ant-menu-item-disabled={blocked || undefined} {id}
-  data-menu-id={id} role="menuitem" data-menu-overflow-item={overflowItem || undefined}
-  data-menu-overflow-hidden={overflowHidden || undefined}
-  inert={overflowHidden || undefined} aria-hidden={overflowHidden || undefined}
-  {@attach node => locked ? undefined : context.register(entry.key, node)}
-  tabindex={blocked || locked ? undefined : -1} aria-disabled={blocked || undefined}
-  title={nativeTitle}
-  aria-label={context.collapsed && !entry.parent ? accessibleTitle : undefined}
-  class={[
-      overflowItem && `${context.prefixCls}-overflow-item`,
-      `${context.prefixCls}-item`,
-      context.active === entry.key && `${context.prefixCls}-item-active`,
-      selected && `${context.prefixCls}-item-selected`,
-      blocked && `${context.prefixCls}-item-disabled`,
-      item.danger && `${context.prefixCls}-item-danger`,
-      classes.item,
-      item.class
-    ]}
-  style={[
-      context.mode === 'inline'
-      && `padding-${context.direction === 'rtl'
-        ? 'right'
-        : 'left'}:${entry.level * context.inlineIndent}px`,
-      styles.item,
-      item.style
-    ].filter(
-      Boolean
-    ).join(
-      ';'
-    )}
-  onclick={event => activate(event, entry)} onkeydown={event => keyboard(event, entry)}
-  {@attach node => connectFocus(node, entry)} onmouseenter={enter} onmouseleave={leave}>
+{#snippet rowContents()}
   <!-- Source icon/label идут подряд; native-тема сохраняет межэлементный пробел. -->
   {#if item.icon}<span class={[`${context.prefixCls}-item-icon`, classes.itemIcon]}
-    style={styles.itemIcon}>{@render item.icon()}</span>{#if !context.componentTheme.className}{' '}{/if}{/if}<span class={[
+    style={styles.itemIcon} aria-hidden={dropdown ? true : undefined}>{@render item.icon()}</span>{#if !dropdown && !context.componentTheme.className}{' '}{/if}{/if}<span data-ant-dropdown-title={dropdown ? true : undefined} class={[
       `${context.prefixCls}-title-content`,
       item.extra !== undefined && `${context.prefixCls}-title-content-with-extra`,
       classes.itemContent
@@ -164,4 +203,20 @@
     isSelected: selected
   })}{:else if trailingIcon && typeof trailingIcon !== 'boolean'}{trailingIcon}{/if}{#if !locked && context.tooltip !== false && (showTooltip || tooltipMounted)}
   <MenuItemTooltip {element} {item} firstLevel={!entry.parent} {connectClick} />
-{/if}</li>
+{/if}
+{/snippet}
+
+<!-- При гидратации svelte:element повторно вставляет строку и теряет её фокус. -->
+{#if dropdown}<li role="none">
+  {#if native?.href === undefined}<button type="button" disabled={blocked} {...rowAttributes}
+    bind:this={element} data-ant-dropdown-item role="menuitem"
+    {@attach registerRow} {@attach connectFocus}>{@render rowContents()}</button>
+  {:else}<a href={blocked ? undefined : native.href} target={native.target} rel={native.rel}
+    {...rowAttributes} bind:this={element} data-ant-dropdown-item role="menuitem"
+    aria-disabled={blocked || undefined}
+    {@attach registerRow} {@attach connectFocus}>{@render rowContents()}</a>{/if}
+</li>
+{:else}<li role="menuitem" {...rowAttributes} bind:this={element}
+  data-ant-menu-item data-ant-menu-item-disabled={blocked || undefined}
+  aria-disabled={blocked || undefined}
+  {@attach registerRow} {@attach connectFocus}>{@render rowContents()}</li>{/if}

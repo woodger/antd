@@ -1,61 +1,87 @@
-// Определяет доступные команды, порядок клавиатуры и текстовый поиск Dropdown.
-// Источник порядка — входные items. Разделители и disabled исключаются из навигации.
-import type { DropdownItem, DropdownMenuItem } from './dropdown.types';
+// Готовит входные данные и слоты Dropdown для Menu и выполняет поиск по тексту команд.
+import type {
+  DropdownMenuClickInfo, DropdownMenuEntry, DropdownProps, DropdownSemantic
+} from './dropdown.types';
+import type { MenuClickInfo, MenuItem, MenuItemType } from './menu.types';
 
 // Первый пункт с данным ключом остаётся в списке рендеринга.
-export function normalizeDropdownItems(items: readonly DropdownItem[]): DropdownItem[] {
+export function normalizeDropdownItems<T extends DropdownMenuEntry>(items: readonly T[]): T[] {
   const seen = new Set<string>();
 
   return items.filter((item) => {
-    if (seen.has(item.key)) {
+    if (item === null || item.key === undefined) {
+      return true;
+    }
+
+    const key = String(item.key);
+    if (seen.has(key)) {
       return false;
     }
 
-    seen.add(item.key);
+    seen.add(key);
     return true;
   });
 }
 
-// Отбирает пункты, к которым можно перевести фокус и применить действие.
-export function getDropdownCommands(items: readonly DropdownItem[]): DropdownMenuItem[] {
-  return items.filter((item): item is DropdownMenuItem => item.type !== 'divider'
-    && !item.disabled);
+/** Команды Dropdown активируются через click даже при работе с клавиатурой. */
+export function isDropdownClick(info: MenuClickInfo): info is DropdownMenuClickInfo {
+  return 'button' in info.domEvent;
 }
 
-// При удалении активной команды начинает с первой доступной.
-export function getDropdownActiveKey(items: readonly DropdownItem[], key: string | null): string | null {
-  const commands = getDropdownCommands(items);
-  const current = commands.find((item) => item.key === key);
-
-  return current?.key ?? commands[0]?.key ?? null;
+/** Оставляет системные сочетания клавиш и IME текущему владельцу фокуса. */
+export function isDropdownMenuKey(event: KeyboardEvent) {
+  return !event.defaultPrevented && !event.isComposing
+    && !event.ctrlKey && !event.altKey && !event.metaKey;
 }
 
-// Навигация стрелками циклична. Без текущей команды направление выбирает край списка.
-export function getDropdownNavigationKey(
-  items: readonly DropdownItem[],
-  current: string | null,
-  direction: 'next' | 'previous' | 'first' | 'last'
-): string | null {
-  const commands = getDropdownCommands(items);
-  if (!commands.length) {
-    return null;
+/** Готовит параметры Menu, сохраняя ключи и исходные данные пунктов. */
+export function toDropdownMenuItems(items: readonly DropdownMenuEntry[]): MenuItemType[] {
+  return normalizeDropdownItems(items).map(toMenuItem);
+}
+
+/** Сужает события команд и рекурсивно подключает их к общему дереву Menu. */
+function toMenuItem(item: DropdownMenuEntry): MenuItemType {
+  if (!item || item.type === 'divider') {
+    return item;
   }
-  if (direction === 'first') {
-    return commands[0].key;
-  }
-  if (direction === 'last') {
-    return commands[commands.length - 1].key;
+  if (item.type === 'group') {
+    return { ...item, children: item.children && toDropdownMenuItems(item.children) };
   }
 
-  const index = commands.findIndex((item) => item.key === current);
-  if (index === -1) {
-    const edge = direction === 'next' ? 0 : commands.length - 1;
-    return commands[edge].key;
+  const handler = item.onClick;
+  const onClick = handler && ((info: MenuClickInfo) => {
+    if (isDropdownClick(info)) handler(info);
+  });
+  if ('children' in item) {
+    return { ...item, onClick, children: toDropdownMenuItems(item.children) };
   }
+  return { ...item, onClick };
+}
 
-  const step = direction === 'next' ? 1 : -1;
-  const nextIndex = (index + step + commands.length) % commands.length;
-  return commands[nextIndex].key;
+/** Нативные атрибуты команд принадлежат Dropdown и проходят через данные Menu. */
+export function getDropdownCommandAttributes(item: MenuItem) {
+  return {
+    href: 'href' in item && typeof item.href === 'string' ? item.href : undefined,
+    target: 'target' in item && typeof item.target === 'string' ? item.target : undefined,
+    rel: 'rel' in item && typeof item.rel === 'string' ? item.rel : undefined,
+    textValue: 'textValue' in item && typeof item.textValue === 'string' ? item.textValue : undefined
+  };
+}
+
+/** Корневые слоты принадлежат панели, остальные применяются ко всем уровням Menu. */
+export function dropdownSemantics(props: DropdownProps) {
+  const { root: rootClass, ...classes } = resolve(props.classNames) ?? {};
+  const { root: rootStyle, ...styles } = resolve(props.styles) ?? {};
+  return {
+    rootClass, rootStyle,
+    classNames: { ...classes, subMenu: classes },
+    styles: { ...styles, subMenu: styles }
+  };
+
+  // Передаёт callback входные props Dropdown вместе с вложенными menu options.
+  function resolve(value?: DropdownSemantic) {
+    return typeof value === 'function' ? value({ props }) : value;
+  }
 }
 
 // Одиночная буква ищет после текущего пункта, чтобы повторный ввод перебирал совпадения.

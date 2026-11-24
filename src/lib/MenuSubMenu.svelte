@@ -23,6 +23,7 @@
   import type { MenuMotion } from './menu-motion.types';
   import MenuInlineSubMenu from './MenuInlineSubMenu.svelte';
   import MenuPopupContent from './MenuPopupContent.svelte';
+  import Icon from './Icon.svelte';
 
   let {
     entry,
@@ -40,6 +41,7 @@
     accessibleTitle?: string;
   } = $props();
   const context = useMenu();
+  const dropdown = context.dropdown;
   let overflowRest = $derived(entry.overflow === true);
   let popupPath = $derived(entry.path.map(context.id).join(' '));
   let item = $derived(menuSubMenu(entry));
@@ -56,7 +58,8 @@
   let actualTheme = $derived(item.theme ?? theme);
   let opened = $derived(!inactive && context.open.includes(entry.key));
   let popupOpen = $derived(opened && (!overflowRest || entry.children.length > 0));
-  let popupRequested = $derived(context.mode !== 'inline' && popupOpen
+  const ownerVisible = $derived(dropdown?.visible ?? true);
+  let popupRequested = $derived(ownerVisible && context.mode !== 'inline' && popupOpen
     && !overflowHidden && !context.locked);
   let blocked = $derived(inactive || context.disabled || Boolean(item.disabled));
   let expandIcon = $derived(item.expandIcon === undefined ? context.expandIcon : item.expandIcon);
@@ -69,7 +72,8 @@
     disabled: blocked
   });
   let popupLayers = $derived([
-    context.componentTheme.style, item.popupStyle, context.semantics.styles.popup
+    dropdown?.themeStyle, context.componentTheme.style, item.popupStyle,
+    context.semantics.styles.popup
   ]);
   let popupStyle = $derived(serializeInlineStyleLayers(popupLayers));
   let popupProperties = $derived(new Set(Array.from(
@@ -153,7 +157,7 @@
     settleWithoutAnimation: !customMotion
   }));
   const popupLeaving = $derived(popupMotion.state.phase === 'leave');
-  const popupPresented = $derived(popupRequested || popupLeaving);
+  const popupPresented = $derived(ownerVisible && (popupRequested || popupLeaving));
   const inlineCopy = $derived(popupMode === 'inline' && !popupLeaving);
   const popupRendered = $derived(!inactive
     && (popupVisited || popupRequested || forcePopup || popupForced && allowForcePopup)
@@ -187,10 +191,12 @@
       popupContainer = undefined;
     }
     // Обычное Menu открывает Trigger после RAF; forceRender допускает первый undefined.
-    else if (context.forceRender && !title && !getter.length) resolveContainer(undefined);
+    else if (ownerVisible && context.forceRender && !title && !getter.length) {
+      resolveContainer(undefined);
+    }
   });
   const portal = createPopupContainer(() => ({
-    open: !inactive && (popupPresented || context.forceRender),
+    open: ownerVisible && !inactive && (popupPresented || context.forceRender),
     rendered: popupRendered,
     reference: title,
     getPopupContainer: context.getPopupContainer ? resolveContainer : undefined,
@@ -201,7 +207,8 @@
     const update = connectInlineStyle(node);
     // Diff семантических слоёв оставляет координаты и токены portal на поверхности.
     $effect(() => update([
-      context.componentTheme.style, transitionStyle, item.popupStyle, context.semantics.styles.popup
+      dropdown?.themeStyle, context.componentTheme.style, transitionStyle, item.popupStyle,
+      context.semantics.styles.popup
     ]));
   }
 
@@ -300,6 +307,7 @@
   }
 
   function connectEvents(element: HTMLElement) {
+    const disconnectOwner = dropdown?.registerPopup(element);
     const keyboard = on(element, 'keydown', event => {
       const root = context.nativeElement;
       if (!root || root.contains(element) || element.inert) {
@@ -313,6 +321,7 @@
     // Svelte сначала вызывает delegated child handlers внутри ShadowRoot, сохраняя domEvent.target.
     const click = on(element, 'click', () => {});
     return () => {
+      disconnectOwner?.();
       keyboard();
       click();
     };
@@ -379,7 +388,8 @@
     };
   });
   $effect(() => {
-    if (blocked || context.locked || context.mode === 'inline' || context.trigger !== 'hover')
+    if (!ownerVisible || blocked || context.locked || context.mode === 'inline'
+      || context.trigger !== 'hover')
       cancel();
   });
 
@@ -391,7 +401,8 @@
   function hover(next: boolean) {
     childrenActive = next;
     cancel();
-    if (blocked || context.locked || context.mode === 'inline' || context.trigger !== 'hover') {
+    if (!ownerVisible || blocked || context.locked || context.mode === 'inline'
+      || context.trigger !== 'hover') {
       return;
     }
 
@@ -410,10 +421,24 @@
   /* Horizontal vendor display не должен раскрывать forceSubMenuRender popup. */
   .menu-popup[hidden] { display: none; }
   .menu-popup:global(.ant-menu-source-theme) { border-radius: var(--ant-border-radius-lg); }
+  [data-ant-dropdown-branch] { position: relative; }
+  [data-ant-dropdown-branch] > [data-ant-menu-submenu-title] { padding-inline-end: calc(var(--ant-control-padding-horizontal) + var(--ant-font-size-sm)); }
+  .dropdown-arrow { position: absolute; inset-inline-end: var(--ant-padding-xs); display: inline-flex; color: var(--ant-color-icon); font-size: var(--ant-font-size-icon); }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-ant-dropdown-branch][data-ant-dropdown-menu-prefix] > [data-ant-menu-submenu-title] {
+      animation: none;
+      transition: none;
+    }
+  }
 </style>
 
-<li bind:this={row} data-ant-menu-prefix={context.prefixCls}
-  data-ant-menu-root-prefix={context.rootPrefixCls}
+<li bind:this={row} data-ant-menu-prefix={dropdown ? undefined : context.prefixCls}
+  data-ant-menu-root-prefix={dropdown ? undefined : context.rootPrefixCls}
+  data-ant-dropdown-branch={dropdown ? true : undefined}
+  data-ant-dropdown-prefix={dropdown?.prefixCls}
+  data-ant-dropdown-root-prefix={dropdown ? context.rootPrefixCls : undefined}
+  data-ant-dropdown-menu-prefix={dropdown ? context.prefixCls : undefined}
   role={overflowHidden ? undefined : 'none'} class={[
     overflowItem && `${context.prefixCls}-overflow-item`,
     overflowRest && `${context.prefixCls}-overflow-item-rest`,
@@ -433,8 +458,10 @@
   <button data-ant-menu-submenu-title type="button" disabled={blocked} bind:this={title}
     {@attach node => inactive || overflowHidden || context.locked
       ? undefined : context.register(entry.key, node)}
-    id={titleId} data-menu-id={titleId}
-    class={`${context.prefixCls}-submenu-title`} role="menuitem" tabindex={blocked ? undefined : -1} aria-disabled={blocked || undefined}
+    id={titleId} data-menu-id={titleId} data-dropdown-key={dropdown ? entry.key : undefined}
+    class={`${context.prefixCls}-submenu-title`} role="menuitem"
+    tabindex={blocked ? undefined : dropdown && context.focusKey === entry.key ? 0 : -1}
+    aria-disabled={blocked || undefined}
     aria-haspopup="menu" aria-expanded={opened} aria-controls={controlledId}
     title={item.title
         ?? (context.collapsed && typeof item.label === 'string'
@@ -444,7 +471,7 @@
         ? (item.title ?? (typeof item.label === 'string' ? item.label : undefined))
         : undefined)}
     style={[
-        context.componentTheme.className && (context.mode === 'horizontal' && !entry.parent
+        !dropdown && context.componentTheme.className && (context.mode === 'horizontal' && !entry.parent
           ? 'width:auto;padding-inline:0'
           : 'width:stretch;min-width:var(--ant-menu-item-width);max-width:var(--ant-menu-item-width)'),
         context.mode === 'inline' && `padding-${context.direction === 'rtl'
@@ -467,10 +494,15 @@
     {#if item.icon}<span class={[`${context.prefixCls}-item-icon`, context.semantics.classes.itemIcon]}
       style={context.semantics.styles.itemIcon}>{@render item.icon()}</span>{#if !context.componentTheme.className}{' '}{/if}{/if}{#if context.collapsed && !entry.parent && !item.icon && typeof item.label === 'string'}
       <span class={`${context.prefixCls}-inline-collapsed-noicon`}>{item.label.charAt(0)}</span>
-    {:else}<span class={`${context.prefixCls}-title-content`}>{#if typeof item.label === 'function'}{@render item.label()}{:else}{item.label ?? ''}{/if}</span>{/if}
+    {:else}<span data-ant-dropdown-title={dropdown ? true : undefined}
+      class={`${context.prefixCls}-title-content`}>{#if typeof item.label === 'function'}{@render item.label()}{:else}{item.label ?? ''}{/if}</span>{/if}
     {#if hasArrow}
       {#if typeof expandIcon === 'function'}<span class={`${context.prefixCls}-submenu-expand-icon`}
         aria-hidden="true">{@render expandIcon(iconInfo)}</span>
+      {:else if expandIcon === undefined && dropdown}<span class={[
+        `${context.prefixCls}-submenu-expand-icon`, `${context.prefixCls}-submenu-arrow`,
+        `${context.prefixCls}-submenu-arrow-icon`, 'dropdown-arrow'
+      ]} aria-hidden="true"><Icon name={rtl ? 'left' : 'right'} /></span>
       {:else if expandIcon === undefined}<i class={`${context.prefixCls}-submenu-arrow`}
         aria-hidden="true"></i>{/if}
     {/if}
@@ -480,7 +512,12 @@
   {/if}
   {#if popupRendered}
     {#key popupContainer}
-      <div data-ant-menu-prefix={context.prefixCls} data-ant-menu-root-prefix={context.rootPrefixCls}
+      <div data-ant-menu-prefix={dropdown ? undefined : context.prefixCls}
+        data-ant-menu-root-prefix={dropdown ? undefined : context.rootPrefixCls}
+        data-ant-dropdown-prefix={dropdown?.prefixCls}
+        data-ant-dropdown-root-prefix={dropdown ? context.rootPrefixCls : undefined}
+        data-ant-dropdown-menu-prefix={dropdown ? context.prefixCls : undefined}
+        data-ant-dropdown-source-theme={dropdown?.sourceTheme || undefined}
         data-menu-popup-path={popupPath} id={popupRender && !context.exiting ? surfaceId : undefined}
         data-ant-menu-motion={context.rootPrefixCls}
         bind:this={popup} role="presentation" popover="manual"
@@ -488,9 +525,9 @@
         inert={popupLeaving || context.locked || undefined}
         aria-hidden={popupLeaving || context.locked || undefined}
         class={[
-            `menu-popup ${context.prefixCls} ant-menu-css-var ${context.prefixCls}-submenu ${context.prefixCls}-submenu-popup`,
-            context.componentTheme.className,
-            context.componentTheme.className && 'ant-menu-source-theme',
+            `menu-popup ${context.prefixCls} ${dropdown ? 'ant-dropdown-css-var' : 'ant-menu-css-var'} ${context.prefixCls}-submenu ${context.prefixCls}-submenu-popup`,
+            !dropdown && context.componentTheme.className,
+            !dropdown && context.componentTheme.className && 'ant-menu-source-theme',
             placementClass,
             `${context.prefixCls}-${actualTheme}`,
             context.direction === 'rtl' && `${context.prefixCls}-rtl`,

@@ -26,19 +26,29 @@
 <output>{lastAction}</output>
 ```
 
-`menu.items` принимает readonly-массив DropdownItem. Команда имеет строковый key,
-label (строку или пассивный Snippet), необязательные icon, textValue, disabled,
-danger и onClick. Разделитель имеет `{ key, type: 'divider' }`. Пустой строковый
-ключ допустим; при повторении ключа используется первое вхождение. Icon декоративный.
+`menu` использует [Menu](menu.md) в вертикальном режиме. `menu.items` принимает
+команды, группы, разделители и подменю с `children`. Ключ команды может быть
+строкой или числом. Пустой строковый ключ допустим. При повторении ключа на
+одном уровне используется первое вхождение. Label принимает строку, число
+или пассивный Snippet. Icon декоративный.
 Для snippet со сложным или нетекстовым содержимым задайте textValue: он служит
 доступным именем команды и текстом поиска. В label не следует вкладывать кнопки,
 ссылки и поля ввода. Пустой список показывает ConfigProvider.locale.emptyText.
+
+Раскрытие задают `openKeys`, `defaultOpenKeys` и `menu.onOpenChange`.
+`triggerSubMenuAction` выбирает наведение или клик. `menu.getPopupContainer`
+задаёт отдельный контейнер подменю. Внешние панели подменю входят в границы
+фокуса и клика Dropdown. `menu.activeKey` выделяет строку без перевода фокуса.
+Выбор по умолчанию отключён. При `selectable` доступны `selectedKeys`,
+`defaultSelectedKeys`, `onSelect` и `onDeselect`. Одновременные `selectable`
+и `multiple` оставляют Dropdown открытым при выборе.
 
 Для навигации item поддерживает href/target/rel: вместо button создаётся a с
 role=menuitem. Это Svelte-адаптация link label исходного Menu без вложения ссылки
 в кнопку. Disabled link не получает href и имеет aria-disabled=true. Enter и
 Space активируют его; preventDefault в callbacks отменяет и нативный переход,
-и закрытие меню. Без href сохраняется прежняя нативная кнопка команды.
+и закрытие меню. При переходе к якорю фокус следует за браузерной навигацией.
+Без href сохраняется прежняя нативная кнопка команды.
 
 Open поддерживает bind:open; defaultOpen читается при создании компонента.
 Без внешнего open состояние хранится отдельно от входных props: обновление
@@ -51,16 +61,18 @@ Tab и клика снаружи. Изменение open владельцем �
 binding **без onOpenChange(false)**; для команды используйте menu.onClick.
 Исходный Ant Design 6.6.8 вызывает callback и при выборе команды, передавая
 второй аргумент с source; это расширение текущего Svelte API ещё не перенесено.
-Сначала вызывается onClick пункта, затем menu.onClick; оба получают
-`{ key, domEvent: MouseEvent }`. PreventDefault в пункте отменяет следующий
-обработчик и закрытие, в menu.onClick — закрытие. Асинхронные операции и их ошибки
-обрабатывает владелец; Dropdown не показывает loading и не ожидает Promise.
+Обработчики идут от пункта к родительским подменю, затем к `menu.onClick`.
+`DropdownMenuClickInfo` добавляет `keyPath` от пункта к корню и `itemData` к
+`key` и нативному `MouseEvent`. Все обработчики команды получают один объект.
+`preventDefault` отменяет оставшиеся обработчики команды, изменение выбора и
+закрытие. Асинхронные операции и их ошибки обрабатывает владелец.
 
 По умолчанию trigger равен `['hover']`; допустимы `'hover'`, `'click'`, их массив
 и `[]` для внешнего управления. MouseEnterDelay/MouseLeaveDelay задаются в
 секундах, по умолчанию 0.1. Уход указателя закрывает меню только при включённом
-hover: внешне открытое меню с click или `[]` остаётся открытым. Hover не перемещает
-фокус; click, Enter, Space и
+hover: внешне открытое меню с click или `[]` остаётся открытым. Hover по умолчанию
+сохраняет текущий фокус. `autoFocus` переводит его в меню также при наведении
+или открытии владельцем. Click, Enter, Space и
 ArrowDown фокусируют первую доступную команду, ArrowUp — последнюю. Стрелки
 обходят команды по кругу, Home/End выбирают крайние, ввод букв ищет по префиксу.
 Повтор буквы перебирает совпадения; пауза в секунду начинает новый поиск.
@@ -78,15 +90,20 @@ aria-controls и aria-expanded, сохраняя исходные ARIA-атри�
 
 PrefixCls задаёт локальный CSS-префикс Dropdown; пустая строка наследует общий
 ConfigProvider.prefixCls. Trigger/popup/arrow и внутреннее меню получают классы
-этого namespace; меню добавляет суффикс -menu. Button в trigger сохраняет собственный
+этого namespace. Меню добавляет суффикс `-menu`, `menu.prefixCls` переопределяет
+его отдельно. Button в trigger сохраняет собственный
 общий prefix. Canonical theme variables и IDs/ARIA не переименовываются.
 Смена префикса сохраняет открытый popover, DOM команд, фокус и typeahead по label.
 77 исходных CSS-правил без motion и исходного title flex:auto изолированы по локальному и общему префиксам;
 native wrapper, ссылки, reduced motion и bind:open/callback contracts сохранены.
-Независимый menu.prefixCls входит в ещё не перенесённый полный Menu API.
 Прежние label flex/min-width и явный dir popup сохранены. [Raw эталоны и public
 counterparts через styles.itemContent/root.direction](../../../tests/browser/fixtures/ant-design-dropdown-prefix-reference.json)
 разделяют эти Native границы и исходное оформление Ant Design.
+
+`classNames` и `styles` принимают набор слотов или функцию с текущими props.
+`root` оформляет панель Dropdown. `item`, `itemTitle`, `itemIcon` и `itemContent`
+применяются на всех уровнях меню. Dropdown задаёт эти слоты вместо
+`menu.classNames` и `menu.styles`, сохраняя слой `ConfigProvider.menu`.
 
 Placement: top, topLeft, topRight, bottom, bottomLeft, bottomRight. По умолчанию
 bottomLeft, в RTL — bottomRight. AutoAdjustOverflow по умолчанию true:
@@ -108,9 +125,10 @@ corner placements используют исходные arrowOffsetHorizontal. �
 сохраняют DOM, фокус и inline-позицию popup. Native-only оформление и существующие
 bind:open/callback contracts сохранены.
 
-Первая версия ограничена плоскими командами:
-интеграция standalone Menu, подменю, selectable/checkable items, contextMenu
-и popupRender пока отсутствуют. Пункты с href уже создают нативные ссылки.
+Из API Dropdown ещё остаются `contextMenu`, `popupRender`, `destroyOnHidden`,
+настройки анимации и глобальный `ConfigProvider.dropdown`. Замеры встроенного
+Menu покрывают порядок событий, управляемое закрытие, множественный выбор,
+RTL и оформление. [Браузерный эталон React 6.6.8](../../../tests/browser/fixtures/ant-design-dropdown-menu-reference.json)
 Deprecated Dropdown.Button исключён из переноса; актуальная композиция —
 SpaceCompact с Dropdown и Button.
 

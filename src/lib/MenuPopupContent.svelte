@@ -65,9 +65,13 @@
 {/snippet}
 
 {#snippet originMenu(children?: Snippet)}
-  <ul data-ant-menu-prefix={parent.prefixCls} data-ant-menu-root-prefix={parent.rootPrefixCls}
+  <ul data-ant-menu-prefix={parent.dropdown ? undefined : parent.prefixCls}
+    data-ant-menu-root-prefix={parent.dropdown ? undefined : parent.rootPrefixCls}
+    data-ant-dropdown-prefix={parent.dropdown?.prefixCls}
+    data-ant-dropdown-root-prefix={parent.dropdown ? parent.rootPrefixCls : undefined}
+    data-ant-dropdown-menu-prefix={parent.dropdown ? parent.prefixCls : undefined}
     {id} role="menu" data-menu-list="true" class={[
-      `${parent.prefixCls} ant-menu-css-var ${parent.prefixCls}-sub`,
+      `${parent.prefixCls} ${parent.dropdown ? 'ant-dropdown-menu-css-var' : 'ant-menu-css-var'} ${parent.prefixCls}-sub`,
       mode === 'inline' ? `${parent.prefixCls}-inline` : `${parent.prefixCls}-vertical`,
       parent.direction === 'rtl' && `${parent.prefixCls}-rtl`
     ]} {style}>

@@ -2,6 +2,7 @@ import { getContext, setContext } from 'svelte';
 import type { MenuEntry } from './menu.engine';
 import type { menuSemantics } from './menu-semantic.engine';
 import type { MenuMode, MenuProps, MenuTheme } from './menu.types';
+import type { DropdownMenuContext } from './dropdown-menu-context';
 
 export interface MenuBranchHover {
   schedule: (entering: boolean) => void;
@@ -9,6 +10,7 @@ export interface MenuBranchHover {
 }
 
 export interface MenuContext {
+  readonly dropdown?: DropdownMenuContext;
   readonly prefixCls: string;
   readonly rootPrefixCls: string;
   readonly rootClassName: string;
@@ -39,6 +41,7 @@ export interface MenuContext {
   readonly selected: readonly string[];
   readonly open: readonly string[];
   readonly active: string | null;
+  readonly focusKey?: string | null;
   readonly forceRender: boolean;
   readonly trigger: 'hover' | 'click';
   readonly openDelay: number;

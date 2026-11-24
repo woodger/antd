@@ -15,6 +15,8 @@
   import type { MenuEntry } from './menu.engine';
   import type { MenuProps, MenuClickInfo } from './menu.types';
   import { provideMenu, type MenuBranchHover } from './menu-context';
+  import { takeDropdownMenu } from './dropdown-menu-context';
+  import { isDropdownMenuKey } from './dropdown.engine';
   import { useConfig } from './config-context';
   import { useSider } from './layout-context';
   import { useComponentTheme } from './theme-component.svelte';
@@ -43,7 +45,7 @@
     selectedKeys,
     defaultSelectedKeys = [],
     multiple = false,
-    selectable = true,
+    selectable,
     openKeys,
     defaultOpenKeys = [],
     onOpenChange,
@@ -74,9 +76,11 @@
   } = $derived(menuProps);
 
   const config = useConfig();
-  let componentPrefix = $derived(config.getPrefixCls('menu', customizePrefixCls));
+  const dropdown = takeDropdownMenu();
+  let componentPrefix = $derived(config.getPrefixCls('menu', customizePrefixCls
+    || (dropdown ? `${dropdown.prefixCls}-menu` : undefined)));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(getMenuPrefixCss(componentPrefix, rootPrefix));
+  let prefixCss = $derived(dropdown ? undefined : getMenuPrefixCss(componentPrefix, rootPrefix));
   let motionCss = $derived(getMenuMotionCss(rootPrefix));
   let popupContainer = $derived(Object.hasOwn(rest, 'getPopupContainer')
     ? rest.getPopupContainer : config.getPopupContainer);
@@ -87,14 +91,17 @@
   const componentTheme = useComponentTheme('Menu');
   const tokens = useToken();
   const sider = useSider();
-  let resolvedCollapse = $derived(inlineCollapsed ?? sider?.collapsed);
+  let resolvedCollapse = $derived(inlineCollapsed ?? (dropdown ? undefined : sider?.collapsed));
+  let resolvedMode = $derived(dropdown ? 'vertical' : mode);
+  let isSelectable = $derived(selectable ?? !dropdown);
   let semantics = $derived(menuSemantics(config.menu, {
     ...menuProps,
+    ...dropdown ? { mode: resolvedMode, selectable: isSelectable } : {},
     theme,
     inlineCollapsed: resolvedCollapse
   }));
   let resolvedExpandIcon = $derived(
-    expandIcon === undefined ? config.menu?.expandIcon : expandIcon
+    expandIcon === undefined && !dropdown ? config.menu?.expandIcon : expandIcon
   );
   const generated = $props.id();
   let model = $derived(buildMenuEntries(items));
@@ -102,8 +109,8 @@
   let opened = $state.raw<string[]>(untrack(() => [...openKeys ?? defaultOpenKeys]));
   let actualSelected = $derived(selectedKeys ?? selected);
   let actualOpen = $derived(openKeys ?? opened);
-  let collapsed = $derived(mode !== 'horizontal' && (resolvedCollapse ?? false));
-  let actualMode = $derived(collapsed ? 'vertical' : mode);
+  let collapsed = $derived(resolvedMode !== 'horizontal' && (resolvedCollapse ?? false));
+  let actualMode = $derived(collapsed ? 'vertical' : resolvedMode);
   let responsive = $derived(actualMode === 'horizontal' && !disabledOverflow);
   let overflowLayout = $state.raw<MenuOverflowLayout>();
   let visibleCount = $derived(overflowLayout?.visibleCount ?? model.roots.length);
@@ -130,6 +137,9 @@
     : model.roots);
 
   let active = $state<string | null>(null);
+  let dropdownFocusKey = $derived(dropdown ? resolveDropdownFocusKey(dropdown.activeKey ?? active)
+    : null);
+  let previousDropdownActiveKey = untrack(() => dropdown?.activeKey);
   let rootElement = $state<HTMLUListElement>();
   let mounted = $state(false);
   let reducedMotion = $state(false);
@@ -167,6 +177,18 @@
     nativeElement = rootElement;
     return () => { nativeElement = undefined; };
   });
+
+  $effect.pre(() => {
+    const next = dropdown?.activeKey;
+    if (previousDropdownActiveKey !== undefined && next === undefined) active = null;
+    previousDropdownActiveKey = next;
+  });
+
+  $effect(() => dropdown?.registerMenu({
+    get focusKey() { return dropdownFocusKey; },
+    isEnabled: key => isEnabled(navigationEntry(key)),
+    focus: focusDropdown
+  }));
 
   $effect(() => {
     if (rootElement && responsive) {
@@ -305,7 +327,7 @@
 
   function click(entry: MenuEntry, event: MouseEvent | KeyboardEvent) {
     const item = menuItem(entry);
-    if (disabled || item.disabled) {
+    if (disabled || item.disabled || dropdown && !dropdown.canActivate(event)) {
       return;
     }
 
@@ -318,11 +340,18 @@
       itemData
     };
     item.onClick?.(info);
-    for (let parent = entry.parent; parent; parent = parent.parent)
+    for (let parent = entry.parent; parent; parent = parent.parent) {
+      if (dropdown && !dropdown.canActivate(event)) return;
       menuSubMenu(parent).onClick?.(info);
+    }
+    if (dropdown && !dropdown.canActivate(event)) return;
     onClick?.(info);
+    if (dropdown) {
+      if (!dropdown.canActivate(event)) return;
+      dropdown.command(isSelectable && multiple);
+    }
 
-    if (selectable) {
+    if (isSelectable) {
       const next = menuSelection(before, entry.key, multiple);
       selected = next.keys;
       const detail = { ...info, selectedKeys: [...next.keys] };
@@ -340,13 +369,16 @@
   }
 
   function titleClick(entry: MenuEntry, event: MouseEvent) {
-    if (disabled || menuSubMenu(entry).disabled) {
+    const submenu = menuSubMenu(entry);
+    if (disabled || submenu.disabled || dropdown && !dropdown.canActivate(event)) {
       return;
     }
 
-    menuSubMenu(entry).onTitleClick?.({ key: entry.key, domEvent: event });
-    if (actualMode === 'inline' || triggerSubMenuAction === 'click')
-      setOpen(entry, !actualOpen.includes(entry.key));
+    const toggles = actualMode === 'inline' || triggerSubMenuAction === 'click';
+    // Trigger Dropdown меняет openKeys до уведомления заголовка.
+    if (dropdown && toggles) setOpen(entry, !actualOpen.includes(entry.key));
+    submenu.onTitleClick?.({ key: entry.key, domEvent: event });
+    if (!dropdown && toggles) setOpen(entry, !actualOpen.includes(entry.key));
   }
 
   function focusItem(key: string) {
@@ -355,18 +387,49 @@
       return;
     }
 
-    const link = element.querySelector<HTMLAnchorElement>('a[href]');
     active = key;
+    if (dropdown) {
+      dropdown.focusRow(element);
+      return;
+    }
+    const link = element.querySelector<HTMLAnchorElement>('a[href]');
     (link ?? element).focus({ preventScroll: true });
   }
 
+  function isEnabled(entry: MenuEntry | undefined) {
+    if (disabled || !entry) return false;
+    return !('disabled' in entry.item && entry.item.disabled);
+  }
+
   function available(entry: MenuEntry) {
-    if (disabled || ('disabled' in entry.item && entry.item.disabled)) {
+    if (!isEnabled(entry)) {
       return false;
     }
 
     const element = elements.get(entry.key);
     return Boolean(element?.getClientRects().length && !element.closest('[inert]'));
+  }
+
+  function resolveDropdownFocusKey(key: string | null) {
+    const entry = key === null ? undefined : navigationEntry(key);
+    if (entry && isEnabled(entry)) {
+      let ancestor = entry.parent;
+      while (ancestor && isEnabled(ancestor) && actualOpen.includes(ancestor.key)) {
+        ancestor = ancestor.parent;
+      }
+      if (!ancestor) return entry.key;
+    }
+
+    return menuLevel(rootEntries).find(isEnabled)?.key ?? null;
+  }
+
+  function focusDropdown(edge?: 'first' | 'last') {
+    const preferred = dropdownFocusKey === null ? undefined : navigationEntry(dropdownFocusKey);
+    const roots = visibleLevel(menuLevel(rootEntries));
+    const target = edge === 'first' ? roots[0] : edge === 'last' ? roots.at(-1)
+      : preferred && available(preferred) ? preferred : roots[0];
+    if (target) focusItem(target.key);
+    else rootElement?.focus({ preventScroll: true });
   }
 
   function visibleLevel(items: MenuEntry[], parent?: MenuEntry) {
@@ -393,7 +456,8 @@
   }
 
   async function keyboard(entry: MenuEntry | null, event: KeyboardEvent) {
-    if (event.defaultPrevented || event.isComposing || disabled) {
+    if (event.defaultPrevented || event.isComposing || disabled
+      || dropdown && !isDropdownMenuKey(event)) {
       return;
     }
 
@@ -456,6 +520,7 @@
   }
 
   provideMenu({
+    dropdown,
     get prefixCls() { return componentPrefix; },
     get rootPrefixCls() { return rootPrefix; },
     get rootClassName() { return rootClassName; },
@@ -464,7 +529,7 @@
     get expandIcon() { return resolvedExpandIcon; },
     get itemIcon() { return itemIcon; },
     get tooltip() { return tooltip; },
-    get tooltipCollapsed() { return Boolean(sider?.collapsed || resolvedCollapse); },
+    get tooltipCollapsed() { return Boolean(!dropdown && sider?.collapsed || resolvedCollapse); },
     get popupRender() { return popupRender; },
     get builtinPlacements() { return builtinPlacements; },
     get motion() { return mounted ? motion : undefined; },
@@ -497,8 +562,13 @@
       return actualOpen;
     },
     get active() {
+      if (dropdown) {
+        return dropdown.activeKey ?? (dropdown.focused || !dropdown.sourceTheme ? dropdownFocusKey
+          : null);
+      }
       return active;
     },
+    get focusKey() { return dropdownFocusKey; },
     get forceRender() {
       return forceSubMenuRender;
     },
@@ -579,16 +649,25 @@
     visibility: hidden;
     pointer-events: none;
   }
+  [data-ant-dropdown-menu] { box-sizing: border-box; width: 100%; max-width: 100%; max-height: calc(100dvh - 16px); overflow: auto; overflow-wrap: anywhere; }
+  :global([data-ant-dropdown-source-theme]) [data-ant-dropdown-menu] { box-sizing: content-box; width: auto; max-height: calc(100vh - var(--ant-control-height-lg) * 2.5); }
+  [data-ant-dropdown-empty] { padding: 8px 12px; color: var(--ant-color-text-description); }
 </style>
 
 {#snippet defaultIndicator()}<EllipsisIcon />{/snippet}
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`menu-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#if motionCss}<ThemeScopeStyle css={motionCss} scope={`menu-motion:${rootPrefix}`} />{/if}<ul {...attributes} data-ant-menu-prefix={componentPrefix} data-ant-menu-root-prefix={rootPrefix} bind:this={rootElement} role="menu" tabindex={tabindex} data-menu-list="true" dir={config.direction}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`menu-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#if motionCss}<ThemeScopeStyle css={motionCss} scope={`menu-motion:${rootPrefix}`} />{/if}<ul {...attributes} data-ant-menu-prefix={dropdown ? undefined : componentPrefix} data-ant-menu-root-prefix={dropdown ? undefined : rootPrefix} bind:this={rootElement} role="menu" tabindex={tabindex} data-menu-list="true" dir={config.direction}
+  data-ant-dropdown-menu={dropdown ? true : undefined}
+  data-ant-dropdown-prefix={dropdown?.prefixCls}
+  data-ant-dropdown-root-prefix={dropdown ? rootPrefix : undefined}
+  data-ant-dropdown-menu-prefix={dropdown ? componentPrefix : undefined}
   data-menu-responsive={responsive || undefined}
   aria-disabled={disabled || undefined} aria-orientation={actualMode === 'horizontal' ? 'horizontal' : 'vertical'}
   style={[componentTheme.style, semantics.styles.root].filter(Boolean).join(';') || undefined} class={[
-      `${componentPrefix} ant-menu-css-var ${componentPrefix}-root`,
-      componentTheme.className,
-      componentTheme.className && 'ant-menu-source-theme',
+      dropdown ? `${componentPrefix} ${componentPrefix}-root`
+        : `${componentPrefix} ant-menu-css-var ${componentPrefix}-root`,
+      dropdown?.sourceTheme && 'ant-dropdown-menu-css-var',
+      !dropdown && componentTheme.className,
+      !dropdown && componentTheme.className && 'ant-menu-source-theme',
       responsive && `${componentPrefix}-overflow`,
       `${componentPrefix}-${actualMode}`,
       `${componentPrefix}-${theme}`,
@@ -600,7 +679,9 @@
       semantics.classes.root
     ]}
   onkeydown={keydown}>
-  <MenuList entries={model.roots} {theme} overflowCount={responsive ? visibleCount : undefined} />
+  {#if dropdown && !model.roots.length}<li data-ant-dropdown-empty role="none"
+    class={`${componentPrefix}-empty`}>{config.locale.emptyText}</li>
+  {:else}<MenuList entries={model.roots} {theme} overflowCount={responsive ? visibleCount : undefined} />{/if}
   {#if responsive && model.roots.length}
     <MenuSubMenu entry={more.root} {theme} overflowItem overflowHidden={!showMore}
       accessibleTitle={indicatorLabel} />

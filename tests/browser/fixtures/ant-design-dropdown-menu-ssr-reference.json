@@ -1,0 +1,175 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "passes": [
+    [
+      {
+        "profile": {
+          "id": "closed"
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      },
+      {
+        "profile": {
+          "id": "open",
+          "open": true
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      },
+      {
+        "profile": {
+          "id": "open-forced-branches",
+          "open": true,
+          "forceBranches": true
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      },
+      {
+        "profile": {
+          "id": "closed-forced-dropdown",
+          "force": true
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      },
+      {
+        "profile": {
+          "id": "rtl-nested",
+          "open": true,
+          "force": true,
+          "forceBranches": true,
+          "direction": "rtl"
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-rtl ant-dropdown-open\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      },
+      {
+        "profile": {
+          "id": "custom-popup-without-menu",
+          "open": true,
+          "custom": true
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      }
+    ],
+    [
+      {
+        "profile": {
+          "id": "closed"
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      },
+      {
+        "profile": {
+          "id": "open",
+          "open": true
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      },
+      {
+        "profile": {
+          "id": "open-forced-branches",
+          "open": true,
+          "forceBranches": true
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      },
+      {
+        "profile": {
+          "id": "closed-forced-dropdown",
+          "force": true
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      },
+      {
+        "profile": {
+          "id": "rtl-nested",
+          "open": true,
+          "force": true,
+          "forceBranches": true,
+          "direction": "rtl"
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-rtl ant-dropdown-open\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      },
+      {
+        "profile": {
+          "id": "custom-popup-without-menu",
+          "open": true,
+          "custom": true
+        },
+        "diagnostics": [],
+        "html": "<button type=\"button\" class=\"ant-dropdown-trigger ant-dropdown-open\">Commands</button>",
+        "callbacks": [],
+        "reported": [
+          "6.6.8",
+          "18.3.1"
+        ]
+      }
+    ]
+  ]
+}

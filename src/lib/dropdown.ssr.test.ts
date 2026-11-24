@@ -2,7 +2,9 @@ import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, expectTypeOf, it } from 'vitest';
 import Dropdown from './Dropdown.svelte';
-import type { DropdownClickInfo, DropdownItem, DropdownProps } from './dropdown.types';
+import type {
+  DropdownClickInfo, DropdownItem, DropdownMenuClickInfo, DropdownProps
+} from './dropdown.types';
 
 const children = createRawSnippet(
   () => ({ render: () => '<button type="button">Actions</button>' })
@@ -31,8 +33,10 @@ describe('Dropdown server rendering', () => {
       expect(body).toContain('ant-dropdown-menu-item-danger');
       expect(body.match(/type="button"/g)).toHaveLength(4);
       expect(body).not.toContain('type="submit"');
+      expectTypeOf<DropdownClickInfo>().toEqualTypeOf<{ key: string; domEvent: MouseEvent; }>();
+      expectTypeOf<DropdownMenuClickInfo>().toExtend<DropdownClickInfo>();
       expectTypeOf<NonNullable<DropdownProps['menu']['onClick']>>().parameter(0).toEqualTypeOf<
-        DropdownClickInfo
+        DropdownMenuClickInfo
       >();
     }
   );

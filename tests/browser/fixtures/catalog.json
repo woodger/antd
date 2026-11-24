@@ -415,6 +415,11 @@
     "root": "dropdown-fixture"
   },
   {
+    "id": "dropdown-menu",
+    "module": "./DropdownMenuFixtures.svelte",
+    "root": "dropdown-menu-fixture"
+  },
+  {
     "id": "tabs",
     "module": "./TabsFixtures.svelte",
     "root": "tabs-fixture"

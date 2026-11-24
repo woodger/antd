@@ -7,7 +7,7 @@
   import type { TooltipSemanticProps } from './tooltip.types';
 
   let { element, item, firstLevel, connectClick }: {
-    element?: HTMLLIElement;
+    element?: HTMLElement;
     item: MenuItem;
     firstLevel: boolean;
     connectClick: (handler: (event: MouseEvent) => void) => () => void;

@@ -8,7 +8,7 @@
 
 Каталог: **73 семейств**, публичных Svelte-компонентов: **113**.
 Есть публичная реализация у **70** семейств; отсутствует у **3**.
-Проверенный объём v1 покрыт у **58**; требуется аудит у **12**; частично покрыт у **0**.
+Проверенный объём v1 покрыт у **59**; требуется аудит у **11**; частично покрыт у **0**.
 
 Наличие экспорта, полнота согласованного v1 и результаты тестов учитываются отдельно.
 Candidate означает запись каталога, для которой целевой объём ещё не согласован.
@@ -28,8 +28,8 @@ Candidate означает запись каталога, для которой 
 | [Splitter](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/splitter) | layout | target | Splitter | Согласованный v1 покрыт | Адаптация React Panel declarations к Svelte items/snippets (partial); Наследование CSS direction через native ConfigProvider (partial); Изоляция preview при общем local class и разных namespace (partial) |
 | [Anchor](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/anchor) | navigation | target | Anchor | Согласованный v1 покрыт | Пересчёт indicator после стилей вместо stale Source geometry (partial); Наследование local owner prefix ссылками вместо исходного пропуска (partial) |
 | [Breadcrumb](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/breadcrumb) | navigation | target | Breadcrumb | Согласованный v1 покрыт | Полный Menu API (missing); Наследование local owner prefix разделителями (partial) |
-| [Dropdown](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/dropdown) | navigation | target | Dropdown | Требуется аудит v1 | Подробный аудит согласованного API v1 (unreviewed); Вложенные меню (missing); Полный onOpenChange info и callback при выборе команды (partial); Semantic/config, render/container и дополнительные trigger API (missing) |
-| [Menu](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/menu) | navigation | target | Menu | Согласованный v1 покрыт | Анимации inline и popup с сохранённой Svelte-навигацией (partial); Интеграция Menu в Dropdown (missing) |
+| [Dropdown](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/dropdown) | navigation | target | Dropdown | Согласованный v1 покрыт | Полный onOpenChange info и callback при выборе команды (partial); Глобальная конфигурация, render и дополнительные trigger API (missing) |
+| [Menu](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/menu) | navigation | target | Menu | Согласованный v1 покрыт | Анимации inline и popup с сохранённой Svelte-навигацией (partial) |
 | [Pagination](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/pagination) | navigation | target | Pagination | Согласованный v1 покрыт | Полные Select props, React-specific API (missing); Актуальные queries вместо stale Source observer после смены tokens (partial) |
 | [Steps](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/steps) | navigation | target | Steps | Согласованный v1 покрыт |  |
 | [Tabs](https://github.com/ant-design/ant-design/tree/984592267de88fbf9cdaecc96a56629e721c709d/components/tabs) | navigation | target | Tabs | Согласованный v1 покрыт | Меню скрытых вкладок more (partial); OnTabScroll с физическими направлениями и native scroll (partial); DestroyOnHidden и приоритет панели (partial); Framework-specific children/ref и native adapters (partial) |

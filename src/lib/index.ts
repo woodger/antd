@@ -578,12 +578,16 @@ export type {
 export type {
   DropdownProps,
   DropdownMenuProps,
+  DropdownMenuEntry,
   DropdownItem,
   DropdownMenuItem,
   DropdownDivider,
   DropdownClickInfo,
+  DropdownMenuClickInfo,
   DropdownPlacement,
-  DropdownTrigger
+  DropdownTrigger,
+  DropdownSlots,
+  DropdownSemantic
 } from './dropdown.types';
 export type {
   TabsProps,

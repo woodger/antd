@@ -1,4 +1,7 @@
 import type { Snippet } from 'svelte';
+import type {
+  MenuClickInfo, MenuDivider, MenuGroup, MenuItem, MenuProps, MenuSubMenu
+} from './menu.types';
 
 export type DropdownPlacement =
   'top'
@@ -14,14 +17,15 @@ export interface DropdownClickInfo {
   domEvent: MouseEvent;
 }
 
-export interface DropdownMenuItem {
+/** Событие встроенного Menu. Кнопки и ссылки передают MouseEvent и при вводе с клавиатуры. */
+export interface DropdownMenuClickInfo extends MenuClickInfo {
+  domEvent: MouseEvent;
+}
+
+export interface DropdownMenuItem extends Omit<MenuItem, 'key' | 'label' | 'onClick'> {
   key: string;
-  type?: 'item';
   label: string | Snippet;
   textValue?: string;
-  icon?: Snippet;
-  disabled?: boolean;
-  danger?: boolean;
   href?: string;
   target?: string;
   rel?: string;
@@ -35,11 +39,29 @@ export interface DropdownDivider {
 
 export type DropdownItem = DropdownMenuItem | DropdownDivider;
 
-/** Данные плоского меню команд Dropdown. */
-export interface DropdownMenuProps {
-  items: readonly DropdownItem[];
-  onClick?: (info: DropdownClickInfo) => void;
+type DropdownMenuClick = { onClick?: (info: DropdownMenuClickInfo) => void; };
+type DropdownCommand = Omit<MenuItem, 'onClick'> & DropdownMenuClick
+  & Pick<DropdownMenuItem, 'href' | 'target' | 'rel' | 'textValue'>;
+type DropdownBranch = Omit<MenuSubMenu, 'children' | 'onClick'> & DropdownMenuClick
+  & { children: readonly DropdownMenuEntry[]; };
+type DropdownGroup = Omit<MenuGroup, 'children'> & { children?: readonly DropdownMenuEntry[]; };
+
+/** Menu принимает команды, группы, разделители и вложенные ветки. */
+export type DropdownMenuEntry = DropdownCommand | DropdownBranch | DropdownGroup | MenuDivider | null;
+
+/** Параметры вложенного Menu. Dropdown задаёт вертикальный режим и отключает выбор по умолчанию. */
+export interface DropdownMenuProps extends Omit<MenuProps, 'items' | 'nativeElement' | 'onClick'> {
+  items: readonly DropdownMenuEntry[];
+  /** Выделяет строку без перевода фокуса. */
+  activeKey?: string;
+  onClick?: (info: DropdownMenuClickInfo) => void;
 }
+
+export type DropdownSlots = Partial<Record<
+  'root' | 'item' | 'itemTitle' | 'itemIcon' | 'itemContent', string
+>>;
+export type DropdownSemantic = DropdownSlots | ((info: { props: DropdownProps; }) =>
+  DropdownSlots | undefined);
 
 /** Меню команд у trigger snippet с клавиатурой, hover/click и возвратом фокуса. */
 export interface DropdownProps {
@@ -53,6 +75,8 @@ export interface DropdownProps {
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   trigger?: DropdownTrigger | readonly DropdownTrigger[];
+  /** Фокусирует меню также при открытии наведением или внешним владельцем. */
+  autoFocus?: boolean;
   disabled?: boolean;
   placement?: DropdownPlacement;
   /** @defaultValue false */
@@ -65,6 +89,10 @@ export interface DropdownProps {
   mouseLeaveDelay?: number;
   /** Локальная функция перекрывает ConfigProvider; undefined сохраняет provider fallback. */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
+  /** Классы поверхности и строк на каждом уровне меню. */
+  classNames?: DropdownSemantic;
+  /** CSS-декларации поверхности и строк на каждом уровне меню. */
+  styles?: DropdownSemantic;
   'aria-label'?: string;
   class?: string;
   style?: string;

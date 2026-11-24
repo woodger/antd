@@ -3011,18 +3011,30 @@
         {
           "id": "core-v1",
           "title": "Подробный аудит согласованного API v1",
-          "state": "unreviewed",
+          "state": "supported",
           "requiredForV1": true,
-          "evidence": [],
-          "note": "Публичная реализация есть; детализация возможностей в реестре ещё не завершена."
+          "evidence": [
+            "docs/reference/components/dropdown.md",
+            "tests/browser/dropdown.spec.ts",
+            "src/lib/dropdown.ssr.test.ts"
+          ],
+          "note": "Нативные команды и ссылки, bind:open/defaultOpen, hover/click/manual, задержки, фокус, клавиатура, typeahead, disabled, SSR и работа внутри Modal проверены через публичный пакет. Вложенный Menu делит ту же реализацию. Расширения исходного Dropdown учтены отдельными возможностями."
         },
         {
           "id": "gap-1",
-          "title": "Вложенные меню",
-          "state": "missing",
+          "title": "Встроенный Menu, вложенный выбор и семантические слоты",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Ограничение зафиксировано в README модуля."
+          "evidence": [
+            "src/lib/DropdownMenu.svelte",
+            "src/lib/dropdown-menu-context.ts",
+            "tests/browser/fixtures/ant-design-dropdown-menu-reference.json",
+            "tests/browser/fixtures/ant-design-dropdown-menu-ssr-reference.json",
+            "tests/browser/dropdown-menu.spec.ts",
+            "tests/browser/dropdown-menu-hydration.spec.ts",
+            "tests/package/dropdown-menu.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-dropdown 1.0.3 и rc-menu 1.5.0. Dropdown использует общий вертикальный Menu с selectable=false по умолчанию. Поддержаны группы, подменю, open/selected keys, множественный выбор, activeKey, локальные menu.prefixCls и Dropdown classNames/styles. Слоты панели заменяют menu.classNames/styles и дополняют настройки ConfigProvider.menu. Обработчики команды получают тот же объект с путём и данными пункта в порядке item → branch → Menu. Внешние submenu portal входят в границы фокуса и мыши. Девять браузерных и шесть SSR-профилей неизменённого UMD повторены. Native button/link, preventDefault и восстановление фокуса сохранены. В Source preventDefault в item callback не останавливает закрытие, а на SSR выводится только trigger. Native сохраняет скрытую SSR-панель со штатным Menu без вызова getter. Вариант onOpenChange со вторым аргументом учтён отдельно."
         },
         {
           "id": "native-links",
@@ -3092,11 +3104,11 @@
         },
         {
           "id": "extended-api",
-          "title": "Semantic/config, render/container и дополнительные trigger API",
+          "title": "Глобальная конфигурация, render и дополнительные trigger API",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Ещё не перенесены global dropdown config вне theme tokens, semantic classNames/styles, popupRender, contextMenu и исходный destroyOnHidden/motion/arrow.pointAtCenter API. Standalone Menu/selectable/checkable integration и полный аудит семейства остаются в работе. Deprecated Dropdown.Button исключён; актуальная композиция — SpaceCompact + Dropdown + Button."
+          "note": "Остаются ConfigProvider.dropdown вне theme tokens, popupRender, contextMenu, дополнительные placement/align настройки, destroyOnHidden/forceRender/motion и arrow.pointAtCenter. Локальные classNames/styles и Menu перенесены отдельной возможностью. Deprecated Dropdown.Button исключён; актуальная композиция — SpaceCompact + Dropdown + Button."
         },
         {
           "id": "popup-container",
@@ -3153,7 +3165,7 @@
             "tests/browser/dropdown-prefix.spec.ts",
             "tests/package/dropdown-prefix.ssr.test.ts"
           ],
-          "note": "19 raw UMD конфигураций в normal/nested/reset scopes, aliases/cssVar, шесть arrow placements, RTL и HTMLElement portal. Owner prefixCls задаёт Dropdown/menu namespace; Button использует общий prefix. Пустой local prefix наследует ConfigProvider. 77 исходных CSS-правил без motion и исходного title flex:auto изолированы по local/global prefixes; canonical markers/variables сохранены. Прежние Native label flex/min-width и явный dir popup сохранены: raw title/portal direction отделены от public styles.itemContent/root.direction counterparts. Живая смена сохраняет открытый popup, trigger/menu/commands DOM, ARIA IDs, focus/typeahead и native link/binding/callback contracts. Standalone Menu integration/menu.prefixCls и общий аудит семейства не добавлены."
+          "note": "19 raw UMD конфигураций в normal/nested/reset scopes, aliases/cssVar, шесть arrow placements, RTL и HTMLElement portal. Owner prefixCls задаёт Dropdown/menu namespace; Button использует общий prefix. Пустой local prefix наследует ConfigProvider. 77 исходных CSS-правил без motion и исходного title flex:auto изолированы по local/global prefixes; canonical markers/variables сохранены. Прежние Native label flex/min-width и явный dir popup сохранены: raw title/portal direction отделены от public styles.itemContent/root.direction counterparts. Живая смена сохраняет открытый popup, trigger/menu/commands DOM, ARIA IDs, focus/typeahead и native link/binding/callback contracts. Вложенный Menu и отдельный menu.prefixCls описаны в разделе встроенного меню."
         }
       ]
     },
@@ -3485,10 +3497,15 @@
         {
           "id": "extended-api",
           "title": "Интеграция Menu в Dropdown",
-          "state": "missing",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Остаётся общий контракт Dropdown.menu и вложенных панелей. В исходном MenuProps исключены activeKey/defaultActiveFirst. Dropdown.menu объявляет activeKey отдельно. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены из переноса."
+          "evidence": [
+            "src/lib/DropdownMenu.svelte",
+            "src/lib/Menu.svelte",
+            "tests/browser/dropdown-menu.spec.ts",
+            "tests/package/dropdown-menu.ssr.test.ts"
+          ],
+          "note": "Встроенный Dropdown использует общее дерево, навигацию, selection и подменю Menu. Его activeKey принадлежит Dropdown.menu и отсутствует у самостоятельного Menu, как в Ant Design 6.6.8. Локальный prefix Menu и нативные кнопки/ссылки Dropdown поддержаны. Deprecated Menu.Item/SubMenu/ItemGroup/Divider children wrappers исключены."
         },
         {
           "id": "link-reset",
