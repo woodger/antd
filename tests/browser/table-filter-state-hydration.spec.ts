@@ -1,0 +1,77 @@
+import { mkdtemp, rm } from 'node:fs/promises';
+import { createServer as createHttpServer } from 'node:http';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createServer, type ViteDevServer } from 'vite';
+import { expect, test } from './test';
+
+let cacheDir: string;
+let server: ViteDevServer;
+
+test.beforeAll(async () => {
+  cacheDir = await mkdtemp(join(tmpdir(), 'antd-table-filter-state-'));
+  server = await createServer({
+    configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+    server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
+    appType: 'custom', cacheDir
+  });
+});
+
+test.afterAll(async () => {
+  await server?.close();
+  if (cacheDir) {
+    await rm(cacheDir, { recursive: true, force: true });
+  }
+});
+
+test('Table hydrates the focused filter trigger and keeps the owner in control', async ({ page }) => {
+  const entry = new URL('./fixtures/table-filter-state.server.ts', import.meta.url);
+  const { renderTableFilterState } = await server.ssrLoadModule(fileURLToPath(entry));
+  const { body, head } = renderTableFilterState();
+  await page.goto('/select-components-hydration.html');
+  await page.addScriptTag({ type: 'module', url: '/table-filter-state.client.ts' });
+  const root = page.locator('#root');
+  await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+  await root.evaluate((target, html) => {
+    document.head.insertAdjacentHTML('beforeend', html.head);
+    target.innerHTML = html.body;
+  }, { body, head });
+  const trigger = root.getByRole('button', { name: 'Filter: Score', exact: true });
+  const menu = root.getByRole('dialog', { name: 'Filter: Score', exact: true });
+  const rows = root.locator('tbody tr[data-row-key] > td:last-child');
+  const original = await trigger.elementHandle();
+  const changes = root.locator('[data-filter-state-changes]');
+  await trigger.focus();
+
+  await root.dispatchEvent('hydrate-table-filter-state');
+
+  await expect(root).toHaveAttribute('data-hydrated', 'true');
+  await expect(trigger).toBeFocused();
+  await expect(trigger).toHaveClass(/active/);
+  await expect(rows).toHaveText(['Alpha', 'Gamma']);
+  await expect(changes).toHaveText('[]');
+
+  await trigger.press('Space');
+  const even = menu.getByRole('radio', { name: 'Even', exact: true });
+  const odd = menu.getByRole('radio', { name: 'Odd', exact: true });
+  await expect(even).toBeFocused();
+  await expect(even).toBeChecked();
+  await even.press('ArrowDown');
+  await expect(odd).toBeChecked();
+  await odd.press('Enter');
+
+  await expect(menu).toBeHidden();
+  await expect(trigger).toBeFocused();
+  await expect(rows).toHaveText(['Alpha', 'Gamma']);
+  await expect(changes).toHaveText('[{"action":"filter","filters":{"score":["odd"]},"rows":[1]}]');
+
+  await trigger.press('Space');
+  await expect(even).toBeChecked();
+  await root.getByRole('button', { name: 'Update', exact: true }).dispatchEvent('click');
+
+  await expect(menu).toBeHidden();
+  await expect(rows).toHaveText(['Beta']);
+  await expect(changes).toHaveText('[{"action":"filter","filters":{"score":["odd"]},"rows":[1]}]');
+  expect(await trigger.evaluate((node, before) => node === before, original)).toBe(true);
+});

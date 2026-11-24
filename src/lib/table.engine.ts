@@ -4,6 +4,7 @@ import type {
   TableColumn,
   TableColumnsType,
   TableFilters,
+  TableFilterOption,
   TableFilterValue,
   TableKey,
   TableMode,
@@ -83,6 +84,65 @@ export function getTableFilters<Row extends object>(
   return getColumnFilters(getTableColumnOrder(columns), filters, mode);
 }
 
+/** Возвращает варианты фильтра, доступные в текущем режиме обработки данных. */
+export function getTableFilterOptions<Row extends object>(
+  column: TableColumn<Row>, mode: TableMode
+) {
+  return mode === 'server' || column.onFilter ? column.filters : undefined;
+}
+
+/** Запоминает начальные значения колонок. Явные ключи defaultFilters задаёт таблица. */
+export function getInitialTableFilters<Row extends object>(
+  columns: readonly TableColumn<Row>[],
+  defaults: Readonly<Record<string, readonly TableFilterValue[]>> = {}
+): TableFilters {
+  const entries: [string, TableFilterValue[]][] = [];
+
+  for (const column of columns) {
+    const values = 'filteredValue' in column ? column.filteredValue : column.defaultFilteredValue;
+    if (values?.length) {
+      entries.push([column.key, [...values]]);
+    }
+  }
+
+  for (const [key, values] of Object.entries(defaults)) {
+    entries.push([key, [...values]]);
+  }
+
+  return Object.fromEntries(entries);
+}
+
+/** Собирает значения владельца, включая пустые критерии управляемых колонок. */
+export function getControlledTableFilters<Row extends object>(
+  columns: readonly TableColumn<Row>[], mode: TableMode
+): TableFilters | undefined {
+  const entries: [string, TableFilterValue[]][] = [];
+
+  for (const column of columns) {
+    const values = column.filteredValue;
+    if (values !== undefined && getTableFilterOptions(column, mode)) {
+      entries.push([column.key, [...(values ?? [])]]);
+    }
+  }
+
+  return entries.length ? Object.fromEntries(entries) : undefined;
+}
+
+/** Применяет ограничения колонки к выбранным значениям или черновику сброса. */
+export function normalizeTableFilter(
+  options: readonly TableFilterOption[],
+  values?: readonly TableFilterValue[] | null,
+  multiple?: boolean
+): TableFilterValue[] {
+  if (!values?.length) {
+    return [];
+  }
+
+  const available = new Set(options.map(option => option.value));
+  const selected = [...new Set(values)].filter(value => available.has(value));
+  return multiple === false ? selected.slice(0, 1) : selected;
+}
+
 // Оставляет допустимые значения фильтров и соблюдает filterMultiple для каждого ключа.
 function getColumnFilters<Row extends object>(
   columns: readonly TableColumn<Row>[],
@@ -92,14 +152,13 @@ function getColumnFilters<Row extends object>(
   const entries: [string, TableFilterValue[]][] = [];
 
   for (const column of columns) {
-    if (!column.filters?.length || (mode === 'client' && !column.onFilter)) {
+    const options = getTableFilterOptions(column, mode);
+    if (!options?.length) {
       continue;
     }
 
-    const available = new Set(column.filters.map((option) => option.value));
-    const configured = Object.hasOwn(filters, column.key) ? filters[column.key] : [];
-    const selected = [...new Set(configured ?? [])].filter((value) => available.has(value));
-    const values = column.filterMultiple === false ? selected.slice(0, 1) : selected;
+    const configured = Object.hasOwn(filters, column.key) ? filters[column.key] : undefined;
+    const values = normalizeTableFilter(options, configured, column.filterMultiple);
 
     if (values.length) {
       entries.push([column.key, values]);

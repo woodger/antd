@@ -82,6 +82,14 @@ export interface TableColumn<Row extends object> {
   filters?: readonly TableFilterOption[];
   onFilter?: (value: TableFilterValue, record: Row) => boolean;
   filterMultiple?: boolean;
+  /** Добавляет индикацию активного фильтра независимо от выбранных значений. */
+  filtered?: boolean;
+  /** Управляет значениями колонки. Значения null и [] задают пустой фильтр. */
+  filteredValue?: readonly TableFilterValue[] | null;
+  /** Начальные значения колонки. Читаются при создании таблицы. */
+  defaultFilteredValue?: readonly TableFilterValue[] | null;
+  /** Кнопка сброса восстанавливает defaultFilteredValue в черновике меню. */
+  filterResetToDefaultFilteredValue?: boolean;
   align?: TableAlign;
   /** Обрезает строку. True включает нативный title для строк и чисел. */
   ellipsis?: boolean | { showTitle?: boolean; };

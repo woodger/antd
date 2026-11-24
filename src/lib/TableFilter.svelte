@@ -3,6 +3,7 @@
   // применённых фильтров Table.
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import { normalizeTableFilter } from './table.engine';
   import type { TableFilterOption, TableFilterValue } from './table.types';
   import { ruRU } from './types';
   import Button from './Button.svelte';
@@ -11,12 +12,16 @@
   import Empty from './Empty.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
 
-  let { prefixCls, dropdownPrefix, title, options, value, multiple, disabled, onApply }: {
+  let {
+    prefixCls, dropdownPrefix, title, options, value, filtered, resetValues, multiple, disabled, onApply
+  }: {
     prefixCls: string;
     dropdownPrefix: string;
     title: string;
     options: readonly TableFilterOption[];
     value: readonly TableFilterValue[];
+    filtered?: boolean;
+    resetValues?: readonly TableFilterValue[] | null;
     multiple: boolean;
     disabled: boolean;
     onApply: (values: TableFilterValue[]) => void;
@@ -33,6 +38,10 @@
   let openedOptions: TableFilterOption[] = [];
   let openedMultiple = true;
   let label = $derived(`${config.locale.table?.filterTitle ?? ruRU.table.filterTitle}: ${title}`);
+  const resetValue = $derived(normalizeTableFilter(options, resetValues, multiple));
+  const canReset = $derived(
+    draft.length !== resetValue.length || draft.some(value => !resetValue.includes(value))
+  );
 
   $effect(() => {
     if (!open || !panel) {
@@ -169,7 +178,7 @@
 
   function reset() {
     panel?.querySelector<HTMLInputElement>('input')?.focus();
-    draft = [];
+    draft = [...resetValue];
   }
 
   function handleKeydown(event: KeyboardEvent) {
@@ -213,7 +222,18 @@
   .table-filter-source [data-ant-table-filter-part="buttons"] { border-top-color: var(--ant-table-border-color); }
 </style>
 
-<button data-ant-table-filter-part="trigger" bind:this={trigger} type="button" class={[`${prefixCls}-filter-trigger`, value.length > 0 && 'active']} {disabled} aria-label={label} aria-haspopup="dialog" aria-expanded={open} aria-controls={`ant-filter-${id}`} popovertarget={`ant-filter-${id}`}><Icon name="filter" /></button>
+<button
+  data-ant-table-filter-part="trigger"
+  bind:this={trigger}
+  type="button"
+  class={[`${prefixCls}-filter-trigger`, (value.length > 0 || filtered) && 'active']}
+  {disabled}
+  aria-label={label}
+  aria-haspopup="dialog"
+  aria-expanded={open}
+  aria-controls={`ant-filter-${id}`}
+  popovertarget={`ant-filter-${id}`}
+><Icon name="filter" /></button>
 <div bind:this={panel} id={`ant-filter-${id}`} class={[`filter-popover ${config.getPrefixCls('dropdown')}`, designTheme.enabled && 'table-filter-source']} popover="auto" role="dialog" tabindex="-1" aria-label={label} dir={config.direction} onbeforetoggle={beforeToggle} onkeydown={handleKeydown} onfocusout={handleFocusOut}>
   <div data-ant-table-filter-part="dropdown" data-ant-table-prefix={prefixCls} data-ant-table-root-prefix={config.getPrefixCls()} class={`${prefixCls}-filter-dropdown`}>
     <div class={`filter-options ${dropdownPrefix}-menu`} role="group" aria-label={label}>
@@ -231,7 +251,7 @@
       {/each}
     </div>
     <div data-ant-table-filter-part="buttons" class={`${prefixCls}-filter-dropdown-btns`}>
-      <Button type="text" size="small" disabled={disabled || draft.length === 0} onclick={reset}>{config.locale.table?.filterReset ?? ruRU.table.filterReset}</Button>
+      <Button type="text" size="small" disabled={disabled || !canReset} onclick={reset}>{config.locale.table?.filterReset ?? ruRU.table.filterReset}</Button>
       <Button type="primary" size="small" {disabled} onclick={confirm}>{config.locale.table?.filterApply ?? ruRU.table.filterApply}</Button>
     </div>
   </div>

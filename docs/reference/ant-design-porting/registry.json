@@ -19956,6 +19956,25 @@
           "note": "Ant Design 6.6.8, rc-table 1.11.1. Два одинаковых UMD-прогона 16 профилей дают 20 состояний и 16 снимков SSR. Вложенный dataIndex читает поля и индексы, строка остаётся буквальным ключом. render сохраняет record/index и получает исходное value. Native сохраняет текстовый вывод false и буквальный пустой ключ. Проверены auto/fixed, max-content, sticky, пустые и headerless таблицы, align в RTL, ellipsis и title. В Source virtual minWidth=316 даёт заголовок 120 px и ячейку 316 px. Native применяет минимум в общей фиксированной сетке шапки и тела. Строгая гидратация и смена layout сохраняют редактор, выделение и фокус."
         },
         {
+          "id": "filter-state",
+          "title": "Начальные и управляемые фильтры колонок",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/TableFilter.svelte",
+            "src/lib/table.engine.ts",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-filter-state-reference.json",
+            "tests/browser/table-filter-state.spec.ts",
+            "tests/browser/table-filter-state-hydration.spec.ts",
+            "tests/package/table-filter-state.ssr.test.ts",
+            "tests/package/table-filter-state.types.ts"
+          ],
+          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона девяти профилей дают 29 состояний и девять SSR-снимков. Проверены filteredValue с null, переходы к управлению и обратно, начальный defaultFilteredValue, forced filtered и восстановление черновика при reset с подтверждением. Скрытые и responsive колонки сохраняют участие в обработке данных. При управлении только колонками учитываются заданные владельцем критерии. При сочетании с filters или defaultFilters карты Table задают остальные колонки, bind:filters передаёт запрос. onChange получает нормализованные активные критерии и запрошенные строки, включая server mode с переданной страницей. Строгая гидратация сохраняет кнопку и фокус, клавиатура подтверждает один запрос, обновление владельца закрывает устаревший черновик."
+        },
+        {
           "id": "sorter-state",
           "title": "Циклы, управление колонками и приоритеты сортировки",
           "state": "supported",

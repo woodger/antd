@@ -31,8 +31,11 @@
   import { createTableViewport } from './table-virtual.model.svelte';
   import {
     areTableFiltersEqual,
+    getControlledTableFilters,
+    getInitialTableFilters,
     getNextTableSorter,
     getTableData,
+    getTableFilterOptions,
     getTableFilters
   } from './table.engine';
   import { flattenTableRows, type TableRow } from './table-tree.engine';
@@ -79,7 +82,8 @@
     sortDirections = tableSortDirections,
     showSorterTooltip = true,
     filters = $bindable(),
-    defaultFilters = {},
+    filters: providedFilters,
+    defaultFilters,
     current = $bindable(),
     defaultCurrent = 1,
     pageSize = $bindable(),
@@ -147,18 +151,31 @@
   const initialSize = untrack(() => defaultPageSize);
   let pageRequest = $state.raw(untrack(readPageRequest));
   $effect.pre(syncPageRequest);
-  const initialFilters: TableFilters = untrack(
-    () => Object.fromEntries(
-      Object.entries(defaultFilters).map(([key, values]) => [key, [...values]])
-    )
-  );
+  const initialFilters = untrack(() => getInitialTableFilters(dataColumns, defaultFilters));
+  let localColumnFilters = $state.raw<TableFilters>();
+  const hasTableFilterDefaults = untrack(() => defaultFilters !== undefined);
+  const usesTableFilterState = $derived(providedFilters !== undefined || hasTableFilterDefaults);
+  const controlledFilters = $derived(getControlledTableFilters(dataColumns, mode));
+  const storedFilters = $derived.by(() => {
+    if (providedFilters === undefined && localColumnFilters !== undefined) {
+      return localColumnFilters;
+    }
+
+    return filters ?? initialFilters;
+  });
+  const appliedFilters = $derived.by(() => {
+    // Режим Ant Design при наличии filteredValue выбирает критерии управляемых колонок.
+    if (controlledFilters && !usesTableFilterState) {
+      return controlledFilters;
+    }
+
+    return controlledFilters ? { ...storedFilters, ...controlledFilters } : storedFilters;
+  });
   let childrenColumnName = $derived(expandable?.childrenColumnName || 'children');
-  let tableData = $derived(readTableData(activeSorts));
+  let tableData = $derived(readTableData(activeSorts, appliedFilters));
   const sortsByColumn = $derived(new Map(tableData.sorters.map(state => [state.columnKey, state])));
   let hasFilters = $derived(
-    dataColumns.some(
-      column => column.filters?.length && (mode === 'server' || column.onFilter)
-    )
+    dataColumns.some(column => getTableFilterOptions(column, mode)?.length)
   );
   let paging = $derived(
     getPaginationState(
@@ -536,19 +553,22 @@
     });
   });
 
-  function readTableData(sorts: readonly TableSortState[]) {
-    return getTableData(
-      dataSource, resolvedColumns, rowKey, sorts, filters ?? initialFilters, mode, childrenColumnName
-    );
+  function readTableData(sorts: readonly TableSortState[], selected: TableFilters) {
+    return getTableData(dataSource, resolvedColumns, rowKey, sorts, selected, mode, childrenColumnName);
   }
 
-  function notifyChange(action: TableChange<Row>['action'], requested?: readonly TableSortState[]) {
+  function notifyChange(
+    action: TableChange<Row>['action'],
+    requested?: { sorts?: readonly TableSortState[]; filters?: TableFilters; }
+  ) {
     scrollport.resetAfterChange();
     if (!onChange) {
       return;
     }
 
-    const data = requested ? readTableData(requested) : tableData;
+    const data = requested
+      ? readTableData(requested.sorts ?? activeSorts, requested.filters ?? appliedFilters)
+      : tableData;
     const showSorters = multipleSort || data.sorters.length > 1;
     onChange({
       action,
@@ -574,7 +594,7 @@
     const requested = changeTableSorts(dataColumns, activeSorts, column, next?.order ?? null);
     localSorts = requested;
     // Управляемая колонка показывает порядок владельца, а событие описывает запрос.
-    notifyChange('sort', controlledSorts.length ? requested : undefined);
+    notifyChange('sort', controlledSorts.length ? { sorts: requested } : undefined);
   }
 
   function readPageRequest() {
@@ -606,13 +626,16 @@
       return;
     }
 
-    const next = { ...(filters ?? initialFilters), [columnKey]: [...values] };
-    const active = getTableFilters(resolvedColumns, next, mode);
-
+    const request = { ...appliedFilters, [columnKey]: [...values] };
+    const active = getTableFilters(resolvedColumns, request, mode);
     if (areTableFiltersEqual(active, tableData.filters)) {
       return;
     }
 
+    const onlyColumnFilters = controlledFilters !== undefined && !usesTableFilterState;
+    const reportRequested = onlyColumnFilters
+      || (controlledFilters !== undefined && Object.hasOwn(controlledFilters, columnKey));
+    const next = onlyColumnFilters ? request : { ...storedFilters };
     if (Object.hasOwn(active, columnKey)) {
       next[columnKey] = active[columnKey];
     }
@@ -620,10 +643,15 @@
       delete next[columnKey];
     }
 
+    // Сохраняет запрос для локального режима после снятия filteredValue.
+    if (onlyColumnFilters || localColumnFilters !== undefined) {
+      localColumnFilters = next;
+    }
+
     filters = next;
     current = 1;
     syncPageRequest();
-    notifyChange('filter');
+    notifyChange('filter', reportRequested ? { filters: active } : undefined);
   }
 
   function sortDescription(order: TableSortOrder | undefined): string {
@@ -907,7 +935,7 @@
   {@const nextSort = sortable ? getNextTableSorter(column.key, currentSort ?? null, directions) : null}
   {@const tooltip = column.showSorterTooltip === undefined
     ? showSorterTooltip : column.showSorterTooltip}
-  {@const filterOptions = mode === 'server' || column.onFilter ? column.filters : undefined}
+  {@const filterOptions = getTableFilterOptions(column, mode)}
   {#if props.colSpan !== 0 && props.rowSpan !== 0}
     <th
       {...props.attributes}
@@ -947,9 +975,22 @@
           />
         {:else}<span class={column.ellipsis ? `${prefix}-column-title` : undefined}>{column.title}</span>{/if}
         {#if filterOptions}
-          <TableFilter prefixCls={prefix} {dropdownPrefix} title={column.title} options={filterOptions} value={Object.hasOwn(tableData.filters, column.key)
-              ? tableData.filters[column.key]
-              : []} multiple={column.filterMultiple !== false} disabled={resolvedDisabled} onApply={(values) => changeFilter(column.key, values)} />
+          {@const value = Object.hasOwn(tableData.filters, column.key)
+            ? tableData.filters[column.key] : []}
+          {@const resetValues = column.filterResetToDefaultFilteredValue
+            ? column.defaultFilteredValue : undefined}
+          <TableFilter
+            prefixCls={prefix}
+            {dropdownPrefix}
+            title={column.title}
+            options={filterOptions}
+            {value}
+            filtered={column.filtered}
+            {resetValues}
+            multiple={column.filterMultiple !== false}
+            disabled={resolvedDisabled}
+            onApply={values => changeFilter(column.key, values)}
+          />
         {/if}
       </div>
     </th>
