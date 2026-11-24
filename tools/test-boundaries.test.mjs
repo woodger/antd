@@ -14,9 +14,21 @@ const dependencies = new Set(Object.keys({
   ...metadata.peerDependencies,
   ...metadata.devDependencies
 }));
-const publicEntries = new Set(Object.keys(metadata.exports).map(entry =>
+const exactEntries = Object.keys(metadata.exports).filter(entry => !entry.includes('*'));
+const publicEntries = new Set(exactEntries.map(entry =>
   entry === '.' ? metadata.name : metadata.name + entry.slice(1)
 ));
+
+if (metadata.exports['./locale/*']) {
+  // Разрешает конкретные модули словарей из публичного шаблона без предварительной сборки.
+  const locales = readdirSync(join(root, 'src/lib/locale'), { withFileTypes: true });
+  for (const entry of locales) {
+    if (entry.isFile() && /^[a-z]{2,3}_[A-Z]{2}\.ts$/.test(entry.name)) {
+      const code = entry.name.slice(0, -3);
+      publicEntries.add(`${metadata.name}/locale/${code}`);
+    }
+  }
+}
 
 // Обходит только файлы, в которых стенд объявляет импорты JavaScript и Svelte.
 function sourceFiles(directory) {

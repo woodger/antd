@@ -74,6 +74,8 @@
   import { getGridMediaCss, getGridMediaScope } from './grid-style.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import type { ComponentSize, Variant, Locale, ThemeConfig } from './types';
+  import type { AntDesignLocale } from './locale.types';
+  import { resolveProviderLocale } from './locale.engine';
   import './styles.css';
 
   /** Наследуемые настройки темы, локали и компонентов для дочернего дерева Svelte. */
@@ -188,8 +190,8 @@
     /** Наследуемое disabled для controls; явное локальное значение уточняет его. */
     componentDisabled?: boolean;
     direction?: 'ltr' | 'rtl';
-    /** Частичный словарь с наследованием родительской локали и её подразделов. */
-    locale?: Partial<Locale>;
+    /** Словарь Ant Design или частичные настройки Svelte, наследуемые от провайдера. */
+    locale?: Partial<Locale> | AntDesignLocale;
     class?: string;
     style?: string;
   }
@@ -306,6 +308,7 @@
     ? getGridMediaScope(parentDesignTokens.state.token) : undefined);
   let gridMediaCss = $derived(gridMediaScope && gridMediaScope !== parentGridMediaScope
     ? getGridMediaCss(designTokens.state.token) : undefined);
+  let providerLocale = $derived(resolveProviderLocale(locale));
   const config: ConfigContext = {
     getPrefixCls,
     get variant() {
@@ -558,53 +561,62 @@
       return designTokens.style;
     },
     get locale() {
+      const inherited = parent.locale;
+      const current = providerLocale;
+
       return {
-        ...parent.locale,
-        ...locale,
+        ...inherited,
+        ...current,
+        justOkText: current?.justOkText ?? current?.okText ?? inherited.justOkText,
+        popconfirm: {
+          okText: current?.popconfirm?.okText ?? current?.okText ?? inherited.popconfirm?.okText,
+          cancelText: current?.popconfirm?.cancelText ?? current?.cancelText
+            ?? inherited.popconfirm?.cancelText
+        },
         typography: {
-          ...parent.locale.typography,
-          ...parent.locale.Text,
-          ...locale?.typography,
-          ...locale?.Text
+          ...inherited.typography,
+          ...inherited.Text,
+          ...current?.typography,
+          ...current?.Text
         },
         Text: {
-          ...parent.locale.typography,
-          ...parent.locale.Text,
-          ...locale?.typography,
-          ...locale?.Text
+          ...inherited.typography,
+          ...inherited.Text,
+          ...current?.typography,
+          ...current?.Text
         },
-        global: { ...parent.locale.global, ...locale?.global },
+        global: { ...inherited.global, ...current?.global },
         colorPicker: {
-          ...parent.locale.colorPicker, ...parent.locale.ColorPicker,
-          ...locale?.colorPicker, ...locale?.ColorPicker
+          ...inherited.colorPicker, ...inherited.ColorPicker,
+          ...current?.colorPicker, ...current?.ColorPicker
         },
         ColorPicker: {
-          ...parent.locale.colorPicker, ...parent.locale.ColorPicker,
-          ...locale?.colorPicker, ...locale?.ColorPicker
+          ...inherited.colorPicker, ...inherited.ColorPicker,
+          ...current?.colorPicker, ...current?.ColorPicker
         },
-        tour: { ...parent.locale.tour, ...parent.locale.Tour, ...locale?.tour, ...locale?.Tour },
-        Tour: { ...parent.locale.tour, ...parent.locale.Tour, ...locale?.tour, ...locale?.Tour },
+        tour: { ...inherited.tour, ...inherited.Tour, ...current?.tour, ...current?.Tour },
+        Tour: { ...inherited.tour, ...inherited.Tour, ...current?.tour, ...current?.Tour },
         carousel: {
-          ...parent.locale.carousel,
-          ...parent.locale.Carousel,
-          ...locale?.carousel,
-          ...locale?.Carousel
+          ...inherited.carousel,
+          ...inherited.Carousel,
+          ...current?.carousel,
+          ...current?.Carousel
         },
         Carousel: {
-          ...parent.locale.carousel,
-          ...parent.locale.Carousel,
-          ...locale?.carousel,
-          ...locale?.Carousel
+          ...inherited.carousel,
+          ...inherited.Carousel,
+          ...current?.carousel,
+          ...current?.Carousel
         },
-        pagination: { ...parent.locale.pagination, ...locale?.pagination },
-        table: { ...parent.locale.table, ...locale?.table },
-        inputNumber: { ...parent.locale.inputNumber, ...locale?.inputNumber },
-        steps: { ...parent.locale.steps, ...locale?.steps },
-        badge: { ...parent.locale.badge, ...locale?.badge },
-        avatarGroup: { ...parent.locale.avatarGroup, ...locale?.avatarGroup },
-        layout: { ...parent.locale.layout, ...locale?.layout },
-        qrcode: { ...parent.locale.qrcode, ...locale?.qrcode },
-        transfer: { ...parent.locale.transfer, ...locale?.transfer }
+        pagination: { ...inherited.pagination, ...current?.pagination },
+        table: { ...inherited.table, ...current?.table },
+        inputNumber: { ...inherited.inputNumber, ...current?.inputNumber },
+        steps: { ...inherited.steps, ...current?.steps },
+        badge: { ...inherited.badge, ...current?.badge },
+        avatarGroup: { ...inherited.avatarGroup, ...current?.avatarGroup },
+        layout: { ...inherited.layout, ...current?.layout },
+        qrcode: { ...inherited.qrcode, ...current?.qrcode },
+        transfer: { ...inherited.transfer, ...current?.transfer }
       };
     }
   };

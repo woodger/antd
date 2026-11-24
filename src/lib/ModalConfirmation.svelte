@@ -28,6 +28,9 @@
     && options.title !== null && typeof options.title !== 'boolean' && options.title !== '');
   let hasIcon = $derived(options.icon !== null && options.icon !== false);
   let okCancel = $derived(options.okCancel ?? confirmation.type === 'confirm');
+  let okText = $derived(
+    options.okText ?? (!okCancel ? config.locale.justOkText : undefined) ?? config.locale.okText
+  );
 
   function mounted() {
     runtime.mounted(id);
@@ -76,14 +79,11 @@
     {#if options.footer === undefined}
       <div class={`${componentPrefix}-confirm-btns`}>
         {#if okCancel}
-          <Button loading={confirmation.pendingCancel} onclick={() => runtime.act(id, false)}>
-            {@render content(options.cancelText ?? config.locale.cancelText)}
-          </Button>
+          <Button loading={confirmation.pendingCancel} onclick={() => runtime.act(id, false)}
+            children={options.cancelText ?? config.locale.cancelText} />
         {/if}
         <Button type="primary" loading={confirmation.pendingOk} autofocus
-          onclick={() => runtime.act(id, true)}>
-          {@render content(options.okText ?? config.locale.okText)}
-        </Button>
+          onclick={() => runtime.act(id, true)} children={okText} />
       </div>
     {:else if options.footer}
       {@render options.footer()}

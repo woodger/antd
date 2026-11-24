@@ -22,6 +22,10 @@
       "svelte": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./locale/*": {
+      "types": "./dist/locale/*.d.ts",
+      "default": "./dist/locale/*.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./porting/registry.json": "./docs/reference/ant-design-porting/registry.json"
   },

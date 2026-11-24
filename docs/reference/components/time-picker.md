@@ -104,9 +104,11 @@ showToday, прямые disabled units, addon/onSelect и второй аргу�
 `multiple` доступен у `DatePicker.TimePicker` и `Picker.TimePicker` из
 `generatePicker`. Эти компоненты принимают массив дат и подтверждают набор
 по правилам [множественного выбора](./date-picker.md#множественный-выбор).
-Mask format, полный каталог locales, React diagnostics и полный rc-trigger/
+Mask format, React diagnostics и полный rc-trigger/
 motion API пока не перенесены. Настройки `popupAlign` и `builtinPlacements`
 общие для пикеров даты и времени. [Положение панели](./date-picker.md#положение-панели)
+Подписи и формат времени берутся из словаря в `ConfigProvider.locale`.
+[Подключение локали](../themes.md#язык-интерфейса)
 Диапазон экспортируется как TimeRangePicker.
 Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream.
 

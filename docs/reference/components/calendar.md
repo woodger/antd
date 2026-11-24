@@ -51,7 +51,8 @@ CalendarCellRenderInfo — Svelte snippet исходного rc-picker inner. Da
 Ячейки сохраняются по позиции строки/столбца, как в upstream.
 
 Locale берётся из ConfigProvider.locale.calendar, независимо от DatePicker.
-Глобальные enUS/ruRU включают Calendar; default locale библиотеки остаётся ruRU.
+Встроенные enUS/ruRU и словари Ant Design включают Calendar. По умолчанию
+действует ruRU. [Подключение локали](../themes.md#язык-интерфейса)
 Словарь Calendar в ConfigProvider заменяется целиком, как DatePicker. Локальный
 Calendar.locale объединяет поля lang с базовым словарём и контекстом. Загрузка
 остальных Day.js locales остаётся у потребителя.
@@ -126,5 +127,5 @@ Defaults prefix stylesheet не перекрывают Native bridge; тёмны
 подпись года в input, Source — рядом с пустым search input; значение и выделение
 Native input проверяются по собственному существующему контракту.
 
-Полный каталог locales, React warnings и неперенесённые возможности используемых
-Select/Radio остаются за пределами подтверждённого объёма этого этапа.
+React warnings и неперенесённые возможности используемых Select/Radio остаются
+за пределами подтверждённого объёма этого этапа.

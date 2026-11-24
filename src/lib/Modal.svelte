@@ -192,8 +192,10 @@
           {#if footer}
             {@render footer()}
           {:else}
-            <Button disabled={confirmLoading} onclick={cancel}>{cancelText ?? config.locale.cancelText}</Button>
-            <Button type="primary" loading={confirmLoading} onclick={handleOk}>{okText ?? config.locale.okText}</Button>
+            <Button disabled={confirmLoading} onclick={cancel}
+              children={cancelText ?? config.locale.cancelText} />
+            <Button type="primary" loading={confirmLoading} onclick={handleOk}
+              children={okText ?? config.locale.okText} />
           {/if}
         </div>
       {/if}

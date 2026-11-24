@@ -70,6 +70,28 @@
 </ConfigProvider>
 ```
 
+Все 73 словаря Ant Design 6.6.8 доступны как отдельные импорты
+`@woodger/antd/locale/<код>`. Словари сохраняют форму `AntDesignLocale`
+с разделами `DatePicker`, `Calendar`, `Pagination` и другими. Для разделов,
+которые опущены в пользовательском словаре этой формы, используются
+английские подписи Ant Design.
+
+```svelte
+<script lang="ts">
+  import { ConfigProvider, DatePicker } from '@woodger/antd';
+  import frFR from '@woodger/antd/locale/fr_FR';
+  import 'dayjs/locale/fr.js';
+</script>
+
+<ConfigProvider locale={frFR}>
+  <DatePicker />
+</ConfigProvider>
+```
+
+Day.js отдельно поставляет названия месяцев и правила календарной недели.
+Подключите его локаль для нужного языка, как в примере. Направление интерфейса
+задаётся через `direction`, в том числе для арабской и еврейской локалей.
+
 Чтобы изменить одну подпись, укажите её во вложенном провайдере.
 В этом примере подсказка кнопки перехода вперёд станет «Next chapter»,
 а подпись «Previous page» и остальные строки пагинации останутся английскими.

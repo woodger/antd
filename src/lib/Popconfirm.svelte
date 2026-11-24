@@ -214,10 +214,13 @@
     <div data-ant-popconfirm-buttons="" class={`${rendered.prefix}-buttons`}>
       {#if rendered.showCancel}<Button {...rendered.cancelButtonProps} size={rendered.cancelButtonProps?.size ?? 'small'} disabled={Boolean(
           action.loading || resolvedDisabled || rendered.cancelButtonProps?.disabled
-        )} htmlType="button" onclick={cancel}>{rendered.cancelText ?? config.locale.cancelText}</Button>{/if}
+        )} htmlType="button" onclick={cancel}
+          children={rendered.cancelText ?? config.locale.popconfirm?.cancelText
+            ?? config.locale.cancelText} />{/if}
       <Button {...rendered.okButtonProps} type={rendered.okButtonProps?.type ?? rendered.okType} size={rendered.okButtonProps?.size ?? 'small'} disabled={Boolean(
           action.loading || resolvedDisabled || rendered.okButtonProps?.disabled
-        )} loading={action.loading} htmlType="button" onclick={confirm}>{rendered.okText ?? config.locale.okText}</Button>
+        )} loading={action.loading} htmlType="button" onclick={confirm}
+          children={rendered.okText ?? config.locale.popconfirm?.okText ?? config.locale.okText} />
     </div>
     {#if errorVisible}<p role="alert" data-ant-popconfirm-error="" class={`${rendered.prefix}-error`}>{config.locale.confirmErrorText ?? ruRU.confirmErrorText}</p>{/if}
   </div>

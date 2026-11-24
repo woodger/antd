@@ -20,6 +20,9 @@
 
 ### Added
 
+- Все 73 словаря Ant Design 6.6.8 доступны через `@woodger/antd/locale/<код>`
+  и подключаются к компонентам через `ConfigProvider.locale`.
+
 - DatePicker и RangePicker поддерживают `prefix`, `classNames` и `styles`
   для поля и календаря. Общие слоты, суффикс и очистка настраиваются через
   `ConfigProvider.datePicker`. Смена настроек сохраняет открытый календарь и фокус.

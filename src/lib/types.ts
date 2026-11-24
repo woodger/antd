@@ -86,6 +86,10 @@ export interface Locale {
   transfer?: TransferLocale;
   okText: string;
   cancelText: string;
+  /** Подпись единственной кнопки Modal в словаре Ant Design. */
+  justOkText?: string;
+  /** Допускает отдельные подписи действий Popconfirm. */
+  popconfirm?: { okText?: string; cancelText?: string; };
   closeText: string;
   clearText: string;
   emptyText: string;

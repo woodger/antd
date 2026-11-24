@@ -977,6 +977,7 @@ export type {
 } from './validation.engine';
 export type { FieldError } from './validation.engine';
 export type { NamePath, NamePathValue, PartialFormValues } from './form-store.engine';
+export type { AntDesignLocale } from './locale.types';
 export {
   ruRU,
   enUS,

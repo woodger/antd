@@ -12828,7 +12828,7 @@
             "docs/reference/components/time-picker.md",
             "docs/reference/components/time-range-picker.md"
           ],
-          "note": "Самостоятельный TimePicker принимает одно значение. DatePicker.TimePicker и фабричный Picker.TimePicker поддерживают multiple, как зафиксировано в DatePicker multiple-time-selection. Свой тип даты доступен через DatePicker.generatePicker, включая RangePicker с picker=time. Полный каталог locales, React diagnostics, полный rc-trigger/motion API и retained popup lifecycle остаются следующими этапами. Styles — CSS strings, nodes/renderers — Svelte snippets. Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream."
+          "note": "Самостоятельный TimePicker принимает одно значение. DatePicker.TimePicker и фабричный Picker.TimePicker поддерживают multiple, как зафиксировано в DatePicker multiple-time-selection. Свой тип даты доступен через DatePicker.generatePicker, включая RangePicker с picker=time. Каталог языка перенесён в ConfigProvider locale-catalog. React diagnostics, полный rc-trigger/motion API и retained popup lifecycle остаются следующими этапами. Styles — CSS strings, nodes/renderers — Svelte snippets. Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream."
         },
         {
           "id": "confirmation-button",
@@ -16722,13 +16722,13 @@
         },
         {
           "id": "theme-prefix-diagnostics",
-          "title": "Все locales и React diagnostics",
+          "title": "React diagnostics и границы композиции",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [
             "docs/reference/components/calendar.md"
           ],
-          "note": "Полный каталог locale exports, React deprecated/invalid-value warnings и неаудированные возможности используемых Select/Radio не объявляются перенесёнными. Адаптация: class/styles strings, snippets, отдельный factory и nativeElement binding вместо React refs/statics."
+          "note": "Каталог языка перенесён в ConfigProvider locale-catalog. React deprecated/invalid-value warnings и неаудированные возможности используемых Select/Radio не объявляются перенесёнными. Адаптация: class/styles strings, snippets, отдельный factory и nativeElement binding вместо React refs/statics."
         },
         {
           "id": "component-theme",
@@ -25280,6 +25280,27 @@
         "tests/browser/listy.spec.ts"
       ],
       "features": [
+        {
+          "id": "locale-catalog",
+          "title": "Полный каталог словарей Ant Design 6.6.8",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "package.json",
+            "src/lib/locale.types.ts",
+            "src/lib/locale.engine.ts",
+            "src/lib/locale/en_US.ts",
+            "src/lib/ConfigProvider.svelte",
+            "tools/ant-design-locales.mjs",
+            "tests/package/fixtures/ant-design-locales-reference.json",
+            "tests/package/locale-catalog.ssr.test.ts",
+            "tests/browser/fixtures/ant-design-locales-browser-reference.json",
+            "tests/browser/locale-catalog.spec.ts",
+            "tests/browser/locale-catalog-hydration.spec.ts",
+            "docs/reference/themes.md"
+          ],
+          "note": "Два прогона закреплённого antd-with-locales.min.js дали одинаковые данные для 73 подмодулей locale/<код>. Пакет сохраняет общий объект Calendar/DatePicker и отдельные подписи Modal и Popconfirm. Deprecated поля формата из rc-picker исключены. AntDesignLocale использует английские defaults Ant Design для пропущенных разделов. Нативные ruRU/enUS и вложенные частичные переопределения сохранены. Два браузерных прогона эталона покрывают 12 языков для пикеров, Calendar, Pagination, Empty, Table, Modal и Popconfirm, включая живую смену французского на немецкий. При строгой гидратации немецкая локаль сохраняет исходное поле, формат 19.06.2024, фокус и выделение. Для календарной арифметики потребитель загружает нужную локаль Day.js."
+        },
         {
           "id": "core-v1",
           "title": "Подробный аудит согласованного API v1",
