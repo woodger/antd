@@ -1,7 +1,7 @@
 // Объединяет оформление календаря и диапазона. Отдельный plain style диапазона
 // применяется между семантическими настройками провайдера и самого поля.
 import type {
-  DatePickerConfig, DatePickerProps, DatePickerSemantic, DatePickerSlots
+  DatePickerConfig, DatePickerMultipleProps, DatePickerProps, DatePickerSemantic, DatePickerSlots
 } from './date-picker.types';
 import type { RangePickerProps } from './range-picker.types';
 import { mergePickerSlots } from './time-picker-semantic.engine';
@@ -36,7 +36,9 @@ function mergeCalendarSlots(layers: (DatePickerSlots | undefined)[], separator: 
 }
 
 /** Собирает контекст и локальные слои в порядке DatePicker/RangePicker. */
-export function datePickerSemantic<Props extends DatePickerProps | RangePickerProps>(
+export function datePickerSemantic<
+  Props extends DatePickerProps | DatePickerMultipleProps | RangePickerProps
+>(
   props: Props,
   config: DatePickerConfig | undefined,
   localClassNames: DatePickerSemantic<Props> | undefined,

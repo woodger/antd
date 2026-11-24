@@ -74,7 +74,7 @@ export interface TimePickerProps extends Omit<
     | 'onPanelChange' | 'onPickerValueChange' | 'disabledDate' | 'onChange'
     | 'prefix' | 'onclick' | 'multiple' | 'cellRender' | 'picker'
 >, Omit<DatePickerTimeConfig, 'format'> {
-  /** На этом этапе поддерживается один Dayjs; multiple следует отдельным переносом. */
+  /** В публичном TimePicker 6.6.8 поддерживается один Dayjs. */
   multiple?: false;
   /** По умолчанию true, как в rc-picker для picker=time. */
   needConfirm?: boolean;

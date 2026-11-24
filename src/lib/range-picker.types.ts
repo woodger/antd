@@ -1,5 +1,6 @@
 import type { Dayjs } from 'dayjs';
 import type { Snippet } from 'svelte';
+import type { HTMLInputAttributes } from 'svelte/elements';
 import type {
   DatePickerProps,
   DatePickerTimeConfig,
@@ -33,6 +34,7 @@ export interface RangePickerConfig {
 export interface RangePickerProps extends Omit<
   DatePickerProps,
   'value'
+  | 'multiple'
   | 'defaultValue'
   | 'showTime'
   | 'disabled'
@@ -51,6 +53,7 @@ export interface RangePickerProps extends Omit<
   | 'classNames'
   | 'styles'
 > {
+  multiple?: HTMLInputAttributes['multiple'];
   /** Управляемая пара Dayjs; формат и точность следуют календарю и showTime. */
   value?: RangePickerInputValue | null;
   /** Начальный локальный диапазон при отсутствии value. */

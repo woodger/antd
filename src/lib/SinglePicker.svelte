@@ -3,7 +3,10 @@
   // commit выполняются раздельно.
   import { tick, untrack } from 'svelte';
   import type { Dayjs } from 'dayjs';
-  import type { DatePickerProps, DatePickerMode, DatePickerPreset } from './date-picker.types';
+  import type {
+    DatePickerProps, DatePickerMode, DatePickerMultipleProps, DatePickerPreset
+  } from './date-picker.types';
+  import { createMultiplePicker, pickerDateList } from './date-picker-multiple.model.svelte';
   import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
   import { normalizePickerFieldFormat } from './picker-mask.engine';
   import { createPickerMaskInput, type PickerMaskSharedKey } from './picker-mask-input.model.svelte.js';
@@ -36,6 +39,7 @@
   import NoCompactStyle from './NoCompactStyle.svelte';
   import Button from './Button.svelte';
   import DatePickerCalendar from './DatePickerCalendar.svelte';
+  import DatePickerSelectionTags from './DatePickerSelectionTags.svelte';
   import DatePickerTimePanel, { type DatePickerTimeScrollMemory }
     from './DatePickerTimePanel.svelte';
   import Icon from './Icon.svelte';
@@ -58,6 +62,7 @@
   let {
     time,
     dateProps,
+    multipleOptions,
     value,
     defaultValue,
     showTime: providedShowTime = false,
@@ -111,7 +116,11 @@
     style,
     nativeElement = $bindable(),
     ...attributes
-  }: DatePickerProps & { time?: TimePickerProps; dateProps?: DatePickerProps; } = $props();
+  }: DatePickerProps & {
+    time?: TimePickerProps;
+    dateProps?: DatePickerProps;
+    multipleOptions?: DatePickerMultipleProps;
+  } = $props();
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('picker', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
@@ -132,8 +141,22 @@
   const compact = useCompact();
   const generatedId = $props.id();
   const initialValue = untrack(() => defaultValue ?? null);
+  const initialDates = untrack(() => pickerDateList(multipleOptions?.defaultValue ?? defaultValue));
+  const initialSelection = untrack(() => {
+    if (!multipleOptions) return undefined;
+
+    return multipleOptions.value === undefined ? initialDates : pickerDateList(multipleOptions.value);
+  });
   let internalValue = $state.raw<Dayjs | null>(initialValue);
-  let mergedValue = $derived(value === undefined ? internalValue : value);
+  // Переключение multiple меняет представление общего списка, сохраняя принятые даты.
+  let dateValues = $state.raw<readonly Dayjs[]>(initialDates);
+  let mergedValue = $derived.by(() => {
+    if (multipleOptions) return null;
+    if (time) return value === undefined ? internalValue : value;
+
+    const values = value === undefined ? dateValues : pickerDateList(value);
+    return values[0] ?? null;
+  });
   let internalOpen = $state(untrack(() => defaultOpen));
   let blocked = $derived(
     disabled ?? field?.disabled ?? form?.disabled ?? config.componentDisabled
@@ -142,7 +165,7 @@
   let actualLocale = $derived(
     { ...datePickerEnUS.lang, ...config.locale.datePicker?.lang, ...locale?.lang }
   );
-  let showTime = $derived(time || picker === 'date' ? providedShowTime : false);
+  let showTime = $derived(!multipleOptions && (time || picker === 'date') ? providedShowTime : false);
   let formats = $derived(time ? timePickerFormats(time, actualLocale)
     : pickerFormats({ format, showTime, picker }, actualLocale));
   let maskFormat = $derived(normalizePickerFieldFormat<Dayjs>(time ? time.format : format, '').mask);
@@ -155,10 +178,11 @@
   let resolvedStatus = $derived((time ? time.status : status)
     ?? ('status' in itemStatus ? itemStatus.status : field?.status));
   let now = $state.raw(untrack(() => adapter.getNow()));
-  let draft = $state.raw<Dayjs | null>(untrack(() => value === undefined ? initialValue : value));
+  let draft = $state.raw<Dayjs | null>(untrack(() => mergedValue));
   let internalPanel = $state.raw(
     untrack(
-      () => pickerValue ?? defaultPickerValue ?? (value === undefined ? initialValue : value)
+      () => pickerValue ?? defaultPickerValue ?? mergedValue
+        ?? initialSelection?.[0]
         ?? (time ? now.startOf('day') : now)
     )
   );
@@ -232,6 +256,17 @@
   let dateSemantic = $derived.by(() => {
     const settings = config.datePicker;
     const providerStyle = settings?.style;
+    if (multipleOptions) {
+      if (!(settings?.classNames || settings?.styles
+        || multipleOptions.classNames || multipleOptions.styles || providerStyle)) {
+        return undefined;
+      }
+      const props = { ...multipleOptions, size: resolvedSize, disabled: blocked, status, variant };
+
+      return datePickerSemantic(
+        props, settings, multipleOptions.classNames, multipleOptions.styles, providerStyle
+      );
+    }
     if (!dateProps || !(settings?.classNames || settings?.styles
       || classNames || styles || providerStyle)) {
       return undefined;
@@ -288,6 +323,18 @@
     acceptInput: next => inputChange(next, true),
     onHelp: () => requestOpen(true, true)
   }));
+  const multiplePicker = createMultiplePicker({
+    get props() { return multipleOptions; },
+    get local() { return dateValues; },
+    set local(next) { dateValues = next; },
+    get picker() { return picker; },
+    get locale() { return actualLocale.locale; },
+    get formats() { return formats; },
+    get disabled() { return blocked; },
+    valid
+  });
+  let multipleText = $derived(multipleOptions ? multiplePicker.values.map(multiplePicker.format).join(',') : '');
+  let showDateNow = $derived(!multipleOptions && mode === 'date' && showNow);
   $effect(() => maskInput.sync());
   const timeInteraction = createRangeInteraction<Dayjs[]>({
     fieldCount: () => 1,
@@ -402,7 +449,8 @@
     if (time) {
       return;
     }
-    const opened = visible, calendar = draft;
+    const opened = visible;
+    const calendar = multipleOptions ? multiplePicker.values[0] ?? null : draft;
     const opening = opened && !datePanelWasOpen;
     const changed = calendar !== previousDateCalendar;
     datePanelWasOpen = opened;
@@ -410,7 +458,10 @@
     if (!opened || !opening && !changed) {
       return;
     }
-    untrack(() => syncDatePanel(opening));
+    untrack(() => {
+      if (opening && multipleOptions) multiplePicker.open();
+      syncDatePanel(opening);
+    });
   });
   $effect.pre(() => {
     if (!time && !visible && datePanelContainer
@@ -425,6 +476,9 @@
       hoverValue = null;
       if (time) {
         untrack(() => timeInteraction.trigger(0, 'popupClose'));
+      }
+      else if (multipleOptions) {
+        untrack(() => multiplePicker.close(confirm));
       }
       else {
         untrack(() => {
@@ -559,15 +613,29 @@
     const changed = time ? !timePickerSameValue(next, mergedValue)
       : next?.valueOf() !== mergedValue?.valueOf();
     setDraft(next, 'date');
-    if (time || value === undefined)
+    if (time) {
       internalValue = next;
+    }
+    else if (value === undefined) {
+      storeDate(next);
+    }
     dirty = false;
     if (changed)
       onChange?.(next, formatPicker(next, actualLocale.locale, formats));
     if (!time) void tick().then(resetText);
     return true;
   }
+  /** Одиночное подтверждение заменяет принятый список одной датой. */
+  function storeDate(next: Dayjs | null) {
+    dateValues = next ? [next] : [];
+  }
   function finish(confirmed: boolean) {
+    if (multipleOptions) {
+      if (!confirmed || multiplePicker.confirm()) {
+        requestOpen(false);
+      }
+      return;
+    }
     if (time) {
       if (confirmed) {
         if (!draft && clock.defaultOpenValue)
@@ -626,7 +694,8 @@
     if (defaultPickerValue && !opening) {
       return;
     }
-    let next = defaultPickerValue ?? draft ?? now;
+    const selectedDate = multipleOptions ? multiplePicker.values[0] : draft;
+    let next = defaultPickerValue ?? selectedDate ?? now;
     if (!defaultPickerValue) {
       if (minDate && minDate.isAfter(next)) next = minDate;
       if (maxDate && next.isAfter(maxDate)) next = maxDate;
@@ -671,6 +740,10 @@
     changeMode(next, date);
   }
   function selectDate(next: Dayjs) {
+    if (multipleOptions) {
+      selectMultipleDate(next);
+      return;
+    }
     const event = picker !== 'date' ? { previous: panel, mode } : undefined;
     retainedDatePreset = false;
     datePresetInteraction.trigger(0, 'panel-intermediate');
@@ -711,6 +784,21 @@
       if (picker === 'date') input?.focus();
     }
     setDatePanel(candidate, 'panel', event);
+  }
+  /** Переход между уровнями панели сохраняет текущий набор выбранных периодов. */
+  function selectMultipleDate(value: Dayjs) {
+    const event = { previous: panel, mode };
+    if (mode !== picker) {
+      const nextMode = mode === 'decade' ? 'year' : picker === 'quarter' ? 'quarter'
+        : mode === 'year' ? 'month' : picker;
+      setDatePanel(value, 'panel', event);
+      selectPanelMode(nextMode, value, event);
+      return;
+    }
+    if (valid(value)) {
+      multiplePicker.select(value);
+      setDatePanel(value, 'panel', event);
+    }
   }
   function selectTime(value: Dayjs) {
     if (time) {
@@ -947,6 +1035,10 @@
     datePanelContainer?.focus();
     focused = true;
     const next = datePresetValue(preset);
+    if (multipleOptions) {
+      multiplePicker.preset(next);
+      return;
+    }
     retainedDatePreset = true;
     dirty = false;
     draftSource = 'panel';
@@ -962,17 +1054,53 @@
       return false;
     }
     const changed = !timePickerSameValue(next, mergedValue);
-    if (value === undefined) internalValue = next;
+    if (value === undefined) storeDate(next);
     if (changed) onChange?.(next, formatPicker(next, actualLocale.locale, formats));
     return true;
   }
   function handleRootClick(event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement; }) {
-    if (!time || blocked) {
+    if ((!time && !multipleOptions) || blocked) {
       return;
     }
     if (!rootElement?.contains(event.currentTarget.ownerDocument.activeElement)) input?.focus();
     requestOpen(true);
-    (time.onclick ?? time.onClick)?.(event);
+    if (time) (time.onclick ?? time.onClick)?.(event);
+  }
+  /** Передаёт фокус в календарь, когда пользователь работает с тегами клавиатурой. */
+  async function multipleKeyboard(
+    event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }
+  ) {
+    onkeydown?.(event);
+    if (event.defaultPrevented || event.isComposing || blocked) {
+      return;
+    }
+    if (event.key === 'Enter' && (!visible || confirm)) {
+      event.preventDefault();
+      if (visible) finish(true);
+      else requestOpen(true);
+    }
+    else if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      requestOpen(true);
+      await tick();
+
+      const firstCell = popup?.querySelector<HTMLButtonElement>('button[data-picker-date]:not(:disabled)');
+      const focusedCell = popup?.querySelector<HTMLButtonElement>(
+        'button[data-picker-date][tabindex="0"]:not(:disabled)'
+      );
+      (focusedCell ?? firstCell)?.focus();
+    }
+  }
+  /** Удаление по клавиатуре возвращает фокус полю, если кнопка исчезает. */
+  function removeMultipleDate(date: Dayjs, event?: MouseEvent) {
+    if (blocked) {
+      return;
+    }
+    event?.stopPropagation();
+    const active = rootElement ? getPopupActiveElement(rootElement) : null;
+    const refocus = active !== input && rootElement?.contains(active);
+    multiplePicker.remove(date, visible);
+    if (refocus) input?.focus();
   }
   function selectPreset(preset: TimePickerPreset) {
     const next = typeof preset.value === 'function' ? preset.value() : preset.value;
@@ -1020,8 +1148,9 @@
             prefixCls={prefix}
             {panel}
             timeTemplate={clock.defaultOpenValue}
-            selected={draft}
-            hovered={hoverValue ?? draft}
+            selected={multipleOptions ? null : draft}
+            multipleValues={multipleOptions ? multiplePicker.values : undefined}
+            hovered={hoverValue ?? (multipleOptions ? null : draft)}
             onHover={handleDateCellHover}
             preserveDisabledHover
             direction={config.direction}
@@ -1054,12 +1183,12 @@
             />
           {/if}
         </div></div>
-        {#if renderExtraFooter || confirm || mode === 'date' && showNow}
+        {#if renderExtraFooter || confirm || showDateNow}
         <div class={[`${prefix}-footer`, dateSemantic?.classes.popup.footer]}
           style={dateSemantic?.styles.popup.footer}>
           {#if renderExtraFooter}<div class={`${prefix}-footer-extra`}>{@render renderExtraFooter(mode)}</div>{/if}
-          {#if (confirm || showTime) && (confirm || mode === 'date' && showNow)}<ul class={`${prefix}-ranges`}>
-            {#if mode === 'date' && showNow}<li class={`${prefix}-now`}><button type="button" data-picker-current class={`${prefix}-now-btn`} disabled={pickerDateDisabled(now, restrictions)} onclick={() => {
+          {#if (confirm || showTime) && (confirm || showDateNow)}<ul class={`${prefix}-ranges`}>
+            {#if showDateNow}<li class={`${prefix}-now`}><button type="button" data-picker-current class={`${prefix}-now-btn`} disabled={pickerDateDisabled(now, restrictions)} onclick={() => {
                 const next = validPickerTime(adapter.getNow(), clock, disabledTime);
                 if (commit(next)) {
                   requestOpen(false);
@@ -1067,11 +1196,11 @@
                 }
               }}>{showTime ? actualLocale.now : actualLocale.today}</button></li>{/if}
             {#if confirm}<li class={`${prefix}-ok`}><Button type="primary" size="small"
-              disabled={!valid(draft)} onclick={() => {
+              disabled={multipleOptions ? !multiplePicker.canConfirm : !valid(draft)} onclick={() => {
                 finish(true);
                 input?.focus();
               }} children={actualLocale.ok} /></li>{/if}
-          </ul>{:else if mode === 'date' && showNow}<button type="button" data-picker-current class={`${prefix}-today-btn`} disabled={pickerDateDisabled(now, restrictions)} onclick={() => {
+          </ul>{:else if showDateNow}<button type="button" data-picker-current class={`${prefix}-today-btn`} disabled={pickerDateDisabled(now, restrictions)} onclick={() => {
               const next = validPickerTime(adapter.getNow());
               if (commit(next))
                 requestOpen(false);
@@ -1155,13 +1284,23 @@
   </div>
 {/snippet}{#snippet clearButton()}
   {#if clearEnabled
-      && (time ? hoverValue || draft : hoverValue || (retainedDatePreset ? draft : mergedValue)) && !blocked}
+      && (multipleOptions ? multiplePicker.values.length
+        : time ? hoverValue || draft : hoverValue || (retainedDatePreset ? draft : mergedValue))
+      && !blocked}
     <button
       type="button"
       data-picker-clear class={`${prefix}-clear`}
       aria-label={actualLocale.clear}
       onpointerdown={event => event.preventDefault()}
       onclick={event => {
+        if (multipleOptions) {
+          event.stopPropagation();
+          multiplePicker.clear();
+          requestOpen(false);
+          input?.focus();
+          onClear?.();
+          return;
+        }
         if (!time && hoverValue) {
           hoverValue = null;
           retainedDatePreset = false;
@@ -1187,15 +1326,27 @@
     {:else if clearContent !== undefined}{clearContent}
     {:else}<Icon name="close-circle-filled" />{/if}</button>
   {/if}
+{/snippet}{#snippet pickerSuffix()}
+  {#if suffixContent !== false && suffixContent !== null && suffixContent !== ''}
+    <span
+      class={[`${prefix}-suffix`, semantic?.classes.suffix]}
+      style={semantic?.styles.suffix}
+      aria-hidden="true"
+    >
+      {#if typeof suffixContent === 'function'}{@render suffixContent()}{:else if suffixContent === undefined || suffixContent === true}{#if time}<PickerClockIcon />{:else}<PickerCalendarIcon />{/if}{#if feedback.hasFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}{:else}{suffixContent}{/if}
+    </span>
+  {/if}
 {/snippet}{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`picker-prefix:${prefix}:${rootPrefix}`} />{/if}<div bind:this={rootElement} data-ant-picker-prefix={prefix} data-ant-picker-root-prefix={rootPrefix} role={time ? 'presentation' : 'group'} style={
     componentTheme.style || time || semantic?.styles.root
       ? [componentTheme.style, semantic?.styles.root, style].filter(Boolean).join(';')
       : style}
-  dir={config.direction} onfocusout={blurWithin} onclick={time ? handleRootClick : undefined}
+  dir={config.direction} onfocusout={blurWithin}
+  onclick={time || multipleOptions ? handleRootClick : undefined}
   class={[
       `${prefix} ant-picker-css-var`,
       componentTheme.className,
       `${prefix}-${actualVariant}`,
+      multipleOptions && `${prefix}-multiple`,
       blocked && `${prefix}-disabled`,
       visible && `${prefix}-open`,
       focused && `${prefix}-focused`,
@@ -1218,6 +1369,54 @@
     >{#if typeof leadingContent === 'function'}{@render leadingContent()}
       {:else if leadingContent !== true}{leadingContent}{/if}</div>
   {/if}
+  {#if multipleOptions}
+    <DatePickerSelectionTags
+      {prefix}
+      {input}
+      values={multiplePicker.values}
+      format={multiplePicker.format}
+      disabled={blocked}
+      placeholder={placeholderText}
+      clearLabel={actualLocale.clear}
+      maxTagCount={multipleOptions.maxTagCount}
+      tagRender={multipleOptions.tagRender}
+      removeIcon={multipleOptions.removeIcon}
+      onRemove={removeMultipleDate}
+    />
+    <input
+      {...attributes}
+      bind:this={input}
+      id={id ?? field?.id}
+      name={name ?? field?.name}
+      type="text"
+      class={[`${prefix}-multiple-input`, semantic?.classes.input]}
+      style={semantic?.styles.input}
+      data-picker-multiple-input
+      role="combobox"
+      aria-haspopup="dialog"
+      aria-expanded={visible}
+      aria-controls={`ant-picker-${generatedId}`}
+      aria-invalid={field?.invalid || resolvedStatus === 'error' || attributes['aria-invalid'] || undefined}
+      aria-describedby={[attributes['aria-describedby'], field?.describedBy].filter(Boolean).join(' ') || undefined}
+      aria-required={attributes.required ?? field?.required ?? attributes['aria-required']}
+      aria-readonly="true"
+      value={multipleText}
+      defaultValue={multipleText}
+      autocomplete="off"
+      disabled={blocked}
+      readonly
+      onkeydown={multipleKeyboard}
+      onfocus={event => {
+        focused = true;
+        onfocus?.(event);
+      }}
+      onblur={event => {
+        onblur?.(event);
+        blurWithin(event);
+      }}
+    />
+    {@render pickerSuffix()}
+  {:else}
   <div class={[`${prefix}-input`, hoverValue && `${prefix}-input-placeholder`]}>
     <input
       {...attributes}
@@ -1278,17 +1477,10 @@
             onblur?.(event);
             blurWithin(event);
           }} />
-    {#if suffixContent !== false && suffixContent !== null && suffixContent !== ''}
-      <span
-        class={[`${prefix}-suffix`, semantic?.classes.suffix]}
-        style={semantic?.styles.suffix}
-        aria-hidden="true"
-      >
-        {#if typeof suffixContent === 'function'}{@render suffixContent()}{:else if suffixContent === undefined || suffixContent === true}{#if time}<PickerClockIcon />{:else}<PickerCalendarIcon />{/if}{#if feedback.hasFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}{:else}{suffixContent}{/if}
-      </span>
-    {/if}
+    {@render pickerSuffix()}
     {#if time}{@render clearButton()}{/if}
   </div>
+  {/if}
   {#if !time}{@render clearButton()}{/if}
 </div><NoCompactStyle>{#key container.target}{#if visible}
     {@const initialPopupStyle = untrack(() => popupThemeStyle)}

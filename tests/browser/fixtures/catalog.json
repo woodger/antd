@@ -771,6 +771,16 @@
     "root": "date-picker-provider-fixture"
   },
   {
+    "id": "date-picker-multiple",
+    "module": "./DatePickerMultipleFixtures.svelte",
+    "root": "date-picker-multiple-fixture"
+  },
+  {
+    "id": "date-picker-multiple-mode",
+    "module": "./DatePickerMultipleModeFixtures.svelte",
+    "root": "date-picker-multiple-mode-fixture"
+  },
+  {
     "id": "date-picker-offgrid-scroll",
     "module": "./DatePickerOffGridScrollFixtures.svelte",
     "root": "date-picker-offgrid-scroll-fixture"

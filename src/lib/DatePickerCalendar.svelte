@@ -19,6 +19,7 @@
     panel,
     timeTemplate,
     selected,
+    multipleValues,
     hovered,
     mode,
     classNames,
@@ -44,6 +45,7 @@
     panel: Dayjs;
     timeTemplate?: Dayjs;
     selected: Dayjs | null;
+    multipleValues?: readonly Dayjs[];
     hovered?: Dayjs | null;
     mode: DatePickerMode;
     classNames?: DatePickerPopupSlots;
@@ -133,6 +135,9 @@
     );
   }
   function selectedCell(date: Dayjs) {
+    if (multipleValues) {
+      return multipleValues.some(value => sameCell(value, date));
+    }
     return selected
       ? weekPanel ? samePickerWeek(selected, date, locale.locale)
       : mode === 'quarter' ? samePickerQuarter(selected, date)

@@ -85,17 +85,18 @@ export interface DatePickerConfig {
   class?: string;
   style?: string;
   variant?: DatePickerProps['variant'];
-  classNames?: DatePickerSemantic<DatePickerProps | RangePickerProps>;
-  styles?: DatePickerSemantic<DatePickerProps | RangePickerProps>;
+  classNames?: DatePickerSemantic<DatePickerProps | DatePickerMultipleProps | RangePickerProps>;
+  styles?: DatePickerSemantic<DatePickerProps | DatePickerMultipleProps | RangePickerProps>;
   suffixIcon?: InputContent;
   allowClear?: DatePickerAllowClear;
 }
 /** Выбор одной даты или datetime через Dayjs, input и локализованную панель. */
 export interface DatePickerProps extends Omit<
   HTMLInputAttributes,
-  'value' | 'defaultValue' | 'size' | 'type' | 'children' | 'prefix'
+  'value' | 'defaultValue' | 'size' | 'type' | 'children' | 'prefix' | 'multiple'
     | 'onchange' | 'oninput' | 'onselect'
 > {
+  multiple?: false;
   /** Выбор даты, недели, месяца, года или квартала. @defaultValue 'date' */
   picker?: DatePickerPicker;
   /** Управляемый Dayjs или null; компонент не вводит прикладную UTC-сериализацию. */
@@ -171,3 +172,47 @@ export interface DatePickerProps extends Omit<
   /** Нативный ref доступен после mount и очищается при unmount. */
   nativeElement?: HTMLDivElement;
 }
+
+/** Дата и действия одного выбранного тега. Value сохраняет исходный Dayjs. */
+export interface DatePickerTagContext {
+  label: string;
+  value: Dayjs;
+  disabled: boolean;
+  closable: boolean;
+  onClose: (event?: MouseEvent) => void;
+}
+
+/** Множественный выбор дат или периодов с отдельным черновиком панели. */
+export interface DatePickerMultipleProps extends Omit<
+  DatePickerProps,
+  'multiple' | 'value' | 'defaultValue' | 'showTime' | 'onChange'
+    | 'onCalendarChange' | 'onOk' | 'classNames' | 'styles'
+> {
+  multiple: true;
+  value?: readonly Dayjs[] | null;
+  defaultValue?: readonly Dayjs[] | null;
+  showTime?: false;
+  /** Сортирует изменённый выбор по времени, сохраняя порядок входного value. @defaultValue true */
+  order?: boolean;
+  maxTagCount?: number | 'responsive';
+  tagRender?: Snippet<[DatePickerTagContext]>;
+  removeIcon?: InputContent;
+  onChange?: (value: Dayjs[] | null, dateStrings: string[] | null) => void;
+  onCalendarChange?: (value: Dayjs[], dateStrings: string[], info: { source: 'date'; }) => void;
+  onOk?: (value: Dayjs[]) => void;
+  classNames?: DatePickerSemantic<DatePickerMultipleProps>;
+  styles?: DatePickerSemantic<DatePickerMultipleProps>;
+}
+
+type SelectionField = 'value' | 'defaultValue' | 'showTime' | 'onChange'
+  | 'onCalendarChange' | 'onOk' | 'classNames' | 'styles';
+
+/** Объявление шаблона выводит тип значения по флагу multiple. */
+export type DatePickerSelectionProps<Multiple extends boolean> = Omit<
+  DatePickerProps, 'multiple' | SelectionField
+> & {
+  multiple?: Multiple;
+} & {
+  [Field in SelectionField]?: Multiple extends true
+    ? DatePickerMultipleProps[Field] : DatePickerProps[Field];
+} & Pick<DatePickerMultipleProps, 'order' | 'maxTagCount' | 'tagRender' | 'removeIcon'>;

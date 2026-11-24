@@ -22,6 +22,36 @@ Value/open/pickerValue — controlled props с callbacks: владелец мо�
 decade служит экраном навигации. NativeElement с bind указывает на root div; bind:this даёт методы
 focus({preventScroll,cursor:'start'|'end'|'all'}) и blur().
 
+## Множественный выбор
+
+`multiple` включает выбор нескольких дат, недель, месяцев, кварталов или годов.
+`value` и `defaultValue` принимают массив Dayjs или null. `onChange` получает
+массив дат и отформатированных строк. Полная очистка передаёт `null, null`,
+а удаление последнего тега в закрытом поле — `[], null`.
+`DatePickerMultipleProps` и `DatePickerTagContext` доступны из пакета.
+Для императивных `mount` и `render` режим массива задаётся как `DatePicker<true>`.
+
+Календарь меняет черновик и вызывает `onCalendarChange`. При `needConfirm`
+кнопка OK вызывает `onOk`, затем `onChange` и закрывает панель. Закрытие без
+подтверждения восстанавливает принятый набор. Без `needConfirm` изменённый
+непустой набор публикуется при закрытии. Пресет сразу переключает период
+и оставляет панель открытой. `order={false}` сохраняет порядок выбора.
+Отклонённое владельцем значение остаётся черновиком только до закрытия.
+`showTime` доступен в одиночном режиме.
+
+`maxTagCount` принимает число или `'responsive'`. `tagRender` получает
+подпись, Dayjs, `disabled`, `closable` и `onClose`. `removeIcon` меняет
+содержимое кнопки удаления. Поле сохраняет `id`, `name` и доступное имя.
+Стрелка вниз переводит фокус в календарь, а FormData получает строки дат через
+запятую, включая скрытые теги.
+
+[Браузерные замеры React](../../../tests/browser/fixtures/ant-design-date-picker-multiple-browser.json.gz)
+и [замеры SSR](../../../tests/browser/fixtures/ant-design-date-picker-multiple-ssr.json.gz)
+сохраняют исходные случаи. Тесты пакета сверяют значения, порядок действий,
+переключение режима и гидратацию.
+
+## Формат и режимы календаря
+
 Format принимает строку, массив допустимых форматов, display callback либо объект
 `{ format: 'YYYY-MM-DD', type: 'mask' }`; без type объект действует как строковый формат. Input
 с callback-only format автоматически readonly. По умолчанию дата YYYY-MM-DD,

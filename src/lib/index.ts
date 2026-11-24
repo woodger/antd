@@ -213,9 +213,11 @@ export type {
   RangePickerPreset,
   RangePickerConfig
 } from './range-picker.types';
-export { default as DatePicker } from './DatePicker.svelte';
+export { default as DatePicker } from './date-picker.component';
 export type {
   DatePickerProps,
+  DatePickerMultipleProps,
+  DatePickerTagContext,
   DatePickerSemantic,
   DatePickerSlots,
   DatePickerPopupSlots,

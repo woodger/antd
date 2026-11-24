@@ -1,8 +1,25 @@
-<script lang="ts">
+<script lang="ts" generics="Multiple extends boolean = false">
   import SinglePicker from './SinglePicker.svelte';
-  import type { DatePickerProps } from './date-picker.types';
+  import type {
+    DatePickerMultipleProps, DatePickerProps, DatePickerSelectionProps
+  } from './date-picker.types';
 
-  let { nativeElement = $bindable(), ...props }: DatePickerProps = $props();
+  let { nativeElement = $bindable(), ...props }: DatePickerSelectionProps<Multiple> = $props();
+  // После вывода generic у владельца конкретный runtime режим задаёт multiple.
+  let ownerProps = $derived(props as DatePickerProps | DatePickerMultipleProps);
+  let dateProps = $derived(ownerProps.multiple ? undefined : ownerProps);
+  let multipleOptions = $derived(ownerProps.multiple ? ownerProps : undefined);
+  let shared = $derived.by(() => {
+    if (!multipleOptions) {
+      return dateProps;
+    }
+
+    const {
+      multiple, value, defaultValue, onChange, onCalendarChange, onOk,
+      classNames, styles, order, maxTagCount, tagRender, removeIcon, ...sharedProps
+    } = multipleOptions;
+    return sharedProps;
+  });
   let picker = $state<{
     focus(options?: FocusOptions & { cursor?: 'start' | 'end' | 'all'; }): void;
     blur(): void;
@@ -17,4 +34,10 @@
   }
 </script>
 
-<SinglePicker {...props} dateProps={props} bind:nativeElement bind:this={picker} />
+<SinglePicker
+  {...shared}
+  {dateProps}
+  {multipleOptions}
+  bind:nativeElement
+  bind:this={picker}
+/>

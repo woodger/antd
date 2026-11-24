@@ -6866,12 +6866,35 @@
           "note": "Scalar {format,type?:mask} сохраняет primitive/function arrays. Числовые YYYY/MM/DD/HH/mm/ss/SSS, локальный неполный текст, реальный focus/segment/caret и отмена native key обработаны общими engine/controller без замены input. Enter использует сохранённый Dayjs; pristine сохраняет скрытое время, SSS не округляется panel step. Format-only updates сохраняют working range и исходную ссылку owner model. DefaultPickerValue удерживает панель при вводе; DOM value/defaultValue следуют отображению. Исходные React6.6.8 first/repeat:5 owners/75 macros/287 подшагов (272 физических и15 DOM controls)/1036 отдельных чтений на CSR;15 закрытых profiles×2SSR serializers на run. Все1618 original parts и4 manifests сохранены целыми gzip без изменения raw полей. Pure producer count/order не сравниваются; аргументы/возвраты/Dayjs/from и публичные aliases требуют Source witness в наблюдаемом переходе. AfterCall сохраняется отдельно от settled. Native combobox/dialog, button calendar, refs/receiver и pre-first-focus collapsed caret construction остаются явно проверяемыми границами. Clipboard/IME и preserveInvalidOnBlur=true matrix этим срезом не заявлены; полнота семейства не заявляется. Отдельный Source hydrateRoot first/repeat покрывает30 closed profiles/270 snapshots с сохранением parsed owner/root/input и нулевой каретки. Ещё4 исходных range-prefix packets сохраняют фокус/нулевую каретку конца после Enter начала;40 facts для10 точных labels проверяются по полным gzip/raw hashes, JSON paths и byte ranges. Только эти свидетели допускают различие с исходной CSR-кареткой; значения, callbacks, Date/from и producer arguments остаются строгими. Maintained Native browser проверяет15 SSR/hydration profiles, включая этот переход фокуса и unmount/+1000. Production public-dist подтверждён составным прогоном:13 успешных V2 cases, TimeRange V3 и финальный RangeDate V4, при побайтно одинаковых3832 src/dist files. V4 заново рендерит15 closed SSR profiles и проверяет RangeDate15 macros/56children, strict hydrate(recover:false), все actual producer arguments BOTH Source и unmount/+1000. Вызовы чистых ограничений во время unmount сохраняются в ledger; cleanup→late не допускает роста, callbacks и refs проверяются отдельно."
         },
         {
+          "id": "multiple-selection",
+          "title": "Множественный выбор дат и периодов, теги и подтверждение",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/DatePicker.svelte",
+            "src/lib/SinglePicker.svelte",
+            "src/lib/date-picker-multiple.model.svelte.ts",
+            "src/lib/DatePickerSelectionTags.svelte",
+            "src/lib/date-picker.component.ts",
+            "src/lib/date-picker.types.ts",
+            "docs/reference/components/date-picker.md",
+            "tests/browser/fixtures/ant-design-date-picker-multiple-browser.json.gz",
+            "tests/browser/fixtures/ant-design-date-picker-multiple-ssr.json.gz",
+            "tests/browser/fixtures/ant-design-date-picker-multiple-interactions.json.gz",
+            "tests/browser/fixtures/ant-design-date-picker-multiple-mode.json.gz",
+            "tests/browser/date-picker-multiple.spec.ts",
+            "tests/browser/date-picker-multiple-hydration.spec.ts",
+            "tests/package/date-picker-multiple.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8, rc-picker 1.12.2 a975a11f9a959a811b1ecd901e8ff8ae8f0e515b. Повторены 9 браузерных профилей, 8 сценариев взаимодействия и переключение режима, 18 SSR-профилей. Набор Dayjs сохраняет aliases и исходный порядок до изменения, order=false отключает сортировку. needConfirm отделяет черновик от принятого списка, OK сообщает onOk перед onChange, пресеты переключают период сразу. Числовой и responsive maxTagCount, tagRender, removeIcon, clear и пустые открытые/закрытые удаления. Существующий Svelte controlled контракт восстанавливает принятый набор при отклонении, а Raw React сохраняет предложенные теги. Native сохраняет имя и фокусируемость readonly editor, FormData, nativeElement и info {source:date}. Повторный label одной недели не оставляет лишний тег после удаления всех соответствующих дат. Disabled click не запрашивает открытие. Raw отклонения и неподдерживаемые source runtime showTime/multiple и множественный TimePicker зафиксированы отдельно. По публичному API multiple относится к date/week/month/year/quarter."
+        },
+        {
           "id": "extended-api",
-          "title": "Multiple, generatePicker и оставшиеся события",
+          "title": "GeneratePicker и оставшиеся события",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет multiple и generatePicker factory. Week/month/year/quarter, showWeek, RangePicker presets/previewValue и семантическое оформление перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно; остальные события семейства ещё не покрыты полностью. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
+          "note": "GeneratePicker factory предстоит перенести. Multiple, week/month/year/quarter, showWeek, RangePicker presets/previewValue и семантическое оформление перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно; остальные события семейства ещё не покрыты полностью. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
         },
         {
           "id": "global-parity",
@@ -12582,7 +12605,7 @@
         },
         {
           "id": "advanced-api",
-          "title": "Multiple, generatePicker, полный trigger/locale API и diagnostics",
+          "title": "GeneratePicker, полный trigger/locale API и diagnostics",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [
