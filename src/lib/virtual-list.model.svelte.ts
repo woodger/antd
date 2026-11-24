@@ -16,6 +16,8 @@ export function createVirtualList<Row, Key>(options: {
   enabled: () => boolean;
   width: () => number | undefined;
   renderSizeCache?: boolean;
+  measureRow?: (row: HTMLElement) => number | undefined;
+  viewportHeight?: (holder: HTMLDivElement) => number;
 }) {
   let heights = $state.raw(new Map<Key, number>());
   let top = $state(0);
@@ -27,7 +29,7 @@ export function createVirtualList<Row, Key>(options: {
   let moving = $state(false);
   let connected = $state(false);
   let holder: HTMLDivElement | undefined;
-  let inner: HTMLDivElement | undefined;
+  let inner: HTMLElement | undefined;
   let observer: ResizeObserver | undefined;
   let measurementRevision = 0;
   let scrollRevision = 0;
@@ -43,6 +45,7 @@ export function createVirtualList<Row, Key>(options: {
   };
   let alignment = $state.raw<Alignment>();
   const nodes = new Map<Key, HTMLElement>();
+  const readRowHeight = options.measureRow ?? measureVirtualListRow;
   const range = $derived(virtualListWindow(
     options.rows(), options.getKey, heights, options.estimate(), options.height(), top,
     innerHeight, options.enabled(), options.width()
@@ -134,7 +137,7 @@ export function createVirtualList<Row, Key>(options: {
   function measureRows() {
     const changes: { key: Key; previous: number | undefined; height: number; }[] = [];
     for (const [key, element] of nodes) {
-      const height = measureVirtualListRow(element);
+      const height = readRowHeight(element);
       if (height === undefined) {
         continue;
       }
@@ -168,7 +171,7 @@ export function createVirtualList<Row, Key>(options: {
     };
   }
 
-  function connect(viewport: HTMLDivElement, content: HTMLDivElement) {
+  function connect(viewport: HTMLDivElement, content: HTMLElement) {
     holder = viewport;
     inner = content;
     connected = true;
@@ -222,10 +225,11 @@ export function createVirtualList<Row, Key>(options: {
     let unknown = index < 0;
     let target: number | null = null;
     let targetAlign = pending.targetAlign;
-    if (holder.clientHeight && index >= 0) {
+    const height = options.viewportHeight?.(holder) ?? holder.clientHeight;
+    if (height && index >= 0) {
       const step = virtualListScrollStep(
         rows, options.getKey, heights, estimate, index, resolved, offset,
-        holder.scrollTop, holder.clientHeight
+        holder.scrollTop, height
       );
       if (step.top !== undefined) sync(step.top);
       target = step.top ?? null;
@@ -277,7 +281,8 @@ export function createVirtualList<Row, Key>(options: {
         await tick();
         continue;
       }
-      if (!holder.clientHeight) {
+      const height = options.viewportHeight?.(holder) ?? holder.clientHeight;
+      if (!height) {
         return;
       }
       const step = virtualListScrollStep(
@@ -289,7 +294,7 @@ export function createVirtualList<Row, Key>(options: {
         resolved,
         offset,
         holder.scrollTop,
-        holder.clientHeight
+        height
       );
       if (step.top !== undefined) sync(step.top);
       const target = step.top ?? null;
@@ -344,6 +349,7 @@ export function createVirtualList<Row, Key>(options: {
     get moving() { return moving; },
     set moving(value: boolean) { moving = value; },
     attach,
+    getSize,
     connect,
     measure,
     collect,

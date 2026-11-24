@@ -19657,11 +19657,21 @@
         },
         {
           "id": "gap-1",
-          "title": "Виртуализация Table",
-          "state": "missing",
+          "title": "Виртуализация Table и прокрутка к строке",
+          "state": "partial",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Ограничение зафиксировано в README модуля."
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table-virtual.model.svelte.ts",
+            "src/lib/table-virtual.engine.ts",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-virtual-reference.json",
+            "tests/browser/table-virtual.spec.ts",
+            "tests/browser/table-virtual-hydration.spec.ts",
+            "tests/package/table-virtual.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона десяти профилей, 44 состояния. Локальный virtual включает окно тела с scroll.y, измеряет строку вместе с подробностями и использует ширины видимых колонок. Проверяются scrollTo по top, key и index, offsets, RTL, скрытый заголовок, короткие и пустые таблицы, вертикальный onScroll, сброс по sort/paginate и сохранение позиции. Выбор и события работают на всей обработанной странице. Native сохраняет семантическую таблицу с закреплённым caption и браузерной прокруткой. SSR выводит первое окно, строгая гидратация сохраняет редактор и фокус. Объединённые ячейки и React components.body остаются вне покрытия."
         },
         {
           "id": "tree-data",
@@ -19679,7 +19689,7 @@
             "tests/browser/table-tree-hydration.spec.ts",
             "tests/package/table-tree.ssr.test.ts"
           ],
-          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых прогона девяти UMD профилей, 57 состояний. Раскрытие определяется children/childrenColumnName, контролируется expandedRowKeys, включает defaultExpandAllRows начальной страницы и сохраняет ключи скрытых веток. Индексы ячеек относятся к соседним записям, rowClassName получает позицию видимой строки и глубину. Пагинация считает корни. Сортировка и рекурсивная фильтрация меняют представление веток, а выбор возвращает исходные записи. Header учитывает свёрнутых потомков, checkStrictly управляет связью отметок с учётом disabled. Проверены indentSize, RTL/custom prefix, переключение кликом и скрытие иконок. Native пропускает клик по листу и по редакторам ячеек; кнопки ссылаются на дочерние строки. Виртуализация остаётся самостоятельным пробелом."
+          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых прогона девяти UMD профилей, 57 состояний. Раскрытие определяется children/childrenColumnName, контролируется expandedRowKeys, включает defaultExpandAllRows начальной страницы и сохраняет ключи скрытых веток. Индексы ячеек относятся к соседним записям, rowClassName получает позицию видимой строки и глубину. Пагинация считает корни. Сортировка и рекурсивная фильтрация меняют представление веток, а выбор возвращает исходные записи. Header учитывает свёрнутых потомков, checkStrictly управляет связью отметок с учётом disabled. Проверены indentSize, RTL/custom prefix, переключение кликом и скрытие иконок. Native пропускает клик по листу и по редакторам ячеек; кнопки ссылаются на дочерние строки."
         },
         {
           "id": "render-empty",
@@ -26663,7 +26673,7 @@
             "tests/browser/select-virtual.spec.ts",
             "tests/package/select-virtual.ssr.test.ts"
           ],
-          "note": "Общий virtual наследуется во вложенном provider, local prop компонента имеет приоритет. Tree и TreeSelect по умолчанию включают virtual при ненулевых высоте и оценке строки; Listy сохраняет default=false. Их local undefined наследует общий default. Select/AutoComplete по умолчанию включают virtual; собственный local undefined перекрывает provider false и включает default, как Source spread. Их popupMatchSelectWidth=false отключает virtual; numeric0 его не отключает. Table требует отдельного переноса."
+          "note": "Общий virtual наследуется во вложенном provider, local prop компонента имеет приоритет. Tree и TreeSelect по умолчанию включают virtual при ненулевых высоте и оценке строки; Listy сохраняет default=false. Их local undefined наследует общий default. Select/AutoComplete по умолчанию включают virtual; собственный local undefined перекрывает provider false и включает default, как Source spread. Их popupMatchSelectWidth=false отключает virtual; numeric0 его не отключает. Table использует локальный prop virtual."
         },
         {
           "id": "popup-match-select-width-default",

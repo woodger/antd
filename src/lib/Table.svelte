@@ -1,6 +1,6 @@
 <script lang="ts" generics="Row extends object">
-  // Координирует настройки строк, пагинацию, выделение и раскрытие. Изменения отправляются с
-  // причиной и актуальным представлением данных.
+  // Координирует пагинацию, выделение и раскрытие. Окно прокрутки ограничивает DOM,
+  // сохраняя полное представление данных для событий и выбора.
   import { untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { getTablePrefixCss } from './table-prefix.engine';
@@ -9,6 +9,8 @@
   import { useDesignTokenContext } from './theme-context.svelte';
   import { getPaginationState } from './pagination.engine';
   import { getTableFixedOffsets } from './table-layout.engine';
+  import { tableVirtualRowHeight } from './table-virtual.engine';
+  import { createTableViewport } from './table-virtual.model.svelte';
   import {
     areTableFiltersEqual,
     changeTableSelection,
@@ -24,6 +26,7 @@
     TableFilterValue,
     TableKey,
     TableProps,
+    TableScrollConfig,
     TableSorter
   } from './table.types';
   import { ruRU } from './types';
@@ -34,6 +37,7 @@
   import Spin from './Spin.svelte';
   import Empty from './Empty.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
+  import ListyScrollbar from './ListyScrollbar.svelte';
 
   let {
     mode = 'client',
@@ -70,6 +74,9 @@
     dropdownPrefixCls,
     empty,
     scroll,
+    virtual = false,
+    onScroll,
+    nativeElement = $bindable(),
     'aria-label': ariaLabel,
     class: className = '',
     style
@@ -172,6 +179,13 @@
   let dataOffset = $derived(expansionOffset + (rowSelection ? 1 : 0));
   // Hidden влияет только на разметку: InternalTable сохраняет sort/filter до rc-table.
   let visibleColumns = $derived(columns.filter(column => !column.hidden));
+  let columnWidths = $derived([
+    ...(expansionColumn
+      ? [expansionColumn.columnWidth ?? (designTheme.enabled ? undefined : 48)] : []),
+    ...(rowSelection ? [selectionWidth] : []),
+    ...visibleColumns.map(column => column.width)
+  ]);
+  let columnCount = $derived(Math.max(columnWidths.length, 1));
   let fixedColumns = $derived(
     [
       ...(expansionColumn ? [expansionColumn.fixed ?? false] : []),
@@ -183,6 +197,46 @@
     side: fixed === true ? 'start' : fixed || undefined,
     offset: `var(--ant-table-fixed-${index}, auto)`
   })));
+
+  const scrollport = createTableViewport({
+    rows: () => visibleRows,
+    widths: () => columnWidths,
+    estimate: () => tableVirtualRowHeight(designTheme.state.token, resolvedSize),
+    cellPadding: () => {
+      const token = designTheme.state.token;
+      const component = token.Table;
+      if (resolvedSize === 'small') return 2 * (component?.cellPaddingInlineSM ?? token.paddingXS);
+      if (resolvedSize === 'medium') return 2 * (component?.cellPaddingInlineMD ?? token.paddingXS);
+      return 2 * (component?.cellPaddingInline ?? token.padding);
+    },
+    virtual: () => virtual,
+    scroll: () => scroll,
+    table: () => table,
+    element: () => content,
+    header: () => showHeader,
+    caption: () => Boolean(caption),
+    rtl: () => config.direction === 'rtl'
+  });
+
+  /** Прокручивает текущую страницу по абсолютной позиции, ключу или индексу. */
+  export function scrollTo(target: TableScrollConfig): void {
+    scrollport.scrollTo(target);
+  }
+
+  function cssSize(value: string | number | undefined) {
+    return typeof value === 'number' ? `${value}px` : value;
+  }
+
+  function columnWidth(index: number) {
+    const virtualWidth = scrollport.layout?.widths[index];
+    return cssSize(virtualWidth ?? columnWidths[index]);
+  }
+
+  function handleScroll(event: Event & { currentTarget: HTMLDivElement; }) {
+    if (scrollport.handleScroll(event.currentTarget)) {
+      onScroll?.(event);
+    }
+  }
 
   $effect(() => {
     const element = table;
@@ -198,7 +252,10 @@
     let measurementRow = element.tHead?.rows[0];
     if (!showHeader) {
       // Без thead ширины и новые строки страницы измеряются по обычной строке tbody.
-      measurementRow = visibleRows.length ? element.tBodies[0]?.rows[0] : undefined;
+      measurementRow = scrollport.rows.length
+        ? element.tBodies[0]?.querySelector<HTMLTableRowElement>(
+          ':scope > tr[data-ant-table-part="row"]'
+        ) ?? undefined : undefined;
     }
     const cells = Array.from(measurementRow?.cells ?? []);
 
@@ -261,6 +318,7 @@
   });
 
   function notifyChange(action: TableChange<Row>['action']) {
+    scrollport.resetAfterChange();
     onChange?.({
       action,
       pagination: { current: paging.current, pageSize: paging.pageSize, total: paging.total },
@@ -425,9 +483,26 @@
   [data-ant-table-part="content"] { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
   .table-sticky { isolation: isolate; scroll-padding-inline: var(--ant-table-fixed-start-width, 0px) var(--ant-table-fixed-end-width, 0px); }
   .table-scroll-y { overflow-y: auto; overscroll-behavior-y: contain; scroll-padding-top: var(--ant-table-header-height, 0px); }
+  .table-virtual-container { position: relative; isolation: isolate; }
+  [data-ant-table-part="content"].table-virtual-scroll { scrollbar-width: none; overflow-anchor: none; }
+  .table-virtual-scroll::-webkit-scrollbar { display: none; }
+  .table-virtual-scroll caption {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 4;
+    background: var(--ant-color-bg-container);
+  }
+  .table-virtual-bars {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .table-virtual-bars > :global(div) { pointer-events: auto; }
   [data-ant-table-part="wrapper"] [data-ant-table-part="cell"].table-fixed-cell { position: var(--ant-table-fixed-position, relative); background: var(--ant-color-bg-container); }
   [data-ant-table-part="wrapper"] [data-ant-table-part="body"] > tr > th.table-fixed-cell { background: linear-gradient(var(--ant-table-header-bg), var(--ant-table-header-bg)) var(--ant-color-bg-container); }
-  [data-ant-table-part="wrapper"] .table-scroll-y [data-ant-table-part="head"] > tr > th { position: sticky; top: 0; z-index: 2; }
+  [data-ant-table-part="wrapper"] .table-scroll-y [data-ant-table-part="head"] > tr > th { position: sticky; top: var(--ant-table-virtual-caption-height, 0px); z-index: 2; }
   /* Непрозрачная подложка нужна и для токенов темы с alpha. */
   [data-ant-table-part="wrapper"] .table-scroll-y [data-ant-table-part="head"] > tr > th,
   [data-ant-table-part="wrapper"] [data-ant-table-part="head"] > tr > .table-fixed-cell { background: linear-gradient(var(--ant-table-header-bg), var(--ant-table-header-bg)) var(--ant-color-bg-container); }
@@ -495,7 +570,16 @@
   {/if}
 {/snippet}
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`table-prefix:${prefix}:${rootPrefix}`} />{/if}<div data-ant-table-part="wrapper" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} class={[
+{#snippet virtualSpacer(height: number)}
+  {#if height > 0}
+    <tr aria-hidden="true">
+      <td colspan={columnCount} style:height={cssSize(height)} style:padding="0"
+        style:border="0" style:line-height="0"></td>
+    </tr>
+  {/if}
+{/snippet}
+
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`table-prefix:${prefix}:${rootPrefix}`} />{/if}<div bind:this={nativeElement} data-ant-table-part="wrapper" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} class={[
     `${prefix}-wrapper ant-table-css-var`,
     componentTheme.className,
     designTheme.enabled && 'table-source-theme',
@@ -512,29 +596,47 @@
       !visibleRows.length && `${prefix}-empty`
     ]}>
     {#if title}<div class={`${prefix}-title`}>{@render title(panelData)}</div>{/if}
-    <div class={`${prefix}-container`}>
+    <div class={[`${prefix}-container`, scrollport.active && 'table-virtual-container']}>
       <!-- svelte-ignore a11y_no_noninteractive_tabindex (Фокус нужен для прокрутки таблицы с клавиатуры.) -->
-      <div bind:this={content} data-ant-table-part="content" class={[
+      <div bind:this={content}
+        data-ant-table-part="content"
+        data-ant-table-virtual={scrollport.active || undefined}
+        class={[
           `${prefix}-content`,
           (scroll?.y !== undefined || fixedColumns.some(Boolean)) && 'table-sticky',
-          scroll?.y !== undefined && 'table-scroll-y'
-        ]} style:max-height={typeof scroll?.y === 'number' ? `${scroll.y}px` : scroll?.y} role="region" aria-label={caption ?? ariaLabel ?? strings.label} tabindex="0">
-        <table bind:this={table} aria-label={ariaLabel ?? (caption ? undefined : strings.label)} aria-busy={loading || undefined} style:min-width={typeof scroll?.x === 'number' ? `${scroll.x}px` : scroll?.x}>
+          scroll?.y !== undefined && 'table-scroll-y',
+          scrollport.active && 'table-virtual-scroll'
+        ]}
+        style:max-height={cssSize(scrollport.maxHeight ?? scroll?.y)}
+        style:scroll-padding-top={cssSize(scrollport.reserved)}
+        style:--ant-table-virtual-caption-height={cssSize(scrollport.captionHeight)}
+        role="region"
+        aria-label={caption ?? ariaLabel ?? strings.label}
+        tabindex="0"
+        onscroll={handleScroll}
+      >
+        <table bind:this={table}
+          aria-label={ariaLabel ?? (caption ? undefined : strings.label)}
+          aria-busy={loading || undefined}
+          aria-rowcount={scrollport.active && !expandedRowRender
+            ? visibleRows.length + Number(showHeader) : undefined}
+          style:min-width={virtual ? '100%' : cssSize(scroll?.x)}
+          style:width={cssSize(scrollport.tableWidth)}
+          style:table-layout={virtual && (scroll?.y !== undefined || fixedColumns.some(Boolean))
+            ? 'fixed' : undefined}
+        >
           {#if caption}<caption>{caption}</caption>{/if}
           {#if visibleColumns.length || dataOffset}<colgroup>
             {#if expansionColumn}<col class={designTheme.enabled ? `${prefix}-expand-icon-col` : undefined}
-              style:width={typeof expansionColumn.columnWidth === 'number'
-                ? `${expansionColumn.columnWidth}px`
-                : expansionColumn.columnWidth ?? (designTheme.enabled ? undefined : '48px')} />{/if}
+              style:width={columnWidth(0)} />{/if}
             {#if rowSelection}<col class={designTheme.enabled ? `${prefix}-selection-col` : undefined}
-              style:width={typeof selectionWidth === 'number'
-                ? `${selectionWidth}px` : selectionWidth} />{/if}
-            {#each visibleColumns as column (column.key)}<col style:width={typeof column.width === 'number'
-                ? `${column.width}px`
-                : column.width} />{/each}
+              style:width={columnWidth(expansionOffset)} />{/if}
+            {#each visibleColumns as column, columnIndex (column.key)}
+              <col style:width={columnWidth(columnIndex + dataOffset)} />
+            {/each}
           </colgroup>{/if}
           {#if showHeader}<thead data-ant-table-part="head" class={`${prefix}-thead`}>
-            <tr>
+            <tr aria-rowindex={scrollport.active && !expandedRowRender ? 1 : undefined}>
               {#if expansionColumn}
                 <th data-ant-table-part="cell" scope="col" aria-label={expansionColumn.columnTitle ?? strings.expandColumn} class={[
                     `${prefix}-cell ${prefix}-row-expand-icon-cell`,
@@ -603,7 +705,9 @@
             </tr>
           </thead>{/if}
           <tbody data-ant-table-part="body" class={`${prefix}-tbody`}>
-            {#each visibleRows as { row, depth, index: renderIndex }, index (row.key)}
+            {@render virtualSpacer(scrollport.before)}
+            {#each scrollport.rows as { row, depth, index: renderIndex }, windowIndex (row.key)}
+              {@const index = scrollport.start + windowIndex}
               {@const canExpand = canExpandRow(row)}
               {@const expanded = canExpand && expandedKeys.has(row.key)}
               {@const checkbox = checkboxProps.get(row.key)}
@@ -616,9 +720,13 @@
                   rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
                 ]}
                 data-row-key={row.key}
+                aria-rowindex={scrollport.active && !expandedRowRender
+                  ? index + Number(showHeader) + 1 : undefined}
                 id={depth > 0 ? expansionId(row.key, 'row') : undefined}
                 onclick={expandable?.expandRowByClick && canExpand
                   ? event => expandByRowClick(row, event) : undefined}
+                {@attach scrollport.active ? element => scrollport.attachRow(element, row.key)
+                  : undefined}
               >
                 {#if expansionColumn}
                   <td data-ant-table-part="cell" class={[
@@ -689,17 +797,43 @@
                 {/each}
               </tr>
               {#if expanded && expandedRowRender}
-                <tr data-ant-table-part="expanded-row" class={`${prefix}-expanded-row`}><td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={Math.max(visibleColumns.length + dataOffset, 1)}><div class="expanded-content" id={expansionId(row.key)}>{@render expandedRowRender(row.record, index)}</div></td></tr>
+                <tr data-ant-table-part="expanded-row" class={`${prefix}-expanded-row`}
+                  {@attach scrollport.active ? scrollport.attachDetails : undefined}>
+                  <td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={columnCount}>
+                    <div class="expanded-content" id={expansionId(row.key)}>{@render expandedRowRender(row.record, index)}</div>
+                  </td>
+                </tr>
               {/if}
             {:else}
-              <tr class={`${prefix}-placeholder`}><td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={Math.max(visibleColumns.length + dataOffset, 1)}>{#if !loading}
+              <tr class={`${prefix}-placeholder`}><td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={columnCount}>{#if !loading}
                 {#snippet nativeEmpty()}<Empty image="simple" description={strings.emptyText} />{/snippet}
                 <RenderEmpty componentName="Table" local={empty} fallback={nativeEmpty} />
               {:else}&nbsp;{/if}</td></tr>
             {/each}
+            {@render virtualSpacer(scrollport.after)}
           </tbody>
         </table>
       </div>
+      {#if scrollport.active && scrollport.height > 0}
+        <div class="table-virtual-bars" style:height={cssSize(scrollport.height)}>
+          {#if scrollport.contentHeight > scrollport.height}
+            <ListyScrollbar prefixCls={`${prefix}-tbody-virtual`}
+              rtl={config.direction === 'rtl'}
+              offset={scrollport.top} range={scrollport.contentHeight} size={scrollport.height}
+              flash={scrollport.flash} onScroll={scrollport.scrollVertical}
+              onMoving={scrollport.dragScrollbar}
+            />
+          {/if}
+          {#if scrollport.layout && scrollport.layout.width > scrollport.width}
+            <ListyScrollbar prefixCls={`${prefix}-tbody-virtual`} horizontal
+              rtl={config.direction === 'rtl'}
+              offset={scrollport.left} range={scrollport.layout.width} size={scrollport.width}
+              flash={scrollport.flash} onScroll={scrollport.scrollHorizontal}
+              onMoving={scrollport.dragScrollbar}
+            />
+          {/if}
+        </div>
+      {/if}
     </div>
     {#if footer}<div class={`${prefix}-footer`}>{@render footer(panelData)}</div>{/if}
   </div>

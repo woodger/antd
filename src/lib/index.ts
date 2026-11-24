@@ -903,7 +903,10 @@ export type {
   TableFilterValue,
   TableMode,
   TableFixed,
-  TableExpandable
+  TableExpandable,
+  TableScrollOptions,
+  TableScrollConfig,
+  TableRef
 } from './table.types';
 export type {
   SelectProps,

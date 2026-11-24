@@ -79,6 +79,28 @@ export type TablePaginationConfig = Pick<
   'showSizeChanger' | 'pageSizeOptions' | 'hideOnSinglePage' | 'showTotal' | 'aria-label'
 >;
 
+/** Размеры области прокрутки и сброс после пользовательского изменения данных. */
+export interface TableScrollOptions {
+  x?: number | string;
+  y?: number | string;
+  /** Сбрасывает вертикальную прокрутку после сортировки, фильтра и пагинации. */
+  scrollToFirstRowOnChange?: boolean;
+}
+
+/** Абсолютная позиция или адрес строки текущей страницы. top имеет приоритет. */
+export interface TableScrollConfig {
+  top?: number;
+  index?: number;
+  key?: TableKey;
+  align?: ScrollLogicalPosition;
+  offset?: number;
+}
+
+/** Методы bind:this. Корневой DOM-узел доступен через bind:nativeElement. */
+export interface TableRef {
+  scrollTo(config: TableScrollConfig): void;
+}
+
 export interface TableChange<Row extends object> {
   action: 'sort' | 'paginate' | 'filter';
   pagination: { current: number; pageSize: number; total: number; };
@@ -142,7 +164,12 @@ export interface TableProps<Row extends object> {
   footer?: Snippet<[data: readonly Row[]]>;
   caption?: string;
   empty?: Snippet;
-  scroll?: { x?: number | string; y?: number | string; };
+  scroll?: TableScrollOptions;
+  /** Ограничивает число строк в DOM при заданном scroll.y. @defaultValue false */
+  virtual?: boolean;
+  /** В виртуальном режиме уведомляет о вертикальной прокрутке. */
+  onScroll?: (event: Event & { currentTarget: HTMLDivElement; }) => void;
+  nativeElement?: HTMLDivElement;
   'aria-label'?: string;
   class?: string;
   style?: string;

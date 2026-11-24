@@ -1738,6 +1738,11 @@
     "root": "table-tree-fixture"
   },
   {
+    "id": "table-virtual",
+    "module": "./TableVirtualFixture.svelte",
+    "root": "table-virtual-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"
