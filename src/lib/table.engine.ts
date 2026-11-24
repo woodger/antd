@@ -2,6 +2,7 @@
 // и нормализует настройки, оставляя обработку данных вызывающему коду.
 import type {
   TableColumn,
+  TableColumnsType,
   TableFilters,
   TableFilterValue,
   TableKey,
@@ -9,6 +10,7 @@ import type {
   TableRowKey,
   TableSorter
 } from './table.types';
+import { getTableColumnOrder } from './table-columns.engine';
 import { filterTableTree, indexTableRows, sortTableTree, type TableRow } from './table-tree.engine';
 
 /**
@@ -18,7 +20,7 @@ import { filterTableTree, indexTableRows, sortTableTree, type TableRow } from '.
  */
 export function getTableData<Row extends object>(
   dataSource: readonly Row[],
-  columns: readonly TableColumn<Row>[],
+  columns: TableColumnsType<Row>,
   rowKey?: TableRowKey<Row>,
   sorter?: TableSorter | null,
   filters?: Readonly<Record<string, readonly TableFilterValue[]>>,
@@ -30,11 +32,15 @@ export function getTableData<Row extends object>(
   sorter: TableSorter | null;
   filters: TableFilters;
 } {
-  assertTableColumnKeys(columns);
-  const { roots, allRows } = indexTableRows(dataSource, rowKey, childrenColumnName);
-  const activeFilters = getTableFilters(columns, filters, mode);
+  if (!columns.length) {
+    throw new Error('Table requires at least one column');
+  }
 
-  const column = columns.find(
+  const dataColumns = getTableColumnOrder(columns);
+  const { roots, allRows } = indexTableRows(dataSource, rowKey, childrenColumnName);
+  const activeFilters = getColumnFilters(dataColumns, filters, mode);
+
+  const column = dataColumns.find(
     (item) => item.key === sorter?.columnKey
       && (typeof item.sorter === 'function'
         || (mode === 'server'
@@ -48,7 +54,7 @@ export function getTableData<Row extends object>(
     return { rows: roots, allRows, sorter: activeSorter, filters: activeFilters };
   }
 
-  const filteredColumns = columns.filter((item) => Object.hasOwn(activeFilters, item.key));
+  const filteredColumns = dataColumns.filter((item) => Object.hasOwn(activeFilters, item.key));
   if (roots.some(row => row.children !== undefined)) {
     const direction = activeSorter?.order === 'descend' ? -1 : 1;
     // В дереве Ant Design сначала сортирует каждый уровень. Фильтр родителя видит
@@ -80,24 +86,17 @@ export function getTableData<Row extends object>(
   return { rows, allRows, sorter: activeSorter, filters: activeFilters };
 }
 
-// Проверяет обязательные столбцы до обращений к rowKey и фильтрам потребителя.
-function assertTableColumnKeys<Row extends object>(columns: readonly TableColumn<Row>[]) {
-  if (!columns.length) {
-    throw new Error('Table requires at least one column');
-  }
-
-  const columnKeys = new Set<string>();
-  for (const column of columns) {
-    if (columnKeys.has(column.key)) {
-      throw new Error(`Table column key "${column.key}" is not unique`);
-    }
-
-    columnKeys.add(column.key);
-  }
+// Нормализует значения для всего дерева колонок, независимо от видимости заголовков.
+export function getTableFilters<Row extends object>(
+  columns: TableColumnsType<Row>,
+  filters: Readonly<Record<string, readonly TableFilterValue[]>> = {},
+  mode: TableMode = 'client'
+): TableFilters {
+  return getColumnFilters(getTableColumnOrder(columns), filters, mode);
 }
 
-// Оставляет допустимые значения фильтров и соблюдает filterMultiple для каждого столбца.
-export function getTableFilters<Row extends object>(
+// Оставляет допустимые значения фильтров и соблюдает filterMultiple для каждого ключа.
+function getColumnFilters<Row extends object>(
   columns: readonly TableColumn<Row>[],
   filters: Readonly<Record<string, readonly TableFilterValue[]>> = {},
   mode: TableMode = 'client'

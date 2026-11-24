@@ -19822,6 +19822,24 @@
           "note": "Hidden убирает col/header/body cells; сортировка/фильтры продолжают использовать все исходные columns, как InternalTable перед rc-table. Полностью скрытые данные оставляют selection/expand columns либо одну пустую колонку без colgroup; пустой header сохраняет исходный unset scope. Empty/expanded spans учитывают видимые колонки и минимум1. 14 UMD cases задают data pipeline/DOM, отдельные сценарии сохраняют live sorting, соседние row headers/editors/focus/selection/FormData и expanded editor. Raw textContent/checkbox counts/colspan attrs сохранены; UI сравнивается по innerText и selection controls, потому что принятый native TableFilter сохраняет закрытый shell. Исходное требование непустого columns сохраняется; callback onChange при prop update не вызывается."
         },
         {
+          "id": "column-groups",
+          "title": "Группы колонок и адаптивная видимость",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table.types.ts",
+            "src/lib/table-columns.engine.ts",
+            "src/lib/table-layout.dom.ts",
+            "tests/browser/fixtures/ant-design-table-columns-reference.json",
+            "tests/browser/table-columns.spec.ts",
+            "tests/browser/table-columns-hydration.spec.ts",
+            "tests/package/table-columns.ssr.test.ts",
+            "docs/reference/components/table.md"
+          ],
+          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона девяти профилей дают 33 состояния, renderToString даёт девять серверных структур. Дерево children строит шапку с colspan, rowspan и scope и задаёт порядок листьев. Служебные ячейки шапки занимают все уровни. Hidden убирает поддерево. Видимая группа без видимых детей остаётся колонкой. Скрытые определения сохраняют участие в sort/filter. Responsive применяется на верхнем уровне, пустой список скрывает колонку. Используются пороги Grid и подписка после SSR. Лист наследует fixed, явный false отключает наследование. Заголовок группы использует крайние листья для своей стороны и offset. Native сохраняет один table, измеряет листовые ширины и высоты уровней, а виртуализация сохраняет окно строк и scrollTo. Геометрия шапки и тела сравнивается с точностью до целого пикселя. Browser и строгая hydration проверяют фокус, выделение и identity редактора при обновлении видимости."
+        },
+        {
           "id": "local-shared-prefix",
           "title": "Table owner, общие child namespaces и префикс списка фильтров",
           "state": "supported",

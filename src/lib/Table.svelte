@@ -1,14 +1,18 @@
 <script lang="ts" generics="Row extends object">
-  // Координирует пагинацию, выделение и раскрытие. Окно прокрутки ограничивает DOM,
-  // сохраняя полное представление данных для событий и выбора.
+  // Координирует обработку данных, шапку, выделение и раскрытие. Смена видимости
+  // колонок не меняет состояние сортировки и фильтров. Окно ограничивает DOM строк.
   import { untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { getTablePrefixCss } from './table-prefix.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import { createBreakpoint } from './grid-breakpoint.model.svelte';
+  import { getGridMediaQueries } from './grid.engine';
   import { getPaginationState } from './pagination.engine';
-  import { getTableFixedOffsets } from './table-layout.engine';
+  import { getTableColumnLayout, getTableColumnOrder, type TableHeading }
+    from './table-columns.engine';
+  import { observeTableLayout } from './table-layout.dom';
   import { tableVirtualRowHeight } from './table-virtual.engine';
   import { createTableViewport } from './table-virtual.model.svelte';
   import {
@@ -89,6 +93,11 @@
   let prefixCss = $derived(getTablePrefixCss(prefix, rootPrefix));
   const componentTheme = useComponentTheme('Table');
   const designTheme = useDesignTokenContext();
+  const breakpoint = createBreakpoint();
+  const hasResponsiveColumns = $derived(columns.some(column => column.responsive !== undefined));
+  let mediaQueries = $derived(hasResponsiveColumns && designTheme.enabled
+    ? getGridMediaQueries(designTheme.state.token) : undefined);
+  untrack(() => mediaQueries);
   let rootStyle = $derived([componentTheme.style, style].filter(Boolean).join(';') || undefined);
   // InternalTable передаёт только явно подготовленный token в columnWidth до bordered CSS.
   let selectionWidth = $derived(designTheme.enabled
@@ -116,7 +125,9 @@
     )
   );
   let hasFilters = $derived(
-    columns.some((column) => column.filters?.length && (mode === 'server' || column.onFilter))
+    getTableColumnOrder(columns).some(
+      column => column.filters?.length && (mode === 'server' || column.onFilter)
+    )
   );
   let paging = $derived(
     getPaginationState(
@@ -177,8 +188,13 @@
   );
   let expansionOffset = $derived(expansionColumn ? 1 : 0);
   let dataOffset = $derived(expansionOffset + (rowSelection ? 1 : 0));
-  // Hidden влияет только на разметку: InternalTable сохраняет sort/filter до rc-table.
-  let visibleColumns = $derived(columns.filter(column => !column.hidden));
+  // План шапки и порядок листьев используют одни и те же видимые колонки.
+  let columnLayout = $derived(getTableColumnLayout(
+    columns, breakpoint.connected ? breakpoint.screens : {}
+  ));
+  let visibleColumns = $derived(columnLayout.leaves.map(leaf => leaf.column));
+  let headerRows = $derived(columnLayout.headings.length ? columnLayout.headings : [[]]);
+  let headerCount = $derived(showHeader ? headerRows.length : 0);
   let columnWidths = $derived([
     ...(expansionColumn
       ? [expansionColumn.columnWidth ?? (designTheme.enabled ? undefined : 48)] : []),
@@ -190,13 +206,21 @@
     [
       ...(expansionColumn ? [expansionColumn.fixed ?? false] : []),
       ...(rowSelection ? [selectionOptions?.fixed ?? false] : []),
-      ...visibleColumns.map((column) => column.fixed)
+      ...columnLayout.leaves.map(leaf => leaf.fixed)
     ]
   );
   let fixedCells = $derived(fixedColumns.map((fixed, index) => ({
     side: fixed === true ? 'start' : fixed || undefined,
     offset: `var(--ant-table-fixed-${index}, auto)`
   })));
+
+  $effect(() => {
+    const view = content?.ownerDocument.defaultView;
+    if (view && hasResponsiveColumns) {
+      // useBreakpoint подключает пороги темы на время текущей подписки.
+      return breakpoint.connect(view, untrack(() => mediaQueries));
+    }
+  });
 
   const scrollport = createTableViewport({
     rows: () => visibleRows,
@@ -232,6 +256,17 @@
     return cssSize(virtualWidth ?? columnWidths[index]);
   }
 
+  // Закреплённый заголовок группы использует крайние листья своего colspan.
+  function headerFixed(index: number, span: number) {
+    const first = fixedCells[index];
+    const last = fixedCells[index + span - 1];
+    if (!first?.side || first.side !== last?.side) {
+      return undefined;
+    }
+
+    return first.side === 'start' ? first : last;
+  }
+
   function handleScroll(event: Event & { currentTarget: HTMLDivElement; }) {
     if (scrollport.handleScroll(event.currentTarget)) {
       onScroll?.(event);
@@ -242,79 +277,17 @@
     const element = table;
     const viewport = content;
     const fixed = fixedColumns;
-    const hasHeader = showHeader && scroll?.y !== undefined;
+    const stickyHeader = headerCount > 0 && scroll?.y !== undefined;
     const hasExpansion = Boolean(expandedRowRender);
 
-    if (!element || !viewport || (!fixed.some(Boolean) && !hasHeader && !hasExpansion)) {
+    if (!element || !viewport || (!fixed.some(Boolean) && !stickyHeader && !hasExpansion)) {
       return;
     }
 
-    let measurementRow = element.tHead?.rows[0];
-    if (!showHeader) {
-      // Без thead ширины и новые строки страницы измеряются по обычной строке tbody.
-      measurementRow = scrollport.rows.length
-        ? element.tBodies[0]?.querySelector<HTMLTableRowElement>(
-          ':scope > tr[data-ant-table-part="row"]'
-        ) ?? undefined : undefined;
-    }
-    const cells = Array.from(measurementRow?.cells ?? []);
-
-    const measure = () => {
-      const widths = cells.map((cell) => cell.getBoundingClientRect().width);
-      const offsets = getTableFixedOffsets(fixed, widths);
-      const pinnedWidth = widths.reduce(
-        (sum, width, index) => sum + (fixed[index] ? width : 0),
-        0
-      );
-      const enabled = cells.length === fixed.length && pinnedWidth < viewport.clientWidth;
-      let startWidth = 0;
-      let endWidth = 0;
-
-      offsets.forEach((offset, index) => {
-        const property = `--ant-table-fixed-${index}`;
-
-        if (enabled && offset !== undefined) {
-          element.style.setProperty(property, `${offset}px`);
-
-          if (fixed[index] === 'end') {
-            endWidth += widths[index];
-          }
-          else {
-            startWidth += widths[index];
-          }
-        }
-        else {
-          element.style.removeProperty(property);
-        }
-      });
-      element.style.setProperty('--ant-table-fixed-position', enabled ? 'sticky' : 'relative');
-      viewport.style.setProperty('--ant-table-fixed-start-width', `${startWidth}px`);
-      viewport.style.setProperty('--ant-table-fixed-end-width', `${endWidth}px`);
-      viewport.style.setProperty(
-        '--ant-table-header-height',
-        `${hasHeader ? element.tHead?.getBoundingClientRect().height ?? 0 : 0}px`
-      );
-      viewport.style.setProperty('--ant-table-viewport-width', `${viewport.clientWidth}px`);
-    };
-
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(viewport);
-    cells.forEach((cell) => observer.observe(cell));
-
-    return () => {
-      observer.disconnect();
-      fixed.forEach((_, index) => element.style.removeProperty(`--ant-table-fixed-${index}`));
-      element.style.removeProperty('--ant-table-fixed-position');
-      [
-        '--ant-table-fixed-start-width',
-        '--ant-table-fixed-end-width',
-        '--ant-table-header-height',
-        '--ant-table-viewport-width'
-      ].forEach(
-        (property) => viewport.style.removeProperty(property)
-      );
-    };
+    return observeTableLayout({
+      table: element, viewport, fixed, stickyHeader,
+      hasBodyRows: !showHeader && scrollport.rows.length > 0
+    });
   });
 
   function notifyChange(action: TableChange<Row>['action']) {
@@ -502,7 +475,11 @@
   .table-virtual-bars > :global(div) { pointer-events: auto; }
   [data-ant-table-part="wrapper"] [data-ant-table-part="cell"].table-fixed-cell { position: var(--ant-table-fixed-position, relative); background: var(--ant-color-bg-container); }
   [data-ant-table-part="wrapper"] [data-ant-table-part="body"] > tr > th.table-fixed-cell { background: linear-gradient(var(--ant-table-header-bg), var(--ant-table-header-bg)) var(--ant-color-bg-container); }
-  [data-ant-table-part="wrapper"] .table-scroll-y [data-ant-table-part="head"] > tr > th { position: sticky; top: var(--ant-table-virtual-caption-height, 0px); z-index: 2; }
+  [data-ant-table-part="wrapper"] .table-scroll-y [data-ant-table-part="head"] > tr > th {
+    position: sticky;
+    top: calc(var(--ant-table-virtual-caption-height, 0px) + var(--ant-table-header-row-offset, 0px));
+    z-index: 2;
+  }
   /* Непрозрачная подложка нужна и для токенов темы с alpha. */
   [data-ant-table-part="wrapper"] .table-scroll-y [data-ant-table-part="head"] > tr > th,
   [data-ant-table-part="wrapper"] [data-ant-table-part="head"] > tr > .table-fixed-cell { background: linear-gradient(var(--ant-table-header-bg), var(--ant-table-header-bg)) var(--ant-color-bg-container); }
@@ -570,6 +547,62 @@
   {/if}
 {/snippet}
 
+{#snippet columnHeading(cell: TableHeading<Row>)}
+  {@const column = cell.column}
+  {@const index = cell.start + dataOffset}
+  {@const fixed = headerFixed(index, cell.colSpan)}
+  {@const sortable = typeof column.sorter === 'function'
+    || (mode === 'server' && column.sorter === true)}
+  {@const order = tableData.sorter?.columnKey === column.key ? tableData.sorter.order : undefined}
+  <th
+    data-ant-table-part="cell"
+    data-ant-table-leaf={headerCount > 1 && !cell.group ? index : undefined}
+    data-ant-table-sortable={sortable || undefined}
+    data-ant-table-sorted={order || undefined}
+    scope={cell.colSpan > 1 ? 'colgroup' : 'col'}
+    colspan={cell.colSpan > 1 ? cell.colSpan : undefined}
+    rowspan={cell.rowSpan > 1 ? cell.rowSpan : undefined}
+    class={[
+      `${prefix}-cell`,
+      column.className,
+      fixed?.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
+      sortable && `${prefix}-column-has-sorters`,
+      order && `${prefix}-column-sort`
+    ]}
+    style:inset-inline-start={fixed?.side === 'start' ? fixed.offset : undefined}
+    style:inset-inline-end={fixed?.side === 'end' ? fixed.offset : undefined}
+    style:z-index={fixed?.side ? 3 : undefined}
+    style:text-align={column.align ?? (cell.colSpan > 1 ? 'center' : undefined)}
+    aria-sort={order === 'ascend' ? 'ascending' : order === 'descend' ? 'descending' : undefined}
+  >
+    <div class="column-heading">
+      {#if sortable}
+        <button type="button" class={`sort-button ${prefix}-column-sorters`} disabled={resolvedDisabled} title={sortDescription(column.key, tableData.sorter)} onclick={() => changeSort(column.key)}>
+          <span class={`${prefix}-column-title`}>{column.title}</span>
+          <span data-ant-table-part="sorter" class={`${prefix}-column-sorter`} aria-hidden="true"><span class={`${prefix}-column-sorter-inner`}>{#if designTheme.enabled}<span class={[
+              `anticon anticon-caret-up ${prefix}-column-sorter-up`,
+              order === 'ascend' && 'active'
+            ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z" /></svg></span><span class={[
+                `anticon anticon-caret-down ${prefix}-column-sorter-down`,
+                order === 'descend' && 'active'
+              ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false"><path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" /></svg></span>{:else}<span class={[
+              'sort-arrow sort-up',
+              order === 'ascend' && 'active'
+            ]}></span><span class={[
+                'sort-arrow sort-down',
+                order === 'descend' && 'active'
+              ]}></span>{/if}</span></span>
+        </button>
+      {:else}<span>{column.title}</span>{/if}
+      {#if column.filters && (mode === 'server' || column.onFilter)}
+        <TableFilter prefixCls={prefix} {dropdownPrefix} title={column.title} options={column.filters} value={Object.hasOwn(tableData.filters, column.key)
+            ? tableData.filters[column.key]
+            : []} multiple={column.filterMultiple !== false} disabled={resolvedDisabled} onApply={(values) => changeFilter(column.key, values)} />
+      {/if}
+    </div>
+  </th>
+{/snippet}
+
 {#snippet virtualSpacer(height: number)}
   {#if height > 0}
     <tr aria-hidden="true">
@@ -619,7 +652,7 @@
           aria-label={ariaLabel ?? (caption ? undefined : strings.label)}
           aria-busy={loading || undefined}
           aria-rowcount={scrollport.active && !expandedRowRender
-            ? visibleRows.length + Number(showHeader) : undefined}
+            ? visibleRows.length + headerCount : undefined}
           style:min-width={virtual ? '100%' : cssSize(scroll?.x)}
           style:width={cssSize(scrollport.tableWidth)}
           style:table-layout={virtual && (scroll?.y !== undefined || fixedColumns.some(Boolean))
@@ -635,75 +668,51 @@
               <col style:width={columnWidth(columnIndex + dataOffset)} />
             {/each}
           </colgroup>{/if}
-          {#if showHeader}<thead data-ant-table-part="head" class={`${prefix}-thead`}>
-            <tr aria-rowindex={scrollport.active && !expandedRowRender ? 1 : undefined}>
-              {#if expansionColumn}
-                <th data-ant-table-part="cell" scope="col" aria-label={expansionColumn.columnTitle ?? strings.expandColumn} class={[
-                    `${prefix}-cell ${prefix}-row-expand-icon-cell`,
-                    expansionColumn.fixed
-                    && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-start`
-                  ]} style:inset-inline-start={expansionColumn.fixed ? fixedCells[0].offset : undefined} style:z-index={expansionColumn.fixed ? 3 : undefined}>{expansionColumn.columnTitle ?? ''}</th>
-              {/if}
-              {#if rowSelection}
-                <th data-ant-table-part="cell" scope="col" class={[
-                    `${prefix}-cell ${prefix}-selection-column`,
-                    selectionOptions?.fixed
-                    && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-start`
-                  ]} style:inset-inline-start={selectionOptions?.fixed
-                      ? fixedCells[expansionOffset].offset
-                      : undefined} style:z-index={selectionOptions?.fixed ? 3 : undefined}>
-                  <Checkbox skipGroup checked={selection.all} indeterminate={selection.some} disabled={resolvedDisabled || selection.disabled} aria-label={strings.selectAll} onCheckedChange={(checked) => changeSelection(
-                      changeableKeys,
-                      checked,
-                      'all'
-                    )} />
-                </th>
-              {/if}
-              {#each visibleColumns as column, columnIndex (column.key)}
-                {@const sortable = typeof column.sorter === 'function' || (mode === 'server' && column.sorter === true)}
-                {@const order = tableData.sorter?.columnKey === column.key ? tableData.sorter.order : undefined}
-                {@const fixed = fixedCells[columnIndex + dataOffset]}
-                <th data-ant-table-part="cell" scope="col" class={[
-                    `${prefix}-cell`,
-                    column.className,
-                    fixed.side
-                    && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
-                    sortable && `${prefix}-column-has-sorters`,
-                    order && `${prefix}-column-sort`
-                  ]} style:inset-inline-start={fixed.side === 'start' ? fixed.offset : undefined} style:inset-inline-end={fixed.side === 'end' ? fixed.offset : undefined} style:z-index={fixed.side ? 3 : undefined} style:text-align={column.align} data-ant-table-sortable={sortable || undefined} data-ant-table-sorted={order || undefined} aria-sort={order === 'ascend'
-                      ? 'ascending'
-                      : order === 'descend' ? 'descending' : undefined}>
-                  <div class="column-heading">
-                    {#if sortable}
-                      <button type="button" class={`sort-button ${prefix}-column-sorters`} disabled={resolvedDisabled} title={sortDescription(column.key, tableData.sorter)} onclick={() => changeSort(column.key)}>
-                        <span class={`${prefix}-column-title`}>{column.title}</span>
-                        <span data-ant-table-part="sorter" class={`${prefix}-column-sorter`} aria-hidden="true"><span class={`${prefix}-column-sorter-inner`}>{#if designTheme.enabled}<span class={[
-                            `anticon anticon-caret-up ${prefix}-column-sorter-up`,
-                            order === 'ascend' && 'active'
-                          ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z" /></svg></span><span class={[
-                              `anticon anticon-caret-down ${prefix}-column-sorter-down`,
-                              order === 'descend' && 'active'
-                            ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false"><path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" /></svg></span>{:else}<span class={[
-                            'sort-arrow sort-up',
-                            order === 'ascend' && 'active'
-                          ]}></span><span class={[
-                              'sort-arrow sort-down',
-                              order === 'descend' && 'active'
-                            ]}></span>{/if}</span></span>
-                      </button>
-                    {:else}<span>{column.title}</span>{/if}
-                    {#if column.filters && (mode === 'server' || column.onFilter)}
-                      <TableFilter prefixCls={prefix} {dropdownPrefix} title={column.title} options={column.filters} value={Object.hasOwn(tableData.filters, column.key)
-                          ? tableData.filters[column.key]
-                          : []} multiple={column.filterMultiple !== false} disabled={resolvedDisabled} onApply={(values) => changeFilter(column.key, values)} />
+          {#if showHeader}
+            <thead data-ant-table-part="head" class={`${prefix}-thead`}>
+              {#each headerRows as row, depth}
+                <tr aria-rowindex={scrollport.active && !expandedRowRender ? depth + 1 : undefined}>
+                  {#if depth === 0}
+                    {#if expansionColumn}
+                      <th data-ant-table-part="cell" scope="col"
+                        rowspan={headerCount > 1 ? headerCount : undefined}
+                        data-ant-table-leaf={headerCount > 1 ? 0 : undefined}
+                        aria-label={expansionColumn.columnTitle ?? strings.expandColumn} class={[
+                          `${prefix}-cell ${prefix}-row-expand-icon-cell`,
+                          expansionColumn.fixed
+                          && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-start`
+                        ]} style:inset-inline-start={expansionColumn.fixed ? fixedCells[0].offset : undefined} style:z-index={expansionColumn.fixed ? 3 : undefined}>{expansionColumn.columnTitle ?? ''}</th>
                     {/if}
-                  </div>
-                </th>
-              {:else}
-                {#if !dataOffset}<th data-ant-table-part="cell" class={`${prefix}-cell`}></th>{/if}
+                    {#if rowSelection}
+                      <th data-ant-table-part="cell" scope="col"
+                        rowspan={headerCount > 1 ? headerCount : undefined}
+                        data-ant-table-leaf={headerCount > 1 ? expansionOffset : undefined}
+                        class={[
+                          `${prefix}-cell ${prefix}-selection-column`,
+                          selectionOptions?.fixed
+                          && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-start`
+                        ]} style:inset-inline-start={selectionOptions?.fixed
+                            ? fixedCells[expansionOffset].offset
+                            : undefined} style:z-index={selectionOptions?.fixed ? 3 : undefined}>
+                        <Checkbox skipGroup checked={selection.all} indeterminate={selection.some} disabled={resolvedDisabled || selection.disabled} aria-label={strings.selectAll} onCheckedChange={(checked) => changeSelection(
+                            changeableKeys,
+                            checked,
+                            'all'
+                          )} />
+                      </th>
+                    {/if}
+                  {/if}
+                  {#each row as cell (cell.column.key)}
+                    {@render columnHeading(cell)}
+                  {:else}
+                    {#if !dataOffset}
+                      <th data-ant-table-part="cell" class={`${prefix}-cell`}></th>
+                    {/if}
+                  {/each}
+                </tr>
               {/each}
-            </tr>
-          </thead>{/if}
+            </thead>
+          {/if}
           <tbody data-ant-table-part="body" class={`${prefix}-tbody`}>
             {@render virtualSpacer(scrollport.before)}
             {#each scrollport.rows as { row, depth, index: renderIndex }, windowIndex (row.key)}
@@ -721,7 +730,7 @@
                 ]}
                 data-row-key={row.key}
                 aria-rowindex={scrollport.active && !expandedRowRender
-                  ? index + Number(showHeader) + 1 : undefined}
+                  ? index + headerCount + 1 : undefined}
                 id={depth > 0 ? expansionId(row.key, 'row') : undefined}
                 onclick={expandable?.expandRowByClick && canExpand
                   ? event => expandByRowClick(row, event) : undefined}

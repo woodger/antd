@@ -1743,6 +1743,11 @@
     "root": "table-virtual-fixture"
   },
   {
+    "id": "table-columns",
+    "module": "./TableColumnsFixture.svelte",
+    "root": "table-columns-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"

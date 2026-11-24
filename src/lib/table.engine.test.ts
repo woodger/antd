@@ -131,6 +131,17 @@ describe('getTableData', () => {
       'Table column key "name" is not unique'
     );
   });
+
+  it('validates column keys across separate branches including hidden groups', () => {
+    const grouped = [
+      { key: 'visible', title: 'Visible', children: [columns[0]] },
+      { key: 'hidden', title: 'Hidden', hidden: true, children: [columns[0]] }
+    ];
+
+    expect(() => getTableData(records, grouped, 'id')).toThrow(
+      'Table column key "name" is not unique'
+    );
+  });
 });
 
 describe('Table filtering', () => {

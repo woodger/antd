@@ -1,0 +1,110 @@
+// Читает фактические ширины листовых колонок и высоты строк шапки. Публикует
+// смещения только в текущем scrollport и удаляет CSS variables при переподключении.
+import { getTableFixedOffsets } from './table-layout.engine';
+import type { TableFixed } from './table.types';
+
+/** Составные заголовки измеряются по листьям в порядке колонок данных. */
+function measureCells(header: HTMLTableSectionElement) {
+  if (header.rows.length < 2) {
+    return Array.from(header.rows[0]?.cells ?? []);
+  }
+
+  const cells = Array.from(header.querySelectorAll<HTMLTableCellElement>(
+    ':scope > tr > th[data-ant-table-leaf]'
+  ));
+  return cells.sort((left, right) => Number(left.dataset.antTableLeaf)
+    - Number(right.dataset.antTableLeaf));
+}
+
+/** Без thead измеряет обычные ячейки, пропуская virtual spacers и details. */
+function findBodyCells(table: HTMLTableElement) {
+  const body = table.tBodies[0];
+  const row = body?.querySelector<HTMLTableRowElement>(':scope > tr[data-ant-table-part="row"]');
+  return Array.from(row?.cells ?? []);
+}
+
+/** Фиксирует каждую строку под предыдущей с учётом разной высоты заголовков. */
+function placeHeaderRows(rows: readonly HTMLTableRowElement[]) {
+  if (rows.length < 2) {
+    return;
+  }
+
+  let top = 0;
+  const heights = rows.map(row => row.getBoundingClientRect().height);
+  for (const [index, row] of rows.entries()) {
+    row.style.setProperty('--ant-table-header-row-offset', `${top}px`);
+    top += heights[index];
+  }
+}
+
+/** Вычисляет размеры sticky областей и возвращает cleanup наблюдателя и стилей. */
+export function observeTableLayout(options: {
+  table: HTMLTableElement;
+  viewport: HTMLDivElement;
+  fixed: readonly (TableFixed | undefined)[];
+  stickyHeader: boolean;
+  hasBodyRows: boolean;
+}) {
+  const { table, viewport, fixed, stickyHeader, hasBodyRows } = options;
+  const head = table.tHead;
+  const cells = head ? measureCells(head) : hasBodyRows ? findBodyCells(table) : [];
+  const rows = stickyHeader ? Array.from(head?.rows ?? []) : [];
+
+  /** Обновляет offsets после resize без переустановки разметки или обработчиков. */
+  function measure() {
+    const widths = cells.map(cell => cell.getBoundingClientRect().width);
+    const headHeight = stickyHeader ? head?.getBoundingClientRect().height ?? 0 : 0;
+    const viewportWidth = viewport.clientWidth;
+    const offsets = getTableFixedOffsets(fixed, widths);
+    const pinnedWidth = widths.reduce(
+      (sum, width, index) => sum + (fixed[index] ? width : 0),
+      0
+    );
+    const enabled = cells.length === fixed.length && pinnedWidth < viewportWidth;
+    let startWidth = 0;
+    let endWidth = 0;
+
+    for (const [index, offset] of offsets.entries()) {
+      const property = `--ant-table-fixed-${index}`;
+      if (!enabled || offset === undefined) {
+        table.style.removeProperty(property);
+        continue;
+      }
+
+      table.style.setProperty(property, `${offset}px`);
+      if (fixed[index] === 'end') {
+        endWidth += widths[index];
+      }
+      else {
+        startWidth += widths[index];
+      }
+    }
+    table.style.setProperty('--ant-table-fixed-position', enabled ? 'sticky' : 'relative');
+    viewport.style.setProperty('--ant-table-fixed-start-width', `${startWidth}px`);
+    viewport.style.setProperty('--ant-table-fixed-end-width', `${endWidth}px`);
+    viewport.style.setProperty('--ant-table-header-height', `${headHeight}px`);
+    viewport.style.setProperty('--ant-table-viewport-width', `${viewportWidth}px`);
+    placeHeaderRows(rows);
+  }
+
+  measure();
+  const Observer = viewport.ownerDocument.defaultView?.ResizeObserver;
+  const observer = Observer && new Observer(measure);
+  observer?.observe(viewport);
+  for (const cell of cells) observer?.observe(cell);
+  for (const row of rows) observer?.observe(row);
+
+  // Значения опираются на прежние строки и не переносятся на новую структуру колонок.
+  return () => {
+    observer?.disconnect();
+    for (const row of rows) row.style.removeProperty('--ant-table-header-row-offset');
+    for (const index of fixed.keys()) table.style.removeProperty(`--ant-table-fixed-${index}`);
+    table.style.removeProperty('--ant-table-fixed-position');
+    for (const property of [
+      '--ant-table-fixed-start-width', '--ant-table-fixed-end-width',
+      '--ant-table-header-height', '--ant-table-viewport-width'
+    ]) {
+      viewport.style.removeProperty(property);
+    }
+  };
+}

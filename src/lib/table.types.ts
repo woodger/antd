@@ -1,5 +1,6 @@
 import type { Snippet } from 'svelte';
 import type { PaginationProps } from './Pagination.svelte';
+import type { GridBreakpoint } from './grid.types';
 import type { ComponentSize } from './types';
 
 export type TableKey = string | number;
@@ -20,6 +21,7 @@ export interface TableSorter {
   order: TableSortOrder;
 }
 
+/** Колонка данных или заголовок группы колонок. Ключ уникален во всём дереве. */
 export interface TableColumn<Row extends object> {
   key: string;
   title: string;
@@ -37,8 +39,22 @@ export interface TableColumn<Row extends object> {
   rowScope?: 'row' | 'rowgroup';
   /** Убирает колонку из DOM, сохраняя её сортировку и фильтры данных. @defaultValue false */
   hidden?: boolean;
+  /** Дочерние колонки образуют следующий уровень заголовка. */
+  children?: TableColumnsType<Row>;
+  /** Ограничивает видимость колонки верхнего уровня активными breakpoint Grid. */
+  responsive?: readonly GridBreakpoint[];
   width?: number | string;
+  /** Лист наследует закрепление группы. False явно отключает наследование. */
   fixed?: TableFixed;
+}
+
+export type TableColumnType<Row extends object> = TableColumn<Row>;
+export type TableColumnsType<Row extends object> = readonly TableColumn<Row>[];
+
+/** У группы собственный заголовок, а поля данных находятся у её дочерних колонок. */
+export interface TableColumnGroupType<Row extends object>
+  extends Omit<TableColumn<Row>, 'children' | 'dataIndex'> {
+  children: TableColumnsType<Row>;
 }
 
 export interface TableRowSelection<Row extends object> {
@@ -119,7 +135,7 @@ export interface TableProps<Row extends object> {
   mode?: TableMode;
   total?: number;
   dataSource: readonly Row[];
-  columns: readonly TableColumn<Row>[];
+  columns: TableColumnsType<Row>;
   rowKey?: TableRowKey<Row>;
   /** Дополняет классы строки. index — позиция на странице, indent — глубина в дереве. */
   rowClassName?: string | ((record: Row, index: number, indent: number) => string);
