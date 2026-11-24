@@ -30,6 +30,9 @@ export interface TableCellProps extends Omit<HTMLTdAttributes, 'children' | 'col
   rowSpan?: number;
 }
 
+/** DOM-атрибуты и Svelte events строки. Ячейки остаются у Table. */
+export type TableRowProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'>;
+
 /** Колонка данных или заголовок группы колонок. Ключ уникален во всём дереве. */
 export interface TableColumn<Row extends object> {
   key: string;
@@ -261,6 +264,10 @@ export interface TableProps<Row extends object> {
   rowKey?: TableRowKey<Row>;
   /** Дополняет классы строки. index — позиция на странице, indent — глубина в дереве. */
   rowClassName?: string | ((record: Row, index: number, indent: number) => string);
+  /** Атрибуты строки данных. index — позиция во всей раскрытой странице. */
+  onRow?: (record: Row, index: number) => TableRowProps | void;
+  /** Атрибуты строки шапки. index — уровень видимых колонок после их размещения. */
+  onHeaderRow?: (columns: TableColumnsType<Row>, index: number) => TableRowProps | void;
   /** Подсветка строк при наведении; изменение сразу обновляет оформление. @defaultValue true */
   rowHoverable?: boolean;
   /** Отображает заголовок колонок, сохраняя данные, caption и панели. @defaultValue true */

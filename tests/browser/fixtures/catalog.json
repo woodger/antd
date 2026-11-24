@@ -1773,6 +1773,11 @@
     "root": "table-expansion-options-fixture"
   },
   {
+    "id": "table-row-attributes",
+    "module": "./TableRowAttributesFixture.svelte",
+    "root": "table-row-attributes-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"

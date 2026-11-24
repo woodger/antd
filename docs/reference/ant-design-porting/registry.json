@@ -19818,6 +19818,24 @@
           "note": "Class string/callback(record,currentPageIndex,indent0) дополняет core/selection classes; defaults/explicit true/false hover сверяются с UMD, включая normal/selected/sorted. Updates сохраняют row/editor/checkbox DOM, focus/selection, keyboard и callbacks. Source true→false оставляет HoverContext paint после leave; raw observation сохранено, native CSS guard очищает сразу. Legacy-стили сохранены. Tree/rowspan варианты требуют отдельного расширения."
         },
         {
+          "id": "row-attributes",
+          "title": "Атрибуты и события строк данных и шапки",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table.types.ts",
+            "src/lib/table-columns.engine.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-row-attributes-reference.json",
+            "tests/browser/table-row-attributes.spec.ts",
+            "tests/browser/table-row-attributes-hydration.spec.ts",
+            "tests/package/table-row-attributes.ssr.test.ts",
+            "tests/package/table-row-attributes.types.ts"
+          ],
+          "note": "Ant Design 6.6.8, rc-table 1.11.1. Два одинаковых прогона 11 UMD-профилей дают 63 состояния и 11 снимков SSR. onRow получает индекс раскрытой страницы, включая server и virtual. onHeaderRow получает видимые определения своего уровня с группами и служебными колонками. Проверены attrs, мышь, клавиатура, обновление callback и порядок раскрытия перед onclick. Source HeaderRow затирает className/style семантическими defaults. Native применяет class/style и восстанавливает липкие offsets после изменения style. aria-controls использует id дочерней строки. Native оставляет один id и Tab stop при наличии основного tr и виртуального span. Гидратация сохраняет редактор, выделение и фокус."
+        },
+        {
           "id": "show-header",
           "title": "ShowHeader и fixed columns без thead",
           "state": "supported",

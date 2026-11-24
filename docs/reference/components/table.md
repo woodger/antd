@@ -492,6 +492,41 @@ HoverContext записаны как диагностика, сравнение 
 [browser](../../../tests/browser/table-row-options.spec.ts) и
 [SSR](../../../tests/package/table-row-options.ssr.test.ts), fixture `?fixture=table-row-options`.
 
+## Атрибуты строк
+
+`onRow(record, index)` возвращает `TableRowProps` для строки данных. Индекс
+начинается с 0 в раскрытой странице после фильтрации, сортировки и пагинации.
+Виртуальное окно передаёт тот же индекс. Пустые строки, итоги и подробности
+в callback не входят.
+
+`onHeaderRow(columns, index)` получает определения колонок данного уровня
+шапки. В них учтены видимость, группы и позиции служебных колонок. Если шапка
+содержит только пустую ячейку, callback получает определение с пустыми
+`key` и `title`. При `showHeader={false}` callback пропускается.
+
+В возвращаемом объекте можно задать `class`, строковый `style`, `data-*`,
+`aria-*` и нативные Svelte-обработчики. Класс строки данных
+дополняет `rowClassName`. Раскрытие по клику обновляет ключи и вызывает
+`onExpand` и `onExpandedRowsChange` до `onclick` из `onRow`. Штатные кнопки
+раскрытия обрабатывают клик сами. Клик по редактору внутри строки можно
+получить в `onRow` без раскрытия строки.
+
+`data-row-key` и вычисляемые виртуальные `aria-rowindex` принадлежат таблице.
+Пользовательский `id` вложенной строки используется в `aria-controls`
+кнопки раскрытия. При двух представлениях виртуальной строки `id` и
+`tabindex` остаются у обычной строки. Слой объединённой ячейки сохраняет
+атрибуты, класс, стиль и обработчики той же записи.
+
+В Ant Design 6.6.8 `HeaderRow` перезаписывает возвращённые `className` и
+`style` значениями semantic DOM. В Svelte `class` и `style` из
+`onHeaderRow` применяются к строке шапки. Эталон сохраняет исходный результат
+React. Проверки Svelte также покрывают смещения закреплённой шапки и строгую
+гидратацию редактора.
+[Эталон](../../../tests/browser/fixtures/ant-design-table-row-attributes-reference.json)
+· [Chromium](../../../tests/browser/table-row-attributes.spec.ts)
+· [SSR](../../../tests/package/table-row-attributes.ssr.test.ts)
+· [Гидратация](../../../tests/browser/table-row-attributes-hydration.spec.ts)
+
 ## Панели title и footer
 
 `title` и `footer` принимают snippets с readonly-массивом записей текущей страницы.

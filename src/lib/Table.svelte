@@ -37,6 +37,7 @@
     TableFilterValue,
     TableKey,
     TableProps,
+    TableRowProps,
     TableScrollConfig,
     TableSorter
   } from './table.types';
@@ -59,6 +60,8 @@
     columns,
     rowKey,
     rowClassName,
+    onRow,
+    onHeaderRow,
     rowHoverable = true,
     showHeader = true,
     sorter = $bindable(),
@@ -232,6 +235,14 @@
   ));
   let leaves = $derived(columnLayout.leaves);
   let headerRows = $derived(columnLayout.headings.length ? columnLayout.headings : [[]]);
+  const headerRowProperties = $derived.by(() => {
+    const configure = onHeaderRow;
+    if (!showHeader || !configure) {
+      return undefined;
+    }
+
+    return headerRows.map((row, index) => configure(columnsAtHeaderLevel(row), index) ?? undefined);
+  });
   let headerCount = $derived(showHeader ? headerRows.length : 0);
   let hasCellProps = $derived(leaves.some(({ column }) => Boolean(column.onCell)));
   let hovered = $state<{ key: TableKey; leaf: number; first: number; last: number; }>();
@@ -303,6 +314,26 @@
     for (const width of widths) offsets.push(offsets[offsets.length - 1] + width);
 
     return spans.map(row => measureMergedRow(row, offsets));
+  });
+  // Строка и её слой span используют атрибуты одного callback с общим индексом.
+  const bodyRowProperties = $derived.by(() => {
+    const configure = onRow;
+    if (!configure) {
+      return undefined;
+    }
+
+    const properties = new Map<TableKey, TableRowProps | undefined>();
+    const start = scrollport.start;
+    for (const [offset, { row }] of scrollport.rows.entries()) {
+      properties.set(row.key, configure(row.record, start + offset) ?? undefined);
+    }
+    for (const { row, sourceIndex } of mergedRows) {
+      if (!properties.has(row.key)) {
+        properties.set(row.key, configure(row.record, sourceIndex) ?? undefined);
+      }
+    }
+
+    return properties;
   });
   // Произвольные итоговые строки сохраняют нативную семантику и свои атрибуты.
   const virtualRowIndices = $derived(
@@ -430,6 +461,11 @@
 
     if (!element || !viewport || (!fixed.some(Boolean) && !stickyHeader && !hasExpansion)) {
       return;
+    }
+
+    if (stickyHeader) {
+      // Изменение inline style строки требует снова записать измеренные смещения шапки.
+      void headerRowProperties;
     }
 
     return observeTableLayout({
@@ -581,6 +617,20 @@
     changeExpansion(row);
   }
 
+  // Встроенное раскрытие завершается до пользовательского onclick, как в Source.
+  function rowClick(
+    row: TableRow<Row>, canExpand: boolean, listener: TableRowProps['onclick']
+  ): TableRowProps['onclick'] {
+    if (!expandable?.expandRowByClick || !canExpand) {
+      return listener;
+    }
+
+    return event => {
+      expandByRowClick(row, event);
+      listener?.(event);
+    };
+  }
+
   function expansionId(key: TableKey, part: 'details' | 'row' = 'details'): string {
     const value = `${typeof key}:${key}`;
 
@@ -598,7 +648,11 @@
       return expansionId(row.key);
     }
 
-    return row.children?.map(child => expansionId(child.key, 'row')).join(' ') || undefined;
+    const targets = row.children?.map(child => {
+      const properties = bodyRowProperties?.get(child.key);
+      return properties?.id ?? expansionId(child.key, 'row');
+    });
+    return targets?.join(' ') || undefined;
   }
 
   // Пользовательский переключатель вызывает тот же запрос, что и штатная кнопка.
@@ -630,6 +684,15 @@
   function serviceCellClass(service: TableServiceColumn): string {
     return service === 'selection' ? `${prefix}-selection-column`
       : `${prefix}-row-expand-icon-cell`;
+  }
+
+  function columnsAtHeaderLevel(row: readonly TableHeading<Row>[]): TableColumn<Row>[] {
+    if (!row.length) {
+      return [{ key: '', title: '' }];
+    }
+
+    return row.map(({ service, visibleColumn }) => service
+      ? { ...visibleColumn, className: serviceCellClass(service) } : visibleColumn);
   }
 </script>
 
@@ -757,9 +820,7 @@
         aria-expanded={expanded}
         aria-controls={controls}
         onclick={event => {
-          if (nested) {
-            event.stopPropagation();
-          }
+          event.stopPropagation();
           changeExpansion(row);
         }}
       ></button>
@@ -1044,7 +1105,9 @@
           {#if showHeader}
             <thead data-ant-table-part="head" class={`${prefix}-thead`}>
               {#each headerRows as row, depth}
-                <tr aria-rowindex={virtualRowIndices ? depth + 1 : undefined}>
+                {@const attributes = headerRowProperties?.[depth]}
+                <tr {...attributes}
+                  aria-rowindex={virtualRowIndices ? depth + 1 : attributes?.['aria-rowindex']}>
                   {#each row as cell (cell.key)}
                     {#if cell.service}
                       {@render serviceHeading(cell, cell.service)}
@@ -1069,27 +1132,29 @@
             {#each scrollport.rows as entry, windowIndex (entry.row.key)}
               {@const { row, depth } = entry}
               {@const index = scrollport.start + windowIndex}
+              {@const attributes = bodyRowProperties?.get(row.key)}
               {@const canExpand = canExpandRow(row)}
               {@const expanded = expandedKeys.has(row.key)}
               {@const hasDetails = expandedRowRender && canExpand && (expanded || forceExpandedRows)}
               {@const expansionClass = depth > 0 || hasDetails
                 ? expandedRowClass(row.record, index, depth) : undefined}
               <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
-              <tr data-ant-table-part="row" data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
+              <tr {...attributes}
+                data-ant-table-part="row" data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
                 data-ant-table-span-hovered={inHoveredRows(index) || undefined} class={[
                   `${prefix}-row`,
                   tree && `${prefix}-row-level-${depth}`,
                   typeof rowClassName === 'function'
                     ? rowClassName(row.record, index, depth) : rowClassName,
                   depth > 0 && expansionClass,
+                  attributes?.class,
                   rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
                 ]}
                 data-row-key={row.key}
                 aria-rowindex={virtualRowIndices
-                  ? index + headerCount + 1 : undefined}
-                id={depth > 0 ? expansionId(row.key, 'row') : undefined}
-                onclick={expandable?.expandRowByClick && canExpand
-                  ? event => expandByRowClick(row, event) : undefined}
+                  ? index + headerCount + 1 : attributes?.['aria-rowindex']}
+                id={attributes?.id ?? (depth > 0 ? expansionId(row.key, 'row') : undefined)}
+                onclick={rowClick(row, canExpand, attributes?.onclick)}
                 {@attach scrollport.active ? element => scrollport.attachRow(element, row.key)
                   : undefined}
               >
@@ -1141,10 +1206,16 @@
             {@render virtualSpacer(scrollport.after)}
             {#each mergedRows as entry (entry.row.key)}
               {@const { row, depth, sourceIndex, top, parts } = entry}
+              {@const attributes = bodyRowProperties?.get(row.key)}
+              {@const hasPrimaryRow = sourceIndex >= scrollport.start
+                && sourceIndex < scrollport.start + scrollport.rows.length}
               {@const canExpand = canExpandRow(row)}
               {@const expanded = expandedKeys.has(row.key)}
               <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
-              <tr data-ant-table-part="span-row" data-row-key={row.key}
+              <tr {...attributes}
+                data-ant-table-part="span-row" data-row-key={row.key}
+                id={hasPrimaryRow ? undefined : attributes?.id}
+                tabindex={hasPrimaryRow ? undefined : attributes?.tabindex}
                 data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
                 class={[
                   'table-span-row', `${prefix}-row ${prefix}-row-extra`,
@@ -1152,11 +1223,11 @@
                   typeof rowClassName === 'function'
                     ? rowClassName(row.record, sourceIndex, depth) : rowClassName,
                   depth > 0 && expandedRowClass(row.record, sourceIndex, depth),
+                  attributes?.class,
                   rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
                 ]}
                 style:top={cssSize(top)}
-                onclick={expandable?.expandRowByClick && canExpand
-                  ? event => expandByRowClick(row, event) : undefined}
+                onclick={rowClick(row, canExpand, attributes?.onclick)}
               >
                 {#each parts as part (part.columnIndex)}
                   {@const leaf = leaves[part.columnIndex]}

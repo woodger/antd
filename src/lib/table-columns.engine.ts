@@ -37,6 +37,7 @@ export interface TableLeaf<Row extends object> {
 export interface TableHeading<Row extends object> {
   key: string;
   column: TableColumn<Row>;
+  visibleColumn: TableColumn<Row>;
   service: TableServiceColumn | undefined;
   start: number;
   leaf: number;
@@ -151,23 +152,40 @@ export function getTableColumnLayout<Row extends object>(
     depth: number,
     start: number,
     inheritedFixed?: TableFixed
-  ): number {
+  ): TableHeading<Row> | undefined {
     const service = getServiceRole(column);
     if (column.hidden || (depth > 0 && service)) {
-      return 0;
+      return undefined;
     }
 
     const key = service ?? `data:${column.key}`;
     const fixed = column.fixed ?? inheritedFixed;
     const heading: TableHeading<Row> = {
-      key, column, service, start, leaf: leaves.length, colSpan: 1, rowSpan: 1, group: false
+      key, column, visibleColumn: column, service, start,
+      leaf: leaves.length, colSpan: 1, rowSpan: 1, group: false
     };
     const row = headings[depth] ??= [];
     row.push(heading);
 
     let childWidth = 0;
-    for (const child of column.children ?? []) {
-      childWidth += visit(child, depth + 1, start + childWidth, fixed);
+    if (column.children?.length) {
+      const visibleChildren: TableColumn<Row>[] = [];
+      let changed = false;
+      for (const child of column.children) {
+        const childHeading = visit(child, depth + 1, start + childWidth, fixed);
+        if (childHeading) {
+          childWidth += childHeading.colSpan;
+          visibleChildren.push(childHeading.visibleColumn);
+          changed ||= childHeading.visibleColumn !== child;
+        }
+        else {
+          changed = true;
+        }
+      }
+      // onHeaderRow видит оставшихся потомков; onHeaderCell сохраняет исходную колонку.
+      if (changed) {
+        heading.visibleColumn = { ...column, children: visibleChildren };
+      }
     }
 
     heading.group = leaves.length > heading.leaf;
@@ -175,12 +193,13 @@ export function getTableColumnLayout<Row extends object>(
       leaves.push({ key, column, service, fixed });
     }
     heading.colSpan = column.colSpan ?? (heading.group ? childWidth : 1);
-    return heading.colSpan;
+    return heading;
   }
 
   let start = 0;
   for (const column of prepareColumns(columns, screens, services)) {
-    start += visit(column, 0, start);
+    const heading = visit(column, 0, start);
+    start += heading?.colSpan ?? 0;
   }
 
   for (const [depth, row] of headings.entries()) {
