@@ -8,13 +8,14 @@ import type {
 } from './date-picker.types';
 
 interface MultiplePickerOptions<DateType extends object> {
-  props?: DatePickerMultipleProps<DateType>;
+  props?: Pick<DatePickerMultipleProps<DateType>, 'value' | 'order' | 'onChange' | 'onOk'>;
   local: readonly DateType[];
-  picker: DatePickerPicker;
+  picker: DatePickerPicker | 'time';
   locale: string;
   formats: DatePickerFormat<DateType>[];
   disabled: boolean;
   valid: (value: DateType) => boolean;
+  calendarChange?: (value: DateType[], text: string[]) => void;
 }
 
 export const emptyPickerDates: readonly never[] = [];
@@ -64,19 +65,34 @@ export function createMultiplePicker<DateType extends object>(
     }
     if (!sameDates(draft, next)) {
       draft = next;
-      props?.onCalendarChange?.(next, next.map(format), { source: 'date' });
+      options.calendarChange?.(next, next.map(format));
     }
   }
 
-  /** Снятие выбора удаляет весь период, даже если начальный массив содержал дубликаты. */
+  /** Кнопка тега удаляет все значения того же периода или времени с точностью до секунды. */
   function withoutPeriod(value: DateType) {
     const { picker, locale } = options;
+    if (picker === 'time') {
+      return draft.filter(date => !dates.sameTime(value, date));
+    }
 
     return draft.filter(date => !samePickerPanelValue(value, date, false, picker, locale));
   }
 
-  /** Выбор уже отмеченного периода удаляет его. */
+  /** Повторный выбор времени снимает первый совпавший тег, как useToggleDates. */
   function toggle(value: DateType) {
+    if (options.picker === 'time') {
+      const index = draft.findIndex(date => dates.sameTime(value, date));
+      const next = [...draft];
+      if (index === -1) {
+        next.push(value);
+      }
+      else {
+        next.splice(index, 1);
+      }
+      return next;
+    }
+
     const remainder = withoutPeriod(value);
 
     return remainder.length === draft.length ? [...draft, value] : remainder;
@@ -170,6 +186,6 @@ export function createMultiplePicker<DateType extends object>(
       publish(true);
       reset(false);
     },
-    format
+    format, update, toggle, withoutPeriod, publish, reset
   };
 }

@@ -1,6 +1,7 @@
 import {
-  DatePicker, generatePicker, RangePicker, type DatePickerMode, type DatePickerPanelContext,
-  type DatePickerTimeProps, type TimeRangePickerProps
+  DatePicker, generatePicker, RangePicker, TimePicker,
+  type DatePickerMode, type DatePickerPanelContext,
+  type DatePickerTimeProps, type TimePickerMultipleProps, type TimeRangePickerProps
 } from '@woodger/antd';
 import registry from '@woodger/antd/porting/registry.json';
 import { createRawSnippet } from 'svelte';
@@ -40,6 +41,9 @@ it('exports an adapter-bound picker family with opaque values at every public bo
   >();
   expectTypeOf<ComponentProps<typeof Picker.TimePicker>['value']>()
     .toEqualTypeOf<OpaquePickerDate | null | undefined>();
+  expectTypeOf<ComponentProps<typeof TimePicker>['multiple']>().toEqualTypeOf<false | undefined>();
+  expectTypeOf<ComponentProps<typeof Picker.TimePicker<true>>['value']>()
+    .toEqualTypeOf<readonly OpaquePickerDate[] | null | undefined>();
   expectTypeOf<ComponentProps<typeof Picker.RangePicker>['value']>()
     .toEqualTypeOf<[OpaquePickerDate | null | undefined, OpaquePickerDate | null | undefined]
       | null | undefined>();
@@ -84,6 +88,29 @@ it('renders the clock of a generated DatePicker with its field format and calend
   expect(submittedValues(body)).toEqual(['13:10:18']);
   expect(body).toContain('data-footer-mode>time</strong>');
   expect(body.match(/class="ant-picker-time-panel-column\b/g)).toHaveLength(2);
+});
+
+it('renders the same multiple clock form value through both generated entrypoints', () => {
+  const Picker = generatePicker(opaquePickerAdapter);
+  const props: TimePickerMultipleProps<OpaquePickerDate> = {
+    multiple: true,
+    name: 'opaque',
+    defaultValue: [opaqueDate('2024-06-15T13:10:18Z'), opaqueDate('2024-06-23T14:26:40Z')],
+    defaultOpen: true
+  };
+  const clock = render(Picker.TimePicker<true>, { props }).body;
+  const root = render(Picker<true>, { props: {
+    multiple: true, picker: 'time', name: props.name,
+    defaultValue: props.defaultValue, defaultOpen: props.defaultOpen
+  } }).body;
+
+  for (const body of [root, clock]) {
+    expect(submittedValues(body)).toEqual(['13:10:18,14:26:40']);
+    expect(body.match(/data-picker-selection-tag\b/g)).toHaveLength(2);
+    expect(body).toContain('ant-picker-time-panel');
+    expect(body).toContain('ant-picker-ok');
+    expect(body).not.toContain('data-picker-current');
+  }
 });
 
 const ssr = readPickerGeneratorServer();

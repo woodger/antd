@@ -3,7 +3,9 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
-import type { GeneratedPickerProfile } from './fixtures/GeneratedPickerFixtures.svelte';
+import type {
+  GeneratedPickerProfile, GeneratedTimeSelectionProfile
+} from './fixtures/GeneratedPickerFixtures.svelte';
 
 interface SourceReference {
   version: string;
@@ -18,6 +20,9 @@ export interface GeneratedPickerState {
   suffix?: string;
   panels?: string[];
   invalidFormats?: [locale: string, value: string, formatType: string][];
+  tags?: string[];
+  selectedUnits?: string[][];
+  nowVisible?: boolean;
   events: unknown[][];
 }
 
@@ -26,6 +31,10 @@ interface BrowserProfile<Id extends string = GeneratedPickerProfile> {
   steps: { action: string; state: GeneratedPickerState; }[];
   errors: string[];
 }
+
+type TimeSelectionPass = Omit<BrowserProfile<string>, 'profile'> & {
+  profile: GeneratedTimeSelectionProfile;
+};
 
 interface ServerPass {
   packets: {
@@ -39,7 +48,7 @@ interface ServerPass {
 
 /** Проверяет хеш оригинальных байтов перед разбором измерений. */
 function readReference<Pass>(
-  kind: 'browser' | 'supplement' | 'root-time' | 'switch-time' | 'ssr', sha256: string
+  kind: string, sha256: string
 ) {
   const path = `./fixtures/ant-design-generated-picker-${kind}-reference.json.gz`;
   const capture = gunzipSync(readFileSync(new URL(path, import.meta.url)));
@@ -76,6 +85,30 @@ export function readPickerGeneratorRootTime() {
 export function readPickerGeneratorTimeSwitch() {
   return readReference<BrowserProfile<'switch-time-dayjs' | 'switch-time-opaque'>[]>(
     'switch-time', 'bf2d7a7dd990abb42b1af5071eb53cb783b49c503b42c75c56ddb5a0423608c0'
+  );
+}
+
+/** Читает исходные действия и снимки набора времени для корня и фабричного TimePicker. */
+export function readPickerGeneratorTimeSelections() {
+  return [
+    readReference<TimeSelectionPass[]>(
+      'root-multiple-time', 'de84636df44895e70323ffe1e1f40bf4bbdbb5b36b09508c50aa702e47144c9d'
+    ),
+    readReference<TimeSelectionPass[]>(
+      'root-multiple-time-edges', 'ecec4ea97cdcd2981a41ad51ba6af565177a333389ebb81a34bce741a195aa2e'
+    ),
+    readReference<TimeSelectionPass[]>(
+      'multiple-time', 'c8f5d6182e41293f406a45335cef7a840171570649ec189ba864fd6d7aa1e997'
+    )
+  ];
+}
+
+/** Сохраняет смещение второго клика при автоматической прокрутке часов. */
+export function readPickerGeneratorTimeSelectionDoubleClick() {
+  type Profile = TimeSelectionPass['profile'] & { delay: number; };
+  type Capture = Omit<TimeSelectionPass, 'profile'> & { profile: Profile; };
+  return readReference<Capture[]>(
+    'root-multiple-time-doubleclick', '904f55ce05d820772f8a87bdd7495cfcdad0b52d00e11f74886b455335ae8e5f'
   );
 }
 

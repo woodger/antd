@@ -1179,6 +1179,7 @@ export type {
 } from './time-range-picker.types';
 export type {
   TimePickerProps,
+  TimePickerMultipleProps,
   TimePickerLocale,
   TimePickerConfig,
   TimePickerSemantic,

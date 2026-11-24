@@ -5,13 +5,15 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { ElementHandle, Page } from '@playwright/test';
 import { createServer, type ViteDevServer } from 'vite';
+import type { GeneratedPickerHydrationProfile } from './fixtures/GeneratedPickerFixtures.svelte';
 import { expect, test } from './test';
 
 /** Проверяет, что гидратация открытой панели сохраняет SSR узлы и состояние редактора. */
-async function verifyGeneratedPickerHydration(page: Page, profile: 'open-range' | 'open-clock') {
+async function verifyGeneratedPickerHydration(page: Page, profile: GeneratedPickerHydrationProfile) {
   const cacheDir = await mkdtemp(join(tmpdir(), 'antd-generated-picker-'));
   const originals: ElementHandle[] = [];
-  const clock = profile === 'open-clock';
+  const clock = profile !== 'open-range';
+  const multiple = profile === 'open-time-selection';
   let server: ViteDevServer | undefined;
 
   try {
@@ -26,7 +28,7 @@ async function verifyGeneratedPickerHydration(page: Page, profile: 'open-range' 
     const { renderGeneratedPickerFixture } = await server.ssrLoadModule(entry);
     const { body, head } = renderGeneratedPickerFixture(profile);
     const route = '/select-components-hydration.html';
-    await page.goto(clock ? `${route}?clock` : route);
+    await page.goto(multiple ? `${route}?time-selection` : clock ? `${route}?clock` : route);
     await page.evaluate(({ body, head }) => {
       const root = document.getElementById('root');
       if (!root) {
@@ -43,6 +45,11 @@ async function verifyGeneratedPickerHydration(page: Page, profile: 'open-range' 
     const firstPanel = popup.locator('[data-opaque-panel]').first();
     const hours = popup.locator('.ant-picker-time-panel-column').first();
     const targets = clock ? [start, hours] : [start, end, firstPanel];
+    if (multiple) {
+      const tags = page.locator('[data-picker-selection-tag]');
+      await expect(tags).toHaveCount(2);
+      targets.push(tags.first(), tags.last());
+    }
     for (const target of targets) {
       await expect(target).toHaveCount(1);
       originals.push(await target.elementHandle());
@@ -65,7 +72,25 @@ async function verifyGeneratedPickerHydration(page: Page, profile: 'open-range' 
         .toBe(true);
     }
 
-    if (clock) {
+    if (multiple) {
+      await start.press('ArrowDown');
+      await expect(hours.getByRole('button', { name: 'hour 13', exact: true })).toBeFocused();
+      await hours.getByText('16', { exact: true }).click();
+      await popup.locator('.ant-picker-ok button').click();
+
+      const expected = ['13:10:18', '16:10:18', '14:26:40'];
+      await expect(start).toHaveValue(expected.join(','));
+      await expect(popup).toHaveCount(0);
+      const log = JSON.parse(await page.locator('#generated-events').innerText()) as unknown[][];
+      expect(log.find(event => event[0] === 'change')).toEqual([
+        'change', [
+          { iso: '2024-06-15T13:10:18.000Z', original: 0, selected: false, frozen: true, ownKeys: ['stamp'] },
+          { iso: '2024-06-15T16:10:18.000Z', original: -1, selected: false, frozen: true, ownKeys: ['stamp'] },
+          { iso: '2024-06-23T14:26:40.000Z', original: 1, selected: false, frozen: true, ownKeys: ['stamp'] }
+        ], expected
+      ]);
+    }
+    else if (clock) {
       await hours.getByText('16', { exact: true }).click();
       await popup.locator('.ant-picker-ok button').click();
       await expect(start).toHaveValue('16:10:18');
@@ -108,3 +133,6 @@ test('hydrates opaque range values, binds the original fields and tears down the
 
 test('hydrates an opaque DatePicker clock and confirms with the original editor and panel',
   ({ page }) => verifyGeneratedPickerHydration(page, 'open-clock'));
+
+test('hydrates a generated time selection and keeps the editor, panel and original tags',
+  ({ page }) => verifyGeneratedPickerHydration(page, 'open-time-selection'));

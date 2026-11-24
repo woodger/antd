@@ -98,7 +98,10 @@ showToday, прямые disabled units, addon/onSelect и второй аргу�
 и правила обновления открытой панели описаны в разделе DatePicker.
 Для собственного типа даты используйте `DatePicker.generatePicker(adapter).TimePicker`.
 Описание адаптера есть в [документации DatePicker](./date-picker.md#свой-тип-даты).
-Multiple, mask format, полный каталог locales, React diagnostics и полный rc-trigger/
+`multiple` доступен у `DatePicker.TimePicker` и `Picker.TimePicker` из
+`generatePicker`. Эти компоненты принимают массив дат и подтверждают набор
+по правилам [множественного выбора](./date-picker.md#множественный-выбор).
+Mask format, полный каталог locales, React diagnostics и полный rc-trigger/
 motion API пока не перенесены. Контейнеры popup описаны в разделе DatePicker.
 Диапазон экспортируется как TimeRangePicker.
 Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream.

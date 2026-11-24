@@ -9,6 +9,7 @@ if (!target) {
 }
 
 const query = new URLSearchParams(location.search);
-const profile = query.has('clock') ? 'open-clock' : 'open-range';
+const profile = query.has('time-selection') ? 'open-time-selection'
+  : query.has('clock') ? 'open-clock' : 'open-range';
 hydrate(GeneratedPickerFixtures, { target, props: { profile }, recover: false });
 target.dataset.hydrated = 'true';

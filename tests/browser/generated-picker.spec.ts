@@ -1,6 +1,7 @@
 import type { Locator, Page } from '@playwright/test';
 import {
   readPickerGeneratorBrowser, readPickerGeneratorRootTime, readPickerGeneratorSupplement,
+  readPickerGeneratorTimeSelectionDoubleClick, readPickerGeneratorTimeSelections,
   readPickerGeneratorTimeSwitch, type GeneratedPickerState
 } from './date-picker-generator-reference';
 import { expect, test } from './test';
@@ -29,8 +30,22 @@ async function act(page: Page, popup: Locator, action: string, multiple: boolean
       await popup.getByRole('button', { name: '2024-06-28', exact: true }).click();
       break;
     case 'hour':
+    case 'hour-original':
       await popup.locator('.ant-picker-time-panel-column').first()
-        .getByText('16', { exact: true }).click();
+        .getByText(action === 'hour' ? '16' : '13', { exact: true }).click();
+      break;
+    case 'millisecond':
+      await popup.locator('.ant-picker-time-panel-column').last()
+        .getByText('100', { exact: true }).click();
+      break;
+    case 'escape':
+      await page.locator('#start').press('Escape');
+      break;
+    case 'preset':
+      await popup.getByRole('button', { name: 'Suggested clock', exact: true }).click();
+      break;
+    case 'remove':
+      await page.locator('[data-picker-selection-tag] button').first().click();
       break;
     case 'february':
       await popup.getByRole('button', { name: '2024-02', exact: true }).click();
@@ -51,12 +66,13 @@ async function act(page: Page, popup: Locator, action: string, multiple: boolean
 /** Сверяет события выбора, учитывая согласованные native info и обработку Enter. */
 function projectEvents(events: unknown[][], local: boolean, profile: string) {
   const dateSource = ['editor', 'calendar', 'month', 'month-grid', 'multiple'].includes(profile);
+  const timeSource = profile === 'root-time' || profile.startsWith('root-multiple-time');
 
   return events.flatMap(event => {
     if (!local && event[0] === 'submit') {
       return [];
     }
-    if (local && event[0] === 'calendar' && (dateSource || profile === 'root-time')) {
+    if (local && event[0] === 'calendar' && (dateSource || timeSource)) {
       expect(event[3]).toEqual({ source: dateSource ? 'date' : 'time' });
       return [[...event.slice(0, 3), {}]];
     }
@@ -64,6 +80,135 @@ function projectEvents(events: unknown[][], local: boolean, profile: string) {
     return [event];
   });
 }
+
+const timeSelections = readPickerGeneratorTimeSelections();
+
+test('the multiple time corpus repeats every upstream measurement', () => {
+  expect(timeSelections.map(reference => reference.passes[0].length)).toEqual([8, 4, 2]);
+  for (const reference of timeSelections) {
+    expect(reference.revision).toBe(source.revision);
+    expect(reference.archiveSha256).toBe(source.archiveSha256);
+    const [first] = reference.passes;
+    expect(reference.passes).toEqual([first, first]);
+    expect(first.every(entry => entry.errors.length === 0)).toBe(true);
+  }
+});
+
+for (const { profile, steps } of timeSelections.flatMap(reference => reference.passes[0])) {
+  test(`generatePicker matches time selection for ${profile.id}`, async ({ page }) => {
+    const params = new URLSearchParams({
+      fixture: 'generated-picker',
+      'time-selection': JSON.stringify(profile)
+    });
+    await page.goto(`/?${params}`);
+    const editor = page.getByRole('combobox');
+    const popup = page.locator('[data-picker-popup]');
+    const original = await editor.elementHandle();
+
+    for (const { action, state } of steps) {
+      if (action !== 'initial') {
+        await act(page, popup, action, true);
+      }
+      const [value, sameInput, sourceName] = state.fields[0];
+      expect(sourceName).toBe('');
+      await expect(editor).toHaveValue(value);
+      const nativeFormValue = await editor.evaluate((field: HTMLInputElement) =>
+        field.form && new FormData(field.form).get('opaque'));
+      expect(nativeFormValue).toBe(value);
+      expect(await editor.evaluate((node, initial) => node === initial, original)).toBe(sameInput);
+      await expect(popup).toHaveCount(state.open ? 1 : 0);
+      await expect(popup.locator('[data-picker-current]')).toHaveCount(state.nowVisible ? 1 : 0);
+      if (state.tags) {
+        await expect(page.locator('[data-picker-selection-tag] .ant-picker-selection-item-content'))
+          .toHaveText(state.tags);
+      }
+      if (state.selectedUnits) {
+        const selected = await popup.locator('.ant-picker-time-panel-column').evaluateAll(columns =>
+          columns.map(column => [...column.querySelectorAll('[data-picker-time-cell-selected]')]
+            .map(cell => cell.textContent)));
+        expect(selected).toEqual(state.selectedUnits);
+      }
+      const events = JSON.parse(await page.locator('#generated-events').innerText()) as unknown[][];
+      expect(projectEvents(events, true, profile.id), `${profile.id}: ${action}`)
+        .toEqual(state.events);
+    }
+    await original.dispose();
+  });
+}
+
+const doubleClicks = readPickerGeneratorTimeSelectionDoubleClick();
+
+for (const { profile, steps } of doubleClicks.passes[0]) {
+  test(`multiple clock double click confirms the intended hour at ${profile.delay}ms`, async ({ page }) => {
+    expect(doubleClicks.revision).toBe(source.revision);
+    expect(doubleClicks.passes).toEqual([doubleClicks.passes[0], doubleClicks.passes[0]]);
+    const upstream = steps.find(step => step.action === 'double')?.state;
+    expect(upstream?.tags).toEqual(profile.delay === 0
+      ? ['13:10:18', '15:10:18', '16:10:18', '14:26:40'] : ['16:10:18', '14:26:40']);
+
+    const params = new URLSearchParams({
+      fixture: 'generated-picker',
+      'time-selection': JSON.stringify(profile)
+    });
+    await page.goto(`/?${params}`);
+    const popup = page.locator('[data-picker-popup]');
+    await act(page, popup, 'start', true);
+    await popup.locator('.ant-picker-time-panel-column').first()
+      .getByText('16', { exact: true }).dblclick({ delay: profile.delay });
+
+    await expect(popup).toHaveCount(0);
+    await expect(page.getByRole('combobox')).toHaveValue('13:10:18,16:10:18,14:26:40');
+    const events = JSON.parse(await page.locator('#generated-events').innerText()) as unknown[][];
+    const firstClick = upstream?.events.slice(0, 3) ?? [];
+    expect(firstClick.map(event => event[0])).toEqual(['open', 'calendar', 'picker']);
+    expect(projectEvents(events, true, profile.id)).toEqual([
+      ...firstClick,
+      ['change', firstClick[1][1], firstClick[1][2]],
+      ['open', false]
+    ]);
+  });
+}
+
+test('DatePicker keeps tags when the multiple field switches between time and date', async ({
+  page
+}) => {
+  const options = { id: 'switch-selection', variant: 'date', actions: [] };
+  const params = new URLSearchParams({
+    fixture: 'generated-picker', profile: 'switch-time', 'time-selection': JSON.stringify(options)
+  });
+  await page.goto(`/?${params}`);
+  const editor = page.getByRole('combobox');
+  const toggle = page.locator('#switch-time');
+  const popup = page.locator('[data-picker-popup]');
+  const original = await editor.elementHandle();
+
+  await act(page, popup, 'start', true);
+  await act(page, popup, 'hour', true);
+  await act(page, popup, 'confirm', true);
+  await expect(editor).toHaveValue('13:10:18,16:10:18,14:26:40');
+
+  await toggle.click();
+  await expect(editor).toHaveValue('2024-06-15,2024-06-15,2024-06-23');
+  await act(page, popup, 'start', true);
+  await expect(popup.locator('.ant-picker-date-panel')).toBeVisible();
+  await act(page, popup, 'outside', true);
+  await toggle.click();
+
+  await expect(editor).toHaveValue('13:10:18,16:10:18,14:26:40');
+  expect(await editor.evaluate((node, initial) => node === initial, original)).toBe(true);
+  const events = JSON.parse(await page.locator('#generated-events').innerText()) as unknown[][];
+  expect(events.filter(event => event[0] === 'change')).toHaveLength(1);
+
+  await page.locator('[data-generated-picker-fixture] .ant-picker').hover();
+  await page.locator('[data-picker-clear]').click();
+  await expect(editor).toHaveValue('');
+  await expect(page.locator('[data-picker-selection-tag]')).toHaveCount(0);
+  const cleared = JSON.parse(await page.locator('#generated-events').innerText()) as unknown[][];
+  expect(cleared.slice(-2)).toEqual([
+    ['calendar', [], [], { source: 'time' }], ['change', null, null]
+  ]);
+  await original.dispose();
+});
 
 test('generatePicker corpus contains two equal independent upstream passes', () => {
   expect(source.version).toBe('6.6.8');

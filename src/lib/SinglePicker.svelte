@@ -53,14 +53,17 @@
   } from './time-picker.engine';
   import { timePickerSemantic } from './time-picker-semantic.engine';
   import { datePickerSemantic } from './date-picker-semantic.engine';
-  import type { TimePickerRuntimeProps, TimePickerPreset } from './time-picker.types';
+  import type {
+    TimePickerMultipleProps, TimePickerPreset, TimePickerRuntimeProps
+  } from './time-picker.types';
   let {
     dateOperations,
     time,
     rootTimeProps,
     standaloneTime = false,
     dateProps,
-    multipleOptions,
+    multipleOptions: dateMultipleProps,
+    timeMultipleProps,
     value,
     defaultValue,
     showTime: providedShowTime = false,
@@ -128,7 +131,9 @@
     standaloneTime?: boolean;
     dateProps?: DatePickerProps<DateType>;
     multipleOptions?: DatePickerMultipleProps<DateType>;
+    timeMultipleProps?: TimePickerMultipleProps<DateType>;
   } = $props();
+  let multipleOptions = $derived(dateMultipleProps ?? timeMultipleProps);
   const dates = untrack(() => dateOperations);
   const { generateConfig: adapter, fields } = dates;
   const calendar = createDatePickerEngine(dates);
@@ -173,7 +178,7 @@
   let dateValues = $state.raw<readonly DateType[]>(initialDates);
   let mergedValue = $derived.by(() => {
     if (multipleOptions) return null;
-    if (time && !rootTimeProps) return value === undefined ? internalValue : value;
+    if (time && standaloneTime) return value === undefined ? internalValue : value;
 
     return value === undefined ? dateValues[0] ?? null : value;
   });
@@ -185,7 +190,7 @@
   let actualLocale = $derived(
     { ...datePickerEnUS.lang, ...config.locale.datePicker?.lang, ...locale?.lang }
   );
-  let showTime = $derived(!multipleOptions && (time || picker === 'date') ? providedShowTime : false);
+  let showTime = $derived(time ? true : !multipleOptions && picker === 'date' && providedShowTime);
   let formats = $derived(time ? timePickerFormats(time, actualLocale)
     : pickerFormats({ format, showTime, picker }, actualLocale));
   let maskFormat = $derived(normalizePickerFieldFormat<DateType>(time ? time.format : format, '').mask);
@@ -301,21 +306,18 @@
   let dateSemantic = $derived.by(() => {
     const settings = config.datePicker;
     const providerStyle = settings?.style;
+    if (dateMultipleProps) {
+      const { classNames, styles } = dateMultipleProps;
+      if (!(settings?.classNames || settings?.styles || classNames || styles || providerStyle)) {
+        return undefined;
+      }
+      const props = { ...dateMultipleProps, size: resolvedSize, disabled: blocked, status, variant };
+      return datePickerSemantic(props, settings, classNames, styles, providerStyle);
+    }
     if (rootTimeProps) {
       const { classNames, styles } = rootTimeProps;
       const props = { ...rootTimeProps, size: resolvedSize, disabled: blocked, status, variant };
       return datePickerSemantic(props, settings, classNames, styles, providerStyle);
-    }
-    if (multipleOptions) {
-      if (!(settings?.classNames || settings?.styles
-        || multipleOptions.classNames || multipleOptions.styles || providerStyle)) {
-        return undefined;
-      }
-      const props = { ...multipleOptions, size: resolvedSize, disabled: blocked, status, variant };
-
-      return datePickerSemantic(
-        props, settings, multipleOptions.classNames, multipleOptions.styles, providerStyle
-      );
     }
     if (!dateProps || !(settings?.classNames || settings?.styles
       || classNames || styles || providerStyle)) {
@@ -326,11 +328,10 @@
     const props = { ...dateProps, size: resolvedSize, disabled: blocked, status, variant };
     return datePickerSemantic(props, settings, classNames, styles, providerStyle);
   });
-  let timeSemantic = $derived(time && !rootTimeProps ? timePickerSemantic(time, config.timePicker, {
-    variant: actualVariant,
-    size: resolvedSize,
-    disabled: blocked
-  }, standaloneTime) : undefined);
+  let timeSemantic = $derived(time && !rootTimeProps
+    ? timePickerSemantic(timeMultipleProps ?? time, config.timePicker, {
+      variant: actualVariant, size: resolvedSize, disabled: blocked
+    }, standaloneTime) : undefined);
   let semantic = $derived(timeSemantic ?? dateSemantic);
   let timeCellRender = $derived(rootTimeProps?.cellRender ?? time?.cellRender);
   let localClearConfig = $derived(time ? time.allowClear : allowClear);
@@ -380,33 +381,55 @@
     get props() { return multipleOptions; },
     get local() { return dateValues; },
     set local(next) { dateValues = next; },
-    get picker() { return picker; },
+    get picker() { return terminalMode; },
     get locale() { return actualLocale.locale; },
     get formats() { return formats; },
     get disabled() { return blocked; },
+    get calendarChange() {
+      return dateMultipleProps?.onCalendarChange || timeMultipleProps?.onCalendarChange
+        ? notifyMultipleCalendar : undefined;
+    },
     valid
   }, dates, calendar);
   let multipleText = $derived(multipleOptions ? multiplePicker.values.map(multiplePicker.format).join(',') : '');
   let replacementSelection = $derived(multipleOptions ? multiplePicker.values : draft ? [draft] : []);
   let showDateNow = $derived(!multipleOptions && mode === 'date' && showNow);
-  let showTimeCurrent = $derived(showNow && (mode === 'time' || mode === 'date'));
+  let showTimeCurrent = $derived(!multipleOptions && showNow && (mode === 'time' || mode === 'date'));
+  let clockValue = $derived(replacementSelection[0] ?? clock.defaultOpenValue ?? null);
   $effect(() => maskInput.sync());
-  const timeInteraction = createRangeInteraction<DateType[]>({
+  const timeInteraction = createRangeInteraction<readonly DateType[]>({
     fieldCount: () => 1,
     needConfirm: () => confirm,
     allowEmpty: () => [false],
-    getCalendarValue: () => [draft ? [draft] : null],
+    getCalendarValue: () => [replacementSelection.length ? replacementSelection : null],
     triggerCalendarChange: (_index, next) => {
+      if (multipleOptions) {
+        multiplePicker.update(next ?? emptyPickerDates);
+        return;
+      }
       setDraft(next?.[0] ?? null, 'time');
       text = formatPicker(draft, actualLocale.locale, formats);
     },
     flushSubmit: (_index, all) => {
-      if (all) {
-        commit(draft);
-        requestOpen(false);
+      if (!all) {
+        return;
       }
+      if (multipleOptions) {
+        multiplePicker.publish();
+      }
+      else {
+        commit(draft);
+      }
+      requestOpen(false);
     },
-    resetValue: resetTimeValue
+    resetValue: () => {
+      if (multipleOptions) {
+        multiplePicker.reset(true);
+      }
+      else {
+        resetTimeValue();
+      }
+    }
   });
 
   const dateSelectionInteraction = createRangeInteraction<DateType[]>({
@@ -471,7 +494,14 @@
     return () => { nativeElement = undefined; };
   });
   $effect(() => {
-    if (time && !rootTimeProps && value !== previousValue) internalValue = value ?? null;
+    if (time && !rootTimeProps && !multipleOptions && value !== previousValue) {
+      if (standaloneTime) {
+        internalValue = value ?? null;
+      }
+      else {
+        storeDate(value ?? null);
+      }
+    }
     previousValue = value;
   });
   $effect(() => {
@@ -555,8 +585,9 @@
   $effect(() => {
     const opened = visible;
     if (time && opened) {
+      const selection = replacementSelection[0];
       const next = !panelWasOpen && defaultPickerValue ? defaultPickerValue
-        : !defaultPickerValue ? draft : null;
+        : !defaultPickerValue ? selection : null;
       if (next) untrack(() => syncTimePickerValue(next, 'reset'));
     }
     panelWasOpen = opened;
@@ -592,8 +623,7 @@
         const keepSelection = !time && retainedDateSelection;
         const cancelPanel = reason === 'escape' && retainedDateSelection === 'panel';
         if (time) {
-          if (reason === 'escape') timeInteraction.trigger(0, 'esc');
-          requestOpen(false);
+          dismissTimePanel(reason === 'escape');
         }
         else if (cancelPanel) {
           dateSelectionInteraction.trigger(0, 'esc');
@@ -646,6 +676,18 @@
       internalOpen = next;
     onOpenChange?.(next);
   }
+
+  /** При отмене набора событие закрытия предшествует восстановлению тегов. */
+  function dismissTimePanel(escaped: boolean) {
+    if (escaped && !multipleOptions) {
+      timeInteraction.trigger(0, 'esc');
+    }
+    requestOpen(false);
+    if (escaped && multipleOptions) {
+      timeInteraction.trigger(0, 'esc');
+    }
+  }
+
   function resetText() {
     retainedDateSelection = undefined;
     text = formatPicker(mergedValue, actualLocale.locale, formats);
@@ -667,10 +709,10 @@
     const changed = time ? !timePickerSameValue(next, mergedValue)
       : !dates.sameValue(next, mergedValue);
     setDraft(next, time ? 'time' : 'date');
-    if (time && !rootTimeProps) {
+    if (time && standaloneTime) {
       internalValue = next;
     }
-    else if (value === undefined) {
+    else if (time && !rootTimeProps || value === undefined) {
       storeDate(next);
     }
     dirty = false;
@@ -684,20 +726,17 @@
     dateValues = next ? [next] : [];
   }
   function finish(confirmed: boolean) {
-    if (multipleOptions) {
-      if (!confirmed || multiplePicker.confirm()) {
+    if (time) {
+      if (confirmed) {
+        confirmTime();
+      }
+      else {
         requestOpen(false);
       }
       return;
     }
-    if (time) {
-      if (confirmed) {
-        if (!draft && clock.defaultOpenValue)
-          timeInteraction.trigger(0, 'panel-intermediate', [clock.defaultOpenValue]);
-        if (draft) onOk?.(draft);
-        timeInteraction.trigger(0, 'confirm');
-      }
-      else {
+    if (multipleOptions) {
+      if (!confirmed || multiplePicker.confirm()) {
         requestOpen(false);
       }
       return;
@@ -743,6 +782,29 @@
     if (!preserveInvalidOnBlur || !invalid)
       resetText();
     requestOpen(false);
+  }
+
+  /** OK получает текущий выбор, включая исходный шаблон часов в пустом поле. */
+  function confirmTime() {
+    if (multipleOptions) {
+      const template = clock.defaultOpenValue;
+      if (!replacementSelection.length && template && valid(template)) {
+        stageTimeSelection(template);
+      }
+      if (!multiplePicker.canConfirm) {
+        return;
+      }
+      multipleOptions.onOk?.([...multiplePicker.values]);
+    }
+    else {
+      if (!draft && clock.defaultOpenValue) {
+        timeInteraction.trigger(0, 'panel-intermediate', [clock.defaultOpenValue]);
+      }
+      if (draft) {
+        onOk?.(draft);
+      }
+    }
+    timeInteraction.trigger(0, 'confirm');
   }
   function syncDatePanel(opening: boolean) {
     if (defaultPickerValue && !opening) {
@@ -903,9 +965,7 @@
       return;
     }
     if (time) {
-      dirty = true;
-      draftSource = 'panel';
-      timeInteraction.trigger(0, 'panel-intermediate', [value]);
+      stageTimeSelection(value);
       syncTimePickerValue(value, 'panel');
       return;
     }
@@ -927,6 +987,18 @@
     setDatePanel(next, 'panel');
     text = formatPicker(next, actualLocale.locale, formats);
     dirty = true;
+  }
+
+  /** Меняет черновик часов через ту же сессию подтверждения для поля и набора. */
+  function stageTimeSelection(value: DateType) {
+    if (multipleOptions) {
+      const selection = multiplePicker.toggle(value);
+      timeInteraction.trigger(0, 'panel-intermediate', selection);
+      return;
+    }
+    dirty = true;
+    draftSource = 'panel';
+    timeInteraction.trigger(0, 'panel-intermediate', [value]);
   }
 
   /** Сохраняет снимок даты просмотра для повторного setter при переходе режима. */
@@ -970,8 +1042,9 @@
 
     draftSource = 'panel';
     if (time) {
-      dirty = true;
-      timeInteraction.trigger(0, source, [date]);
+      if (!multipleOptions || terminal) {
+        stageTimeSelection(date);
+      }
     }
     else if (multipleOptions) {
       if (terminal) multiplePicker.select(date);
@@ -1088,16 +1161,7 @@
         event.preventDefault();
         requestOpen(true);
         await tick();
-        if (panelReplacement || mode !== 'time') {
-          focusPickerPanel(popup, mode, dates.formatKey(replacementValue, 'YYYY-MM-DD', actualLocale.locale));
-          return;
-        }
-        (popup?.querySelector<HTMLButtonElement>(
-          '[data-picker-time-cell-selected] button:not(:disabled)'
-        ) ?? popup?.querySelector<HTMLButtonElement>(
-          'button[data-picker-time-control]:not(:disabled)'
-        ))
-          ?.focus();
+        focusTimePanel();
       }
       return;
     }
@@ -1357,7 +1421,23 @@
     requestOpen(true);
     if (time) (time.onclick ?? time.onClick)?.(event);
   }
-  /** Передаёт фокус в календарь, когда пользователь работает с тегами клавиатурой. */
+  /** Переводит фокус в авторскую панель или на первую доступную ячейку времени. */
+  function focusTimePanel() {
+    if (panelReplacement || mode !== 'time') {
+      const dateKey = dates.formatKey(replacementValue, 'YYYY-MM-DD', actualLocale.locale);
+      focusPickerPanel(popup, mode, dateKey);
+      return;
+    }
+    const selected = popup?.querySelector<HTMLButtonElement>(
+      '[data-picker-time-cell-selected] button:not(:disabled)'
+    );
+    const target = selected ?? popup?.querySelector<HTMLButtonElement>(
+      'button[data-picker-time-control]:not(:disabled)'
+    );
+    target?.focus();
+  }
+
+  /** Сохраняет клавиатурное подтверждение и доступ к панели в поле с тегами. */
   async function multipleKeyboard(
     event: KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }
   ) {
@@ -1365,16 +1445,35 @@
     if (event.defaultPrevented || event.isComposing || blocked) {
       return;
     }
-    if (event.key === 'Enter' && (!visible || confirm)) {
+    if (time && event.key === 'Escape' && visible) {
       event.preventDefault();
-      if (visible) finish(true);
-      else requestOpen(true);
+      event.stopPropagation();
+      dismissTimePanel(true);
+    }
+    else if (time && event.key === 'Tab' && visible) {
+      timeInteraction.trigger(0, 'keyboard-submit-weak');
+    }
+    else if (event.key === 'Enter' && (!visible || confirm || time)) {
+      event.preventDefault();
+      if (!visible) {
+        requestOpen(true);
+      }
+      else if (confirm) {
+        finish(true);
+      }
+      else {
+        timeInteraction.trigger(0, 'keyboard-submit');
+      }
     }
     else if (event.key === 'ArrowDown') {
       event.preventDefault();
       requestOpen(true);
       await tick();
 
+      if (time) {
+        focusTimePanel();
+        return;
+      }
       const firstCell = popup?.querySelector<HTMLButtonElement>('button[data-picker-date]:not(:disabled)');
       const focusedCell = popup?.querySelector<HTMLButtonElement>(
         'button[data-picker-date][tabindex="0"]:not(:disabled)'
@@ -1390,11 +1489,31 @@
     event?.stopPropagation();
     const active = rootElement ? getPopupActiveElement(rootElement) : null;
     const refocus = active !== input && rootElement?.contains(active);
-    multiplePicker.remove(date, visible);
+    if (time) {
+      const selection = multiplePicker.withoutPeriod(date);
+      timeInteraction.trigger(0, visible ? 'input' : 'remove', selection);
+    }
+    else {
+      multiplePicker.remove(date, visible);
+    }
     if (refocus) input?.focus();
   }
+  /** Передаёт события набора с метаданными публичного владельца. */
+  function notifyMultipleCalendar(value: DateType[], text: string[]) {
+    if (timeMultipleProps) {
+      timeMultipleProps.onCalendarChange?.(value, text, {});
+    }
+    else {
+      dateMultipleProps?.onCalendarChange?.(value, text, { source: time ? 'time' : 'date' });
+    }
+  }
+
   function selectPreset(preset: TimePickerPreset<DateType>) {
     const next = typeof preset.value === 'function' ? preset.value() : preset.value;
+    if (multipleOptions) {
+      multiplePicker.preset(next);
+      return;
+    }
     timeInteraction.reset();
     setDraft(next, 'time');
     if (commit(next)) requestOpen(false);
@@ -1558,7 +1677,8 @@
         >
           {#if time?.renderExtraFooter}
             <div class={`${prefix}-footer-extra`}>
-              {#if rootTimeProps || panelReplacement || authoredMode}{@render time.renderExtraFooter(mode)}
+              {#if rootTimeProps || timeMultipleProps || panelReplacement || authoredMode}
+                {@render time.renderExtraFooter(mode)}
               {:else}{@render time.renderExtraFooter()}{/if}
             </div>
           {/if}
@@ -1576,7 +1696,8 @@
               }}
             >{actualLocale.now}</button></li>{/if}
             {#if confirm}<li class={`${prefix}-ok`}><PickerConfirmButton component={components?.button}
-              disabled={!valid(draft || clock.defaultOpenValue || null)}
+              disabled={multipleOptions && replacementSelection.length
+                ? !multiplePicker.canConfirm : !valid(clockValue)}
               onclick={() => finish(true)}
               children={actualLocale.ok}
             /></li>{/if}
@@ -1589,7 +1710,7 @@
 
 {#snippet timePanelBody()}
   {#if timeLocale}<PickerTimePanel dateOperations={dates} prefixCls={prefix}
-    value={draft || clock.defaultOpenValue || null}
+    value={clockValue}
     pickerValue={panel}
     config={clock}
     locale={timeLocale}
@@ -1617,6 +1738,9 @@
       onclick={event => {
         if (multipleOptions) {
           event.stopPropagation();
+          if (time) {
+            timeInteraction.reset();
+          }
           multiplePicker.clear();
           requestOpen(false);
           input?.focus();
@@ -1751,7 +1875,7 @@
     {#if time}{@render clearButton()}{/if}
   </div>
   {/if}
-  {#if !time}{@render clearButton()}{/if}
+  {#if !time || multipleOptions}{@render clearButton()}{/if}
 </div><NoCompactStyle>{#key container.target}{#if visible}
     {@const initialPopupStyle = untrack(() => popupThemeStyle)}
     <div bind:this={popup} data-picker-popup data-ant-picker-prefix={prefix} data-ant-picker-root-prefix={rootPrefix} id={`ant-picker-${generatedId}`} popover="manual" role="dialog" aria-label={attributes['aria-label'] ?? (time ? placeholderText || actualLocale.timeSelect : actualLocale.placeholder)} hidden={!shown} onfocusout={blurWithin} class={[

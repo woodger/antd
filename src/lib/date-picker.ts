@@ -3,7 +3,9 @@
 import type { Component, ComponentConstructorOptions, SvelteComponent } from 'svelte';
 import DatePickerRoot from './DatePicker.svelte';
 import RangePickerRoot from './RangePicker.svelte';
-import { createTimePickerComponent, type TimePanelOptions } from './time-picker.component';
+import {
+  createTimePickerComponent, type GeneratedTimePickerComponent, type TimePanelOptions
+} from './time-picker.component';
 import { pickerAdapterProps } from './picker-adapter-props.engine';
 import {
   createPickerDateOperations, type PickerDateOperations
@@ -90,7 +92,7 @@ export function createPickerFamily<DateType extends object>(
   const WeekPicker = createDatePickerComponent(dateOperations, 'week');
   const MonthPicker = createDatePickerComponent(dateOperations, 'month');
   const YearPicker = createDatePickerComponent(dateOperations, 'year');
-  const TimePicker = createTimePickerComponent(dateOperations);
+  const TimePicker: GeneratedTimePickerComponent<DateType> = createTimePickerComponent(dateOperations);
   const RangePicker: RangePickerComponent<DateType> = (anchor, props) => RangePickerRoot<DateType>(
     anchor, pickerAdapterProps(props, { dateOperations, parseTimeInput })
   );

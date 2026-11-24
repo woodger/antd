@@ -197,13 +197,12 @@ export interface DatePickerTagContext<DateType extends object = Dayjs> {
   onClose: (event?: MouseEvent) => void;
 }
 
-/** Множественный выбор дат или периодов с отдельным черновиком панели. */
+/** Множественный выбор периодов или времени с отдельным черновиком панели. */
 export interface DatePickerMultipleProps<DateType extends object = Dayjs> extends Omit<
   DatePickerProps<DateType>,
-  'picker' | 'multiple' | 'value' | 'defaultValue' | 'showTime' | 'onChange'
+  'multiple' | 'value' | 'defaultValue' | 'showTime' | 'onChange'
     | 'onCalendarChange' | 'onOk' | 'classNames' | 'styles'
 > {
-  picker?: DatePickerPicker;
   multiple: true;
   value?: readonly DateType[] | null;
   defaultValue?: readonly DateType[] | null;
@@ -214,7 +213,9 @@ export interface DatePickerMultipleProps<DateType extends object = Dayjs> extend
   tagRender?: Snippet<[DatePickerTagContext<DateType>]>;
   removeIcon?: InputContent;
   onChange?: (value: DateType[] | null, dateStrings: string[] | null) => void;
-  onCalendarChange?: (value: DateType[], dateStrings: string[], info: { source: 'date'; }) => void;
+  onCalendarChange?(
+    value: DateType[], dateStrings: string[], info: { source: 'date' | 'time'; }
+  ): void;
   onOk?: (value: DateType[]) => void;
   classNames?: DatePickerSemantic<DatePickerMultipleProps<DateType>>;
   styles?: DatePickerSemantic<DatePickerMultipleProps<DateType>>;
@@ -225,9 +226,8 @@ type SelectionField = 'value' | 'defaultValue' | 'showTime' | 'onChange'
 
 /** Объявление шаблона выводит тип значения по флагу multiple. */
 export type DatePickerSelectionProps<Multiple extends boolean, DateType extends object = Dayjs> = Omit<
-  DatePickerProps<DateType>, 'picker' | 'multiple' | SelectionField
+  DatePickerProps<DateType>, 'multiple' | SelectionField
 > & {
-  picker?: Multiple extends true ? DatePickerPicker : DatePickerProps<DateType>['picker'];
   multiple?: Multiple;
 } & {
   [Field in SelectionField]?: Multiple extends true

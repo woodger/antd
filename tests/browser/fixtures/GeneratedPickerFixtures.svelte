@@ -2,7 +2,26 @@
   export type GeneratedPickerProfile = 'editor' | 'calendar' | 'range'
     | 'month' | 'month-grid' | 'time' | 'time-columns' | 'time-range'
     | 'multiple' | 'masked' | 'open-range' | 'controlled'
-    | 'root-time' | 'child-time' | 'switch-time' | 'open-clock';
+    | 'root-time' | 'child-time' | 'switch-time' | 'open-clock' | 'open-time-selection';
+
+  export type GeneratedPickerHydrationProfile = 'open-range' | 'open-clock' | 'open-time-selection';
+
+  export interface GeneratedTimeSelectionProfile {
+    id: string;
+    variant: 'date' | 'TimePicker';
+    actions: string[];
+    slot?: boolean;
+    order?: boolean;
+    needConfirm?: boolean;
+    controlled?: boolean;
+    presets?: boolean;
+    empty?: boolean;
+    template?: boolean;
+    one?: boolean;
+    duplicates?: boolean;
+    precision?: boolean;
+    open?: boolean;
+  }
 </script>
 
 <script lang="ts">
@@ -25,12 +44,30 @@
     }
   }
 
-  let { profile = readProfile() }: { profile?: GeneratedPickerProfile; } = $props();
+  /** Получает настройки из исходного браузерного профиля для набора времени. */
+  function readTimeSelection(): GeneratedTimeSelectionProfile | undefined {
+    const reference = new URLSearchParams(globalThis.location?.search).get('time-selection');
+    return reference ? JSON.parse(reference) : undefined;
+  }
+
+  let {
+    profile = readProfile(), timeSelection: sourceTimeSelection = readTimeSelection()
+  }: { profile?: GeneratedPickerProfile; timeSelection?: GeneratedTimeSelectionProfile; } = $props();
+  const hydrationSelection: GeneratedTimeSelectionProfile = {
+    id: 'open-time-selection', variant: 'TimePicker', actions: [], open: true
+  };
+  let timeSelection = $derived(
+    profile === 'open-time-selection' ? hydrationSelection : sourceTimeSelection
+  );
   const Picker = DatePicker.generatePicker(opaquePickerAdapter);
   const { MonthPicker, RangePicker, TimePicker } = Picker;
-  const dates: [OpaquePickerDate, OpaquePickerDate] = [
+  const regularDates: [OpaquePickerDate, OpaquePickerDate] = [
     opaqueDate('2024-06-15T13:10:18Z'), opaqueDate('2024-06-23T14:26:40Z')
   ];
+  const sameSecondDates: typeof regularDates = [
+    regularDates[0], opaqueDate('2024-06-23T13:10:18Z')
+  ];
+  let dates = $derived(timeSelection?.duplicates ? sameSecondDates : regularDates);
   const view = opaqueDate('2024-06-19T11:00:00Z');
   const endOfMonthView = opaqueDate('2024-01-31T11:00:00Z');
   const rangeView: [OpaquePickerDate, OpaquePickerDate] = [view, view];
@@ -113,6 +150,36 @@
     // Принимает значение, подтверждённое кнопкой времени.
     onOk: (value: Payload) => record('ok', value)
   };
+
+  let clockSelection = $derived.by(() => {
+    if (!timeSelection) {
+      return undefined;
+    }
+    const {
+      id, slot, order, needConfirm, controlled, presets, empty, template, one, precision, open
+    } = timeSelection;
+    const withPanel = slot || id === 'multiple-time-slot';
+    const showCalendar = profile === 'switch-time' && !selectClock;
+    const options = {
+      ...callbacks,
+      id: 'start',
+      name: 'opaque',
+      format: showCalendar ? 'YYYY-MM-DD' : precision ? 'HH:mm:ss.SSS' : 'HH:mm:ss',
+      millisecondStep: precision ? 100 : undefined,
+      value: controlled ? dates : undefined,
+      defaultValue: empty ? undefined : one ? [dates[0]] : dates,
+      defaultPickerValue: view,
+      defaultOpenValue: template ? view : undefined,
+      defaultOpen: open,
+      getPopupContainer: open ? undefined : popupContainer,
+      components: withPanel ? timeSlots : undefined,
+      order,
+      needConfirm,
+      presets: presets ? [{ label: 'Suggested clock', value: () => view }] : undefined,
+      previewValue: false as const
+    };
+    return options;
+  });
 </script>
 
 {#snippet panel(context: DatePickerPanelContext<OpaquePickerDate>)}
@@ -133,7 +200,13 @@
     log = [...log, ['submit']];
   }}>
     {#if mounted}
-      {#if profile === 'time-range'}
+      {#if clockSelection && timeSelection?.variant === 'TimePicker'}
+        <TimePicker {...clockSelection} multiple bind:nativeElement bind:this={handle} />
+      {:else if clockSelection}
+        <Picker {...clockSelection}
+          picker={profile === 'switch-time' && !selectClock ? 'date' : 'time'}
+          multiple bind:nativeElement bind:this={handle} />
+      {:else if profile === 'time-range'}
         <RangePicker
           {...callbacks} id={ids} picker="time"
           name="opaque" format="HH:mm:ss" defaultValue={dates} defaultPickerValue={rangeView}

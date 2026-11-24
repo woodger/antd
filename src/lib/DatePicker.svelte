@@ -17,11 +17,11 @@
   } = $props();
   // После вывода generic у владельца конкретный runtime режим задаёт multiple.
   let ownerProps = $derived(props as DatePickerProps<DateType> | DatePickerMultipleProps<DateType>);
-  let rootTimeProps = $derived(
-    !ownerProps.multiple && ownerProps.picker === 'time' ? ownerProps : undefined
-  );
-  let dateProps = $derived(ownerProps.multiple || ownerProps.picker === 'time' ? undefined : ownerProps);
   let multipleOptions = $derived(ownerProps.multiple ? ownerProps : undefined);
+  let scalarProps = $derived(ownerProps.multiple ? undefined : ownerProps);
+  let fieldProps = $derived(multipleOptions ? multipleFieldProps(multipleOptions) : scalarProps);
+  let rootTimeProps = $derived(ownerProps.picker === 'time' ? fieldProps : undefined);
+  let dateProps = $derived(ownerProps.picker === 'time' ? undefined : scalarProps);
   let time = $derived(rootTimeProps && timeOptions(rootTimeProps));
   let calendarPicker = $derived(
     ownerProps.picker === 'time' ? defaultPicker : ownerProps.picker ?? defaultPicker
@@ -36,20 +36,22 @@
         onCalendarChange: rootTimeProps.onCalendarChange
       };
     }
-    if (!multipleOptions) {
-      return dateProps && calendarOptions(dateProps);
-    }
-
-    const {
-      multiple, value, defaultValue, onChange, onCalendarChange, onOk,
-      classNames, styles, order, maxTagCount, tagRender, removeIcon, ...sharedProps
-    } = multipleOptions;
-    return calendarOptions(sharedProps);
+    return fieldProps && calendarOptions(fieldProps);
   });
   let picker = $state<{
     focus(options?: FocusOptions & { cursor?: 'start' | 'end' | 'all'; }): void;
     blur(): void;
   }>();
+
+  /** Оставляет общие настройки редактора, перенося список и его события отдельно. */
+  function multipleFieldProps(props: DatePickerMultipleProps<DateType>): DatePickerProps<DateType> {
+    const {
+      multiple, value, defaultValue, onChange, onCalendarChange, onOk,
+      classNames, styles, order, maxTagCount, tagRender, removeIcon, ...field
+    } = props;
+
+    return field;
+  }
 
   /** Сохраняет часы внутри showTime у календарного поля и исключает атрибуты самого режима time. */
   function calendarOptions(props: DatePickerProps<DateType>) {

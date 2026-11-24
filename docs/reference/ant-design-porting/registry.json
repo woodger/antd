@@ -6979,7 +6979,7 @@
             "tests/browser/generated-picker-hydration.spec.ts",
             "tests/package/generated-picker.ssr.test.ts"
           ],
-          "note": "Ant Design 6.6.8 / rc-picker 1.12.2. Фабрика связывает GenerateConfig с DatePicker, WeekPicker, MonthPicker, YearPicker, TimePicker и RangePicker, включая picker=time у корневого поля и диапазона. Deprecated QuarterPicker заменён picker=quarter. Официальный UMD дал два одинаковых прогона для 11 профилей / 46 действий и 7 SSR-профилей. Сверены поля, порядок событий и точные ссылки на иммутабельные объекты даты без методов Dayjs. Сетка месяцев использует addMonth от января, включая переход с 31 января на 29 февраля. Компоненты и локаль получают исходный адаптер. Native сохраняет слоты Svelte, календарный info.source, имя поля multiple для FormData, обработку Enter без submit формы и открытый SSR shell. Строгая hydration проверяет сохранение узлов, фокуса, выделения и bind refs. Корневое поле часов использует ConfigProvider.datePicker, фабричный TimePicker — слоты ConfigProvider.timePicker и вариант DatePicker. Оставшиеся события и multiple для времени указаны в extended-api."
+          "note": "Ant Design 6.6.8 / rc-picker 1.12.2. Фабрика связывает GenerateConfig с DatePicker, WeekPicker, MonthPicker, YearPicker, TimePicker и RangePicker, включая picker=time у корневого поля и диапазона. Deprecated QuarterPicker заменён picker=quarter. Официальный UMD дал два одинаковых прогона для 11 профилей / 46 действий и 7 SSR-профилей. Сверены поля, порядок событий и точные ссылки на иммутабельные объекты даты без методов Dayjs. Сетка месяцев использует addMonth от января, включая переход с 31 января на 29 февраля. Компоненты и локаль получают исходный адаптер. Native сохраняет слоты Svelte, календарный info.source, имя поля multiple для FormData, обработку Enter без submit формы и открытый SSR shell. Строгая hydration проверяет сохранение узлов, фокуса, выделения и bind refs. Корневое поле часов использует ConfigProvider.datePicker, фабричный TimePicker — слоты ConfigProvider.timePicker и вариант DatePicker. Массивы времени у корня и фабричного TimePicker сверены в multiple-time-selection."
         },
         {
           "id": "extended-api",
@@ -6995,7 +6995,29 @@
             "tests/browser/generated-picker-hydration.spec.ts",
             "tests/package/generated-picker.ssr.test.ts"
           ],
-          "note": "Одиночный picker=time у корневого DatePicker сверён с фабричным TimePicker по значениям, оформлению и порядку событий. Переключение календаря и часов сохраняет объект даты и редактор. Native calendar сохраняет info.source. Strict hydration в штатном контейнере сохраняет редактор и колонки открытой панели. Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d: подтвердить час, сменить picker с time на date, открыть поле. React дважды передаёт undefined в locale.format с обязательным строковым форматом, после исключения поле размонтируется. Контроль Dayjs открывает календарь, а Native с пользовательским адаптером сохраняет редактор и открывает нужную панель. Множественный выбор времени и отдельные последовательности событий остаются пробелами."
+          "note": "Одиночный picker=time у корневого DatePicker сверён с фабричным TimePicker по значениям, оформлению и порядку событий. Переключение календаря и часов сохраняет объект даты и редактор. Native calendar сохраняет info.source. Strict hydration в штатном контейнере сохраняет редактор и колонки открытой панели. Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d: подтвердить час, сменить picker с time на date, открыть поле. React дважды передаёт undefined в locale.format с обязательным строковым форматом, после исключения поле размонтируется. Контроль Dayjs открывает календарь, а Native с пользовательским адаптером сохраняет редактор и открывает нужную панель. Отдельные последовательности событий расширенного API требуют сверки."
+        },
+        {
+          "id": "multiple-time-selection",
+          "title": "Множественный выбор времени у DatePicker и фабричного TimePicker",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/date-picker-multiple.model.svelte.ts",
+            "src/lib/SinglePicker.svelte",
+            "src/lib/time-picker.component.ts",
+            "src/lib/time-picker.types.ts",
+            "docs/reference/components/date-picker.md",
+            "docs/reference/components/time-picker.md",
+            "tests/browser/fixtures/ant-design-generated-picker-root-multiple-time-reference.json.gz",
+            "tests/browser/fixtures/ant-design-generated-picker-root-multiple-time-edges-reference.json.gz",
+            "tests/browser/fixtures/ant-design-generated-picker-multiple-time-reference.json.gz",
+            "tests/browser/fixtures/ant-design-generated-picker-root-multiple-time-doubleclick-reference.json.gz",
+            "tests/browser/generated-picker.spec.ts",
+            "tests/browser/generated-picker-hydration.spec.ts",
+            "tests/package/generated-picker.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 / rc-picker 1.12.2. Два совпавших прогона 14 сценариев сверяют порядок тегов, ссылки дат, первую выделенную дату для колонок, пользовательскую панель, пресет, отмену, отклонённый controlled commit, удаление тега, пустой набор и подтверждение defaultOpenValue. Повторный выбор сравнивает часы, минуты и секунды и снимает первый совпавший тег. Обработчики сохраняют исходные объекты с полной точностью. Native корень передаёт source=time, фабричный TimePicker передаёт пустой info. Native сохраняет имя редактора, FormData, клавиатурный фокус, теги и DOM панели при строгой гидратации. В React 6.6.8 реальный двойной клик по 16 при исходных тегах 13:10:18 и 14:26:40 добавляет также 15:10:18 при delay=0 или снимает 13:10:18 при delay=80ms. Native подтверждает результат первого клика, сохраняя прежние теги. Замеры повторены дважды."
         },
         {
           "id": "global-parity",
@@ -12744,14 +12766,14 @@
         },
         {
           "id": "advanced-api",
-          "title": "Multiple, полный trigger/locale API и diagnostics",
+          "title": "Полный trigger/locale API и diagnostics",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [
             "docs/reference/components/time-picker.md",
             "docs/reference/components/time-range-picker.md"
           ],
-          "note": "TimePicker выбирает одно значение; multiple=true пока отсутствует. Свой тип даты доступен через DatePicker.generatePicker, включая RangePicker с picker=time. Полный каталог locales, React diagnostics, полный rc-trigger/motion API и retained popup lifecycle остаются следующими этапами. Styles — CSS strings, nodes/renderers — Svelte snippets. Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream."
+          "note": "Самостоятельный TimePicker принимает одно значение. DatePicker.TimePicker и фабричный Picker.TimePicker поддерживают multiple, как зафиксировано в DatePicker multiple-time-selection. Свой тип даты доступен через DatePicker.generatePicker, включая RangePicker с picker=time. Полный каталог locales, React diagnostics, полный rc-trigger/motion API и retained popup lifecycle остаются следующими этапами. Styles — CSS strings, nodes/renderers — Svelte snippets. Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream."
         },
         {
           "id": "confirmation-button",

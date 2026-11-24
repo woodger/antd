@@ -1,7 +1,9 @@
 import type { Dayjs } from 'dayjs';
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
-import type { DatePickerMode, DatePickerProps, DatePickerTimeConfig } from './date-picker.types';
+import type {
+  DatePickerMode, DatePickerMultipleProps, DatePickerProps, DatePickerTimeConfig
+} from './date-picker.types';
 import type { PickerModeFooter } from './picker-components.types';
 import type { PickerLocale } from './picker-locale.types';
 import type { InputContent } from './input.types';
@@ -77,7 +79,7 @@ export interface TimePickerProps<
     | 'onPanelChange' | 'onPickerValueChange' | 'disabledDate' | 'onChange'
     | 'prefix' | 'onclick' | 'mode' | 'multiple' | 'cellRender' | 'picker' | 'renderExtraFooter'
 >, Omit<DatePickerTimeConfig<DateType>, 'format'> {
-  /** В публичном TimePicker 6.6.8 поддерживается одиночный выбор. */
+  /** Самостоятельный TimePicker выбирает одно значение. */
   multiple?: false;
   /** По умолчанию true, как в rc-picker для picker=time. */
   needConfirm?: boolean;
@@ -111,6 +113,23 @@ export interface TimePickerProps<
   /** Пользовательская панель может запросить календарный режим. */
   onPanelChange?(value: DateType, mode: Mode): void;
   onPickerValueChange?(value: DateType, info: { source: 'reset' | 'panel'; mode: Mode; }): void;
+}
+
+/** Набор времени для DatePicker.TimePicker и фабричного Picker.TimePicker. */
+export interface TimePickerMultipleProps<DateType extends object = Dayjs> extends Omit<
+  TimePickerProps<DatePickerMode, DateType>,
+  'multiple' | 'value' | 'defaultValue' | 'onChange' | 'onCalendarChange' | 'onOk'
+    | 'classNames' | 'styles'
+>, Pick<DatePickerMultipleProps<DateType>, 'order' | 'maxTagCount' | 'tagRender' | 'removeIcon'> {
+  multiple: true;
+  value?: readonly DateType[] | null;
+  defaultValue?: readonly DateType[] | null;
+  onChange?: DatePickerMultipleProps<DateType>['onChange'];
+  onOk?: DatePickerMultipleProps<DateType>['onOk'];
+  onCalendarChange?: (value: DateType[], text: string[], info: Record<string, never>) => void;
+  classNames?: TimePickerSlots
+    | ((info: { props: TimePickerMultipleProps<DateType>; }) => TimePickerSlots | undefined);
+  styles?: TimePickerMultipleProps<DateType>['classNames'];
 }
 
 /** Реализация принимает footer обеих публичных сигнатур. */
