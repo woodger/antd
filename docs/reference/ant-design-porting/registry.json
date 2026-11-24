@@ -6977,7 +6977,8 @@
             "tests/browser/fixtures/ant-design-generated-picker-root-time-reference.json.gz",
             "tests/browser/generated-picker.spec.ts",
             "tests/browser/generated-picker-hydration.spec.ts",
-            "tests/package/generated-picker.ssr.test.ts"
+            "tests/package/generated-picker.ssr.test.ts",
+            "tests/package/GeneratedRangePickerTypes.svelte"
           ],
           "note": "Ant Design 6.6.8 / rc-picker 1.12.2. Фабрика связывает GenerateConfig с DatePicker, WeekPicker, MonthPicker, YearPicker, TimePicker и RangePicker, включая picker=time у корневого поля и диапазона. Deprecated QuarterPicker заменён picker=quarter. Официальный UMD дал два одинаковых прогона для 11 профилей / 46 действий и 7 SSR-профилей. Сверены поля, порядок событий и точные ссылки на иммутабельные объекты даты без методов Dayjs. Сетка месяцев использует addMonth от января, включая переход с 31 января на 29 февраля. Компоненты и локаль получают исходный адаптер. Native сохраняет слоты Svelte, календарный info.source, имя поля multiple для FormData, обработку Enter без submit формы и открытый SSR shell. Строгая hydration проверяет сохранение узлов, фокуса, выделения и bind refs. Корневое поле часов использует ConfigProvider.datePicker, фабричный TimePicker — слоты ConfigProvider.timePicker и вариант DatePicker. Массивы времени у корня и фабричного TimePicker сверены в multiple-time-selection."
         },

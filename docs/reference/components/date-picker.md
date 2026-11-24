@@ -39,7 +39,9 @@ const { WeekPicker, MonthPicker, YearPicker, TimePicker, RangePicker } = Picker;
 `generatePicker` также доступен как именованный экспорт. Для квартала укажите
 `picker="quarter"` на `Picker`, для времени — `picker="time"` на `Picker` или
 `RangePicker` из семейства. `value`, `presets`, ограничения и callbacks используют
-тип даты адаптера. Пользовательские панели получают исходный `generateConfig`;
+тип даты адаптера. В шаблоне Svelte `Picker.RangePicker` выводит этот тип для
+`value` и `onChange` в календарном режиме и в режиме времени.
+Пользовательские панели получают исходный `generateConfig`;
 выбранный ими объект передаётся владельцу с той же ссылкой.
 
 ## Выбор времени

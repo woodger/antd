@@ -28,13 +28,15 @@ interface CustomTimeRangeModeProps<DateType extends object> extends
   Omit<TimeRangePickerProps<DatePickerMode, DateType>, 'components'>, TimePanelOptions<DateType>,
   TimeRangePickerModeOptions<DateType> {}
 
-/** Общий вызов RangePicker принимает настройки календаря либо режима времени. */
+type RangePickerFamilyProps<DateType extends object> = RangePickerProps<DateType>
+  | TimeRangeModeProps<DateType> | CustomTimeRangeModeProps<DateType>;
+
+/** Тип props согласован у вызова компонента и у служебного $set для вывода в шаблоне. */
 interface RangePickerComponent<DateType extends object> {
-  (
-    anchor: unknown,
-    props: RangePickerProps<DateType> | TimeRangeModeProps<DateType>
-      | CustomTimeRangeModeProps<DateType>
-  ): ReturnType<Component<{}, RangePickerHandle, ''>>;
+  (anchor: unknown, props: RangePickerFamilyProps<DateType>): RangePickerHandle & {
+    $on?: ReturnType<Component>['$on'];
+    $set?: (props: Partial<RangePickerFamilyProps<DateType>>) => void;
+  };
   z_$$bindings?: RangePickerBindings;
 }
 
