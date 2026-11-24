@@ -2363,6 +2363,11 @@
     "root": "select-value-ownership-fixture"
   },
   {
+    "id": "select-immediate-cache",
+    "module": "./SelectImmediateCacheFixtures.svelte",
+    "root": "select-immediate-cache-fixture"
+  },
+  {
     "id": "autocomplete-render",
     "module": "./AutoCompleteRenderFixtures.svelte",
     "root": "autocomplete-render-fixture"

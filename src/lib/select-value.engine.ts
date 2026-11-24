@@ -23,6 +23,28 @@ export function emptySelectValueCache<Value extends SelectDataValue, Data extend
   return { labels: new Map(), options: new Map(), display: [], values: [] };
 }
 
+/** Запоминает новые options до публикации выбора. Следующий resolve оставит принятые ключи. */
+export function rememberSelectOptions<Value extends SelectDataValue, Data extends object>(
+  cache: SelectValueCache<Value, Data>,
+  items: readonly SelectValueItem<Value>[],
+  valueOptions: SelectDataMaps<Value, Data>['valueOptions']
+): SelectValueCache<Value, Data> {
+  let remembered: { labels: Map<Value, unknown>; options: Map<Value, Data | undefined>; } | undefined;
+
+  for (const { value, label } of items) {
+    if (cache.options.get(value) !== undefined) continue;
+
+    const option = valueOptions.get(value);
+    if (option === undefined) continue;
+
+    remembered ??= { labels: new Map(cache.labels), options: new Map(cache.options) };
+    remembered.labels.set(value, label);
+    remembered.options.set(value, option);
+  }
+
+  return remembered ? { ...cache, ...remembered } : cache;
+}
+
 /** Объектный label читается независимо от labelInValue; флаг меняет только outgoing payload. */
 export function selectValueRaw<Value extends SelectDataValue>(draft: unknown): Value | undefined {
   const value = draft && typeof draft === 'object' ? Reflect.get(draft, 'value') : draft;

@@ -5165,6 +5165,22 @@
           "note": "Ant Design6.6.8/rc-select1.10.1: общий pipeline сохраняет исходные records, literal key/value/index fallback, отдельные mapped value/label, one-level groups, last-value callback winner и shallow-copy arguments без deprecated props getter. Generic raw OptionType не требует canonical полей. Title/className/CSS object и whitelist DOM/data/aria attrs листьев, className/title headers, группы в measured viewport. Все primary40/169, SSR40, diagnostic4/16, attrs10/38 и paired mappedARIA2/10 actual UMD traces независимо повторены побайтно. Native logical aria-selected исправляет доказанное virtual против nonvirtual Source противоречие; mapped token lookup исправляет потерю выбора при literal value чтении. Native label/NFKD filter и удалённый disabled selected cache используют отдельные whole public Source owners1/3 и1/6 без ledger filtering; historical a231 browser baseline сохранён. Старые unit корпуса tags/sort/tokens/count перенаправлены на живые raw engines; splitSelectTokens сохраняется также для TreeSelect. Проверены57 новых browser cases:40 полных raw traces,10 attrs,2 one-level diagnostics и mapped token correction,4 strict hydration. SSR40 сохраняет реальные pure sort calls4 без DOM/interactive effects. Hydra сохраняет DOM/method/ref identity и FormData; оба AC unmount сразу после повторного выбора отменяют queued MessageChannel close, все ресурсы и поздние callbacks отсутствуют. Отдельный production consumer40/169 использует только публичный пакет и stylesheet, без React/server/source/tests modules; DOM/refs/полный owner state стабильны после unmount и0/1000ms. Existing browser regression1604 подтверждён across runs; два устаревших ColorPicker locators исправлены и весь изменённый29-case spec проверен повторно. Primitive selected-value binding сохранён; labelInValue/optionLabelProp исключены самим AutoComplete; labelRender/optionRender перенесены в option-label-render, прочий extended API остаётся отдельным этапом."
         },
         {
+          "id": "native-selected-record-cache",
+          "title": "Кэш подписи и данных при одновременной смене value и options",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Select.svelte",
+            "src/lib/select-value.engine.ts",
+            "tests/browser/select-immediate-cache.spec.ts",
+            "tests/browser/fixtures/SelectImmediateCacheFixtures.svelte",
+            "tests/browser/fixtures/ant-design-select-immediate-cache-reference.json",
+            "tests/package/select-value.ssr.test.ts",
+            "docs/reference/components/select.md"
+          ],
+          "note": "Повторённые браузерные замеры Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d сохраняют исходную потерю подписи при атомарном обновлении контролируемых single/multiple value и options. LabelInValue сохраняет явную подпись, но onDeselect теряет label и raw option. При удалении отдельным обновлением исходный кэш сохраняет оба. Native фиксирует label и исходную option до записи value и вызова callbacks. Сверка текущего выбора удаляет отклонённые и снятые значения. Актуальные options по-прежнему имеют приоритет. Браузерные сценарии охватывают onChange с фильтрацией, bind:value, function binding с отклонённым выбором и удалением, labelInValue, mapped 0, новую option с тем же ключом, FormData и порядок callbacks. Согласованный one-way local shadow сохраняется."
+        },
+        {
           "id": "semantic-popup-surface",
           "title": "PopupRender, prefix, semantic classNames/styles и общий select config",
           "state": "supported",

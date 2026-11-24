@@ -3,7 +3,9 @@ import { createHash } from 'node:crypto';
 import { render } from 'svelte/server';
 import type { ComponentProps } from 'svelte';
 import { expect, it, vi } from 'vitest';
+import registry from '@woodger/antd/porting/registry.json';
 import SelectValueCase from '../browser/fixtures/SelectValueCase.svelte';
+import immediateCache from '../browser/fixtures/ant-design-select-immediate-cache-reference.json';
 import { selectValueSamples } from '../browser/fixtures/select-value-cases';
 import { readSelectValueSSR } from '../browser/select-value-ssr-metrics';
 import { verifySelectValueProducerCalls, verifySelectValueReceipts } from '../browser/select-value-receipts';
@@ -33,6 +35,15 @@ function richNodes(html: string) {
   return [...html.matchAll(/<(strong|em)\s+data-select-value-node="([^"]+)"[^>]*>([^<]*)<\/(?:strong|em)>/g)]
     .map(match => ({ tag: match[1], token: match[2], text: match[3] }));
 }
+
+it('pins two original selected-option cache observations to the migration release', () => {
+  expect(immediateCache.version).toBe(registry.upstream.version);
+  expect(immediateCache.revision).toBe(registry.upstream.revision);
+  expect(immediateCache.archiveSha256).toBe(registry.upstream.archiveSha256);
+  expect(immediateCache.passes).toHaveLength(2);
+  expect(immediateCache.passes[0]).toHaveLength(8);
+  expect(immediateCache.passes[0]).toEqual(immediateCache.passes[1]);
+});
 
 it('pins forty-eight original SSR owners and their actual pure renderer calls', () => {
   expect(createHash('sha256').update(bytes).digest('hex'))

@@ -58,6 +58,13 @@ OnClear предшествует onChange и не создаёт onDeselect. В�
 onValueChange сохраняются. Удалённый selected option остаётся в cache до снятия выбора.
 Без labelInValue selected value остаётся string/number или их массив.
 
+Select запоминает подпись и исходные данные до передачи нового значения владельцу.
+Пункт сохраняет подпись и данные для `onDeselect`, даже если владелец принимает
+выбор и удаляет пункт из `options` одним обновлением. При сверке с принятым
+`value` кэш удаляет отклонённые записи. В повторённых замерах React 6.6.8
+одновременное обновление теряло подпись или данные option в зависимости от режима.
+[Замеры React](../../../tests/browser/fixtures/ant-design-select-immediate-cache-reference.json)
+
 Исходные [40 сценариев](../../../tests/browser/fixtures/ant-design-select-data-reference.json.gz),
 [40 SSR](../../../tests/browser/fixtures/ant-design-select-data-ssr-reference.json),
 [атрибуты](../../../tests/browser/fixtures/ant-design-select-data-attributes-reference.json) и

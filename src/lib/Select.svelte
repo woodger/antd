@@ -49,7 +49,8 @@
   } from './select-data.engine';
   import type { SelectDataRow } from './select-data.types';
   import {
-    emptySelectValueCache, resolveSelectValueCache, convertSelectValues, selectValueDrafts,
+    emptySelectValueCache, resolveSelectValueCache, rememberSelectOptions, convertSelectValues,
+    selectValueDrafts,
     selectValueRaw, selectValueEvent, selectValueOutput, selectValueText, selectValueTitle, keepSelectSuppliedValue,
     hasSelectLabelFeatures,
     type SelectValueItem
@@ -1169,7 +1170,11 @@
     setOpen(true);
   }
 
-  function rememberLabels(items: readonly SelectValueItem<RawValue>[]) {
+  /** Сохраняет данные выбора до bind/value callbacks, которые могут заменить options. */
+  function rememberSelection(items: readonly SelectValueItem<RawValue>[]) {
+    if (items.length) {
+      cachedData = rememberSelectOptions(cachedData, items, dataMaps.valueOptions);
+    }
     // Snapshot нужен и при позднем включении label API после обычного выбора.
     internalLabels = items;
     uncontrolledLabels = providedValue === undefined ? items : undefined;
@@ -1188,7 +1193,7 @@
     const callback = onChange as ((value: unknown, options: OptionType[]) => void) | undefined;
     const rawOptions = callback && changed ? next.map(callbackOption) : undefined;
     useDefault = false;
-    rememberLabels(labeled);
+    rememberSelection(labeled);
     // TypeScript не сужает generic Mode/LabelInValue при runtime проверке.
     value = output as typeof value;
     (onValueChange as ((value: unknown) => void) | undefined)?.(output);
@@ -1245,7 +1250,7 @@
     else {
       const changed = selectedRaw !== undefined;
       useDefault = false;
-      rememberLabels([]);
+      rememberSelection([]);
       value = undefined;
       if (changed) {
         (onValueChange as ((value: undefined) => void) | undefined)?.(undefined);
@@ -1348,7 +1353,7 @@
     const output = selectValueOutput(labeled, false, Boolean(labelInValue));
     const keepSupplied = !changed && keepSelectSuppliedValue(value, providedValue, chosenValue);
     if (!keepSupplied) {
-      rememberLabels(labeled);
+      rememberSelection(labeled);
       value = output as typeof value;
     }
     (onValueChange as ((value: unknown) => void) | undefined)?.(keepSupplied ? value : output);
