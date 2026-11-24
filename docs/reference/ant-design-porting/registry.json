@@ -3124,11 +3124,52 @@
         },
         {
           "id": "extended-api",
-          "title": "Глобальная конфигурация, render, lifecycle и оформление открытия",
+          "title": "Глобальная конфигурация, классы открытия и ref",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Остаются ConfigProvider.dropdown вне theme tokens, popupRender, destroyOnHidden, forceRender, transitionName, rootClassName, openClassName и ref trigger. Локальные classNames/styles, Menu и расширенное позиционирование перенесены отдельными возможностями. Deprecated Dropdown.Button исключён; актуальная композиция — SpaceCompact + Dropdown + Button."
+          "note": "Остаются ConfigProvider.dropdown вне theme tokens, rootClassName, openClassName и ref trigger. Deprecated Dropdown.Button исключён; актуальная композиция — SpaceCompact + Dropdown + Button."
+        },
+        {
+          "id": "popup-render-lifecycle",
+          "title": "PopupRender, ленивый монтаж, forceRender и destroyOnHidden",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Dropdown.svelte",
+            "src/lib/DropdownPopupContent.svelte",
+            "src/lib/dropdown.types.ts",
+            "src/lib/dropdown-menu-context.ts",
+            "tests/browser/fixtures/ant-design-dropdown-lifecycle-reference.json",
+            "tests/browser/fixtures/ant-design-dropdown-replacement-reference.json",
+            "tests/browser/fixtures/ant-design-dropdown-lifecycle-ssr-reference.json",
+            "tests/browser/fixtures/ant-design-dropdown-form-context-reference.json",
+            "tests/browser/fixtures/ant-design-dropdown-lifecycle-toggle-reference.json",
+            "tests/browser/fixtures/DropdownLifecycleFixtures.svelte",
+            "tests/browser/dropdown-lifecycle.spec.ts",
+            "tests/browser/dropdown-lifecycle-hydration.spec.ts",
+            "tests/package/dropdown-lifecycle.ssr.test.ts",
+            "docs/reference/components/dropdown.md"
+          ],
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d. Повторены 10 профилей жизненного цикла, два профиля переключения флагов, четыре профиля внедрённого Menu, Form.Item и 14 SSR-сериализаций. Snippet получает origin при наличии menu.items, включая пустой массив. Пользовательская панель монтируется на клиенте, сохраняет DOM и черновик между открытиями; destroyOnHidden удаляет её после leave, forceRender монтирует заранее и сохраняет при обоих флагах. Отмена forceRender до первого открытия удаляет скрытый DOM. Переоткрытие принимает замену renderer; реактивные captures сохранённого Snippet остаются живыми. Вложенные Menu получают префикс Dropdown и ConfigProvider.menu, закрытие зависит от selectable/multiple внешнего menu. Контролы панели наследуют оформление Form.Item и сохраняют независимое поле. Встроенное меню без флагов сохраняет прежнюю SSR-оболочку. Strict hydration проверяет исходную закрытую и открытую принудительную панель, reuse trigger, состояние редактора и удаление DOM. Native focus, bind:open и контракт событий выбора сохранены."
+        },
+        {
+          "id": "popup-motion",
+          "title": "Фазы анимации панели и transitionName",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Dropdown.svelte",
+            "src/lib/dropdown-prefix.engine.ts",
+            "src/lib/menu-motion.dom.ts",
+            "src/lib/vendor/dropdown-motion.css.js",
+            "tools/ant-design-css-recipes.json",
+            "tests/browser/fixtures/ant-design-dropdown-motion-reference.json",
+            "tests/browser/dropdown-motion.spec.ts",
+            "tests/package/dropdown-lifecycle.ssr.test.ts",
+            "docs/reference/components/dropdown.md"
+          ],
+          "note": "92 правила и восемь keyframes извлечены из Ant Design 6.6.8. Appear/enter/leave используют оригинальные классы и тайминги; flip заменяет keyframes по фактическому размещению. Пустой transitionName отключает движение, пользовательское имя выбирает свои CSS-фазы. Восемь повторённых браузерных профилей сверяют реальные CSSAnimation и судьбу панели после закрытия. Уходящая панель inert и исключена из accessibility tree. Быстрое переоткрытие сохраняет DOM, reduced motion и отключение движения во время закрытия завершают удаление."
         },
         {
           "id": "popup-container",
@@ -3149,7 +3190,7 @@
             "tests/browser/overlay-container.spec.ts",
             "tests/package/overlay-container.ssr.test.ts"
           ],
-          "note": "Локальный getPopupContainer || ConfigProvider; собственный undefined сохраняет provider. Getter получает исходный child trigger, не вызывается до первого открытия/при SSR. Reactive portal сохраняет menu DOM/focus при неизменном container, копирует inherited theme variables и сохраняет собственные Dropdown/Menu aliases. Открытый ShadowRoot: pointer внутри не считается outside, клавиатура и Escape/focus работают через фактический root/composedPath. Source precedence и payload включены в 39 UMD-эталонов общего набора; default native placement inline/manual popover, native link/keyboard и сохранённое меню остаются. Остальные extended Dropdown props и motion описаны отдельно. Унаследованные arrow coordinates и CSS-derived arrow variables родительского popup не перезаписывают собственный controller текущей поверхности."
+          "note": "Локальный getPopupContainer || ConfigProvider; собственный undefined сохраняет provider. Getter получает исходный child trigger с первого открытия или при подготовке forceRender. При SSR getter не вызывается. Reactive portal сохраняет menu DOM/focus при неизменном container, копирует inherited theme variables и сохраняет собственные Dropdown/Menu aliases. Открытый ShadowRoot: pointer внутри не считается outside, клавиатура и Escape/focus работают через фактический root/composedPath. Source precedence и payload включены в 39 UMD-эталонов общего набора; default native placement inline/manual popover, native link/keyboard и сохранённое меню остаются. Остальные extended Dropdown props и motion описаны отдельно. Унаследованные arrow coordinates и CSS-derived arrow variables родительского popup не перезаписывают собственный controller текущей поверхности."
         },
         {
           "id": "native-unbound-props-state",

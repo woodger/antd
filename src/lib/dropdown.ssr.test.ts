@@ -35,7 +35,8 @@ describe('Dropdown server rendering', () => {
       expect(body).not.toContain('type="submit"');
       expectTypeOf<DropdownClickInfo>().toEqualTypeOf<{ key: string; domEvent: MouseEvent; }>();
       expectTypeOf<DropdownMenuClickInfo>().toExtend<DropdownClickInfo>();
-      expectTypeOf<NonNullable<DropdownProps['menu']['onClick']>>().parameter(0).toEqualTypeOf<
+      expectTypeOf<NonNullable<NonNullable<DropdownProps['menu']>['onClick']>>()
+        .parameter(0).toEqualTypeOf<
         DropdownMenuClickInfo
       >();
     }

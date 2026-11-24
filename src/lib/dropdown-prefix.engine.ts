@@ -1,4 +1,17 @@
+// Изолирует правила Dropdown по префиксам панели, Menu и ConfigProvider.
 import template from './vendor/dropdown-prefix.css.js';
+import motion from './vendor/dropdown-motion.css.js';
+
+/** Общий prefix задаёт имя фазы, локальный ограничивает placement overrides. */
+export function getDropdownMotionCss(prefix: string, rootPrefix: string) {
+  if (prefix === 'ant-dropdown' && rootPrefix === 'ant') return motion;
+
+  return motion.replace(/"ant-dropdown"|"ant"|\.ant-dropdown|\.ant-slide-/g, match => {
+    if (match === '"ant-dropdown"') return JSON.stringify(prefix);
+    if (match === '"ant"') return JSON.stringify(rootPrefix);
+    return match === '.ant-dropdown' ? `.${prefix}` : `.${rootPrefix}-slide-`;
+  }).replace(/<\/style/gi, '<\\/style');
+}
 
 /** Dropdown владеет menu prefix; Button namespace и canonical tokens остаются независимыми. */
 export function getDropdownPrefixCss(prefix: string, rootPrefix: string, menuPrefix?: string) {

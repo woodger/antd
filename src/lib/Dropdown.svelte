@@ -1,25 +1,29 @@
 <script lang="ts">
-  // Владеет видимостью меню, позицией привязки и возвратом фокуса к trigger.
+  // Владеет панелью от первого открытия до завершения анимации, её привязкой и фокусом.
   import NoCompactStyle from './NoCompactStyle.svelte';
   import DropdownMenu from './DropdownMenu.svelte';
+  import DropdownPopupContent from './DropdownPopupContent.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
-  import { getDropdownPrefixCss } from './dropdown-prefix.engine';
-  import { onDestroy, untrack } from 'svelte';
+  import { getDropdownMotionCss, getDropdownPrefixCss } from './dropdown-prefix.engine';
+  import { onDestroy, onMount, tick, untrack } from 'svelte';
   import { on } from 'svelte/events';
   import { useConfig } from './config-context';
   import { useForm } from './form-context';
-  import { connectPopup, getPopupActiveElement } from './popup.dom';
+  import { connectPopup, getPopupActiveElement, type PopupConnection } from './popup.dom';
   import { getPopupArrowStyle, getPopupPlacements } from './popup-position.engine';
   import { createDropdownPosition, dropdownFitVariables } from './dropdown-position.dom';
   import { createPopupContainer } from './popup-container.model.svelte.js';
-  import { connectPopoverTrigger } from './popover.dom';
+  import { connectPopoverTrigger, focusPopover } from './popover.dom';
   import { useComponentTheme } from './theme-component.svelte';
   import { connectInlineStyle } from './inline-style.dom';
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { getTooltipDelay, type TooltipPosition } from './tooltip.engine';
-  import { dropdownSemantics, getDropdownMatch, isDropdownMenuKey } from './dropdown.engine';
+  import {
+    dropdownSemantics, getDropdownMatch, getDropdownMotionName, isDropdownMenuKey
+  } from './dropdown.engine';
   import type { DropdownMenuContext, DropdownMenuView } from './dropdown-menu-context';
+  import { useMenuMotion } from './menu-motion.svelte';
   import type {
     DropdownProps,
     DropdownTrigger
@@ -30,7 +34,11 @@
   let {
     prefixCls: customizePrefixCls,
     children,
-    menu = { items: [] },
+    menu,
+    popupRender,
+    forceRender,
+    destroyOnHidden,
+    transitionName,
     defaultOpen = false,
     onOpenChange,
     trigger = ['hover'],
@@ -53,16 +61,18 @@
   const config = useConfig();
   let componentPrefix = $derived(config.getPrefixCls('dropdown', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
-  const menuPrefix = $derived(menu.prefixCls || `${componentPrefix}-menu`);
+  const menuPrefix = $derived(menu?.prefixCls || `${componentPrefix}-menu`);
   let prefixCss = $derived(getDropdownPrefixCss(componentPrefix, rootPrefix, menuPrefix));
+  const requestedPlacement = $derived(
+    placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft')
+  );
   const componentTheme = useComponentTheme('Dropdown');
   const semantics = $derived(dropdownSemantics({ ...dropdownProps, open: providedOpen }));
-  const popupStyleLayers = $derived([componentTheme.style, semantics.rootStyle]);
-  const popupStyle = $derived(serializeInlineStyleLayers(popupStyleLayers));
   const designTokens = useDesignTokenContext();
   const form = useForm();
   const generatedId = $props.id();
-  const menuId = $derived(menu.id ?? `ant-dropdown-${generatedId}-menu`);
+  const menuId = $derived(menu?.id ?? `ant-dropdown-${generatedId}-menu`);
+  const popupId = $derived(`${menuId}-popup`);
   const triggerId = `ant-dropdown-${generatedId}-trigger`;
   const initialDefault = untrack(() => defaultOpen);
   let internalOpen = $state(initialDefault);
@@ -73,7 +83,11 @@
   let anchor = $state<Element>();
   let popup = $state<HTMLDivElement>();
   let list = $state<HTMLUListElement>();
-  let menuView = $state.raw<DropdownMenuView>();
+  const registeredMenus = new Set<DropdownMenuView>();
+  let menuViews = $state.raw<DropdownMenuView[]>([]);
+  let focusedMenu = $state<HTMLUListElement>();
+  const menuView = $derived(menuViews.find(view => view.element === (focusedMenu ?? list))
+    ?? menuViews[0]);
   let shown = $state(false);
   let actualSide = $state<'top' | 'bottom'>('bottom');
   let alignedPlacement = $state<string>();
@@ -93,19 +107,51 @@
   let resumeFocus = false;
   let search = { text: '', time: 0 };
   let active = true;
+  let mounted = $state(false);
+  let visited = $state(false);
+  let reducedMotion = $state(false);
+  let popupConnection: PopupConnection | undefined;
   let resolvedDisabled = $derived(disabled ?? form?.disabled ?? config.componentDisabled);
   let visible = $derived(!resolvedDisabled && isOpen);
+  const expanded = $derived(visible && shown);
   const alignPoint = $derived(supports('contextMenu'));
+  const requestedContent = $derived({ renderer: popupRender, hasMenu: Boolean(menu?.items) });
+  let acceptedContent = $state.raw<typeof requestedContent>();
+  const content = $derived(visible || !acceptedContent ? requestedContent : acceptedContent);
+  const customContent = $derived(Boolean(content.renderer) || !content.hasMenu);
+  const nativeShell = $derived(Boolean(menu?.items) && !popupRender
+    && destroyOnHidden === undefined && forceRender === undefined);
+  const retain = $derived(Boolean(forceRender || visited && !destroyOnHidden));
+  const renderRequested = $derived(visible || retain);
+  const motionName = $derived(transitionName ?? getDropdownMotionName(rootPrefix, requestedPlacement));
+  const motionCss = $derived(getDropdownMotionCss(componentPrefix, rootPrefix));
+  const popupMotion = useMenuMotion(() => host, () => popup, () => ({
+    motion: {
+      motionName,
+      onAppearPrepare: preparePopup,
+      onEnterPrepare: preparePopup
+    },
+    present: mounted && renderRequested,
+    visible: mounted && visible,
+    enabled: mounted && designTokens.state.token.motion && !reducedMotion,
+    inactive: !mounted || resolvedDisabled,
+    forced: Boolean(forceRender),
+    settleWithoutAnimation: true
+  }));
+  const leaving = $derived(popupMotion.state.phase === 'leave');
+  const presented = $derived(visible || leaving);
+  const rendered = $derived(nativeShell || mounted && (renderRequested || leaving));
+  const popupStyleLayers = $derived([componentTheme.style, popupMotion.state.style,
+    semantics.rootStyle]);
+  const popupStyle = $derived(serializeInlineStyleLayers(popupStyleLayers));
   const portal = createPopupContainer(() => ({
-    open: visible,
+    open: mounted && (presented || Boolean(forceRender)),
+    rendered,
     reference: anchor,
     getPopupContainer: getPopupContainer || config.getPopupContainer,
     themeStyle: popupStyle,
     preserveVariables: ['--ant-dropdown-anchor-width', ...dropdownFitVariables]
   }));
-  const requestedPlacement = $derived(
-    placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft')
-  );
   const legacySide = $derived(requestedPlacement.startsWith('top') ? 'top' : 'bottom');
   const legacyAlignment = $derived(
     requestedPlacement.endsWith('Left')
@@ -130,6 +176,28 @@
     if (!shown) return requestedPlacement;
 
     return builtinPlacements ? alignedPlacement : `${actualSide}${legacySuffix}`;
+  });
+
+  onMount(() => { mounted = true; });
+
+  $effect.pre(() => {
+    // До первого открытия подготовленная forceRender панель ещё не является сохранённой.
+    if (mounted && visible) visited = true;
+    else if (!rendered) visited = false;
+
+    if (!rendered) acceptedContent = undefined;
+    else if (visible || !acceptedContent) acceptedContent = requestedContent;
+  });
+
+  $effect(() => {
+    const view = host?.ownerDocument.defaultView;
+    if (!view) return;
+
+    const preference = view.matchMedia('(prefers-reduced-motion: reduce)');
+    function update() { reducedMotion = preference.matches; }
+
+    update();
+    return on(preference, 'change', update);
   });
 
   $effect.pre(() => {
@@ -158,7 +226,8 @@
 
   $effect(() => {
     if (anchor) {
-      return connectPopoverTrigger(anchor, menuId, shown, 'menu');
+      const id = rendered ? customContent ? popupId : menuId : '';
+      return connectPopoverTrigger(anchor, id, expanded, customContent ? 'dialog' : 'menu');
     }
   });
 
@@ -170,14 +239,14 @@
       clicked = false;
       focusPending = null;
       search = { text: '', time: 0 };
-      if (focusedInMenu() && source instanceof HTMLElement && source.isConnected)
+      if (focusedInPopup() && source instanceof HTMLElement && source.isConnected)
         untrack(() => restoreTriggerFocus(source));
     }
     else if (view) {
       const key = view.focusKey;
-      const focused = focusedInMenu();
+      const focused = focusedInPopup();
       const rowKey = focused instanceof HTMLElement ? focused.dataset.dropdownKey : undefined;
-      if (focused === list && key !== null || rowKey !== undefined && !view.isEnabled(rowKey)) {
+      if (focused === view.element && key !== null || rowKey !== undefined && !view.isEnabled(rowKey)) {
         repairFocus = true;
       }
     }
@@ -186,16 +255,27 @@
   $effect(() => {
     const view = menuView;
     void view?.focusKey;
-    if (shown && view && repairFocus) {
+    if (expanded && view && repairFocus) {
       repairFocus = false;
       untrack(() => view.focus());
     }
   });
 
   $effect(() => {
+    if (!expanded) return;
+
+    // Пользовательский renderer может смонтировать Menu тем же обновлением, что и popup.
+    let cancelled = false;
+    void tick().then(() => {
+      if (!cancelled && expanded) focusOnOpen();
+    });
+    return () => { cancelled = true; };
+  });
+
+  $effect(() => {
     const surface = popup;
     const source = anchor;
-    if (!surface || !source || !visible) {
+    if (!surface || !source || !presented) {
       return;
     }
 
@@ -210,6 +290,9 @@
       get builtinPlacements() { return builtinPlacements; },
       get alignPoint() { return alignPoint; },
       get outsideEvents() { return alignPoint ? 'mouse' : 'pointer'; },
+      get interactive() { return visible; },
+      pauseAlignment: () => leaving || popupMotion.state.step === 'start'
+        || popupMotion.state.step === 'active',
       maxWidth: '100vw',
       gap: () => untrack(() => designTokens.enabled
         ? (arrow ? designTokens.state.token.sizePopupArrow / 2 : 0)
@@ -229,26 +312,19 @@
         shown = next;
         if (!next) {
           menuFocused = false;
+          focusedMenu = undefined;
           hoveredSurfaces.clear();
-        }
-        else if (resumeFocus) {
-          resumeFocus = false;
-          menuView?.focus();
-        }
-        else if (focusPending) {
-          focusRequestedEdge();
-        }
-        else if (autoFocus) {
-          menuView?.focus();
         }
       }
     }));
+    popupConnection = disconnect;
 
     return () => {
-      resumeFocus = Boolean(focusedInMenu());
+      resumeFocus = visible && Boolean(focusedInPopup());
       closing = true;
       disconnect();
       position.reset();
+      if (popupConnection === disconnect) popupConnection = undefined;
       closing = false;
     };
   });
@@ -256,7 +332,7 @@
   $effect(() => {
     const source = anchor;
     const surface = popup;
-    if (shown && alignPoint && source && surface) {
+    if (expanded && alignPoint && source && surface) {
       return connectPointDismissal(source, surface);
     }
   });
@@ -270,6 +346,11 @@
     if (pending !== undefined)
       clearTimeout(pending);
     pending = undefined;
+  }
+
+  // Для prepare браузер измеряет панель с исходным размером, до scale-анимации.
+  function preparePopup() {
+    popupConnection?.forceAlign();
   }
 
   function supports(kind: DropdownTrigger) {
@@ -372,8 +453,53 @@
 
   function focusRequestedEdge() {
     const edge = focusPending;
+    // При быстром переоткрытии DOM может ещё быть inert до следующего обновления.
+    if (!edge || !popup || popup.inert) return;
+
     focusPending = null;
-    if (edge) menuView?.focus(edge);
+    if (menuView) menuView.focus(edge);
+    else if (customContent) focusPopover(popup);
+  }
+
+  function focusOnOpen() {
+    if (focusPending) {
+      resumeFocus = false;
+      focusRequestedEdge();
+      return;
+    }
+    if (resumeFocus) {
+      resumeFocus = false;
+      menuView?.focus();
+      return;
+    }
+    if (autoFocus && !focusCustomRoot()) menuView?.focus();
+  }
+
+  // Snippet может передать фокус единственному focusable корню. Menu владеет своими строками.
+  function focusCustomRoot() {
+    if (!customContent || !popup) return false;
+
+    const roots = popup.querySelectorAll(':scope > :not([data-ant-dropdown-arrow])');
+    const root = roots[0];
+    if (roots.length !== 1 || !(root instanceof HTMLElement || root instanceof SVGElement)
+      || root.tabIndex < 0 && !root.hasAttribute('tabindex')
+      || menuViews.some(view => view.element === root)) {
+      return false;
+    }
+
+    root.focus({ preventScroll: true });
+    return focusedInPopup() === root;
+  }
+
+  // Координаты раскладки сохраняют масштаб при нулевом или промежуточном scale панели.
+  function layoutTop(element: HTMLElement) {
+    let top = element.offsetTop;
+    let parent = element.offsetParent;
+    while (parent instanceof HTMLElement) {
+      top += parent.offsetTop + parent.clientTop;
+      parent = parent.offsetParent;
+    }
+    return top;
   }
 
   function focusRow(row: HTMLElement, options: FocusOptions = { preventScroll: true }) {
@@ -381,13 +507,15 @@
     const level = row.closest<HTMLElement>('ul[data-menu-list]');
     if (!level) return;
 
-    const bounds = row.getBoundingClientRect();
-    const menuBounds = level.getBoundingClientRect();
-    if (bounds.top < menuBounds.top + 4) {
-      level.scrollTop -= menuBounds.top + 4 - bounds.top;
+    const top = layoutTop(row) - layoutTop(level) - level.clientTop;
+    const bottom = top + row.offsetHeight;
+    const scrollTop = level.scrollTop;
+    const scrollBottom = scrollTop + level.clientHeight;
+    if (top < scrollTop + 4) {
+      level.scrollTop = top - 4;
     }
-    else if (bounds.bottom > menuBounds.bottom - 4) {
-      level.scrollTop += bounds.bottom - menuBounds.bottom + 4;
+    else if (bottom > scrollBottom - 4) {
+      level.scrollTop = bottom - level.clientHeight + 4;
     }
   }
 
@@ -411,7 +539,7 @@
     search = { text: '', time: 0 };
     if ((reason === 'escape'
       || reason === 'menu')
-      && focusedInMenu()
+      && focusedInPopup()
       && anchor instanceof HTMLElement
       && anchor.isConnected) {
       restoreTriggerFocus(anchor);
@@ -473,7 +601,7 @@
     rememberPointer(event);
     clicked = true;
     dismissed = false;
-    focusPending = autoFocus ? null : 'first';
+    focusPending = autoFocus || popupRender && event.detail !== 0 ? null : 'first';
     request(true);
   }
 
@@ -505,7 +633,7 @@
   }
 
   function enterPopup(surface: HTMLElement, event: PointerEvent) {
-    if (event.pointerType === 'touch') return;
+    if (!visible || event.pointerType === 'touch') return;
 
     hoveredSurfaces.add(surface);
     cancelPending();
@@ -535,7 +663,7 @@
     return Boolean(popup?.contains(target)) || ownsNestedTarget(target);
   }
 
-  function focusedInMenu() {
+  function focusedInPopup() {
     if (!popup) return undefined;
 
     let focused = getPopupActiveElement(popup);
@@ -547,14 +675,21 @@
     return focused && ownsMenuTarget(focused) ? focused : undefined;
   }
 
-  function handleFocusin() {
+  function handleFocusin(event: FocusEvent) {
+    const target = event.composedPath()[0];
+    if (target instanceof Node) {
+      const owner = menuViews.find(view => view.element.contains(target));
+      if (owner || popup?.contains(target)) focusedMenu = owner?.element;
+    }
+
     menuFocused = true;
+    leavingByTab = false;
     cancelPending();
   }
 
   function handleFocusout(event: FocusEvent) {
     if (closing
-      || !shown
+      || !expanded
       || event.relatedTarget instanceof Node
       && ownsMenuTarget(event.relatedTarget)) {
       return;
@@ -566,15 +701,17 @@
       && event.relatedTarget instanceof Node
       && host?.contains(event.relatedTarget)) {
       menuFocused = false;
+      focusedMenu = undefined;
       return;
     }
 
     menuFocused = false;
+    focusedMenu = undefined;
     leavingByTab = false;
     close('tab');
   }
 
-  function handleMenuKeydown(event: KeyboardEvent) {
+  function handleMenuKeydown(event: KeyboardEvent, root: HTMLUListElement) {
     if (!isDropdownMenuKey(event)) return;
 
     leavingByTab = event.key === 'Tab';
@@ -585,9 +722,8 @@
     const target = event.composedPath()[0];
     if (!(target instanceof Element)) return;
     const row = target.closest<HTMLElement>('[data-dropdown-key]');
-    if (!row && target !== list) return;
-    const level = row?.closest('ul[data-menu-list]') ?? list;
-    if (!level) return;
+    if (!row && target !== root) return;
+    const level = row?.closest('ul[data-menu-list]') ?? root;
 
     event.preventDefault();
     const now = Date.now();
@@ -607,16 +743,25 @@
         ?? element.querySelector('[data-ant-dropdown-title]')?.textContent ?? '';
       return [{ key, text, element }];
     });
-    const key = getDropdownMatch(commands, row?.dataset.dropdownKey ?? menuView?.focusKey ?? null,
-      search.text);
+    const view = menuViews.find(view => view.element === root);
+    const current = row?.dataset.dropdownKey ?? view?.focusKey ?? null;
+    const key = getDropdownMatch(commands, current, search.text);
     const command = commands.find(command => command.key === key);
     if (command) focusRow(command.element);
   }
 
+  function handlePopupKeydown(event: KeyboardEvent) {
+    if (event.key === 'Tab' && !event.defaultPrevented) leavingByTab = true;
+  }
+
   function registerMenu(view: DropdownMenuView) {
-    menuView = view;
+    // При замене renderer cleanup и новая регистрация используют один актуальный набор.
+    registeredMenus.add(view);
+    menuViews = [...registeredMenus];
     return () => {
-      if (menuView === view) menuView = undefined;
+      registeredMenus.delete(view);
+      menuViews = [...registeredMenus];
+      if (focusedMenu === view.element) focusedMenu = undefined;
     };
   }
 
@@ -635,8 +780,8 @@
       on(surface, 'pointerleave', event => {
         if (!popup?.contains(surface)) leavePopup(surface, event);
       }),
-      on(surface, 'focusin', () => {
-        if (!popup?.contains(surface)) handleFocusin();
+      on(surface, 'focusin', event => {
+        if (!popup?.contains(surface)) handleFocusin(event);
       }),
       on(surface, 'focusout', event => {
         if (!popup?.contains(surface)) handleFocusout(event);
@@ -649,21 +794,28 @@
     };
   }
 
-  const menuContext: DropdownMenuContext = {
-    get prefixCls() { return componentPrefix; },
-    get activeKey() { return menu.activeKey; },
-    get visible() { return visible; },
-    get focused() { return menuFocused; },
-    get sourceTheme() { return Boolean(componentTheme.className); },
-    get themeStyle() { return componentTheme.style; },
-    canActivate: event => active && visible && shown && !event.defaultPrevented,
-    command: stayOpen => {
-      if (!stayOpen) close('menu');
-    },
-    focusRow,
-    registerMenu,
-    registerPopup
-  };
+  function createMenuContext(origin: boolean): DropdownMenuContext {
+    return {
+      get prefixCls() { return componentPrefix; },
+      get menuPrefix() { return menuPrefix; },
+      get activeKey() { return origin ? menu?.activeKey : undefined; },
+      get visible() { return visible; },
+      get sourceTheme() { return Boolean(componentTheme.className); },
+      get themeStyle() { return componentTheme.style; },
+      isFocused: element => menuFocused && (origin && !customContent || focusedMenu === element),
+      canActivate: event => active && expanded && !event.defaultPrevented,
+      command() {
+        if (!(menu?.selectable && menu.multiple)) close('menu');
+      },
+      keydown: handleMenuKeydown,
+      focusRow,
+      registerMenu,
+      registerPopup
+    };
+  }
+
+  const menuContext = createMenuContext(true);
+  const popupContext = createMenuContext(false);
 </script>
 
 <style>
@@ -687,27 +839,41 @@
   }
 </style>
 
+{#snippet originMenu()}
+  {#if menu?.items}<DropdownMenu {menu} {semantics} context={menuContext} id={menuId}
+    label={ariaLabel} labelledby={triggerId} bind:nativeElement={list} />{/if}
+{/snippet}
+
 {#if prefixCss}<ThemeScopeStyle css={prefixCss}
-  scope={`dropdown-prefix:${componentPrefix}:${rootPrefix}${menu.prefixCls ? `:${menuPrefix}` : ''}`} />{/if}<span data-ant-dropdown-trigger data-ant-dropdown-prefix={componentPrefix} data-ant-dropdown-root-prefix={rootPrefix} data-ant-dropdown-menu-prefix={menuPrefix} bind:this={host} id={triggerId} role="presentation" class={[`${componentPrefix}-trigger`, className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} ontouchstart={handleTouchStart} onclick={handleClick} oncontextmenucapture={handleContextMenu} onkeydown={handleTriggerKeydown}>{@render children()}</span>
-<NoCompactStyle>
+  scope={`dropdown-prefix:${componentPrefix}:${rootPrefix}${menu?.prefixCls ? `:${menuPrefix}` : ''}`} />{/if}{#if mounted}<ThemeScopeStyle css={motionCss}
+  scope={`dropdown-motion:${componentPrefix}:${rootPrefix}`} />{/if}<span data-ant-dropdown-trigger data-ant-dropdown-prefix={componentPrefix} data-ant-dropdown-root-prefix={rootPrefix} data-ant-dropdown-menu-prefix={menuPrefix} bind:this={host} id={triggerId} role="presentation" class={[`${componentPrefix}-trigger`, className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} ontouchstart={handleTouchStart} onclick={handleClick} oncontextmenucapture={handleContextMenu} onkeydown={handleTriggerKeydown}>{@render children()}</span>
+<NoCompactStyle>{#if rendered}
 <div data-ant-dropdown-popup data-ant-dropdown-prefix={componentPrefix} data-ant-dropdown-root-prefix={rootPrefix} data-ant-dropdown-menu-prefix={menuPrefix} data-ant-dropdown-source-theme={componentTheme.className ? true : undefined}
   data-ant-dropdown-source-align={builtinPlacements ? true : undefined}
-  data-ant-dropdown-placement={actualPlacement} bind:this={popup} id={`${menuId}-popup`} popover="manual" role="presentation" hidden dir={config.direction} class={[
+  data-ant-dropdown-motion data-ant-dropdown-placement={actualPlacement}
+  bind:this={popup} id={popupId} popover="manual" role={customContent ? 'dialog' : 'presentation'}
+  tabindex="-1" aria-label={customContent ? ariaLabel : undefined}
+  aria-labelledby={customContent && !ariaLabel ? triggerId : undefined} hidden
+  inert={leaving || undefined} aria-hidden={leaving || undefined} dir={config.direction} class={[
     componentPrefix,
     'ant-dropdown-css-var',
     componentTheme.className,
     componentTheme.className && 'ant-dropdown-source-theme',
     semantics.rootClass,
     actualPlacement && `${componentPrefix}-placement-${actualPlacement}`,
-    config.direction === 'rtl' && `${componentPrefix}-rtl`
+    config.direction === 'rtl' && `${componentPrefix}-rtl`,
+    popupMotion.state.className
   ]} style={untrack(() => popupStyle)}
   {@attach connectPopupStyle} {@attach portal}
   onpointerenter={event => enterPopup(event.currentTarget, event)}
   onpointerleave={event => leavePopup(event.currentTarget, event)}
-  onfocusin={handleFocusin} onfocusout={handleFocusout}>
+  onfocusin={handleFocusin} onfocusout={handleFocusout}
+  onkeydown={customContent ? handlePopupKeydown : undefined}
+  onanimationend={popupMotion.end} ontransitionend={popupMotion.end}>
   {#if arrow}<span data-ant-dropdown-arrow class={`${componentPrefix}-arrow`}
     style={arrowStyle} aria-hidden="true"></span>{/if}
-  <DropdownMenu {menu} {semantics} context={menuContext} id={menuId} label={ariaLabel}
-    labelledby={triggerId} onkeydown={handleMenuKeydown} bind:nativeElement={list} />
+  {#if content.renderer}<DropdownPopupContent renderer={content.renderer}
+    origin={content.hasMenu ? originMenu : undefined} context={popupContext} />
+  {:else if content.hasMenu}{@render originMenu()}{/if}
 </div>
-</NoCompactStyle>
+{/if}</NoCompactStyle>

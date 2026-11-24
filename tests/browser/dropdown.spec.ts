@@ -668,6 +668,9 @@ test('Dropdown escapes overflow clipping and supports a scrollable long menu', a
 
   await page.getByLabel('Many Dropdown items', { exact: true }).check();
   await trigger(page).press('ArrowDown');
+  const popup = menu(page).locator('..');
+  const appearing = /\bant-slide-(?:up|down)-appear\b/;
+  await expect(popup).toHaveClass(appearing);
   await page.keyboard.press('End');
 
   const last = command(page, 'Command 40');
@@ -675,11 +678,14 @@ test('Dropdown escapes overflow clipping and supports a scrollable long menu', a
   await expect(last).toBeFocused();
 
   await expect.poll(() => menu(page).evaluate((element) => element.scrollTop > 0)).toBe(true);
+  await expect(popup).not.toHaveClass(appearing);
+  const withinViewport = await last.evaluate(row => {
+    const list = row.closest('ul[data-menu-list]');
+    if (!list) throw new Error('Missing scroll viewport for focused command');
 
-  const bounds = (await menu(page).boundingBox())!;
-  const itemBounds = (await last.boundingBox())!;
-
-  expect(itemBounds.y + itemBounds.height).toBeLessThanOrEqual(bounds.y + bounds.height + 1);
+    return row.getBoundingClientRect().bottom <= list.getBoundingClientRect().bottom + 1;
+  });
+  expect(withinViewport).toBe(true);
 });
 
 test(

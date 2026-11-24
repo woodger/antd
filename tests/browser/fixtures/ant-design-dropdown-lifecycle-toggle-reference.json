@@ -1,0 +1,281 @@
+{
+  "version": "6.6.8",
+  "react": "18.3.1",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "browser": "157.0.8103.78",
+  "passes": [
+    [
+      {
+        "profile": {
+          "sample": "force-before-open",
+          "initial": {
+            "force": true,
+            "destroy": false,
+            "open": false
+          },
+          "actions": [
+            {
+              "force": false
+            },
+            {
+              "force": true
+            },
+            {
+              "open": true
+            },
+            {
+              "open": false
+            },
+            {
+              "force": false
+            }
+          ]
+        },
+        "frames": [
+          {
+            "mounted": true,
+            "visible": false,
+            "editor": {
+              "key": 1,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": false,
+            "visible": false,
+            "editor": null
+          },
+          {
+            "mounted": true,
+            "visible": false,
+            "editor": {
+              "key": 2,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": true,
+            "visible": true,
+            "editor": {
+              "key": 2,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": true,
+            "visible": false,
+            "editor": {
+              "key": 2,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": true,
+            "visible": false,
+            "editor": {
+              "key": 2,
+              "value": "Initial"
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "sample": "destroy-after-close",
+          "initial": {
+            "force": false,
+            "destroy": false,
+            "open": true
+          },
+          "actions": [
+            {
+              "open": false
+            },
+            {
+              "destroy": true
+            },
+            {
+              "destroy": false
+            },
+            {
+              "open": true
+            }
+          ]
+        },
+        "frames": [
+          {
+            "mounted": true,
+            "visible": true,
+            "editor": {
+              "key": 1,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": true,
+            "visible": false,
+            "editor": {
+              "key": 1,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": false,
+            "visible": false,
+            "editor": null
+          },
+          {
+            "mounted": false,
+            "visible": false,
+            "editor": null
+          },
+          {
+            "mounted": true,
+            "visible": true,
+            "editor": {
+              "key": 2,
+              "value": "Initial"
+            }
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "profile": {
+          "sample": "force-before-open",
+          "initial": {
+            "force": true,
+            "destroy": false,
+            "open": false
+          },
+          "actions": [
+            {
+              "force": false
+            },
+            {
+              "force": true
+            },
+            {
+              "open": true
+            },
+            {
+              "open": false
+            },
+            {
+              "force": false
+            }
+          ]
+        },
+        "frames": [
+          {
+            "mounted": true,
+            "visible": false,
+            "editor": {
+              "key": 1,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": false,
+            "visible": false,
+            "editor": null
+          },
+          {
+            "mounted": true,
+            "visible": false,
+            "editor": {
+              "key": 2,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": true,
+            "visible": true,
+            "editor": {
+              "key": 2,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": true,
+            "visible": false,
+            "editor": {
+              "key": 2,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": true,
+            "visible": false,
+            "editor": {
+              "key": 2,
+              "value": "Initial"
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "sample": "destroy-after-close",
+          "initial": {
+            "force": false,
+            "destroy": false,
+            "open": true
+          },
+          "actions": [
+            {
+              "open": false
+            },
+            {
+              "destroy": true
+            },
+            {
+              "destroy": false
+            },
+            {
+              "open": true
+            }
+          ]
+        },
+        "frames": [
+          {
+            "mounted": true,
+            "visible": true,
+            "editor": {
+              "key": 1,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": true,
+            "visible": false,
+            "editor": {
+              "key": 1,
+              "value": "Initial"
+            }
+          },
+          {
+            "mounted": false,
+            "visible": false,
+            "editor": null
+          },
+          {
+            "mounted": false,
+            "visible": false,
+            "editor": null
+          },
+          {
+            "mounted": true,
+            "visible": true,
+            "editor": {
+              "key": 2,
+              "value": "Initial"
+            }
+          }
+        ]
+      }
+    ]
+  ]
+}

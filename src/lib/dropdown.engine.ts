@@ -1,6 +1,6 @@
 // Готовит входные данные и слоты Dropdown для Menu и выполняет поиск по тексту команд.
 import type {
-  DropdownMenuClickInfo, DropdownMenuEntry, DropdownProps, DropdownSemantic
+  DropdownMenuClickInfo, DropdownMenuEntry, DropdownPlacement, DropdownProps, DropdownSemantic
 } from './dropdown.types';
 import type { MenuClickInfo, MenuItem, MenuItemType } from './menu.types';
 
@@ -32,6 +32,14 @@ export function isDropdownClick(info: MenuClickInfo): info is DropdownMenuClickI
 export function isDropdownMenuKey(event: KeyboardEvent) {
   return !event.defaultPrevented && !event.isComposing
     && !event.ctrlKey && !event.altKey && !event.metaKey;
+}
+
+/** Имя фазы следует запрошенной стороне; CSS учитывает фактический flip. */
+export function getDropdownMotionName(prefix: string, placement: DropdownPlacement) {
+  if (placement.startsWith('top')) return `${prefix}-slide-down`;
+  if (placement.startsWith('left')) return `${prefix}-slide-right`;
+  if (placement.startsWith('right')) return `${prefix}-slide-left`;
+  return `${prefix}-slide-up`;
 }
 
 /** Готовит параметры Menu, сохраняя ключи и исходные данные пунктов. */

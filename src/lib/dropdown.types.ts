@@ -52,7 +52,7 @@ export type DropdownMenuEntry = DropdownCommand | DropdownBranch | DropdownGroup
 
 /** Параметры вложенного Menu. Dropdown задаёт вертикальный режим и отключает выбор по умолчанию. */
 export interface DropdownMenuProps extends Omit<MenuProps, 'items' | 'nativeElement' | 'onClick'> {
-  items: readonly DropdownMenuEntry[];
+  items?: readonly DropdownMenuEntry[];
   /** Выделяет строку без перевода фокуса. */
   activeKey?: string;
   onClick?: (info: DropdownMenuClickInfo) => void;
@@ -69,7 +69,15 @@ export interface DropdownProps {
   /** Непустой локальный префикс перекрывает ConfigProvider; внутреннее меню получает суффикс -menu. */
   prefixCls?: string;
   children: Snippet;
-  menu: DropdownMenuProps;
+  menu?: DropdownMenuProps;
+  /** Оборачивает или заменяет панель. Origin доступен, когда передан menu.items. */
+  popupRender?: Snippet<[origin?: Snippet]>;
+  /** Удаляет панель после закрытия и завершения анимации. @defaultValue false */
+  destroyOnHidden?: boolean;
+  /** Монтирует скрытую панель на клиенте до первого открытия. @defaultValue false */
+  forceRender?: boolean;
+  /** CSSMotion-класс. Пустая строка отключает переход. */
+  transitionName?: string;
   /** Поддерживает bind:open. */
   open?: boolean | undefined;
   /** @defaultValue false */

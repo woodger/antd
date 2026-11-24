@@ -2,6 +2,7 @@
 import { getContext, setContext } from 'svelte';
 
 export interface DropdownMenuView {
+  readonly element: HTMLUListElement;
   focus: (edge?: 'first' | 'last') => void;
   isEnabled: (key: string) => boolean;
   readonly focusKey: string | null;
@@ -9,13 +10,15 @@ export interface DropdownMenuView {
 
 export interface DropdownMenuContext {
   readonly prefixCls: string;
+  readonly menuPrefix: string;
   readonly activeKey: string | undefined;
   readonly visible: boolean;
-  readonly focused: boolean;
   readonly sourceTheme: boolean;
   readonly themeStyle: string | undefined;
   canActivate: (event: MouseEvent | KeyboardEvent) => boolean;
-  command: (stayOpen: boolean) => void;
+  isFocused: (element: HTMLUListElement | undefined) => boolean;
+  command: () => void;
+  keydown: (event: KeyboardEvent, element: HTMLUListElement) => void;
   focusRow: (row: HTMLElement, options?: FocusOptions) => void;
   registerMenu: (view: DropdownMenuView) => () => void;
   registerPopup: (popup: HTMLElement) => () => void;
@@ -28,7 +31,7 @@ export function provideDropdownMenu(context: DropdownMenuContext) {
   setContext(key, context);
 }
 
-/** Потребляет настройки панели один раз. Независимые Menu в snippets получают свои настройки. */
+/** Изолирует вложенные Menu. Соседние списки получают контекст общей панели. */
 export function takeDropdownMenu() {
   const context = getContext<DropdownMenuContext | undefined>(key);
   if (context) setContext(key, undefined);

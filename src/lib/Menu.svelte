@@ -16,6 +16,7 @@
   import type { MenuProps, MenuClickInfo } from './menu.types';
   import { provideMenu, type MenuBranchHover } from './menu-context';
   import { takeDropdownMenu } from './dropdown-menu-context';
+  import { getDropdownPrefixCss } from './dropdown-prefix.engine';
   import { isDropdownMenuKey } from './dropdown.engine';
   import { useConfig } from './config-context';
   import { useSider } from './layout-context';
@@ -80,7 +81,15 @@
   let componentPrefix = $derived(config.getPrefixCls('menu', customizePrefixCls
     || (dropdown ? `${dropdown.prefixCls}-menu` : undefined)));
   let rootPrefix = $derived(config.getPrefixCls());
-  let prefixCss = $derived(dropdown ? undefined : getMenuPrefixCss(componentPrefix, rootPrefix));
+  const prefixCss = $derived.by(() => {
+    if (!dropdown) return getMenuPrefixCss(componentPrefix, rootPrefix);
+    if (componentPrefix !== dropdown.menuPrefix) {
+      return getDropdownPrefixCss(dropdown.prefixCls, rootPrefix, componentPrefix);
+    }
+  });
+  const prefixScope = $derived(dropdown
+    ? `dropdown-menu-prefix:${dropdown.prefixCls}:${rootPrefix}:${componentPrefix}`
+    : `menu-prefix:${componentPrefix}:${rootPrefix}`);
   let motionCss = $derived(getMenuMotionCss(rootPrefix));
   let popupContainer = $derived(Object.hasOwn(rest, 'getPopupContainer')
     ? rest.getPopupContainer : config.getPopupContainer);
@@ -184,11 +193,17 @@
     previousDropdownActiveKey = next;
   });
 
-  $effect(() => dropdown?.registerMenu({
-    get focusKey() { return dropdownFocusKey; },
-    isEnabled: key => isEnabled(navigationEntry(key)),
-    focus: focusDropdown
-  }));
+  $effect(() => {
+    const element = rootElement;
+    if (element && dropdown) {
+      return dropdown.registerMenu({
+        element,
+        get focusKey() { return dropdownFocusKey; },
+        isEnabled: key => isEnabled(navigationEntry(key)),
+        focus: focusDropdown
+      });
+    }
+  });
 
   $effect(() => {
     if (rootElement && responsive) {
@@ -348,7 +363,7 @@
     onClick?.(info);
     if (dropdown) {
       if (!dropdown.canActivate(event)) return;
-      dropdown.command(isSelectable && multiple);
+      dropdown.command();
     }
 
     if (isSelectable) {
@@ -563,8 +578,8 @@
     },
     get active() {
       if (dropdown) {
-        return dropdown.activeKey ?? (dropdown.focused || !dropdown.sourceTheme ? dropdownFocusKey
-          : null);
+        return dropdown.activeKey ?? (dropdown.isFocused(rootElement) || !dropdown.sourceTheme
+          ? dropdownFocusKey : null);
       }
       return active;
     },
@@ -619,6 +634,7 @@
       const entry = key === undefined ? null : navigationEntry(key) ?? null;
       void keyboard(entry, event);
     }
+    dropdown?.keydown(event, event.currentTarget);
     onkeydown?.(event);
   }
 
@@ -656,7 +672,7 @@
 </style>
 
 {#snippet defaultIndicator()}<EllipsisIcon />{/snippet}
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`menu-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#if motionCss}<ThemeScopeStyle css={motionCss} scope={`menu-motion:${rootPrefix}`} />{/if}<ul {...attributes} data-ant-menu-prefix={dropdown ? undefined : componentPrefix} data-ant-menu-root-prefix={dropdown ? undefined : rootPrefix} bind:this={rootElement} role="menu" tabindex={tabindex} data-menu-list="true" dir={config.direction}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={prefixScope} />{/if}{#if motionCss}<ThemeScopeStyle css={motionCss} scope={`menu-motion:${rootPrefix}`} />{/if}<ul {...attributes} data-ant-menu-prefix={dropdown ? undefined : componentPrefix} data-ant-menu-root-prefix={dropdown ? undefined : rootPrefix} bind:this={rootElement} role="menu" tabindex={tabindex} data-menu-list="true" dir={config.direction}
   data-ant-dropdown-menu={dropdown ? true : undefined}
   data-ant-dropdown-prefix={dropdown?.prefixCls}
   data-ant-dropdown-root-prefix={dropdown ? rootPrefix : undefined}

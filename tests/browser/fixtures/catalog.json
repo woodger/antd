@@ -425,6 +425,11 @@
     "root": "dropdown-placement-fixture"
   },
   {
+    "id": "dropdown-lifecycle",
+    "module": "./DropdownLifecycleFixtures.svelte",
+    "root": "dropdown-lifecycle-fixture"
+  },
+  {
     "id": "tabs",
     "module": "./TabsFixtures.svelte",
     "root": "tabs-fixture"

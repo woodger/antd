@@ -3031,6 +3031,49 @@
     "format": "module"
   },
   {
+    "id": "dropdown-motion",
+    "output": "src/lib/vendor/dropdown-motion.css.js",
+    "expectedRules": 92,
+    "include": [
+      "^\\.ant-slide-(?:up|down|left|right)-(?:appear|enter|leave)(?![a-z0-9])",
+      "^\\.ant-dropdown\\.ant-slide-"
+    ],
+    "exclude": [],
+    "replacements": [
+      {
+        "pattern": "^",
+        "replacement": ":where([data-ant-dropdown-motion][data-ant-dropdown-prefix=\"ant-dropdown\"][data-ant-dropdown-root-prefix=\"ant\"])"
+      }
+    ],
+    "declarationReplacements": [
+      {
+        "pattern": "var\\(--ant-motion-duration-mid\\)",
+        "replacement": "var(--ant-motion-duration-mid,0.2s)"
+      },
+      {
+        "pattern": "var\\(--ant-motion-ease-out-quint\\)",
+        "replacement": "var(--ant-motion-ease-out-quint,cubic-bezier(0.23,1,0.32,1))"
+      },
+      {
+        "pattern": "var\\(--ant-motion-ease-in-quint\\)",
+        "replacement": "var(--ant-motion-ease-in-quint,cubic-bezier(0.755,0.05,0.855,0.06))"
+      }
+    ],
+    "keyframes": [
+      "antSlideUpIn",
+      "antSlideUpOut",
+      "antSlideDownIn",
+      "antSlideDownOut",
+      "antSlideLeftIn",
+      "antSlideLeftOut",
+      "antSlideRightIn",
+      "antSlideRightOut"
+    ],
+    "appendRootKeyframes": true,
+    "header": "/* Ant Design 6.6.8 — MIT; vendor/LICENSE.ant-design.\n * Dropdown: фазы slide по четырём сторонам и замена keyframes после flip.\n * CSS ограничен панелью; fallback motion tokens действуют вне полной темы.\n * SHA-256: 8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa\n */",
+    "format": "module"
+  },
+  {
     "id": "menu-prefix",
     "output": "src/lib/vendor/menu-prefix.css.js",
     "expectedRules": 201,

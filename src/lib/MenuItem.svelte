@@ -130,7 +130,7 @@
     if (!dropdown || blocked || locked || event.pointerType === 'touch') return;
 
     context.activate(entry.key);
-    if (dropdown.focused) dropdown.focusRow(event.currentTarget);
+    if (dropdown.isFocused(context.nativeElement)) dropdown.focusRow(event.currentTarget);
   }
 
   function activate(event: MouseEvent) {
