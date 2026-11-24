@@ -57,6 +57,11 @@ export interface DatePickerTimeConfig<DateType extends object = Dayjs> {
   hideDisabledOptions?: boolean;
   /** В showTime задаёт только время пустого выбора; дата остаётся датой панели. */
   defaultOpenValue?: DateType;
+  disabledTime?: (date: DateType) => DatePickerDisabledTime;
+  /** Автоматически выбирает ближайшую доступную ячейку при прокрутке часов. */
+  changeOnScroll?: boolean;
+  /** Значение для панели. Видимость Now задаётся одноимённым prop поля. */
+  showNow?: boolean;
 }
 export interface DatePickerPopupSlots {
   root?: string;
@@ -124,9 +129,6 @@ export interface DatePickerProps<DateType extends object = Dayjs> extends Omit<
   /** @defaultValue false */
   defaultOpen?: boolean;
   disabledDate?(date: DateType, info: { type: DatePickerMode; }): boolean;
-  disabledTime?: (date: DateType) => DatePickerDisabledTime;
-  /** Автоматически выбирает ближайшую доступную ячейку при прокрутке часов. */
-  changeOnScroll?: boolean;
   minDate?: DateType;
   maxDate?: DateType;
   /** При включении выбор публикуется после подтверждения OK. */

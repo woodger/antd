@@ -1,12 +1,13 @@
 import type { Dayjs } from 'dayjs';
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
-import type { DatePickerDisabledTime, DatePickerMode, DatePickerTimeConfig } from './date-picker.types';
+import type { DatePickerDisabledTime, DatePickerMode } from './date-picker.types';
 import type { PickerModeFooter } from './picker-components.types';
 import type {
   RangePickerProps,
   RangePickerInfo,
-  RangePickerPart
+  RangePickerPart,
+  RangePickerTimeConfig
 } from './range-picker.types';
 import type {
   TimePickerContent,
@@ -32,7 +33,7 @@ export interface TimeRangePickerProps<
     | 'onPickerValueChange' | 'onPanelChange' | 'prefix' | 'onclick'
     | 'onfocus' | 'onblur' | 'multiple' | 'placeholder' | 'renderExtraFooter' | 'classNames' | 'styles'
     | 'cellRender' | 'picker' | 'mode'
->, Omit<DatePickerTimeConfig<DateType>, 'format' | 'defaultOpenValue'> {
+> {
   placeholder?: string | [string, string];
   /** Заполняет только панель и кандидат OK; одиночная дата относится к start. */
   defaultOpenValue?: DateType | [DateType, DateType];
@@ -72,3 +73,10 @@ export interface TimeRangePickerProps<
 export type TimeRangePickerRuntimeProps<DateType extends object = Dayjs> = Omit<
   TimeRangePickerProps<DatePickerMode, DateType>, 'renderExtraFooter'
 > & { renderExtraFooter?: PickerModeFooter<DatePickerMode>; };
+
+/** Режим времени в семействе DatePicker также принимает вложенные настройки часов. */
+export interface TimeRangePickerModeOptions<DateType extends object> {
+  picker: 'time';
+  showTime?: boolean | (Omit<RangePickerTimeConfig<DateType>, 'disabledTime'> &
+    Pick<TimeRangePickerProps<'time', DateType>, 'disabledTime'>);
+}

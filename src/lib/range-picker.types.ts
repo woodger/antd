@@ -19,9 +19,16 @@ export interface RangePickerInfo {
   range: RangePickerPart;
 }
 /** Настройки времени диапазона; начальные значения панели задаются для обеих границ. */
-export interface RangePickerTimeConfig<DateType extends object = Dayjs> extends Omit<DatePickerTimeConfig<DateType>, 'defaultOpenValue'> {
+export interface RangePickerTimeConfig<DateType extends object = Dayjs> extends Omit<
+  DatePickerTimeConfig<DateType>, 'defaultOpenValue' | 'disabledTime'
+> {
   /** В showTime задаёт время пустых границ, сохраняя текущую дату каждой панели. */
   defaultOpenValue?: [DateType, DateType];
+  disabledTime?: (
+    date: DateType,
+    partial: RangePickerPart,
+    info: { from?: DateType; }
+  ) => DatePickerDisabledTime;
 }
 export interface RangePickerPreset<DateType extends object = Dayjs> {
   label: string | Snippet;
@@ -37,13 +44,12 @@ export interface RangePickerConfig {
 /** Пара дат с общей панелью диапазона, временем и подтверждением границ. */
 export interface RangePickerProps<DateType extends object = Dayjs> extends Omit<
   DatePickerProps<DateType>,
-  keyof Omit<DatePickerTimeConfig<DateType>, 'format'>
-  | 'changeOnScroll'
-  | 'picker'
+  'picker'
   | 'value'
   | 'multiple'
   | 'mode'
   | 'defaultValue'
+  | 'defaultOpenValue'
   | 'showTime'
   | 'disabled'
   | 'id'
@@ -78,12 +84,10 @@ export interface RangePickerProps<DateType extends object = Dayjs> extends Omit<
   placeholder?: [string, string];
   /** Колонки времени для picker=date; week/month/year/quarter игнорируют настройку. @defaultValue false */
   showTime?: boolean | RangePickerTimeConfig<DateType>;
+  /** Начальное время пустых границ datetime задаётся парой значений. */
+  defaultOpenValue?: DateType | [DateType, DateType];
   disabledDate?: (date: DateType, info: { type: DatePickerCalendarMode; from?: DateType; }) => boolean;
-  disabledTime?: (
-    date: DateType,
-    partial: RangePickerPart,
-    info: { from?: DateType; }
-  ) => DatePickerDisabledTime;
+  disabledTime?: RangePickerTimeConfig<DateType>['disabledTime'];
   /** Начальные даты панелей; используются при открытии без управляемого pickerValue. */
   defaultPickerValue?: [DateType, DateType] | DateType | null;
   pickerValue?: [DateType, DateType] | DateType | null;

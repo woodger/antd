@@ -3,10 +3,11 @@
   // семантические слоты и события владельца DatePicker.
   import type { PickerDateOperations } from './picker-date-operations.engine';
   import SinglePicker from './SinglePicker.svelte';
-  import { timePickerSharedProps } from './time-picker-props.engine';
+  import { mergeShowTime, splitPickerClock, timePickerSharedProps } from './time-picker-props.engine';
   import type { TimePickerRuntimeProps } from './time-picker.types';
   import type {
-    DatePickerMultipleProps, DatePickerPicker, DatePickerProps, DatePickerSelectionProps
+    DatePickerMultipleProps, DatePickerPicker, DatePickerProps, DatePickerSelectionProps,
+    DatePickerTimeConfig
   } from './date-picker.types';
 
   let {
@@ -30,6 +31,7 @@
     if (time && rootTimeProps) {
       return {
         ...timePickerSharedProps(time),
+        showNow: rootTimeProps.showNow,
         mode: rootTimeProps.mode,
         cellRender: rootTimeProps.cellRender,
         onChange: rootTimeProps.onChange,
@@ -53,14 +55,19 @@
     return field;
   }
 
-  /** Сохраняет часы внутри showTime у календарного поля и исключает атрибуты самого режима time. */
+  /** Передаёт календарю общие настройки часов через showTime, оставляя атрибуты поля отдельно. */
   function calendarOptions(props: DatePickerProps<DateType>) {
-    const {
-      picker, showHour, showMinute, showSecond, showMillisecond, use12Hours, hourStep, minuteStep,
-      secondStep, millisecondStep, hideDisabledOptions, defaultOpenValue, changeOnScroll,
-      ...calendar
-    } = props;
-    return calendar;
+    const { clock, field } = splitPickerClock(props);
+    const { picker, defaultOpenValue, disabledTime, showTime, ...calendar } = field;
+    const settings = mergeShowTime<DatePickerTimeConfig<DateType>>({
+      ...clock, defaultOpenValue, disabledTime, showNow: calendar.showNow
+    }, showTime);
+
+    return {
+      ...calendar,
+      showTime: settings,
+      disabledTime: settings ? settings.disabledTime : disabledTime
+    };
   }
 
   /** Настройки часов берутся из props и showTime. Слоты и события принадлежат DatePicker. */

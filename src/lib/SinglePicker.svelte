@@ -1089,7 +1089,7 @@
       hoverRangeValue: null,
       showTime: showTime ? pickerPanelClock(clock, {
         defaultOpenValue: clock.defaultOpenValue,
-        disabledTime, changeOnScroll: time?.changeOnScroll, showNow: providedShowNow
+        disabledTime, changeOnScroll: clock.changeOnScroll, showNow: clock.showNow
       }) : null,
       showWeek,
       minDate,

@@ -10,6 +10,8 @@
   import type { PickerLocale } from './picker-locale.types';
   import { createDatePickerEngine, timeColumns } from './date-picker.engine';
   import { createTimePickerEngine, timeFormat, timePickerOptions } from './time-picker.engine';
+  import { createTimeColumnScrollSelection } from './time-picker-column.dom';
+  import type { TimePickerColumnType } from './time-picker.types';
   import type { DatePickerDisabledTime, DatePickerTimeConfig, DatePickerProps,
     DatePickerCellRenderInfo, DatePickerPopupSlots } from './date-picker.types';
   let {
@@ -84,6 +86,52 @@
   }));
   let root: HTMLDivElement;
   const scrollValues = new WeakMap<Element, string>();
+  const alignedPositions = new WeakMap<HTMLUListElement, number>();
+  const scrollSelections = new WeakMap<
+    HTMLUListElement, ReturnType<typeof createTimeColumnScrollSelection>
+  >();
+
+  /** Отложенный выбор использует текущий черновик, как нажатие на ячейку. */
+  function watchColumnScroll(column: HTMLUListElement, unit: TimePickerColumnType) {
+    const selection = createTimeColumnScrollSelection(
+      column,
+      item => item.parentElement !== column
+        || item.getAttribute('data-picker-time-disabled') === 'true',
+      item => {
+        const selected = item.getAttribute('data-picker-time-value');
+        if (selected === null) {
+          return;
+        }
+
+        if (unit === 'meridiem') {
+          const offset = selected === 'pm' ? 12 : 0;
+          onSelect(fields.setHour(value, fields.getHour(value) % 12 + offset));
+        }
+        else {
+          onSelect(dates.setTimeUnit(value, unit, Number(selected)));
+        }
+      }
+    );
+    scrollSelections.set(column, selection);
+
+    return () => {
+      selection.cancel();
+      scrollSelections.delete(column);
+    };
+  }
+
+  /** Снимает позицию, подавляя выбор при восстановлении или выравнивании. */
+  function handleColumnScroll(column: HTMLUListElement) {
+    rememberColumn(column);
+    const selection = scrollSelections.get(column);
+    if (alignedPositions.get(column) === column.scrollTop) {
+      selection?.cancel();
+      return;
+    }
+
+    alignedPositions.delete(column);
+    selection?.schedule();
+  }
 
   // Выбранное значение и подписи опций участвуют в ключе восстановления scroll.
   function readColumn(column: HTMLUListElement) {
@@ -163,11 +211,16 @@
         const signature = state.signature;
         if (scrollValues.get(column) === signature)
           continue;
+        scrollSelections.get(column)?.cancel();
         const saved = scrollMemory?.get(unit);
         if (saved && (saved.signature === signature || !selected)) {
           column.scrollTop = saved.top;
+          alignedPositions.set(column, column.scrollTop);
         }
-        else if (selected) column.scrollTop = selected.offsetTop - first.offsetTop;
+        else if (selected) {
+          column.scrollTop = selected.offsetTop - first.offsetTop;
+          alignedPositions.set(column, column.scrollTop);
+        }
         scrollValues.set(column, signature);
         rememberColumn(column);
       }
@@ -247,7 +300,8 @@
   <div class={[`${prefixCls}-content`, classNames?.content]} style={styles?.content}>
     {#each columns as column (column.unit)}
       <ul class={`${prefixCls}-time-panel-column`} aria-label={column.unit}
-        onscroll={event => rememberColumn(event.currentTarget)}>
+        {@attach config.changeOnScroll ? node => watchColumnScroll(node, column.unit) : undefined}
+        onscroll={event => handleColumnScroll(event.currentTarget)}>
         {#each items(column) as item (item)}
           {@const unavailable = blocked(column.unit, item)}
           {@const label = cellLabel(column.unit, item)}
@@ -282,7 +336,8 @@
     {/each}
     {#if showColumns && config.use12Hours}
       <ul class={`${prefixCls}-time-panel-column`} aria-label="meridiem"
-        onscroll={event => rememberColumn(event.currentTarget)}>
+        {@attach config.changeOnScroll ? node => watchColumnScroll(node, 'meridiem') : undefined}
+        onscroll={event => handleColumnScroll(event.currentTarget)}>
         {#each [0, 12] as hour}
           {@const unavailable = timePickerOptions(24, config.hourStep, restrictions.disabledHours?.())
             .every(option => option.disabled || (option.value < 12) !== (hour === 0))}

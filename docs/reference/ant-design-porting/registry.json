@@ -7116,6 +7116,9 @@
           "state": "supported",
           "requiredForV1": false,
           "evidence": [
+            "src/lib/DatePicker.svelte",
+            "src/lib/RangePicker.svelte",
+            "src/lib/time-picker-props.engine.ts",
             "src/lib/time-picker.engine.ts",
             "src/lib/SinglePicker.svelte",
             "src/lib/RangePickerCore.svelte",
@@ -7123,11 +7126,26 @@
             "src/lib/datetime-config.engine.test.ts",
             "tests/browser/fixtures/DatetimeConfigFixtures.svelte",
             "tests/browser/fixtures/ant-design-datetime-config-reference.json",
+            "tests/browser/fixtures/ant-design-picker-clock-options-reference.json",
             "tests/browser/datetime-config-metrics.ts",
             "tests/browser/datetime-config.spec.ts",
+            "tests/browser/picker-clock-options.spec.ts",
             "tests/package/datetime-config.ssr.test.ts"
           ],
-          "note": "ShowTime.format → первый элемент picker.format, если это строка → locale datetime format; явные show flags и use12Hours имеют приоритет. Date-only baseline восстанавливает часы/минуты/секунды, SSS включает millisecond column, одиночный S — нет. Общая чистая нормализация single/range сохраняет исходные input formats, defaultOpenValue, disabled callbacks и steps. 40 raw UMD-измерений покрывают оба режима; подтверждение AM/PM сохраняет UTC, даты и исходное выравнивание точности. Literal observation выделен отдельно."
+          "note": "ShowTime.format → первый элемент picker.format, если это строка → locale datetime format; явные show flags и use12Hours имеют приоритет. Date-only baseline восстанавливает часы/минуты/секунды, SSS включает millisecond column, одиночный S — нет. 40 UMD-измерений покрывают оба режима; подтверждение AM/PM сохраняет UTC, даты и исходную точность. Два совпавших прогона официального UMD 6.6.8 в UTC охватывают 14 профилей с top-level и вложенными настройками. Сверены колонки, формат поля, ограничения, скрытые шаги, шаблоны каждой границы и выбор при прокрутке у DatePicker и RangePicker, включая picker=time у диапазона. Одиночный defaultOpenValue в календарном диапазоне сохраняет нулевое время обеих границ, как в Source."
+        },
+        {
+          "id": "datetime-confirm-order",
+          "title": "Порядок событий OK в календаре со временем",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "tests/browser/fixtures/ant-design-picker-clock-options-reference.json",
+            "tests/browser/picker-clock-options.spec.ts"
+          ],
+          "note": "В Ant Design 6.6.8 в обычном datetime второе подтверждение диапазона и подтверждение одиночного поля сообщают onOk перед onChange и onOpenChange(false). В Native одиночное поле вызывает onOk после onChange, диапазон — после onChange и закрытия. Порядок событий в picker=time совпадает с Source."
         },
         {
           "id": "datetime-format-literals",

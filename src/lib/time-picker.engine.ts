@@ -74,7 +74,7 @@ export function timePickerLang<DateType extends object = Dayjs>(
 
 // Определяет видимость колонок из формата, пока её не задают явные show-флаги.
 export function timePickerClock<DateType extends object = Dayjs>(
-  props: Pick<TimePickerProps<'time', DateType>, keyof DatePickerTimeConfig | 'changeOnScroll'>,
+  props: Pick<TimePickerProps<'time', DateType>, Exclude<keyof DatePickerTimeConfig, 'disabledTime'>>,
   locale: NonNullable<TimePickerProps['locale']>['lang'] = {}
 ): DatePickerTimeConfig<DateType> {
   const formats = timePickerFormats(props, locale);

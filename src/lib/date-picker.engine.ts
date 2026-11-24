@@ -78,7 +78,9 @@ export function pickerFormats<DateType extends object = Dayjs>(
 
 // Разрешает явные флаги столбцов до разбора формата без экранированных литералов. Нормализует
 // шаги видимых колонок.
-export function timeColumns(config: Omit<DatePickerTimeConfig, 'defaultOpenValue'>, format: string) {
+export function timeColumns(
+  config: Omit<DatePickerTimeConfig, 'defaultOpenValue' | 'disabledTime'>, format: string
+) {
   const explicit = [
     config.showHour,
     config.showMinute,

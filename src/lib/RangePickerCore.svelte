@@ -64,6 +64,8 @@
     parseTimeInput,
     time,
     dateProps,
+    rootTimeProps,
+    clockFormat,
     value,
     defaultValue,
     disabled,
@@ -134,6 +136,8 @@
     parseTimeInput?: TimeRangeInputParser<DateType>;
     time?: TimeRangePickerRuntimeProps<DateType>;
     dateProps?: RangePickerProps<DateType>;
+    rootTimeProps?: TimeRangePickerRuntimeProps<DateType>;
+    clockFormat?: string;
   } = $props();
   const dates = untrack(() => dateOperations);
   const { generateConfig: adapter, fields } = dates;
@@ -186,16 +190,13 @@
   let lang = $derived(
     { ...datePickerEnUS.lang, ...config.locale.datePicker?.lang, ...locale?.lang }
   );
-  let formatConfig = $derived(
-    {
-      format,
-      picker,
-      showTime: typeof showTime === 'object'
-        ? { ...showTime, defaultOpenValue: undefined }
-        : showTime
-    }
-  );
-  let formats = $derived(time ? timePickerFormats(time, lang) : pickerFormats(formatConfig, lang));
+  let clockSettings = $derived.by(() => {
+    const config = typeof showTime === 'object' ? showTime : {};
+    const { defaultOpenValue, disabledTime, ...options } = config;
+    return { options, templates: defaultOpenValue };
+  });
+  let formats = $derived(time ? timePickerFormats(time, lang)
+    : pickerFormats({ format, picker, showTime: showTime && clockSettings.options }, lang));
   let maskFormat = $derived(normalizePickerFieldFormat<DateType>(time ? time.format : format, '').mask);
   let readOnly = $derived(
     time && typeof formats[0] === 'function'
@@ -251,12 +252,14 @@
   });
   let clock = $derived.by((): DatePickerTimeConfig<DateType> => {
     if (time) {
-      return timeRangeClock(time, lang, active);
+      const options = clockFormat === undefined ? time : { ...time, format: clockFormat };
+      return timeRangeClock(options, lang, active);
     }
-    const raw = typeof showTime === 'object' ? showTime : {};
+
+    const { options, templates } = clockSettings;
     return datePickerClock({
       format,
-      showTime: { ...raw, defaultOpenValue: raw.defaultOpenValue?.[active] }
+      showTime: { ...options, defaultOpenValue: templates?.[active] }
     }, lang);
   });
   let timeFormat = $derived(
@@ -358,10 +361,12 @@
     const props = { ...dateProps, size: resolvedSize, disabled: semanticDisabled, status, variant };
     return datePickerSemantic(props, settings, classNames, styles, providerStyle);
   });
-  let semantic = $derived(time ? timeRangeSemantic(time, config.timePicker, config.rangePicker, {
-    size: resolvedSize,
-    disabled: semanticDisabled
-  }) : dateSemantic);
+  let semantic = $derived(time
+    ? timeRangeSemantic(rootTimeProps ?? time, config.timePicker, config.rangePicker, {
+      size: resolvedSize,
+      disabled: semanticDisabled
+    })
+    : dateSemantic);
   let timeLocale = $derived(time ? timePickerLang(time, lang) : undefined);
   let timePlaceholder = $derived.by(() => {
     if (!time) {
@@ -737,13 +742,10 @@
     )) {
       return true;
     }
-    const config = typeof showTime === 'object'
-      ? { ...showTime, defaultOpenValue: undefined }
-      : showTime;
     return pickerTimeDisabled(
       date,
       {
-        showTime: config,
+        showTime: Boolean(showTime),
         disabledTime: next => disabledTime?.(
           next,
           index === 1 ? 'end' : 'start',
@@ -1223,7 +1225,6 @@
 
   function replacementContext(offset: number): Omit<DatePickerPanelContext<DateType>, 'cellRender'> {
     const selected = calendar[active] ?? (time ? clock.defaultOpenValue : undefined);
-    const configuredTime = typeof showTime === 'object' ? showTime : undefined;
     return {
       mode: replacementMode,
       range: cellRange,
@@ -1235,9 +1236,9 @@
       values: selected ? [selected] : [],
       ...replacementHover(),
       showTime: showTime ? pickerPanelClock(clock, {
-        defaultOpenValue: time ? time.defaultOpenValue : configuredTime?.defaultOpenValue,
+        defaultOpenValue: time ? time.defaultOpenValue : clockSettings.templates,
         disabledTime: (time ? time.disabledTime : disabledTime) ? timeRestriction : undefined,
-        changeOnScroll: time?.changeOnScroll, showNow
+        changeOnScroll: clock.changeOnScroll, showNow: clock.showNow
       }) : null,
       showWeek,
       minDate,

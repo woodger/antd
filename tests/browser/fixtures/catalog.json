@@ -1598,6 +1598,11 @@
     "root": "datetime-config-fixture"
   },
   {
+    "id": "picker-clock-options",
+    "module": "./PickerClockOptionsFixtures.svelte",
+    "root": "picker-clock-options-fixture"
+  },
+  {
     "id": "color-picker-theme",
     "module": "./ColorPickerThemeFixtures.svelte",
     "root": "color-picker-theme-fixture"

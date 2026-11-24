@@ -16,19 +16,17 @@ import type {
 import type { GenerateConfig } from './date-generate.types';
 import type { RangePickerProps } from './range-picker.types';
 import type { TimeRangeInputParser } from './time-range-picker.engine';
-import type { TimeRangePickerProps } from './time-range-picker.types';
+import type { TimeRangePickerModeOptions, TimeRangePickerProps } from './time-range-picker.types';
 
 type DatePickerHandle = ReturnType<typeof DatePickerRoot>;
 type RangePickerHandle = ReturnType<typeof RangePickerRoot>;
 type RangePickerBindings = 'nativeElement' | 'startInput' | 'endInput';
-interface TimeRangeModeProps<DateType extends object> extends TimeRangePickerProps<'time', DateType> {
-  picker: 'time';
-}
+type TimeRangeModeProps<DateType extends object> = TimeRangePickerProps<'time', DateType>
+  & TimeRangePickerModeOptions<DateType>;
 
 interface CustomTimeRangeModeProps<DateType extends object> extends
-  Omit<TimeRangePickerProps<DatePickerMode, DateType>, 'components'>, TimePanelOptions<DateType> {
-  picker: 'time';
-}
+  Omit<TimeRangePickerProps<DatePickerMode, DateType>, 'components'>, TimePanelOptions<DateType>,
+  TimeRangePickerModeOptions<DateType> {}
 
 /** Общий вызов RangePicker принимает настройки календаря либо режима времени. */
 interface RangePickerComponent<DateType extends object> {

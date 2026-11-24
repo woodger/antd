@@ -66,9 +66,9 @@ export function parseTimeRangeInput(
 export function timeRangeClock<DateType extends object = Dayjs>(
   props: TimeRangePickerProps<'time', DateType>, locale: PickerLocale, index: number
 ) {
-  const defaults = Array.isArray(props.defaultOpenValue)
-    ? props.defaultOpenValue : [props.defaultOpenValue];
-  return timePickerClock({ ...props, defaultOpenValue: defaults[index] }, locale);
+  const { disabledTime: _disabledTime, defaultOpenValue, ...clock } = props;
+  const defaults = Array.isArray(defaultOpenValue) ? defaultOpenValue : [defaultOpenValue];
+  return timePickerClock({ ...clock, defaultOpenValue: defaults[index] }, locale);
 }
 
 /** Сверяет пару временных значений с правилами владельца и адаптера. */
