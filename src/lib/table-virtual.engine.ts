@@ -18,12 +18,13 @@ export function tableVirtualRowHeight(token: AliasToken, size: ComponentSize) {
   return Math.max(1, padding * 2 + fontHeight + token.lineWidth);
 }
 
-/** Проценты считаются от scroll.x, а ширина заполняет также более широкий viewport. */
+/** После распределения ширины применяет минимумы к общей сетке шапки и тела. */
 export function tableVirtualColumns(
   widths: readonly (number | string | undefined)[],
   scrollWidth: number,
   clientWidth: number,
-  cellPadding: number
+  cellPadding: number,
+  minWidths: readonly (number | undefined)[]
 ) {
   const target = Math.max(scrollWidth, clientWidth);
   const declared = widths.map(width => {
@@ -58,8 +59,11 @@ export function tableVirtualColumns(
     }
   }
 
-  // В Source padding div-ячейки задаёт нижнюю границу внешней ширины.
-  const boxed = filled.map(width => Math.max(width, cellPadding));
+  // В Source padding div-ячейки и minWidth задают нижнюю границу внешней ширины.
+  const boxed = filled.map((width, index) => {
+    const minimum = tableVirtualDimension(minWidths[index], 0);
+    return Math.max(width, cellPadding, minimum);
+  });
   const boxedTotal = boxed.reduce((sum, width) => sum + width, 0);
   return { widths: boxed, width: Math.max(target, boxedTotal) };
 }

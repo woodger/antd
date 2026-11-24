@@ -53,6 +53,7 @@ function alignTableRow(
 export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(options: {
   rows: () => readonly Entry[];
   widths: () => readonly (string | number | undefined)[];
+  minWidths: () => readonly (number | undefined)[];
   estimate: () => number;
   cellPadding: () => number;
   virtual: () => boolean;
@@ -72,7 +73,8 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
   let lastTop = 0;
   let cancelAnimation: (() => void) | undefined;
   const scroll = $derived(options.scroll());
-  const active = $derived(options.virtual() && scroll?.y !== undefined && options.rows().length > 0);
+  const virtualLayout = $derived(options.virtual() && scroll?.y !== undefined);
+  const active = $derived(virtualLayout && options.rows().length > 0);
   const summary = $derived(options.summary());
   const fixedSummary = $derived(summary === 'top' || summary === 'bottom');
   const scrollWidth = $derived(tableVirtualDimension(scroll?.x, 1));
@@ -94,8 +96,10 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     return typeof bodyHeight === 'number' ? bodyHeight + reserved
       : `calc(${bodyHeight} + ${reserved}px)`;
   });
-  const layout = $derived(active
-    ? tableVirtualColumns(options.widths(), scrollWidth, width, options.cellPadding()) : undefined);
+  const layout = $derived(virtualLayout ? tableVirtualColumns(
+    options.widths(), scrollWidth, width, active ? options.cellPadding() : 0,
+    active ? options.minWidths() : []
+  ) : undefined);
   const list = createVirtualList<Entry, TableKey>({
     rows: options.rows,
     getKey: entry => entry.row.key,

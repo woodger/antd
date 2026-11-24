@@ -19917,6 +19917,26 @@
           "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона девяти профилей дают 33 состояния, renderToString даёт девять серверных структур. Дерево children строит шапку с colspan, rowspan и scope и задаёт порядок листьев. Служебные ячейки шапки занимают все уровни. Hidden убирает поддерево. Видимая группа без видимых детей остаётся колонкой. Скрытые определения сохраняют участие в sort/filter. Responsive применяется на верхнем уровне, пустой список скрывает колонку. Используются пороги Grid и подписка после SSR. Лист наследует fixed, явный false отключает наследование. Заголовок группы использует крайние листья для своей стороны и offset. Native сохраняет один table, измеряет листовые ширины и высоты уровней, а виртуализация сохраняет окно строк и scrollTo. Геометрия шапки и тела сравнивается с точностью до целого пикселя. Browser и строгая hydration проверяют фокус, выделение и identity редактора при обновлении видимости."
         },
         {
+          "id": "column-layout",
+          "title": "Вложенные значения, алгоритм ширин и обрезка колонок",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table.types.ts",
+            "src/lib/table-cell.engine.ts",
+            "src/lib/table-layout.engine.ts",
+            "src/lib/table-virtual.engine.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-column-layout-reference.json",
+            "tests/browser/table-column-layout.spec.ts",
+            "tests/browser/table-column-layout-hydration.spec.ts",
+            "tests/package/table-column-layout.ssr.test.ts",
+            "tests/package/table-column-layout.types.ts"
+          ],
+          "note": "Ant Design 6.6.8, rc-table 1.11.1. Два одинаковых UMD-прогона 16 профилей дают 20 состояний и 16 снимков SSR. Вложенный dataIndex читает поля и индексы, строка остаётся буквальным ключом. render сохраняет record/index и получает исходное value. Native сохраняет текстовый вывод false и буквальный пустой ключ. Проверены auto/fixed, max-content, sticky, пустые и headerless таблицы, align в RTL, ellipsis и title. В Source virtual minWidth=316 даёт заголовок 120 px и ячейку 316 px. Native применяет минимум в общей фиксированной сетке шапки и тела. Строгая гидратация и смена layout сохраняют редактор, выделение и фокус."
+        },
+        {
           "id": "cell-spans",
           "title": "Атрибуты и объединение ячеек Table",
           "state": "supported",

@@ -1778,6 +1778,11 @@
     "root": "table-row-attributes-fixture"
   },
   {
+    "id": "table-column-layout",
+    "module": "./TableColumnLayoutFixture.svelte",
+    "root": "table-column-layout-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"

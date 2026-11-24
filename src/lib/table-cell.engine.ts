@@ -1,6 +1,52 @@
-// Сохраняет порядок атрибутов ячейки и определяет строки, нужные для spans
+// Читает значения и атрибуты ячеек и определяет строки, нужные для spans
 // вокруг виртуального окна. Невидимые начала объединённых ячеек измеряет viewport.
-import type { TableCellProps, TableColumn } from './table.types';
+import type { TableCellProps, TableColumn, TableDataIndex } from './table.types';
+
+/** Распознаёт также readonly путь из определения колонки. */
+function isDataPath(index: PropertyKey | readonly (string | number)[]): index is
+  readonly (string | number)[] {
+  return Array.isArray(index);
+}
+
+/** Читает буквальный ключ или путь, оставляя значение для render до форматирования. */
+export function readTableCellValue<Row extends object>(
+  record: Row, dataIndex: TableDataIndex<Row> | undefined
+): unknown {
+  if (dataIndex === undefined) {
+    return record;
+  }
+  if (!isDataPath(dataIndex)) {
+    return record[dataIndex];
+  }
+
+  let value: unknown = record;
+  for (const segment of dataIndex) {
+    if (value === null || value === undefined) {
+      return undefined;
+    }
+    value = Reflect.get(Object(value), segment);
+  }
+  return value;
+}
+
+/** Нативный title выводится из строки или числа. У snippet свой title через onCell. */
+export function resolveTableCellDisplay<Row extends object>(record: Row, column: TableColumn<Row>) {
+  const { dataIndex, render, ellipsis } = column;
+  if (render || dataIndex === undefined || (isDataPath(dataIndex) && !dataIndex.length)) {
+    return undefined;
+  }
+
+  const value = readTableCellValue(record, dataIndex);
+  if (value === null || value === undefined) {
+    return undefined;
+  }
+
+  const text = String(value);
+  const showTitle = ellipsis === true || (ellipsis && ellipsis.showTitle);
+  const title = showTitle && (typeof value === 'string' || typeof value === 'number')
+    ? text : undefined;
+  return { text, title };
+}
 
 /** Отделяет параметры размещения от DOM attributes и обработчиков владельца. */
 export function resolveTableCell(properties?: TableCellProps | void, col = 1, row = 1) {

@@ -14,9 +14,12 @@
     getTableColumnLayout, getTableColumnOrder, type TableHeading, type TableLeaf,
     type TableServiceColumn
   } from './table-columns.engine';
-  import { resolveTableCell, resolveTableVirtualCells, type TableCell, type TableMergedRow }
-    from './table-cell.engine';
+  import {
+    readTableCellValue, resolveTableCell, resolveTableCellDisplay, resolveTableVirtualCells,
+    type TableCell, type TableMergedRow
+  } from './table-cell.engine';
   import { observeTableLayout } from './table-layout.dom';
+  import { getTableLayout } from './table-layout.engine';
   import { createTableSelection } from './table-selection.model.svelte';
   import { observeTableSticky, type TableStickyBarLayout } from './table-sticky.dom';
   import { provideTableSummary, type TableFixedCell } from './table-summary-context';
@@ -91,6 +94,7 @@
     dropdownPrefixCls,
     empty,
     scroll,
+    tableLayout,
     sticky,
     virtual = false,
     onScroll,
@@ -273,6 +277,7 @@
   const scrollport = createTableViewport({
     rows: () => visibleRows,
     widths: () => columnWidths,
+    minWidths: () => leaves.map(({ column }) => column.minWidth),
     estimate: () => tableVirtualRowHeight(designTheme.state.token, resolvedSize),
     cellPadding: () => {
       const token = designTheme.state.token;
@@ -289,6 +294,24 @@
     caption: () => Boolean(caption),
     summary: () => summaryPlacement,
     rtl: () => config.direction === 'rtl'
+  });
+  const resolvedLayout = $derived.by(() => {
+    if (scrollport.active) {
+      // Шапка и виртуальные строки используют уже вычисленные общие ширины.
+      return 'fixed';
+    }
+
+    const x = scroll?.x;
+    const pinned = fixedColumns.some(Boolean);
+    if (virtual && scroll?.y === undefined && pinned && tableLayout === undefined) {
+      // Без окна строк фиксированная раскладка сохраняет ширины закреплённых колонок.
+      return 'fixed';
+    }
+
+    const horizontal = x !== undefined || Boolean(expandable?.fixed);
+    const fixed = horizontal && pinned;
+    const ellipsis = leaves.some(({ column }) => Boolean(column.ellipsis));
+    return getTableLayout(tableLayout, x, fixed, pinHeader, ellipsis);
   });
 
   let cellPlan = $derived.by(() => {
@@ -444,6 +467,16 @@
     }
 
     return first.side === 'start' ? first : last;
+  }
+
+  function isFixedBoundary(index: number, span: number): boolean {
+    const side = fixedSpan(index, span)?.side;
+    if (!side) {
+      return false;
+    }
+
+    const neighbor = side === 'start' ? index + span : index - 1;
+    return fixedCells[neighbor]?.side !== side;
   }
 
   function handleScroll(event: Event & { currentTarget: HTMLDivElement; }) {
@@ -675,12 +708,6 @@
     };
   }
 
-  function cellValue(record: Row, key: keyof Row | undefined): string {
-    const value = key === undefined ? undefined : record[key];
-
-    return value === null || value === undefined ? '' : String(value);
-  }
-
   function serviceCellClass(service: TableServiceColumn): string {
     return service === 'selection' ? `${prefix}-selection-column`
       : `${prefix}-row-expand-icon-cell`;
@@ -784,6 +811,13 @@
   .sort-button::after { content: none; }
   .column-heading { display: flex; align-items: center; gap: var(--ant-margin-xxs); }
   .column-heading > :first-child { flex: 1; }
+  .column-heading-ellipsis > :first-child { min-width: 0; }
+  .table-ellipsis-content {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .sort-arrow { display: block; width: 0; height: 0; border-inline: 4px solid transparent; }
   .sort-arrow.active { color: var(--ant-color-primary); }
   .sort-up { margin-bottom: 2px; border-bottom: 5px solid currentColor; }
@@ -845,6 +879,7 @@
   {#if props.colSpan !== 0 && props.rowSpan !== 0}
     <th
       {...props.attributes}
+      title={props.attributes.title ?? (column.ellipsis ? column.title : undefined)}
       data-ant-table-part="cell"
       data-ant-table-leaf={headerCount > 1 && !cell.group ? cell.leaf : undefined}
       data-ant-table-sortable={sortable || undefined}
@@ -855,6 +890,7 @@
       class={[
         `${prefix}-cell`,
         column.className,
+        column.ellipsis && `${prefix}-cell-ellipsis`,
         fixed?.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
         sortable && `${prefix}-column-has-sorters`,
         order && `${prefix}-column-sort`,
@@ -863,7 +899,7 @@
       style={cellStyle(fixed, 3, column.align ?? (props.colSpan > 1 ? 'center' : undefined), props.style)}
       aria-sort={order === 'ascend' ? 'ascending' : order === 'descend' ? 'descending' : undefined}
     >
-      <div class="column-heading">
+      <div class="column-heading" class:column-heading-ellipsis={Boolean(column.ellipsis)}>
         {#if sortable}
           <button type="button" class={`sort-button ${prefix}-column-sorters`} disabled={resolvedDisabled} title={sortDescription(column.key, tableData.sorter)} onclick={() => changeSort(column.key)}>
             <span class={`${prefix}-column-title`}>{column.title}</span>
@@ -881,7 +917,7 @@
                   order === 'descend' && 'active'
                 ]}></span>{/if}</span></span>
           </button>
-        {:else}<span>{column.title}</span>{/if}
+        {:else}<span class={column.ellipsis ? `${prefix}-column-title` : undefined}>{column.title}</span>{/if}
         {#if column.filters && (mode === 'server' || column.onFilter)}
           <TableFilter prefixCls={prefix} {dropdownPrefix} title={column.title} options={column.filters} value={Object.hasOwn(tableData.filters, column.key)
               ? tableData.filters[column.key]
@@ -895,22 +931,29 @@
 {#snippet bodyCell(
   leaf: TableLeaf<Row>,
   columnIndex: number,
-  key: TableKey,
+  entry: TableRowEntry,
   index: number,
   cell: TableCell,
-  body: Snippet,
+  canExpand: boolean,
+  expanded: boolean,
   overlay?: { width: number; height: number; gap: number; }
 )}
+  {@const key = entry.row.key}
   {@const { column, service } = leaf}
   {@const fixed = fixedCells[columnIndex]}
   {@const sorted = !service && tableData.sorter?.columnKey === column.key}
+  {@const display = service ? undefined : resolveTableCellDisplay(entry.row.record, column)}
+  {@const wrapText = Boolean(column.ellipsis) && !column.render
+    && isFixedBoundary(columnIndex, cell.colSpan)}
   {@const attributes = {
     ...cell.attributes,
     ...cellHoverEvents(cell, key, columnIndex, index),
     'data-ant-table-part': 'cell',
     'data-ant-table-sorted': sorted || undefined,
+    title: cell.attributes.title ?? display?.title,
     class: [
       `${prefix}-cell`, service ? serviceCellClass(service) : column.className,
+      column.ellipsis && `${prefix}-cell-ellipsis`,
       fixed.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
       sorted && `${prefix}-column-sort`,
       inHoveredRows(index, index + Math.max(1, cell.rowSpan) - 1) && `${prefix}-cell-row-hover`,
@@ -920,6 +963,9 @@
     colspan: cell.colSpan !== 1 ? cell.colSpan : undefined,
     rowspan: cell.rowSpan !== 1 ? cell.rowSpan : undefined
   }}
+  {#snippet body()}
+    {@render bodyContent(leaf, columnIndex, entry, canExpand, expanded, display?.text, wrapText)}
+  {/snippet}
   <!-- Нативные th и td сохраняют редактор при гидратации Svelte 5.57. -->
   {#if column.rowScope}
     <th {...attributes} scope={column.rowScope}
@@ -938,7 +984,7 @@
 
 {#snippet bodyContent(
   leaf: TableLeaf<Row>, columnIndex: number, entry: TableRowEntry,
-  canExpand: boolean, expanded: boolean
+  canExpand: boolean, expanded: boolean, text: string | undefined, wrapText: boolean
 )}
   {@const { row, depth, index } = entry}
   {#if showTreeControls && columnIndex === treeControlColumn}
@@ -965,7 +1011,9 @@
     {/if}
   {:else if leaf.service === 'expand'}
     {@render expansionControl(row, canExpand, expanded)}
-  {:else if leaf.column.render}{@render leaf.column.render(row.record, index)}{:else}{cellValue(row.record, leaf.column.dataIndex)}{/if}
+  {:else if leaf.column.render}{@render leaf.column.render(
+    row.record, index, readTableCellValue(row.record, leaf.column.dataIndex)
+  )}{:else if wrapText}<span class={`${prefix}-cell-content table-ellipsis-content`}>{text ?? ''}</span>{:else}{text ?? ''}{/if}
 {/snippet}
 
 {#snippet virtualSpacer(height: number)}
@@ -1045,6 +1093,7 @@
       `${prefix}`,
       `${prefix}-${resolvedSize}`,
       bordered && `${prefix}-bordered`,
+      tableLayout === 'fixed' && `${prefix}-layout-fixed`,
       showHeader === false && !title && `${prefix}-no-header`,
       !visibleRows.length && `${prefix}-empty`
     ]}>
@@ -1083,8 +1132,7 @@
             ? visibleRows.length + headerCount : undefined}
           style:min-width={virtual ? '100%' : cssSize(scroll?.x)}
           style:width={cssSize(scrollport.tableWidth)}
-          style:table-layout={virtual && (scroll?.y !== undefined || fixedColumns.some(Boolean))
-            ? 'fixed' : undefined}
+          style:table-layout={resolvedLayout}
         >
           {#if caption}<caption>{caption}</caption>{/if}
           {#if leaves.length}<colgroup>
@@ -1098,7 +1146,9 @@
                 <col class={designTheme.enabled ? `${prefix}-expand-icon-col` : undefined}
                   style:width={columnWidth(columnIndex)} />
               {:else}
-                <col style:width={columnWidth(columnIndex)} />
+                <col style:width={columnWidth(columnIndex)}
+                  style:min-width={resolvedLayout === 'auto' ? cssSize(leaf.column.minWidth)
+                    : undefined} />
               {/if}
             {/each}
           </colgroup>{/if}
@@ -1161,9 +1211,6 @@
                 {#each leaves as leaf, columnIndex (leaf.key)}
                   {@const cell = bodyCellProps(leaf.column, row.record, index, columnIndex)}
                   {@const placeholder = cellPlan?.placeholders.get(index)?.[columnIndex]}
-                  {#snippet cellContent()}
-                    {@render bodyContent(leaf, columnIndex, entry, canExpand, expanded)}
-                  {/snippet}
                   {#if placeholder !== undefined}
                     {#if placeholder > 0}
                       <!-- Ширина остаётся в сетке, содержимое находится в строке span. -->
@@ -1172,7 +1219,7 @@
                         style:visibility="hidden"></td>
                     {/if}
                   {:else if cell.colSpan !== 0 && cell.rowSpan !== 0}
-                    {@render bodyCell(leaf, columnIndex, row.key, index, cell, cellContent)}
+                    {@render bodyCell(leaf, columnIndex, entry, index, cell, canExpand, expanded)}
                   {/if}
                 {:else}
                   <td data-ant-table-part="cell" class={`${prefix}-cell`}>
@@ -1231,11 +1278,8 @@
               >
                 {#each parts as part (part.columnIndex)}
                   {@const leaf = leaves[part.columnIndex]}
-                  {#snippet spanContent()}
-                    {@render bodyContent(leaf, part.columnIndex, entry, canExpand, expanded)}
-                  {/snippet}
                   {@render bodyCell(
-                    leaf, part.columnIndex, row.key, sourceIndex, part.cell, spanContent, part
+                    leaf, part.columnIndex, entry, sourceIndex, part.cell, canExpand, expanded, part
                   )}
                 {/each}
               </tr>

@@ -11,6 +11,9 @@ export type TableRowKey<Row extends object> = keyof Row | ((record: Row) => Tabl
 export type TableSortOrder = 'ascend' | 'descend';
 export type TableMode = 'client' | 'server';
 export type TableFixed = boolean | 'start' | 'end';
+export type TableLayout = 'auto' | 'fixed';
+export type TableAlign = 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent';
+export type TableDataIndex<Row extends object> = keyof Row | readonly (string | number)[];
 export type TableFilterValue = TableKey | boolean;
 export type TableFilters = Record<string, TableFilterValue[]>;
 
@@ -37,14 +40,20 @@ export type TableRowProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'
 export interface TableColumn<Row extends object> {
   key: string;
   title: string;
-  dataIndex?: keyof Row;
-  /** Index относится к соседним записям текущей страницы или ветки. */
-  render?: Snippet<[record: Row, index: number]>;
+  /** Строка обозначает буквальный ключ. Массив задаёт путь, включая индексы массивов. */
+  dataIndex?: TableDataIndex<Row>;
+  /**
+   * Index относится к соседним записям. Table передаёт исходное значение третьим
+   * аргументом. Snippet можно вызвать и с двумя аргументами.
+   */
+  render?: Snippet<[record: Row, index: number, value?: unknown]>;
   sorter?: true | ((left: Row, right: Row) => number);
   filters?: readonly TableFilterOption[];
   onFilter?: (value: TableFilterValue, record: Row) => boolean;
   filterMultiple?: boolean;
-  align?: 'left' | 'center' | 'right';
+  align?: TableAlign;
+  /** Обрезает строку. True включает нативный title для строк и чисел. */
+  ellipsis?: boolean | { showTitle?: boolean; };
   /** Дополняет классы заголовка и каждой ячейки данных этой колонки. */
   className?: string;
   /** Ячейки данных этой колонки становятся th с указанным scope. */
@@ -64,6 +73,8 @@ export interface TableColumn<Row extends object> {
   /** Ограничивает видимость колонки верхнего уровня активными breakpoint Grid. */
   responsive?: readonly GridBreakpoint[];
   width?: number | string;
+  /** Минимальная ширина в px при auto или для ширины виртуальной ячейки. */
+  minWidth?: number;
   /** Лист наследует закрепление группы. False явно отключает наследование. */
   fixed?: TableFixed;
 }
@@ -217,7 +228,7 @@ export type TableSummaryRowProps = HTMLAttributes<HTMLTableRowElement>;
 export interface TableSummaryCellProps extends Omit<TableCellProps, 'align'> {
   /** Индекс видимой колонки с учётом колонок выделения и раскрытия. */
   index: number;
-  align?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent';
+  align?: TableAlign;
   children?: Snippet;
 }
 
@@ -312,6 +323,8 @@ export interface TableProps<Row extends object> {
   caption?: string;
   empty?: Snippet;
   scroll?: TableScrollOptions;
+  /** Задаёт алгоритм ширин обычной таблицы. Виртуальное окно использует общую сетку. */
+  tableLayout?: TableLayout;
   sticky?: boolean | TableSticky;
   /** Ограничивает число строк в DOM при заданном scroll.y. @defaultValue false */
   virtual?: boolean;
