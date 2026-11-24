@@ -24,6 +24,7 @@
   import { useVariant } from './variant.svelte';
   import { useComponentTheme } from './theme-component.svelte';
   import { connectComponentTheme } from './theme-component.dom';
+  import { createOverlayStyle } from './overlay-style.model.svelte';
   import { useForm, useFormField } from './form-context';
   import { useFormItemStatusContext } from './form-item-status';
   import { useFormFeedback } from './form-feedback-context';
@@ -52,9 +53,11 @@
     timePickerValidTime
   } from './time-picker.engine';
   import { timePickerSemantic } from './time-picker-semantic.engine';
+  import { datePickerSemantic } from './date-picker-semantic.engine';
   import type { TimePickerProps, TimePickerPreset } from './time-picker.types';
   let {
     time,
+    dateProps,
     value,
     defaultValue,
     showTime: providedShowTime = false,
@@ -70,7 +73,7 @@
     minDate,
     maxDate,
     needConfirm,
-    allowClear = true,
+    allowClear,
     inputReadOnly,
     preserveInvalidOnBlur = false,
     showNow = true,
@@ -78,6 +81,7 @@
     previewValue = 'hover',
     size,
     status,
+    prefix: prefixContent,
     suffixIcon,
     variant,
     locale,
@@ -102,11 +106,12 @@
     rootClassName = '',
     prefixCls,
     classNames,
+    styles,
     getPopupContainer,
     style,
     nativeElement = $bindable(),
     ...attributes
-  }: DatePickerProps & { time?: TimePickerProps; } = $props();
+  }: DatePickerProps & { time?: TimePickerProps; dateProps?: DatePickerProps; } = $props();
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('picker', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
@@ -224,19 +229,35 @@
   const dateTimeScroll: DatePickerTimeScrollMemory = new Map();
   let dateTimePanel = $state<{ captureScroll: () => void }>();
   let actualVariant = $derived(time ? timeVariant.variant : dateVariant.variant);
+  let dateSemantic = $derived.by(() => {
+    const settings = config.datePicker;
+    const providerStyle = settings?.style;
+    if (!dateProps || !(settings?.classNames || settings?.styles
+      || classNames || styles || providerStyle)) {
+      return undefined;
+    }
+
+    // Исходные props приходят из публичной обёртки. Core сохраняет receiver своих callbacks.
+    const props = { ...dateProps, size: resolvedSize, disabled: blocked, status, variant };
+    return datePickerSemantic(props, settings, classNames, styles, providerStyle);
+  });
   let semantic = $derived(time ? timePickerSemantic(time, config.timePicker, {
     variant: actualVariant,
     size: resolvedSize,
     disabled: blocked
-  }) : undefined);
-  let timeAllowClear = $derived(time?.allowClear ?? config.timePicker?.allowClear ?? true);
+  }) : dateSemantic);
+  let localClearConfig = $derived(time ? time.allowClear : allowClear);
+  let providerClearConfig = $derived(time ? config.timePicker?.allowClear : config.datePicker?.allowClear);
+  let clearEnabled = $derived(localClearConfig ?? providerClearConfig ?? true);
   let clearContent = $derived.by(() => {
-    const local = typeof time?.allowClear === 'object'
-      ? time.allowClear.clearIcon : undefined;
-    const context = typeof config.timePicker?.allowClear === 'object'
-      ? config.timePicker.allowClear.clearIcon : undefined;
+    const local = typeof localClearConfig === 'object' ? localClearConfig?.clearIcon : undefined;
+    const context = typeof providerClearConfig === 'object'
+      ? providerClearConfig?.clearIcon : undefined;
     return local !== undefined ? local : context;
   });
+  let leadingContent = $derived(time ? time.prefix : prefixContent);
+  let showLeadingContent = $derived(leadingContent != null && leadingContent !== ''
+    && leadingContent !== false && (!time || leadingContent !== true));
   let suffixContent = $derived(time
     ? time.suffixIcon === undefined ? config.timePicker?.suffixIcon : time.suffixIcon
     : suffixIcon !== undefined ? suffixIcon : config.datePicker?.suffixIcon);
@@ -316,6 +337,15 @@
   const popupThemeStyle = $derived(
     [componentTheme.style, semantic?.styles.popup.root].filter(Boolean).join(';') || undefined
   );
+  const datePopupStyle = untrack(() =>
+    time ? undefined : createOverlayStyle(() => [popupThemeStyle]));
+
+  // Авторские декларации следуют после координат и обновляются на той же панели.
+  function attachPopupStyle(node: HTMLElement) {
+    return datePopupStyle
+      ? datePopupStyle.attach(node) : connectComponentTheme(node, popupThemeStyle);
+  }
+
   const container = createPickerPopup(() => ({
     open: visible,
     reference: rootElement,
@@ -428,6 +458,8 @@
       autoAdjustOverflow: true,
       maxWidth: '100vw',
       gap: 4,
+      applyPosition: datePopupStyle
+        ? position => untrack(() => datePopupStyle.position(position)) : undefined,
       getPosition: (reference, bounds, viewport) => getPickerPopupPosition(
         reference,
         bounds,
@@ -980,10 +1012,51 @@
         <div class={showTime && mode === 'date'
             ? `${prefix}-datetime-panel`
             : undefined}>
-          <DatePickerCalendar {picker} {showWeek} prefixCls={prefix} {panel} timeTemplate={clock.defaultOpenValue} selected={draft} hovered={hoverValue ?? draft} onHover={handleDateCellHover} preserveDisabledHover direction={config.direction} {mode} locale={panelLocale} {cellRender} {restrictions} {now} onSelect={selectDate} onNavigate={navigate} onModeChange={changeMode} />
-          {#if showTime && mode === 'date'}<DatePickerTimePanel bind:this={dateTimePanel} scrollMemory={dateTimeScroll} prefixCls={prefix} value={draft ?? datePanelValue} selectedValue={draft} config={clock} format={timeFormat} locale={panelLocale} {now} {cellRender} {disabledTime} onSelect={selectTime} onHover={handleDateHover} />{/if}
+          <DatePickerCalendar
+            classNames={dateSemantic?.classes.popup}
+            styles={dateSemantic?.styles.popup}
+            {picker}
+            {showWeek}
+            prefixCls={prefix}
+            {panel}
+            timeTemplate={clock.defaultOpenValue}
+            selected={draft}
+            hovered={hoverValue ?? draft}
+            onHover={handleDateCellHover}
+            preserveDisabledHover
+            direction={config.direction}
+            {mode}
+            locale={panelLocale}
+            {cellRender}
+            {restrictions}
+            {now}
+            onSelect={selectDate}
+            onNavigate={navigate}
+            onModeChange={changeMode}
+          />
+          {#if showTime && mode === 'date'}
+            <DatePickerTimePanel
+              classNames={dateSemantic?.classes.popup}
+              styles={dateSemantic?.styles.popup}
+              bind:this={dateTimePanel}
+              scrollMemory={dateTimeScroll}
+              prefixCls={prefix}
+              value={draft ?? datePanelValue}
+              selectedValue={draft}
+              config={clock}
+              format={timeFormat}
+              locale={panelLocale}
+              {now}
+              {cellRender}
+              {disabledTime}
+              onSelect={selectTime}
+              onHover={handleDateHover}
+            />
+          {/if}
         </div></div>
-        {#if renderExtraFooter || confirm || mode === 'date' && showNow}<div class={`${prefix}-footer`}>
+        {#if renderExtraFooter || confirm || mode === 'date' && showNow}
+        <div class={[`${prefix}-footer`, dateSemantic?.classes.popup.footer]}
+          style={dateSemantic?.styles.popup.footer}>
           {#if renderExtraFooter}<div class={`${prefix}-footer-extra`}>{@render renderExtraFooter(mode)}</div>{/if}
           {#if (confirm || showTime) && (confirm || mode === 'date' && showNow)}<ul class={`${prefix}-ranges`}>
             {#if mode === 'date' && showNow}<li class={`${prefix}-now`}><button type="button" data-picker-current class={`${prefix}-now-btn`} disabled={pickerDateDisabled(now, restrictions)} onclick={() => {
@@ -1081,7 +1154,7 @@
     </div>
   </div>
 {/snippet}{#snippet clearButton()}
-  {#if (time ? timeAllowClear : allowClear)
+  {#if clearEnabled
       && (time ? hoverValue || draft : hoverValue || (retainedDatePreset ? draft : mergedValue)) && !blocked}
     <button
       type="button"
@@ -1108,15 +1181,15 @@
         input?.focus();
         if (time) onClear?.();
       }}
-    >{#if time && typeof clearContent === 'function'}{@render clearContent()}
-    {:else if time && (clearContent === null
-        || typeof clearContent === 'boolean' || clearContent === '')}<span class={`${prefix}-clear-btn`}></span>
-    {:else if time && clearContent !== undefined}{clearContent}
+    >{#if typeof clearContent === 'function'}{@render clearContent()}
+    {:else if clearContent === null
+        || typeof clearContent === 'boolean' || clearContent === ''}<span class={`${prefix}-clear-btn`}></span>
+    {:else if clearContent !== undefined}{clearContent}
     {:else}<Icon name="close-circle-filled" />{/if}</button>
   {/if}
 {/snippet}{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`picker-prefix:${prefix}:${rootPrefix}`} />{/if}<div bind:this={rootElement} data-ant-picker-prefix={prefix} data-ant-picker-root-prefix={rootPrefix} role={time ? 'presentation' : 'group'} style={
-    componentTheme.style || time
-      ? [componentTheme.style, time && semantic?.styles.root, style].filter(Boolean).join(';')
+    componentTheme.style || time || semantic?.styles.root
+      ? [componentTheme.style, semantic?.styles.root, style].filter(Boolean).join(';')
       : style}
   dir={config.direction} onfocusout={blurWithin} onclick={time ? handleRootClick : undefined}
   class={[
@@ -1132,17 +1205,18 @@
       feedback.hasFeedback && `${prefix}-has-feedback`,
       config.direction === 'rtl' && `${prefix}-rtl`,
       compactClasses(prefix, config.direction, compact),
-      time && config.timePicker?.class,
-      semantic?.classes.root,
+      time ? config.timePicker?.class : config.datePicker?.class,
+      time && semantic?.classes.root,
       className,
+      dateSemantic?.classes.root,
       rootClassName
     ]}>
-  {#if time && time.prefix !== undefined && time.prefix !== null
-      && typeof time.prefix !== 'boolean' && time.prefix !== ''}
+  {#if showLeadingContent}
     <div
       class={[`${prefix}-prefix`, semantic?.classes.prefix]}
       style={semantic?.styles.prefix}
-    >{#if typeof time.prefix === 'function'}{@render time.prefix()}{:else}{time.prefix}{/if}</div>
+    >{#if typeof leadingContent === 'function'}{@render leadingContent()}
+      {:else if leadingContent !== true}{leadingContent}{/if}</div>
   {/if}
   <div class={[`${prefix}-input`, hoverValue && `${prefix}-input-placeholder`]}>
     <input
@@ -1223,10 +1297,10 @@
         componentTheme.className,
         config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
         `${prefix}-dropdown-placement-${popupPlacement === 'top' ? 'top' : 'bottom'}${actualPlacement.endsWith('Right') ? 'Right' : 'Left'}`,
-        time ? semantic?.classes.popup.root : classNames?.popup?.root,
+        semantic?.classes.popup.root,
         time && rootClassName
       ]} style={initialPopupStyle}
-      {@attach node => connectComponentTheme(node, popupThemeStyle)} {@attach container.portal}>
+      {@attach attachPopupStyle} {@attach container.portal}>
       {#if time}
         <div
           class={[`${prefix}-panel-container`, semantic?.classes.popup.container]}
@@ -1236,7 +1310,9 @@
           {:else}{@render timePanelLayout()}{/if}
         </div>
       {:else}
-      <div bind:this={datePanelContainer} class={`${prefix}-panel-container`} tabindex="-1">
+      <div bind:this={datePanelContainer}
+        class={[`${prefix}-panel-container`, dateSemantic?.classes.popup.container]}
+        style={dateSemantic?.styles.popup.container} tabindex="-1">
         {#if panelRender}{@render panelRender(datePanelLayout)}
         {:else}{@render datePanelLayout()}{/if}
       </div>

@@ -216,6 +216,10 @@ export type {
 export { default as DatePicker } from './DatePicker.svelte';
 export type {
   DatePickerProps,
+  DatePickerSemantic,
+  DatePickerSlots,
+  DatePickerPopupSlots,
+  DatePickerAllowClear,
   DatePickerPicker,
   DatePickerPreset,
   DatePickerCellRenderInfo,

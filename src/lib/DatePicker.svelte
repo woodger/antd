@@ -17,4 +17,4 @@
   }
 </script>
 
-<SinglePicker {...props} bind:nativeElement bind:this={picker} />
+<SinglePicker {...props} dateProps={props} bind:nativeElement bind:this={picker} />

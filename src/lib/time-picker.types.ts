@@ -70,7 +70,7 @@ export interface TimePickerConfig {
 /** Выбор времени через Dayjs; дата, UTC/timezone и точность не сериализуются компонентом. */
 export interface TimePickerProps extends Omit<
   DatePickerProps,
-  'showTime' | 'allowClear' | 'status' | 'onCalendarChange' | 'classNames'
+  'showTime' | 'allowClear' | 'status' | 'onCalendarChange' | 'classNames' | 'styles'
     | 'onPanelChange' | 'onPickerValueChange' | 'disabledDate' | 'onChange'
     | 'prefix' | 'onclick' | 'multiple' | 'cellRender' | 'picker'
 >, Omit<DatePickerTimeConfig, 'format'> {

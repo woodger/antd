@@ -24,4 +24,5 @@
   }
 </script>
 
-<RangePickerCore {...props} bind:nativeElement bind:startInput bind:endInput bind:this={picker} />
+<RangePickerCore {...props} dateProps={props}
+  bind:nativeElement bind:startInput bind:endInput bind:this={picker} />

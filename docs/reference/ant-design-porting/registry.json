@@ -6867,19 +6867,42 @@
         },
         {
           "id": "extended-api",
-          "title": "Multiple, generatePicker и полный semantic API",
+          "title": "Multiple, generatePicker и оставшиеся события",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Нет multiple, generatePicker factory и полного набора semantic slots/events. Week/month/year/quarter, showWeek и RangePicker presets/previewValue перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно; остальные события семейства ещё не покрыты полностью. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
+          "note": "Нет multiple и generatePicker factory. Week/month/year/quarter, showWeek, RangePicker presets/previewValue и семантическое оформление перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно; остальные события семейства ещё не покрыты полностью. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
         },
         {
           "id": "global-parity",
-          "title": "Глобальный DatePicker component config и полный popup motion/lifecycle",
+          "title": "Исходные popup motion и lifecycle",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "262 CSS-правила; component tokens/aliases/algorithms перенесены отдельно. Полный пользовательский component config не перенесён; local/shared prefix поддерживается отдельно. Native conditional panel удаляется при закрытии; исходные retained popup lifecycle, полный rc-trigger и motion остаются пробелами."
+          "note": "Токены, prefix и семантическое оформление перенесены отдельно. Native панель удаляется при закрытии. Исходные retained popup lifecycle, полный rc-trigger и motion остаются пробелами."
+        },
+        {
+          "id": "component-config",
+          "title": "Семантические слоты и настройки DatePicker и RangePicker",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/date-picker.types.ts",
+            "src/lib/range-picker.types.ts",
+            "src/lib/date-picker-semantic.engine.ts",
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "src/lib/DatePickerCalendar.svelte",
+            "src/lib/DatePickerTimePanel.svelte",
+            "tests/browser/fixtures/DatePickerProviderFixtures.svelte",
+            "tests/browser/fixtures/ant-design-date-picker-provider-browser-reference.json.gz",
+            "tests/browser/fixtures/ant-design-date-picker-provider-ssr-reference.json.gz",
+            "tests/browser/date-picker-provider.spec.ts",
+            "tests/package/date-picker-provider.ssr.test.ts",
+            "docs/reference/components/date-picker.md",
+            "docs/reference/components/range-picker.md"
+          ],
+          "note": "DatePicker и RangePicker получают общие classNames/styles, suffixIcon и boolean/object allowClear из datePicker. Одиночное поле берёт class/style/variant из datePicker, диапазон берёт class/style/variant/separator из rangePicker. Слоты принимают object/function и строки CSS. Props функций содержат итоговые size/disabled и исходные variant/status. Поддержаны prefix, слот popup root и шесть частей панели. Week number не получает item, datetime применяет header/content/item также к времени. Undefined наследует запись, явный объект заменяет её целиком. Два одинаковых прогона официального Ant Design 6.6.8 охватывают 28 браузерных сценариев и 112 состояний, а также 18 закрытых SSR профилей. Сравниваются классы и авторские CSS декларации всех слотов, аргументы функций DatePicker/RangePicker, видимый текст, очистка и фокус. В Svelte отдельно проверяются черновик, каретка, фокус в панели, а также гидратация и удаление диапазона. TimePicker и TimeRangePicker сохраняют свои настройки."
         },
         {
           "id": "confirmation-button",
@@ -6993,7 +7016,7 @@
             "tests/browser/config-variants.spec.ts",
             "tests/package/config-variants.ssr.test.ts"
           ],
-          "note": "DatePicker и RangePicker читают свои datePicker/rangePicker config после local variant и Form, затем global. DatePicker config пока только variant; Dayjs values, draft/confirmation и FormData сохраняют существующие контракты."
+          "note": "DatePicker и RangePicker читают свои datePicker/rangePicker config после local variant и Form, затем global. Остальные настройки описаны в component-config. Dayjs values, draft/confirmation и FormData сохраняют существующие контракты."
         },
         {
           "id": "local-shared-prefix",
@@ -25796,7 +25819,22 @@
             "tests/browser/config-variants.spec.ts",
             "tests/package/config-variants.ssr.test.ts"
           ],
-          "note": "ConfigProvider.variant и Form.variant по form/hooks/useVariants 6.6.8: local, ближайший Form, component, fallback Input, global, outlined. Подключены все 18 представлений source consumers, включая Search button/input, Card и Pagination. Component records наследуются либо заменяются целиком; вложенный global не отменяет inherited component variant, theme.inherit=false сохраняет config. Select/datePicker/mentions config пока содержат только variant. Дополнительная конфигурация Card и TreeSelect описана в соответствующих features. Source raw classes/colors/borders и native DOM/focus/selection/FormData/callback boundaries закреплены в evidence; общий аудит provider остаётся незавершённым."
+          "note": "ConfigProvider.variant и Form.variant по form/hooks/useVariants 6.6.8: local, ближайший Form, component, fallback Input, global, outlined. Подключены все 18 представлений source consumers, включая Search button/input, Card и Pagination. Component records наследуются либо заменяются целиком; вложенный global не отменяет inherited component variant, theme.inherit=false сохраняет config. Дополнительные настройки DatePicker/RangePicker, Select, Card и TreeSelect описаны в соответствующих features. Source raw classes/colors/borders и native DOM/focus/selection/FormData/callback boundaries закреплены в evidence; общий аудит provider остаётся незавершённым."
+        },
+        {
+          "id": "date-picker-component-config",
+          "title": "ConfigProvider.datePicker и rangePicker",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/date-picker.types.ts",
+            "src/lib/range-picker.types.ts",
+            "src/lib/ConfigProvider.svelte",
+            "tests/browser/date-picker-provider.spec.ts",
+            "tests/package/date-picker-provider.ssr.test.ts",
+            "docs/reference/components/date-picker.md"
+          ],
+          "note": "Общий datePicker управляет семантическим оформлением, очисткой и суффиксом DatePicker/RangePicker. RangePicker берёт обычные class/style/variant/separator из rangePicker. Вложенные записи наследуются или заменяются целиком. Проверены приоритеты локальных стилей, смена конфигурации в открытой панели и SSR. Подробности в feature date-picker/component-config."
         },
         {
           "id": "card-component-config",

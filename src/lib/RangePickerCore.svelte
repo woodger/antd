@@ -41,6 +41,7 @@
   import { useVariant } from './variant.svelte';
   import { useComponentTheme } from './theme-component.svelte';
   import { connectComponentTheme } from './theme-component.dom';
+  import { createOverlayStyle } from './overlay-style.model.svelte';
   import { useForm, useFormField } from './form-context';
   import { useFormItemStatusContext } from './form-item-status';
   import { useFormFeedback } from './form-feedback-context';
@@ -71,10 +72,12 @@
   } from './time-range-picker.engine';
   import { timePickerDateDisabled } from './time-picker.engine';
   import { timeRangeSemantic } from './time-range-picker-semantic.engine';
+  import { datePickerSemantic } from './date-picker-semantic.engine';
   import type { TimeRangePickerProps } from './time-range-picker.types';
   import { connectTimeRangePopup } from './time-range-picker-popup.dom';
   let {
     time,
+    dateProps,
     value,
     defaultValue,
     disabled,
@@ -97,7 +100,7 @@
     defaultOpen = false,
     needConfirm,
     showNow,
-    allowClear = true,
+    allowClear,
     inputReadOnly,
     preserveInvalidOnBlur = false,
     onChange,
@@ -119,6 +122,7 @@
     placement,
     size,
     status,
+    prefix: prefixContent,
     suffixIcon,
     variant,
     locale,
@@ -126,13 +130,14 @@
     rootClassName = '',
     prefixCls,
     classNames,
+    styles,
     getPopupContainer,
     style,
     nativeElement = $bindable(),
     startInput = $bindable(),
     endInput = $bindable(),
     ...attributes
-  }: RangePickerProps & { time?: TimeRangePickerProps; } = $props();
+  }: RangePickerProps & { time?: TimeRangePickerProps; dateProps?: RangePickerProps; } = $props();
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('picker', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
@@ -156,9 +161,10 @@
   const initial = untrack(() => rangePair(defaultValue));
   let internalValue = $state.raw<RangePickerValue>(initial);
   let committed = $derived(value === undefined ? internalValue : rangePair(value));
-  let blocked = $derived(
-    rangeFlags(disabled ?? field?.disabled ?? form?.disabled ?? config.componentDisabled)
+  let semanticDisabled = $derived(
+    disabled ?? field?.disabled ?? form?.disabled ?? config.componentDisabled
   );
+  let blocked = $derived(rangeFlags(semanticDisabled));
   let empty = $derived(rangeFlags(allowEmpty));
   let showTime = $derived(time || picker === 'date' ? providedShowTime : false);
   let confirm = $derived(needConfirm ?? Boolean(showTime));
@@ -308,10 +314,22 @@
     ?? ('status' in itemStatus ? itemStatus.status : field?.status));
   let resolvedVariant = $derived(variantContext.variant);
   let resolvedSeparator = $derived(separator ?? config.rangePicker?.separator);
+  let dateSemantic = $derived.by(() => {
+    const settings = config.datePicker;
+    const providerStyle = config.rangePicker?.style;
+    if (!dateProps || !(settings?.classNames || settings?.styles
+      || classNames || styles || providerStyle)) {
+      return undefined;
+    }
+
+    // Семантика получает исходные props, не меняя вызовы callbacks внутри core.
+    const props = { ...dateProps, size: resolvedSize, disabled: semanticDisabled, status, variant };
+    return datePickerSemantic(props, settings, classNames, styles, providerStyle);
+  });
   let semantic = $derived(time ? timeRangeSemantic(time, config.timePicker, config.rangePicker, {
     size: resolvedSize,
-    disabled: disabled ?? field?.disabled ?? form?.disabled ?? config.componentDisabled
-  }) : undefined);
+    disabled: semanticDisabled
+  }) : dateSemantic);
   let timeLocale = $derived(time ? timePickerLang(time, lang) : undefined);
   let timePlaceholder = $derived.by(() => {
     if (!time) {
@@ -325,14 +343,18 @@
       ?? config.locale.datePicker?.timePickerLocale?.rangePlaceholder
       ?? datePickerEnUS.timePickerLocale.rangePlaceholder;
   });
-  let timeAllowClear = $derived(time?.allowClear ?? config.timePicker?.allowClear ?? true);
+  let localClearConfig = $derived(time ? time.allowClear : allowClear);
+  let providerClearConfig = $derived(time ? config.timePicker?.allowClear : config.datePicker?.allowClear);
+  let clearEnabled = $derived(localClearConfig ?? providerClearConfig ?? true);
   let clearContent = $derived.by(() => {
-    const local = typeof time?.allowClear === 'object'
-      ? time.allowClear.clearIcon : undefined;
-    const context = typeof config.timePicker?.allowClear === 'object'
-      ? config.timePicker.allowClear.clearIcon : undefined;
+    const local = typeof localClearConfig === 'object' ? localClearConfig?.clearIcon : undefined;
+    const context = typeof providerClearConfig === 'object'
+      ? providerClearConfig?.clearIcon : undefined;
     return local !== undefined ? local : context;
   });
+  let leadingContent = $derived(time ? time.prefix : prefixContent);
+  let showLeadingContent = $derived(leadingContent != null && leadingContent !== ''
+    && leadingContent !== false && (!time || leadingContent !== true));
   let suffixContent = $derived(time
     ? time.suffixIcon === undefined ? config.timePicker?.suffixIcon : time.suffixIcon
     : suffixIcon !== undefined ? suffixIcon : config.datePicker?.suffixIcon);
@@ -380,6 +402,15 @@
   const popupThemeStyle = $derived(
     [componentTheme.style, semantic?.styles.popup.root].filter(Boolean).join(';') || undefined
   );
+  const datePopupStyle = untrack(() =>
+    time ? undefined : createOverlayStyle(() => [popupThemeStyle]));
+
+  // Авторские декларации следуют после координат и обновляются на той же панели.
+  function attachPopupStyle(node: HTMLElement) {
+    return datePopupStyle
+      ? datePopupStyle.attach(node) : connectComponentTheme(node, popupThemeStyle);
+  }
+
   const container = createPickerPopup(() => ({
     open: visible,
     reference: rootElement,
@@ -538,6 +569,8 @@
       autoAdjustOverflow: true,
       maxWidth: '100vw',
       gap: 4,
+      applyPosition: datePopupStyle
+        ? position => untrack(() => datePopupStyle.position(position)) : undefined,
       getPosition: (reference, bounds, viewport) => getPickerPopupPosition(
         reference,
         bounds,
@@ -1306,27 +1339,97 @@
           <div class={`${prefix}-panel`} tabindex="-1"><div class={showTime && mode === 'date'
               ? `${prefix}-datetime-panel`
               : undefined}>
-            <DatePickerCalendar {picker} {showWeek} prefixCls={prefix} panel={view} timeTemplate={clock.defaultOpenValue} selected={calendar[active]} range={calendarRange} hovered={periodWeakHover ? hover : undefined} onHover={handleDateHover} {mode} locale={panelLocale} {cellRender} {cellRange} restrictions={{ minDate, maxDate, disabledDate: panelDisabled }} {now} direction={config.direction} showNext={!multiplePanels} onSelect={selectDate} onNavigate={next => syncPanel(active, 'panel', false, next)} onModeChange={(next, viewDate) => {
-                  if (picker !== 'date') setMode(next, active, viewDate);
-                  else { mode = next; onPanelChange?.([...calendar], [next, next]); }
-                }} />
-            {#if showTime && mode === 'date'}<DatePickerTimePanel prefixCls={prefix} value={calendar[active] ?? datePanelValue} selectedValue={calendar[active]} config={clock} format={timeFormat} locale={panelLocale} {now} {cellRender} {cellRange} disabledTime={timeRestriction} onSelect={selectTime} onHover={handleTimeHover} />{/if}
+            <DatePickerCalendar
+              classNames={dateSemantic?.classes.popup}
+              styles={dateSemantic?.styles.popup}
+              {picker}
+              {showWeek}
+              prefixCls={prefix}
+              panel={view}
+              timeTemplate={clock.defaultOpenValue}
+              selected={calendar[active]}
+              range={calendarRange}
+              hovered={periodWeakHover ? hover : undefined}
+              onHover={handleDateHover}
+              {mode}
+              locale={panelLocale}
+              {cellRender}
+              {cellRange}
+              restrictions={{ minDate, maxDate, disabledDate: panelDisabled }}
+              {now}
+              direction={config.direction}
+              showNext={!multiplePanels}
+              onSelect={selectDate}
+              onNavigate={next => syncPanel(active, 'panel', false, next)}
+              onModeChange={(next, viewDate) => {
+                if (picker !== 'date') {
+                  setMode(next, active, viewDate);
+                }
+                else {
+                  mode = next;
+                  onPanelChange?.([...calendar], [next, next]);
+                }
+              }}
+            />
+            {#if showTime && mode === 'date'}
+              <DatePickerTimePanel
+                classNames={dateSemantic?.classes.popup}
+                styles={dateSemantic?.styles.popup}
+                prefixCls={prefix}
+                value={calendar[active] ?? datePanelValue}
+                selectedValue={calendar[active]}
+                config={clock}
+                format={timeFormat}
+                locale={panelLocale}
+                {now}
+                {cellRender}
+                {cellRange}
+                disabledTime={timeRestriction}
+                onSelect={selectTime}
+                onHover={handleTimeHover}
+              />
+            {/if}
           </div></div>
-          {#if multiplePanels}<div class={`${prefix}-panel`} tabindex="-1"><DatePickerCalendar {picker} {showWeek} prefixCls={prefix} panel={offsetPickerPanel(view, picker, 1)} selected={calendar[active]} range={calendarRange} hovered={periodWeakHover ? hover : undefined} onHover={handleDateHover} {mode} locale={secondPanelLocale} {cellRender} {cellRange} restrictions={{ minDate, maxDate, disabledDate: panelDisabled }} {now} direction={config.direction} showPrevious={false} onSelect={picker === 'quarter' || picker === 'week' ? date => selectDate(date, 1) : selectDate} onNavigate={next => syncPanel(
+          {#if multiplePanels}<div class={`${prefix}-panel`} tabindex="-1"><DatePickerCalendar
+              classNames={dateSemantic?.classes.popup}
+              styles={dateSemantic?.styles.popup}
+              {picker}
+              {showWeek}
+              prefixCls={prefix}
+              panel={offsetPickerPanel(view, picker, 1)}
+              selected={calendar[active]}
+              range={calendarRange}
+              hovered={periodWeakHover ? hover : undefined}
+              onHover={handleDateHover}
+              {mode}
+              locale={secondPanelLocale}
+              {cellRender}
+              {cellRange}
+              restrictions={{ minDate, maxDate, disabledDate: panelDisabled }}
+              {now}
+              direction={config.direction}
+              showPrevious={false}
+              onSelect={picker === 'quarter' || picker === 'week'
+                ? date => selectDate(date, 1) : selectDate}
+              onNavigate={next => syncPanel(
                 active,
                 'panel',
                 false,
                 offsetPickerPanel(next, picker, -1)
-              )} onModeChange={(next, viewDate) => {
+              )}
+              onModeChange={(next, viewDate) => {
                 if (picker !== 'date') setMode(next, active, viewDate);
                 else {
                   syncPanel(active, 'panel', false, view.add(1, 'month'));
                   mode = next;
                   onPanelChange?.([...calendar], [next, next]);
                 }
-              }} /></div>{/if}
+              }}
+            /></div>{/if}
         </div>
-        {#if renderExtraFooter || confirm || mode === 'date' && showCurrent}<div class={`${prefix}-footer`}>
+        {#if renderExtraFooter || confirm || mode === 'date' && showCurrent}
+        <div class={[`${prefix}-footer`, dateSemantic?.classes.popup.footer]}
+          style={dateSemantic?.styles.popup.footer}>
           {#if renderExtraFooter}<div class={`${prefix}-footer-extra`}>{@render renderExtraFooter(mode)}</div>{/if}
           {#if confirm || mode === 'date' && showCurrent}<ul class={`${prefix}-ranges`}>{#if mode === 'date' && showCurrent}<li class={`${prefix}-now`}><button type="button" data-picker-current class={`${prefix}-now-btn`} disabled={pickerDateDisabled(
             now,
@@ -1423,8 +1526,8 @@
 {/snippet}{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`picker-prefix:${prefix}:${rootPrefix}`} />{/if}<div
   bind:this={rootElement} data-ant-picker-prefix={prefix} data-ant-picker-root-prefix={rootPrefix}
   role={time ? 'presentation' : 'group'}
-  style={componentTheme.style || time || config.rangePicker?.style
-    ? [componentTheme.style, time ? semantic?.styles.root : config.rangePicker?.style,
+  style={componentTheme.style || time || semantic?.styles.root
+    ? [componentTheme.style, semantic?.styles.root,
       style].filter(Boolean).join(';') : style}
   dir={config.direction}
   onfocusout={blurWithin}
@@ -1443,17 +1546,18 @@
       feedback.hasFeedback && `${prefix}-has-feedback`,
       config.direction === 'rtl' && `${prefix}-rtl`,
       compactClasses(prefix, config.direction, compact),
-      semantic?.classes.root,
+      time && semantic?.classes.root,
       className,
       config.rangePicker?.class,
+      dateSemantic?.classes.root,
       rootClassName
     ]}>
-  {#if time?.prefix !== undefined && time.prefix !== null
-      && typeof time.prefix !== 'boolean' && time.prefix !== ''}
+  {#if showLeadingContent}
     <div
       class={[`${prefix}-prefix`, semantic?.classes.prefix]}
       style={semantic?.styles.prefix}
-    >{#if typeof time.prefix === 'function'}{@render time.prefix()}{:else}{time.prefix}{/if}</div>
+    >{#if typeof leadingContent === 'function'}{@render leadingContent()}
+      {:else if leadingContent !== true}{leadingContent}{/if}</div>
   {/if}
   <div class={[
       `${prefix}-input ${prefix}-input-start`,
@@ -1556,7 +1660,7 @@
       aria-hidden="true"
     >{#if typeof suffixContent === 'function'}{@render suffixContent()}{:else if suffixContent === undefined || suffixContent === true}{#if time}<PickerClockIcon />{:else}<PickerCalendarIcon />{/if}{#if feedback.hasFeedback && feedback.icon}<FormFeedbackIcon descriptor={feedback.icon} />{/if}{:else}{suffixContent}{/if}</span>
   {/if}
-  {#if (time ? timeAllowClear : allowClear) && (time ? calendar : committed)
+  {#if clearEnabled && (time ? calendar : committed)
       .some((date, index) => (date || time && previewValue
         && (presetHover?.[index] || index === active && hover)) && !blocked[index])}
     <button
@@ -1565,10 +1669,10 @@
       aria-label={lang.clear}
       onpointerdown={event => event.preventDefault()}
       onclick={clear}
-    >{#if time && typeof clearContent === 'function'}{@render clearContent()}
-    {:else if time && (clearContent === null
-        || typeof clearContent === 'boolean' || clearContent === '')}<span class={`${prefix}-clear-btn`}></span>
-    {:else if time && clearContent !== undefined}{clearContent}
+    >{#if typeof clearContent === 'function'}{@render clearContent()}
+    {:else if clearContent === null
+        || typeof clearContent === 'boolean' || clearContent === ''}<span class={`${prefix}-clear-btn`}></span>
+    {:else if clearContent !== undefined}{clearContent}
     {:else}<Icon name="close-circle-filled" />{/if}</button>
   {/if}
 </div><NoCompactStyle>{#key container.target}{#if visible}
@@ -1582,11 +1686,11 @@
           `${prefix}-dropdown-placement-${verticalPlacement}${actualPlacement.endsWith('Right')
             ? 'Right'
             : 'Left'}`,
-          time ? semantic?.classes.popup.root : classNames?.popup?.root,
+          semantic?.classes.popup.root,
           time && rootClassName
         ]}
       style={initialPopupStyle}
-      {@attach node => connectComponentTheme(node, popupThemeStyle)}
+      {@attach attachPopupStyle}
       {@attach container.portal}
       onkeydown={event => {
           if (event.key === 'Escape') {
@@ -1625,7 +1729,8 @@
         </div>
       {:else}
       <div data-picker-range-arrow class={`${prefix}-range-arrow`} style={`left:${bar.left + bar.width / 2}px`}></div>
-      <div class={`${prefix}-panel-container`}>
+      <div class={[`${prefix}-panel-container`, dateSemantic?.classes.popup.container]}
+        style={dateSemantic?.styles.popup.container}>
         {#if panelRender}{@render panelRender(datePanelLayout)}
         {:else}{@render datePanelLayout()}{/if}
       </div>

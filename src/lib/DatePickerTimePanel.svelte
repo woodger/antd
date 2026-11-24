@@ -12,9 +12,9 @@
   import { formatPicker, timeColumns } from './date-picker.engine';
   import { timeFormat, timePickerColumnDate, timePickerOptions } from './time-picker.engine';
   import type { DatePickerDisabledTime, DatePickerTimeConfig, DatePickerProps,
-    DatePickerCellRenderInfo } from './date-picker.types';
+    DatePickerCellRenderInfo, DatePickerPopupSlots } from './date-picker.types';
   let { prefixCls, value, selectedValue, config, format, locale, disabledTime, onSelect, onHover,
-    scrollMemory, cellRender, cellRange, now }: {
+    scrollMemory, cellRender, cellRange, now, classNames, styles }: {
     prefixCls: string;
     value: Dayjs;
     selectedValue: Dayjs | null;
@@ -28,6 +28,8 @@
     onSelect: (value: Dayjs) => void;
     onHover?: (value: Dayjs | null) => void;
     scrollMemory?: DatePickerTimeScrollMemory;
+    classNames?: DatePickerPopupSlots;
+    styles?: DatePickerPopupSlots;
   } = $props();
   let renderToday = $derived.by(() => {
     void prefixCls;
@@ -239,9 +241,10 @@
   button:focus-visible { outline:2px solid var(--ant-color-primary);outline-offset:-2px; }
 </style>
 <div bind:this={root} class={`${prefixCls}-time-panel`}>
-  <div class={`${prefixCls}-header`}><div class={`${prefixCls}-header-view`}>{selectedValue
+  <div class={[`${prefixCls}-header`, classNames?.header]} style={styles?.header}>
+    <div class={`${prefixCls}-header-view`}>{selectedValue
         ? formatPicker(selectedValue, locale.locale, [headerFormat]) : '\u00a0'}</div></div>
-  <div class={`${prefixCls}-content`}>
+  <div class={[`${prefixCls}-content`, classNames?.content]} style={styles?.content}>
     {#each columns as column (column.unit)}
       <ul class={`${prefixCls}-time-panel-column`} aria-label={column.unit}
         onscroll={event => rememberColumn(event.currentTarget)}>
@@ -259,8 +262,9 @@
               onmouseenter={onHover && (() => onHover?.(timePickerColumnDate(value, selectedValue, column.unit, item)))} onmouseleave={onHover && (() => onHover?.(null))} data-picker-time-cell-selected={selectedValue?.get(column.unit) === item || undefined} class={[
                 `${prefixCls}-time-panel-cell`,
                 selectedValue?.get(column.unit) === item && `${prefixCls}-time-panel-cell-selected`,
-                unavailable && `${prefixCls}-time-panel-cell-disabled`
-              ]}>
+                unavailable && `${prefixCls}-time-panel-cell-disabled`,
+                classNames?.item
+              ]} style={styles?.item}>
               {#snippet originNode()}
                 <button type="button" class={`${prefixCls}-time-panel-cell-inner`}
                   data-picker-time-control={cellRender ? '' : undefined}
@@ -293,8 +297,9 @@
               `${prefixCls}-time-panel-cell`,
               unavailable && `${prefixCls}-time-panel-cell-disabled`,
               selectedValue && (selectedValue.hour() < 12) === (hour === 0)
-                && `${prefixCls}-time-panel-cell-selected`
-            ]}>
+                && `${prefixCls}-time-panel-cell-selected`,
+              classNames?.item
+            ]} style={styles?.item}>
             {#snippet originNode()}
               <button type="button" class={`${prefixCls}-time-panel-cell-inner`}
                 data-picker-time-control={cellRender ? '' : undefined}

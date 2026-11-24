@@ -20,6 +20,10 @@
 
 ### Added
 
+- DatePicker и RangePicker поддерживают `prefix`, `classNames` и `styles`
+  для поля и календаря. Общие слоты, суффикс и очистка настраиваются через
+  `ConfigProvider.datePicker`. Смена настроек сохраняет открытый календарь и фокус.
+
 - Dropdown поддерживает стили `ConfigProvider.dropdown`, `rootClassName`,
   `openClassName` и `bind:ref` на DOM-узел триггера. Управляемый `open` сохраняет
   видимость, если владелец отклонил запрос.

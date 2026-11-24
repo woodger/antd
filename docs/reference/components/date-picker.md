@@ -267,6 +267,32 @@ getPopupContainer с fallback на ConfigProvider.getPopupContainer; undefined
 undefined, затем с root; функция с параметром ждёт DOM ref, как rc-trigger.
 SSR не вызывает getter. Без выбранной функции сохраняется native размещение.
 
+### Семантическое оформление и настройки провайдера
+
+DatePicker и RangePicker принимают `prefix`, `classNames` и `styles`.
+`prefix` выводит строку, число или Snippet перед редактором.
+`classNames` и `styles` задают слоты `root`, `prefix`, `input`, `suffix`
+и `popup` с ролями `root`, `header`, `body`, `content`, `item`, `footer`,
+`container`. Строковое значение `popup` относится к `popup.root`.
+Для `styles` используются строки CSS. Оба свойства принимают объект слотов
+или функцию `({ props }) => slots`. Функция видит локальные props поля
+с итоговыми `size` и `disabled` и может вернуть `undefined`.
+В datetime `header`, `content` и `item` оформляют календарь и колонки времени,
+а `body` оформляет календарь. Номера недель вне слота `item`.
+
+`ConfigProvider.datePicker` задаёт общие `classNames`, `styles`, `suffixIcon`
+и `allowClear` для обоих полей, а также `class`, `style` и `variant` одиночного
+DatePicker. RangePicker берёт обычные `class`, `style`, `variant` и `separator`
+из `ConfigProvider.rangePicker`. Классы объединяются. Для корня сначала
+применяются `styles.root` и `style` провайдера, затем локальные `styles.root`
+и `style`. Вложенный провайдер наследует отсутствующую настройку.
+Явный объект, включая `{}`, целиком заменяет родительскую настройку.
+
+`allowClear` принимает boolean или `{ clearIcon }`. Локальное значение перекрывает
+настройку провайдера. Если очистка разрешена, локальная иконка имеет приоритет,
+а отсутствующая иконка наследуется. По умолчанию очистка включена. Кнопка
+сохраняет доступное имя из локали.
+
 DatePicker/RangePicker поддерживают `suffixIcon`: локальный prop перекрывает
 `ConfigProvider.datePicker.suffixIcon`. `true`/undefined выводят календарь и Form
 feedback; null/false/пустая строка скрывают suffix целиком. Строка, число (включая
@@ -274,6 +300,11 @@ feedback; null/false/пустая строка скрывают suffix цели�
 используют те же правила с часами и `ConfigProvider.timePicker`. RangePicker
 использует общий datePicker config для значка; rangePicker config управляет
 прежними class/style/variant/separator. Смена suffix сохраняет поле и фокус.
+
+Смена семантического оформления сохраняет DOM поля и открытой панели,
+фокус, выделение и черновик. Приоритеты и слоты сверены с React 6.6.8
+в [браузере](../../../tests/browser/date-picker-provider.spec.ts) и
+[SSR](../../../tests/package/date-picker-provider.ssr.test.ts).
 
 Исходный offset до поля — 4 px; координаты при единичном масштабе округляются
 вниз, как rc-trigger. Минимальная ширина popup равна ширине selector.
@@ -324,8 +355,6 @@ Defaults в prefix stylesheet имеют нулевую specificity: canonical N
 Служебные snippets/head/popup boundaries не добавляют текст рядом с controls;
 SSR проверяет также defaultOpen, browser — обновление общего префикса.
 
-Остальные picker/multiple modes, generatePicker factory,
-полный semantic/component config
-и полный rc-trigger/motion API ещё не перенесены. Реестр перечисляет эти пробелы
-отдельно; данный этап не заявляет полноту семейства DatePicker.
+Multiple, generatePicker, оставшиеся события и исходный lifecycle popup
+перечислены в [реестре переноса](../ant-design-porting/status.md).
 

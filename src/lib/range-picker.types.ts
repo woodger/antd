@@ -4,7 +4,8 @@ import type {
   DatePickerProps,
   DatePickerTimeConfig,
   DatePickerDisabledTime,
-  DatePickerMode
+  DatePickerMode,
+  DatePickerSemantic
 } from './date-picker.types';
 export type RangePickerValue = [Dayjs | null, Dayjs | null];
 export type RangePickerInputValue = [Dayjs | null | undefined, Dayjs | null | undefined];
@@ -47,6 +48,8 @@ export interface RangePickerProps extends Omit<
   | 'onPickerValueChange'
   | 'onPanelChange'
   | 'presets'
+  | 'classNames'
+  | 'styles'
 > {
   /** Управляемая пара Dayjs; формат и точность следуют календарю и showTime. */
   value?: RangePickerInputValue | null;
@@ -83,6 +86,8 @@ export interface RangePickerProps extends Omit<
   ) => void;
   onPanelChange?: (value: RangePickerValue, modes: [DatePickerMode, DatePickerMode]) => void;
   separator?: string | Snippet;
+  classNames?: DatePickerSemantic<RangePickerProps>;
+  styles?: DatePickerSemantic<RangePickerProps>;
   presets?: readonly RangePickerPreset[];
   /** @defaultValue 'hover' */
   previewValue?: false | 'hover';

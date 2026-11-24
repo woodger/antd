@@ -4,6 +4,7 @@ import type { Snippet } from 'svelte';
 import type { InputContent } from './input.types';
 import type { ComponentSize } from './types';
 import type { PickerLocale } from './picker-locale.types';
+import type { RangePickerProps } from './range-picker.types';
 import type { TimePickerColumnType } from './time-picker.types';
 export type DatePickerLocale = {
   lang: Partial<PickerLocale>;
@@ -54,15 +55,46 @@ export interface DatePickerTimeConfig {
   /** В showTime задаёт только время пустого выбора; дата остаётся датой панели. */
   defaultOpenValue?: Dayjs;
 }
-/** Общие настройки DatePicker/RangePicker; local props имеют приоритет. */
+export interface DatePickerPopupSlots {
+  root?: string;
+  header?: string;
+  body?: string;
+  content?: string;
+  item?: string;
+  footer?: string;
+  container?: string;
+}
+
+export interface DatePickerSlots {
+  root?: string;
+  prefix?: string;
+  input?: string;
+  suffix?: string;
+  /** Строка задаёт popup.root. */
+  popup?: string | DatePickerPopupSlots;
+}
+
+/** Произвольный класс или CSS слота. Callback получает props фактического поля. */
+export type DatePickerSemantic<Props extends object = DatePickerProps> = DatePickerSlots
+  | ((info: { props: Props; }) => DatePickerSlots | undefined);
+
+export type DatePickerAllowClear = boolean | { clearIcon?: InputContent; };
+
+/** Общая семантика DatePicker и RangePicker. Вложенный провайдер заменяет объект. */
 export interface DatePickerConfig {
+  class?: string;
+  style?: string;
   variant?: DatePickerProps['variant'];
+  classNames?: DatePickerSemantic<DatePickerProps | RangePickerProps>;
+  styles?: DatePickerSemantic<DatePickerProps | RangePickerProps>;
   suffixIcon?: InputContent;
+  allowClear?: DatePickerAllowClear;
 }
 /** Выбор одной даты или datetime через Dayjs, input и локализованную панель. */
 export interface DatePickerProps extends Omit<
   HTMLInputAttributes,
-  'value' | 'defaultValue' | 'size' | 'type' | 'children' | 'onchange' | 'oninput' | 'onselect'
+  'value' | 'defaultValue' | 'size' | 'type' | 'children' | 'prefix'
+    | 'onchange' | 'oninput' | 'onselect'
 > {
   /** Выбор даты, недели, месяца, года или квартала. @defaultValue 'date' */
   picker?: DatePickerPicker;
@@ -92,7 +124,7 @@ export interface DatePickerProps extends Omit<
   /** При включении выбор публикуется после подтверждения OK. */
   needConfirm?: boolean;
   /** @defaultValue true */
-  allowClear?: boolean;
+  allowClear?: DatePickerAllowClear;
   inputReadOnly?: boolean;
   /** @defaultValue false */
   preserveInvalidOnBlur?: boolean;
@@ -100,6 +132,7 @@ export interface DatePickerProps extends Omit<
   showNow?: boolean;
   size?: ComponentSize;
   status?: 'error' | 'warning';
+  prefix?: InputContent;
   /** true/undefined — calendar и Form feedback; null/false/'' скрывают suffix. */
   suffixIcon?: InputContent;
   /** Локальное оформление перекрывает Form и ConfigProvider; fallback outlined. */
@@ -133,8 +166,8 @@ export interface DatePickerProps extends Omit<
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
   class?: string;
   rootClassName?: string;
-  /** Класс popup; остальные semantic slots пока не перенесены. */
-  classNames?: { popup?: { root?: string; }; };
+  classNames?: DatePickerSemantic;
+  styles?: DatePickerSemantic;
   /** Нативный ref доступен после mount и очищается при unmount. */
   nativeElement?: HTMLDivElement;
 }

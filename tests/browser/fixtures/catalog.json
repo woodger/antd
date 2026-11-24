@@ -766,6 +766,11 @@
     "root": "date-picker-fixture"
   },
   {
+    "id": "date-picker-provider",
+    "module": "./DatePickerProviderFixtures.svelte",
+    "root": "date-picker-provider-fixture"
+  },
+  {
     "id": "date-picker-offgrid-scroll",
     "module": "./DatePickerOffGridScrollFixtures.svelte",
     "root": "date-picker-offgrid-scroll-fixture"

@@ -6,6 +6,9 @@ RangePicker позволяет выбрать диапазон дат и вре�
 RangePickerCore также используется TimeRangePicker. ConfigProvider.rangePicker
 задаёт общий variant/class/style/separator; локальные props имеют приоритет.
 Объект вложенного провайдера заменяет родительский целиком.
+Семантические классы и стили, значок суффикса и настройку очистки RangePicker
+наследует из `ConfigProvider.datePicker`. Локальные `prefix`, `classNames`
+и `styles` работают по [общим правилам DatePicker](date-picker.md#семантическое-оформление-и-настройки-провайдера).
 
 ```svelte
 <script lang="ts">
@@ -59,7 +62,6 @@ bind:this даёт focus({index:0|1,preventScroll,cursor}) и blur(). Native onf
 
 Подтверждены SSR без browser APIs, ввод/ошибки/очистка, переходы фокуса,
 подтверждение времени, ограничения/from, nullable границы, controlled rejection,
-Form/нативная отправка и UTC в разных browser zones. Остальные picker modes,
-mask, полный semantic/config/motion API остаются пробелами
-семейства; наличие RangePicker не означает полного покрытия React DatePicker.
+Form/нативная отправка и UTC в разных browser zones. Состояние переноса остальных
+возможностей приведено в [реестре](../ant-design-porting/status.md).
 

@@ -9,7 +9,7 @@
     samePickerWeek
   } from './date-picker.engine';
   import type {
-    DatePickerMode, DatePickerPicker, DatePickerProps, DatePickerCellRenderInfo
+    DatePickerMode, DatePickerPicker, DatePickerProps, DatePickerCellRenderInfo, DatePickerPopupSlots
   } from './date-picker.types';
   import type { PickerLocale } from './picker-locale.types';
   let {
@@ -21,6 +21,8 @@
     selected,
     hovered,
     mode,
+    classNames,
+    styles,
     locale,
     restrictions,
     now,
@@ -44,6 +46,8 @@
     selected: Dayjs | null;
     hovered?: Dayjs | null;
     mode: DatePickerMode;
+    classNames?: DatePickerPopupSlots;
+    styles?: DatePickerPopupSlots;
     direction: 'ltr' | 'rtl';
     range?: readonly [Dayjs | null, Dayjs | null];
     cellRender?: DatePickerProps['cellRender'];
@@ -267,7 +271,7 @@
   .date-cell:focus-visible { outline:2px solid var(--ant-color-primary);outline-offset:-2px; }
 </style>
 <div bind:this={root} class={[`${prefixCls}-${mode}-panel`, datePanel && showWeek && `${prefixCls}-${mode}-panel-show-week`]}>
-  <div class={`${prefixCls}-header`}>
+  <div class={[`${prefixCls}-header`, classNames?.header]} style={styles?.header}>
     <button type="button" tabindex="-1" class={[`${prefixCls}-header-super-prev-btn`, headerDisabled(-1, true) && `${prefixCls}-header-super-prev-btn-disabled`]} disabled={headerDisabled(-1, true)} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousYear} onclick={() => move(-1, true)}><span class={`${prefixCls}-super-prev-icon`}></span></button>
     {#if datePanel}<button type="button" tabindex="-1" class={[`${prefixCls}-header-prev-btn`, headerDisabled(-1) && `${prefixCls}-header-prev-btn-disabled`]} disabled={headerDisabled(-1)} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousMonth} onclick={() => move(-1)}><span class={`${prefixCls}-prev-icon`}></span></button>{/if}
     <div class={`${prefixCls}-header-view`}>
@@ -289,8 +293,9 @@
     {#if datePanel}<button type="button" tabindex="-1" class={[`${prefixCls}-header-next-btn`, headerDisabled(1) && `${prefixCls}-header-next-btn-disabled`]} disabled={headerDisabled(1)} style:visibility={showNext ? undefined : 'hidden'} aria-label={locale.nextMonth} onclick={() => move(1)}><span class={`${prefixCls}-next-icon`}></span></button>{/if}
     <button type="button" tabindex="-1" class={[`${prefixCls}-header-super-next-btn`, headerDisabled(1, true) && `${prefixCls}-header-super-next-btn-disabled`]} disabled={headerDisabled(1, true)} style:visibility={showNext ? undefined : 'hidden'} aria-label={locale.nextYear} onclick={() => move(1, true)}><span class={`${prefixCls}-super-next-icon`}></span></button>
   </div>
-  <div class={`${prefixCls}-body`}>
-    <table class={`${prefixCls}-content`} role="grid" aria-label={panel.format('YYYY-MM')}>
+  <div class={[`${prefixCls}-body`, classNames?.body]} style={styles?.body}>
+    <table class={[`${prefixCls}-content`, classNames?.content]} style={styles?.content}
+      role="grid" aria-label={panel.format('YYYY-MM')}>
       {#if datePanel}<thead><tr>{#if weekPrefix}<th scope="col"><span style="width:0;height:0;position:absolute;overflow:hidden;opacity:0">{locale.week}</span></th>{/if}{#each weeks as _, n}<th scope="col">{weeks[(n + firstDay) % 7]}</th>{/each}</tr></thead>{/if}
       <tbody>
         {#each Array.from({ length: cells.length / width }, (_, n) => n) as row}
@@ -337,8 +342,9 @@
                   !weekPanel && sameCell(range?.[0], date) && `${prefixCls}-cell-range-start`,
                   !weekPanel && sameCell(range?.[1], date) && `${prefixCls}-cell-range-end`,
                   !weekPanel && inRangeCell(date) && `${prefixCls}-cell-in-range`,
-                  datePanel && renderToday.isSame(date, 'day') && `${prefixCls}-cell-today`
-                ]}>
+                  datePanel && renderToday.isSame(date, 'day') && `${prefixCls}-cell-today`,
+                  classNames?.item
+                ]} style={styles?.item}>
               {#snippet originNode()}
               <button type="button" data-picker-date={label(date)} aria-label={label(date)} disabled={disabled} tabindex={(mode === 'quarter' ? samePickerQuarter(date, panel) : date.isSame(panel, unit)) ? 0 : -1} class={`${prefixCls}-cell-inner date-cell`} onclick={cellRender ? undefined : () => onSelect(date)} onkeydown={cellRender ? undefined : event => key(event, date)}>{cellText(date)}</button>
               {/snippet}

@@ -27,7 +27,7 @@ export interface TimeRangePickerProps extends Omit<
   RangePickerProps,
   'showTime' | 'allowClear' | 'status' | 'disabledDate' | 'disabledTime'
     | 'onPickerValueChange' | 'onPanelChange' | 'prefix' | 'onclick'
-    | 'onfocus' | 'onblur' | 'multiple' | 'placeholder' | 'renderExtraFooter' | 'classNames'
+    | 'onfocus' | 'onblur' | 'multiple' | 'placeholder' | 'renderExtraFooter' | 'classNames' | 'styles'
     | 'cellRender' | 'picker'
 >, Omit<DatePickerTimeConfig, 'format' | 'defaultOpenValue'> {
   placeholder?: string | [string, string];
