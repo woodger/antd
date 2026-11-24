@@ -1,7 +1,7 @@
 <script lang="ts" generics="Row extends object">
   // Координирует обработку данных, шапку, выделение и раскрытие. Смена видимости
   // колонок не меняет состояние сортировки и фильтров. Окно ограничивает DOM строк.
-  import { untrack } from 'svelte';
+  import { untrack, type Snippet } from 'svelte';
   import { useConfig } from './config-context';
   import { getTablePrefixCss } from './table-prefix.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
@@ -12,6 +12,8 @@
   import { getPaginationState } from './pagination.engine';
   import { getTableColumnLayout, getTableColumnOrder, type TableHeading }
     from './table-columns.engine';
+  import { resolveTableCell, resolveTableVirtualCells, type TableCell, type TableMergedRow }
+    from './table-cell.engine';
   import { observeTableLayout } from './table-layout.dom';
   import { tableVirtualRowHeight } from './table-virtual.engine';
   import { createTableViewport } from './table-virtual.model.svelte';
@@ -26,6 +28,7 @@
   import { flattenTableRows, getTableLinkedSelection, type TableRow } from './table-tree.engine';
   import type {
     TableChange,
+    TableColumn,
     TableFilters,
     TableFilterValue,
     TableKey,
@@ -195,6 +198,11 @@
   let visibleColumns = $derived(columnLayout.leaves.map(leaf => leaf.column));
   let headerRows = $derived(columnLayout.headings.length ? columnLayout.headings : [[]]);
   let headerCount = $derived(showHeader ? headerRows.length : 0);
+  let hasCellProps = $derived(visibleColumns.some(column => Boolean(column.onCell)));
+  let hovered = $state<{ key: TableKey; leaf: number; first: number; last: number; }>();
+  let hasHeaderProps = $derived(headerRows.some(row => row.some(({ column }) =>
+    column.onHeaderCell || column.colSpan !== undefined || column.rowSpan !== undefined
+  )));
   let columnWidths = $derived([
     ...(expansionColumn
       ? [expansionColumn.columnWidth ?? (designTheme.enabled ? undefined : 48)] : []),
@@ -242,6 +250,57 @@
     rtl: () => config.direction === 'rtl'
   });
 
+  let cellPlan = $derived.by(() => {
+    if (!scrollport.active || !hasCellProps) {
+      return undefined;
+    }
+
+    const start = scrollport.start;
+    const end = start + scrollport.rows.length - 1;
+    return resolveTableVirtualCells(visibleRows, visibleColumns, start, end);
+  });
+
+  // Вычисляет начало и размер merged cells через измерения того же виртуального окна.
+  let mergedRows = $derived.by(() => {
+    const spans = cellPlan?.merged;
+    const layout = scrollport.layout;
+    if (!spans?.length || !layout) {
+      return [];
+    }
+
+    const widths = layout.widths;
+    const offsets = [0];
+    for (const width of widths) offsets.push(offsets[offsets.length - 1] + width);
+
+    return spans.map(row => measureMergedRow(row, offsets));
+  });
+  const virtualRowIndices = $derived(scrollport.active && !expandedRowRender && !mergedRows.length);
+  const emptyCell = resolveTableCell();
+
+  function measureMergedRow({ index, cells }: TableMergedRow, offsets: readonly number[]) {
+    const entry = visibleRows[index];
+    const key = entry.row.key;
+    const top = scrollport.getSize(key).top;
+    const parts = [];
+    let previousRight = 0;
+
+    for (const origin of cells) {
+      const first = origin.columnIndex + dataOffset;
+      const span = Math.max(1, Math.floor(origin.cell.colSpan));
+      const end = Math.min(offsets.length - 1, first + span);
+      const left = offsets[first];
+      const width = offsets[end] - left;
+      const gap = left - previousRight;
+
+      const last = visibleRows[origin.lastIndex];
+      const bottom = scrollport.getSize(key, last.row.key).bottom ?? top;
+      parts.push({ ...origin, width, gap, height: bottom - top });
+      previousRight = offsets[end];
+    }
+
+    return { ...entry, sourceIndex: index, top, parts };
+  }
+
   /** Прокручивает текущую страницу по абсолютной позиции, ключу или индексу. */
   export function scrollTo(target: TableScrollConfig): void {
     scrollport.scrollTo(target);
@@ -254,6 +313,64 @@
   function columnWidth(index: number) {
     const virtualWidth = scrollport.layout?.widths[index];
     return cssSize(virtualWidth ?? columnWidths[index]);
+  }
+
+  function bodyCellProps(column: TableColumn<Row>, record: Row, index: number, leaf: number) {
+    if (cellPlan) {
+      return cellPlan.cells.get(index)?.[leaf] ?? emptyCell;
+    }
+
+    return column.onCell ? resolveTableCell(column.onCell(record, index)) : emptyCell;
+  }
+
+  function inHoveredRows(first: number, last = first) {
+    const current = hovered;
+    return rowHoverable && current !== undefined && current.first <= last && current.last >= first
+      && visibleRows[current.first]?.row.key === current.key;
+  }
+
+  function clearHoveredCell(key: TableKey, leaf: number) {
+    if (hovered?.key === key && hovered.leaf === leaf) {
+      hovered = undefined;
+    }
+  }
+
+  // Удалённый из виртуального окна узел может не получить mouseleave.
+  function detachHoveredCell(key: TableKey, leaf: number) {
+    return () => clearHoveredCell(key, leaf);
+  }
+
+  function cellHoverEvents(cell: TableCell, key: TableKey, leaf: number, index: number) {
+    if (!rowHoverable || !hasCellProps) {
+      return { onmouseenter: undefined, onmouseleave: undefined };
+    }
+
+    return {
+      onmouseenter: (event: MouseEvent & { currentTarget: HTMLTableCellElement; }) => {
+        const last = Math.min(visibleRows.length - 1, index + Math.max(1, cell.rowSpan) - 1);
+        hovered = { key, leaf, first: index, last };
+        cell.attributes.onmouseenter?.(event);
+      },
+      onmouseleave: (event: MouseEvent & { currentTarget: HTMLTableCellElement; }) => {
+        clearHoveredCell(key, leaf);
+        cell.attributes.onmouseleave?.(event);
+      }
+    };
+  }
+
+  type FixedCell = { side: 'start' | 'end' | undefined; offset: string; };
+
+  // Пользовательский стиль имеет приоритет над выравниванием и закреплением ячейки.
+  function cellStyle(
+    fixed: FixedCell | undefined,
+    zIndex: number,
+    align: TableColumn<Row>['align'],
+    custom: TableCell['style']
+  ) {
+    const side = fixed?.side;
+    const inset = side && `inset-inline-${side}: ${fixed.offset}; z-index: ${zIndex}`;
+    return [inset, align && `text-align: ${align}`, custom]
+      .filter(Boolean).join('; ') || undefined;
   }
 
   // Закреплённый заголовок группы использует крайние листья своего colspan.
@@ -286,7 +403,8 @@
 
     return observeTableLayout({
       table: element, viewport, fixed, stickyHeader,
-      hasBodyRows: !showHeader && scrollport.rows.length > 0
+      hasBodyRows: !showHeader && scrollport.rows.length > 0,
+      measureColumns: showHeader ? hasHeaderProps : hasCellProps
     });
   });
 
@@ -473,6 +591,24 @@
     z-index: 5;
   }
   .table-virtual-bars > :global(div) { pointer-events: auto; }
+  .table-span-body { position: relative; }
+  .table-span-row {
+    position: absolute;
+    inset-inline: 0;
+    display: flex;
+    align-items: flex-start;
+    pointer-events: none;
+  }
+  .table-span-row > :is(td, th) {
+    display: block;
+    box-sizing: border-box;
+    flex: 0 0 var(--ant-table-span-width);
+    width: var(--ant-table-span-width);
+    height: var(--ant-table-span-height);
+    margin-inline-start: var(--ant-table-span-gap);
+    align-content: center;
+    pointer-events: auto;
+  }
   [data-ant-table-part="wrapper"] [data-ant-table-part="cell"].table-fixed-cell { position: var(--ant-table-fixed-position, relative); background: var(--ant-color-bg-container); }
   [data-ant-table-part="wrapper"] [data-ant-table-part="body"] > tr > th.table-fixed-cell { background: linear-gradient(var(--ant-table-header-bg), var(--ant-table-header-bg)) var(--ant-color-bg-container); }
   [data-ant-table-part="wrapper"] .table-scroll-y [data-ant-table-part="head"] > tr > th {
@@ -491,10 +627,10 @@
   [data-ant-table-part="wrapper"] [data-ant-table-part="body"] > tr[data-ant-table-selected] > .table-fixed-cell { background: linear-gradient(var(--ant-table-row-selected-bg), var(--ant-table-row-selected-bg)) var(--ant-color-bg-container); }
   .table-source-theme [data-ant-table-part="head"] th[data-ant-table-sortable]:hover [data-ant-table-part="sorter"] { color: var(--ant-table-header-icon-hover-color); }
   [data-ant-table-part="wrapper"].table-source-theme [data-ant-table-part="head"] th[data-ant-table-sortable].table-fixed-cell:hover { background: linear-gradient(var(--ant-table-fixed-header-sort-active-bg), var(--ant-table-fixed-header-sort-active-bg)) var(--ant-color-bg-container); }
-  .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"]:hover > td { background: var(--ant-table-row-hover-bg); }
-  .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"][data-ant-table-selected]:hover > :is(th, td) { background: var(--ant-table-row-selected-hover-bg); }
-  .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"]:hover > td.table-fixed-cell { background: linear-gradient(var(--ant-table-row-hover-bg), var(--ant-table-row-hover-bg)) var(--ant-color-bg-container); }
-  .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"][data-ant-table-selected]:hover > :is(th, td).table-fixed-cell { background: linear-gradient(var(--ant-table-row-selected-hover-bg), var(--ant-table-row-selected-hover-bg)) var(--ant-color-bg-container); }
+  .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"]:is(:hover, [data-ant-table-span-hovered]) > td { background: var(--ant-table-row-hover-bg); }
+  .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"][data-ant-table-selected]:is(:hover, [data-ant-table-span-hovered]) > :is(th, td) { background: var(--ant-table-row-selected-hover-bg); }
+  .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"]:is(:hover, [data-ant-table-span-hovered]) > td.table-fixed-cell { background: linear-gradient(var(--ant-table-row-hover-bg), var(--ant-table-row-hover-bg)) var(--ant-color-bg-container); }
+  .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"][data-ant-table-selected]:is(:hover, [data-ant-table-span-hovered]) > :is(th, td).table-fixed-cell { background: linear-gradient(var(--ant-table-row-selected-hover-bg), var(--ant-table-row-selected-hover-bg)) var(--ant-color-bg-container); }
   [data-ant-table-part="content"]:focus-visible, .sort-button:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 2px; }
   caption { padding: var(--ant-padding-sm); color: var(--ant-color-text-heading); text-align: start; font-weight: 600; }
   .sort-button { width: 100%; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: inherit; cursor: pointer; }
@@ -551,56 +687,101 @@
   {@const column = cell.column}
   {@const index = cell.start + dataOffset}
   {@const fixed = headerFixed(index, cell.colSpan)}
+  {@const props = resolveTableCell(column.onHeaderCell?.(column), cell.colSpan, cell.rowSpan)}
   {@const sortable = typeof column.sorter === 'function'
     || (mode === 'server' && column.sorter === true)}
   {@const order = tableData.sorter?.columnKey === column.key ? tableData.sorter.order : undefined}
-  <th
-    data-ant-table-part="cell"
-    data-ant-table-leaf={headerCount > 1 && !cell.group ? index : undefined}
-    data-ant-table-sortable={sortable || undefined}
-    data-ant-table-sorted={order || undefined}
-    scope={cell.colSpan > 1 ? 'colgroup' : 'col'}
-    colspan={cell.colSpan > 1 ? cell.colSpan : undefined}
-    rowspan={cell.rowSpan > 1 ? cell.rowSpan : undefined}
-    class={[
-      `${prefix}-cell`,
-      column.className,
-      fixed?.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
-      sortable && `${prefix}-column-has-sorters`,
-      order && `${prefix}-column-sort`
-    ]}
-    style:inset-inline-start={fixed?.side === 'start' ? fixed.offset : undefined}
-    style:inset-inline-end={fixed?.side === 'end' ? fixed.offset : undefined}
-    style:z-index={fixed?.side ? 3 : undefined}
-    style:text-align={column.align ?? (cell.colSpan > 1 ? 'center' : undefined)}
-    aria-sort={order === 'ascend' ? 'ascending' : order === 'descend' ? 'descending' : undefined}
-  >
-    <div class="column-heading">
-      {#if sortable}
-        <button type="button" class={`sort-button ${prefix}-column-sorters`} disabled={resolvedDisabled} title={sortDescription(column.key, tableData.sorter)} onclick={() => changeSort(column.key)}>
-          <span class={`${prefix}-column-title`}>{column.title}</span>
-          <span data-ant-table-part="sorter" class={`${prefix}-column-sorter`} aria-hidden="true"><span class={`${prefix}-column-sorter-inner`}>{#if designTheme.enabled}<span class={[
-              `anticon anticon-caret-up ${prefix}-column-sorter-up`,
-              order === 'ascend' && 'active'
-            ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z" /></svg></span><span class={[
-                `anticon anticon-caret-down ${prefix}-column-sorter-down`,
-                order === 'descend' && 'active'
-              ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false"><path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" /></svg></span>{:else}<span class={[
-              'sort-arrow sort-up',
-              order === 'ascend' && 'active'
-            ]}></span><span class={[
-                'sort-arrow sort-down',
-                order === 'descend' && 'active'
-              ]}></span>{/if}</span></span>
-        </button>
-      {:else}<span>{column.title}</span>{/if}
-      {#if column.filters && (mode === 'server' || column.onFilter)}
-        <TableFilter prefixCls={prefix} {dropdownPrefix} title={column.title} options={column.filters} value={Object.hasOwn(tableData.filters, column.key)
-            ? tableData.filters[column.key]
-            : []} multiple={column.filterMultiple !== false} disabled={resolvedDisabled} onApply={(values) => changeFilter(column.key, values)} />
-      {/if}
-    </div>
-  </th>
+  {#if props.colSpan !== 0 && props.rowSpan !== 0}
+    <th
+      {...props.attributes}
+      data-ant-table-part="cell"
+      data-ant-table-leaf={headerCount > 1 && !cell.group ? cell.leaf + dataOffset : undefined}
+      data-ant-table-sortable={sortable || undefined}
+      data-ant-table-sorted={order || undefined}
+      scope={cell.colSpan > 1 ? 'colgroup' : 'col'}
+      colspan={props.colSpan !== 1 ? props.colSpan : undefined}
+      rowspan={props.rowSpan !== 1 ? props.rowSpan : undefined}
+      class={[
+        `${prefix}-cell`,
+        column.className,
+        fixed?.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
+        sortable && `${prefix}-column-has-sorters`,
+        order && `${prefix}-column-sort`,
+        props.className
+      ]}
+      style={cellStyle(fixed, 3, column.align ?? (props.colSpan > 1 ? 'center' : undefined), props.style)}
+      aria-sort={order === 'ascend' ? 'ascending' : order === 'descend' ? 'descending' : undefined}
+    >
+      <div class="column-heading">
+        {#if sortable}
+          <button type="button" class={`sort-button ${prefix}-column-sorters`} disabled={resolvedDisabled} title={sortDescription(column.key, tableData.sorter)} onclick={() => changeSort(column.key)}>
+            <span class={`${prefix}-column-title`}>{column.title}</span>
+            <span data-ant-table-part="sorter" class={`${prefix}-column-sorter`} aria-hidden="true"><span class={`${prefix}-column-sorter-inner`}>{#if designTheme.enabled}<span class={[
+                `anticon anticon-caret-up ${prefix}-column-sorter-up`,
+                order === 'ascend' && 'active'
+              ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z" /></svg></span><span class={[
+                  `anticon anticon-caret-down ${prefix}-column-sorter-down`,
+                  order === 'descend' && 'active'
+                ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false"><path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" /></svg></span>{:else}<span class={[
+                'sort-arrow sort-up',
+                order === 'ascend' && 'active'
+              ]}></span><span class={[
+                  'sort-arrow sort-down',
+                  order === 'descend' && 'active'
+                ]}></span>{/if}</span></span>
+          </button>
+        {:else}<span>{column.title}</span>{/if}
+        {#if column.filters && (mode === 'server' || column.onFilter)}
+          <TableFilter prefixCls={prefix} {dropdownPrefix} title={column.title} options={column.filters} value={Object.hasOwn(tableData.filters, column.key)
+              ? tableData.filters[column.key]
+              : []} multiple={column.filterMultiple !== false} disabled={resolvedDisabled} onApply={(values) => changeFilter(column.key, values)} />
+        {/if}
+      </div>
+    </th>
+  {/if}
+{/snippet}
+
+{#snippet dataCell(
+  column: TableColumn<Row>,
+  leaf: number,
+  key: TableKey,
+  index: number,
+  cell: TableCell,
+  body: Snippet,
+  overlay?: { width: number; height: number; gap: number; }
+)}
+  {@const fixed = fixedCells[leaf + dataOffset]}
+  {@const sorted = tableData.sorter?.columnKey === column.key}
+  {@const attributes = {
+    ...cell.attributes,
+    ...cellHoverEvents(cell, key, leaf, index),
+    'data-ant-table-part': 'cell',
+    'data-ant-table-sorted': sorted || undefined,
+    class: [
+      `${prefix}-cell`, column.className,
+      fixed.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
+      sorted && `${prefix}-column-sort`,
+      inHoveredRows(index, index + Math.max(1, cell.rowSpan) - 1) && `${prefix}-cell-row-hover`,
+      cell.className
+    ],
+    style: cellStyle(fixed, 1, column.align, cell.style),
+    colspan: cell.colSpan !== 1 ? cell.colSpan : undefined,
+    rowspan: cell.rowSpan !== 1 ? cell.rowSpan : undefined
+  }}
+  <!-- Нативные th и td сохраняют редактор при гидратации Svelte 5.57. -->
+  {#if column.rowScope}
+    <th {...attributes} scope={column.rowScope}
+      {@attach hasCellProps ? () => detachHoveredCell(key, leaf) : undefined}
+      style:--ant-table-span-width={cssSize(overlay?.width)}
+      style:--ant-table-span-height={cssSize(overlay?.height)}
+      style:--ant-table-span-gap={cssSize(overlay?.gap)}>{@render body()}</th>
+  {:else}
+    <td {...attributes}
+      {@attach hasCellProps ? () => detachHoveredCell(key, leaf) : undefined}
+      style:--ant-table-span-width={cssSize(overlay?.width)}
+      style:--ant-table-span-height={cssSize(overlay?.height)}
+      style:--ant-table-span-gap={cssSize(overlay?.gap)}>{@render body()}</td>
+  {/if}
 {/snippet}
 
 {#snippet virtualSpacer(height: number)}
@@ -651,7 +832,7 @@
         <table bind:this={table}
           aria-label={ariaLabel ?? (caption ? undefined : strings.label)}
           aria-busy={loading || undefined}
-          aria-rowcount={scrollport.active && !expandedRowRender
+          aria-rowcount={virtualRowIndices
             ? visibleRows.length + headerCount : undefined}
           style:min-width={virtual ? '100%' : cssSize(scroll?.x)}
           style:width={cssSize(scrollport.tableWidth)}
@@ -671,7 +852,7 @@
           {#if showHeader}
             <thead data-ant-table-part="head" class={`${prefix}-thead`}>
               {#each headerRows as row, depth}
-                <tr aria-rowindex={scrollport.active && !expandedRowRender ? depth + 1 : undefined}>
+                <tr aria-rowindex={virtualRowIndices ? depth + 1 : undefined}>
                   {#if depth === 0}
                     {#if expansionColumn}
                       <th data-ant-table-part="cell" scope="col"
@@ -713,7 +894,8 @@
               {/each}
             </thead>
           {/if}
-          <tbody data-ant-table-part="body" class={`${prefix}-tbody`}>
+          <tbody data-ant-table-part="body" class={`${prefix}-tbody`}
+            class:table-span-body={mergedRows.length > 0}>
             {@render virtualSpacer(scrollport.before)}
             {#each scrollport.rows as { row, depth, index: renderIndex }, windowIndex (row.key)}
               {@const index = scrollport.start + windowIndex}
@@ -721,7 +903,8 @@
               {@const expanded = canExpand && expandedKeys.has(row.key)}
               {@const checkbox = checkboxProps.get(row.key)}
               <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
-              <tr data-ant-table-part="row" data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined} class={[
+              <tr data-ant-table-part="row" data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
+                data-ant-table-span-hovered={inHoveredRows(index) || undefined} class={[
                   `${prefix}-row`,
                   tree && `${prefix}-row-level-${depth}`,
                   typeof rowClassName === 'function'
@@ -729,7 +912,7 @@
                   rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
                 ]}
                 data-row-key={row.key}
-                aria-rowindex={scrollport.active && !expandedRowRender
+                aria-rowindex={virtualRowIndices
                   ? index + headerCount + 1 : undefined}
                 id={depth > 0 ? expansionId(row.key, 'row') : undefined}
                 onclick={expandable?.expandRowByClick && canExpand
@@ -765,35 +948,22 @@
                   </td>
                 {/if}
                 {#each visibleColumns as column, columnIndex (column.key)}
-                  {@const fixed = fixedCells[columnIndex + dataOffset]}
-                  {@const sorted = tableData.sorter?.columnKey === column.key}
-                  {@const attributes = {
-                    'data-ant-table-part': 'cell',
-                    'data-ant-table-sorted': sorted || undefined,
-                    class: [
-                      `${prefix}-cell`, column.className,
-                      fixed.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
-                      sorted && `${prefix}-column-sort`
-                    ]
-                  }}
+                  {@const cell = bodyCellProps(column, row.record, index, columnIndex)}
+                  {@const placeholder = cellPlan?.placeholders.get(index)?.[columnIndex]}
                   {#snippet cellContent()}
                     {#if showTreeControls && columnIndex === 0}
                       {@render expansionControl(row, canExpand, expanded, depth)}
                     {/if}{#if column.render}{@render column.render(row.record, renderIndex)}{:else}{cellValue(row.record, column.dataIndex)}{/if}
                   {/snippet}
-                  <!-- Svelte 5.57 перемещает svelte:element при hydration, снимая фокус с редактора. -->
-                  {#if column.rowScope}
-                    <th {...attributes} scope={column.rowScope}
-                      style:inset-inline-start={fixed.side === 'start' ? fixed.offset : undefined}
-                      style:inset-inline-end={fixed.side === 'end' ? fixed.offset : undefined}
-                      style:z-index={fixed.side ? 1 : undefined}
-                      style:text-align={column.align}>{@render cellContent()}</th>
-                  {:else}
-                    <td {...attributes}
-                      style:inset-inline-start={fixed.side === 'start' ? fixed.offset : undefined}
-                      style:inset-inline-end={fixed.side === 'end' ? fixed.offset : undefined}
-                      style:z-index={fixed.side ? 1 : undefined}
-                      style:text-align={column.align}>{@render cellContent()}</td>
+                  {#if placeholder !== undefined}
+                    {#if placeholder > 0}
+                      <!-- Ширина остаётся в сетке, содержимое находится в строке span. -->
+                      <td aria-hidden="true" class={`${prefix}-cell`}
+                        colspan={placeholder > 1 ? placeholder : undefined}
+                        style:visibility="hidden"></td>
+                    {/if}
+                  {:else if cell.colSpan !== 0 && cell.rowSpan !== 0}
+                    {@render dataCell(column, columnIndex, row.key, index, cell, cellContent)}
                   {/if}
                 {:else}
                   {#if !dataOffset}
@@ -820,6 +990,36 @@
               {:else}&nbsp;{/if}</td></tr>
             {/each}
             {@render virtualSpacer(scrollport.after)}
+            {#each mergedRows as { row, depth, index, sourceIndex, top, parts } (row.key)}
+              {@const canExpand = canExpandRow(row)}
+              {@const expanded = canExpand && expandedKeys.has(row.key)}
+              <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
+              <tr data-ant-table-part="span-row" data-row-key={row.key}
+                data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
+                class={[
+                  'table-span-row', `${prefix}-row ${prefix}-row-extra`,
+                  tree && `${prefix}-row-level-${depth}`,
+                  typeof rowClassName === 'function'
+                    ? rowClassName(row.record, sourceIndex, depth) : rowClassName,
+                  rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
+                ]}
+                style:top={cssSize(top)}
+                onclick={expandable?.expandRowByClick && canExpand
+                  ? event => expandByRowClick(row, event) : undefined}
+              >
+                {#each parts as part (part.columnIndex)}
+                  {@const column = visibleColumns[part.columnIndex]}
+                  {#snippet spanContent()}
+                    {#if showTreeControls && part.columnIndex === 0}
+                      {@render expansionControl(row, canExpand, expanded, depth)}
+                    {/if}{#if column.render}{@render column.render(row.record, index)}{:else}{cellValue(row.record, column.dataIndex)}{/if}
+                  {/snippet}
+                  {@render dataCell(
+                    column, part.columnIndex, row.key, sourceIndex, part.cell, spanContent, part
+                  )}
+                {/each}
+              </tr>
+            {/each}
           </tbody>
         </table>
       </div>

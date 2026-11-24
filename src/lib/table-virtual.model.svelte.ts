@@ -312,6 +312,7 @@ export function createTableViewport<Entry extends { row: { key: TableKey; }; }>(
     get maxHeight() { return active ? limit + reserved : undefined; },
     get reserved() { return active ? reserved : undefined; },
     get captionHeight() { return active && options.caption() ? captionHeight : undefined; },
+    getSize: list.getSize,
     attachRow: list.attach,
     attachDetails,
     dragScrollbar,

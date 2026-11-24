@@ -44,10 +44,14 @@ export function observeTableLayout(options: {
   fixed: readonly (TableFixed | undefined)[];
   stickyHeader: boolean;
   hasBodyRows: boolean;
+  measureColumns?: boolean;
 }) {
-  const { table, viewport, fixed, stickyHeader, hasBodyRows } = options;
+  const { table, viewport, fixed, stickyHeader, hasBodyRows, measureColumns } = options;
   const head = table.tHead;
-  const cells = head ? measureCells(head) : hasBodyRows ? findBodyCells(table) : [];
+  // При spans число ячеек и число физических колонок могут различаться.
+  const cells = measureColumns
+    ? Array.from(table.querySelectorAll<HTMLElement>(':scope > colgroup > col'))
+    : head ? measureCells(head) : hasBodyRows ? findBodyCells(table) : [];
   const rows = stickyHeader ? Array.from(head?.rows ?? []) : [];
 
   /** Обновляет offsets после resize без переустановки разметки или обработчиков. */
@@ -91,6 +95,7 @@ export function observeTableLayout(options: {
   const Observer = viewport.ownerDocument.defaultView?.ResizeObserver;
   const observer = Observer && new Observer(measure);
   observer?.observe(viewport);
+  if (measureColumns) observer?.observe(table);
   for (const cell of cells) observer?.observe(cell);
   for (const row of rows) observer?.observe(row);
 

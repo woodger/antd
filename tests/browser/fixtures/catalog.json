@@ -1748,6 +1748,11 @@
     "root": "table-columns-fixture"
   },
   {
+    "id": "table-spans",
+    "module": "./TableSpansFixture.svelte",
+    "root": "table-spans-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"

@@ -7,6 +7,7 @@ import type { TableColumn, TableColumnsType, TableFixed } from './table.types';
 export interface TableHeading<Row extends object> {
   column: TableColumn<Row>;
   start: number;
+  leaf: number;
   colSpan: number;
   rowSpan: number;
   group: boolean;
@@ -44,44 +45,47 @@ export function getTableColumnLayout<Row extends object>(
   const headings: TableHeading<Row>[][] = [];
 
   // rc-table оставляет заголовок группы как отдельную колонку после скрытия всех детей.
-  function visit(column: TableColumn<Row>, depth: number, inheritedFixed?: TableFixed) {
+  function visit(
+    column: TableColumn<Row>,
+    depth: number,
+    start: number,
+    inheritedFixed?: TableFixed
+  ): number {
     if (column.hidden) {
-      return;
+      return 0;
     }
 
     const fixed = column.fixed ?? inheritedFixed;
     const heading: TableHeading<Row> = {
-      column, start: leaves.length, colSpan: 1, rowSpan: 1, group: false
+      column, start, leaf: leaves.length, colSpan: 1, rowSpan: 1, group: false
     };
     const row = headings[depth] ??= [];
     row.push(heading);
 
+    let childWidth = 0;
     for (const child of column.children ?? []) {
-      visit(child, depth + 1, fixed);
+      childWidth += visit(child, depth + 1, start + childWidth, fixed);
     }
 
-    const childSpan = leaves.length - heading.start;
-    if (childSpan === 0) {
+    heading.group = leaves.length > heading.leaf;
+    if (!heading.group) {
       leaves.push({ column, fixed });
     }
-    else {
-      heading.colSpan = childSpan;
-      heading.group = true;
-    }
+    heading.colSpan = column.colSpan ?? (heading.group ? childWidth : 1);
+    return heading.colSpan;
   }
 
   // InternalTable проверяет responsive у верхнего уровня до обхода групп в rc-table.
+  let start = 0;
   for (const column of columns) {
     if (!column.responsive || column.responsive.some(point => screens[point])) {
-      visit(column, 0);
+      start += visit(column, 0, start);
     }
   }
 
   for (const [depth, row] of headings.entries()) {
     for (const cell of row) {
-      if (!cell.group) {
-        cell.rowSpan = headings.length - depth;
-      }
+      cell.rowSpan = cell.column.rowSpan ?? (cell.group ? 1 : headings.length - depth);
     }
   }
 

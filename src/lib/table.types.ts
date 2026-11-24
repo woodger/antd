@@ -1,4 +1,5 @@
 import type { Snippet } from 'svelte';
+import type { HTMLTdAttributes } from 'svelte/elements';
 import type { PaginationProps } from './Pagination.svelte';
 import type { GridBreakpoint } from './grid.types';
 import type { ComponentSize } from './types';
@@ -21,6 +22,12 @@ export interface TableSorter {
   order: TableSortOrder;
 }
 
+/** Атрибуты и Svelte events отдельной ячейки. Нулевой span пропускает её. */
+export interface TableCellProps extends Omit<HTMLTdAttributes, 'children' | 'colspan' | 'rowspan'> {
+  colSpan?: number;
+  rowSpan?: number;
+}
+
 /** Колонка данных или заголовок группы колонок. Ключ уникален во всём дереве. */
 export interface TableColumn<Row extends object> {
   key: string;
@@ -37,6 +44,14 @@ export interface TableColumn<Row extends object> {
   className?: string;
   /** Ячейки данных этой колонки становятся th с указанным scope. */
   rowScope?: 'row' | 'rowgroup';
+  /** Переопределяет ширину заголовка в колонках. Ноль скрывает ячейку. */
+  colSpan?: number;
+  /** Переопределяет высоту заголовка в строках. Ноль скрывает ячейку. */
+  rowSpan?: number;
+  /** Атрибуты и spans ячейки данных. index — позиция в раскрытой странице. */
+  onCell?: (record: Row, index: number) => TableCellProps | void;
+  /** Атрибуты заголовка с приоритетом над spans колонки. */
+  onHeaderCell?: (column: TableColumn<Row>) => TableCellProps | void;
   /** Убирает колонку из DOM, сохраняя её сортировку и фильтры данных. @defaultValue false */
   hidden?: boolean;
   /** Дочерние колонки образуют следующий уровень заголовка. */
