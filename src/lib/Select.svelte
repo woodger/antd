@@ -2001,8 +2001,8 @@
 {#snippet removeGlyph()}<SelectIcon name="close" />{/snippet}
 {#snippet clearGlyph()}<SelectIcon name="close-circle" />{/snippet}
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`select-prefix:${prefix}:${rootPrefix}`} />{/if}
-{#if rootSlot && rootContext}
+<!-- Пробельный узел перед Select занимает ширину в строке inline-block. -->
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`select-prefix:${prefix}:${rootPrefix}`} />{/if}{#if rootSlot && rootContext}
   <SelectComponent component={rootSlot} context={rootContext} root />
   {@render componentPopup()}
 {:else}<div data-ant-select-prefix={prefix} data-ant-select-root-prefix={rootPrefix}

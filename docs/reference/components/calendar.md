@@ -85,8 +85,8 @@ yearControlWidth/monthControlWidth задают минимальную шири�
 скрытый текстовый sizer сохраняет intrinsic размер readonly input даже при 0/10px.
 Переключатель режима не переносит отдельные кнопки.
 При viewport до 480px год и месяц располагаются рядом, переключатель — ниже,
-как в исходном Calendar. Эти правила принадлежат CalendarHeader и не меняют
-геометрию остальных Select/RadioGroup. Границы полей и кнопок в мини-календарях
+как в исходном Calendar. Зазор между селекторами задаёт CSS-отступ.
+Границы полей и кнопок в мини-календарях
 300/360px, mobile/RTL и работа dropdown/клавиатуры проверяются в
 [calendar-header](../../../tests/browser/calendar-header.spec.ts).
 
