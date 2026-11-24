@@ -19657,11 +19657,29 @@
         },
         {
           "id": "gap-1",
-          "title": "Виртуализация и древовидные данные",
+          "title": "Виртуализация Table",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
           "note": "Ограничение зафиксировано в README модуля."
+        },
+        {
+          "id": "tree-data",
+          "title": "Древовидные записи, раскрытие веток и выбор",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table-tree.engine.ts",
+            "src/lib/table-tree.engine.test.ts",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-tree-reference.json",
+            "tests/browser/table-tree.spec.ts",
+            "tests/browser/table-tree-hydration.spec.ts",
+            "tests/package/table-tree.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых прогона девяти UMD профилей, 57 состояний. Раскрытие определяется children/childrenColumnName, контролируется expandedRowKeys, включает defaultExpandAllRows начальной страницы и сохраняет ключи скрытых веток. Индексы ячеек относятся к соседним записям, rowClassName получает позицию видимой строки и глубину. Пагинация считает корни. Сортировка и рекурсивная фильтрация меняют представление веток, а выбор возвращает исходные записи. Header учитывает свёрнутых потомков, checkStrictly управляет связью отметок с учётом disabled. Проверены indentSize, RTL/custom prefix, переключение кликом и скрытие иконок. Native пропускает клик по листу и по редакторам ячеек; кнопки ссылаются на дочерние строки. Виртуализация остаётся самостоятельным пробелом."
         },
         {
           "id": "render-empty",

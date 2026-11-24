@@ -9,12 +9,7 @@ import type {
   TableRowKey,
   TableSorter
 } from './table.types';
-
-export interface TableRow<Row extends object> {
-  key: TableKey;
-  record: Row;
-  sourceIndex: number;
-}
+import { filterTableTree, indexTableRows, sortTableTree, type TableRow } from './table-tree.engine';
 
 /**
  * Фильтрует и стабильно сортирует данные без мутации исходных records. Row keys должны
@@ -27,7 +22,8 @@ export function getTableData<Row extends object>(
   rowKey?: TableRowKey<Row>,
   sorter?: TableSorter | null,
   filters?: Readonly<Record<string, readonly TableFilterValue[]>>,
-  mode: TableMode = 'client'
+  mode: TableMode = 'client',
+  childrenColumnName = 'children'
 ): {
   rows: TableRow<Row>[];
   allRows: TableRow<Row>[];
@@ -35,7 +31,7 @@ export function getTableData<Row extends object>(
   filters: TableFilters;
 } {
   assertTableColumnKeys(columns);
-  const allRows = indexTableRows(dataSource, rowKey);
+  const { roots, allRows } = indexTableRows(dataSource, rowKey, childrenColumnName);
   const activeFilters = getTableFilters(columns, filters, mode);
 
   const column = columns.find(
@@ -49,11 +45,22 @@ export function getTableData<Row extends object>(
     : null;
 
   if (mode === 'server') {
-    return { rows: allRows, allRows, sorter: activeSorter, filters: activeFilters };
+    return { rows: roots, allRows, sorter: activeSorter, filters: activeFilters };
   }
 
   const filteredColumns = columns.filter((item) => Object.hasOwn(activeFilters, item.key));
-  const rows = allRows.filter(
+  if (roots.some(row => row.children !== undefined)) {
+    const direction = activeSorter?.order === 'descend' ? -1 : 1;
+    // В дереве Ant Design сначала сортирует каждый уровень. Фильтр родителя видит
+    // отсортированные и отфильтрованные дочерние записи.
+    const sorted = typeof column?.sorter === 'function' && activeSorter
+      ? sortTableTree(roots, column.sorter, direction, childrenColumnName) : roots;
+    const rows = filterTableTree(sorted, filteredColumns, activeFilters, childrenColumnName);
+
+    return { rows, allRows, sorter: activeSorter, filters: activeFilters };
+  }
+
+  const rows = roots.filter(
     (row) => filteredColumns.every(
       (item) => activeFilters[item.key].some((value) => item.onFilter?.(value, row.record))
     )
@@ -86,32 +93,6 @@ function assertTableColumnKeys<Row extends object>(columns: readonly TableColumn
     }
 
     columnKeys.add(column.key);
-  }
-}
-
-// Сохраняет исходный индекс строки для стабильной сортировки.
-function indexTableRows<Row extends object>(
-  dataSource: readonly Row[],
-  rowKey?: TableRowKey<Row>
-): TableRow<Row>[] {
-  const keys = new Set<TableKey>();
-  return dataSource.map(createRow);
-
-  // Проверяет ключ перед добавлением строки. Дубли запрещены и в server mode.
-  function createRow(record: Row, sourceIndex: number): TableRow<Row> {
-    const key: unknown = typeof rowKey === 'function'
-      ? rowKey(record)
-      : Reflect.get(record, rowKey ?? 'key');
-
-    if (typeof key !== 'string' && (typeof key !== 'number' || !Number.isFinite(key))) {
-      throw new Error('Table rowKey must resolve to a string or finite number for every record');
-    }
-    if (keys.has(key)) {
-      throw new Error(`Table row key "${key}" is not unique`);
-    }
-
-    keys.add(key);
-    return { key, record, sourceIndex };
   }
 }
 

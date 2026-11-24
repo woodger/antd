@@ -1733,6 +1733,11 @@
     "root": "table-column-hidden-fixture"
   },
   {
+    "id": "table-tree",
+    "module": "./TableTreeFixture.svelte",
+    "root": "table-tree-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"

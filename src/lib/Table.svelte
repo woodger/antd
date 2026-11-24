@@ -17,6 +17,7 @@
     getTableFilters,
     getTableSelection
   } from './table.engine';
+  import { flattenTableRows, getTableLinkedSelection, type TableRow } from './table-tree.engine';
   import type {
     TableChange,
     TableFilters,
@@ -90,12 +91,12 @@
   const initialCurrent = untrack(() => defaultCurrent);
   const initialSize = untrack(() => defaultPageSize);
   const initialSelection = untrack(() => [...defaultSelectedRowKeys]);
-  let internalExpansion = $state(untrack(() => [...expandable?.defaultExpandedRowKeys ?? []]));
   const initialFilters: TableFilters = untrack(
     () => Object.fromEntries(
       Object.entries(defaultFilters).map(([key, values]) => [key, [...values]])
     )
   );
+  let childrenColumnName = $derived(expandable?.childrenColumnName || 'children');
   let tableData = $derived(
     getTableData(
       dataSource,
@@ -103,7 +104,8 @@
       rowKey,
       sorter === undefined ? initialSorter : sorter,
       filters ?? initialFilters,
-      mode
+      mode,
+      childrenColumnName
     )
   );
   let hasFilters = $derived(
@@ -125,34 +127,54 @@
       )
   );
   let panelData = $derived(pageRows.map(row => row.record));
+  let expandedRowRender = $derived(expandable?.expandedRowRender);
+  let tree = $derived(!expandedRowRender && pageRows.some(row => row.children !== undefined));
+  let showTreeControls = $derived(tree && expandable?.showExpandColumn !== false);
+  let indentSize = $derived(expandable?.indentSize ?? 15);
+  let internalExpansion = $state(untrack(() => {
+    const initialKeys = expandable?.defaultExpandedRowKeys;
+    if (initialKeys) {
+      return [...initialKeys];
+    }
+
+    return expandable?.defaultExpandAllRows
+      ? flattenTableRows(pageRows).map(({ row }) => row.key) : [];
+  }));
+  let expandedKeys = $derived(new Set(expandable?.expandedRowKeys ?? internalExpansion));
+  const collapsed = new Set<TableKey>();
+  let visibleRows = $derived(flattenTableRows(pageRows, tree ? expandedKeys : collapsed));
+
   let selectionOptions = $derived(typeof rowSelection === 'object' ? rowSelection : undefined);
-  let visibleRows = $derived(
-    pageRows.map(
-      (row) => ({
-        ...row,
-        checkbox: selectionOptions?.getCheckboxProps?.(row.record) ?? {},
-        canExpand: expandable ? expandable.rowExpandable?.(row.record) ?? true : false
-      })
-    )
+  let pageCheckboxes = $derived(rowSelection
+    ? flattenTableRows(pageRows).map(({ row }) =>
+      [row.key, selectionOptions?.getCheckboxProps?.(row.record) ?? {}] as const)
+    : []);
+  let checkboxProps = $derived(new Map(pageCheckboxes));
+  let ownerSelection = $derived(selectedRowKeys ?? initialSelection);
+  let linkedSelection = $derived(selectionOptions?.checkStrictly === false
+    ? getTableLinkedSelection(tableData.rows, ownerSelection, checkboxDisabled)
+    : undefined
   );
   let changeableKeys = $derived(
-    visibleRows.filter((row) => !row.checkbox.disabled).map((row) => row.key)
+    pageCheckboxes.filter(([, props]) => !props.disabled).map(([key]) => key)
   );
-  let selectedKeys = $derived(new Set(selectedRowKeys ?? initialSelection));
+  let selectedKeys = $derived(new Set(linkedSelection?.keys ?? ownerSelection));
   let selection = $derived(getTableSelection(changeableKeys, [...selectedKeys]));
-  let expandedKeys = $derived(new Set(expandable?.expandedRowKeys ?? internalExpansion));
   let resolvedDisabled = $derived((disabled ?? config.componentDisabled) || loading);
   let resolvedSize = $derived(size ?? config.componentSize);
   let strings = $derived({ ...ruRU.table, ...config.locale.table });
   let content = $state<HTMLDivElement>();
   let table = $state<HTMLTableElement>();
-  let expansionOffset = $derived(expandable ? 1 : 0);
+  let expansionColumn = $derived(
+    expandedRowRender && expandable?.showExpandColumn !== false ? expandable : undefined
+  );
+  let expansionOffset = $derived(expansionColumn ? 1 : 0);
   let dataOffset = $derived(expansionOffset + (rowSelection ? 1 : 0));
   // Hidden влияет только на разметку: InternalTable сохраняет sort/filter до rc-table.
   let visibleColumns = $derived(columns.filter(column => !column.hidden));
   let fixedColumns = $derived(
     [
-      ...(expandable ? [expandable.fixed ?? false] : []),
+      ...(expansionColumn ? [expansionColumn.fixed ?? false] : []),
       ...(rowSelection ? [selectionOptions?.fixed ?? false] : []),
       ...visibleColumns.map((column) => column.fixed)
     ]
@@ -167,7 +189,7 @@
     const viewport = content;
     const fixed = fixedColumns;
     const hasHeader = showHeader && scroll?.y !== undefined;
-    const hasExpansion = Boolean(expandable);
+    const hasExpansion = Boolean(expandedRowRender);
 
     if (!element || !viewport || (!fixed.some(Boolean) && !hasHeader && !hasExpansion)) {
       return;
@@ -291,12 +313,21 @@
     notifyChange('filter');
   }
 
+  // Для связи отметок вне текущей страницы применяются те же правила disabled.
+  function checkboxDisabled(row: TableRow<Row>): boolean {
+    const props = checkboxProps.get(row.key) ?? selectionOptions?.getCheckboxProps?.(row.record);
+    return !!props?.disabled;
+  }
+
   function changeSelection(keys: TableKey[], checked: boolean, type: 'single' | 'all') {
     if (resolvedDisabled) {
       return;
     }
 
-    const next = changeTableSelection([...selectedKeys], keys, checked);
+    const key = keys[0];
+    const next = type === 'single' && linkedSelection && key !== undefined
+      ? linkedSelection.toggle(key, checked)
+      : changeTableSelection([...selectedKeys], keys, checked);
     selectedRowKeys = next;
     const records = new Map(tableData.allRows.map((row) => [row.key, row.record]));
     const rows = next.flatMap((key) => {
@@ -315,11 +346,18 @@
       : next?.order === 'descend' ? strings.sortDescending : strings.cancelSort;
   }
 
-  function changeExpansion(record: Row, key: TableKey) {
-    if (resolvedDisabled || !expandable || expandable.rowExpandable?.(record) === false) {
+  // rowExpandable относится к подробностям; ветка определяется массивом потомков.
+  function canExpandRow(row: TableRow<Row>): boolean {
+    return expandedRowRender ? expandable?.rowExpandable?.(row.record) ?? true
+      : tree && row.children !== undefined;
+  }
+
+  function changeExpansion(row: TableRow<Row>) {
+    if (resolvedDisabled || !canExpandRow(row)) {
       return;
     }
 
+    const { key, record } = row;
     const next = new Set(expandedKeys);
     const expanded = !next.has(key);
 
@@ -331,20 +369,48 @@
     }
 
     internalExpansion = [...next];
-    const { onExpand, onExpandedRowsChange } = expandable;
+    const { onExpand, onExpandedRowsChange } = expandable ?? {};
     onExpand?.(expanded, record);
     onExpandedRowsChange?.([...next]);
   }
 
-  function expansionId(key: TableKey): string {
+  // Встроенные controls и редакторы ячеек используют свои click и keyboard handlers.
+  function expandByRowClick(row: TableRow<Row>, event: MouseEvent) {
+    if (event.defaultPrevented) {
+      return;
+    }
+    const target = event.target;
+    if (!(target instanceof Element) || target.closest('tr') !== event.currentTarget) {
+      return;
+    }
+    const editor = target.closest(
+      'button, input, select, textarea, a[href], label, summary, [contenteditable], [role="button"]'
+    );
+    if (editor?.closest('tr') === event.currentTarget) {
+      return;
+    }
+
+    changeExpansion(row);
+  }
+
+  function expansionId(key: TableKey, part: 'details' | 'row' = 'details'): string {
     const value = `${typeof key}:${key}`;
 
-    return `ant-table-details-${id}-${Array.from(
+    return `ant-table-${part}-${id}-${Array.from(
       { length: value.length },
       (_, index) => value.charCodeAt(index).toString(16)
     ).join(
       '-'
     )}`;
+  }
+
+  // У вложенных строк отдельные tr; aria-controls связывает кнопку с видимыми детьми.
+  function expandedTargets(row: TableRow<Row>, nested: boolean): string | undefined {
+    if (!nested) {
+      return expansionId(row.key);
+    }
+
+    return row.children?.map(child => expansionId(child.key, 'row')).join(' ') || undefined;
   }
 
   function cellValue(record: Row, key: keyof Row | undefined): string {
@@ -396,6 +462,39 @@
   [data-ant-table-size="small"] .expanded-content { padding: var(--ant-table-cell-padding-block-sm) var(--ant-table-cell-padding-inline-sm); }
 </style>
 
+{#snippet expansionControl(row: TableRow<Row>, canExpand: boolean, expanded: boolean, depth?: number)}
+  {@const nested = depth !== undefined}
+  {#if depth !== undefined}
+    <span
+      aria-hidden="true"
+      class={`${prefix}-row-indent indent-level-${depth}`}
+      style:padding-inline-start={`${depth * indentSize}px`}
+    ></span>
+  {/if}
+  {#if canExpand}
+    <button
+      type="button"
+      data-ant-table-part="expand-icon"
+      class={[
+        `${prefix}-row-expand-icon`,
+        `${prefix}-row-expand-icon-${expanded ? 'expanded' : 'collapsed'}`
+      ]}
+      disabled={resolvedDisabled}
+      aria-label={`${expanded ? strings.collapseRow : strings.expandRow} ${row.key}`}
+      aria-expanded={expanded}
+      aria-controls={expanded ? expandedTargets(row, nested) : undefined}
+      onclick={event => {
+        if (nested) {
+          event.stopPropagation();
+        }
+        changeExpansion(row);
+      }}
+    ></button>
+  {:else if nested}
+    <span aria-hidden="true" class={`${prefix}-row-expand-icon ${prefix}-row-expand-icon-spaced`}></span>
+  {/if}
+{/snippet}
+
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`table-prefix:${prefix}:${rootPrefix}`} />{/if}<div data-ant-table-part="wrapper" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} class={[
     `${prefix}-wrapper ant-table-css-var`,
     componentTheme.className,
@@ -423,10 +522,10 @@
         <table bind:this={table} aria-label={ariaLabel ?? (caption ? undefined : strings.label)} aria-busy={loading || undefined} style:min-width={typeof scroll?.x === 'number' ? `${scroll.x}px` : scroll?.x}>
           {#if caption}<caption>{caption}</caption>{/if}
           {#if visibleColumns.length || dataOffset}<colgroup>
-            {#if expandable}<col class={designTheme.enabled ? `${prefix}-expand-icon-col` : undefined}
-              style:width={typeof expandable.columnWidth === 'number'
-                ? `${expandable.columnWidth}px`
-                : expandable.columnWidth ?? (designTheme.enabled ? undefined : '48px')} />{/if}
+            {#if expansionColumn}<col class={designTheme.enabled ? `${prefix}-expand-icon-col` : undefined}
+              style:width={typeof expansionColumn.columnWidth === 'number'
+                ? `${expansionColumn.columnWidth}px`
+                : expansionColumn.columnWidth ?? (designTheme.enabled ? undefined : '48px')} />{/if}
             {#if rowSelection}<col class={designTheme.enabled ? `${prefix}-selection-col` : undefined}
               style:width={typeof selectionWidth === 'number'
                 ? `${selectionWidth}px` : selectionWidth} />{/if}
@@ -436,12 +535,12 @@
           </colgroup>{/if}
           {#if showHeader}<thead data-ant-table-part="head" class={`${prefix}-thead`}>
             <tr>
-              {#if expandable}
-                <th data-ant-table-part="cell" scope="col" aria-label={expandable.columnTitle ?? strings.expandColumn} class={[
+              {#if expansionColumn}
+                <th data-ant-table-part="cell" scope="col" aria-label={expansionColumn.columnTitle ?? strings.expandColumn} class={[
                     `${prefix}-cell ${prefix}-row-expand-icon-cell`,
-                    expandable.fixed
+                    expansionColumn.fixed
                     && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-start`
-                  ]} style:inset-inline-start={expandable.fixed ? fixedCells[0].offset : undefined} style:z-index={expandable.fixed ? 3 : undefined}>{expandable.columnTitle ?? ''}</th>
+                  ]} style:inset-inline-start={expansionColumn.fixed ? fixedCells[0].offset : undefined} style:z-index={expansionColumn.fixed ? 3 : undefined}>{expansionColumn.columnTitle ?? ''}</th>
               {/if}
               {#if rowSelection}
                 <th data-ant-table-part="cell" scope="col" class={[
@@ -504,30 +603,30 @@
             </tr>
           </thead>{/if}
           <tbody data-ant-table-part="body" class={`${prefix}-tbody`}>
-            {#each visibleRows as row, index (row.key)}
-              {@const expanded = row.canExpand && expandedKeys.has(row.key)}
+            {#each visibleRows as { row, depth, index: renderIndex }, index (row.key)}
+              {@const canExpand = canExpandRow(row)}
+              {@const expanded = canExpand && expandedKeys.has(row.key)}
+              {@const checkbox = checkboxProps.get(row.key)}
+              <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
               <tr data-ant-table-part="row" data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined} class={[
                   `${prefix}-row`,
+                  tree && `${prefix}-row-level-${depth}`,
                   typeof rowClassName === 'function'
-                    ? rowClassName(row.record, index, 0) : rowClassName,
+                    ? rowClassName(row.record, index, depth) : rowClassName,
                   rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
-                ]}>
-                {#if expandable}
+                ]}
+                data-row-key={row.key}
+                id={depth > 0 ? expansionId(row.key, 'row') : undefined}
+                onclick={expandable?.expandRowByClick && canExpand
+                  ? event => expandByRowClick(row, event) : undefined}
+              >
+                {#if expansionColumn}
                   <td data-ant-table-part="cell" class={[
                       `${prefix}-cell ${prefix}-row-expand-icon-cell`,
-                      expandable.fixed
+                      expansionColumn.fixed
                       && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-start`
-                    ]} style:inset-inline-start={expandable.fixed ? fixedCells[0].offset : undefined} style:z-index={expandable.fixed ? 1 : undefined}>
-                    {#if row.canExpand}
-                      <button type="button" data-ant-table-part="expand-icon" class={[
-                          `${prefix}-row-expand-icon`,
-                          expanded
-                            ? `${prefix}-row-expand-icon-expanded`
-                            : `${prefix}-row-expand-icon-collapsed`
-                        ]} disabled={resolvedDisabled} aria-label={`${expanded
-                            ? strings.collapseRow
-                            : strings.expandRow} ${row.key}`} aria-expanded={expanded} aria-controls={expanded ? expansionId(row.key) : undefined} onclick={() => changeExpansion(row.record, row.key)}></button>
-                    {/if}
+                    ]} style:inset-inline-start={expansionColumn.fixed ? fixedCells[0].offset : undefined} style:z-index={expansionColumn.fixed ? 1 : undefined}>
+                    {@render expansionControl(row, canExpand, expanded)}
                   </td>
                 {/if}
                 {#if rowSelection}
@@ -538,7 +637,9 @@
                     ]} style:inset-inline-start={selectionOptions?.fixed
                         ? fixedCells[expansionOffset].offset
                         : undefined} style:z-index={selectionOptions?.fixed ? 1 : undefined}>
-                    <Checkbox skipGroup checked={selectedKeys.has(row.key)} disabled={resolvedDisabled || row.checkbox.disabled} aria-label={row.checkbox['aria-label']
+                    <Checkbox skipGroup checked={selectedKeys.has(row.key)}
+                      indeterminate={linkedSelection?.half.has(row.key) ?? false}
+                      disabled={resolvedDisabled || checkbox?.disabled} aria-label={checkbox?.['aria-label']
                         ?? `${strings.selectRow} ${row.key}`} onCheckedChange={(checked) => changeSelection(
                             [row.key],
                             checked,
@@ -548,21 +649,47 @@
                 {/if}
                 {#each visibleColumns as column, columnIndex (column.key)}
                   {@const fixed = fixedCells[columnIndex + dataOffset]}
-                  <svelte:element data-ant-table-part="cell" data-ant-table-sorted={tableData.sorter?.columnKey === column.key || undefined} this={column.rowScope ? 'th' : 'td'} scope={column.rowScope} class={[
-                      `${prefix}-cell`,
-                      column.className,
-                      fixed.side
-                      && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
-                      tableData.sorter?.columnKey === column.key && `${prefix}-column-sort`
-                    ]} style:inset-inline-start={fixed.side === 'start' ? fixed.offset : undefined} style:inset-inline-end={fixed.side === 'end' ? fixed.offset : undefined} style:z-index={fixed.side ? 1 : undefined} style:text-align={column.align}>
-                    {#if column.render}{@render column.render(row.record, index)}{:else}{cellValue(row.record, column.dataIndex)}{/if}
-                  </svelte:element>
+                  {@const sorted = tableData.sorter?.columnKey === column.key}
+                  {@const attributes = {
+                    'data-ant-table-part': 'cell',
+                    'data-ant-table-sorted': sorted || undefined,
+                    class: [
+                      `${prefix}-cell`, column.className,
+                      fixed.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
+                      sorted && `${prefix}-column-sort`
+                    ]
+                  }}
+                  {#snippet cellContent()}
+                    {#if showTreeControls && columnIndex === 0}
+                      {@render expansionControl(row, canExpand, expanded, depth)}
+                    {/if}{#if column.render}{@render column.render(row.record, renderIndex)}{:else}{cellValue(row.record, column.dataIndex)}{/if}
+                  {/snippet}
+                  <!-- Svelte 5.57 перемещает svelte:element при hydration, снимая фокус с редактора. -->
+                  {#if column.rowScope}
+                    <th {...attributes} scope={column.rowScope}
+                      style:inset-inline-start={fixed.side === 'start' ? fixed.offset : undefined}
+                      style:inset-inline-end={fixed.side === 'end' ? fixed.offset : undefined}
+                      style:z-index={fixed.side ? 1 : undefined}
+                      style:text-align={column.align}>{@render cellContent()}</th>
+                  {:else}
+                    <td {...attributes}
+                      style:inset-inline-start={fixed.side === 'start' ? fixed.offset : undefined}
+                      style:inset-inline-end={fixed.side === 'end' ? fixed.offset : undefined}
+                      style:z-index={fixed.side ? 1 : undefined}
+                      style:text-align={column.align}>{@render cellContent()}</td>
+                  {/if}
                 {:else}
-                  {#if !dataOffset}<td data-ant-table-part="cell" class={`${prefix}-cell`}></td>{/if}
+                  {#if !dataOffset}
+                    <td data-ant-table-part="cell" class={`${prefix}-cell`}>
+                      {#if showTreeControls}
+                        {@render expansionControl(row, canExpand, expanded, depth)}
+                      {/if}
+                    </td>
+                  {/if}
                 {/each}
               </tr>
-              {#if expanded && expandable}
-                <tr data-ant-table-part="expanded-row" class={`${prefix}-expanded-row`}><td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={Math.max(visibleColumns.length + dataOffset, 1)}><div class="expanded-content" id={expansionId(row.key)}>{@render expandable.expandedRowRender(row.record, index)}</div></td></tr>
+              {#if expanded && expandedRowRender}
+                <tr data-ant-table-part="expanded-row" class={`${prefix}-expanded-row`}><td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={Math.max(visibleColumns.length + dataOffset, 1)}><div class="expanded-content" id={expansionId(row.key)}>{@render expandedRowRender(row.record, index)}</div></td></tr>
               {/if}
             {:else}
               <tr class={`${prefix}-placeholder`}><td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={Math.max(visibleColumns.length + dataOffset, 1)}>{#if !loading}

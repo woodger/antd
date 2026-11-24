@@ -161,18 +161,28 @@ export function treeCheckDisabled(node: object): boolean {
 export function parseTreeChecked(keys: readonly TreeKey[] | TreeCheckedKeys): TreeCheckedKeys {
   return Array.isArray(keys) ? { checked: keys, halfChecked: [] } : keys as TreeCheckedKeys;
 }
-// conductUtil из rc-tree 1.4.0; MIT, vendor/LICENSE.rc-tree. Disabled nodes разрывают conduction.
-export function conductTreeCheck<Data extends object>(
-  keys: readonly TreeKey[],
-  index: TreeIndex<Data>,
-  cleanHalf?: readonly TreeKey[]
-): { checked: TreeKey[]; halfChecked: TreeKey[]; } {
-  const checked = new Set(keys.filter(key => index.entities.has(String(key))));
+interface TreeCheckEntry<Key, Entry> {
+  key: Key;
+  parent?: Entry;
+  children: readonly Entry[];
+  level: number;
+}
+
+// Проводит выбор по уровням. Table и Tree задают собственные правила ключей и disabled.
+// conductUtil из rc-tree 1.4.0; MIT, vendor/LICENSE.rc-tree.
+export function conductTreeCheckByKey<Key, Entry extends TreeCheckEntry<Key, Entry>>(
+  keys: readonly Key[],
+  entries: readonly Entry[],
+  hasKey: (key: Key) => boolean,
+  isDisabled: (entry: Entry) => boolean,
+  cleanHalf?: readonly Key[]
+): { checked: Key[]; halfChecked: Key[]; } {
+  const checked = new Set(keys.filter(hasKey));
   let half = new Set(cleanHalf);
   const clean = cleanHalf !== undefined;
-  const levels = new Map<number, TreeEntity<Data>[]>();
+  const levels = new Map<number, Entry[]>();
   let max = 0;
-  for (const entry of index.ordered) {
+  for (const entry of entries) {
     const level = levels.get(entry.level) ?? [];
     level.push(entry);
     levels.set(entry.level, level);
@@ -180,10 +190,11 @@ export function conductTreeCheck<Data extends object>(
   }
   for (let level = 0; level <= max; level++) {
     for (const entry of levels.get(level) ?? []) {
-      if (treeCheckDisabled(entry.node))
+      if (isDisabled(entry)) {
         continue;
+      }
       if (clean ? !checked.has(entry.key) && !half.has(entry.key) : checked.has(entry.key)) {
-        for (const child of entry.children.filter(child => !treeCheckDisabled(child.node))) {
+        for (const child of entry.children.filter(child => !isDisabled(child))) {
           if (clean) {
             checked.delete(child.key);
           }
@@ -195,17 +206,18 @@ export function conductTreeCheck<Data extends object>(
     }
   }
   half = new Set();
-  const visited = new Set<TreeKey>();
+  const visited = new Set<Key>();
   for (let level = max; level >= 0; level--) {
     for (const entry of levels.get(level) ?? []) {
       const parent = entry.parent;
-      if (treeCheckDisabled(entry.node) || !parent || visited.has(parent.key))
+      if (isDisabled(entry) || !parent || visited.has(parent.key)) {
         continue;
-      if (treeCheckDisabled(parent.node)) {
+      }
+      if (isDisabled(parent)) {
         visited.add(parent.key);
         continue;
       }
-      const children = parent.children.filter(child => !treeCheckDisabled(child.node));
+      const children = parent.children.filter(child => !isDisabled(child));
       const all = children.every(child => checked.has(child.key));
       const partial = children.some(child => checked.has(child.key) || half.has(child.key));
       if (all && !clean)
@@ -218,6 +230,21 @@ export function conductTreeCheck<Data extends object>(
     }
   }
   return { checked: [...checked], halfChecked: [...half].filter(key => !checked.has(key)) };
+}
+
+// Tree ищет записи по строковому ключу и учитывает собственные флаги checkable.
+export function conductTreeCheck<Data extends object>(
+  keys: readonly TreeKey[],
+  index: TreeIndex<Data>,
+  cleanHalf?: readonly TreeKey[]
+): { checked: TreeKey[]; halfChecked: TreeKey[]; } {
+  return conductTreeCheckByKey(
+    keys,
+    index.ordered,
+    key => index.entities.has(String(key)),
+    entry => treeCheckDisabled(entry.node),
+    cleanHalf
+  );
 }
 export function toggleTreeCheck<Data extends object>(
   key: TreeKey,

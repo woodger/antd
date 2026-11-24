@@ -24,6 +24,7 @@ export interface TableColumn<Row extends object> {
   key: string;
   title: string;
   dataIndex?: keyof Row;
+  /** Index относится к соседним записям текущей страницы или ветки. */
   render?: Snippet<[record: Row, index: number]>;
   sorter?: true | ((left: Row, right: Row) => number);
   filters?: readonly TableFilterOption[];
@@ -43,14 +44,27 @@ export interface TableColumn<Row extends object> {
 export interface TableRowSelection<Row extends object> {
   fixed?: boolean;
   getCheckboxProps?: (record: Row) => { disabled?: boolean; 'aria-label'?: string; };
+  /** False связывает отметки родителей и потомков. @defaultValue true */
+  checkStrictly?: boolean;
 }
 
 export interface TableExpandable<Row extends object> {
-  expandedRowRender: Snippet<[record: Row, index: number]>;
+  /** Snippet подробностей. Без него раскрываются вложенные строки. */
+  expandedRowRender?: Snippet<[record: Row, index: number]>;
   /** Управляемые ключи; новое значение принимает владелец через onExpandedRowsChange. */
-  expandedRowKeys?: TableKey[];
+  expandedRowKeys?: readonly TableKey[];
   /** Начальные ключи; последующие изменения не переинициализируют состояние. */
   defaultExpandedRowKeys?: readonly TableKey[];
+  /** Раскрывает записи начальной страницы, если defaultExpandedRowKeys не задан. */
+  defaultExpandAllRows?: boolean;
+  /** Поле вложенных записей. @defaultValue 'children' */
+  childrenColumnName?: string;
+  /** Отступ каждого уровня вложенности в пикселях. @defaultValue 15 */
+  indentSize?: number;
+  /** Переключает раскрытие нажатием на строку. */
+  expandRowByClick?: boolean;
+  /** Показывает стандартный переключатель раскрытия. @defaultValue true */
+  showExpandColumn?: boolean;
   onExpand?: (expanded: boolean, record: Row) => void;
   onExpandedRowsChange?: (keys: TableKey[]) => void;
   rowExpandable?: (record: Row) => boolean;
@@ -85,7 +99,7 @@ export interface TableProps<Row extends object> {
   dataSource: readonly Row[];
   columns: readonly TableColumn<Row>[];
   rowKey?: TableRowKey<Row>;
-  /** Дополняет классы строки; index относится к текущей странице, indent у плоских данных равен 0. */
+  /** Дополняет классы строки. index — позиция на странице, indent — глубина в дереве. */
   rowClassName?: string | ((record: Row, index: number, indent: number) => string);
   /** Подсветка строк при наведении; изменение сразу обновляет оформление. @defaultValue true */
   rowHoverable?: boolean;
