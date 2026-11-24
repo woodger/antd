@@ -32,6 +32,7 @@
   import type {
     TableChange,
     TableColumn,
+    TableExpandIconInfo,
     TableFilters,
     TableFilterValue,
     TableKey,
@@ -168,6 +169,8 @@
   });
   const pinHeader = $derived(Boolean(sticky) || scroll?.y !== undefined);
   let expandedRowRender = $derived(expandable?.expandedRowRender);
+  const forceExpandedRows = $derived(expandable?.forceRender === true);
+  const expandIcon = $derived(expandable?.expandIcon ?? config.table?.expandable?.expandIcon);
   let tree = $derived(!expandedRowRender && pageRows.some(row => row.children !== undefined));
   let showTreeControls = $derived(tree && expandable?.showExpandColumn !== false);
   let indentSize = $derived(expandable?.indentSize ?? 15);
@@ -532,6 +535,11 @@
       : tree && row.children !== undefined;
   }
 
+  function expandedRowClass(record: Row, index: number, indent: number): string | undefined {
+    const className = expandable?.expandedRowClassName;
+    return typeof className === 'function' ? className(record, index, indent) : className;
+  }
+
   function changeExpansion(row: TableRow<Row>) {
     if (resolvedDisabled || !canExpandRow(row)) {
       return;
@@ -591,6 +599,26 @@
     }
 
     return row.children?.map(child => expansionId(child.key, 'row')).join(' ') || undefined;
+  }
+
+  // Пользовательский переключатель вызывает тот же запрос, что и штатная кнопка.
+  function expandIconInfo(
+    row: TableRow<Row>, canExpand: boolean, expanded: boolean, ariaControls: string | undefined
+  ): TableExpandIconInfo<Row> {
+    return {
+      prefixCls: prefix,
+      record: row.record,
+      expanded,
+      expandable: canExpand,
+      disabled: resolvedDisabled || !canExpand,
+      ariaControls,
+      onExpand(event) {
+        event?.stopPropagation();
+        if (!event?.defaultPrevented) {
+          changeExpansion(row);
+        }
+      }
+    };
   }
 
   function cellValue(record: Row, key: keyof Row | undefined): string {
@@ -707,6 +735,7 @@
 
 {#snippet expansionControl(row: TableRow<Row>, canExpand: boolean, expanded: boolean, depth?: number)}
   {@const nested = depth !== undefined}
+  {@const controls = expanded && canExpand ? expandedTargets(row, nested) : undefined}
   {#if depth !== undefined}
     <span
       aria-hidden="true"
@@ -714,27 +743,34 @@
       style:padding-inline-start={`${depth * indentSize}px`}
     ></span>
   {/if}
-  {#if canExpand}
-    <button
-      type="button"
-      data-ant-table-part="expand-icon"
-      class={[
-        `${prefix}-row-expand-icon`,
-        `${prefix}-row-expand-icon-${expanded ? 'expanded' : 'collapsed'}`
-      ]}
-      disabled={resolvedDisabled}
-      aria-label={`${expanded ? strings.collapseRow : strings.expandRow} ${row.key}`}
-      aria-expanded={expanded}
-      aria-controls={expanded ? expandedTargets(row, nested) : undefined}
-      onclick={event => {
-        if (nested) {
-          event.stopPropagation();
-        }
-        changeExpansion(row);
-      }}
-    ></button>
-  {:else if nested}
-    <span aria-hidden="true" class={`${prefix}-row-expand-icon ${prefix}-row-expand-icon-spaced`}></span>
+  {#snippet origin()}
+    {#if canExpand}
+      <button
+        type="button"
+        data-ant-table-part="expand-icon"
+        class={[
+          `${prefix}-row-expand-icon`,
+          `${prefix}-row-expand-icon-${expanded ? 'expanded' : 'collapsed'}`
+        ]}
+        disabled={resolvedDisabled}
+        aria-label={`${expanded ? strings.collapseRow : strings.expandRow} ${row.key}`}
+        aria-expanded={expanded}
+        aria-controls={controls}
+        onclick={event => {
+          if (nested) {
+            event.stopPropagation();
+          }
+          changeExpansion(row);
+        }}
+      ></button>
+    {:else if nested}
+      <span aria-hidden="true" class={`${prefix}-row-expand-icon ${prefix}-row-expand-icon-spaced`}></span>
+    {/if}
+  {/snippet}
+  {#if expandIcon}
+    {@render expandIcon(expandIconInfo(row, canExpand, expanded, controls), origin)}
+  {:else}
+    {@render origin()}
   {/if}
 {/snippet}
 
@@ -1034,7 +1070,10 @@
               {@const { row, depth } = entry}
               {@const index = scrollport.start + windowIndex}
               {@const canExpand = canExpandRow(row)}
-              {@const expanded = canExpand && expandedKeys.has(row.key)}
+              {@const expanded = expandedKeys.has(row.key)}
+              {@const hasDetails = expandedRowRender && canExpand && (expanded || forceExpandedRows)}
+              {@const expansionClass = depth > 0 || hasDetails
+                ? expandedRowClass(row.record, index, depth) : undefined}
               <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
               <tr data-ant-table-part="row" data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
                 data-ant-table-span-hovered={inHoveredRows(index) || undefined} class={[
@@ -1042,6 +1081,7 @@
                   tree && `${prefix}-row-level-${depth}`,
                   typeof rowClassName === 'function'
                     ? rowClassName(row.record, index, depth) : rowClassName,
+                  depth > 0 && expansionClass,
                   rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
                 ]}
                 data-row-key={row.key}
@@ -1077,11 +1117,18 @@
                   </td>
                 {/each}
               </tr>
-              {#if expanded && expandedRowRender}
-                <tr data-ant-table-part="expanded-row" class={`${prefix}-expanded-row`}
-                  {@attach scrollport.active ? scrollport.attachDetails : undefined}>
+              {#if hasDetails && expandedRowRender}
+                <tr data-ant-table-part="expanded-row" hidden={!expanded}
+                  class={[
+                    `${prefix}-expanded-row`,
+                    `${prefix}-expanded-row-level-${depth + 1}`,
+                    expansionClass
+                  ]}
+                  {@attach scrollport.active && expanded ? scrollport.attachDetails : undefined}>
                   <td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={columnCount}>
-                    <div class="expanded-content" id={expansionId(row.key)}>{@render expandedRowRender(row.record, index)}</div>
+                    <div class="expanded-content" id={expansionId(row.key)}>
+                      {@render expandedRowRender(row.record, index, depth + 1, expanded)}
+                    </div>
                   </td>
                 </tr>
               {/if}
@@ -1095,7 +1142,7 @@
             {#each mergedRows as entry (entry.row.key)}
               {@const { row, depth, sourceIndex, top, parts } = entry}
               {@const canExpand = canExpandRow(row)}
-              {@const expanded = canExpand && expandedKeys.has(row.key)}
+              {@const expanded = expandedKeys.has(row.key)}
               <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
               <tr data-ant-table-part="span-row" data-row-key={row.key}
                 data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
@@ -1104,6 +1151,7 @@
                   tree && `${prefix}-row-level-${depth}`,
                   typeof rowClassName === 'function'
                     ? rowClassName(row.record, sourceIndex, depth) : rowClassName,
+                  depth > 0 && expandedRowClass(row.record, sourceIndex, depth),
                   rowSelection && selectedKeys.has(row.key) && `${prefix}-row-selected`
                 ]}
                 style:top={cssSize(top)}

@@ -58,7 +58,7 @@ describe('Table expanded row rendering', () => {
         /<button type="button"[^>]*aria-label="Раскрыть строку 0"[^>]*aria-expanded="false"/
       );
       expect(body).not.toContain('aria-controls=');
-      expect(body).not.toContain('class="ant-table-expanded-row"');
+      expect(body).not.toContain('data-ant-table-part="expanded-row"');
     }
   );
 
@@ -108,7 +108,7 @@ describe('Table expanded row rendering', () => {
       }
     );
 
-    expect(body).not.toContain('class="ant-table-expanded-row"');
+    expect(body).not.toContain('data-ant-table-part="expanded-row"');
     expect(keys).toEqual([]);
   });
 
@@ -170,7 +170,7 @@ describe('Table expanded row rendering', () => {
     });
 
     expect(body).not.toContain('aria-label="Раскрыть строку');
-    expect(body).not.toContain('class="ant-table-expanded-row"');
+    expect(body).not.toContain('data-ant-table-part="expanded-row"');
     expect(keys).toEqual([0]);
     const plain = render(
       Table<Person>,

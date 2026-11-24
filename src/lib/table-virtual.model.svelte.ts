@@ -15,7 +15,7 @@ function measureTableRow(row: HTMLElement): number | undefined {
   }
 
   const details = row.nextElementSibling as HTMLTableRowElement | null;
-  return details?.dataset.antTablePart === 'expanded-row'
+  return details?.dataset.antTablePart === 'expanded-row' && !details.hidden
     ? height + (measureVirtualListRow(details) ?? 0) : height;
 }
 

@@ -1768,6 +1768,11 @@
     "root": "table-service-columns-fixture"
   },
   {
+    "id": "table-expansion-options",
+    "module": "./TableExpansionOptionsFixture.svelte",
+    "root": "table-expansion-options-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"

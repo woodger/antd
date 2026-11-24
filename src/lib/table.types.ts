@@ -131,9 +131,27 @@ export interface TableRowSelection<Row extends object> {
   checkStrictly?: boolean;
 }
 
+/** Состояние переключателя. onExpand привязан к этой строке. */
+export interface TableExpandIconInfo<Row extends object = object> {
+  prefixCls: string;
+  record: Row;
+  expanded: boolean;
+  expandable: boolean;
+  disabled: boolean;
+  ariaControls?: string;
+  /** Переданное событие прекращает всплытие к строке. */
+  onExpand: (event?: Event) => void;
+}
+
 export interface TableExpandable<Row extends object> {
   /** Snippet подробностей. Без него раскрываются вложенные строки. */
-  expandedRowRender?: Snippet<[record: Row, index: number]>;
+  expandedRowRender?: Snippet<[record: Row, index: number, indent: number, expanded: boolean]>;
+  /** Сохраняет скрытые подробности строк, находящихся в DOM. @defaultValue false */
+  forceRender?: boolean;
+  /** Классы строки подробностей и вложенных записей. */
+  expandedRowClassName?: string | ((record: Row, index: number, indent: number) => string);
+  /** Заменяет переключатель и получает штатную кнопку в origin. */
+  expandIcon?: Snippet<[info: TableExpandIconInfo<Row>, origin: Snippet]>;
   /** Управляемые ключи; новое значение принимает владелец через onExpandedRowsChange. */
   expandedRowKeys?: readonly TableKey[];
   /** Начальные ключи; последующие изменения не переинициализируют состояние. */
@@ -154,6 +172,11 @@ export interface TableExpandable<Row extends object> {
   columnTitle?: string | Snippet;
   columnWidth?: number | string;
   fixed?: TableFixed;
+}
+
+/** Настройки переключателя раскрытия для дочерних таблиц. */
+export interface TableConfig {
+  expandable?: Pick<TableExpandable<object>, 'expandIcon'>;
 }
 
 /** Настройки Pagination, которыми управляет Table; total вычисляется по данным. */

@@ -19728,7 +19728,27 @@
             "tests/package/table-service-columns.ssr.test.ts",
             "tests/package/table-selection.types.ts"
           ],
-          "note": "Ant Design 6.6.8, rc-table 1.11.1. Два одинаковых UMD-прогона 16 профилей дают 47 состояний и 16 снимков SSR. Table.SELECTION_COLUMN и Table.EXPAND_COLUMN задают порядок верхнего уровня, включая группы, повторные маркеры, inactive и явное размещение при showExpandColumn=false. Проверены логическое закрепление и наследование стороны, RTL, дерево, colspan/rowspan, физические индексы итогов и обновление без шапки. columnTitle и renderCell используют Svelte snippets со штатными controls, onCell получает индекс раскрытой страницы, renderCell получает индекс среди соседей. Виртуальная таблица сохраняет нативный td и один интерактивный span. Строгая гидратация сохраняет input и фокус. Расширенный expandable API переносится отдельно."
+          "note": "Ant Design 6.6.8, rc-table 1.11.1. Два одинаковых UMD-прогона 16 профилей дают 47 состояний и 16 снимков SSR. Table.SELECTION_COLUMN и Table.EXPAND_COLUMN задают порядок верхнего уровня, включая группы, повторные маркеры, inactive и явное размещение при showExpandColumn=false. Проверены логическое закрепление и наследование стороны, RTL, дерево, colspan/rowspan, физические индексы итогов и обновление без шапки. columnTitle и renderCell используют Svelte snippets со штатными controls, onCell получает индекс раскрытой страницы, renderCell получает индекс среди соседей. Виртуальная таблица сохраняет нативный td и один интерактивный span. Строгая гидратация сохраняет input и фокус. Настройки кнопки и подробностей покрывает feature expansion-options."
+        },
+        {
+          "id": "expansion-options",
+          "title": "Настройка кнопки раскрытия и жизненного цикла подробностей",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table.types.ts",
+            "src/lib/table-virtual.model.svelte.ts",
+            "src/lib/ConfigProvider.svelte",
+            "src/lib/config-context.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-expansion-options-reference.json",
+            "tests/browser/table-expansion-options.spec.ts",
+            "tests/browser/table-expansion-options-hydration.spec.ts",
+            "tests/package/table-expansion-options.ssr.test.ts",
+            "tests/package/table-expansion-options.types.ts"
+          ],
+          "note": "Ant Design 6.6.8, rc-table 1.11.1. Два одинаковых прогона 12 UMD-профилей дают 49 состояний и 12 снимков SSR. expandIcon получает запись и штатную кнопку через Svelte snippet, переключение привязано к записи. Локальная настройка перекрывает ConfigProvider, собственный record провайдера заменяет родительский. expandedRowClassName применяется к подробностям и вложенным строкам с индексом раскрытой страницы и глубиной записи. expandedRowRender получает глубину подробностей и флаг раскрытия. forceRender сохраняет редакторы при закрытии до ухода строки из DOM, включая виртуальное окно. Скрытая строка пропускается при измерении и клавиатурной навигации. Строгая гидратация сохраняет серверные узлы и фокус. Raw React сохраняет ранее открывавшиеся обычные подробности при forceRender=false. Svelte сохраняет согласованный default с размонтированием при закрытии."
         },
         {
           "id": "render-empty",

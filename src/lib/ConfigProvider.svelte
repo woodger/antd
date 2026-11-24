@@ -39,6 +39,7 @@
   import type { CascaderConfig } from './cascader.types';
   import type { TransferConfig } from './transfer.types';
   import type { PaginationComponentConfig } from './pagination.types';
+  import type { TableConfig } from './table.types';
   import type { ListyConfig } from './listy.types';
   import type { TypographyConfig } from './typography.types';
   import type { TourConfig } from './tour.types';
@@ -135,6 +136,8 @@
     cascader?: CascaderConfig;
     transfer?: TransferConfig;
     pagination?: PaginationComponentConfig;
+    /** Настройки раскрытия Table. Собственный record заменяет родительский целиком. */
+    table?: TableConfig;
     listy?: ListyConfig;
     typography?: TypographyConfig;
     tour?: TourConfig;
@@ -240,6 +243,7 @@
     cascader,
     transfer,
     pagination,
+    table,
     listy,
     typography,
     tour,
@@ -430,6 +434,9 @@
     },
     get pagination() {
       return pagination ?? parent.pagination;
+    },
+    get table() {
+      return table ?? parent.table;
     },
     get listy() {
       return listy ?? parent.listy;
