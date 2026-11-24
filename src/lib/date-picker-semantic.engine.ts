@@ -1,9 +1,8 @@
 // Объединяет оформление календаря и диапазона. Отдельный plain style диапазона
 // применяется между семантическими настройками провайдера и самого поля.
 import type {
-  DatePickerConfig, DatePickerMultipleProps, DatePickerProps, DatePickerSemantic, DatePickerSlots
+  DatePickerConfig, DatePickerSemantic, DatePickerSlots
 } from './date-picker.types';
-import type { RangePickerProps } from './range-picker.types';
 import { mergePickerSlots } from './time-picker-semantic.engine';
 
 /** Вычисляет слоты в контексте фактического поля, не меняя переданные props. */
@@ -36,20 +35,23 @@ function mergeCalendarSlots(layers: (DatePickerSlots | undefined)[], separator: 
 }
 
 /** Собирает контекст и локальные слои в порядке DatePicker/RangePicker. */
-export function datePickerSemantic<
-  Props extends DatePickerProps | DatePickerMultipleProps | RangePickerProps
->(
+export function datePickerSemantic<Props extends object>(
   props: Props,
   config: DatePickerConfig | undefined,
   localClassNames: DatePickerSemantic<Props> | undefined,
   localStyles: DatePickerSemantic<Props> | undefined,
   providerStyle: string | undefined
 ) {
+  // ConfigProvider разделяется между пикерами с разными адаптерами. Его callback
+  // получает настоящие props поля, в том числе объект даты выбранного адаптера.
+  const providerClasses = config?.classNames as DatePickerSemantic<Props> | undefined;
+  const providerStyles = config?.styles as DatePickerSemantic<Props> | undefined;
+
   const classes = mergeCalendarSlots([
-    resolveSlots(config?.classNames, props), resolveSlots(localClassNames, props)
+    resolveSlots(providerClasses, props), resolveSlots(localClassNames, props)
   ], ' ');
   const styles = mergeCalendarSlots([
-    resolveSlots(config?.styles, props), { root: providerStyle }, resolveSlots(localStyles, props)
+    resolveSlots(providerStyles, props), { root: providerStyle }, resolveSlots(localStyles, props)
   ], ';');
 
   return { classes, styles };

@@ -3,7 +3,7 @@ import utc from 'dayjs/plugin/utc.js';
 import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
-import TimePicker from './TimePicker.svelte';
+import TimePicker from './time-picker.component';
 
 dayjs.extend(utc);
 

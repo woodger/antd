@@ -12,11 +12,13 @@ const timeOnly = new Set([
 ]);
 
 /** Общие native/input props без утечки time-only callbacks и renderers в DOM. */
-export function timePickerSharedProps(props: TimePickerRuntimeProps): DatePickerProps {
+export function timePickerSharedProps<DateType extends object>(
+  props: TimePickerRuntimeProps<DateType>
+): DatePickerProps<DateType> {
   // После удаления time-only полей оставшаяся часть имеет общий контракт DatePickerProps.
   const shared = Object.fromEntries(
     Object.entries(props).filter(([key]) => !timeOnly.has(key))
-  ) as DatePickerProps;
+  ) as DatePickerProps<DateType>;
 
   return {
     ...shared,

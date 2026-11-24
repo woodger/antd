@@ -1,16 +1,14 @@
-<script lang="ts">
-  import type { Dayjs } from 'dayjs';
+<script lang="ts" generics="DateType extends object">
+  import type { PickerDateOperations } from './picker-date-operations.engine';
+  import { untrack } from 'svelte';
   import PickerTimeColumn from './PickerTimeColumn.svelte';
-  import {
-    timePickerPanel,
-    timePickerColumnDate,
-    timePickerColumnValue
-  } from './time-picker.engine';
+  import { createTimePickerEngine } from './time-picker.engine';
   import type { DatePickerTimeConfig } from './date-picker.types';
   import type { TimePickerProps } from './time-picker.types';
   import type { PickerLocale } from './picker-locale.types';
 
   let {
+    dateOperations,
     prefixCls,
     value,
     pickerValue,
@@ -28,17 +26,18 @@
     itemClass,
     itemStyle
   }: {
+    dateOperations: PickerDateOperations<DateType>;
     prefixCls: string;
-    value: Dayjs | null;
-    pickerValue?: Dayjs | null;
-    config: DatePickerTimeConfig & { changeOnScroll?: boolean; };
+    value: DateType | null;
+    pickerValue?: DateType | null;
+    config: DatePickerTimeConfig<DateType> & { changeOnScroll?: boolean; };
     locale: PickerLocale;
-    now: Dayjs;
-    disabledTime?: TimePickerProps['disabledTime'];
-    onSelect: (value: Dayjs) => void;
-    onHover?: (value: Dayjs | null) => void;
+    now: DateType;
+    disabledTime?: TimePickerProps<'time', DateType>['disabledTime'];
+    onSelect: (value: DateType) => void;
+    onHover?: (value: DateType | null) => void;
     onConfirm?: () => void;
-    cellRender?: TimePickerProps['cellRender'];
+    cellRender?: TimePickerProps<'time', DateType>['cellRender'];
     range?: 'start' | 'end';
     class?: string;
     style?: string;
@@ -46,6 +45,8 @@
     itemStyle?: string;
   } = $props();
 
+  const dates = untrack(() => dateOperations);
+  const { timePickerPanel, timePickerColumnDate, timePickerColumnValue } = createTimePickerEngine(dates);
   let panel = $derived(timePickerPanel(value, pickerValue, config, disabledTime, locale, now));
 </script>
 

@@ -16,19 +16,19 @@ export type DatePickerCalendarMode = 'date' | 'week' | 'month' | 'year' | 'decad
 export type DatePickerMode = DatePickerCalendarMode | 'time';
 /** Терминальный выбор; decade остаётся только режимом навигации панели. */
 export type DatePickerPicker = 'date' | 'week' | 'month' | 'year' | 'quarter';
-export type DatePickerFormat = string | ((value: Dayjs) => string);
+export type DatePickerFormat<DateType extends object = Dayjs> = string | ((value: DateType) => string);
 /** Строковый формат поля; mask включает редактирование числовых разрядов. */
 export interface DatePickerFormatConfig { format: string; type?: 'mask'; }
 /** Быстрый выбор одной даты: готовое или лениво вычисляемое значение. */
-export interface DatePickerPreset {
+export interface DatePickerPreset<DateType extends object = Dayjs> {
   label: string | Snippet;
-  value: Dayjs | (() => Dayjs);
+  value: DateType | (() => DateType);
 }
 /** OriginNode сохраняет стандартную native кнопку; renderer заменяет её целиком. */
-export interface DatePickerCellRenderInfo {
+export interface DatePickerCellRenderInfo<DateType extends object = Dayjs> {
   prefixCls: string;
   originNode: Snippet;
-  today: Dayjs;
+  today: DateType;
   type: DatePickerMode | 'time';
   locale: PickerLocale;
   range?: 'start' | 'end';
@@ -41,7 +41,7 @@ export interface DatePickerDisabledTime {
   disabledMilliseconds?: (hour: number, minute: number, second: number) => number[];
 }
 /** Время в календаре: отображение разрядов, шаги, ограничения и начальная дата панели. */
-export interface DatePickerTimeConfig {
+export interface DatePickerTimeConfig<DateType extends object = Dayjs> {
   /** Формат time panel; для определения колонок имеет приоритет над format поля. */
   format?: string;
   showHour?: boolean;
@@ -56,7 +56,7 @@ export interface DatePickerTimeConfig {
   millisecondStep?: number;
   hideDisabledOptions?: boolean;
   /** В showTime задаёт только время пустого выбора; дата остаётся датой панели. */
-  defaultOpenValue?: Dayjs;
+  defaultOpenValue?: DateType;
 }
 export interface DatePickerPopupSlots {
   root?: string;
@@ -93,8 +93,8 @@ export interface DatePickerConfig {
   suffixIcon?: InputContent;
   allowClear?: DatePickerAllowClear;
 }
-/** Выбор одной даты или datetime через Dayjs, input и локализованную панель. */
-export interface DatePickerProps extends Omit<
+/** Выбор одной даты или datetime через адаптер даты, input и локализованную панель. */
+export interface DatePickerProps<DateType extends object = Dayjs> extends Omit<
   HTMLInputAttributes,
   'value' | 'defaultValue' | 'size' | 'type' | 'children' | 'prefix' | 'multiple'
     | 'onchange' | 'oninput' | 'onselect'
@@ -104,29 +104,29 @@ export interface DatePickerProps extends Omit<
   picker?: DatePickerPicker;
   /** Управляемая панель. Компонент предлагает переход через onPanelChange. */
   mode?: DatePickerMode;
-  /** Управляемый Dayjs или null; компонент не вводит прикладную UTC-сериализацию. */
-  value?: Dayjs | null;
+  /** Управляемая дата или null; компонент не вводит прикладную UTC-сериализацию. */
+  value?: DateType | null;
   /** Начальная дата локального состояния при отсутствии value. */
-  defaultValue?: Dayjs;
+  defaultValue?: DateType;
   /** Локальный picker owner перекрывает ConfigProvider.prefixCls для поля и panel. */
   prefixCls?: string;
   /** Колонки времени для picker=date; week/month/year/quarter игнорируют настройку. @defaultValue false */
-  showTime?: boolean | DatePickerTimeConfig;
+  showTime?: boolean | DatePickerTimeConfig<DateType>;
   /** Номера недель в date/week панели; по умолчанию включены только для picker=week. */
   showWeek?: boolean;
   /** Первый формат задаёт вывод; дополнительные строки допускаются при разборе. Объект type=mask включает числовые разряды. */
-  format?: DatePickerFormat | DatePickerFormat[] | DatePickerFormatConfig;
+  format?: DatePickerFormat<DateType> | DatePickerFormat<DateType>[] | DatePickerFormatConfig;
   /** Начальная дата панели; применяется заново при каждом открытии popup. */
-  defaultPickerValue?: Dayjs;
+  defaultPickerValue?: DateType;
   /** Управляемая дата панели, независимая от выбранного value. */
-  pickerValue?: Dayjs;
+  pickerValue?: DateType;
   open?: boolean;
   /** @defaultValue false */
   defaultOpen?: boolean;
-  disabledDate?: (date: Dayjs, info: { type: DatePickerCalendarMode; }) => boolean;
-  disabledTime?: (date: Dayjs) => DatePickerDisabledTime;
-  minDate?: Dayjs;
-  maxDate?: Dayjs;
+  disabledDate?: (date: DateType, info: { type: DatePickerCalendarMode; }) => boolean;
+  disabledTime?: (date: DateType) => DatePickerDisabledTime;
+  minDate?: DateType;
+  maxDate?: DateType;
   /** При включении выбор публикуется после подтверждения OK. */
   needConfirm?: boolean;
   /** @defaultValue true */
@@ -144,27 +144,27 @@ export interface DatePickerProps extends Omit<
   /** Локальное оформление перекрывает Form и ConfigProvider; fallback outlined. */
   variant?: 'outlined' | 'borderless' | 'filled' | 'underlined';
   locale?: DatePickerLocale;
-  onChange?: (value: Dayjs | null, dateString: string) => void;
+  onChange?: (value: DateType | null, dateString: string) => void;
   onCalendarChange?: (
-    value: Dayjs | null,
+    value: DateType | null,
     dateString: string,
     info: { source: 'date' | 'time'; }
   ) => void;
-  onOk?: (value: Dayjs) => void;
+  onOk?: (value: DateType) => void;
   onClear?: () => void;
   onPickerValueChange?: (
-    value: Dayjs,
+    value: DateType,
     info: { source: 'reset' | 'panel'; mode: DatePickerMode; }
   ) => void;
   onOpenChange?: (open: boolean) => void;
-  onPanelChange?: (value: Dayjs, mode: DatePickerMode) => void;
+  onPanelChange?: (value: DateType, mode: DatePickerMode) => void;
   /** Быстрый выбор даты со строковой или Snippet подписью. */
-  presets?: readonly DatePickerPreset[];
+  presets?: readonly DatePickerPreset<DateType>[];
   /** Временное отображение даты при наведении; не меняет выбранное value. @defaultValue 'hover' */
   previewValue?: false | 'hover';
-  cellRender?: Snippet<[Dayjs | number | 'am' | 'pm', DatePickerCellRenderInfo]>;
+  cellRender?: Snippet<[DateType | number | 'am' | 'pm', DatePickerCellRenderInfo<DateType>]>;
   /** Заменяет отдельные элементы, сохраняя выбор, проверку и подтверждение DatePicker. */
-  components?: DatePickerComponents;
+  components?: DatePickerComponents<DateType>;
   /** Полная раскладка панели: пресеты, календарь/время и footer. */
   panelRender?: Snippet<[Snippet]>;
   renderExtraFooter?: Snippet<[DatePickerMode]>;
@@ -174,52 +174,52 @@ export interface DatePickerProps extends Omit<
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
   class?: string;
   rootClassName?: string;
-  classNames?: DatePickerSemantic;
-  styles?: DatePickerSemantic;
+  classNames?: DatePickerSemantic<DatePickerProps<DateType>>;
+  styles?: DatePickerSemantic<DatePickerProps<DateType>>;
   /** Нативный ref доступен после mount и очищается при unmount. */
   nativeElement?: HTMLDivElement;
 }
 
-/** Дата и действия одного выбранного тега. Value сохраняет исходный Dayjs. */
-export interface DatePickerTagContext {
+/** Дата и действия одного выбранного тега. Value сохраняет исходный объект даты. */
+export interface DatePickerTagContext<DateType extends object = Dayjs> {
   label: string;
-  value: Dayjs;
+  value: DateType;
   disabled: boolean;
   closable: boolean;
   onClose: (event?: MouseEvent) => void;
 }
 
 /** Множественный выбор дат или периодов с отдельным черновиком панели. */
-export interface DatePickerMultipleProps extends Omit<
-  DatePickerProps,
+export interface DatePickerMultipleProps<DateType extends object = Dayjs> extends Omit<
+  DatePickerProps<DateType>,
   'multiple' | 'value' | 'defaultValue' | 'showTime' | 'onChange'
     | 'onCalendarChange' | 'onOk' | 'classNames' | 'styles'
 > {
   multiple: true;
-  value?: readonly Dayjs[] | null;
-  defaultValue?: readonly Dayjs[] | null;
+  value?: readonly DateType[] | null;
+  defaultValue?: readonly DateType[] | null;
   showTime?: false;
   /** Сортирует изменённый выбор по времени, сохраняя порядок входного value. @defaultValue true */
   order?: boolean;
   maxTagCount?: number | 'responsive';
-  tagRender?: Snippet<[DatePickerTagContext]>;
+  tagRender?: Snippet<[DatePickerTagContext<DateType>]>;
   removeIcon?: InputContent;
-  onChange?: (value: Dayjs[] | null, dateStrings: string[] | null) => void;
-  onCalendarChange?: (value: Dayjs[], dateStrings: string[], info: { source: 'date'; }) => void;
-  onOk?: (value: Dayjs[]) => void;
-  classNames?: DatePickerSemantic<DatePickerMultipleProps>;
-  styles?: DatePickerSemantic<DatePickerMultipleProps>;
+  onChange?: (value: DateType[] | null, dateStrings: string[] | null) => void;
+  onCalendarChange?: (value: DateType[], dateStrings: string[], info: { source: 'date'; }) => void;
+  onOk?: (value: DateType[]) => void;
+  classNames?: DatePickerSemantic<DatePickerMultipleProps<DateType>>;
+  styles?: DatePickerSemantic<DatePickerMultipleProps<DateType>>;
 }
 
 type SelectionField = 'value' | 'defaultValue' | 'showTime' | 'onChange'
   | 'onCalendarChange' | 'onOk' | 'classNames' | 'styles';
 
 /** Объявление шаблона выводит тип значения по флагу multiple. */
-export type DatePickerSelectionProps<Multiple extends boolean> = Omit<
-  DatePickerProps, 'multiple' | SelectionField
+export type DatePickerSelectionProps<Multiple extends boolean, DateType extends object = Dayjs> = Omit<
+  DatePickerProps<DateType>, 'multiple' | SelectionField
 > & {
   multiple?: Multiple;
 } & {
   [Field in SelectionField]?: Multiple extends true
-    ? DatePickerMultipleProps[Field] : DatePickerProps[Field];
-} & Pick<DatePickerMultipleProps, 'order' | 'maxTagCount' | 'tagRender' | 'removeIcon'>;
+    ? DatePickerMultipleProps<DateType>[Field] : DatePickerProps<DateType>[Field];
+} & Pick<DatePickerMultipleProps<DateType>, 'order' | 'maxTagCount' | 'tagRender' | 'removeIcon'>;

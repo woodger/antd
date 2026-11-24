@@ -1,13 +1,9 @@
-<script lang="ts">
+<script lang="ts" generics="DateType extends object">
   // Рисует панель даты и применяет ограничения навигации и выбора. Заголовок, сетка и
   // пользовательские ячейки используют один режим.
-  import type { Dayjs } from 'dayjs';
-  import { tick, type Snippet } from 'svelte';
-  import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
-  import {
-    calendarCells, pickerCalendarValue, pickerDateDisabled, pickerPanelDateDisabled, samePickerQuarter,
-    samePickerWeek
-  } from './date-picker.engine';
+  import type { PickerDateOperations } from './picker-date-operations.engine';
+  import { tick, untrack, type Snippet } from 'svelte';
+  import { createDatePickerEngine } from './date-picker.engine';
   import type {
     DatePickerCalendarMode, DatePickerPicker, DatePickerProps,
     DatePickerCellRenderInfo, DatePickerPopupSlots
@@ -16,6 +12,7 @@
   import type { DatePickerPanelNavigation } from './picker-components.types';
   import type { InputContent } from './input.types';
   let {
+    dateOperations,
     prefixCls,
     picker = 'date',
     showWeek,
@@ -47,33 +44,41 @@
     onNavigate,
     onModeChange
   }: DatePickerPanelNavigation & {
+    dateOperations: PickerDateOperations<DateType>;
     prefixCls: string;
     picker?: DatePickerPicker;
     showWeek?: boolean;
-    panel: Dayjs;
-    timeTemplate?: Dayjs;
-    selected: Dayjs | null;
-    multipleValues?: readonly Dayjs[];
-    hovered?: Dayjs | null;
+    panel: DateType;
+    timeTemplate?: DateType;
+    selected: DateType | null;
+    multipleValues?: readonly DateType[];
+    hovered?: DateType | null;
     mode: DatePickerCalendarMode;
     controlledMode?: boolean;
     classNames?: DatePickerPopupSlots;
     styles?: DatePickerPopupSlots;
     direction: 'ltr' | 'rtl';
-    range?: readonly [Dayjs | null, Dayjs | null];
-    cellRender?: DatePickerProps['cellRender'];
+    range?: readonly [DateType | null, DateType | null];
+    cellRender?: DatePickerProps<DateType>['cellRender'];
     cellRange?: 'start' | 'end';
-    onHover?: (value: Dayjs | null) => void;
+    onHover?: (value: DateType | null) => void;
     preserveDisabledHover?: boolean;
     showPrevious?: boolean;
     showNext?: boolean;
     locale: PickerLocale;
-    restrictions: Pick<DatePickerProps, 'minDate' | 'maxDate' | 'disabledDate'>;
-    now: Dayjs;
-    onSelect: (value: Dayjs) => void;
-    onNavigate: (value: Dayjs) => void;
-    onModeChange: (mode: DatePickerCalendarMode, viewDate?: Dayjs) => void;
+    restrictions: Pick<DatePickerProps<DateType>, 'minDate' | 'maxDate' | 'disabledDate'>;
+    now: DateType;
+    onSelect: (value: DateType) => void;
+    onNavigate: (value: DateType) => void;
+    onModeChange: (mode: DatePickerCalendarMode, viewDate?: DateType) => void;
   } = $props();
+  const dates = untrack(() => dateOperations);
+  const { generateConfig: adapter, fields } = dates;
+  const {
+    pickerCalendarValue, calendarCells, samePickerWeek, samePickerQuarter,
+    pickerDateDisabled, pickerPanelDateDisabled
+  } = createDatePickerEngine(dates);
+
   let renderToday = $derived.by(() => {
     void prefixCls;
     void picker;
@@ -105,45 +110,45 @@
   let weekPanel = $derived(mode === 'week');
   let weekPrefix = $derived(datePanel && (showWeek ?? weekPanel));
   let width = $derived(datePanel ? 7 : mode === 'quarter' ? 4 : 3);
-  let weeks = $derived(locale.shortWeekDays ?? adapter.locale.getShortWeekDays!(locale.locale));
-  let months = $derived(locale.shortMonths ?? adapter.locale.getShortMonths!(locale.locale));
+  let weeks = $derived(locale.shortWeekDays ?? adapter.locale.getShortWeekDays?.(locale.locale) ?? []);
+  let months = $derived(locale.shortMonths ?? adapter.locale.getShortMonths?.(locale.locale) ?? []);
   let firstDay = $derived(adapter.locale.getWeekFirstDay(locale.locale));
   let unit = $derived<'day' | 'month' | 'year'>(
     datePanel ? 'day' : mode === 'month' || mode === 'quarter' ? 'month' : 'year'
   );
-  function cellInfo(originNode: Snippet): DatePickerCellRenderInfo {
+  function cellInfo(originNode: Snippet): DatePickerCellRenderInfo<DateType> {
     return { prefixCls, originNode, today: renderToday, type: mode, locale, range: cellRange };
   }
-  function label(date: Dayjs) {
+  function label(date: DateType) {
     const format = mode === 'quarter' ? locale.fieldQuarterFormat ?? 'YYYY-[Q]Q'
       : mode === 'month' ? locale.fieldMonthFormat ?? 'YYYY-MM'
       : mode === 'year' ? locale.fieldYearFormat ?? 'YYYY' : undefined;
     return format && (picker !== 'date' || mode === 'quarter')
       ? adapter.locale.format(locale.locale, date, format)
-      : date.format(datePanel ? 'YYYY-MM-DD' : mode === 'month' ? 'YYYY-MM' : 'YYYY');
+      : dates.formatKey(date, datePanel ? 'YYYY-MM-DD' : mode === 'month' ? 'YYYY-MM' : 'YYYY', locale.locale);
   }
-  function cellText(date: Dayjs) {
+  function cellText(date: DateType) {
     if (mode === 'month' && !locale.monthFormat) {
-      return months[date.month()];
+      return months[fields.getMonth(date)];
     }
     const format = mode === 'quarter' ? locale.cellQuarterFormat ?? '[Q]Q'
       : datePanel ? locale.cellDateFormat ?? 'D'
       : mode === 'month' ? locale.monthFormat! : locale.cellYearFormat ?? 'YYYY';
     const text = adapter.locale.format(locale.locale, date, format);
     return mode === 'decade'
-      ? `${text}-${adapter.locale.format(locale.locale, date.add(9, 'year'), format)}` : text;
+      ? `${text}-${adapter.locale.format(locale.locale, fields.addYear(date, 9), format)}` : text;
   }
   function move(amount: number, large = false) {
     onNavigate(
       datePanel
-        ? cellPanel.add(amount, large ? 'year' : 'month')
-        : cellPanel.add(
+        ? dates.add(cellPanel, amount, large ? 'year' : 'month')
+        : dates.add(cellPanel,
           amount * (mode === 'month' || mode === 'quarter' ? 1 : mode === 'year' ? 10 : 100),
           'year'
         )
     );
   }
-  function selectedCell(date: Dayjs) {
+  function selectedCell(date: DateType) {
     if (multipleValues) {
       return multipleValues.some(value => sameCell(value, date));
     }
@@ -151,52 +156,67 @@
       ? weekPanel ? samePickerWeek(selected, date, locale.locale)
       : mode === 'quarter' ? samePickerQuarter(selected, date)
       : mode === 'decade'
-        ? Math.floor(selected.year() / 10) === Math.floor(date.year() / 10)
-        : selected.isSame(date, unit)
+        ? Math.floor(fields.getYear(selected) / 10) === Math.floor(fields.getYear(date) / 10)
+        : dates.samePeriod(selected, date, unit)
       : false;
   }
-  function sameCell(value: Dayjs | null | undefined, date: Dayjs) {
+  function sameCell(value: DateType | null | undefined, date: DateType) {
     return value && (picker !== 'date' && mode === 'decade'
-      ? Math.floor(value.year() / 10) === Math.floor(date.year() / 10)
+      ? Math.floor(fields.getYear(value) / 10) === Math.floor(fields.getYear(date) / 10)
       : weekPanel ? samePickerWeek(value, date, locale.locale)
-      : mode === 'quarter' ? samePickerQuarter(value, date) : value.isSame(date, unit));
+      : mode === 'quarter' ? samePickerQuarter(value, date) : dates.samePeriod(value, date, unit));
   }
-  function inRangeCell(date: Dayjs) {
+  /** Помечает ячейки текущего календаря, годы соседних периодов остаются за границей. */
+  function cellInView(date: DateType) {
+    if (datePanel) {
+      return fields.getMonth(date) === fields.getMonth(panel);
+    }
+    if (mode === 'month' || mode === 'quarter') {
+      return true;
+    }
+
+    const span = mode === 'year' ? 10 : 100;
+    const first = Math.floor(fields.getYear(panel) / span) * span;
+    const year = fields.getYear(date);
+
+    return year >= first && year < first + span;
+  }
+  function inRangeCell(date: DateType) {
     if (!range?.[0] || !range[1]) {
       return false;
     }
     return mode === 'quarter'
       ? !samePickerQuarter(date, range[0]) && !samePickerQuarter(date, range[1])
-        && date.isAfter(range[0]) && date.isBefore(range[1])
-      : date.isAfter(range[0], unit) && date.isBefore(range[1], unit);
+        && dates.isAfter(date, range[0]) && dates.isBefore(date, range[1])
+      : dates.isAfter(date, range[0], unit) && dates.isBefore(date, range[1], unit);
   }
-  function unavailable(date: Dayjs) {
+  function unavailable(date: DateType) {
     return picker === 'date' && !controlledMode
       ? pickerDateDisabled(date, restrictions, mode, locale.locale)
       : pickerPanelDateDisabled(date, restrictions, mode, locale.locale);
   }
   function headerDisabled(amount: number, large = false) {
     if (weekPanel || controlledMode && datePanel) {
-      const target = cellPanel.add(amount, large ? 'year' : 'month');
+      const target = dates.add(cellPanel, amount, large ? 'year' : 'month');
       return amount < 0
-        ? !!restrictions.minDate && target.endOf('month').isBefore(restrictions.minDate, 'day')
-        : !!restrictions.maxDate && target.startOf('month').isAfter(restrictions.maxDate, 'day');
+        ? !!restrictions.minDate && dates.isBefore(dates.endOf(target, 'month'), restrictions.minDate, 'day')
+        : !!restrictions.maxDate && dates.isAfter(dates.startOf(target, 'month'), restrictions.maxDate, 'day');
     }
     if (picker === 'date' && !controlledMode || mode === 'date') {
       return false;
     }
-    const target = cellPanel.add(
+    const target = dates.add(cellPanel,
       amount * (mode === 'month' || mode === 'quarter' ? 1 : mode === 'year' ? 10 : 100),
       'year'
     );
     const size = mode === 'month' || mode === 'quarter' ? 1 : mode === 'year' ? 10 : 100;
-    const first = Math.floor(target.year() / size) * size;
+    const first = Math.floor(fields.getYear(target) / size) * size;
     const last = first + size - 1;
     return amount < 0
-      ? !!restrictions.minDate && last < restrictions.minDate.year()
-      : !!restrictions.maxDate && first > restrictions.maxDate.year();
+      ? !!restrictions.minDate && last < fields.getYear(restrictions.minDate)
+      : !!restrictions.maxDate && first > fields.getYear(restrictions.maxDate);
   }
-  function weekRowClasses(date: Dayjs) {
+  function weekRowClasses(date: DateType) {
     if (!weekPanel) {
       return undefined;
     }
@@ -208,37 +228,37 @@
       start && `${prefixCls}-week-panel-row-range-start`,
       end && `${prefixCls}-week-panel-row-range-end`,
       range?.[0] && range[1] && !start && !end
-        && date.isAfter(range[0]) && date.isBefore(range[1]) && `${prefixCls}-week-panel-row-range-hover`,
+        && dates.isAfter(date, range[0]) && dates.isBefore(date, range[1]) && `${prefixCls}-week-panel-row-range-hover`,
       hovered && samePickerWeek(hovered, date, locale.locale) && `${prefixCls}-week-panel-row-hover`
     ];
   }
-  async function key(event: KeyboardEvent, date: Dayjs) {
-    let next: Dayjs;
+  async function key(event: KeyboardEvent, date: DateType) {
+    let next: DateType;
     const step = mode === 'decade' ? 10 : mode === 'quarter' ? 3 : 1;
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-      next = date.add(
+      next = dates.add(date,
         (event.key === 'ArrowLeft' ? -1 : 1) * (direction === 'rtl' ? -1 : 1) * step,
         unit
       );
     }
     else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-      next = date.add((event.key === 'ArrowUp' ? -1 : 1) * width * step, unit);
+      next = dates.add(date, (event.key === 'ArrowUp' ? -1 : 1) * width * step, unit);
     }
     else if (event.key === 'PageUp' || event.key === 'PageDown') {
       next = datePanel
-        ? date.add(event.key === 'PageUp' ? -1 : 1, event.shiftKey ? 'year' : 'month')
-        : date.add(
+        ? dates.add(date, event.key === 'PageUp' ? -1 : 1, event.shiftKey ? 'year' : 'month')
+        : dates.add(date,
           (event.key === 'PageUp' ? -1 : 1) * (mode === 'month' || mode === 'quarter' ? 1 : mode === 'year' ? 10 : 100),
           'year'
         );
     }
     else if (event.key === 'Home' || event.key === 'End') {
       next = datePanel
-        ? event.key === 'Home' ? date.startOf('month') : date.endOf('month')
+        ? event.key === 'Home' ? dates.startOf(date, 'month') : dates.endOf(date, 'month')
         : mode === 'month' || mode === 'quarter'
-          ? date.month(event.key === 'Home' ? 0 : mode === 'quarter' ? 9 : 11)
-          : date.year(
-            Math.floor(date.year() / (mode === 'year'
+          ? fields.setMonth(date, event.key === 'Home' ? 0 : mode === 'quarter' ? 9 : 11)
+          : fields.setYear(date,
+            Math.floor(fields.getYear(date) / (mode === 'year'
               ? 10
               : 100)) * (mode === 'year'
                 ? 10
@@ -251,23 +271,19 @@
       return;
     }
     event.preventDefault();
-    const sign = next.isBefore(date) ? -1 : 1;
+    const sign = dates.isBefore(next, date) ? -1 : 1;
     for (let n = 0; n < 3660 && unavailable(next); n++) {
       if (sign > 0
         && restrictions.maxDate
         && !(weekPanel && samePickerWeek(next, restrictions.maxDate, locale.locale))
-        && next.startOf(unit).isAfter(
-          restrictions.maxDate.endOf(unit)
-        )
+        && dates.isAfter(dates.startOf(next, unit), dates.endOf(restrictions.maxDate, unit))
         || sign < 0
         && restrictions.minDate
         && !(weekPanel && samePickerWeek(next, restrictions.minDate, locale.locale))
-        && next.endOf(unit).isBefore(
-          restrictions.minDate.startOf(unit)
-        )) {
+        && dates.isBefore(dates.endOf(next, unit), dates.startOf(restrictions.minDate, unit))) {
         return;
       }
-      next = next.add(sign * step, unit);
+      next = dates.add(next, sign * step, unit);
     }
     if (unavailable(next)) {
       return;
@@ -296,18 +312,16 @@
     {#if datePanel}<button type="button" tabindex="-1" class={[`${prefixCls}-header-prev-btn`, headerDisabled(-1) && `${prefixCls}-header-prev-btn-disabled`]} disabled={headerDisabled(-1)} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousMonth} onclick={() => move(-1)}>{@render navigationIcon(prevIcon, 'prev')}</button>{/if}
     <div class={`${prefixCls}-header-view`}>
       {#if datePanel}<button type="button" tabindex="-1" class={`${prefixCls}-month-btn`} aria-label={locale.monthSelect} onclick={() => onModeChange('month', cellPanel)}>{locale.monthFormat
-          ? adapter.locale.format(locale.locale, panel, locale.monthFormat) : months[panel.month()]}</button>{/if}{#if (picker !== 'date' || controlledMode) && mode === 'decade'}{adapter.locale.format(locale.locale, panel.year(Math.floor(panel.year() / 100) * 100), locale.yearFormat ?? 'YYYY')}-{adapter.locale.format(locale.locale, panel.year(Math.floor(panel.year() / 100) * 100 + 99), locale.yearFormat ?? 'YYYY')}{:else}<button type="button" tabindex="-1" class={`${prefixCls}-${(picker !== 'date' || controlledMode) && mode === 'year' ? 'decade' : 'year'}-btn`} aria-label={mode === 'year' || mode === 'decade'
+          ? adapter.locale.format(locale.locale, panel, locale.monthFormat) : months[fields.getMonth(panel)]}</button>{/if}{#if (picker !== 'date' || controlledMode) && mode === 'decade'}{adapter.locale.format(locale.locale, fields.setYear(panel, Math.floor(fields.getYear(panel) / 100) * 100), locale.yearFormat ?? 'YYYY')}-{adapter.locale.format(locale.locale, fields.setYear(panel, Math.floor(fields.getYear(panel) / 100) * 100 + 99), locale.yearFormat ?? 'YYYY')}{:else}<button type="button" tabindex="-1" class={`${prefixCls}-${(picker !== 'date' || controlledMode) && mode === 'year' ? 'decade' : 'year'}-btn`} aria-label={mode === 'year' || mode === 'decade'
           ? locale.decadeSelect
           : locale.yearSelect} onclick={() => onModeChange(
               datePanel || mode === 'month' || mode === 'quarter' ? 'year' : 'decade', cellPanel
             )}>{mode === 'year'
-            ? `${Math.floor(panel.year() / 10) * 10}-${Math.floor(panel.year() / 10) * 10 + 9}`
+            ? `${Math.floor(fields.getYear(panel) / 10) * 10}-${Math.floor(fields.getYear(panel) / 10) * 10 + 9}`
             : mode === 'decade'
               ? `${Math
-                .floor(panel
-                  .year() / 100) * 100}-${Math
-                    .floor(panel
-                      .year() / 100) * 100 + 99}`
+                .floor(fields.getYear(panel) / 100) * 100}-${Math
+                    .floor(fields.getYear(panel) / 100) * 100 + 99}`
               : adapter.locale.format(locale.locale, panel, locale.yearFormat ?? 'YYYY')}</button>{/if}
     </div>
     {#if datePanel}<button type="button" tabindex="-1" class={[`${prefixCls}-header-next-btn`, headerDisabled(1) && `${prefixCls}-header-next-btn-disabled`]} disabled={headerDisabled(1)} style:visibility={showNext ? undefined : 'hidden'} aria-label={locale.nextMonth} onclick={() => move(1)}>{@render navigationIcon(nextIcon, 'next')}</button>{/if}
@@ -315,7 +329,7 @@
   </div>
   <div class={[`${prefixCls}-body`, classNames?.body]} style={styles?.body}>
     <table class={[`${prefixCls}-content`, classNames?.content]} style={styles?.content}
-      role="grid" aria-label={panel.format('YYYY-MM')}>
+      role="grid" aria-label={dates.formatKey(panel, 'YYYY-MM', locale.locale)}>
       {#if datePanel}<thead><tr>{#if weekPrefix}<th scope="col"><span style="width:0;height:0;position:absolute;overflow:hidden;opacity:0">{locale.week}</span></th>{/if}{#each weeks as _, n}<th scope="col">{weeks[(n + firstDay) % 7]}</th>{/each}</tr></thead>{/if}
       <tbody>
         {#each Array.from({ length: cells.length / width }, (_, n) => n) as row}
@@ -339,7 +353,7 @@
                   aria-label={`${locale.week} ${adapter.locale.getWeek(locale.locale, rowDate)}`} disabled={prefixDisabled} tabindex="-1">{adapter.locale.getWeek(locale.locale, rowDate)}</button>
               </td>{/if}{#each cells.slice(row * width, (row + 1) * width) as date (label(date))}
             {@const disabled = unavailable(date)}
-            {@const inView = datePanel ? date.month() === panel.month() : mode === 'month' || mode === 'quarter' ? true : date.year() >= Math.floor(panel.year() / (mode === 'year' ? 10 : 100)) * (mode === 'year' ? 10 : 100) && date.year() < Math.floor(panel.year() / (mode === 'year' ? 10 : 100)) * (mode === 'year' ? 10 : 100) + (mode === 'year' ? 10 : 100)}
+            {@const inView = cellInView(date)}
             <td onclick={cellRender ? () => {
               if (!disabled) onSelect(date);
             } : undefined}
@@ -362,11 +376,11 @@
                   !weekPanel && sameCell(range?.[0], date) && `${prefixCls}-cell-range-start`,
                   !weekPanel && sameCell(range?.[1], date) && `${prefixCls}-cell-range-end`,
                   !weekPanel && inRangeCell(date) && `${prefixCls}-cell-in-range`,
-                  datePanel && renderToday.isSame(date, 'day') && `${prefixCls}-cell-today`,
+                  datePanel && dates.samePeriod(renderToday, date, 'day') && `${prefixCls}-cell-today`,
                   classNames?.item
                 ]} style={styles?.item}>
               {#snippet originNode()}
-              <button type="button" data-picker-date={label(date)} aria-label={label(date)} disabled={disabled} tabindex={(mode === 'quarter' ? samePickerQuarter(date, panel) : date.isSame(panel, unit)) ? 0 : -1} class={`${prefixCls}-cell-inner date-cell`} onclick={cellRender ? undefined : () => onSelect(date)} onkeydown={cellRender ? undefined : event => key(event, date)}>{cellText(date)}</button>
+              <button type="button" data-picker-date={label(date)} aria-label={label(date)} disabled={disabled} tabindex={(mode === 'quarter' ? samePickerQuarter(date, panel) : dates.samePeriod(date, panel, unit)) ? 0 : -1} class={`${prefixCls}-cell-inner date-cell`} onclick={cellRender ? undefined : () => onSelect(date)} onkeydown={cellRender ? undefined : event => key(event, date)}>{cellText(date)}</button>
               {/snippet}
               {#if cellRender}{@render cellRender(date, cellInfo(originNode))}
               {:else}{@render originNode()}{/if}

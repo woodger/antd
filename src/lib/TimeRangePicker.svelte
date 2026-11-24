@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { dayjsPickerDates } from './picker-date-operations.engine';
+  import { parseTimeRangeInput } from './time-range-picker.engine';
   import RangePickerCore from './RangePickerCore.svelte';
   import { timeRangeSharedProps } from './time-range-picker-props.engine';
   import type {
@@ -33,6 +35,8 @@
   {...shared}
   {value}
   time={props}
+  dateOperations={dayjsPickerDates}
+  parseTimeInput={parseTimeRangeInput}
   bind:nativeElement
   bind:startInput
   bind:endInput

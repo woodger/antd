@@ -141,9 +141,9 @@ export function getPickerPopupPosition(
 }
 
 /** При замене содержимого оставляет фокус в панели до удаления старой кнопки. */
-export function retainPickerReplacementFocus(getOptions: () => {
+export function retainPickerReplacementFocus<DateType extends object>(getOptions: () => {
   popup?: HTMLElement;
-  panel?: DatePickerPanel;
+  panel?: DatePickerPanel<DateType>;
   count: number;
   prefix: string;
 }) {

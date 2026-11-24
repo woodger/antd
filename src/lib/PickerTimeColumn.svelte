@@ -1,5 +1,4 @@
-<script lang="ts">
-  import type { Dayjs } from 'dayjs';
+<script lang="ts" generics="DateType extends object">
   import { untrack, type Snippet } from 'svelte';
   import { connectTimePickerColumn } from './time-picker-column.dom';
   import type { TimePickerOption } from './time-picker.engine';
@@ -36,9 +35,9 @@
     onChange: (value: TimePickerOption['value']) => void;
     onHover?: (value: TimePickerOption['value'] | null) => void;
     onDblClick?: () => void;
-    cellRender?: TimePickerProps['cellRender'];
+    cellRender?: TimePickerProps<'time', DateType>['cellRender'];
     locale: PickerLocale;
-    today: Dayjs;
+    today: DateType;
     range?: 'start' | 'end';
     class?: string;
     style?: string;
@@ -113,7 +112,7 @@
     buttons[next]?.focus();
   }
 
-  function renderInfo(originNode: Snippet): TimePickerCellRenderInfo {
+  function renderInfo(originNode: Snippet): TimePickerCellRenderInfo<DateType> {
     return {
       prefixCls, originNode, today, type: 'time', subType: type, locale, range
     };

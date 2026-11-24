@@ -20,42 +20,44 @@ export type TimeRangePickerFocusOptions = FocusOptions & {
 };
 
 /** В диапазоне semantic callback получает resolved size/disabled и исходный variant. */
-export type TimeRangePickerSemantic = TimePickerSlots
-  | ((info: { props: TimeRangePickerProps; }) => TimePickerSlots | undefined);
+export type TimeRangePickerSemantic<DateType extends object = Dayjs> = TimePickerSlots
+  | ((info: { props: TimeRangePickerProps<'time', DateType>; }) => TimePickerSlots | undefined);
 
-/** Пара Dayjs с picker=time; каждая граница подтверждается отдельно, как в rc-picker. */
-export interface TimeRangePickerProps<Mode extends DatePickerMode = 'time'> extends Omit<
-  RangePickerProps,
+/** Пара дат с picker=time; каждая граница подтверждается отдельно, как в rc-picker. */
+export interface TimeRangePickerProps<
+  Mode extends DatePickerMode = 'time', DateType extends object = Dayjs
+> extends Omit<
+  RangePickerProps<DateType>,
   'showTime' | 'allowClear' | 'status' | 'disabledDate' | 'disabledTime'
     | 'onPickerValueChange' | 'onPanelChange' | 'prefix' | 'onclick'
     | 'onfocus' | 'onblur' | 'multiple' | 'placeholder' | 'renderExtraFooter' | 'classNames' | 'styles'
     | 'cellRender' | 'picker' | 'mode'
->, Omit<DatePickerTimeConfig, 'format' | 'defaultOpenValue'> {
+>, Omit<DatePickerTimeConfig<DateType>, 'format' | 'defaultOpenValue'> {
   placeholder?: string | [string, string];
-  /** Заполняет только панель и кандидат OK; одиночный Dayjs относится к start. */
-  defaultOpenValue?: Dayjs | [Dayjs, Dayjs];
+  /** Заполняет только панель и кандидат OK; одиночная дата относится к start. */
+  defaultOpenValue?: DateType | [DateType, DateType];
   changeOnScroll?: boolean;
   allowClear?: boolean | { clearIcon?: TimePickerContent; };
   suffixIcon?: TimePickerContent;
   prefix?: TimePickerContent;
   status?: 'error' | 'warning' | 'success' | 'validating';
-  classNames?: TimeRangePickerSemantic;
-  styles?: TimeRangePickerSemantic;
-  cellRender?: Snippet<[number | 'am' | 'pm', TimePickerCellRenderInfo]>;
+  classNames?: TimeRangePickerSemantic<DateType>;
+  styles?: TimeRangePickerSemantic<DateType>;
+  cellRender?: Snippet<[number | 'am' | 'pm', TimePickerCellRenderInfo<DateType>]>;
   panelRender?: Snippet<[Snippet]>;
   renderExtraFooter?: Snippet<[Mode]>;
-  disabledDate?: (date: Dayjs, info: { type: 'time'; from?: Dayjs | null; }) => boolean;
+  disabledDate?: (date: DateType, info: { type: 'time'; from?: DateType | null; }) => boolean;
   disabledTime?: (
-    date: Dayjs,
+    date: DateType,
     partial: RangePickerPart,
-    info: { from?: Dayjs | null; }
+    info: { from?: DateType | null; }
   ) => DatePickerDisabledTime;
   onPickerValueChange?(
-    value: [Dayjs, Dayjs],
+    value: [DateType, DateType],
     info: RangePickerInfo & { source: 'reset' | 'panel'; mode: [Mode, Mode]; }
   ): void;
   /** Пользовательская панель может изменить режим одной границы. */
-  onPanelChange?(value: [Dayjs | null, Dayjs | null], modes: [Mode, Mode]): void;
+  onPanelChange?(value: [DateType | null, DateType | null], modes: [Mode, Mode]): void;
   onclick?: HTMLAttributes<HTMLDivElement>['onclick'];
   onClick?: HTMLAttributes<HTMLDivElement>['onclick'];
   /** Вызывается и для native controls панели; info относится к активной границе. */
@@ -67,6 +69,6 @@ export interface TimeRangePickerProps<Mode extends DatePickerMode = 'time'> exte
 }
 
 /** Реализация принимает footer обеих публичных сигнатур. */
-export type TimeRangePickerRuntimeProps = Omit<
-  TimeRangePickerProps<DatePickerMode>, 'renderExtraFooter'
+export type TimeRangePickerRuntimeProps<DateType extends object = Dayjs> = Omit<
+  TimeRangePickerProps<DatePickerMode, DateType>, 'renderExtraFooter'
 > & { renderExtraFooter?: PickerModeFooter<DatePickerMode>; };

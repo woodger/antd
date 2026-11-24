@@ -22,6 +22,25 @@ Value/open/pickerValue — controlled props с callbacks: владелец мо�
 decade служит экраном навигации. NativeElement с bind указывает на root div; bind:this даёт методы
 focus({preventScroll,cursor:'start'|'end'|'all'}) и blur().
 
+## Свой тип даты
+
+`DatePicker.generatePicker(adapter)` создаёт семейство пикеров для
+`GenerateConfig<DateType>`. Адаптер определяет календарные операции, локаль,
+форматирование и разбор текста.
+
+```ts
+import { DatePicker } from '@woodger/antd';
+
+const Picker = DatePicker.generatePicker(dateAdapter);
+const { WeekPicker, MonthPicker, YearPicker, TimePicker, RangePicker } = Picker;
+```
+
+`generatePicker` также доступен как именованный экспорт. Для квартала укажите
+`picker="quarter"` на `Picker`, для диапазона времени — `picker="time"` на
+`RangePicker` из семейства. `value`, `presets`, ограничения и callbacks используют
+тип даты адаптера. Пользовательские панели получают исходный `generateConfig`;
+выбранный ими объект передаётся владельцу с той же ссылкой.
+
 ## Множественный выбор
 
 `multiple` включает выбор нескольких дат, недель, месяцев, кварталов или годов.
@@ -471,6 +490,6 @@ Defaults в prefix stylesheet имеют нулевую specificity: canonical N
 Служебные snippets/head/popup boundaries не добавляют текст рядом с controls;
 SSR проверяет также defaultOpen, browser — обновление общего префикса.
 
-Multiple, generatePicker, оставшиеся события и исходный lifecycle popup
-перечислены в [реестре переноса](../ant-design-porting/status.md).
+Оставшиеся события и исходный lifecycle popup перечислены в
+[реестре переноса](../ant-design-porting/status.md).
 

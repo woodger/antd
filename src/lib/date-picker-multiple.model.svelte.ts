@@ -1,50 +1,45 @@
 // Хранит принятый массив отдельно от выбора в открытой панели. Даты и их
 // ссылки сохраняются, сортировка затрагивает только новый массив выбора.
 import { untrack } from 'svelte';
-import dayjs, { type Dayjs } from 'dayjs';
-import { formatPicker, samePickerPanelValue } from './date-picker.engine';
+import type { createDatePickerEngine } from './date-picker.engine';
+import type { PickerDateOperations } from './picker-date-operations.engine';
 import type {
   DatePickerFormat, DatePickerMultipleProps, DatePickerPicker
 } from './date-picker.types';
 
-interface MultiplePickerOptions {
-  props?: DatePickerMultipleProps;
-  local: readonly Dayjs[];
+interface MultiplePickerOptions<DateType extends object> {
+  props?: DatePickerMultipleProps<DateType>;
+  local: readonly DateType[];
   picker: DatePickerPicker;
   locale: string;
-  formats: DatePickerFormat[];
+  formats: DatePickerFormat<DateType>[];
   disabled: boolean;
-  valid: (value: Dayjs) => boolean;
+  valid: (value: DateType) => boolean;
 }
 
-const emptyDates: readonly Dayjs[] = [];
-
-/** При смене multiple прежнее скалярное значение занимает один элемент списка. */
-export function pickerDateList(value: Dayjs | readonly Dayjs[] | null | undefined) {
-  if (value == null) {
-    return emptyDates;
-  }
-
-  return dayjs.isDayjs(value) ? [value] : value;
-}
-
-/** Изменения сравниваются по порядку и полным полям времени, как в календаре. */
-function sameDates(left: readonly Dayjs[], right: readonly Dayjs[]) {
-  return left.length === right.length && left.every((date, index) => {
-    const other = right[index];
-
-    return date === other || samePickerPanelValue(date, other, true);
-  });
-}
+export const emptyPickerDates: readonly never[] = [];
 
 /** Связывает изменения панели, подтверждение и отклонённое значение владельца. */
-export function createMultiplePicker(options: MultiplePickerOptions) {
+export function createMultiplePicker<DateType extends object>(
+  options: MultiplePickerOptions<DateType>,
+  dates: PickerDateOperations<DateType>,
+  { formatPicker, samePickerPanelValue }: ReturnType<typeof createDatePickerEngine<DateType>>
+) {
+  /** Строго сравнивает порядок и полные календарные поля выбранных дат. */
+  function sameDates(left: readonly DateType[], right: readonly DateType[]) {
+    return left.length === right.length && left.every((date, index) => {
+      const other = right[index];
+
+      return date === other || samePickerPanelValue(date, other, true);
+    });
+  }
+
   let saved = $derived.by(() => {
     const value = options.props?.value;
 
-    return value === undefined ? options.local : pickerDateList(value);
+    return value === undefined ? options.local : value ?? emptyPickerDates;
   });
-  let draft = $state.raw<readonly Dayjs[]>(untrack(() => saved));
+  let draft = $state.raw<readonly DateType[]>(untrack(() => saved));
   let confirmed = false;
 
   $effect.pre(() => {
@@ -53,19 +48,19 @@ export function createMultiplePicker(options: MultiplePickerOptions) {
   });
 
   /** Выводит одну дату общим форматом поля, включая locale и callback. */
-  function format(value: Dayjs) {
+  function format(value: DateType) {
     const { locale, formats } = options;
 
     return formatPicker(value, locale, formats);
   }
 
   /** Обновляет список панели и сообщает владельцу только фактическое изменение. */
-  function update(values: readonly Dayjs[]) {
+  function update(values: readonly DateType[]) {
     const props = options.props;
     const next = [...values];
 
     if (props?.order !== false) {
-      next.sort((first, second) => first.valueOf() - second.valueOf());
+      next.sort(dates.compare);
     }
     if (!sameDates(draft, next)) {
       draft = next;
@@ -74,14 +69,14 @@ export function createMultiplePicker(options: MultiplePickerOptions) {
   }
 
   /** Снятие выбора удаляет весь период, даже если начальный массив содержал дубликаты. */
-  function withoutPeriod(value: Dayjs) {
+  function withoutPeriod(value: DateType) {
     const { picker, locale } = options;
 
     return draft.filter(date => !samePickerPanelValue(value, date, false, picker, locale));
   }
 
   /** Выбор уже отмеченного периода удаляет его. */
-  function toggle(value: Dayjs) {
+  function toggle(value: DateType) {
     const remainder = withoutPeriod(value);
 
     return remainder.length === draft.length ? [...draft, value] : remainder;
@@ -123,17 +118,17 @@ export function createMultiplePicker(options: MultiplePickerOptions) {
       confirmed = false;
     },
     /** Сохраняет подсветку панели и pending tags до завершения выбора. */
-    select(value: Dayjs) {
+    select(value: DateType) {
       confirmed = false;
       update(toggle(value));
     },
     /** Пресет применяет период сразу и оставляет панель открытой. */
-    preset(value: Dayjs) {
+    preset(value: DateType) {
       update(toggle(value));
       publish();
     },
     /** В открытой панели удаление остаётся черновиком до её закрытия. */
-    remove(value: Dayjs, open: boolean) {
+    remove(value: DateType, open: boolean) {
       confirmed = false;
       update(withoutPeriod(value));
       if (!open) {
@@ -171,7 +166,7 @@ export function createMultiplePicker(options: MultiplePickerOptions) {
     },
     /** Явная очистка может опубликовать пустой выбор независимо от needConfirm. */
     clear() {
-      update(emptyDates);
+      update(emptyPickerDates);
       publish(true);
       reset(false);
     },

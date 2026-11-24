@@ -18,19 +18,19 @@ export interface TimePickerLocale {
 }
 
 /** OriginNode — native button snippet; остальные поля сохраняют форму rc-picker. */
-export interface TimePickerCellRenderInfo {
+export interface TimePickerCellRenderInfo<DateType extends object = Dayjs> {
   prefixCls: string;
   originNode: Snippet;
-  today: Dayjs;
+  today: DateType;
   type: 'time';
   subType: TimePickerColumnType;
   range?: 'start' | 'end';
   locale: PickerLocale;
 }
 
-export interface TimePickerPreset {
+export interface TimePickerPreset<DateType extends object = Dayjs> {
   label: string | Snippet;
-  value: Dayjs | (() => Dayjs);
+  value: DateType | (() => DateType);
 }
 
 export interface TimePickerPopupSlots {
@@ -51,8 +51,8 @@ export interface TimePickerSlots {
 }
 
 /** Как outer TimePicker: локальный callback получает исходные props с разрешённым variant. */
-export type TimePickerSemantic = TimePickerSlots
-  | ((info: { props: TimePickerProps; }) => TimePickerSlots | undefined);
+export type TimePickerSemantic<DateType extends object = Dayjs> = TimePickerSlots
+  | ((info: { props: TimePickerProps<'time', DateType>; }) => TimePickerSlots | undefined);
 
 /**
  * Объект component config заменяется целиком во вложенном ConfigProvider.
@@ -68,14 +68,16 @@ export interface TimePickerConfig {
   allowClear?: boolean | { clearIcon?: TimePickerContent; };
 }
 
-/** Выбор времени через Dayjs; дата, UTC/timezone и точность не сериализуются компонентом. */
-export interface TimePickerProps<Mode extends DatePickerMode = 'time'> extends Omit<
-  DatePickerProps,
+/** Выбор времени через адаптер даты; дата, UTC/timezone и точность не сериализуются компонентом. */
+export interface TimePickerProps<
+  Mode extends DatePickerMode = 'time', DateType extends object = Dayjs
+> extends Omit<
+  DatePickerProps<DateType>,
   'showTime' | 'allowClear' | 'status' | 'onCalendarChange' | 'classNames' | 'styles'
     | 'onPanelChange' | 'onPickerValueChange' | 'disabledDate' | 'onChange'
     | 'prefix' | 'onclick' | 'mode' | 'multiple' | 'cellRender' | 'picker' | 'renderExtraFooter'
->, Omit<DatePickerTimeConfig, 'format'> {
-  /** В публичном TimePicker 6.6.8 поддерживается один Dayjs. */
+>, Omit<DatePickerTimeConfig<DateType>, 'format'> {
+  /** В публичном TimePicker 6.6.8 поддерживается одиночный выбор. */
   multiple?: false;
   /** По умолчанию true, как в rc-picker для picker=time. */
   needConfirm?: boolean;
@@ -88,30 +90,30 @@ export interface TimePickerProps<Mode extends DatePickerMode = 'time'> extends O
   suffixIcon?: TimePickerContent | true;
   prefix?: TimePickerContent;
   status?: 'error' | 'warning' | 'success' | 'validating';
-  classNames?: TimePickerSemantic;
-  styles?: TimePickerSemantic;
-  cellRender?: Snippet<[number | 'am' | 'pm', TimePickerCellRenderInfo]>;
+  classNames?: TimePickerSemantic<DateType>;
+  styles?: TimePickerSemantic<DateType>;
+  cellRender?: Snippet<[number | 'am' | 'pm', TimePickerCellRenderInfo<DateType>]>;
   /** Получает snippet стандартной panel layout, сохраняя внешний popup lifecycle. */
   panelRender?: Snippet<[Snippet]>;
   renderExtraFooter?: [Mode] extends ['time'] ? Snippet : Snippet<[Mode]>;
-  presets?: readonly TimePickerPreset[];
+  presets?: readonly TimePickerPreset<DateType>[];
   onclick?: HTMLAttributes<HTMLDivElement>['onclick'];
   /** Совместимый alias; onclick имеет приоритет. */
   onClick?: HTMLAttributes<HTMLDivElement>['onclick'];
   onFocus?: DatePickerProps['onfocus'];
   onBlur?: DatePickerProps['onblur'];
   onKeyDown?: (event: KeyboardEvent) => void;
-  disabledDate?: (date: Dayjs, info: { type: 'time'; }) => boolean;
+  disabledDate?: (date: DateType, info: { type: 'time'; }) => boolean;
   /** Третий аргумент SinglePicker — пустой объект после удаления range. */
-  onCalendarChange?: (value: Dayjs | null, dateString: string, info: Record<string, never>) => void;
+  onCalendarChange?: (value: DateType | null, dateString: string, info: Record<string, never>) => void;
   /** При полной очистке dateString=null, как в runtime SinglePicker rc-picker. */
-  onChange?: (value: Dayjs | null, dateString: string | null) => void;
+  onChange?: (value: DateType | null, dateString: string | null) => void;
   /** Пользовательская панель может запросить календарный режим. */
-  onPanelChange?(value: Dayjs, mode: Mode): void;
-  onPickerValueChange?(value: Dayjs, info: { source: 'reset' | 'panel'; mode: Mode; }): void;
+  onPanelChange?(value: DateType, mode: Mode): void;
+  onPickerValueChange?(value: DateType, info: { source: 'reset' | 'panel'; mode: Mode; }): void;
 }
 
 /** Реализация принимает footer обеих публичных сигнатур. */
-export type TimePickerRuntimeProps = Omit<TimePickerProps<DatePickerMode>, 'renderExtraFooter'> & {
+export type TimePickerRuntimeProps<DateType extends object = Dayjs> = Omit<TimePickerProps<DatePickerMode, DateType>, 'renderExtraFooter'> & {
   renderExtraFooter?: PickerModeFooter<DatePickerMode>;
 };

@@ -1,20 +1,20 @@
-<script lang="ts">
+<script lang="ts" generics="DateType extends object">
   // Даёт пользовательской панели тот же renderer ячейки и состав значков навигации.
   import type { DatePickerPanel, DatePickerPanelContext } from './picker-components.types';
   import type { DatePickerProps } from './date-picker.types';
   import type { TimePickerProps } from './time-picker.types';
 
   let { panel, context, dateCell, timeCell }: {
-    panel: DatePickerPanel;
-    context: Omit<DatePickerPanelContext, 'cellRender'>;
-    dateCell?: DatePickerProps['cellRender'];
-    timeCell?: TimePickerProps['cellRender'];
+    panel: DatePickerPanel<DateType>;
+    context: Omit<DatePickerPanelContext<DateType>, 'cellRender'>;
+    dateCell?: DatePickerProps<DateType>['cellRender'];
+    timeCell?: TimePickerProps<'time', DateType>['cellRender'];
   } = $props();
 </script>
 
 {#snippet cellRender(
-  value: Parameters<DatePickerPanelContext['cellRender']>[0],
-  info: Parameters<DatePickerPanelContext['cellRender']>[1]
+  value: Parameters<DatePickerPanelContext<DateType>['cellRender']>[0],
+  info: Parameters<DatePickerPanelContext<DateType>['cellRender']>[1]
 )}
   {#if dateCell}
     {@render dateCell(value, info)}

@@ -6,15 +6,15 @@ import type { TimeRangePickerProps, TimeRangePickerSemantic } from './time-range
 import { mergePickerSlots } from './time-picker-semantic.engine';
 
 // Ведёт классы и стили раздельно, помещая контекстный root style диапазона перед локальным слоем.
-export function timeRangeSemantic(
-  props: TimeRangePickerProps,
+export function timeRangeSemantic<DateType extends object>(
+  props: TimeRangePickerProps<'time', DateType>,
   context: TimePickerConfig | undefined,
   range: RangePickerConfig | undefined,
   resolved: Pick<TimeRangePickerProps, 'size' | 'disabled'>
 ) {
   const filled = { ...props, ...resolved };
   // Выполняет локальный callback с разрешёнными props диапазона или возвращает объект слотов.
-  const resolve = (value: TimeRangePickerSemantic | undefined) =>
+  const resolve = (value: TimeRangePickerSemantic<DateType> | undefined) =>
     typeof value === 'function' ? value({ props: filled }) : value;
   // Использует те же разрешённые props для общего timePicker config, сохраняя исходный контракт
   // callback.

@@ -1,12 +1,18 @@
-<script lang="ts" generics="Multiple extends boolean = false">
+<script lang="ts" generics="Multiple extends boolean, DateType extends object">
+  import type { PickerDateOperations } from './picker-date-operations.engine';
   import SinglePicker from './SinglePicker.svelte';
   import type {
-    DatePickerMultipleProps, DatePickerProps, DatePickerSelectionProps
+    DatePickerMultipleProps, DatePickerPicker, DatePickerProps, DatePickerSelectionProps
   } from './date-picker.types';
 
-  let { nativeElement = $bindable(), ...props }: DatePickerSelectionProps<Multiple> = $props();
+  let {
+    nativeElement = $bindable(), dateOperations, defaultPicker, ...props
+  }: DatePickerSelectionProps<Multiple, DateType> & {
+    dateOperations: PickerDateOperations<DateType>;
+    defaultPicker?: DatePickerPicker;
+  } = $props();
   // После вывода generic у владельца конкретный runtime режим задаёт multiple.
-  let ownerProps = $derived(props as DatePickerProps | DatePickerMultipleProps);
+  let ownerProps = $derived(props as DatePickerProps<DateType> | DatePickerMultipleProps<DateType>);
   let dateProps = $derived(ownerProps.multiple ? undefined : ownerProps);
   let multipleOptions = $derived(ownerProps.multiple ? ownerProps : undefined);
   let shared = $derived.by(() => {
@@ -36,6 +42,8 @@
 
 <SinglePicker
   {...shared}
+  {dateOperations}
+  picker={shared?.picker ?? defaultPicker}
   {dateProps}
   {multipleOptions}
   bind:nativeElement

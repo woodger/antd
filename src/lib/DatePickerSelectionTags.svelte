@@ -1,27 +1,27 @@
-<script lang="ts">
+<script lang="ts" generics="DateType extends object">
   // Показывает выбранные периоды и адаптивный счётчик. Скрытые теги участвуют
   // в измерении, сохраняя порядок и исключаясь из клавиатурной навигации.
   import { onMount } from 'svelte';
-  import type { Dayjs } from 'dayjs';
   import type { DatePickerMultipleProps } from './date-picker.types';
   import { connectSelectTagOverflow } from './select-tag-overflow.dom';
   import Icon from './Icon.svelte';
 
   let {
-    prefix, input, values, format, disabled, placeholder, clearLabel,
+    prefix, input, values, format, dateKey, disabled, placeholder, clearLabel,
     maxTagCount, tagRender, removeIcon, onRemove
   }: {
     prefix: string;
     input?: HTMLInputElement;
-    values: readonly Dayjs[];
-    format: (value: Dayjs) => string;
+    values: readonly DateType[];
+    format: (value: DateType) => string;
+    dateKey: (value: DateType) => string | number;
     disabled: boolean;
     placeholder?: string;
     clearLabel: string;
-    maxTagCount?: DatePickerMultipleProps['maxTagCount'];
-    tagRender?: DatePickerMultipleProps['tagRender'];
-    removeIcon?: DatePickerMultipleProps['removeIcon'];
-    onRemove: (value: Dayjs, event?: MouseEvent) => void;
+    maxTagCount?: DatePickerMultipleProps<DateType>['maxTagCount'];
+    tagRender?: DatePickerMultipleProps<DateType>['tagRender'];
+    removeIcon?: DatePickerMultipleProps<DateType>['removeIcon'];
+    onRemove: (value: DateType, event?: MouseEvent) => void;
   } = $props();
 
   let host = $state<HTMLDivElement>();
@@ -29,14 +29,14 @@
   let responsiveCount = $state<number>();
   let responsive = $derived(maxTagCount === 'responsive');
   let tags = $derived.by(() => {
-    const occurrences = new Map<number, number>();
+    const occurrences = new Map<string | number, number>();
 
     return values.map(value => {
-      const timestamp = value.valueOf();
-      const occurrence = occurrences.get(timestamp) ?? 0;
-      occurrences.set(timestamp, occurrence + 1);
+      const key = dateKey(value);
+      const occurrence = occurrences.get(key) ?? 0;
+      occurrences.set(key, occurrence + 1);
 
-      return { key: `${timestamp}:${occurrence}`, label: format(value), value };
+      return { key: `${key}:${occurrence}`, label: format(value), value };
     });
   });
   let visibleCount = $derived(responsive

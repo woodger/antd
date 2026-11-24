@@ -52,41 +52,41 @@ export interface DatePickerPanelNavigation {
 }
 
 /** Настройки времени после разрешения формата и активной границы. */
-export interface DatePickerPanelTimeConfig extends Omit<DatePickerTimeConfig, 'defaultOpenValue'> {
-  defaultOpenValue?: Dayjs | readonly Dayjs[];
-  disabledTime?: (date: Dayjs) => DatePickerDisabledTime;
+export interface DatePickerPanelTimeConfig<DateType extends object = Dayjs> extends Omit<DatePickerTimeConfig<DateType>, 'defaultOpenValue'> {
+  defaultOpenValue?: DateType | readonly DateType[];
+  disabledTime?: (date: DateType) => DatePickerDisabledTime;
   changeOnScroll?: boolean;
   showNow?: boolean;
 }
 
 /** Данные и действия внутри одного экземпляра панели. */
-export interface DatePickerPanelContext extends DatePickerPanelNavigation {
+export interface DatePickerPanelContext<DateType extends object = Dayjs> extends DatePickerPanelNavigation {
   mode: DatePickerPanelMode;
   range?: 'start' | 'end';
   prefixCls: string;
   locale: PickerLocale;
-  generateConfig: GenerateConfig<Dayjs>;
+  generateConfig: GenerateConfig<DateType>;
   /** Для второй панели диапазона содержит дату её собственного периода. */
-  pickerValue: Dayjs;
-  value?: Dayjs;
-  values: readonly Dayjs[];
-  hoverValue: readonly Dayjs[] | null;
-  hoverRangeValue: readonly [Dayjs, Dayjs] | null;
-  showTime: DatePickerPanelTimeConfig | null;
+  pickerValue: DateType;
+  value?: DateType;
+  values: readonly DateType[];
+  hoverValue: readonly DateType[] | null;
+  hoverRangeValue: readonly [DateType, DateType] | null;
+  showTime: DatePickerPanelTimeConfig<DateType> | null;
   showWeek?: boolean;
-  minDate?: Dayjs;
-  maxDate?: Dayjs;
-  disabledDate: (date: Dayjs, info: { type: DatePickerMode; }) => boolean;
-  cellRender: Snippet<[Dayjs | number | 'am' | 'pm', DatePickerCellRenderInfo]>;
+  minDate?: DateType;
+  maxDate?: DateType;
+  disabledDate: (date: DateType, info: { type: DatePickerMode; }) => boolean;
+  cellRender: Snippet<[DateType | number | 'am' | 'pm', DatePickerCellRenderInfo<DateType>]>;
   /** Меняет дату просмотра. У управляемого поля сообщает предложенное значение. */
-  onPickerValueChange: (date: Dayjs) => void;
-  onModeChange: (mode: DatePickerMode, date?: Dayjs) => void;
-  /** Передаёт выбранный Dayjs в обычную логику черновика и подтверждения. */
-  onSelect: (date: Dayjs) => void;
-  onHover: (date: Dayjs | null) => void;
+  onPickerValueChange: (date: DateType) => void;
+  onModeChange: (mode: DatePickerMode, date?: DateType) => void;
+  /** Передаёт выбранную дату в обычную логику черновика и подтверждения. */
+  onSelect: (date: DateType) => void;
+  onHover: (date: DateType | null) => void;
 }
 
-export type DatePickerPanel = Snippet<[DatePickerPanelContext]>;
+export type DatePickerPanel<DateType extends object = Dayjs> = Snippet<[DatePickerPanelContext<DateType>]>;
 
 /** Внутренний вызов footer поддерживает прежнюю сигнатуру и режим авторской панели. */
 export type PickerModeFooter<Mode extends DatePickerMode> = {
@@ -94,7 +94,7 @@ export type PickerModeFooter<Mode extends DatePickerMode> = {
 }['render'];
 
 /** Замены элементов поля и раскрытой панели. */
-export interface DatePickerComponents extends Partial<Record<DatePickerPanelMode, DatePickerPanel>> {
+export interface DatePickerComponents<DateType extends object = Dayjs> extends Partial<Record<DatePickerPanelMode, DatePickerPanel<DateType>>> {
   /** В одиночном поле и в обеих границах диапазона. */
   input?: DatePickerEditor;
   button?: 'button' | Snippet<[DatePickerButtonContext]>;

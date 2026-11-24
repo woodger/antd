@@ -1,38 +1,16 @@
-<script lang="ts">
+<script lang="ts" generics="DateType extends object">
   // Координирует два редактора, draft диапазона и панели календаря. Подтверждение публикует
   // диапазон отдельно от навигации.
   import { onMount, tick, untrack } from 'svelte';
-  import type { Dayjs } from 'dayjs';
+  import type { PickerDateOperations } from './picker-date-operations.engine';
   import type { RangePickerMode, RangePickerProps, RangePickerValue } from './range-picker.types';
   import type { DatePickerCalendarMode, DatePickerMode, DatePickerTimeConfig } from './date-picker.types';
   import {
     createRangeInteraction,
     type RangeInteractionSource
   } from './range-picker-interaction.engine';
-  import {
-    rangePair,
-    rangeFlags,
-    sameRange,
-    rangeFrom,
-    orderedRange,
-    validRange
-  } from './range-picker.engine';
-  import {
-    pickerFormats,
-    pickerCalendarValue,
-    samePickerPanelValue,
-    nextPickerPanelMode,
-    offsetPickerPanel,
-    samePickerPanel,
-    samePickerQuarter,
-    samePickerWeek,
-    formatPicker,
-    parsePicker,
-    pickerDateDisabled,
-    pickerTimeDisabled,
-    validPickerTime
-  } from './date-picker.engine';
-  import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
+  import { createRangePickerEngine, rangePair, rangeFlags, rangeFrom } from './range-picker.engine';
+  import { createDatePickerEngine, pickerFormats, nextPickerPanelMode } from './date-picker.engine';
   import { normalizePickerFieldFormat } from './picker-mask.engine';
   import { createPickerMaskInput, type PickerMaskSharedKey } from './picker-mask-input.model.svelte.js';
   import {
@@ -40,10 +18,7 @@
     pickerEditorMaskEvents, type PickerEditorEvent
   } from './picker-editor.model.svelte.js';
   import type { DatePickerEditorAttributes, DatePickerPanelContext } from './picker-components.types';
-  import {
-    pickerPanelClock, pickerPanelHoverRange, pickerPanelOutsideBounds, pickerPanelSlot,
-    samePickerPanelPeriod
-  } from './picker-panel.engine';
+  import { createPickerPanelEngine, pickerPanelClock, pickerPanelSlot } from './picker-panel.engine';
   import { datePickerEnUS } from './date-picker.locale';
   import { useConfig } from './config-context';
   import { getPickerPrefixCss } from './picker-prefix.engine';
@@ -75,22 +50,18 @@
   import PickerClockIcon from './PickerClockIcon.svelte';
   import PickerTimePanel from './PickerTimePanel.svelte';
   import {
-    datePickerClock, timePickerFormats, timePickerLang, timePickerSameValue
+    createTimePickerEngine, datePickerClock, timePickerFormats, timePickerLang
   } from './time-picker.engine';
   import {
-    parseTimeRangeInput,
-    sameTimeRange,
-    samePickerTime,
-    timeRangeClock,
-    timeRangeInvalid,
-    validTimeRange
+    createTimeRangePickerEngine, timeRangeClock, type TimeRangeInputParser
   } from './time-range-picker.engine';
-  import { timePickerDateDisabled } from './time-picker.engine';
   import { timeRangeSemantic } from './time-range-picker-semantic.engine';
   import { datePickerSemantic } from './date-picker-semantic.engine';
   import type { TimeRangePickerRuntimeProps } from './time-range-picker.types';
   import { connectTimeRangePopup } from './time-range-picker-popup.dom';
   let {
+    dateOperations,
+    parseTimeInput,
     time,
     dateProps,
     value,
@@ -158,10 +129,28 @@
     startInput = $bindable(),
     endInput = $bindable(),
     ...attributes
-  }: RangePickerProps & {
-    time?: TimeRangePickerRuntimeProps;
-    dateProps?: RangePickerProps;
+  }: RangePickerProps<DateType> & {
+    dateOperations: PickerDateOperations<DateType>;
+    parseTimeInput?: TimeRangeInputParser<DateType>;
+    time?: TimeRangePickerRuntimeProps<DateType>;
+    dateProps?: RangePickerProps<DateType>;
   } = $props();
+  const dates = untrack(() => dateOperations);
+  const { generateConfig: adapter, fields } = dates;
+  const dateEngine = createDatePickerEngine(dates);
+  const {
+    pickerCalendarValue, pickerDateWithCalendar, samePickerPanelValue, offsetPickerPanel,
+    samePickerPanel, samePickerQuarter, samePickerWeek, formatPicker, parsePicker,
+    pickerDateDisabled, pickerTimeDisabled, validPickerTime
+  } = dateEngine;
+  const { sameRange, orderedRange, validRange } = createRangePickerEngine(dates, dateEngine);
+  const { pickerPanelHoverRange, pickerPanelOutsideBounds, samePickerPanelPeriod } =
+    createPickerPanelEngine(dates, dateEngine);
+  const timeEngine = createTimePickerEngine(dates, dateEngine);
+  const { timePickerSameValue, timePickerDateDisabled } = timeEngine;
+  const { sameTimeRange, timeRangeInvalid, validTimeRange } =
+    createTimeRangePickerEngine(dates, dateEngine, timeEngine);
+
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('picker', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
@@ -183,7 +172,7 @@
   const compact = useCompact();
   const generatedId = $props.id();
   const initial = untrack(() => rangePair(defaultValue));
-  let internalValue = $state.raw<RangePickerValue>(initial);
+  let internalValue = $state.raw<RangePickerValue<DateType>>(initial);
   let committed = $derived(value === undefined ? internalValue : rangePair(value));
   let semanticDisabled = $derived(
     disabled ?? field?.disabled ?? form?.disabled ?? config.componentDisabled
@@ -207,32 +196,32 @@
     }
   );
   let formats = $derived(time ? timePickerFormats(time, lang) : pickerFormats(formatConfig, lang));
-  let maskFormat = $derived(normalizePickerFieldFormat<Dayjs>(time ? time.format : format, '').mask);
+  let maskFormat = $derived(normalizePickerFieldFormat<DateType>(time ? time.format : format, '').mask);
   let readOnly = $derived(
     time && typeof formats[0] === 'function'
       || (inputReadOnly ?? (attributes.readonly
         || formats.every(item => typeof item === 'function')))
   );
-  let calendar = $state.raw<RangePickerValue>(
+  let calendar = $state.raw<RangePickerValue<DateType>>(
     untrack(() => value === undefined ? [...initial] : rangePair(value))
   );
-  let submit = $state.raw<RangePickerValue>(untrack(() => [...calendar]));
+  let submit = $state.raw<RangePickerValue<DateType>>(untrack(() => [...calendar]));
   let texts = $state<[string, string]>(untrack(() => dateTexts(calendar)));
   let rawInvalid = $state<[boolean, boolean]>([false, false]);
-  let quarterInputValues = $state.raw<[Dayjs | null | undefined, Dayjs | null | undefined]>([undefined, undefined]);
+  let quarterInputValues = $state.raw<[DateType | null | undefined, DateType | null | undefined]>([undefined, undefined]);
   let revision = $state(0);
-  const interaction = createRangeInteraction<Dayjs>({
+  const interaction = createRangeInteraction<DateType>({
     fieldCount: () => blocked.filter(item => !item).length,
     needConfirm: () => confirm,
     allowEmpty: () => empty,
     getCalendarValue: () => calendar,
     triggerCalendarChange: (index, next) => {
-      const copy: RangePickerValue = [...calendar];
+      const copy: RangePickerValue<DateType> = [...calendar];
       copy[index] = next;
       changeCalendar(copy);
     },
     flushSubmit: (index, all) => {
-      const copy: RangePickerValue = [...submit];
+      const copy: RangePickerValue<DateType> = [...submit];
       copy[index] = calendar[index];
       submit = copy;
       if (all) {
@@ -247,10 +236,10 @@
         submit = [...committed];
       }
       else {
-        const copy: RangePickerValue = [...calendar];
+        const copy: RangePickerValue<DateType> = [...calendar];
         copy[index] = committed[index];
         changeCalendar(copy);
-        const next: RangePickerValue = [...submit];
+        const next: RangePickerValue<DateType> = [...submit];
         next[index] = committed[index];
         submit = next;
       }
@@ -260,7 +249,7 @@
     void revision;
     return interaction.activeIndex;
   });
-  let clock = $derived.by((): DatePickerTimeConfig => {
+  let clock = $derived.by((): DatePickerTimeConfig<DateType> => {
     if (time) {
       return timeRangeClock(time, lang, active);
     }
@@ -291,7 +280,7 @@
   let timeContainer = $state<HTMLDivElement>();
   let timePosition = $state({ arrow: 0, offset: 0 });
   let now = $state.raw(untrack(() => adapter.getNow()));
-  let panels = $state.raw<[Dayjs, Dayjs]>(untrack(() => {
+  let panels = $state.raw<[DateType, DateType]>(untrack(() => {
     const base = initialPanel(0);
     return [base, initialPanel(1)];
   }));
@@ -308,7 +297,7 @@
   let periodModes = $state.raw<RangePickerMode>(untrack(() => [picker, picker]));
   let multiplePanels = $derived(!showTime && mode === picker);
   const panelFocus = preservePickerPanelFocus(() => ({
-    popup, mode, date: view.format('YYYY-MM-DD'), controlled: providedMode !== undefined,
+    popup, mode, date: dates.formatKey(view, 'YYYY-MM-DD', lang.locale), controlled: providedMode !== undefined,
     editor: active === 1 ? endElement : startElement
   }));
   retainPickerReplacementFocus(() => ({
@@ -319,18 +308,18 @@
     : picker === 'month' ? lang.rangeMonthPlaceholder
     : picker === 'year' ? lang.rangeYearPlaceholder : lang.rangePlaceholder);
   let showCurrent = $derived(Boolean(showNow && (mode === 'date' || time && mode === 'time')));
-  let hover = $state.raw<Dayjs | null>(null);
-  let presetHover = $state.raw<RangePickerValue | null>(null);
-  let displayRange = $derived.by((): RangePickerValue => {
-    const pair: RangePickerValue = presetHover && previewValue ? [...presetHover] : [...calendar];
+  let hover = $state.raw<DateType | null>(null);
+  let presetHover = $state.raw<RangePickerValue<DateType> | null>(null);
+  let displayRange = $derived.by((): RangePickerValue<DateType> => {
+    const pair: RangePickerValue<DateType> = presetHover && previewValue ? [...presetHover] : [...calendar];
     if (hover && previewValue)
       pair[active] = hover;
-    return pair[0] && pair[1] && pair[0].isAfter(pair[1]) ? [pair[1], pair[0]] : pair;
+    return pair[0] && pair[1] && dates.isAfter(pair[0], pair[1]) ? [pair[1], pair[0]] : pair;
   });
   let periodWeakHover = $derived(picker !== 'date' && !!hover
-    && !calendar[active ^ 1] && calendar[active]?.valueOf() !== committed[active]?.valueOf());
+    && !calendar[active ^ 1] && !dates.sameValue(calendar[active], committed[active]));
   let calendarRange = $derived(picker === 'date' ? displayRange : periodWeakHover ? undefined
-    : [displayRange[0] ?? displayRange[1], displayRange[1] ?? displayRange[0]] as RangePickerValue);
+    : [displayRange[0] ?? displayRange[1], displayRange[1] ?? displayRange[0]] as RangePickerValue<DateType>);
   let displayedTexts = $derived.by(() => {
     const pair = presetHover && previewValue ? dateTexts(presetHover) : [...texts];
     if (hover && previewValue)
@@ -673,13 +662,13 @@
   function inputs() {
     return [startElement, endElement];
   }
-  function dateTexts(pair: RangePickerValue): [string, string] {
+  function dateTexts(pair: RangePickerValue<DateType>): [string, string] {
     return [
       formatPicker(pair[0], lang.locale, formats),
       formatPicker(pair[1], lang.locale, formats)
     ];
   }
-  function initialPanel(index: number): Dayjs {
+  function initialPanel(index: number): DateType {
     const defaults = Array.isArray(defaultPickerValue)
       ? defaultPickerValue
       : [defaultPickerValue, defaultPickerValue];
@@ -690,9 +679,9 @@
       ?? (!time ? (value === undefined
         ? initial
         : value)?.[index ^ 1] : undefined)
-      ?? (time ? adapter.getNow().startOf('day') : adapter.getNow());
+      ?? (time ? dates.startOf(adapter.getNow(), 'day') : adapter.getNow());
   }
-  function panelValues(): [Dayjs, Dayjs] {
+  function panelValues(): [DateType, DateType] {
     return pickerValue
       ? Array.isArray(pickerValue) ? pickerValue : [pickerValue, pickerValue]
       : panels;
@@ -700,7 +689,7 @@
   function from() {
     return rangeFrom(calendar, interaction.triggeredFields, active);
   }
-  function timeRestriction(date: Dayjs) {
+  function timeRestriction(date: DateType) {
     if (time) {
       return time.disabledTime?.(date, active === 1 ? 'end' : 'start', {
         from: from()
@@ -709,9 +698,9 @@
     return disabledTime?.(date, active === 1 ? 'end' : 'start', { from: from() }) ?? {};
   }
   function invalid(
-    date: Dayjs,
+    date: DateType,
     index: number,
-    reference?: Dayjs,
+    reference?: DateType,
     type: DatePickerCalendarMode = picker,
     typeOnlyInfo = false
   ) {
@@ -722,16 +711,16 @@
     const other = calendar[index ^ 1];
     const same = other
       && (type === 'decade'
-        ? Math.floor(other.year() / 10) === Math.floor(date.year() / 10)
+        ? Math.floor(fields.getYear(other) / 10) === Math.floor(fields.getYear(date) / 10)
         : type === 'week' ? samePickerWeek(other, date, lang.locale)
         : type === 'quarter' ? samePickerQuarter(other, date)
-        : other.isSame(date, type === 'date' ? 'day' : type));
+        : dates.samePeriod(other, date, type === 'date' ? 'day' : type));
     if (blocked[index ^ 1]
       && other
       && !same
       && (index === 1
-        ? other.isAfter(date)
-        : date.isAfter(other))) {
+        ? dates.isAfter(other, date)
+        : dates.isAfter(date, other))) {
       return true;
     }
     if (pickerDateDisabled(
@@ -764,30 +753,29 @@
       }
     );
   }
-  function panelDisabled(date: Dayjs, info: { type: DatePickerCalendarMode; }) {
+  function panelDisabled(date: DateType, info: { type: DatePickerCalendarMode; }) {
     const other = calendar[active ^ 1];
     const same = other
       && (info.type === 'decade'
-        ? Math.floor(other.year() / 10) === Math.floor(date.year() / 10)
+        ? Math.floor(fields.getYear(other) / 10) === Math.floor(fields.getYear(date) / 10)
         : info.type === 'week' ? samePickerWeek(other, date, lang.locale)
         : info.type === 'quarter' ? samePickerQuarter(other, date)
-        : other.isSame(date, info.type === 'date' ? 'day' : info.type));
+        : dates.samePeriod(other, date, info.type === 'date' ? 'day' : info.type));
     return Boolean(
       blocked[active ^ 1]
       && other
       && !same
       && (active === 1
-        ? other.isAfter(date)
-        : date.isAfter(other))
+        ? dates.isAfter(other, date)
+        : dates.isAfter(date, other))
       || disabledDate?.(
         date,
         { ...info, from: from() }
       )
     );
   }
-  function changeCalendar(next: RangePickerValue) {
-    const sameDate = time ? timePickerSameValue : (a: Dayjs | null, b: Dayjs | null) =>
-      a?.valueOf() === b?.valueOf();
+  function changeCalendar(next: RangePickerValue<DateType>) {
+    const sameDate = time ? timePickerSameValue : dates.sameValue;
     const changed = time ? !sameTimeRange(calendar, next) : !sameRange(calendar, next);
     const part = sameDate(calendar[0], next[0]) ? 'end' : 'start';
     if (changed) {
@@ -802,8 +790,8 @@
     if (changed)
       onCalendarChange?.([...next], dateTexts(next), { range: part });
   }
-  function commit(next: RangePickerValue | null) {
-    const pair: RangePickerValue = next === null
+  function commit(next: RangePickerValue<DateType> | null) {
+    const pair: RangePickerValue<DateType> = next === null
       ? [blocked[0] ? submit[0] : null, blocked[1] ? submit[1] : null]
       : orderedRange(next, order, blocked);
     changeCalendar(pair);
@@ -842,7 +830,7 @@
       internalOpen = next;
     onOpenChange?.(next);
   }
-  function syncPanel(index: number, source: 'reset' | 'panel', preserve: boolean, target?: Dayjs) {
+  function syncPanel(index: number, source: 'reset' | 'panel', preserve: boolean, target?: DateType) {
     if (time) {
       if (target) setTimePanel(index, target, source);
       return;
@@ -875,20 +863,20 @@
       && !preserve
       && calendar[0]
       && calendar[1]
-      && !calendar[1].isSame(
+      && !dates.samePeriod(calendar[1],
         calendar[0],
         'month'
       )
-      && !calendar[1].isSame(
-        calendar[0].add(1, 'month'),
+      && !dates.samePeriod(calendar[1],
+        fields.addMonth(calendar[0], 1),
         'month'
       )) {
-      next = calendar[1].add(-1, 'month');
+      next = fields.addMonth(calendar[1], -1);
     }
-    if (minDate && next.isBefore(minDate))
+    if (minDate && dates.isBefore(next, minDate))
       next = minDate;
     const dual = picker === 'date' && !providedMode ? !showTime : multiplePanels;
-    if (maxDate && (dual ? offsetPickerPanel(next, picker, 1) : next).isAfter(maxDate))
+    if (maxDate && dates.isAfter(dual ? offsetPickerPanel(next, picker, 1) : next, maxDate))
       next = dual ? offsetPickerPanel(maxDate, picker, -1) : maxDate;
     setDatePanel(index, next, source);
   }
@@ -901,7 +889,7 @@
     }
     return time ? ['time', 'time'] : picker === 'date' ? dateModes : periodModes;
   }
-  function setMode(next: DatePickerMode, index = active, viewDate?: Dayjs) {
+  function setMode(next: DatePickerMode, index = active, viewDate?: DateType) {
     if (providedMode) {
       if (viewDate) publishPanelChange(index, next, viewDate);
       return;
@@ -920,21 +908,21 @@
       periodModes = modes;
     }
     if (viewDate) {
-      const values: RangePickerValue = [...calendar];
+      const values: RangePickerValue<DateType> = [...calendar];
       values[index] = viewDate;
       onPanelChange?.(values, panelModes());
     }
   }
-  function publishPanelChange(index: number, next: DatePickerMode, date?: Dayjs) {
+  function publishPanelChange(index: number, next: DatePickerMode, date?: DateType) {
     const modes: RangePickerMode = [...panelModes()];
     modes[index] = next;
-    const values: RangePickerValue = [...calendar];
+    const values: RangePickerValue<DateType> = [...calendar];
     if (date) {
       values[index] = date;
     }
     (time?.onPanelChange ?? onPanelChange)?.(values, modes);
   }
-  function navigatePanel(date: Dayjs, offset = 0) {
+  function navigatePanel(date: DateType, offset = 0) {
     if (authoredModes || time) {
       navigateReplacement(date, offset);
       return;
@@ -947,7 +935,7 @@
     }
     syncPanel(active, 'panel', false, next);
   }
-  function changePanelMode(next: DatePickerCalendarMode, date?: Dayjs, offset = 0) {
+  function changePanelMode(next: DatePickerCalendarMode, date?: DateType, offset = 0) {
     if (authoredModes || time) {
       changeReplacementMode(next, date, offset);
       return;
@@ -964,19 +952,19 @@
       setMode(next, active, date);
     }
     else {
-      if (offset) syncPanel(active, 'panel', false, view.add(1, 'month'));
+      if (offset) syncPanel(active, 'panel', false, fields.addMonth(view, 1));
       localMode = next;
       onPanelChange?.([...calendar], [next, next]);
     }
   }
   function setDatePanel(
     index: number,
-    next: Dayjs,
+    next: DateType,
     source: 'reset' | 'panel',
-    event?: { previous: [Dayjs, Dayjs]; modes: RangePickerMode }
+    event?: { previous: [DateType, DateType]; modes: RangePickerMode }
   ) {
     const previous = event?.previous ?? panelValues();
-    const pair: [Dayjs, Dayjs] = [...previous];
+    const pair: [DateType, DateType] = [...previous];
     pair[index] = next;
     if (!pickerValue) panels = pair;
     if (pair.some((date, part) =>
@@ -986,7 +974,7 @@
       });
     }
   }
-  function send(index: number, source: RangeInteractionSource, next?: Dayjs | null) {
+  function send(index: number, source: RangeInteractionSource, next?: DateType | null) {
     const previous = interaction.activeIndex;
     interaction.trigger(index, source, next);
     revision++;
@@ -1071,9 +1059,9 @@
     });
   }
   function selectIntermediateDate(
-    date: Dayjs,
+    date: DateType,
     index: number,
-    event: { previous: [Dayjs, Dayjs]; modes: RangePickerMode }
+    event: { previous: [DateType, DateType]; modes: RangePickerMode }
   ) {
     const nextMode = nextPickerPanelMode(picker, event.modes[index]);
     send(index, 'panel-intermediate', date);
@@ -1084,7 +1072,7 @@
       setMode(nextMode, index, date);
     }
   }
-  function selectDate(date: Dayjs, panelOffset = 0) {
+  function selectDate(date: DateType, panelOffset = 0) {
     if (time || authoredModes && mode !== picker) {
       selectReplacement(date, panelOffset);
       return;
@@ -1104,7 +1092,7 @@
     const base = calendar[active] ?? datePanelValue;
     const next = showTime
       ? validPickerTime(
-        base.year(date.year()).month(date.month()).date(date.date()),
+        pickerDateWithCalendar(base, date),
         clock,
         timeRestriction
       )
@@ -1115,14 +1103,14 @@
     const panelDate = offset ? offsetPickerPanel(next, picker, -panelOffset) : next;
     setDatePanel(index, panelDate, 'panel', picker !== 'date' || providedMode ? event : undefined);
   }
-  function handleDateHover(date: Dayjs | null) {
+  function handleDateHover(date: DateType | null) {
     if (date && showTime) {
       const base = calendar[active] ?? datePanelValue;
-      date = base.year(date.year()).month(date.month()).date(date.date());
+      date = pickerDateWithCalendar(base, date);
     }
     hover = date;
   }
-  function selectTime(date: Dayjs) {
+  function selectTime(date: DateType) {
     if (time && mode !== terminalMode) {
       selectReplacement(date, 0);
       return;
@@ -1154,7 +1142,7 @@
   }
 
   function setReplacementValue(
-    date: Dayjs,
+    date: DateType,
     offset: number,
     event: ReturnType<typeof panelSnapshot>
   ) {
@@ -1167,13 +1155,13 @@
     }
   }
 
-  function navigateReplacement(date: Dayjs, offset: number) {
+  function navigateReplacement(date: DateType, offset: number) {
     const event = panelSnapshot();
     setReplacementValue(date, offset, event);
     publishPanelChange(event.index, event.modes[event.index], date);
   }
 
-  function changeReplacementMode(next: DatePickerMode, date: Dayjs | undefined, offset: number) {
+  function changeReplacementMode(next: DatePickerMode, date: DateType | undefined, offset: number) {
     const event = panelSnapshot();
     const shown = date ?? replacementValue(offset);
     if (date) {
@@ -1182,7 +1170,7 @@
     publishReplacementMode(next, shown, event.index);
   }
 
-  function publishReplacementMode(next: DatePickerMode, date: Dayjs, index: number) {
+  function publishReplacementMode(next: DatePickerMode, date: DateType, index: number) {
     if (!providedMode) {
       const modes: RangePickerMode = [...panelModes()];
       modes[index] = next;
@@ -1191,7 +1179,7 @@
     publishPanelChange(index, next, date);
   }
 
-  function selectReplacement(date: Dayjs, offset: number) {
+  function selectReplacement(date: DateType, offset: number) {
     const event = panelSnapshot();
     const currentMode = event.modes[event.index];
     const nextMode = nextPickerPanelMode(terminalMode, currentMode);
@@ -1205,10 +1193,10 @@
     }
   }
 
-  function replacementDisabled(date: Dayjs, { type }: { type: DatePickerMode; }) {
+  function replacementDisabled(date: DateType, { type }: { type: DatePickerMode; }) {
     const other = calendar[active ^ 1];
     if (blocked[active ^ 1] && other
-      && (active === 1 ? other.isAfter(date) : date.isAfter(other))
+      && (active === 1 ? dates.isAfter(other, date) : dates.isAfter(date, other))
       && !samePickerPanelPeriod(other, date, type, lang.locale)) {
       return true;
     }
@@ -1221,10 +1209,10 @@
   }
 
   function replacementHover() {
-    const pair: RangePickerValue = presetHover && previewValue ? [...presetHover] : [...calendar];
+    const pair: RangePickerValue<DateType> = presetHover && previewValue ? [...presetHover] : [...calendar];
     if (hover && previewValue === 'hover') {
       const weak = !calendar[active ^ 1]
-        && calendar[active]?.valueOf() !== committed[active]?.valueOf();
+        && !dates.sameValue(calendar[active], committed[active]);
       if (weak && !presetHover) {
         return { hoverValue: [hover], hoverRangeValue: null };
       }
@@ -1233,7 +1221,7 @@
     return { hoverValue: null, hoverRangeValue: pickerPanelHoverRange(...pair) };
   }
 
-  function replacementContext(offset: number): Omit<DatePickerPanelContext, 'cellRender'> {
+  function replacementContext(offset: number): Omit<DatePickerPanelContext<DateType>, 'cellRender'> {
     const selected = calendar[active] ?? (time ? clock.defaultOpenValue : undefined);
     const configuredTime = typeof showTime === 'object' ? showTime : undefined;
     return {
@@ -1268,8 +1256,8 @@
     };
   }
   // Ввод, маска и подтверждение используют дату одной и той же редактируемой границы.
-  function parseFieldInput(text: string, boundary: Dayjs | null): Dayjs | null {
-    return time ? parseTimeRangeInput(text, lang.locale, formats, boundary)
+  function parseFieldInput(text: string, boundary: DateType | null): DateType | null {
+    return time && parseTimeInput ? parseTimeInput(text, lang.locale, formats, boundary)
       : parsePicker(text, lang.locale, formats);
   }
 
@@ -1462,7 +1450,7 @@
         requestOpen(true);
         await tick();
         if (panelReplacement || mode !== 'time') {
-          focusPickerPanel(popup, mode, replacementValue(0).format('YYYY-MM-DD'));
+          focusPickerPanel(popup, mode, dates.formatKey(replacementValue(0), 'YYYY-MM-DD', lang.locale));
           return;
         }
         (popup?.querySelector<HTMLButtonElement>(
@@ -1497,7 +1485,7 @@
       event.preventDefault();
       requestOpen(true);
       await tick();
-      focusPickerPanel(popup, mode, view.format('YYYY-MM-DD'));
+      focusPickerPanel(popup, mode, dates.formatKey(view, 'YYYY-MM-DD', lang.locale));
     }
   }
   function clear(event?: MouseEvent) {
@@ -1509,7 +1497,7 @@
     requestOpen(false);
     if (time) onClear?.();
   }
-  function presetValue(next: RangePickerValue) {
+  function presetValue(next: RangePickerValue<DateType>) {
     resetQuarterInput();
     interaction.reset();
     revision++;
@@ -1518,13 +1506,13 @@
   }
   function setTimePanel(
     index: number,
-    next: Dayjs,
+    next: DateType,
     source: 'reset' | 'panel',
-    event?: { previous: [Dayjs, Dayjs]; modes: RangePickerMode; }
+    event?: { previous: [DateType, DateType]; modes: RangePickerMode; }
   ) {
     const pair = event?.previous ?? panelValues();
-    const changed = !samePickerTime(pair[index], next);
-    const copy: [Dayjs, Dayjs] = [...pair];
+    const changed = !dates.sameTime(pair[index], next);
+    const copy: [DateType, DateType] = [...pair];
     copy[index] = next;
     if (!pickerValue) panels = copy;
     if (changed) {
@@ -1536,7 +1524,7 @@
   function syncTimePanel(index: number, resetDefault: boolean) {
     const defaults = Array.isArray(defaultPickerValue)
       ? defaultPickerValue : [defaultPickerValue, defaultPickerValue];
-    let next: Dayjs | null | undefined;
+    let next: DateType | null | undefined;
     if (defaults[index]) {
       if (!resetDefault) {
         return;
@@ -1553,8 +1541,8 @@
       return;
     }
     if (!defaults[index]) {
-      if (minDate && next.isBefore(minDate)) next = minDate;
-      if (maxDate && next.isAfter(maxDate)) next = maxDate;
+      if (minDate && dates.isBefore(next, minDate)) next = minDate;
+      if (maxDate && dates.isAfter(next, maxDate)) next = maxDate;
     }
     setTimePanel(index, next, 'reset');
   }
@@ -1570,13 +1558,13 @@
     send(active, 'confirm');
     if (!notifyFirst) onOk?.([...calendar]);
   }
-  function timeNowDisabled(date: Dayjs) {
+  function timeNowDisabled(date: DateType) {
     if (!time) {
       return false;
     }
     const other = calendar[active ^ 1];
-    return !!(blocked[active ^ 1] && other && !samePickerTime(other, date)
-      && (active === 1 ? other.isAfter(date) : date.isAfter(other)))
+    return !!(blocked[active ^ 1] && other && !dates.sameTime(other, date)
+      && (active === 1 ? dates.isAfter(other, date) : dates.isAfter(date, other)))
       || timePickerDateDisabled(date, {
         minDate, maxDate,
         disabledDate: next => !!time.disabledDate?.(next, { type: 'time', from: from() })
@@ -1611,7 +1599,7 @@
     }
     (time.onblur ?? time.onBlur)?.(event, { range: active === 1 ? 'end' : 'start' });
   }
-  function handleTimeHover(next: Dayjs | null) {
+  function handleTimeHover(next: DateType | null) {
     if (previewValue !== 'hover') {
       return;
     }
@@ -1654,6 +1642,7 @@
 
 {#snippet dateCalendar(calendarMode: DatePickerCalendarMode, offset: number)}
   <DatePickerCalendar
+    dateOperations={dates}
     classNames={dateSemantic?.classes.popup}
     styles={dateSemantic?.styles.popup}
     {picker}
@@ -1713,6 +1702,7 @@
             {#if mode !== 'time'}{@render dateCalendar(mode, 0)}{/if}
             {#if mode === 'time' || showTime && mode === 'date'}
               <DatePickerTimePanel
+                dateOperations={dates}
                 classNames={dateSemantic?.classes.popup}
                 styles={dateSemantic?.styles.popup}
                 prefixCls={prefix}
@@ -1830,7 +1820,7 @@
   </div>
 {/snippet}
 {#snippet timePanelBody()}
-  {#if timeLocale}<PickerTimePanel prefixCls={prefix}
+  {#if timeLocale}<PickerTimePanel dateOperations={dates} prefixCls={prefix}
     value={calendar[active] || clock.defaultOpenValue || null}
     pickerValue={view}
     config={clock}

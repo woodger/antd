@@ -28,22 +28,28 @@ export function mergePickerSlots(values: (TimePickerSlots | undefined)[], separa
 }
 
 /** Semantic слои outer TimePicker/inner SinglePicker, включая порядок callbacks. */
-export function timePickerSemantic(
-  props: TimePickerProps,
+export function timePickerSemantic<DateType extends object>(
+  props: TimePickerProps<'time', DateType>,
   config: TimePickerConfig | undefined,
   resolved: Pick<TimePickerProps, 'variant' | 'size' | 'disabled'>
 ) {
-  const resolve = (value: TimePickerSemantic | undefined, props: TimePickerProps) =>
+  const resolve = (
+    value: TimePickerSemantic<DateType> | undefined,
+    props: TimePickerProps<'time', DateType>
+  ) =>
     typeof value === 'function' ? value({ props }) : value;
+  // Настройки провайдера получают props фактического пикера, включая его тип даты.
+  const providerClasses = config?.classNames as TimePickerSemantic<DateType> | undefined;
+  const providerStyles = config?.styles as TimePickerSemantic<DateType> | undefined;
   const outerProps = { ...props, variant: resolved.variant };
   const outerClasses = mergePickerSlots([
-    resolve(config?.classNames, outerProps), resolve(props.classNames, outerProps)
+    resolve(providerClasses, outerProps), resolve(props.classNames, outerProps)
   ], ' ');
   const outerStyles = mergePickerSlots([
-    resolve(config?.styles, outerProps), { root: config?.style },
+    resolve(providerStyles, outerProps), { root: config?.style },
     resolve(props.styles, outerProps)
   ], ';');
-  const innerProps: TimePickerProps = {
+  const innerProps: TimePickerProps<'time', DateType> = {
     ...outerProps,
     ...resolved,
     classNames: outerClasses,
@@ -52,9 +58,9 @@ export function timePickerSemantic(
   };
 
   return {
-    classes: mergePickerSlots([resolve(config?.classNames, innerProps), outerClasses], ' '),
+    classes: mergePickerSlots([resolve(providerClasses, innerProps), outerClasses], ' '),
     styles: mergePickerSlots([
-      resolve(config?.styles, innerProps), { root: config?.style }, outerStyles
+      resolve(providerStyles, innerProps), { root: config?.style }, outerStyles
     ], ';')
   };
 }

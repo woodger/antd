@@ -6457,7 +6457,7 @@
       "name": "DatePicker",
       "category": "data-entry",
       "scope": "target",
-      "scopeReason": "DatePicker и RangePicker date/showTime/week/month/year/quarter с Dayjs по исходной машине rc-picker; остальные picker/config API отмечены отдельно.",
+      "scopeReason": "DatePicker и RangePicker по исходной машине rc-picker, Dayjs по умолчанию и собственный GenerateConfig. Оставшийся picker/config API отмечен отдельно.",
       "upstreamPath": "components/date-picker",
       "reviewedRevision": "984592267de88fbf9cdaecc96a56629e721c709d",
       "exports": [
@@ -6471,6 +6471,12 @@
           "upstream": "DatePicker.RangePicker",
           "local": [
             "RangePicker"
+          ]
+        },
+        {
+          "upstream": "DatePicker.generatePicker",
+          "local": [
+            "generatePicker"
           ]
         }
       ],
@@ -6955,12 +6961,31 @@
           "note": "Ant Design 6.6.8 и rc-picker 1.12.2. Восемь ключей components заменяют содержимое панели внутри штатной раскладки, datetime включает календарь и время целиком. 23 независимо повторённых профиля и 113 действий сверяют props, поведение controlled mode и pickerValue, шаги переходов, выбор, ограничения, hover, multiple, диапазоны и возврат к встроенной панели. Вторая панель получает следующий период и при навигации передаёт общий pickerValue с обратным сдвигом. Authored Dayjs передаётся в черновик без округления колонками. Native onCalendarChange сохраняет метаданные source; при смене snippet фокус остаётся внутри popup. Source SSR оставляет portal пустым, Native открытый SSR shell содержит слот и проходит строгую гидратацию. Значки навигации доступны в обоих вариантах панели."
         },
         {
+          "id": "date-adapter-factory",
+          "title": "DatePicker.generatePicker и общий адаптер для даты, времени и диапазона",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/date-picker.ts",
+            "src/lib/picker-date-operations.engine.ts",
+            "src/lib/date-generate.types.ts",
+            "docs/reference/components/date-picker.md",
+            "tests/browser/fixtures/ant-design-generated-picker-browser-reference.json.gz",
+            "tests/browser/fixtures/ant-design-generated-picker-supplement-reference.json.gz",
+            "tests/browser/fixtures/ant-design-generated-picker-ssr-reference.json.gz",
+            "tests/browser/generated-picker.spec.ts",
+            "tests/browser/generated-picker-hydration.spec.ts",
+            "tests/package/generated-picker.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 / rc-picker 1.12.2. Фабрика связывает GenerateConfig с DatePicker, WeekPicker, MonthPicker, YearPicker, TimePicker и RangePicker, включая picker=time у диапазона. Deprecated QuarterPicker заменён picker=quarter. Официальный UMD дал два одинаковых прогона для 9 профилей / 38 действий и 7 SSR-профилей. Сверены поля, порядок событий и точные ссылки на иммутабельные объекты даты без методов Dayjs. Сетка месяцев использует addMonth от января, включая переход с 31 января на 29 февраля. Компоненты и локаль получают исходный адаптер. Native сохраняет слоты Svelte, календарный info.source, имя поля multiple для FormData, обработку Enter без submit формы и открытый SSR shell. Строгая hydration проверяет сохранение узлов, фокуса, выделения и bind refs. Корневой DatePicker с picker=time и оставшиеся события указаны в extended-api."
+        },
+        {
           "id": "extended-api",
-          "title": "GeneratePicker и оставшиеся события",
+          "title": "Корневой DatePicker с picker=time и оставшиеся события",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "GeneratePicker factory и часть событий предстоит перенести. Multiple, mode, week/month/year/quarter, showWeek, компоненты редактора, подтверждения и панелей, RangePicker presets/previewValue и семантическое оформление перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
+          "note": "Выбор времени доступен в TimePicker и в RangePicker с picker=time из семейства DatePicker. Прямой picker=time у корневого DatePicker и часть событий остаются пробелами. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно. Native receiver и calendar info {source} сохраняют согласованные контракты."
         },
         {
           "id": "global-parity",
@@ -12709,14 +12734,14 @@
         },
         {
           "id": "advanced-api",
-          "title": "GeneratePicker, полный trigger/locale API и diagnostics",
+          "title": "Multiple, полный trigger/locale API и diagnostics",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [
             "docs/reference/components/time-picker.md",
             "docs/reference/components/time-range-picker.md"
           ],
-          "note": "На этом этапе только один Dayjs; multiple=true не заявлен в типах. Полный каталог locales, React diagnostics, полный rc-trigger/motion API и retained popup lifecycle остаются следующими этапами. Styles — CSS strings, nodes/renderers — Svelte snippets. Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream."
+          "note": "TimePicker выбирает одно значение; multiple=true пока отсутствует. Свой тип даты доступен через DatePicker.generatePicker, включая RangePicker с picker=time. Полный каталог locales, React diagnostics, полный rc-trigger/motion API и retained popup lifecycle остаются следующими этапами. Styles — CSS strings, nodes/renderers — Svelte snippets. Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream."
         },
         {
           "id": "confirmation-button",

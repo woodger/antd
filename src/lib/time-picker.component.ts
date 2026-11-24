@@ -2,17 +2,33 @@
 // Значения экспорта — те же Svelte-компоненты с прежними ref и bindings.
 import type { Component } from 'svelte';
 import TimePickerControl from './TimePicker.svelte';
+import { pickerAdapterProps } from './picker-adapter-props.engine';
+import { dayjsPickerDates, type PickerDateOperations } from './picker-date-operations.engine';
+import type { Dayjs } from 'dayjs';
 import type { DatePickerMode } from './date-picker.types';
 import type { DatePickerComponents, DatePickerPanel } from './picker-components.types';
 import type { TimePickerProps } from './time-picker.types';
 
 /** Переход в календарный режим включается своим слотом времени. */
-export type TimePanelOptions = { components: DatePickerComponents & { time: DatePickerPanel; }; };
+export type TimePanelOptions<DateType extends object = Dayjs> = {
+  components: DatePickerComponents<DateType> & { time: DatePickerPanel<DateType>; };
+};
 type TimePickerHandle = ReturnType<typeof TimePickerControl>;
 
-/** Последняя перегрузка задаёт обычный контракт при извлечении ComponentProps. */
-const TimePicker: Component<
-  TimePickerProps<DatePickerMode> & TimePanelOptions, TimePickerHandle, 'nativeElement'
-> & Component<TimePickerProps, TimePickerHandle, 'nativeElement'> = TimePickerControl;
+type TimePickerComponent<DateType extends object> = Component<
+  TimePickerProps<DatePickerMode, DateType> & TimePanelOptions<DateType>,
+  TimePickerHandle, 'nativeElement'
+> & Component<TimePickerProps<'time', DateType>, TimePickerHandle, 'nativeElement'>;
+
+/** Привязывает адаптер времени. Последняя перегрузка сохраняет обычный ComponentProps. */
+export function createTimePickerComponent<DateType extends object>(
+  dateOperations: PickerDateOperations<DateType>
+): TimePickerComponent<DateType> {
+  return (anchor, props) => TimePickerControl<DateType>(
+    anchor, pickerAdapterProps(props, { dateOperations })
+  );
+}
+
+const TimePicker = createTimePickerComponent(dayjsPickerDates);
 
 export default TimePicker;

@@ -202,7 +202,7 @@ export type {
   UploadRequestHandler,
   UploadRequest
 } from './upload.types';
-export { default as RangePicker } from './RangePicker.svelte';
+export { default as RangePicker } from './range-picker.component';
 export type {
   RangePickerProps,
   RangePickerValue,
@@ -215,6 +215,8 @@ export type {
   RangePickerConfig
 } from './range-picker.types';
 export { default as DatePicker } from './date-picker.component';
+export { generatePicker } from './date-picker';
+export type { GenerateConfig } from './date-generate.types';
 export type {
   DatePickerProps,
   DatePickerMultipleProps,

@@ -1,7 +1,7 @@
 // Готовит форматы, календарные периоды и правила выбора времени DatePicker. Следует локали
-// адаптера Dayjs и сохраняет порядок вызовов disabledDate и disabledTime.
+// адаптера даты и сохраняет порядок вызовов disabledDate и disabledTime.
 import type { Dayjs } from 'dayjs';
-import { dayjsGenerateConfig as date } from './date-picker-dayjs.engine';
+import { dayjsPickerDates, type PickerDateOperations } from './picker-date-operations.engine';
 import { normalizePickerFieldFormat } from './picker-mask.engine';
 import type {
   DatePickerFormat,
@@ -39,12 +39,12 @@ export function nextPickerPanelMode(
 
 // Определяет формат по явным настройкам, затем локали и типу выбора. Для даты со временем
 // учитывает видимые столбцы.
-export function pickerFormats(
-  props: Pick<DatePickerProps, 'format' | 'showTime' | 'picker'>,
+export function pickerFormats<DateType extends object = Dayjs>(
+  props: Pick<DatePickerProps<DateType>, 'format' | 'showTime' | 'picker'>,
   locale: NonNullable<DatePickerProps['locale']>['lang'] = {}
-): DatePickerFormat[] {
+): DatePickerFormat<DateType>[] {
   if (props.format) {
-    return normalizePickerFieldFormat<Dayjs>(props.format, 'YYYY-MM-DD').formats;
+    return normalizePickerFieldFormat<DateType>(props.format, 'YYYY-MM-DD').formats;
   }
   if (props.picker === 'week') {
     return [locale.fieldWeekFormat || 'gggg-wo'];
@@ -75,213 +75,10 @@ export function pickerFormats(
       : '');
   return [locale.fieldDateTimeFormat ?? `YYYY-MM-DD ${time}`];
 }
-// Форматирует валидную дату первым настроенным форматом, включая пользовательскую функцию.
-export function formatPicker(
-  value: Dayjs | null | undefined,
-  locale: string,
-  formats: readonly DatePickerFormat[]
-): string {
-  if (!value || !value.isValid()) {
-    return '';
-  }
-  return typeof formats[0] === 'function'
-    ? formats[0](value)
-    : date.locale.format(locale, value, formats[0] ?? 'YYYY-MM-DD');
-}
-// Передаёт парсеру только строковые форматы. Пользовательская функция форматирования обратного
-// преобразования не задаёт.
-export function parsePicker(
-  text: string,
-  locale: string,
-  formats: readonly DatePickerFormat[]
-): Dayjs | null {
-  return date.locale.parse(
-    locale,
-    text,
-    formats.filter((format): format is string => typeof format === 'string')
-  );
-}
-// useRangePickerValue/fillTime rc-picker: UI time belongs to the viewed calendar date.
-export function pickerCalendarValue(value: Dayjs, template?: Dayjs): Dayjs {
-  return value.hour(template?.hour() ?? 0).minute(template?.minute() ?? 0)
-    .second(template?.second() ?? 0).millisecond(template?.millisecond() ?? 0);
-}
-// Сравнивает год и порядковый номер календарного квартала.
-export function samePickerQuarter(a: Dayjs, b: Dayjs): boolean {
-  return a.year() === b.year() && Math.floor(a.month() / 3) === Math.floor(b.month() / 3);
-}
-// Сравнивает календарные даты начала недели в локали поля с точностью до дня.
-export function samePickerWeek(a: Dayjs, b: Dayjs, locale: string): boolean {
-  const firstWeekStart = date.locale.getWeekFirstDate(locale, a);
-  const secondWeekStart = date.locale.getWeekFirstDate(locale, b);
 
-  return firstWeekStart.year() === secondWeekStart.year()
-    && firstWeekStart.month() === secondWeekStart.month()
-    && firstWeekStart.date() === secondWeekStart.date();
-}
-// rc-picker compares date panels by Y/M/D and datetime panels by all wall fields.
-export function samePickerPanelValue(
-  a: Dayjs,
-  b: Dayjs,
-  datetime: boolean,
-  picker: DatePickerPicker = 'date',
-  locale = 'en_US'
-): boolean {
-  if (picker === 'week') {
-    return samePickerWeek(a, b, locale);
-  }
-  if (picker === 'quarter') {
-    return samePickerQuarter(a, b);
-  }
-  if (picker === 'year') {
-    return a.year() === b.year();
-  }
-  if (picker === 'month') {
-    return a.year() === b.year() && a.month() === b.month();
-  }
-  return a.year() === b.year() && a.month() === b.month() && a.date() === b.date()
-    && (!datetime || a.hour() === b.hour() && a.minute() === b.minute()
-      && a.second() === b.second() && a.millisecond() === b.millisecond());
-}
-// Сдвигает панель на месяц, год или десятилетие согласно текущему уровню выбора.
-export function offsetPickerPanel(value: Dayjs, picker: DatePickerPicker, amount: number): Dayjs {
-  return picker === 'date' || picker === 'week' ? value.add(amount, 'month')
-    : value.add(amount * (picker === 'year' ? 10 : 1), 'year');
-}
-// Сравнивает период видимой панели, включая десятилетие для year picker.
-export function samePickerPanel(a: Dayjs, b: Dayjs, picker: DatePickerPicker): boolean {
-  return picker === 'year' ? Math.floor(a.year() / 10) === Math.floor(b.year() / 10)
-    : a.isSame(b, picker === 'date' || picker === 'week' ? 'month' : 'year');
-}
-// Формирует ячейки календаря для уровня выбора. Для дней захватывает соседние месяцы, для годов и
-// десятилетий крайние ячейки выходят за период.
-export function calendarCells(panel: Dayjs, mode: DatePickerCalendarMode, locale: string): Dayjs[] {
-  if (mode === 'date' || mode === 'week') {
-    const first = panel.date(1);
-    const offset = (date.getWeekDay(first) - date.locale.getWeekFirstDay(locale) + 7) % 7;
-    return Array.from({ length: 42 }, (_, index) => date.addDate(first, index - offset));
-  }
-  if (mode === 'quarter') {
-    const first = panel.month(0);
-    return Array.from({ length: 4 }, (_, index) => first.add(index * 3, 'month'));
-  }
-  if (mode === 'month') {
-    return Array.from({ length: 12 }, (_, index) => panel.month(index));
-  }
-  const unit = mode === 'year' ? 1 : 10;
-  const base = Math.floor(panel.year() / (unit * 10)) * unit * 10;
-  const first = panel.year(base).add(-unit, 'year');
-  return Array.from({ length: 12 }, (_, index) => first.add(index * unit, 'year'));
-}
-// Проверяет границы периода и disabledDate. Для недели и квартала сохраняет отдельный порядок
-// проверки callback.
-export function pickerDateDisabled(
-  value: Dayjs,
-  props: Pick<DatePickerProps, 'minDate' | 'maxDate' | 'disabledDate'>,
-  mode: DatePickerCalendarMode = 'date',
-  locale = 'en_US'
-): boolean {
-  if (mode === 'week') {
-    return Boolean(
-      props.disabledDate?.(value, { type: mode })
-      || props.minDate && props.minDate.isAfter(value) && !samePickerWeek(
-        props.minDate,
-        value,
-        locale
-      )
-      || props.maxDate && value.isAfter(props.maxDate) && !samePickerWeek(
-        props.maxDate,
-        value,
-        locale
-      )
-    );
-  }
-  if (mode === 'quarter') {
-    return Boolean(
-      props.disabledDate?.(value, { type: mode })
-      || props.minDate && props.minDate.isAfter(value) && !samePickerQuarter(props.minDate, value)
-      || props.maxDate && value.isAfter(props.maxDate) && !samePickerQuarter(props.maxDate, value)
-    );
-  }
-  const unit = mode === 'date' ? 'day' : mode === 'month' ? 'month' : 'year';
-  const period = mode === 'decade' ? value.year(Math.floor(value.year() / 10) * 10) : value;
-  const first = period.startOf(unit);
-  const last = mode === 'decade' ? first.add(10, 'year').add(-1, 'millisecond')
-    : period.endOf(unit);
-  return Boolean(
-    props.minDate
-    && last.isBefore(props.minDate.startOf('day'))
-    || props.maxDate
-    && first.isAfter(
-      props.maxDate.endOf('day')
-    )
-    || props.disabledDate?.(
-      value,
-      { type: mode }
-    )
-  );
-}
-// Для крупных периодов проверяет обе крайние даты, останавливаясь после первой разрешённой
-// границы.
-export function pickerPanelDateDisabled(
-  value: Dayjs,
-  props: Pick<DatePickerProps, 'minDate' | 'maxDate' | 'disabledDate'>,
-  mode: DatePickerCalendarMode,
-  locale = 'en_US'
-): boolean {
-  if (mode === 'date' || mode === 'quarter' || mode === 'week') {
-    return pickerDateDisabled(
-      value,
-      props,
-      mode,
-      locale
-    );
-  }
-  const start = mode === 'month' ? value.date(1)
-    : value.month(0).date(1).year(mode === 'decade'
-      ? Math.floor(value.year() / 10) * 10 : value.year());
-  const end = mode === 'month' ? start.add(1, 'month').add(-1, 'day')
-    : start.add(mode === 'decade' ? 10 : 1, 'year').add(-1, 'day');
-  return pickerDateDisabled(start, props, mode) && pickerDateDisabled(end, props, mode);
-}
-// Проверяет единицы времени от часов до миллисекунд. После первого запрета зависимые callbacks не
-// вызываются.
-export function pickerTimeDisabled(
-  value: Dayjs,
-  props: Pick<DatePickerProps, 'showTime' | 'disabledTime'>
-): boolean {
-  if (!props.showTime) {
-    return false;
-  }
-  const field: {
-    disabledTime?: (
-      date: Dayjs,
-      range: 'start',
-      info: { from: undefined; }
-    ) => DatePickerDisabledTime;
-  } = props;
-  const config = field.disabledTime?.(value, 'start', { from: undefined }) ?? {};
-
-  if (config.disabledHours?.().includes(value.hour())) {
-    return true;
-  }
-  if (config.disabledMinutes?.(value.hour()).includes(value.minute())) {
-    return true;
-  }
-  if (config.disabledSeconds?.(value.hour(), value.minute()).includes(value.second())) {
-    return true;
-  }
-
-  const disabledMillisecond = config.disabledMilliseconds?.(
-    value.hour(),
-    value.minute(),
-    value.second()
-  ).includes(value.millisecond());
-  return Boolean(disabledMillisecond);
-}
 // Разрешает явные флаги столбцов до разбора формата без экранированных литералов. Нормализует
 // шаги видимых колонок.
-export function timeColumns(config: DatePickerTimeConfig, format: string) {
+export function timeColumns(config: Omit<DatePickerTimeConfig, 'defaultOpenValue'>, format: string) {
   const explicit = [
     config.showHour,
     config.showMinute,
@@ -336,61 +133,304 @@ export function timeColumns(config: DatePickerTimeConfig, format: string) {
   });
 }
 
-// Как findValidateTime: ближайший разрешённый unit слева, иначе первый разрешённый.
-// Выравниваются все четыре unit, включая скрытые секунды/миллисекунды.
-export function validPickerTime(
-  value: Dayjs,
-  config: DatePickerTimeConfig = {},
-  disabledTime?: DatePickerProps['disabledTime']
-): Dayjs {
-  const dynamic = disabledTime?.(value) ?? {};
-  let next = value;
-  for (const column of [
-    {
-      unit: 'hour' as const,
-      count: 24,
-      step: config.hourStep ?? 1,
-      // Читает запреты для часов до обновления зависимых единиц времени.
-      disabled: () => dynamic.disabledHours?.() ?? []
-    },
-    {
-      unit: 'minute' as const,
-      count: 60,
-      step: config.minuteStep ?? 1,
-      // Читает запреты для минут по уже выбранному часу.
-      disabled: () => dynamic.disabledMinutes?.(next.hour()) ?? []
-    },
-    {
-      unit: 'second' as const,
-      count: 60,
-      step: config.secondStep ?? 1,
-      // Читает запреты для секунд по уже выровненным часу и минуте.
-      disabled: () => dynamic.disabledSeconds?.(
-        next.hour(),
-        next.minute()
-      )
-        ?? []
-    },
-    {
-      unit: 'millisecond' as const,
-      count: 1000,
-      step: config.millisecondStep ?? 100,
-      // Читает запреты для миллисекунд по уже выровненным старшим единицам.
-      disabled: () => dynamic.disabledMilliseconds?.(next.hour(), next.minute(), next.second())
-        ?? []
-    }
-  ]) {
-    const step = column.step >= 1 ? column.step | 0 : 1;
-    const forbidden = column.disabled();
-    const valueCount = Math.ceil(column.count / step);
-    const values = Array.from({ length: valueCount }, (_, index) => index * step);
-    const allowedValues = values.filter(unitValue => !forbidden.includes(unitValue));
+/** Применяет правила выбора к значениям одного date adapter. */
+export function createDatePickerEngine<DateType extends object>(
+  dates: PickerDateOperations<DateType>
+) {
+  const { generateConfig: adapter, fields } = dates;
 
-    const current = next.get(column.unit);
-    const selected = allowedValues.findLast(unitValue => unitValue <= current) ?? allowedValues[0];
-    if (selected !== undefined && selected !== current) {
-      next = next.set(column.unit, selected);
+  // Форматирует валидную дату первым настроенным форматом, включая пользовательскую функцию.
+  function formatPicker(
+    value: DateType | null | undefined,
+    locale: string,
+    formats: readonly DatePickerFormat<DateType>[]
+  ): string {
+    if (!value || !fields.isValidate(value)) {
+      return '';
     }
+    return typeof formats[0] === 'function'
+      ? formats[0](value)
+      : adapter.locale.format(locale, value, formats[0] ?? 'YYYY-MM-DD');
   }
-  return next;
+  // Передаёт парсеру только строковые форматы. Пользовательская функция форматирования обратного
+  // преобразования не задаёт.
+  function parsePicker(
+    text: string,
+    locale: string,
+    formats: readonly DatePickerFormat<DateType>[]
+  ): DateType | null {
+    return adapter.locale.parse(
+      locale,
+      text,
+      formats.filter((format): format is string => typeof format === 'string')
+    );
+  }
+  // Переносит время на дату панели, как fillTime в rc-picker.
+  function pickerCalendarValue(value: DateType, template?: DateType): DateType {
+    const hours = fields.setHour(value, template ? fields.getHour(template) : 0);
+    const minutes = fields.setMinute(hours, template ? fields.getMinute(template) : 0);
+    const seconds = fields.setSecond(minutes, template ? fields.getSecond(template) : 0);
+
+    return fields.setMillisecond(seconds, template ? fields.getMillisecond(template) : 0);
+  }
+  // Переносит календарную дату, сохраняя время и режим исходного значения.
+  function pickerDateWithCalendar(value: DateType, date: DateType): DateType {
+    const withYear = fields.setYear(value, fields.getYear(date));
+    const withMonth = fields.setMonth(withYear, fields.getMonth(date));
+
+    return fields.setDate(withMonth, fields.getDate(date));
+  }
+
+  // Сравнивает год и порядковый номер календарного квартала.
+  function samePickerQuarter(a: DateType, b: DateType): boolean {
+    return fields.getYear(a) === fields.getYear(b)
+      && Math.floor(fields.getMonth(a) / 3) === Math.floor(fields.getMonth(b) / 3);
+  }
+  // Сравнивает календарные даты начала недели в локали поля с точностью до дня.
+  function samePickerWeek(a: DateType, b: DateType, locale: string): boolean {
+    const firstWeekStart = adapter.locale.getWeekFirstDate(locale, a);
+    const secondWeekStart = adapter.locale.getWeekFirstDate(locale, b);
+
+    return fields.getYear(firstWeekStart) === fields.getYear(secondWeekStart)
+      && fields.getMonth(firstWeekStart) === fields.getMonth(secondWeekStart)
+      && fields.getDate(firstWeekStart) === fields.getDate(secondWeekStart);
+  }
+  // Сравнивает календарный период; datetime также учитывает все поля времени.
+  function samePickerPanelValue(
+    a: DateType,
+    b: DateType,
+    datetime: boolean,
+    picker: DatePickerPicker = 'date',
+    locale = 'en_US'
+  ): boolean {
+    if (picker === 'week') {
+      return samePickerWeek(a, b, locale);
+    }
+    if (picker === 'quarter') {
+      return samePickerQuarter(a, b);
+    }
+    if (picker === 'year') {
+      return fields.getYear(a) === fields.getYear(b);
+    }
+    if (picker === 'month') {
+      return fields.getYear(a) === fields.getYear(b) && fields.getMonth(a) === fields.getMonth(b);
+    }
+    return fields.getYear(a) === fields.getYear(b) && fields.getMonth(a) === fields.getMonth(b)
+      && fields.getDate(a) === fields.getDate(b)
+      && (!datetime || dates.sameTime(a, b)
+        && fields.getMillisecond(a) === fields.getMillisecond(b));
+  }
+  // Сдвигает панель на месяц, год или десятилетие согласно текущему уровню выбора.
+  function offsetPickerPanel(value: DateType, picker: DatePickerPicker, amount: number): DateType {
+    return picker === 'date' || picker === 'week' ? fields.addMonth(value, amount)
+      : fields.addYear(value, amount * (picker === 'year' ? 10 : 1));
+  }
+  // Сравнивает период видимой панели, включая десятилетие для year picker.
+  function samePickerPanel(a: DateType, b: DateType, picker: DatePickerPicker): boolean {
+    return picker === 'year' ? Math.floor(fields.getYear(a) / 10) === Math.floor(fields.getYear(b) / 10)
+      : dates.samePeriod(a, b, picker === 'date' || picker === 'week' ? 'month' : 'year');
+  }
+  // Формирует ячейки календаря для уровня выбора. Для дней захватывает соседние месяцы, для годов и
+  // десятилетий крайние ячейки выходят за период.
+  function calendarCells(panel: DateType, mode: DatePickerCalendarMode, locale: string): DateType[] {
+    if (mode === 'date' || mode === 'week') {
+      const first = fields.setDate(panel, 1);
+      const offset = (adapter.getWeekDay(first) - adapter.locale.getWeekFirstDay(locale) + 7) % 7;
+      return Array.from({ length: 42 }, (_, index) => adapter.addDate(first, index - offset));
+    }
+    if (mode === 'quarter') {
+      const first = fields.setMonth(panel, 0);
+      return Array.from({ length: 4 }, (_, index) => fields.addMonth(first, index * 3));
+    }
+    if (mode === 'month') {
+      const firstMonth = fields.setMonth(panel, 0);
+      return Array.from({ length: 12 }, (_, index) => fields.addMonth(firstMonth, index));
+    }
+    const unit = mode === 'year' ? 1 : 10;
+    const base = Math.floor(fields.getYear(panel) / (unit * 10)) * unit * 10;
+    const first = fields.addYear(fields.setYear(panel, base), -unit);
+    return Array.from({ length: 12 }, (_, index) => fields.addYear(first, index * unit));
+  }
+  // Проверяет границы периода и disabledDate. Для недели и квартала сохраняет отдельный порядок
+  // проверки callback.
+  function pickerDateDisabled(
+    value: DateType,
+    props: Pick<DatePickerProps<DateType>, 'minDate' | 'maxDate' | 'disabledDate'>,
+    mode: DatePickerCalendarMode = 'date',
+    locale = 'en_US'
+  ): boolean {
+    if (mode === 'week') {
+      return Boolean(
+        props.disabledDate?.(value, { type: mode })
+        || props.minDate && dates.isAfter(props.minDate, value) && !samePickerWeek(
+          props.minDate,
+          value,
+          locale
+        )
+        || props.maxDate && dates.isAfter(value, props.maxDate) && !samePickerWeek(
+          props.maxDate,
+          value,
+          locale
+        )
+      );
+    }
+    if (mode === 'quarter') {
+      return Boolean(
+        props.disabledDate?.(value, { type: mode })
+        || props.minDate && dates.isAfter(props.minDate, value) && !samePickerQuarter(props.minDate, value)
+        || props.maxDate && dates.isAfter(value, props.maxDate) && !samePickerQuarter(props.maxDate, value)
+      );
+    }
+    const unit = mode === 'date' ? 'day' : mode === 'month' ? 'month' : 'year';
+    const period = mode === 'decade'
+      ? fields.setYear(value, Math.floor(fields.getYear(value) / 10) * 10) : value;
+    const first = dates.startOf(period, unit);
+    const last = mode === 'decade'
+      ? dates.add(fields.addYear(first, 10), -1, 'millisecond')
+      : dates.endOf(period, unit);
+    return Boolean(
+      props.minDate
+      && dates.isBefore(last, dates.startOf(props.minDate, 'day'))
+      || props.maxDate
+      && dates.isAfter(first, dates.endOf(props.maxDate, 'day'))
+      || props.disabledDate?.(
+        value,
+        { type: mode }
+      )
+    );
+  }
+  // Для крупных периодов проверяет обе крайние даты, останавливаясь после первой разрешённой
+  // границы.
+  function pickerPanelDateDisabled(
+    value: DateType,
+    props: Pick<DatePickerProps<DateType>, 'minDate' | 'maxDate' | 'disabledDate'>,
+    mode: DatePickerCalendarMode,
+    locale = 'en_US'
+  ): boolean {
+    if (mode === 'date' || mode === 'quarter' || mode === 'week') {
+      return pickerDateDisabled(
+        value,
+        props,
+        mode,
+        locale
+      );
+    }
+    const year = fields.getYear(value);
+    const periodStart = mode === 'month' ? value : fields.setMonth(value, 0);
+    let start = fields.setDate(periodStart, 1);
+    if (mode !== 'month') {
+      start = fields.setYear(start, mode === 'decade' ? Math.floor(year / 10) * 10 : year);
+    }
+
+    const nextPeriod = mode === 'month' ? fields.addMonth(start, 1)
+      : fields.addYear(start, mode === 'decade' ? 10 : 1);
+    const end = fields.addDate(nextPeriod, -1);
+    return pickerDateDisabled(start, props, mode) && pickerDateDisabled(end, props, mode);
+  }
+  // Проверяет единицы времени от часов до миллисекунд. После первого запрета зависимые callbacks не
+  // вызываются.
+  function pickerTimeDisabled(
+    value: DateType,
+    props: Pick<DatePickerProps<DateType>, 'showTime' | 'disabledTime'>
+  ): boolean {
+    if (!props.showTime) {
+      return false;
+    }
+    const field: {
+      disabledTime?: (
+        date: DateType,
+        range: 'start',
+        info: { from: undefined; }
+      ) => DatePickerDisabledTime;
+    } = props;
+    const config = field.disabledTime?.(value, 'start', { from: undefined }) ?? {};
+
+    if (config.disabledHours?.().includes(fields.getHour(value))) {
+      return true;
+    }
+    if (config.disabledMinutes?.(fields.getHour(value)).includes(fields.getMinute(value))) {
+      return true;
+    }
+    if (config.disabledSeconds?.(fields.getHour(value), fields.getMinute(value)).includes(fields.getSecond(value))) {
+      return true;
+    }
+
+    const disabledMillisecond = config.disabledMilliseconds?.(
+      fields.getHour(value),
+      fields.getMinute(value),
+      fields.getSecond(value)
+    ).includes(fields.getMillisecond(value));
+    return Boolean(disabledMillisecond);
+  }
+
+  // Как findValidateTime: ближайший разрешённый unit слева, иначе первый разрешённый.
+  // Выравниваются все четыре unit, включая скрытые секунды/миллисекунды.
+  function validPickerTime(
+    value: DateType,
+    config: DatePickerTimeConfig<DateType> = {},
+    disabledTime?: DatePickerProps<DateType>['disabledTime']
+  ): DateType {
+    const dynamic = disabledTime?.(value) ?? {};
+    let next = value;
+    for (const column of [
+      {
+        unit: 'hour' as const,
+        count: 24,
+        step: config.hourStep ?? 1,
+        // Читает запреты для часов до обновления зависимых единиц времени.
+        disabled: () => dynamic.disabledHours?.() ?? []
+      },
+      {
+        unit: 'minute' as const,
+        count: 60,
+        step: config.minuteStep ?? 1,
+        // Читает запреты для минут по уже выбранному часу.
+        disabled: () => dynamic.disabledMinutes?.(fields.getHour(next)) ?? []
+      },
+      {
+        unit: 'second' as const,
+        count: 60,
+        step: config.secondStep ?? 1,
+        // Читает запреты для секунд по уже выровненным часу и минуте.
+        disabled: () => dynamic.disabledSeconds?.(
+          fields.getHour(next),
+          fields.getMinute(next)
+        )
+          ?? []
+      },
+      {
+        unit: 'millisecond' as const,
+        count: 1000,
+        step: config.millisecondStep ?? 100,
+        // Читает запреты для миллисекунд по уже выровненным старшим единицам.
+        disabled: () => dynamic.disabledMilliseconds?.(fields.getHour(next), fields.getMinute(next), fields.getSecond(next))
+          ?? []
+      }
+    ]) {
+      const step = column.step >= 1 ? column.step | 0 : 1;
+      const forbidden = column.disabled();
+      const valueCount = Math.ceil(column.count / step);
+      const values = Array.from({ length: valueCount }, (_, index) => index * step);
+      const allowedValues = values.filter(unitValue => !forbidden.includes(unitValue));
+
+      const current = dates.getTimeUnit(next, column.unit);
+      const selected = allowedValues.findLast(unitValue => unitValue <= current) ?? allowedValues[0];
+      if (selected !== undefined && selected !== current) {
+        next = dates.setTimeUnit(next, column.unit, selected);
+      }
+    }
+    return next;
+  }
+
+  return {
+    formatPicker, parsePicker, pickerCalendarValue, pickerDateWithCalendar, samePickerQuarter,
+    samePickerWeek, samePickerPanelValue, offsetPickerPanel, samePickerPanel, calendarCells,
+    pickerDateDisabled, pickerPanelDateDisabled, pickerTimeDisabled, validPickerTime
+  };
 }
+
+export const {
+  formatPicker, parsePicker, pickerCalendarValue, pickerDateWithCalendar, samePickerQuarter,
+  samePickerWeek, samePickerPanelValue, offsetPickerPanel, samePickerPanel, calendarCells,
+  pickerDateDisabled, pickerPanelDateDisabled, pickerTimeDisabled, validPickerTime
+} = createDatePickerEngine(dayjsPickerDates);

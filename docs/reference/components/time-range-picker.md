@@ -92,6 +92,8 @@ Popup наследует общий container API DatePicker, сохраняет
 [SSR](../../../src/lib/time-range-picker.ssr.test.ts),
 [public package](../../../tests/package/time-range-picker.ssr.test.ts),
 [browser](../../../tests/browser/time-range-picker.spec.ts) и `?fixture=time-range-picker`.
-Полные mask/generatePicker/trigger/token/locale API и React diagnostics остаются
+Для собственного типа даты используйте `RangePicker` из
+[фабрики DatePicker](./date-picker.md#свой-тип-даты) с `picker="time"`.
+Полные mask/trigger/token/locale API и React diagnostics остаются
 в следующих этапах; v1-ready в реестре не означает полного покрытия React API.
 

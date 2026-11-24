@@ -2,36 +2,44 @@
   export type DatePickerTimeScrollMemory = Map<string, { signature: string; top: number }>;
 </script>
 
-<script lang="ts">
+<script lang="ts" generics="DateType extends object">
   // Рендерит колонки времени DatePicker. Память scroll связывает позицию с
   // содержимым колонки, чтобы повторное открытие не применяло старое измерение.
-  import type { Dayjs } from 'dayjs';
-  import type { Snippet } from 'svelte';
-  import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
+  import type { PickerDateOperations } from './picker-date-operations.engine';
+  import { untrack, type Snippet } from 'svelte';
   import type { PickerLocale } from './picker-locale.types';
-  import { formatPicker, timeColumns } from './date-picker.engine';
-  import { timeFormat, timePickerColumnDate, timePickerOptions } from './time-picker.engine';
+  import { createDatePickerEngine, timeColumns } from './date-picker.engine';
+  import { createTimePickerEngine, timeFormat, timePickerOptions } from './time-picker.engine';
   import type { DatePickerDisabledTime, DatePickerTimeConfig, DatePickerProps,
     DatePickerCellRenderInfo, DatePickerPopupSlots } from './date-picker.types';
-  let { prefixCls, value, selectedValue, config, format, locale, disabledTime, onSelect, onHover,
-    scrollMemory, cellRender, cellRange, now, classNames, styles, showColumns = true }: {
+  let {
+    dateOperations, prefixCls, value, selectedValue, config, format, locale, disabledTime,
+    onSelect, onHover, scrollMemory, cellRender, cellRange, now, classNames, styles, showColumns = true
+  }: {
+    dateOperations: PickerDateOperations<DateType>;
     prefixCls: string;
-    value: Dayjs;
-    selectedValue: Dayjs | null;
-    config: DatePickerTimeConfig;
+    value: DateType;
+    selectedValue: DateType | null;
+    config: DatePickerTimeConfig<DateType>;
     format: string;
     locale: PickerLocale;
-    now: Dayjs;
-    cellRender?: DatePickerProps['cellRender'];
+    now: DateType;
+    cellRender?: DatePickerProps<DateType>['cellRender'];
     cellRange?: 'start' | 'end';
-    disabledTime?: (date: Dayjs) => DatePickerDisabledTime;
-    onSelect: (value: Dayjs) => void;
-    onHover?: (value: Dayjs | null) => void;
+    disabledTime?: (date: DateType) => DatePickerDisabledTime;
+    onSelect: (value: DateType) => void;
+    onHover?: (value: DateType | null) => void;
     scrollMemory?: DatePickerTimeScrollMemory;
     classNames?: DatePickerPopupSlots;
     styles?: DatePickerPopupSlots;
     showColumns?: boolean;
   } = $props();
+  const dates = untrack(() => dateOperations);
+  const { generateConfig: adapter, fields } = dates;
+  const calendar = createDatePickerEngine(dates);
+  const { formatPicker } = calendar;
+  const { timePickerColumnDate } = createTimePickerEngine(dates, calendar);
+
   let renderToday = $derived.by(() => {
     void prefixCls;
     void value;
@@ -47,8 +55,8 @@
   });
   function cellInfo(
     originNode: Snippet,
-    subType: NonNullable<DatePickerCellRenderInfo['subType']>
-  ): DatePickerCellRenderInfo {
+    subType: NonNullable<DatePickerCellRenderInfo<DateType>['subType']>
+  ): DatePickerCellRenderInfo<DateType> {
     return { prefixCls, originNode, today: renderToday, type: 'time', subType,
       locale, range: cellRange };
   }
@@ -60,7 +68,7 @@
     return locale.cellMeridiemFormat
       ? adapter.locale.format(
         locale.locale,
-        renderToday.hour(hour ? 15 : 9),
+        fields.setHour(renderToday, hour ? 15 : 9),
         locale.cellMeridiemFormat
       )
       : hour ? 'PM' : 'AM';
@@ -82,10 +90,11 @@
     const unit = column.getAttribute('aria-label') as
       'hour' | 'minute' | 'second' | 'millisecond' | 'meridiem';
     const selected = selectedValue === null ? null : unit === 'meridiem'
-      ? selectedValue.hour() < 12 ? 'am' : 'pm' : selectedValue.get(unit);
+      ? fields.getHour(selectedValue) < 12 ? 'am' : 'pm' : dates.getTimeUnit(selectedValue, unit);
     // DatePicker дополняет время panel из defaultOpenValue или нулями.
     // Числовой optionalValue остаётся зависимостью и при заданном selectedValue.
-    const optional = unit === 'meridiem' ? undefined : config.defaultOpenValue?.get(unit) ?? 0;
+    const optional = unit === 'meridiem' ? undefined
+      : config.defaultOpenValue ? dates.getTimeUnit(config.defaultOpenValue, unit) : 0;
     const rows = [...column.children].map(cell => ({
       node: cell as HTMLLIElement,
       value: unit === 'meridiem' ? cell.getAttribute('data-picker-time-value')
@@ -174,7 +183,7 @@
       (_, n) => n * column.step
     )
       .filter(
-        item => column.unit !== 'hour' || !config.use12Hours || (item < 12) === (value.hour() < 12)
+        item => column.unit !== 'hour' || !config.use12Hours || (item < 12) === (fields.getHour(value) < 12)
       );
   }
   function keyboard(event: KeyboardEvent, target = event.currentTarget as HTMLButtonElement) {
@@ -213,28 +222,16 @@
       return restrictions.disabledHours?.().includes(item) ?? false;
     }
     if (unit === 'minute') {
-      return restrictions.disabledMinutes?.(value.hour()).includes(item)
-        ?? false;
+      return restrictions.disabledMinutes?.(fields.getHour(value)).includes(item) ?? false;
     }
     if (unit === 'second') {
-      return restrictions
-        .disabledSeconds?.(value
-          .hour(), value
-            .minute())
-        .includes(
-          item
-        )
-        ?? false;
+      return restrictions.disabledSeconds?.(fields.getHour(value), fields.getMinute(value))
+        .includes(item) ?? false;
     }
-    return restrictions
-      .disabledMilliseconds?.(value
-        .hour(), value
-          .minute(), value
-            .second())
-      .includes(
-        item
-      )
-      ?? false;
+
+    return restrictions.disabledMilliseconds?.(
+      fields.getHour(value), fields.getMinute(value), fields.getSecond(value)
+    ).includes(item) ?? false;
   }
 </script>
 <style>
@@ -245,7 +242,7 @@
   <div class={[`${prefixCls}-header`, classNames?.header]} style={styles?.header}>
     <div class={`${prefixCls}-header-view`}>{selectedValue
         ? showColumns ? formatPicker(selectedValue, locale.locale, [headerFormat])
-          : selectedValue.format()
+          : dates.formatKey(selectedValue, undefined, locale.locale)
         : '\u00a0'}</div></div>
   <div class={[`${prefixCls}-content`, classNames?.content]} style={styles?.content}>
     {#each columns as column (column.unit)}
@@ -259,22 +256,22 @@
               data-picker-time-value={item} data-picker-time-label={label}
               data-picker-time-disabled={unavailable}
               onclick={cellRender ? () => {
-                if (!unavailable) onSelect(value.set(column.unit, item));
+                if (!unavailable) onSelect(dates.setTimeUnit(value, column.unit, item));
               } : undefined}
               onkeydown={cellRender ? cellKeyboard : undefined}
-              onmouseenter={onHover && (() => onHover?.(timePickerColumnDate(value, selectedValue, column.unit, item)))} onmouseleave={onHover && (() => onHover?.(null))} data-picker-time-cell-selected={selectedValue?.get(column.unit) === item || undefined} class={[
+              onmouseenter={onHover && (() => onHover?.(timePickerColumnDate(value, selectedValue, column.unit, item)))} onmouseleave={onHover && (() => onHover?.(null))} data-picker-time-cell-selected={(selectedValue && dates.getTimeUnit(selectedValue, column.unit)) === item || undefined} class={[
                 `${prefixCls}-time-panel-cell`,
-                selectedValue?.get(column.unit) === item && `${prefixCls}-time-panel-cell-selected`,
+                (selectedValue && dates.getTimeUnit(selectedValue, column.unit)) === item && `${prefixCls}-time-panel-cell-selected`,
                 unavailable && `${prefixCls}-time-panel-cell-disabled`,
                 classNames?.item
               ]} style={styles?.item}>
               {#snippet originNode()}
                 <button type="button" class={`${prefixCls}-time-panel-cell-inner`}
                   data-picker-time-control={cellRender ? '' : undefined}
-                  disabled={unavailable} tabindex={activeValue.get(column.unit) === item ? 0 : -1}
+                  disabled={unavailable} tabindex={dates.getTimeUnit(activeValue, column.unit) === item ? 0 : -1}
                   onkeydown={cellRender ? undefined : keyboard} aria-label={`${column.unit} ${item}`}
-                  aria-pressed={selectedValue?.get(column.unit) === item}
-                  onclick={cellRender ? undefined : () => onSelect(value.set(column.unit, item))}>{label}</button>
+                  aria-pressed={(selectedValue && dates.getTimeUnit(selectedValue, column.unit)) === item}
+                  onclick={cellRender ? undefined : () => onSelect(dates.setTimeUnit(value, column.unit, item))}>{label}</button>
               {/snippet}
               {#if cellRender}{@render cellRender(item, cellInfo(originNode, column.unit))}
               {:else}{@render originNode()}{/if}
@@ -293,23 +290,23 @@
             data-picker-time-value={hour ? 'pm' : 'am'} data-picker-time-label={meridiemLabel(hour)}
             data-picker-time-disabled={unavailable}
             onclick={cellRender ? () => {
-              if (!unavailable) onSelect(value.hour(value.hour() % 12 + hour));
+              if (!unavailable) onSelect(fields.setHour(value, fields.getHour(value) % 12 + hour));
             } : undefined}
             onkeydown={cellRender ? cellKeyboard : undefined}
-            onmouseenter={onHover && (() => onHover?.(timePickerColumnDate(value, selectedValue, 'meridiem', hour === 0 ? 'am' : 'pm')))} onmouseleave={onHover && (() => onHover?.(null))} data-picker-time-cell-selected={!!selectedValue && (selectedValue.hour() < 12) === (hour === 0) || undefined} class={[
+            onmouseenter={onHover && (() => onHover?.(timePickerColumnDate(value, selectedValue, 'meridiem', hour === 0 ? 'am' : 'pm')))} onmouseleave={onHover && (() => onHover?.(null))} data-picker-time-cell-selected={!!selectedValue && (fields.getHour(selectedValue) < 12) === (hour === 0) || undefined} class={[
               `${prefixCls}-time-panel-cell`,
               unavailable && `${prefixCls}-time-panel-cell-disabled`,
-              selectedValue && (selectedValue.hour() < 12) === (hour === 0)
+              selectedValue && (fields.getHour(selectedValue) < 12) === (hour === 0)
                 && `${prefixCls}-time-panel-cell-selected`,
               classNames?.item
             ]} style={styles?.item}>
             {#snippet originNode()}
               <button type="button" class={`${prefixCls}-time-panel-cell-inner`}
                 data-picker-time-control={cellRender ? '' : undefined}
-                disabled={unavailable} tabindex={(activeValue.hour() < 12) === (hour === 0) ? 0 : -1}
+                disabled={unavailable} tabindex={(fields.getHour(activeValue) < 12) === (hour === 0) ? 0 : -1}
                 onkeydown={cellRender ? undefined : keyboard}
-                aria-pressed={!!selectedValue && (selectedValue.hour() < 12) === (hour === 0)}
-                onclick={cellRender ? undefined : () => onSelect(value.hour(value.hour() % 12 + hour))}>{meridiemLabel(hour)}</button>
+                aria-pressed={!!selectedValue && (fields.getHour(selectedValue) < 12) === (hour === 0)}
+                onclick={cellRender ? undefined : () => onSelect(fields.setHour(value, fields.getHour(value) % 12 + hour))}>{meridiemLabel(hour)}</button>
             {/snippet}
             {#if cellRender}{@render cellRender(hour ? 'pm' : 'am', cellInfo(originNode, 'meridiem'))}
             {:else}{@render originNode()}{/if}

@@ -796,6 +796,11 @@
     "root": "picker-panel-fixture"
   },
   {
+    "id": "generated-picker",
+    "module": "./GeneratedPickerFixtures.svelte",
+    "root": "generated-picker-fixture"
+  },
+  {
     "id": "date-picker-offgrid-scroll",
     "module": "./DatePickerOffGridScrollFixtures.svelte",
     "root": "date-picker-offgrid-scroll-fixture"

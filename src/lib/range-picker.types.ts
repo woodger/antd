@@ -9,8 +9,8 @@ import type {
   DatePickerMode,
   DatePickerSemantic
 } from './date-picker.types';
-export type RangePickerValue = [Dayjs | null, Dayjs | null];
-export type RangePickerInputValue = [Dayjs | null | undefined, Dayjs | null | undefined];
+export type RangePickerValue<DateType extends object = Dayjs> = [DateType | null, DateType | null];
+export type RangePickerInputValue<DateType extends object = Dayjs> = [DateType | null | undefined, DateType | null | undefined];
 export type RangePickerPart = 'start' | 'end';
 /** Видимые панели на начальной и конечной границах диапазона. */
 export type RangePickerMode = [start: DatePickerMode, end: DatePickerMode];
@@ -18,13 +18,13 @@ export interface RangePickerInfo {
   range: RangePickerPart;
 }
 /** Настройки времени диапазона; начальные значения панели задаются для обеих границ. */
-export interface RangePickerTimeConfig extends Omit<DatePickerTimeConfig, 'defaultOpenValue'> {
+export interface RangePickerTimeConfig<DateType extends object = Dayjs> extends Omit<DatePickerTimeConfig<DateType>, 'defaultOpenValue'> {
   /** В showTime задаёт время пустых границ, сохраняя текущую дату каждой панели. */
-  defaultOpenValue?: [Dayjs, Dayjs];
+  defaultOpenValue?: [DateType, DateType];
 }
-export interface RangePickerPreset {
+export interface RangePickerPreset<DateType extends object = Dayjs> {
   label: string | Snippet;
-  value: RangePickerInputValue | (() => RangePickerInputValue);
+  value: RangePickerInputValue<DateType> | (() => RangePickerInputValue<DateType>);
 }
 /** Настройки общей range-обёртки; вложенный ConfigProvider заменяет объект целиком. */
 export interface RangePickerConfig {
@@ -33,9 +33,9 @@ export interface RangePickerConfig {
   variant?: DatePickerProps['variant'];
   separator?: string | Snippet;
 }
-/** Пара Dayjs с общей панелью диапазона, временем и подтверждением границ. */
-export interface RangePickerProps extends Omit<
-  DatePickerProps,
+/** Пара дат с общей панелью диапазона, временем и подтверждением границ. */
+export interface RangePickerProps<DateType extends object = Dayjs> extends Omit<
+  DatePickerProps<DateType>,
   'value'
   | 'multiple'
   | 'mode'
@@ -60,10 +60,10 @@ export interface RangePickerProps extends Omit<
   multiple?: HTMLInputAttributes['multiple'];
   /** Управляемые панели границ. onPanelChange предлагает следующую пару. */
   mode?: Readonly<RangePickerMode>;
-  /** Управляемая пара Dayjs; формат и точность следуют календарю и showTime. */
-  value?: RangePickerInputValue | null;
+  /** Управляемая пара дат; формат и точность следуют календарю и showTime. */
+  value?: RangePickerInputValue<DateType> | null;
   /** Начальный локальный диапазон при отсутствии value. */
-  defaultValue?: RangePickerInputValue;
+  defaultValue?: RangePickerInputValue<DateType>;
   disabled?: boolean | [boolean, boolean];
   /** @defaultValue false */
   allowEmpty?: boolean | [boolean, boolean];
@@ -72,32 +72,32 @@ export interface RangePickerProps extends Omit<
   id?: string | { start?: string; end?: string; };
   placeholder?: [string, string];
   /** Колонки времени для picker=date; week/month/year/quarter игнорируют настройку. @defaultValue false */
-  showTime?: boolean | RangePickerTimeConfig;
-  disabledDate?: (date: Dayjs, info: { type: DatePickerCalendarMode; from?: Dayjs; }) => boolean;
+  showTime?: boolean | RangePickerTimeConfig<DateType>;
+  disabledDate?: (date: DateType, info: { type: DatePickerCalendarMode; from?: DateType; }) => boolean;
   disabledTime?: (
-    date: Dayjs,
+    date: DateType,
     partial: RangePickerPart,
-    info: { from?: Dayjs; }
+    info: { from?: DateType; }
   ) => DatePickerDisabledTime;
   /** Начальные даты панелей; используются при открытии без управляемого pickerValue. */
-  defaultPickerValue?: [Dayjs, Dayjs] | Dayjs | null;
-  pickerValue?: [Dayjs, Dayjs] | Dayjs | null;
-  onChange?: (value: RangePickerValue | null, dateStrings: [string, string] | null) => void;
+  defaultPickerValue?: [DateType, DateType] | DateType | null;
+  pickerValue?: [DateType, DateType] | DateType | null;
+  onChange?: (value: RangePickerValue<DateType> | null, dateStrings: [string, string] | null) => void;
   onCalendarChange?: (
-    value: RangePickerValue,
+    value: RangePickerValue<DateType>,
     dateStrings: [string, string],
     info: RangePickerInfo
   ) => void;
-  onOk?: (value: RangePickerValue) => void;
+  onOk?: (value: RangePickerValue<DateType>) => void;
   onPickerValueChange?: (
-    value: [Dayjs, Dayjs],
+    value: [DateType, DateType],
     info: RangePickerInfo & { source: 'reset' | 'panel'; mode: RangePickerMode; }
   ) => void;
-  onPanelChange?: (value: RangePickerValue, modes: RangePickerMode) => void;
+  onPanelChange?: (value: RangePickerValue<DateType>, modes: RangePickerMode) => void;
   separator?: string | Snippet;
-  classNames?: DatePickerSemantic<RangePickerProps>;
-  styles?: DatePickerSemantic<RangePickerProps>;
-  presets?: readonly RangePickerPreset[];
+  classNames?: DatePickerSemantic<RangePickerProps<DateType>>;
+  styles?: DatePickerSemantic<RangePickerProps<DateType>>;
+  presets?: readonly RangePickerPreset<DateType>[];
   /** @defaultValue 'hover' */
   previewValue?: false | 'hover';
   /** Поддерживает bind:startInput. */
