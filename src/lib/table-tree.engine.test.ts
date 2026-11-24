@@ -38,6 +38,34 @@ it('sorts every level before branch-sensitive filtering without altering origina
   expect(root.items.map(row => row.key)).toEqual(['drop', 'last', 0]);
 });
 
+it('presents the children accepted by both filters to each parent predicate', () => {
+  const items = [
+    { key: 'outside', rank: 3 },
+    { key: 'hidden', rank: 1, hidden: true },
+    { key: 0, rank: 2 }
+  ];
+  const root = { key: 'branch', rank: 1, items };
+  const keep: TableColumn<Row> = {
+    key: 'keep', title: 'Keep', filters: [{ text: 'Visible', value: true }],
+    onFilter: (_value, row) => row.items
+      ? row.items.length === 1 && row.items[0].key === 0 : !row.hidden
+  };
+  const rank: TableColumn<Row> = {
+    key: 'rank', title: 'Rank', filters: [{ text: 'At most two', value: 2 }],
+    onFilter: (value, row) => typeof value === 'number' && row.rank <= value
+      && (!row.items || (row.items.length === 1 && row.items[0].key === 0))
+  };
+
+  const { rows } = getTableData(
+    [root], [keep, rank], 'key', null, { keep: [true], rank: [2] }, 'client', 'items'
+  );
+
+  expect(rows.map(row => row.key)).toEqual(['branch']);
+  expect(rows[0].record.items?.map(row => row.key)).toEqual([0]);
+  expect(root.items).toBe(items);
+  expect(root.items.map(row => row.key)).toEqual(['outside', 'hidden', 0]);
+});
+
 it('preserves server-provided branches and applies expanded keys only to the rendered rows', () => {
   const leaf = { key: 0, rank: 2 };
   const root = { key: 'branch', rank: 6, items: [leaf] };

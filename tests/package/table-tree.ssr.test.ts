@@ -1,8 +1,48 @@
 import { render } from 'svelte/server';
 import { expect, it, vi } from 'vitest';
+import { Table, type TableColumn } from '@woodger/antd';
 import registry from '@woodger/antd/porting/registry.json';
 import TableTreeFixture from '../browser/fixtures/TableTreeFixture.svelte';
 import source from '../browser/fixtures/ant-design-table-tree-reference.json';
+
+const filterValues = { status: 'active', region: 'eu', access: 'public', group: 'primary' };
+const filterFields = ['status', 'region', 'access', 'group'] as const;
+type FilterRow = typeof filterValues & { key: string; children?: FilterRow[]; };
+
+/** Строит двоичное дерево замера. Все записи проходят каждый активный фильтр. */
+function filterBranch(key: string, depth: number): FilterRow {
+  const row: FilterRow = { key, ...filterValues };
+  if (depth > 0) {
+    row.children = [filterBranch(`${key}1`, depth - 1), filterBranch(`${key}2`, depth - 1)];
+  }
+  return row;
+}
+
+it.each([1, 2, 3, 4])('evaluates %i filters once per record in a collapsed tree', active => {
+  const dataSource = [filterBranch('root', 6)];
+  let calls = 0;
+  const columns: TableColumn<FilterRow>[] = filterFields.map(field => ({
+    key: field,
+    dataIndex: field,
+    title: field,
+    filters: [{ text: filterValues[field], value: filterValues[field] }],
+    onFilter(value, row) {
+      calls += 1;
+      return row[field] === value;
+    }
+  }));
+  const filters = Object.fromEntries(
+    filterFields.slice(0, active).map(field => [field, [filterValues[field]]])
+  );
+
+  const { body } = render(Table<FilterRow>, {
+    props: { columns, dataSource, filters, pagination: false }
+  });
+
+  const visible = [...body.matchAll(/<tr\b[^>]* data-row-key="([^"]+)"/g)].map(match => match[1]);
+  expect(visible).toEqual(['root']);
+  expect(calls).toBe(127 * active);
+});
 
 it('pins the independent repeated tree observations to the supported Ant Design archive', () => {
   expect(source.reference).toMatchObject({

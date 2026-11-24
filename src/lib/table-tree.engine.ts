@@ -99,7 +99,7 @@ export function sortTableTree<Row extends object>(
   });
 }
 
-/** Фильтр Ant Design видит потомков, прошедших все активные фильтры. */
+/** Предикат родителя получает потомков после применения всех активных фильтров. */
 export function filterTableTree<Row extends object>(
   rows: TableRow<Row>[],
   columns: readonly TableColumn<Row>[],
@@ -108,13 +108,16 @@ export function filterTableTree<Row extends object>(
 ): TableRow<Row>[] {
   let current = rows;
 
-  for (const column of columns) {
+  for (const [filterIndex, column] of columns.entries()) {
     const next: TableRow<Row>[] = [];
     const values = filters[column.key];
     for (const row of current) {
-      const children = row.children && filterTableTree(
-        row.children, columns, filters, childrenColumnName
-      );
+      let children = row.children;
+      // После первого критерия строка уже хранит отфильтрованную ветку.
+      if (filterIndex === 0 && children) {
+        children = filterTableTree(children, columns, filters, childrenColumnName);
+      }
+
       const candidate = children ? withChildren(row, children, childrenColumnName)
         : { ...row, record: { ...row.record } };
 
