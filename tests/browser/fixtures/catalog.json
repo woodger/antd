@@ -1598,6 +1598,11 @@
     "root": "datetime-config-fixture"
   },
   {
+    "id": "picker-alignment",
+    "module": "./PickerAlignmentFixtures.svelte",
+    "root": "picker-alignment-fixture"
+  },
+  {
     "id": "picker-clock-options",
     "module": "./PickerClockOptionsFixtures.svelte",
     "root": "picker-clock-options-fixture"

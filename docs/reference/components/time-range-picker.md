@@ -84,9 +84,10 @@ scroll timers и observers очищаются при удалении.
 
 Popup наследует общий container API DatePicker, сохраняет минимальную ширину selector
 и сдвигает узкую time panel со стрелкой под активное
-поле. В RTL колонки времени сохраняют исходный порядок hours → minutes → seconds,
+поле. Положение панели настраивается через `popupAlign` и `builtinPlacements`.
+В RTL колонки времени сохраняют исходный порядок hours → minutes → seconds,
 а направление внутри колонок меняется. Темы, compact, размеры, locale и status
-используют текущие контексты библиотеки.
+используют текущие контексты библиотеки. [Положение панели](./date-picker.md#положение-панели)
 
 Проверки: [engine](../../../src/lib/time-range-picker.engine.test.ts),
 [SSR](../../../src/lib/time-range-picker.ssr.test.ts),

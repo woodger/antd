@@ -30,11 +30,12 @@
   import FormFeedbackIcon from './FormFeedbackIcon.svelte';
   import { useCompact } from './space-compact-context';
   import { compactClasses } from './space-compact.engine';
-  import { connectPopup, getPopupActiveElement } from './popup.dom';
+  import { getPopupActiveElement } from './popup.dom';
   import {
-    createPickerPopup, focusPickerPanel, getPickerPopupPosition, keepPickerEditorFocus,
+    createPickerPopup, focusPickerPanel, keepPickerEditorFocus,
     preservePickerPanelFocus, retainPickerReplacementFocus
   } from './picker-popup.model.svelte.js';
+  import { connectPickerPopup } from './picker-popup.dom';
   import NoCompactStyle from './NoCompactStyle.svelte';
   import PickerConfirmButton from './PickerConfirmButton.svelte';
   import PickerEditor from './PickerEditor.svelte';
@@ -108,6 +109,8 @@
     superNextIcon,
     panelRender,
     placement,
+    popupAlign,
+    builtinPlacements,
     disabled,
     id,
     name,
@@ -264,7 +267,9 @@
   let actualPlacement = $derived(
     placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft')
   );
-  let popupPlacement = $state<'top' | 'bottom'>('bottom');
+  let alignedPlacement = $state<string>();
+  let popupPlacement = $derived(shown ? alignedPlacement
+    : `bottom${actualPlacement.endsWith('Right') ? 'Right' : 'Left'}`);
   let invalid = $derived(
     time
       ? !!draft && !valid(draft) || invalidTimeInput
@@ -577,31 +582,23 @@
     panelWasOpen = opened;
   });
   $effect(() => {
-    if (!visible || !popup || !rootElement) {
+    const surface = popup;
+    const anchor = rootElement;
+    if (!visible || !surface || !anchor) {
       return;
     }
-    return connectPopup(popup, rootElement, {
-      placement: actualPlacement.startsWith('top') ? 'top' : 'bottom',
-      align: actualPlacement.endsWith('Right') ? 'right' : 'left',
-      autoAdjustOverflow: true,
-      maxWidth: '100vw',
-      gap: 4,
+    return untrack(() => connectPickerPopup(surface, anchor, () => ({
+      placement: actualPlacement, popupAlign, builtinPlacements
+    }), {
       applyPosition: datePopupStyle
         ? position => untrack(() => datePopupStyle.position(position)) : undefined,
-      getPosition: (reference, bounds, viewport) => getPickerPopupPosition(
-        reference,
-        bounds,
-        viewport,
-        actualPlacement
-      ),
-      matchAnchorWidth: true,
-      preserveFocus: event => keepPickerEditorFocus(event, popup,
+      preserveFocus: event => keepPickerEditorFocus(event, surface,
         !time && Boolean(cellRender || panelRender || renderExtraFooter)),
       onVisibilityChange: next => {
         shown = next;
       },
       onPlacement: next => {
-        popupPlacement = next === 'top' ? 'top' : 'bottom';
+        alignedPlacement = next;
       },
       onDismiss: reason => {
         const keepSelection = !time && retainedDateSelection;
@@ -622,7 +619,7 @@
         if (reason === 'escape' && (!keepSelection || cancelPanel))
           input?.focus();
       }
-    });
+    }));
   });
   $effect(() => {
     if (blocked) {
@@ -1910,7 +1907,7 @@
         `${prefix}-dropdown ant-picker-css-var`,
         componentTheme.className,
         config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
-        `${prefix}-dropdown-placement-${popupPlacement === 'top' ? 'top' : 'bottom'}${actualPlacement.endsWith('Right') ? 'Right' : 'Left'}`,
+        popupPlacement && `${prefix}-dropdown-placement-${popupPlacement}`,
         semantic?.classes.popup.root,
         time && rootClassName
       ]} style={initialPopupStyle}

@@ -7086,6 +7086,23 @@
           "note": "54 эталона официального UMD задают local → ConfigProvider fallback, undefined/nesting/theme reset, div.ant-picker trigger и defaultOpen с учётом нулевой/положительной арности getter. Исходные offset=4 с округлением координат вниз при scale=1, min-width selector и default bottomRight в RTL перенесены в общие single/range cores. Новый callback с прежним контейнером сохраняет panel/editor DOM, draft, state, focus/selection; смена самого DOM target пересоздаёт panel, как React portal. Поддержаны ShadowRoot со стилями потребителя, native refs/cleanup и SSR без вызова getter. Dayjs, точность/UTC, FormData и машины подтверждения сохранены; native conditional panel по-прежнему удаляется при закрытии, в отличие от retained popup rc-trigger."
         },
         {
+          "id": "popup-alignment",
+          "title": "Смещения и карта размещений панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/date-picker.types.ts",
+            "src/lib/picker-popup.dom.ts",
+            "src/lib/popup-geometry.dom.ts",
+            "src/lib/popup-position.engine.ts",
+            "tests/browser/fixtures/ant-design-picker-alignment-reference.json",
+            "tests/browser/picker-alignment.spec.ts",
+            "tests/package/picker-alignment.ssr.test.ts",
+            "docs/reference/components/date-picker.md"
+          ],
+          "note": "Ant Design 6.6.8, rc-picker 1.12.2, rc-trigger 3.10.1. Два прогона каждого из 34 сценариев сверяют точки, числовые и процентные смещения, targetOffset, замену карты, переключение стороны и shift, dynamicInset и htmlRegion. При замене свойств открытой панели класс отражает текущую карту, а координаты обновляются при измерении, в том числе при прокрутке контейнера и изменении размера поля. Native top layer сохраняет полную видимость стандартной панели, когда размеры окна позволяют. SSR оставляет параметры геометрии внутри компонента."
+        },
+        {
           "id": "component-theme",
           "title": "Общая тема DatePicker для date/time single/range input, calendar и popup",
           "state": "supported",
@@ -12847,6 +12864,23 @@
             "tests/package/picker-container.ssr.test.ts"
           ],
           "note": "54 эталона официального UMD задают local → ConfigProvider fallback, undefined/nesting/theme reset, div.ant-picker trigger и defaultOpen с учётом нулевой/положительной арности getter. Исходные offset=4 с округлением координат вниз при scale=1, min-width selector и default bottomRight в RTL перенесены в общие single/range cores. Новый callback с прежним контейнером сохраняет panel/editor DOM, draft, state, focus/selection; смена самого DOM target пересоздаёт panel, как React portal. Поддержаны ShadowRoot со стилями потребителя, native refs/cleanup и SSR без вызова getter. Dayjs, точность/UTC, FormData и машины подтверждения сохранены; native conditional panel по-прежнему удаляется при закрытии, в отличие от retained popup rc-trigger."
+        },
+        {
+          "id": "popup-alignment",
+          "title": "Смещения и карта размещений панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/date-picker.types.ts",
+            "src/lib/picker-popup.dom.ts",
+            "src/lib/popup-geometry.dom.ts",
+            "src/lib/popup-position.engine.ts",
+            "tests/browser/fixtures/ant-design-picker-alignment-reference.json",
+            "tests/browser/picker-alignment.spec.ts",
+            "tests/package/picker-alignment.ssr.test.ts",
+            "docs/reference/components/date-picker.md"
+          ],
+          "note": "Ant Design 6.6.8, rc-picker 1.12.2, rc-trigger 3.10.1. Два прогона каждого из 34 сценариев сверяют точки, числовые и процентные смещения, targetOffset, замену карты, переключение стороны и shift, dynamicInset и htmlRegion. При замене свойств открытой панели класс отражает текущую карту, а координаты обновляются при измерении, в том числе при прокрутке контейнера и изменении размера поля. Native top layer сохраняет полную видимость стандартной панели, когда размеры окна позволяют. SSR оставляет параметры геометрии внутри компонента."
         },
         {
           "id": "controlled-confirmation",

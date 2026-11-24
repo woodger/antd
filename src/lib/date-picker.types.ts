@@ -1,4 +1,5 @@
 import type { Dayjs } from 'dayjs';
+import type { PopupSourceAlign } from './popup-position.engine';
 import type { HTMLInputAttributes } from 'svelte/elements';
 import type { Snippet } from 'svelte';
 import type { InputContent } from './input.types';
@@ -16,6 +17,8 @@ export type DatePickerCalendarMode = 'date' | 'week' | 'month' | 'year' | 'decad
 export type DatePickerMode = DatePickerCalendarMode | 'time';
 /** Терминальный выбор; decade остаётся только режимом навигации панели. */
 export type DatePickerPicker = 'date' | 'week' | 'month' | 'year' | 'quarter';
+/** Правила привязки панели к полю. Процентные смещения относятся к указанному прямоугольнику. */
+export type DatePickerPopupAlign = Omit<PopupSourceAlign, '_experimental'>;
 export type DatePickerFormat<DateType extends object = Dayjs> = string | ((value: DateType) => string);
 /** Строковый формат поля; mask включает редактирование числовых разрядов. */
 export interface DatePickerFormatConfig { format: string; type?: 'mask'; }
@@ -175,6 +178,10 @@ export interface DatePickerProps<DateType extends object = Dayjs> extends Omit<
   renderExtraFooter?: Snippet<[DatePickerMode]>;
   /** По умолчанию bottomLeft в LTR и bottomRight в RTL, как rc-picker. */
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
+  /** Накладывает настройки на выбранную запись карты, целиком заменяя вложенный overflow. */
+  popupAlign?: DatePickerPopupAlign;
+  /** Заменяет карту встроенных placements, включая пустой объект. */
+  builtinPlacements?: Readonly<Record<string, DatePickerPopupAlign>>;
   /** Локальный контейнер; undefined наследует ConfigProvider.getPopupContainer. */
   getPopupContainer?: (trigger: HTMLElement) => HTMLElement | ShadowRoot;
   class?: string;

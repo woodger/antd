@@ -6,8 +6,9 @@ import {
 } from './popup-position.engine';
 import { treeSelectBuiltinPlacements } from './tree-select-align.engine';
 import {
-  createTreeSelectAlignSurface, treeSelectAlignScrollers, type TreeSelectAlignBorderBox
+  createTreeSelectAlignSurface, type TreeSelectAlignBorderBox
 } from './tree-select-align-surface.dom';
+import { getPopupScrollers } from './popup-geometry.dom';
 import type { InlineStyleLayer } from './inline-style.engine';
 import type { TooltipPlacement } from './tooltip.types';
 import type { TooltipPosition, TooltipRect } from './tooltip.engine';
@@ -109,8 +110,8 @@ export function createTreeSelectAlign(
     for (const node of scrollTargets) node.removeEventListener('scroll', invalidate);
     const container = getOptions().container;
     const from = container instanceof view.ShadowRoot ? null : container;
-    const anchorScrollers = treeSelectAlignScrollers(anchor);
-    const popupScrollers = treeSelectAlignScrollers(popup, from);
+    const anchorScrollers = getPopupScrollers(anchor);
+    const popupScrollers = getPopupScrollers(popup, from);
     scrollTargets = new Set([view, ...anchorScrollers, ...popupScrollers]);
     for (const node of scrollTargets) {
       node.addEventListener('scroll', invalidate, { passive: true });
@@ -118,7 +119,7 @@ export function createTreeSelectAlign(
 
     const saved = clipping.get(popup);
     if (!saved || saved.parent !== container) {
-      clipping.set(popup, { parent: container, nodes: treeSelectAlignScrollers(popup, from) });
+      clipping.set(popup, { parent: container, nodes: getPopupScrollers(popup, from) });
     }
   }
 

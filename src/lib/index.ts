@@ -225,6 +225,7 @@ export type {
   DatePickerSemantic,
   DatePickerSlots,
   DatePickerPopupSlots,
+  DatePickerPopupAlign,
   DatePickerAllowClear,
   DatePickerPicker,
   DatePickerPreset,

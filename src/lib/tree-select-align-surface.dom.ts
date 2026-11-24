@@ -1,65 +1,13 @@
 /** rc-trigger 3.10.1 useAlign/util; MIT, vendor/LICENSE.rc-trigger. */
 import { treeSelectAlignProjection, type TreeSelectAlignPoint } from './tree-select-align.engine';
-import type { getPopupPosition, PopupArea } from './popup-position.engine';
+import type { getPopupPosition } from './popup-position.engine';
+import { clipPopupArea } from './popup-geometry.dom';
 import type { InlineStyleLayer } from './inline-style.engine';
 import {
   createTreeSelectMotionFrame,
   type TreeSelectMotionFrameState,
   type TreeSelectMotionTransitionEnd
 } from './tree-select-motion-frame.dom';
-
-export function treeSelectAlignScrollers(
-  element: Element,
-  from: HTMLElement | null = element.parentElement
-) {
-  const view = element.ownerDocument.defaultView!;
-  const nodes: HTMLElement[] = [];
-  let parent = from;
-  while (parent) {
-    const style = view.getComputedStyle(parent);
-    if ([style.overflow, style.overflowX, style.overflowY].some(value =>
-      ['hidden', 'scroll', 'clip', 'auto'].includes(value))) {
-      nodes.push(parent);
-    }
-    parent = parent.parentElement;
-  }
-  return nodes;
-}
-
-export function treeSelectAlignVisibleArea(initial: PopupArea, scrollers: readonly HTMLElement[]) {
-  const area = { ...initial };
-  for (const node of scrollers) {
-    const document = node.ownerDocument;
-    const view = document.defaultView!;
-    if (node === document.body || node === document.documentElement) continue;
-    const style = view.getComputedStyle(node);
-    const rect = node.getBoundingClientRect();
-    const number = (value: string) => Number.parseFloat(value) || 0;
-    const left = number(style.borderLeftWidth);
-    const right = number(style.borderRightWidth);
-    const top = number(style.borderTopWidth);
-    const bottom = number(style.borderBottomWidth);
-    const scale = (physical: number, css: number) => {
-      const value = Math.round(physical / css * 1000) / 1000;
-      return Number.isNaN(value) ? 1 : value;
-    };
-    const sx = scale(rect.width, node.offsetWidth);
-    const sy = scale(rect.height, node.offsetHeight);
-    const mx = style.overflow === 'clip' ? number(style.overflowClipMargin) * sx : 0;
-    const my = style.overflow === 'clip' ? number(style.overflowClipMargin) * sy : 0;
-    const l = rect.x + left * sx - mx;
-    const t = rect.y + top * sy - my;
-    const r = l + rect.width + 2 * mx - (left + right) * sx
-      - (node.offsetWidth - node.clientWidth - left - right) * sx;
-    const b = t + rect.height + 2 * my - (top + bottom) * sy
-      - (node.offsetHeight - node.clientHeight - top - bottom) * sy;
-    area.left = Math.max(area.left, l);
-    area.top = Math.max(area.top, t);
-    area.right = Math.min(area.right, r);
-    area.bottom = Math.min(area.bottom, b);
-  }
-  return area;
-}
 
 type Alignment = ReturnType<typeof getPopupPosition>;
 export interface TreeSelectAlignBorderBox {
@@ -172,10 +120,10 @@ export function createTreeSelectAlignSurface(
         const style = view.getComputedStyle(proxy);
         const target = anchor.getBoundingClientRect();
         const html = document.documentElement;
-        const visible = treeSelectAlignVisibleArea({
+        const visible = clipPopupArea({
           left: 0, top: 0, right: html.clientWidth, bottom: html.clientHeight
         }, scrollers);
-        const scroll = treeSelectAlignVisibleArea({
+        const scroll = clipPopupArea({
           left: -html.scrollLeft, top: -html.scrollTop,
           right: html.scrollWidth - html.scrollLeft, bottom: html.scrollHeight - html.scrollTop
         }, scrollers);

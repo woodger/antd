@@ -2,8 +2,7 @@
 import { tick, untrack } from 'svelte';
 import { createPopupContainer } from './popup-container.model.svelte.js';
 import { getPopupActiveElement } from './popup.dom';
-import { getTooltipPosition, type TooltipRect } from './tooltip.engine';
-import type { DatePickerMode, DatePickerProps } from './date-picker.types';
+import type { DatePickerMode } from './date-picker.types';
 import type { DatePickerPanel } from './picker-components.types';
 
 interface PickerPopupContainerOptions {
@@ -118,26 +117,6 @@ export function createPickerPopup(getOptions: () => PickerPopupContainerOptions)
   });
 
   return { portal, get target() { return target; } };
-}
-
-export function getPickerPopupPosition(
-  reference: TooltipRect,
-  popup: TooltipRect,
-  viewport: TooltipRect,
-  placement: NonNullable<DatePickerProps['placement']>
-) {
-  const position = getTooltipPosition(
-    reference,
-    popup,
-    viewport,
-    placement.startsWith('top') ? 'top' : 'bottom',
-    true,
-    placement.endsWith('Right') ? 'right' : 'left',
-    4
-  );
-
-  // useAlign округляет offset вниз при scale=1; размеры native panel могут быть дробными.
-  return { ...position, left: Math.floor(position.left), top: Math.floor(position.top) };
 }
 
 /** При замене содержимого оставляет фокус в панели до удаления старой кнопки. */
