@@ -806,6 +806,11 @@
     "root": "generated-picker-fixture"
   },
   {
+    "id": "generated-range-time-input",
+    "module": "./GeneratedRangeTimeInputFixture.svelte",
+    "root": "generated-range-time-input-fixture"
+  },
+  {
     "id": "date-picker-offgrid-scroll",
     "module": "./DatePickerOffGridScrollFixtures.svelte",
     "root": "date-picker-offgrid-scroll-fixture"

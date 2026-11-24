@@ -18,11 +18,16 @@ export type TimeRangeInputParser<DateType extends object> = (
 
 const calendarFormat = 'YYYY-MM-DD';
 
+// Распознаёт форматы часов, пропуская литералы в квадратных скобках.
+function isTimeOnlyFormat(format: string): boolean {
+  const remainingFormat = format.replace(/\[[^\]]*\]|LTS?|[HhmsSAa]/g, '');
+  return !/[A-Za-z]/.test(remainingFormat);
+}
+
 // Проверяет время на дате границы. Форматы с явной датой, смещением или timestamp
 // разбираются напрямую, поскольку значения этих полей задаёт сам текст.
 function parseTimeRangeFormat(text: string, format: string, boundary: Dayjs): Dayjs | null {
-  const remainingFormat = format.replace(/\[[^\]]*\]|LTS?|[HhmsSAa]/g, '');
-  if (/[A-Za-z]/.test(remainingFormat)) {
+  if (!isTimeOnlyFormat(format)) {
     return dayjs(text, format, true);
   }
 
@@ -77,9 +82,51 @@ export function createTimeRangePickerEngine<DateType extends object>(
   calendar = createDatePickerEngine(dates),
   timePicker = createTimePickerEngine(dates, calendar)
 ) {
-  const { fields } = dates;
-  const { pickerTimeDisabled } = calendar;
+  const { generateConfig: adapter, fields } = dates;
+  const { parsePicker, pickerCalendarValue, pickerTimeDisabled } = calendar;
   const { timePickerSameValue, timePickerDateDisabled } = timePicker;
+
+  // После переноса отклоняет время, которое адаптер сдвинул из-за смены смещения.
+  function applyParsedTime(boundary: DateType, parsed: DateType): DateType | null {
+    const value = pickerCalendarValue(boundary, parsed);
+    const sameClock = dates.sameTime(value, parsed)
+      && fields.getMillisecond(value) === fields.getMillisecond(parsed);
+
+    return sameClock && dates.samePeriod(value, boundary, 'day') ? value : null;
+  }
+
+  // Разбирает ввод через адаптер. Только формат часов наследует дату границы.
+  function parseAdapterTimeRangeInput(
+    text: string,
+    locale: string,
+    formats: readonly DatePickerFormat<DateType>[],
+    boundary: DateType | null
+  ): DateType | null {
+    if (!boundary || !fields.isValidate(boundary)) {
+      return parsePicker(text, locale, formats);
+    }
+
+    for (const format of formats) {
+      if (typeof format !== 'string') {
+        continue;
+      }
+
+      const parsed = adapter.locale.parse(locale, text, [format]);
+      if (!parsed) {
+        continue;
+      }
+      if (!isTimeOnlyFormat(format)) {
+        return parsed;
+      }
+
+      const value = applyParsedTime(boundary, parsed);
+      if (value) {
+        return value;
+      }
+    }
+
+    return null;
+  }
 
   // Сравнивает соответствующие даты по календарным полям времени с точностью до миллисекунд.
   function sameTimeRange(a: RangePickerValue<DateType>, b: RangePickerValue<DateType>) {
@@ -126,7 +173,7 @@ export function createTimeRangePickerEngine<DateType extends object>(
       && (disabled[1] || !end || !invalid(end, 1, { from: start })));
   }
 
-  return { sameTimeRange, timeRangeInvalid, validTimeRange };
+  return { parseAdapterTimeRangeInput, sameTimeRange, timeRangeInvalid, validTimeRange };
 }
 
 export const { sameTimeRange, timeRangeInvalid, validTimeRange } =

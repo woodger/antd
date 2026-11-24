@@ -11,6 +11,67 @@ const supplement = readPickerGeneratorSupplement();
 const rootTime = readPickerGeneratorRootTime();
 const profiles = [...source.passes[0], ...supplement.passes[0], ...rootTime.passes[0]];
 
+test.describe('generatePicker RangePicker manual time input', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.clock.setFixedTime(new Date('2026-11-24T12:00:00Z'));
+  });
+
+  test('keeps the saved date for the edited start in a controlled range', async ({ page }) => {
+    await page.goto('/?fixture=generated-range-time-input');
+    const start = page.locator('#start');
+    const end = page.locator('#end');
+
+    await start.fill('10:15');
+    await start.press('Enter');
+    await end.press('Enter');
+
+    await expect(start).toHaveValue('10:15');
+    await expect(end).toHaveValue('18:00');
+    await expect(page.getByTestId('changes')).toHaveText(JSON.stringify([
+      [['2026-10-15T10:15:00.000Z', '2026-10-15T18:00:00.000Z'], ['10:15', '18:00']]
+    ]));
+  });
+
+  test('keeps both dates when editing the masked end of an overnight range', async ({ page }) => {
+    await page.goto('/?fixture=generated-range-time-input&profile=overnight-mask');
+    const start = page.locator('#start');
+    const end = page.locator('#end');
+
+    await end.focus();
+    await end.press('ArrowRight');
+    await end.press('ArrowUp');
+    await end.press('Enter');
+    await start.press('Enter');
+
+    await expect(start).toHaveValue('23:45');
+    await expect(end).toHaveValue('01:31');
+    await expect(page.getByTestId('changes')).toHaveText(JSON.stringify([
+      [['2026-10-15T23:45:58.123Z', '2026-10-16T01:31:00.000Z'], ['23:45', '01:31']]
+    ]));
+  });
+
+  for (const { input, displayed, iso } of [
+    { input: '10:15', displayed: '2026-10-15 10:15', iso: '2026-10-15T10:15:00.000Z' },
+    { input: '2026-10-14 10:15', displayed: '2026-10-14 10:15', iso: '2026-10-14T10:15:00.000Z' }
+  ]) {
+    test(`uses the matching format for ${input}`, async ({ page }) => {
+      await page.goto('/?fixture=generated-range-time-input&profile=format-list');
+      const start = page.locator('#start');
+      const end = page.locator('#end');
+
+      await start.fill(input);
+      await start.press('Enter');
+      await end.press('Enter');
+
+      await expect(start).toHaveValue(displayed);
+      await expect(end).toHaveValue('2026-10-15 18:00');
+      await expect(page.getByTestId('changes')).toHaveText(JSON.stringify([
+        [[iso, '2026-10-15T18:00:00.000Z'], [displayed, '2026-10-15 18:00']]
+      ]));
+    });
+  }
+});
+
 /** Выполняет закрытие, набор текста и выбор через пользовательские и штатные кнопки. */
 async function act(page: Page, popup: Locator, action: string, multiple: boolean) {
   switch (action) {

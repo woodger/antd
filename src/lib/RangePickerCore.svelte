@@ -156,7 +156,7 @@
     createPickerPanelEngine(dates, dateEngine);
   const timeEngine = createTimePickerEngine(dates, dateEngine);
   const { timePickerSameValue, timePickerDateDisabled } = timeEngine;
-  const { sameTimeRange, timeRangeInvalid, validTimeRange } =
+  const { parseAdapterTimeRangeInput, sameTimeRange, timeRangeInvalid, validTimeRange } =
     createTimeRangePickerEngine(dates, dateEngine, timeEngine);
 
   const config = useConfig();
@@ -1266,8 +1266,12 @@
   }
   // Ввод, маска и подтверждение используют дату одной и той же редактируемой границы.
   function parseFieldInput(text: string, boundary: DateType | null): DateType | null {
-    return time && parseTimeInput ? parseTimeInput(text, lang.locale, formats, boundary)
-      : parsePicker(text, lang.locale, formats);
+    if (time) {
+      const parse = parseTimeInput ?? parseAdapterTimeRangeInput;
+      return parse(text, lang.locale, formats, boundary);
+    }
+
+    return parsePicker(text, lang.locale, formats);
   }
 
   function inputChange(index: number, text: string, masked = false) {
