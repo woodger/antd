@@ -1763,6 +1763,11 @@
     "root": "table-selection-fixture"
   },
   {
+    "id": "table-service-columns",
+    "module": "./TableServiceColumnsFixture.svelte",
+    "root": "table-service-columns-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"

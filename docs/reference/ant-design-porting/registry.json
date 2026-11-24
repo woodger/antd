@@ -19694,7 +19694,7 @@
         {
           "id": "row-selection",
           "title": "Выбор строк, Shift-диапазоны и сохранение записей",
-          "state": "partial",
+          "state": "supported",
           "requiredForV1": false,
           "evidence": [
             "src/lib/Table.svelte",
@@ -19709,7 +19709,26 @@
             "tests/package/table-selection.types.ts",
             "docs/reference/components/table.md"
           ],
-          "note": "Ant Design 6.6.8. Два одинаковых UMD-прогона 13 профилей дают 79 состояний и 13 снимков SSR. Checkbox и Radio принимают управляемые ключи и начальный набор из rowSelection. При отклонении Radio с общим name восстанавливает принятую отметку. Shift пропускает disabled и уважает checkStrictly. Снимки кэша сохраняют выбранные записи и вложенные связи после смены данных. onSelect получает событие активации, onChange публикует пять методов. Корневой Svelte callback сохраняет типы single/all и прежнее поведение серверных страниц. User control callbacks используют native change, records содержат известные записи. Пустые placeholders Source сохранены в измерениях. Стандартные и пользовательские команды проверены мышью и клавиатурой. getTitleCheckboxProps, hideSelectAll, ширина, выравнивание и явное fixed применяются к служебной колонке. Table.SELECTION_COLUMN, columnTitle, renderCell и onCell относятся к следующему этапу размещения и замены служебных ячеек."
+          "note": "Ant Design 6.6.8. Два одинаковых UMD-прогона 13 профилей дают 79 состояний и 13 снимков SSR. Checkbox и Radio принимают управляемые ключи и начальный набор из rowSelection. При отклонении Radio с общим name восстанавливает принятую отметку. Shift пропускает disabled и уважает checkStrictly. Снимки кэша сохраняют выбранные записи и вложенные связи после смены данных. onSelect получает событие активации, onChange публикует пять методов. Корневой Svelte callback сохраняет типы single/all и прежнее поведение серверных страниц. User control callbacks используют native change, records содержат известные записи. Пустые placeholders Source сохранены в измерениях. Стандартные и пользовательские команды проверены мышью и клавиатурой. getTitleCheckboxProps, hideSelectAll, ширина, выравнивание и явное fixed применяются к служебной колонке. Пользовательская шапка, содержимое, onCell и порядок вынесены в feature service-columns."
+        },
+        {
+          "id": "service-columns",
+          "title": "Размещение и содержимое колонок выбора и раскрытия",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table-columns.engine.ts",
+            "src/lib/table.component.ts",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-service-columns-reference.json",
+            "tests/browser/table-service-columns.spec.ts",
+            "tests/browser/table-service-columns-hydration.spec.ts",
+            "tests/package/table-service-columns.ssr.test.ts",
+            "tests/package/table-selection.types.ts"
+          ],
+          "note": "Ant Design 6.6.8, rc-table 1.11.1. Два одинаковых UMD-прогона 16 профилей дают 47 состояний и 16 снимков SSR. Table.SELECTION_COLUMN и Table.EXPAND_COLUMN задают порядок верхнего уровня, включая группы, повторные маркеры, inactive и явное размещение при showExpandColumn=false. Проверены логическое закрепление и наследование стороны, RTL, дерево, colspan/rowspan, физические индексы итогов и обновление без шапки. columnTitle и renderCell используют Svelte snippets со штатными controls, onCell получает индекс раскрытой страницы, renderCell получает индекс среди соседей. Виртуальная таблица сохраняет нативный td и один интерактивный span. Строгая гидратация сохраняет input и фокус. Расширенный expandable API переносится отдельно."
         },
         {
           "id": "render-empty",

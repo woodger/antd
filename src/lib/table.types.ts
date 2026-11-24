@@ -117,6 +117,12 @@ export interface TableRowSelection<Row extends object> {
   /** Скрывает checkbox и меню в заголовке колонки. */
   hideSelectAll?: boolean;
   getTitleCheckboxProps?: () => TableSelectionControlProps;
+  /** Заменяет шапку. Snippet получает исходный checkbox, у Radio он отсутствует. */
+  columnTitle?: string | Snippet<[checkbox: Snippet | undefined]>;
+  /** Snippet получает отметку, запись, индекс среди соседей и исходный контрол. */
+  renderCell?: Snippet<[checked: boolean, record: Row, index: number, origin: Snippet]>;
+  /** Атрибуты ячейки выбора. index относится ко всей раскрытой странице. */
+  onCell?: TableColumn<Row>['onCell'];
   fixed?: TableFixed;
   columnWidth?: string | number;
   align?: TableColumn<Row>['align'];
@@ -140,14 +146,14 @@ export interface TableExpandable<Row extends object> {
   indentSize?: number;
   /** Переключает раскрытие нажатием на строку. */
   expandRowByClick?: boolean;
-  /** Показывает стандартный переключатель раскрытия. @defaultValue true */
+  /** Добавляет колонку автоматически и показывает переключатель дерева. @defaultValue true */
   showExpandColumn?: boolean;
   onExpand?: (expanded: boolean, record: Row) => void;
   onExpandedRowsChange?: (keys: TableKey[]) => void;
   rowExpandable?: (record: Row) => boolean;
-  columnTitle?: string;
+  columnTitle?: string | Snippet;
   columnWidth?: number | string;
-  fixed?: boolean;
+  fixed?: TableFixed;
 }
 
 /** Настройки Pagination, которыми управляет Table; total вычисляется по данным. */

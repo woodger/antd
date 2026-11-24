@@ -1,6 +1,6 @@
-import type { ComponentProps } from 'svelte';
+import type { ComponentProps, Snippet } from 'svelte';
 import type {
-  Table, TableKey, TableRowSelectMethod, TableRowSelection, TableSelectionPreset
+  Table, TableColumn, TableKey, TableRowSelectMethod, TableRowSelection, TableSelectionPreset
 } from '@woodger/antd';
 
 interface Row { key: number; name: string; }
@@ -19,5 +19,14 @@ export type TableSelectionContracts = [
   ]>>,
   Assert<Equal<typeof Table.SELECTION_ALL, 'SELECT_ALL'>>,
   Assert<Equal<typeof Table.SELECTION_ALL | typeof Table.SELECTION_INVERT
-    | typeof Table.SELECTION_NONE, TableSelectionPreset>>
+    | typeof Table.SELECTION_NONE, TableSelectionPreset>>,
+  Assert<typeof Table.SELECTION_COLUMN | typeof Table.EXPAND_COLUMN extends TableColumn<Row>
+    ? true : false>,
+  Assert<Equal<Parameters<NonNullable<TableRowSelection<Row>['renderCell']>>, [
+    checked: boolean, record: Row, index: number, origin: Snippet
+  ]>>,
+  Assert<Equal<Parameters<Exclude<TableRowSelection<Row>['columnTitle'], string | undefined>>, [
+    checkbox: Snippet | undefined
+  ]>>,
+  Assert<Equal<TableRowSelection<Row>['onCell'], TableColumn<Row>['onCell']>>
 ];

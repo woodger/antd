@@ -270,7 +270,7 @@ export function createTableSelection<Row extends object>(input: SelectionInputs<
 
   /** Заголовочный checkbox изменяет доступные строки только текущей страницы. */
   function togglePage(next: boolean) {
-    if (input.disabled() || header.disabled || hideHeader) {
+    if (input.disabled() || header.disabled || radio) {
       return;
     }
 

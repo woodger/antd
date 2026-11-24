@@ -1,11 +1,43 @@
 // Готовит дерево колонок для обработки данных и для разметки. Скрытие и media
-// queries не меняют список ключей, которыми владеет сортировка и фильтры.
+// queries не меняют ключи сортировки и фильтров. Служебные колонки занимают
+// физический лист сетки только в режимах выбора и раскрытия подробностей.
 // Ant Design 6.6.8, rc-table 1.11.1. MIT, vendor/LICENSE.ant-design.
 import type { GridScreenMap } from './grid.types';
 import type { TableColumn, TableColumnsType, TableFixed } from './table.types';
 
-export interface TableHeading<Row extends object> {
+const serviceRole = Symbol('Table column role');
+export type TableServiceColumn = 'selection' | 'expand';
+
+/** Маркер сохраняет роль при передаче колонки через state proxy Svelte. */
+function serviceMarker<Role extends TableServiceColumn>(role: Role) {
+  return Object.freeze({ key: role, title: '', [serviceRole]: role });
+}
+
+export const SELECTION_COLUMN = serviceMarker('selection');
+export const EXPAND_COLUMN = serviceMarker('expand');
+
+/** Отличает маркер от пользовательской колонки даже при совпадении key. */
+function getServiceRole(column: object | undefined): TableServiceColumn | undefined {
+  const role = column && serviceRole in column ? column[serviceRole] : undefined;
+  return role === 'selection' || role === 'expand' ? role : undefined;
+}
+
+interface TableColumnServices<Row extends object> {
+  selection?: Pick<TableColumn<Row>, 'align' | 'fixed' | 'width' | 'onCell'>;
+  expansion?: { automatic: boolean; fixed?: TableFixed; width?: number | string; };
+}
+
+export interface TableLeaf<Row extends object> {
+  key: string;
   column: TableColumn<Row>;
+  service: TableServiceColumn | undefined;
+  fixed: TableFixed | undefined;
+}
+
+export interface TableHeading<Row extends object> {
+  key: string;
+  column: TableColumn<Row>;
+  service: TableServiceColumn | undefined;
   start: number;
   leaf: number;
   colSpan: number;
@@ -21,6 +53,10 @@ export function getTableColumnOrder<Row extends object>(columns: TableColumnsTyp
   // Ключ управляет sort/filter и DOM identity независимо от глубины.
   function visit(items: TableColumnsType<Row>) {
     for (const column of items) {
+      if (getServiceRole(column)) {
+        continue;
+      }
+
       if (keys.has(column.key)) {
         throw new Error(`Table column key "${column.key}" is not unique`);
       }
@@ -37,11 +73,76 @@ export function getTableColumnOrder<Row extends object>(columns: TableColumnsTyp
   return ordered;
 }
 
+/** Подставляет колонку подробностей в marker или в её стандартную позицию. */
+function placeExpansion<Row extends object>(
+  columns: TableColumn<Row>[], options: NonNullable<TableColumnServices<Row>['expansion']>
+) {
+  const slot = columns.findIndex(column => getServiceRole(column) === 'expand');
+  if (slot === -1 && !options.automatic) {
+    return;
+  }
+
+  const defaultIndex = options.fixed === 'end' ? columns.length : 0;
+  const index = slot === -1 ? defaultIndex : slot;
+  const column = {
+    ...EXPAND_COLUMN,
+    width: options.width,
+    fixed: options.fixed ?? columns[index]?.fixed
+  };
+  columns.splice(index, slot === -1 ? 0 : 1, column);
+}
+
+/** Размещает выбор после начального expand и наследует fixed соседних колонок. */
+function placeSelection<Row extends object>(
+  columns: TableColumn<Row>[], options: NonNullable<TableColumnServices<Row>['selection']>
+) {
+  const slot = columns.findIndex(column => getServiceRole(column) === 'selection');
+  const defaultIndex = getServiceRole(columns[0]) === 'expand' ? 1 : 0;
+  const index = slot === -1 ? defaultIndex : slot;
+  const previous = columns[index - 1];
+  const next = columns[index + (slot === -1 ? 0 : 1)];
+  const fixed = options.fixed ?? next?.fixed ?? previous?.fixed;
+
+  if (fixed && getServiceRole(previous) === 'expand' && previous.fixed === undefined) {
+    columns[index - 1] = { ...previous, fixed };
+  }
+
+  columns.splice(index, slot === -1 ? 0 : 1, { ...SELECTION_COLUMN, ...options, fixed });
+}
+
+/** Обрабатывает верхний уровень по порядку Source, начиная с видимых определений. */
+function prepareColumns<Row extends object>(
+  columns: TableColumnsType<Row>, screens: GridScreenMap, services: TableColumnServices<Row>
+) {
+  const seen = new Set<TableServiceColumn>();
+  const prepared: TableColumn<Row>[] = [];
+  for (const column of columns) {
+    if (column.hidden || (column.responsive && !column.responsive.some(point => screens[point]))) {
+      continue;
+    }
+
+    const role = getServiceRole(column);
+    if (role) {
+      const enabled = role === 'selection' ? services.selection : services.expansion;
+      if (!enabled || seen.has(role)) {
+        continue;
+      }
+      seen.add(role);
+    }
+    prepared.push(column);
+  }
+
+  if (services.expansion) placeExpansion(prepared, services.expansion);
+  if (services.selection) placeSelection(prepared, services.selection);
+
+  return prepared;
+}
+
 /** Возвращает уровни шапки и порядок ячеек тела после скрытия колонок. */
 export function getTableColumnLayout<Row extends object>(
-  columns: TableColumnsType<Row>, screens: GridScreenMap
+  columns: TableColumnsType<Row>, screens: GridScreenMap, services: TableColumnServices<Row> = {}
 ) {
-  const leaves: { column: TableColumn<Row>; fixed: TableFixed | undefined; }[] = [];
+  const leaves: TableLeaf<Row>[] = [];
   const headings: TableHeading<Row>[][] = [];
 
   // rc-table оставляет заголовок группы как отдельную колонку после скрытия всех детей.
@@ -51,13 +152,15 @@ export function getTableColumnLayout<Row extends object>(
     start: number,
     inheritedFixed?: TableFixed
   ): number {
-    if (column.hidden) {
+    const service = getServiceRole(column);
+    if (column.hidden || (depth > 0 && service)) {
       return 0;
     }
 
+    const key = service ?? `data:${column.key}`;
     const fixed = column.fixed ?? inheritedFixed;
     const heading: TableHeading<Row> = {
-      column, start, leaf: leaves.length, colSpan: 1, rowSpan: 1, group: false
+      key, column, service, start, leaf: leaves.length, colSpan: 1, rowSpan: 1, group: false
     };
     const row = headings[depth] ??= [];
     row.push(heading);
@@ -69,18 +172,15 @@ export function getTableColumnLayout<Row extends object>(
 
     heading.group = leaves.length > heading.leaf;
     if (!heading.group) {
-      leaves.push({ column, fixed });
+      leaves.push({ key, column, service, fixed });
     }
     heading.colSpan = column.colSpan ?? (heading.group ? childWidth : 1);
     return heading.colSpan;
   }
 
-  // InternalTable проверяет responsive у верхнего уровня до обхода групп в rc-table.
   let start = 0;
-  for (const column of columns) {
-    if (!column.responsive || column.responsive.some(point => screens[point])) {
-      start += visit(column, 0, start);
-    }
+  for (const column of prepareColumns(columns, screens, services)) {
+    start += visit(column, 0, start);
   }
 
   for (const [depth, row] of headings.entries()) {

@@ -10,8 +10,10 @@
   import { createBreakpoint } from './grid-breakpoint.model.svelte';
   import { getGridMediaQueries } from './grid.engine';
   import { getPaginationState } from './pagination.engine';
-  import { getTableColumnLayout, getTableColumnOrder, type TableHeading }
-    from './table-columns.engine';
+  import {
+    getTableColumnLayout, getTableColumnOrder, type TableHeading, type TableLeaf,
+    type TableServiceColumn
+  } from './table-columns.engine';
   import { resolveTableCell, resolveTableVirtualCells, type TableCell, type TableMergedRow }
     from './table-cell.engine';
   import { observeTableLayout } from './table-layout.dom';
@@ -181,6 +183,8 @@
   let expandedKeys = $derived(new Set(expandable?.expandedRowKeys ?? internalExpansion));
   const collapsed = new Set<TableKey>();
   let visibleRows = $derived(flattenTableRows(pageRows, tree ? expandedKeys : collapsed));
+  type TableRowEntry = (typeof visibleRows)[number];
+  const treeControlColumn = $derived(rowSelection ? 1 : 0);
 
   let resolvedDisabled = $derived((disabled ?? config.componentDisabled) || loading);
   let selectionOptions = $derived(typeof rowSelection === 'object' ? rowSelection : undefined);
@@ -205,42 +209,39 @@
   let content = $state<HTMLDivElement>();
   let table = $state<HTMLTableElement>();
   let stickyBar = $state.raw<TableStickyBarLayout>();
-  let expansionColumn = $derived(
-    expandedRowRender && expandable?.showExpandColumn !== false ? expandable : undefined
-  );
-  let expansionOffset = $derived(expansionColumn ? 1 : 0);
-  let dataOffset = $derived(expansionOffset + (rowSelection ? 1 : 0));
   // План шапки и порядок листьев используют одни и те же видимые колонки.
   let columnLayout = $derived(getTableColumnLayout(
-    columns, breakpoint.connected ? breakpoint.screens : {}
+    columns,
+    breakpoint.connected ? breakpoint.screens : {},
+    {
+      selection: rowSelection ? {
+        width: selectionWidth,
+        align: selectionOptions?.align,
+        fixed: selectionOptions?.fixed,
+        onCell: selectionOptions?.onCell
+      } : undefined,
+      expansion: expandedRowRender ? {
+        automatic: expandable?.showExpandColumn !== false,
+        width: expandable?.columnWidth ?? (designTheme.enabled ? undefined : 48),
+        fixed: expandable?.fixed
+      } : undefined
+    }
   ));
-  let visibleColumns = $derived(columnLayout.leaves.map(leaf => leaf.column));
+  let leaves = $derived(columnLayout.leaves);
   let headerRows = $derived(columnLayout.headings.length ? columnLayout.headings : [[]]);
   let headerCount = $derived(showHeader ? headerRows.length : 0);
-  let hasCellProps = $derived(visibleColumns.some(column => Boolean(column.onCell)));
+  let hasCellProps = $derived(leaves.some(({ column }) => Boolean(column.onCell)));
   let hovered = $state<{ key: TableKey; leaf: number; first: number; last: number; }>();
   let hasHeaderProps = $derived(headerRows.some(row => row.some(({ column }) =>
     column.onHeaderCell || column.colSpan !== undefined || column.rowSpan !== undefined
   )));
-  let columnWidths = $derived([
-    ...(expansionColumn
-      ? [expansionColumn.columnWidth ?? (designTheme.enabled ? undefined : 48)] : []),
-    ...(rowSelection ? [selectionWidth] : []),
-    ...visibleColumns.map(column => column.width)
-  ]);
+  let columnWidths = $derived(leaves.map(({ column }) => column.width));
   let columnCount = $derived(Math.max(columnWidths.length, 1));
-  let fixedColumns = $derived(
-    [
-      ...(expansionColumn ? [expansionColumn.fixed ?? false] : []),
-      ...(rowSelection ? [selectionOptions?.fixed ?? false] : []),
-      ...columnLayout.leaves.map(leaf => leaf.fixed)
-    ]
-  );
+  let fixedColumns = $derived(leaves.map(leaf => leaf.fixed));
   let fixedCells = $derived(fixedColumns.map((fixed, index) => ({
     side: fixed === true ? 'start' : fixed || undefined,
     offset: `var(--ant-table-fixed-${index}, auto)`
   })));
-  const selectionFixed = $derived(fixedCells[expansionOffset]);
 
   provideTableSummary({
     get prefix() { return prefix; },
@@ -283,7 +284,7 @@
 
     const start = scrollport.start;
     const end = start + scrollport.rows.length - 1;
-    return resolveTableVirtualCells(visibleRows, visibleColumns, start, end);
+    return resolveTableVirtualCells(visibleRows, leaves.map(leaf => leaf.column), start, end);
   });
 
   // Вычисляет начало и размер merged cells через измерения того же виртуального окна.
@@ -314,7 +315,7 @@
     let previousRight = 0;
 
     for (const origin of cells) {
-      const first = origin.columnIndex + dataOffset;
+      const first = origin.columnIndex;
       const span = Math.max(1, Math.floor(origin.cell.colSpan));
       const end = Math.min(offsets.length - 1, first + span);
       const left = offsets[first];
@@ -371,7 +372,7 @@
 
   function cellHoverEvents(cell: TableCell, key: TableKey, leaf: number, index: number) {
     if (!rowHoverable || !hasCellProps) {
-      return { onmouseenter: undefined, onmouseleave: undefined };
+      return undefined;
     }
 
     return {
@@ -597,6 +598,11 @@
 
     return value === null || value === undefined ? '' : String(value);
   }
+
+  function serviceCellClass(service: TableServiceColumn): string {
+    return service === 'selection' ? `${prefix}-selection-column`
+      : `${prefix}-row-expand-icon-cell`;
+  }
 </script>
 
 <style>
@@ -734,8 +740,7 @@
 
 {#snippet columnHeading(cell: TableHeading<Row>)}
   {@const column = cell.column}
-  {@const index = cell.start + dataOffset}
-  {@const fixed = fixedSpan(index, cell.colSpan)}
+  {@const fixed = fixedSpan(cell.start, cell.colSpan)}
   {@const props = resolveTableCell(column.onHeaderCell?.(column), cell.colSpan, cell.rowSpan)}
   {@const sortable = typeof column.sorter === 'function'
     || (mode === 'server' && column.sorter === true)}
@@ -744,7 +749,7 @@
     <th
       {...props.attributes}
       data-ant-table-part="cell"
-      data-ant-table-leaf={headerCount > 1 && !cell.group ? cell.leaf + dataOffset : undefined}
+      data-ant-table-leaf={headerCount > 1 && !cell.group ? cell.leaf : undefined}
       data-ant-table-sortable={sortable || undefined}
       data-ant-table-sorted={order || undefined}
       scope={cell.colSpan > 1 ? 'colgroup' : 'col'}
@@ -790,24 +795,25 @@
   {/if}
 {/snippet}
 
-{#snippet dataCell(
-  column: TableColumn<Row>,
-  leaf: number,
+{#snippet bodyCell(
+  leaf: TableLeaf<Row>,
+  columnIndex: number,
   key: TableKey,
   index: number,
   cell: TableCell,
   body: Snippet,
   overlay?: { width: number; height: number; gap: number; }
 )}
-  {@const fixed = fixedCells[leaf + dataOffset]}
-  {@const sorted = tableData.sorter?.columnKey === column.key}
+  {@const { column, service } = leaf}
+  {@const fixed = fixedCells[columnIndex]}
+  {@const sorted = !service && tableData.sorter?.columnKey === column.key}
   {@const attributes = {
     ...cell.attributes,
-    ...cellHoverEvents(cell, key, leaf, index),
+    ...cellHoverEvents(cell, key, columnIndex, index),
     'data-ant-table-part': 'cell',
     'data-ant-table-sorted': sorted || undefined,
     class: [
-      `${prefix}-cell`, column.className,
+      `${prefix}-cell`, service ? serviceCellClass(service) : column.className,
       fixed.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`,
       sorted && `${prefix}-column-sort`,
       inHoveredRows(index, index + Math.max(1, cell.rowSpan) - 1) && `${prefix}-cell-row-hover`,
@@ -820,17 +826,49 @@
   <!-- Нативные th и td сохраняют редактор при гидратации Svelte 5.57. -->
   {#if column.rowScope}
     <th {...attributes} scope={column.rowScope}
-      {@attach hasCellProps ? () => detachHoveredCell(key, leaf) : undefined}
+      {@attach hasCellProps ? () => detachHoveredCell(key, columnIndex) : undefined}
       style:--ant-table-span-width={cssSize(overlay?.width)}
       style:--ant-table-span-height={cssSize(overlay?.height)}
       style:--ant-table-span-gap={cssSize(overlay?.gap)}>{@render body()}</th>
   {:else}
     <td {...attributes}
-      {@attach hasCellProps ? () => detachHoveredCell(key, leaf) : undefined}
+      {@attach hasCellProps ? () => detachHoveredCell(key, columnIndex) : undefined}
       style:--ant-table-span-width={cssSize(overlay?.width)}
       style:--ant-table-span-height={cssSize(overlay?.height)}
       style:--ant-table-span-gap={cssSize(overlay?.gap)}>{@render body()}</td>
   {/if}
+{/snippet}
+
+{#snippet bodyContent(
+  leaf: TableLeaf<Row>, columnIndex: number, entry: TableRowEntry,
+  canExpand: boolean, expanded: boolean
+)}
+  {@const { row, depth, index } = entry}
+  {#if showTreeControls && columnIndex === treeControlColumn}
+    {@render expansionControl(row, canExpand, expanded, depth)}
+  {/if}{#if leaf.service === 'selection'}
+    {@const checked = selectedKeys.has(row.key)}
+    {@const renderCell = selectionOptions?.renderCell}
+    {#snippet origin()}
+      {@const control = selection.control(row.key)}
+      <TableSelectionControl
+        radio={selection.radio}
+        {checked}
+        mixed={selection.indeterminate(row.key, tree)}
+        disabled={resolvedDisabled || Boolean(control?.disabled)}
+        label={`${strings.selectRow} ${row.key}`}
+        {control}
+        onToggle={(_, event) => selection.toggleRow(row, event)}
+      />
+    {/snippet}
+    {#if renderCell}
+      {@render renderCell(checked, row.record, index, origin)}
+    {:else}
+      {@render origin()}
+    {/if}
+  {:else if leaf.service === 'expand'}
+    {@render expansionControl(row, canExpand, expanded)}
+  {:else if leaf.column.render}{@render leaf.column.render(row.record, index)}{:else}{cellValue(row.record, leaf.column.dataIndex)}{/if}
 {/snippet}
 
 {#snippet virtualSpacer(height: number)}
@@ -851,6 +889,50 @@
     control={selection.title}
     onToggle={selection.togglePage}
   />
+{/snippet}
+
+{#snippet selectionHeading()}
+  {@const title = selectionOptions?.columnTitle}
+  {#if typeof title === 'function'}
+    {@render title(selection.radio ? undefined : selectPageControl)}
+  {:else if title}
+    {title}
+  {:else if !selection.hideHeader}
+    {@const commands = selection.commands}
+    {#if commands}
+      <div class={`${prefix}-selection`}>
+        {@render selectPageControl()}
+        <TableSelectionMenu {prefix} {commands} {strings}
+          disabled={resolvedDisabled} onCommand={selection.runCommand} />
+      </div>
+    {:else}
+      {@render selectPageControl()}
+    {/if}
+  {/if}
+{/snippet}
+
+{#snippet serviceHeading(cell: TableHeading<Row>, service: TableServiceColumn)}
+  {@const fixed = fixedCells[cell.leaf]}
+  {@const detailsTitle = expandable?.columnTitle}
+  <th data-ant-table-part="cell" scope="col"
+    rowspan={cell.rowSpan > 1 ? cell.rowSpan : undefined}
+    data-ant-table-leaf={headerCount > 1 ? cell.leaf : undefined}
+    aria-label={service === 'expand' && typeof detailsTitle !== 'function'
+      ? detailsTitle ?? strings.expandColumn : undefined}
+    class={[
+      `${prefix}-cell`, serviceCellClass(service),
+      fixed.side && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${fixed.side}`
+    ]}
+    style={cellStyle(fixed, 3, cell.column.align, undefined)}
+  >
+    {#if service === 'selection'}
+      {@render selectionHeading()}
+    {:else if typeof detailsTitle === 'function'}
+      {@render detailsTitle()}
+    {:else}
+      {detailsTitle ?? ''}
+    {/if}
+  </th>
 {/snippet}
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`table-prefix:${prefix}:${rootPrefix}`} />{/if}<div bind:this={nativeElement} data-ant-table-part="wrapper" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} class={[
@@ -908,62 +990,33 @@
             ? 'fixed' : undefined}
         >
           {#if caption}<caption>{caption}</caption>{/if}
-          {#if visibleColumns.length || dataOffset}<colgroup>
-            {#if expansionColumn}<col class={designTheme.enabled ? `${prefix}-expand-icon-col` : undefined}
-              style:width={columnWidth(0)} />{/if}
-            {#if rowSelection}<col class={[
-              (designTheme.enabled || selection.commands) && `${prefix}-selection-col`,
-              selection.commands && `${prefix}-selection-col-with-dropdown`
-            ]} style:width={columnWidth(expansionOffset)} />{/if}
-            {#each visibleColumns as column, columnIndex (column.key)}
-              <col style:width={columnWidth(columnIndex + dataOffset)} />
+          {#if leaves.length}<colgroup>
+            {#each leaves as leaf, columnIndex (leaf.key)}
+              {#if leaf.service === 'selection'}
+                <col class={[
+                  (designTheme.enabled || selection.commands) && `${prefix}-selection-col`,
+                  selection.commands && `${prefix}-selection-col-with-dropdown`
+                ]} style:width={columnWidth(columnIndex)} />
+              {:else if leaf.service === 'expand'}
+                <col class={designTheme.enabled ? `${prefix}-expand-icon-col` : undefined}
+                  style:width={columnWidth(columnIndex)} />
+              {:else}
+                <col style:width={columnWidth(columnIndex)} />
+              {/if}
             {/each}
           </colgroup>{/if}
           {#if showHeader}
             <thead data-ant-table-part="head" class={`${prefix}-thead`}>
               {#each headerRows as row, depth}
                 <tr aria-rowindex={virtualRowIndices ? depth + 1 : undefined}>
-                  {#if depth === 0}
-                    {#if expansionColumn}
-                      <th data-ant-table-part="cell" scope="col"
-                        rowspan={headerCount > 1 ? headerCount : undefined}
-                        data-ant-table-leaf={headerCount > 1 ? 0 : undefined}
-                        aria-label={expansionColumn.columnTitle ?? strings.expandColumn} class={[
-                          `${prefix}-cell ${prefix}-row-expand-icon-cell`,
-                          expansionColumn.fixed
-                          && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-start`
-                        ]} style:inset-inline-start={expansionColumn.fixed ? fixedCells[0].offset : undefined} style:z-index={expansionColumn.fixed ? 3 : undefined}>{expansionColumn.columnTitle ?? ''}</th>
+                  {#each row as cell (cell.key)}
+                    {#if cell.service}
+                      {@render serviceHeading(cell, cell.service)}
+                    {:else}
+                      {@render columnHeading(cell)}
                     {/if}
-                    {#if rowSelection}
-                      <th data-ant-table-part="cell" scope="col"
-                        rowspan={headerCount > 1 ? headerCount : undefined}
-                        data-ant-table-leaf={headerCount > 1 ? expansionOffset : undefined}
-                        class={[
-                          `${prefix}-cell ${prefix}-selection-column`,
-                          selectionFixed?.side
-                          && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${selectionFixed.side}`
-                        ]} style={cellStyle(selectionFixed, 3, selectionOptions?.align, undefined)}>
-                        {#if !selection.hideHeader}
-                          {@const commands = selection.commands}
-                          {#if commands}
-                            <div class={`${prefix}-selection`}>
-                              {@render selectPageControl()}
-                              <TableSelectionMenu {prefix} {commands} {strings}
-                                disabled={resolvedDisabled} onCommand={selection.runCommand} />
-                            </div>
-                          {:else}
-                            {@render selectPageControl()}
-                          {/if}
-                        {/if}
-                      </th>
-                    {/if}
-                  {/if}
-                  {#each row as cell (cell.column.key)}
-                    {@render columnHeading(cell)}
                   {:else}
-                    {#if !dataOffset}
-                      <th data-ant-table-part="cell" class={`${prefix}-cell`}></th>
-                    {/if}
+                    <th data-ant-table-part="cell" class={`${prefix}-cell`}></th>
                   {/each}
                 </tr>
               {/each}
@@ -977,11 +1030,11 @@
           <tbody data-ant-table-part="body" class={`${prefix}-tbody`}
             class:table-span-body={mergedRows.length > 0}>
             {@render virtualSpacer(scrollport.before)}
-            {#each scrollport.rows as { row, depth, index: renderIndex }, windowIndex (row.key)}
+            {#each scrollport.rows as entry, windowIndex (entry.row.key)}
+              {@const { row, depth } = entry}
               {@const index = scrollport.start + windowIndex}
               {@const canExpand = canExpandRow(row)}
               {@const expanded = canExpand && expandedKeys.has(row.key)}
-              {@const checkControl = selection.control(row.key)}
               <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
               <tr data-ant-table-part="row" data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
                 data-ant-table-span-hovered={inHoveredRows(index) || undefined} class={[
@@ -1000,39 +1053,11 @@
                 {@attach scrollport.active ? element => scrollport.attachRow(element, row.key)
                   : undefined}
               >
-                {#if expansionColumn}
-                  <td data-ant-table-part="cell" class={[
-                      `${prefix}-cell ${prefix}-row-expand-icon-cell`,
-                      expansionColumn.fixed
-                      && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-start`
-                    ]} style:inset-inline-start={expansionColumn.fixed ? fixedCells[0].offset : undefined} style:z-index={expansionColumn.fixed ? 1 : undefined}>
-                    {@render expansionControl(row, canExpand, expanded)}
-                  </td>
-                {/if}
-                {#if rowSelection}
-                  <td data-ant-table-part="cell" class={[
-                      `${prefix}-cell ${prefix}-selection-column`,
-                      selectionFixed?.side
-                      && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${selectionFixed.side}`
-                    ]} style={cellStyle(selectionFixed, 1, selectionOptions?.align, undefined)}>
-                    <TableSelectionControl
-                      radio={selection.radio}
-                      checked={selectedKeys.has(row.key)}
-                      mixed={selection.indeterminate(row.key, tree)}
-                      disabled={resolvedDisabled || Boolean(checkControl?.disabled)}
-                      label={`${strings.selectRow} ${row.key}`}
-                      control={checkControl}
-                      onToggle={(_, event) => selection.toggleRow(row, event)}
-                    />
-                  </td>
-                {/if}
-                {#each visibleColumns as column, columnIndex (column.key)}
-                  {@const cell = bodyCellProps(column, row.record, index, columnIndex)}
+                {#each leaves as leaf, columnIndex (leaf.key)}
+                  {@const cell = bodyCellProps(leaf.column, row.record, index, columnIndex)}
                   {@const placeholder = cellPlan?.placeholders.get(index)?.[columnIndex]}
                   {#snippet cellContent()}
-                    {#if showTreeControls && columnIndex === 0}
-                      {@render expansionControl(row, canExpand, expanded, depth)}
-                    {/if}{#if column.render}{@render column.render(row.record, renderIndex)}{:else}{cellValue(row.record, column.dataIndex)}{/if}
+                    {@render bodyContent(leaf, columnIndex, entry, canExpand, expanded)}
                   {/snippet}
                   {#if placeholder !== undefined}
                     {#if placeholder > 0}
@@ -1042,16 +1067,14 @@
                         style:visibility="hidden"></td>
                     {/if}
                   {:else if cell.colSpan !== 0 && cell.rowSpan !== 0}
-                    {@render dataCell(column, columnIndex, row.key, index, cell, cellContent)}
+                    {@render bodyCell(leaf, columnIndex, row.key, index, cell, cellContent)}
                   {/if}
                 {:else}
-                  {#if !dataOffset}
-                    <td data-ant-table-part="cell" class={`${prefix}-cell`}>
-                      {#if showTreeControls}
-                        {@render expansionControl(row, canExpand, expanded, depth)}
-                      {/if}
-                    </td>
-                  {/if}
+                  <td data-ant-table-part="cell" class={`${prefix}-cell`}>
+                    {#if showTreeControls}
+                      {@render expansionControl(row, canExpand, expanded, depth)}
+                    {/if}
+                  </td>
                 {/each}
               </tr>
               {#if expanded && expandedRowRender}
@@ -1069,7 +1092,8 @@
               {:else}&nbsp;{/if}</td></tr>
             {/each}
             {@render virtualSpacer(scrollport.after)}
-            {#each mergedRows as { row, depth, index, sourceIndex, top, parts } (row.key)}
+            {#each mergedRows as entry (entry.row.key)}
+              {@const { row, depth, sourceIndex, top, parts } = entry}
               {@const canExpand = canExpandRow(row)}
               {@const expanded = canExpand && expandedKeys.has(row.key)}
               <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
@@ -1087,14 +1111,12 @@
                   ? event => expandByRowClick(row, event) : undefined}
               >
                 {#each parts as part (part.columnIndex)}
-                  {@const column = visibleColumns[part.columnIndex]}
+                  {@const leaf = leaves[part.columnIndex]}
                   {#snippet spanContent()}
-                    {#if showTreeControls && part.columnIndex === 0}
-                      {@render expansionControl(row, canExpand, expanded, depth)}
-                    {/if}{#if column.render}{@render column.render(row.record, index)}{:else}{cellValue(row.record, column.dataIndex)}{/if}
+                    {@render bodyContent(leaf, part.columnIndex, entry, canExpand, expanded)}
                   {/snippet}
-                  {@render dataCell(
-                    column, part.columnIndex, row.key, sourceIndex, part.cell, spanContent, part
+                  {@render bodyCell(
+                    leaf, part.columnIndex, row.key, sourceIndex, part.cell, spanContent, part
                   )}
                 {/each}
               </tr>
