@@ -2,15 +2,16 @@ import type { Snippet } from 'svelte';
 import type {
   MenuClickInfo, MenuDivider, MenuGroup, MenuItem, MenuProps, MenuSubMenu
 } from './menu.types';
+import type { AdjustOverflow, TooltipAlignConfig, TooltipPlacement } from './tooltip.types';
 
-export type DropdownPlacement =
-  'top'
-  | 'topLeft'
-  | 'topRight'
-  | 'bottom'
-  | 'bottomLeft'
-  | 'bottomRight';
-export type DropdownTrigger = 'hover' | 'click';
+/** Физические стороны и углы, включая боковое размещение. */
+export type DropdownPlacement = TooltipPlacement;
+export type DropdownTrigger = 'hover' | 'click' | 'contextMenu';
+
+/** Объект включает стрелку. pointAtCenter привязывает её к центру trigger. */
+export interface DropdownArrowOptions {
+  pointAtCenter?: boolean;
+}
 
 export interface DropdownClickInfo {
   key: string;
@@ -63,7 +64,7 @@ export type DropdownSlots = Partial<Record<
 export type DropdownSemantic = DropdownSlots | ((info: { props: DropdownProps; }) =>
   DropdownSlots | undefined);
 
-/** Меню команд у trigger snippet с клавиатурой, hover/click и возвратом фокуса. */
+/** Меню команд у trigger snippet с мышью, клавиатурой и возвратом фокуса. */
 export interface DropdownProps {
   /** Непустой локальный префикс перекрывает ConfigProvider; внутреннее меню получает суффикс -menu. */
   prefixCls?: string;
@@ -79,10 +80,12 @@ export interface DropdownProps {
   autoFocus?: boolean;
   disabled?: boolean;
   placement?: DropdownPlacement;
+  /** Переопределяет точки, смещения и правила коррекции выбранного placement. */
+  align?: TooltipAlignConfig;
   /** @defaultValue false */
-  arrow?: boolean;
+  arrow?: boolean | DropdownArrowOptions;
   /** @defaultValue true */
-  autoAdjustOverflow?: boolean;
+  autoAdjustOverflow?: boolean | AdjustOverflow;
   /** @defaultValue 0.1 */
   mouseEnterDelay?: number;
   /** @defaultValue 0.1 */

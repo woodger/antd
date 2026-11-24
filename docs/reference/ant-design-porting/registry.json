@@ -3068,7 +3068,27 @@
             "src/lib/Dropdown.svelte",
             "tests/browser/dropdown.spec.ts"
           ],
-          "note": "Как rc-trigger 3.10.1, pointer leave запрашивает закрытие только при наличии hover. Внешне открытое меню с click или пустым массивом trigger сохраняет видимость и не вызывает onOpenChange при уходе указателя; hover задержки и обычные click/keyboard сценарии сохранены."
+          "note": "Как rc-trigger 3.10.1, pointer leave запрашивает закрытие при наличии hover без contextMenu. Внешне открытое меню с click или пустым массивом trigger сохраняет видимость и не вызывает onOpenChange при уходе указателя. Задержки и закрытие contextMenu описаны в placement-and-context."
+        },
+        {
+          "id": "placement-and-context",
+          "title": "Контекстное открытие и расширенное размещение панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Dropdown.svelte",
+            "src/lib/dropdown.types.ts",
+            "src/lib/dropdown-position.dom.ts",
+            "src/lib/popup.dom.ts",
+            "src/lib/popup-position.engine.ts",
+            "tests/browser/dropdown-placement.spec.ts",
+            "tests/browser/fixtures/ant-design-dropdown-context-reference.json",
+            "tests/browser/fixtures/ant-design-dropdown-placement-reference.json",
+            "tests/browser/fixtures/ant-design-dropdown-interactions-reference.json",
+            "tests/package/dropdown-placement.ssr.test.ts",
+            "docs/reference/components/dropdown.md"
+          ],
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, rc-dropdown 1.0.3 и rc-trigger 3.10.1. 43 профиля и 225 состояний официального UMD повторены, включая шесть боковых placements, corner flip, проценты и точки align, arrow.pointAtCenter, коррекцию по осям, RTL/portal и controlled hold/accept. ContextMenu сохраняет координату, повторное открытие перемещает тот же popup, hover leave сохраняет pending show. Click, resize и scroll родительских контейнеров запрашивают закрытие; прокрутка menu сохраняет наблюдаемую видимость и scrollTop. Fit-content и динамические insets сохраняют ширину у правого края и узкого позиционированного контейнера. Native fixed top layer, принятый click bubble, onOpenChange(boolean), keyboard focus recovery, SSR-оболочка и обычные шесть placements сохранены. Изменение trigger при открытом popup сохраняет DOM и активный пункт. Поведение произвольных CSS-трансформаций portal и фазы popup motion в эту сверку не входят."
         },
         {
           "id": "source-theme-tokens",
@@ -3104,11 +3124,11 @@
         },
         {
           "id": "extended-api",
-          "title": "Глобальная конфигурация, render и дополнительные trigger API",
+          "title": "Глобальная конфигурация, render, lifecycle и оформление открытия",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Остаются ConfigProvider.dropdown вне theme tokens, popupRender, contextMenu, дополнительные placement/align настройки, destroyOnHidden/forceRender/motion и arrow.pointAtCenter. Локальные classNames/styles и Menu перенесены отдельной возможностью. Deprecated Dropdown.Button исключён; актуальная композиция — SpaceCompact + Dropdown + Button."
+          "note": "Остаются ConfigProvider.dropdown вне theme tokens, popupRender, destroyOnHidden, forceRender, transitionName, rootClassName, openClassName и ref trigger. Локальные classNames/styles, Menu и расширенное позиционирование перенесены отдельными возможностями. Deprecated Dropdown.Button исключён; актуальная композиция — SpaceCompact + Dropdown + Button."
         },
         {
           "id": "popup-container",

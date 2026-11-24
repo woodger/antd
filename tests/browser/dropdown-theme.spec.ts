@@ -1,6 +1,5 @@
 import { test, expect } from './test';
 import reference from './fixtures/ant-design-dropdown-metrics.json' with { type: 'json' };
-import type { DropdownPlacement } from '@woodger/antd';
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 1400 });
@@ -51,7 +50,7 @@ for (const sample of reference.cases) {
         }).boundingBox())!;
         return placement.startsWith('top')
           ? trigger.y - surface.y - surface.height : surface.y - trigger.y - trigger.height;
-      }).toBeCloseTo(sample.gaps[placement as DropdownPlacement], 5);
+      }).toBeCloseTo(sample.gaps[placement as keyof typeof sample.arrows], 5);
     }
     await page.getByLabel('Themed Dropdown arrow', { exact: true }).evaluate(element => {
       const input = element as HTMLInputElement;

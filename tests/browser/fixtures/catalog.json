@@ -420,6 +420,11 @@
     "root": "dropdown-menu-fixture"
   },
   {
+    "id": "dropdown-placement",
+    "module": "./DropdownPlacementFixtures.svelte",
+    "root": "dropdown-placement-fixture"
+  },
+  {
     "id": "tabs",
     "module": "./TabsFixtures.svelte",
     "root": "tabs-fixture"

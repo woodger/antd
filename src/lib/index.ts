@@ -586,6 +586,7 @@ export type {
   DropdownMenuClickInfo,
   DropdownPlacement,
   DropdownTrigger,
+  DropdownArrowOptions,
   DropdownSlots,
   DropdownSemantic
 } from './dropdown.types';

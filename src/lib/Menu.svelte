@@ -651,6 +651,7 @@
   }
   [data-ant-dropdown-menu] { box-sizing: border-box; width: 100%; max-width: 100%; max-height: calc(100dvh - 16px); overflow: auto; overflow-wrap: anywhere; }
   :global([data-ant-dropdown-source-theme]) [data-ant-dropdown-menu] { box-sizing: content-box; width: auto; max-height: calc(100vh - var(--ant-control-height-lg) * 2.5); }
+  :global([data-ant-dropdown-source-align]) > [data-ant-dropdown-menu] { overflow-wrap: break-word; }
   [data-ant-dropdown-empty] { padding: 8px 12px; color: var(--ant-color-text-description); }
 </style>
 

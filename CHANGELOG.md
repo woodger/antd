@@ -13,6 +13,10 @@
 
 ### Added
 
+- Dropdown поддерживает `contextMenu`, боковые `placement`, `align`,
+  `arrow.pointAtCenter` и настройку коррекции по осям. Контекстное меню
+  следует координате указателя и учитывает ширину контейнера.
+
 - Dropdown использует Menu для команд, групп, вложенных панелей и выбора.
   Поддержаны `menu.activeKey`, `autoFocus`, локальные `classNames` и `styles`.
 

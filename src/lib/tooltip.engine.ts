@@ -63,6 +63,7 @@ interface TooltipPositionContext {
   source?: TooltipSourcePlacement;
   align?: PopupSourceAlign;
   builtinPlacements?: Readonly<Record<string, PopupSourceAlign>>;
+  alignPoint?: boolean;
 }
 
 export interface TooltipSourcePlacement {
@@ -143,6 +144,7 @@ function getSourcePosition(
     },
     placements,
     align: { ...placements[placement], ...context.align },
+    alignPoint: context.alignPoint,
     scaleX: 1,
     scaleY: 1,
     flips: context.flips

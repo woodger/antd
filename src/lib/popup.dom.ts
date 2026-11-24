@@ -32,8 +32,10 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   sourcePlacement?: TooltipSourcePlacement;
   sourceAlign?: PopupSourceAlign;
   builtinPlacements?: Readonly<Record<string, PopupSourceAlign>>;
+  /** Для виртуального anchor имя placement определяется точкой самой панели. */
+  alignPoint?: boolean;
   onAlign?: (position: TooltipPosition) => void;
-  onPlacement: (placement: TooltipPlacement) => void;
+  onPlacement: (placement: TooltipPlacement, position: TooltipPosition) => void;
   onDismiss: (reason: 'escape' | 'outside') => void;
   /** Внутренний opt-out для поверхности без обработчика Escape, например заменённого Select menu. */
   dismissOnEscape?: boolean;
@@ -46,7 +48,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   align?: 'left' | 'right' | 'top' | 'bottom';
   matchAnchorWidth?: boolean;
   anchorWidthVariable?: string;
-  getAnchorWidth?: () => number;
+  getAnchorWidth?: () => number | undefined;
   constrainWidth?: boolean;
   gap?: number | (() => number | undefined);
   allowZeroSize?: boolean | (() => boolean);
@@ -54,6 +56,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   /** Удерживает последнюю геометрию окрашенной поверхности во время CSS transform. */
   pauseAlignment?: () => boolean;
   interactive?: boolean;
+  measurePopup?: () => DOMRect;
   getPosition?: (anchor: DOMRect, popup: DOMRect, viewport: TooltipRect) => TooltipPosition | undefined;
   getAnchorRect?: (current: DOMRect, popup: DOMRect) => DOMRect;
   applyPosition?: (position: TooltipPosition) => void;
@@ -153,7 +156,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
     else if (options.interactive !== false && index === -1) stack.push(popup);
     openPopups.set(document, stack);
 
-    const bounds = popup.getBoundingClientRect();
+    const bounds = options.measurePopup?.() ?? popup.getBoundingClientRect();
     const positionRect = options.getAnchorRect?.(rect, bounds) ?? rect;
     const position = options.getPosition?.(positionRect, bounds, viewport) ?? getTooltipPosition(
       positionRect,
@@ -168,6 +171,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
         source: options.sourcePlacement,
         align: options.sourceAlign,
         builtinPlacements: options.builtinPlacements,
+        alignPoint: options.alignPoint,
         scrollRegion: {
           x: -document.documentElement.scrollLeft,
           y: -document.documentElement.scrollTop,
@@ -203,7 +207,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
         popup.style.setProperty('--arrow-x', `${position.arrowX}px`);
         popup.style.setProperty('--arrow-y', `${position.arrowY}px`);
       }
-      options.onPlacement(position.placement);
+      options.onPlacement(position.placement, position);
       lastPosition = signature;
     }
     const wasShown = shown;

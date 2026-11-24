@@ -1,6 +1,5 @@
 <script lang="ts">
-  // Связывает способы открытия с фокусом и клавиатурой menu. Задержки принадлежат текущему
-  // trigger.
+  // Владеет видимостью меню, позицией привязки и возвратом фокуса к trigger.
   import NoCompactStyle from './NoCompactStyle.svelte';
   import DropdownMenu from './DropdownMenu.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
@@ -10,17 +9,18 @@
   import { useConfig } from './config-context';
   import { useForm } from './form-context';
   import { connectPopup, getPopupActiveElement } from './popup.dom';
+  import { getPopupArrowStyle, getPopupPlacements } from './popup-position.engine';
+  import { createDropdownPosition, dropdownFitVariables } from './dropdown-position.dom';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { connectPopoverTrigger } from './popover.dom';
   import { useComponentTheme } from './theme-component.svelte';
   import { connectInlineStyle } from './inline-style.dom';
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { useDesignTokenContext } from './theme-context.svelte';
-  import { getTooltipDelay } from './tooltip.engine';
+  import { getTooltipDelay, type TooltipPosition } from './tooltip.engine';
   import { dropdownSemantics, getDropdownMatch, isDropdownMenuKey } from './dropdown.engine';
   import type { DropdownMenuContext, DropdownMenuView } from './dropdown-menu-context';
   import type {
-    DropdownPlacement,
     DropdownProps,
     DropdownTrigger
   } from './dropdown.types';
@@ -37,6 +37,7 @@
     autoFocus = false,
     disabled,
     placement,
+    align,
     arrow = false,
     autoAdjustOverflow = true,
     mouseEnterDelay = 0.1,
@@ -75,6 +76,9 @@
   let menuView = $state.raw<DropdownMenuView>();
   let shown = $state(false);
   let actualSide = $state<'top' | 'bottom'>('bottom');
+  let alignedPlacement = $state<string>();
+  let arrowStyle = $state<string>();
+  let pointer = $state.raw<{ x: number; y: number; }>();
   let pending: ReturnType<typeof setTimeout> | undefined;
   let focusPending: 'first' | 'last' | null = null;
   let hovered = false;
@@ -91,26 +95,42 @@
   let active = true;
   let resolvedDisabled = $derived(disabled ?? form?.disabled ?? config.componentDisabled);
   let visible = $derived(!resolvedDisabled && isOpen);
+  const alignPoint = $derived(supports('contextMenu'));
   const portal = createPopupContainer(() => ({
     open: visible,
     reference: anchor,
     getPopupContainer: getPopupContainer || config.getPopupContainer,
-    themeStyle: popupStyle
+    themeStyle: popupStyle,
+    preserveVariables: ['--ant-dropdown-anchor-width', ...dropdownFitVariables]
   }));
-  let requestedPlacement = $derived(
+  const requestedPlacement = $derived(
     placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft')
   );
-  let side = $derived(requestedPlacement.startsWith('top') ? 'top' as const : 'bottom' as const);
-  let align = $derived(
+  const legacySide = $derived(requestedPlacement.startsWith('top') ? 'top' : 'bottom');
+  const legacyAlignment = $derived(
     requestedPlacement.endsWith('Left')
       ? 'left' as const
       : requestedPlacement.endsWith('Right') ? 'right' as const : undefined
   );
-  let actualPlacement = $derived(
-    `${actualSide}${align === 'left'
-      ? 'Left'
-      : align === 'right' ? 'Right' : ''}` as DropdownPlacement
-  );
+  const builtinPlacements = $derived.by(() => {
+    const lateral = requestedPlacement.startsWith('left') || requestedPlacement.startsWith('right');
+    if (!alignPoint && !lateral && !align && typeof arrow !== 'object'
+      && typeof autoAdjustOverflow !== 'object') {
+      return undefined;
+    }
+
+    const token = designTokens.state.token;
+    const pointAtCenter = typeof arrow === 'object' && arrow.pointAtCenter === true;
+    return getPopupPlacements(pointAtCenter, arrow ? token.sizePopupArrow : 0, token.marginXXS,
+      token.borderRadius, autoAdjustOverflow);
+  });
+  const legacySuffix = $derived(legacyAlignment === 'left' ? 'Left'
+    : legacyAlignment === 'right' ? 'Right' : '');
+  const actualPlacement = $derived.by(() => {
+    if (!shown) return requestedPlacement;
+
+    return builtinPlacements ? alignedPlacement : `${actualSide}${legacySuffix}`;
+  });
 
   $effect.pre(() => {
     const next = providedOpen;
@@ -179,27 +199,31 @@
       return;
     }
 
+    const position = createDropdownPosition(surface, () => Boolean(builtinPlacements),
+      () => Boolean(getPopupContainer || config.getPopupContainer));
     const disconnect = untrack(() => connectPopup(surface, source, {
       trigger: host,
-      get placement() {
-        return side;
-      },
-      get align() {
-        return align;
-      },
-      get autoAdjustOverflow() {
-        return autoAdjustOverflow;
-      },
+      get placement() { return builtinPlacements ? requestedPlacement : legacySide; },
+      get align() { return builtinPlacements ? undefined : legacyAlignment; },
+      get autoAdjustOverflow() { return autoAdjustOverflow; },
+      get sourceAlign() { return align; },
+      get builtinPlacements() { return builtinPlacements; },
+      get alignPoint() { return alignPoint; },
+      get outsideEvents() { return alignPoint ? 'mouse' : 'pointer'; },
       maxWidth: '100vw',
       gap: () => untrack(() => designTokens.enabled
         ? (arrow ? designTokens.state.token.sizePopupArrow / 2 : 0)
           + designTokens.state.token.marginXXS : undefined),
-      matchAnchorWidth: true,
+      anchorWidthVariable: '--ant-dropdown-anchor-width',
+      getAnchorWidth: () => alignPoint ? 0 : undefined,
+      getAnchorRect(rect) {
+        return alignPoint && pointer ? new DOMRect(pointer.x, pointer.y) : rect;
+      },
+      measurePopup: position.measure,
+      get applyPosition() { return builtinPlacements ? position.apply : undefined; },
       preserveFocus: false,
       isRelatedTarget: ownsNestedTarget,
-      onPlacement: (next) => {
-        actualSide = next === 'top' ? 'top' : 'bottom';
-      },
+      onPlacement: (_, current) => updatePlacement(current),
       onDismiss: close,
       onVisibilityChange: (next) => {
         shown = next;
@@ -224,8 +248,17 @@
       resumeFocus = Boolean(focusedInMenu());
       closing = true;
       disconnect();
+      position.reset();
       closing = false;
     };
+  });
+
+  $effect(() => {
+    const source = anchor;
+    const surface = popup;
+    if (shown && alignPoint && source && surface) {
+      return connectPointDismissal(source, surface);
+    }
   });
 
   onDestroy(() => {
@@ -243,6 +276,58 @@
     return typeof trigger === 'string' ? trigger === kind : trigger.includes(kind);
   }
 
+  function updatePlacement(position: TooltipPosition) {
+    if (builtinPlacements) {
+      alignedPlacement = position.alignedPlacement;
+      arrowStyle = getPopupArrowStyle({
+        align: position.sourceAlign, arrowX: position.arrowX, arrowY: position.arrowY
+      });
+      return;
+    }
+
+    actualSide = position.placement === 'top' ? 'top' : 'bottom';
+    arrowStyle = undefined;
+  }
+
+  // Прокрутка контейнеров и resize закрывают меню, привязанное к координате окна.
+  function connectPointDismissal(source: Element, surface: HTMLElement) {
+    const document = source.ownerDocument;
+    const view = document.defaultView;
+    if (!view) return;
+
+    const targets = new Set<EventTarget>([view]);
+    for (const node of [source, surface]) {
+      const root = node.getRootNode();
+      if (root instanceof ShadowRoot) targets.add(root);
+    }
+
+    function dismiss() {
+      if (visible && shown) close('outside');
+    }
+
+    function scroll(event: Event) {
+      const target = event.target;
+      if (target === document || target === view || target instanceof Element
+        && (target !== source && target.contains(source)
+          || target !== surface && target.contains(surface))) {
+        dismiss();
+      }
+    }
+
+    const dispose = Array.from(targets, target =>
+      on(target, 'scroll', scroll, { capture: true, passive: true }));
+    dispose.push(on(view, 'resize', dismiss, { passive: true }));
+    return () => dispose.forEach(remove => remove());
+  }
+
+  function isTriggerDisabled() {
+    return resolvedDisabled || anchor?.matches(':disabled, [aria-disabled="true"]');
+  }
+
+  function rememberPointer(event: MouseEvent) {
+    pointer = { x: event.clientX, y: event.clientY };
+  }
+
   function wanted() {
     return !dismissed && (clicked || menuFocused || hoveredSurfaces.size > 0
       || hovered && supports('hover'));
@@ -252,19 +337,17 @@
     cancelPending();
     const source = anchor;
     const ownerValue = isOpen;
+    // У hover+contextMenu нет hideAction=hover. Уход указателя не отменяет задержку открытия.
+    const retainedHover = next && delay > 0 && alignPoint;
 
     function apply() {
       pending = undefined;
       if (!active
-        || next
-        && (resolvedDisabled
-          || !wanted())
+        || next && (resolvedDisabled
+          || !(wanted() || retainedHover && alignPoint && supports('hover')))
         || !source?.isConnected
         || source !== anchor
-        || !Object.is(
-          isOpen,
-          ownerValue
-        )) {
+        || !Object.is(isOpen, ownerValue)) {
         return;
       }
 
@@ -336,65 +419,78 @@
   }
 
   function handleEnter(event: PointerEvent) {
-    if (resolvedDisabled
-      || event.pointerType === 'touch'
-      || anchor?.matches(
-        ':disabled, [aria-disabled="true"]'
-      )) {
+    if (isTriggerDisabled() || event.pointerType === 'touch') {
       return;
     }
 
     hovered = true;
     dismissed = false;
-    if (supports('hover'))
+    if (supports('hover')) {
+      rememberPointer(event);
       request(true, getTooltipDelay(mouseEnterDelay));
+    }
   }
 
   function handleLeave() {
     hovered = false;
-    if (supports('hover') && !wanted())
+    if (!alignPoint && supports('hover') && !wanted())
       request(false, getTooltipDelay(mouseLeaveDelay));
   }
 
-  function handleClick(event: MouseEvent) {
-    if (event.defaultPrevented
-      || resolvedDisabled
-      || anchor?.matches(
-        ':disabled, [aria-disabled="true"]'
-      )
-      || !supports(
-        'click'
-      )
-      && !(event.detail === 0
-        && supports(
-          'hover'
-        ))) {
+  function handleTouchStart() {
+    if (!alignPoint || !supports('hover') || supports('click') || visible || isTriggerDisabled()) {
       return;
     }
+
+    clicked = true;
+    dismissed = false;
+    request(true);
+  }
+
+  function handleClick(event: MouseEvent) {
+    if (event.defaultPrevented || isTriggerDisabled()) {
+      return;
+    }
+
+    const clickToOpen = supports('click');
+    if (alignPoint) {
+      // У contextMenu обычный клик закрывает панель даже без trigger=click.
+      if (visible) close('trigger');
+      else if (clickToOpen) openFromClick(event);
+      return;
+    }
+    if (!clickToOpen && !(event.detail === 0 && supports('hover'))) return;
 
     if (clicked || visible && !wanted()) {
       close('trigger');
     }
     else {
-      clicked = true;
-      dismissed = false;
-      focusPending = autoFocus ? null : 'first';
-      request(true);
+      openFromClick(event);
     }
   }
 
+  function openFromClick(event: MouseEvent) {
+    rememberPointer(event);
+    clicked = true;
+    dismissed = false;
+    focusPending = autoFocus ? null : 'first';
+    request(true);
+  }
+
+  function handleContextMenu(event: MouseEvent) {
+    if (!alignPoint || event.defaultPrevented || isTriggerDisabled()) return;
+
+    event.preventDefault();
+    rememberPointer(event);
+    clicked = true;
+    dismissed = false;
+    focusPending = null;
+    request(true);
+  }
+
   function handleTriggerKeydown(event: KeyboardEvent) {
-    if (event.defaultPrevented
-      || event.isComposing
-      || resolvedDisabled
-      || !supports('click')
-      && !supports(
-        'hover'
-      )
-      && !visible
-      || anchor?.matches(
-        ':disabled, [aria-disabled="true"]'
-      )) {
+    if (event.defaultPrevented || event.isComposing || isTriggerDisabled()
+      || !visible && !supports('click') && !supports('hover')) {
       return;
     }
     if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
@@ -419,7 +515,7 @@
     hoveredSurfaces.delete(surface);
     if (event.relatedTarget instanceof Node && ownsMenuTarget(event.relatedTarget)) return;
 
-    if (supports('hover') && !wanted()) {
+    if (!alignPoint && supports('hover') && !wanted()) {
       request(false, getTooltipDelay(mouseLeaveDelay));
     }
   }
@@ -572,10 +668,16 @@
 
 <style>
   [data-ant-dropdown-trigger] { display: inline-block; max-width: 100%; vertical-align: middle; }
-  [data-ant-dropdown-popup] { position: fixed; inset: auto; margin: 0; padding: 0; border: 0; background: transparent; width: max-content; overflow: visible; }
+  [data-ant-dropdown-popup] { position: fixed; inset: auto; margin: 0; padding: 0; border: 0; background: transparent; width: max-content; min-width: var(--ant-dropdown-anchor-width, 0px); overflow: visible; }
+  [data-ant-dropdown-popup][data-ant-dropdown-source-align] {
+    width: fit-content;
+    right: var(--ant-dropdown-fit-right, auto);
+    bottom: var(--ant-dropdown-fit-bottom, auto);
+    justify-self: var(--ant-dropdown-fit-justify, unsafe left);
+  }
   [data-ant-dropdown-popup][hidden], [data-ant-dropdown-popup]:not(:popover-open) { display: none; }
-  [data-ant-dropdown-placement^="top"]:where(:not([data-ant-dropdown-source-theme])) > [data-ant-dropdown-arrow] { left: var(--arrow-x, 50%); right: auto; transform: translateX(-50%) translateY(100%) rotate(180deg); }
-  [data-ant-dropdown-placement^="bottom"]:where(:not([data-ant-dropdown-source-theme])) > [data-ant-dropdown-arrow] { left: var(--arrow-x, 50%); right: auto; transform: translateX(-50%) translateY(-100%); }
+  [data-ant-dropdown-placement^="top"]:where(:not([data-ant-dropdown-source-theme], [data-ant-dropdown-source-align])) > [data-ant-dropdown-arrow] { left: var(--arrow-x, 50%); right: auto; transform: translateX(-50%) translateY(100%) rotate(180deg); }
+  [data-ant-dropdown-placement^="bottom"]:where(:not([data-ant-dropdown-source-theme], [data-ant-dropdown-source-align])) > [data-ant-dropdown-arrow] { left: var(--arrow-x, 50%); right: auto; transform: translateX(-50%) translateY(-100%); }
   @media (prefers-reduced-motion: reduce) {
     [data-ant-dropdown-popup],
     [data-ant-dropdown-popup] :global([data-ant-dropdown-menu]) {
@@ -586,22 +688,25 @@
 </style>
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss}
-  scope={`dropdown-prefix:${componentPrefix}:${rootPrefix}${menu.prefixCls ? `:${menuPrefix}` : ''}`} />{/if}<span data-ant-dropdown-trigger data-ant-dropdown-prefix={componentPrefix} data-ant-dropdown-root-prefix={rootPrefix} data-ant-dropdown-menu-prefix={menuPrefix} bind:this={host} id={triggerId} role="presentation" class={[`${componentPrefix}-trigger`, className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} onclick={handleClick} onkeydown={handleTriggerKeydown}>{@render children()}</span>
+  scope={`dropdown-prefix:${componentPrefix}:${rootPrefix}${menu.prefixCls ? `:${menuPrefix}` : ''}`} />{/if}<span data-ant-dropdown-trigger data-ant-dropdown-prefix={componentPrefix} data-ant-dropdown-root-prefix={rootPrefix} data-ant-dropdown-menu-prefix={menuPrefix} bind:this={host} id={triggerId} role="presentation" class={[`${componentPrefix}-trigger`, className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} ontouchstart={handleTouchStart} onclick={handleClick} oncontextmenucapture={handleContextMenu} onkeydown={handleTriggerKeydown}>{@render children()}</span>
 <NoCompactStyle>
-<div data-ant-dropdown-popup data-ant-dropdown-prefix={componentPrefix} data-ant-dropdown-root-prefix={rootPrefix} data-ant-dropdown-menu-prefix={menuPrefix} data-ant-dropdown-source-theme={componentTheme.className ? true : undefined} data-ant-dropdown-placement={shown ? actualPlacement : requestedPlacement} bind:this={popup} id={`${menuId}-popup`} popover="manual" role="presentation" hidden dir={config.direction} class={[
+<div data-ant-dropdown-popup data-ant-dropdown-prefix={componentPrefix} data-ant-dropdown-root-prefix={rootPrefix} data-ant-dropdown-menu-prefix={menuPrefix} data-ant-dropdown-source-theme={componentTheme.className ? true : undefined}
+  data-ant-dropdown-source-align={builtinPlacements ? true : undefined}
+  data-ant-dropdown-placement={actualPlacement} bind:this={popup} id={`${menuId}-popup`} popover="manual" role="presentation" hidden dir={config.direction} class={[
     componentPrefix,
     'ant-dropdown-css-var',
     componentTheme.className,
     componentTheme.className && 'ant-dropdown-source-theme',
     semantics.rootClass,
-    `${componentPrefix}-placement-${shown ? actualPlacement : requestedPlacement}`,
+    actualPlacement && `${componentPrefix}-placement-${actualPlacement}`,
     config.direction === 'rtl' && `${componentPrefix}-rtl`
   ]} style={untrack(() => popupStyle)}
   {@attach connectPopupStyle} {@attach portal}
   onpointerenter={event => enterPopup(event.currentTarget, event)}
   onpointerleave={event => leavePopup(event.currentTarget, event)}
   onfocusin={handleFocusin} onfocusout={handleFocusout}>
-  {#if arrow}<span data-ant-dropdown-arrow class={`${componentPrefix}-arrow`} aria-hidden="true"></span>{/if}
+  {#if arrow}<span data-ant-dropdown-arrow class={`${componentPrefix}-arrow`}
+    style={arrowStyle} aria-hidden="true"></span>{/if}
   <DropdownMenu {menu} {semantics} context={menuContext} id={menuId} label={ariaLabel}
     labelledby={triggerId} onkeydown={handleMenuKeydown} bind:nativeElement={list} />
 </div>
