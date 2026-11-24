@@ -781,6 +781,11 @@
     "root": "date-picker-multiple-mode-fixture"
   },
   {
+    "id": "date-picker-panel-mode",
+    "module": "./DatePickerPanelModeFixtures.svelte",
+    "root": "date-picker-panel-mode-fixture"
+  },
+  {
     "id": "date-picker-offgrid-scroll",
     "module": "./DatePickerOffGridScrollFixtures.svelte",
     "root": "date-picker-offgrid-scroll-fixture"

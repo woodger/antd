@@ -14,7 +14,7 @@
   import type { DatePickerDisabledTime, DatePickerTimeConfig, DatePickerProps,
     DatePickerCellRenderInfo, DatePickerPopupSlots } from './date-picker.types';
   let { prefixCls, value, selectedValue, config, format, locale, disabledTime, onSelect, onHover,
-    scrollMemory, cellRender, cellRange, now, classNames, styles }: {
+    scrollMemory, cellRender, cellRange, now, classNames, styles, showColumns = true }: {
     prefixCls: string;
     value: Dayjs;
     selectedValue: Dayjs | null;
@@ -30,6 +30,7 @@
     scrollMemory?: DatePickerTimeScrollMemory;
     classNames?: DatePickerPopupSlots;
     styles?: DatePickerPopupSlots;
+    showColumns?: boolean;
   } = $props();
   let renderToday = $derived.by(() => {
     void prefixCls;
@@ -65,7 +66,7 @@
       : hour ? 'PM' : 'AM';
   }
   let activeValue = $derived(selectedValue ?? value);
-  let columns = $derived(timeColumns(config, format));
+  let columns = $derived(showColumns ? timeColumns(config, format) : []);
   let headerFormat = $derived(config.format || timeFormat({
     showHour: columns.some(column => column.unit === 'hour'),
     showMinute: columns.some(column => column.unit === 'minute'),
@@ -243,7 +244,9 @@
 <div bind:this={root} class={`${prefixCls}-time-panel`}>
   <div class={[`${prefixCls}-header`, classNames?.header]} style={styles?.header}>
     <div class={`${prefixCls}-header-view`}>{selectedValue
-        ? formatPicker(selectedValue, locale.locale, [headerFormat]) : '\u00a0'}</div></div>
+        ? showColumns ? formatPicker(selectedValue, locale.locale, [headerFormat])
+          : selectedValue.format()
+        : '\u00a0'}</div></div>
   <div class={[`${prefixCls}-content`, classNames?.content]} style={styles?.content}>
     {#each columns as column (column.unit)}
       <ul class={`${prefixCls}-time-panel-column`} aria-label={column.unit}
@@ -280,7 +283,7 @@
         {/each}
       </ul>
     {/each}
-    {#if config.use12Hours}
+    {#if showColumns && config.use12Hours}
       <ul class={`${prefixCls}-time-panel-column`} aria-label="meridiem"
         onscroll={event => rememberColumn(event.currentTarget)}>
         {#each [0, 12] as hour}

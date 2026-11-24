@@ -5,12 +5,36 @@ import { dayjsGenerateConfig as date } from './date-picker-dayjs.engine';
 import { normalizePickerFieldFormat } from './picker-mask.engine';
 import type {
   DatePickerFormat,
+  DatePickerCalendarMode,
   DatePickerMode,
   DatePickerPicker,
   DatePickerProps,
   DatePickerTimeConfig,
   DatePickerDisabledTime
 } from './date-picker.types';
+
+const yearAndMonth = ['decade', 'year', 'month'] as const;
+const panelDescent: Record<DatePickerPicker, readonly DatePickerMode[]> = {
+  date: [...yearAndMonth, 'date'],
+  week: [...yearAndMonth, 'week'],
+  month: yearAndMonth,
+  quarter: ['decade', 'year', 'quarter'],
+  year: yearAndMonth
+};
+
+/** Следующий уровень зависит от picker, даже когда видимую панель задаёт владелец. */
+export function nextPickerPanelMode(
+  picker: DatePickerPicker,
+  mode: DatePickerMode
+): DatePickerMode | undefined {
+  if (mode === picker) {
+    return undefined;
+  }
+  const levels = panelDescent[picker];
+  const index = levels.indexOf(mode);
+
+  return levels[index + 1];
+}
 
 // Определяет формат по явным настройкам, затем локали и типу выбора. Для даты со временем
 // учитывает видимые столбцы.
@@ -130,7 +154,7 @@ export function samePickerPanel(a: Dayjs, b: Dayjs, picker: DatePickerPicker): b
 }
 // Формирует ячейки календаря для уровня выбора. Для дней захватывает соседние месяцы, для годов и
 // десятилетий крайние ячейки выходят за период.
-export function calendarCells(panel: Dayjs, mode: DatePickerMode, locale: string): Dayjs[] {
+export function calendarCells(panel: Dayjs, mode: DatePickerCalendarMode, locale: string): Dayjs[] {
   if (mode === 'date' || mode === 'week') {
     const first = panel.date(1);
     const offset = (date.getWeekDay(first) - date.locale.getWeekFirstDay(locale) + 7) % 7;
@@ -153,7 +177,7 @@ export function calendarCells(panel: Dayjs, mode: DatePickerMode, locale: string
 export function pickerDateDisabled(
   value: Dayjs,
   props: Pick<DatePickerProps, 'minDate' | 'maxDate' | 'disabledDate'>,
-  mode: DatePickerMode = 'date',
+  mode: DatePickerCalendarMode = 'date',
   locale = 'en_US'
 ): boolean {
   if (mode === 'week') {
@@ -201,7 +225,7 @@ export function pickerDateDisabled(
 export function pickerPanelDateDisabled(
   value: Dayjs,
   props: Pick<DatePickerProps, 'minDate' | 'maxDate' | 'disabledDate'>,
-  mode: DatePickerMode,
+  mode: DatePickerCalendarMode,
   locale = 'en_US'
 ): boolean {
   if (mode === 'date' || mode === 'quarter' || mode === 'week') {

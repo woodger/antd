@@ -9,7 +9,8 @@
     samePickerWeek
   } from './date-picker.engine';
   import type {
-    DatePickerMode, DatePickerPicker, DatePickerProps, DatePickerCellRenderInfo, DatePickerPopupSlots
+    DatePickerCalendarMode, DatePickerPicker, DatePickerProps,
+    DatePickerCellRenderInfo, DatePickerPopupSlots
   } from './date-picker.types';
   import type { PickerLocale } from './picker-locale.types';
   let {
@@ -22,6 +23,7 @@
     multipleValues,
     hovered,
     mode,
+    controlledMode = false,
     classNames,
     styles,
     locale,
@@ -47,7 +49,8 @@
     selected: Dayjs | null;
     multipleValues?: readonly Dayjs[];
     hovered?: Dayjs | null;
-    mode: DatePickerMode;
+    mode: DatePickerCalendarMode;
+    controlledMode?: boolean;
     classNames?: DatePickerPopupSlots;
     styles?: DatePickerPopupSlots;
     direction: 'ltr' | 'rtl';
@@ -63,7 +66,7 @@
     now: Dayjs;
     onSelect: (value: Dayjs) => void;
     onNavigate: (value: Dayjs) => void;
-    onModeChange: (mode: DatePickerMode, viewDate?: Dayjs) => void;
+    onModeChange: (mode: DatePickerCalendarMode, viewDate?: Dayjs) => void;
   } = $props();
   let renderToday = $derived.by(() => {
     void prefixCls;
@@ -162,17 +165,18 @@
       : date.isAfter(range[0], unit) && date.isBefore(range[1], unit);
   }
   function unavailable(date: Dayjs) {
-    return picker === 'date' ? pickerDateDisabled(date, restrictions, mode, locale.locale)
+    return picker === 'date' && !controlledMode
+      ? pickerDateDisabled(date, restrictions, mode, locale.locale)
       : pickerPanelDateDisabled(date, restrictions, mode, locale.locale);
   }
   function headerDisabled(amount: number, large = false) {
-    if (weekPanel) {
+    if (weekPanel || controlledMode && datePanel) {
       const target = cellPanel.add(amount, large ? 'year' : 'month');
       return amount < 0
         ? !!restrictions.minDate && target.endOf('month').isBefore(restrictions.minDate, 'day')
         : !!restrictions.maxDate && target.startOf('month').isAfter(restrictions.maxDate, 'day');
     }
-    if (picker === 'date' || mode === 'date') {
+    if (picker === 'date' && !controlledMode || mode === 'date') {
       return false;
     }
     const target = cellPanel.add(
@@ -281,7 +285,7 @@
     {#if datePanel}<button type="button" tabindex="-1" class={[`${prefixCls}-header-prev-btn`, headerDisabled(-1) && `${prefixCls}-header-prev-btn-disabled`]} disabled={headerDisabled(-1)} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousMonth} onclick={() => move(-1)}><span class={`${prefixCls}-prev-icon`}></span></button>{/if}
     <div class={`${prefixCls}-header-view`}>
       {#if datePanel}<button type="button" tabindex="-1" class={`${prefixCls}-month-btn`} aria-label={locale.monthSelect} onclick={() => onModeChange('month', cellPanel)}>{locale.monthFormat
-          ? adapter.locale.format(locale.locale, panel, locale.monthFormat) : months[panel.month()]}</button>{/if}{#if picker !== 'date' && mode === 'decade'}{adapter.locale.format(locale.locale, panel.year(Math.floor(panel.year() / 100) * 100), locale.yearFormat ?? 'YYYY')}-{adapter.locale.format(locale.locale, panel.year(Math.floor(panel.year() / 100) * 100 + 99), locale.yearFormat ?? 'YYYY')}{:else}<button type="button" tabindex="-1" class={`${prefixCls}-${picker !== 'date' && mode === 'year' ? 'decade' : 'year'}-btn`} aria-label={mode === 'year' || mode === 'decade'
+          ? adapter.locale.format(locale.locale, panel, locale.monthFormat) : months[panel.month()]}</button>{/if}{#if (picker !== 'date' || controlledMode) && mode === 'decade'}{adapter.locale.format(locale.locale, panel.year(Math.floor(panel.year() / 100) * 100), locale.yearFormat ?? 'YYYY')}-{adapter.locale.format(locale.locale, panel.year(Math.floor(panel.year() / 100) * 100 + 99), locale.yearFormat ?? 'YYYY')}{:else}<button type="button" tabindex="-1" class={`${prefixCls}-${(picker !== 'date' || controlledMode) && mode === 'year' ? 'decade' : 'year'}-btn`} aria-label={mode === 'year' || mode === 'decade'
           ? locale.decadeSelect
           : locale.yearSelect} onclick={() => onModeChange(
               datePanel || mode === 'month' || mode === 'quarter' ? 'year' : 'decade', cellPanel

@@ -207,6 +207,7 @@ export type {
   RangePickerProps,
   RangePickerValue,
   RangePickerInputValue,
+  RangePickerMode,
   RangePickerPart,
   RangePickerInfo,
   RangePickerTimeConfig,

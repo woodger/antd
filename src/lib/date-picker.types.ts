@@ -10,7 +10,9 @@ export type DatePickerLocale = {
   lang: Partial<PickerLocale>;
   timePickerLocale?: { placeholder?: string; rangePlaceholder?: [string, string]; };
 };
-export type DatePickerMode = 'date' | 'week' | 'month' | 'year' | 'decade' | 'quarter';
+export type DatePickerCalendarMode = 'date' | 'week' | 'month' | 'year' | 'decade' | 'quarter';
+/** Видимая панель. Формат поля и окончательный выбор задаёт picker. */
+export type DatePickerMode = DatePickerCalendarMode | 'time';
 /** Терминальный выбор; decade остаётся только режимом навигации панели. */
 export type DatePickerPicker = 'date' | 'week' | 'month' | 'year' | 'quarter';
 export type DatePickerFormat = string | ((value: Dayjs) => string);
@@ -99,6 +101,8 @@ export interface DatePickerProps extends Omit<
   multiple?: false;
   /** Выбор даты, недели, месяца, года или квартала. @defaultValue 'date' */
   picker?: DatePickerPicker;
+  /** Управляемая панель. Компонент предлагает переход через onPanelChange. */
+  mode?: DatePickerMode;
   /** Управляемый Dayjs или null; компонент не вводит прикладную UTC-сериализацию. */
   value?: Dayjs | null;
   /** Начальная дата локального состояния при отсутствии value. */
@@ -118,7 +122,7 @@ export interface DatePickerProps extends Omit<
   open?: boolean;
   /** @defaultValue false */
   defaultOpen?: boolean;
-  disabledDate?: (date: Dayjs, info: { type: DatePickerMode; }) => boolean;
+  disabledDate?: (date: Dayjs, info: { type: DatePickerCalendarMode; }) => boolean;
   disabledTime?: (date: Dayjs) => DatePickerDisabledTime;
   minDate?: Dayjs;
   maxDate?: Dayjs;

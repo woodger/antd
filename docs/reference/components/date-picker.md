@@ -52,6 +52,19 @@ focus({preventScroll,cursor:'start'|'end'|'all'}) и blur().
 
 ## Формат и режимы календаря
 
+`picker` задаёт формат поля и тип конечного выбора. `mode` управляет открытой
+панелью. `onPanelChange(viewDate, nextMode)` сообщает предложенную дату и режим.
+Если владелец оставляет `mode` прежним, панель остаётся на том же уровне.
+Промежуточный выбор обновляет черновик. Для `multiple` он меняет только
+панель, а добавление дат начинается на уровне `picker`.
+
+`DatePickerMode` включает `date`, `week`, `month`, `quarter`, `year`,
+`decade` и `time`. Для колонок на панели `time` включите `showTime`.
+`pickerValue` отдельно управляет датой, которую показывает панель.
+При снятии `mode` панель возвращается к `picker`. В 6.6.8 первый выбор после
+снятия `mode` может перейти к десятилетиям. Исходная последовательность
+зафиксирована в [замерах React](../../../tests/browser/fixtures/ant-design-date-picker-panel-mode-browser.json.gz).
+
 Format принимает строку, массив допустимых форматов, display callback либо объект
 `{ format: 'YYYY-MM-DD', type: 'mask' }`; без type объект действует как строковый формат. Input
 с callback-only format автоматически readonly. По умолчанию дата YYYY-MM-DD,

@@ -4,7 +4,7 @@
   import { tick, untrack } from 'svelte';
   import type { Dayjs } from 'dayjs';
   import type {
-    DatePickerProps, DatePickerMode, DatePickerMultipleProps, DatePickerPreset
+    DatePickerCalendarMode, DatePickerProps, DatePickerMode, DatePickerMultipleProps, DatePickerPreset
   } from './date-picker.types';
   import { createMultiplePicker, pickerDateList } from './date-picker-multiple.model.svelte';
   import { dayjsGenerateConfig as adapter } from './date-picker-dayjs.engine';
@@ -14,6 +14,7 @@
     pickerFormats,
     pickerCalendarValue,
     samePickerPanelValue,
+    nextPickerPanelMode,
     formatPicker,
     parsePicker,
     pickerDateDisabled,
@@ -35,7 +36,9 @@
   import { useCompact } from './space-compact-context';
   import { compactClasses } from './space-compact.engine';
   import { connectPopup, getPopupActiveElement } from './popup.dom';
-  import { createPickerPopup, getPickerPopupPosition } from './picker-popup.model.svelte.js';
+  import {
+    createPickerPopup, focusPickerPanel, getPickerPopupPosition, preservePickerPanelFocus
+  } from './picker-popup.model.svelte.js';
   import NoCompactStyle from './NoCompactStyle.svelte';
   import Button from './Button.svelte';
   import DatePickerCalendar from './DatePickerCalendar.svelte';
@@ -67,6 +70,7 @@
     defaultValue,
     showTime: providedShowTime = false,
     picker = 'date',
+    mode: providedMode,
     showWeek,
     format,
     pickerValue,
@@ -187,13 +191,15 @@
     )
   );
   let panel = $derived(pickerValue ?? internalPanel);
-  let mode = $state<DatePickerMode>(untrack(() => picker));
-  let previousPickerMode = untrack(() => ({ picker, open: visible }));
-  $effect(() => {
-    const current = { picker, open: visible };
-    if (!time && current.open && (picker !== previousPickerMode.picker
-      || picker !== 'date' && !previousPickerMode.open)) {
-      mode = picker;
+  let localMode = $state<DatePickerMode>(untrack(() => picker));
+  let mode = $derived(providedMode ?? localMode);
+  let previousPickerMode = untrack(() => ({ picker, open: visible, controlled: false }));
+  $effect.pre(() => {
+    const current = { picker, open: visible, controlled: providedMode !== undefined };
+    if (!time && (current.controlled || previousPickerMode.controlled
+      || current.open && (picker !== previousPickerMode.picker
+        || picker !== 'date' && !previousPickerMode.open))) {
+      localMode = picker;
     }
     previousPickerMode = current;
   });
@@ -214,8 +220,12 @@
   let input = $state<HTMLInputElement>();
   let rootElement = $state<HTMLDivElement>();
   let popup = $state<HTMLDivElement>();
+  const panelFocus = preservePickerPanelFocus(() => ({
+    popup, mode, date: panel.format('YYYY-MM-DD'), controlled: providedMode !== undefined,
+    editor: input
+  }));
   let datePanelContainer = $state<HTMLDivElement>();
-  let retainedDatePreset = $state(false);
+  let retainedDateSelection = $state<'preset' | 'panel'>();
   let shown = $state(false);
   let actualPlacement = $derived(
     placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft')
@@ -354,7 +364,7 @@
     resetValue: resetTimeValue
   });
 
-  const datePresetInteraction = createRangeInteraction<Dayjs[]>({
+  const dateSelectionInteraction = createRangeInteraction<Dayjs[]>({
     fieldCount: () => 1,
     needConfirm: () => confirm,
     allowEmpty: () => [false],
@@ -368,7 +378,7 @@
     },
     flushSubmit: (_index, all) => {
       if (all) {
-        if (draft) submitDatePresetValue(draft);
+        if (draft) submitDateSelection(draft);
         requestOpen(false);
       }
     },
@@ -406,7 +416,7 @@
       dateTimeTarget = target;
       dateTimeScroll.clear();
     }
-    else if (visible && (!showTime || mode !== 'date')) {
+    else if (visible && mode !== 'time' && (!showTime || mode !== 'date')) {
       dateTimeScroll.clear();
     }
     else if (!visible) untrack(() => dateTimePanel?.captureScroll());
@@ -435,7 +445,7 @@
     text = formatted ?? formatPicker(mergedValue, actualLocale.locale, formats);
     draft = mergedValue;
     dirty = false;
-    retainedDatePreset = false;
+    retainedDateSelection = undefined;
     previousMergedValue = mergedValue;
     previousDateText = formatted;
   });
@@ -482,11 +492,11 @@
       }
       else {
         untrack(() => {
-          if (retainedDatePreset) {
-            datePresetInteraction.trigger(0, 'popupClose');
+          if (retainedDateSelection) {
+            dateSelectionInteraction.trigger(0, 'popupClose');
           }
           else {
-            datePresetInteraction.reset();
+            dateSelectionInteraction.reset();
           }
         });
       }
@@ -541,18 +551,23 @@
         popupPlacement = next === 'top' ? 'top' : 'bottom';
       },
       onDismiss: reason => {
-        const keepPreset = !time && retainedDatePreset;
+        const keepSelection = !time && retainedDateSelection;
+        const cancelPanel = reason === 'escape' && retainedDateSelection === 'panel';
         if (time) {
           if (reason === 'escape') timeInteraction.trigger(0, 'esc');
           requestOpen(false);
         }
-        else if (keepPreset) {
-          closeDatePreset();
+        else if (cancelPanel) {
+          dateSelectionInteraction.trigger(0, 'esc');
+          requestOpen(false);
+        }
+        else if (keepSelection) {
+          closeDateSelection();
         }
         else {
           finish(false);
         }
-        if (reason === 'escape' && !keepPreset)
+        if (reason === 'escape' && (!keepSelection || cancelPanel))
           input?.focus();
       }
     });
@@ -584,8 +599,8 @@
     }
     if (next) {
       now = adapter.getNow();
-      if (!time && !retainedDatePreset && !preserveDraft) draft = mergedValue;
-      mode = picker;
+      if (!time && !retainedDateSelection && !preserveDraft) draft = mergedValue;
+      localMode = picker;
       if (time) timeInteraction.trigger(0, 'field-switch');
     }
     if (open === undefined)
@@ -593,7 +608,7 @@
     onOpenChange?.(next);
   }
   function resetText() {
-    retainedDatePreset = false;
+    retainedDateSelection = undefined;
     text = formatPicker(mergedValue, actualLocale.locale, formats);
     dirty = false;
     draft = mergedValue;
@@ -606,7 +621,7 @@
       onCalendarChange?.(next, formatPicker(next, actualLocale.locale, formats), { source });
   }
   function commit(next: Dayjs | null) {
-    if (!time) datePresetInteraction.reset();
+    if (!time) dateSelectionInteraction.reset();
     if (!time && blocked || next && !valid(next)) {
       return false;
     }
@@ -648,12 +663,12 @@
       }
       return;
     }
-    if (confirmed && retainedDatePreset) {
+    if (confirmed && retainedDateSelection) {
       if (!valid(draft)) {
         return;
       }
       if (draft) onOk?.(draft);
-      datePresetInteraction.trigger(0, 'confirm');
+      dateSelectionInteraction.trigger(0, 'confirm');
       return;
     }
     if (confirmed && picker !== 'date') {
@@ -713,6 +728,11 @@
       onPickerValueChange?.(next, { source, mode: event?.mode ?? mode });
   }
   function navigate(next: Dayjs) {
+    if (providedMode !== undefined) {
+      setDatePanel(next, 'panel');
+      onPanelChange?.(next, mode);
+      return;
+    }
     if (picker !== 'date') {
       setDatePanel(next, 'panel');
       onPanelChange?.(next, mode);
@@ -726,9 +746,22 @@
     onPickerValueChange?.(target, { source: 'panel', mode });
     onPanelChange?.(target, mode);
   }
-  function changeMode(next: DatePickerMode, viewDate?: Dayjs) {
-    mode = next;
-    onPanelChange?.(picker === 'date' ? panel : viewDate ?? datePanelValue, mode);
+  function publishMode(next: DatePickerMode, date: Dayjs) {
+    if (providedMode === undefined) {
+      localMode = next;
+    }
+    onPanelChange?.(date, next);
+  }
+  function changeMode(next: DatePickerCalendarMode, viewDate?: Dayjs) {
+    if (providedMode !== undefined) {
+      const headerDate = mode === 'date' || mode === 'week' ? viewDate : undefined;
+      if (headerDate) {
+        setDatePanel(headerDate, 'panel');
+      }
+      publishMode(next, viewDate ?? datePanelValue);
+      return;
+    }
+    publishMode(next, picker === 'date' ? panel : viewDate ?? datePanelValue);
   }
   function selectPanelMode(
     next: DatePickerMode,
@@ -737,25 +770,36 @@
   ) {
     // PickerPanel.triggerModeChange(viewDate) повторно задаёт view до события mode.
     setDatePanel(date, 'panel', event);
-    changeMode(next, date);
+    publishMode(next, picker === 'date' && providedMode === undefined ? panel : date);
+  }
+  function selectIntermediateDate(
+    date: Dayjs,
+    event: { previous: Dayjs; mode: DatePickerMode },
+    source: 'date' | 'time' = 'date'
+  ) {
+    const nextMode = nextPickerPanelMode(picker, event.mode);
+    retainedDateSelection = providedMode !== undefined ? 'panel' : undefined;
+    draftSource = 'panel';
+    setDraft(date, source);
+    text = formatPicker(date, actualLocale.locale, formats);
+    dirty = true;
+
+    // Два setter'а React используют один снимок предыдущей панели.
+    setDatePanel(date, 'panel', event);
+    if (nextMode) {
+      selectPanelMode(nextMode, date, event);
+    }
   }
   function selectDate(next: Dayjs) {
     if (multipleOptions) {
       selectMultipleDate(next);
       return;
     }
-    const event = picker !== 'date' ? { previous: panel, mode } : undefined;
-    retainedDatePreset = false;
-    datePresetInteraction.trigger(0, 'panel-intermediate');
-    if (picker !== 'date' && mode !== picker) {
-      draftSource = 'panel';
-      setDraft(next, 'date');
-      text = formatPicker(next, actualLocale.locale, formats);
-      dirty = true;
-      // onPanelValueSelect и triggerModeChange используют один React batch snapshot.
-      setDatePanel(next, 'panel', event);
-      selectPanelMode(mode === 'decade' ? 'year' : picker === 'quarter' ? 'quarter'
-        : picker === 'week' && mode === 'month' ? 'week' : 'month', next, event!);
+    const event = { previous: panel, mode };
+    retainedDateSelection = undefined;
+    dateSelectionInteraction.trigger(0, 'panel-intermediate');
+    if (mode !== picker && (picker !== 'date' || providedMode !== undefined)) {
+      selectIntermediateDate(next, event);
       return;
     }
     if (picker === 'date' && mode !== 'date') {
@@ -783,16 +827,18 @@
       requestOpen(false);
       if (picker === 'date') input?.focus();
     }
-    setDatePanel(candidate, 'panel', event);
+    setDatePanel(candidate, 'panel', picker !== 'date' || providedMode !== undefined
+      ? event : undefined);
   }
   /** Переход между уровнями панели сохраняет текущий набор выбранных периодов. */
   function selectMultipleDate(value: Dayjs) {
     const event = { previous: panel, mode };
     if (mode !== picker) {
-      const nextMode = mode === 'decade' ? 'year' : picker === 'quarter' ? 'quarter'
-        : mode === 'year' ? 'month' : picker;
+      const nextMode = nextPickerPanelMode(picker, mode);
       setDatePanel(value, 'panel', event);
-      selectPanelMode(nextMode, value, event);
+      if (nextMode) {
+        selectPanelMode(nextMode, value, event);
+      }
       return;
     }
     if (valid(value)) {
@@ -808,9 +854,19 @@
       syncTimePickerValue(value, 'panel');
       return;
     }
-    retainedDatePreset = false;
-    datePresetInteraction.trigger(0, 'panel-intermediate');
+    retainedDateSelection = undefined;
+    dateSelectionInteraction.trigger(0, 'panel-intermediate');
     const next = validPickerTime(value, clock, disabledTime);
+    if (mode === 'time') {
+      const event = { previous: panel, mode };
+      if (multipleOptions) {
+        selectMultipleDate(next);
+      }
+      else {
+        selectIntermediateDate(next, event, 'time');
+      }
+      return;
+    }
     draftSource = 'panel';
     setDraft(next, 'time');
     setDatePanel(next, 'panel');
@@ -820,8 +876,8 @@
   function inputChange(next: string, masked = false) {
     if (!time && !masked) requestOpen(true);
     if (!time) {
-      retainedDatePreset = false;
-      datePresetInteraction.trigger(0, 'input');
+      retainedDateSelection = undefined;
+      dateSelectionInteraction.trigger(0, 'input');
     }
     text = next;
     dirty = true;
@@ -883,33 +939,33 @@
       return;
     }
     if (event.key === 'Escape') {
-      if (visible || retainedDatePreset) {
+      if (visible || retainedDateSelection) {
         event.preventDefault();
         event.stopPropagation();
-        datePresetInteraction.trigger(0, 'esc');
+        dateSelectionInteraction.trigger(0, 'esc');
         requestOpen(false);
       }
       else {
-        datePresetInteraction.reset();
+        dateSelectionInteraction.reset();
       }
     }
     else if (event.key === 'Tab') {
-      if (retainedDatePreset) {
-        datePresetInteraction.trigger(0, 'keyboard-submit-weak');
+      if (retainedDateSelection) {
+        dateSelectionInteraction.trigger(0, 'keyboard-submit-weak');
       }
-      else if (draft) datePresetInteraction.reset();
+      else if (draft) dateSelectionInteraction.reset();
     }
-    else if (event.key === 'Enter' && retainedDatePreset) {
+    else if (event.key === 'Enter' && retainedDateSelection) {
       event.preventDefault();
       const closed = !visible;
       const parsed = parsePicker(event.currentTarget.value, actualLocale.locale, formats);
-      if (maskKey ? maskKey.enterValid : parsed) datePresetInteraction.trigger(0, 'keyboard-submit');
+      if (maskKey ? maskKey.enterValid : parsed) dateSelectionInteraction.trigger(0, 'keyboard-submit');
       if (closed) requestOpen(true);
     }
     else if (event.key === 'Enter') {
       event.preventDefault();
       if (!visible) {
-        if (parsePicker(text, actualLocale.locale, formats)) datePresetInteraction.reset();
+        if (parsePicker(text, actualLocale.locale, formats)) dateSelectionInteraction.reset();
         requestOpen(true);
       }
       else {
@@ -930,19 +986,13 @@
         }
       }
     }
-    else if (event.key === 'ArrowDown' && picker === 'date' && !maskKey) {
+    else if (event.key === 'ArrowDown' && (picker === 'date' || providedMode !== undefined)
+      && !maskKey) {
       event.preventDefault();
       if (!visible)
         requestOpen(true);
       await tick();
-      (popup?.querySelector<HTMLButtonElement>(
-        `[data-picker-date="${panel.format('YYYY-MM-DD')}"]:not(:disabled)`
-      )
-        ?? popup?.querySelector<
-          HTMLButtonElement
-        >(
-          '[data-picker-date]:not(:disabled)'
-        ))?.focus();
+      focusPickerPanel(popup, mode, panel.format('YYYY-MM-DD'));
     }
   }
   function blurWithin(event?: FocusEvent) {
@@ -956,6 +1006,7 @@
     queueMicrotask(() => {
       const active = popup ? getPopupActiveElement(popup) : input?.ownerDocument.activeElement;
       if (!input?.isConnected
+        || panelFocus.moving && (!active || active === input.ownerDocument.body)
         || active
         && (rootElement?.contains(active)
           || popup?.contains(
@@ -966,8 +1017,8 @@
       focused = false;
       field?.onBlur();
       if (visible || dirty) {
-        if (!time && retainedDatePreset) {
-          closeDatePreset();
+        if (!time && retainedDateSelection) {
+          closeDateSelection();
         }
         else {
           finish(false);
@@ -1020,7 +1071,7 @@
     }
     handleDateHover(next);
   }
-  function closeDatePreset() {
+  function closeDateSelection() {
     requestOpen(false);
     if (!visible && datePanelContainer
       && getPopupActiveElement(datePanelContainer) === datePanelContainer) {
@@ -1039,14 +1090,14 @@
       multiplePicker.preset(next);
       return;
     }
-    retainedDatePreset = true;
+    retainedDateSelection = 'preset';
     dirty = false;
     draftSource = 'panel';
     text = formatPicker(next, actualLocale.locale, formats);
-    if (submitDatePresetValue(next)) closeDatePreset();
+    if (submitDateSelection(next)) closeDateSelection();
   }
-  function submitDatePresetValue(next: Dayjs) {
-    // Preset меняет calendar до validation; popupClose управляет сессией отдельно.
+  function submitDateSelection(next: Dayjs) {
+    // Выбор меняет calendar до validation; popupClose управляет сессией отдельно.
     if (!timePickerSameValue(next, draft)) setDraft(next, 'date');
     if (!next.isValid() || disabledDate?.(next, { type: picker })
       || pickerDateDisabled(next, { minDate, maxDate }, picker, actualLocale.locale)
@@ -1140,7 +1191,7 @@
         <div class={showTime && mode === 'date'
             ? `${prefix}-datetime-panel`
             : undefined}>
-          <DatePickerCalendar
+          {#if mode !== 'time'}<DatePickerCalendar
             classNames={dateSemantic?.classes.popup}
             styles={dateSemantic?.styles.popup}
             {picker}
@@ -1155,6 +1206,7 @@
             preserveDisabledHover
             direction={config.direction}
             {mode}
+            controlledMode={providedMode !== undefined}
             locale={panelLocale}
             {cellRender}
             {restrictions}
@@ -1162,8 +1214,8 @@
             onSelect={selectDate}
             onNavigate={navigate}
             onModeChange={changeMode}
-          />
-          {#if showTime && mode === 'date'}
+          />{/if}
+          {#if mode === 'time' || showTime && mode === 'date'}
             <DatePickerTimePanel
               classNames={dateSemantic?.classes.popup}
               styles={dateSemantic?.styles.popup}
@@ -1173,11 +1225,12 @@
               value={draft ?? datePanelValue}
               selectedValue={draft}
               config={clock}
+              showColumns={Boolean(showTime)}
               format={timeFormat}
               locale={panelLocale}
               {now}
               {cellRender}
-              {disabledTime}
+              disabledTime={showTime ? disabledTime : undefined}
               onSelect={selectTime}
               onHover={handleDateHover}
             />
@@ -1285,7 +1338,7 @@
 {/snippet}{#snippet clearButton()}
   {#if clearEnabled
       && (multipleOptions ? multiplePicker.values.length
-        : time ? hoverValue || draft : hoverValue || (retainedDatePreset ? draft : mergedValue))
+        : time ? hoverValue || draft : hoverValue || (retainedDateSelection ? draft : mergedValue))
       && !blocked}
     <button
       type="button"
@@ -1303,7 +1356,7 @@
         }
         if (!time && hoverValue) {
           hoverValue = null;
-          retainedDatePreset = false;
+          retainedDateSelection = undefined;
           commit(null);
           requestOpen(false);
           input?.focus();
@@ -1470,7 +1523,7 @@
           maskInput.focus();
           focused = true;
           if (time) timeInteraction.trigger(0, 'field-switch');
-          else datePresetInteraction.trigger(0, 'field-switch');
+          else dateSelectionInteraction.trigger(0, 'field-switch');
           onfocus?.(event);
         }} onblur={event => {
             maskInput.blur();

@@ -6889,12 +6889,35 @@
           "note": "Ant Design 6.6.8, rc-picker 1.12.2 a975a11f9a959a811b1ecd901e8ff8ae8f0e515b. Повторены 9 браузерных профилей, 8 сценариев взаимодействия и переключение режима, 18 SSR-профилей. Набор Dayjs сохраняет aliases и исходный порядок до изменения, order=false отключает сортировку. needConfirm отделяет черновик от принятого списка, OK сообщает onOk перед onChange, пресеты переключают период сразу. Числовой и responsive maxTagCount, tagRender, removeIcon, clear и пустые открытые/закрытые удаления. Существующий Svelte controlled контракт восстанавливает принятый набор при отклонении, а Raw React сохраняет предложенные теги. Native сохраняет имя и фокусируемость readonly editor, FormData, nativeElement и info {source:date}. Повторный label одной недели не оставляет лишний тег после удаления всех соответствующих дат. Disabled click не запрашивает открытие. Raw отклонения и неподдерживаемые source runtime showTime/multiple и множественный TimePicker зафиксированы отдельно. По публичному API multiple относится к date/week/month/year/quarter."
         },
         {
+          "id": "controlled-panel-mode",
+          "title": "Управляемая панель DatePicker и отдельные режимы границ RangePicker",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "src/lib/date-picker.types.ts",
+            "src/lib/range-picker.types.ts",
+            "docs/reference/components/date-picker.md",
+            "docs/reference/components/range-picker.md",
+            "tests/browser/fixtures/ant-design-date-picker-panel-mode-browser.json.gz",
+            "tests/browser/fixtures/ant-design-date-picker-panel-mode-supplement.json.gz",
+            "tests/browser/fixtures/ant-design-date-picker-panel-mode-bounds.json.gz",
+            "tests/browser/fixtures/ant-design-date-picker-panel-mode-range-release.json.gz",
+            "tests/browser/fixtures/ant-design-date-picker-panel-mode-ssr.json.gz",
+            "tests/browser/date-picker-panel-mode.spec.ts",
+            "tests/browser/date-picker-panel-mode-hydration.spec.ts",
+            "tests/package/date-picker-panel-mode.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8, rc-picker 1.12.2. 15 независимо повторённых браузерных профилей и 92 действия сверяют принятие и отклонение mode, заголовки, активную границу, независимый pickerValue, переходы дат/периодов, time/showTime, multiple и ограничения. onPickerValueChange сохраняет снимок прежних режимов, onPanelChange сообщает предложенный режим. Смена mode оставляет поле, текст, выбор и portal. При снятии mode Native использует picker. Raw Source переключает день на decade после снятия mode у одиночного поля и выбрасывает TypeError у диапазона. Native focus и source в onCalendarChange сохранены. Девять DOM-free SSR профилей сверяют поля, открытый Svelte shell сохраняет свою панель. Strict hydration проверяет оба редактора, каретку, FormData и очистку. Публичные React TimePicker/TimeRangePicker принудительно передают mode=undefined."
+        },
+        {
           "id": "extended-api",
-          "title": "GeneratePicker и оставшиеся события",
+          "title": "GeneratePicker, components и оставшиеся события",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "GeneratePicker factory предстоит перенести. Multiple, week/month/year/quarter, showWeek, RangePicker presets/previewValue и семантическое оформление перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно; остальные события семейства ещё не покрыты полностью. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
+          "note": "GeneratePicker factory, замены редактора/панелей через components и часть событий предстоит перенести. Multiple, mode, week/month/year/quarter, showWeek, RangePicker presets/previewValue и семантическое оформление перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
         },
         {
           "id": "global-parity",

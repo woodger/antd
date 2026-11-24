@@ -37,6 +37,14 @@ Date показывает два соседних календаря, showTime �
 отклонить предложение компонента. DefaultPickerValue/pickerValue принимают дату
 или пару дат панели; onPickerValueChange сообщает range/source/mode.
 
+`mode` принимает пару `[start, end]` и задаёт панели обеих границ.
+`onPanelChange(dates, modes)` предлагает режим активной границы и сохраняет режим
+второй. При переключении границы календарь использует её текущий режим.
+Смена пары не пересоздаёт поля и сохраняет введённое значение, выделение и фокус.
+При снятии `mode` обе панели возвращаются к `picker`. Исходный RangePicker
+в Ant Design React 6.6.8 выбрасывает TypeError и удаляет поле при снятии пары.
+[Замеры React](../../../tests/browser/fixtures/ant-design-date-picker-panel-mode-range-release.json.gz)
+
 Order=true сортирует отправляемую пару, если обе границы доступны. Order=false
 сохраняет позиции. Disabled принимает boolean либо [start,end], allowEmpty —
 boolean либо [start,end]. Очистка сохраняет заблокированную границу. DisabledDate

@@ -40,16 +40,16 @@ export function footerCompatibility(
 }
 
 export function rejectedHookContracts(
-  date: Snippet<[DatePickerMode]>,
+  calendar: Snippet<[Exclude<DatePickerMode, 'time'>]>,
   time: Snippet<['time']>,
   timeCell: NonNullable<TimeProps['cellRender']>
 ) {
-  // @ts-expect-error Date footer receives date-panel modes, not time.
+  // @ts-expect-error Footer DatePicker должен принимать также календарные режимы.
   const wrongDate: DateProps['renderExtraFooter'] = time;
   // @ts-expect-error Single TimePicker keeps its existing noarg footer.
-  const wrongSingleTime: TimeProps['renderExtraFooter'] = date;
+  const wrongSingleTime: TimeProps['renderExtraFooter'] = calendar;
   // @ts-expect-error TimeRange footer receives time, not date-panel modes.
-  const wrongTimeRange: TimeRangeProps['renderExtraFooter'] = date;
+  const wrongTimeRange: TimeRangeProps['renderExtraFooter'] = calendar;
   // @ts-expect-error A time-only renderer cannot accept a Dayjs date cell.
   const wrongCell: DateProps['cellRender'] = timeCell;
   return { wrongDate, wrongSingleTime, wrongTimeRange, wrongCell };

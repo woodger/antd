@@ -5,12 +5,15 @@ import type {
   DatePickerProps,
   DatePickerTimeConfig,
   DatePickerDisabledTime,
+  DatePickerCalendarMode,
   DatePickerMode,
   DatePickerSemantic
 } from './date-picker.types';
 export type RangePickerValue = [Dayjs | null, Dayjs | null];
 export type RangePickerInputValue = [Dayjs | null | undefined, Dayjs | null | undefined];
 export type RangePickerPart = 'start' | 'end';
+/** Видимые панели на начальной и конечной границах диапазона. */
+export type RangePickerMode = [start: DatePickerMode, end: DatePickerMode];
 export interface RangePickerInfo {
   range: RangePickerPart;
 }
@@ -35,6 +38,7 @@ export interface RangePickerProps extends Omit<
   DatePickerProps,
   'value'
   | 'multiple'
+  | 'mode'
   | 'defaultValue'
   | 'showTime'
   | 'disabled'
@@ -54,6 +58,8 @@ export interface RangePickerProps extends Omit<
   | 'styles'
 > {
   multiple?: HTMLInputAttributes['multiple'];
+  /** Управляемые панели границ. onPanelChange предлагает следующую пару. */
+  mode?: Readonly<RangePickerMode>;
   /** Управляемая пара Dayjs; формат и точность следуют календарю и showTime. */
   value?: RangePickerInputValue | null;
   /** Начальный локальный диапазон при отсутствии value. */
@@ -67,7 +73,7 @@ export interface RangePickerProps extends Omit<
   placeholder?: [string, string];
   /** Колонки времени для picker=date; week/month/year/quarter игнорируют настройку. @defaultValue false */
   showTime?: boolean | RangePickerTimeConfig;
-  disabledDate?: (date: Dayjs, info: { type: DatePickerMode; from?: Dayjs; }) => boolean;
+  disabledDate?: (date: Dayjs, info: { type: DatePickerCalendarMode; from?: Dayjs; }) => boolean;
   disabledTime?: (
     date: Dayjs,
     partial: RangePickerPart,
@@ -85,9 +91,9 @@ export interface RangePickerProps extends Omit<
   onOk?: (value: RangePickerValue) => void;
   onPickerValueChange?: (
     value: [Dayjs, Dayjs],
-    info: RangePickerInfo & { source: 'reset' | 'panel'; mode: [DatePickerMode, DatePickerMode]; }
+    info: RangePickerInfo & { source: 'reset' | 'panel'; mode: RangePickerMode; }
   ) => void;
-  onPanelChange?: (value: RangePickerValue, modes: [DatePickerMode, DatePickerMode]) => void;
+  onPanelChange?: (value: RangePickerValue, modes: RangePickerMode) => void;
   separator?: string | Snippet;
   classNames?: DatePickerSemantic<RangePickerProps>;
   styles?: DatePickerSemantic<RangePickerProps>;
