@@ -426,7 +426,8 @@ test(
     await control(page, 'Page size changer').check();
     await control(page, 'Transfer pagination').selectOption('simple');
     await source(page).getByRole('combobox', { name: 'Записей на странице', exact: true }).click();
-    await page.getByRole('option', { name: '50 / стр.', exact: true }).click();
+    // Виртуальный Select выводит роль option только для активной строки и её соседей.
+    await button(page, '50 / стр.').click();
 
     await expect(rows(page)).toHaveCount(31);
     await expect(next(page)).toBeDisabled();
@@ -491,7 +492,7 @@ test(
     await control(page, 'Page size changer').check();
     await control(page, 'Transfer pagination').selectOption('simple');
     await source(page).getByRole('combobox', { name: 'Записей на странице', exact: true }).click();
-    await page.getByRole('option', { name: '50 / стр.', exact: true }).click();
+    await button(page, '50 / стр.').click();
 
     await expect(rows(page)).toHaveCount(31);
     await search(page).fill('absent');
@@ -512,7 +513,7 @@ test(
     await control(page, 'Page size changer').check();
     await control(page, 'Transfer pagination').selectOption('simple');
     await source(page).getByRole('combobox', { name: 'Записей на странице', exact: true }).click();
-    await page.getByRole('option', { name: '50 / стр.', exact: true }).click();
+    await button(page, '50 / стр.').click();
 
     await expect(rows(page)).toHaveCount(3);
     await expect(source(page).getByRole('combobox', { name: 'Записей на странице', exact: true }))
