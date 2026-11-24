@@ -11,7 +11,7 @@
   import { getGridMediaQueries } from './grid.engine';
   import { getPaginationState } from './pagination.engine';
   import {
-    getTableColumnLayout, getTableColumnOrder, type TableHeading, type TableLeaf,
+    fillTableColumns, getTableColumnLayout, getTableColumnOrder, type TableHeading, type TableLeaf,
     type TableServiceColumn
   } from './table-columns.engine';
   import {
@@ -67,6 +67,7 @@
     total,
     dataSource,
     columns,
+    column,
     rowKey,
     rowClassName,
     onRow,
@@ -120,13 +121,16 @@
   const componentTheme = useComponentTheme('Table');
   const designTheme = useDesignTokenContext();
   const breakpoint = createBreakpoint();
-  const hasResponsiveColumns = $derived(columns.some(column => column.responsive !== undefined));
+  const resolvedColumns = $derived(fillTableColumns(columns, column));
+  const hasResponsiveColumns = $derived(
+    resolvedColumns.some(column => column.responsive !== undefined)
+  );
   let mediaQueries = $derived(hasResponsiveColumns && designTheme.enabled
     ? getGridMediaQueries(designTheme.state.token) : undefined);
   untrack(() => mediaQueries);
   let rootStyle = $derived([componentTheme.style, style].filter(Boolean).join(';') || undefined);
   const id = $props.id();
-  const dataColumns = $derived(getTableColumnOrder(columns));
+  const dataColumns = $derived(getTableColumnOrder(resolvedColumns));
   let localSorts = $state.raw(untrack(() => getInitialTableSorts(dataColumns, defaultSorter)));
   const controlledSorts = $derived(getControlledTableSorts(dataColumns, mode));
   const multipleSort = $derived(dataColumns.some(isTableMultipleSorter));
@@ -232,7 +236,7 @@
   let stickyBar = $state.raw<TableStickyBarLayout>();
   // План шапки и порядок листьев используют одни и те же видимые колонки.
   let columnLayout = $derived(getTableColumnLayout(
-    columns,
+    resolvedColumns,
     breakpoint.connected ? breakpoint.screens : {},
     {
       selection: rowSelection ? {
@@ -534,7 +538,7 @@
 
   function readTableData(sorts: readonly TableSortState[]) {
     return getTableData(
-      dataSource, columns, rowKey, sorts, filters ?? initialFilters, mode, childrenColumnName
+      dataSource, resolvedColumns, rowKey, sorts, filters ?? initialFilters, mode, childrenColumnName
     );
   }
 
@@ -551,7 +555,7 @@
       pagination: { current: paging.current, pageSize: paging.pageSize, total: paging.total },
       sorter: data.sorter ? { ...data.sorter } : null,
       ...(showSorters ? { sorters: data.sorters.map(state => ({ ...state })) } : {}),
-      ...(hasFilters ? { filters: getTableFilters(columns, data.filters, mode) } : {}),
+      ...(hasFilters ? { filters: getTableFilters(resolvedColumns, data.filters, mode) } : {}),
       currentDataSource: data.rows.map(row => row.record)
     });
   }
@@ -603,7 +607,7 @@
     }
 
     const next = { ...(filters ?? initialFilters), [columnKey]: [...values] };
-    const active = getTableFilters(columns, next, mode);
+    const active = getTableFilters(resolvedColumns, next, mode);
 
     if (areTableFiltersEqual(active, tableData.filters)) {
       return;

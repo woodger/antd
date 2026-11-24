@@ -113,6 +113,9 @@ export interface TableColumn<Row extends object> {
 export type TableColumnType<Row extends object> = TableColumn<Row>;
 export type TableColumnsType<Row extends object> = readonly TableColumn<Row>[];
 
+/** Общие свойства колонок. Дочернее дерево задаётся в columns. */
+export type TableColumnDefaults<Row extends object> = Partial<Omit<TableColumn<Row>, 'children'>>;
+
 /** У группы собственный заголовок, а поля данных находятся у её дочерних колонок. */
 export interface TableColumnGroupType<Row extends object>
   extends Omit<TableColumn<Row>, 'children' | 'dataIndex'> {
@@ -305,6 +308,8 @@ export interface TableProps<Row extends object> {
   total?: number;
   dataSource: readonly Row[];
   columns: TableColumnsType<Row>;
+  /** Заполняет отсутствующие или равные undefined свойства групп и листьев. */
+  column?: TableColumnDefaults<Row>;
   rowKey?: TableRowKey<Row>;
   /** Дополняет классы строки. index — позиция на странице, indent — глубина в дереве. */
   rowClassName?: string | ((record: Row, index: number, indent: number) => string);

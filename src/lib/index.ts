@@ -896,6 +896,7 @@ export type {
   TableColumnType,
   TableColumnGroupType,
   TableColumnsType,
+  TableColumnDefaults,
   TableKey,
   TableRowKey,
   TableSorter,

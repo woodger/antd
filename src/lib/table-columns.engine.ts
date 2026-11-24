@@ -22,6 +22,42 @@ function getServiceRole(column: object | undefined): TableServiceColumn | undefi
   return role === 'selection' || role === 'expand' ? role : undefined;
 }
 
+/** Копирует только заданные значения по правилам mergeProps в Source. */
+function getDefinedColumnProps(column: object) {
+  return Object.fromEntries(Object.entries(column).filter(([, value]) => value !== undefined));
+}
+
+/** Заполняет группы и листья одним набором props, сохраняя служебные маркеры. */
+export function fillTableColumns<Row extends object>(
+  columns: TableColumnsType<Row>, defaults: Partial<TableColumn<Row>> | undefined
+): TableColumnsType<Row> {
+  if (!defaults) {
+    return columns;
+  }
+
+  const { children: _children, ...defaultsWithoutChildren } = defaults;
+  const shared = getDefinedColumnProps(defaultsWithoutChildren);
+
+  /** Переопределяет общие props локальными и обходит собственное дерево группы. */
+  function fillColumn(column: TableColumn<Row>): TableColumn<Row> {
+    if (getServiceRole(column)) {
+      return column;
+    }
+
+    const own = getDefinedColumnProps(column);
+    // Object.entries теряет типы обязательных key и title исходной колонки.
+    const filled = { ...shared, ...own } as TableColumn<Row>;
+    const children = column.children;
+    if (Array.isArray(children)) {
+      filled.children = children.map(fillColumn);
+    }
+
+    return filled;
+  }
+
+  return columns.map(fillColumn);
+}
+
 interface TableColumnServices<Row extends object> {
   selection?: Pick<TableColumn<Row>, 'align' | 'fixed' | 'width' | 'onCell'>;
   expansion?: { automatic: boolean; fixed?: TableFixed; width?: number | string; };

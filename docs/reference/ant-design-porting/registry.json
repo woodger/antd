@@ -19918,6 +19918,24 @@
           "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона девяти профилей дают 33 состояния, renderToString даёт девять серверных структур. Дерево children строит шапку с colspan, rowspan и scope и задаёт порядок листьев. Служебные ячейки шапки занимают все уровни. Hidden убирает поддерево. Видимая группа без видимых детей остаётся колонкой. Скрытые определения сохраняют участие в sort/filter. Responsive применяется на верхнем уровне, пустой список скрывает колонку. Используются пороги Grid и подписка после SSR. Лист наследует fixed, явный false отключает наследование. Заголовок группы использует крайние листья для своей стороны и offset. Native сохраняет один table, измеряет листовые ширины и высоты уровней, а виртуализация сохраняет окно строк и scrollTo. Геометрия шапки и тела сравнивается с точностью до целого пикселя. Browser и строгая hydration проверяют фокус, выделение и identity редактора при обновлении видимости."
         },
         {
+          "id": "column-defaults",
+          "title": "Общие свойства колонок Table",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table-columns.engine.ts",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-column-defaults-reference.json",
+            "tests/browser/table-column-defaults.spec.ts",
+            "tests/browser/table-column-layout-hydration.spec.ts",
+            "tests/package/table-column-defaults.ssr.test.ts",
+            "tests/package/table-column-defaults.types.ts"
+          ],
+          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Повторные прогоны 11 профилей фиксируют 19 состояний Chromium и 11 SSR. Table.column заполняет группы и листья до раскладки, сортировки и фильтрации. Проверены undefined, false, 0, пустая строка и null, замена массива фильтров, вложенный путь и render, атрибуты ячеек, события сортировки и фильтра, controlled/defaultSortOrder, hidden, responsive и отдельные настройки служебных колонок. Svelte сохраняет обязательные ключи и заголовки колонок. Для нулевой ширины Svelte выводит col с 0px, Source пропускает конечный col. Строгая гидратация и обновление column сохраняют редактор, его черновик, фокус и выделение."
+        },
+        {
           "id": "column-layout",
           "title": "Вложенные значения, алгоритм ширин и обрезка колонок",
           "state": "supported",

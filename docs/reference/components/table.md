@@ -396,6 +396,30 @@ const columns: TableColumnsType<Person> = [
 группы сохраняет активный редактор и выделение текста. [Браузер](../../../tests/browser/table-columns.spec.ts)
 и [SSR](../../../tests/package/table-columns.ssr.test.ts).
 
+## Общие свойства колонок
+
+`column` задаёт общие свойства групп и листьев. Например, эти настройки
+применятся к каждой колонке, пока она не задаст собственное значение.
+
+```svelte
+<Table {columns} {dataSource} column={{ align: 'center', ellipsis: true, width: 160 }} />
+```
+
+Отсутствующее свойство и `undefined` наследуют общее значение. `false`, `0`,
+пустая строка и `null` сохраняются как явные переопределения. Массивы и объекты
+заменяются целиком. Каждая колонка в группе получает тот же общий набор.
+
+`TableColumnDefaults<Row>` содержит необязательные свойства отдельной колонки.
+Дерево групп и обязательные `key` и `title` задаются в `columns`.
+Служебные колонки используют свои параметры `rowSelection` и `expandable`.
+Общий `column` учитывается при выборе видимых колонок, чтении данных и обработке
+сортировки и фильтров. Обновление `column` само по себе не вызывает `onChange`.
+
+[Эталон](../../../tests/browser/fixtures/ant-design-table-column-defaults-reference.json)
+· [Chromium](../../../tests/browser/table-column-defaults.spec.ts)
+· [SSR](../../../tests/package/table-column-defaults.ssr.test.ts)
+· [Гидратация](../../../tests/browser/table-column-layout-hydration.spec.ts)
+
 ## Видимость колонок
 
 `TableColumn.hidden` по умолчанию false. True убирает col/header/body cells
