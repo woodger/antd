@@ -182,6 +182,8 @@ export interface TableLocale {
   filterApply?: string;
   filterReset?: string;
   filterEmptyText?: string;
+  filterCheckAll?: string;
+  filterSearchPlaceholder?: string;
   expandColumn?: string;
   expandRow?: string;
   collapseRow?: string;
@@ -310,6 +312,8 @@ export const ruRU = {
     filterApply: 'Применить',
     filterReset: 'Сбросить',
     filterEmptyText: 'Без фильтров',
+    filterCheckAll: 'Выбрать все элементы',
+    filterSearchPlaceholder: 'Поиск в фильтрах',
     expandColumn: 'Подробности',
     expandRow: 'Раскрыть строку',
     collapseRow: 'Свернуть строку'
@@ -403,6 +407,8 @@ export const enUS = {
     filterApply: 'Apply',
     filterReset: 'Reset',
     filterEmptyText: 'No filters',
+    filterCheckAll: 'Select all items',
+    filterSearchPlaceholder: 'Search in filters',
     expandColumn: 'Details',
     expandRow: 'Expand row',
     collapseRow: 'Collapse row'

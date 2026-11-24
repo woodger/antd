@@ -13,6 +13,7 @@ import type {
   TableSortOrder
 } from './table.types';
 import { getTableColumnOrder } from './table-columns.engine';
+import { walkTableFilterOptions } from './table-filter-options.engine';
 import { createTableSortPlan, tableSortDirections, type TableSortState } from './table-sorter.engine';
 import { filterTableTree, indexTableRows, sortTableTree, type TableRow } from './table-tree.engine';
 
@@ -138,7 +139,7 @@ export function normalizeTableFilter(
     return [];
   }
 
-  const available = new Set(options.map(option => option.value));
+  const available = new Set(Array.from(walkTableFilterOptions(options), option => option.value));
   const selected = [...new Set(values)].filter(value => available.has(value));
   return multiple === false ? selected.slice(0, 1) : selected;
 }

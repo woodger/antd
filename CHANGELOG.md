@@ -24,6 +24,8 @@
 
 ### Added
 
+- Table поддерживает вложенные варианты фильтра, `filterMode` и `filterSearch`.
+
 - Table поддерживает начальные и управляемые фильтры колонок, индикацию
   `filtered` и сброс черновика к `defaultFilteredValue`.
 

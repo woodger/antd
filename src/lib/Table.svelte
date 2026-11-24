@@ -988,6 +988,8 @@
             filtered={column.filtered}
             {resetValues}
             multiple={column.filterMultiple !== false}
+            filterMode={column.filterMode}
+            filterSearch={column.filterSearch}
             disabled={resolvedDisabled}
             onApply={values => changeFilter(column.key, values)}
           />

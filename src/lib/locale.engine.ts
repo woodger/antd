@@ -44,6 +44,8 @@ function tableLocale(locale: AntDesignLocale['Table'], emptyText?: string): Loca
     filterApply: source.filterConfirm ?? fallback.filterApply,
     filterReset: source.filterReset ?? fallback.filterReset,
     filterEmptyText: source.filterEmptyText ?? fallback.filterEmptyText,
+    filterCheckAll: source.filterCheckAll ?? fallback.filterCheckAll,
+    filterSearchPlaceholder: source.filterSearchPlaceholder ?? fallback.filterSearchPlaceholder,
     expandRow: source.expand ?? fallback.expandRow,
     collapseRow: source.collapse ?? fallback.collapseRow
   };

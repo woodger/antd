@@ -17,6 +17,7 @@ export interface MenuContext {
   readonly semantics: ReturnType<typeof menuSemantics>;
   readonly expandIcon: MenuProps['expandIcon'];
   readonly itemIcon: MenuProps['itemIcon'];
+  readonly itemRole?: MenuProps['_itemRole'];
   readonly tooltip: MenuProps['tooltip'];
   readonly tooltipCollapsed: boolean;
   readonly popupRender: MenuProps['popupRender'];

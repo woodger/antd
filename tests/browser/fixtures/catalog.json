@@ -1778,6 +1778,11 @@
     "root": "table-row-attributes-fixture"
   },
   {
+    "id": "table-filter-options",
+    "module": "./TableFilterOptionsFixture.svelte",
+    "root": "table-filter-options-fixture"
+  },
+  {
     "id": "table-filter-state",
     "module": "./TableFilterStateFixture.svelte",
     "root": "table-filter-state-fixture"

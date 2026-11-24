@@ -144,8 +144,9 @@
   }
 
   function keyboard(event: KeyboardEvent) {
+    const activatesChoice = Boolean(context.itemRole) && event.key === ' ';
     if (context.locked || blocked) {
-      if (event.key === 'Enter')
+      if (event.key === 'Enter' || activatesChoice)
         event.preventDefault();
       return;
     }
@@ -156,9 +157,9 @@
       }
       return;
     }
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || activatesChoice) {
       // Enter на настоящей ссылке создаёт native click, который запускает callback.
-      if (event.composedPath()[0] instanceof HTMLAnchorElement) {
+      if (!activatesChoice && event.composedPath()[0] instanceof HTMLAnchorElement) {
         return;
       }
       event.preventDefault();
@@ -216,7 +217,8 @@
     aria-disabled={blocked || undefined}
     {@attach registerRow} {@attach connectFocus}>{@render rowContents()}</a>{/if}
 </li>
-{:else}<li role="menuitem" {...rowAttributes} bind:this={element}
+{:else}<li role={context.itemRole ?? 'menuitem'}
+  aria-checked={context.itemRole ? selected : undefined} {...rowAttributes} bind:this={element}
   data-ant-menu-item data-ant-menu-item-disabled={blocked || undefined}
   aria-disabled={blocked || undefined}
   {@attach registerRow} {@attach connectFocus}>{@render rowContents()}</li>{/if}

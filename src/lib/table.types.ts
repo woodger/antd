@@ -17,11 +17,16 @@ export type TableAlign = 'start' | 'end' | 'left' | 'right' | 'center' | 'justif
 export type TableDataIndex<Row extends object> = keyof Row | readonly (string | number)[];
 export type TableFilterValue = TableKey | boolean;
 export type TableFilters = Record<string, TableFilterValue[]>;
+export type TableFilterMode = 'menu' | 'tree';
 
 export interface TableFilterOption {
   text: string;
   value: TableFilterValue;
+  children?: readonly TableFilterOption[];
 }
+
+/** Пользовательский поиск получает текущий запрос и исходный вариант. */
+export type TableFilterSearch = boolean | ((input: string, option: TableFilterOption) => boolean);
 
 export interface TableSorter {
   columnKey: string;
@@ -82,6 +87,10 @@ export interface TableColumn<Row extends object> {
   filters?: readonly TableFilterOption[];
   onFilter?: (value: TableFilterValue, record: Row) => boolean;
   filterMultiple?: boolean;
+  /** Выбирает представление фильтра. @defaultValue 'menu' */
+  filterMode?: TableFilterMode;
+  /** Показывает поле поиска. В дереве поиск выделяет совпадения. */
+  filterSearch?: TableFilterSearch;
   /** Добавляет индикацию активного фильтра независимо от выбранных значений. */
   filtered?: boolean;
   /** Управляет значениями колонки. Значения null и [] задают пустой фильтр. */

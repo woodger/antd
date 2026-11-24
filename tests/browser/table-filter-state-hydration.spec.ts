@@ -75,3 +75,42 @@ test('Table hydrates the focused filter trigger and keeps the owner in control',
   await expect(changes).toHaveText('[{"action":"filter","filters":{"score":["odd"]},"rows":[1]}]');
   expect(await trigger.evaluate((node, before) => node === before, original)).toBe(true);
 });
+
+test('Table hydrates its filter trigger and checks a branch by keyboard', async ({ page }) => {
+  const entry = new URL('./fixtures/table-filter-state.server.ts', import.meta.url);
+  const { renderTableFilterOptions } = await server.ssrLoadModule(fileURLToPath(entry));
+  const { body, head } = renderTableFilterOptions();
+  await page.goto('/select-components-hydration.html?filter-options');
+  await page.addScriptTag({ type: 'module', url: '/table-filter-state.client.ts' });
+  const root = page.locator('#root');
+  await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+  await root.evaluate((target, html) => {
+    document.head.insertAdjacentHTML('beforeend', html.head);
+    target.innerHTML = html.body;
+  }, { body, head });
+  const trigger = root.getByRole('button', { name: 'Filter: Category', exact: true });
+  const rows = root.locator('tbody tr[data-row-key] > td:last-child');
+  const original = await trigger.elementHandle();
+  await trigger.focus();
+
+  await root.dispatchEvent('hydrate-table-filter-state');
+  await expect(root).toHaveAttribute('data-hydrated', 'true');
+
+  await expect(trigger).toBeFocused();
+  await expect(rows).toHaveText(['Alpha']);
+  await trigger.press('Enter');
+  const tree = root.getByRole('tree', { name: 'Filter: Category' });
+  await expect(tree).toBeFocused();
+
+  await tree.press('Home');
+  await tree.press('Space');
+  await expect(tree.getByRole('checkbox', { name: 'Banana', exact: true })).toBeChecked();
+  await expect(rows).toHaveText(['Alpha']);
+  await root.getByRole('button', { name: 'Apply', exact: true }).press('Enter');
+
+  await expect(trigger).toBeFocused();
+  expect(await trigger.evaluate((node, before) => node === before, original)).toBe(true);
+  await expect(rows).toHaveText(['Alpha', 'Beta', 'Gamma']);
+  const changes = root.locator('[data-filter-options-changes]');
+  await expect(changes).toHaveText('[{"filters":{"category":["produce","apple","banana"]},"rows":[0,1,2]}]');
+});

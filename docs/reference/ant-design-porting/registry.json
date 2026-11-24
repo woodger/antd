@@ -19574,7 +19574,10 @@
       ],
       "dependencies": [
         "config-provider",
-        "tooltip"
+        "input",
+        "menu",
+        "tooltip",
+        "tree"
       ],
       "upstreamPackages": [
         {
@@ -19973,6 +19976,25 @@
             "tests/package/table-filter-state.types.ts"
           ],
           "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона девяти профилей дают 29 состояний и девять SSR-снимков. Проверены filteredValue с null, переходы к управлению и обратно, начальный defaultFilteredValue, forced filtered и восстановление черновика при reset с подтверждением. Скрытые и responsive колонки сохраняют участие в обработке данных. При управлении только колонками учитываются заданные владельцем критерии. При сочетании с filters или defaultFilters карты Table задают остальные колонки, bind:filters передаёт запрос. onChange получает нормализованные активные критерии и запрошенные строки, включая server mode с переданной страницей. Строгая гидратация сохраняет кнопку и фокус, клавиатура подтверждает один запрос, обновление владельца закрывает устаревший черновик."
+        },
+        {
+          "id": "filter-options",
+          "title": "Вложенные варианты, дерево и поиск в фильтрах колонок",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TableFilter.svelte",
+            "src/lib/TableFilterOptions.svelte",
+            "src/lib/table-filter-options.engine.ts",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-filter-options-reference.json",
+            "tests/browser/table-filter-options.spec.ts",
+            "tests/browser/table-filter-state-hydration.spec.ts",
+            "tests/package/table-filter-options.ssr.test.ts",
+            "tests/package/table-filter-options.types.ts"
+          ],
+          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона девяти профилей дают 56 состояний и девять SSR-снимков. Проверены вложенные меню, поиск и пустой результат, каскадный и одиночный выбор, общий флажок, сохранение черновика и раскрытия дерева. В React предикат дерева получает данные со строковым value. Svelte передаёт исходный вариант в обоих режимах и сохраняет типы значений в onChange. Меню и дерево работают с клавиатурой, состояние выбора доступно через ARIA. Строгая гидратация сохраняет триггер и фокус."
         },
         {
           "id": "sorter-state",

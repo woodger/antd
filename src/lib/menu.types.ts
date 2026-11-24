@@ -185,6 +185,8 @@ export interface MenuProps extends Omit<
   multiple?: boolean;
   /** @defaultValue true */
   selectable?: boolean;
+  /** @internal Семантика строк выбора внутри фильтра Table. */
+  _itemRole?: 'menuitemcheckbox' | 'menuitemradio';
   openKeys?: readonly string[];
   defaultOpenKeys?: readonly string[];
   onOpenChange?: (keys: string[]) => void;

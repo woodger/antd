@@ -916,6 +916,8 @@ export type {
   TableFilters,
   TableFilterOption,
   TableFilterValue,
+  TableFilterMode,
+  TableFilterSearch,
   TableMode,
   TableFixed,
   TableLayout,
