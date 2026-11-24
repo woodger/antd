@@ -53,6 +53,7 @@
   import Icon from './Icon.svelte';
   import Pagination from './Pagination.svelte';
   import TableFilter from './TableFilter.svelte';
+  import TableSortButton from './TableSortButton.svelte';
   import TableSelectionControl from './TableSelectionControl.svelte';
   import TableSelectionMenu from './TableSelectionMenu.svelte';
   import TableStickyScrollbar from './TableStickyScrollbar.svelte';
@@ -75,6 +76,7 @@
     sorter = $bindable(),
     defaultSorter,
     sortDirections = tableSortDirections,
+    showSorterTooltip = true,
     filters = $bindable(),
     defaultFilters = {},
     current = $bindable(),
@@ -826,30 +828,23 @@
   }
   [data-ant-table-part="wrapper"] [data-ant-table-part="body"] > tr > :where(td).table-fixed-cell[data-ant-table-sorted] { background: linear-gradient(var(--ant-table-body-sort-bg), var(--ant-table-body-sort-bg)) var(--ant-color-bg-container); }
   [data-ant-table-part="wrapper"] [data-ant-table-part="body"] > tr[data-ant-table-selected] > .table-fixed-cell { background: linear-gradient(var(--ant-table-row-selected-bg), var(--ant-table-row-selected-bg)) var(--ant-color-bg-container); }
-  .table-source-theme [data-ant-table-part="head"] th[data-ant-table-sortable]:hover [data-ant-table-part="sorter"] { color: var(--ant-table-header-icon-hover-color); }
+  .table-source-theme [data-ant-table-part="head"] th[data-ant-table-sortable]:hover :global([data-ant-table-part="sorter"]) { color: var(--ant-table-header-icon-hover-color); }
   [data-ant-table-part="wrapper"].table-source-theme [data-ant-table-part="head"] th[data-ant-table-sortable].table-fixed-cell:hover { background: linear-gradient(var(--ant-table-fixed-header-sort-active-bg), var(--ant-table-fixed-header-sort-active-bg)) var(--ant-color-bg-container); }
   .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"]:is(:hover, [data-ant-table-span-hovered]) > td { background: var(--ant-table-row-hover-bg); }
   .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"][data-ant-table-selected]:is(:hover, [data-ant-table-span-hovered]) > :is(th, td) { background: var(--ant-table-row-selected-hover-bg); }
   .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"]:is(:hover, [data-ant-table-span-hovered]) > td.table-fixed-cell { background: linear-gradient(var(--ant-table-row-hover-bg), var(--ant-table-row-hover-bg)) var(--ant-color-bg-container); }
   .table-source-theme:not(.table-hover-disabled) [data-ant-table-part="body"] > tr[data-ant-table-part="row"][data-ant-table-selected]:is(:hover, [data-ant-table-span-hovered]) > :is(th, td).table-fixed-cell { background: linear-gradient(var(--ant-table-row-selected-hover-bg), var(--ant-table-row-selected-hover-bg)) var(--ant-color-bg-container); }
-  [data-ant-table-part="content"]:focus-visible, .sort-button:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 2px; }
+  [data-ant-table-part="content"]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 2px; }
   caption { padding: var(--ant-padding-sm); color: var(--ant-color-text-heading); text-align: start; font-weight: 600; }
-  .sort-button { width: 100%; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: inherit; cursor: pointer; }
-  .sort-button:disabled { cursor: not-allowed; }
-  .sort-button::after { content: none; }
   .column-heading { display: flex; align-items: center; gap: var(--ant-margin-xxs); }
-  .column-heading > :first-child { flex: 1; }
-  .column-heading-ellipsis > :first-child { min-width: 0; }
+  .column-heading > :global(:first-child) { flex: 1; }
+  .column-heading-ellipsis > :global(:first-child) { min-width: 0; }
   .table-ellipsis-content {
     display: block;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-  .sort-arrow { display: block; width: 0; height: 0; border-inline: 4px solid transparent; }
-  .sort-arrow.active { color: var(--ant-color-primary); }
-  .sort-up { margin-bottom: 2px; border-bottom: 5px solid currentColor; }
-  .sort-down { border-top: 5px solid currentColor; }
   .loading-state { display: flex; align-items: center; gap: var(--ant-margin-xs); padding: var(--ant-padding-sm); color: var(--ant-color-primary); }
   [data-ant-table-part="wrapper"] [data-ant-table-part="expand-icon"]:disabled { color: var(--ant-color-text-disabled); border-color: var(--ant-table-border-color); cursor: not-allowed; }
   [data-ant-table-part="wrapper"] [data-ant-table-part="table"] [data-ant-table-part="body"] > tr[data-ant-table-part="expanded-row"] > td[data-ant-table-part="cell"] { padding: 0; }
@@ -897,19 +892,6 @@
   {/if}
 {/snippet}
 
-{#snippet sortArrow(direction: 'up' | 'down', active: boolean)}
-  {#if designTheme.enabled}<span class={[
-      `anticon anticon-caret-${direction} ${prefix}-column-sorter-${direction}`,
-      active && 'active'
-    ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false">
-      {#if direction === 'up'}
-        <path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z" />
-      {:else}
-        <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" />
-      {/if}
-    </svg></span>{:else}<span class={['sort-arrow', `sort-${direction}`, active && 'active']}></span>{/if}
-{/snippet}
-
 {#snippet columnHeading(cell: TableHeading<Row>)}
   {@const column = cell.column}
   {@const fixed = fixedSpan(cell.start, cell.colSpan)}
@@ -919,6 +901,9 @@
   {@const order = currentSort?.order}
   {@const directions = column.sortDirections ?? sortDirections}
   {@const nextSort = sortable ? getNextTableSorter(column.key, currentSort ?? null, directions) : null}
+  {@const tooltip = column.showSorterTooltip === undefined
+    ? showSorterTooltip : column.showSorterTooltip}
+  {@const filterOptions = mode === 'server' || column.onFilter ? column.filters : undefined}
   {#if props.colSpan !== 0 && props.rowSpan !== 0}
     <th
       {...props.attributes}
@@ -944,24 +929,21 @@
     >
       <div class="column-heading" class:column-heading-ellipsis={Boolean(column.ellipsis)}>
         {#if sortable}
-          <button type="button" class={`sort-button ${prefix}-column-sorters`}
-            disabled={resolvedDisabled} title={sortDescription(nextSort?.order)}
-            onclick={() => changeSort(column, nextSort)}>
-            <span class={`${prefix}-column-title`}>{column.title}</span>
-            <span data-ant-table-part="sorter" class={`${prefix}-column-sorter`} aria-hidden="true">
-              {#if column.sortIcon}
-                {@render column.sortIcon({ sortOrder: order ?? null })}
-              {:else}
-                <span class={`${prefix}-column-sorter-inner`}>
-                  {#if directions.includes('ascend')}{@render sortArrow('up', order === 'ascend')}{/if}
-                  {#if directions.includes('descend')}{@render sortArrow('down', order === 'descend')}{/if}
-                </span>
-              {/if}
-            </span>
-          </button>
+          <TableSortButton
+            {prefix}
+            label={column.title}
+            {order}
+            {directions}
+            sortIcon={column.sortIcon}
+            {tooltip}
+            wholeCell={!filterOptions}
+            description={sortDescription(nextSort?.order)}
+            disabled={resolvedDisabled}
+            onSort={() => changeSort(column, nextSort)}
+          />
         {:else}<span class={column.ellipsis ? `${prefix}-column-title` : undefined}>{column.title}</span>{/if}
-        {#if column.filters && (mode === 'server' || column.onFilter)}
-          <TableFilter prefixCls={prefix} {dropdownPrefix} title={column.title} options={column.filters} value={Object.hasOwn(tableData.filters, column.key)
+        {#if filterOptions}
+          <TableFilter prefixCls={prefix} {dropdownPrefix} title={column.title} options={filterOptions} value={Object.hasOwn(tableData.filters, column.key)
               ? tableData.filters[column.key]
               : []} multiple={column.filterMultiple !== false} disabled={resolvedDisabled} onApply={(values) => changeFilter(column.key, values)} />
         {/if}

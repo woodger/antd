@@ -4,6 +4,7 @@ import type { PaginationProps } from './Pagination.svelte';
 import type { CheckboxChangeEvent, CheckboxProps, CheckboxValue } from './checkbox.types';
 import type { GridBreakpoint } from './grid.types';
 import type { RadioChangeEvent } from './radio.types';
+import type { TooltipProps } from './tooltip.types';
 import type { ComponentSize } from './types';
 
 export type TableKey = string | number;
@@ -38,6 +39,15 @@ export interface TableColumnSorter<Row extends object> {
   multiple?: number;
 }
 
+export type TableSorterTooltipTarget = 'full-header' | 'sorter-icon';
+
+/** Встроенный Tooltip использует кнопку сортировки или её декоративную иконку. */
+export interface TableSorterTooltipProps
+  extends Omit<TooltipProps, 'children' | 'overlay' | 'class' | 'style'> {
+  /** @defaultValue 'full-header' */
+  target?: TableSorterTooltipTarget;
+}
+
 /** Атрибуты и Svelte events отдельной ячейки. Нулевой span пропускает её. */
 export interface TableCellProps extends Omit<HTMLTdAttributes, 'children' | 'colspan' | 'rowspan'> {
   colSpan?: number;
@@ -67,6 +77,8 @@ export interface TableColumn<Row extends object> {
   sortDirections?: readonly (TableSortOrder | null)[];
   /** Заменяет декоративные стрелки. Snippet получает отображаемый порядок. */
   sortIcon?: Snippet<[info: { sortOrder: TableSortOrder | null; }]>;
+  /** Перекрывает настройку таблицы для этой колонки, включая false. */
+  showSorterTooltip?: boolean | TableSorterTooltipProps;
   filters?: readonly TableFilterOption[];
   onFilter?: (value: TableFilterValue, record: Row) => boolean;
   filterMultiple?: boolean;
@@ -310,6 +322,8 @@ export interface TableProps<Row extends object> {
   defaultSorter?: TableSorter | null;
   /** Цикл направления для колонок без собственного списка. */
   sortDirections?: readonly (TableSortOrder | null)[];
+  /** Штатная подсказка следующего направления для сортируемых колонок. */
+  showSorterTooltip?: boolean | TableSorterTooltipProps;
   /** Поддерживает bind:filters. */
   filters?: TableFilters;
   /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */

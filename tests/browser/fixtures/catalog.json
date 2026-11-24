@@ -1788,6 +1788,11 @@
     "root": "table-sorter-fixture"
   },
   {
+    "id": "table-sorter-tooltip",
+    "module": "./TableSorterTooltipFixture.svelte",
+    "root": "table-sorter-tooltip-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"

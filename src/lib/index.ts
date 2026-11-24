@@ -902,6 +902,8 @@ export type {
   TableSortCompare,
   TableSortOrder,
   TableColumnSorter,
+  TableSorterTooltipProps,
+  TableSorterTooltipTarget,
   TableRowSelection,
   TableRowSelectionType,
   TableRowSelectMethod,

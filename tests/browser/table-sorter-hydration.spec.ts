@@ -69,3 +69,35 @@ test('Table hydrates the focused sort button and sends one controlled keyboard r
     await expect(button).toBeFocused();
     expect(await button.evaluate((node, before) => node === before, original)).toBe(true);
   });
+
+test('Table hydrates the controlled sorter tooltip without moving button focus', async ({ page }) => {
+  const entry = new URL('./fixtures/table-sorter.server.ts', import.meta.url);
+  const { renderTableSorterTooltip } = await server.ssrLoadModule(fileURLToPath(entry));
+  const { body, head } = renderTableSorterTooltip();
+  await page.goto('/select-components-hydration.html?sorter-tooltip');
+  await page.addScriptTag({ type: 'module', url: '/table-sorter.client.ts' });
+  const root = page.locator('#root');
+  await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+  await root.evaluate((node, html) => {
+    document.head.insertAdjacentHTML('beforeend', html.head);
+    node.innerHTML = html.body;
+  }, { body, head });
+  const button = root.getByRole('button', { name: 'Score', exact: true });
+  const original = await button.elementHandle();
+  await button.focus();
+  await expect(root.locator('[role="tooltip"]')).toBeHidden();
+
+  await root.dispatchEvent('hydrate-table-sorter');
+
+  await expect(root).toHaveAttribute('data-hydrated', 'true');
+  const tooltip = page.getByRole('tooltip');
+  await expect(tooltip).toHaveText('Ascending');
+  await expect(button).toBeFocused();
+  expect(await button.evaluate((node, before) => node === before, original)).toBe(true);
+
+  await button.press('Enter');
+
+  await expect(tooltip).toHaveText('Descending');
+  await expect(button).toBeFocused();
+  await expect(root.locator('th')).toHaveAttribute('aria-sort', 'ascending');
+});

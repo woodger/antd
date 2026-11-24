@@ -19573,7 +19573,8 @@
         }
       ],
       "dependencies": [
-        "config-provider"
+        "config-provider",
+        "tooltip"
       ],
       "upstreamPackages": [
         {
@@ -19954,7 +19955,26 @@
             "tests/package/table-sorter.ssr.test.ts",
             "tests/package/table-sorter.types.ts"
           ],
-          "note": "Ant Design 6.6.8, rc-table 1.11.1. Два одинаковых UMD-прогона 15 профилей дают 63 состояния и 15 серверных снимков. Проверены sortDirections таблицы и колонки, повторы и пустой список, defaultSortOrder, sortOrder с null и снятием управления, приоритеты multiple включая ноль, порядок критериев события, дерево, responsive, удалённая сортировка и sortIcon. Компаратор получает направление. Событие передаёт запрошенные строки при управляемом sortOrder. Native сохраняет скалярный bind:sorter, кнопку с Enter и Space и нативный title для следующего направления. Полный список доступен через onChange.sorters. Строгая гидратация сохраняет DOM и фокус."
+          "note": "Ant Design 6.6.8, rc-table 1.11.1. Два одинаковых UMD-прогона 15 профилей дают 63 состояния и 15 серверных снимков. Проверены sortDirections таблицы и колонки, повторы и пустой список, defaultSortOrder, sortOrder с null и снятием управления, приоритеты multiple включая ноль, порядок критериев события, дерево, responsive, удалённая сортировка и sortIcon. Компаратор получает направление. Событие передаёт запрошенные строки при управляемом sortOrder. Native сохраняет скалярный bind:sorter и кнопку с Enter и Space. Полный список доступен через onChange.sorters. Строгая гидратация сохраняет DOM и фокус."
+        },
+        {
+          "id": "sorter-tooltip",
+          "title": "Области и параметры подсказки сортировки",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/TableSortButton.svelte",
+            "src/lib/TableSorterTooltip.svelte",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-sorter-tooltip-reference.json",
+            "tests/browser/table-sorter-tooltip.spec.ts",
+            "tests/browser/table-sorter-hydration.spec.ts",
+            "tests/package/table-sorter-tooltip.ssr.test.ts",
+            "tests/package/table-sorter-tooltip.types.ts"
+          ],
+          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона 14 профилей дают 50 состояний. showSorterTooltip колонки перекрывает Table. Проверены штатный текст и цикл направления, full-header и sorter-icon, отступ ячейки и отдельная зона фильтра, title со строкой и 0, placement и container, semantic CSS, управляемый open и порядок Tooltip → sort для click. В Svelte триггер focus использует кнопку сортировки. В React фокус получает th вне области Tooltip. SSR и строгая гидратация сохраняют нативную кнопку. При закрытой подсказке её доступное описание сообщает следующее направление. Открытая подсказка заголовка описывает кнопку своим содержимым. Смена цели и loading закрывают подсказку и отменяют ожидающее открытие."
         },
         {
           "id": "cell-spans",

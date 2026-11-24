@@ -5,6 +5,7 @@
     element: () => HTMLElement | undefined;
     enabled: () => boolean;
     connectClick: (handler: (event: MouseEvent) => void) => () => void;
+    connectDescription?: (id: string) => () => void;
   }
 
   const anchorKey = Symbol('tooltip-anchor');
@@ -94,6 +95,8 @@
   let content = $derived(getTooltipContent(title, overlay));
   let available = $derived(hasTooltipContent(content));
   let visible = $derived(!props.disabled && available && rawOpen);
+  const describe = $derived(anchor && (!external || visible)
+    ? external?.connectDescription ?? anchor : undefined);
   let popupVisited = $state(false);
   const renderPopup = $derived(!external || props.forceRender || visible || popupVisited);
 
@@ -362,7 +365,7 @@
   .ant-tooltip-trigger { display: inline-block; max-width: 100%; vertical-align: middle; }
 </style>
 
-{#if !external}<span bind:this={wrapper} role="presentation" class={['ant-tooltip-trigger', className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} onfocusin={handleFocus} onfocusout={handleBlur} onclick={handleClick} oncontextmenu={handleContextMenu} ontouchstart={handleTouchStart}>{@render children()}</span>{/if}{#if renderPopup}<NoCompactStyle><TooltipPopup bind:this={popupController} title={content} color={props.color} prefixCls={props.prefixCls} open={visible} {anchor} describe={!external || visible ? anchor : undefined} trigger={host} {placement} {arrow} {autoAdjustOverflow} {getPopupContainer}
+{#if !external}<span bind:this={wrapper} role="presentation" class={['ant-tooltip-trigger', className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} onfocusin={handleFocus} onfocusout={handleBlur} onclick={handleClick} oncontextmenu={handleContextMenu} ontouchstart={handleTouchStart}>{@render children()}</span>{/if}{#if renderPopup}<NoCompactStyle><TooltipPopup bind:this={popupController} title={content} color={props.color} prefixCls={props.prefixCls} open={visible} {anchor} {describe} trigger={host} {placement} {arrow} {autoAdjustOverflow} {getPopupContainer}
   sourceAnchor={Boolean(external)}
   outsideEvents={actionOverrides ? 'mouse' : undefined}
   semanticProps={{ ...props, open: providedOpen, trigger: resolvedTrigger,

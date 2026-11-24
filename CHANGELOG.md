@@ -24,6 +24,9 @@
 
 ### Added
 
+- Table показывает подсказку сортировки и принимает `showSorterTooltip`
+  на таблице и в колонке.
+
 - Table поддерживает `sortDirections`, `sortOrder`, `defaultSortOrder` и
   `sortIcon` колонок, а также сортировку по нескольким приоритетам.
 

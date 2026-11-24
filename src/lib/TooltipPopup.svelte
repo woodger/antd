@@ -78,7 +78,7 @@
     forceRender?: boolean;
     zIndex?: number;
     anchor?: Element;
-    describe?: Element;
+    describe?: Element | ((id: string) => () => void);
     trigger?: Element;
     placement?: TooltipPlacement;
     align?: TooltipProps['align'];
@@ -257,7 +257,7 @@
 
   $effect(() => {
     if (describe && available && !resolvedDisabled) {
-      return connectTooltipDescription(describe, id);
+      return typeof describe === 'function' ? describe(id) : connectTooltipDescription(describe, id);
     }
   });
 
