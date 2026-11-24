@@ -1,7 +1,9 @@
 import type { Snippet } from 'svelte';
-import type { HTMLAttributes, HTMLTdAttributes } from 'svelte/elements';
+import type { HTMLAttributes, HTMLInputAttributes, HTMLTdAttributes } from 'svelte/elements';
 import type { PaginationProps } from './Pagination.svelte';
+import type { CheckboxChangeEvent, CheckboxProps, CheckboxValue } from './checkbox.types';
 import type { GridBreakpoint } from './grid.types';
+import type { RadioChangeEvent } from './radio.types';
 import type { ComponentSize } from './types';
 
 export type TableKey = string | number;
@@ -72,9 +74,53 @@ export interface TableColumnGroupType<Row extends object>
   children: TableColumnsType<Row>;
 }
 
+export type TableRowSelectMethod = 'all' | 'none' | 'invert' | 'single' | 'multiple';
+export type TableRowSelectionType = 'checkbox' | 'radio';
+export type TableSelectionPreset = 'SELECT_ALL' | 'SELECT_INVERT' | 'SELECT_NONE';
+
+/** Команда меню получает доступные ключи текущей страницы. */
+export interface TableSelectionItem {
+  key: string;
+  text: string | Snippet;
+  onSelect?: (changeableRowKeys: TableKey[]) => void;
+}
+
+/** Атрибуты контрола. Проверенное и начальное состояние задаёт Table. */
+export interface TableSelectionControlProps extends Omit<
+  HTMLInputAttributes,
+  'type' | 'value' | 'checked' | 'defaultChecked' | 'children' | 'indeterminate' | 'size' | 'class'
+> {
+  class?: string;
+  value?: CheckboxValue;
+  indeterminate?: boolean;
+  prefixCls?: string;
+  autoFocus?: boolean;
+  tabIndex?: number;
+  onClick?: CheckboxProps['onClick'];
+  onChange?: (event: CheckboxChangeEvent | RadioChangeEvent) => void;
+}
+
 export interface TableRowSelection<Row extends object> {
-  fixed?: boolean;
-  getCheckboxProps?: (record: Row) => { disabled?: boolean; 'aria-label'?: string; };
+  /** Режим одного или нескольких выбранных ключей. @defaultValue 'checkbox' */
+  type?: TableRowSelectionType;
+  /** Управляемые ключи внутри rowSelection. Новые значения принимает владелец. */
+  selectedRowKeys?: readonly TableKey[];
+  /** Начальная отметка до первого взаимодействия. */
+  defaultSelectedRowKeys?: readonly TableKey[];
+  /** Сохраняет выбранные записи после их удаления из dataSource. */
+  preserveSelectedRowKeys?: boolean;
+  onChange?: (keys: TableKey[], rows: Row[], info: { type: TableRowSelectMethod; }) => void;
+  /** Вызывается до onChange при взаимодействии с одной строкой. */
+  onSelect?: (row: Row, checked: boolean, rows: Row[], nativeEvent: Event) => void;
+  /** True включает все штатные команды. Порядок массива задаёт порядок пунктов. */
+  selections?: boolean | readonly (TableSelectionItem | TableSelectionPreset)[];
+  /** Скрывает checkbox и меню в заголовке колонки. */
+  hideSelectAll?: boolean;
+  getTitleCheckboxProps?: () => TableSelectionControlProps;
+  fixed?: TableFixed;
+  columnWidth?: string | number;
+  align?: TableColumn<Row>['align'];
+  getCheckboxProps?: (record: Row) => TableSelectionControlProps;
   /** False связывает отметки родителей и потомков. @defaultValue true */
   checkStrictly?: boolean;
 }

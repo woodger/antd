@@ -19692,6 +19692,26 @@
           "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых прогона девяти UMD профилей, 57 состояний. Раскрытие определяется children/childrenColumnName, контролируется expandedRowKeys, включает defaultExpandAllRows начальной страницы и сохраняет ключи скрытых веток. Индексы ячеек относятся к соседним записям, rowClassName получает позицию видимой строки и глубину. Пагинация считает корни. Сортировка и рекурсивная фильтрация меняют представление веток, а выбор возвращает исходные записи. Header учитывает свёрнутых потомков, checkStrictly управляет связью отметок с учётом disabled. Проверены indentSize, RTL/custom prefix, переключение кликом и скрытие иконок. Native пропускает клик по листу и по редакторам ячеек; кнопки ссылаются на дочерние строки."
         },
         {
+          "id": "row-selection",
+          "title": "Выбор строк, Shift-диапазоны и сохранение записей",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/TableSelectionControl.svelte",
+            "src/lib/TableSelectionMenu.svelte",
+            "src/lib/table-selection.model.svelte.ts",
+            "src/lib/table.types.ts",
+            "tests/browser/fixtures/ant-design-table-selection-reference.json",
+            "tests/browser/table-selection.spec.ts",
+            "tests/browser/table-selection-hydration.spec.ts",
+            "tests/package/table-selection.ssr.test.ts",
+            "tests/package/table-selection.types.ts",
+            "docs/reference/components/table.md"
+          ],
+          "note": "Ant Design 6.6.8. Два одинаковых UMD-прогона 13 профилей дают 79 состояний и 13 снимков SSR. Checkbox и Radio принимают управляемые ключи и начальный набор из rowSelection. При отклонении Radio с общим name восстанавливает принятую отметку. Shift пропускает disabled и уважает checkStrictly. Снимки кэша сохраняют выбранные записи и вложенные связи после смены данных. onSelect получает событие активации, onChange публикует пять методов. Корневой Svelte callback сохраняет типы single/all и прежнее поведение серверных страниц. User control callbacks используют native change, records содержат известные записи. Пустые placeholders Source сохранены в измерениях. Стандартные и пользовательские команды проверены мышью и клавиатурой. getTitleCheckboxProps, hideSelectAll, ширина, выравнивание и явное fixed применяются к служебной колонке. Table.SELECTION_COLUMN, columnTitle, renderCell и onCell относятся к следующему этапу размещения и замены служебных ячеек."
+        },
+        {
           "id": "render-empty",
           "title": "ConfigProvider.renderEmpty: source priorities и native boundaries",
           "state": "supported",

@@ -171,6 +171,10 @@ export interface TableLocale {
   loadingText: string;
   selectAll: string;
   selectRow: string;
+  selectionAll?: string;
+  selectInvert?: string;
+  selectNone?: string;
+  selectionMenu?: string;
   sortAscending: string;
   sortDescending: string;
   cancelSort: string;
@@ -295,6 +299,10 @@ export const ruRU = {
     loadingText: 'Загрузка данных…',
     selectAll: 'Выбрать все строки на странице',
     selectRow: 'Выбрать строку',
+    selectionAll: 'Выбрать все строки',
+    selectInvert: 'Инвертировать выбор на странице',
+    selectNone: 'Сбросить выбор',
+    selectionMenu: 'Команды выбора строк',
     sortAscending: 'Сортировать по возрастанию',
     sortDescending: 'Сортировать по убыванию',
     cancelSort: 'Сбросить сортировку',
@@ -384,6 +392,10 @@ export const enUS = {
     loadingText: 'Loading data…',
     selectAll: 'Select all rows on this page',
     selectRow: 'Select row',
+    selectionAll: 'Select all data',
+    selectInvert: 'Invert current page',
+    selectNone: 'Clear all data',
+    selectionMenu: 'Selection commands',
     sortAscending: 'Sort ascending',
     sortDescending: 'Sort descending',
     cancelSort: 'Clear sorting',

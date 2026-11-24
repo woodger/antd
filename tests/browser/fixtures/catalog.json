@@ -1758,6 +1758,11 @@
     "root": "table-summary-fixture"
   },
   {
+    "id": "table-selection",
+    "module": "./TableSelectionFixture.svelte",
+    "root": "table-selection-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"

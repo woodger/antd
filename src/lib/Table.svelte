@@ -15,19 +15,18 @@
   import { resolveTableCell, resolveTableVirtualCells, type TableCell, type TableMergedRow }
     from './table-cell.engine';
   import { observeTableLayout } from './table-layout.dom';
+  import { createTableSelection } from './table-selection.model.svelte';
   import { observeTableSticky, type TableStickyBarLayout } from './table-sticky.dom';
   import { provideTableSummary, type TableFixedCell } from './table-summary-context';
   import { tableVirtualRowHeight } from './table-virtual.engine';
   import { createTableViewport } from './table-virtual.model.svelte';
   import {
     areTableFiltersEqual,
-    changeTableSelection,
     getNextTableSorter,
     getTableData,
-    getTableFilters,
-    getTableSelection
+    getTableFilters
   } from './table.engine';
-  import { flattenTableRows, getTableLinkedSelection, type TableRow } from './table-tree.engine';
+  import { flattenTableRows, type TableRow } from './table-tree.engine';
   import type {
     TableChange,
     TableColumn,
@@ -39,10 +38,11 @@
     TableSorter
   } from './table.types';
   import { ruRU } from './types';
-  import Checkbox from './Checkbox.svelte';
   import Icon from './Icon.svelte';
   import Pagination from './Pagination.svelte';
   import TableFilter from './TableFilter.svelte';
+  import TableSelectionControl from './TableSelectionControl.svelte';
+  import TableSelectionMenu from './TableSelectionMenu.svelte';
   import TableStickyScrollbar from './TableStickyScrollbar.svelte';
   import Spin from './Spin.svelte';
   import Empty from './Empty.svelte';
@@ -69,7 +69,7 @@
     pagination,
     rowSelection = false,
     selectedRowKeys = $bindable(),
-    defaultSelectedRowKeys = [],
+    defaultSelectedRowKeys,
     onChange,
     onSelectionChange,
     expandable,
@@ -107,14 +107,12 @@
     ? getGridMediaQueries(designTheme.state.token) : undefined);
   untrack(() => mediaQueries);
   let rootStyle = $derived([componentTheme.style, style].filter(Boolean).join(';') || undefined);
-  // InternalTable передаёт только явно подготовленный token в columnWidth до bordered CSS.
-  let selectionWidth = $derived(designTheme.enabled
-    ? designTheme.state.token.Table?.selectionColumnWidth : 48);
   const id = $props.id();
   const initialSorter = untrack(() => defaultSorter ? { ...defaultSorter } : null);
   const initialCurrent = untrack(() => defaultCurrent);
   const initialSize = untrack(() => defaultPageSize);
-  const initialSelection = untrack(() => [...defaultSelectedRowKeys]);
+  let pageRequest = $state.raw(untrack(readPageRequest));
+  $effect.pre(syncPageRequest);
   const initialFilters: TableFilters = untrack(
     () => Object.fromEntries(
       Object.entries(defaultFilters).map(([key, values]) => [key, [...values]])
@@ -140,8 +138,8 @@
   let paging = $derived(
     getPaginationState(
       mode === 'server' ? total ?? dataSource.length : tableData.rows.length,
-      current ?? initialCurrent,
-      pageSize ?? initialSize
+      pageRequest.current,
+      pageRequest.pageSize
     )
   );
   let pageRows = $derived(
@@ -184,23 +182,24 @@
   const collapsed = new Set<TableKey>();
   let visibleRows = $derived(flattenTableRows(pageRows, tree ? expandedKeys : collapsed));
 
-  let selectionOptions = $derived(typeof rowSelection === 'object' ? rowSelection : undefined);
-  let pageCheckboxes = $derived(rowSelection
-    ? flattenTableRows(pageRows).map(({ row }) =>
-      [row.key, selectionOptions?.getCheckboxProps?.(row.record) ?? {}] as const)
-    : []);
-  let checkboxProps = $derived(new Map(pageCheckboxes));
-  let ownerSelection = $derived(selectedRowKeys ?? initialSelection);
-  let linkedSelection = $derived(selectionOptions?.checkStrictly === false
-    ? getTableLinkedSelection(tableData.rows, ownerSelection, checkboxDisabled)
-    : undefined
-  );
-  let changeableKeys = $derived(
-    pageCheckboxes.filter(([, props]) => !props.disabled).map(([key]) => key)
-  );
-  let selectedKeys = $derived(new Set(linkedSelection?.keys ?? ownerSelection));
-  let selection = $derived(getTableSelection(changeableKeys, [...selectedKeys]));
   let resolvedDisabled = $derived((disabled ?? config.componentDisabled) || loading);
+  let selectionOptions = $derived(typeof rowSelection === 'object' ? rowSelection : undefined);
+  const selection = createTableSelection({
+    enabled: () => Boolean(rowSelection),
+    disabled: () => resolvedDisabled,
+    options: () => selectionOptions,
+    rootKeys: () => selectedRowKeys,
+    rootDefaults: () => defaultSelectedRowKeys,
+    setRootKeys: keys => { selectedRowKeys = keys; },
+    rootChange: () => onSelectionChange,
+    page: () => pageRows,
+    data: () => tableData.rows,
+    records: () => tableData.allRows
+  });
+  const selectedKeys = $derived(selection.checked);
+  // Явная ширина колонки перекрывает token и прежний размер без темы.
+  const selectionWidth = $derived(selectionOptions?.columnWidth ?? (designTheme.enabled
+    ? designTheme.state.token.Table?.selectionColumnWidth : 48));
   let resolvedSize = $derived(size ?? config.componentSize);
   let strings = $derived({ ...ruRU.table, ...config.locale.table });
   let content = $state<HTMLDivElement>();
@@ -241,6 +240,7 @@
     side: fixed === true ? 'start' : fixed || undefined,
     offset: `var(--ant-table-fixed-${index}, auto)`
   })));
+  const selectionFixed = $derived(fixedCells[expansionOffset]);
 
   provideTableSummary({
     get prefix() { return prefix; },
@@ -468,6 +468,19 @@
     notifyChange('sort');
   }
 
+  function readPageRequest() {
+    return { current: current ?? initialCurrent, pageSize: pageSize ?? initialSize };
+  }
+
+  // Управляемые props обновляют тот же запрос до рендера, действия Table — до onChange.
+  function syncPageRequest() {
+    const next = readPageRequest();
+    const previous = untrack(() => pageRequest);
+    if (next.current !== previous.current || next.pageSize !== previous.pageSize) {
+      pageRequest = next;
+    }
+  }
+
   function changePage(page: number, size: number) {
     if (resolvedDisabled) {
       return;
@@ -475,6 +488,7 @@
 
     current = page;
     pageSize = size;
+    syncPageRequest();
     notifyChange('paginate');
   }
 
@@ -499,32 +513,8 @@
 
     filters = next;
     current = 1;
+    syncPageRequest();
     notifyChange('filter');
-  }
-
-  // Для связи отметок вне текущей страницы применяются те же правила disabled.
-  function checkboxDisabled(row: TableRow<Row>): boolean {
-    const props = checkboxProps.get(row.key) ?? selectionOptions?.getCheckboxProps?.(row.record);
-    return !!props?.disabled;
-  }
-
-  function changeSelection(keys: TableKey[], checked: boolean, type: 'single' | 'all') {
-    if (resolvedDisabled) {
-      return;
-    }
-
-    const key = keys[0];
-    const next = type === 'single' && linkedSelection && key !== undefined
-      ? linkedSelection.toggle(key, checked)
-      : changeTableSelection([...selectedKeys], keys, checked);
-    selectedRowKeys = next;
-    const records = new Map(tableData.allRows.map((row) => [row.key, row.record]));
-    const rows = next.flatMap((key) => {
-      const record = records.get(key);
-
-      return record ? [record] : [];
-    });
-    onSelectionChange?.([...next], rows, { type });
   }
 
   function sortDescription(columnKey: string, active: TableSorter | null): string {
@@ -852,6 +842,17 @@
   {/if}
 {/snippet}
 
+{#snippet selectPageControl()}
+  <TableSelectionControl
+    checked={selection.header.all}
+    mixed={selection.header.some}
+    disabled={resolvedDisabled || selection.header.disabled}
+    label={strings.selectAll}
+    control={selection.title}
+    onToggle={selection.togglePage}
+  />
+{/snippet}
+
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`table-prefix:${prefix}:${rootPrefix}`} />{/if}<div bind:this={nativeElement} data-ant-table-part="wrapper" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} class={[
     `${prefix}-wrapper ant-table-css-var`,
     componentTheme.className,
@@ -910,8 +911,10 @@
           {#if visibleColumns.length || dataOffset}<colgroup>
             {#if expansionColumn}<col class={designTheme.enabled ? `${prefix}-expand-icon-col` : undefined}
               style:width={columnWidth(0)} />{/if}
-            {#if rowSelection}<col class={designTheme.enabled ? `${prefix}-selection-col` : undefined}
-              style:width={columnWidth(expansionOffset)} />{/if}
+            {#if rowSelection}<col class={[
+              (designTheme.enabled || selection.commands) && `${prefix}-selection-col`,
+              selection.commands && `${prefix}-selection-col-with-dropdown`
+            ]} style:width={columnWidth(expansionOffset)} />{/if}
             {#each visibleColumns as column, columnIndex (column.key)}
               <col style:width={columnWidth(columnIndex + dataOffset)} />
             {/each}
@@ -937,16 +940,21 @@
                         data-ant-table-leaf={headerCount > 1 ? expansionOffset : undefined}
                         class={[
                           `${prefix}-cell ${prefix}-selection-column`,
-                          selectionOptions?.fixed
-                          && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-start`
-                        ]} style:inset-inline-start={selectionOptions?.fixed
-                            ? fixedCells[expansionOffset].offset
-                            : undefined} style:z-index={selectionOptions?.fixed ? 3 : undefined}>
-                        <Checkbox skipGroup checked={selection.all} indeterminate={selection.some} disabled={resolvedDisabled || selection.disabled} aria-label={strings.selectAll} onCheckedChange={(checked) => changeSelection(
-                            changeableKeys,
-                            checked,
-                            'all'
-                          )} />
+                          selectionFixed?.side
+                          && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${selectionFixed.side}`
+                        ]} style={cellStyle(selectionFixed, 3, selectionOptions?.align, undefined)}>
+                        {#if !selection.hideHeader}
+                          {@const commands = selection.commands}
+                          {#if commands}
+                            <div class={`${prefix}-selection`}>
+                              {@render selectPageControl()}
+                              <TableSelectionMenu {prefix} {commands} {strings}
+                                disabled={resolvedDisabled} onCommand={selection.runCommand} />
+                            </div>
+                          {:else}
+                            {@render selectPageControl()}
+                          {/if}
+                        {/if}
                       </th>
                     {/if}
                   {/if}
@@ -973,7 +981,7 @@
               {@const index = scrollport.start + windowIndex}
               {@const canExpand = canExpandRow(row)}
               {@const expanded = canExpand && expandedKeys.has(row.key)}
-              {@const checkbox = checkboxProps.get(row.key)}
+              {@const checkControl = selection.control(row.key)}
               <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions (Клавиатурой управляет кнопка раскрытия.) -->
               <tr data-ant-table-part="row" data-ant-table-selected={rowSelection && selectedKeys.has(row.key) || undefined}
                 data-ant-table-span-hovered={inHoveredRows(index) || undefined} class={[
@@ -1004,19 +1012,18 @@
                 {#if rowSelection}
                   <td data-ant-table-part="cell" class={[
                       `${prefix}-cell ${prefix}-selection-column`,
-                      selectionOptions?.fixed
-                      && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-start`
-                    ]} style:inset-inline-start={selectionOptions?.fixed
-                        ? fixedCells[expansionOffset].offset
-                        : undefined} style:z-index={selectionOptions?.fixed ? 1 : undefined}>
-                    <Checkbox skipGroup checked={selectedKeys.has(row.key)}
-                      indeterminate={linkedSelection?.half.has(row.key) ?? false}
-                      disabled={resolvedDisabled || checkbox?.disabled} aria-label={checkbox?.['aria-label']
-                        ?? `${strings.selectRow} ${row.key}`} onCheckedChange={(checked) => changeSelection(
-                            [row.key],
-                            checked,
-                            'single'
-                          )} />
+                      selectionFixed?.side
+                      && `table-fixed-cell ${prefix}-cell-fix ${prefix}-cell-fix-${selectionFixed.side}`
+                    ]} style={cellStyle(selectionFixed, 1, selectionOptions?.align, undefined)}>
+                    <TableSelectionControl
+                      radio={selection.radio}
+                      checked={selectedKeys.has(row.key)}
+                      mixed={selection.indeterminate(row.key, tree)}
+                      disabled={resolvedDisabled || Boolean(checkControl?.disabled)}
+                      label={`${strings.selectRow} ${row.key}`}
+                      control={checkControl}
+                      onToggle={(_, event) => selection.toggleRow(row, event)}
+                    />
                   </td>
                 {/if}
                 {#each visibleColumns as column, columnIndex (column.key)}

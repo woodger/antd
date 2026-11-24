@@ -24,6 +24,12 @@ export function useRadioGroup(): RadioGroupContext | undefined {
   return getContext(groupKey);
 }
 
+/** Изолирует radio Table от поля RadioGroup, внутри которого находится таблица. */
+export function isolateRadioContext() {
+  setContext(groupKey, undefined);
+  setContext(optionTypeKey, undefined);
+}
+
 export function provideRadioOptionType(value: 'button') {
   setContext(optionTypeKey, value);
 }
