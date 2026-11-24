@@ -33,6 +33,9 @@
 - DatePicker, RangePicker, TimePicker и TimeRangePicker принимают пользовательский
   редактор и кнопку подтверждения через `components.input` и `components.button`.
 
+- Пикеры принимают snippets для восьми режимов панели. Слоты используют штатные
+  черновик, навигацию и подтверждение. Значки навигации календаря можно заменить.
+
 - Dropdown поддерживает стили `ConfigProvider.dropdown`, `rootClassName`,
   `openClassName` и `bind:ref` на DOM-узел триггера. Управляемый `open` сохраняет
   видимость, если владелец отклонил запрос.

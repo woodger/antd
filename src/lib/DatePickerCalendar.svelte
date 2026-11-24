@@ -13,6 +13,8 @@
     DatePickerCellRenderInfo, DatePickerPopupSlots
   } from './date-picker.types';
   import type { PickerLocale } from './picker-locale.types';
+  import type { DatePickerPanelNavigation } from './picker-components.types';
+  import type { InputContent } from './input.types';
   let {
     prefixCls,
     picker = 'date',
@@ -30,6 +32,10 @@
     restrictions,
     now,
     direction,
+    prevIcon,
+    nextIcon,
+    superPrevIcon,
+    superNextIcon,
     range,
     cellRender,
     cellRange,
@@ -40,7 +46,7 @@
     onSelect,
     onNavigate,
     onModeChange
-  }: {
+  }: DatePickerPanelNavigation & {
     prefixCls: string;
     picker?: DatePickerPicker;
     showWeek?: boolean;
@@ -279,10 +285,15 @@
   .date-cell { color:inherit;border:0;background:transparent;padding:0;font:inherit;cursor:pointer; }
   .date-cell:focus-visible { outline:2px solid var(--ant-color-primary);outline-offset:-2px; }
 </style>
+{#snippet navigationIcon(icon: InputContent | undefined, part: string)}
+  {#if icon === undefined}<span class={`${prefixCls}-${part}-icon`}></span>
+  {:else if typeof icon === 'function'}{@render icon()}
+  {:else if typeof icon !== 'boolean'}{icon ?? ''}{/if}
+{/snippet}
 <div bind:this={root} class={[`${prefixCls}-${mode}-panel`, datePanel && showWeek && `${prefixCls}-${mode}-panel-show-week`]}>
   <div class={[`${prefixCls}-header`, classNames?.header]} style={styles?.header}>
-    <button type="button" tabindex="-1" class={[`${prefixCls}-header-super-prev-btn`, headerDisabled(-1, true) && `${prefixCls}-header-super-prev-btn-disabled`]} disabled={headerDisabled(-1, true)} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousYear} onclick={() => move(-1, true)}><span class={`${prefixCls}-super-prev-icon`}></span></button>
-    {#if datePanel}<button type="button" tabindex="-1" class={[`${prefixCls}-header-prev-btn`, headerDisabled(-1) && `${prefixCls}-header-prev-btn-disabled`]} disabled={headerDisabled(-1)} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousMonth} onclick={() => move(-1)}><span class={`${prefixCls}-prev-icon`}></span></button>{/if}
+    <button type="button" tabindex="-1" class={[`${prefixCls}-header-super-prev-btn`, headerDisabled(-1, true) && `${prefixCls}-header-super-prev-btn-disabled`]} disabled={headerDisabled(-1, true)} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousYear} onclick={() => move(-1, true)}>{@render navigationIcon(superPrevIcon, 'super-prev')}</button>
+    {#if datePanel}<button type="button" tabindex="-1" class={[`${prefixCls}-header-prev-btn`, headerDisabled(-1) && `${prefixCls}-header-prev-btn-disabled`]} disabled={headerDisabled(-1)} style:visibility={showPrevious ? undefined : 'hidden'} aria-label={locale.previousMonth} onclick={() => move(-1)}>{@render navigationIcon(prevIcon, 'prev')}</button>{/if}
     <div class={`${prefixCls}-header-view`}>
       {#if datePanel}<button type="button" tabindex="-1" class={`${prefixCls}-month-btn`} aria-label={locale.monthSelect} onclick={() => onModeChange('month', cellPanel)}>{locale.monthFormat
           ? adapter.locale.format(locale.locale, panel, locale.monthFormat) : months[panel.month()]}</button>{/if}{#if (picker !== 'date' || controlledMode) && mode === 'decade'}{adapter.locale.format(locale.locale, panel.year(Math.floor(panel.year() / 100) * 100), locale.yearFormat ?? 'YYYY')}-{adapter.locale.format(locale.locale, panel.year(Math.floor(panel.year() / 100) * 100 + 99), locale.yearFormat ?? 'YYYY')}{:else}<button type="button" tabindex="-1" class={`${prefixCls}-${(picker !== 'date' || controlledMode) && mode === 'year' ? 'decade' : 'year'}-btn`} aria-label={mode === 'year' || mode === 'decade'
@@ -299,8 +310,8 @@
                       .year() / 100) * 100 + 99}`
               : adapter.locale.format(locale.locale, panel, locale.yearFormat ?? 'YYYY')}</button>{/if}
     </div>
-    {#if datePanel}<button type="button" tabindex="-1" class={[`${prefixCls}-header-next-btn`, headerDisabled(1) && `${prefixCls}-header-next-btn-disabled`]} disabled={headerDisabled(1)} style:visibility={showNext ? undefined : 'hidden'} aria-label={locale.nextMonth} onclick={() => move(1)}><span class={`${prefixCls}-next-icon`}></span></button>{/if}
-    <button type="button" tabindex="-1" class={[`${prefixCls}-header-super-next-btn`, headerDisabled(1, true) && `${prefixCls}-header-super-next-btn-disabled`]} disabled={headerDisabled(1, true)} style:visibility={showNext ? undefined : 'hidden'} aria-label={locale.nextYear} onclick={() => move(1, true)}><span class={`${prefixCls}-super-next-icon`}></span></button>
+    {#if datePanel}<button type="button" tabindex="-1" class={[`${prefixCls}-header-next-btn`, headerDisabled(1) && `${prefixCls}-header-next-btn-disabled`]} disabled={headerDisabled(1)} style:visibility={showNext ? undefined : 'hidden'} aria-label={locale.nextMonth} onclick={() => move(1)}>{@render navigationIcon(nextIcon, 'next')}</button>{/if}
+    <button type="button" tabindex="-1" class={[`${prefixCls}-header-super-next-btn`, headerDisabled(1, true) && `${prefixCls}-header-super-next-btn-disabled`]} disabled={headerDisabled(1, true)} style:visibility={showNext ? undefined : 'hidden'} aria-label={locale.nextYear} onclick={() => move(1, true)}>{@render navigationIcon(superNextIcon, 'super-next')}</button>
   </div>
   <div class={[`${prefixCls}-body`, classNames?.body]} style={styles?.body}>
     <table class={[`${prefixCls}-content`, classNames?.content]} style={styles?.content}

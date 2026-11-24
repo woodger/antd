@@ -240,7 +240,12 @@ export type {
   DatePickerEditorContext,
   DatePickerEditorElement,
   DatePickerEditorRegistration,
-  DatePickerButtonContext
+  DatePickerButtonContext,
+  DatePickerPanel,
+  DatePickerPanelContext,
+  DatePickerPanelMode,
+  DatePickerPanelNavigation,
+  DatePickerPanelTimeConfig
 } from './picker-components.types';
 export { default as TextArea } from './TextArea.svelte';
 export type {
@@ -1162,8 +1167,8 @@ export type {
   TypographyEllipsisConfig,
   TypographyLocale
 } from './typography.types';
-export { default as TimePicker } from './TimePicker.svelte';
-export { default as TimeRangePicker } from './TimeRangePicker.svelte';
+export { default as TimePicker } from './time-picker.component';
+export { default as TimeRangePicker } from './time-range-picker.component';
 export type {
   TimeRangePickerProps,
   TimeRangePickerFocusOptions,

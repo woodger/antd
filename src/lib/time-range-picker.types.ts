@@ -1,7 +1,8 @@
 import type { Dayjs } from 'dayjs';
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
-import type { DatePickerDisabledTime, DatePickerTimeConfig } from './date-picker.types';
+import type { DatePickerDisabledTime, DatePickerMode, DatePickerTimeConfig } from './date-picker.types';
+import type { PickerModeFooter } from './picker-components.types';
 import type {
   RangePickerProps,
   RangePickerInfo,
@@ -23,7 +24,7 @@ export type TimeRangePickerSemantic = TimePickerSlots
   | ((info: { props: TimeRangePickerProps; }) => TimePickerSlots | undefined);
 
 /** Пара Dayjs с picker=time; каждая граница подтверждается отдельно, как в rc-picker. */
-export interface TimeRangePickerProps extends Omit<
+export interface TimeRangePickerProps<Mode extends DatePickerMode = 'time'> extends Omit<
   RangePickerProps,
   'showTime' | 'allowClear' | 'status' | 'disabledDate' | 'disabledTime'
     | 'onPickerValueChange' | 'onPanelChange' | 'prefix' | 'onclick'
@@ -42,18 +43,19 @@ export interface TimeRangePickerProps extends Omit<
   styles?: TimeRangePickerSemantic;
   cellRender?: Snippet<[number | 'am' | 'pm', TimePickerCellRenderInfo]>;
   panelRender?: Snippet<[Snippet]>;
-  renderExtraFooter?: Snippet<['time']>;
+  renderExtraFooter?: Snippet<[Mode]>;
   disabledDate?: (date: Dayjs, info: { type: 'time'; from?: Dayjs | null; }) => boolean;
   disabledTime?: (
     date: Dayjs,
     partial: RangePickerPart,
     info: { from?: Dayjs | null; }
   ) => DatePickerDisabledTime;
-  onPickerValueChange?: (
+  onPickerValueChange?(
     value: [Dayjs, Dayjs],
-    info: RangePickerInfo & { source: 'reset' | 'panel'; mode: ['time', 'time']; }
-  ) => void;
-  onPanelChange?: (value: [Dayjs | null, Dayjs | null], modes: ['time', 'time']) => void;
+    info: RangePickerInfo & { source: 'reset' | 'panel'; mode: [Mode, Mode]; }
+  ): void;
+  /** Пользовательская панель может изменить режим одной границы. */
+  onPanelChange?(value: [Dayjs | null, Dayjs | null], modes: [Mode, Mode]): void;
   onclick?: HTMLAttributes<HTMLDivElement>['onclick'];
   onClick?: HTMLAttributes<HTMLDivElement>['onclick'];
   /** Вызывается и для native controls панели; info относится к активной границе. */
@@ -63,3 +65,8 @@ export interface TimeRangePickerProps extends Omit<
   onBlur?: TimeRangePickerProps['onblur'];
   onKeyDown?: (event: KeyboardEvent) => void;
 }
+
+/** Реализация принимает footer обеих публичных сигнатур. */
+export type TimeRangePickerRuntimeProps = Omit<
+  TimeRangePickerProps<DatePickerMode>, 'renderExtraFooter'
+> & { renderExtraFooter?: PickerModeFooter<DatePickerMode>; };

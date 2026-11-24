@@ -6,7 +6,7 @@ import type { ComponentSize } from './types';
 import type { PickerLocale } from './picker-locale.types';
 import type { RangePickerProps } from './range-picker.types';
 import type { TimePickerColumnType } from './time-picker.types';
-import type { DatePickerComponents } from './picker-components.types';
+import type { DatePickerComponents, DatePickerPanelNavigation } from './picker-components.types';
 export type DatePickerLocale = {
   lang: Partial<PickerLocale>;
   timePickerLocale?: { placeholder?: string; rangePlaceholder?: [string, string]; };
@@ -98,7 +98,7 @@ export interface DatePickerProps extends Omit<
   HTMLInputAttributes,
   'value' | 'defaultValue' | 'size' | 'type' | 'children' | 'prefix' | 'multiple'
     | 'onchange' | 'oninput' | 'onselect'
-> {
+>, DatePickerPanelNavigation {
   multiple?: false;
   /** Выбор даты, недели, месяца, года или квартала. @defaultValue 'date' */
   picker?: DatePickerPicker;

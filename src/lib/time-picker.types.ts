@@ -1,7 +1,8 @@
 import type { Dayjs } from 'dayjs';
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
-import type { DatePickerProps, DatePickerTimeConfig } from './date-picker.types';
+import type { DatePickerMode, DatePickerProps, DatePickerTimeConfig } from './date-picker.types';
+import type { PickerModeFooter } from './picker-components.types';
 import type { PickerLocale } from './picker-locale.types';
 import type { InputContent } from './input.types';
 
@@ -68,11 +69,11 @@ export interface TimePickerConfig {
 }
 
 /** Выбор времени через Dayjs; дата, UTC/timezone и точность не сериализуются компонентом. */
-export interface TimePickerProps extends Omit<
+export interface TimePickerProps<Mode extends DatePickerMode = 'time'> extends Omit<
   DatePickerProps,
   'showTime' | 'allowClear' | 'status' | 'onCalendarChange' | 'classNames' | 'styles'
     | 'onPanelChange' | 'onPickerValueChange' | 'disabledDate' | 'onChange'
-    | 'prefix' | 'onclick' | 'mode' | 'multiple' | 'cellRender' | 'picker'
+    | 'prefix' | 'onclick' | 'mode' | 'multiple' | 'cellRender' | 'picker' | 'renderExtraFooter'
 >, Omit<DatePickerTimeConfig, 'format'> {
   /** В публичном TimePicker 6.6.8 поддерживается один Dayjs. */
   multiple?: false;
@@ -92,7 +93,7 @@ export interface TimePickerProps extends Omit<
   cellRender?: Snippet<[number | 'am' | 'pm', TimePickerCellRenderInfo]>;
   /** Получает snippet стандартной panel layout, сохраняя внешний popup lifecycle. */
   panelRender?: Snippet<[Snippet]>;
-  renderExtraFooter?: Snippet;
+  renderExtraFooter?: [Mode] extends ['time'] ? Snippet : Snippet<[Mode]>;
   presets?: readonly TimePickerPreset[];
   onclick?: HTMLAttributes<HTMLDivElement>['onclick'];
   /** Совместимый alias; onclick имеет приоритет. */
@@ -105,6 +106,12 @@ export interface TimePickerProps extends Omit<
   onCalendarChange?: (value: Dayjs | null, dateString: string, info: Record<string, never>) => void;
   /** При полной очистке dateString=null, как в runtime SinglePicker rc-picker. */
   onChange?: (value: Dayjs | null, dateString: string | null) => void;
-  onPanelChange?: (value: Dayjs, mode: 'time') => void;
-  onPickerValueChange?: (value: Dayjs, info: { source: 'reset' | 'panel'; mode: 'time'; }) => void;
+  /** Пользовательская панель может запросить календарный режим. */
+  onPanelChange?(value: Dayjs, mode: Mode): void;
+  onPickerValueChange?(value: Dayjs, info: { source: 'reset' | 'panel'; mode: Mode; }): void;
 }
+
+/** Реализация принимает footer обеих публичных сигнатур. */
+export type TimePickerRuntimeProps = Omit<TimePickerProps<DatePickerMode>, 'renderExtraFooter'> & {
+  renderExtraFooter?: PickerModeFooter<DatePickerMode>;
+};

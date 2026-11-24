@@ -3,7 +3,7 @@
   import { timeRangeSharedProps } from './time-range-picker-props.engine';
   import type {
     TimeRangePickerFocusOptions,
-    TimeRangePickerProps
+    TimeRangePickerRuntimeProps
   } from './time-range-picker.types';
 
   let {
@@ -11,7 +11,7 @@
     startInput = $bindable(),
     endInput = $bindable(),
     ...props
-  }: TimeRangePickerProps = $props();
+  }: TimeRangePickerRuntimeProps = $props();
   let shared = $derived(timeRangeSharedProps(props));
   let value = $derived(props.value);
   let picker = $state<{

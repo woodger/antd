@@ -6931,15 +6931,36 @@
             "tests/browser/picker-components-hydration.spec.ts",
             "tests/package/picker-components.ssr.test.ts"
           ],
-          "note": "Ant Design 6.6.8 и rc-picker 1.12.2. Семь независимо повторённых браузерных профилей сверяют input, textarea, маску, подтверждение и поведение multiple. Семь SSR-профилей сверяют поля, имя и значение. Svelte snippet использует нативные атрибуты и attachment для регистрации элемента. Смена оформления сохраняет DOM, фокус и выделение. При Enter Native подтверждает текст без перевода строки. У React перевод строки повторно открывает одиночный DatePicker и попадает во второе поле RangePicker. Legacy refs сохраняют тип HTMLInputElement. Замена календарных/временных панелей остаётся в extended-api."
+          "note": "Ant Design 6.6.8 и rc-picker 1.12.2. Семь независимо повторённых браузерных профилей сверяют input, textarea, маску, подтверждение и поведение multiple. Семь SSR-профилей сверяют поля, имя и значение. Svelte snippet использует нативные атрибуты и attachment для регистрации элемента. Смена оформления сохраняет DOM, фокус и выделение. При Enter Native подтверждает текст без перевода строки. У React перевод строки повторно открывает одиночный DatePicker и попадает во второе поле RangePicker. Legacy refs сохраняют тип HTMLInputElement."
+        },
+        {
+          "id": "component-panels",
+          "title": "Пользовательские панели всех режимов и значки навигации",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/PickerPanelReplacement.svelte",
+            "src/lib/picker-components.types.ts",
+            "src/lib/DatePickerCalendar.svelte",
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "docs/reference/components/date-picker.md",
+            "docs/reference/components/range-picker.md",
+            "tests/browser/fixtures/ant-design-picker-components-panels.json.gz",
+            "tests/browser/fixtures/ant-design-picker-components-panels-supplement.json.gz",
+            "tests/browser/picker-panels.spec.ts",
+            "tests/browser/picker-panels-hydration.spec.ts",
+            "tests/package/picker-panels.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 и rc-picker 1.12.2. Восемь ключей components заменяют содержимое панели внутри штатной раскладки, datetime включает календарь и время целиком. 23 независимо повторённых профиля и 113 действий сверяют props, поведение controlled mode и pickerValue, шаги переходов, выбор, ограничения, hover, multiple, диапазоны и возврат к встроенной панели. Вторая панель получает следующий период и при навигации передаёт общий pickerValue с обратным сдвигом. Authored Dayjs передаётся в черновик без округления колонками. Native onCalendarChange сохраняет метаданные source; при смене snippet фокус остаётся внутри popup. Source SSR оставляет portal пустым, Native открытый SSR shell содержит слот и проходит строгую гидратацию. Значки навигации доступны в обоих вариантах панели."
         },
         {
           "id": "extended-api",
-          "title": "GeneratePicker, пользовательские панели и оставшиеся события",
+          "title": "GeneratePicker и оставшиеся события",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "GeneratePicker factory, замены панелей через components и часть событий предстоит перенести. Multiple, mode, week/month/year/quarter, showWeek, RangePicker presets/previewValue и семантическое оформление перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
+          "note": "GeneratePicker factory и часть событий предстоит перенести. Multiple, mode, week/month/year/quarter, showWeek, компоненты редактора, подтверждения и панелей, RangePicker presets/previewValue и семантическое оформление перенесены. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно. Native receiver и calendar info {source} остаются отдельными согласованными контрактами."
         },
         {
           "id": "global-parity",
@@ -12663,18 +12684,39 @@
             "tests/browser/picker-components.spec.ts",
             "tests/package/picker-components.ssr.test.ts"
           ],
-          "note": "TimePicker и TimeRangePicker используют общий components.input и components.button. Эталон React проверяет ручной ввод в textarea и порядок onOk, onChange и закрытия. Браузерный тест диапазона проверяет подтверждение обеих границ и сохранение их календарных дат; кнопка не отправляет форму. Замена панели time остаётся в advanced-api."
+          "note": "TimePicker и TimeRangePicker используют общий components.input и components.button. Эталон React проверяет ручной ввод в textarea и порядок onOk, onChange и закрытия. Браузерный тест диапазона проверяет подтверждение обеих границ и сохранение их календарных дат; кнопка не отправляет форму."
+        },
+        {
+          "id": "component-panels",
+          "title": "Пользовательская панель времени и переходы в календарные режимы",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/PickerPanelReplacement.svelte",
+            "src/lib/picker-components.types.ts",
+            "src/lib/TimePicker.svelte",
+            "src/lib/TimeRangePicker.svelte",
+            "src/lib/time-picker.component.ts",
+            "src/lib/time-range-picker.component.ts",
+            "docs/reference/components/time-picker.md",
+            "docs/reference/components/time-range-picker.md",
+            "tests/browser/fixtures/ant-design-picker-components-panels.json.gz",
+            "tests/browser/fixtures/ant-design-picker-components-panels-supplement.json.gz",
+            "tests/browser/picker-panels.spec.ts",
+            "tests/package/picker-panels.ssr.test.ts"
+          ],
+          "note": "TimePicker и TimeRangePicker выбирают components.time и поддерживают onModeChange из самой панели. Прямой prop mode остаётся закрытым для time wrappers. В диапазоне сообщается режим каждой границы. Обычные типы props по умолчанию сужены до time. Эталон сверяет применение точного Dayjs, начальное время пустого поля, события навигации и клик OK, переход к календарю и возврат. Встроенный календарь при переходе использует ограничения владельца. SSR и снятие слоя проверены на тех же runtime exports."
         },
         {
           "id": "advanced-api",
-          "title": "GeneratePicker, пользовательская панель, полный trigger/locale API и diagnostics",
+          "title": "GeneratePicker, полный trigger/locale API и diagnostics",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [
             "docs/reference/components/time-picker.md",
             "docs/reference/components/time-range-picker.md"
           ],
-          "note": "На этом этапе только один Dayjs; multiple=true не заявлен в типах. Замена панели time через components, полный каталог locales, React diagnostics, полный rc-trigger/motion API и retained popup lifecycle остаются следующими этапами. Styles — CSS strings, nodes/renderers — Svelte snippets. Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream."
+          "note": "На этом этапе только один Dayjs; multiple=true не заявлен в типах. Полный каталог locales, React diagnostics, полный rc-trigger/motion API и retained popup lifecycle остаются следующими этапами. Styles — CSS strings, nodes/renderers — Svelte snippets. Переполненный 32-bit step вызывает RangeError вместо бесконечного цикла upstream."
         },
         {
           "id": "confirmation-button",

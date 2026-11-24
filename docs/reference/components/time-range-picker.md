@@ -76,6 +76,12 @@ scroll timers и observers очищаются при удалении.
 `startInput` и `endInput` сохраняют тип `HTMLInputElement`.
 [Контекст редактора и кнопки](date-picker.md#редактор-и-кнопка-подтверждения)
 
+`components.time` заменяет панель активной границы. Действия snippet применяются
+к этой границе, а кнопка OK использует штатное подтверждение диапазона.
+Переходы в другие режимы отражаются в паре `onPanelChange`. Для таких панелей
+используйте `TimeRangePickerProps<DatePickerMode>`.
+[Контекст панели](date-picker.md#пользовательские-панели)
+
 Popup наследует общий container API DatePicker, сохраняет минимальную ширину selector
 и сдвигает узкую time panel со стрелкой под активное
 поле. В RTL колонки времени сохраняют исходный порядок hours → minutes → seconds,

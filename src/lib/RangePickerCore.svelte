@@ -39,7 +39,11 @@
     createPickerEditor, isPickerInput, isPickerInputEvent,
     pickerEditorMaskEvents, type PickerEditorEvent
   } from './picker-editor.model.svelte.js';
-  import type { DatePickerEditorAttributes } from './picker-components.types';
+  import type { DatePickerEditorAttributes, DatePickerPanelContext } from './picker-components.types';
+  import {
+    pickerPanelClock, pickerPanelHoverRange, pickerPanelOutsideBounds, pickerPanelSlot,
+    samePickerPanelPeriod
+  } from './picker-panel.engine';
   import { datePickerEnUS } from './date-picker.locale';
   import { useConfig } from './config-context';
   import { getPickerPrefixCss } from './picker-prefix.engine';
@@ -56,11 +60,13 @@
   import { compactClasses } from './space-compact.engine';
   import { connectPopup, getPopupActiveElement } from './popup.dom';
   import {
-    createPickerPopup, focusPickerPanel, getPickerPopupPosition, preservePickerPanelFocus
+    createPickerPopup, focusPickerPanel, getPickerPopupPosition, keepPickerEditorFocus,
+    preservePickerPanelFocus, retainPickerReplacementFocus
   } from './picker-popup.model.svelte.js';
   import NoCompactStyle from './NoCompactStyle.svelte';
   import PickerConfirmButton from './PickerConfirmButton.svelte';
   import PickerEditor from './PickerEditor.svelte';
+  import PickerPanelReplacement from './PickerPanelReplacement.svelte';
   import DatePickerCalendar from './DatePickerCalendar.svelte';
   import DatePickerTimePanel from './DatePickerTimePanel.svelte';
   import Icon from './Icon.svelte';
@@ -82,7 +88,7 @@
   import { timePickerDateDisabled } from './time-picker.engine';
   import { timeRangeSemantic } from './time-range-picker-semantic.engine';
   import { datePickerSemantic } from './date-picker-semantic.engine';
-  import type { TimeRangePickerProps } from './time-range-picker.types';
+  import type { TimeRangePickerRuntimeProps } from './time-range-picker.types';
   import { connectTimeRangePopup } from './time-range-picker-popup.dom';
   let {
     time,
@@ -126,6 +132,10 @@
     renderExtraFooter,
     cellRender,
     components,
+    prevIcon,
+    nextIcon,
+    superPrevIcon,
+    superNextIcon,
     panelRender,
     separator,
     presets,
@@ -148,7 +158,10 @@
     startInput = $bindable(),
     endInput = $bindable(),
     ...attributes
-  }: RangePickerProps & { time?: TimeRangePickerProps; dateProps?: RangePickerProps; } = $props();
+  }: RangePickerProps & {
+    time?: TimeRangePickerRuntimeProps;
+    dateProps?: RangePickerProps;
+  } = $props();
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('picker', prefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
@@ -284,8 +297,13 @@
   }));
   let view = $derived(panelValues()[active]);
   let datePanelValue = $derived(pickerCalendarValue(view, clock.defaultOpenValue));
-  let localMode = $state<DatePickerMode>(untrack(() => picker));
-  let mode = $derived(providedMode?.[active] ?? localMode);
+  let terminalMode = $derived(time ? 'time' as const : picker);
+  let localMode = $state<DatePickerMode>(untrack(() => terminalMode));
+  let authoredModes = $state.raw<RangePickerMode>();
+  let mode = $derived(providedMode?.[active] ?? authoredModes?.[active] ?? localMode);
+  let replacementMode = $derived(pickerPanelSlot(mode, Boolean(showTime)));
+  let panelReplacement = $derived(components?.[replacementMode]);
+  let navigationIcons = $derived({ prevIcon, nextIcon, superPrevIcon, superNextIcon });
   let dateModes = $derived<RangePickerMode>([localMode, localMode]);
   let periodModes = $state.raw<RangePickerMode>(untrack(() => [picker, picker]));
   let multiplePanels = $derived(!showTime && mode === picker);
@@ -293,11 +311,14 @@
     popup, mode, date: view.format('YYYY-MM-DD'), controlled: providedMode !== undefined,
     editor: active === 1 ? endElement : startElement
   }));
+  retainPickerReplacementFocus(() => ({
+    popup, panel: panelReplacement, count: multiplePanels ? 2 : 1, prefix
+  }));
   let periodPlaceholder = $derived(picker === 'week' ? lang.rangeWeekPlaceholder
     : picker === 'quarter' ? lang.rangeQuarterPlaceholder
     : picker === 'month' ? lang.rangeMonthPlaceholder
     : picker === 'year' ? lang.rangeYearPlaceholder : lang.rangePlaceholder);
-  let showCurrent = $derived((showNow ?? false) && mode === 'date');
+  let showCurrent = $derived(Boolean(showNow && (mode === 'date' || time && mode === 'time')));
   let hover = $state.raw<Dayjs | null>(null);
   let presetHover = $state.raw<RangePickerValue | null>(null);
   let displayRange = $derived.by((): RangePickerValue => {
@@ -404,25 +425,27 @@
   let previousDatePanel = untrack(() => ({
     opened: false, index: active, calendar: calendar[active], focused
   }));
-  let previousPeriodMode = untrack(() => ({ open: false, active, picker, controlled: false }));
+  let previousPeriodMode = untrack(() => ({
+    open: false, active, picker: terminalMode, controlled: false
+  }));
   let dateFocusIndex: number | null = null;
   $effect.pre(() => {
-    if (time) {
-      return;
-    }
-    const current = { open: visible, active, picker, controlled: providedMode !== undefined };
+    const current = {
+      open: visible, active, picker: terminalMode, controlled: providedMode !== undefined
+    };
     if (previousPeriodMode.controlled && !current.controlled) {
-      localMode = picker;
+      localMode = terminalMode;
+      authoredModes = undefined;
       periodModes = [picker, picker];
     }
     else if (current.open && (current.picker !== previousPeriodMode.picker
-      || picker !== 'date' && (!previousPeriodMode.open
+      || (time || authoredModes || picker !== 'date') && (!previousPeriodMode.open
         || current.active !== previousPeriodMode.active))) {
-      untrack(() => setMode(picker, current.active));
+      untrack(() => setMode(terminalMode, current.active));
     }
     // Закрытая смена picker применяется при открытии; обычный date reopen сохраняем.
     previousPeriodMode = {
-      ...current, picker: current.open ? picker : previousPeriodMode.picker
+      ...current, picker: current.open ? terminalMode : previousPeriodMode.picker
     };
   });
   const popupThemeStyle = $derived(
@@ -604,19 +627,8 @@
         actualPlacement
       ),
       matchAnchorWidth: true,
-      preserveFocus: event => {
-        if (time || !(cellRender || panelRender || renderExtraFooter)) {
-          return true;
-        }
-        for (const target of event.composedPath()) {
-          if (target === popup) break;
-          if (target instanceof HTMLElement
-            && (target.matches('input, textarea, select') || target.isContentEditable)) {
-            return false;
-          }
-        }
-        return true;
-      },
+      preserveFocus: event => keepPickerEditorFocus(event, popup,
+        !time && Boolean(cellRender || panelRender || renderExtraFooter)),
       onPlacement: next => {
         verticalPlacement = next === 'top' ? 'top' : 'bottom';
       },
@@ -884,7 +896,10 @@
     if (providedMode) {
       return [...providedMode];
     }
-    return picker === 'date' ? dateModes : periodModes;
+    if (authoredModes) {
+      return authoredModes;
+    }
+    return time ? ['time', 'time'] : picker === 'date' ? dateModes : periodModes;
   }
   function setMode(next: DatePickerMode, index = active, viewDate?: Dayjs) {
     if (providedMode) {
@@ -892,7 +907,14 @@
       return;
     }
     localMode = next;
-    if (picker !== 'date' && periodModes[index] !== next) {
+    if (authoredModes) {
+      if (authoredModes[index] !== next) {
+        const modes: RangePickerMode = [...authoredModes];
+        modes[index] = next;
+        authoredModes = modes;
+      }
+    }
+    else if (!time && picker !== 'date' && periodModes[index] !== next) {
       const modes: RangePickerMode = [...periodModes];
       modes[index] = next;
       periodModes = modes;
@@ -910,9 +932,13 @@
     if (date) {
       values[index] = date;
     }
-    onPanelChange?.(values, modes);
+    (time?.onPanelChange ?? onPanelChange)?.(values, modes);
   }
   function navigatePanel(date: Dayjs, offset = 0) {
+    if (authoredModes || time) {
+      navigateReplacement(date, offset);
+      return;
+    }
     const next = offset ? offsetPickerPanel(date, picker, -offset) : date;
     if (providedMode) {
       setDatePanel(active, next, 'panel');
@@ -922,6 +948,10 @@
     syncPanel(active, 'panel', false, next);
   }
   function changePanelMode(next: DatePickerCalendarMode, date?: Dayjs, offset = 0) {
+    if (authoredModes || time) {
+      changeReplacementMode(next, date, offset);
+      return;
+    }
     if (providedMode) {
       const headerDate = mode === 'date' || mode === 'week' ? date : undefined;
       if (headerDate) {
@@ -962,7 +992,7 @@
     revision++;
     if (interaction.activeIndex !== previous) {
       hover = null;
-      setMode(picker, interaction.activeIndex);
+      setMode(terminalMode, interaction.activeIndex);
       if (time) syncPanel(interaction.activeIndex, 'reset', true);
     }
     const target = interaction.currentIndex;
@@ -1055,6 +1085,10 @@
     }
   }
   function selectDate(date: Dayjs, panelOffset = 0) {
+    if (time || authoredModes && mode !== picker) {
+      selectReplacement(date, panelOffset);
+      return;
+    }
     resetQuarterInput(active);
     const event = { previous: panelValues(), modes: panelModes() };
     if (mode !== picker && (picker !== 'date' || providedMode !== undefined)) {
@@ -1089,6 +1123,10 @@
     hover = date;
   }
   function selectTime(date: Dayjs) {
+    if (time && mode !== terminalMode) {
+      selectReplacement(date, 0);
+      return;
+    }
     const next = time ? date : validPickerTime(date, clock, timeRestriction);
     const index = active;
     if (!time && mode === 'time') {
@@ -1102,6 +1140,132 @@
     else {
       setDatePanel(index, next, 'panel');
     }
+  }
+
+  /** Вторая панель передаёт свою дату, а владелец хранит общую дату просмотра. */
+  function replacementValue(offset: number) {
+    const date = time ? view : datePanelValue;
+    return offset ? offsetPickerPanel(date, picker, offset) : date;
+  }
+
+  /** Снимок исходной границы нужен даже если выбор сразу переводит фокус. */
+  function panelSnapshot() {
+    return { index: active, previous: panelValues(), modes: panelModes() };
+  }
+
+  function setReplacementValue(
+    date: Dayjs,
+    offset: number,
+    event: ReturnType<typeof panelSnapshot>
+  ) {
+    const first = offset ? offsetPickerPanel(date, picker, -offset) : date;
+    if (time) {
+      setTimePanel(event.index, first, 'panel', event);
+    }
+    else {
+      setDatePanel(event.index, first, 'panel', event);
+    }
+  }
+
+  function navigateReplacement(date: Dayjs, offset: number) {
+    const event = panelSnapshot();
+    setReplacementValue(date, offset, event);
+    publishPanelChange(event.index, event.modes[event.index], date);
+  }
+
+  function changeReplacementMode(next: DatePickerMode, date: Dayjs | undefined, offset: number) {
+    const event = panelSnapshot();
+    const shown = date ?? replacementValue(offset);
+    if (date) {
+      setReplacementValue(date, offset, event);
+    }
+    publishReplacementMode(next, shown, event.index);
+  }
+
+  function publishReplacementMode(next: DatePickerMode, date: Dayjs, index: number) {
+    if (!providedMode) {
+      const modes: RangePickerMode = [...panelModes()];
+      modes[index] = next;
+      authoredModes = modes;
+    }
+    publishPanelChange(index, next, date);
+  }
+
+  function selectReplacement(date: Dayjs, offset: number) {
+    const event = panelSnapshot();
+    const currentMode = event.modes[event.index];
+    const nextMode = nextPickerPanelMode(terminalMode, currentMode);
+    const source = !showTime && currentMode === terminalMode ? 'panel-final' : 'panel-intermediate';
+    resetQuarterInput(event.index);
+    send(event.index, source, date);
+    setReplacementValue(date, offset, event);
+    if (nextMode) {
+      setReplacementValue(date, offset, event);
+      publishReplacementMode(nextMode, date, event.index);
+    }
+  }
+
+  function replacementDisabled(date: Dayjs, { type }: { type: DatePickerMode; }) {
+    const other = calendar[active ^ 1];
+    if (blocked[active ^ 1] && other
+      && (active === 1 ? other.isAfter(date) : date.isAfter(other))
+      && !samePickerPanelPeriod(other, date, type, lang.locale)) {
+      return true;
+    }
+    const fromDate = from();
+    const localDisabled = time
+      ? time.disabledDate?.(date, { type: 'time', from: fromDate })
+      : disabledDate?.(date, { type: type === 'time' ? 'date' : type, from: fromDate });
+    return Boolean(localDisabled) || pickerPanelOutsideBounds(date, { minDate, maxDate },
+      type, lang.locale);
+  }
+
+  function replacementHover() {
+    const pair: RangePickerValue = presetHover && previewValue ? [...presetHover] : [...calendar];
+    if (hover && previewValue === 'hover') {
+      const weak = !calendar[active ^ 1]
+        && calendar[active]?.valueOf() !== committed[active]?.valueOf();
+      if (weak && !presetHover) {
+        return { hoverValue: [hover], hoverRangeValue: null };
+      }
+      pair[active] = hover;
+    }
+    return { hoverValue: null, hoverRangeValue: pickerPanelHoverRange(...pair) };
+  }
+
+  function replacementContext(offset: number): Omit<DatePickerPanelContext, 'cellRender'> {
+    const selected = calendar[active] ?? (time ? clock.defaultOpenValue : undefined);
+    const configuredTime = typeof showTime === 'object' ? showTime : undefined;
+    return {
+      mode: replacementMode,
+      range: cellRange,
+      prefixCls: prefix,
+      locale: timeLocale ?? (offset ? secondPanelLocale : panelLocale),
+      generateConfig: adapter,
+      pickerValue: replacementValue(offset),
+      value: selected,
+      values: selected ? [selected] : [],
+      ...replacementHover(),
+      showTime: showTime ? pickerPanelClock(clock, {
+        defaultOpenValue: time ? time.defaultOpenValue : configuredTime?.defaultOpenValue,
+        disabledTime: (time ? time.disabledTime : disabledTime) ? timeRestriction : undefined,
+        changeOnScroll: time?.changeOnScroll, showNow
+      }) : null,
+      showWeek,
+      minDate,
+      maxDate,
+      ...navigationIcons,
+      disabledDate: replacementDisabled,
+      onPickerValueChange: date => navigateReplacement(date, offset),
+      onModeChange: (next, date) => changeReplacementMode(next, date, offset),
+      onSelect: date => selectReplacement(date, offset),
+      onHover: date => {
+        if (previewValue === 'hover') {
+          hover = date;
+          presetHover = null;
+        }
+      }
+    };
   }
   // Ввод, маска и подтверждение используют дату одной и той же редактируемой границы.
   function parseFieldInput(text: string, boundary: Dayjs | null): Dayjs | null {
@@ -1297,6 +1461,10 @@
         event.preventDefault();
         requestOpen(true);
         await tick();
+        if (panelReplacement || mode !== 'time') {
+          focusPickerPanel(popup, mode, replacementValue(0).format('YYYY-MM-DD'));
+          return;
+        }
         (popup?.querySelector<HTMLButtonElement>(
           '[data-picker-time-cell-selected] button:not(:disabled)'
         ) ?? popup?.querySelector<HTMLButtonElement>(
@@ -1348,15 +1516,20 @@
     if (commit(next))
       requestOpen(false);
   }
-  function setTimePanel(index: number, next: Dayjs, source: 'reset' | 'panel') {
-    const pair = panelValues();
+  function setTimePanel(
+    index: number,
+    next: Dayjs,
+    source: 'reset' | 'panel',
+    event?: { previous: [Dayjs, Dayjs]; modes: RangePickerMode; }
+  ) {
+    const pair = event?.previous ?? panelValues();
     const changed = !samePickerTime(pair[index], next);
     const copy: [Dayjs, Dayjs] = [...pair];
     copy[index] = next;
     if (!pickerValue) panels = copy;
     if (changed) {
       time?.onPickerValueChange?.(copy, {
-        range: index === 1 ? 'end' : 'start', source, mode: ['time', 'time']
+        range: index === 1 ? 'end' : 'start', source, mode: event?.modes ?? panelModes()
       });
     }
   }
@@ -1390,6 +1563,12 @@
       send(active, 'panel-intermediate', clock.defaultOpenValue);
     onOk?.([...calendar]);
     send(active, 'confirm');
+  }
+  function confirmDate() {
+    const notifyFirst = picker !== 'date' || Boolean(panelReplacement || authoredModes);
+    if (notifyFirst) onOk?.([...calendar]);
+    send(active, 'confirm');
+    if (!notifyFirst) onOk?.([...calendar]);
   }
   function timeNowDisabled(date: Dayjs) {
     if (!time) {
@@ -1473,6 +1652,43 @@
   [data-picker-presets] button { border:0;padding:0;background:transparent;color:inherit;font:inherit;cursor:pointer; }
 </style>
 
+{#snippet dateCalendar(calendarMode: DatePickerCalendarMode, offset: number)}
+  <DatePickerCalendar
+    classNames={dateSemantic?.classes.popup}
+    styles={dateSemantic?.styles.popup}
+    {picker}
+    {showWeek}
+    {...navigationIcons}
+    prefixCls={prefix}
+    panel={offset ? offsetPickerPanel(view, picker, offset) : view}
+    timeTemplate={time ? view : offset ? undefined : clock.defaultOpenValue}
+    selected={calendar[active]}
+    range={calendarRange}
+    hovered={periodWeakHover ? hover : undefined}
+    onHover={time && calendarMode !== 'date' ? handleTimeHover : handleDateHover}
+    mode={calendarMode}
+    controlledMode={providedMode !== undefined}
+    locale={timeLocale ?? (offset ? secondPanelLocale : panelLocale)}
+    {cellRender}
+    {cellRange}
+    restrictions={{ minDate, maxDate, disabledDate: time ? replacementDisabled : panelDisabled }}
+    {now}
+    direction={config.direction}
+    showPrevious={!offset}
+    showNext={Boolean(offset) || !multiplePanels}
+    onSelect={date => selectDate(date, offset)}
+    onNavigate={date => navigatePanel(date, offset)}
+    onModeChange={(next, date) => changePanelMode(next, date, offset)}
+  />
+{/snippet}
+
+{#snippet replacementPanelBody(offset: number)}
+  {#if panelReplacement}
+    <PickerPanelReplacement panel={panelReplacement} context={replacementContext(offset)}
+      dateCell={cellRender} timeCell={time?.cellRender} />
+  {/if}
+{/snippet}
+
 {#snippet datePanelLayout()}
   <div class={`${prefix}-panel-layout`}>
         {#if presets?.length}<div data-picker-presets class={`${prefix}-presets`}><ul>{#each presets as preset, index (index)}<li><button type="button" onpointerenter={() => {
@@ -1486,34 +1702,15 @@
               rangePair(typeof preset.value === 'function' ? preset.value() : preset.value)
             )}>{#if typeof preset.label === 'function'}{@render preset.label()}{:else}{preset.label}{/if}</button></li>{/each}</ul></div>{/if}
         <div><div class={multiplePanels ? `${prefix}-panels` : undefined}>
-          <div class={`${prefix}-panel`} tabindex="-1"><div class={showTime && mode === 'date'
+          <div class={[`${prefix}-panel`,
+            panelReplacement && config.direction === 'rtl' && `${prefix}-panel-rtl`]}
+            data-picker-authored-panel={panelReplacement ? true : undefined} tabindex="-1">
+            {#if panelReplacement}
+              {@render replacementPanelBody(0)}
+            {:else}<div class={showTime && mode === 'date'
               ? `${prefix}-datetime-panel`
               : undefined}>
-            {#if mode !== 'time'}<DatePickerCalendar
-              classNames={dateSemantic?.classes.popup}
-              styles={dateSemantic?.styles.popup}
-              {picker}
-              {showWeek}
-              prefixCls={prefix}
-              panel={view}
-              timeTemplate={clock.defaultOpenValue}
-              selected={calendar[active]}
-              range={calendarRange}
-              hovered={periodWeakHover ? hover : undefined}
-              onHover={handleDateHover}
-              {mode}
-              controlledMode={providedMode !== undefined}
-              locale={panelLocale}
-              {cellRender}
-              {cellRange}
-              restrictions={{ minDate, maxDate, disabledDate: panelDisabled }}
-              {now}
-              direction={config.direction}
-              showNext={!multiplePanels}
-              onSelect={selectDate}
-              onNavigate={navigatePanel}
-              onModeChange={changePanelMode}
-            />{/if}
+            {#if mode !== 'time'}{@render dateCalendar(mode, 0)}{/if}
             {#if mode === 'time' || showTime && mode === 'date'}
               <DatePickerTimePanel
                 classNames={dateSemantic?.classes.popup}
@@ -1533,31 +1730,18 @@
                 onHover={handleTimeHover}
               />
             {/if}
-          </div></div>
-          {#if multiplePanels && mode !== 'time'}<div class={`${prefix}-panel`} tabindex="-1"><DatePickerCalendar
-              classNames={dateSemantic?.classes.popup}
-              styles={dateSemantic?.styles.popup}
-              {picker}
-              {showWeek}
-              prefixCls={prefix}
-              panel={offsetPickerPanel(view, picker, 1)}
-              selected={calendar[active]}
-              range={calendarRange}
-              hovered={periodWeakHover ? hover : undefined}
-              onHover={handleDateHover}
-              {mode}
-              controlledMode={providedMode !== undefined}
-              locale={secondPanelLocale}
-              {cellRender}
-              {cellRange}
-              restrictions={{ minDate, maxDate, disabledDate: panelDisabled }}
-              {now}
-              direction={config.direction}
-              showPrevious={false}
-              onSelect={date => selectDate(date, 1)}
-              onNavigate={next => navigatePanel(next, 1)}
-              onModeChange={(next, date) => changePanelMode(next, date, 1)}
-            /></div>{/if}
+          </div>{/if}</div>
+          {#if multiplePanels && mode !== 'time'}
+            <div class={[`${prefix}-panel`,
+              panelReplacement && config.direction === 'rtl' && `${prefix}-panel-rtl`]}
+              data-picker-authored-panel={panelReplacement ? true : undefined} tabindex="-1">
+              {#if panelReplacement}
+                {@render replacementPanelBody(1)}
+              {:else}
+                {@render dateCalendar(mode, 1)}
+              {/if}
+            </div>
+          {/if}
         </div>
         {#if renderExtraFooter || confirm || mode === 'date' && showCurrent}
         <div class={[`${prefix}-footer`, dateSemantic?.classes.popup.footer]}
@@ -1574,11 +1758,7 @@
               && !empty[active]
               || Boolean(
                 calendar[active] && invalid(calendar[active]!, active, picker === 'quarter' || picker === 'week' ? undefined : from())
-              )} onclick={() => {
-                if (picker !== 'date') onOk?.([...calendar]);
-                send(active, 'confirm');
-                if (picker === 'date') onOk?.([...calendar]);
-              }} children={lang.ok} /></li>{/if}</ul>{/if}</div>{/if}
+              )} onclick={confirmDate} children={lang.ok} /></li>{/if}</ul>{/if}</div>{/if}
         </div>
       </div>
 {/snippet}
@@ -1603,25 +1783,21 @@
     <div>
       <div
         class={[`${prefix}-panel`, config.direction === 'rtl' && `${prefix}-panel-rtl`]}
+        data-picker-authored-panel={panelReplacement ? true : undefined}
         tabindex="-1"
       >
-        {#if timeLocale}<PickerTimePanel prefixCls={prefix}
-          value={calendar[active] || clock.defaultOpenValue || null}
-          pickerValue={view}
-          config={clock}
-          locale={timeLocale}
-          {now}
-          disabledTime={timeRestriction}
-          onSelect={selectTime}
-          onHover={handleTimeHover}
-          onConfirm={confirm ? () => send(active, 'confirm') : undefined}
-          cellRender={time?.cellRender}
-          range={active === 1 ? 'end' : 'start'}
-          class={semantic?.classes.popup.content}
-          style={semantic?.styles.popup.content}
-          itemClass={semantic?.classes.popup.item}
-          itemStyle={semantic?.styles.popup.item}
-        />{/if}
+        {#if panelReplacement}
+          {@render replacementPanelBody(0)}
+        {:else if mode === 'date'}
+          <div class={`${prefix}-datetime-panel`}>
+            {@render dateCalendar(mode, 0)}
+            {@render timePanelBody()}
+          </div>
+        {:else if mode !== 'time'}
+          {@render dateCalendar(mode, 0)}
+        {:else}
+          {@render timePanelBody()}
+        {/if}
       </div>
       {#if confirm || showCurrent || time?.renderExtraFooter}
         <div
@@ -1629,7 +1805,7 @@
           style={semantic?.styles.popup.footer}
         >
           {#if time?.renderExtraFooter}<div class={`${prefix}-footer-extra`}>
-            {@render time.renderExtraFooter('time')}
+            {@render time.renderExtraFooter(mode)}
           </div>{/if}
           {#if confirm || showCurrent}<ul class={`${prefix}-ranges`}>
             {#if showCurrent}<li class={`${prefix}-now`}><button
@@ -1652,6 +1828,25 @@
       {/if}
     </div>
   </div>
+{/snippet}
+{#snippet timePanelBody()}
+  {#if timeLocale}<PickerTimePanel prefixCls={prefix}
+    value={calendar[active] || clock.defaultOpenValue || null}
+    pickerValue={view}
+    config={clock}
+    locale={timeLocale}
+    {now}
+    disabledTime={timeRestriction}
+    onSelect={selectTime}
+    onHover={handleTimeHover}
+    onConfirm={confirm ? () => send(active, 'confirm') : undefined}
+    cellRender={time?.cellRender}
+    range={cellRange}
+    class={semantic?.classes.popup.content}
+    style={semantic?.styles.popup.content}
+    itemClass={semantic?.classes.popup.item}
+    itemStyle={semantic?.styles.popup.item}
+  />{/if}
 {/snippet}{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`picker-prefix:${prefix}:${rootPrefix}`} />{/if}<div
   bind:this={rootElement} data-ant-picker-prefix={prefix} data-ant-picker-root-prefix={rootPrefix}
   role={time ? 'presentation' : 'group'}
@@ -1773,7 +1968,7 @@
           <div
             bind:this={timeContainer}
             class={[
-              `${prefix}-panel-container ${prefix}-time-panel-container`,
+              `${prefix}-panel-container ${prefix}-${replacementMode}-panel-container`,
               semantic?.classes.popup.container
             ]}
             style={[
@@ -1792,7 +1987,9 @@
         </div>
       {:else}
       <div data-picker-range-arrow class={`${prefix}-range-arrow`} style={`left:${bar.left + bar.width / 2}px`}></div>
-      <div class={[`${prefix}-panel-container`, dateSemantic?.classes.popup.container]}
+      <div class={[`${prefix}-panel-container`,
+          panelReplacement && `${prefix}-${replacementMode}-panel-container`,
+          dateSemantic?.classes.popup.container]}
         style={dateSemantic?.styles.popup.container}>
         {#if panelRender}{@render panelRender(datePanelLayout)}
         {:else}{@render datePanelLayout()}{/if}

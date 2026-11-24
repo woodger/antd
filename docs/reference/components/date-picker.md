@@ -341,6 +341,48 @@ Snippet получает `attributes` поля и `register` для DOM-элем
 RangePicker. В Svelte Enter подтверждает ввод без перевода строки.
 [Браузерные замеры React](../../../tests/browser/fixtures/ant-design-picker-components-editors.json.gz)
 
+### Пользовательские панели
+
+`components` принимает snippets для `date`, `week`, `month`, `quarter`,
+`year`, `decade`, `time` и `datetime`. Последний заменяет календарь и
+колонки времени как одну панель. При отсутствии нужного слота используется
+штатная панель. `panelRender` по-прежнему оборачивает всю раскладку,
+включая панель, пресеты и footer.
+
+`DatePickerPanelContext` содержит дату просмотра `pickerValue`, черновой
+выбор `value` и `values`, локаль, адаптер Dayjs `generateConfig`, ограничения
+и параметры времени. `disabledDate` учитывает `minDate` и `maxDate`.
+`onSelect` принимает готовый Dayjs и передаёт его в обычную логику выбора и
+подтверждения. `onPickerValueChange` сообщает о навигации, а `onModeChange`
+запрашивает режим. При управляемых `mode` и `pickerValue` решение об обновлении
+принимает владелец. Ключ `datetime` соответствует публичному режиму `date`.
+
+```svelte
+<script lang="ts">
+  import { DatePicker, type DatePickerPanelContext } from '@woodger/antd';
+</script>
+
+{#snippet month(context: DatePickerPanelContext)}
+  {@const date = context.pickerValue.startOf('month')}
+  <button type="button" onclick={() => context.onPickerValueChange(date.add(1, 'month'))}>
+    Следующий месяц
+  </button>
+  <button type="button" disabled={context.disabledDate(date, { type: 'month' })}
+    onclick={() => context.onSelect(date)}>
+    Выбрать {date.format('YYYY-MM')}
+  </button>
+{/snippet}
+
+<DatePicker picker="month" components={{ month }} />
+```
+
+Замена сама задаёт доступную разметку и вызовы `onHover` для предпросмотра.
+`cellRender` доступен в контексте и использует переданный `originNode`, если
+владелец не задал renderer. `prevIcon`, `nextIcon`, `superPrevIcon` и
+`superNextIcon` принимают текст или snippets и действуют также в штатном
+заголовке. Когда сфокусированная кнопка исчезает при смене слота, фокус
+остаётся в popup.
+
 ### Семантическое оформление и настройки провайдера
 
 DatePicker и RangePicker принимают `prefix`, `classNames` и `styles`.

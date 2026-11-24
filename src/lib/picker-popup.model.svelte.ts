@@ -4,6 +4,7 @@ import { createPopupContainer } from './popup-container.model.svelte.js';
 import { getPopupActiveElement } from './popup.dom';
 import { getTooltipPosition, type TooltipRect } from './tooltip.engine';
 import type { DatePickerMode, DatePickerProps } from './date-picker.types';
+import type { DatePickerPanel } from './picker-components.types';
 
 interface PickerPopupContainerOptions {
   open: boolean;
@@ -23,8 +24,12 @@ export function focusPickerPanel(popup: HTMLElement | undefined, mode: DatePicke
     : 'button[data-picker-date][tabindex="0"]:not(:disabled)';
   const fallback = mode === 'time'
     ? '[data-picker-time-value] button:not(:disabled)' : 'button[data-picker-date]:not(:disabled)';
-  const control = popup.querySelector<HTMLButtonElement>(preferred)
-    ?? popup.querySelector<HTMLButtonElement>(fallback);
+  const control = popup.querySelector<HTMLElement>(preferred)
+    ?? popup.querySelector<HTMLElement>(fallback)
+    ?? popup.querySelector<HTMLElement>([
+      '[data-picker-authored-panel] :is(button, input, textarea, select):not(:disabled)',
+      '[data-picker-authored-panel] :is(a[href], [tabindex]):not([tabindex="-1"])'
+    ].join(','));
 
   control?.focus();
   return control !== null;
@@ -133,4 +138,48 @@ export function getPickerPopupPosition(
 
   // useAlign округляет offset вниз при scale=1; размеры native panel могут быть дробными.
   return { ...position, left: Math.floor(position.left), top: Math.floor(position.top) };
+}
+
+/** При замене содержимого оставляет фокус в панели до удаления старой кнопки. */
+export function retainPickerReplacementFocus(getOptions: () => {
+  popup?: HTMLElement;
+  panel?: DatePickerPanel;
+  count: number;
+  prefix: string;
+}) {
+  let previous = untrack(getOptions);
+  $effect.pre(() => {
+    const current = getOptions();
+    const { popup, panel, count, prefix } = current;
+    const replaced = popup === previous.popup && (panel !== previous.panel
+      || panel && count < previous.count);
+    previous = current;
+    if (!replaced || !popup?.isConnected) {
+      return;
+    }
+    const active = getPopupActiveElement(popup);
+    const owners = Array.from(popup.getElementsByClassName(`${prefix}-panel`));
+    if (active && owners.some(owner => owner.contains(active))) {
+      const first = owners[0];
+      if (first instanceof HTMLElement) {
+        untrack(() => first.focus({ preventScroll: true }));
+      }
+    }
+  });
+}
+
+/** Авторские панели и редакторы сами управляют фокусом своих controls. */
+export function keepPickerEditorFocus(
+  event: PointerEvent, popup: HTMLElement | undefined, allowNestedEditors: boolean
+) {
+  for (const target of event.composedPath()) {
+    if (target === popup) break;
+    if (!(target instanceof HTMLElement)) continue;
+    if (target.hasAttribute('data-picker-authored-panel')
+      || allowNestedEditors
+        && (target.matches('input, textarea, select') || target.isContentEditable)) {
+      return false;
+    }
+  }
+  return true;
 }

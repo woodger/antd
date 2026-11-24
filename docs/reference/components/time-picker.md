@@ -75,6 +75,12 @@ Native name/id/required и FormItem работают без скрытого ISO
 подпись OK и атрибуты штатного подтверждения.
 [Контекст редактора и кнопки](date-picker.md#редактор-и-кнопка-подтверждения)
 
+`components.time` заменяет колонки, сохраняя обычный черновик и подтверждение.
+Панель может запросить календарный режим через `onModeChange`. Для владельца
+с такими переходами используйте `TimePickerProps<DatePickerMode>`. По
+умолчанию тип режима у `TimePickerProps` — `'time'`.
+[Контекст панели](date-picker.md#пользовательские-панели)
+
 Адаптация доступности использует native buttons для единиц, стрелки/Home/End,
 ArrowDown из input, Enter/Tab и Escape с возвратом фокуса. Popup использует общий
 native popover lifecycle библиотеки. Класс popup задаётся через classNames.popup.root

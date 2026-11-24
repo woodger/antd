@@ -14,17 +14,18 @@ import type {
 } from './date-picker.types';
 
 const yearAndMonth = ['decade', 'year', 'month'] as const;
-const panelDescent: Record<DatePickerPicker, readonly DatePickerMode[]> = {
+const panelDescent: Record<DatePickerPicker | 'time', readonly DatePickerMode[]> = {
   date: [...yearAndMonth, 'date'],
   week: [...yearAndMonth, 'week'],
   month: yearAndMonth,
   quarter: ['decade', 'year', 'quarter'],
-  year: yearAndMonth
+  year: yearAndMonth,
+  time: yearAndMonth
 };
 
 /** Следующий уровень зависит от picker, даже когда видимую панель задаёт владелец. */
 export function nextPickerPanelMode(
-  picker: DatePickerPicker,
+  picker: DatePickerPicker | 'time',
   mode: DatePickerMode
 ): DatePickerMode | undefined {
   if (mode === picker) {

@@ -1,9 +1,9 @@
 <script lang="ts">
   import SinglePicker from './SinglePicker.svelte';
   import { timePickerSharedProps } from './time-picker-props.engine';
-  import type { TimePickerFocusOptions, TimePickerProps } from './time-picker.types';
+  import type { TimePickerFocusOptions, TimePickerRuntimeProps } from './time-picker.types';
 
-  let { nativeElement = $bindable(), ...props }: TimePickerProps = $props();
+  let { nativeElement = $bindable(), ...props }: TimePickerRuntimeProps = $props();
   let shared = $derived(timePickerSharedProps(props));
   let picker = $state<{ focus(options?: TimePickerFocusOptions): void; blur(): void; }>();
 
