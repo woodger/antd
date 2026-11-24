@@ -74,7 +74,6 @@ import '@woodger/antd/styles.css';
 - [Всплывающие элементы](docs/reference/popup-settings.md) — контейнер, размещение и ширина списка.
 - [Эффект Wave](docs/reference/wave.md) — настройки и поведение эффекта нажатия.
 - [Клавиатура и фокус](docs/reference/keyboard.md) — управление компонентами и доступность.
-- [Публичные экспорты](src/lib/index.ts) — компоненты, функции и типы.
 - [Покрытие переноса Ant Design](docs/reference/ant-design-porting/status.md) — реализованные возможности и отличия.
 
 ## Руководство разработчика
