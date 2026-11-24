@@ -64,26 +64,12 @@ async function act(page: Page, action: string) {
   }
 }
 
-/** Сохраняет Native-контракт info.source и существующий порядок OK календарного пикера. */
+/** Native сообщает источник одиночного черновика через публичное поле info.source. */
 function expectedEvents(sample: Sample, state: ClockState) {
   const source = sample.profile.actions.includes('choose-date') ? 'date' : 'time';
-  const calls = state.events.map(event => event[0] === 'calendar' && !sample.profile.range
+  return state.events.map(event => event[0] === 'calendar' && !sample.profile.range
     ? [event[0], event[1], event[2], { source }]
     : event);
-
-  if (!state.open && sample.profile.picker !== 'time' && calls.at(-1)?.[0] === 'open') {
-    const close = calls.length - 1;
-    const change = calls[close - 1]?.[0] === 'change';
-    const confirm = change ? close - 2 : close - 1;
-    if (calls[confirm]?.[0] === 'ok') {
-      // Отличие существующего календарного режима записано в реестре.
-      const [onOk] = calls.splice(confirm, 1);
-      const position = sample.profile.range ? calls.length : calls.length - 1;
-      calls.splice(position, 0, onOk);
-    }
-  }
-
-  return calls;
 }
 
 test.beforeEach(async ({ page }) => {

@@ -154,6 +154,7 @@ export interface DatePickerProps<DateType extends object = Dayjs> extends Omit<
     dateString: string,
     info: { source: 'date' | 'time'; }
   ) => void;
+  /** Кнопка OK сообщает подтверждаемый черновик перед публикацией изменения. */
   onOk?: (value: DateType) => void;
   onClear?: () => void;
   onPickerValueChange?: (

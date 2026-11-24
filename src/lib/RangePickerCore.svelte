@@ -7,7 +7,8 @@
   import type { DatePickerCalendarMode, DatePickerMode, DatePickerTimeConfig } from './date-picker.types';
   import {
     createRangeInteraction,
-    type RangeInteractionSource
+    type RangeInteractionSource,
+    type RangeInteractionSubmit
   } from './range-picker-interaction.engine';
   import { createRangePickerEngine, rangePair, rangeFlags, rangeFrom } from './range-picker.engine';
   import { createDatePickerEngine, pickerFormats, nextPickerPanelMode } from './date-picker.engine';
@@ -221,15 +222,7 @@
       copy[index] = next;
       changeCalendar(copy);
     },
-    flushSubmit: (index, all) => {
-      const copy: RangePickerValue<DateType> = [...submit];
-      copy[index] = calendar[index];
-      submit = copy;
-      if (all) {
-        commit(copy);
-        requestOpen(false);
-      }
-    },
+    flushSubmit: submitField,
     resetValue: index => {
       resetQuarterInput(index);
       if (index === undefined) {
@@ -792,7 +785,19 @@
     if (changed)
       onCalendarChange?.([...next], dateTexts(next), { range: part });
   }
-  function commit(next: RangePickerValue<DateType> | null) {
+  /** Публикует диапазон, когда завершено подтверждение всех доступных полей. */
+  function submitField(
+    index: number, all: boolean, accepted?: RangePickerValue<DateType>, opened?: boolean
+  ) {
+    const copy: RangePickerValue<DateType> = [...submit];
+    copy[index] = calendar[index];
+    submit = copy;
+    if (all) {
+      commit(copy, accepted);
+      requestOpen(false, opened);
+    }
+  }
+  function commit(next: RangePickerValue<DateType> | null, accepted?: RangePickerValue<DateType>) {
     const pair: RangePickerValue<DateType> = next === null
       ? [blocked[0] ? submit[0] : null, blocked[1] ? submit[1] : null]
       : orderedRange(next, order, blocked);
@@ -805,7 +810,8 @@
           picker === 'date' && index === 0), picker, lang.locale));
     if (passed) {
       resetQuarterInput();
-      const changed = time ? !sameTimeRange(pair, committed) : !sameRange(pair, committed);
+      const previous = accepted ?? committed;
+      const changed = time ? !sameTimeRange(pair, previous) : !sameRange(pair, previous);
       if (time || value === undefined)
         internalValue = [...pair];
       if (changed) {
@@ -817,8 +823,8 @@
     }
     return passed;
   }
-  function requestOpen(next: boolean) {
-    if (next && blocked.every(Boolean) || next === visible) {
+  function requestOpen(next: boolean, opened?: boolean) {
+    if (next && blocked.every(Boolean) || next === (opened ?? visible)) {
       return;
     }
     if (next) {
@@ -976,9 +982,14 @@
       });
     }
   }
-  function send(index: number, source: RangeInteractionSource, next?: DateType | null) {
+  function send(
+    index: number,
+    source: RangeInteractionSource,
+    next?: DateType | null,
+    flush?: RangeInteractionSubmit
+  ) {
     const previous = interaction.activeIndex;
-    interaction.trigger(index, source, next);
+    interaction.trigger(index, source, next, flush);
     revision++;
     if (interaction.activeIndex !== previous) {
       hover = null;
@@ -1553,11 +1564,24 @@
     onOk?.([...calendar]);
     send(active, 'confirm');
   }
+  /** OK сообщает черновик диапазона до переключения поля или публикации значения. */
   function confirmDate() {
-    const notifyFirst = picker !== 'date' || Boolean(panelReplacement || authoredModes);
-    if (notifyFirst) onOk?.([...calendar]);
-    send(active, 'confirm');
-    if (!notifyFirst) onOk?.([...calendar]);
+    const index = active;
+    // Обработчик onOk может изменить value или open в той же операции.
+    const accepted = onOk && committed;
+    const opened = visible;
+    onOk?.([...calendar]);
+    send(index, 'confirm', undefined, (field, all) => submitField(field, all, accepted, opened));
+  }
+  /** Для OK нужна дата активного поля. allowEmpty учитывается при отправке диапазона. */
+  function canConfirmDate() {
+    const selected = calendar[active];
+    if (!selected) {
+      return false;
+    }
+
+    const reference = picker === 'quarter' || picker === 'week' ? undefined : from();
+    return !invalid(selected, active, reference);
   }
   function timeNowDisabled(date: DateType) {
     if (!time) {
@@ -1745,11 +1769,11 @@
               active,
               'confirm',
               validPickerTime(adapter.getNow(), clock)
-            )}>{showTime ? lang.now : lang.today}</button></li>{/if}{#if confirm}<li class={`${prefix}-ok`}><PickerConfirmButton component={components?.button} disabled={!calendar[active]
-              && !empty[active]
-              || Boolean(
-                calendar[active] && invalid(calendar[active]!, active, picker === 'quarter' || picker === 'week' ? undefined : from())
-              )} onclick={confirmDate} children={lang.ok} /></li>{/if}</ul>{/if}</div>{/if}
+            )}>{showTime ? lang.now : lang.today}</button></li>{/if}
+            {#if confirm}<li class={`${prefix}-ok`}>
+              <PickerConfirmButton component={components?.button}
+                disabled={!canConfirmDate()} onclick={confirmDate} children={lang.ok} />
+            </li>{/if}</ul>{/if}</div>{/if}
         </div>
       </div>
 {/snippet}

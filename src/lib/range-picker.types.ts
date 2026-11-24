@@ -97,6 +97,7 @@ export interface RangePickerProps<DateType extends object = Dayjs> extends Omit<
     dateStrings: [string, string],
     info: RangePickerInfo
   ) => void;
+  /** OK активной границы сообщает текущий черновик диапазона. */
   onOk?: (value: RangePickerValue<DateType>) => void;
   onPickerValueChange?: (
     value: [DateType, DateType],

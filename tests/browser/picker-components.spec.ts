@@ -253,8 +253,8 @@ test('the intrinsic confirmation button uses disabled and does not submit the fo
   expect(await readForm(page)).toEqual(['2024-06-16']);
   const log = await events(page);
   expect(log.filter(([name]) => name === 'ok' || name === 'change')).toEqual([
-    ['change', '2024-06-16T00:00:00.000+00:00', '2024-06-16'],
-    ['ok', '2024-06-16T00:00:00.000+00:00']
+    ['ok', '2024-06-16T00:00:00.000+00:00'],
+    ['change', '2024-06-16T00:00:00.000+00:00', '2024-06-16']
   ]);
   expect(log.filter(([name]) => name === 'submit')).toEqual([]);
 });

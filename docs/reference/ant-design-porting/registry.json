@@ -7136,16 +7136,21 @@
         },
         {
           "id": "datetime-confirm-order",
-          "title": "Порядок событий OK в календаре со временем",
-          "state": "partial",
+          "title": "Подтверждение даты и диапазона в календаре с временем и без него",
+          "state": "supported",
           "requiredForV1": false,
           "evidence": [
             "src/lib/SinglePicker.svelte",
             "src/lib/RangePickerCore.svelte",
+            "src/lib/range-picker-interaction.engine.ts",
             "tests/browser/fixtures/ant-design-picker-clock-options-reference.json",
-            "tests/browser/picker-clock-options.spec.ts"
+            "tests/browser/fixtures/ant-design-picker-confirmation-reference.json",
+            "tests/browser/picker-clock-options.spec.ts",
+            "tests/browser/picker-confirmation.spec.ts",
+            "tests/package/picker-confirmation.ssr.test.ts",
+            "docs/reference/components/date-picker.md"
           ],
-          "note": "В Ant Design 6.6.8 в обычном datetime второе подтверждение диапазона и подтверждение одиночного поля сообщают onOk перед onChange и onOpenChange(false). В Native одиночное поле вызывает onOk после onChange, диапазон — после onChange и закрытия. Порядок событий в picker=time совпадает с Source."
+          "note": "Два совпавших прогона Ant Design 6.6.8 в UTC для 19 профилей и 83 действий. Кнопка OK вызывает onOk до onChange и onOpenChange(false). В диапазоне первое подтверждение переводит фокус на другую границу. Сверены Enter в поле и на кнопке, пустые границы с allowEmpty, запрещённая дата, принятие и отклонение controlled value, изменение value или open внутри onOk. Native передаёт публичный info.source и возвращает фокус в одиночное поле после OK. Состояние кнопки проверено в SSR."
         },
         {
           "id": "datetime-format-literals",

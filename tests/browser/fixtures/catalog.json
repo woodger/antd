@@ -1603,6 +1603,11 @@
     "root": "picker-clock-options-fixture"
   },
   {
+    "id": "picker-confirmation",
+    "module": "./PickerConfirmationFixtures.svelte",
+    "root": "picker-confirmation-fixture"
+  },
+  {
     "id": "color-picker-theme",
     "module": "./ColorPickerThemeFixtures.svelte",
     "root": "color-picker-theme-fixture"

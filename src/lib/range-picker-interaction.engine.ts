@@ -12,6 +12,8 @@ export type RangeInteractionSource =
   | 'remove'
   | 'popupClose'
   | 'esc';
+export type RangeInteractionSubmit = (index: number, all: boolean) => void;
+
 // Создаёт отдельное состояние редактирования для одного RangePicker.
 export function createRangeInteraction<Value>(options: {
   fieldCount: () => number;
@@ -19,7 +21,7 @@ export function createRangeInteraction<Value>(options: {
   allowEmpty: () => readonly boolean[];
   getCalendarValue: () => readonly (Value | null | undefined)[];
   triggerCalendarChange: (index: number, value: Value | null) => void;
-  flushSubmit: (index: number, all: boolean) => void;
+  flushSubmit: RangeInteractionSubmit;
   resetValue: (index?: number) => void;
 }) {
   const { getCalendarValue, triggerCalendarChange, flushSubmit, resetValue } = options;
@@ -67,10 +69,10 @@ export function createRangeInteraction<Value>(options: {
     }
   };
   // Публикует выбранное поле и завершает взаимодействие, когда обработаны все поля.
-  const submitField = (index: number) => {
+  const submitField = (index: number, flush: RangeInteractionSubmit) => {
     recordTriggeredField(index);
     const allFieldsTriggered = triggeredFields.length >= options.fieldCount();
-    flushSubmit(index, allFieldsTriggered);
+    flush(index, allFieldsTriggered);
     if (allFieldsTriggered) {
       reset();
     }
@@ -170,7 +172,13 @@ export function createRangeInteraction<Value>(options: {
   }
 
   // Применяет команду к текущему взаимодействию, публикуя draft до перехода фокуса.
-  const triggerChange = (index: number, source: RangeInteractionSource, value?: Value | null) => {
+  // Подтверждение может передать обработчик со снимком принятого значения.
+  const triggerChange = (
+    index: number,
+    source: RangeInteractionSource,
+    value?: Value | null,
+    flush = flushSubmit
+  ) => {
     let currentIndex = getCurrentIndex();
     if (source !== 'popupClose') {
       isLastInput = source === 'input';
@@ -197,10 +205,10 @@ export function createRangeInteraction<Value>(options: {
         if (options.needConfirm()) {
           confirmedIndex = actionIndex;
         }
-        submitField(actionIndex);
+        submitField(actionIndex, flush);
         break;
       case 'switchNext':
-        submitAndSwitch(actionIndex, index, source, value);
+        submitAndSwitch(actionIndex, index, source, value, flush);
         break;
       case 'finish':
         reset();
@@ -232,7 +240,8 @@ export function createRangeInteraction<Value>(options: {
     actionIndex: number,
     requestedIndex: number,
     source: RangeInteractionSource,
-    value: Value | null | undefined
+    value: Value | null | undefined,
+    flush: RangeInteractionSubmit
   ) {
     if (source === 'panel-final' || value !== undefined) {
       recordTriggeredField(actionIndex, true);
@@ -246,7 +255,7 @@ export function createRangeInteraction<Value>(options: {
 
     const shouldFocusNext = source === 'confirm' || source === 'keyboard-submit'
       || source === 'panel-final' || source === 'popupClose' && !isLastInput;
-    const allFieldsTriggered = submitField(actionIndex);
+    const allFieldsTriggered = submitField(actionIndex, flush);
     if (allFieldsTriggered && source === 'field-switch') {
       setCurrentIndex(requestedIndex);
       setForceFocus(false);

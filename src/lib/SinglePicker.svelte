@@ -374,7 +374,7 @@
     readOnly, preserveInvalidOnBlur,
     validateText: next => !!parsePicker(next, actualLocale.locale, formats),
     acceptInput: next => inputChange(next, true),
-    onHelp: () => requestOpen(true, true)
+    onHelp: () => requestOpen(true, { preserveDraft: true })
   }));
   const maskEvents = pickerEditorMaskEvents(maskInput, () => attributes);
   const multiplePicker = createMultiplePicker({
@@ -444,12 +444,7 @@
         text = formatPicker(draft, actualLocale.locale, formats);
       }
     },
-    flushSubmit: (_index, all) => {
-      if (all) {
-        if (draft) submitDateSelection(draft);
-        requestOpen(false);
-      }
-    },
+    flushSubmit: (_index, all) => submitDraftSelection(all),
     resetValue: () => {
       if (!timePickerSameValue(mergedValue, draft)) {
         setDraft(mergedValue, 'date');
@@ -661,13 +656,13 @@
       )
     );
   }
-  function requestOpen(next: boolean, preserveDraft = false) {
-    if (blocked || visible === next) {
+  function requestOpen(next: boolean, options?: { preserveDraft?: boolean; opened?: boolean; }) {
+    if (blocked || (options?.opened ?? visible) === next) {
       return;
     }
     if (next) {
       now = adapter.getNow();
-      if (!time && !retainedDateSelection && !preserveDraft) draft = mergedValue;
+      if (!time && !retainedDateSelection && !options?.preserveDraft) draft = mergedValue;
       localMode = terminalMode;
       authoredMode = false;
       if (time) timeInteraction.trigger(0, 'field-switch');
@@ -701,13 +696,13 @@
     if (changed)
       onCalendarChange?.(next, formatPicker(next, actualLocale.locale, formats), { source });
   }
-  function commit(next: DateType | null) {
+  function commit(next: DateType | null, accepted?: DateType | null) {
     if (!time) dateSelectionInteraction.reset();
     if (!time && blocked || next && !valid(next)) {
       return false;
     }
-    const changed = time ? !timePickerSameValue(next, mergedValue)
-      : !dates.sameValue(next, mergedValue);
+    const previous = accepted === undefined ? mergedValue : accepted;
+    const changed = time ? !timePickerSameValue(next, previous) : !dates.sameValue(next, previous);
     setDraft(next, time ? 'time' : 'date');
     if (time && standaloneTime) {
       internalValue = next;
@@ -741,33 +736,12 @@
       }
       return;
     }
-    if (confirmed && retainedDateSelection) {
-      if (!valid(draft)) {
-        return;
-      }
-      if (draft) onOk?.(draft);
-      dateSelectionInteraction.trigger(0, 'confirm');
-      return;
-    }
-    if (confirmed && picker !== 'date') {
-      if (!valid(draft)) {
-        return;
-      }
-      if (draft) onOk?.(draft);
-      if (!commit(draft)) {
-        return;
-      }
-      requestOpen(false);
-      return;
-    }
     if (confirmed) {
-      if (!valid(draft) || !commit(draft)) {
-        return;
-      }
-      if (draft)
-        onOk?.(draft);
+      confirmDate();
+      return;
     }
-    else if (!confirm && dirty) {
+
+    if (!confirm && dirty) {
       if (!text) {
         commit(null);
       }
@@ -782,6 +756,39 @@
     if (!preserveInvalidOnBlur || !invalid)
       resetText();
     requestOpen(false);
+  }
+
+  /** Кнопка OK сообщает черновик перед отправкой значения и закрытием панели. */
+  function confirmDate() {
+    const selected = draft;
+    if (!selected || !valid(selected)) {
+      return;
+    }
+
+    // Обработчик onOk может изменить value или open в той же операции.
+    const accepted = onOk && mergedValue;
+    const opened = visible;
+    const retained = retainedDateSelection;
+    const calendarDate = picker === 'date';
+    onOk?.(selected);
+    if (retained) {
+      dateSelectionInteraction.trigger(
+        0, 'confirm', undefined, (_index, all) => submitDraftSelection(all, accepted, opened)
+      );
+      return;
+    }
+    if (!commit(selected, accepted)) {
+      return;
+    }
+
+    requestOpen(false, { opened });
+    if (calendarDate && (!preserveInvalidOnBlur || !invalid)) {
+      // При отклонении controlled value закрытие возвращает календарь к принятой дате.
+      if (value !== undefined && !visible && draft !== mergedValue) {
+        setDraft(mergedValue, 'date');
+      }
+      resetText();
+    }
   }
 
   /** OK получает текущий выбор, включая исходный шаблон часов в пустом поле. */
@@ -1400,7 +1407,14 @@
     text = formatPicker(next, actualLocale.locale, formats);
     if (submitDateSelection(next)) closeDateSelection();
   }
-  function submitDateSelection(next: DateType) {
+  /** Отправляет черновик пресета или авторской панели при завершении взаимодействия. */
+  function submitDraftSelection(all: boolean, accepted?: DateType | null, opened?: boolean) {
+    if (all) {
+      if (draft) submitDateSelection(draft, accepted);
+      requestOpen(false, { opened });
+    }
+  }
+  function submitDateSelection(next: DateType, accepted?: DateType | null) {
     // Выбор меняет calendar до validation; popupClose управляет сессией отдельно.
     if (!timePickerSameValue(next, draft)) setDraft(next, 'date');
     if (!fields.isValidate(next) || disabledDate?.(next, { type: picker })
@@ -1408,7 +1422,8 @@
       || pickerTimeDisabled(next, { showTime, disabledTime })) {
       return false;
     }
-    const changed = !timePickerSameValue(next, mergedValue);
+    const previous = accepted === undefined ? mergedValue : accepted;
+    const changed = !timePickerSameValue(next, previous);
     if (value === undefined) storeDate(next);
     if (changed) onChange?.(next, formatPicker(next, actualLocale.locale, formats));
     return true;
