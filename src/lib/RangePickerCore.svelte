@@ -1558,18 +1558,15 @@
     }
     setTimePanel(index, next, 'reset');
   }
-  function confirmTime() {
-    if (!calendar[active] && clock.defaultOpenValue)
-      send(active, 'panel-intermediate', clock.defaultOpenValue);
-    onOk?.([...calendar]);
-    send(active, 'confirm');
-  }
   /** OK сообщает черновик диапазона до переключения поля или публикации значения. */
-  function confirmDate() {
+  function confirmField() {
     const index = active;
     // Обработчик onOk может изменить value или open в той же операции.
     const accepted = onOk && committed;
     const opened = visible;
+    if (time && !calendar[index] && clock.defaultOpenValue) {
+      send(index, 'panel-intermediate', clock.defaultOpenValue);
+    }
     onOk?.([...calendar]);
     send(index, 'confirm', undefined, (field, all) => submitField(field, all, accepted, opened));
   }
@@ -1772,7 +1769,7 @@
             )}>{showTime ? lang.now : lang.today}</button></li>{/if}
             {#if confirm}<li class={`${prefix}-ok`}>
               <PickerConfirmButton component={components?.button}
-                disabled={!canConfirmDate()} onclick={confirmDate} children={lang.ok} />
+                disabled={!canConfirmDate()} onclick={confirmField} children={lang.ok} />
             </li>{/if}</ul>{/if}</div>{/if}
         </div>
       </div>
@@ -1835,7 +1832,7 @@
               disabled={!calendar[active] && !clock.defaultOpenValue
                 || !!(calendar[active] || clock.defaultOpenValue)
                   && invalid((calendar[active] || clock.defaultOpenValue)!, active)}
-              onclick={confirmTime}
+              onclick={confirmField}
               children={lang.ok}
             /></li>{/if}
           </ul>{/if}

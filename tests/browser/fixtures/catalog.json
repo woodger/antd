@@ -1608,6 +1608,11 @@
     "root": "picker-confirmation-fixture"
   },
   {
+    "id": "picker-controlled-confirmation",
+    "module": "./PickerControlledConfirmationFixtures.svelte",
+    "root": "picker-controlled-confirmation-fixture"
+  },
+  {
     "id": "color-picker-theme",
     "module": "./ColorPickerThemeFixtures.svelte",
     "root": "color-picker-theme-fixture"

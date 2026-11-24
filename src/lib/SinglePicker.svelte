@@ -410,18 +410,7 @@
       setDraft(next?.[0] ?? null, 'time');
       text = formatPicker(draft, actualLocale.locale, formats);
     },
-    flushSubmit: (_index, all) => {
-      if (!all) {
-        return;
-      }
-      if (multipleOptions) {
-        multiplePicker.publish();
-      }
-      else {
-        commit(draft);
-      }
-      requestOpen(false);
-    },
+    flushSubmit: (_index, all) => submitTimeSelection(all),
     resetValue: () => {
       if (multipleOptions) {
         multiplePicker.reset(true);
@@ -731,8 +720,9 @@
       return;
     }
     if (multipleOptions) {
+      const opened = visible;
       if (!confirmed || multiplePicker.confirm()) {
-        requestOpen(false);
+        requestOpen(false, { opened });
       }
       return;
     }
@@ -793,25 +783,48 @@
 
   /** OK получает текущий выбор, включая исходный шаблон часов в пустом поле. */
   function confirmTime() {
+    const opened = visible;
     if (multipleOptions) {
       const template = clock.defaultOpenValue;
       if (!replacementSelection.length && template && valid(template)) {
         stageTimeSelection(template);
       }
-      if (!multiplePicker.canConfirm) {
+      const submit = multiplePicker.prepareConfirmation();
+      if (!submit) {
         return;
       }
-      multipleOptions.onOk?.([...multiplePicker.values]);
+      timeInteraction.trigger(0, 'confirm', undefined,
+        (_index, all) => submitTimeSelection(all, submit, opened));
+      return;
+    }
+
+    const accepted = onOk && mergedValue;
+    if (!draft && clock.defaultOpenValue) {
+      timeInteraction.trigger(0, 'panel-intermediate', [clock.defaultOpenValue]);
+    }
+    if (draft) {
+      onOk?.(draft);
+    }
+    timeInteraction.trigger(0, 'confirm', undefined,
+      (_index, all) => submitTimeSelection(all, () => commit(draft, accepted), opened));
+  }
+
+  /** Публикует выбор часов перед закрытием, включая отправку из конкретного действия. */
+  function submitTimeSelection(all: boolean, submit?: () => void, opened?: boolean) {
+    if (!all) {
+      return;
+    }
+
+    if (submit) {
+      submit();
+    }
+    else if (multipleOptions) {
+      multiplePicker.publish();
     }
     else {
-      if (!draft && clock.defaultOpenValue) {
-        timeInteraction.trigger(0, 'panel-intermediate', [clock.defaultOpenValue]);
-      }
-      if (draft) {
-        onOk?.(draft);
-      }
+      commit(draft);
     }
-    timeInteraction.trigger(0, 'confirm');
+    requestOpen(false, { opened });
   }
   function syncDatePanel(opening: boolean) {
     if (defaultPickerValue && !opening) {

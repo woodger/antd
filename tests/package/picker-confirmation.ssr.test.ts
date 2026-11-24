@@ -3,14 +3,17 @@ import { expect, it, vi } from 'vitest';
 import registry from '@woodger/antd/porting/registry.json';
 import PickerConfirmationFixtures from '../browser/fixtures/PickerConfirmationFixtures.svelte';
 import reference from '../browser/fixtures/ant-design-picker-confirmation-reference.json';
+import controlled from '../browser/fixtures/ant-design-picker-controlled-confirmation-reference.json';
 
 it('uses the pinned Ant Design archive for the recorded confirmation sequences', () => {
-  expect(reference.reference).toMatchObject({
-    version: registry.upstream.version,
-    revision: registry.upstream.revision,
-    archiveSha256: registry.upstream.archiveSha256,
-    repeated: 2
-  });
+  for (const source of [reference, controlled]) {
+    expect(source.reference).toMatchObject({
+      version: registry.upstream.version,
+      revision: registry.upstream.revision,
+      archiveSha256: registry.upstream.archiveSha256,
+      repeated: 2
+    });
+  }
 });
 
 for (const sample of reference.cases) {

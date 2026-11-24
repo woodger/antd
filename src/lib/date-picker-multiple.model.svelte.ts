@@ -99,7 +99,7 @@ export function createMultiplePicker<DateType extends object>(
   }
 
   /** Публикует проверенный массив. Полная очистка имеет специальный null payload. */
-  function publish(clear = false) {
+  function publish(clear = false, accepted?: readonly DateType[]) {
     const { props, disabled, valid } = options;
 
     if (!props || disabled || !clear && draft.some(date => !valid(date))) {
@@ -107,7 +107,7 @@ export function createMultiplePicker<DateType extends object>(
     }
 
     const next = [...draft];
-    const changed = !sameDates(saved, next);
+    const changed = !sameDates(accepted ?? saved, next);
     if (props.value === undefined) options.local = next;
     if (changed) props.onChange?.(clear ? null : next, next.length ? next.map(format) : null);
 
@@ -158,15 +158,28 @@ export function createMultiplePicker<DateType extends object>(
 
       return draft.length > 0 && draft.every(valid);
     },
-    /** OK предшествует итоговому изменению и закрытию панели. */
-    confirm() {
+    /** Сообщает черновик и готовит отправку с value, действовавшим до onOk. */
+    prepareConfirmation() {
       if (!this.canConfirm) {
+        return undefined;
+      }
+
+      const props = options.props;
+      const onOk = props?.onOk;
+      const accepted = onOk && saved;
+      onOk?.call(props, [...draft]);
+
+      /** Время отправки выбирает владелец сессии подтверждения. */
+      return () => publish(false, accepted);
+    },
+    /** Завершает календарный выбор после успешной отправки. */
+    confirm() {
+      const submit = this.prepareConfirmation();
+      if (!submit) {
         return false;
       }
 
-      options.props?.onOk?.([...draft]);
-      confirmed = publish();
-
+      confirmed = submit();
       return confirmed;
     },
     /** Применяет черновик после закрытия либо возвращает принятые даты. */

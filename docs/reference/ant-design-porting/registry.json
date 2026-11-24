@@ -7153,6 +7153,21 @@
           "note": "Два совпавших прогона Ant Design 6.6.8 в UTC для 19 профилей и 83 действий. Кнопка OK вызывает onOk до onChange и onOpenChange(false). В диапазоне первое подтверждение переводит фокус на другую границу. Сверены Enter в поле и на кнопке, пустые границы с allowEmpty, запрещённая дата, принятие и отклонение controlled value, изменение value или open внутри onOk. Native передаёт публичный info.source и возвращает фокус в одиночное поле после OK. Состояние кнопки проверено в SSR."
         },
         {
+          "id": "controlled-confirmation",
+          "title": "Подтверждение часов и списков при обновлении value или open в onOk",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "src/lib/date-picker-multiple.model.svelte.ts",
+            "tests/browser/fixtures/ant-design-picker-controlled-confirmation-reference.json",
+            "tests/browser/picker-controlled-confirmation.spec.ts",
+            "docs/reference/components/date-picker.md"
+          ],
+          "note": "Два совпавших прогона Ant Design 6.6.8 для 12 профилей и 41 действия. Охвачены DatePicker в режиме time, его RangePicker, фабричный TimePicker, множественный выбор дат и времени и самостоятельные компоненты часов. Сверены последовательность и аргументы callbacks, строки поля, доступность OK и переход фокуса диапазона."
+        },
+        {
           "id": "datetime-format-literals",
           "title": "Сохранённое native исключение literals при выводе datetime units; дефект Source",
           "state": "partial",
@@ -12832,6 +12847,20 @@
             "tests/package/picker-container.ssr.test.ts"
           ],
           "note": "54 эталона официального UMD задают local → ConfigProvider fallback, undefined/nesting/theme reset, div.ant-picker trigger и defaultOpen с учётом нулевой/положительной арности getter. Исходные offset=4 с округлением координат вниз при scale=1, min-width selector и default bottomRight в RTL перенесены в общие single/range cores. Новый callback с прежним контейнером сохраняет panel/editor DOM, draft, state, focus/selection; смена самого DOM target пересоздаёт panel, как React portal. Поддержаны ShadowRoot со стилями потребителя, native refs/cleanup и SSR без вызова getter. Dayjs, точность/UTC, FormData и машины подтверждения сохранены; native conditional panel по-прежнему удаляется при закрытии, в отличие от retained popup rc-trigger."
+        },
+        {
+          "id": "controlled-confirmation",
+          "title": "Подтверждение времени при обновлении value или open в onOk",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "tests/browser/fixtures/ant-design-picker-controlled-confirmation-reference.json",
+            "tests/browser/picker-controlled-confirmation.spec.ts",
+            "docs/reference/components/time-picker.md"
+          ],
+          "note": "Подтверждение сообщает об изменении времени и запросе закрытия, когда владелец уже принял value или изменил open внутри onOk. Сверены TimePicker с существующим выбором и с defaultOpenValue, а также обе границы TimeRangePicker."
         },
         {
           "id": "native-unit-double-click",
