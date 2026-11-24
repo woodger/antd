@@ -19937,6 +19937,26 @@
           "note": "Ant Design 6.6.8, rc-table 1.11.1. Два одинаковых UMD-прогона 16 профилей дают 20 состояний и 16 снимков SSR. Вложенный dataIndex читает поля и индексы, строка остаётся буквальным ключом. render сохраняет record/index и получает исходное value. Native сохраняет текстовый вывод false и буквальный пустой ключ. Проверены auto/fixed, max-content, sticky, пустые и headerless таблицы, align в RTL, ellipsis и title. В Source virtual minWidth=316 даёт заголовок 120 px и ячейку 316 px. Native применяет минимум в общей фиксированной сетке шапки и тела. Строгая гидратация и смена layout сохраняют редактор, выделение и фокус."
         },
         {
+          "id": "sorter-state",
+          "title": "Циклы, управление колонками и приоритеты сортировки",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table-sorter.engine.ts",
+            "src/lib/table.engine.ts",
+            "src/lib/table.types.ts",
+            "src/lib/table.engine.test.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-sorter-reference.json",
+            "tests/browser/table-sorter.spec.ts",
+            "tests/browser/table-sorter-hydration.spec.ts",
+            "tests/package/table-sorter.ssr.test.ts",
+            "tests/package/table-sorter.types.ts"
+          ],
+          "note": "Ant Design 6.6.8, rc-table 1.11.1. Два одинаковых UMD-прогона 15 профилей дают 63 состояния и 15 серверных снимков. Проверены sortDirections таблицы и колонки, повторы и пустой список, defaultSortOrder, sortOrder с null и снятием управления, приоритеты multiple включая ноль, порядок критериев события, дерево, responsive, удалённая сортировка и sortIcon. Компаратор получает направление. Событие передаёт запрошенные строки при управляемом sortOrder. Native сохраняет скалярный bind:sorter, кнопку с Enter и Space и нативный title для следующего направления. Полный список доступен через onChange.sorters. Строгая гидратация сохраняет DOM и фокус."
+        },
+        {
           "id": "cell-spans",
           "title": "Атрибуты и объединение ячеек Table",
           "state": "supported",

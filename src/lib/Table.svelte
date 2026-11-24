@@ -20,6 +20,10 @@
   } from './table-cell.engine';
   import { observeTableLayout } from './table-layout.dom';
   import { getTableLayout } from './table-layout.engine';
+  import {
+    changeTableSorts, getControlledTableSorts, getInitialTableSorts, isTableMultipleSorter,
+    isTableSortable, tableSortDirections, type TableSortState
+  } from './table-sorter.engine';
   import { createTableSelection } from './table-selection.model.svelte';
   import { observeTableSticky, type TableStickyBarLayout } from './table-sticky.dom';
   import { provideTableSummary, type TableFixedCell } from './table-summary-context';
@@ -42,7 +46,8 @@
     TableProps,
     TableRowProps,
     TableScrollConfig,
-    TableSorter
+    TableSorter,
+    TableSortOrder
   } from './table.types';
   import { ruRU } from './types';
   import Icon from './Icon.svelte';
@@ -68,7 +73,8 @@
     rowHoverable = true,
     showHeader = true,
     sorter = $bindable(),
-    defaultSorter = null,
+    defaultSorter,
+    sortDirections = tableSortDirections,
     filters = $bindable(),
     defaultFilters = {},
     current = $bindable(),
@@ -118,7 +124,19 @@
   untrack(() => mediaQueries);
   let rootStyle = $derived([componentTheme.style, style].filter(Boolean).join(';') || undefined);
   const id = $props.id();
-  const initialSorter = untrack(() => defaultSorter ? { ...defaultSorter } : null);
+  const dataColumns = $derived(getTableColumnOrder(columns));
+  let localSorts = $state.raw(untrack(() => getInitialTableSorts(dataColumns, defaultSorter)));
+  const controlledSorts = $derived(getControlledTableSorts(dataColumns, mode));
+  const multipleSort = $derived(dataColumns.some(isTableMultipleSorter));
+  const activeSorts = $derived.by(() => {
+    if (controlledSorts.length) {
+      return controlledSorts;
+    }
+    if (sorter !== undefined) {
+      return sorter ? [sorter] : [];
+    }
+    return localSorts;
+  });
   const initialCurrent = untrack(() => defaultCurrent);
   const initialSize = untrack(() => defaultPageSize);
   let pageRequest = $state.raw(untrack(readPageRequest));
@@ -129,19 +147,10 @@
     )
   );
   let childrenColumnName = $derived(expandable?.childrenColumnName || 'children');
-  let tableData = $derived(
-    getTableData(
-      dataSource,
-      columns,
-      rowKey,
-      sorter === undefined ? initialSorter : sorter,
-      filters ?? initialFilters,
-      mode,
-      childrenColumnName
-    )
-  );
+  let tableData = $derived(readTableData(activeSorts));
+  const sortsByColumn = $derived(new Map(tableData.sorters.map(state => [state.columnKey, state])));
   let hasFilters = $derived(
-    getTableColumnOrder(columns).some(
+    dataColumns.some(
       column => column.filters?.length && (mode === 'server' || column.onFilter)
     )
   );
@@ -521,24 +530,45 @@
     });
   });
 
-  function notifyChange(action: TableChange<Row>['action']) {
+  function readTableData(sorts: readonly TableSortState[]) {
+    return getTableData(
+      dataSource, columns, rowKey, sorts, filters ?? initialFilters, mode, childrenColumnName
+    );
+  }
+
+  function notifyChange(action: TableChange<Row>['action'], requested?: readonly TableSortState[]) {
     scrollport.resetAfterChange();
-    onChange?.({
+    if (!onChange) {
+      return;
+    }
+
+    const data = requested ? readTableData(requested) : tableData;
+    const showSorters = multipleSort || data.sorters.length > 1;
+    onChange({
       action,
       pagination: { current: paging.current, pageSize: paging.pageSize, total: paging.total },
-      sorter: tableData.sorter ? { ...tableData.sorter } : null,
-      ...(hasFilters ? { filters: getTableFilters(columns, tableData.filters, mode) } : {}),
-      currentDataSource: tableData.rows.map((row) => row.record)
+      sorter: data.sorter ? { ...data.sorter } : null,
+      ...(showSorters ? { sorters: data.sorters.map(state => ({ ...state })) } : {}),
+      ...(hasFilters ? { filters: getTableFilters(columns, data.filters, mode) } : {}),
+      currentDataSource: data.rows.map(row => row.record)
     });
   }
 
-  function changeSort(columnKey: string) {
+  function changeSort(column: TableColumn<Row>, next: TableSorter | null) {
     if (resolvedDisabled) {
       return;
     }
 
-    sorter = getNextTableSorter(columnKey, tableData.sorter);
-    notifyChange('sort');
+    if (!controlledSorts.length && (sorter !== undefined || !multipleSort)) {
+      sorter = next;
+      notifyChange('sort');
+      return;
+    }
+
+    const requested = changeTableSorts(dataColumns, activeSorts, column, next?.order ?? null);
+    localSorts = requested;
+    // Управляемая колонка показывает порядок владельца, а событие описывает запрос.
+    notifyChange('sort', controlledSorts.length ? requested : undefined);
   }
 
   function readPageRequest() {
@@ -590,12 +620,10 @@
     notifyChange('filter');
   }
 
-  function sortDescription(columnKey: string, active: TableSorter | null): string {
-    const next = getNextTableSorter(columnKey, active);
-
-    return next?.order === 'ascend'
+  function sortDescription(order: TableSortOrder | undefined): string {
+    return order === 'ascend'
       ? strings.sortAscending
-      : next?.order === 'descend' ? strings.sortDescending : strings.cancelSort;
+      : order === 'descend' ? strings.sortDescending : strings.cancelSort;
   }
 
   // rowExpandable относится к подробностям; ветка определяется массивом потомков.
@@ -869,13 +897,28 @@
   {/if}
 {/snippet}
 
+{#snippet sortArrow(direction: 'up' | 'down', active: boolean)}
+  {#if designTheme.enabled}<span class={[
+      `anticon anticon-caret-${direction} ${prefix}-column-sorter-${direction}`,
+      active && 'active'
+    ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false">
+      {#if direction === 'up'}
+        <path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z" />
+      {:else}
+        <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" />
+      {/if}
+    </svg></span>{:else}<span class={['sort-arrow', `sort-${direction}`, active && 'active']}></span>{/if}
+{/snippet}
+
 {#snippet columnHeading(cell: TableHeading<Row>)}
   {@const column = cell.column}
   {@const fixed = fixedSpan(cell.start, cell.colSpan)}
   {@const props = resolveTableCell(column.onHeaderCell?.(column), cell.colSpan, cell.rowSpan)}
-  {@const sortable = typeof column.sorter === 'function'
-    || (mode === 'server' && column.sorter === true)}
-  {@const order = tableData.sorter?.columnKey === column.key ? tableData.sorter.order : undefined}
+  {@const sortable = isTableSortable(column, mode)}
+  {@const currentSort = sortsByColumn.get(column.key)}
+  {@const order = currentSort?.order}
+  {@const directions = column.sortDirections ?? sortDirections}
+  {@const nextSort = sortable ? getNextTableSorter(column.key, currentSort ?? null, directions) : null}
   {#if props.colSpan !== 0 && props.rowSpan !== 0}
     <th
       {...props.attributes}
@@ -901,21 +944,20 @@
     >
       <div class="column-heading" class:column-heading-ellipsis={Boolean(column.ellipsis)}>
         {#if sortable}
-          <button type="button" class={`sort-button ${prefix}-column-sorters`} disabled={resolvedDisabled} title={sortDescription(column.key, tableData.sorter)} onclick={() => changeSort(column.key)}>
+          <button type="button" class={`sort-button ${prefix}-column-sorters`}
+            disabled={resolvedDisabled} title={sortDescription(nextSort?.order)}
+            onclick={() => changeSort(column, nextSort)}>
             <span class={`${prefix}-column-title`}>{column.title}</span>
-            <span data-ant-table-part="sorter" class={`${prefix}-column-sorter`} aria-hidden="true"><span class={`${prefix}-column-sorter-inner`}>{#if designTheme.enabled}<span class={[
-                `anticon anticon-caret-up ${prefix}-column-sorter-up`,
-                order === 'ascend' && 'active'
-              ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z" /></svg></span><span class={[
-                  `anticon anticon-caret-down ${prefix}-column-sorter-down`,
-                  order === 'descend' && 'active'
-                ]}><svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" focusable="false"><path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" /></svg></span>{:else}<span class={[
-                'sort-arrow sort-up',
-                order === 'ascend' && 'active'
-              ]}></span><span class={[
-                  'sort-arrow sort-down',
-                  order === 'descend' && 'active'
-                ]}></span>{/if}</span></span>
+            <span data-ant-table-part="sorter" class={`${prefix}-column-sorter`} aria-hidden="true">
+              {#if column.sortIcon}
+                {@render column.sortIcon({ sortOrder: order ?? null })}
+              {:else}
+                <span class={`${prefix}-column-sorter-inner`}>
+                  {#if directions.includes('ascend')}{@render sortArrow('up', order === 'ascend')}{/if}
+                  {#if directions.includes('descend')}{@render sortArrow('down', order === 'descend')}{/if}
+                </span>
+              {/if}
+            </span>
           </button>
         {:else}<span class={column.ellipsis ? `${prefix}-column-title` : undefined}>{column.title}</span>{/if}
         {#if column.filters && (mode === 'server' || column.onFilter)}
@@ -941,7 +983,7 @@
   {@const key = entry.row.key}
   {@const { column, service } = leaf}
   {@const fixed = fixedCells[columnIndex]}
-  {@const sorted = !service && tableData.sorter?.columnKey === column.key}
+  {@const sorted = !service && sortsByColumn.has(column.key)}
   {@const display = service ? undefined : resolveTableCellDisplay(entry.row.record, column)}
   {@const wrapText = Boolean(column.ellipsis) && !column.render
     && isFixedBoundary(columnIndex, cell.colSpan)}

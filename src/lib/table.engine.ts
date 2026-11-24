@@ -8,9 +8,11 @@ import type {
   TableKey,
   TableMode,
   TableRowKey,
-  TableSorter
+  TableSorter,
+  TableSortOrder
 } from './table.types';
 import { getTableColumnOrder } from './table-columns.engine';
+import { createTableSortPlan, tableSortDirections, type TableSortState } from './table-sorter.engine';
 import { filterTableTree, indexTableRows, sortTableTree, type TableRow } from './table-tree.engine';
 
 /**
@@ -22,7 +24,7 @@ export function getTableData<Row extends object>(
   dataSource: readonly Row[],
   columns: TableColumnsType<Row>,
   rowKey?: TableRowKey<Row>,
-  sorter?: TableSorter | null,
+  sorting?: TableSorter | readonly TableSortState[] | null,
   filters?: Readonly<Record<string, readonly TableFilterValue[]>>,
   mode: TableMode = 'client',
   childrenColumnName = 'children'
@@ -30,6 +32,7 @@ export function getTableData<Row extends object>(
   rows: TableRow<Row>[];
   allRows: TableRow<Row>[];
   sorter: TableSorter | null;
+  sorters: TableSorter[];
   filters: TableFilters;
 } {
   if (!columns.length) {
@@ -39,31 +42,22 @@ export function getTableData<Row extends object>(
   const dataColumns = getTableColumnOrder(columns);
   const { roots, allRows } = indexTableRows(dataSource, rowKey, childrenColumnName);
   const activeFilters = getColumnFilters(dataColumns, filters, mode);
-
-  const column = dataColumns.find(
-    (item) => item.key === sorter?.columnKey
-      && (typeof item.sorter === 'function'
-        || (mode === 'server'
-          && item.sorter === true))
-  );
-  const activeSorter = column && sorter && (sorter.order === 'ascend' || sorter.order === 'descend')
-    ? { columnKey: column.key, order: sorter.order }
-    : null;
+  const requested = sorting ? ('columnKey' in sorting ? [sorting] : sorting) : [];
+  const { sorters, compare } = createTableSortPlan(dataColumns, requested, mode);
+  const state = { allRows, sorter: sorters[0] ?? null, sorters, filters: activeFilters };
 
   if (mode === 'server') {
-    return { rows: roots, allRows, sorter: activeSorter, filters: activeFilters };
+    return { ...state, rows: roots };
   }
 
   const filteredColumns = dataColumns.filter((item) => Object.hasOwn(activeFilters, item.key));
   if (roots.some(row => row.children !== undefined)) {
-    const direction = activeSorter?.order === 'descend' ? -1 : 1;
     // В дереве Ant Design сначала сортирует каждый уровень. Фильтр родителя видит
     // отсортированные и отфильтрованные дочерние записи.
-    const sorted = typeof column?.sorter === 'function' && activeSorter
-      ? sortTableTree(roots, column.sorter, direction, childrenColumnName) : roots;
+    const sorted = compare ? sortTableTree(roots, compare, childrenColumnName) : roots;
     const rows = filterTableTree(sorted, filteredColumns, activeFilters, childrenColumnName);
 
-    return { rows, allRows, sorter: activeSorter, filters: activeFilters };
+    return { ...state, rows };
   }
 
   const rows = roots.filter(
@@ -72,18 +66,12 @@ export function getTableData<Row extends object>(
     )
   );
 
-  if (typeof column?.sorter !== 'function' || !activeSorter) {
-    return { rows, allRows, sorter: null, filters: activeFilters };
+  if (compare) {
+    rows.sort((left, right) =>
+      compare(left.record, right.record) || left.sourceIndex - right.sourceIndex);
   }
 
-  const compare = column.sorter;
-  const direction = activeSorter.order === 'ascend' ? 1 : -1;
-  rows.sort(
-    (left, right) => (compare(left.record, right.record) * direction
-      || left.sourceIndex - right.sourceIndex)
-  );
-
-  return { rows, allRows, sorter: activeSorter, filters: activeFilters };
+  return { ...state, rows };
 }
 
 // Нормализует значения для всего дерева колонок, независимо от видимости заголовков.
@@ -137,16 +125,15 @@ export function areTableFiltersEqual(left: TableFilters, right: TableFilters): b
   });
 }
 
-// Цикл сортировки начинается с ascend при выборе другого столбца.
+/** Следующий шаг берётся из цикла колонки, а конец списка очищает направление. */
 export function getNextTableSorter(
   columnKey: string,
-  sorter: TableSorter | null
+  sorter: TableSorter | null,
+  directions: readonly (TableSortOrder | null)[] = tableSortDirections
 ): TableSorter | null {
-  if (sorter?.columnKey !== columnKey) {
-    return { columnKey, order: 'ascend' };
-  }
-
-  return sorter.order === 'ascend' ? { columnKey, order: 'descend' } : null;
+  const index = sorter?.columnKey === columnKey ? directions.indexOf(sorter.order) + 1 : 0;
+  const order = directions[index];
+  return order ? { columnKey, order } : null;
 }
 
 // Заголовок агрегирует выбор только для переданных строк страницы.

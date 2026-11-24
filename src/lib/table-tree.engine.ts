@@ -83,18 +83,17 @@ function withChildren<Row extends object>(
 export function sortTableTree<Row extends object>(
   rows: readonly TableRow<Row>[],
   compare: (left: Row, right: Row) => number,
-  direction: number,
   childrenColumnName: string
 ): TableRow<Row>[] {
   const sorted = [...rows].sort((left, right) =>
-    compare(left.record, right.record) * direction || left.sourceIndex - right.sourceIndex);
+    compare(left.record, right.record) || left.sourceIndex - right.sourceIndex);
 
   return sorted.map(row => {
     if (!row.children) {
       return row;
     }
 
-    const children = sortTableTree(row.children, compare, direction, childrenColumnName);
+    const children = sortTableTree(row.children, compare, childrenColumnName);
     return withChildren(row, children, childrenColumnName);
   });
 }

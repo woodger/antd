@@ -67,6 +67,33 @@ describe('getTableData', () => {
     expect(result.rows.map((row) => row.key)).toEqual([0, 2, 3, 1]);
   });
 
+  it('uses priority to compare records and keeps the requested order for events', () => {
+    const definitions: TableColumn<RecordRow>[] = [
+      {
+        key: 'name', title: 'Name', sorter: {
+          multiple: 0,
+          compare: (left, right, order) => order === 'descend'
+            ? right.id - left.id : left.name.localeCompare(right.name)
+        }
+      },
+      {
+        key: 'score', title: 'Score', sorter: {
+          multiple: 2, compare: (left, right) => left.score - right.score
+        }
+      }
+    ];
+    const requested = [
+      { columnKey: 'name', order: 'descend' }, { columnKey: 'score', order: 'ascend' }
+    ] as const;
+
+    const result = getTableData(records, definitions, 'id', requested);
+
+    expect(result.rows.map(row => row.key)).toEqual([1, 3, 0, 2]);
+    expect(result.sorters).toEqual(requested);
+    expect(result.sorter).toEqual(requested[0]);
+    expect(records.map(row => row.id)).toEqual([0, 1, 2, 3]);
+  });
+
   it('uses source order after clearing sorting or removing its column', () => {
     expect(getTableData(records, columns, 'id', null).rows.map((row) => row.key)).toEqual(
       [0, 1, 2, 3]
@@ -102,7 +129,7 @@ describe('getTableData', () => {
 
   it('accepts an empty collection with declared columns', () => {
     expect(getTableData([], columns, 'id')).toEqual(
-      { rows: [], allRows: [], sorter: null, filters: {} }
+      { rows: [], allRows: [], sorter: null, sorters: [], filters: {} }
     );
   });
 

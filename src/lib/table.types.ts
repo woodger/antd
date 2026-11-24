@@ -27,6 +27,17 @@ export interface TableSorter {
   order: TableSortOrder;
 }
 
+/** Table передаёт активное направление до применения его знака к сравнению. */
+export type TableSortCompare<Row extends object> = (
+  left: Row, right: Row, order?: TableSortOrder | null
+) => number;
+
+export interface TableColumnSorter<Row extends object> {
+  compare?: TableSortCompare<Row>;
+  /** Большие числовые приоритеты сравниваются первыми. Ноль включает совмещение. */
+  multiple?: number;
+}
+
 /** Атрибуты и Svelte events отдельной ячейки. Нулевой span пропускает её. */
 export interface TableCellProps extends Omit<HTMLTdAttributes, 'children' | 'colspan' | 'rowspan'> {
   colSpan?: number;
@@ -47,7 +58,15 @@ export interface TableColumn<Row extends object> {
    * аргументом. Snippet можно вызвать и с двумя аргументами.
    */
   render?: Snippet<[record: Row, index: number, value?: unknown]>;
-  sorter?: true | ((left: Row, right: Row) => number);
+  sorter?: boolean | TableSortCompare<Row> | TableColumnSorter<Row>;
+  /** Явное null оставляет колонку без направления под управлением владельца. */
+  sortOrder?: TableSortOrder | null;
+  /** Читается при создании таблицы. */
+  defaultSortOrder?: TableSortOrder | null;
+  /** Заменяет цикл направлений таблицы для этой колонки. */
+  sortDirections?: readonly (TableSortOrder | null)[];
+  /** Заменяет декоративные стрелки. Snippet получает отображаемый порядок. */
+  sortIcon?: Snippet<[info: { sortOrder: TableSortOrder | null; }]>;
   filters?: readonly TableFilterOption[];
   onFilter?: (value: TableFilterValue, record: Row) => boolean;
   filterMultiple?: boolean;
@@ -257,6 +276,8 @@ export interface TableChange<Row extends object> {
   action: 'sort' | 'paginate' | 'filter';
   pagination: { current: number; pageSize: number; total: number; };
   sorter: TableSorter | null;
+  /** Полный список активных критериев при совмещении сортировок. */
+  sorters?: TableSorter[];
   filters?: TableFilters;
   currentDataSource: Row[];
 }
@@ -287,6 +308,8 @@ export interface TableProps<Row extends object> {
   sorter?: TableSorter | null;
   /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */
   defaultSorter?: TableSorter | null;
+  /** Цикл направления для колонок без собственного списка. */
+  sortDirections?: readonly (TableSortOrder | null)[];
   /** Поддерживает bind:filters. */
   filters?: TableFilters;
   /** Начальное локальное значение; последующие изменения prop не переинициализируют состояние. */

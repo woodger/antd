@@ -24,6 +24,9 @@
 
 ### Added
 
+- Table поддерживает `sortDirections`, `sortOrder`, `defaultSortOrder` и
+  `sortIcon` колонок, а также сортировку по нескольким приоритетам.
+
 - Table читает вложенные пути `dataIndex` и поддерживает `ellipsis`, `minWidth`
   и `tableLayout`. Виртуальная шапка и тело учитывают минимум в общей сетке.
 

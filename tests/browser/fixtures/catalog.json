@@ -1783,6 +1783,11 @@
     "root": "table-column-layout-fixture"
   },
   {
+    "id": "table-sorter",
+    "module": "./TableSorterFixture.svelte",
+    "root": "table-sorter-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"
