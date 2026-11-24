@@ -1,0 +1,4430 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "react": "18.3.1",
+  "passes": [
+    [
+      {
+        "profile": {
+          "id": "default",
+          "steps": [
+            "open",
+            "close",
+            "open",
+            "escape"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "escape",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "classes",
+          "openClassName": "mine open owned",
+          "rootClassName": "shared",
+          "steps": [
+            "open",
+            "class-update",
+            "close",
+            "open",
+            "escape"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "mine",
+                  "open",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "mine",
+                  "open",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "shared",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "class-update",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "revised-open",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "revised-open",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "revised-root",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "revised-root",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "revised-open",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "revised-open",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "revised-root",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "escape",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "revised-root",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "explicit-empty",
+          "openClassName": "",
+          "steps": [
+            "open",
+            "close",
+            "open"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "custom-prefix",
+          "rtl": true,
+          "prefixCls": "local-menu",
+          "steps": [
+            "open",
+            "prefix-update",
+            "provider-update",
+            "escape"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "local-menu-trigger",
+                  "local-menu-rtl",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "local-menu-trigger",
+                  "local-menu-rtl",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "local-menu-trigger",
+                  "local-menu-rtl",
+                  "owned",
+                  "local-menu-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "local-menu-trigger",
+                  "local-menu-rtl",
+                  "owned",
+                  "local-menu-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "local-menu",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "local-menu-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "local-menu-rtl",
+                  "local-menu-placement-bottomRight"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "prefix-update",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned",
+                  "other-menu-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned",
+                  "other-menu-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "other-menu",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "other-menu-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "other-menu-rtl",
+                  "other-menu-placement-bottomRight"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "provider-update",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned",
+                  "other-menu-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned",
+                  "other-menu-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "other-menu",
+                  "css-18i3bgp",
+                  "css-var-r0",
+                  "other-menu-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "other-menu-rtl",
+                  "other-menu-placement-bottomRight"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "escape",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "other-menu",
+                  "other-menu-hidden",
+                  "css-18i3bgp",
+                  "css-var-r0",
+                  "other-menu-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "other-menu-rtl",
+                  "other-menu-placement-bottomRight"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "controlled",
+          "controlled": true,
+          "initial": true,
+          "openClassName": "owner-open",
+          "steps": [
+            "close",
+            "owner-close",
+            "open",
+            "owner-open",
+            "escape"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "owner-close",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "owner-open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "escape",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "svg",
+          "svg": true,
+          "steps": [
+            "open",
+            "replace",
+            "escape",
+            "open"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "svg",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "svg",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "svg",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "svg",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "replace",
+            "state": {
+              "trigger": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "reference": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null,
+                {
+                  "identity": 3,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "ant-dropdown-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "escape",
+            "state": {
+              "trigger": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null,
+                {
+                  "identity": 3,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "ant-dropdown-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "reference": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null,
+                {
+                  "identity": 3,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "ant-dropdown-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null,
+                {
+                  "identity": 3,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "ant-dropdown-open"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "profile": {
+          "id": "default",
+          "steps": [
+            "open",
+            "close",
+            "open",
+            "escape"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "escape",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "classes",
+          "openClassName": "mine open owned",
+          "rootClassName": "shared",
+          "steps": [
+            "open",
+            "class-update",
+            "close",
+            "open",
+            "escape"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "mine",
+                  "open",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "mine",
+                  "open",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "shared",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "class-update",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "revised-open",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "revised-open",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "revised-root",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "revised-root",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "revised-open",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "revised-open",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "revised-root",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "escape",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "revised-root",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "explicit-empty",
+          "openClassName": "",
+          "steps": [
+            "open",
+            "close",
+            "open"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "custom-prefix",
+          "rtl": true,
+          "prefixCls": "local-menu",
+          "steps": [
+            "open",
+            "prefix-update",
+            "provider-update",
+            "escape"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "local-menu-trigger",
+                  "local-menu-rtl",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "local-menu-trigger",
+                  "local-menu-rtl",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "local-menu-trigger",
+                  "local-menu-rtl",
+                  "owned",
+                  "local-menu-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "local-menu-trigger",
+                  "local-menu-rtl",
+                  "owned",
+                  "local-menu-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "local-menu",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "local-menu-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "local-menu-rtl",
+                  "local-menu-placement-bottomRight"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "prefix-update",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned",
+                  "other-menu-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned",
+                  "other-menu-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "other-menu",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "other-menu-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "other-menu-rtl",
+                  "other-menu-placement-bottomRight"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "provider-update",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned",
+                  "other-menu-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned",
+                  "other-menu-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "other-menu",
+                  "css-18i3bgp",
+                  "css-var-r0",
+                  "other-menu-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "other-menu-rtl",
+                  "other-menu-placement-bottomRight"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "escape",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "other-menu-trigger",
+                  "other-menu-rtl",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "other-menu",
+                  "other-menu-hidden",
+                  "css-18i3bgp",
+                  "css-var-r0",
+                  "other-menu-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "other-menu-rtl",
+                  "other-menu-placement-bottomRight"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "local-menu-trigger",
+                    "local-menu-rtl",
+                    "owned"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "controlled",
+          "controlled": true,
+          "initial": true,
+          "openClassName": "owner-open",
+          "steps": [
+            "close",
+            "owner-close",
+            "open",
+            "owner-open",
+            "escape"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "owner-close",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "owner-open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "escape",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "owner-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "owner-open"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "profile": {
+          "id": "svg",
+          "svg": true,
+          "steps": [
+            "open",
+            "replace",
+            "escape",
+            "open"
+          ]
+        },
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "svg",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "svg",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": []
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 1,
+                "tag": "svg",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "reference": {
+                "identity": 1,
+                "tag": "svg",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "replace",
+            "state": {
+              "trigger": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "reference": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null,
+                {
+                  "identity": 3,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "ant-dropdown-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "escape",
+            "state": {
+              "trigger": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "reference": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null,
+                {
+                  "identity": 3,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "ant-dropdown-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "trigger": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "reference": {
+                "identity": 3,
+                "tag": "BUTTON",
+                "id": "trigger",
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "owned",
+                  "ant-dropdown-open"
+                ]
+              },
+              "alias": true,
+              "popup": {
+                "identity": 2,
+                "tag": "DIV",
+                "id": null,
+                "classes": [
+                  "ant-dropdown",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "provider-popup",
+                  "popup-only",
+                  "ant-dropdown-placement-bottomLeft"
+                ]
+              },
+              "visible": true,
+              "focused": "trigger",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null,
+                {
+                  "identity": 3,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "ant-dropdown-open"
+                  ]
+                }
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "trigger": null,
+              "reference": null,
+              "alias": false,
+              "popup": null,
+              "visible": false,
+              "focused": "BODY",
+              "references": [
+                {
+                  "identity": 1,
+                  "tag": "svg",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned"
+                  ]
+                },
+                null,
+                {
+                  "identity": 3,
+                  "tag": "BUTTON",
+                  "id": "trigger",
+                  "classes": [
+                    "ant-dropdown-trigger",
+                    "owned",
+                    "ant-dropdown-open"
+                  ]
+                },
+                null
+              ],
+              "events": [
+                [
+                  true,
+                  "trigger"
+                ],
+                [
+                  false,
+                  "trigger"
+                ],
+                [
+                  true,
+                  "trigger"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  ]
+}

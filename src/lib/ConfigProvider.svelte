@@ -15,6 +15,7 @@
   import type { DescriptionsConfig } from './descriptions.types';
   import type { AnchorConfig } from './anchor.types';
   import type { BreadcrumbConfig } from './breadcrumb.types';
+  import type { DropdownConfig } from './dropdown.types';
   import type { MenuConfig } from './menu.types';
   import type { FloatButtonConfig, FloatButtonGroupConfig } from './float-button.types';
   import type { ButtonConfig } from './button.types';
@@ -106,6 +107,8 @@
     descriptions?: DescriptionsConfig;
     anchor?: AnchorConfig;
     breadcrumb?: BreadcrumbConfig;
+    /** Классы и стили Dropdown. Undefined наследует record, объект заменяет его целиком. */
+    dropdown?: DropdownConfig;
     /** Классы, стили и значок раскрытия Menu. Undefined наследует родительский record. */
     menu?: MenuConfig;
     mentions?: MentionsComponentConfig;
@@ -211,6 +214,7 @@
     descriptions,
     anchor,
     breadcrumb,
+    dropdown,
     menu,
     mentions,
     button,
@@ -351,6 +355,9 @@
     },
     get breadcrumb() {
       return breadcrumb ?? parent.breadcrumb;
+    },
+    get dropdown() {
+      return dropdown ?? parent.dropdown;
     },
     get menu() {
       return menu ?? parent.menu;

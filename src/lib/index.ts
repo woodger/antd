@@ -577,6 +577,7 @@ export type {
 } from './popconfirm.types';
 export type {
   DropdownProps,
+  DropdownConfig,
   DropdownMenuProps,
   DropdownMenuEntry,
   DropdownItem,

@@ -64,11 +64,25 @@ export type DropdownSlots = Partial<Record<
 export type DropdownSemantic = DropdownSlots | ((info: { props: DropdownProps; }) =>
   DropdownSlots | undefined);
 
+/** Общие классы и стили панели и её меню. Вложенный provider заменяет record целиком. */
+export interface DropdownConfig extends Pick<DropdownProps, 'classNames' | 'styles'> {
+  /** Дополнительный класс корня панели. */
+  class?: string;
+  /** Слой корня между styles.root провайдера и styles.root экземпляра. */
+  style?: string;
+}
+
 /** Меню команд у trigger snippet с мышью, клавиатурой и возвратом фокуса. */
 export interface DropdownProps {
   /** Непустой локальный префикс перекрывает ConfigProvider; внутреннее меню получает суффикс -menu. */
   prefixCls?: string;
   children: Snippet;
+  /** DOM-узел trigger после монтирования, включая SVG. Очищается при unmount. */
+  ref?: Element;
+  /** Дополнительный класс панели Dropdown. */
+  rootClassName?: string;
+  /** Класс открытого trigger после hydration. Пустая строка отключает `${prefixCls}-open`. */
+  openClassName?: string;
   menu?: DropdownMenuProps;
   /** Оборачивает или заменяет панель. Origin доступен, когда передан menu.items. */
   popupRender?: Snippet<[origin?: Snippet]>;

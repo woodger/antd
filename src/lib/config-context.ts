@@ -14,6 +14,7 @@ import type { MentionsComponentConfig } from './mentions.types';
 import type { DescriptionsConfig } from './descriptions.types';
 import type { AnchorConfig } from './anchor.types';
 import type { BreadcrumbConfig } from './breadcrumb.types';
+import type { DropdownConfig } from './dropdown.types';
 import type { MenuConfig } from './menu.types';
 import type { FloatButtonConfig, FloatButtonGroupConfig } from './float-button.types';
 import type { ButtonConfig } from './button.types';
@@ -87,6 +88,7 @@ export interface ConfigContext {
   readonly descriptions?: DescriptionsConfig;
   readonly anchor?: AnchorConfig;
   readonly breadcrumb?: BreadcrumbConfig;
+  readonly dropdown?: DropdownConfig;
   readonly menu?: MenuConfig;
   readonly mentions?: MentionsComponentConfig;
   readonly tabs?: TabsConfig;

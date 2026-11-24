@@ -13,6 +13,10 @@
 
 ### Added
 
+- Dropdown поддерживает стили `ConfigProvider.dropdown`, `rootClassName`,
+  `openClassName` и `bind:ref` на DOM-узел триггера. Управляемый `open` сохраняет
+  видимость, если владелец отклонил запрос.
+
 - Dropdown принимает `popupRender`, `forceRender`, `destroyOnHidden` и
   `transitionName`. Пользовательская панель сохраняет состояние после закрытия
   по умолчанию. Штатная анимация учитывает сторону размещения и настройки движения.

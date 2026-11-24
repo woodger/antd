@@ -51,6 +51,8 @@ Space активируют его; preventDefault в callbacks отменяет 
 Без href сохраняется прежняя нативная кнопка команды.
 
 Open поддерживает bind:open; defaultOpen читается при создании компонента.
+При передаче `open` без binding видимость следует значению владельца, включая
+случай, когда он отклоняет запрос открытия или закрытия.
 Без внешнего open состояние хранится отдельно от входных props: обновление
 spread-объекта сохраняет открытое/закрытое меню, DOM команд и focus, без callbacks.
 Изменение defaultOpen после mount не сбрасывает состояние. При снятии внешнего
@@ -97,6 +99,12 @@ aria-controls и aria-expanded, сохраняя исходные ARIA-атри�
 относятся к wrapper trigger. Disabled наследуется от Form/ConfigProvider;
 явное false переопределяет контекст. Нативный disabled trigger также не открывает меню.
 
+`bind:ref` возвращает сам DOM-узел триггера, включая SVG. Значение доступно после
+монтирования, обновляется при замене узла и очищается при удалении Dropdown.
+После гидратации `openClassName` добавляется к этому узлу при открытии. По умолчанию
+используется `${prefixCls}-open`. Пустая строка отключает добавление класса.
+`rootClassName` добавляет классы на панель.
+
 PrefixCls задаёт локальный CSS-префикс Dropdown; пустая строка наследует общий
 ConfigProvider.prefixCls. Trigger/popup/arrow и внутреннее меню получают классы
 этого namespace. Меню добавляет суффикс `-menu`, `menu.prefixCls` переопределяет
@@ -113,6 +121,16 @@ counterparts через styles.itemContent/root.direction](../../../tests/browse
 `root` оформляет панель Dropdown. `item`, `itemTitle`, `itemIcon` и `itemContent`
 применяются на всех уровнях меню. Dropdown задаёт эти слоты вместо
 `menu.classNames` и `menu.styles`, сохраняя слой `ConfigProvider.menu`.
+
+`ConfigProvider.dropdown` задаёт `class`, `style`, `classNames` и `styles` панели.
+Классы слотов накапливаются. Корень применяет `styles.root` провайдера, затем его
+`style`, затем локальный `styles.root`. Стили пунктов дополняют друг друга в порядке
+от провайдера к экземпляру. `undefined` наследует настройку целиком, объект во
+вложенном провайдере её заменяет. В callbacks провайдера доступны используемые
+задержки и `autoAdjustOverflow`. Локальные callbacks получают входные props.
+[Замеры провайдера](../../../tests/browser/fixtures/ant-design-dropdown-provider-reference.json) и
+[замеры trigger](../../../tests/browser/fixtures/ant-design-dropdown-appearance-reference.json)
+сняты в Ant Design 6.6.8.
 
 `placement` задаёт сторону и выравнивание. Доступны `top`, `topLeft`, `topRight`,
 `bottom`, `bottomLeft`, `bottomRight`, `left`, `leftTop`, `leftBottom`, `right`,
@@ -187,7 +205,6 @@ bind:open/callback contracts сохранены.
 Замеры встроенного [Menu](../../../tests/browser/fixtures/ant-design-dropdown-menu-reference.json)
 покрывают управляемое закрытие, множественный выбор и оформление.
 
-`ConfigProvider.dropdown`, `rootClassName`, `openClassName` и ref trigger остаются в работе.
 Deprecated Dropdown.Button исключён из переноса; актуальная композиция —
 SpaceCompact с Dropdown и Button.
 

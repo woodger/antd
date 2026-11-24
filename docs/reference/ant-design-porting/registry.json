@@ -3118,17 +3118,28 @@
           "evidence": [
             "src/lib/dropdown.types.ts",
             "tests/browser/dropdown.spec.ts",
+            "tests/browser/fixtures/ant-design-dropdown-appearance-reference.json",
             "docs/reference/components/dropdown.md"
           ],
-          "note": "Сохранён принятый Svelte onOpenChange(boolean) и bind:open; выбор команды закрывает binding без onOpenChange(false). Исходный Ant Design 6.6.8 передаёт второй аргумент с source и вызывает callback при выборе команды. Это различие остаётся для отдельного совместимого расширения API."
+          "note": "Сохранён принятый Svelte onOpenChange(boolean) и bind:open. Выбор команды закрывает binding без onOpenChange(false). Исходный Ant Design 6.6.8 передаёт второй аргумент с source и вызывает callback при выборе команды. Это различие остаётся для отдельного совместимого расширения API. В двух исходных замерах Escape отправляет два trigger-запроса false при отказе владельца закрыть панель. Svelte сохраняет один запрос на нажатие."
         },
         {
           "id": "extended-api",
           "title": "Глобальная конфигурация, классы открытия и ref",
-          "state": "missing",
+          "state": "supported",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Остаются ConfigProvider.dropdown вне theme tokens, rootClassName, openClassName и ref trigger. Deprecated Dropdown.Button исключён; актуальная композиция — SpaceCompact + Dropdown + Button."
+          "evidence": [
+            "src/lib/Dropdown.svelte",
+            "src/lib/ConfigProvider.svelte",
+            "src/lib/dropdown.types.ts",
+            "tests/browser/fixtures/ant-design-dropdown-appearance-reference.json",
+            "tests/browser/fixtures/ant-design-dropdown-provider-reference.json",
+            "tests/browser/dropdown-appearance.spec.ts",
+            "tests/browser/dropdown-appearance-hydration.spec.ts",
+            "tests/package/dropdown-appearance.ssr.test.ts",
+            "docs/reference/components/dropdown.md"
+          ],
+          "note": "Шесть профилей trigger и пять профилей провайдера повторены на официальном UMD 6.6.8. ConfigProvider.dropdown поддерживает наследование/замену record, class/style и object/function semantic slots. Provider styles.root → provider style → local styles.root. Слоты строк дополняются по декларациям и применяются на всех уровнях Menu. Дефолты callbacks провайдера следуют фактическим настройкам Svelte, включая mouseEnterDelay=0.1. Исходный CSS counterpart передаёт 0.1 явно. Локальные callbacks сохраняют входные props. RootClassName относится к панели. Пустой openClassName отключает default class. Bind:ref возвращает актуальный trigger, включая SVG. OpenClassName и ref применяются к trigger после hydration. Базовый trigger class остаётся у существующей обёртки, RTL наследуется из контекста. Строгая гидратация сохраняет исходные trigger/popup, классы владельца и внешний фокус. Управляемый open читает значение владельца также без binding. Прежние class/style wrapper, bind:open и порядок событий сохраняются. Deprecated Dropdown.Button исключён согласно общей политике."
         },
         {
           "id": "popup-render-lifecycle",
@@ -25253,6 +25264,22 @@
             "docs/reference/theme-context.md"
           ],
           "note": "Семь Dropdown defaults и 56 defaults внутреннего Menu, component algorithms/aliases, zero/undefined, CSS strings и custom prefix/hash. Внутренний Menu дополняет Dropdown aliases без общего provider reset; itemHeight Menu не задаёт высоту Dropdown rows. Scoped declarations и computed metrics для 18 настроек: menu/rows/icons/divider, hover/disabled/danger, шесть положений arrow/pseudo-elements и глобальные placement gaps с arrow и без неё. Source padding/box sizing, corner arrow offsets и maxHeight сохранены с native button/link semantics. Смена темы сохраняет DOM/focus, controller left/top и native link navigation; native-only оформление и прежние Svelte bind/callback contracts сохранены."
+        },
+        {
+          "id": "dropdown-component-config",
+          "title": "Классы и стили Dropdown через ConfigProvider",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/ConfigProvider.svelte",
+            "src/lib/config-context.ts",
+            "src/lib/dropdown.types.ts",
+            "tests/browser/fixtures/ant-design-dropdown-provider-reference.json",
+            "tests/browser/dropdown-appearance.spec.ts",
+            "tests/package/dropdown-appearance.ssr.test.ts",
+            "docs/reference/components/dropdown.md"
+          ],
+          "note": "Undefined наследует dropdown, собственный объект заменяет его целиком. Class/style задают корень панели, semantic slots применяются к панели и встроенному Menu. Приоритет локальных styles.root сохраняется. Реактивное обновление настроек сохраняет DOM панели и ref триггера."
         },
         {
           "id": "breadcrumb-theme-tokens",

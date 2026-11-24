@@ -14,6 +14,7 @@
   import { createDropdownPosition, dropdownFitVariables } from './dropdown-position.dom';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { connectPopoverTrigger, focusPopover } from './popover.dom';
+  import { connectTooltipOpenClass } from './tooltip.dom';
   import { useComponentTheme } from './theme-component.svelte';
   import { connectInlineStyle } from './inline-style.dom';
   import { serializeInlineStyleLayers } from './inline-style.engine';
@@ -29,12 +30,18 @@
     DropdownTrigger
   } from './dropdown.types';
 
-  let { open = $bindable<boolean | undefined>(), open: providedOpen, ...dropdownProps }:
-  DropdownProps = $props();
+  let {
+    open = $bindable<boolean | undefined>(),
+    open: providedOpen,
+    ref = $bindable<Element | undefined>(),
+    ...dropdownProps
+  }: DropdownProps = $props();
   let {
     prefixCls: customizePrefixCls,
     children,
     menu,
+    rootClassName,
+    openClassName,
     popupRender,
     forceRender,
     destroyOnHidden,
@@ -51,8 +58,6 @@
     mouseEnterDelay = 0.1,
     mouseLeaveDelay = 0.1,
     getPopupContainer,
-    classNames: _classNames,
-    styles: _styles,
     'aria-label': ariaLabel,
     class: className = '',
     style
@@ -67,7 +72,11 @@
     placement ?? (config.direction === 'rtl' ? 'bottomRight' : 'bottomLeft')
   );
   const componentTheme = useComponentTheme('Dropdown');
-  const semantics = $derived(dropdownSemantics({ ...dropdownProps, open: providedOpen }));
+  const semantics = $derived.by(() => {
+    const props = { ...dropdownProps, open: providedOpen };
+    const providerProps = { ...props, mouseEnterDelay, mouseLeaveDelay, autoAdjustOverflow };
+    return dropdownSemantics(config.dropdown, props, providerProps);
+  });
   const designTokens = useDesignTokenContext();
   const form = useForm();
   const generatedId = $props.id();
@@ -77,8 +86,8 @@
   const initialDefault = untrack(() => defaultOpen);
   let internalOpen = $state(initialDefault);
   let previousOwnerOpen = untrack(() => providedOpen);
-  // Spread update может вернуть omitted open в undefined; собственное состояние сохраняется отдельно.
-  let isOpen = $derived(providedOpen === undefined ? internalOpen : open ?? initialDefault);
+  // Запись в bindable prop уведомляет binding. Обычный open остаётся решением владельца.
+  let isOpen = $derived(providedOpen === undefined ? internalOpen : providedOpen ?? initialDefault);
   let host = $state<HTMLSpanElement>();
   let anchor = $state<Element>();
   let popup = $state<HTMLDivElement>();
@@ -214,14 +223,26 @@
       return;
     }
 
-    function update() {
-      anchor = element!.firstElementChild ?? element;
-    }
+    const update = () => {
+      const triggerNode = element.firstElementChild ?? element;
+      anchor = triggerNode;
+      ref = triggerNode;
+    };
 
     update();
     const observer = new MutationObserver(update);
     observer.observe(element, { childList: true });
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      ref = undefined;
+    };
+  });
+
+  $effect(() => {
+    if (!anchor || !visible) return;
+
+    const resolvedOpenClass = openClassName === undefined ? `${componentPrefix}-open` : openClassName;
+    if (resolvedOpenClass) return connectTooltipOpenClass(anchor, resolvedOpenClass);
   });
 
   $effect(() => {
@@ -239,8 +260,10 @@
       clicked = false;
       focusPending = null;
       search = { text: '', time: 0 };
-      if (focusedInPopup() && source instanceof HTMLElement && source.isConnected)
+      if (focusedInPopup() && (source instanceof HTMLElement || source instanceof SVGElement)
+        && source.isConnected) {
         untrack(() => restoreTriggerFocus(source));
+      }
     }
     else if (view) {
       const key = view.focusKey;
@@ -519,7 +542,7 @@
     }
   }
 
-  function restoreTriggerFocus(source: HTMLElement) {
+  function restoreTriggerFocus(source: HTMLElement | SVGElement) {
     closing = true;
     source.focus({ preventScroll: true });
     closing = false;
@@ -540,7 +563,7 @@
     if ((reason === 'escape'
       || reason === 'menu')
       && focusedInPopup()
-      && anchor instanceof HTMLElement
+      && (anchor instanceof HTMLElement || anchor instanceof SVGElement)
       && anchor.isConnected) {
       restoreTriggerFocus(anchor);
     }
@@ -856,9 +879,11 @@
   aria-labelledby={customContent && !ariaLabel ? triggerId : undefined} hidden
   inert={leaving || undefined} aria-hidden={leaving || undefined} dir={config.direction} class={[
     componentPrefix,
+    rootClassName,
     'ant-dropdown-css-var',
     componentTheme.className,
     componentTheme.className && 'ant-dropdown-source-theme',
+    config.dropdown?.class,
     semantics.rootClass,
     actualPlacement && `${componentPrefix}-placement-${actualPlacement}`,
     config.direction === 'rtl' && `${componentPrefix}-rtl`,

@@ -1,0 +1,4030 @@
+{
+  "version": "6.6.8",
+  "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+  "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+  "react": "18.3.1",
+  "passes": [
+    [
+      {
+        "profile": "provider",
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-config",
+                  "outer-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "update",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": false,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "panel": null,
+              "item": null,
+              "title": null,
+              "trigger": null,
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "profile": "local",
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-config",
+                  "outer-root",
+                  "local-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "7px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-item",
+                  "local-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(136, 0, 17)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "update",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "local-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "7px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "local-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(136, 0, 17)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "local-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "7px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "local-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(136, 0, 17)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": false,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:classes": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:styles": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "local-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "7px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "local-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(136, 0, 17)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "panel": null,
+              "item": null,
+              "title": null,
+              "trigger": null,
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "profile": "inherit",
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-config",
+                  "outer-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "update",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": false,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "panel": null,
+              "item": null,
+              "title": null,
+              "trigger": null,
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "profile": "reset",
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "padding": "0px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "border-top-width": "0px"
+                }
+              },
+              "title": null,
+              "trigger": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {}
+            }
+          },
+          {
+            "step": "update",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "padding": "0px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "border-top-width": "0px"
+                }
+              },
+              "title": null,
+              "trigger": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {}
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "padding": "0px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "border-top-width": "0px"
+                }
+              },
+              "title": null,
+              "trigger": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-trigger"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {}
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "padding": "0px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "border-top-width": "0px"
+                }
+              },
+              "title": null,
+              "trigger": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {}
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "panel": null,
+              "item": null,
+              "title": null,
+              "trigger": null,
+              "semanticInputs": {}
+            }
+          }
+        ]
+      },
+      {
+        "profile": "replace",
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "local-dd",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "local-dd-css-var",
+                  "inner-config",
+                  "inner-root",
+                  "local-dd-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "local-dd-menu-item",
+                  "inner-item",
+                  "local-dd-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "local-dd-menu-title-content",
+                  "inner-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "local-dd-trigger",
+                  "local-dd-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "inner:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "update",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "local-dd",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "local-dd-css-var",
+                  "inner-next-config",
+                  "inner-next-root",
+                  "local-dd-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "local-dd-menu-item",
+                  "inner-next-item",
+                  "local-dd-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "local-dd-menu-title-content",
+                  "inner-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "local-dd-trigger",
+                  "local-dd-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "inner:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "local-dd",
+                  "local-dd-hidden",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "local-dd-css-var",
+                  "inner-next-config",
+                  "inner-next-root",
+                  "local-dd-placement-bottomLeft"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "local-dd-menu-item",
+                  "inner-next-item",
+                  "local-dd-menu-item-only-child"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "local-dd-menu-title-content",
+                  "inner-next-title"
+                ],
+                "visible": false,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "local-dd-trigger"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "inner:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:classes": {
+                  "open": false,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:styles": {
+                  "open": false,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "local-dd",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "local-dd-css-var",
+                  "inner-next-config",
+                  "inner-next-root",
+                  "local-dd-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "local-dd-menu-item",
+                  "inner-next-item",
+                  "local-dd-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "local-dd-menu-title-content",
+                  "inner-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "local-dd-trigger",
+                  "local-dd-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "inner:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "panel": null,
+              "item": null,
+              "title": null,
+              "trigger": null,
+              "semanticInputs": {
+                "inner:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "profile": "provider",
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-config",
+                  "outer-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "update",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": false,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "panel": null,
+              "item": null,
+              "title": null,
+              "trigger": null,
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "profile": "local",
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-config",
+                  "outer-root",
+                  "local-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "7px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-item",
+                  "local-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(136, 0, 17)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "update",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "local-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "7px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "local-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(136, 0, 17)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "local-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "7px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "local-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(136, 0, 17)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": false,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:classes": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:styles": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "local-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "7px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "local-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(136, 0, 17)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "panel": null,
+              "item": null,
+              "title": null,
+              "trigger": null,
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "local:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "profile": "inherit",
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-config",
+                  "outer-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "update",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": false,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": false,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "outer-next-config",
+                  "outer-next-root",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "outer-next-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-menu-title-content",
+                  "outer-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "panel": null,
+              "item": null,
+              "title": null,
+              "trigger": null,
+              "semanticInputs": {
+                "outer:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:classes": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "outer-next:styles": {
+                  "open": true,
+                  "prefix": null,
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "profile": "reset",
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "padding": "0px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "border-top-width": "0px"
+                }
+              },
+              "title": null,
+              "trigger": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {}
+            }
+          },
+          {
+            "step": "update",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "padding": "0px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "border-top-width": "0px"
+                }
+              },
+              "title": null,
+              "trigger": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {}
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "ant-dropdown-hidden",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "padding": "0px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "border-top-width": "0px"
+                }
+              },
+              "title": null,
+              "trigger": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-trigger"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {}
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "ant-dropdown",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "ant-dropdown-css-var",
+                  "ant-dropdown-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "padding": "0px",
+                  "border-top-width": "0px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "ant-dropdown-menu-item",
+                  "ant-dropdown-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgba(0, 0, 0, 0.88)",
+                  "border-top-width": "0px"
+                }
+              },
+              "title": null,
+              "trigger": {
+                "id": 3,
+                "classes": [
+                  "ant-dropdown-trigger",
+                  "ant-dropdown-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {}
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "panel": null,
+              "item": null,
+              "title": null,
+              "trigger": null,
+              "semanticInputs": {}
+            }
+          }
+        ]
+      },
+      {
+        "profile": "replace",
+        "frames": [
+          {
+            "step": "initial",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "local-dd",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "local-dd-css-var",
+                  "inner-config",
+                  "inner-root",
+                  "local-dd-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "local-dd-menu-item",
+                  "inner-item",
+                  "local-dd-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "local-dd-menu-title-content",
+                  "inner-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "local-dd-trigger",
+                  "local-dd-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "inner:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "update",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "local-dd",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "local-dd-css-var",
+                  "inner-next-config",
+                  "inner-next-root",
+                  "local-dd-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "local-dd-menu-item",
+                  "inner-next-item",
+                  "local-dd-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "local-dd-menu-title-content",
+                  "inner-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "local-dd-trigger",
+                  "local-dd-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "inner:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "close",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "local-dd",
+                  "local-dd-hidden",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "local-dd-css-var",
+                  "inner-next-config",
+                  "inner-next-root",
+                  "local-dd-placement-bottomLeft"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "local-dd-menu-item",
+                  "inner-next-item",
+                  "local-dd-menu-item-only-child"
+                ],
+                "visible": false,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "local-dd-menu-title-content",
+                  "inner-next-title"
+                ],
+                "visible": false,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "local-dd-trigger"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "inner:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:classes": {
+                  "open": false,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:styles": {
+                  "open": false,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "open",
+            "state": {
+              "panel": {
+                "id": 1,
+                "classes": [
+                  "local-dd",
+                  "provider-study",
+                  "css-1y106cm",
+                  "css-var-r0",
+                  "local-dd-css-var",
+                  "inner-next-config",
+                  "inner-next-root",
+                  "local-dd-placement-bottomLeft"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(187, 0, 170)",
+                  "background-color": "rgb(241, 244, 241)",
+                  "padding": "3px",
+                  "border-top-width": "3px"
+                }
+              },
+              "item": {
+                "id": 2,
+                "classes": [
+                  "local-dd-menu-item",
+                  "inner-next-item",
+                  "local-dd-menu-item-only-child"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(17, 136, 51)",
+                  "border-top-width": "2px"
+                }
+              },
+              "title": {
+                "id": 3,
+                "classes": [
+                  "local-dd-menu-title-content",
+                  "inner-next-title"
+                ],
+                "visible": true,
+                "style": {
+                  "font-weight": "650"
+                }
+              },
+              "trigger": {
+                "id": 4,
+                "classes": [
+                  "local-dd-trigger",
+                  "local-dd-open"
+                ],
+                "visible": true,
+                "style": {
+                  "color": "rgb(0, 0, 0)"
+                }
+              },
+              "semanticInputs": {
+                "inner:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          },
+          {
+            "step": "unmount",
+            "state": {
+              "panel": null,
+              "item": null,
+              "title": null,
+              "trigger": null,
+              "semanticInputs": {
+                "inner:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:classes": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                },
+                "inner-next:styles": {
+                  "open": true,
+                  "prefix": "local-dd",
+                  "arrow": null,
+                  "placement": null,
+                  "enterDelay": 0.1,
+                  "leaveDelay": 0.1,
+                  "overflow": true
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  ]
+}
