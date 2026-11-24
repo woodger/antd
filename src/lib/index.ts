@@ -219,6 +219,7 @@ export { generatePicker } from './date-picker';
 export type { GenerateConfig } from './date-generate.types';
 export type {
   DatePickerProps,
+  DatePickerTimeProps,
   DatePickerMultipleProps,
   DatePickerTagContext,
   DatePickerSemantic,

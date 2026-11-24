@@ -5,9 +5,10 @@
   import type { TimePickerFocusOptions, TimePickerRuntimeProps } from './time-picker.types';
 
   let {
-    nativeElement = $bindable(), dateOperations, ...props
+    nativeElement = $bindable(), dateOperations, standaloneTime = false, ...props
   }: TimePickerRuntimeProps<DateType> & {
     dateOperations: PickerDateOperations<DateType>;
+    standaloneTime?: boolean;
   } = $props();
   let shared = $derived(timePickerSharedProps(props));
   let picker = $state<{ focus(options?: TimePickerFocusOptions): void; blur(): void; }>();
@@ -21,4 +22,5 @@
   }
 </script>
 
-<SinglePicker {...shared} {dateOperations} time={props} bind:nativeElement bind:this={picker} />
+<SinglePicker {...shared} {dateOperations} {standaloneTime} time={props}
+  bind:nativeElement bind:this={picker} />

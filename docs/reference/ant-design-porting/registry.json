@@ -6974,19 +6974,28 @@
             "tests/browser/fixtures/ant-design-generated-picker-browser-reference.json.gz",
             "tests/browser/fixtures/ant-design-generated-picker-supplement-reference.json.gz",
             "tests/browser/fixtures/ant-design-generated-picker-ssr-reference.json.gz",
+            "tests/browser/fixtures/ant-design-generated-picker-root-time-reference.json.gz",
             "tests/browser/generated-picker.spec.ts",
             "tests/browser/generated-picker-hydration.spec.ts",
             "tests/package/generated-picker.ssr.test.ts"
           ],
-          "note": "Ant Design 6.6.8 / rc-picker 1.12.2. Фабрика связывает GenerateConfig с DatePicker, WeekPicker, MonthPicker, YearPicker, TimePicker и RangePicker, включая picker=time у диапазона. Deprecated QuarterPicker заменён picker=quarter. Официальный UMD дал два одинаковых прогона для 9 профилей / 38 действий и 7 SSR-профилей. Сверены поля, порядок событий и точные ссылки на иммутабельные объекты даты без методов Dayjs. Сетка месяцев использует addMonth от января, включая переход с 31 января на 29 февраля. Компоненты и локаль получают исходный адаптер. Native сохраняет слоты Svelte, календарный info.source, имя поля multiple для FormData, обработку Enter без submit формы и открытый SSR shell. Строгая hydration проверяет сохранение узлов, фокуса, выделения и bind refs. Корневой DatePicker с picker=time и оставшиеся события указаны в extended-api."
+          "note": "Ant Design 6.6.8 / rc-picker 1.12.2. Фабрика связывает GenerateConfig с DatePicker, WeekPicker, MonthPicker, YearPicker, TimePicker и RangePicker, включая picker=time у корневого поля и диапазона. Deprecated QuarterPicker заменён picker=quarter. Официальный UMD дал два одинаковых прогона для 11 профилей / 46 действий и 7 SSR-профилей. Сверены поля, порядок событий и точные ссылки на иммутабельные объекты даты без методов Dayjs. Сетка месяцев использует addMonth от января, включая переход с 31 января на 29 февраля. Компоненты и локаль получают исходный адаптер. Native сохраняет слоты Svelte, календарный info.source, имя поля multiple для FormData, обработку Enter без submit формы и открытый SSR shell. Строгая hydration проверяет сохранение узлов, фокуса, выделения и bind refs. Корневое поле часов использует ConfigProvider.datePicker, фабричный TimePicker — слоты ConfigProvider.timePicker и вариант DatePicker. Оставшиеся события и multiple для времени указаны в extended-api."
         },
         {
           "id": "extended-api",
-          "title": "Корневой DatePicker с picker=time и оставшиеся события",
-          "state": "missing",
+          "title": "Режим времени и оставшиеся события",
+          "state": "partial",
           "requiredForV1": false,
-          "evidence": [],
-          "note": "Выбор времени доступен в TimePicker и в RangePicker с picker=time из семейства DatePicker. Прямой picker=time у корневого DatePicker и часть событий остаются пробелами. Empty-datetime callbacks выбора, повторного открытия и Escape сверены отдельно. Native receiver и calendar info {source} сохраняют согласованные контракты."
+          "evidence": [
+            "src/lib/DatePicker.svelte",
+            "src/lib/date-picker.types.ts",
+            "tests/browser/fixtures/ant-design-generated-picker-root-time-reference.json.gz",
+            "tests/browser/fixtures/ant-design-generated-picker-switch-time-reference.json.gz",
+            "tests/browser/generated-picker.spec.ts",
+            "tests/browser/generated-picker-hydration.spec.ts",
+            "tests/package/generated-picker.ssr.test.ts"
+          ],
+          "note": "Одиночный picker=time у корневого DatePicker сверён с фабричным TimePicker по значениям, оформлению и порядку событий. Переключение календаря и часов сохраняет объект даты и редактор. Native calendar сохраняет info.source. Strict hydration в штатном контейнере сохраняет редактор и колонки открытой панели. Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d: подтвердить час, сменить picker с time на date, открыть поле. React дважды передаёт undefined в locale.format с обязательным строковым форматом, после исключения поле размонтируется. Контроль Dayjs открывает календарь, а Native с пользовательским адаптером сохраняет редактор и открывает нужную панель. Множественный выбор времени и отдельные последовательности событий остаются пробелами."
         },
         {
           "id": "global-parity",

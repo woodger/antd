@@ -7,6 +7,7 @@ import type {
   DatePickerDisabledTime,
   DatePickerCalendarMode,
   DatePickerMode,
+  DatePickerPicker,
   DatePickerSemantic
 } from './date-picker.types';
 export type RangePickerValue<DateType extends object = Dayjs> = [DateType | null, DateType | null];
@@ -36,7 +37,10 @@ export interface RangePickerConfig {
 /** Пара дат с общей панелью диапазона, временем и подтверждением границ. */
 export interface RangePickerProps<DateType extends object = Dayjs> extends Omit<
   DatePickerProps<DateType>,
-  'value'
+  keyof Omit<DatePickerTimeConfig<DateType>, 'format'>
+  | 'changeOnScroll'
+  | 'picker'
+  | 'value'
   | 'multiple'
   | 'mode'
   | 'defaultValue'
@@ -57,6 +61,7 @@ export interface RangePickerProps<DateType extends object = Dayjs> extends Omit<
   | 'classNames'
   | 'styles'
 > {
+  picker?: DatePickerPicker;
   multiple?: HTMLInputAttributes['multiple'];
   /** Управляемые панели границ. onPanelChange предлагает следующую пару. */
   mode?: Readonly<RangePickerMode>;

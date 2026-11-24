@@ -1,7 +1,9 @@
 import {
-  DatePicker, generatePicker, RangePicker, type DatePickerPanelContext, type TimeRangePickerProps
+  DatePicker, generatePicker, RangePicker, type DatePickerMode, type DatePickerPanelContext,
+  type DatePickerTimeProps, type TimeRangePickerProps
 } from '@woodger/antd';
 import registry from '@woodger/antd/porting/registry.json';
+import { createRawSnippet } from 'svelte';
 import { render } from 'svelte/server';
 import { expect, expectTypeOf, it, vi } from 'vitest';
 import type { ComponentProps } from 'svelte';
@@ -33,6 +35,9 @@ it('exports an adapter-bound picker family with opaque values at every public bo
     .toEqualTypeOf<OpaquePickerDate | null | undefined>();
   expectTypeOf<ComponentProps<typeof Picker<true>>['value']>()
     .toEqualTypeOf<readonly OpaquePickerDate[] | null | undefined>();
+  expectTypeOf<ComponentProps<typeof Picker>['picker']>().toEqualTypeOf<
+    DatePickerTimeProps['picker'] | 'date' | 'week' | 'month' | 'quarter' | 'year' | undefined
+  >();
   expectTypeOf<ComponentProps<typeof Picker.TimePicker>['value']>()
     .toEqualTypeOf<OpaquePickerDate | null | undefined>();
   expectTypeOf<ComponentProps<typeof Picker.RangePicker>['value']>()
@@ -62,6 +67,23 @@ it('renders the generated week, year and time range panels from opaque values', 
   expect(quarter).toContain('ant-picker-quarter-panel');
   expect(time).toContain('ant-picker-time-panel');
   expect(submittedValues(time)).toEqual(['13:10:18', '14:26:40']);
+});
+
+it('renders the clock of a generated DatePicker with its field format and calendar footer', () => {
+  const Picker = generatePicker(opaquePickerAdapter);
+  const renderExtraFooter = createRawSnippet<[DatePickerMode]>(mode => ({
+    render: () => `<strong data-footer-mode>${mode()}</strong>`
+  }));
+  const props: DatePickerTimeProps<OpaquePickerDate> = {
+    picker: 'time', open: true, name: 'opaque',
+    defaultValue: opaqueDate('2024-06-15T13:10:18Z'),
+    format: 'HH:mm:ss', showTime: { format: 'HH:mm' }, renderExtraFooter
+  };
+  const { body } = render(Picker, { props });
+
+  expect(submittedValues(body)).toEqual(['13:10:18']);
+  expect(body).toContain('data-footer-mode>time</strong>');
+  expect(body.match(/class="ant-picker-time-panel-column\b/g)).toHaveLength(2);
 });
 
 const ssr = readPickerGeneratorServer();

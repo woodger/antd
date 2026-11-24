@@ -1,7 +1,8 @@
 <script module lang="ts">
   export type GeneratedPickerProfile = 'editor' | 'calendar' | 'range'
     | 'month' | 'month-grid' | 'time' | 'time-columns' | 'time-range'
-    | 'multiple' | 'masked' | 'open-range' | 'controlled';
+    | 'multiple' | 'masked' | 'open-range' | 'controlled'
+    | 'root-time' | 'child-time' | 'switch-time' | 'open-clock';
 </script>
 
 <script lang="ts">
@@ -17,6 +18,7 @@
       case 'calendar': case 'range': case 'month': case 'time': case 'multiple':
       case 'month-grid': case 'time-columns': case 'time-range':
       case 'masked': case 'open-range': case 'controlled':
+      case 'root-time': case 'child-time': case 'switch-time': case 'open-clock':
         return profile;
       default:
         return 'editor';
@@ -33,6 +35,9 @@
   const endOfMonthView = opaqueDate('2024-01-31T11:00:00Z');
   const rangeView: [OpaquePickerDate, OpaquePickerDate] = [view, view];
   const theme = { token: { motion: false } };
+  const datePicker = { classNames: { root: 'date-owner' }, suffixIcon: 'Date configuration' };
+  const timePicker = { classNames: { root: 'time-owner' }, suffixIcon: 'Time configuration' };
+  let compareProvider = $derived(profile === 'root-time' || profile === 'child-time');
   const ids = { start: 'start', end: 'end' };
   const mask = { format: 'YYYY-MM-DD', type: 'mask' } as const;
   const dateSlots = { date: panel };
@@ -46,6 +51,7 @@
   let endInput = $state<HTMLInputElement>();
   let handle = $state<{ focus(): void; blur(): void; }>();
   let mounted = $state(true);
+  let selectClock = $state(true);
 
   type Payload = OpaquePickerDate | (OpaquePickerDate | null)[] | null;
 
@@ -119,7 +125,9 @@
   </div>
 {/snippet}
 
-<ConfigProvider locale={enUS} {theme}>
+<ConfigProvider locale={enUS} {theme}
+  datePicker={compareProvider ? datePicker : undefined}
+  timePicker={compareProvider ? timePicker : undefined}>
   <form data-generated-picker-fixture aria-label="Opaque date form" onsubmit={event => {
     event.preventDefault();
     log = [...log, ['submit']];
@@ -147,7 +155,18 @@
           defaultPickerValue={profile === 'month-grid' ? endOfMonthView : view}
           components={profile === 'month' ? monthSlots : undefined}
           previewValue={false} getPopupContainer={popupContainer} bind:nativeElement />
-      {:else if profile === 'time' || profile === 'time-columns'}
+      {:else if profile === 'root-time' || profile === 'open-clock'}
+        <Picker {...callbacks} picker="time" id="start" name="opaque" format="HH:mm:ss"
+          defaultValue={dates[0]} defaultPickerValue={view}
+          defaultOpen={profile === 'open-clock'}
+          previewValue={false}
+          getPopupContainer={profile === 'root-time' ? popupContainer : undefined}
+          bind:nativeElement bind:this={handle} />
+      {:else if profile === 'switch-time'}
+        <Picker {...callbacks} picker={selectClock ? 'time' : 'date'} id="start" name="opaque"
+          defaultValue={dates[0]} previewValue={false} getPopupContainer={popupContainer}
+          bind:nativeElement bind:this={handle} />
+      {:else if profile === 'time' || profile === 'time-columns' || profile === 'child-time'}
         <TimePicker {...callbacks} id="start" name="opaque" format="HH:mm:ss"
           defaultValue={dates[0]} defaultPickerValue={view}
           components={profile === 'time' ? timeSlots : undefined}
@@ -169,6 +188,11 @@
 <button id="outside" type="button" style="position:fixed;right:16px;bottom:16px">Outside</button>
 <button id="new-value" type="button" onclick={() => { controlled = dates[1]; }}>New value</button>
 <button id="focus-picker" type="button" onclick={() => handle?.focus()}>Focus</button>
+{#if profile === 'switch-time'}
+  <button id="switch-time" type="button" onclick={() => { selectClock = !selectClock; }}>
+    Switch picker
+  </button>
+{/if}
 <button id="remove-picker" type="button" style="position:fixed;right:16px;bottom:58px"
   onclick={() => { mounted = false; }}>Remove</button>
 <output id="generated-events">{JSON.stringify(log)}</output>

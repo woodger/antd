@@ -42,7 +42,7 @@
     disabled?: boolean | [boolean, boolean] | null;
     status?: string;
     variant?: string;
-    picker?: DatePickerPicker;
+    picker?: import('@woodger/antd').DatePickerProps['picker'];
     class?: string;
     allowClear?: DatePickerAllowClear;
     value?: unknown;

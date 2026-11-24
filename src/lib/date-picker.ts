@@ -94,8 +94,9 @@ export function createPickerFamily<DateType extends object>(
   const RangePicker: RangePickerComponent<DateType> = (anchor, props) => RangePickerRoot<DateType>(
     anchor, pickerAdapterProps(props, { dateOperations, parseTimeInput })
   );
+  const DatePicker = createDatePickerComponent(dateOperations);
 
-  return Object.assign(createDatePickerComponent(dateOperations), {
+  return Object.assign(DatePicker, {
     WeekPicker, MonthPicker, YearPicker, TimePicker, RangePicker
   });
 }

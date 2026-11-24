@@ -1,8 +1,8 @@
 # DatePicker
 
-DatePicker позволяет выбрать дату, дату со временем, неделю, месяц, квартал
-или год. Значение — Dayjs; при очистке возвращается null. Undefined включает
-внутреннее состояние с defaultValue. OnChange(value, dateString) получает объект
+DatePicker позволяет выбрать дату, время, дату со временем, неделю, месяц,
+квартал или год. Значение имеет тип Dayjs, при очистке возвращается null.
+Undefined включает внутреннее состояние с defaultValue. OnChange(value, dateString) получает объект
 даты и отображаемую строку, а не ISO-строку или timestamp.
 
 ```svelte
@@ -18,8 +18,9 @@ DatePicker позволяет выбрать дату, дату со време�
 Value/open/pickerValue — controlled props с callbacks: владелец может отклонить
 изменение; component сам не переписывает переданный value. Без value/open
 используются defaultValue/defaultOpen и внутреннее состояние. DefaultPickerValue
-задаёт исходную дату панели при каждом открытии. `picker` выбирает date, week, month, quarter или year;
-decade служит экраном навигации. NativeElement с bind указывает на root div; bind:this даёт методы
+задаёт исходную дату панели при каждом открытии. `picker` выбирает date, time,
+week, month, quarter или year. Decade служит экраном навигации.
+NativeElement с bind указывает на root div, а bind:this даёт методы
 focus({preventScroll,cursor:'start'|'end'|'all'}) и blur().
 
 ## Свой тип даты
@@ -36,10 +37,21 @@ const { WeekPicker, MonthPicker, YearPicker, TimePicker, RangePicker } = Picker;
 ```
 
 `generatePicker` также доступен как именованный экспорт. Для квартала укажите
-`picker="quarter"` на `Picker`, для диапазона времени — `picker="time"` на
+`picker="quarter"` на `Picker`, для времени — `picker="time"` на `Picker` или
 `RangePicker` из семейства. `value`, `presets`, ограничения и callbacks используют
 тип даты адаптера. Пользовательские панели получают исходный `generateConfig`;
 выбранный ими объект передаётся владельцу с той же ссылкой.
+
+## Выбор времени
+
+`picker="time"` открывает колонки времени. Без явного `format` редактор
+использует формат времени локали. `showTime.format` задаёт формат колонок
+отдельно от формата поля. Подтверждение по умолчанию включено.
+
+`DatePickerTimeProps` описывает режим часов. Он использует оформление
+`ConfigProvider.datePicker`, передаёт `'time'` в `renderExtraFooter`
+для панели часов и `{ source: 'time' }` в `onCalendarChange`.
+Фабричный `Picker.TimePicker` берёт слоты и значки из `ConfigProvider.timePicker`.
 
 ## Множественный выбор
 

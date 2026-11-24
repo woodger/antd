@@ -8,13 +8,13 @@ const timeOnly = new Set([
   'suffixIcon', 'prefix', 'classNames', 'styles',
   'cellRender', 'panelRender', 'renderExtraFooter', 'presets', 'onPickerValueChange', 'onPanelChange',
   'disabledDate', 'onCalendarChange', 'onChange', 'onclick', 'onClick', 'onFocus', 'onBlur',
-  'onKeyDown', 'allowClear', 'status', 'multiple', 'mode'
+  'onKeyDown', 'allowClear', 'status', 'multiple', 'mode', 'picker'
 ]);
 
 /** Общие native/input props без утечки time-only callbacks и renderers в DOM. */
 export function timePickerSharedProps<DateType extends object>(
   props: TimePickerRuntimeProps<DateType>
-): DatePickerProps<DateType> {
+): Omit<DatePickerProps<DateType>, 'picker'> {
   // После удаления time-only полей оставшаяся часть имеет общий контракт DatePickerProps.
   const shared = Object.fromEntries(
     Object.entries(props).filter(([key]) => !timeOnly.has(key))

@@ -4,7 +4,8 @@
   import { tick, untrack } from 'svelte';
   import type { PickerDateOperations } from './picker-date-operations.engine';
   import type {
-    DatePickerCalendarMode, DatePickerProps, DatePickerMode, DatePickerMultipleProps, DatePickerPreset
+    DatePickerCalendarMode, DatePickerProps, DatePickerMode, DatePickerMultipleProps,
+    DatePickerPicker, DatePickerPreset
   } from './date-picker.types';
   import { createMultiplePicker, emptyPickerDates } from './date-picker-multiple.model.svelte';
   import { normalizePickerFieldFormat } from './picker-mask.engine';
@@ -56,6 +57,8 @@
   let {
     dateOperations,
     time,
+    rootTimeProps,
+    standaloneTime = false,
     dateProps,
     multipleOptions,
     value,
@@ -117,9 +120,12 @@
     style,
     nativeElement = $bindable(),
     ...attributes
-  }: DatePickerProps<DateType> & {
+  }: Omit<DatePickerProps<DateType>, 'picker'> & {
     dateOperations: PickerDateOperations<DateType>;
+    picker?: DatePickerPicker;
     time?: TimePickerRuntimeProps<DateType>;
+    rootTimeProps?: DatePickerProps<DateType>;
+    standaloneTime?: boolean;
     dateProps?: DatePickerProps<DateType>;
     multipleOptions?: DatePickerMultipleProps<DateType>;
   } = $props();
@@ -167,7 +173,7 @@
   let dateValues = $state.raw<readonly DateType[]>(initialDates);
   let mergedValue = $derived.by(() => {
     if (multipleOptions) return null;
-    if (time) return value === undefined ? internalValue : value;
+    if (time && !rootTimeProps) return value === undefined ? internalValue : value;
 
     return value === undefined ? dateValues[0] ?? null : value;
   });
@@ -204,18 +210,21 @@
   let panel = $derived(pickerValue ?? internalPanel);
   let terminalMode = $derived(time ? 'time' as const : picker);
   let localMode = $state<DatePickerMode>(untrack(() => terminalMode));
-  let mode = $derived(time ? localMode : providedMode ?? localMode);
+  let mode = $derived(providedMode ?? localMode);
   let authoredMode = $state(false);
   let replacementMode = $derived(pickerPanelSlot(mode, Boolean(showTime)));
   let panelReplacement = $derived(components?.[replacementMode]);
   let navigationIcons = $derived({ prevIcon, nextIcon, superPrevIcon, superNextIcon });
-  let previousPickerMode = untrack(() => ({ picker, open: visible, controlled: false }));
+  let previousPickerMode = untrack(() => ({ picker: terminalMode, open: visible, controlled: false }));
   $effect.pre(() => {
-    const current = { picker, open: visible, controlled: providedMode !== undefined };
-    if (!time && (current.controlled || previousPickerMode.controlled
-      || current.open && (picker !== previousPickerMode.picker
-        || picker !== 'date' && !previousPickerMode.open))) {
-      localMode = picker;
+    const current = { picker: terminalMode, open: visible, controlled: providedMode !== undefined };
+    const switchedPicker = current.picker !== previousPickerMode.picker;
+    const switchedTime = switchedPicker
+      && (current.picker === 'time' || previousPickerMode.picker === 'time');
+    if (switchedTime || (!time || rootTimeProps) && (current.controlled
+      || previousPickerMode.controlled || current.open && (switchedPicker
+        || current.picker !== 'date' && !previousPickerMode.open))) {
+      localMode = current.picker;
       authoredMode = false;
     }
     previousPickerMode = current;
@@ -258,7 +267,10 @@
         ? dirty && draftSource === 'input' ? quarterInputValue : draft
         : parsePicker(text, actualLocale.locale, formats)) && !readOnly
   );
-  let clock = $derived(time ? timePickerClock(time, actualLocale)
+  let clockFormat = $derived(typeof rootTimeProps?.showTime === 'object'
+    ? rootTimeProps.showTime?.format : undefined);
+  let clock = $derived(time ? timePickerClock(
+    clockFormat === undefined ? time : { ...time, format: clockFormat }, actualLocale)
     : datePickerClock({ format, showTime }, actualLocale));
   let timeFormat = $derived(
     clock.format ?? (typeof formats[0] === 'string' ? formats[0] : 'HH:mm:ss')
@@ -277,16 +289,23 @@
   let formattedDateValue = $derived(time ? undefined
     : formatPicker(mergedValue, actualLocale.locale, formats));
   let previousDateText = untrack(() => formattedDateValue);
+  let previousTimeMode = untrack(() => Boolean(time));
   let wasVisible = untrack(() => visible);
   let datePanelWasOpen = false;
   let previousDateCalendar = untrack(() => draft);
   let panelWasOpen = false;
   const dateTimeScroll: DatePickerTimeScrollMemory = new Map();
   let dateTimePanel = $state<{ captureScroll: () => void }>();
-  let actualVariant = $derived(time ? timeVariant.variant : dateVariant.variant);
+  let actualVariant = $derived(time && standaloneTime ? timeVariant.variant : dateVariant.variant);
+  let pickerConfig = $derived(time && !rootTimeProps ? config.timePicker : config.datePicker);
   let dateSemantic = $derived.by(() => {
     const settings = config.datePicker;
     const providerStyle = settings?.style;
+    if (rootTimeProps) {
+      const { classNames, styles } = rootTimeProps;
+      const props = { ...rootTimeProps, size: resolvedSize, disabled: blocked, status, variant };
+      return datePickerSemantic(props, settings, classNames, styles, providerStyle);
+    }
     if (multipleOptions) {
       if (!(settings?.classNames || settings?.styles
         || multipleOptions.classNames || multipleOptions.styles || providerStyle)) {
@@ -307,13 +326,15 @@
     const props = { ...dateProps, size: resolvedSize, disabled: blocked, status, variant };
     return datePickerSemantic(props, settings, classNames, styles, providerStyle);
   });
-  let semantic = $derived(time ? timePickerSemantic(time, config.timePicker, {
+  let timeSemantic = $derived(time && !rootTimeProps ? timePickerSemantic(time, config.timePicker, {
     variant: actualVariant,
     size: resolvedSize,
     disabled: blocked
-  }) : dateSemantic);
+  }, standaloneTime) : undefined);
+  let semantic = $derived(timeSemantic ?? dateSemantic);
+  let timeCellRender = $derived(rootTimeProps?.cellRender ?? time?.cellRender);
   let localClearConfig = $derived(time ? time.allowClear : allowClear);
-  let providerClearConfig = $derived(time ? config.timePicker?.allowClear : config.datePicker?.allowClear);
+  let providerClearConfig = $derived(pickerConfig?.allowClear);
   let clearEnabled = $derived(localClearConfig ?? providerClearConfig ?? true);
   let clearContent = $derived.by(() => {
     const local = typeof localClearConfig === 'object' ? localClearConfig?.clearIcon : undefined;
@@ -325,8 +346,8 @@
   let showLeadingContent = $derived(leadingContent != null && leadingContent !== ''
     && leadingContent !== false && (!time || leadingContent !== true));
   let suffixContent = $derived(time
-    ? time.suffixIcon === undefined ? config.timePicker?.suffixIcon : time.suffixIcon
-    : suffixIcon !== undefined ? suffixIcon : config.datePicker?.suffixIcon);
+    ? time.suffixIcon === undefined ? pickerConfig?.suffixIcon : time.suffixIcon
+    : suffixIcon !== undefined ? suffixIcon : pickerConfig?.suffixIcon);
   let placeholderText = $derived(time
     ? attributes.placeholder ?? locale?.timePickerLocale?.placeholder
       ?? config.locale.datePicker?.timePickerLocale?.placeholder
@@ -419,7 +440,7 @@
     [componentTheme.style, semantic?.styles.popup.root].filter(Boolean).join(';') || undefined
   );
   const datePopupStyle = untrack(() =>
-    time ? undefined : createOverlayStyle(() => [popupThemeStyle]));
+    time && !rootTimeProps ? undefined : createOverlayStyle(() => [popupThemeStyle]));
 
   // Авторские декларации следуют после координат и обновляются на той же панели.
   function attachPopupStyle(node: HTMLElement) {
@@ -450,17 +471,21 @@
     return () => { nativeElement = undefined; };
   });
   $effect(() => {
-    if (time && value !== previousValue) internalValue = value ?? null;
+    if (time && !rootTimeProps && value !== previousValue) internalValue = value ?? null;
     previousValue = value;
   });
   $effect(() => {
     const formatted = formattedDateValue;
+    const timeMode = Boolean(time);
+    const switchedEditorMode = timeMode !== previousTimeMode;
+    previousTimeMode = timeMode;
     // Context repaint не сбрасывает draft, пока value и его отображение прежние.
-    if (mergedValue === previousMergedValue && (time || formatted === previousDateText)) {
+    if (!switchedEditorMode && mergedValue === previousMergedValue
+      && (time || formatted === previousDateText)) {
       return;
     }
 
-    if (!time && mergedValue === previousMergedValue) {
+    if (!switchedEditorMode && !time && mergedValue === previousMergedValue) {
       text = formatPicker(draft, actualLocale.locale, formats);
       previousDateText = formatted;
       return;
@@ -641,8 +666,8 @@
     }
     const changed = time ? !timePickerSameValue(next, mergedValue)
       : !dates.sameValue(next, mergedValue);
-    setDraft(next, 'date');
-    if (time) {
+    setDraft(next, time ? 'time' : 'date');
+    if (time && !rootTimeProps) {
       internalValue = next;
     }
     else if (value === undefined) {
@@ -929,7 +954,7 @@
   }
 
   function publishReplacementMode(next: DatePickerMode, date: DateType) {
-    if (time || providedMode === undefined) {
+    if (providedMode === undefined) {
       localMode = next;
       authoredMode = true;
     }
@@ -966,7 +991,9 @@
   }
 
   function replacementDisabled(date: DateType, { type }: { type: DatePickerMode; }) {
-    const localDisabled = time
+    const localDisabled = rootTimeProps
+      ? rootTimeProps.disabledDate?.(date, { type })
+      : time
       ? time.disabledDate?.(date, { type: 'time' })
       : disabledDate?.(date, { type: type === 'time' ? 'date' : type });
     return Boolean(localDisabled) || pickerPanelOutsideBounds(date, { minDate, maxDate },
@@ -1512,7 +1539,7 @@
       >
         {#if panelReplacement}
           <PickerPanelReplacement panel={panelReplacement} context={replacementContext()}
-            timeCell={time?.cellRender} />
+            dateCell={cellRender} timeCell={timeCellRender} />
         {:else if mode === 'date'}
           <div class={`${prefix}-datetime-panel`}>
             {@render dateCalendar(mode)}
@@ -1531,7 +1558,7 @@
         >
           {#if time?.renderExtraFooter}
             <div class={`${prefix}-footer-extra`}>
-              {#if panelReplacement || authoredMode}{@render time.renderExtraFooter(mode)}
+              {#if rootTimeProps || panelReplacement || authoredMode}{@render time.renderExtraFooter(mode)}
               {:else}{@render time.renderExtraFooter()}{/if}
             </div>
           {/if}
@@ -1571,7 +1598,7 @@
     onSelect={selectTime}
     onHover={handleTimeHover}
     onConfirm={confirm ? () => timeInteraction.trigger(0, 'confirm') : undefined}
-    cellRender={time?.cellRender}
+    cellRender={timeCellRender}
     class={semantic?.classes.popup.content}
     style={semantic?.styles.popup.content}
     itemClass={semantic?.classes.popup.item}
@@ -1651,8 +1678,8 @@
       feedback.hasFeedback && `${prefix}-has-feedback`,
       config.direction === 'rtl' && `${prefix}-rtl`,
       compactClasses(prefix, config.direction, compact),
-      time ? config.timePicker?.class : config.datePicker?.class,
-      time && semantic?.classes.root,
+      pickerConfig?.class,
+      timeSemantic?.classes.root,
       className,
       dateSemantic?.classes.root,
       rootClassName

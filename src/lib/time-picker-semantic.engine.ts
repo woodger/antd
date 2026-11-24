@@ -31,7 +31,8 @@ export function mergePickerSlots(values: (TimePickerSlots | undefined)[], separa
 export function timePickerSemantic<DateType extends object>(
   props: TimePickerProps<'time', DateType>,
   config: TimePickerConfig | undefined,
-  resolved: Pick<TimePickerProps, 'variant' | 'size' | 'disabled'>
+  resolved: Pick<TimePickerProps, 'variant' | 'size' | 'disabled'>,
+  standalone = true
 ) {
   const resolve = (
     value: TimePickerSemantic<DateType> | undefined,
@@ -41,7 +42,10 @@ export function timePickerSemantic<DateType extends object>(
   // Настройки провайдера получают props фактического пикера, включая его тип даты.
   const providerClasses = config?.classNames as TimePickerSemantic<DateType> | undefined;
   const providerStyles = config?.styles as TimePickerSemantic<DateType> | undefined;
-  const outerProps = { ...props, variant: resolved.variant };
+  const outerProps = standalone
+    ? { ...props, variant: resolved.variant }
+    : { ...props, size: resolved.size, disabled: resolved.disabled, status: props.status,
+      variant: props.variant };
   const outerClasses = mergePickerSlots([
     resolve(providerClasses, outerProps), resolve(props.classNames, outerProps)
   ], ' ');
@@ -49,6 +53,10 @@ export function timePickerSemantic<DateType extends object>(
     resolve(providerStyles, outerProps), { root: config?.style },
     resolve(props.styles, outerProps)
   ], ';');
+  if (!standalone) {
+    return { classes: outerClasses, styles: outerStyles };
+  }
+
   const innerProps: TimePickerProps<'time', DateType> = {
     ...outerProps,
     ...resolved,

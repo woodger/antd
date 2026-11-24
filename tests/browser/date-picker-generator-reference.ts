@@ -14,11 +14,15 @@ interface SourceReference {
 export interface GeneratedPickerState {
   fields: [value: string, sameInput: boolean, name: string][];
   open: boolean;
+  ownerClass?: string;
+  suffix?: string;
+  panels?: string[];
+  invalidFormats?: [locale: string, value: string, formatType: string][];
   events: unknown[][];
 }
 
-interface BrowserProfile {
-  profile: { id: GeneratedPickerProfile; actions: string[]; };
+interface BrowserProfile<Id extends string = GeneratedPickerProfile> {
+  profile: { id: Id; actions: string[]; };
   steps: { action: string; state: GeneratedPickerState; }[];
   errors: string[];
 }
@@ -34,7 +38,9 @@ interface ServerPass {
 }
 
 /** Проверяет хеш оригинальных байтов перед разбором измерений. */
-function readReference<Pass>(kind: 'browser' | 'supplement' | 'ssr', sha256: string) {
+function readReference<Pass>(
+  kind: 'browser' | 'supplement' | 'root-time' | 'switch-time' | 'ssr', sha256: string
+) {
   const path = `./fixtures/ant-design-generated-picker-${kind}-reference.json.gz`;
   const capture = gunzipSync(readFileSync(new URL(path, import.meta.url)));
   const hash = createHash('sha256').update(capture).digest('hex');
@@ -56,6 +62,20 @@ export function readPickerGeneratorBrowser() {
 export function readPickerGeneratorSupplement() {
   return readReference<BrowserProfile[]>(
     'supplement', 'f443d509d072e39da2be43d71b4f547c70d7fc2bdcb32b56f13f771036bc4966'
+  );
+}
+
+/** Возвращает выбор времени у корневого пикера и фабричного TimePicker. */
+export function readPickerGeneratorRootTime() {
+  return readReference<BrowserProfile[]>(
+    'root-time', '75ef1f1588ba2f68504e27a7f466d12541af240c60caca780b78fa42b52c5af7'
+  );
+}
+
+/** Показывает вызовы формата и разметку при смене picker у Dayjs и пользовательской даты. */
+export function readPickerGeneratorTimeSwitch() {
+  return readReference<BrowserProfile<'switch-time-dayjs' | 'switch-time-opaque'>[]>(
+    'switch-time', 'bf2d7a7dd990abb42b1af5071eb53cb783b49c503b42c75c56ddb5a0423608c0'
   );
 }
 

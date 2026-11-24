@@ -98,10 +98,10 @@ export interface DatePickerProps<DateType extends object = Dayjs> extends Omit<
   HTMLInputAttributes,
   'value' | 'defaultValue' | 'size' | 'type' | 'children' | 'prefix' | 'multiple'
     | 'onchange' | 'oninput' | 'onselect'
->, DatePickerPanelNavigation {
+>, DatePickerPanelNavigation, Omit<DatePickerTimeConfig<DateType>, 'format'> {
   multiple?: false;
-  /** Выбор даты, недели, месяца, года или квартала. @defaultValue 'date' */
-  picker?: DatePickerPicker;
+  /** Выбор календарного периода или времени. @defaultValue 'date' */
+  picker?: DatePickerPicker | 'time';
   /** Управляемая панель. Компонент предлагает переход через onPanelChange. */
   mode?: DatePickerMode;
   /** Управляемая дата или null; компонент не вводит прикладную UTC-сериализацию. */
@@ -123,8 +123,10 @@ export interface DatePickerProps<DateType extends object = Dayjs> extends Omit<
   open?: boolean;
   /** @defaultValue false */
   defaultOpen?: boolean;
-  disabledDate?: (date: DateType, info: { type: DatePickerCalendarMode; }) => boolean;
+  disabledDate?(date: DateType, info: { type: DatePickerMode; }): boolean;
   disabledTime?: (date: DateType) => DatePickerDisabledTime;
+  /** Автоматически выбирает ближайшую доступную ячейку при прокрутке часов. */
+  changeOnScroll?: boolean;
   minDate?: DateType;
   maxDate?: DateType;
   /** При включении выбор публикуется после подтверждения OK. */
@@ -180,6 +182,12 @@ export interface DatePickerProps<DateType extends object = Dayjs> extends Omit<
   nativeElement?: HTMLDivElement;
 }
 
+/** Выбор времени с семантикой и настройками корневого DatePicker. */
+export interface DatePickerTimeProps<DateType extends object = Dayjs>
+  extends DatePickerProps<DateType> {
+  picker: 'time';
+}
+
 /** Дата и действия одного выбранного тега. Value сохраняет исходный объект даты. */
 export interface DatePickerTagContext<DateType extends object = Dayjs> {
   label: string;
@@ -192,9 +200,10 @@ export interface DatePickerTagContext<DateType extends object = Dayjs> {
 /** Множественный выбор дат или периодов с отдельным черновиком панели. */
 export interface DatePickerMultipleProps<DateType extends object = Dayjs> extends Omit<
   DatePickerProps<DateType>,
-  'multiple' | 'value' | 'defaultValue' | 'showTime' | 'onChange'
+  'picker' | 'multiple' | 'value' | 'defaultValue' | 'showTime' | 'onChange'
     | 'onCalendarChange' | 'onOk' | 'classNames' | 'styles'
 > {
+  picker?: DatePickerPicker;
   multiple: true;
   value?: readonly DateType[] | null;
   defaultValue?: readonly DateType[] | null;
@@ -216,8 +225,9 @@ type SelectionField = 'value' | 'defaultValue' | 'showTime' | 'onChange'
 
 /** Объявление шаблона выводит тип значения по флагу multiple. */
 export type DatePickerSelectionProps<Multiple extends boolean, DateType extends object = Dayjs> = Omit<
-  DatePickerProps<DateType>, 'multiple' | SelectionField
+  DatePickerProps<DateType>, 'picker' | 'multiple' | SelectionField
 > & {
+  picker?: Multiple extends true ? DatePickerPicker : DatePickerProps<DateType>['picker'];
   multiple?: Multiple;
 } & {
   [Field in SelectionField]?: Multiple extends true

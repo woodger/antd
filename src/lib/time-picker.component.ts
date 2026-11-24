@@ -22,13 +22,14 @@ type TimePickerComponent<DateType extends object> = Component<
 
 /** Привязывает адаптер времени. Последняя перегрузка сохраняет обычный ComponentProps. */
 export function createTimePickerComponent<DateType extends object>(
-  dateOperations: PickerDateOperations<DateType>
+  dateOperations: PickerDateOperations<DateType>,
+  standaloneTime = false
 ): TimePickerComponent<DateType> {
   return (anchor, props) => TimePickerControl<DateType>(
-    anchor, pickerAdapterProps(props, { dateOperations })
+    anchor, pickerAdapterProps(props, { dateOperations, standaloneTime })
   );
 }
 
-const TimePicker = createTimePickerComponent(dayjsPickerDates);
+const TimePicker = createTimePickerComponent(dayjsPickerDates, true);
 
 export default TimePicker;

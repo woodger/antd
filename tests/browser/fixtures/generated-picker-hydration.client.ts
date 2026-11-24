@@ -8,5 +8,7 @@ if (!target) {
   throw Error('Missing generated picker hydration target');
 }
 
-hydrate(GeneratedPickerFixtures, { target, props: { profile: 'open-range' }, recover: false });
+const query = new URLSearchParams(location.search);
+const profile = query.has('clock') ? 'open-clock' : 'open-range';
+hydrate(GeneratedPickerFixtures, { target, props: { profile }, recover: false });
 target.dataset.hydrated = 'true';
