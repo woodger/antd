@@ -508,7 +508,7 @@ export { default as Radio } from './Radio.svelte';
 export { default as RadioGroup } from './RadioGroup.svelte';
 export { default as Switch } from './Switch.svelte';
 export { default as Pagination } from './Pagination.svelte';
-export { default as Table } from './Table.svelte';
+export { default as Table } from './table.component';
 export { default as Select } from './Select.svelte';
 export { default as Modal } from './Modal.svelte';
 export { default as Form } from './Form.svelte';
@@ -910,6 +910,11 @@ export type {
   TableExpandable,
   TableScrollOptions,
   TableScrollConfig,
+  TableSticky,
+  TableSummaryConfig,
+  TableSummaryProps,
+  TableSummaryRowProps,
+  TableSummaryCellProps,
   TableRef
 } from './table.types';
 export type {

@@ -1753,6 +1753,11 @@
     "root": "table-spans-fixture"
   },
   {
+    "id": "table-summary",
+    "module": "./TableSummaryFixture.svelte",
+    "root": "table-summary-fixture"
+  },
+  {
     "id": "select-variants",
     "module": "./SelectVariantsFixtures.svelte",
     "root": "select-variants-fixture"

@@ -13,7 +13,8 @@ export function virtualListWindow<Row, Key>(
   scrollTop: number,
   innerHeight: number,
   enabled = true,
-  scrollWidth?: number
+  scrollWidth?: number,
+  scrollTail = 0
 ) {
   const useVirtual = Boolean(enabled && height && estimate);
   const cachedHeight = [...heights.values()].reduce((sum, value) => sum + value, 0);
@@ -39,7 +40,13 @@ export function virtualListWindow<Row, Key>(
     if (next > scrollTop + (height ?? 0) && end === undefined) end = index;
     total = next;
   });
-  if (start === undefined) {
+  if (start === undefined && scrollTail > 0 && rows.length > 0) {
+    // Итоговая секция может целиком занять viewport после последней строки.
+    start = rows.length - 1;
+    const lastHeight = heights.get(getKey(rows[start])) ?? estimate;
+    offset = total - lastHeight;
+  }
+  else if (start === undefined) {
     start = 0;
     offset = 0;
     end = Math.ceil((height ?? 0) / estimate);

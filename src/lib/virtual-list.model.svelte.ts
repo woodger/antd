@@ -18,6 +18,8 @@ export function createVirtualList<Row, Key>(options: {
   renderSizeCache?: boolean;
   measureRow?: (row: HTMLElement) => number | undefined;
   viewportHeight?: (holder: HTMLDivElement) => number;
+  /** Высота содержимого после последней строки, вне индексов списка. */
+  scrollTail?: () => number;
 }) {
   let heights = $state.raw(new Map<Key, number>());
   let top = $state(0);
@@ -48,7 +50,7 @@ export function createVirtualList<Row, Key>(options: {
   const readRowHeight = options.measureRow ?? measureVirtualListRow;
   const range = $derived(virtualListWindow(
     options.rows(), options.getKey, heights, options.estimate(), options.height(), top,
-    innerHeight, options.enabled(), options.width()
+    innerHeight, options.enabled(), options.width(), options.scrollTail?.()
   ));
   const sizes = $derived(virtualListSizes(
     options.rows(),
@@ -84,7 +86,8 @@ export function createVirtualList<Row, Key>(options: {
     if (!holder) {
       return;
     }
-    const maximum = (range.scrollHeight ?? NaN) - (options.height() ?? NaN);
+    const maximum = (range.scrollHeight ?? NaN) + (options.scrollTail?.() ?? 0)
+      - (options.height() ?? NaN);
     const value = Math.max(0, Number.isNaN(maximum) ? next : Math.min(next, maximum));
     holder.scrollTop = value;
     if (top !== value) {

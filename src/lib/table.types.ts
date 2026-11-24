@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte';
-import type { HTMLTdAttributes } from 'svelte/elements';
+import type { HTMLAttributes, HTMLTdAttributes } from 'svelte/elements';
 import type { PaginationProps } from './Pagination.svelte';
 import type { GridBreakpoint } from './grid.types';
 import type { ComponentSize } from './types';
@@ -118,6 +118,38 @@ export interface TableScrollOptions {
   scrollToFirstRowOnChange?: boolean;
 }
 
+/** Смещения закреплённых частей относительно окна или заданной области прокрутки. */
+export interface TableSticky {
+  /** Верхний отступ шапки в пикселях. @defaultValue 0 */
+  offsetHeader?: number;
+  /** Нижний отступ закреплённого итога в пикселях. @defaultValue 0 */
+  offsetSummary?: number;
+  /** Нижний отступ дополнительной полосы в пикселях. @defaultValue 0 */
+  offsetScroll?: number;
+  /** Вызывается после появления DOM. По умолчанию используется окно таблицы. */
+  getContainer?: () => HTMLElement | Window | null | undefined;
+}
+
+export interface TableSummaryProps {
+  children?: Snippet;
+}
+
+export type TableSummaryRowProps = HTMLAttributes<HTMLTableRowElement>;
+
+export interface TableSummaryCellProps extends Omit<TableCellProps, 'align'> {
+  /** Индекс видимой колонки с учётом колонок выделения и раскрытия. */
+  index: number;
+  align?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent';
+  children?: Snippet;
+}
+
+/** Группа итоговых строк. Размещение известно таблице и при SSR. */
+export interface TableSummaryConfig<Row extends object> {
+  /** При scroll.y или sticky закрепляет итог. True равнозначно 'bottom'. */
+  fixed?: boolean | 'top' | 'bottom';
+  render: Snippet<[data: readonly Row[]]>;
+}
+
 /** Абсолютная позиция или адрес строки текущей страницы. top имеет приоритет. */
 export interface TableScrollConfig {
   top?: number;
@@ -193,9 +225,12 @@ export interface TableProps<Row extends object> {
   title?: Snippet<[data: readonly Row[]]>;
   /** Панель после таблицы; получает те же записи страницы, включая пустой массив. */
   footer?: Snippet<[data: readonly Row[]]>;
+  /** Итоговые строки внутри таблицы; получают записи текущей страницы. */
+  summary?: Snippet<[data: readonly Row[]]> | TableSummaryConfig<Row>;
   caption?: string;
   empty?: Snippet;
   scroll?: TableScrollOptions;
+  sticky?: boolean | TableSticky;
   /** Ограничивает число строк в DOM при заданном scroll.y. @defaultValue false */
   virtual?: boolean;
   /** В виртуальном режиме уведомляет о вертикальной прокрутке. */

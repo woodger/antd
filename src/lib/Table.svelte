@@ -1,6 +1,6 @@
 <script lang="ts" generics="Row extends object">
-  // Координирует обработку данных, шапку, выделение и раскрытие. Смена видимости
-  // колонок не меняет состояние сортировки и фильтров. Окно ограничивает DOM строк.
+  // Координирует данные, выбор и раскрытие. Шапка, тело и итоги используют
+  // одну сетку колонок, а виртуальное окно ограничивает только строки тела.
   import { untrack, type Snippet } from 'svelte';
   import { useConfig } from './config-context';
   import { getTablePrefixCss } from './table-prefix.engine';
@@ -15,6 +15,8 @@
   import { resolveTableCell, resolveTableVirtualCells, type TableCell, type TableMergedRow }
     from './table-cell.engine';
   import { observeTableLayout } from './table-layout.dom';
+  import { observeTableSticky, type TableStickyBarLayout } from './table-sticky.dom';
+  import { provideTableSummary, type TableFixedCell } from './table-summary-context';
   import { tableVirtualRowHeight } from './table-virtual.engine';
   import { createTableViewport } from './table-virtual.model.svelte';
   import {
@@ -41,6 +43,7 @@
   import Icon from './Icon.svelte';
   import Pagination from './Pagination.svelte';
   import TableFilter from './TableFilter.svelte';
+  import TableStickyScrollbar from './TableStickyScrollbar.svelte';
   import Spin from './Spin.svelte';
   import Empty from './Empty.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
@@ -76,11 +79,13 @@
     size,
     title,
     footer,
+    summary,
     caption,
     prefixCls,
     dropdownPrefixCls,
     empty,
     scroll,
+    sticky,
     virtual = false,
     onScroll,
     nativeElement = $bindable(),
@@ -148,6 +153,20 @@
       )
   );
   let panelData = $derived(pageRows.map(row => row.record));
+  const summaryRender = $derived(typeof summary === 'function' ? summary : summary?.render);
+  const summaryPlacement = $derived.by(() => {
+    if (!summaryRender) {
+      return undefined;
+    }
+
+    const fixed = typeof summary === 'object' && summary.fixed;
+    if (fixed && (sticky || scroll?.y !== undefined)) {
+      return fixed === 'top' ? 'top' : 'bottom';
+    }
+
+    return 'inline';
+  });
+  const pinHeader = $derived(Boolean(sticky) || scroll?.y !== undefined);
   let expandedRowRender = $derived(expandable?.expandedRowRender);
   let tree = $derived(!expandedRowRender && pageRows.some(row => row.children !== undefined));
   let showTreeControls = $derived(tree && expandable?.showExpandColumn !== false);
@@ -186,6 +205,7 @@
   let strings = $derived({ ...ruRU.table, ...config.locale.table });
   let content = $state<HTMLDivElement>();
   let table = $state<HTMLTableElement>();
+  let stickyBar = $state.raw<TableStickyBarLayout>();
   let expansionColumn = $derived(
     expandedRowRender && expandable?.showExpandColumn !== false ? expandable : undefined
   );
@@ -222,6 +242,11 @@
     offset: `var(--ant-table-fixed-${index}, auto)`
   })));
 
+  provideTableSummary({
+    get prefix() { return prefix; },
+    fixedSpan
+  });
+
   $effect(() => {
     const view = content?.ownerDocument.defaultView;
     if (view && hasResponsiveColumns) {
@@ -247,6 +272,7 @@
     element: () => content,
     header: () => showHeader,
     caption: () => Boolean(caption),
+    summary: () => summaryPlacement,
     rtl: () => config.direction === 'rtl'
   });
 
@@ -274,7 +300,10 @@
 
     return spans.map(row => measureMergedRow(row, offsets));
   });
-  const virtualRowIndices = $derived(scrollport.active && !expandedRowRender && !mergedRows.length);
+  // Произвольные итоговые строки сохраняют нативную семантику и свои атрибуты.
+  const virtualRowIndices = $derived(
+    scrollport.active && !expandedRowRender && !mergedRows.length && !summaryRender
+  );
   const emptyCell = resolveTableCell();
 
   function measureMergedRow({ index, cells }: TableMergedRow, offsets: readonly number[]) {
@@ -358,11 +387,9 @@
     };
   }
 
-  type FixedCell = { side: 'start' | 'end' | undefined; offset: string; };
-
   // Пользовательский стиль имеет приоритет над выравниванием и закреплением ячейки.
   function cellStyle(
-    fixed: FixedCell | undefined,
+    fixed: TableFixedCell | undefined,
     zIndex: number,
     align: TableColumn<Row>['align'],
     custom: TableCell['style']
@@ -373,8 +400,8 @@
       .filter(Boolean).join('; ') || undefined;
   }
 
-  // Закреплённый заголовок группы использует крайние листья своего colspan.
-  function headerFixed(index: number, span: number) {
+  // Закрепление объединённой ячейки зависит от стороны её крайних колонок.
+  function fixedSpan(index: number, span: number) {
     const first = fixedCells[index];
     const last = fixedCells[index + span - 1];
     if (!first?.side || first.side !== last?.side) {
@@ -394,7 +421,7 @@
     const element = table;
     const viewport = content;
     const fixed = fixedColumns;
-    const stickyHeader = headerCount > 0 && scroll?.y !== undefined;
+    const stickyHeader = headerCount > 0 && pinHeader;
     const hasExpansion = Boolean(expandedRowRender);
 
     if (!element || !viewport || (!fixed.some(Boolean) && !stickyHeader && !hasExpansion)) {
@@ -404,7 +431,20 @@
     return observeTableLayout({
       table: element, viewport, fixed, stickyHeader,
       hasBodyRows: !showHeader && scrollport.rows.length > 0,
-      measureColumns: showHeader ? hasHeaderProps : hasCellProps
+      measureColumns: showHeader ? hasHeaderProps : hasCellProps || Boolean(summaryRender)
+    });
+  });
+
+  $effect(() => {
+    const viewport = content;
+    const element = table;
+    if (!viewport || !element || !sticky) {
+      return;
+    }
+
+    const options = typeof sticky === 'object' ? sticky : {};
+    return observeTableSticky(viewport, element, options, summaryPlacement, layout => {
+      stickyBar = layout;
     });
   });
 
@@ -575,11 +615,12 @@
   .table-sticky { isolation: isolate; scroll-padding-inline: var(--ant-table-fixed-start-width, 0px) var(--ant-table-fixed-end-width, 0px); }
   .table-scroll-y { overflow-y: auto; overscroll-behavior-y: contain; scroll-padding-top: var(--ant-table-header-height, 0px); }
   .table-virtual-container { position: relative; isolation: isolate; }
+  .table-sticky-container { position: relative; }
   [data-ant-table-part="content"].table-virtual-scroll { scrollbar-width: none; overflow-anchor: none; }
   .table-virtual-scroll::-webkit-scrollbar { display: none; }
-  .table-virtual-scroll caption {
+  .table-virtual-scroll caption, [data-ant-table-pin-summary] caption {
     position: sticky;
-    inset-block-start: 0;
+    inset-block-start: var(--ant-table-sticky-head-top, 0px);
     z-index: 4;
     background: var(--ant-color-bg-container);
   }
@@ -611,18 +652,36 @@
   }
   [data-ant-table-part="wrapper"] [data-ant-table-part="cell"].table-fixed-cell { position: var(--ant-table-fixed-position, relative); background: var(--ant-color-bg-container); }
   [data-ant-table-part="wrapper"] [data-ant-table-part="body"] > tr > th.table-fixed-cell { background: linear-gradient(var(--ant-table-header-bg), var(--ant-table-header-bg)) var(--ant-color-bg-container); }
-  [data-ant-table-part="wrapper"] .table-scroll-y [data-ant-table-part="head"] > tr > th {
+  [data-ant-table-part="wrapper"] .table-pin-head [data-ant-table-part="head"] > tr > th {
     position: sticky;
-    top: calc(var(--ant-table-virtual-caption-height, 0px) + var(--ant-table-header-row-offset, 0px));
+    top: calc(var(--ant-table-sticky-head-top, 0px)
+      + var(--ant-table-virtual-caption-height, 0px) + var(--ant-table-header-row-offset, 0px));
     z-index: 2;
   }
   /* Непрозрачная подложка нужна и для токенов темы с alpha. */
-  [data-ant-table-part="wrapper"] .table-scroll-y [data-ant-table-part="head"] > tr > th,
+  [data-ant-table-part="wrapper"] .table-pin-head [data-ant-table-part="head"] > tr > th,
   [data-ant-table-part="wrapper"] [data-ant-table-part="head"] > tr > .table-fixed-cell { background: linear-gradient(var(--ant-table-header-bg), var(--ant-table-header-bg)) var(--ant-color-bg-container); }
-  [data-ant-table-part="wrapper"] .table-scroll-y [data-ant-table-part="head"] > tr > th[data-ant-table-sorted],
+  [data-ant-table-part="wrapper"] .table-pin-head [data-ant-table-part="head"] > tr > th[data-ant-table-sorted],
   [data-ant-table-part="wrapper"] [data-ant-table-part="head"] > tr > .table-fixed-cell[data-ant-table-sorted] { background: linear-gradient(var(--ant-table-header-sort-active-bg), var(--ant-table-header-sort-active-bg)) var(--ant-color-bg-container); }
-  [data-ant-table-part="wrapper"] .table-scroll-y [data-ant-table-part="head"] > tr > th[data-ant-table-sortable]:hover,
+  [data-ant-table-part="wrapper"] .table-pin-head [data-ant-table-part="head"] > tr > th[data-ant-table-sortable]:hover,
   [data-ant-table-part="wrapper"] [data-ant-table-part="head"] > tr > .table-fixed-cell[data-ant-table-sortable]:hover { background: linear-gradient(var(--ant-table-header-sort-hover-bg), var(--ant-table-header-sort-hover-bg)) var(--ant-color-bg-container); }
+  [data-ant-table-part="wrapper"] [data-ant-table-part="summary"][data-fixed] {
+    position: sticky;
+    z-index: 3;
+  }
+  [data-ant-table-part="summary"][data-fixed="top"] {
+    display: table-row-group;
+    top: calc(var(--ant-table-sticky-head-top, 0px)
+      + var(--ant-table-virtual-caption-height, 0px) + var(--ant-table-header-height, 0px));
+  }
+  [data-ant-table-part="summary"][data-fixed="bottom"] {
+    bottom: var(--ant-table-sticky-summary-bottom, 0px);
+  }
+  [data-ant-table-part="summary"] :global(.table-summary-fixed-cell) {
+    position: var(--ant-table-fixed-position, relative);
+    background: var(--ant-color-bg-container);
+    z-index: 1;
+  }
   [data-ant-table-part="wrapper"] [data-ant-table-part="body"] > tr > :where(td).table-fixed-cell[data-ant-table-sorted] { background: linear-gradient(var(--ant-table-body-sort-bg), var(--ant-table-body-sort-bg)) var(--ant-color-bg-container); }
   [data-ant-table-part="wrapper"] [data-ant-table-part="body"] > tr[data-ant-table-selected] > .table-fixed-cell { background: linear-gradient(var(--ant-table-row-selected-bg), var(--ant-table-row-selected-bg)) var(--ant-color-bg-container); }
   .table-source-theme [data-ant-table-part="head"] th[data-ant-table-sortable]:hover [data-ant-table-part="sorter"] { color: var(--ant-table-header-icon-hover-color); }
@@ -686,7 +745,7 @@
 {#snippet columnHeading(cell: TableHeading<Row>)}
   {@const column = cell.column}
   {@const index = cell.start + dataOffset}
-  {@const fixed = headerFixed(index, cell.colSpan)}
+  {@const fixed = fixedSpan(index, cell.colSpan)}
   {@const props = resolveTableCell(column.onHeaderCell?.(column), cell.colSpan, cell.rowSpan)}
   {@const sortable = typeof column.sorter === 'function'
     || (mode === 'server' && column.sorter === true)}
@@ -810,19 +869,27 @@
       !visibleRows.length && `${prefix}-empty`
     ]}>
     {#if title}<div class={`${prefix}-title`}>{@render title(panelData)}</div>{/if}
-    <div class={[`${prefix}-container`, scrollport.active && 'table-virtual-container']}>
+    <div class={[
+      `${prefix}-container`,
+      scrollport.active && 'table-virtual-container',
+      sticky && 'table-sticky-container'
+    ]}>
       <!-- svelte-ignore a11y_no_noninteractive_tabindex (Фокус нужен для прокрутки таблицы с клавиатуры.) -->
       <div bind:this={content}
         data-ant-table-part="content"
         data-ant-table-virtual={scrollport.active || undefined}
+        data-ant-table-pin-summary={summaryPlacement === 'top' || summaryPlacement === 'bottom'
+          ? summaryPlacement : undefined}
         class={[
           `${prefix}-content`,
-          (scroll?.y !== undefined || fixedColumns.some(Boolean)) && 'table-sticky',
+          (pinHeader || fixedColumns.some(Boolean)) && 'table-sticky',
+          pinHeader && 'table-pin-head',
           scroll?.y !== undefined && 'table-scroll-y',
           scrollport.active && 'table-virtual-scroll'
         ]}
         style:max-height={cssSize(scrollport.maxHeight ?? scroll?.y)}
-        style:scroll-padding-top={cssSize(scrollport.reserved)}
+        style:scroll-padding-top={cssSize(scrollport.topInset)}
+        style:scroll-padding-bottom={cssSize(scrollport.bottomInset)}
         style:--ant-table-virtual-caption-height={cssSize(scrollport.captionHeight)}
         role="region"
         aria-label={caption ?? ariaLabel ?? strings.label}
@@ -893,6 +960,11 @@
                 </tr>
               {/each}
             </thead>
+          {/if}
+          {#if summaryPlacement === 'top' && summaryRender}
+            <tfoot data-ant-table-part="summary" data-fixed="top" class={`${prefix}-summary`}>
+              {@render summaryRender(panelData)}
+            </tfoot>
           {/if}
           <tbody data-ant-table-part="body" class={`${prefix}-tbody`}
             class:table-span-body={mergedRows.length > 0}>
@@ -1021,10 +1093,19 @@
               </tr>
             {/each}
           </tbody>
+          {#if summaryRender && summaryPlacement !== 'top'}
+            <tfoot data-ant-table-part="summary" data-fixed={summaryPlacement === 'bottom'
+              ? 'bottom' : undefined} class={`${prefix}-summary`}>
+              {@render summaryRender(panelData)}
+            </tfoot>
+          {/if}
         </table>
       </div>
       {#if scrollport.active && scrollport.height > 0}
-        <div class="table-virtual-bars" style:height={cssSize(scrollport.height)}>
+        <div class="table-virtual-bars"
+          style:height={cssSize(scrollport.height)}
+          style:bottom={cssSize(scrollport.bottomInset)}
+        >
           {#if scrollport.contentHeight > scrollport.height}
             <ListyScrollbar prefixCls={`${prefix}-tbody-virtual`}
               rtl={config.direction === 'rtl'}
@@ -1042,6 +1123,10 @@
             />
           {/if}
         </div>
+      {/if}
+      {#if stickyBar}
+        <TableStickyScrollbar {prefix} layout={stickyBar} rtl={config.direction === 'rtl'}
+          onScroll={scrollport.scrollHorizontal} onMoving={scrollport.dragScrollbar} />
       {/if}
     </div>
     {#if footer}<div class={`${prefix}-footer`}>{@render footer(panelData)}</div>{/if}

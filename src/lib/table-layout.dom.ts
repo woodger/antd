@@ -37,6 +37,42 @@ function placeHeaderRows(rows: readonly HTMLTableRowElement[]) {
   }
 }
 
+/** При измерении колонок оставляет уже сфокусированный итог видимым между ними. */
+function revealSummaryFocus(
+  table: HTMLTableElement,
+  viewport: HTMLDivElement,
+  startWidth: number,
+  endWidth: number
+) {
+  const foot = table.tFoot;
+  const focused = table.ownerDocument.activeElement;
+  if (!foot || !focused || !foot.contains(focused)) {
+    return;
+  }
+
+  const cell = focused.closest('td, th');
+  if (cell?.closest('table') !== table || cell.classList.contains('table-summary-fixed-cell')) {
+    return;
+  }
+
+  const view = viewport.ownerDocument.defaultView;
+  const rtl = view?.getComputedStyle(viewport).direction === 'rtl';
+  const viewportLeft = viewport.getBoundingClientRect().left + viewport.clientLeft;
+  const left = viewportLeft + (rtl ? endWidth : startWidth);
+  const right = viewportLeft + viewport.clientWidth - (rtl ? startWidth : endWidth);
+  const rect = focused.getBoundingClientRect();
+  if (rect.width <= 0 || rect.width > right - left) {
+    return;
+  }
+
+  if (rect.left < left) {
+    viewport.scrollLeft += rect.left - left;
+  }
+  else if (rect.right > right) {
+    viewport.scrollLeft += rect.right - right;
+  }
+}
+
 /** Вычисляет размеры sticky областей и возвращает cleanup наблюдателя и стилей. */
 export function observeTableLayout(options: {
   table: HTMLTableElement;
@@ -89,6 +125,7 @@ export function observeTableLayout(options: {
     viewport.style.setProperty('--ant-table-header-height', `${headHeight}px`);
     viewport.style.setProperty('--ant-table-viewport-width', `${viewportWidth}px`);
     placeHeaderRows(rows);
+    if (startWidth || endWidth) revealSummaryFocus(table, viewport, startWidth, endWidth);
   }
 
   measure();
