@@ -1188,7 +1188,11 @@
   .auto-complete[data-ant-auto-complete-source-theme]:focus-within { outline: 0; outline-offset: 0; }
   .auto-complete[data-ant-auto-complete-source-theme][data-ant-auto-complete-customize] { min-height: 0; }
   .auto-complete[data-ant-auto-complete-component-input] { height: auto; min-height: 0; align-items: flex-start; }
-  .auto-complete[data-ant-auto-complete-component-input] > [data-ant-auto-complete-content] { flex: 1 1 auto; }
+  .auto-complete[data-ant-auto-complete-component-input] > [data-ant-auto-complete-content] {
+    flex: 1 1 auto;
+    /* Заполненное поле скрывает ::before, а абсолютный редактор сам не задаёт высоту. */
+    min-height: 1lh;
+  }
   .clear { display: flex; flex: none; padding: 0; border: 0; background: none; color: var(--ant-color-text-tertiary); cursor: pointer; }
   .clear:focus-visible { outline: 2px solid var(--ant-color-primary); }
   .feedback-suffix { display: block; flex: none; }

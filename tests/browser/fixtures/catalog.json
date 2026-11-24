@@ -2373,6 +2373,11 @@
     "root": "autocomplete-render-fixture"
   },
   {
+    "id": "auto-complete-editor-height",
+    "module": "./AutoCompleteEditorHeightFixtures.svelte",
+    "root": "auto-complete-editor-height-fixture"
+  },
+  {
     "id": "autocomplete-render-label-title",
     "module": "./AutoCompleteRenderLabelTitleFixtures.svelte",
     "root": "autocomplete-render-label-title-fixture"

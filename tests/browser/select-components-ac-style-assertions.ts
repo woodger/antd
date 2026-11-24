@@ -5,6 +5,7 @@ import { drainSelectSurface } from './select-surface-driver';
 import { verifySelectComponentsDOMAttributes, verifySelectComponentsPoint, type NativeComponentsOwner } from './select-components-assertions';
 import { verifyIconNode } from './select-icons-assertions';
 import { verifySelectSurfaceNode } from './select-surface-assertions';
+import { readAutoCompleteEditorHeightCase } from './auto-complete-editor-height-reference';
 import type { ComponentsCase } from './select-components-reference';
 import type { ACStyleCase, ACStylePoint, SelectComponentsACStyleSample } from './select-components-ac-style-reference';
 export interface NativeACStylePopupTopology {
@@ -78,6 +79,7 @@ function verifyLayoutNode(
 ) {
   let current = attributes(actual);
   const original = attributes(source);
+  let expectedCss = source.css;
   if (source.classes.includes('ant-select-content')) {
     assert.equal(current.find(([name]) => name === 'data-ant-auto-complete-content')?.[1], 'true');
     current = current.filter(([name]) => name !== 'data-ant-auto-complete-content');
@@ -86,6 +88,10 @@ function verifyLayoutNode(
       Object.fromEntries(original),
       label + ' complete existing content wrapper attributes'
     );
+    // CSS по умолчанию повторяет публичный styles.content.minHeight='1lh' эталона.
+    const { lineHeight, minHeight } = readAutoCompleteEditorHeightCase('input-height-counterpart').before;
+    assert.equal(source.css.lineHeight, lineHeight, label + ' content line height');
+    expectedCss = { ...source.css, minHeight };
   }
   else if (source.classes.includes('ant-select-clear')) {
     // Reuse the unchanged inherited icon wrapper comparator: exact private
@@ -100,7 +106,8 @@ function verifyLayoutNode(
   else {
     verifySelectComponentsDOMAttributes(actual, source, current, original, label);
   }
-  for (const key of ['tag', 'connected', 'text', 'styleAttribute', 'cssText', 'inlineProperties', 'css', 'box',
+  assert.deepEqual(actual.css, expectedCss, label + '/css');
+  for (const key of ['tag', 'connected', 'text', 'styleAttribute', 'cssText', 'inlineProperties', 'box',
     'geometryBoundary', 'value', 'caret', 'focused', 'metrics'] as const) {
     assert.deepEqual(actual[key], source[key], label + '/' + key);
   }
@@ -226,8 +233,8 @@ export function verifySelectComponentsACStylePoint(
   );
   check('inherited-option-and-icon-nodes', () => {
     // The unchanged icon comparator already names AC's existing BUTTON and
-    // popup flex annotations. The new editor/root/layout comparisons above
-    // contain no CSS or geometry exemptions.
+    // popup flex annotations. The layout comparison checks the measured
+    // AutoComplete minimum height alongside the other CSS properties.
     const boundary = { control: 'autocomplete' as const, legacyClear: false, rootDisabled: false,
       hiddenPopup: source.icons.current.popup?.css.display === 'none' };
     for (const key of ['nodes', 'svg'] as const) {

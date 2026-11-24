@@ -117,3 +117,9 @@ allowClear описаны в [общем разделе иконок](select.md#
 полностью заменяет поле и не вызывает оба editor renderers. Исходный motion пока отсутствует.
 Generic numeric/object values не поддерживаются.
 
+С `components.input` оболочка редактора сохраняет минимум одну строку после
+ввода и при начальном непустом значении. `styles.content.minHeight` позволяет
+задать другой минимум. В React 6.6.8 абсолютный редактор без этой настройки
+сжимался до 0 px. В [замерах React](../../../tests/browser/fixtures/ant-design-auto-complete-editor-height-reference.json)
+записаны исходный сбой и вариант с `styles.content.minHeight = '1lh'`.
+
