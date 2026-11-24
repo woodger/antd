@@ -6935,9 +6935,10 @@
             "tests/browser/fixtures/ant-design-picker-components-ssr.json.gz",
             "tests/browser/picker-components.spec.ts",
             "tests/browser/picker-components-hydration.spec.ts",
+            "tests/browser/picker-textarea.spec.ts",
             "tests/package/picker-components.ssr.test.ts"
           ],
-          "note": "Ant Design 6.6.8 и rc-picker 1.12.2. Семь независимо повторённых браузерных профилей сверяют input, textarea, маску, подтверждение и поведение multiple. Семь SSR-профилей сверяют поля, имя и значение. Svelte snippet использует нативные атрибуты и attachment для регистрации элемента. Смена оформления сохраняет DOM, фокус и выделение. При Enter Native подтверждает текст без перевода строки. У React перевод строки повторно открывает одиночный DatePicker и попадает во второе поле RangePicker. Legacy refs сохраняют тип HTMLInputElement."
+          "note": "Ant Design 6.6.8 и rc-picker 1.12.2. Семь независимо повторённых браузерных профилей сверяют input, textarea, маску, подтверждение и поведение multiple. Семь SSR-профилей сверяют поля, имя и значение. Svelte snippet использует нативные атрибуты и attachment для регистрации элемента. Смена оформления сохраняет DOM, фокус и выделение. При Enter Native подтверждает текст без перевода строки. У React перевод строки повторно открывает одиночный DatePicker и попадает во второе поле RangePicker. Legacy refs сохраняют тип HTMLInputElement. Встроенный textarea удерживает все четыре пикера в колонке 288 px, использует токены темы и сохраняет фокус, каретку и маску при hydration."
         },
         {
           "id": "component-panels",

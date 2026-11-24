@@ -791,6 +791,11 @@
     "root": "picker-components-fixture"
   },
   {
+    "id": "picker-textarea",
+    "module": "./PickerTextareaFixtures.svelte",
+    "root": "picker-textarea-fixture"
+  },
+  {
     "id": "picker-panels",
     "module": "./PickerPanelFixtures.svelte",
     "root": "picker-panel-fixture"

@@ -17,7 +17,7 @@
   }
 
   export const editorHydrationProfile = {
-    id: 'hydration', range: true, textarea: true, mask: true, input: true
+    id: 'hydration', range: true, editor: 'textarea', mask: true, input: true
   } satisfies PickerComponentsProfile;
 </script>
 

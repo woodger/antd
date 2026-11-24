@@ -3,11 +3,12 @@ import { createServer as createHttpServer } from 'node:http';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { ElementHandle } from '@playwright/test';
+import type { ElementHandle, Page } from '@playwright/test';
 import { createServer, type ViteDevServer } from 'vite';
 import { expect, test } from './test';
 
-test('hydrates masked textareas without replacing them and moves focus to the end', async ({ page }) => {
+/** Сверяет сохранение SSR элементов и клавиатурный переход между границами диапазона. */
+async function verifyEditorHydration(page: Page, nativeSlot: boolean) {
   const cacheDir = await mkdtemp(join(tmpdir(), 'antd-picker-editors-'));
   const originals: ElementHandle[] = [];
   let server: ViteDevServer | undefined;
@@ -20,9 +21,10 @@ test('hydrates masked textareas without replacing them and moves focus to the en
     });
     const entry = fileURLToPath(new URL('./fixtures/picker-components-hydration.server.ts', import.meta.url));
     const { renderEditorFixture } = await server.ssrLoadModule(entry);
-    const { body, head } = renderEditorFixture();
+    const { body, head } = renderEditorFixture(nativeSlot);
     await page.clock.setFixedTime(new Date('2024-06-19T16:00:00Z'));
-    await page.goto('/select-components-hydration.html');
+    const route = '/select-components-hydration.html';
+    await page.goto(nativeSlot ? `${route}?native-slot` : route);
     await page.evaluate(({ body, head }) => {
       const root = document.getElementById('root');
       if (!root) {
@@ -35,6 +37,8 @@ test('hydrates masked textareas without replacing them and moves focus to the en
     const start = page.locator('textarea#start');
     const end = page.locator('textarea#end');
     const popup = page.locator('[data-picker-popup]');
+    await expect(start).toHaveCount(1);
+    await expect(end).toHaveCount(1);
     originals.push(await start.elementHandle(), await end.elementHandle());
     await start.focus();
     await start.evaluate((field: HTMLTextAreaElement) => field.setSelectionRange(8, 10));
@@ -44,6 +48,9 @@ test('hydrates masked textareas without replacing them and moves focus to the en
     await page.addScriptTag({ type: 'module', url: '/picker-components-hydration.client.ts' });
     await expect(page.locator('#root')).toHaveAttribute('data-hydrated', 'true');
     await expect(start).toBeFocused();
+    if (nativeSlot) {
+      await expect(start).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+    }
     expect(await start.evaluate((input: HTMLTextAreaElement) => [
       input.selectionStart, input.selectionEnd
     ])).toEqual([8, 10]);
@@ -78,4 +85,10 @@ test('hydrates masked textareas without replacing them and moves focus to the en
     await server?.close();
     await rm(cacheDir, { recursive: true, force: true });
   }
-});
+}
+
+test('hydrates masked textareas without replacing them and moves focus to the end', ({ page }) =>
+  verifyEditorHydration(page, false));
+
+test('hydrates styled built-in textareas and keeps masked range navigation', ({ page }) =>
+  verifyEditorHydration(page, true));

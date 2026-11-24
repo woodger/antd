@@ -1881,7 +1881,7 @@
     ]}>
     {#if components?.input}
       <PickerEditor editor={components.input} attributes={editorAttributes(0)}
-        register={customInputs[0].register} range="start" />
+        register={customInputs[0].register} range="start" size={resolvedSize} />
     {:else}
       <input {...editorAttributes(0)} bind:this={nativeStart} {@attach maskInputs[0].attach} />
     {/if}
@@ -1895,7 +1895,7 @@
     ]}>
     {#if components?.input}
       <PickerEditor editor={components.input} attributes={editorAttributes(1)}
-        register={customInputs[1].register} range="end" />
+        register={customInputs[1].register} range="end" size={resolvedSize} />
     {:else}
       <input {...editorAttributes(1)} bind:this={nativeEnd} {@attach maskInputs[1].attach} />
     {/if}

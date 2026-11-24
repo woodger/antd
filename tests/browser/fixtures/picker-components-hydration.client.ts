@@ -6,8 +6,10 @@ const root = document.getElementById('root');
 if (!root) {
   throw Error('Missing custom editor hydration target');
 }
+const nativeSlot = new URLSearchParams(location.search).has('native-slot');
+const profile = { ...editorHydrationProfile, nativeSlot };
 const owner = hydrate(PickerComponentsFixtures, {
-  target: root, props: { profile: editorHydrationProfile }, recover: false
+  target: root, props: { profile }, recover: false
 });
 root.dataset.hydrated = 'true';
 

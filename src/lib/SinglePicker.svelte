@@ -1715,7 +1715,8 @@
   {:else}
   <div class={[`${prefix}-input`, hoverValue && `${prefix}-input-placeholder`]}>
     {#if components?.input}
-      <PickerEditor editor={components.input} attributes={editorAttributes()} register={customInput.register} />
+      <PickerEditor editor={components.input} attributes={editorAttributes()}
+        register={customInput.register} size={resolvedSize} />
     {:else}
       <input {...editorAttributes()} bind:this={nativeInput} {@attach maskInput.attach} />
     {/if}
