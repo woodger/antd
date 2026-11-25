@@ -4,6 +4,7 @@ import Fixture from './TableFilterStateFixture.svelte';
 import DropdownFixture from './TableFilterDropdownFixture.svelte';
 import OptionsFixture from './TableFilterOptionsFixture.svelte';
 import ContentFixture from './TableFilterContentFixture.svelte';
+import StaticContentFixture from './TableFilterStaticContentFixture.svelte';
 import PopupContainerFixture from './TablePopupContainerFixture.svelte';
 
 const target = document.getElementById('root');
@@ -22,6 +23,9 @@ target.addEventListener('hydrate-table-filter-state', () => {
   }
   else if (query.has('filter-content')) {
     hydrate(ContentFixture, { target, props: { profileId: 'single-menu' }, recover: false });
+  }
+  else if (query.has('filter-static-content')) {
+    hydrate(StaticContentFixture, { target, props: { profileId: 'live' }, recover: false });
   }
   else if (query.has('popup-container')) {
     hydrate(PopupContainerFixture, { target, props: { profileId: 'table' }, recover: false });

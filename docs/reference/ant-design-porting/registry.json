@@ -20305,6 +20305,26 @@
           "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона 11 профилей дают 57 состояний и 11 SSR-снимков. Проверены filterDropdown, filterIcon, выбор в Menu, произвольные ключи, подтверждение с закрытием и без него, сброс и порядок уведомлений, open владельца, закрытие при клике снаружи, hover, placement и popupRender. В React filterOnClose включён по умолчанию. Встроенный Svelte фильтр сохраняет отмену черновика при закрытии. Явное true включает применение. Dropdown сохраняет один запрос на внешний клик и следующий уход фокуса. Пакетные проверки охватывают forceRender, destroyOnHidden, локальный контейнер, типы значений, server mode и строгую гидратацию."
         },
         {
+          "id": "filter-static-content",
+          "title": "Статическое содержимое filterIcon и filterDropdown",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TableFilter.svelte",
+            "src/lib/TableFilterCustomContent.svelte",
+            "src/lib/table.types.ts",
+            "src/lib/table.engine.ts",
+            "src/lib/table.engine.test.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-filter-static-content-reference.json",
+            "tests/browser/table-filter-static-content.spec.ts",
+            "tests/browser/table-filter-state-hydration.spec.ts",
+            "tests/package/table-filter-static-content.ssr.test.ts",
+            "tests/package/table-filter-dropdown.types.ts"
+          ],
+          "note": "Два совпавших UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 для 22 профилей дали 22 SSR-снимка и 21 пару открытия и закрытия. Строки, числа и вложенные массивы заменяют панель или иконку. Falsy значения используют штатное содержимое, true и пустой массив оставляют слот пустым. Пользовательский критерий без onFilter сохраняет строки в клиентской таблице и доступен в состоянии. Проверены смешанные фильтры плоских строк и дерева. Переход между панелями сохраняет кнопку и отбрасывает черновик при закрытии пользовательского содержимого. Строгая гидратация сохраняет фокус на триггере, forceRender готовит редактор и Menu после монтирования. Реактивный текст сохраняет DOM редактора, а клавиатура работает во вложенном Menu."
+        },
+        {
           "id": "sorter-state",
           "title": "Циклы, управление колонками и приоритеты сортировки",
           "state": "supported",

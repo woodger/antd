@@ -1,16 +1,18 @@
 <script lang="ts">
   // Хранит черновик и связывает операции панели с применённым фильтром Table.
   // Настроенная панель использует Dropdown для размещения, портала и фокуса.
-  import { untrack, type Snippet } from 'svelte';
+  import { untrack } from 'svelte';
   import { on } from 'svelte/events';
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
   import type { DropdownProps } from './dropdown.types';
-  import { areTableFilterOptionsEqual, snapshotTableFilterOptions } from './table-filter-options.engine';
+  import {
+    areTableFilterOptionsEqual, snapshotTableFilterOptions
+  } from './table-filter-options.engine';
   import type { TableFilterLocale } from './table-locale.engine';
   import { normalizeTableFilter } from './table.engine';
   import type {
-    TableFilterConfirmOptions, TableFilterDropdownOptions, TableFilterDropdownProps,
+    TableColumn, TableFilterConfirmOptions, TableFilterDropdownOptions, TableFilterDropdownProps,
     TableFilterMode, TableFilterOption, TableFilterResetOptions, TableFilterSearch, TableFilterValue
   } from './table.types';
   import Button from './Button.svelte';
@@ -40,10 +42,10 @@
     strings: TableFilterLocale;
     filterMode?: TableFilterMode;
     filterSearch?: TableFilterSearch;
-    filterDropdown?: Snippet<[info: TableFilterDropdownProps]>;
+    filterDropdown?: TableColumn<object>['filterDropdown'];
     filterDropdownProps?: TableFilterDropdownOptions;
     filterOnClose?: boolean;
-    filterIcon?: Snippet<[filtered: boolean]>;
+    filterIcon?: TableColumn<object>['filterIcon'];
     getPopupContainer?: DropdownProps['getPopupContainer'];
     onApply: (values: TableFilterValue[]) => void;
   } = $props();
@@ -421,7 +423,16 @@
     aria-expanded={native ? nativeOpen : false}
     aria-controls={native ? `ant-filter-${id}` : undefined}
     popovertarget={native ? `ant-filter-${id}` : undefined}
-  >{#if filterIcon}<span aria-hidden="true">{@render filterIcon(active)}</span>{:else}<Icon name="filter" />{/if}</button>
+  >
+    {#if filterIcon}
+      <span aria-hidden="true">
+        {#if typeof filterIcon === 'function'}{@render filterIcon(active)}
+        {:else}<RenderContent value={filterIcon} />{/if}
+      </span>
+    {:else}
+      <Icon name="filter" />
+    {/if}
+  </button>
 {/snippet}
 
 {#snippet renderContent()}
@@ -437,7 +448,7 @@
     {@attach usesDropdown ? connectDropdownContent : undefined}
   >
     {#if filterDropdown}
-      <TableFilterCustomContent renderer={filterDropdown} info={dropdownInfo} />
+      <TableFilterCustomContent content={filterDropdown} info={dropdownInfo} />
     {:else}
       {#if usesDropdown || visited || !advanced}
         <TableFilterOptions {prefixCls} {dropdownPrefix} {label} labelledby={labelReference}

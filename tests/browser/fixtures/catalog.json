@@ -1818,6 +1818,11 @@
     "root": "table-filter-dropdown-fixture"
   },
   {
+    "id": "table-filter-static-content",
+    "module": "./TableFilterStaticContentFixture.svelte",
+    "root": "table-filter-static-content-fixture"
+  },
+  {
     "id": "table-popup-container",
     "module": "./TablePopupContainerFixture.svelte",
     "root": "table-popup-container-fixture"

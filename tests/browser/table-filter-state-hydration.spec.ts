@@ -63,6 +63,64 @@ test('Table hydrates its filter trigger and chooses a snippet label by keyboard'
   await expect(rows.first()).toHaveAttribute('data-row-key', 'rich');
 });
 
+test('Table hydrates a static filter trigger and keeps the prepared editor and actions', async ({
+  page
+}) => {
+  const entry = new URL('./fixtures/table-filter-state.server.ts', import.meta.url);
+  const { renderTableFilterStaticContent } = await server.ssrLoadModule(fileURLToPath(entry));
+  const { body, head } = renderTableFilterStaticContent();
+  await page.goto('/select-components-hydration.html?filter-static-content');
+  await page.addScriptTag({ type: 'module', url: '/table-filter-state.client.ts' });
+  const root = page.locator('#root');
+  await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+  await root.evaluate((node, html) => {
+    document.head.insertAdjacentHTML('beforeend', html.head);
+    node.innerHTML = html.body;
+  }, { body, head });
+  const name = 'Filter: Value';
+  const trigger = root.getByRole('button', { name, exact: true });
+  const panel = root.getByRole('dialog', { name, exact: true });
+  const editor = panel.getByRole('textbox', { name: 'Panel draft', exact: true });
+  const prepared = root.locator('input[aria-label="Panel draft"]');
+  const beforeTrigger = await trigger.elementHandle();
+  await trigger.focus();
+
+  await root.dispatchEvent('hydrate-table-filter-state');
+
+  await expect(root).toHaveAttribute('data-hydrated', 'true');
+  await expect(trigger).toBeFocused();
+  await expect(trigger).toHaveText('Icon 0');
+  await expect(panel).toBeHidden();
+  await expect(prepared).toBeAttached();
+  const beforeEditor = await prepared.elementHandle();
+
+  await trigger.press('Enter');
+  await editor.fill('Draft');
+  await editor.press('Enter');
+  await expect(panel).toBeVisible();
+  await expect(editor).toBeFocused();
+
+  await root.getByRole('button', { name: 'Rename content', exact: true }).dispatchEvent('click');
+
+  await expect(trigger).toHaveText('Updated icon 0');
+  await expect(panel.getByText('Updated panel', { exact: true })).toBeVisible();
+  await expect(editor).toHaveValue('Draft');
+  await expect(editor).toBeFocused();
+  expect(await editor.evaluate((node, before) => node === before, beforeEditor)).toBe(true);
+
+  const item = panel.getByRole('menuitem', { name: 'Pick local', exact: true });
+  await item.press('Enter');
+  await expect(root.locator('[data-menu-keys]')).toHaveText('["pick"]');
+  await expect(panel).toBeVisible();
+  await item.press('Escape');
+
+  await expect(panel).toBeHidden();
+  await expect(trigger).toBeFocused();
+  expect(await trigger.evaluate((node, before) => node === before, beforeTrigger)).toBe(true);
+  await expect(root.locator('[data-open-events]')).toHaveText('[true,false]');
+  await expect(root.locator('[data-filter-changes]')).toHaveText('[]');
+});
+
 test('Table hydrates the focused trigger and resolves its filter portal on opening', async ({
   page
 }) => {

@@ -138,14 +138,14 @@ export interface TableColumn<Row extends object> {
   /** Перекрывает настройку таблицы для этой колонки, включая false. */
   showSorterTooltip?: boolean | TableSorterTooltipProps;
   filters?: readonly TableFilterOption[];
-  /** Заменяет содержимое фильтра. Snippet получает черновик и операции над ним. */
-  filterDropdown?: Snippet<[info: TableFilterDropdownProps]>;
+  /** Заменяет панель содержимым. Snippet верхнего уровня получает черновик и операции. */
+  filterDropdown?: Exclude<RenderEmptyContent, Snippet> | Snippet<[info: TableFilterDropdownProps]>;
   /** Настраивает размещение, триггеры, открытие и обёртку панели. */
   filterDropdownProps?: TableFilterDropdownOptions;
   /** Применяет встроенный фильтр при закрытии. @defaultValue false */
   filterOnClose?: boolean;
-  /** Заменяет декоративную иконку. Snippet получает признак активного фильтра. */
-  filterIcon?: Snippet<[filtered: boolean]>;
+  /** Заменяет декоративную иконку. Snippet верхнего уровня получает состояние фильтра. */
+  filterIcon?: Exclude<RenderEmptyContent, Snippet> | Snippet<[filtered: boolean]>;
   onFilter?: (value: TableFilterValue, record: Row) => boolean;
   filterMultiple?: boolean;
   /** Выбирает представление фильтра. @defaultValue 'menu' */

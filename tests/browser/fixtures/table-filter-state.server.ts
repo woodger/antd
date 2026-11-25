@@ -3,6 +3,7 @@ import Fixture from './TableFilterStateFixture.svelte';
 import DropdownFixture from './TableFilterDropdownFixture.svelte';
 import OptionsFixture from './TableFilterOptionsFixture.svelte';
 import ContentFixture from './TableFilterContentFixture.svelte';
+import StaticContentFixture from './TableFilterStaticContentFixture.svelte';
 import PopupContainerFixture from './TablePopupContainerFixture.svelte';
 
 /** Формирует отфильтрованные строки и кнопку до подключения обработчиков. */
@@ -18,6 +19,11 @@ export function renderTableFilterOptions() {
 /** Выводит строки и закрытый триггер фильтра с пользовательскими подписями. */
 export function renderTableFilterContent() {
   return render(ContentFixture, { props: { profileId: 'single-menu' } });
+}
+
+/** Рендерит статический редактор в закрытой панели для проверки его hydration. */
+export function renderTableFilterStaticContent() {
+  return render(StaticContentFixture, { props: { profileId: 'live' } });
 }
 
 /** Выводит заданную колонкой иконку до монтирования пользовательской панели. */

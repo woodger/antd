@@ -1313,7 +1313,12 @@ Space переключает выбранный вариант. В поле по
 
 ### Пользовательская панель фильтра
 
-`filterDropdown` заменяет содержимое панели snippet. `selectedKeys` содержит
+`filterDropdown` принимает строку, число, snippet или вложенный массив.
+`0`, `''`, `false`, `null` и `undefined` используют штатный список вариантов.
+`true` и пустой массив выводят пустую пользовательскую панель.
+Snippets внутри массива вызываются без аргументов.
+
+Snippet верхнего уровня получает операции панели. `selectedKeys` содержит
 черновик. `setSelectedKeys` обновляет его и принимает string, number и boolean.
 Пользовательская панель сама определяет допустимые значения и их количество.
 Критерии пользовательской панели без `onFilter` сохраняются в состоянии
@@ -1358,17 +1363,28 @@ Space переключает выбранный вариант. В поле по
 `filterDropdownProps` передаёт параметры в Dropdown. `open` управляет
 видимостью, а `onOpenChange` сообщает о запросе. `placement`, `trigger`,
 `getPopupContainer`, `destroyOnHidden` и `forceRender` используют правила
-Dropdown. `popupRender` получает snippet исходного содержимого. `filterIcon`
-заменяет декоративную иконку и получает признак активного фильтра.
+Dropdown. `popupRender` получает snippet исходного содержимого.
+
+`filterIcon` принимает строку, число, snippet или вложенный массив.
+Snippet верхнего уровня получает признак активного фильтра.
+`0`, `''`, `false`, `null` и `undefined` используют штатную иконку.
+`true` и пустой массив оставляют кнопку без декоративного содержимого.
+Доступное имя кнопки берётся из заголовка колонки и локали.
 
 Встроенная панель по умолчанию отменяет черновик при закрытии. При
 `filterOnClose: true` действия пользователя, закрывающие панель, применяют
-черновик. Обновление `open` владельцем переключает видимость. Пользовательская
-панель применяет условия через `confirm` или `clearFilters({ confirm: true })`.
+черновик. Обновление `open` владельцем переключает видимость. Snippet
+пользовательской панели применяет условия через `confirm` или
+`clearFilters({ confirm: true })`.
 
 [Эталон панели](../../../tests/browser/fixtures/ant-design-table-filter-dropdown-reference.json)
 · [Chromium](../../../tests/browser/table-filter-dropdown.spec.ts)
 · [SSR](../../../tests/package/table-filter-dropdown.ssr.test.ts)
+
+[Эталон статической панели и иконки](../../../tests/browser/fixtures/ant-design-table-filter-static-content-reference.json)
+· [Chromium](../../../tests/browser/table-filter-static-content.spec.ts)
+· [SSR](../../../tests/package/table-filter-static-content.ssr.test.ts)
+· [Гидратация](../../../tests/browser/table-filter-state-hydration.spec.ts)
 
 ### Контейнеры выпадающих панелей
 
