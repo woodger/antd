@@ -7,7 +7,7 @@ import type { GridBreakpoint } from './grid.types';
 import type { PaginationSlots } from './pagination.types';
 import type { RadioChangeEvent } from './radio.types';
 import type { TooltipProps } from './tooltip.types';
-import type { ComponentSize } from './types';
+import type { ComponentSize, RenderEmptyContent, TableLocale } from './types';
 
 export type TableKey = string | number;
 export type TableRowKey<Row extends object> = keyof Row | ((record: Row) => TableKey);
@@ -408,6 +408,22 @@ export interface TableChange<Row extends object> {
   currentDataSource: Row[];
 }
 
+type TableLocaleContentField = 'emptyText' | 'filterApply' | 'filterConfirm' | 'filterReset'
+  | 'filterEmptyText' | 'filterCheckAll' | 'selectionAll' | 'selectInvert' | 'selectNone';
+
+/** Локальный словарь Table со строками доступности и содержимым на основе Svelte snippets. */
+export type TableLocaleOverrides =
+  Partial<Omit<TableLocale, TableLocaleContentField>>
+  & Partial<Record<TableLocaleContentField, RenderEmptyContent>>
+  & {
+    expand?: string;
+    collapse?: string;
+    triggerAsc?: string;
+    triggerDesc?: string;
+    /** Поле исходного словаря. Текст действия сортировки задают triggerAsc, triggerDesc и cancelSort. */
+    sortTitle?: string;
+  };
+
 /** Типизированная таблица с columns, row identity, фильтрами, сортировкой и пагинацией. */
 export interface TableProps<Row extends object> {
   /** Локальный Table owner перекрывает ConfigProvider.prefixCls. */
@@ -474,6 +490,8 @@ export interface TableProps<Row extends object> {
   /** Итоговые строки внутри таблицы; получают записи текущей страницы. */
   summary?: Snippet<[data: readonly Row[]]> | TableSummaryConfig<Row>;
   caption?: string;
+  /** Локальные подписи таблицы и содержимое пустой ячейки. */
+  locale?: TableLocaleOverrides;
   empty?: Snippet;
   scroll?: TableScrollOptions;
   /** Задаёт алгоритм ширин обычной таблицы. Виртуальное окно использует общую сетку. */

@@ -937,6 +937,7 @@ export type {
   TableClassNameSlots,
   TableSemantic,
   TableSemanticSlots,
+  TableLocaleOverrides,
   TableScrollOptions,
   TableScrollConfig,
   TableSticky,

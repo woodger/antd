@@ -1,7 +1,6 @@
 <script lang="ts">
   // Представляет черновик в списке, вложенном Menu или Tree. Обрабатываемые
   // таблицей значения и момент подтверждения принадлежат TableFilter.
-  import { useConfig } from './config-context';
   import { takeDropdownMenu } from './dropdown-menu-context';
   import {
     getTableFilterMenu, getTableFilterNodes, walkTableFilterNodes, type TableFilterNode
@@ -11,18 +10,20 @@
   } from './table.types';
   import type { MenuItemIconInfo, MenuSelectInfo } from './menu.types';
   import type { TreeCheckedKeys, TreeCheckInfo, TreeEventNode, TreeKey } from './tree.types';
-  import { ruRU } from './types';
+  import type { TableFilterLocale } from './table-locale.engine';
   import Checkbox from './Checkbox.svelte';
   import Empty from './Empty.svelte';
   import Icon from './Icon.svelte';
   import Input from './Input.svelte';
   import Menu from './Menu.svelte';
   import NoFormItemBinding from './NoFormItemBinding.svelte';
+  import RenderContent from './RenderContent.svelte';
   import RenderEmpty from './RenderEmpty.svelte';
   import Tree from './Tree.svelte';
 
   let {
     prefixCls, dropdownPrefix, label, labelledby, id, options, mode, search, multiple, disabled, open,
+    strings,
     draft = $bindable(), query = $bindable(), getPopupContainer
   }: {
     prefixCls: string;
@@ -36,6 +37,7 @@
     multiple: boolean;
     disabled: boolean;
     open: boolean;
+    strings: Pick<TableFilterLocale, 'filterSearchPlaceholder' | 'filterCheckAll' | 'filterEmptyText'>;
     draft: TableFilterValue[];
     query: string;
     getPopupContainer: (trigger: HTMLElement) => HTMLElement;
@@ -43,11 +45,11 @@
 
   // Выбор в Menu подтверждает TableFilter, даже если вся таблица внутри Dropdown.
   takeDropdownMenu();
-  const config = useConfig();
-  const placeholder = $derived(
-    config.locale.table?.filterSearchPlaceholder ?? ruRU.table.filterSearchPlaceholder
+  const placeholder = $derived(strings.filterSearchPlaceholder);
+  const emptyText = $derived(strings.filterEmptyText);
+  const description = $derived(
+    typeof emptyText === 'object' && emptyText !== null ? emptyDescription : emptyText
   );
-  const checkAllLabel = $derived(config.locale.table?.filterCheckAll ?? ruRU.table.filterCheckAll);
   const normalizedQuery = $derived(query.trim().toLowerCase());
   const grouped = $derived(options.some(option => option.children));
   const nodes = $derived(getTableFilterNodes(options));
@@ -176,8 +178,10 @@
   }
 </style>
 
+{#snippet emptyDescription()}<RenderContent value={emptyText} />{/snippet}
+
 {#snippet nativeEmpty()}
-  <Empty image="simple" description={config.locale.table?.filterEmptyText ?? ruRU.table.filterEmptyText}
+  <Empty image="simple" {description}
     styles={{ image: 'height:24px' }} style="margin:0;padding:16px 0" />
 {/snippet}
 
@@ -205,7 +209,7 @@
       <NoFormItemBinding>
         <Checkbox checked={allChecked} indeterminate={draftValues.size > 0 && !allChecked}
           {disabled} skipGroup class={`${prefixCls}-filter-dropdown-checkall`}
-          onCheckedChange={selectAll}>{checkAllLabel}</Checkbox>
+          onCheckedChange={selectAll}><RenderContent value={strings.filterCheckAll} /></Checkbox>
       </NoFormItemBinding>
     {/if}
     <Tree treeData={nodes} checkedKeys={selectedKeys} checkable aria-label={label}

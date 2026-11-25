@@ -20,6 +20,7 @@
   } from './table-cell.engine';
   import { observeTableLayout } from './table-layout.dom';
   import { getTableLayout } from './table-layout.engine';
+  import { resolveTableLocale } from './table-locale.engine';
   import {
     getTablePageRows, getTablePagerPlacements, getTablePagerSize, getTablePagingTotal,
     type TablePagerAlignment
@@ -58,7 +59,6 @@
     TableSorter,
     TableSortOrder
   } from './table.types';
-  import { ruRU } from './types';
   import Icon from './Icon.svelte';
   import Pagination from './Pagination.svelte';
   import TableFilter from './TableFilter.svelte';
@@ -118,6 +118,7 @@
     caption,
     prefixCls,
     dropdownPrefixCls,
+    locale,
     empty,
     scroll,
     tableLayout,
@@ -288,7 +289,7 @@
   const pagerSemantics = $derived(
     getTablePaginationSemantics(classes.pagination, slots.pagination, pagination)
   );
-  let strings = $derived({ ...ruRU.table, ...config.locale.table });
+  const strings = $derived(resolveTableLocale(config.locale.table, locale));
   let content = $state<HTMLDivElement>();
   let table = $state<HTMLTableElement>();
   let stickyBar = $state.raw<TableStickyBarLayout>();
@@ -1103,6 +1104,7 @@
             prefixCls={prefix}
             {dropdownPrefix}
             {rootClassName}
+            {strings}
             title={titleLabel}
             titleReference={titleReference}
             options={filterOptions}
@@ -1475,7 +1477,8 @@
             {:else}
               <tr class={`${prefix}-placeholder`}><td data-ant-table-part="cell" class={`${prefix}-cell`} colspan={columnCount}>{#if !loading}
                 {#snippet nativeEmpty()}<Empty image="simple" description={strings.emptyText} />{/snippet}
-                <RenderEmpty componentName="Table" local={empty} fallback={nativeEmpty} />
+                <RenderEmpty componentName="Table" local={empty ?? locale?.emptyText}
+                  fallback={nativeEmpty} />
               {:else}&nbsp;{/if}</td></tr>
             {/each}
             {@render virtualSpacer(scrollport.after)}

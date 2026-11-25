@@ -105,6 +105,52 @@ disabled-строки при расчёте checked/indeterminate и отклю�
 `aria-label`, `class` и `style`. `scroll.x` задаёт минимальную ширину таблицы:
 горизонтальная прокрутка остаётся внутри фокусируемого контейнера.
 
+## Локализация Table
+
+`locale` задаёт подписи одной таблицы. Пропущенные поля наследуются из
+`ConfigProvider.locale`.
+
+| Назначение | Поля |
+| --- | --- |
+| Действия и состояние фильтра | `filterConfirm`, `filterReset`, `filterEmptyText`, `filterCheckAll`, `filterSearchPlaceholder` |
+| Следующее действие сортировки | `triggerAsc`, `triggerDesc`, `cancelSort` |
+| Подписи кнопок раскрытия | `expand`, `collapse` |
+| Команды выбора | `selectionAll`, `selectInvert`, `selectNone` |
+| Нативные подписи и доступные имена | `label`, `loadingText`, `filterTitle`, `selectAll`, `selectRow`, `selectionMenu`, `expandColumn` |
+
+Нативные имена `filterApply`, `sortAscending`, `sortDescending`, `expandRow`
+и `collapseRow` также действуют. Поля Ant Design имеют приоритет, если
+заданы обе формы. Подписи кнопок фильтра и команд выбора принимают строки,
+числа, snippets и вложенные массивы содержимого. Явные пустые значения
+позволяют вывести кнопку или команду без текста. `filterEmptyText` задаёт
+описание внутри Empty. При `undefined` описание берётся из словаря Empty.
+
+Приоритет содержимого пустой ячейки идёт от snippet `empty` к
+`locale.emptyText`, затем к `ConfigProvider.renderEmpty('Table')` и простому
+Empty. Локальный `emptyText` заменяет содержимое ячейки целиком и может быть
+строкой, числом, snippet или вложенным массивом. `0` выводится как текст.
+`null`, `false`, `''` и `[]` оставляют ячейку пустой. `undefined` передаёт
+выбор следующему источнику. Во время `loading` таблица показывает статус загрузки
+и скрывает содержимое пустой ячейки.
+
+```svelte
+{#snippet emptyRows()}<span>Для этих условий записей нет.</span>{/snippet}
+
+<Table {columns} {dataSource}
+  locale={{ emptyText: emptyRows, filterConfirm: 'Применить условия' }} />
+```
+
+Для фильтров `renderEmpty('Table.filter')` может вернуть `0` или `false`.
+При `null` и `undefined` используется Empty с описанием `filterEmptyText`.
+[RenderEmpty](../render-empty.md)
+
+Сопоставлены 52 браузерных состояния и 27 серверных снимков Ant Design 6.6.8.
+Смена словаря сохраняет открытый фильтр, запрос поиска, черновик и фокус.
+[Снимки React](../../../tests/browser/fixtures/ant-design-table-locale-reference.json),
+[Chromium](../../../tests/browser/table-locale.spec.ts),
+[гидратация](../../../tests/browser/table-column-layout-hydration.spec.ts)
+и [SSR](../../../tests/package/table-locale.ssr.test.ts).
+
 ## Настройки пагинации
 
 `pagination.placement` принимает `topStart`, `topCenter`, `topEnd`,
@@ -1024,9 +1070,8 @@ callback и не сбрасывает страницу. Если настрое�
 Space переключает выбранный вариант. В поле поиска Enter оставляет черновик
 открытым. Escape возвращает фокус из подменю к его заголовку и из основной
 панели к кнопке фильтра.
-Меню остаётся в границах viewport и наследует тему и RTL. Подписи из
-`locale.table` включают `filterTitle`, `filterApply`, `filterReset`,
-`filterSearchPlaceholder` и `filterCheckAll`.
+Меню остаётся в границах viewport и наследует тему и RTL.
+[Подписи фильтров](#локализация-table) можно задавать для отдельной таблицы.
 
 [Эталон](../../../tests/browser/fixtures/ant-design-table-filter-state-reference.json)
 · [Chromium](../../../tests/browser/table-filter-state.spec.ts)

@@ -6,21 +6,22 @@
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { snapshotTableFilterOptions } from './table-filter-options.engine';
+  import type { TableFilterLocale } from './table-locale.engine';
   import { normalizeTableFilter } from './table.engine';
   import type {
     TableFilterConfirmOptions, TableFilterDropdownOptions, TableFilterDropdownProps,
     TableFilterMode, TableFilterOption, TableFilterResetOptions, TableFilterSearch, TableFilterValue
   } from './table.types';
-  import { ruRU } from './types';
   import Button from './Button.svelte';
   import Dropdown from './Dropdown.svelte';
   import Icon from './Icon.svelte';
+  import RenderContent from './RenderContent.svelte';
   import TableFilterCustomContent from './TableFilterCustomContent.svelte';
   import TableFilterOptions from './TableFilterOptions.svelte';
 
   let {
     prefixCls, dropdownPrefix, rootClassName, title, titleReference, options, value, filtered, resetValues,
-    multiple, disabled,
+    multiple, disabled, strings,
     filterMode = 'menu', filterSearch = false, filterDropdown, filterDropdownProps,
     filterOnClose = false, filterIcon, onApply
   }: {
@@ -35,6 +36,7 @@
     resetValues?: readonly TableFilterValue[] | null;
     multiple: boolean;
     disabled: boolean;
+    strings: TableFilterLocale;
     filterMode?: TableFilterMode;
     filterSearch?: TableFilterSearch;
     filterDropdown?: Snippet<[info: TableFilterDropdownProps]>;
@@ -70,7 +72,7 @@
   let dropdownApplied: TableFilterValue[] | undefined;
   const active = $derived(value.length > 0 || Boolean(filtered));
   const filterLabelId = `ant-filter-label-${id}`;
-  const filterTitle = $derived(config.locale.table?.filterTitle ?? ruRU.table.filterTitle);
+  const filterTitle = $derived(strings.filterTitle);
   const label = $derived(`${filterTitle}: ${title}`);
   const labelReference = $derived(titleReference ? `${filterLabelId} ${titleReference}` : undefined);
   const dropdownLabelReference = $derived(filterDropdownProps?.['aria-labelledby']
@@ -413,15 +415,15 @@
     {:else}
       {#if usesDropdown || visited || !advanced}
         <TableFilterOptions {prefixCls} {dropdownPrefix} {label} labelledby={labelReference}
-          {id} options={optionList}
+          {id} {strings} options={optionList}
           {multiple} disabled={blocked} {open} mode={filterMode} search={filterSearch}
           bind:draft bind:query getPopupContainer={submenuContainer} />
       {/if}
       <div data-ant-table-filter-part="buttons" class={`${prefixCls}-filter-dropdown-btns`}>
         <Button type="text" size="small" disabled={blocked || !canReset}
-          onclick={reset}>{config.locale.table?.filterReset ?? ruRU.table.filterReset}</Button>
+          onclick={reset}><RenderContent value={strings.filterReset} /></Button>
         <Button type="primary" size="small" disabled={blocked}
-          onclick={() => confirm()}>{config.locale.table?.filterApply ?? ruRU.table.filterApply}</Button>
+          onclick={() => confirm()}><RenderContent value={strings.filterApply} /></Button>
       </div>
     {/if}
   </div>

@@ -1,6 +1,7 @@
 import { render } from 'svelte/server';
 import DefaultsFixture from './TableColumnDefaultsFixture.svelte';
 import Fixture from './TableColumnLayoutFixture.svelte';
+import LocaleFixture from './TableLocaleFixture.svelte';
 import PaginationFixture from './TablePaginationFixture.svelte';
 import SemanticFixture from './TableSemanticFixture.svelte';
 
@@ -22,4 +23,9 @@ export function renderTableSemantic() {
 /** Готовит верхний и нижний пейджеры вокруг одной страницы с редактором. */
 export function renderTablePagination() {
   return render(PaginationFixture, { props: { profileId: 'live' } });
+}
+
+/** Готовит пустую ячейку с редактором из локального словаря. */
+export function renderTableLocale() {
+  return render(LocaleFixture, { props: { profileId: 'body-snippet' } });
 }

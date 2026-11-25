@@ -166,3 +166,35 @@ test('Table hydrates both pagers around the same editor', async ({ page }) => {
   await expect(pagers.locator('[aria-current="page"]')).toHaveText(['3', '3']);
   await expect(container.getByRole('textbox', { name: 'Editor 4', exact: true })).toBeVisible();
 });
+
+test('Table hydrates the editor from locale.emptyText and keeps it through locale updates',
+  async ({ page }) => {
+    const entry = new URL('./fixtures/table-column-layout.server.ts', import.meta.url);
+    const { renderTableLocale } = await server.ssrLoadModule(fileURLToPath(entry));
+    const { body, head } = renderTableLocale();
+    await page.goto('/select-components-hydration.html?table-locale');
+    await page.addScriptTag({ type: 'module', url: '/table-column-layout.client.ts' });
+    const container = page.locator('#root');
+    await expect(container).toHaveAttribute('data-hydration-ready', 'true');
+    await container.evaluate((root, html) => {
+      document.head.insertAdjacentHTML('beforeend', html.head);
+      root.innerHTML = html.body;
+    }, { body, head });
+    const editor = container.getByRole('textbox', { name: 'Empty editor', exact: true });
+    const original = await editor.elementHandle();
+    await editor.fill('Empty draft before hydration');
+    await editor.evaluate((input: HTMLInputElement) => input.setSelectionRange(2, 9));
+
+    await container.dispatchEvent('hydrate-table-column-layout');
+    await expect(container).toHaveAttribute('data-hydrated', 'true');
+    await container.getByRole('button', { name: 'Change table locale', exact: true })
+      .dispatchEvent('click');
+
+    await expect(editor).toHaveValue('Empty draft before hydration');
+    await expect(editor).toBeFocused();
+    expect(await editor.evaluate((node, before) => node === before, original)).toBe(true);
+    expect(await editor.evaluate((input: HTMLInputElement) => [
+      input.selectionStart, input.selectionEnd
+    ])).toEqual([2, 9]);
+  }
+);
