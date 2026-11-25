@@ -14,6 +14,7 @@ export { createModal } from './modal.model.svelte.js';
 export type {
   ModalConfirmType,
   ModalConfirmAction,
+  ModalConfirmFocusableConfig,
   ModalConfirmConfig,
   ModalConfirmHandle,
   ModalInstance,
@@ -1003,7 +1004,9 @@ export type {
   FormProps, FormConfig, FormScrollOptions, FormRequiredMark, FormRequiredMarkInfo, FormLocale,
   FormSemanticSlots, FormSemantic, FormTooltipProps, FormItemTooltip, FormFeedbackIcons, FormFeedbackInfo
 } from './form.types';
-export type { ModalProps, ModalContent } from './modal.types';
+export type {
+  ModalProps, ModalContent, ModalConfig, ModalMask, ModalMaskConfig, ModalFocusableConfig
+} from './modal.types';
 export type { ConfigProviderProps } from './ConfigProvider.svelte';
 export type {
   WaveConfig,

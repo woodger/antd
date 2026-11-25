@@ -5,7 +5,7 @@ import type { CssMotionEvent } from './css-motion.types';
 import {
   getDrawerMotionDuration, getDrawerTransform, type DrawerInteraction
 } from './drawer.engine';
-import { connectDrawerFocus } from './drawer-focus.dom';
+import { connectDialogFocus } from './dialog-focus.dom';
 import { createDrawerMotion } from './drawer-motion.dom';
 import type { DrawerMotionConfig, DrawerPlacement } from './drawer.types';
 
@@ -42,7 +42,7 @@ export function createDrawerDialog(
 
   const wrapper = contentWrapper;
   const view = documentView;
-  const focus = connectDrawerFocus(dialog, getInteraction);
+  const focus = connectDialogFocus(dialog, getInteraction);
   const reducedMotion = view.matchMedia('(prefers-reduced-motion: reduce)');
   const panel = createDrawerMotion(view, () => wrapper, binding.getSection, (state, commit) =>
     binding.paint('panel', state, commit));

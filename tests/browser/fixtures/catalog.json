@@ -315,6 +315,11 @@
     "root": "modal-controller-fixture"
   },
   {
+    "id": "modal-interaction",
+    "module": "./ModalInteractionFixtures.svelte",
+    "root": "modal-interaction-fixture"
+  },
+  {
     "id": "checkbox-group",
     "module": "./CheckboxGroupFixtures.svelte",
     "root": "checkbox-group-fixture"

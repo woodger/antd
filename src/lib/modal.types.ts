@@ -1,7 +1,17 @@
 import type { Snippet } from 'svelte';
+import type { DrawerFocusableConfig, DrawerMask, DrawerMaskConfig } from './drawer.types';
 import type { GetContainer } from './types';
 
 export type ModalContent = string | number | boolean | null | Snippet;
+export type ModalMask = DrawerMask;
+export type ModalMaskConfig = DrawerMaskConfig;
+export type ModalFocusableConfig = DrawerFocusableConfig;
+
+/** Унаследованные настройки маски и фокуса из ConfigProvider.modal. */
+export interface ModalConfig {
+  mask?: ModalMask;
+  focusable?: ModalFocusableConfig;
+}
 
 /** Модальный native dialog с управлением open и snippets содержимого/footer. */
 export interface ModalProps {
@@ -25,8 +35,11 @@ export interface ModalProps {
   closable?: boolean;
   /** @defaultValue true */
   keyboard?: boolean;
-  /** Пока перенесён только closable; по умолчанию true. */
-  mask?: { closable?: boolean; };
+  /** Управляет видимой маской, её размытием и закрытием по фону. */
+  mask?: ModalMask;
+  focusable?: ModalFocusableConfig;
+  /** Блокирует прокрутку страницы, пока открыт диалог. @defaultValue true */
+  scrollLock?: boolean;
   /** @defaultValue false */
   confirmLoading?: boolean;
   /** Показывает Skeleton тела и скрывает footer. */

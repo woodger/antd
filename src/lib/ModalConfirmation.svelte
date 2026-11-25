@@ -6,6 +6,7 @@
   import Icon from './Icon.svelte';
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import { normalizeDialogMask } from './dialog-interaction.engine';
   import { modalHolderKey, type ModalConfirmation } from './modal.model.svelte.js';
   import type { ModalHolderProps } from './modal-confirm.types';
   import type { ModalContent } from './modal.types';
@@ -32,9 +33,51 @@
     && options.title !== null && typeof options.title !== 'boolean' && options.title !== '');
   let hasIcon = $derived(options.icon !== null && options.icon !== false);
   let okCancel = $derived(options.okCancel ?? confirmation.type === 'confirm');
+  const autofocusButton = $derived.by(() => {
+    const target = options.focusable?.autoFocusButton;
+    return target === undefined ? 'ok' : target;
+  });
+  const visible = $derived(confirmation.open);
+  let okButton = $state<HTMLButtonElement | HTMLAnchorElement>();
+  let cancelButton = $state<HTMLButtonElement | HTMLAnchorElement>();
+  let previousAutofocus = untrack(() => autofocusButton);
+  let mask = $derived.by(() => {
+    const own = normalizeDialogMask(options.mask);
+    return { ...own, closable: own.closable ?? false };
+  });
   let okText = $derived(
     options.okText ?? (!okCancel ? config.locale.justOkText : undefined) ?? config.locale.okText
   );
+
+  $effect(() => {
+    const target = autofocusButton;
+    const open = visible;
+    const ok = okButton;
+    const cancel = cancelButton;
+    // Svelte добавляет autofocus через spread. При смене выбора обновляем DOM property.
+    if (ok) ok.autofocus = target === 'ok';
+    if (cancel) cancel.autofocus = target === 'cancel';
+
+    const changed = target !== previousAutofocus;
+    previousAutofocus = target;
+    if (!open || !changed || target === null) {
+      return;
+    }
+
+    const button = target === 'ok' ? ok : cancel;
+    const view = button?.ownerDocument.defaultView;
+    if (!button || !view) {
+      return;
+    }
+
+    // Начальный фокус задаёт dialog. Update переносит фокус после обновления footer.
+    const timer = view.setTimeout(() => {
+      if (button.isConnected && button.closest('dialog[open]')) {
+        button.focus({ preventScroll: true });
+      }
+    }, 0);
+    return () => view.clearTimeout(timer);
+  });
 
   function mounted() {
     runtime.mounted(id);
@@ -57,7 +100,9 @@
   {zIndex}
   closable={options.closable ?? false}
   keyboard={options.keyboard}
-  mask={options.mask ?? { closable: false }}
+  {mask}
+  focusable={options.focusable}
+  scrollLock={options.scrollLock}
   getContainer={options.getContainer}
   class={['modal-confirm-dialog', `${componentPrefix}-confirm`, `${componentPrefix}-confirm-${confirmation.type}`, options.class]
     .filter(Boolean).join(' ')}
@@ -84,10 +129,13 @@
     {#if options.footer === undefined}
       <div class={`${componentPrefix}-confirm-btns`}>
         {#if okCancel}
-          <Button loading={confirmation.pendingCancel} onclick={() => runtime.act(id, false)}
+          <Button loading={confirmation.pendingCancel} autofocus={autofocusButton === 'cancel'}
+            bind:nativeElement={cancelButton}
+            onclick={() => runtime.act(id, false)}
             children={options.cancelText ?? config.locale.cancelText} />
         {/if}
-        <Button type="primary" loading={confirmation.pendingOk} autofocus
+        <Button type="primary" loading={confirmation.pendingOk} autofocus={autofocusButton === 'ok'}
+          bind:nativeElement={okButton}
           onclick={() => runtime.act(id, true)} children={okText} />
       </div>
     {:else if options.footer}

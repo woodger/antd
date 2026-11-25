@@ -1,17 +1,13 @@
 // Преобразует dimension и placement Drawer в размер, смещение и параметры движения без DOM.
 import type {
-  DrawerConfig, DrawerFocusableConfig, DrawerMask, DrawerMaskConfig,
+  DrawerConfig, DrawerFocusableConfig, DrawerMask,
   DrawerPlacement, DrawerPushConfig, DrawerSize
 } from './drawer.types';
+import { resolveDialogFocusable, resolveDialogMask } from './dialog-interaction.engine';
 
 export const DEFAULT_DRAWER_SIZE = 378;
 export const DEFAULT_DRAWER_PUSH_DISTANCE = 180;
 const defaultSizeInCss = `${DEFAULT_DRAWER_SIZE}px`;
-
-/** Boolean меняет только видимость маски; остальные поля могут прийти из ConfigProvider. */
-function maskOptions(value: DrawerMask | undefined): DrawerMaskConfig {
-  return typeof value === 'boolean' ? { enabled: value } : value ?? {};
-}
 
 /** Выбирает native modality для прежних настроек и разрешает независимые режимы фокуса. */
 export function resolveDrawerInteraction(
@@ -20,19 +16,14 @@ export function resolveDrawerInteraction(
   autoFocus: boolean,
   config?: DrawerConfig
 ) {
-  const ownMask = maskOptions(mask);
-  const inheritedMask = maskOptions(config?.mask);
-  const mergedMask = { ...inheritedMask, ...ownMask };
-  const enabled = mergedMask.enabled !== false;
-  const closable = ownMask.closable ?? inheritedMask.closable ?? true;
-  const { trap = enabled, focusTriggerAfterClose: restoreFocus = true } = {
-    ...config?.focusable,
-    ...focusable
-  };
-  const native = enabled && trap && autoFocus && restoreFocus;
+  const mergedMask = resolveDialogMask(mask, config?.mask);
+  const { trap, restoreFocus } = resolveDialogFocusable(
+    focusable, config?.focusable, mergedMask.enabled
+  );
+  const native = mergedMask.enabled && trap && autoFocus && restoreFocus;
 
   return {
-    mask: { enabled, closable, blur: Boolean(mergedMask.blur) },
+    mask: mergedMask,
     trap,
     restoreFocus,
     autoFocus,

@@ -1,9 +1,15 @@
-// Согласует нативную модальность с открытым dialog без модального барьера. В обоих режимах
-// один Drawer владеет фокусом, а смена настроек сохраняет тот же DOM и исходный opener.
-import type { DrawerInteraction } from './drawer.engine';
+// Согласует нативную модальность с открытым dialog без нативного барьера. Стек определяет
+// владельца Escape и ловушки фокуса. Смена режима сохраняет тот же DOM и исходный opener.
 import { isPopupFocusWithin } from './popup.dom';
 
-const drawersByDocument = new WeakMap<Document, HTMLDialogElement[]>();
+interface DialogFocusOptions {
+  native: boolean;
+  trap: boolean;
+  restoreFocus: boolean;
+  autoFocus: boolean;
+}
+
+const dialogsByDocument = new WeakMap<Document, HTMLDialogElement[]>();
 const tabbableSelector = [
   'button', 'input', 'select', 'textarea', 'a[href]', 'area[href]', 'summary', 'iframe',
   '[tabindex]', '[contenteditable]', 'audio[controls]', 'video[controls]'
@@ -39,17 +45,20 @@ function tabStops(dialog: HTMLDialogElement): HTMLElement[] {
 }
 
 /** Управляет видимостью dialog, клавиатурой и возвратом фокуса независимо от анимации. */
-export function connectDrawerFocus(
+export function connectDialogFocus(
   dialog: HTMLDialogElement,
-  getInteraction: () => DrawerInteraction
+  getInteraction: () => DialogFocusOptions,
+  getInitialFocus?: (controls: HTMLElement[]) => HTMLElement | undefined
 ) {
   const document = dialog.ownerDocument;
   const documentView = document.defaultView;
-  if (!documentView) throw new Error('Drawer requires an active document');
+  if (!documentView) {
+    throw new Error('Dialog requires an active document');
+  }
   const view = documentView;
 
-  const stack = drawersByDocument.get(document) ?? [];
-  drawersByDocument.set(document, stack);
+  const stack = dialogsByDocument.get(document) ?? [];
+  dialogsByDocument.set(document, stack);
   let native: boolean | undefined;
   let opener: HTMLElement | undefined;
   let lastFocused: HTMLElement | undefined;
@@ -59,8 +68,10 @@ export function connectDrawerFocus(
     if (native !== false || !dialog.open || !dialog.isConnected) {
       return false;
     }
-    const topDrawer = stack.findLast(node => node.open && node.isConnected);
-    if (topDrawer !== dialog) return false;
+    const topDialog = stack.findLast(node => node.open && node.isConnected);
+    if (topDialog !== dialog) {
+      return false;
+    }
 
     const targetModal = target?.closest('dialog:modal');
     return !targetModal || targetModal === dialog.closest('dialog:modal');
@@ -97,7 +108,7 @@ export function connectDrawerFocus(
     }
   }
 
-  /** Даёт вложенному popup обработать Escape на document, затем обращается к верхнему Drawer. */
+  /** Даёт вложенному popup обработать Escape на document, затем обращается к верхнему dialog. */
   function handleKeydown(event: KeyboardEvent) {
     if (event.defaultPrevented || event.isComposing) return;
 
@@ -140,7 +151,8 @@ export function connectDrawerFocus(
     const interaction = getInteraction();
     present(interaction.native);
     if (!interaction.native && interaction.autoFocus) {
-      dialog.focus({ preventScroll: true });
+      const target = getInitialFocus?.(tabStops(dialog)) ?? dialog;
+      target.focus({ preventScroll: true });
     }
     keepFocus();
   }

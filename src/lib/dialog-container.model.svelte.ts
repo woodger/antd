@@ -109,10 +109,10 @@ export function createDialogContainer(getOptions: () => DialogContainerOptions) 
       if (container) {
         explicitPortal = attachPortal(container);
       }
-      else if (container === undefined && getOptions().component === 'drawer') {
+      else if (container === undefined) {
         $effect(() => {
           if (portalByDefault) {
-            // Ближайший dialog держит вложенный Drawer перед своей панелью и в своём focus scope.
+            // Ближайший dialog удерживает вложенную панель в своём focus scope.
             const destination = origin.closest('dialog') ?? document.body;
             return untrack(() => attachPortal(destination));
           }

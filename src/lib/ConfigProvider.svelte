@@ -28,6 +28,7 @@
   import type { PopoverConfig } from './popover.types';
   import type { PopconfirmConfig } from './popconfirm.types';
   import type { DrawerConfig } from './drawer.types';
+  import type { ModalConfig } from './modal.types';
   import type { RateConfig } from './rate.types';
   import type { WatermarkConfig } from './watermark.types';
   import type { AffixConfig } from './affix.types';
@@ -126,6 +127,8 @@
     popover?: PopoverConfig;
     popconfirm?: PopconfirmConfig;
     drawer?: DrawerConfig;
+    /** Настройки маски и фокуса Modal и контекстных подтверждений. */
+    modal?: ModalConfig;
     rate?: RateConfig;
     watermark?: WatermarkConfig;
     affix?: AffixConfig;
@@ -234,6 +237,7 @@
     popover,
     popconfirm,
     drawer,
+    modal,
     rate,
     watermark,
     affix,
@@ -401,6 +405,9 @@
     },
     get drawer() {
       return drawer ?? parent.drawer;
+    },
+    get modal() {
+      return modal ?? parent.modal;
     },
     get button() {
       return button ?? parent.button;

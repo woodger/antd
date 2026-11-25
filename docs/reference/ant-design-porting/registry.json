@@ -23259,7 +23259,7 @@
         "tests/browser/drawer-geometry.spec.ts",
         "tests/browser/drawer-geometry-hydration.spec.ts",
         "tests/package/drawer-geometry.ssr.test.ts",
-        "src/lib/drawer-focus.dom.ts",
+        "src/lib/dialog-focus.dom.ts",
         "src/lib/ConfigProvider.svelte",
         "src/lib/popup.dom.ts",
         "tests/browser/fixtures/DrawerFocusFixtures.svelte",
@@ -23544,7 +23544,7 @@
             "src/lib/Drawer.svelte",
             "src/lib/drawer.dom.ts",
             "src/lib/dialog-container.model.svelte.ts",
-            "src/lib/drawer-focus.dom.ts",
+            "src/lib/dialog-focus.dom.ts",
             "src/lib/drawer.engine.ts",
             "src/lib/ConfigProvider.svelte",
             "src/lib/popup.dom.ts",
@@ -23795,7 +23795,15 @@
         "tests/browser/modal-prefix.spec.ts",
         "tests/package/modal-prefix.ssr.test.ts",
         "tests/browser/fixtures/ant-design-dialog-container-commit-reference.json",
-        "tests/browser/drawer-container-timing.spec.ts"
+        "tests/browser/drawer-container-timing.spec.ts",
+        "src/lib/ConfigProvider.svelte",
+        "src/lib/dialog-interaction.engine.ts",
+        "src/lib/dialog-focus.dom.ts",
+        "tests/browser/fixtures/ModalInteractionFixtures.svelte",
+        "tests/browser/fixtures/ant-design-modal-interaction-reference.json",
+        "tests/browser/modal-interaction.spec.ts",
+        "tests/browser/modal-interaction-hydration.spec.ts",
+        "tests/package/modal-interaction.ssr.test.ts"
       ],
       "features": [
         {
@@ -23932,12 +23940,46 @@
           "note": "Svelte-эквивалент Modal.useModal: info/success/error/warning/confirm, typed PromiseLike handle, destroy, object/function update, scalar/Snippet title/content/button labels, icon/footer, width, okCancel, closable/keyboard/mask.closable/getContainer/class. Callback arity/manual close, per-button async loading, rejection retry, duplicate/reentrant guard, first-close-wins и late-result cleanup. Holder наследует и обновляет тему/локаль/RTL/container; sibling scopes и nested dialogs изолированы. Native centering и прежние locale.okText/cancelText сохранены. AfterClose вызывается по native close; holder detach тихо завершает pending handles с false и восстанавливает фокус, не перехватывая явный перевод владельцем. SSR не обращается к DOM и выводит closed shells. Source raw 13 cases pinned; full button/focusable/semantic/render options и global static API остаются missing."
         },
         {
+          "id": "modal-mask-focus-scroll",
+          "title": "Маска, прокрутка и фокус Modal и подтверждений",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/modal.md",
+            "src/lib/Modal.svelte",
+            "src/lib/ModalConfirmation.svelte",
+            "src/lib/modal.types.ts",
+            "src/lib/modal-confirm.types.ts",
+            "src/lib/ConfigProvider.svelte",
+            "src/lib/dialog-interaction.engine.ts",
+            "src/lib/dialog-focus.dom.ts",
+            "tests/browser/fixtures/ModalInteractionFixtures.svelte",
+            "tests/browser/fixtures/ant-design-modal-interaction-reference.json",
+            "tests/browser/modal-interaction.spec.ts",
+            "tests/browser/modal-interaction-hydration.spec.ts",
+            "tests/package/modal-interaction.ssr.test.ts"
+          ],
+          "note": "Два совпавших прогона UMD Ant Design 6.6.8 для 20 профилей и двух update autoFocusButton. Булева и объектная маска, blur, closable, локальные и provider поля, trap, focusTriggerAfterClose и scrollLock. Без видимой маски сохраняются область клика и блокировка прокрутки по умолчанию. Подтверждение наследует enabled/blur, closable по умолчанию false и включает autofocus кнопки OK или Cancel. Native сохраняет прежнюю модальность и scroll lock в explicit host, а свободный фокус корректно отражается в aria-modal. Проверены живые переходы без потери DOM, клавиатура в стеке, SSR и гидратация."
+        },
+        {
+          "id": "source-confirm-null-autofocus",
+          "title": "Наблюдение upstream: autoFocusButton null выбирает OK",
+          "state": "partial",
+          "requiredForV1": false,
+          "evidence": [
+            "tests/browser/fixtures/ant-design-modal-interaction-reference.json",
+            "tests/browser/modal-interaction.spec.ts",
+            "src/lib/ModalConfirmation.svelte"
+          ],
+          "note": "Два UMD-прогона подтверждают фокус OK при открытии с focusable.autoFocusButton=null и при update с cancel на null. Svelte снимает явный autofocus кнопок и при update оставляет текущий фокус. Старый initial OK при undefined и перевод фокуса при update на cancel сохранены."
+        },
+        {
           "id": "extended-modal-api",
           "title": "Global static API, semantic slots и полный render/config API",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Global static methods без holder, полный button/focusable/mask config, ConfigProvider.modal, semantic classNames/styles, modalRender ещё не перенесены. Source centering/position и lifecycle требуют отдельного аудита относительно согласованной native реализации."
+          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Global static methods без holder, полный button config, оставшиеся поля ConfigProvider.modal, semantic classNames/styles, modalRender ещё не перенесены. Source centering/position и lifecycle требуют отдельного аудита относительно согласованной native реализации."
         },
         {
           "id": "native-zero-title",

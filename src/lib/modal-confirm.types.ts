@@ -1,10 +1,16 @@
 import type { Snippet } from 'svelte';
 import type { createModal } from './modal.model.svelte.js';
-import type { ModalContent, ModalProps } from './modal.types';
+import type { ModalContent, ModalFocusableConfig, ModalProps } from './modal.types';
 
 export type ModalConfirmType = 'info' | 'success' | 'error' | 'warning' | 'confirm';
 /** Callback с аргументом close управляет закрытием вручную; Promise включает loading. */
 export type ModalConfirmAction = (close: () => void) => unknown;
+
+/** Управляет фокусом кнопок стандартного footer при открытии и после update. */
+export interface ModalConfirmFocusableConfig extends ModalFocusableConfig {
+  /** Null отключает явный autofocus обеих кнопок. @defaultValue 'ok' */
+  autoFocusButton?: 'ok' | 'cancel' | null;
+}
 
 /** Контекстное подтверждение createModal, отображаемое единственным ModalHolder. */
 export interface ModalConfirmConfig {
@@ -27,6 +33,8 @@ export interface ModalConfirmConfig {
   keyboard?: boolean;
   /** По умолчанию закрытие по фону запрещено. */
   mask?: ModalProps['mask'];
+  focusable?: ModalConfirmFocusableConfig;
+  scrollLock?: ModalProps['scrollLock'];
   getContainer?: ModalProps['getContainer'];
   class?: string;
   footer?: Snippet | null;

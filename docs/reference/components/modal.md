@@ -21,8 +21,6 @@ aria-labelledby имеет приоритет, затем непустой aria-
 [Raw content/ARIA случаи](../../../tests/browser/fixtures/ant-design-modal-content-reference.json)
 фиксируют исходные исключения: React теряет title=0 и явные ARIA props. Native
 показывает 0 и сохраняет имя, заданное владельцем.
-Закрытие по фону настраивается через mask={{ closable: false }}; по умолчанию
-разрешено. Прежний maskClosable удалён. Остальные настройки mask пока не перенесены.
 
 На границе Modal сбрасываются статус и индикатор проверки внешнего `Form.Item`.
 Локальный `Form.Item` и явный `status` поля задают оформление внутри окна.
@@ -83,8 +81,8 @@ Getter вызывается только после browser mount, в том ч�
 не меняют этот lifecycle и не зацикливают перенос. Отсутствующий
 selector или пустой результат getter используют body. Для отключённого DOM-узла
 и DocumentFragment открытие ждёт вставки в document. Стили ShadowRoot подключает
-потребитель. Нативная модальность, fullscreen-размещение, inert, scroll lock и
-возврат фокуса сохраняются в любом контейнере. Прежний SSR shell и eagerly mounted
+потребитель. В нативном режиме dialog сохраняет модальность, inert и возврат
+фокуса в любом контейнере. Прежний SSR shell и eagerly mounted
 children при loading=false сохранены; полное API Modal, semantic styles и render hooks ещё требуют переноса.
 
 Эталонные зависимости — @rc-component/dialog 1.10.0 и portal 2.1.3;
@@ -94,6 +92,28 @@ children при loading=false сохранены; полное API Modal, semant
 [browser-проверки](../../../tests/browser/dialog-container.spec.ts) и
 [проверки взаимодействия](../../../tests/browser/dialog-container-interaction.spec.ts),
 фикстура — `?fixture=dialog-container`.
+
+## Маска, прокрутка и фокус
+
+`mask` принимает boolean или объект с `enabled`, `blur` и `closable`.
+По умолчанию маска видима и клик по фону закрывает окно. `blur: true` добавляет
+размытие на 4 px. `mask={false}` оставляет прозрачную область вокруг панели.
+Она обрабатывает клик по правилам `mask.closable` и блокирует кнопки под ней.
+Клик начинается и заканчивается в этой области.
+
+`focusable.trap` по умолчанию следует видимости маски. При `trap: false` фокус
+можно перевести за пределы окна. `aria-modal` следует удержанию фокуса.
+`focusable.focusTriggerAfterClose` по умолчанию возвращает фокус к триггеру
+после закрытия окна с видимой маской. `ConfigProvider.modal` задаёт параметры
+`mask` и `focusable`. Локальные поля имеют приоритет.
+
+`scrollLock={false}` разрешает прокрутку страницы независимо от маски и фокуса.
+По умолчанию нативный режим блокирует её в любом контейнере. Управляемый режим
+блокирует страницу при стандартном портале и в `document.body`, как Ant Design.
+Смена режима сохраняет dialog, черновик и фокус внутри панели.
+[Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-interaction-reference.json)
+· [Chromium](../../../tests/browser/modal-interaction.spec.ts)
+· [Гидратация](../../../tests/browser/modal-interaction-hydration.spec.ts).
 
 ## Контекстные подтверждения Modal
 
@@ -125,8 +145,12 @@ update(object | previous => patch) и await результата true/false. Con
 OK и Cancel; остальные типы — только OK. По умолчанию ширина 416px, close скрыт,
 Escape разрешён, закрытие по фону запрещено. Нативное центрирование сохранено.
 Title/content и подписи кнопок принимают scalar/Snippet; icon — Snippet/null/false,
-footer — Snippet/null. Опции okCancel, closable, keyboard, mask.closable,
-getContainer и class применяются отдельно к каждому подтверждению.
+footer — Snippet/null. Опции okCancel, closable, keyboard, mask, focusable,
+scrollLock, getContainer и class применяются отдельно к каждому подтверждению.
+Клик по фону закрывает подтверждение при локальном `mask.closable: true`.
+`focusable.autoFocusButton` выбирает OK или Cancel при открытии и в `handle.update()`.
+По умолчанию выбирается OK. При `null` ни одна кнопка не получает явный autofocus.
+В Ant Design 6.6.8 `null` даёт фокус OK. [Сверка](../../../tests/browser/modal-interaction.spec.ts).
 
 Callback onOk/onCancel без аргумента закрывает окно после синхронного результата.
 Callback с аргументом close оставляет закрытие владельцу. Возвращённый Promise

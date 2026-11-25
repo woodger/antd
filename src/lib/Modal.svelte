@@ -1,7 +1,7 @@
 <script lang="ts">
   // Соединяет native dialog с cancel и подтверждением. Отдельно обрабатывает запросы закрытия от
   // маски и Escape.
-  import { tick } from 'svelte';
+  import { tick, untrack } from 'svelte';
   import NoCompactStyle from './NoCompactStyle.svelte';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getModalPrefixCss } from './modal-prefix.engine';
@@ -12,6 +12,9 @@
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import { useWatermarkPanel } from './watermark-context';
   import { createDialogContainer } from './dialog-container.model.svelte.js';
+  import { connectDialogFocus } from './dialog-focus.dom';
+  import { resolveDialogFocusable, resolveDialogMask } from './dialog-interaction.engine';
+  import { getPopupActiveElement, isPopupFocusWithin } from './popup.dom';
   import type { ModalContent, ModalProps as ModalComponentProps } from './modal.types';
   import Button from './Button.svelte';
   import Icon from './Icon.svelte';
@@ -32,6 +35,8 @@
     closable = true,
     keyboard = true,
     mask,
+    focusable,
+    scrollLock = true,
     confirmLoading = false,
     loading = false,
     okText,
@@ -45,6 +50,19 @@
 
   const config = useConfig();
   isolateFormItemStyle();
+  const interaction = $derived.by(() => {
+    const mergedMask = resolveDialogMask(mask, config.modal?.mask);
+    const focus = resolveDialogFocusable(focusable, config.modal?.focusable, mergedMask.enabled);
+    const restoreFocus = mergedMask.enabled && focus.restoreFocus;
+
+    return {
+      mask: mergedMask,
+      trap: focus.trap,
+      restoreFocus,
+      native: focus.trap && restoreFocus,
+      autoFocus: true
+    };
+  });
   let componentPrefix = $derived(config.getPrefixCls('modal', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let prefixCss = $derived(getModalPrefixCss(componentPrefix, rootPrefix));
@@ -57,49 +75,103 @@
   const titleId = `ant-modal-${generatedId}`;
   let hasTitle = $derived(title !== undefined && title !== null && title !== false && title !== '');
   let dialog = $state<HTMLDialogElement>();
-  let backdropPointer = false;
-  let focusTrigger: HTMLElement | undefined;
+  let backdrop = $state<HTMLDivElement>();
+  let backdropPointer: number | undefined;
+  let runtime = $state.raw<{ sync(open: boolean): void; closed(): void; }>();
   const container = createDialogContainer(() => ({
     component: 'modal',
     open,
     getContainer,
     getPopupContainer: config.getPopupContainer,
+    portalByDefault: !interaction.native && open,
     style: componentTheme.style,
-    onPointerDown: event => { backdropPointer = isBackdrop(event); },
-    onPointerUp: handlePointerUp
+    onPointerDown: event => {
+      backdropPointer = event.button === 0 && isBackdrop(event) ? event.pointerId : undefined;
+    },
+    onPointerUp: handlePointerUp,
+    onPointerCancel: () => { backdropPointer = undefined; }
   }));
+  const scrollUnlocked = $derived.by(() => {
+    if (!scrollLock) {
+      return true;
+    }
+    if (interaction.native) {
+      return false;
+    }
+
+    const target = container.target;
+    return target === false || target !== undefined && target !== dialog?.ownerDocument.body;
+  });
 
   $effect(() => {
-    if (!dialog || !container.connected || !dialog.isConnected) {
+    const current = runtime;
+    const requested = open;
+    void interaction;
+    if (!current || !container.connected || !dialog?.isConnected) {
       return;
     }
 
-    if (open && !dialog.matches(':modal')) {
-      if (dialog.open) dialog.close();
-      focusTrigger = dialog.ownerDocument.activeElement as HTMLElement | undefined;
-      dialog.showModal();
-    }
-    else if (!open && dialog.open) {
-      dialog.close();
-    }
+    untrack(() => current.sync(requested));
   });
 
   function connectDialog(node: HTMLDialogElement) {
+    const focus = connectDialogFocus(node, () => interaction, controls => {
+      const autofocus = controls.find(control => control.hasAttribute('autofocus'));
+      return autofocus ?? (interaction.trap ? controls[0] : undefined);
+    });
+    let shown = false;
+    let pendingRestore: (() => void) | undefined;
+
+    function sync(visible: boolean) {
+      if (visible) {
+        shown = true;
+        pendingRestore = undefined;
+        if (node.open) focus.sync();
+        else focus.open();
+      }
+      else if (node.open) {
+        pendingRestore = focus.close();
+      }
+    }
+
+    function closed() {
+      // Смена режима тоже создаёт close event. Уведомление принадлежит фактическому закрытию.
+      if (node.open || !shown) {
+        return;
+      }
+
+      shown = false;
+      const restore = pendingRestore ?? focus.close();
+      pendingRestore = undefined;
+      open = false;
+      restore?.();
+      afterClose?.();
+    }
+
+    const current = { sync, closed };
+    runtime = current;
     return () => {
       const document = node.ownerDocument;
-      const active = document.activeElement;
-      const trigger = focusTrigger;
-      const restore = node.open && (active === document.body || !active || node.contains(active));
-      if (node.open) node.close();
+      const active = getPopupActiveElement(node);
+      const restore = pendingRestore ?? focus.close();
+      if (runtime === current) runtime = undefined;
+
+      if (active && active !== document.body && !isPopupFocusWithin(node, active)) {
+        return;
+      }
       if (restore) {
         void tick().then(() => {
-          const current = document.activeElement;
-          if (trigger?.isConnected && (current === document.body || !current || current === node)) {
-            trigger.focus();
+          const focused = document.activeElement;
+          if (!focused || focused === document.body || focused === node) {
+            restore();
           }
         });
       }
     };
+  }
+
+  function handleClose(event: Event) {
+    if (event.currentTarget === dialog) runtime?.closed();
   }
 
   function cancel() {
@@ -118,24 +190,25 @@
   }
 
   function isBackdrop(event: PointerEvent) {
-    if (!dialog) {
+    if (event.target === backdrop) {
+      return true;
+    }
+    if (!dialog || event.target !== dialog || !dialog.matches(':modal')) {
       return false;
     }
 
     const bounds = dialog.getBoundingClientRect();
 
-    return event.target === dialog && (
-      event.clientX < bounds.left || event.clientX > bounds.right ||
-      event.clientY < bounds.top || event.clientY > bounds.bottom
-    );
+    return event.clientX < bounds.left || event.clientX > bounds.right
+      || event.clientY < bounds.top || event.clientY > bounds.bottom;
   }
 
   function handlePointerUp(event: PointerEvent) {
-    if (mask?.closable !== false && backdropPointer && isBackdrop(event)) {
+    const start = backdropPointer;
+    backdropPointer = undefined;
+    if (start === event.pointerId && interaction.mask.closable && isBackdrop(event)) {
       cancel();
     }
-
-    backdropPointer = false;
   }
 
   function handleOk() {
@@ -149,10 +222,17 @@
 </script>
 
 <style>
-  :global(html:has(dialog.ant-svelte-dialog[open])) { overflow: hidden; }
+  :global(html:has(dialog.ant-svelte-dialog[open]:not([data-ant-dialog-unlocked]))) {
+    overflow: hidden;
+  }
   .ant-svelte-dialog { max-width: calc(100vw - 32px); max-height: calc(100dvh - 48px); padding: 0; border: 0; overflow: visible; background: transparent; color: var(--ant-color-text); }
   .ant-svelte-dialog { z-index: var(--ant-z-index-popup-base, 1000); }
   .ant-svelte-dialog::backdrop { background: var(--ant-color-bg-mask); }
+  .ant-svelte-dialog[data-ant-modal-mask-blur]::backdrop,
+  [data-ant-modal-mask][data-ant-modal-mask-blur] { backdrop-filter: blur(4px); }
+  .ant-svelte-dialog[data-ant-modal-managed] { position: fixed; inset: 0; margin: auto; }
+  [data-ant-modal-backdrop] { position: fixed; inset: 0; z-index: -1; }
+  [data-ant-modal-mask] { background: var(--ant-color-bg-mask); }
   [data-ant-modal-panel] { top: auto; max-width: none; width: 100%; margin: 0; padding: 0; }
   [data-ant-modal-container] { max-height: calc(100dvh - 48px); overflow: auto; }
   [data-ant-modal-title] { padding-inline-end: 32px; }
@@ -168,7 +248,11 @@
 <NoCompactStyle>
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`modal-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#key container.key}<dialog
   data-ant-modal-prefix={componentPrefix} data-ant-modal-root-prefix={rootPrefix}
+  data-ant-modal-managed={!interaction.native || undefined}
+  data-ant-modal-mask-blur={interaction.mask.enabled && interaction.mask.blur || undefined}
+  data-ant-dialog-unlocked={scrollUnlocked || undefined}
   bind:this={dialog}
+  tabindex={interaction.native ? undefined : -1}
   class={['ant-svelte-dialog ant-modal-css-var', componentTheme.className, className]}
   style={componentTheme.style}
   style:width={`${width}px`}
@@ -176,17 +260,16 @@
   dir={config.direction}
   aria-label={ariaLabel}
   aria-labelledby={ariaLabelledBy ?? (ariaLabel?.trim() ? undefined : hasTitle ? titleId : undefined)}
-  aria-modal="true"
+  aria-modal={interaction.trap || undefined}
   oncancel={handleCancel}
-  onclose={event => {
-      if (event.currentTarget === dialog && !dialog.open) {
-        open = false;
-        afterClose?.();
-      }
-    }}
+  onclose={handleClose}
   {@attach container.attach}
   {@attach connectDialog}
 >
+  {#if !interaction.native}<div data-ant-modal-backdrop
+    data-ant-modal-mask={interaction.mask.enabled || undefined}
+    data-ant-modal-mask-blur={interaction.mask.blur || undefined}
+    aria-hidden="true" bind:this={backdrop}></div>{/if}
   <div data-ant-modal-panel data-ant-modal-prefix={componentPrefix} data-ant-modal-root-prefix={rootPrefix} class={componentPrefix}>
     <div data-ant-modal-container class={`${componentPrefix}-container`} {@attach watermarkPanel}>
       {#if closable}
