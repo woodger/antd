@@ -2,6 +2,7 @@ import type { Snippet } from 'svelte';
 import type { HTMLAttributes, HTMLInputAttributes, HTMLTdAttributes } from 'svelte/elements';
 import type { PaginationProps } from './Pagination.svelte';
 import type { CheckboxChangeEvent, CheckboxProps, CheckboxValue } from './checkbox.types';
+import type { DropdownProps } from './dropdown.types';
 import type { GridBreakpoint } from './grid.types';
 import type { RadioChangeEvent } from './radio.types';
 import type { TooltipProps } from './tooltip.types';
@@ -27,6 +28,37 @@ export interface TableFilterOption {
 
 /** Пользовательский поиск получает текущий запрос и исходный вариант. */
 export type TableFilterSearch = boolean | ((input: string, option: TableFilterOption) => boolean);
+
+export interface TableFilterConfirmOptions {
+  closeDropdown: boolean;
+}
+
+export interface TableFilterResetOptions {
+  confirm?: boolean;
+  closeDropdown?: boolean;
+}
+
+/** Аргумент snippet пользовательского фильтра. Изменения остаются в черновике до confirm. */
+export interface TableFilterDropdownProps {
+  prefixCls: string;
+  selectedKeys: readonly TableFilterValue[];
+  setSelectedKeys: (keys: readonly TableFilterValue[]) => void;
+  /** Подтверждает черновик. Вызов без аргумента закрывает панель. */
+  confirm: (options?: TableFilterConfirmOptions) => void;
+  /** Восстанавливает начальный черновик. Опции управляют очисткой и закрытием. */
+  clearFilters: (options?: TableFilterResetOptions) => void;
+  filters?: readonly TableFilterOption[];
+  /** Закрывает панель без применения черновика. */
+  close: () => void;
+  visible: boolean;
+}
+
+/** Параметры Dropdown. Table предоставляет кнопку и содержимое панели. */
+export interface TableFilterDropdownOptions extends Omit<
+  DropdownProps, 'children' | 'ref' | 'defaultOpen' | 'popupRender'
+> {
+  popupRender?: Snippet<[origin: Snippet]>;
+}
 
 export interface TableSorter {
   columnKey: string;
@@ -85,6 +117,14 @@ export interface TableColumn<Row extends object> {
   /** Перекрывает настройку таблицы для этой колонки, включая false. */
   showSorterTooltip?: boolean | TableSorterTooltipProps;
   filters?: readonly TableFilterOption[];
+  /** Заменяет содержимое фильтра. Snippet получает черновик и операции над ним. */
+  filterDropdown?: Snippet<[info: TableFilterDropdownProps]>;
+  /** Настраивает размещение, триггеры, открытие и обёртку панели. */
+  filterDropdownProps?: TableFilterDropdownOptions;
+  /** Применяет встроенный фильтр при закрытии. @defaultValue false */
+  filterOnClose?: boolean;
+  /** Заменяет декоративную иконку. Snippet получает признак активного фильтра. */
+  filterIcon?: Snippet<[filtered: boolean]>;
   onFilter?: (value: TableFilterValue, record: Row) => boolean;
   filterMultiple?: boolean;
   /** Выбирает представление фильтра. @defaultValue 'menu' */

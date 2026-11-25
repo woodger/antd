@@ -888,9 +888,10 @@ callback и не сбрасывает страницу. Если настрое�
 отображаемой выборке до пагинации.
 
 Внешние изменения filters, dataSource и columns не вызывают callbacks и не
-переписывают страницу владельца. Дубликаты значений удаляются; неизвестные
-варианты, удалённые колонки и колонки без списка/предиката в клиентском режиме игнорируются при
-отображении. В одиночном режиме используется первое допустимое значение.
+переписывают страницу владельца. Дубликаты значений удаляются. Встроенный фильтр
+игнорирует неизвестные варианты, удалённые колонки и колонки без списка или
+предиката в клиентском режиме. При одиночном выборе применяется первое допустимое
+значение.
 Состояние владельца сохраняется, поэтому возвращённая колонка может снова
 применить свой фильтр. Выбранные строки сохраняют ключи при скрытии фильтром;
 «выбрать всё» затрагивает только доступные строки видимой страницы.
@@ -913,6 +914,63 @@ Space переключает выбранный вариант. В поле по
 [Эталон вариантов и поиска](../../../tests/browser/fixtures/ant-design-table-filter-options-reference.json)
 · [Chromium](../../../tests/browser/table-filter-options.spec.ts)
 · [SSR](../../../tests/package/table-filter-options.ssr.test.ts)
+
+### Пользовательская панель фильтра
+
+`filterDropdown` заменяет содержимое панели snippet. `selectedKeys` содержит
+черновик. `setSelectedKeys` обновляет его и принимает string, number и boolean.
+Пользовательская панель сама определяет допустимые значения и их количество.
+`filters` в аргументе snippet доступен как список предложенных вариантов.
+Выбор пункта `Menu` внутри snippet оставляет панель открытой. Callback
+`onSelect` может передать новые ключи в `setSelectedKeys`.
+
+```svelte
+<script lang="ts">
+  import { Table, type TableColumn, type TableFilterDropdownProps } from '@woodger/antd';
+
+  type Row = { key: string; team: string };
+  const dataSource: Row[] = [{ key: '1', team: 'core' }, { key: '2', team: 'ops' }];
+  const columns: TableColumn<Row>[] = [{
+    key: 'team',
+    dataIndex: 'team',
+    title: 'Команда',
+    filterDropdown: teamFilter,
+    onFilter: (key, row) => key === row.team
+  }];
+</script>
+
+{#snippet teamFilter(filter: TableFilterDropdownProps)}
+  <button type="button" onclick={() => filter.setSelectedKeys(['core'])}>
+    Основная команда
+  </button>
+  <button type="button" onclick={() => filter.confirm()}>Применить</button>
+{/snippet}
+
+<Table {columns} {dataSource} pagination={false} />
+```
+
+`confirm()` запрашивает закрытие панели перед применением. Вызов
+`confirm({ closeDropdown: false })` применяет условия, сохраняя панель открытой.
+`close()` закрывает её без изменений. `clearFilters()` возвращает начальный
+черновик. При `filterResetToDefaultFilteredValue` это `defaultFilteredValue`.
+Опция `confirm: true` снимает применённый фильтр, а `closeDropdown: true`
+запрашивает закрытие после этого. Открытая панель синхронизирует черновик
+при изменениях применённых значений владельца.
+
+`filterDropdownProps` передаёт параметры в Dropdown. `open` управляет
+видимостью, а `onOpenChange` сообщает о запросе. `placement`, `trigger`,
+`getPopupContainer`, `destroyOnHidden` и `forceRender` используют правила
+Dropdown. `popupRender` получает snippet исходного содержимого. `filterIcon`
+заменяет декоративную иконку и получает признак активного фильтра.
+
+Встроенная панель по умолчанию отменяет черновик при закрытии. При
+`filterOnClose: true` действия пользователя, закрывающие панель, применяют
+черновик. Обновление `open` владельцем переключает видимость. Пользовательская
+панель применяет условия через `confirm` или `clearFilters({ confirm: true })`.
+
+[Эталон панели](../../../tests/browser/fixtures/ant-design-table-filter-dropdown-reference.json)
+· [Chromium](../../../tests/browser/table-filter-dropdown.spec.ts)
+· [SSR](../../../tests/package/table-filter-dropdown.ssr.test.ts)
 
 ## Направления и приоритеты сортировки
 

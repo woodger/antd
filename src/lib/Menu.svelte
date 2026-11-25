@@ -78,7 +78,8 @@
   } = $derived(menuProps);
 
   const config = useConfig();
-  const dropdown = takeDropdownMenu();
+  const dropdownScope = takeDropdownMenu();
+  const dropdown = dropdownScope?.context;
   let componentPrefix = $derived(config.getPrefixCls('menu', customizePrefixCls
     || (dropdown ? `${dropdown.prefixCls}-menu` : undefined)));
   let rootPrefix = $derived(config.getPrefixCls());
@@ -103,7 +104,7 @@
   const sider = useSider();
   let resolvedCollapse = $derived(inlineCollapsed ?? (dropdown ? undefined : sider?.collapsed));
   let resolvedMode = $derived(dropdown ? 'vertical' : mode);
-  let isSelectable = $derived(selectable ?? !dropdown);
+  let isSelectable = $derived(selectable ?? dropdownScope?.defaultSelectable ?? !dropdown);
   let semantics = $derived(menuSemantics(config.menu, {
     ...menuProps,
     ...dropdown ? { mode: resolvedMode, selectable: isSelectable } : {},

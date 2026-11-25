@@ -1,26 +1,32 @@
 <script lang="ts">
-  // Хранит черновик условий фильтра до confirm/reset. Popup управляет фокусом отдельно от
-  // применённых фильтров Table.
+  // Хранит черновик и связывает операции панели с применённым фильтром Table.
+  // Настроенная панель использует Dropdown для размещения, портала и фокуса.
+  import { untrack, type Snippet } from 'svelte';
+  import { on } from 'svelte/events';
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { snapshotTableFilterOptions } from './table-filter-options.engine';
   import { normalizeTableFilter } from './table.engine';
   import type {
-    TableFilterMode, TableFilterOption, TableFilterSearch, TableFilterValue
+    TableFilterConfirmOptions, TableFilterDropdownOptions, TableFilterDropdownProps,
+    TableFilterMode, TableFilterOption, TableFilterResetOptions, TableFilterSearch, TableFilterValue
   } from './table.types';
   import { ruRU } from './types';
   import Button from './Button.svelte';
+  import Dropdown from './Dropdown.svelte';
   import Icon from './Icon.svelte';
+  import TableFilterCustomContent from './TableFilterCustomContent.svelte';
   import TableFilterOptions from './TableFilterOptions.svelte';
 
   let {
     prefixCls, dropdownPrefix, title, options, value, filtered, resetValues, multiple, disabled,
-    filterMode = 'menu', filterSearch = false, onApply
+    filterMode = 'menu', filterSearch = false, filterDropdown, filterDropdownProps,
+    filterOnClose = false, filterIcon, onApply
   }: {
     prefixCls: string;
     dropdownPrefix: string;
     title: string;
-    options: readonly TableFilterOption[];
+    options?: readonly TableFilterOption[];
     value: readonly TableFilterValue[];
     filtered?: boolean;
     resetValues?: readonly TableFilterValue[] | null;
@@ -28,6 +34,10 @@
     disabled: boolean;
     filterMode?: TableFilterMode;
     filterSearch?: TableFilterSearch;
+    filterDropdown?: Snippet<[info: TableFilterDropdownProps]>;
+    filterDropdownProps?: TableFilterDropdownOptions;
+    filterOnClose?: boolean;
+    filterIcon?: Snippet<[filtered: boolean]>;
     onApply: (values: TableFilterValue[]) => void;
   } = $props();
 
@@ -36,34 +46,79 @@
   const id = $props.id();
   let trigger = $state<HTMLButtonElement>();
   let panel = $state<HTMLDivElement>();
-  let open = $state(false);
+  let content = $state<HTMLDivElement>();
+  let nativeOpen = $state(false);
+  let requestedOpen = $state(false);
+  const usesDropdown = $derived(Boolean(filterDropdown || filterDropdownProps || filterOnClose));
+  const blocked = $derived(disabled || Boolean(filterDropdownProps?.disabled));
+  const open = $derived(
+    usesDropdown ? !blocked && (filterDropdownProps?.open ?? requestedOpen) : nativeOpen
+  );
+  const dropdownPlacement = $derived(filterDropdownProps?.placement
+    ?? (config.direction === 'rtl' ? 'bottomLeft' : 'bottomRight'));
   let visited = $state(false);
-  let draft = $state<TableFilterValue[]>([]);
+  let draft = $state<TableFilterValue[]>(untrack(() => usesDropdown ? [...value] : []));
   let query = $state('');
   let openedValue: TableFilterValue[] = [];
   let openedOptions: ReturnType<typeof snapshotTableFilterOptions> = [];
   let openedMultiple = true;
   let openedMode: TableFilterMode = 'menu';
   let openedSearch: TableFilterSearch = false;
+  let dropdownApplied: TableFilterValue[] | undefined;
+  const active = $derived(value.length > 0 || Boolean(filtered));
   let label = $derived(`${config.locale.table?.filterTitle ?? ruRU.table.filterTitle}: ${title}`);
-  const optionSnapshot = $derived(snapshotTableFilterOptions(options));
+  const optionList = $derived(options ?? []);
+  const optionSnapshot = $derived(snapshotTableFilterOptions(optionList));
   const advanced = $derived(
-    filterMode === 'tree' || Boolean(filterSearch) || options.some(option => option.children)
+    filterMode === 'tree' || Boolean(filterSearch) || optionList.some(option => option.children)
   );
-  const resetValue = $derived(normalizeTableFilter(options, resetValues, multiple));
-  const canReset = $derived(
-    draft.length !== resetValue.length || draft.some(value => !resetValue.includes(value))
+  const resetValue = $derived(filterDropdown
+    ? normalizeTableFilter(undefined, resetValues)
+    : normalizeTableFilter(optionList, resetValues, multiple)
   );
+  const canReset = $derived(!sameValues(draft, resetValue));
+  const dropdownInfo: TableFilterDropdownProps = $derived({
+    prefixCls: `${dropdownPrefix}-custom`,
+    selectedKeys: draft,
+    setSelectedKeys,
+    confirm,
+    clearFilters,
+    filters: options,
+    close,
+    visible: open
+  });
 
-  $effect(() => {
-    if (!open || !panel) {
+  // После подтверждения без закрытия значения владельца остаются источником черновика.
+  $effect.pre(() => {
+    if (usesDropdown) {
+      nativeOpen = false;
+      if (blocked) {
+        requestedOpen = false;
+      }
+    }
+    else {
+      requestedOpen = false;
+    }
+
+    if (!usesDropdown || !open) {
+      if (dropdownApplied) {
+        dropdownApplied = undefined;
+        query = '';
+      }
       return;
     }
 
-    const sameValue = value.length === openedValue.length
-      && value.every(
-        (item) => openedValue.includes(item)
-      );
+    if (!dropdownApplied || !sameValues(value, dropdownApplied)) {
+      dropdownApplied = [...value];
+      draft = [...value];
+    }
+  });
+
+  $effect(() => {
+    if (!nativeOpen || !panel) {
+      return;
+    }
+
     const sameOptions = optionSnapshot.length === openedOptions.length
       && optionSnapshot.every(
         (item, index) => Object.is(item.value, openedOptions[index].value)
@@ -71,14 +126,14 @@
           && item.children === openedOptions[index].children
       );
 
-    if (disabled || !sameValue || !sameOptions || multiple !== openedMultiple
+    if (blocked || !sameValues(value, openedValue) || !sameOptions || multiple !== openedMultiple
       || filterMode !== openedMode || filterSearch !== openedSearch) {
       panel.hidePopover();
     }
   });
 
   $effect(() => {
-    if (!open || !panel || !trigger) {
+    if (!nativeOpen || !panel || !trigger) {
       return;
     }
 
@@ -109,6 +164,10 @@
     };
   });
 
+  function sameValues(left: readonly TableFilterValue[], right: readonly TableFilterValue[]) {
+    return left.length === right.length && left.every(value => right.includes(value));
+  }
+
   function positionPanel() {
     if (!panel?.matches(':popover-open') || !trigger) {
       return;
@@ -132,26 +191,28 @@
 
   /** Фокусирует поиск, навигацию Menu/Tree или выбранный нативный input. */
   function focusOptions(preferChecked = true) {
-    if (!panel) {
+    const surface = usesDropdown ? content : panel;
+    if (!surface) {
       return;
     }
 
-    const checked = preferChecked ? panel.querySelector<HTMLElement>('input:checked') : null;
-    const target = panel.querySelector<HTMLElement>('[data-ant-table-filter-search] input')
-      ?? panel.querySelector<HTMLElement>('[role="tree"], [role="menu"]')
+    const checked = preferChecked ? surface.querySelector<HTMLElement>('input:checked') : null;
+    const target = surface.querySelector<HTMLElement>('[data-ant-table-filter-search] input')
+      ?? surface.querySelector<HTMLElement>('[role="tree"], [role="menu"]')
       ?? checked
-      ?? panel.querySelector<HTMLElement>('input');
+      ?? surface.querySelector<HTMLElement>('input');
     target?.focus({ preventScroll: true });
   }
 
   /** Оставляет подменю внутри панели для фокуса и light dismiss. */
   function submenuContainer(anchor: HTMLElement) {
-    return panel ?? anchor.ownerDocument.body;
+    return panel ?? content?.closest<HTMLElement>('[data-ant-dropdown-popup]')
+      ?? anchor.ownerDocument.body;
   }
 
   function beforeToggle(event: ToggleEvent) {
     if (event.newState === 'open') {
-      if (disabled) {
+      if (blocked) {
         event.preventDefault();
         return;
       }
@@ -165,33 +226,72 @@
       panel?.style.setProperty('opacity', '0');
       panel?.style.setProperty('pointer-events', 'none');
       visited = true;
-      open = true;
+      nativeOpen = true;
     }
     else {
-      open = false;
+      nativeOpen = false;
       query = '';
     }
   }
 
+  function requestDropdownOpen(nextOpen: boolean) {
+    requestedOpen = nextOpen;
+    filterDropdownProps?.onOpenChange?.(nextOpen);
+  }
+
+  function handleDropdownOpenChange(nextOpen: boolean) {
+    if (!nextOpen && filterOnClose && !filterDropdown) {
+      confirm();
+      return;
+    }
+
+    requestDropdownOpen(nextOpen);
+  }
+
+  function setSelectedKeys(keys: readonly TableFilterValue[]) {
+    draft = [...keys];
+  }
+
   function close() {
+    if (usesDropdown) {
+      requestDropdownOpen(false);
+      return;
+    }
+
     panel?.hidePopover();
     trigger?.focus();
   }
 
-  function confirm() {
-    if (disabled) {
+  function confirm({ closeDropdown }: TableFilterConfirmOptions = { closeDropdown: true }) {
+    if (blocked) {
       return;
     }
 
-    const selected = [...draft];
-    close();
-    onApply(selected);
+    if (closeDropdown) {
+      close();
+    }
+    onApply([...draft]);
+  }
+
+  function clearFilters({ confirm, closeDropdown }: TableFilterResetOptions = {}) {
+    if (blocked) {
+      return;
+    }
+
+    if (confirm) {
+      onApply([]);
+    }
+    if (closeDropdown) {
+      close();
+    }
+
+    query = '';
+    draft = [...resetValue];
   }
 
   function reset() {
     focusOptions(false);
-    query = '';
-    draft = [...resetValue];
+    clearFilters();
   }
 
   function handleKeydown(event: KeyboardEvent) {
@@ -200,13 +300,34 @@
       event.stopPropagation();
       close();
     }
-    else if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
-      event.preventDefault();
-      event.stopPropagation();
-      if (!event.target.closest('[data-ant-table-filter-search]')) {
-        confirm();
-      }
+    else {
+      handleInputKeydown(event);
     }
+  }
+
+  function handleInputKeydown(event: KeyboardEvent) {
+    if (event.key !== 'Enter' || !(event.target instanceof HTMLInputElement)) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    if (!event.target.closest('[data-ant-table-filter-search]')) {
+      confirm();
+    }
+  }
+
+  /** Отдаёт Dropdown программный фокус через tabindex=-1 при autoFocus. */
+  function connectDropdownContent(element: HTMLDivElement) {
+    if (filterDropdownProps?.autoFocus) {
+      element.tabIndex = -1;
+    }
+    const disconnectInput = filterDropdown ? undefined : on(element, 'keydown', handleInputKeydown);
+
+    return () => {
+      disconnectInput?.();
+      element.removeAttribute('tabindex');
+    };
   }
 
   function handleFocusOut(event: FocusEvent) {
@@ -228,33 +349,107 @@
   [data-ant-table-filter-part="trigger"]:focus-visible { outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border); outline-offset: 2px; }
   /* visibility наследуется Checkbox с transition: all и задерживает фокус при открытии. */
   .filter-popover { position: fixed; inset: auto; width: min(260px, calc(100vw - 16px)); max-height: min(360px, calc(100dvh - 16px)); margin: 0; padding: 0; overflow-y: auto; opacity: 0; pointer-events: none; border: 0; border-radius: var(--ant-border-radius-lg); background: var(--ant-color-bg-container); color: var(--ant-color-text); box-shadow: var(--ant-box-shadow-secondary); font: var(--ant-font-size)/var(--ant-line-height) var(--ant-font-family); font-weight: 400; text-align: start; }
+  .dropdown-content {
+    max-inline-size: calc(100vw - 16px);
+    max-block-size: calc(100dvh - 16px);
+    overflow-y: auto;
+    border-radius: var(--ant-border-radius-lg);
+    background: var(--ant-color-bg-elevated);
+    color: var(--ant-color-text);
+    box-shadow: var(--ant-box-shadow-secondary);
+    font: var(--ant-font-size)/var(--ant-line-height) var(--ant-font-family);
+    text-align: start;
+  }
+  .dropdown-options {
+    inline-size: min(260px, calc(100vw - 16px));
+    max-block-size: min(360px, calc(100dvh - 16px));
+  }
   .table-filter-source, .table-filter-source [data-ant-table-filter-part="dropdown"] { background: var(--ant-table-filter-dropdown-bg); }
   [data-ant-table-filter-part="buttons"] { display: flex; justify-content: space-between; gap: var(--ant-margin-xs); padding: var(--ant-padding-xs); border-top: var(--ant-line-width) solid var(--ant-color-border-secondary); }
   .table-filter-source [data-ant-table-filter-part="buttons"] { border-top-color: var(--ant-table-border-color); }
 </style>
 
-<button
-  data-ant-table-filter-part="trigger"
-  bind:this={trigger}
-  type="button"
-  class={[`${prefixCls}-filter-trigger`, (value.length > 0 || filtered) && 'active']}
-  {disabled}
-  aria-label={label}
-  aria-haspopup="dialog"
-  aria-expanded={open}
-  aria-controls={`ant-filter-${id}`}
-  popovertarget={`ant-filter-${id}`}
-><Icon name="filter" /></button>
-<div bind:this={panel} id={`ant-filter-${id}`} class={[`filter-popover ${config.getPrefixCls('dropdown')}`, designTheme.enabled && 'table-filter-source']} popover="auto" role="dialog" tabindex="-1" aria-label={label} dir={config.direction} onbeforetoggle={beforeToggle} onkeydown={handleKeydown} onfocusout={handleFocusOut}>
-  <div data-ant-table-filter-part="dropdown" data-ant-table-prefix={prefixCls} data-ant-table-root-prefix={config.getPrefixCls()} class={`${prefixCls}-filter-dropdown`}>
-    {#if visited || !advanced}
-      <TableFilterOptions {prefixCls} {dropdownPrefix} {label} {id} {options} {multiple}
-        {disabled} {open} mode={filterMode} search={filterSearch} bind:draft bind:query
-        getPopupContainer={submenuContainer} />
+{#snippet renderTrigger(native: boolean)}
+  <button
+    data-ant-table-filter-part="trigger"
+    bind:this={trigger}
+    type="button"
+    class={[`${prefixCls}-filter-trigger`, active && 'active']}
+    disabled={blocked}
+    aria-label={label}
+    aria-haspopup="dialog"
+    aria-expanded={native ? nativeOpen : false}
+    aria-controls={native ? `ant-filter-${id}` : undefined}
+    popovertarget={native ? `ant-filter-${id}` : undefined}
+  >{#if filterIcon}<span aria-hidden="true">{@render filterIcon(active)}</span>{:else}<Icon name="filter" />{/if}</button>
+{/snippet}
+
+{#snippet renderContent()}
+  <div
+    bind:this={content}
+    data-ant-table-filter-part="dropdown"
+    data-ant-table-prefix={prefixCls}
+    data-ant-table-root-prefix={config.getPrefixCls()}
+    class={`${prefixCls}-filter-dropdown`}
+    class:dropdown-content={usesDropdown}
+    class:dropdown-options={usesDropdown && !filterDropdown}
+    class:table-filter-source={usesDropdown && designTheme.enabled}
+    {@attach usesDropdown ? connectDropdownContent : undefined}
+  >
+    {#if filterDropdown}
+      <TableFilterCustomContent renderer={filterDropdown} info={dropdownInfo} />
+    {:else}
+      {#if usesDropdown || visited || !advanced}
+        <TableFilterOptions {prefixCls} {dropdownPrefix} {label} {id} options={optionList}
+          {multiple} disabled={blocked} {open} mode={filterMode} search={filterSearch}
+          bind:draft bind:query getPopupContainer={submenuContainer} />
+      {/if}
+      <div data-ant-table-filter-part="buttons" class={`${prefixCls}-filter-dropdown-btns`}>
+        <Button type="text" size="small" disabled={blocked || !canReset}
+          onclick={reset}>{config.locale.table?.filterReset ?? ruRU.table.filterReset}</Button>
+        <Button type="primary" size="small" disabled={blocked}
+          onclick={() => confirm()}>{config.locale.table?.filterApply ?? ruRU.table.filterApply}</Button>
+      </div>
     {/if}
-    <div data-ant-table-filter-part="buttons" class={`${prefixCls}-filter-dropdown-btns`}>
-      <Button type="text" size="small" disabled={disabled || !canReset} onclick={reset}>{config.locale.table?.filterReset ?? ruRU.table.filterReset}</Button>
-      <Button type="primary" size="small" {disabled} onclick={confirm}>{config.locale.table?.filterApply ?? ruRU.table.filterApply}</Button>
-    </div>
   </div>
-</div>
+{/snippet}
+
+{#snippet renderDropdown()}
+  {#if filterDropdownProps?.popupRender}
+    {@render filterDropdownProps.popupRender(renderContent)}
+  {:else}
+    {@render renderContent()}
+  {/if}
+{/snippet}
+
+{#if usesDropdown}
+  <Dropdown
+    {...filterDropdownProps}
+    {open}
+    disabled={blocked}
+    placement={dropdownPlacement}
+    trigger={filterDropdownProps?.trigger ?? 'click'}
+    aria-label={filterDropdownProps?.['aria-label'] ?? label}
+    onOpenChange={handleDropdownOpenChange}
+    popupRender={renderDropdown}
+  >
+    {@render renderTrigger(false)}
+  </Dropdown>
+{:else}
+  {@render renderTrigger(true)}
+  <div
+    bind:this={panel}
+    id={`ant-filter-${id}`}
+    class={[`filter-popover ${config.getPrefixCls('dropdown')}`, designTheme.enabled && 'table-filter-source']}
+    popover="auto"
+    role="dialog"
+    tabindex="-1"
+    aria-label={label}
+    dir={config.direction}
+    onbeforetoggle={beforeToggle}
+    onkeydown={handleKeydown}
+    onfocusout={handleFocusOut}
+  >
+    {@render renderContent()}
+  </div>
+{/if}

@@ -36,7 +36,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
   alignPoint?: boolean;
   onAlign?: (position: TooltipPosition) => void;
   onPlacement: (placement: TooltipPlacement, position: TooltipPosition) => void;
-  onDismiss: (reason: 'escape' | 'outside') => void;
+  onDismiss: (reason: 'escape' | 'outside', outsideTarget?: Node) => void;
   /** Внутренний opt-out для поверхности без обработчика Escape, например заменённого Select menu. */
   dismissOnEscape?: boolean;
   outsideEvents?: 'pointer' | 'mouse';
@@ -280,7 +280,7 @@ export function connectPopup(popup: HTMLElement, anchor: Element, options: {
       && !trigger.contains(target)
       && !('host' in triggerRoot && triggerRoot.host === target)
       && !options.isRelatedTarget?.(target)) {
-      options.onDismiss('outside');
+      options.onDismiss('outside', target);
     }
   }
 

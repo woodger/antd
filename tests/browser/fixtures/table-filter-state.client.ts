@@ -1,6 +1,7 @@
 import '@woodger/antd/styles.css';
 import { hydrate } from 'svelte';
 import Fixture from './TableFilterStateFixture.svelte';
+import DropdownFixture from './TableFilterDropdownFixture.svelte';
 import OptionsFixture from './TableFilterOptionsFixture.svelte';
 
 const target = document.getElementById('root');
@@ -10,7 +11,11 @@ if (!target) {
 
 // Серверная кнопка получает фокус прежде, чем hydrate подключит обработчики.
 target.addEventListener('hydrate-table-filter-state', () => {
-  if (new URLSearchParams(location.search).has('filter-options')) {
+  const query = new URLSearchParams(location.search);
+  if (query.has('filter-dropdown')) {
+    hydrate(DropdownFixture, { target, props: { profileId: 'custom' }, recover: false });
+  }
+  else if (query.has('filter-options')) {
     hydrate(OptionsFixture, { target, props: { profileId: 'tree-cascade' }, recover: false });
   }
   else {

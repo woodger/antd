@@ -24,16 +24,21 @@ export interface DropdownMenuContext {
   registerPopup: (popup: HTMLElement) => () => void;
 }
 
+interface DropdownMenuScope {
+  context: DropdownMenuContext;
+  defaultSelectable?: boolean;
+}
+
 const key = Symbol('ant-dropdown-menu');
 
 /** Передаёт настройки ближайшему Menu внутри панели. */
-export function provideDropdownMenu(context: DropdownMenuContext) {
-  setContext(key, context);
+export function provideDropdownMenu(context: DropdownMenuContext, defaultSelectable?: boolean) {
+  setContext<DropdownMenuScope>(key, { context, defaultSelectable });
 }
 
 /** Изолирует вложенные Menu. Соседние списки получают контекст общей панели. */
 export function takeDropdownMenu() {
-  const context = getContext<DropdownMenuContext | undefined>(key);
-  if (context) setContext(key, undefined);
-  return context;
+  const scope = getContext<DropdownMenuScope | undefined>(key);
+  if (scope) setContext(key, undefined);
+  return scope;
 }

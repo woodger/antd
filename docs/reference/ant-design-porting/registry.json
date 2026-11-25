@@ -19574,6 +19574,7 @@
       ],
       "dependencies": [
         "config-provider",
+        "dropdown",
         "input",
         "menu",
         "tooltip",
@@ -19995,6 +19996,25 @@
             "tests/package/table-filter-options.types.ts"
           ],
           "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона девяти профилей дают 56 состояний и девять SSR-снимков. Проверены вложенные меню, поиск и пустой результат, каскадный и одиночный выбор, общий флажок, сохранение черновика и раскрытия дерева. В React предикат дерева получает данные со строковым value. Svelte передаёт исходный вариант в обоих режимах и сохраняет типы значений в onChange. Меню и дерево работают с клавиатурой, состояние выбора доступно через ARIA. Строгая гидратация сохраняет триггер и фокус."
+        },
+        {
+          "id": "filter-dropdown",
+          "title": "Пользовательская панель фильтра и параметры Dropdown",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TableFilter.svelte",
+            "src/lib/TableFilterCustomContent.svelte",
+            "src/lib/table.engine.ts",
+            "src/lib/table.types.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-filter-dropdown-reference.json",
+            "tests/browser/table-filter-dropdown.spec.ts",
+            "tests/browser/table-filter-state-hydration.spec.ts",
+            "tests/package/table-filter-dropdown.ssr.test.ts",
+            "tests/package/table-filter-dropdown.types.ts"
+          ],
+          "note": "Ant Design 6.6.8 и rc-table 1.11.1. Два одинаковых UMD-прогона 11 профилей дают 57 состояний и 11 SSR-снимков. Проверены filterDropdown, filterIcon, выбор в Menu, произвольные ключи, подтверждение с закрытием и без него, сброс и порядок уведомлений, open владельца, закрытие при клике снаружи, hover, placement и popupRender. В React filterOnClose включён по умолчанию. Встроенный Svelte фильтр сохраняет отмену черновика при закрытии. Явное true включает применение. Dropdown сохраняет один запрос на внешний клик и следующий уход фокуса. Пакетные проверки охватывают forceRender, destroyOnHidden, локальный контейнер, типы значений, server mode и строгую гидратацию."
         },
         {
           "id": "sorter-state",

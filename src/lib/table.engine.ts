@@ -89,7 +89,8 @@ export function getTableFilters<Row extends object>(
 export function getTableFilterOptions<Row extends object>(
   column: TableColumn<Row>, mode: TableMode
 ) {
-  return mode === 'server' || column.onFilter ? column.filters : undefined;
+  return mode === 'server' || column.onFilter || column.filterDropdown
+    ? column.filters : undefined;
 }
 
 /** Запоминает начальные значения колонок. Явные ключи defaultFilters задаёт таблица. */
@@ -121,7 +122,7 @@ export function getControlledTableFilters<Row extends object>(
 
   for (const column of columns) {
     const values = column.filteredValue;
-    if (values !== undefined && getTableFilterOptions(column, mode)) {
+    if (values !== undefined && (column.filterDropdown || getTableFilterOptions(column, mode))) {
       entries.push([column.key, [...(values ?? [])]]);
     }
   }
@@ -129,9 +130,9 @@ export function getControlledTableFilters<Row extends object>(
   return entries.length ? Object.fromEntries(entries) : undefined;
 }
 
-/** Применяет ограничения колонки к выбранным значениям или черновику сброса. */
+/** Убирает повторы и учитывает ограничения встроенной панели, если они заданы. */
 export function normalizeTableFilter(
-  options: readonly TableFilterOption[],
+  options: readonly TableFilterOption[] | undefined,
   values?: readonly TableFilterValue[] | null,
   multiple?: boolean
 ): TableFilterValue[] {
@@ -139,12 +140,16 @@ export function normalizeTableFilter(
     return [];
   }
 
-  const available = new Set(Array.from(walkTableFilterOptions(options), option => option.value));
-  const selected = [...new Set(values)].filter(value => available.has(value));
+  let selected = [...new Set(values)];
+  if (options) {
+    const available = new Set(Array.from(walkTableFilterOptions(options), option => option.value));
+    selected = selected.filter(value => available.has(value));
+  }
+
   return multiple === false ? selected.slice(0, 1) : selected;
 }
 
-// Оставляет допустимые значения фильтров и соблюдает filterMultiple для каждого ключа.
+// Пользовательская панель сама задаёт допустимые значения и правила выбора.
 function getColumnFilters<Row extends object>(
   columns: readonly TableColumn<Row>[],
   filters: Readonly<Record<string, readonly TableFilterValue[]>> = {},
@@ -153,13 +158,15 @@ function getColumnFilters<Row extends object>(
   const entries: [string, TableFilterValue[]][] = [];
 
   for (const column of columns) {
-    const options = getTableFilterOptions(column, mode);
-    if (!options?.length) {
+    const custom = Boolean(column.filterDropdown);
+    const options = custom ? undefined : getTableFilterOptions(column, mode);
+    if (!custom && !options?.length) {
       continue;
     }
 
     const configured = Object.hasOwn(filters, column.key) ? filters[column.key] : undefined;
-    const values = normalizeTableFilter(options, configured, column.filterMultiple);
+    const multiple = custom ? undefined : column.filterMultiple;
+    const values = normalizeTableFilter(options, configured, multiple);
 
     if (values.length) {
       entries.push([column.key, values]);

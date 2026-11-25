@@ -175,7 +175,7 @@
   let tableData = $derived(readTableData(activeSorts, appliedFilters));
   const sortsByColumn = $derived(new Map(tableData.sorters.map(state => [state.columnKey, state])));
   let hasFilters = $derived(
-    dataColumns.some(column => getTableFilterOptions(column, mode)?.length)
+    dataColumns.some(column => column.filterDropdown || getTableFilterOptions(column, mode)?.length)
   );
   let paging = $derived(
     getPaginationState(
@@ -936,6 +936,7 @@
   {@const tooltip = column.showSorterTooltip === undefined
     ? showSorterTooltip : column.showSorterTooltip}
   {@const filterOptions = getTableFilterOptions(column, mode)}
+  {@const hasColumnFilter = Boolean(filterOptions || column.filterDropdown)}
   {#if props.colSpan !== 0 && props.rowSpan !== 0}
     <th
       {...props.attributes}
@@ -968,13 +969,13 @@
             {directions}
             sortIcon={column.sortIcon}
             {tooltip}
-            wholeCell={!filterOptions}
+            wholeCell={!hasColumnFilter}
             description={sortDescription(nextSort?.order)}
             disabled={resolvedDisabled}
             onSort={() => changeSort(column, nextSort)}
           />
         {:else}<span class={column.ellipsis ? `${prefix}-column-title` : undefined}>{column.title}</span>{/if}
-        {#if filterOptions}
+        {#if hasColumnFilter}
           {@const value = Object.hasOwn(tableData.filters, column.key)
             ? tableData.filters[column.key] : []}
           {@const resetValues = column.filterResetToDefaultFilteredValue
@@ -990,6 +991,10 @@
             multiple={column.filterMultiple !== false}
             filterMode={column.filterMode}
             filterSearch={column.filterSearch}
+            filterDropdown={column.filterDropdown}
+            filterDropdownProps={column.filterDropdownProps}
+            filterOnClose={column.filterOnClose}
+            filterIcon={column.filterIcon}
             disabled={resolvedDisabled}
             onApply={values => changeFilter(column.key, values)}
           />

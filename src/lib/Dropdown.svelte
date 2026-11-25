@@ -110,6 +110,7 @@
   let menuFocused = $state(false);
   let clicked = false;
   let dismissed = false;
+  let dismissedFocusTarget: Node | undefined;
   let closing = false;
   let leavingByTab = false;
   let repairFocus = false;
@@ -330,12 +331,13 @@
       preserveFocus: false,
       isRelatedTarget: ownsNestedTarget,
       onPlacement: (_, current) => updatePlacement(current),
-      onDismiss: close,
+      onDismiss: handleDismiss,
       onVisibilityChange: (next) => {
         shown = next;
         if (!next) {
           menuFocused = false;
           focusedMenu = undefined;
+          dismissedFocusTarget = undefined;
           hoveredSurfaces.clear();
         }
       }
@@ -548,6 +550,13 @@
     closing = false;
   }
 
+  // Нажатие снаружи может перевести фокус на тот же control после запроса close.
+  function handleDismiss(reason: 'escape' | 'outside', target?: Node) {
+    const label = target instanceof Element ? target.closest<HTMLLabelElement>('label') : null;
+    dismissedFocusTarget = target && focusedInPopup() ? label?.control ?? target : undefined;
+    close(reason);
+  }
+
   function close(reason: 'escape' | 'outside' | 'trigger' | 'tab' | 'menu') {
     const previous = { clicked, dismissed, focusPending };
     clicked = false;
@@ -706,32 +715,35 @@
     }
 
     menuFocused = true;
+    dismissedFocusTarget = undefined;
     leavingByTab = false;
     cancelPending();
   }
 
   function handleFocusout(event: FocusEvent) {
+    const next = event.relatedTarget;
     if (closing
       || !expanded
-      || event.relatedTarget instanceof Node
-      && ownsMenuTarget(event.relatedTarget)) {
-      return;
-    }
-    if (event.relatedTarget === null && !leavingByTab) {
-      return;
-    }
-    if (!leavingByTab
-      && event.relatedTarget instanceof Node
-      && host?.contains(event.relatedTarget)) {
-      menuFocused = false;
-      focusedMenu = undefined;
+      || next instanceof Node && ownsMenuTarget(next)) {
       return;
     }
 
+    const outsideTarget = dismissedFocusTarget;
+    dismissedFocusTarget = undefined;
+    if (next === null && !leavingByTab) {
+      return;
+    }
+
+    const clickedOutside = outsideTarget && next instanceof Node
+      && (next.contains(outsideTarget) || outsideTarget.contains(next));
+    const returnsToTrigger = next instanceof Node && host?.contains(next);
+    const keepOpen = !leavingByTab && (clickedOutside || returnsToTrigger);
     menuFocused = false;
     focusedMenu = undefined;
     leavingByTab = false;
-    close('tab');
+    if (!keepOpen) {
+      close('tab');
+    }
   }
 
   function handleMenuKeydown(event: KeyboardEvent, root: HTMLUListElement) {
