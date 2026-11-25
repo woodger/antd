@@ -47,11 +47,11 @@ fallback. При fresh=false скрытый ID кэшируется вместе
 не удаляются при смене ID или отключении.
 
 `zIndex` задаёт inline z-index popup, включая 0 и отрицательные значения.
-Provider root styles и local styles.root идут после него;
-без prop сохраняется тематический zIndexPopup. Настройки передаются single/range
+Provider root styles и local styles.root идут после него. Без prop уровень
+берётся из контекста или тематического `zIndexPopup`. Настройки передаются single/range
 Slider и ellipsis Tooltip Typography. В Typography disabled вычисляет сам ellipsis
-и перекрывает значение из tooltip options, как в upstream. Общий source zIndex
-context и порядок native top layer этим prop не меняются.
+и перекрывает значение из tooltip options, как в upstream.
+[Уровни вложенных панелей](../theme-context.md#уровни-вложенных-панелей)
 
 `bind:ref` выдаёт TooltipRef после mount и очищает его при unmount. NativeElement
 указывает на основной DOM trigger, включая SVG; popupElement — на существующий
@@ -303,7 +303,7 @@ Root styles имеют приоритет над вычисленными коо
 Tooltip Typography. У Typography без config сохраняется исходный hover trigger;
 его Tooltip создаётся лениво после DOM-измерения и не вызывает semantic callbacks при SSR.
 
-Tooltip.unique, motion, общий zIndex context и остальные delegated rc-trigger props
+Tooltip.unique, motion и остальные delegated rc-trigger props
 пока не поддерживаются. Границы fresh cache для Snippet и CSS-transform/clipping
 описаны выше.
 

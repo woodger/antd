@@ -36,6 +36,9 @@ counterpart скрывает этот header; Native сохраняет один
 с новым local prefix. Прежние disabled-loading правила и размер native SVG сохранены;
 для них записан отдельный React-вариант через публичные button props.
 
+`zIndex` задаёт числовой слой Modal, включая 0. Слой наследуют вложенные
+диалоги и popup. [Уровни вложенных панелей](../theme-context.md#уровни-вложенных-панелей)
+
 `theme.components.Modal` настраивает header/content/footer background, title color,
 font size/line height, внутренние отступы и wireframe. Поддерживаются aliases,
 component algorithms, CSS lengths и custom prefix; Button/Input внутри сохраняют
@@ -90,6 +93,8 @@ children при loading=false сохранены; полное API Modal, semant
 `createModal()` и единственный `ModalHolder` заменяют React `Modal.useModal()`.
 Holder размещается под нужным ConfigProvider: открытые подтверждения наследуют его
 тему, локаль, RTL и контейнер, включая последующие изменения контекста.
+`zIndex` здесь по умолчанию равен `zIndexPopupBase + 1000` и обновляется
+через `handle.update({ zIndex })`.
 
 ```svelte
 <script lang="ts">

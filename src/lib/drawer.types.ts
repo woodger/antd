@@ -18,6 +18,8 @@ export interface DrawerProps {
   placement?: DrawerPlacement;
   /** @defaultValue 'default' */
   size?: DrawerSize;
+  /** Числовой слой панели и база для вложенных popup. */
+  zIndex?: number;
   /** @defaultValue true */
   closable?: boolean;
   /** @defaultValue true */

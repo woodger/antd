@@ -1,0 +1,1108 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "id": "root"
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": null,
+          "computed": "1070"
+        },
+        "dropdown": {
+          "inline": null,
+          "computed": "1050"
+        },
+        "popover": {
+          "inline": null,
+          "computed": "1030"
+        },
+        "popconfirm": {
+          "inline": null,
+          "computed": "1060"
+        },
+        "menu": {
+          "inline": null,
+          "computed": "1050"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "root-token",
+        "base": 1450
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": null,
+          "computed": "1520"
+        },
+        "dropdown": {
+          "inline": null,
+          "computed": "1500"
+        },
+        "popover": {
+          "inline": null,
+          "computed": "1480"
+        },
+        "popconfirm": {
+          "inline": null,
+          "computed": "1510"
+        },
+        "menu": {
+          "inline": null,
+          "computed": "1500"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "root-local-child",
+        "child": 1711
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1711",
+          "computed": "1711"
+        },
+        "dropdown": {
+          "inline": "1711",
+          "computed": "1711"
+        },
+        "popover": {
+          "inline": "1711",
+          "computed": "1711"
+        },
+        "popconfirm": {
+          "inline": "1711",
+          "computed": "1711"
+        },
+        "menu": {
+          "inline": null,
+          "computed": "1050"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal",
+        "owner": "modal"
+      },
+      "initial": {
+        "modal": {
+          "inline": null,
+          "computed": "1000"
+        },
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "dropdown": {
+          "inline": "1150",
+          "computed": "1150"
+        },
+        "popover": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "popconfirm": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "menu": {
+          "inline": "1150",
+          "computed": "1150"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-zero",
+        "owner": "modal",
+        "zIndex": 0
+      },
+      "initial": {
+        "modal": {
+          "inline": "0",
+          "computed": "0"
+        },
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "dropdown": {
+          "inline": "50",
+          "computed": "50"
+        },
+        "popover": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "popconfirm": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "menu": {
+          "inline": "50",
+          "computed": "50"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-update",
+        "owner": "modal",
+        "zIndex": 1500,
+        "update": 1810
+      },
+      "initial": {
+        "modal": {
+          "inline": "1500",
+          "computed": "1500"
+        },
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1600",
+          "computed": "1600"
+        },
+        "dropdown": {
+          "inline": "1550",
+          "computed": "1550"
+        },
+        "popover": {
+          "inline": "1600",
+          "computed": "1600"
+        },
+        "popconfirm": {
+          "inline": "1600",
+          "computed": "1600"
+        },
+        "menu": {
+          "inline": "1550",
+          "computed": "1550"
+        }
+      },
+      "updated": {
+        "modal": {
+          "inline": "1810",
+          "computed": "1810"
+        },
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1910",
+          "computed": "1910"
+        },
+        "dropdown": {
+          "inline": "1860",
+          "computed": "1860"
+        },
+        "popover": {
+          "inline": "1910",
+          "computed": "1910"
+        },
+        "popconfirm": {
+          "inline": "1910",
+          "computed": "1910"
+        },
+        "menu": {
+          "inline": "1860",
+          "computed": "1860"
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "confirmation",
+        "owner": "confirmation"
+      },
+      "initial": {
+        "modal": {
+          "inline": "2000",
+          "computed": "2000"
+        },
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "2100",
+          "computed": "2100"
+        },
+        "dropdown": {
+          "inline": "2050",
+          "computed": "2050"
+        },
+        "popover": {
+          "inline": "2100",
+          "computed": "2100"
+        },
+        "popconfirm": {
+          "inline": "2100",
+          "computed": "2100"
+        },
+        "menu": {
+          "inline": "2050",
+          "computed": "2050"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "confirmation-token",
+        "owner": "confirmation",
+        "base": 1450
+      },
+      "initial": {
+        "modal": {
+          "inline": "2450",
+          "computed": "2450"
+        },
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "2550",
+          "computed": "2550"
+        },
+        "dropdown": {
+          "inline": "2500",
+          "computed": "2500"
+        },
+        "popover": {
+          "inline": "2550",
+          "computed": "2550"
+        },
+        "popconfirm": {
+          "inline": "2550",
+          "computed": "2550"
+        },
+        "menu": {
+          "inline": "2500",
+          "computed": "2500"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "confirmation-zero",
+        "owner": "confirmation",
+        "zIndex": 0
+      },
+      "initial": {
+        "modal": {
+          "inline": "0",
+          "computed": "0"
+        },
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "dropdown": {
+          "inline": "50",
+          "computed": "50"
+        },
+        "popover": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "popconfirm": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "menu": {
+          "inline": "50",
+          "computed": "50"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "confirmation-update",
+        "owner": "confirmation",
+        "zIndex": 1550,
+        "update": 1720
+      },
+      "initial": {
+        "modal": {
+          "inline": "1550",
+          "computed": "1550"
+        },
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1650",
+          "computed": "1650"
+        },
+        "dropdown": {
+          "inline": "1600",
+          "computed": "1600"
+        },
+        "popover": {
+          "inline": "1650",
+          "computed": "1650"
+        },
+        "popconfirm": {
+          "inline": "1650",
+          "computed": "1650"
+        },
+        "menu": {
+          "inline": "1600",
+          "computed": "1600"
+        }
+      },
+      "updated": {
+        "modal": {
+          "inline": "1720",
+          "computed": "1720"
+        },
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1820",
+          "computed": "1820"
+        },
+        "dropdown": {
+          "inline": "1770",
+          "computed": "1770"
+        },
+        "popover": {
+          "inline": "1820",
+          "computed": "1820"
+        },
+        "popconfirm": {
+          "inline": "1820",
+          "computed": "1820"
+        },
+        "menu": {
+          "inline": "1770",
+          "computed": "1770"
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "drawer",
+        "owner": "drawer"
+      },
+      "initial": {
+        "modal": null,
+        "drawer": {
+          "inline": null,
+          "computed": "1000"
+        },
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "dropdown": {
+          "inline": "1150",
+          "computed": "1150"
+        },
+        "popover": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "popconfirm": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "menu": {
+          "inline": "1150",
+          "computed": "1150"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "drawer-zero",
+        "owner": "drawer",
+        "zIndex": 0
+      },
+      "initial": {
+        "modal": null,
+        "drawer": {
+          "inline": null,
+          "computed": "1000"
+        },
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "dropdown": {
+          "inline": "50",
+          "computed": "50"
+        },
+        "popover": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "popconfirm": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "menu": {
+          "inline": "50",
+          "computed": "50"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "tooltip",
+        "owner": "tooltip"
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": {
+          "inline": null,
+          "computed": "1070"
+        },
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "dropdown": {
+          "inline": "1150",
+          "computed": "1150"
+        },
+        "popover": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "popconfirm": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "menu": {
+          "inline": "1150",
+          "computed": "1150"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "tooltip-zero",
+        "owner": "tooltip",
+        "zIndex": 0
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": {
+          "inline": "0",
+          "computed": "0"
+        },
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "dropdown": {
+          "inline": "50",
+          "computed": "50"
+        },
+        "popover": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "popconfirm": {
+          "inline": "1100",
+          "computed": "1100"
+        },
+        "menu": {
+          "inline": "50",
+          "computed": "50"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "tooltip-token",
+        "owner": "tooltip",
+        "base": 1450
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": {
+          "inline": null,
+          "computed": "1520"
+        },
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1650",
+          "computed": "1650"
+        },
+        "dropdown": {
+          "inline": "1600",
+          "computed": "1600"
+        },
+        "popover": {
+          "inline": "1650",
+          "computed": "1650"
+        },
+        "popconfirm": {
+          "inline": "1650",
+          "computed": "1650"
+        },
+        "menu": {
+          "inline": "1600",
+          "computed": "1600"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "tooltip-trigger",
+        "owner": "tooltip-trigger",
+        "zIndex": 1540
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": {
+          "inline": "1540",
+          "computed": "1540"
+        },
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1640",
+          "computed": "1640"
+        },
+        "dropdown": {
+          "inline": "1590",
+          "computed": "1590"
+        },
+        "popover": {
+          "inline": "1640",
+          "computed": "1640"
+        },
+        "popconfirm": {
+          "inline": "1640",
+          "computed": "1640"
+        },
+        "menu": {
+          "inline": "1590",
+          "computed": "1590"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "popover",
+        "owner": "popover"
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": {
+          "inline": null,
+          "computed": "1030"
+        },
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "dropdown": {
+          "inline": "1150",
+          "computed": "1150"
+        },
+        "popover": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "popconfirm": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "menu": {
+          "inline": "1150",
+          "computed": "1150"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "popconfirm",
+        "owner": "popconfirm"
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": {
+          "inline": null,
+          "computed": "1060"
+        },
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "dropdown": {
+          "inline": "1150",
+          "computed": "1150"
+        },
+        "popover": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "popconfirm": {
+          "inline": "1200",
+          "computed": "1200"
+        },
+        "menu": {
+          "inline": "1150",
+          "computed": "1150"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "dropdown",
+        "owner": "dropdown"
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": {
+          "inline": null,
+          "computed": "1050"
+        },
+        "tooltip": {
+          "inline": null,
+          "computed": "1070"
+        },
+        "dropdown": {
+          "inline": null,
+          "computed": "1050"
+        },
+        "popover": {
+          "inline": null,
+          "computed": "1030"
+        },
+        "popconfirm": {
+          "inline": null,
+          "computed": "1060"
+        },
+        "menu": {
+          "inline": null,
+          "computed": "1050"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "dropdown-zero",
+        "owner": "dropdown",
+        "zIndex": 0
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": {
+          "inline": "0",
+          "computed": "0"
+        },
+        "tooltip": {
+          "inline": null,
+          "computed": "1070"
+        },
+        "dropdown": {
+          "inline": null,
+          "computed": "1050"
+        },
+        "popover": {
+          "inline": null,
+          "computed": "1030"
+        },
+        "popconfirm": {
+          "inline": null,
+          "computed": "1060"
+        },
+        "menu": {
+          "inline": null,
+          "computed": "1050"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "dropdown-tokens",
+        "owner": "dropdown",
+        "dropdownToken": 1330,
+        "menuToken": 1420
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": {
+          "inline": null,
+          "computed": "1330"
+        },
+        "tooltip": {
+          "inline": null,
+          "computed": "1070"
+        },
+        "dropdown": {
+          "inline": null,
+          "computed": "1330"
+        },
+        "popover": {
+          "inline": null,
+          "computed": "1030"
+        },
+        "popconfirm": {
+          "inline": null,
+          "computed": "1060"
+        },
+        "menu": {
+          "inline": null,
+          "computed": "1330"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "dropdown-explicit",
+        "owner": "dropdown",
+        "zIndex": 1650
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": {
+          "inline": "1650",
+          "computed": "1650"
+        },
+        "tooltip": {
+          "inline": "1750",
+          "computed": "1750"
+        },
+        "dropdown": {
+          "inline": "1700",
+          "computed": "1700"
+        },
+        "popover": {
+          "inline": "1750",
+          "computed": "1750"
+        },
+        "popconfirm": {
+          "inline": "1750",
+          "computed": "1750"
+        },
+        "menu": {
+          "inline": "1700",
+          "computed": "1700"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "dropdown-update",
+        "owner": "dropdown",
+        "zIndex": 1650,
+        "update": 1820
+      },
+      "initial": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": {
+          "inline": "1650",
+          "computed": "1650"
+        },
+        "tooltip": {
+          "inline": "1750",
+          "computed": "1750"
+        },
+        "dropdown": {
+          "inline": "1700",
+          "computed": "1700"
+        },
+        "popover": {
+          "inline": "1750",
+          "computed": "1750"
+        },
+        "popconfirm": {
+          "inline": "1750",
+          "computed": "1750"
+        },
+        "menu": {
+          "inline": "1700",
+          "computed": "1700"
+        }
+      },
+      "updated": {
+        "modal": null,
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": {
+          "inline": "1820",
+          "computed": "1820"
+        },
+        "tooltip": {
+          "inline": "1920",
+          "computed": "1920"
+        },
+        "dropdown": {
+          "inline": "1870",
+          "computed": "1870"
+        },
+        "popover": {
+          "inline": "1920",
+          "computed": "1920"
+        },
+        "popconfirm": {
+          "inline": "1920",
+          "computed": "1920"
+        },
+        "menu": {
+          "inline": "1870",
+          "computed": "1870"
+        }
+      }
+    },
+    {
+      "profile": {
+        "id": "modal-dropdown",
+        "owner": "modal-dropdown",
+        "zIndex": 1560
+      },
+      "initial": {
+        "modal": {
+          "inline": "1560",
+          "computed": "1560"
+        },
+        "drawer": null,
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": {
+          "inline": "1610",
+          "computed": "1610"
+        },
+        "tooltip": {
+          "inline": "1710",
+          "computed": "1710"
+        },
+        "dropdown": {
+          "inline": "1660",
+          "computed": "1660"
+        },
+        "popover": {
+          "inline": "1710",
+          "computed": "1710"
+        },
+        "popconfirm": {
+          "inline": "1710",
+          "computed": "1710"
+        },
+        "menu": {
+          "inline": "1660",
+          "computed": "1660"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "modal-drawer",
+        "owner": "modal-drawer",
+        "zIndex": 1560
+      },
+      "initial": {
+        "modal": {
+          "inline": "1560",
+          "computed": "1560"
+        },
+        "drawer": {
+          "inline": "1660",
+          "computed": "1660"
+        },
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1760",
+          "computed": "1760"
+        },
+        "dropdown": {
+          "inline": "1710",
+          "computed": "1710"
+        },
+        "popover": {
+          "inline": "1760",
+          "computed": "1760"
+        },
+        "popconfirm": {
+          "inline": "1760",
+          "computed": "1760"
+        },
+        "menu": {
+          "inline": "1710",
+          "computed": "1710"
+        }
+      },
+      "updated": null
+    },
+    {
+      "profile": {
+        "id": "drawer-modal",
+        "owner": "drawer-modal",
+        "zIndex": 1560
+      },
+      "initial": {
+        "modal": {
+          "inline": "1660",
+          "computed": "1660"
+        },
+        "drawer": {
+          "inline": "1560",
+          "computed": "1560"
+        },
+        "parentTooltip": null,
+        "parentPopover": null,
+        "parentPopconfirm": null,
+        "parentDropdown": null,
+        "tooltip": {
+          "inline": "1760",
+          "computed": "1760"
+        },
+        "dropdown": {
+          "inline": "1710",
+          "computed": "1710"
+        },
+        "popover": {
+          "inline": "1760",
+          "computed": "1760"
+        },
+        "popconfirm": {
+          "inline": "1760",
+          "computed": "1760"
+        },
+        "menu": {
+          "inline": "1710",
+          "computed": "1710"
+        }
+      },
+      "updated": null
+    }
+  ]
+}

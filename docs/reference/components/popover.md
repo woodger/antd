@@ -126,8 +126,9 @@ Bind:ref задаётся непосредственно компоненту; m
 `id` задаёт ID native dialog; пустая строка использует стабильный generated ID.
 Скрытый ID обновляется вместе с кэшем содержимого. Aria-controls trigger меняется
 без потери caller IDREF tokens, включая совпадение нового ID с существующим token.
-`zIndex`, включая 0 и отрицательные числа, задаёт явный слой перед semantic root styles; общий source zIndex context и порядок native top layer
-этот prop не заменяет.
+`zIndex`, включая 0 и отрицательные числа, задаёт явный слой перед semantic
+root styles. Без prop уровень наследуется из контекста или CSS-токена темы.
+[Уровни вложенных панелей](../theme-context.md#уровни-вложенных-панелей)
 
 `forceRender=true` прогревает скрытое содержимое и portal после mount/hydration,
 также при disabled и destroyOnHidden. Выключение forceRender у закрытой панели

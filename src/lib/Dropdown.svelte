@@ -18,6 +18,7 @@
   import { useComponentTheme } from './theme-component.svelte';
   import { connectInlineStyle } from './inline-style.dom';
   import { serializeInlineStyleLayers } from './inline-style.engine';
+  import { getInlineZIndex, provideZIndex, useZIndex } from './z-index-context.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { getTooltipDelay, type TooltipPosition } from './tooltip.engine';
   import {
@@ -79,6 +80,10 @@
     return dropdownSemantics(config.dropdown, props, providerProps);
   });
   const designTokens = useDesignTokenContext();
+  const localZIndex = $derived(getInlineZIndex(semantics.rootStyle));
+  const layer = useZIndex('popup', () => localZIndex);
+  // Source Dropdown с нулевым или отсутствующим zIndex сохраняет контекст родителя.
+  provideZIndex(() => layer.zIndex ? layer.contextZIndex : layer.parentZIndex);
   const form = useForm();
   const generatedId = $props.id();
   const menuId = $derived(menu?.id ?? `ant-dropdown-${generatedId}-menu`);
@@ -152,8 +157,12 @@
   const leaving = $derived(popupMotion.state.phase === 'leave');
   const presented = $derived(visible || leaving);
   const rendered = $derived(nativeShell || mounted && (renderRequested || leaving));
-  const popupStyleLayers = $derived([componentTheme.style, popupMotion.state.style,
-    semantics.rootStyle]);
+  const popupStyleLayers = $derived([
+    componentTheme.style,
+    popupMotion.state.style,
+    localZIndex === undefined ? layer.style : undefined,
+    semantics.rootStyle
+  ]);
   const popupStyle = $derived(serializeInlineStyleLayers(popupStyleLayers));
   const portal = createPopupContainer(() => ({
     open: mounted && (presented || Boolean(forceRender)),

@@ -378,7 +378,7 @@
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Общий React z-index context ещё не перенесён; CSS popup base используется без нового stacking context API. Prefix подключён отдельной feature; ограничения Button/Badge/Tooltip сохраняются."
+          "note": "FloatButton использует собственный CSS-слой. Подключение к унаследованному числовому слою остаётся отдельным этапом. Prefix подключён отдельной feature, ограничения Button/Badge/Tooltip сохраняются."
         },
         {
           "id": "source-wave",
@@ -3238,6 +3238,23 @@
             "tests/package/dropdown-prefix.ssr.test.ts"
           ],
           "note": "19 raw UMD конфигураций в normal/nested/reset scopes, aliases/cssVar, шесть arrow placements, RTL и HTMLElement portal. Owner prefixCls задаёт Dropdown/menu namespace; Button использует общий prefix. Пустой local prefix наследует ConfigProvider. 77 исходных CSS-правил без motion и исходного title flex:auto изолированы по local/global prefixes; canonical markers/variables сохранены. Прежние Native label flex/min-width и явный dir popup сохранены: raw title/portal direction отделены от public styles.itemContent/root.direction counterparts. Живая смена сохраняет открытый popup, trigger/menu/commands DOM, ARIA IDs, focus/typeahead и native link/binding/callback contracts. Вложенный Menu и отдельный menu.prefixCls описаны в разделе встроенного меню."
+        },
+        {
+          "id": "z-index-context",
+          "title": "Унаследованный слой Dropdown и его потомков",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Dropdown.svelte",
+            "src/lib/MenuSubMenu.svelte",
+            "docs/reference/components/dropdown.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-z-index-context-reference.json",
+            "tests/browser/z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Dropdown прибавляет 50 к слою владельца. Явное целое значение в итоговом inline CSS имеет приоритет с учётом important. Ненулевой числовой слой передаётся потомкам. Смена на ноль и снятие локального значения возвращают исходные уровни, сохраняя узлы. Подменю без унаследованного числа использует токен Dropdown."
         }
       ]
     },
@@ -3638,6 +3655,22 @@
             "tests/package/menu-prefix.ssr.test.ts"
           ],
           "note": "14 raw UMD конфигураций: четыре режима и normal/nested/reset scopes, light/dark/RTL, aliases/cssVar и HTMLElement portal. Owner prefixCls используется рекурсивно для items/groups/divider/submenus/placements; пустая строка наследует ConfigProvider. 201 base и 77 theme rules сохраняют canonical variables/link reset, CSS scope boundaries и deprecated exclusions; Typography namespace независим. Source MenuDivider dashed class пропускает local owner prefix: raw results отделены от public per-divider prefixCls counterparts. Native сохраняет coherent dashed classes. Девять live transitions сохраняют root/item/title DOM, refs/IDs, selection/open state, focus, native links и callbacks. Независимый per-divider prefixCls, полный semantic/config/tooltip и overflow/motion этим этапом не добавлены."
+        },
+        {
+          "id": "z-index-context",
+          "title": "Слой всплывающих подменю",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/MenuSubMenu.svelte",
+            "docs/reference/components/menu.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-z-index-context-reference.json",
+            "tests/browser/z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Menu берёт слой владельца плюс 50. В Dropdown подменю использует собственный слой и CSS-токен Dropdown как fallback. Явные popupStyle и semantic popup root styles сохраняют приоритет."
         }
       ]
     },
@@ -18486,7 +18519,7 @@
             "tests/browser/fixtures/ant-design-overlay-metrics.json",
             "docs/reference/theme-context.md"
           ],
-          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; source zIndex context и motion остаются в работе; общий аудит семейств не завершён."
+          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; уровни добавлены в z-index-context, motion остаётся в работе; общий аудит семейств не завершён."
         },
         {
           "id": "popup-container",
@@ -18835,7 +18868,7 @@
             "tests/package/popover-lifecycle.ssr.test.ts",
             "docs/reference/components/popover.md"
           ],
-          "note": "Id использует стабильный fallback для пустой строки и меняется вместе с hidden payload/fresh; title/description ID для native ARIA остаются стабильными. Aria-controls нормализует IDREF tokens и удаляет только собственные, сохраняя совпадающий caller token и корректную очистку после unmount. ForceRender после mount прогревает скрытые snippets/portal, включая disabled/destroyOnHidden; повторный force mount получает текущие props. Getter не вызывается в SSR, retained native shell и прежний eager SSR без destroy сохранены. Widget state сохраняется до удаления и сбрасывается при destroy без force; AvatarGroup открывает lazy snippet также для force render. ZIndex, включая 0/-1, идёт перед semantic root/overlayStyle; component tokens и прежний native top layer сохраняются, общий source zIndex context не объявляется перенесённым. 52 UMD-сценария / 399 кадров фиксируют props/cache/styles, portals и widget state в трёх consumers. Обновление ID/слоя сохраняет DOM/draft/selection/focus, pending Promise/parked focus и native controlled/disabled guards."
+          "note": "Id использует стабильный fallback для пустой строки и меняется вместе с hidden payload/fresh; title/description ID для native ARIA остаются стабильными. Aria-controls нормализует IDREF tokens и удаляет только собственные, сохраняя совпадающий caller token и корректную очистку после unmount. ForceRender после mount прогревает скрытые snippets/portal, включая disabled/destroyOnHidden; повторный force mount получает текущие props. Getter не вызывается в SSR, retained native shell и прежний eager SSR без destroy сохранены. Widget state сохраняется до удаления и сбрасывается при destroy без force; AvatarGroup открывает lazy snippet также для force render. ZIndex, включая 0/-1, идёт перед semantic root/overlayStyle; component tokens и прежний native top layer сохраняются, наследование добавлено в z-index-context. 52 UMD-сценария / 399 кадров фиксируют props/cache/styles, portals и widget state в трёх consumers. Обновление ID/слоя сохраняет DOM/draft/selection/focus, pending Promise/parked focus и native controlled/disabled guards."
         },
         {
           "id": "source-fresh-cache",
@@ -18878,6 +18911,22 @@
             "tests/package/popup-prefix.ssr.test.ts"
           ],
           "note": "Общий prefix наследуется; локальный непустой prefixCls имеет приоритет, empty/undefined наследуют provider. 45 unmodified UMD cases и 15 живых transitions проверяют local/global/nested/sibling/RTL, CSS-variable namespace, computed paint/classes, default open classes и непустые text nodes. Исходный textContent сохранён отдельно, Svelte whitespace между slots исключён из сравнения. Single/range Slider owner class не меняет независимо наследуемый Tooltip prefix; локальный Popconfirm prefix не меняет внешний Popover. Программное обновление контекста сохраняет control/trigger, открытый popup DOM, draft/focus/selection, keyboard и values Slider. Внешний pointerdown и Native dismiss contracts не меняются; SSR сохраняет hidden shells и CSS без DOM containers. Делегированные Button/другие class prefixes подключаются отдельно."
+        },
+        {
+          "id": "z-index-context",
+          "title": "Унаследованный слой Popover и его потомков",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Popover.svelte",
+            "docs/reference/components/popover.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-z-index-context-reference.json",
+            "tests/browser/z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Popover передаёт числовой уровень триггеру и содержимому. Вложенная панель получает слой владельца плюс 100 с учётом явного zIndex, темы и приоритета root styles. Браузерная сверка включает Popover в Modal и Popover с дочерними Dropdown, Menu и Tooltip."
         }
       ]
     },
@@ -21202,7 +21251,7 @@
             "tests/browser/fixtures/ant-design-overlay-metrics.json",
             "docs/reference/theme-context.md"
           ],
-          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; source zIndex context и motion остаются в работе; общий аудит семейств не завершён."
+          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; уровни добавлены в z-index-context, motion остаётся в работе; общий аудит семейств не завершён."
         },
         {
           "id": "popup-container",
@@ -21541,7 +21590,7 @@
             "tests/package/tooltip-lifecycle.ssr.test.ts",
             "docs/reference/components/tooltip.md"
           ],
-          "note": "Disabled скрывает popup/open class и снимает собственную description, сохраняя raw open, события и pending delay. Uncontrolled open переживает обновление spread props; Svelte bind contract сохранён. Id имеет стабильный falsy fallback и кэшируется с содержимым по fresh; caller-owned ARIA tokens сохраняются, включая whitespace/escaped id без повторного добавления токенов observer. ForceRender монтирует скрытое содержимое и portal после hydration, включая disabled/empty title и destroyOnHidden; первый mount берёт текущий payload, выключение force при destroy удаляет его. Явный zIndex, включая 0/negative, идёт перед provider/local root и legacy overlayStyle; отсутствие prop возвращает тематический default. 19 UMD-сценариев / 139 кадров и четыре consumer traces / 20 кадров закрепляют поведение. Настройки переданы single/active range/pinned range Slider и Typography; Typography вычисляет disabled по ellipsis, перекрывая tooltip option, как Source. Native eager SSR, retained shell, доступное описание закрытого Tooltip и существующая active range composition сохранены; destroy=true SSR остаётся lazy. Browser проверяет draft/counter/focus/selection, ID ownership, portal cleanup и отсутствие позднего callback после unmount. Source shared zIndex context, top-layer stacking, motion/UniqueProvider и остальные delegated props этим этапом не объявляются перенесёнными; общий аудит семейства остаётся в работе."
+          "note": "Disabled скрывает popup/open class и снимает собственную description, сохраняя raw open, события и pending delay. Uncontrolled open переживает обновление spread props; Svelte bind contract сохранён. Id имеет стабильный falsy fallback и кэшируется с содержимым по fresh; caller-owned ARIA tokens сохраняются, включая whitespace/escaped id без повторного добавления токенов observer. ForceRender монтирует скрытое содержимое и portal после hydration, включая disabled/empty title и destroyOnHidden; первый mount берёт текущий payload, выключение force при destroy удаляет его. Явный zIndex, включая 0/negative, идёт перед provider/local root и legacy overlayStyle; корневой Tooltip без prop использует CSS-токен темы. 19 UMD-сценариев / 139 кадров и четыре consumer traces / 20 кадров закрепляют поведение. Настройки переданы single/active range/pinned range Slider и Typography; Typography вычисляет disabled по ellipsis, перекрывая tooltip option, как Source. Native eager SSR, retained shell, доступное описание закрытого Tooltip и существующая active range composition сохранены; destroy=true SSR остаётся lazy. Browser проверяет draft/counter/focus/selection, ID ownership, portal cleanup и отсутствие позднего callback после unmount. Source shared zIndex context, top-layer stacking, motion/UniqueProvider и остальные delegated props этим этапом не объявляются перенесёнными; общий аудит семейства остаётся в работе."
         },
         {
           "id": "independent-trigger-actions",
@@ -21584,6 +21633,23 @@
             "tests/package/popup-prefix.ssr.test.ts"
           ],
           "note": "Общий prefix наследуется; локальный непустой prefixCls имеет приоритет, empty/undefined наследуют provider. 45 unmodified UMD cases и 15 живых transitions проверяют local/global/nested/sibling/RTL, CSS-variable namespace, computed paint/classes, default open classes и непустые text nodes. Исходный textContent сохранён отдельно, Svelte whitespace между slots исключён из сравнения. Single/range Slider owner class не меняет независимо наследуемый Tooltip prefix; локальный Popconfirm prefix не меняет внешний Popover. Программное обновление контекста сохраняет control/trigger, открытый popup DOM, draft/focus/selection, keyboard и values Slider. Внешний pointerdown и Native dismiss contracts не меняются; SSR сохраняет hidden shells и CSS без DOM containers. Делегированные Button/другие class prefixes подключаются отдельно."
+        },
+        {
+          "id": "z-index-context",
+          "title": "Унаследованный слой Tooltip и его потомков",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Tooltip.svelte",
+            "src/lib/TooltipPopup.svelte",
+            "docs/reference/components/tooltip.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-z-index-context-reference.json",
+            "tests/browser/z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Контекст Tooltip доступен триггеру и popup. Вложенный слой, явный ноль, базовый токен темы и перенос DOM проверены по исходным профилям. Для встроенных TooltipPopup тот же расчёт применяется без повторного смещения."
         }
       ]
     },
@@ -21761,7 +21827,7 @@
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Единый исходный zIndex context всех popup families ещё отсутствует. Local/shared prefix CSS и component CSS tokens/aliases/algorithms перенесены отдельно; runtime zIndex и default1001 сохраняют прежний приоритет. React dev diagnostics/private PurePanel не воспроизводятся."
+          "note": "Tour использует собственный zIndex и default1001. Подключение наследуемого слоя и передача его потомкам остаются отдельным этапом. Local/shared prefix CSS и component CSS tokens/aliases/algorithms перенесены отдельно. React dev diagnostics/private PurePanel не воспроизводятся."
         },
         {
           "id": "component-theme",
@@ -22982,6 +23048,23 @@
             "tests/package/drawer-prefix.ssr.test.ts"
           ],
           "note": "18 raw UMD конфигураций в normal/nested/reset scopes: placements/sizes, RTL, aliases/cssVar, blur и close omission; independent Button namespace. 32 исходных CSS-правила без motion/pure/inline/resizable/skeleton изолированы по корням, canonical tokens и native dialog/size markers сохранены. Motion panel/mask lookup и backdrop dismissal используют устойчивые атрибуты. Живая смена prefix сохраняет открытые dialog/panel/input DOM, draft/focus/selection, IDs, callbacks и возврат фокуса после Escape/mask. Native modality/scroll/container/lifecycle и общий незавершённый аудит семейства не меняются."
+        },
+        {
+          "id": "z-index-context",
+          "title": "Числовой слой Drawer и вложенных поверхностей",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Drawer.svelte",
+            "src/lib/drawer.types.ts",
+            "docs/reference/components/drawer.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-z-index-context-reference.json",
+            "tests/browser/z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Drawer принимает zIndex и передаёт базу вложенным диалогам и popup. При явном нуле Source обёртка Drawer остаётся на CSS-уровне 1000, а дочерние слои получают нулевую базу. Native выводит 0 у самой панели. SSR проверяет явный ноль. Chromium сверяет вложенность Modal в обоих порядках."
         }
       ]
     },
@@ -23442,6 +23525,25 @@
             "tests/package/modal-prefix.ssr.test.ts"
           ],
           "note": "Для отдельного разбора: raw official UMD 6.6.8 в nested alias scope с общим window prefix теряет margin-inline-start второй footer Button (0px). Отдельный public fresh local prefix возвращает исходные 8px. Native CSS scope учитывает local/global pair и сохраняет корректный margin."
+        },
+        {
+          "id": "z-index-context",
+          "title": "Слой Modal и контекстных подтверждений",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Modal.svelte",
+            "src/lib/modal.types.ts",
+            "src/lib/ModalConfirmation.svelte",
+            "src/lib/modal-confirm.types.ts",
+            "docs/reference/components/modal.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-z-index-context-reference.json",
+            "tests/browser/z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Два совпавших UMD-прогона Ant Design 6.6.8 для 26 профилей. Корневой Modal сохраняет CSS-слой от zIndexPopupBase. Явный zIndex и наследование работают во вложенных Modal и Drawer. Контекстное подтверждение берёт zIndexPopupBase + 1000, включая обновление через handle.update. Явный ноль сохраняется. Строгая гидратация и смена уровня удерживают DOM, черновик, фокус и клавиатурное закрытие Dropdown."
         }
       ]
     },
@@ -23814,7 +23916,7 @@
             "tests/browser/fixtures/ant-design-overlay-metrics.json",
             "docs/reference/theme-context.md"
           ],
-          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; source zIndex context и motion остаются в работе; общий аудит семейств не завершён."
+          "note": "Source preparation Tooltip/Popover/Popconfirm, внутренний Tooltip scope и порядок component aliases, wireframe padding/border, текущий titleMinWidth, unitless zIndexPopup и rounded arrow paths/offsets. Все scoped CSS declarations и computed metrics закреплены по официальному UMD для 14 настроек, включая algorithms, нули/undefined и custom prefix. Source позиционирование использует глобальные sizePopupArrow/marginXXS; обновления и отключение темы сохраняют позицию/DOM/фокус и ожидающий Promise. Прежние native-only API/отступы, viewport limits и top layer сохранены. 12 placements добавлены отдельной feature; уровни добавлены в z-index-context, motion остаётся в работе; общий аудит семейств не завершён."
         },
         {
           "id": "popup-container",
@@ -24138,7 +24240,7 @@
             "tests/package/popover-lifecycle.ssr.test.ts",
             "docs/reference/components/popconfirm.md"
           ],
-          "note": "Id использует стабильный fallback для пустой строки и меняется вместе с hidden payload/fresh; title/description ID для native ARIA остаются стабильными. Aria-controls нормализует IDREF tokens и удаляет только собственные, сохраняя совпадающий caller token и корректную очистку после unmount. ForceRender после mount прогревает скрытые snippets/portal, включая disabled/destroyOnHidden; повторный force mount получает текущие props. Getter не вызывается в SSR, retained native shell и прежний eager SSR без destroy сохранены. Widget state сохраняется до удаления и сбрасывается при destroy без force; AvatarGroup открывает lazy snippet также для force render. ZIndex, включая 0/-1, идёт перед semantic root/overlayStyle; component tokens и прежний native top layer сохраняются, общий source zIndex context не объявляется перенесённым. 52 UMD-сценария / 399 кадров фиксируют props/cache/styles, portals и widget state в трёх consumers. Обновление ID/слоя сохраняет DOM/draft/selection/focus, pending Promise/parked focus и native controlled/disabled guards."
+          "note": "Id использует стабильный fallback для пустой строки и меняется вместе с hidden payload/fresh; title/description ID для native ARIA остаются стабильными. Aria-controls нормализует IDREF tokens и удаляет только собственные, сохраняя совпадающий caller token и корректную очистку после unmount. ForceRender после mount прогревает скрытые snippets/portal, включая disabled/destroyOnHidden; повторный force mount получает текущие props. Getter не вызывается в SSR, retained native shell и прежний eager SSR без destroy сохранены. Widget state сохраняется до удаления и сбрасывается при destroy без force; AvatarGroup открывает lazy snippet также для force render. ZIndex, включая 0/-1, идёт перед semantic root/overlayStyle; component tokens и прежний native top layer сохраняются, наследование добавлено в z-index-context. 52 UMD-сценария / 399 кадров фиксируют props/cache/styles, portals и widget state в трёх consumers. Обновление ID/слоя сохраняет DOM/draft/selection/focus, pending Promise/parked focus и native controlled/disabled guards."
         },
         {
           "id": "source-fresh-cache",
@@ -24181,6 +24283,23 @@
             "tests/package/popup-prefix.ssr.test.ts"
           ],
           "note": "Общий prefix наследуется; локальный непустой prefixCls имеет приоритет, empty/undefined наследуют provider. 45 unmodified UMD cases и 15 живых transitions проверяют local/global/nested/sibling/RTL, CSS-variable namespace, computed paint/classes, default open classes и непустые text nodes. Исходный textContent сохранён отдельно, Svelte whitespace между slots исключён из сравнения. Single/range Slider owner class не меняет независимо наследуемый Tooltip prefix; локальный Popconfirm prefix не меняет внешний Popover. Программное обновление контекста сохраняет control/trigger, открытый popup DOM, draft/focus/selection, keyboard и values Slider. Внешний pointerdown и Native dismiss contracts не меняются; SSR сохраняет hidden shells и CSS без DOM containers. Делегированные Button/другие class prefixes подключаются отдельно."
+        },
+        {
+          "id": "z-index-context",
+          "title": "Унаследованный слой Popconfirm и его потомков",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Popconfirm.svelte",
+            "src/lib/Popover.svelte",
+            "docs/reference/components/popconfirm.md",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-z-index-context-reference.json",
+            "tests/browser/z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Popconfirm разрешает и передаёт уровень через Popover. Сверены вложенный Popconfirm, потомки в description и явные overrides, включая нулевой контекст родителя."
         }
       ]
     },

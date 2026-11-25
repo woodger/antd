@@ -1,9 +1,11 @@
 <script lang="ts">
+  // Отображает подтверждение контроллера на зарезервированном слое Modal.
   import { untrack } from 'svelte';
   import Modal from './Modal.svelte';
   import Button from './Button.svelte';
   import Icon from './Icon.svelte';
   import { useConfig } from './config-context';
+  import { useDesignTokenContext } from './theme-context.svelte';
   import { modalHolderKey, type ModalConfirmation } from './modal.model.svelte.js';
   import type { ModalHolderProps } from './modal-confirm.types';
   import type { ModalContent } from './modal.types';
@@ -15,6 +17,7 @@
   const titleId = `ant-modal-confirm-title-${generatedId}`;
   const contentId = `ant-modal-confirm-content-${generatedId}`;
   const config = useConfig();
+  const theme = useDesignTokenContext();
   const icons = {
     info: 'info-circle-filled',
     success: 'check-circle-filled',
@@ -23,6 +26,7 @@
     confirm: 'exclamation-circle-filled'
   } as const;
   let options = $derived(confirmation.config);
+  const zIndex = $derived(options.zIndex ?? theme.state.token.zIndexPopupBase + 1000);
   let componentPrefix = $derived(config.getPrefixCls('modal', options.prefixCls));
   let hasTitle = $derived(options.title !== undefined
     && options.title !== null && typeof options.title !== 'boolean' && options.title !== '');
@@ -50,6 +54,7 @@
   prefixCls={componentPrefix}
   open={confirmation.open}
   width={options.width || 416}
+  {zIndex}
   closable={options.closable ?? false}
   keyboard={options.keyboard}
   mask={options.mask ?? { closable: false }}

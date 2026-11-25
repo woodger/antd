@@ -19,6 +19,8 @@ export interface ModalProps {
   footer?: Snippet | null;
   /** @defaultValue 520 */
   width?: number;
+  /** Числовой слой диалога и база для вложенных popup. */
+  zIndex?: number;
   /** @defaultValue true */
   closable?: boolean;
   /** @defaultValue true */

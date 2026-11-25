@@ -15,6 +15,8 @@ export interface ModalConfirmConfig {
   icon?: Snippet | null | false;
   /** @defaultValue 416 */
   width?: number;
+  /** По умолчанию zIndexPopupBase + 1000. Потомки наследуют этот слой. */
+  zIndex?: ModalProps['zIndex'];
   /** Только confirm показывает Cancel по умолчанию. */
   okCancel?: boolean;
   okText?: ModalContent;

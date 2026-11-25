@@ -16,6 +16,7 @@
   import { connectInlineStyle } from './inline-style.dom';
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import { provideZIndex, useZIndex, type ZIndexLayer } from './z-index-context.svelte';
   import { connectTooltipDescription, connectTooltipOpenClass } from './tooltip.dom';
   import {
     getTooltipArrow,
@@ -48,6 +49,7 @@
     disabled,
     forceRender,
     zIndex,
+    zIndexLayer,
     anchor,
     describe,
     trigger,
@@ -77,6 +79,7 @@
     disabled?: boolean;
     forceRender?: boolean;
     zIndex?: number;
+    zIndexLayer?: ZIndexLayer;
     anchor?: Element;
     describe?: Element | ((id: string) => () => void);
     trigger?: Element;
@@ -106,7 +109,9 @@
   let resolvedDisabled = $derived(disabled ?? semanticProps?.disabled ?? false);
   let open = $derived(rawOpen && !resolvedDisabled);
   let force = $derived(forceRender ?? semanticProps?.forceRender ?? false);
-  let resolvedZIndex = $derived(zIndex ?? semanticProps?.zIndex);
+  const localLayer = useZIndex('container', () => zIndex ?? semanticProps?.zIndex);
+  const layer = $derived(zIndexLayer ?? localLayer);
+  provideZIndex(() => layer.contextZIndex);
   let popup = $state<HTMLSpanElement>();
   let realign: (() => void) | undefined;
   let actualPlacement = $state(untrack(() => placement));
@@ -184,7 +189,7 @@
   let colorInfo = $derived(getTooltipColor(color, prefix));
   let rootLayers = $derived([
     componentTheme.style,
-    resolvedZIndex === undefined ? undefined : `z-index:${resolvedZIndex}`,
+    layer.style,
     colorInfo.arrowStyle,
     semantics.styles.root
   ]);

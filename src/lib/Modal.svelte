@@ -8,6 +8,7 @@
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import { useWatermarkPanel } from './watermark-context';
   import { createDialogContainer } from './dialog-container.model.svelte.js';
   import type { ModalContent, ModalProps as ModalComponentProps } from './modal.types';
@@ -26,6 +27,7 @@
     'aria-labelledby': ariaLabelledBy,
     footer,
     width = 520,
+    zIndex,
     closable = true,
     keyboard = true,
     mask,
@@ -46,6 +48,8 @@
   let prefixCss = $derived(getModalPrefixCss(componentPrefix, rootPrefix));
   const componentTheme = useComponentTheme('Modal');
   const designTheme = useDesignTokenContext();
+  const layer = useZIndex('container', () => zIndex);
+  provideZIndex(() => layer.contextZIndex);
   const watermarkPanel = useWatermarkPanel();
   const generatedId = $props.id();
   const titleId = `ant-modal-${generatedId}`;
@@ -144,6 +148,7 @@
 <style>
   :global(html:has(dialog.ant-svelte-dialog[open])) { overflow: hidden; }
   .ant-svelte-dialog { max-width: calc(100vw - 32px); max-height: calc(100dvh - 48px); padding: 0; border: 0; overflow: visible; background: transparent; color: var(--ant-color-text); }
+  .ant-svelte-dialog { z-index: var(--ant-z-index-popup-base, 1000); }
   .ant-svelte-dialog::backdrop { background: var(--ant-color-bg-mask); }
   [data-ant-modal-panel] { top: auto; max-width: none; width: 100%; margin: 0; padding: 0; }
   [data-ant-modal-container] { max-height: calc(100dvh - 48px); overflow: auto; }
@@ -164,6 +169,7 @@
   class={['ant-svelte-dialog ant-modal-css-var', componentTheme.className, className]}
   style={componentTheme.style}
   style:width={`${width}px`}
+  style:z-index={layer.zIndex}
   dir={config.direction}
   aria-label={ariaLabel}
   aria-labelledby={ariaLabelledBy ?? (ariaLabel?.trim() ? undefined : hasTitle ? titleId : undefined)}

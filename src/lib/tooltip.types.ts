@@ -159,7 +159,7 @@ export interface SliderTooltipConfig {
   disabled?: TooltipProps['disabled'];
   /** Монтирует скрытое содержимое после hydration, включая destroyOnHidden. */
   forceRender?: TooltipProps['forceRender'];
-  /** Явный z-index каждой подсказки; не заменяет общий source zIndex context. */
+  /** Явный слой каждой подсказки. Без него используется уровень из контекста или темы. */
   zIndex?: TooltipProps['zIndex'];
   /** Обновляет содержимое скрытой подсказки; default cache сохраняет последний открытый кадр. */
   fresh?: boolean;

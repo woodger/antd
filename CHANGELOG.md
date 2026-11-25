@@ -25,6 +25,9 @@
 
 ### Added
 
+- Modal и Drawer принимают `zIndex` и передают слой вложенным диалогам,
+  Dropdown, Menu, Tooltip, Popover и Popconfirm.
+
 - Table принимает статическое содержимое в `filterIcon` и `filterDropdown`.
 
 - Table принимает составные заголовки колонок, подпись таблицы и подписи команд выбора.

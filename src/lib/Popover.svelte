@@ -5,6 +5,7 @@
   import { onDestroy, onMount, untrack } from 'svelte';
   import { useConfig } from './config-context';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import { useComponentTheme } from './theme-component.svelte';
   import { getOverlaySemantics } from './overlay-semantic.engine';
   import { createOverlayStyle } from './overlay-style.model.svelte';
@@ -80,6 +81,8 @@
   let prefixCss = $derived(getOverlayPrefixCss('popover', prefix, prefixTemplate));
   let resolvedOpenClassName = $derived(openClassName || `${prefix}-open`);
   const designTokens = useDesignTokenContext();
+  const layer = useZIndex('container', () => zIndex);
+  provideZIndex(() => layer.contextZIndex);
   const tooltipTheme = useComponentTheme('Tooltip');
   const componentTheme = useComponentTheme('Popover');
   const isPopconfirm = consumePopconfirmTheme();
@@ -122,7 +125,7 @@
   let colorInfo = $derived(getTooltipColor(color, prefix));
   let rootLayers = $derived([
     popupThemeStyle,
-    zIndex === undefined ? undefined : `z-index:${zIndex}`,
+    layer.style,
     colorInfo.arrowStyle,
     semantics.styles.root
   ]);

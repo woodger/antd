@@ -15,6 +15,7 @@
   import { getMenuHoverRelatedTarget, withMenuCurrentTarget } from './menu-event.dom';
   import { connectInlineStyle } from './inline-style.dom';
   import { getInlineStyleDeclarations, serializeInlineStyleLayers } from './inline-style.engine';
+  import { useZIndex } from './z-index-context.svelte';
   import type { TooltipPosition } from './tooltip.engine';
   import type { TooltipPlacement } from './tooltip.types';
   import { getMenuMotionStyle } from './menu-motion.dom';
@@ -43,6 +44,7 @@
   } = $props();
   const context = useMenu();
   const dropdown = context.dropdown;
+  const layer = useZIndex('popup');
   let overflowRest = $derived(entry.overflow === true);
   let popupPath = $derived(entry.path.map(context.id).join(' '));
   let item = $derived(menuSubMenu(entry));
@@ -72,9 +74,18 @@
     isOpen: opened,
     disabled: blocked
   });
+  const dropdownStyle = $derived.by(() => {
+    const style = dropdown?.themeStyle;
+    const declarations = Array.from(getInlineStyleDeclarations([style]));
+    const inherited = declarations.filter(entry => entry.property !== 'z-index');
+    // Подменю наследует тему Dropdown, а его слой вычисляется отдельно.
+    return inherited.length === declarations.length ? style
+      : inherited.map(({ property, value, priority }) =>
+        [property, value, priority === 'important' ? 'important' : ''] as const);
+  });
+  const popupBaseLayers = $derived([dropdownStyle, context.componentTheme.style, layer.style]);
   let popupLayers = $derived([
-    dropdown?.themeStyle, context.componentTheme.style, item.popupStyle,
-    context.semantics.styles.popup
+    ...popupBaseLayers, item.popupStyle, context.semantics.styles.popup
   ]);
   let popupStyle = $derived(serializeInlineStyleLayers(popupLayers));
   let popupProperties = $derived(new Set(Array.from(
@@ -208,7 +219,7 @@
     const update = connectInlineStyle(node);
     // Diff семантических слоёв оставляет координаты и токены portal на поверхности.
     $effect(() => update([
-      dropdown?.themeStyle, context.componentTheme.style, transitionStyle, item.popupStyle,
+      ...popupBaseLayers, transitionStyle, item.popupStyle,
       context.semantics.styles.popup
     ]));
   }
@@ -419,6 +430,7 @@
   [data-ant-menu-submenu-title] { display: block; width: 100%; padding-block: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: inherit; }
   [data-ant-menu-submenu-title]:focus-visible { outline: 2px solid var(--ant-color-primary); outline-offset: -2px; }
   .menu-popup { position: fixed; margin: 0; border: 0; overflow: visible; background: transparent; }
+  .menu-popup[data-ant-dropdown-prefix] { z-index: var(--ant-dropdown-z-index-popup, 1050); }
   /* Horizontal vendor display не должен раскрывать forceSubMenuRender popup. */
   .menu-popup[hidden] { display: none; }
   .menu-popup:global(.ant-menu-source-theme) { border-radius: var(--ant-border-radius-lg); }

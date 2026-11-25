@@ -9,6 +9,7 @@
   import { useConfig } from './config-context';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import { useWatermarkPanel } from './watermark-context';
   import { createDrawerDialog } from './drawer.dom';
   import { getDrawerSize } from './drawer.engine';
@@ -24,6 +25,7 @@
     footer,
     placement = 'right',
     size = 'default',
+    zIndex,
     closable = true,
     keyboard = true,
     mask,
@@ -44,6 +46,8 @@
   let prefixCss = $derived(getDrawerPrefixCss(componentPrefix));
   const componentTheme = useComponentTheme('Drawer');
   const designTheme = useDesignTokenContext();
+  const layer = useZIndex('container', () => zIndex);
+  provideZIndex(() => layer.contextZIndex);
   const watermarkPanel = useWatermarkPanel();
   const generatedId = $props.id();
   let dialog = $state<HTMLDialogElement>();
@@ -56,7 +60,11 @@
   let rootId = $derived(id ?? `ant-drawer-${generatedId}`);
   let titleId = $derived(`${rootId}-title`);
   let renderContent = $derived(open || closing || forceRender || mounted && !destroyOnHidden);
-  let rootStyle = $derived([componentTheme.style, style].filter(Boolean).join(';') || undefined);
+  let rootStyle = $derived([
+    componentTheme.style,
+    layer.style,
+    style
+  ].filter(Boolean).join(';') || undefined);
   const container = createDialogContainer(() => ({
     component: 'drawer',
     getContainer,

@@ -488,6 +488,31 @@ SVG берутся из глобальных токенов. Для собств
 самом `Tour`: его значение по умолчанию 1001 имеет приоритет над `zIndexPopup`.
 Кнопки в подвале используют тему `Button`.
 
+## Уровни вложенных панелей
+
+Modal, Drawer, Tooltip, Popover и Popconfirm передают числовой уровень
+потомкам, в том числе при переносе DOM в портал. Без явного `zIndex`
+корневая поверхность использует CSS-токен компонента, а её потомки
+получают базу `zIndexPopupBase + 100`.
+
+Вложенные Modal, Drawer, Tooltip, Popover и Popconfirm прибавляют 100
+к уровню родителя. При явном нуле у родителя используется
+`zIndexPopupBase + 100`. Dropdown и всплывающие подменю Menu прибавляют 50,
+включая случай нулевой базы. Dropdown передаёт свой ненулевой слой
+потомкам, а явное целое `z-index` читается из итоговых стилей панели с
+учётом каскада inline CSS.
+
+Числовой `zIndex` на диалоге задаёт его слой и уровень для потомков.
+Контекстные подтверждения Modal начинают с `zIndexPopupBase + 1000`
+и принимают `zIndex` также в `handle.update`. Браузер упорядочивает
+нативные `dialog` и `popover` в top layer при открытии.
+
+В замере Ant Design 6.6.8 Drawer с `zIndex={0}` получает CSS-слой 1000
+и передаёт нулевую базу потомкам. Svelte применяет 0 и к поверхности Drawer.
+[Эталон](../../tests/browser/fixtures/ant-design-z-index-context-reference.json)
+· [Chromium](../../tests/browser/z-index-context.spec.ts)
+· [SSR](../../tests/package/z-index-context.ssr.test.ts)
+
 ## CSS и SSR
 
 `ConfigProvider.prefixCls` задаёт префикс CSS-классов, в том числе у `Flex`,

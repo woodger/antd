@@ -23,6 +23,7 @@
   import { onDestroy, onMount, untrack } from 'svelte';
   import { on } from 'svelte/events';
   import { useConfig } from './config-context';
+  import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import {
     getTooltipActions,
     getTooltipContent,
@@ -56,6 +57,8 @@
   } = $derived(props);
 
   const config = useConfig();
+  const layer = useZIndex('container', () => props.zIndex);
+  provideZIndex(() => layer.contextZIndex);
   const external = getContext<TooltipAnchor | undefined>(anchorKey);
   if (external) {
     // Tooltip внутри пользовательского содержимого получает собственный trigger.
@@ -368,6 +371,7 @@
 {#if !external}<span bind:this={wrapper} role="presentation" class={['ant-tooltip-trigger', className]} {style} onpointerenter={handleEnter} onpointerleave={handleLeave} onfocusin={handleFocus} onfocusout={handleBlur} onclick={handleClick} oncontextmenu={handleContextMenu} ontouchstart={handleTouchStart}>{@render children()}</span>{/if}{#if renderPopup}<NoCompactStyle><TooltipPopup bind:this={popupController} title={content} color={props.color} prefixCls={props.prefixCls} open={visible} {anchor} {describe} trigger={host} {placement} {arrow} {autoAdjustOverflow} {getPopupContainer}
   sourceAnchor={Boolean(external)}
   outsideEvents={actionOverrides ? 'mouse' : undefined}
+  zIndexLayer={layer}
   semanticProps={{ ...props, open: providedOpen, trigger: resolvedTrigger,
     mouseEnterDelay: enterDelay, mouseLeaveDelay: leaveDelay }}
   onDismiss={dismiss} onHoverChange={handlePopupHover} /></NoCompactStyle>{/if}
