@@ -21,8 +21,8 @@
   import { observeTableLayout } from './table-layout.dom';
   import { getTableLayout } from './table-layout.engine';
   import {
-    changeTableSorts, getControlledTableSorts, getInitialTableSorts, isTableMultipleSorter,
-    isTableSortable, tableSortDirections, type TableSortState
+    changeTableSorts, getControlledTableSorts, getInitialTableSorts, getTableColumnTitleSorts,
+    isTableMultipleSorter, isTableSortable, tableSortDirections, type TableSortState
   } from './table-sorter.engine';
   import { createTableSelection } from './table-selection.model.svelte';
   import { observeTableSticky, type TableStickyBarLayout } from './table-sticky.dom';
@@ -42,6 +42,7 @@
   import type {
     TableChange,
     TableColumn,
+    TableColumnTitleProps,
     TableExpandIconInfo,
     TableFilters,
     TableFilterValue,
@@ -135,6 +136,7 @@
   let rootStyle = $derived([componentTheme.style, style].filter(Boolean).join(';') || undefined);
   const id = $props.id();
   const dataColumns = $derived(getTableColumnOrder(resolvedColumns));
+  const columnIndices = $derived(new Map(dataColumns.map((entry, index) => [entry.key, index])));
   let localSorts = $state.raw(untrack(() => getInitialTableSorts(dataColumns, defaultSorter)));
   const controlledSorts = $derived(getControlledTableSorts(dataColumns, mode));
   const multipleSort = $derived(dataColumns.some(isTableMultipleSorter));
@@ -173,6 +175,10 @@
   });
   let childrenColumnName = $derived(expandable?.childrenColumnName || 'children');
   let tableData = $derived(readTableData(activeSorts, appliedFilters));
+  const columnTitleInfo: TableColumnTitleProps<Row> = $derived({
+    sortColumns: getTableColumnTitleSorts(dataColumns, activeSorts, mode),
+    filters: tableData.filters
+  });
   const sortsByColumn = $derived(new Map(tableData.sorters.map(state => [state.columnKey, state])));
   let hasFilters = $derived(
     dataColumns.some(column => column.filterDropdown || getTableFilterOptions(column, mode)?.length)
@@ -937,10 +943,24 @@
     ? showSorterTooltip : column.showSorterTooltip}
   {@const filterOptions = getTableFilterOptions(column, mode)}
   {@const hasColumnFilter = Boolean(filterOptions || column.filterDropdown)}
+  {@const title = column.title}
+  {@const titleSnippet = typeof title === 'function' ? title : undefined}
+  {@const titleText = typeof title === 'string' || typeof title === 'number'
+    ? String(title) : undefined}
+  {@const titleId = titleSnippet
+    ? `ant-table-column-title-${id}-${columnIndices.get(column.key)}` : undefined}
+  {@const headingLabel = props.attributes['aria-label']}
+  {@const titleLabel = titleText ?? headingLabel ?? column.key}
+  {@const titleReference = titleText === undefined
+    ? props.attributes['aria-labelledby'] ?? (headingLabel === undefined ? titleId : undefined)
+    : undefined}
+  {#snippet renderTitle()}
+    {#if titleSnippet}{@render titleSnippet(columnTitleInfo)}{/if}
+  {/snippet}
   {#if props.colSpan !== 0 && props.rowSpan !== 0}
     <th
       {...props.attributes}
-      title={props.attributes.title ?? (column.ellipsis ? column.title : undefined)}
+      title={props.attributes.title ?? (column.ellipsis ? titleText : undefined)}
       data-ant-table-part="cell"
       data-ant-table-leaf={headerCount > 1 && !cell.group ? cell.leaf : undefined}
       data-ant-table-sortable={sortable || undefined}
@@ -964,7 +984,11 @@
         {#if sortable}
           <TableSortButton
             {prefix}
-            label={column.title}
+            label={titleText}
+            accessibleLabel={titleText === undefined ? titleLabel : undefined}
+            {titleId}
+            labelledby={titleReference}
+            titleContent={titleSnippet ? renderTitle : undefined}
             {order}
             {directions}
             sortIcon={column.sortIcon}
@@ -974,7 +998,9 @@
             disabled={resolvedDisabled}
             onSort={() => changeSort(column, nextSort)}
           />
-        {:else}<span class={column.ellipsis ? `${prefix}-column-title` : undefined}>{column.title}</span>{/if}
+        {:else if titleSnippet}
+          <div id={titleId} class={`${prefix}-column-title`}>{@render renderTitle()}</div>
+        {:else}<span class={column.ellipsis ? `${prefix}-column-title` : undefined}>{titleText ?? ''}</span>{/if}
         {#if hasColumnFilter}
           {@const value = Object.hasOwn(tableData.filters, column.key)
             ? tableData.filters[column.key] : []}
@@ -983,7 +1009,8 @@
           <TableFilter
             prefixCls={prefix}
             {dropdownPrefix}
-            title={column.title}
+            title={titleLabel}
+            titleReference={titleReference}
             options={filterOptions}
             {value}
             filtered={column.filtered}

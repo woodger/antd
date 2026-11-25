@@ -1,15 +1,22 @@
 <script lang="ts">
-  // Сохраняет одну фокусируемую кнопку при смене настроек подсказки.
-  // Клики Tooltip и сортировки выполняются на том же native trigger.
+  // Управляет нативной кнопкой и подсказкой сортировки. Интерактивный заголовок
+  // размещается рядом с кнопкой и получает область наведения вместе с ней.
+  import type { Snippet } from 'svelte';
+  import { on } from 'svelte/events';
   import { useDesignTokenContext } from './theme-context.svelte';
   import TableSorterTooltip from './TableSorterTooltip.svelte';
   import type { TableColumn, TableSorterTooltipProps, TableSortOrder } from './table.types';
 
   let {
-    prefix, label, order, directions, sortIcon, description, tooltip, wholeCell, disabled, onSort
+    prefix, label, accessibleLabel, titleId, labelledby, titleContent, order, directions,
+    sortIcon, description, tooltip, wholeCell, disabled, onSort
   }: {
     prefix: string;
-    label: string;
+    label?: string;
+    accessibleLabel?: string;
+    titleId?: string;
+    labelledby?: string;
+    titleContent?: Snippet;
     order?: TableSortOrder;
     directions: readonly (TableSortOrder | null)[];
     sortIcon?: TableColumn<object>['sortIcon'];
@@ -27,7 +34,9 @@
   const iconTarget = $derived(options?.target === 'sorter-icon');
   const up = $derived(directions.includes('ascend'));
   const down = $derived(directions.includes('descend'));
+  const fullTarget = $derived(wholeCell && Boolean(tooltip) && !iconTarget && !disabled);
   let button = $state<HTMLButtonElement>();
+  let heading = $state<HTMLDivElement>();
   let icon = $state<HTMLSpanElement>();
   let popupDescriptionId = $state<string>();
   let tooltipClick: ((event: MouseEvent) => void) | undefined;
@@ -64,6 +73,33 @@
     }
     onSort();
   }
+
+  /** Поля, ссылки и другие controls сохраняют собственное действие внутри заголовка. */
+  function handleHeadingClick(event: MouseEvent) {
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    const controls = 'button,input,select,textarea,a[href],label,summary,[tabindex],'
+      + '[contenteditable]:not([contenteditable="false"]),'
+      + '[role="button"],[role="link"],[role="checkbox"],[role="radio"],[role="switch"],'
+      + '[role^="menuitem"],[role="option"],[role="tab"]';
+
+    for (const node of event.composedPath()) {
+      if (node === event.currentTarget) {
+        break;
+      }
+      if (node instanceof Element && node.matches(controls)) {
+        return;
+      }
+    }
+
+    activate(event);
+  }
+
+  function connectHeading(element: HTMLDivElement) {
+    return on(element, 'click', handleHeadingClick);
+  }
 </script>
 
 <style>
@@ -83,6 +119,18 @@
   }
   .sort-button:disabled { cursor: not-allowed; }
   .sort-button:not(.sort-button-full)::after { content: none; }
+  .sort-heading { display: flex; align-items: center; min-width: 0; }
+  .sort-heading:not(.sort-heading-disabled) { cursor: pointer; }
+  .sort-heading:not(.sort-heading-full)::after { content: none; }
+  .sort-title { position: relative; z-index: 1; flex: 1; min-width: 0; }
+  .sort-button-icon {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    width: auto;
+    flex: none;
+  }
   .sort-arrow { display: block; width: 0; height: 0; border-inline: 4px solid transparent; }
   .sort-arrow.active { color: var(--ant-color-primary); }
   .sort-up { margin-bottom: 2px; border-bottom: 5px solid currentColor; }
@@ -102,40 +150,61 @@
     </svg></span>{:else}<span class={['sort-arrow', `sort-${direction}`, active && 'active']}></span>{/if}
 {/snippet}
 
-<button
-  bind:this={button}
-  type="button"
-  class={[
-    'sort-button',
-    `${prefix}-column-sorters`,
-    iconTarget && `${prefix}-column-sorters-tooltip-target-sorter`
-  ]}
-  class:sort-button-full={wholeCell && Boolean(tooltip) && !iconTarget && !disabled}
-  {disabled}
-  aria-describedby={popupDescriptionId ?? (description ? descriptionId : undefined)}
-  onclick={activate}
->
-  <span class={`${prefix}-column-title`}>{label}</span>
-  <span bind:this={icon} data-ant-table-part="sorter" class={[
-    `${prefix}-column-sorter`, !sortIcon && up && down && `${prefix}-column-sorter-full`
-  ]} aria-hidden="true">
-    {#if sortIcon}
-      {@render sortIcon({ sortOrder: order ?? null })}
-    {:else}
-      <span class={`${prefix}-column-sorter-inner`}>
-        {#if up}{@render sortArrow('up', order === 'ascend')}{/if}
-        {#if down}{@render sortArrow('down', order === 'descend')}{/if}
-      </span>
+{#snippet sortButton(iconOnly: boolean)}
+  <button
+    bind:this={button}
+    type="button"
+    class={[
+      'sort-button',
+      !iconOnly && `${prefix}-column-sorters`,
+      !iconOnly && iconTarget && `${prefix}-column-sorters-tooltip-target-sorter`
+    ]}
+    class:sort-button-full={!iconOnly && fullTarget}
+    class:sort-button-icon={iconOnly}
+    {disabled}
+    aria-label={accessibleLabel}
+    aria-labelledby={labelledby}
+    aria-describedby={popupDescriptionId ?? (description ? descriptionId : undefined)}
+    onclick={activate}
+  >
+    {#if !iconOnly}<span class={`${prefix}-column-title`}>{label ?? ''}</span>{/if}
+    <span bind:this={icon} data-ant-table-part="sorter" class={[
+      `${prefix}-column-sorter`, !sortIcon && up && down && `${prefix}-column-sorter-full`
+    ]} aria-hidden="true">
+      {#if sortIcon}
+        {@render sortIcon({ sortOrder: order ?? null })}
+      {:else}
+        <span class={`${prefix}-column-sorter-inner`}>
+          {#if up}{@render sortArrow('up', order === 'ascend')}{/if}
+          {#if down}{@render sortArrow('down', order === 'descend')}{/if}
+        </span>
+      {/if}
+    </span>
+    {#if description}
+      <!-- Описание доступно по ID и не добавляет текст к заголовку колонки. -->
+      <span id={descriptionId} role="note" aria-label={description} hidden></span>
     {/if}
-  </span>
-  {#if description}
-    <!-- Описание доступно по ID и не добавляет текст к заголовку колонки. -->
-    <span id={descriptionId} role="note" aria-label={description} hidden></span>
-  {/if}
-</button>
+  </button>
+{/snippet}
+
+{#if titleContent}
+  <div
+    bind:this={heading}
+    class={['sort-heading', `${prefix}-column-sorters`,
+      iconTarget && `${prefix}-column-sorters-tooltip-target-sorter`]}
+    class:sort-heading-full={fullTarget}
+    class:sort-heading-disabled={disabled}
+    {@attach connectHeading}
+  >
+    <div id={titleId} class={`sort-title ${prefix}-column-title`}>{@render titleContent()}</div>
+    {@render sortButton(true)}
+  </div>
+{:else}
+  {@render sortButton(false)}
+{/if}
 {#if tooltip}
   {#key iconTarget}
-    <TableSorterTooltip anchor={iconTarget ? icon : button}
+    <TableSorterTooltip anchor={iconTarget ? icon : heading ?? button}
       connectDescription={iconTarget ? undefined : connectDescription}
       {description} {disabled} {options} {connectClick} />
   {/key}

@@ -1,7 +1,7 @@
 // Определяет управляемые и локальные критерии. Порядок списка для событий
 // хранится отдельно от приоритетов сравнения записей.
 import type {
-  TableColumn, TableMode, TableSortCompare, TableSorter, TableSortOrder
+  TableColumn, TableColumnTitleProps, TableMode, TableSortCompare, TableSorter, TableSortOrder
 } from './table.types';
 
 export interface TableSortState {
@@ -81,6 +81,23 @@ export function getControlledTableSorts<Row extends object>(
       accepting = multiple ? 'multiple' : 'closed';
     }
   }
+  return sorts;
+}
+
+/** Возвращает данные заголовка с неактивными критериями и живыми определениями колонок. */
+export function getTableColumnTitleSorts<Row extends object>(
+  columns: readonly TableColumn<Row>[], states: readonly TableSortState[], mode: TableMode
+): TableColumnTitleProps<Row>['sortColumns'] {
+  const byKey = new Map(columns.map(column => [column.key, column]));
+  const sorts: { column: TableColumn<Row>; order: TableSortOrder | null; }[] = [];
+
+  for (const { columnKey, order } of states) {
+    const column = byKey.get(columnKey);
+    if (column && (column.children || isTableSortable(column, mode))) {
+      sorts.push({ column, order });
+    }
+  }
+
   return sorts;
 }
 

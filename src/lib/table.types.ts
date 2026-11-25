@@ -76,6 +76,17 @@ export interface TableColumnSorter<Row extends object> {
   multiple?: number;
 }
 
+export type TableColumnTitle<Row extends object> =
+  string | number | boolean | null | Snippet<[info: TableColumnTitleProps<Row>]>;
+
+/** Значения, которые Table передаёт заголовкам листьев и групп. */
+export interface TableColumnTitleProps<Row extends object> {
+  /** Критерии в порядке состояния. order равен null для неактивного критерия. */
+  readonly sortColumns: readonly { column: TableColumn<Row>; order: TableSortOrder | null; }[];
+  /** Применённые фильтры, без черновика открытой панели и отклонённых запросов. */
+  readonly filters: Readonly<Record<string, readonly TableFilterValue[]>>;
+}
+
 export type TableSorterTooltipTarget = 'full-header' | 'sorter-icon';
 
 /** Встроенный Tooltip использует кнопку сортировки или её декоративную иконку. */
@@ -97,7 +108,8 @@ export type TableRowProps = Omit<HTMLAttributes<HTMLTableRowElement>, 'children'
 /** Колонка данных или заголовок группы колонок. Ключ уникален во всём дереве. */
 export interface TableColumn<Row extends object> {
   key: string;
-  title: string;
+  /** Число или строка выводятся как текст. Snippet получает состояние Table. */
+  title?: TableColumnTitle<Row>;
   /** Строка обозначает буквальный ключ. Массив задаёт путь, включая индексы массивов. */
   dataIndex?: TableDataIndex<Row>;
   /**

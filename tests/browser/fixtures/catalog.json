@@ -1803,6 +1803,11 @@
     "root": "table-column-layout-fixture"
   },
   {
+    "id": "table-column-title",
+    "module": "./TableColumnTitleFixture.svelte",
+    "root": "table-column-title-fixture"
+  },
+  {
     "id": "table-sorter",
     "module": "./TableSorterFixture.svelte",
     "root": "table-sorter-fixture"

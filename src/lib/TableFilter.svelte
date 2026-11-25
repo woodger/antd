@@ -19,13 +19,15 @@
   import TableFilterOptions from './TableFilterOptions.svelte';
 
   let {
-    prefixCls, dropdownPrefix, title, options, value, filtered, resetValues, multiple, disabled,
+    prefixCls, dropdownPrefix, title, titleReference, options, value, filtered, resetValues,
+    multiple, disabled,
     filterMode = 'menu', filterSearch = false, filterDropdown, filterDropdownProps,
     filterOnClose = false, filterIcon, onApply
   }: {
     prefixCls: string;
     dropdownPrefix: string;
     title: string;
+    titleReference?: string;
     options?: readonly TableFilterOption[];
     value: readonly TableFilterValue[];
     filtered?: boolean;
@@ -66,7 +68,12 @@
   let openedSearch: TableFilterSearch = false;
   let dropdownApplied: TableFilterValue[] | undefined;
   const active = $derived(value.length > 0 || Boolean(filtered));
-  let label = $derived(`${config.locale.table?.filterTitle ?? ruRU.table.filterTitle}: ${title}`);
+  const filterLabelId = `ant-filter-label-${id}`;
+  const filterTitle = $derived(config.locale.table?.filterTitle ?? ruRU.table.filterTitle);
+  const label = $derived(`${filterTitle}: ${title}`);
+  const labelReference = $derived(titleReference ? `${filterLabelId} ${titleReference}` : undefined);
+  const dropdownLabelReference = $derived(filterDropdownProps?.['aria-labelledby']
+    ?? (filterDropdownProps?.['aria-label'] === undefined ? labelReference : undefined));
   const optionList = $derived(options ?? []);
   const optionSnapshot = $derived(snapshotTableFilterOptions(optionList));
   const advanced = $derived(
@@ -377,6 +384,7 @@
     class={[`${prefixCls}-filter-trigger`, active && 'active']}
     disabled={blocked}
     aria-label={label}
+    aria-labelledby={labelReference}
     aria-haspopup="dialog"
     aria-expanded={native ? nativeOpen : false}
     aria-controls={native ? `ant-filter-${id}` : undefined}
@@ -400,7 +408,8 @@
       <TableFilterCustomContent renderer={filterDropdown} info={dropdownInfo} />
     {:else}
       {#if usesDropdown || visited || !advanced}
-        <TableFilterOptions {prefixCls} {dropdownPrefix} {label} {id} options={optionList}
+        <TableFilterOptions {prefixCls} {dropdownPrefix} {label} labelledby={labelReference}
+          {id} options={optionList}
           {multiple} disabled={blocked} {open} mode={filterMode} search={filterSearch}
           bind:draft bind:query getPopupContainer={submenuContainer} />
       {/if}
@@ -422,6 +431,9 @@
   {/if}
 {/snippet}
 
+{#if labelReference}
+  <span id={filterLabelId} hidden>{filterTitle}:</span>
+{/if}
 {#if usesDropdown}
   <Dropdown
     {...filterDropdownProps}
@@ -430,6 +442,7 @@
     placement={dropdownPlacement}
     trigger={filterDropdownProps?.trigger ?? 'click'}
     aria-label={filterDropdownProps?.['aria-label'] ?? label}
+    aria-labelledby={dropdownLabelReference}
     onOpenChange={handleDropdownOpenChange}
     popupRender={renderDropdown}
   >
@@ -445,6 +458,7 @@
     role="dialog"
     tabindex="-1"
     aria-label={label}
+    aria-labelledby={labelReference}
     dir={config.direction}
     onbeforetoggle={beforeToggle}
     onkeydown={handleKeydown}

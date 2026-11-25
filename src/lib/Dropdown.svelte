@@ -59,6 +59,7 @@
     mouseLeaveDelay = 0.1,
     getPopupContainer,
     'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledby,
     class: className = '',
     style
   } = $derived(dropdownProps);
@@ -876,7 +877,8 @@
 
 {#snippet originMenu()}
   {#if menu?.items}<DropdownMenu {menu} {semantics} context={menuContext} id={menuId}
-    label={ariaLabel} labelledby={triggerId} bind:nativeElement={list} />{/if}
+    label={ariaLabel} labelReference={ariaLabelledby} labelledby={triggerId}
+    bind:nativeElement={list} />{/if}
 {/snippet}
 
 {#if prefixCss}<ThemeScopeStyle css={prefixCss}
@@ -888,7 +890,8 @@
   data-ant-dropdown-motion data-ant-dropdown-placement={actualPlacement}
   bind:this={popup} id={popupId} popover="manual" role={customContent ? 'dialog' : 'presentation'}
   tabindex="-1" aria-label={customContent ? ariaLabel : undefined}
-  aria-labelledby={customContent && !ariaLabel ? triggerId : undefined} hidden
+  aria-labelledby={customContent ? ariaLabelledby ?? (ariaLabel ? undefined : triggerId) : undefined}
+  hidden
   inert={leaving || undefined} aria-hidden={leaving || undefined} dir={config.direction} class={[
     componentPrefix,
     rootClassName,

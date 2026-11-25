@@ -95,7 +95,8 @@ Escape и выбор команды возвращают фокус к trigger, 
 В children передавайте один нативный focusable control, обычно Button.
 Dropdown связывает первый дочерний элемент с menu через aria-haspopup="menu",
 aria-controls и aria-expanded, сохраняя исходные ARIA-атрибуты владельца.
-`aria-label` именует меню; по умолчанию имя берётся от trigger. Class/style
+`aria-label` задаёт имя панели. `aria-labelledby` связывает его с элементом по ID.
+По умолчанию имя берётся от trigger. Class/style
 относятся к wrapper trigger. Disabled наследуется от Form/ConfigProvider;
 явное false переопределяет контекст. Нативный disabled trigger также не открывает меню.
 

@@ -410,7 +410,7 @@ const columns: TableColumnsType<Person> = [
 заменяются целиком. Каждая колонка в группе получает тот же общий набор.
 
 `TableColumnDefaults<Row>` содержит необязательные свойства отдельной колонки.
-Дерево групп и обязательные `key` и `title` задаются в `columns`.
+Дерево групп и обязательные ключи `key` задаются в `columns`.
 Служебные колонки используют свои параметры `rowSelection` и `expandable`.
 Общий `column` учитывается при выборе видимых колонок, чтении данных и обработке
 сортировки и фильтров. Обновление `column` само по себе не вызывает `onChange`.
@@ -419,6 +419,39 @@ const columns: TableColumnsType<Person> = [
 · [Chromium](../../../tests/browser/table-column-defaults.spec.ts)
 · [SSR](../../../tests/package/table-column-defaults.ssr.test.ts)
 · [Гидратация](../../../tests/browser/table-column-layout-hydration.spec.ts)
+
+## Заголовки колонок
+
+`column.title` принимает строку, число или Svelte snippet. Отсутствующее
+значение, `null` и boolean оставляют заголовок пустым. Группы и листья получают
+одинаковый `TableColumnTitleProps<Row>`. В `sortColumns` находятся определения
+колонок и направления в порядке состояния. `order: null` обозначает неактивный
+критерий. `filters` содержит применённые критерии, включая значения владельца
+в управляемом режиме.
+
+```svelte
+{#snippet scoreHeading(info: TableColumnTitleProps<Row>)}
+  Баллы
+  {#if info.filters.score?.length}
+    <span>({info.filters.score.length})</span>
+  {/if}
+{/snippet}
+```
+
+Передайте `scoreHeading` в `column.title`. У сортируемой колонки клик по заголовку
+меняет направление.
+Кнопки, ссылки и поля внутри snippet сохраняют свои действия. Нативная кнопка
+сортировки поддерживает Enter и Space. Фильтр и сортировка используют доступное
+имя заголовка. Для snippet с одной иконкой задайте `aria-label` в
+`onHeaderCell`.
+
+При `ellipsis` строка или число задают нативный `title` ячейки. Для
+заголовка-snippet этот атрибут можно вернуть из `onHeaderCell`.
+
+[Эталон](../../../tests/browser/fixtures/ant-design-table-column-title-reference.json)
+· [Chromium](../../../tests/browser/table-column-title.spec.ts)
+· [SSR](../../../tests/package/table-column-title.ssr.test.ts)
+· [Гидратация](../../../tests/browser/table-sorter-hydration.spec.ts)
 
 ## Видимость колонок
 

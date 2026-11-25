@@ -897,6 +897,8 @@ export type {
   TableColumnGroupType,
   TableColumnsType,
   TableColumnDefaults,
+  TableColumnTitle,
+  TableColumnTitleProps,
   TableKey,
   TableRowKey,
   TableSorter,

@@ -45,7 +45,7 @@ export function fillTableColumns<Row extends object>(
     }
 
     const own = getDefinedColumnProps(column);
-    // Object.entries теряет типы обязательных key и title исходной колонки.
+    // Object.entries теряет типы ключа и свойств исходной колонки.
     const filled = { ...shared, ...own } as TableColumn<Row>;
     const children = column.children;
     if (Array.isArray(children)) {

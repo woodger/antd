@@ -101,3 +101,37 @@ test('Table hydrates the controlled sorter tooltip without moving button focus',
   await expect(button).toBeFocused();
   await expect(root.locator('th')).toHaveAttribute('aria-sort', 'ascending');
 });
+
+test('Table hydrates a title snippet with its own controls and a focused sort button', async ({ page }) => {
+  const entry = new URL('./fixtures/table-sorter.server.ts', import.meta.url);
+  const { renderTableColumnTitle } = await server.ssrLoadModule(fileURLToPath(entry));
+  const { body, head } = renderTableColumnTitle();
+  await page.goto('/select-components-hydration.html?column-title');
+  await page.addScriptTag({ type: 'module', url: '/table-sorter.client.ts' });
+  const root = page.locator('#root');
+  await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+  await root.evaluate((node, html) => {
+    document.head.insertAdjacentHTML('beforeend', html.head);
+    node.innerHTML = html.body;
+  }, { body, head });
+  const cell = root.locator('[data-observed-header="score"]');
+  const note = cell.getByRole('textbox', { name: 'Header note', exact: true });
+  const sort = cell.getByRole('button', { name: 'Score with details', exact: true });
+  const before = await sort.elementHandle();
+  const beforeNote = await note.elementHandle();
+  await note.fill('Draft before hydration');
+  await sort.focus();
+
+  await root.dispatchEvent('hydrate-table-sorter');
+  await expect(root).toHaveAttribute('data-hydrated', 'true');
+  await expect(sort).toBeFocused();
+  await sort.press('Space');
+
+  await expect(sort).toBeFocused();
+  await expect(note).toHaveValue('Draft before hydration');
+  await expect(cell).toHaveAttribute('aria-sort', 'ascending');
+  await expect(cell.locator('[data-title-sample]')).toHaveAttribute('data-title-sample',
+    '{"sortColumns":[{"key":"score","order":"ascend"}],"filters":{}}');
+  expect(await sort.evaluate((node, original) => node === original, before)).toBe(true);
+  expect(await note.evaluate((node, original) => node === original, beforeNote)).toBe(true);
+});

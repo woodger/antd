@@ -119,6 +119,7 @@ export interface DropdownProps {
   /** CSS-декларации поверхности и строк на каждом уровне меню. */
   styles?: DropdownSemantic;
   'aria-label'?: string;
+  'aria-labelledby'?: string;
   class?: string;
   style?: string;
 }

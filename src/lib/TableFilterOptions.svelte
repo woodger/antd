@@ -22,12 +22,13 @@
   import Tree from './Tree.svelte';
 
   let {
-    prefixCls, dropdownPrefix, label, id, options, mode, search, multiple, disabled, open,
+    prefixCls, dropdownPrefix, label, labelledby, id, options, mode, search, multiple, disabled, open,
     draft = $bindable(), query = $bindable(), getPopupContainer
   }: {
     prefixCls: string;
     dropdownPrefix: string;
     label: string;
+    labelledby?: string;
     id: string;
     options: readonly TableFilterOption[];
     mode: TableFilterMode;
@@ -207,7 +208,8 @@
           onCheckedChange={selectAll}>{checkAllLabel}</Checkbox>
       </NoFormItemBinding>
     {/if}
-    <Tree treeData={nodes} checkedKeys={selectedKeys} checkable aria-label={label} blockNode
+    <Tree treeData={nodes} checkedKeys={selectedKeys} checkable aria-label={label}
+      aria-labelledby={labelledby} blockNode
       {multiple} {disabled} selectable={false} checkStrictly={!multiple} defaultExpandAll
       autoExpandParent virtual={false} class={`${dropdownPrefix}-menu`}
       filterTreeNode={normalizedQuery ? matchesTree : undefined} onCheck={selectTree} />
@@ -217,9 +219,10 @@
     prefixCls={`${dropdownPrefix}-menu`} tooltip={false} itemIcon={mark}
     _itemRole={multiple ? 'menuitemcheckbox' : 'menuitemradio'}
     openKeys={open ? menuKeys : []} onOpenChange={keys => { menuKeys = keys; }}
-    onSelect={selectMenu} onDeselect={selectMenu} aria-label={label} />
+    onSelect={selectMenu} onDeselect={selectMenu} aria-label={label} aria-labelledby={labelledby} />
 {:else}
-  <div class={`filter-options ${dropdownPrefix}-menu`} role="group" aria-label={label}>
+  <div class={`filter-options ${dropdownPrefix}-menu`} role="group"
+    aria-label={label} aria-labelledby={labelledby}>
     {#each visibleOptions as { option, index } (index)}
       {#if multiple}
         <Checkbox checked={draftValues.has(option.value)} {disabled}
