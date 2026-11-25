@@ -279,8 +279,10 @@ props и разрешённые `size`, `disabled`, `status` и `variant`. `open
 Строка `classNames.popup` задаёт класс `popup.root`. Классы `rootClassName`
 и `classNames.root` применяются к полю и панели. `popup.item`, `popup.itemTitle`
 и `popup.itemSwitcher` относятся к узлу дерева, заголовку и переключателю.
-Панель получает `styles.root`, затем `styles.popup.root`. Числовой
-`popupMatchSelectWidth` имеет приоритет над `width` в стилях. По умолчанию
+Панель получает `styles.root`, затем `styles.popup.root`. Слой поля задаётся
+отдельно. Панель берёт `z-index` из `styles.popup.root` или
+[контекста владельца](../theme-context.md#уровни-вложенных-панелей).
+Числовой `popupMatchSelectWidth` имеет приоритет над `width` в стилях. По умолчанию
 панель берёт ширину поля. При `false` она подстраивается под содержимое с шириной
 поля в качестве минимума. Локальный prop имеет приоритет над `ConfigProvider.popupMatchSelectWidth`.
 Стили могут задавать границы ширины. Смена стилей открытой панели сохраняет DOM,

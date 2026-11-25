@@ -4916,6 +4916,22 @@
       ],
       "features": [
         {
+          "id": "z-index-context",
+          "title": "Унаследованный слой панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/AutoComplete.svelte",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/components/auto-complete.md",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-input-z-index-context-reference.json",
+            "tests/browser/input-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Панель использует слой владельца плюс 50. Явный styles.popup.root из общих и локальных настроек Select сохраняет приоритет. undefined в zIndex объекта оставляет унаследованный слой, null возвращает CSS-токен."
+        },
+        {
           "id": "core-v1",
           "title": "Свободный ввод, options/groups и исходные change/search/select callbacks",
           "state": "supported",
@@ -5633,6 +5649,22 @@
         "tests/package/cascader-prefix.ssr.test.ts"
       ],
       "features": [
+        {
+          "id": "z-index-context",
+          "title": "Унаследованный слой панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/CascaderCore.svelte",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/components/cascader.md",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-input-z-index-context-reference.json",
+            "tests/browser/input-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Список путей использует унаследованный слой плюс 50. Семантический popup.root имеет приоритет, включая ноль."
+        },
         {
           "id": "paths-state",
           "title": "Single paths, controlled/default state, missing values и clear",
@@ -6655,6 +6687,23 @@
         "tests/package/date-picker-preset-transitions.ssr.test.ts"
       ],
       "features": [
+        {
+          "id": "z-index-context",
+          "title": "Унаследованный слой панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/components/date-picker.md",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-input-z-index-context-reference.json",
+            "tests/browser/input-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Одиночная панель и диапазон используют уровень владельца плюс 50. Явный popup.root перекрывает его. Слой выводится при SSR и обновляется в портале."
+        },
         {
           "id": "single",
           "title": "Single date input/calendar, clear, ограничения и controlled/default value",
@@ -9811,6 +9860,22 @@
       ],
       "features": [
         {
+          "id": "z-index-context",
+          "title": "Унаследованный слой панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Mentions.svelte",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/components/mentions.md",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-input-z-index-context-reference.json",
+            "tests/browser/input-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Список, открытый через символ упоминания, использует слой владельца плюс 50. Явный ноль владельца даёт 50. У корневого списка действует токен темы."
+        },
+        {
           "id": "core-v1",
           "title": "Controlled/default text, prefix/split, поиск, выбор и getMentions",
           "state": "supported",
@@ -10686,6 +10751,22 @@
         "tests/package/select-surface-omission.ssr.test.ts"
       ],
       "features": [
+        {
+          "id": "z-index-context",
+          "title": "Унаследованный слой панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Select.svelte",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/components/select.md",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-input-z-index-context-reference.json",
+            "tests/browser/input-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Панель использует слой владельца плюс 50. Явный popup.root перекрывает его. undefined в zIndex объекта оставляет унаследованный слой, null возвращает CSS-токен. Tooltip внутри popupRender получает контекст владельца Select. Обновление и сброс уровня проверены по исходным профилям."
+        },
         {
           "id": "selection",
           "title": "Одиночный и множественный выбор",
@@ -12739,6 +12820,24 @@
       ],
       "features": [
         {
+          "id": "z-index-context",
+          "title": "Унаследованный слой панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/SinglePicker.svelte",
+            "src/lib/RangePickerCore.svelte",
+            "src/lib/theme-component.dom.ts",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/components/time-picker.md",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-input-z-index-context-reference.json",
+            "tests/browser/input-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "TimePicker и TimeRangePicker наследуют уровень владельца плюс 50. Явный popup.root имеет приоритет, включая ноль и important. Строгая гидратация и смена слоя в портале сохраняют узел, фокус, черновик и выделение TimeRangePicker."
+        },
+        {
           "id": "single-picker",
           "title": "SinglePicker: controlled/default value/open, input, confirm, clear и presets",
           "state": "supported",
@@ -13629,6 +13728,22 @@
         "tests/browser/fixtures/tree-select-checkable-styles.client.ts"
       ],
       "features": [
+        {
+          "id": "z-index-context",
+          "title": "Унаследованный слой панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/TreeSelectControl.svelte",
+            "src/lib/z-index-context.svelte.ts",
+            "docs/reference/components/tree-select.md",
+            "docs/reference/theme-context.md",
+            "tests/browser/fixtures/ant-design-input-z-index-context-reference.json",
+            "tests/browser/input-z-index-context.spec.ts",
+            "tests/package/z-index-context.ssr.test.ts"
+          ],
+          "note": "Панель дерева использует уровень владельца плюс 50. Явный styles.popup.root имеет приоритет, включая ноль. SSR и Chromium сравнивают слой по исходному эталону."
+        },
         {
           "id": "core-v1",
           "title": "Single/multiple, labelInValue, controlled/default value и очистка",

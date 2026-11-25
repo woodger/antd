@@ -2656,5 +2656,10 @@
     "id": "z-index-context",
     "module": "./ZIndexContextFixture.svelte",
     "root": "z-index-context-fixture"
+  },
+  {
+    "id": "input-z-index-context",
+    "module": "./InputZIndexContextFixture.svelte",
+    "root": "input-z-index-context-fixture"
   }
 ]

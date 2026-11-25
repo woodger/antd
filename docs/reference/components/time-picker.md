@@ -1,6 +1,7 @@
 # TimePicker
 
 TimePicker позволяет выбрать время.
+Вложенная панель наследует [слой владельца](../theme-context.md#уровни-вложенных-панелей).
 
 ```svelte
 <script lang="ts">

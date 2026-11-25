@@ -70,6 +70,7 @@
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { useComponentTheme } from './theme-component.svelte';
   import { useToken } from './theme-context.svelte';
+  import { useZIndex } from './z-index-context.svelte';
   import Tree from './Tree.svelte';
   import TreeTitle from './TreeTitle.svelte';
   import Icon from './Icon.svelte';
@@ -203,6 +204,7 @@
   const compact = useCompact();
   const selectTheme = useComponentTheme('Select');
   const treeSelectTheme = useComponentTheme('TreeSelect');
+  const layer = useZIndex('popup');
   const componentStyle = $derived(
     [selectTheme.style, treeSelectTheme.style].filter(Boolean).join(';') || undefined
   );
@@ -389,6 +391,7 @@
   let panelVirtual = $derived(matchedWidth !== false && (virtual ?? config.virtual ?? true));
   let popupLayers = $derived([
     componentStyle,
+    layer.style,
     `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`,
     !visible ? 'pointer-events:none' : undefined,
     popupMotionState.style,

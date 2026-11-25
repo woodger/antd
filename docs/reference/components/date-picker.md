@@ -535,6 +535,9 @@ SSR проверяет также defaultOpen, browser — обновление 
 
 ### Положение панели
 
+Слои одиночных панелей и диапазонов дат и времени описаны в
+[общих правилах панелей](../theme-context.md#уровни-вложенных-панелей).
+
 DatePicker, RangePicker, TimePicker и TimeRangePicker принимают `popupAlign` и
 `builtinPlacements`. Для фабрики `generatePicker` действуют те же настройки.
 `builtinPlacements` заменяет встроенную карту целиком. `popupAlign` накладывается

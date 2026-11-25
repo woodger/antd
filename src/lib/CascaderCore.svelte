@@ -49,6 +49,7 @@
   import { connectPopup, getPopupActiveElement } from './popup.dom';
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useComponentTheme } from './theme-component.svelte';
+  import { useZIndex } from './z-index-context.svelte';
   import { createTreeSelectAlign, type TreeSelectAlignSnapshot } from './tree-select-align.dom';
   import { createOverlayStyle } from './overlay-style.model.svelte';
   import { serializeInlineStyleLayers } from './inline-style.engine';
@@ -149,6 +150,7 @@
   const compact = useCompact();
   const selectTheme = useComponentTheme('Select');
   const cascaderTheme = useComponentTheme('Cascader');
+  const layer = useZIndex('popup');
   const componentStyle = $derived(
     [!panel && selectTheme.style, cascaderTheme.style].filter(Boolean).join(';') || undefined
   );
@@ -241,7 +243,7 @@
     css.popup.root,
     typeof popupMatchSelectWidth === 'number' ? `width:${popupMatchSelectWidth}px` : undefined
   ].filter(Boolean).join(';'));
-  let popupLayers = $derived([componentStyle, popupStyle]);
+  let popupLayers = $derived([componentStyle, layer.style, popupStyle]);
   const popupOverlay = createOverlayStyle(() => popupLayers);
   const portal = createPopupContainer(() => ({
     open: !panel && visible,

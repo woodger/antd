@@ -13,6 +13,22 @@ export interface SelectStyleFrame {
   readonly text: string | undefined;
 }
 
+/** Подставляет унаследованный слой при собственном undefined в zIndex объекта. */
+export function resolveSelectPopupRootStyle(
+  style: SelectStyle | undefined,
+  inheritedZIndex: number | undefined
+) {
+  if (inheritedZIndex === undefined || style == null || typeof style === 'string') {
+    return style;
+  }
+
+  if (Object.hasOwn(style, 'zIndex') && style.zIndex === undefined) {
+    return { ...style, zIndex: inheritedZIndex };
+  }
+
+  return style;
+}
+
 export function selectStyleName(property: string): string {
   return property.startsWith('--') ? property : property.replace(/[A-Z]/g, '-$&')
     .toLowerCase().replace(/^ms-/, '-ms-');

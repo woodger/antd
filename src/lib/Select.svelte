@@ -11,10 +11,11 @@
   import SelectPopupContent from './SelectPopupContent.svelte';
   import { hasSelectControlSemantics, hasSelectDisplayContent, mergeSelectSemanticMaps, mergeSelectStyle, resolveSelectSemanticValue, serializeSelectStyle } from './select-semantic.engine';
   import { createSelectStyle, selectStyle, selectStyleAttributes } from './select-style.model.svelte';
-  import { resolveSelectStyleFrame } from './select-style.engine';
+  import { resolveSelectPopupRootStyle, resolveSelectStyleFrame } from './select-style.engine';
   import { createSelectComponentInputStyle, type SelectComponentInputLifetime } from './select-component-input-style.dom';
   import { useComponentTheme } from './theme-component.svelte';
   import { useToken } from './theme-context.svelte';
+  import { useZIndex } from './z-index-context.svelte';
   import SelectOptionList from './SelectOptionList.svelte';
   import { createSelectOptionList } from './select-option-list.model.svelte';
   import type { SelectOptionListItem, SelectOptionListRenderInfo } from './select-option-list.types';
@@ -176,6 +177,7 @@
   let prefixCss = $derived(getSelectPrefixCss(prefix, rootPrefix));
   const variantContext = useVariant('select', () => ({ variant }));
   const componentTheme = useComponentTheme('Select');
+  const layer = useZIndex('popup');
   const compact = useCompact();
   const controlRef = {
     get nativeElement() {
@@ -637,16 +639,24 @@
   let realVirtual = $derived(effectiveVirtual !== false && matchedWidth !== false);
   let itemHeight = $derived(listItemHeight ?? tokens.token.controlHeight);
   let listLabel = $derived(attributes['aria-label'] ?? placeholder ?? config.locale.searchText);
+  const popupRootStyle = $derived(
+    resolveSelectPopupRootStyle(semantics.styles.popup.root, layer.zIndex)
+  );
   let popupBaseLayers = $derived([
     componentTheme.style,
+    layer.style,
     `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`
   ]);
   let popupAfterLayers = $derived([
     typeof matchedWidth === 'number' ? [['width', `${matchedWidth}px`]] as const : undefined
   ]);
-  let popupLayers = $derived([...popupBaseLayers, serializeSelectStyle(semantics.styles.popup.root), ...popupAfterLayers]);
+  let popupLayers = $derived([
+    ...popupBaseLayers,
+    serializeSelectStyle(popupRootStyle),
+    ...popupAfterLayers
+  ]);
   const popupStyle = createOverlayStyle(() => popupBaseLayers, anchorWidthVariable, () => expanded, {
-    style: () => semantics.styles.popup.root, after: () => popupAfterLayers
+    style: () => popupRootStyle, after: () => popupAfterLayers
   });
   const portal = createPopupContainer(() => ({
     open: expanded,
@@ -2276,7 +2286,7 @@
         componentTheme.className && config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
         popupPlacement && `${prefix}-dropdown-placement-${popupPlacement}`,
         componentTheme.className, semantics.classes.popup.root, rootClassName]} style={initialPopupStyle}
-      {...selectStyleAttributes(semantics.styles.popup.root)} {@attach popupStyle.attach}
+      {...selectStyleAttributes(popupRootStyle)} {@attach popupStyle.attach}
       {@attach portal}
       aria-busy={loading || undefined}
       onfocusout={handleListFocusOut}

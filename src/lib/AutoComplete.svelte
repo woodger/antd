@@ -33,7 +33,7 @@
     hasSelectDisplayContent, mergeSelectSemanticMaps, mergeSelectStyle, resolveSelectSemanticValue, serializeSelectStyle
   } from './select-semantic.engine';
   import { createSelectStyle, selectStyleAttributes } from './select-style.model.svelte';
-  import { resolveSelectStyleFrame } from './select-style.engine';
+  import { resolveSelectPopupRootStyle, resolveSelectStyleFrame } from './select-style.engine';
   import { createSelectComponentInputStyle } from './select-component-input-style.dom';
   import RenderContent from './RenderContent.svelte';
   import SelectPopupContent from './SelectPopupContent.svelte';
@@ -58,6 +58,7 @@
   import { createPopupContainer } from './popup-container.model.svelte.js';
   import { useComponentTheme } from './theme-component.svelte';
   import { useToken } from './theme-context.svelte';
+  import { useZIndex } from './z-index-context.svelte';
   import SelectIcon from './SelectIcon.svelte';
   import { resolveSelectSuffix, resolveSelectMenuIcon, resolveSelectClear } from './select-icons.engine';
   import { selectIconAttribute } from './select-icon-attribute.engine';
@@ -154,6 +155,7 @@
   const form = useForm();
   const compact = useCompact();
   const componentTheme = useComponentTheme('Select');
+  const layer = useZIndex('popup');
   const generated = $props.id();
   let innerValue = $state<string | undefined>(untrack(() => value ?? defaultValue));
   let innerOpen = $state(untrack(() => open ?? defaultOpen));
@@ -337,18 +339,24 @@
   let realVirtual = $derived(effectiveVirtual !== false && matchedWidth !== false);
   let itemHeight = $derived(listItemHeight ?? tokens.token.controlHeight);
   let listLabel = $derived(attributes['aria-label'] ?? attributes.placeholder ?? config.locale.searchText);
+  const popupRootStyle = $derived(
+    resolveSelectPopupRootStyle(semantics.styles.popup.root, layer.zIndex)
+  );
   let popupBefore = $derived([
     componentTheme.style,
+    layer.style,
     `${matchedWidth === true ? 'width' : 'min-width'}:var(${anchorWidthVariable})`
   ]);
   let popupAfter = $derived([
     typeof matchedWidth === 'number' ? [['width', `${matchedWidth}px`]] as const : undefined
   ]);
   let popupLayers = $derived([
-    ...popupBefore, serializeSelectStyle(semantics.styles.popup.root), ...popupAfter
+    ...popupBefore,
+    serializeSelectStyle(popupRootStyle),
+    ...popupAfter
   ]);
   const popupStyle = createOverlayStyle(() => popupBefore, anchorWidthVariable, () => visible,
-    { style: () => semantics.styles.popup.root, after: () => popupAfter });
+    { style: () => popupRootStyle, after: () => popupAfter });
   const portal = createPopupContainer(() => ({
     open: visible,
     reference: root,
@@ -1297,7 +1305,7 @@
           componentTheme.className && config.direction === 'rtl' && `${prefix}-dropdown-rtl`,
           popupPlacement && `${prefix}-dropdown-placement-${popupPlacement}`,
           rootClassName, semantics.classes.popup.root]} dir={config.direction}
-      {...selectStyleAttributes(semantics.styles.popup.root)} style={initialPopupStyle}
+      {...selectStyleAttributes(popupRootStyle)} style={initialPopupStyle}
       onfocusout={handlePopupFocusOut}
       onmouseenter={reservePointerUpdate}
       {@attach popupStyle.attach}

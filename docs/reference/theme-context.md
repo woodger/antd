@@ -502,6 +502,18 @@ Modal, Drawer, Tooltip, Popover и Popconfirm передают числовой 
 потомкам, а явное целое `z-index` читается из итоговых стилей панели с
 учётом каскада inline CSS.
 
+Панели Select, AutoComplete, TreeSelect, Cascader, Mentions, DatePicker,
+RangePicker, TimePicker и TimeRangePicker также прибавляют 50 к уровню владельца.
+Явный `z-index` в доступном слоте `styles.popup.root` имеет приоритет, включая 0.
+В объектах стилей Select и AutoComplete `zIndex: undefined` оставляет
+слой из контекста. При `zIndex: null` панель возвращается к CSS-токену темы.
+Корневая панель без явного слоя использует CSS-токен темы. Содержимое пользовательской
+панели продолжает читать контекст её владельца. Например, Tooltip внутри Select
+в Modal прибавляет 100 к уровню Modal.
+[Эталон полей](../../tests/browser/fixtures/ant-design-input-z-index-context-reference.json)
+· [Chromium](../../tests/browser/input-z-index-context.spec.ts)
+· [SSR](../../tests/package/z-index-context.ssr.test.ts)
+
 Числовой `zIndex` на диалоге задаёт его слой и уровень для потомков.
 Контекстные подтверждения Modal начинают с `zIndexPopupBase + 1000`
 и принимают `zIndex` также в `handle.update`. Браузер упорядочивает

@@ -17,6 +17,7 @@
   import { useVariant } from './variant.svelte';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import { useZIndex } from './z-index-context.svelte';
   import { connectComponentTheme } from './theme-component.dom';
   import { useForm, useFormField } from './form-context';
   import { useFormItemStatusContext } from './form-item-status';
@@ -82,6 +83,7 @@
   const variantContext = useVariant('mentions', () => ({ variant }));
   let appearance = $derived(variantContext.variant);
   const componentTheme = useComponentTheme('Mentions');
+  const layer = useZIndex('popup');
   const designTheme = useDesignTokenContext();
   const form = useForm();
   const controlRef = {
@@ -534,6 +536,7 @@
       <div {...prefixAttributes} bind:this={popup} popover="manual" hidden={!visible || !shown}
         class={['popup', `${componentPrefix}-dropdown ant-mentions-css-var`,
           componentTheme.className, popupClassName]}
+        style:z-index={layer.zIndex}
         {@attach node => connectComponentTheme(node, componentTheme.style)}
         dir={config.direction} {@attach portal}>
         {#if popupRender}

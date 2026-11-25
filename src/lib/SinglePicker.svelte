@@ -22,6 +22,7 @@
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { useVariant } from './variant.svelte';
   import { useComponentTheme } from './theme-component.svelte';
+  import { useZIndex } from './z-index-context.svelte';
   import { connectComponentTheme } from './theme-component.dom';
   import { createOverlayStyle } from './overlay-style.model.svelte';
   import { useForm, useFormField } from './form-context';
@@ -155,6 +156,7 @@
   const dateVariant = useVariant('datePicker', () => ({ variant }));
   const timeVariant = useVariant('timePicker', () => time ?? {});
   const componentTheme = useComponentTheme('DatePicker');
+  const layer = useZIndex('popup');
   const controlRef = {
     get nativeElement() {
       return nativeElement;
@@ -448,16 +450,18 @@
     }
   });
 
-  const popupThemeStyle = $derived(
-    [componentTheme.style, semantic?.styles.popup.root].filter(Boolean).join(';') || undefined
-  );
+  const popupThemeStyle = $derived([
+    componentTheme.style,
+    layer.style,
+    semantic?.styles.popup.root
+  ].filter(Boolean).join(';') || undefined);
   const datePopupStyle = untrack(() =>
     time && !rootTimeProps ? undefined : createOverlayStyle(() => [popupThemeStyle]));
 
   // Авторские декларации следуют после координат и обновляются на той же панели.
   function attachPopupStyle(node: HTMLElement) {
     return datePopupStyle
-      ? datePopupStyle.attach(node) : connectComponentTheme(node, popupThemeStyle);
+      ? datePopupStyle.attach(node) : connectComponentTheme(node, popupThemeStyle, ['z-index']);
   }
 
   const container = createPickerPopup(() => ({
