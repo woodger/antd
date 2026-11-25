@@ -1,12 +1,34 @@
-// Разрешает настройки кнопки и semantic slots. Оболочка и содержимое получают разные props,
-// поскольку маска и другие параметры портала принадлежат Drawer, а не самой секции.
+// Разрешает настройки содержимого, кнопки и semantic slots. Атрибуты и стили идут на узел,
+// который ими владеет, даже когда Drawer перенесён через портал.
 import type {
-  DrawerClosable, DrawerClosableConfig, DrawerCloseIcon, DrawerConfig, DrawerProps,
+  DrawerClosable, DrawerClosableConfig, DrawerCloseIcon, DrawerConfig, DrawerContent, DrawerProps,
   DrawerSemantic, DrawerSemanticSlots
 } from './drawer.types';
 
 const shellSlots = ['root', 'mask', 'wrapper', 'section', 'dragger'] as const;
 const panelSlots = ['header', 'title', 'extra', 'body', 'footer', 'close'] as const;
+
+/** Решает, нужна ли область Drawer. Числовой ноль сохраняет область и выводится как текст. */
+export function hasDrawerContent(value: DrawerContent | undefined) {
+  return value != null && value !== false && value !== '';
+}
+
+/** Разносит ARIA и data по их DOM-владельцам без передачи служебных props. */
+export function getDrawerAttributes(props: DrawerProps) {
+  const dialog: Record<string, unknown> = {};
+  const wrapper: Record<string, unknown> = {};
+
+  for (const [name, value] of Object.entries(props)) {
+    if (name === 'role' || name.startsWith('aria-')) {
+      dialog[name] = value;
+    }
+    else if (name.startsWith('data-')) {
+      wrapper[name] = value;
+    }
+  }
+
+  return { dialog, wrapper };
+}
 
 /** Отличает явное отключение кнопки от отсутствия слоя настроек. */
 function getCloseOptions(

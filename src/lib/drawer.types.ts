@@ -20,7 +20,8 @@ export interface DrawerFocusableConfig {
   focusTriggerAfterClose?: boolean;
 }
 
-export type DrawerCloseIcon = Exclude<RenderEmptyContent, undefined>;
+export type DrawerContent = Exclude<RenderEmptyContent, undefined>;
+export type DrawerCloseIcon = DrawerContent;
 
 /** Кнопка закрытия и её доступное имя. Сторона учитывает направление текста. */
 export interface DrawerClosableConfig extends AriaAttributes {
@@ -73,16 +74,21 @@ export interface DrawerPushConfig {
   distance?: number | string;
 }
 
+type DrawerPanelEvents = Pick<
+  HTMLAttributes<HTMLDivElement>,
+  'onclick' | 'onmouseenter' | 'onmouseover' | 'onmouseleave' | 'onkeydown' | 'onkeyup' | 'onfocusin'
+>;
+
 /** Выдвижная панель с управлением open, фокусом и жизненным циклом children. */
-export interface DrawerProps {
+export interface DrawerProps extends AriaAttributes, DrawerPanelEvents {
   /** Локальный CSS-префикс Drawer и его частей; пустая строка наследует ConfigProvider. */
   prefixCls?: string;
   /** Поддерживает bind:open. */
   open?: boolean;
-  title?: string | Snippet;
+  title?: DrawerContent;
   children?: Snippet;
-  extra?: Snippet;
-  footer?: Snippet;
+  extra?: DrawerContent;
+  footer?: DrawerContent;
   /** Подменяет тело панели анимированным Skeleton до готовности children. */
   loading?: boolean;
   /** Получает секцию с заголовком, телом и подвалом для обёртки или замены. */
@@ -111,6 +117,8 @@ export interface DrawerProps {
   keyboard?: boolean;
   /** Маска, размытие и закрытие при полном нажатии на фон. @defaultValue true */
   mask?: DrawerMask;
+  /** Дополнительный класс маски вместе с classNames.mask. */
+  maskClassName?: string;
   focusable?: DrawerFocusableConfig;
   /** Передаёт фокус панели при открытии. @defaultValue true */
   autoFocus?: boolean;
@@ -127,9 +135,12 @@ export interface DrawerProps {
   /** После завершения анимации видимости, перед удалением скрытого содержимого. */
   afterOpenChange?: (open: boolean) => void;
   id?: string;
-  'aria-label'?: string;
-  'aria-labelledby'?: string;
-  'aria-describedby'?: string;
+  /** Краткое доступное описание диалога. */
+  'aria-description'?: string | null;
+  /** Роль нативного dialog. */
+  role?: HTMLAttributes<HTMLDialogElement>['role'];
+  /** Атрибуты выдвижной оболочки панели. */
+  [attribute: `data-${string}`]: string | number | boolean | null | undefined;
   /** Класс корневого dialog. Для секции используйте classNames.section. */
   class?: string;
   /** Inline CSS корневого dialog. Для секции используйте styles.section. */

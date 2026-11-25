@@ -1,0 +1,434 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "content": [
+    {
+      "name": "zero",
+      "header": true,
+      "title": "0",
+      "extra": "0",
+      "footer": "0",
+      "linked": true,
+      "hasLabelledBy": true
+    },
+    {
+      "name": "empty",
+      "header": false,
+      "title": null,
+      "extra": null,
+      "footer": null,
+      "linked": false,
+      "hasLabelledBy": false
+    },
+    {
+      "name": "hidden",
+      "header": false,
+      "title": null,
+      "extra": null,
+      "footer": null,
+      "linked": false,
+      "hasLabelledBy": false
+    },
+    {
+      "name": "null",
+      "header": false,
+      "title": null,
+      "extra": null,
+      "footer": null,
+      "linked": false,
+      "hasLabelledBy": false
+    },
+    {
+      "name": "true",
+      "header": true,
+      "title": "",
+      "extra": "",
+      "footer": "",
+      "linked": true,
+      "hasLabelledBy": true
+    },
+    {
+      "name": "text",
+      "header": true,
+      "title": "Text",
+      "extra": "Text",
+      "footer": "Text",
+      "linked": true,
+      "hasLabelledBy": true
+    },
+    {
+      "name": "array",
+      "header": true,
+      "title": "Start 0 end",
+      "extra": "Start 0 end",
+      "footer": "Start 0 end",
+      "linked": true,
+      "hasLabelledBy": true
+    },
+    {
+      "name": "empty-array",
+      "header": true,
+      "title": "",
+      "extra": "",
+      "footer": "",
+      "linked": true,
+      "hasLabelledBy": true
+    }
+  ],
+  "attributes": [
+    {
+      "aria": {
+        "aria-label": "Queue editor",
+        "aria-labelledby": "custom-name",
+        "aria-describedby": "custom-help",
+        "aria-description": "Queue status",
+        "aria-modal": "false",
+        "aria-busy": "true",
+        "aria-live": "polite",
+        "aria-atomic": "true",
+        "aria-keyshortcuts": "Control+Enter",
+        "aria-details": null
+      },
+      "data": {
+        "data-state": "pending",
+        "data-count": "0",
+        "data-ready": "false",
+        "data-empty": "",
+        "data-cleared": "present",
+        "data-next": null
+      },
+      "role": "alertdialog",
+      "idAt": [
+        false,
+        false,
+        true
+      ],
+      "ariaAt": [
+        false,
+        false,
+        true
+      ],
+      "dataAt": [
+        false,
+        true,
+        false
+      ],
+      "maskClasses": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "aria": {
+        "aria-label": "Queue editor",
+        "aria-labelledby": "custom-name",
+        "aria-describedby": null,
+        "aria-description": "Queue status",
+        "aria-modal": "false",
+        "aria-busy": "false",
+        "aria-live": "polite",
+        "aria-atomic": "true",
+        "aria-keyshortcuts": "Control+Enter",
+        "aria-details": "custom-help"
+      },
+      "data": {
+        "data-state": "ready",
+        "data-count": "1",
+        "data-ready": "true",
+        "data-empty": "",
+        "data-cleared": null,
+        "data-next": "new"
+      },
+      "role": "alertdialog",
+      "idAt": [
+        false,
+        false,
+        true
+      ],
+      "ariaAt": [
+        false,
+        false,
+        true
+      ],
+      "dataAt": [
+        false,
+        true,
+        false
+      ],
+      "maskClasses": [
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "events": {
+    "events": {
+      "focus": [],
+      "enter": [
+        {
+          "scope": "outer",
+          "kind": "over",
+          "type": "mouseover",
+          "target": "editor",
+          "current": "section",
+          "key": null,
+          "prevented": false
+        },
+        {
+          "scope": "outer",
+          "kind": "enter",
+          "type": "mouseenter",
+          "target": "editor",
+          "current": "section",
+          "key": null,
+          "prevented": false
+        }
+      ],
+      "leave": [
+        {
+          "scope": "outer",
+          "kind": "leave",
+          "type": "mouseleave",
+          "target": "editor",
+          "current": "section",
+          "key": null,
+          "prevented": false
+        }
+      ],
+      "key": [
+        {
+          "scope": "outer",
+          "kind": "down",
+          "type": "keydown",
+          "target": "editor",
+          "current": "section",
+          "key": "a",
+          "prevented": false
+        },
+        {
+          "scope": "outer",
+          "kind": "up",
+          "type": "keyup",
+          "target": "editor",
+          "current": "section",
+          "key": "a",
+          "prevented": false
+        }
+      ],
+      "click": [
+        {
+          "scope": "outer",
+          "kind": "click",
+          "type": "click",
+          "target": "action",
+          "current": "section",
+          "key": null,
+          "prevented": false
+        }
+      ],
+      "updated": [
+        {
+          "scope": "next",
+          "kind": "click",
+          "type": "click",
+          "target": "action",
+          "current": "section",
+          "key": null,
+          "prevented": false
+        }
+      ],
+      "close": [
+        {
+          "scope": "next",
+          "kind": "request",
+          "type": "click",
+          "target": "close",
+          "current": "close",
+          "key": null,
+          "prevented": false
+        },
+        {
+          "scope": "next",
+          "kind": "click",
+          "type": "click",
+          "target": "close",
+          "current": "section",
+          "key": null,
+          "prevented": false
+        }
+      ]
+    },
+    "escape": {
+      "guard": [
+        {
+          "scope": "next",
+          "kind": "down",
+          "type": "keydown",
+          "target": "action",
+          "current": "section",
+          "key": "Escape",
+          "prevented": true
+        },
+        {
+          "scope": "next",
+          "kind": "request",
+          "type": "keydown",
+          "target": "action",
+          "current": null,
+          "key": "Escape",
+          "prevented": true
+        },
+        {
+          "scope": "next",
+          "kind": "up",
+          "type": "keyup",
+          "target": "action",
+          "current": "section",
+          "key": "Escape",
+          "prevented": false
+        }
+      ]
+    },
+    "mask": {
+      "click": [
+        {
+          "scope": "outer",
+          "kind": "request",
+          "type": "click",
+          "target": "mask",
+          "current": "mask",
+          "key": null,
+          "prevented": false
+        }
+      ]
+    },
+    "nested-inline": {
+      "click": [
+        {
+          "scope": "inner",
+          "kind": "click",
+          "type": "click",
+          "target": "child-action",
+          "current": "section",
+          "key": null,
+          "prevented": false
+        },
+        {
+          "scope": "outer",
+          "kind": "click",
+          "type": "click",
+          "target": "child-action",
+          "current": "section",
+          "key": null,
+          "prevented": false
+        }
+      ],
+      "key": [
+        {
+          "scope": "inner",
+          "kind": "down",
+          "type": "keydown",
+          "target": "child-action",
+          "current": "section",
+          "key": "Control",
+          "prevented": false
+        },
+        {
+          "scope": "outer",
+          "kind": "down",
+          "type": "keydown",
+          "target": "child-action",
+          "current": "section",
+          "key": "Control",
+          "prevented": false
+        },
+        {
+          "scope": "inner",
+          "kind": "up",
+          "type": "keyup",
+          "target": "child-action",
+          "current": "section",
+          "key": "Control",
+          "prevented": false
+        },
+        {
+          "scope": "outer",
+          "kind": "up",
+          "type": "keyup",
+          "target": "child-action",
+          "current": "section",
+          "key": "Control",
+          "prevented": false
+        }
+      ]
+    },
+    "nested-portal": {
+      "click": [
+        {
+          "scope": "inner",
+          "kind": "click",
+          "type": "click",
+          "target": "child-action",
+          "current": "section",
+          "key": null,
+          "prevented": false
+        },
+        {
+          "scope": "outer",
+          "kind": "click",
+          "type": "click",
+          "target": "child-action",
+          "current": "section",
+          "key": null,
+          "prevented": false
+        }
+      ],
+      "key": [
+        {
+          "scope": "inner",
+          "kind": "down",
+          "type": "keydown",
+          "target": "child-action",
+          "current": "section",
+          "key": "Control",
+          "prevented": false
+        },
+        {
+          "scope": "outer",
+          "kind": "down",
+          "type": "keydown",
+          "target": "child-action",
+          "current": "section",
+          "key": "Control",
+          "prevented": false
+        },
+        {
+          "scope": "inner",
+          "kind": "up",
+          "type": "keyup",
+          "target": "child-action",
+          "current": "section",
+          "key": "Control",
+          "prevented": false
+        },
+        {
+          "scope": "outer",
+          "kind": "up",
+          "type": "keyup",
+          "target": "child-action",
+          "current": "section",
+          "key": "Control",
+          "prevented": false
+        }
+      ]
+    }
+  }
+}

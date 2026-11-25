@@ -23263,7 +23263,12 @@
         "tests/browser/fixtures/ant-design-drawer-panel-reference.json",
         "tests/browser/drawer-panel.spec.ts",
         "tests/browser/drawer-panel-hydration.spec.ts",
-        "tests/package/drawer-panel.ssr.test.ts"
+        "tests/package/drawer-panel.ssr.test.ts",
+        "tests/browser/fixtures/DrawerDomFixtures.svelte",
+        "tests/browser/fixtures/ant-design-drawer-dom-reference.json",
+        "tests/browser/drawer-dom.spec.ts",
+        "tests/browser/drawer-dom-hydration.spec.ts",
+        "tests/package/drawer-dom.ssr.test.ts"
       ],
       "features": [
         {
@@ -23291,6 +23296,25 @@
             "tests/package/drawer-panel.ssr.test.ts"
           ],
           "note": "Два совпавших UMD-прогона Ant Design 6.6.8 покрывают 24 профиля и 48 кадров. Отдельные два прогона подтверждают приоритет transform и opacity в четырёх состояниях перехода и порядок afterOpenChange. Кнопка учитывает logical placement, disabled, locale/ARIA и приоритет иконок. Loading заменяет тело активным Skeleton из пяти строк. drawerRender переиспользует или заменяет секцию, bind:panelRef следует её lifecycle. Semantic callbacks получают props оболочки и содержимого раздельно. CSS declarations, snippets и bindable ref следуют публичным контрактам Svelte. Прежние class/style остаются на нативном dialog; ConfigProvider.drawer.class/style оформляют секцию. Проверены RTL, custom prefix, forceRender, destroyOnHidden и строгая гидратация."
+        },
+        {
+          "id": "panel-dom",
+          "title": "Содержимое, DOM-атрибуты и события секции",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/drawer.md",
+            "src/lib/Drawer.svelte",
+            "src/lib/DrawerPanel.svelte",
+            "src/lib/drawer-panel.engine.ts",
+            "src/lib/drawer.types.ts",
+            "tests/browser/fixtures/DrawerDomFixtures.svelte",
+            "tests/browser/fixtures/ant-design-drawer-dom-reference.json",
+            "tests/browser/drawer-dom.spec.ts",
+            "tests/browser/drawer-dom-hydration.spec.ts",
+            "tests/package/drawer-dom.ssr.test.ts"
+          ],
+          "note": "Два совпавших прогона UMD Ant Design 6.6.8 (984592267de88fbf9cdaecc96a56629e721c709d) и @rc-component/drawer 1.4.2. Восемь вариантов title/extra/footer сохраняют ноль, строки, массивы и исходную проверку присутствия слота. Два кадра ARIA/data измеряют role, ложные и удаляемые значения, класс maskClassName и semantic mask. ARIA и id принадлежат native dialog, data-* — wrapper. Пять профилей событий проверяют currentTarget, смену обработчика, порядок click/onClose, границу маски и вложенные порталы. DrawerPopup заменяет публичный React onFocus обработчиком ignoreElement. В Svelte onfocusin сообщает о фокусе потомков. React закрывается по Escape и при preventDefault в onKeyDown, Svelte учитывает отмену. События используют нативный DOM-маршрут, включая target mouseenter/mouseleave и границы отдельного портала. SSR и строгая hydration сохраняют атрибуты и идентичность узлов."
         },
         {
           "id": "compact-isolation",
@@ -23434,6 +23458,14 @@
             "tests/package/drawer-geometry.ssr.test.ts"
           ],
           "note": "Четыре UMD-профиля 6.6.8 проверяют внешний open, начальный показ, forceRender, destroyOnHidden и прерванный уход. afterOpenChange(false) вызывается с ещё смонтированным содержимым после закрытия native dialog. Прерывание инвалидирует предыдущую фазу. SSR готовит оболочку и содержимое без уведомления."
+        },
+        {
+          "id": "custom-motion",
+          "title": "Пользовательская конфигурация переходов Drawer и маски",
+          "state": "missing",
+          "requiredForV1": false,
+          "evidence": [],
+          "note": "Типы Ant Design 6.6.8 наследуют motion и maskMotion из @rc-component/drawer 1.4.2. Drawer передаёт их через rest поверх штатных CSSMotion-настроек. Публичная настройка этих переходов пока остаётся открытой."
         },
         {
           "id": "mask-focusability",

@@ -5,7 +5,7 @@
   import Skeleton from './Skeleton.svelte';
   import { useConfig } from './config-context';
   import {
-    getDrawerPanelSemanticProps, resolveDrawerClose, resolveDrawerSemantics
+    getDrawerPanelSemanticProps, hasDrawerContent, resolveDrawerClose, resolveDrawerSemantics
   } from './drawer-panel.engine';
   import type { DrawerProps } from './drawer.types';
 
@@ -23,8 +23,10 @@
     resolveDrawerSemantics(semanticProps, config.drawer, 'panel')
   );
   const { title, extra, footer, children, loading } = $derived(props);
-  const hasTitle = $derived(title !== undefined);
-  const closeOnly = $derived(close && !hasTitle && !extra);
+  const hasTitle = $derived(hasDrawerContent(title));
+  const hasExtra = $derived(hasDrawerContent(extra));
+  const hasFooter = $derived(hasDrawerContent(footer));
+  const closeOnly = $derived(close && !hasTitle && !hasExtra);
 </script>
 
 <style>
@@ -68,7 +70,7 @@
   </button>
 {/snippet}
 
-{#if hasTitle || close || extra}
+{#if hasTitle || close || hasExtra}
   <div data-ant-drawer-header class={[
     `${prefix}-header`, closeOnly && `${prefix}-header-close-only`, classes.header
   ]} style={styles.header}>
@@ -77,12 +79,12 @@
       {#if hasTitle}
         <h2 id={titleId} data-ant-drawer-title
           class={[`${prefix}-title`, classes.title]} style={styles.title}>
-          {#if typeof title === 'function'}{@render title()}{:else}{title}{/if}
+          <RenderContent value={title} />
         </h2>
       {/if}
     </div>
-    {#if extra}<div data-ant-drawer-extra class={[`${prefix}-extra`, classes.extra]}
-      style={styles.extra}>{@render extra()}</div>{/if}
+    {#if hasExtra}<div data-ant-drawer-extra class={[`${prefix}-extra`, classes.extra]}
+      style={styles.extra}><RenderContent value={extra} /></div>{/if}
     {#if close?.placement === 'end' && close.icon !== null}{@render closeButton(close)}{/if}
   </div>
 {/if}
@@ -92,5 +94,5 @@
       class="ant-svelte-drawer-loading" rootClassName={`${prefix}-body-skeleton`} />
   {:else}{@render children?.()}{/if}
 </div>
-{#if footer}<div data-ant-drawer-footer class={[`${prefix}-footer`, classes.footer]}
-  style={styles.footer}>{@render footer()}</div>{/if}
+{#if hasFooter}<div data-ant-drawer-footer class={[`${prefix}-footer`, classes.footer]}
+  style={styles.footer}><RenderContent value={footer} /></div>{/if}

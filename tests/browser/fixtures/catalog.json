@@ -485,6 +485,11 @@
     "root": "drawer-panel-fixture"
   },
   {
+    "id": "drawer-dom",
+    "module": "./DrawerDomFixtures.svelte",
+    "root": "drawer-dom-fixture"
+  },
+  {
     "id": "alert",
     "module": "./AlertFixtures.svelte",
     "root": "alert-fixture"

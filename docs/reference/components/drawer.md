@@ -20,13 +20,18 @@ Drawer использует нативный dialog. `bind:open` передаё�
 Начальное `open={true}` подготавливает содержимое в SSR и открывает dialog
 после гидратации. Серверный dialog остаётся закрытым до подключения браузера.
 
-Title принимает строку или пассивный Snippet, children/extra/footer — Snippet.
-Заголовок использует h2; интерактивные действия размещайте в extra/footer.
-Без footer нижняя область отсутствует. Без title именуйте dialog через
-aria-label или aria-labelledby. Внешнее aria-labelledby имеет приоритет;
-aria-label заменяет автоматически созданную связь с визуальным title.
-Aria-describedby связывает внешнее описание. `id`, `class` и `style` относятся
-к корневому dialog.
+`title`, `extra` и `footer` принимают текст, число, snippet или массив
+содержимого. Ноль отображается как текст. Пустая строка, `false`, `null`
+и `undefined` скрывают область. `true` и пустой массив оставляют пустую
+область, как в Ant Design. `children` передаётся через snippet.
+Заголовок использует `h2`. Интерактивные действия размещайте в `extra` и `footer`.
+
+Без заголовка именуйте диалог через `aria-label` или `aria-labelledby`.
+Внешний `aria-labelledby` имеет приоритет. `aria-label` заменяет автоматически
+созданную связь с визуальным заголовком. `id`, `role`, `aria-*`, `class` и
+`style` относятся к нативному `dialog`. Атрибуты `data-*` относятся к
+выдвижной оболочке `*-content-wrapper`. Для маски `maskClassName` дополняет
+`classNames.mask`.
 
 PrefixCls задаёт локальный namespace Drawer, его mask/panel/header/body/footer.
 Пустая строка наследует ConfigProvider.prefixCls. 32 исходных CSS-правила без
@@ -94,6 +99,17 @@ pointerup для фона. Callback уведомляет о запросе и н
 не вызывают onClose. Нативное закрытие синхронизирует binding; позднее событие
 старого закрытия не закрывает заново открытый dialog.
 
+Секция вызывает `onclick`, `onmouseenter`, `onmouseover`, `onmouseleave`,
+`onkeydown`, `onkeyup` и `onfocusin`. `event.currentTarget` указывает на
+секцию из `bind:panelRef`. События следуют DOM-вложенности, в том числе при
+переносе секции через `getContainer`. Клик по кнопке закрытия сначала вызывает
+`onClose`, затем доходит до `onclick` секции. Маска вызывает `onClose` своим
+событием. `preventDefault()` в `onkeydown` отменяет закрытие по Escape.
+[Эталон событий и атрибутов](../../../tests/browser/fixtures/ant-design-drawer-dom-reference.json)
+· [Chromium](../../../tests/browser/drawer-dom.spec.ts)
+· [SSR](../../../tests/package/drawer-dom.ssr.test.ts)
+· [Гидратация](../../../tests/browser/drawer-dom-hydration.spec.ts)
+
 По умолчанию Drawer с маской открывается через `showModal()`. Браузер
 фокусирует первый доступный control или сам dialog, включает inert для
 фона и удерживает фокус. После закрытия фокус возвращается к opener.
@@ -101,7 +117,7 @@ pointerup для фона. Callback уведомляет о запросе и н
 `focusable.focusTriggerAfterClose={false}` отключает возврат.
 `autoFocus={false}` сохраняет текущий фокус при свободном перемещении.
 При включённом trap фокус остаётся внутри панели.
-В управляемом режиме `aria-modal` применяется при включённых маске и trap.
+При отсутствии явного `aria-modal` атрибут применяется при включённых маске и trap.
 Select, Tooltip и Popover обрабатывают свой Escape раньше Drawer.
 Поддерживается стек с Modal
 и другими модальными Drawer. Вложенная панель смещает родительскую внутрь
@@ -205,4 +221,3 @@ Drawer передаёт ему document.body, как Ant wrapper. Getter выз�
 Drawer сохраняют fullscreen-геометрию и нативный focus barrier.
 Эталон — @rc-component/drawer 1.4.2 и portal 2.1.3;
 [LICENSE.rc-drawer](../../../src/lib/vendor/LICENSE.rc-drawer) сохранена в пакете.
-

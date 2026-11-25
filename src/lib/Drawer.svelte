@@ -17,7 +17,7 @@
     getDrawerPushDistance, getDrawerPushOffset, getDrawerSize, isDrawerHorizontal,
     resolveDrawerInteraction
   } from './drawer.engine';
-  import { resolveDrawerSemantics } from './drawer-panel.engine';
+  import { getDrawerAttributes, hasDrawerContent, resolveDrawerSemantics } from './drawer-panel.engine';
   import { provideDrawerPush, useDrawerPush } from './drawer-push-context';
   import { connectDrawerResize } from './drawer-resize.dom';
   import { createDialogContainer } from './dialog-container.model.svelte.js';
@@ -41,6 +41,7 @@
     zIndex,
     keyboard = true,
     mask,
+    maskClassName,
     focusable,
     autoFocus = true,
     forceRender = false,
@@ -51,7 +52,7 @@
     id,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledby,
-    'aria-describedby': ariaDescribedby,
+    'aria-modal': ariaModal,
     class: className = '',
     style,
     rootClassName,
@@ -112,6 +113,22 @@
   let active = true;
   let rootId = $derived(id ?? `ant-drawer-${generatedId}`);
   let titleId = $derived(`${rootId}-title`);
+  const dialogLabelId = $derived(
+    ariaLabelledby ?? (ariaLabel == null && hasDrawerContent(title) ? titleId : undefined)
+  );
+  const dialogModal = $derived(
+    ariaModal === undefined ? interaction.mask.enabled && interaction.trap || undefined : ariaModal
+  );
+  const attributes = $derived(getDrawerAttributes(props));
+  const sectionEvents = $derived({
+    onclick: props.onclick,
+    onmouseenter: props.onmouseenter,
+    onmouseover: props.onmouseover,
+    onmouseleave: props.onmouseleave,
+    onkeydown: props.onkeydown,
+    onkeyup: props.onkeyup,
+    onfocusin: props.onfocusin
+  });
   let renderContent = $derived(open || closing || forceRender || mounted && !destroyOnHidden);
   const dialogStyle = $derived([
     componentTheme.style,
@@ -340,7 +357,10 @@
 
 <!-- Keyed range содержит только переносимый dialog; head-style anchors остаются снаружи. -->
 <NoCompactStyle>
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`drawer-prefix:${componentPrefix}`} />{/if}{#key container.key}<dialog data-ant-drawer-prefix={componentPrefix} data-ant-drawer-placement={placement}
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`drawer-prefix:${componentPrefix}`} />{/if}{#key container.key}<dialog
+  {...attributes.dialog}
+  data-ant-drawer-prefix={componentPrefix}
+  data-ant-drawer-placement={placement}
   data-ant-drawer-maskless={!interaction.mask.enabled || undefined}
   data-ant-drawer-inline={!interaction.native && getContainer === false || undefined}
   data-ant-dialog-unlocked={scrollUnlocked || undefined}
@@ -357,16 +377,15 @@
     classes.root,
     className
   ]} style={dialogStyle} style:--ant-svelte-drawer-size={sizeInCss} dir={config.direction}
-    aria-modal={interaction.mask.enabled && interaction.trap || undefined}
-    aria-label={ariaLabel} aria-labelledby={ariaLabelledby
-      ?? (ariaLabel === undefined && title !== undefined
-        ? titleId
-        : undefined)} aria-describedby={ariaDescribedby} oncancel={handleCancel} onclose={handleClose}
+    aria-modal={dialogModal} aria-labelledby={dialogLabelId}
+    oncancel={handleCancel} onclose={handleClose}
     {@attach container.attach} {@attach connectRuntime}>
   {#if interaction.mask.enabled}<div data-ant-drawer-mask class={[
-    `${componentPrefix}-mask`, interaction.mask.blur && `${componentPrefix}-mask-blur`, classes.mask
+    `${componentPrefix}-mask`, interaction.mask.blur && `${componentPrefix}-mask-blur`,
+    classes.mask, maskClassName
   ]} style={styles.mask} aria-hidden="true"></div>{/if}
-  <div data-ant-drawer-content-wrapper data-ant-drawer-dragging={resizing || undefined} class={[
+  <div {...attributes.wrapper} data-ant-drawer-content-wrapper
+    data-ant-drawer-dragging={resizing || undefined} class={[
     `${componentPrefix}-content-wrapper`,
     resizing && `${componentPrefix}-content-wrapper-dragging`,
     classes.wrapper
@@ -380,7 +399,7 @@
         classes.dragger
       ]} style={styles.dragger} {@attach connectResizeHandle}></div>{/if}
       {#snippet section()}
-        <div data-ant-drawer-section
+        <div {...sectionEvents} data-ant-drawer-section
           class={[`${componentPrefix}-section`, config.drawer?.class, classes.section]}
           style={styles.section} {@attach bindPanel} {@attach watermarkPanel}>
           <DrawerPanel {props} prefix={componentPrefix} {titleId} {requestClose} />
