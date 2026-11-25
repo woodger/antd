@@ -70,22 +70,28 @@ export function serializeThemeVariables(variables: Record<string, string>, prefi
   return entries.map(([key, value]) => `${key}:${value}`).join(';');
 }
 
+/** Сохраняет вычисленные CSS-переменные для восстановления после вложенного компонента. */
+export function snapshotThemeVariables(names: Iterable<string>, scope: string) {
+  const snapshots: string[] = [];
+  const resets: Record<string, string> = {};
+  for (const name of names) {
+    const snapshot = `--ant-svelte-${scope}-${name.slice(2)}`;
+    snapshots.push(`${snapshot}:var(${name})`);
+    resets[name] = `var(${snapshot})`;
+  }
+
+  return { snapshots: snapshots.join(';'), resets };
+}
+
 /** Снимок provider CSS сохраняет его inline overrides при сбросе aliases на дочерних roots. */
 export function themeVariableScopes(
   variables: Record<string, string>,
   prefix: string,
   key: string
 ) {
-  const snapshots: string[] = [];
-  const resets: Record<string, string> = {};
-  for (const name of Object.keys(variables)) {
-    const snapshot = `--ant-svelte-theme-base-${name.slice(2)}`;
-    snapshots.push(`${snapshot}:var(${name})`);
-    resets[name] = `var(${snapshot})`;
-  }
-
+  const { snapshots, resets } = snapshotThemeVariables(Object.keys(variables), 'theme-base');
   return {
-    snapshots: snapshots.join(';'),
+    snapshots,
     css: `.${key}{${serializeThemeVariables(resets, prefix)}}`
   };
 }

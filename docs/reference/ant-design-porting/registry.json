@@ -19699,6 +19699,25 @@
           "note": "Два одинаковых UMD-прогона Ant Design 6.6.8 и rc-table 1.11.1 для 10 профилей дают 34 состояния и 10 SSR-снимков. Отдельный профиль видимой полосы даёт два состояния с gutter 15 px. Snippet получает корневые записи текущей страницы. Проверены scroll.y, sticky, showHeader, пустое тело, приоритет встроенного virtual, DOM scrollTo по позиции и ключу, offset и index, прямая передача запроса proxy handle, LTR/RTL, синхронизация колёсика, закреплённых итогов и положения владельца. Применение сортировки и страницы следует scrollToFirstRowOnChange. Svelte читает фактический DOM gutter и сохраняет caption в видимой шапке. Строгая гидратация подтверждает DOM identity, ввод и фокус."
         },
         {
+          "id": "loading-spin",
+          "title": "Настройки Spin и пустое состояние при загрузке Table",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/Table.svelte",
+            "src/lib/table.types.ts",
+            "src/lib/Spin.svelte",
+            "src/lib/table-prefix.engine.ts",
+            "docs/reference/components/table.md",
+            "tests/browser/fixtures/ant-design-table-loading-reference.json",
+            "tests/browser/table-loading.spec.ts",
+            "tests/browser/table-virtual-hydration.spec.ts",
+            "tests/package/table-loading.ssr.test.ts",
+            "tests/package/table-loading.types.ts"
+          ],
+          "note": "Два совпавших UMD-прогона Ant Design 6.6.8 дали 42 браузерных состояния и 14 SSR-снимков. Объект loading делегируется Spin, включая size, delay, percent, fullscreen, description, indicator и semantic styles. Исходный placeholder зависит от отсутствия данных и запроса загрузки до delay. Нативный Spin блокирует собственные controls и snippets через inert, отменяет отложенный индикатор и возвращает удержанный фокус; проверены браузер, SSR без таймеров и строгая гидратация редактора. Таблица сохраняет свои CSS-токены внутри Spin при стандартном и пользовательском префиксе. Boolean loading сохраняет согласованный отдельный статус и скрытие пустого описания для явно пустого массива."
+        },
+        {
           "id": "element-components",
           "title": "Замена элементов таблицы, шапки и тела",
           "state": "supported",

@@ -31,10 +31,9 @@ function withCallerHeaderClass(classes: string[], profile: string) {
 
 /** Проецирует семантический контекст React на элементы нативной таблицы. */
 export function expectedTableSemantics(profile: string, state: SourceState) {
-  const root = state.semantic[0];
   const semantic = state.semantic.map(node => {
     if (isTablePager(node)) {
-      return { ...node, tag: 'nav', parent: root.classes };
+      return { ...node, tag: 'nav' };
     }
 
     return {

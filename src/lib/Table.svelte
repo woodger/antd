@@ -4,7 +4,7 @@
   import { untrack, type Snippet } from 'svelte';
   import type { Attachment } from 'svelte/attachments';
   import { useConfig } from './config-context';
-  import { getTablePrefixCss } from './table-prefix.engine';
+  import { getTablePrefixCss, getTableSpinTheme } from './table-prefix.engine';
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
@@ -47,6 +47,7 @@
     getTableFilters
   } from './table.engine';
   import { flattenTableRows, type TableRow } from './table-tree.engine';
+  import type { SpinSemanticInfo } from './spin.types';
   import type {
     TableChange,
     TableColumn,
@@ -92,7 +93,7 @@
   let {
     mode = 'client',
     total,
-    dataSource,
+    dataSource: suppliedData,
     columns,
     column,
     rowKey,
@@ -136,6 +137,14 @@
     class: className = '',
     rootClassName
   } = $derived(rawProps);
+
+  const emptyData: readonly Row[] = [];
+  const dataSource = $derived(suppliedData ?? emptyData);
+  const spinOptions = $derived(typeof loading === 'object' ? loading : undefined);
+  const simpleLoading = $derived(loading === true);
+  const loadingRequested = $derived(spinOptions ? spinOptions.spinning ?? true : simpleLoading);
+  const hideEmpty = $derived(loadingRequested && (simpleLoading || suppliedData == null));
+  const passiveSpin = { role: 'presentation' as const, 'aria-label': '' };
 
   const config = useConfig();
   let prefix = $derived(config.getPrefixCls('table', prefixCls));
@@ -265,7 +274,7 @@
   type TableRowEntry = (typeof visibleRows)[number];
   const treeControlColumn = $derived(rowSelection ? 1 : 0);
 
-  let resolvedDisabled = $derived((disabled ?? config.componentDisabled) || loading);
+  let resolvedDisabled = $derived((disabled ?? config.componentDisabled) || loadingRequested);
   const pagerDisabled = $derived(resolvedDisabled || Boolean(pagerOptions?.disabled));
   let selectionOptions = $derived(typeof rowSelection === 'object' ? rowSelection : undefined);
   const selection = createTableSelection({
@@ -298,6 +307,10 @@
   const classes = $derived(semantics.classes);
   const slots = $derived(semantics.styles);
   const rootStyle = $derived(appendSemanticStyle(componentTheme.style || undefined, slots.root));
+  const spinTheme = $derived(designTheme.enabled
+    ? getTableSpinTheme(designTheme.state, rootStyle) : undefined);
+  const themedRootStyle = $derived(appendSemanticStyle(rootStyle, spinTheme?.root));
+  const spinStyles = $derived(spinTheme ? getLoadingStyles : spinOptions?.styles);
   const pagerSemantics = $derived(
     getTablePaginationSemantics(classes.pagination, slots.pagination, pagination)
   );
@@ -830,6 +843,14 @@
     }, section);
   });
 
+  /** Настройки контейнера из loading могут переопределить восстановленные токены. */
+  function getLoadingStyles(info: SpinSemanticInfo) {
+    const options = spinOptions?.styles;
+    const styles = typeof options === 'function' ? options(info) : options;
+    const container = appendSemanticStyle(spinTheme?.content, styles?.container);
+    return { ...styles, container: container ?? undefined };
+  }
+
   function readTableData(sorts: readonly TableSortState[], selected: TableFilters) {
     return getTableData(dataSource, resolvedColumns, rowKey, sorts, selected, mode, childrenColumnName);
   }
@@ -1180,6 +1201,18 @@
     text-overflow: ellipsis;
   }
   .loading-state { display: flex; align-items: center; gap: var(--ant-margin-xs); padding: var(--ant-padding-sm); color: var(--ant-color-primary); }
+  /* Spin принимает фокус ещё до применения inert и смены стиля обёртки. */
+  [data-ant-table-part="wrapper"] > :global([data-ant-table-passive-spin]) {
+    position: static;
+    color: inherit;
+    font: inherit;
+  }
+  [data-ant-table-part="wrapper"] > :global([data-ant-table-passive-spin] > [data-ant-spin-part="container"]) {
+    display: contents;
+  }
+  [data-ant-table-part="wrapper"] > :global([data-ant-table-passive-spin] > [data-ant-spin-part="container"]::after) {
+    content: none;
+  }
   [data-ant-table-part="wrapper"] [data-ant-table-part="expand-icon"]:disabled { color: var(--ant-color-text-disabled); border-color: var(--ant-table-border-color); cursor: not-allowed; }
   [data-ant-table-part="wrapper"] [data-ant-table-part="table"] :global([data-ant-table-part="body"] > tr[data-ant-table-part="expanded-row"] > td[data-ant-table-part="cell"]) { padding: 0; }
   .expanded-content { position: sticky; inset-inline-start: 0; box-sizing: border-box; width: var(--ant-table-viewport-width, 100%); max-width: 100%; padding: var(--ant-table-cell-padding-block) var(--ant-table-cell-padding-inline); overflow-wrap: anywhere; }
@@ -1653,7 +1686,7 @@
   {@const attributes: TableElementAttributes<'table'> = {
     'aria-label': heading ? ariaLabel ?? (caption && bodyRenderer ? undefined : strings.label)
       : undefined,
-    'aria-busy': heading && loading || undefined
+    'aria-busy': heading && loadingRequested || undefined
   }}
   {@const ref = (node: HTMLElement) => registerBandTable(kind, node)}
   {#snippet bandContent()}
@@ -1703,10 +1736,10 @@
 {/snippet}
 
 {#snippet bodyPlaceholder()}
-  {#snippet contents()}{#if !loading}
+  {#snippet contents()}{#if !hideEmpty}
     {#snippet nativeEmpty()}<Empty image="simple" description={strings.emptyText} />{/snippet}
     <RenderEmpty componentName="Table" local={empty ?? locale?.emptyText} fallback={nativeEmpty} />
-  {:else}&nbsp;{/if}{/snippet}
+  {:else if simpleLoading}&nbsp;{/if}{/snippet}
   {#snippet cells()}
     {@render dataCell('td', {
       'data-ant-table-part': 'cell', class: `${prefix}-cell`, colspan: columnCount
@@ -1847,7 +1880,7 @@
 {#snippet mainTable()}
   {@const attributes: TableElementAttributes<'table'> = {
     'aria-label': ariaLabel ?? (caption ? undefined : strings.label),
-    'aria-busy': loading || undefined,
+    'aria-busy': loadingRequested || undefined,
     'aria-rowcount': virtualRowIndices ? visibleRows.length + inlineHeaderCount : undefined
   }}
   {@const minWidth = virtual ? '100%' : cssSize(scroll?.x)}
@@ -1874,18 +1907,7 @@
   {/if}
 {/snippet}
 
-{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`table-prefix:${prefix}:${rootPrefix}`} />{/if}<div bind:this={nativeElement} data-ant-table-part="wrapper" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} class={[
-    `${prefix}-wrapper ant-table-css-var`,
-    componentTheme.className,
-    designTheme.enabled && 'table-source-theme',
-    !rowHoverable && 'table-hover-disabled',
-    config.direction === 'rtl' && `${prefix}-wrapper-rtl`,
-    config.table?.class,
-    className,
-    rootClassName,
-    classes.root
-  ]} dir={config.direction} style={rootStyle}>
-  {#if loading}<div class="loading-state" role="status"><Spin size="small" aria-hidden />{strings.loadingText}</div>{/if}
+{#snippet tableContent()}
   {#if pagerPlacements.top}{@render tablePager(pagerPlacements.top)}{/if}
   <div data-ant-table-part="table" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} data-ant-table-size={resolvedSize} class={[
       `${prefix}`,
@@ -1964,4 +1986,22 @@
       style={slots.footer}>{@render footer(panelData)}</div>{/if}
   </div>
   {#if pagerPlacements.bottom}{@render tablePager(pagerPlacements.bottom)}{/if}
+{/snippet}
+
+{#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`table-prefix:${prefix}:${rootPrefix}`} />{/if}<div bind:this={nativeElement} data-ant-table-part="wrapper" data-ant-table-prefix={prefix} data-ant-table-root-prefix={rootPrefix} class={[
+    `${prefix}-wrapper ant-table-css-var`,
+    componentTheme.className,
+    designTheme.enabled && 'table-source-theme',
+    !rowHoverable && 'table-hover-disabled',
+    config.direction === 'rtl' && `${prefix}-wrapper-rtl`,
+    config.table?.class,
+    className,
+    rootClassName,
+    classes.root
+  ]} dir={config.direction} style={themedRootStyle}>
+  {#if simpleLoading}
+    <div class="loading-state" role="status"><Spin size="small" aria-hidden />{strings.loadingText}</div>
+  {/if}
+  <Spin {...(spinOptions ?? passiveSpin)} data-ant-table-passive-spin={spinOptions ? undefined : ''}
+    spinning={Boolean(spinOptions) && loadingRequested} styles={spinStyles} children={tableContent} />
 </div>

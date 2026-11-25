@@ -10,7 +10,7 @@ type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends
 type Assert<Value extends true> = Value;
 
 export type TableSummaryContracts = [
-  Assert<Equal<Props['dataSource'], readonly Row[]>>,
+  Assert<Equal<Props['dataSource'], readonly Row[] | null | undefined>>,
   Assert<Equal<Props['onChange'], ((change: TableChange<Row>) => void) | undefined>>,
   Assert<Equal<Props['summary'], Snippet<[readonly Row[]]> | TableSummaryConfig<Row> | undefined>>,
   Assert<Equal<ComponentProps<typeof Table.Summary.Cell>, TableSummaryCellProps>>,

@@ -3,6 +3,7 @@ import { hydrate } from 'svelte';
 import TableVirtualFixture from './TableVirtualFixture.svelte';
 import TableCustomBodyFixture from './TableCustomBodyFixture.svelte';
 import TableElementComponentsFixture from './TableElementComponentsFixture.svelte';
+import TableLoadingFixture from './TableLoadingFixture.svelte';
 
 const target = document.getElementById('root');
 if (!target) {
@@ -20,6 +21,11 @@ target.addEventListener('hydrate-table-virtual', () => {
   }
   else if (query.has('custom-body')) {
     hydrate(TableCustomBodyFixture, { target, props: { profileId: 'dom' }, recover: false });
+  }
+  else if (query.has('table-loading')) {
+    hydrate(TableLoadingFixture, {
+      target, props: { profileId: 'object-editor', initiallyIdle: true }, recover: false
+    });
   }
   else {
     hydrate(TableVirtualFixture, {

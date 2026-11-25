@@ -1838,6 +1838,11 @@
     "root": "table-locale-fixture"
   },
   {
+    "id": "table-loading",
+    "module": "./TableLoadingFixture.svelte",
+    "root": "table-loading-fixture"
+  },
+  {
     "id": "table-sorter",
     "module": "./TableSorterFixture.svelte",
     "root": "table-sorter-fixture"

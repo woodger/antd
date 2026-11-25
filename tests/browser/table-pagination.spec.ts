@@ -7,6 +7,7 @@ test.use({ viewport: source.reference.viewport, locale: 'en-US' });
 const fixture = '/?fixture=table-pagination&profile=';
 const root = '#table-pagination-fixture';
 const wrapper = root + ' [data-ant-table-part="wrapper"]';
+const spinContent = wrapper + ' > [data-ant-spin-root] > [data-ant-spin-part="container"]';
 const table = '[data-ant-table-part="table"]';
 
 type Edge = 'top' | 'bottom';
@@ -14,8 +15,8 @@ type Edge = 'top' | 'bottom';
 /** Выбирает видимый пейджер по месту относительно контейнера таблицы. */
 function pager(page: Page, edge: Edge) {
   return page.locator(edge === 'top'
-    ? wrapper + ' > nav:has(~ ' + table + ')'
-    : wrapper + ' > ' + table + ' ~ nav');
+    ? spinContent + ' > nav:has(~ ' + table + ')'
+    : spinContent + ' > ' + table + ' ~ nav');
 }
 
 /** Снимает состав и порядок пейджеров и их общее состояние с DOM пакета. */
@@ -196,7 +197,7 @@ test('Table keeps root bindings and server total ahead of nested settings', asyn
 
   await page.getByRole('button', { name: 'Clear total', exact: true }).click();
 
-  await expect(page.locator(wrapper + ' > nav')).toHaveCount(0);
+  await expect(page.locator(spinContent + ' > nav')).toHaveCount(0);
   await expect(owner).toHaveText('3 / 4');
   await expect(rows).toHaveText(['Record 0', 'Record 1', 'Record 2']);
   await expect(report).toHaveText(expected);

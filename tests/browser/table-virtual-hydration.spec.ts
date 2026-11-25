@@ -107,6 +107,53 @@ test('Table hydrates a custom scroll body and preserves the focused editor', asy
   }
 });
 
+test('Table restores the editor from its SSR markup after changing loading', async ({ page }) => {
+  const artifacts = new URL('../../.upstream/artifacts/table-loading-hydration-', import.meta.url);
+  const cacheDir = await mkdtemp(fileURLToPath(artifacts));
+  let server: ViteDevServer | undefined;
+  try {
+    server = await createServer({
+      configFile: fileURLToPath(new URL('./vite.config.ts', import.meta.url)),
+      server: { middlewareMode: true, hmr: { server: createHttpServer() }, watch: null },
+      appType: 'custom', cacheDir
+    });
+    const entry = new URL('./fixtures/table-virtual-hydration.server.ts', import.meta.url);
+    const { renderLoadingTableFixture } = await server.ssrLoadModule(fileURLToPath(entry));
+    const { body, head } = renderLoadingTableFixture();
+    await page.goto('/select-components-hydration.html?table-loading');
+    await page.addScriptTag({ type: 'module', url: '/table-virtual-hydration.client.ts' });
+    const root = page.locator('#root');
+    await expect(root).toHaveAttribute('data-hydration-ready', 'true');
+    await root.evaluate((node, html) => {
+      document.head.insertAdjacentHTML('beforeend', html.head);
+      node.innerHTML = html.body;
+    }, { body, head });
+    const input = root.locator('input[aria-label="Row draft"]');
+    const original = await input.elementHandle();
+    await input.fill('Edited during SSR');
+    await input.evaluate((node: HTMLInputElement) => node.setSelectionRange(2, 7));
+
+    await root.dispatchEvent('hydrate-table-virtual');
+    await expect(root).toHaveAttribute('data-hydrated', 'true');
+    await expect(input).toBeFocused();
+    await expect(input).toHaveValue('Edited during SSR');
+    await root.getByRole('button', { name: 'Apply loading options' }).dispatchEvent('click');
+    await expect(root.locator('[data-ant-spin-root]')).toBeFocused();
+    await root.getByRole('button', { name: 'Finish table loading' }).dispatchEvent('click');
+
+    await expect(input).toBeFocused();
+    await expect(input).toHaveValue('Edited during SSR');
+    expect(await input.evaluate((node, before) => node === before, original)).toBe(true);
+    expect(await input.evaluate((node: HTMLInputElement) => [
+      node.selectionStart, node.selectionEnd
+    ])).toEqual([2, 7]);
+  }
+  finally {
+    await server?.close();
+    await rm(cacheDir, { recursive: true, force: true });
+  }
+});
+
 test('virtual Table hydrates the focused editor before changing the visible window', async ({ page }) => {
   const cacheDir = await mkdtemp(join(tmpdir(), 'antd-table-virtual-'));
   let server: ViteDevServer | undefined;

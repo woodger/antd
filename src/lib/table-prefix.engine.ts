@@ -1,4 +1,7 @@
 import template from './vendor/table-prefix.css.js';
+import type { DesignTokenState } from './theme-context.types';
+import { serializeThemeVariables, snapshotThemeVariables, tokenToCSSVariable }
+  from './theme-css-variables.engine';
 
 /** Table owner и private nested border независимы от общих Checkbox/Pagination namespaces. */
 export function getTablePrefixCss(prefix: string, rootPrefix: string) {
@@ -31,4 +34,36 @@ export function getTablePrefixCss(prefix: string, rootPrefix: string) {
       return match === '"ant-table"' ? `"${prefix}"` : `" ${prefix}"`;
     }
   ).replace(/<\/style/gi, '<\\/style');
+}
+
+/** Восстанавливает изменённые общие токены Table после собственного CSS scope вложенного Spin. */
+export function getTableSpinTheme(state: DesignTokenState, rootStyle?: string | null) {
+  const declarations = (rootStyle ?? '').matchAll(/(?:^|;)\s*(--[\w-]+)\s*:/g);
+  const overrides = new Set(Array.from(declarations, match => match[1]));
+  for (const key of Object.keys(state.token.Spin ?? {})) {
+    overrides.add(tokenToCSSVariable(key, state.prefix));
+  }
+
+  const prefix = tokenToCSSVariable('', state.prefix);
+  const referenceStart = `var(${prefix}`;
+  const names = new Set<string>();
+  for (const value of Object.values(state.cssVar)) {
+    if (typeof value !== 'string' || !value.startsWith(referenceStart)) {
+      continue;
+    }
+
+    const prefixed = value.slice(4, -1);
+    const canonical = `--ant-${prefixed.slice(prefix.length)}`;
+    if (overrides.has(prefixed) || overrides.has(canonical)) {
+      names.add(prefixed);
+      names.add(canonical);
+    }
+  }
+
+  if (!names.size) {
+    return undefined;
+  }
+
+  const { snapshots, resets } = snapshotThemeVariables(names, 'table-base');
+  return { root: snapshots, content: serializeThemeVariables(resets) };
 }

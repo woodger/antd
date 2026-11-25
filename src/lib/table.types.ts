@@ -6,6 +6,7 @@ import type {
 import type { PaginationProps } from './Pagination.svelte';
 import type { CheckboxChangeEvent, CheckboxProps, CheckboxValue } from './checkbox.types';
 import type { DropdownProps } from './dropdown.types';
+import type { SpinProps } from './spin.types';
 import type { GridBreakpoint } from './grid.types';
 import type { PaginationSlots } from './pagination.types';
 import type { RadioChangeEvent } from './radio.types';
@@ -511,7 +512,8 @@ export interface TableProps<Row extends object> {
   /** @defaultValue 'client' */
   mode?: TableMode;
   total?: number;
-  dataSource: readonly Row[];
+  /** Пустой массив задаёт известный пустой результат. */
+  dataSource?: readonly Row[] | null;
   columns: TableColumnsType<Row>;
   /** Заполняет отсутствующие или равные undefined свойства групп и листьев. */
   column?: TableColumnDefaults<Row>;
@@ -555,8 +557,8 @@ export interface TableProps<Row extends object> {
   onChange?: (change: TableChange<Row>) => void;
   onSelectionChange?: (keys: TableKey[], rows: Row[], info: { type: 'single' | 'all'; }) => void;
   expandable?: TableExpandable<Row>;
-  /** @defaultValue false */
-  loading?: boolean;
+  /** Объект настраивает вложенный Spin. При отсутствии spinning он запрошен сразу. */
+  loading?: boolean | SpinProps;
   disabled?: boolean;
   /** @defaultValue false */
   bordered?: boolean;

@@ -2,6 +2,7 @@ import { render } from 'svelte/server';
 import TableVirtualFixture from './TableVirtualFixture.svelte';
 import TableCustomBodyFixture from './TableCustomBodyFixture.svelte';
 import TableElementComponentsFixture from './TableElementComponentsFixture.svelte';
+import TableLoadingFixture from './TableLoadingFixture.svelte';
 
 /** Рендерит то же начальное окно, с которым клиент начинает гидратацию. */
 export function renderVirtualTableFixture() {
@@ -17,5 +18,12 @@ export function renderCustomTableBodyFixture() {
 export function renderTableElementsFixture(stringTag: boolean) {
   return render(TableElementComponentsFixture, {
     props: { profileId: 'virtual', editor: true, stringTag }
+  });
+}
+
+/** Оставляет поле редактируемым до клиентской смены режима loading. */
+export function renderLoadingTableFixture() {
+  return render(TableLoadingFixture, {
+    props: { profileId: 'object-editor', initiallyIdle: true }
   });
 }
