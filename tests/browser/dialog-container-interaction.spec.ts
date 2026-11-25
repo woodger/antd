@@ -95,7 +95,10 @@ for (const name of ['modal-local', 'modal-local-shadow', 'drawer-local', 'drawer
 
     await select.click();
 
-    await expect(panel(page).getByRole('option', { name: 'Beta', exact: true })).toBeVisible();
+    await expect(select).toHaveAttribute('aria-expanded', 'true');
+    // Виртуальный Select разделяет доступную option и видимую строку.
+    await expect(panel(page).getByRole('option', { name: 'Beta', exact: true })).toHaveCount(1);
+    await expect(panel(page).getByRole('button', { name: 'Beta', exact: true })).toBeVisible();
     await select.press('Escape');
 
     await expect(select).toHaveAttribute('aria-expanded', 'false');
