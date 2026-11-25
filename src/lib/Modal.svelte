@@ -6,6 +6,7 @@
   import ThemeScopeStyle from './ThemeScopeStyle.svelte';
   import { getModalPrefixCss } from './modal-prefix.engine';
   import { useConfig } from './config-context';
+  import { isolateFormItemStyle } from './form-item-status';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
@@ -43,6 +44,7 @@
   }: ModalProps = $props();
 
   const config = useConfig();
+  isolateFormItemStyle();
   let componentPrefix = $derived(config.getPrefixCls('modal', customizePrefixCls));
   let rootPrefix = $derived(config.getPrefixCls());
   let prefixCss = $derived(getModalPrefixCss(componentPrefix, rootPrefix));

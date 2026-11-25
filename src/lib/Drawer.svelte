@@ -7,6 +7,7 @@
   import { getDrawerPrefixCss } from './drawer-prefix.engine';
   import { flushSync, onDestroy, untrack } from 'svelte';
   import { useConfig } from './config-context';
+  import { isolateFormItemStyle } from './form-item-status';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
@@ -64,6 +65,7 @@
   } = $derived(props);
 
   const config = useConfig();
+  isolateFormItemStyle();
   const interaction = $derived(resolveDrawerInteraction(mask, focusable, autoFocus, config.drawer));
   let componentPrefix = $derived(config.getPrefixCls('drawer', customizePrefixCls));
   let prefixCss = $derived(getDrawerPrefixCss(componentPrefix));

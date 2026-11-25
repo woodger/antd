@@ -24,6 +24,10 @@ aria-labelledby имеет приоритет, затем непустой aria-
 Закрытие по фону настраивается через mask={{ closable: false }}; по умолчанию
 разрешено. Прежний maskClosable удалён. Остальные настройки mask пока не перенесены.
 
+На границе Modal сбрасываются статус и индикатор проверки внешнего `Form.Item`.
+Локальный `Form.Item` и явный `status` поля задают оформление внутри окна.
+[Сверка с Ant Design 6.6.8](../../../tests/browser/dialog-form-style.spec.ts).
+
 `prefixCls` меняет namespace Modal и его частей; пустая строка наследует
 ConfigProvider.prefixCls. Настройка доступна и в config контекстного подтверждения,
 включая handle.update. Button использует независимый общий prefix; canonical

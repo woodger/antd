@@ -1,5 +1,6 @@
 import { getContext, setContext } from 'svelte';
 import type { FormValidateStatus } from './form-error-list.types';
+import { provideFormFeedback } from './form-feedback-context';
 
 /** Реактивное состояние ближайшего FormItem; ошибки и предупреждения доступны только для чтения. */
 export interface FormItemStatus {
@@ -18,6 +19,13 @@ export function useFormItemStatusContext(): Partial<FormItemStatus> {
 
 export function provideFormItemStatus(status: Partial<FormItemStatus>) {
   setContext(statusKey, status);
+}
+
+/** Изолирует оформление внешнего FormItem и сохраняет его ошибки и предупреждения. */
+export function isolateFormItemStyle() {
+  const parent = useFormItemStatusContext();
+  provideFormItemStatus(Object.create(parent, { status: { value: undefined } }));
+  provideFormFeedback({});
 }
 
 /**

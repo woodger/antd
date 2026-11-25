@@ -1,0 +1,205 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "component": "drawer",
+      "initial": {
+        "metrics": {
+          "owner-input": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": false
+          },
+          "owner-select": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": true
+          },
+          "dialog-input": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "dialog-select": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "explicit-input": {
+            "status": "warning",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "local-input": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": false
+          },
+          "local-select": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": true
+          },
+          "footer-input": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          }
+        },
+        "context": ""
+      },
+      "updated": {
+        "metrics": {
+          "owner-input": {
+            "status": "warning",
+            "feedback": true,
+            "inFormItem": false
+          },
+          "owner-select": {
+            "status": "warning",
+            "feedback": true,
+            "inFormItem": true
+          },
+          "dialog-input": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "dialog-select": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "explicit-input": {
+            "status": "warning",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "local-input": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": false
+          },
+          "local-select": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": true
+          },
+          "footer-input": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          }
+        },
+        "context": ""
+      },
+      "draft": {
+        "sameInput": true,
+        "value": "Edited value"
+      }
+    },
+    {
+      "component": "modal",
+      "initial": {
+        "metrics": {
+          "owner-input": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": false
+          },
+          "owner-select": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": true
+          },
+          "dialog-input": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "dialog-select": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "explicit-input": {
+            "status": "warning",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "local-input": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": false
+          },
+          "local-select": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": true
+          },
+          "footer-input": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          }
+        },
+        "context": ""
+      },
+      "updated": {
+        "metrics": {
+          "owner-input": {
+            "status": "warning",
+            "feedback": true,
+            "inFormItem": false
+          },
+          "owner-select": {
+            "status": "warning",
+            "feedback": true,
+            "inFormItem": true
+          },
+          "dialog-input": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "dialog-select": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "explicit-input": {
+            "status": "warning",
+            "feedback": false,
+            "inFormItem": false
+          },
+          "local-input": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": false
+          },
+          "local-select": {
+            "status": "error",
+            "feedback": true,
+            "inFormItem": true
+          },
+          "footer-input": {
+            "status": "",
+            "feedback": false,
+            "inFormItem": false
+          }
+        },
+        "context": ""
+      },
+      "draft": {
+        "sameInput": true,
+        "value": "Edited value"
+      }
+    }
+  ]
+}

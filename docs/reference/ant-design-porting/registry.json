@@ -23214,6 +23214,11 @@
       "effort": "unknown",
       "evidence": [
         "docs/reference/components/drawer.md",
+        "src/lib/form-item-status.ts",
+        "tests/browser/fixtures/DialogFormStyleFixtures.svelte",
+        "tests/browser/fixtures/ant-design-dialog-form-style-reference.json",
+        "tests/browser/dialog-form-style.spec.ts",
+        "tests/package/dialog-form-style.ssr.test.ts",
         "tests/browser/drawer.spec.ts",
         "src/lib/dialog-container.model.svelte.ts",
         "tests/browser/fixtures/DialogContainerFixtures.svelte",
@@ -23341,6 +23346,20 @@
             "tests/browser/space-compact.spec.ts"
           ],
           "note": "Без Compact сохраняется существующее поведение; общий подробный аудит семейства ещё не завершён."
+        },
+        {
+          "id": "form-style-isolation",
+          "title": "Изоляция оформления внешнего Form.Item",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/form-item-status.ts",
+            "tests/browser/fixtures/DialogFormStyleFixtures.svelte",
+            "tests/browser/fixtures/ant-design-dialog-form-style-reference.json",
+            "tests/browser/dialog-form-style.spec.ts",
+            "tests/package/dialog-form-style.ssr.test.ts"
+          ],
+          "note": "Два совпавших прогона UMD Ant Design 6.6.8 для Drawer и Modal. Контекст внешнего Form.Item перестаёт задавать визуальный status, hasFeedback, feedbackIcon и in-form-item внутри диалога. Ошибки и предупреждения остаются доступны через useFormItemStatus. Явный status и внутренний Form.Item применяются. Смена внешнего status не пересоздаёт элементы, сохраняет фокус и черновик. SSR выводит оформление с теми же границами."
         },
         {
           "id": "popup-container",
@@ -23708,6 +23727,11 @@
       "effort": "unknown",
       "evidence": [
         "docs/reference/components/modal.md",
+        "src/lib/form-item-status.ts",
+        "tests/browser/fixtures/DialogFormStyleFixtures.svelte",
+        "tests/browser/fixtures/ant-design-dialog-form-style-reference.json",
+        "tests/browser/dialog-form-style.spec.ts",
+        "tests/package/dialog-form-style.ssr.test.ts",
         "tests/browser/modal.spec.ts",
         "src/lib/dialog-container.model.svelte.ts",
         "tests/browser/fixtures/DialogContainerFixtures.svelte",
@@ -23772,6 +23796,20 @@
             "tests/browser/space-compact.spec.ts"
           ],
           "note": "Без Compact сохраняется существующее поведение; общий подробный аудит семейства ещё не завершён."
+        },
+        {
+          "id": "form-style-isolation",
+          "title": "Изоляция оформления внешнего Form.Item",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "src/lib/form-item-status.ts",
+            "tests/browser/fixtures/DialogFormStyleFixtures.svelte",
+            "tests/browser/fixtures/ant-design-dialog-form-style-reference.json",
+            "tests/browser/dialog-form-style.spec.ts",
+            "tests/package/dialog-form-style.ssr.test.ts"
+          ],
+          "note": "Два совпавших прогона UMD Ant Design 6.6.8 для Drawer и Modal. Контекст внешнего Form.Item перестаёт задавать визуальный status, hasFeedback, feedbackIcon и in-form-item внутри диалога. Ошибки и предупреждения остаются доступны через useFormItemStatus. Явный status и внутренний Form.Item применяются. Смена внешнего status не пересоздаёт элементы, сохраняет фокус и черновик. SSR выводит оформление с теми же границами."
         },
         {
           "id": "popup-container",

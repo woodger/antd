@@ -1443,6 +1443,11 @@
     "root": "dialog-container-fixture"
   },
   {
+    "id": "dialog-form-style",
+    "module": "./DialogFormStyleFixtures.svelte",
+    "root": "dialog-form-style-fixture"
+  },
+  {
     "id": "avatar-responsive",
     "module": "./AvatarResponsiveFixtures.svelte",
     "root": "avatar-responsive-fixture"
