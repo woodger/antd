@@ -470,6 +470,11 @@
     "root": "drawer-fixture"
   },
   {
+    "id": "drawer-geometry",
+    "module": "./DrawerGeometryFixtures.svelte",
+    "root": "drawer-geometry-fixture"
+  },
+  {
     "id": "alert",
     "module": "./AlertFixtures.svelte",
     "root": "alert-fixture"

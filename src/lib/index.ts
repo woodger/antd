@@ -667,7 +667,9 @@ export type {
   CollapseSemanticInfo,
   CollapseExpandIconInfo
 } from './collapse.types';
-export type { DrawerProps, DrawerPlacement, DrawerSize } from './drawer.types';
+export type {
+  DrawerProps, DrawerPlacement, DrawerSize, DrawerResizableConfig, DrawerPushConfig
+} from './drawer.types';
 export type {
   AlertProps,
   AlertType,

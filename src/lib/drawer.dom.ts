@@ -6,7 +6,8 @@ import type { DrawerPlacement } from './drawer.types';
 // Создаёт DOM-контроллер для шаблона с panel и mask.
 export function createDrawerDialog(
   dialog: HTMLDialogElement,
-  onClosing: (closing: boolean) => void
+  onClosing: (closing: boolean) => void,
+  onSettled: (open: boolean) => void
 ) {
   const panel = dialog.querySelector<HTMLElement>('[data-ant-drawer-content-wrapper]')!;
   const mask = dialog.querySelector<HTMLElement>('[data-ant-drawer-mask]')!;
@@ -26,13 +27,35 @@ export function createDrawerDialog(
     animations = [];
   }
 
-  // Закрывает native dialog после завершения motion и сообщает владельцу о завершении.
-  function finishClose() {
+  // Уведомляет о своей ревизии после применения видимости и до удаления содержимого.
+  function finish(current: number, open: boolean) {
+    if (disposed || revision !== current || open && !dialog.open) {
+      return;
+    }
+
     cancelMotion();
+    if (open) {
+      phase = 'open';
+      onSettled(true);
+      return;
+    }
+
     phase = 'closed';
-    if (dialog.open)
-      dialog.close();
-    onClosing(false);
+    if (dialog.open) dialog.close();
+
+    const settledRevision = revision;
+    try {
+      onSettled(false);
+    }
+    finally {
+      if (revision === settledRevision) onClosing(false);
+    }
+  }
+
+  // Выносит уведомление нулевой фазы из синхронного DOM-обновления.
+  function finishWithoutMotion(open: boolean) {
+    const current = revision;
+    queueMicrotask(() => finish(current, open));
   }
 
   // Запускает анимации panel и mask либо сразу применяет итог при reduced motion.
@@ -43,12 +66,7 @@ export function createDrawerDialog(
         view.getComputedStyle(dialog).getPropertyValue('--ant-motion-duration-slow')
       );
     if (!duration) {
-      if (opening) {
-        phase = 'open';
-      }
-      else {
-        finishClose();
-      }
+      finishWithoutMotion(opening);
       return;
     }
 
@@ -60,19 +78,7 @@ export function createDrawerDialog(
     };
     const motion = panel.animate([{ transform: from }, { transform: to }], options);
     animations = [motion, mask.animate([{ opacity }, { opacity: opening ? '1' : '0' }], options)];
-    void motion.finished.then(() => {
-      if (disposed || current !== revision) {
-        return;
-      }
-
-      if (opening) {
-        cancelMotion();
-        phase = 'open';
-      }
-      else {
-        finishClose();
-      }
-    }, () => { });
+    void motion.finished.then(() => finish(current, opening), () => {});
   }
 
   // Сверяет состояние dialog с open и placement. При повторном открытии берёт текущий кадр.
@@ -86,7 +92,7 @@ export function createDrawerDialog(
       if (dialog.open && phase !== 'closing') {
         if (side !== placement) {
           cancelMotion();
-          phase = 'open';
+          if (phase === 'opening') finishWithoutMotion(true);
         }
         side = placement;
         return;

@@ -1,0 +1,2836 @@
+{
+  "reference": {
+    "version": "6.6.8",
+    "revision": "984592267de88fbf9cdaecc96a56629e721c709d",
+    "archiveSha256": "8eb361740b62dc79762f21d036dea685d5e7c1d714315ea3247b9aa5d2269dfa",
+    "source": "package/dist/antd.min.js",
+    "react": "18.3.1",
+    "repeat": 2
+  },
+  "cases": [
+    {
+      "profile": {
+        "name": "resize-right-max",
+        "mode": "resize",
+        "placement": "right",
+        "maxSize": 440,
+        "deltas": [
+          -120,
+          -80,
+          75
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                582,
+                0,
+                378,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "start",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                582,
+                0,
+                378,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "start",
+              378
+            ]
+          ]
+        },
+        {
+          "action": "move:-120",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                520,
+                0,
+                440,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              440
+            ]
+          ]
+        },
+        {
+          "action": "move:-80",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                520,
+                0,
+                440,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              440
+            ]
+          ]
+        },
+        {
+          "action": "move:75",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                657,
+                0,
+                303,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              303
+            ]
+          ]
+        },
+        {
+          "action": "end",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                657,
+                0,
+                303,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "end",
+              303
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            {
+              "visible": false,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                657,
+                0,
+                303,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "resize-left-default-size",
+        "mode": "resize",
+        "placement": "left",
+        "defaultSize": 250,
+        "draggerSize": 6,
+        "deltas": [
+          60,
+          -45,
+          105
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                250,
+                720
+              ],
+              "handle": 6,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "start",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                250,
+                720
+              ],
+              "handle": 6,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "start",
+              250
+            ]
+          ]
+        },
+        {
+          "action": "move:60",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                310,
+                720
+              ],
+              "handle": 6,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              310
+            ]
+          ]
+        },
+        {
+          "action": "move:-45",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                205,
+                720
+              ],
+              "handle": 6,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              205
+            ]
+          ]
+        },
+        {
+          "action": "move:105",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                355,
+                720
+              ],
+              "handle": 6,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              355
+            ]
+          ]
+        },
+        {
+          "action": "end",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                355,
+                720
+              ],
+              "handle": 6,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "end",
+              355
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            {
+              "visible": false,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                355,
+                720
+              ],
+              "handle": 6,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "resize-top-controlled",
+        "mode": "resize",
+        "placement": "top",
+        "size": 230,
+        "accept": true,
+        "deltas": [
+          120,
+          -50,
+          95
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                230
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "start",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                230
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "start",
+              230
+            ]
+          ]
+        },
+        {
+          "action": "move:120",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                350
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              350
+            ]
+          ]
+        },
+        {
+          "action": "move:-50",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                180
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              180
+            ]
+          ]
+        },
+        {
+          "action": "move:95",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                325
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              325
+            ]
+          ]
+        },
+        {
+          "action": "end",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                325
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "end",
+              325
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            {
+              "visible": false,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                325
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "resize-bottom-rejected",
+        "mode": "resize",
+        "placement": "bottom",
+        "size": 200,
+        "deltas": [
+          -50,
+          45,
+          -125
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                520,
+                960,
+                200
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "start",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                520,
+                960,
+                200
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "start",
+              200
+            ]
+          ]
+        },
+        {
+          "action": "move:-50",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                520,
+                960,
+                200
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              250
+            ]
+          ]
+        },
+        {
+          "action": "move:45",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                520,
+                960,
+                200
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              155
+            ]
+          ]
+        },
+        {
+          "action": "move:-125",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                520,
+                960,
+                200
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              325
+            ]
+          ]
+        },
+        {
+          "action": "end",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                520,
+                960,
+                200
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "end",
+              200
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            {
+              "visible": false,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                520,
+                960,
+                200
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "resize-percent-rtl",
+        "mode": "resize",
+        "placement": "right",
+        "defaultSize": "40%",
+        "rtl": true,
+        "deltas": [
+          45,
+          -70,
+          15
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                576,
+                0,
+                384,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "start",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                576,
+                0,
+                384,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "start",
+              384
+            ]
+          ]
+        },
+        {
+          "action": "move:45",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                621,
+                0,
+                339,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              339
+            ]
+          ]
+        },
+        {
+          "action": "move:-70",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                506,
+                0,
+                454,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              454
+            ]
+          ]
+        },
+        {
+          "action": "move:15",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                591,
+                0,
+                369,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              369
+            ]
+          ]
+        },
+        {
+          "action": "end",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                591,
+                0,
+                369,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "end",
+              369
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            {
+              "visible": false,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                591,
+                0,
+                369,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "resize-pixel-string",
+        "mode": "resize",
+        "placement": "left",
+        "size": "255px",
+        "accept": true,
+        "deltas": [
+          29,
+          75
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                255,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "start",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                255,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "start",
+              255
+            ]
+          ]
+        },
+        {
+          "action": "move:29",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                284,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              284
+            ]
+          ]
+        },
+        {
+          "action": "move:75",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                330,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              330
+            ]
+          ]
+        },
+        {
+          "action": "end",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                330,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "end",
+              330
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            {
+              "visible": false,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                330,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "resize-zero",
+        "mode": "resize",
+        "placement": "right",
+        "defaultSize": 208,
+        "deltas": [
+          210,
+          120
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                752,
+                0,
+                208,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "start",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                752,
+                0,
+                208,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "start",
+              208
+            ]
+          ]
+        },
+        {
+          "action": "move:210",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                960,
+                0,
+                0,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              0
+            ]
+          ]
+        },
+        {
+          "action": "move:120",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                872,
+                0,
+                88,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              88
+            ]
+          ]
+        },
+        {
+          "action": "end",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                872,
+                0,
+                88,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "end",
+              88
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            {
+              "visible": false,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                872,
+                0,
+                88,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "resize-reset-on-destroy",
+        "mode": "resize",
+        "placement": "left",
+        "defaultSize": 260,
+        "deltas": [
+          50
+        ],
+        "destroyOnHidden": true
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                260,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "start",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                260,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "start",
+              260
+            ]
+          ]
+        },
+        {
+          "action": "move:50",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                310,
+                720
+              ],
+              "handle": 4,
+              "dragging": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "resize",
+              310
+            ]
+          ]
+        },
+        {
+          "action": "end",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                310,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "end",
+              310
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            null,
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                260,
+                720
+              ],
+              "handle": 4,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "push-default",
+        "mode": "push",
+        "placement": "right",
+        "steps": [
+          "open:b",
+          "close:b"
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                582,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                402,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                582,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              false,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "push-off",
+        "mode": "push",
+        "placement": "left",
+        "push": false,
+        "steps": [
+          "open:b",
+          "close:b"
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              false,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "push-inherited",
+        "mode": "push",
+        "placement": "left",
+        "push": {
+          "distance": 56
+        },
+        "childPush": true,
+        "rtl": true,
+        "steps": [
+          "open:b",
+          "open:c",
+          "close:c",
+          "close:b"
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                56,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:c",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                56,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                56,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                510,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            }
+          ],
+          "events": [
+            [
+              "settled",
+              "c",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:c",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                56,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "c",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              false,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "push-numeric-string",
+        "mode": "push",
+        "placement": "top",
+        "push": {
+          "distance": "36"
+        },
+        "steps": [
+          "open:b",
+          "close:b"
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                378
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                36,
+                960,
+                378
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                378
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              false,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "push-css-distance",
+        "mode": "push",
+        "placement": "bottom",
+        "push": {
+          "distance": "36px"
+        },
+        "steps": [
+          "open:b",
+          "close:b"
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                342,
+                960,
+                378
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                342,
+                960,
+                378
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                342,
+                960,
+                378
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              false,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "push-two-children",
+        "mode": "push",
+        "placement": "right",
+        "siblings": true,
+        "steps": [
+          "open:b",
+          "open:c",
+          "close:b",
+          "close:c"
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                582,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                402,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:c",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                402,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                510,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            }
+          ],
+          "events": [
+            [
+              "settled",
+              "c",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:b",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                582,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                510,
+                960,
+                210
+              ],
+              "handle": null,
+              "dragging": false
+            }
+          ],
+          "events": [
+            [
+              "settled",
+              "b",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:c",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                582,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "c",
+              false,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "lifecycle-lazy",
+        "mode": "lifecycle",
+        "placement": "right",
+        "destroyOnHidden": true,
+        "steps": [
+          "open:a",
+          "close:a",
+          "open:a",
+          "close:a"
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            null,
+            null,
+            null
+          ],
+          "events": []
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                582,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            null,
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                582,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            null,
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "lifecycle-forced",
+        "mode": "lifecycle",
+        "placement": "bottom",
+        "forceRender": true,
+        "destroyOnHidden": true,
+        "steps": [
+          "open:a",
+          "close:a"
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": false,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": []
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                342,
+                960,
+                378
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            {
+              "visible": false,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "lifecycle-initially-open",
+        "mode": "lifecycle",
+        "placement": "left",
+        "initialOpen": true,
+        "destroyOnHidden": true,
+        "steps": [
+          "close:a",
+          "open:a"
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close:a",
+          "panels": [
+            null,
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                0,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "profile": {
+        "name": "lifecycle-animated",
+        "mode": "lifecycle",
+        "placement": "right",
+        "motion": true,
+        "destroyOnHidden": true,
+        "steps": [
+          "open:a",
+          "close:a",
+          "reopen:a",
+          "close:a"
+        ]
+      },
+      "frames": [
+        {
+          "action": "idle",
+          "panels": [
+            null,
+            null,
+            null
+          ],
+          "events": []
+        },
+        {
+          "action": "open:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                582,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close-before-motion",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": []
+        },
+        {
+          "action": "reopen-before-motion",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": []
+        },
+        {
+          "action": "reopen:a",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true,
+              "rect": [
+                582,
+                0,
+                378,
+                720
+              ],
+              "handle": null,
+              "dragging": false
+            },
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              true,
+              true
+            ]
+          ]
+        },
+        {
+          "action": "close-before-motion",
+          "panels": [
+            {
+              "visible": true,
+              "mounted": true
+            },
+            null,
+            null
+          ],
+          "events": []
+        },
+        {
+          "action": "end-motion",
+          "panels": [
+            null,
+            null,
+            null
+          ],
+          "events": [
+            [
+              "settled",
+              "a",
+              false,
+              true
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

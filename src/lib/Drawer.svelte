@@ -12,7 +12,11 @@
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
   import { useWatermarkPanel } from './watermark-context';
   import { createDrawerDialog } from './drawer.dom';
-  import { getDrawerSize } from './drawer.engine';
+  import {
+    getDrawerPushDistance, getDrawerPushOffset, getDrawerSize, isDrawerHorizontal
+  } from './drawer.engine';
+  import { provideDrawerPush, useDrawerPush } from './drawer-push-context';
+  import { connectDrawerResize } from './drawer-resize.dom';
   import { createDialogContainer } from './dialog-container.model.svelte.js';
   import type { DrawerProps } from './drawer.types';
 
@@ -24,7 +28,11 @@
     extra,
     footer,
     placement = 'right',
-    size = 'default',
+    size,
+    defaultSize = 'default',
+    maxSize,
+    resizable = false,
+    push,
     zIndex,
     closable = true,
     keyboard = true,
@@ -33,6 +41,7 @@
     destroyOnHidden = false,
     getContainer,
     onClose,
+    afterOpenChange,
     id,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledby,
@@ -48,10 +57,30 @@
   const designTheme = useDesignTokenContext();
   const layer = useZIndex('container', () => zIndex);
   provideZIndex(() => layer.contextZIndex);
+  const parentDrawer = useDrawerPush();
+  let pushedChildren = $state(0);
+  const pushDistance = $derived(getDrawerPushDistance(push, parentDrawer?.distance));
+  provideDrawerPush({
+    get distance() { return pushDistance; },
+    registerChild() {
+      pushedChildren++;
+      return () => { pushedChildren--; };
+    }
+  });
+  const pushOffset = $derived(
+    pushedChildren > 0 ? getDrawerPushOffset(placement, pushDistance) : undefined
+  );
   const watermarkPanel = useWatermarkPanel();
   const generatedId = $props.id();
   let dialog = $state<HTMLDialogElement>();
   let mounted = $state(false);
+  let resizedSize = $state<number>();
+  let resizing = $state(false);
+  const panelSize = $derived(size ?? resizedSize ?? defaultSize);
+  const allowZero = $derived(Boolean(resizable) || size === undefined);
+  const sizeInCss = $derived(getDrawerSize(panelSize, allowZero));
+  const horizontal = $derived(isDrawerHorizontal(placement));
+  const resizeCallbacks = $derived(typeof resizable === 'object' ? resizable : undefined);
   // Это фаза фактической DOM-анимации, а не копия запрошенного open.
   let closing = $state(false);
   let runtime = $state.raw<ReturnType<typeof createDrawerDialog>>();
@@ -80,12 +109,41 @@
 
   function connectRuntime(node: HTMLDialogElement) {
     closing = false;
-    const current = createDrawerDialog(node, value => { closing = value; });
+    const current = createDrawerDialog(
+      node,
+      value => { closing = value; },
+      next => afterOpenChange?.(next)
+    );
     runtime = current;
     return () => {
       current.destroy();
       if (runtime === current) runtime = undefined;
     };
+  }
+
+  function resizePanel(nextSize: number) {
+    resizedSize = nextSize;
+    resizeCallbacks?.onResize?.(nextSize);
+  }
+
+  function connectResizeHandle(node: HTMLElement) {
+    const wrapper = node.parentElement;
+    if (!wrapper) {
+      return;
+    }
+
+    const connection = connectDrawerResize(node, wrapper, () => ({
+      enabled: open && Boolean(dialog?.open) && Boolean(resizable),
+      placement,
+      size: sizeInCss,
+      maxSize,
+      onResizeStart: resizeCallbacks?.onResizeStart,
+      onResize: resizePanel,
+      onResizeEnd: resizeCallbacks?.onResizeEnd
+    }), dragging => { resizing = dragging; });
+    $effect(() => connection.sync(open && Boolean(resizable), placement));
+
+    return connection.destroy;
   }
 
   // Содержимое остаётся смонтированным до завершения ухода панели.
@@ -111,6 +169,13 @@
     });
   });
 
+  $effect(() => {
+    if (parentDrawer && open && dialog && container.connected) {
+      // Одновременно открытые дети освобождают только свою регистрацию.
+      return untrack(() => parentDrawer.registerChild());
+    }
+  });
+
   onDestroy(() => {
     active = false;
   });
@@ -119,6 +184,7 @@
     mounted = true;
     return () => {
       mounted = false;
+      resizedSize = undefined;
     };
   }
 
@@ -167,7 +233,16 @@
   .ant-svelte-drawer { width: 100%; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; overflow: hidden; background: transparent; pointer-events: auto; outline: none; }
   .ant-svelte-drawer:not([open]) { display: none; }
   .ant-svelte-drawer::backdrop { background: transparent; }
-  .ant-svelte-drawer > [data-ant-drawer-content-wrapper] { max-width: 100%; max-height: 100%; transition: none; }
+  .ant-svelte-drawer > [data-ant-drawer-content-wrapper] {
+    max-width: 100%;
+    max-height: 100%;
+    transition: translate var(--ant-motion-duration-slow);
+  }
+  .ant-svelte-drawer > [data-ant-drawer-content-wrapper][data-ant-drawer-dragging] {
+    transition: none;
+    user-select: none;
+    will-change: width, height;
+  }
   [data-ant-drawer-placement="left"] > [data-ant-drawer-content-wrapper], [data-ant-drawer-placement="right"] > [data-ant-drawer-content-wrapper] { width: min(var(--ant-svelte-drawer-size), 100%); height: 100%; }
   [data-ant-drawer-placement="top"] > [data-ant-drawer-content-wrapper], [data-ant-drawer-placement="bottom"] > [data-ant-drawer-content-wrapper] { width: 100%; height: min(var(--ant-svelte-drawer-size), 100%); }
   [data-ant-drawer-header] { gap: var(--ant-margin-xs); }
@@ -176,7 +251,40 @@
   .drawer-source-theme [data-ant-drawer-title] { color: inherit; }
   [data-ant-drawer-extra] { max-width: 50%; }
   [data-ant-drawer-section] { min-height: 0; }
-  @media (prefers-reduced-motion: reduce) { [data-ant-drawer-close] { transition: none; } }
+  [data-ant-drawer-dragging] > [data-ant-drawer-section] { pointer-events: none; }
+  [data-ant-drawer-dragger] {
+    position: absolute;
+    background: transparent;
+    touch-action: none;
+    pointer-events: auto;
+    z-index: 1;
+  }
+  [data-ant-drawer-dragger]:hover { background: var(--ant-color-primary); opacity: 0.2; }
+  [data-ant-drawer-dragging] > [data-ant-drawer-dragger] {
+    background: var(--ant-color-primary);
+    opacity: 0.3;
+  }
+  [data-ant-drawer-placement="left"] > [data-ant-drawer-content-wrapper] > [data-ant-drawer-dragger],
+  [data-ant-drawer-placement="right"] > [data-ant-drawer-content-wrapper] > [data-ant-drawer-dragger] {
+    top: 0;
+    bottom: 0;
+    width: var(--ant-drawer-dragger-size);
+    cursor: col-resize;
+  }
+  [data-ant-drawer-placement="top"] > [data-ant-drawer-content-wrapper] > [data-ant-drawer-dragger],
+  [data-ant-drawer-placement="bottom"] > [data-ant-drawer-content-wrapper] > [data-ant-drawer-dragger] {
+    inset-inline: 0;
+    height: var(--ant-drawer-dragger-size);
+    cursor: row-resize;
+  }
+  [data-ant-drawer-placement="left"] > [data-ant-drawer-content-wrapper] > [data-ant-drawer-dragger] { right: 0; }
+  [data-ant-drawer-placement="right"] > [data-ant-drawer-content-wrapper] > [data-ant-drawer-dragger] { left: 0; }
+  [data-ant-drawer-placement="top"] > [data-ant-drawer-content-wrapper] > [data-ant-drawer-dragger] { bottom: 0; }
+  [data-ant-drawer-placement="bottom"] > [data-ant-drawer-content-wrapper] > [data-ant-drawer-dragger] { top: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    .ant-svelte-drawer > [data-ant-drawer-content-wrapper],
+    [data-ant-drawer-close] { transition: none; }
+  }
 </style>
 
 <!-- Keyed range содержит только переносимый dialog; head-style anchors остаются снаружи. -->
@@ -188,14 +296,23 @@
     `${componentPrefix}-${placement}`,
     config.direction === 'rtl' && `${componentPrefix}-rtl`,
     className
-  ]} style={rootStyle} style:--ant-svelte-drawer-size={getDrawerSize(size)} dir={config.direction} aria-modal="true" aria-label={ariaLabel} aria-labelledby={ariaLabelledby
+  ]} style={rootStyle} style:--ant-svelte-drawer-size={sizeInCss} dir={config.direction} aria-modal="true" aria-label={ariaLabel} aria-labelledby={ariaLabelledby
       ?? (ariaLabel === undefined && title !== undefined
         ? titleId
         : undefined)} aria-describedby={ariaDescribedby} oncancel={handleCancel} onclose={handleClose}
     {@attach container.attach} {@attach connectRuntime}>
   <div data-ant-drawer-mask class={[`${componentPrefix}-mask`, mask?.blur && `${componentPrefix}-mask-blur`]} aria-hidden="true"></div>
-  <div data-ant-drawer-content-wrapper class={`${componentPrefix}-content-wrapper`}>
+  <div data-ant-drawer-content-wrapper data-ant-drawer-dragging={resizing || undefined} class={[
+    `${componentPrefix}-content-wrapper`,
+    resizing && `${componentPrefix}-content-wrapper-dragging`
+  ]} style:translate={pushOffset}>
     {#if renderContent}
+      {#if resizable}<div data-ant-drawer-dragger aria-hidden="true" class={[
+        `${componentPrefix}-resizable-dragger`,
+        `${componentPrefix}-resizable-dragger-${placement}`,
+        `${componentPrefix}-resizable-dragger-${horizontal ? 'horizontal' : 'vertical'}`,
+        resizing && `${componentPrefix}-resizable-dragger-dragging`
+      ]} {@attach connectResizeHandle}></div>{/if}
       <div data-ant-drawer-section class={`${componentPrefix}-section`} {@attach rememberContent} {@attach watermarkPanel}>
         {#if title !== undefined || closable || extra}
           <div data-ant-drawer-header class={`${componentPrefix}-header`}>

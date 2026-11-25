@@ -23239,7 +23239,15 @@
         "tests/browser/fixtures/ant-design-drawer-prefix-reference.json",
         "tests/browser/drawer-prefix-metrics.ts",
         "tests/browser/drawer-prefix.spec.ts",
-        "tests/package/drawer-prefix.ssr.test.ts"
+        "tests/package/drawer-prefix.ssr.test.ts",
+        "src/lib/drawer.engine.ts",
+        "src/lib/drawer-resize.dom.ts",
+        "src/lib/drawer-push-context.ts",
+        "tests/browser/fixtures/DrawerGeometryFixtures.svelte",
+        "tests/browser/fixtures/ant-design-drawer-geometry-reference.json",
+        "tests/browser/drawer-geometry.spec.ts",
+        "tests/browser/drawer-geometry-hydration.spec.ts",
+        "tests/package/drawer-geometry.ssr.test.ts"
       ],
       "features": [
         {
@@ -23252,11 +23260,11 @@
         },
         {
           "id": "gap-1",
-          "title": "Немодальные панели, push и resize",
+          "title": "Немодальный режим и focusable-настройки",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Ограничение зафиксировано в README модуля."
+          "note": "Нативный Drawer сохраняет модальность. Mask=false, focusable, дополнительные настройки панели и semantic DOM остаются в работе. Resize, push и afterOpenChange описаны отдельными features."
         },
         {
           "id": "compact-isolation",
@@ -23303,7 +23311,7 @@
             "tests/package/drawer-theme.ssr.test.ts",
             "docs/reference/theme-context.md"
           ],
-          "note": "Четыре исходных CSS defaults: zIndexPopup=zIndexPopupBase, footerPaddingBlock=paddingXS, footerPaddingInline=padding и draggerSize=4; финальные overrides, component algorithms, aliases, нули/undefined и custom prefix. DraggerSize подготавливается без заявления о поддержке отсутствующего resize API. 16 UMD-тем / 288 raw CSS-состояний: четыре placement, два размера, header/footer/extra/close, blur/hover, восемь provider scopes и root style priority. Source title наследует цвет panel; legacy colorTextHeading сохранён. Source getContainer=false в статическом host с типографикой из public theme.useToken() выравнивает DOM-контекст native ConfigProvider; native style сравнивается с Source rootStyle. Theme updates/inherit reset сохраняют native modality, Input/section/dialog DOM, draft/selection/focus и FormData. Portal sync сохраняет component aliases и локальные variables; unmount освобождает модальность, SSR не открывает немодальное окно и не запускает browser timers. Остальные API gaps и общий аудит остаются отдельными задачами."
+          "note": "Четыре исходных CSS defaults: zIndexPopup=zIndexPopupBase, footerPaddingBlock=paddingXS, footerPaddingInline=padding и draggerSize=4; финальные overrides, component algorithms, aliases, нули/undefined и custom prefix. DraggerSize применяется к видимой границе resize, включая локальный prefix. 16 UMD-тем / 288 raw CSS-состояний: четыре placement, два размера, header/footer/extra/close, blur/hover, восемь provider scopes и root style priority. Source title наследует цвет panel; legacy colorTextHeading сохранён. Source getContainer=false в статическом host с типографикой из public theme.useToken() выравнивает DOM-контекст native ConfigProvider; native style сравнивается с Source rootStyle. Theme updates/inherit reset сохраняют native modality, Input/section/dialog DOM, draft/selection/focus и FormData. Portal sync сохраняет component aliases и локальные variables; unmount освобождает модальность, SSR не открывает немодальное окно и не запускает browser timers. Остальные API gaps и общий аудит остаются отдельными задачами."
         },
         {
           "id": "component-prefix",
@@ -23344,6 +23352,62 @@
             "tests/package/z-index-context.ssr.test.ts"
           ],
           "note": "Drawer принимает zIndex и передаёт базу вложенным диалогам и popup. При явном нуле Source обёртка Drawer остаётся на CSS-уровне 1000, а дочерние слои получают нулевую базу. Native выводит 0 у самой панели. SSR проверяет явный ноль. Chromium сверяет вложенность Modal в обоих порядках."
+        },
+        {
+          "id": "resizable-dimensions",
+          "title": "Размер панели и перетаскивание границы",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/drawer.md",
+            "src/lib/Drawer.svelte",
+            "src/lib/drawer-resize.dom.ts",
+            "src/lib/drawer.engine.ts",
+            "src/lib/drawer.types.ts",
+            "src/lib/drawer.engine.test.ts",
+            "tests/browser/fixtures/DrawerGeometryFixtures.svelte",
+            "tests/browser/fixtures/ant-design-drawer-geometry-reference.json",
+            "tests/browser/drawer-geometry.spec.ts",
+            "tests/browser/drawer-geometry-hydration.spec.ts",
+            "tests/package/drawer-geometry.ssr.test.ts"
+          ],
+          "note": "Ant Design 6.6.8 / 984592267de88fbf9cdaecc96a56629e721c709d, @rc-component/drawer 1.4.2. Восемь UMD-профилей проверяют четыре стороны, RTL, процентный и пиксельный размер, maxSize, ноль, controlled принятие/отклонение и сброс при destroyOnHidden. onResize передаёт предложение, onResizeEnd измеряет применённый результат. В pinned UMD start/end получают число, хотя исходный d.ts объявляет callbacks без параметров. Svelte типизирует фактически переданный размер. Native Pointer Events покрывают основной указатель и гарантируют cleanup при закрытии, отключении или удалении панели."
+        },
+        {
+          "id": "nested-push",
+          "title": "Смещение родительской панели",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/drawer.md",
+            "src/lib/Drawer.svelte",
+            "src/lib/drawer.engine.ts",
+            "src/lib/drawer-push-context.ts",
+            "tests/browser/drawer.spec.ts",
+            "tests/browser/fixtures/DrawerGeometryFixtures.svelte",
+            "tests/browser/fixtures/ant-design-drawer-geometry-reference.json",
+            "tests/browser/drawer-geometry.spec.ts",
+            "tests/browser/drawer-geometry-hydration.spec.ts",
+            "tests/package/drawer-geometry.ssr.test.ts"
+          ],
+          "note": "Шесть UMD-профилей 6.6.8 измеряют default 180px, push=false, наследование через true, числовую строку и поведение с двумя дочерними панелями. Source 1.4.2 добавляет px к строке distance; строка 36px не даёт смещения. При закрытии одной из двух панелей в сыром UMD смещение родителя сбрасывается. Svelte держит регистрацию каждой открытой панели и снимает смещение после последней. Нативная модальность, фокус и scroll lock проверены отдельно."
+        },
+        {
+          "id": "open-change-motion",
+          "title": "Уведомление о завершении показа и скрытия",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/drawer.md",
+            "src/lib/Drawer.svelte",
+            "src/lib/drawer.dom.ts",
+            "tests/browser/fixtures/DrawerGeometryFixtures.svelte",
+            "tests/browser/fixtures/ant-design-drawer-geometry-reference.json",
+            "tests/browser/drawer-geometry.spec.ts",
+            "tests/browser/drawer-geometry-hydration.spec.ts",
+            "tests/package/drawer-geometry.ssr.test.ts"
+          ],
+          "note": "Четыре UMD-профиля 6.6.8 проверяют внешний open, начальный показ, forceRender, destroyOnHidden и прерванный уход. afterOpenChange(false) вызывается с ещё смонтированным содержимым после закрытия native dialog. Прерывание инвалидирует предыдущую фазу. SSR готовит оболочку и содержимое без уведомления."
         }
       ]
     },

@@ -536,7 +536,7 @@ test(
 );
 
 test(
-  'Drawer stacks a child modal without push and returns focus and scrolling to its parent',
+  'Drawer pushes its parent and preserves focus and scroll locking through nested close',
   async ({ page }) => {
     await open(page);
 
@@ -547,11 +547,14 @@ test(
     const child = page.getByRole('dialog', { name: 'Nested drawer', exact: true });
 
     await expect(child).toBeVisible();
+    const parent = page.locator('#drawer-fixture [data-ant-drawer-content-wrapper]').first();
+    await expect(parent).toHaveCSS('translate', '-180px');
 
     await page.keyboard.press('Escape');
 
     await expect(child).toBeHidden();
     await expect(dialog(page)).toBeVisible();
+    await expect(parent).toHaveCSS('translate', 'none');
     await expect(trigger).toBeFocused();
     await expect(page.locator('html')).toHaveCSS('overflow', 'hidden');
 

@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { getDrawerMotionDuration, getDrawerSize, getDrawerTransform } from './drawer.engine';
+import {
+  getDrawerMotionDuration, getDrawerPushDistance, getDrawerResizeSize, getDrawerSize,
+  getDrawerTransform
+} from './drawer.engine';
 
 describe('Drawer dimensions', () => {
   it('resolves official presets and numeric pixel sizes', () => {
@@ -18,6 +21,31 @@ describe('Drawer dimensions', () => {
   it('falls back for empty, nonpositive or nonfinite dimensions', () => {
     for (const size of ['', '  ', 0, -1, NaN, Infinity])
       expect(getDrawerSize(size)).toBe('378px');
+  });
+
+  it('supports numeric strings and a zero size reached by resizing', () => {
+    expect(getDrawerSize('250.5')).toBe('250.5px');
+    expect(getDrawerSize(0, true)).toBe('0px');
+    expect(getDrawerSize(-1, true)).toBe('378px');
+  });
+
+  it('clamps the proposed size without treating a missing maximum as zero', () => {
+    expect(getDrawerResizeSize('right', 200, 210, 400)).toBe(0);
+    expect(getDrawerResizeSize('right', 200, -230, 400)).toBe(400);
+    expect(getDrawerResizeSize('bottom', 200, -100, 0)).toBe(300);
+    expect(getDrawerResizeSize('left', 200, 100)).toBe(300);
+  });
+});
+
+describe('Drawer nested push distance', () => {
+  it('distinguishes the default, inheritance, zero and pixel number strings', () => {
+    expect(getDrawerPushDistance(undefined, 68)).toBe(180);
+    expect(getDrawerPushDistance(true, 68)).toBe(68);
+    expect(getDrawerPushDistance({}, 68)).toBe(68);
+    expect(getDrawerPushDistance(false, 68)).toBe(0);
+    expect(getDrawerPushDistance({ distance: 0 }, 68)).toBe(0);
+    expect(getDrawerPushDistance({ distance: '36' })).toBe(36);
+    expect(getDrawerPushDistance({ distance: '36px' })).toBe(0);
   });
 });
 
