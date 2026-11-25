@@ -1006,7 +1006,8 @@ export type {
 } from './form.types';
 export type {
   ModalProps, ModalContent, ModalConfig, ModalMask, ModalMaskConfig, ModalFocusableConfig, ModalWidth,
-  ModalMousePosition
+  ModalMousePosition, ModalButtonProps, ModalOkType, ModalFooterButtons, ModalFooter,
+  ModalClosableConfig, ModalClosable
 } from './modal.types';
 export type { ConfigProviderProps } from './ConfigProvider.svelte';
 export type {

@@ -187,6 +187,59 @@ CSS-эффекта, Svelte завершает фазу после проверк
 · [SSR](../../../tests/package/modal-motion.ssr.test.ts)
 · [Гидратация](../../../tests/browser/modal-motion-hydration.spec.ts).
 
+## Кнопки, футер и закрытие
+
+`okButtonProps` и `cancelButtonProps` принимают настройки Button, включая ссылку
+`href` и её нативный обработчик. Локальные поля перекрывают поля
+`ConfigProvider.modal`. `okType` задаёт вид OK, по умолчанию `primary`.
+`okText` и `cancelText` принимают scalar или Snippet. При `undefined` используется
+локаль, `null` оставляет подпись пустой.
+
+Кнопка сначала запускает действие Modal, затем свой `onclick` или `onClick`.
+У подтверждения повторное нажатие на ту же кнопку во время Promise пропускает
+оба обработчика, даже если визуальное ожидание снято через `loading: false`.
+
+Футер получает штатную группу и snippets отдельных кнопок. Например, в обычном
+Modal и в подтверждении можно поставить OK перед Cancel.
+
+```svelte
+{#snippet footer(_defaultFooter, { OkBtn, CancelBtn })}
+  {@render OkBtn()}
+  {@render CancelBtn()}
+{/snippet}
+
+<Modal bind:open {footer} okButtonProps={{ danger: true }} />
+```
+
+Футер без параметров работает как прежде. При `footer={null}` кнопок нет.
+В подтверждении штатная группа включает элемент с классом `-confirm-btns`;
+при выборе отдельных кнопок разметку группы задаёт сам snippet. Кнопка Cancel
+появляется, когда её разрешает `okCancel`.
+
+`closable` принимает boolean или объект с `closeIcon`, `disabled`, ARIA-атрибутами,
+`role`, `onClose` и `afterClose`. `disabled` действует на кнопку закрытия.
+Escape и фон управляются через `keyboard` и `mask.closable`. Если `closable` не
+задан, отдельный `closeIcon={null}` или `closeIcon={false}` скрывает кнопку.
+В объекте `closable` значение `closeIcon: null` оставляет кнопку с доступным
+именем и без иконки.
+
+Обычный Modal вызывает локальный `closable.onClose` после `onOk` или `onCancel`.
+Подтверждение вызывает его при завершении действия кнопки либо сразу после
+`onCancel` для Escape, фона и кнопки закрытия. `closable.afterClose` предшествует
+`afterClose` при закрытии панели, в том числе при внешней смене `open` или
+`handle.destroy()`. Для Promise сохраняется `onClose` на момент нажатия,
+а `afterClose` читается при фактическом закрытии. Провайдер задаёт вид и
+доступность кнопки.
+
+В исходной версии `confirmLoading` блокирует действие Cancel через колбэк.
+В Svelte он также сохраняет прежний disabled у кнопки Cancel и кнопки закрытия.
+При загрузке сам Button использует нативный disabled. В обычном Modal OK
+наследует `componentDisabled`, если в настройках кнопки не задано `disabled`.
+[Эталон Ant Design 6.6.8](../../../tests/browser/fixtures/ant-design-modal-actions-reference.json)
+· [Chromium](../../../tests/browser/modal-actions.spec.ts)
+· [SSR и типы](../../../tests/package/modal-actions.ssr.test.ts)
+· [Гидратация](../../../tests/browser/modal-actions-hydration.spec.ts).
+
 ## Контекстные подтверждения Modal
 
 `createModal()` и единственный `ModalHolder` заменяют React `Modal.useModal()`.
@@ -216,9 +269,12 @@ Holder размещается под нужным ConfigProvider: открыты
 update(object | previous => patch) и await результата true/false. Confirm показывает
 OK и Cancel; остальные типы — только OK. По умолчанию ширина 416px, close скрыт,
 Escape разрешён, закрытие по фону запрещено. Нативное центрирование сохранено.
-Title/content и подписи кнопок принимают scalar/Snippet; icon — Snippet/null/false,
-footer — Snippet/null. Опции okCancel, closable, keyboard, mask, focusable,
-scrollLock, getContainer и class применяются отдельно к каждому подтверждению.
+Title/content, icon и подписи кнопок принимают scalar или Snippet.
+`ConfigProvider.modal` задаёт `infoIcon`, `successIcon`, `errorIcon` и `warningIcon`.
+Тип confirm использует `warningIcon`. Локальный `icon` имеет приоритет, а
+`icon: null` и `icon: false` скрывают иконку. Опции okCancel, closable, keyboard,
+mask, focusable, scrollLock, getContainer и class применяются отдельно к каждому
+подтверждению.
 Клик по фону закрывает подтверждение при локальном `mask.closable: true`.
 `focusable.autoFocusButton` выбирает OK или Cancel при открытии и в `handle.update()`.
 По умолчанию выбирается OK. При `null` ни одна кнопка не получает явный autofocus.
@@ -244,8 +300,8 @@ Destroy и удаление holder завершают ожидающие handles
 сняты с официального UMD. Source destroy оставляет await незавершённым; это
 исключение записано и не воспроизводится. Асинхронный rejection использует
 поведение исходного await-режима, без unhandled rejection. Прежние Native
-подписи кнопок из locale.okText/cancelText сохранены. Глобальные static methods,
-полные button/focusable/semantic/render options пока не перенесены. Проверки:
+подписи кнопок из locale.okText/cancelText сохранены. Реестр отслеживает
+глобальные static methods, semantic slots и modalRender.
 [модель](../../../src/lib/modal.model.test.ts),
 [браузер](../../../tests/browser/modal-controller.spec.ts),
 [SSR и декларации](../../../tests/package/modal-controller.ssr.test.ts).

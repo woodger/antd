@@ -1,4 +1,6 @@
 import type { Snippet } from 'svelte';
+import type { AriaAttributes, AriaRole } from 'svelte/elements';
+import type { ButtonElementProps, ButtonType } from './button.types';
 import type { DrawerFocusableConfig, DrawerMask, DrawerMaskConfig } from './drawer.types';
 import type { GridResponsive } from './grid.types';
 import type { GetContainer } from './types';
@@ -8,6 +10,30 @@ export type ModalMask = DrawerMask;
 export type ModalMaskConfig = DrawerMaskConfig;
 export type ModalFocusableConfig = DrawerFocusableConfig;
 export type ModalWidth = number | string | GridResponsive<number | string>;
+export type ModalButtonProps = Omit<ButtonElementProps<string | undefined>, 'nativeElement'>;
+export type ModalOkType = ButtonType | 'danger';
+
+/** Настроенные кнопки футера с теми же действиями, что и при стандартной отрисовке. */
+export interface ModalFooterButtons {
+  OkBtn: Snippet;
+  CancelBtn: Snippet;
+}
+
+/** Футер может использовать штатную группу или разместить кнопки по отдельности. */
+export type ModalFooter = Snippet<[defaultFooter: Snippet, buttons: ModalFooterButtons]>;
+
+/** Настройки кнопки закрытия. Колбэки берутся из локального closable. */
+export interface ModalClosableConfig extends AriaAttributes {
+  closeIcon?: ModalContent;
+  disabled?: boolean;
+  role?: AriaRole | null;
+  /** Обычный Modal вызывает колбэк после onOk или onCancel. */
+  onClose?: () => void;
+  /** Вызывается после закрытия окна перед его afterClose. */
+  afterClose?: () => void;
+}
+
+export type ModalClosable = boolean | ModalClosableConfig;
 
 /** Координаты страницы для начала масштабирования панели. */
 export interface ModalMousePosition {
@@ -15,11 +41,19 @@ export interface ModalMousePosition {
   y: number;
 }
 
-/** Унаследованные настройки маски, фокуса и размещения из ConfigProvider.modal. */
+/** Унаследованные настройки Modal и контекстных подтверждений из ConfigProvider. */
 export interface ModalConfig {
   mask?: ModalMask;
   focusable?: ModalFocusableConfig;
   centered?: boolean;
+  closable?: ModalClosable;
+  closeIcon?: ModalContent;
+  okButtonProps?: ModalButtonProps;
+  cancelButtonProps?: ModalButtonProps;
+  infoIcon?: ModalContent;
+  successIcon?: ModalContent;
+  errorIcon?: ModalContent;
+  warningIcon?: ModalContent;
 }
 
 /** Модальный native dialog с управлением open и snippets содержимого/footer. */
@@ -35,7 +69,7 @@ export interface ModalProps {
   'aria-label'?: string;
   /** Явный id перекрывает автоматически связанный title. */
   'aria-labelledby'?: string;
-  footer?: Snippet | null;
+  footer?: ModalFooter | null;
   /** Пиксели, CSS-длина или значения по breakpoint Grid. @defaultValue 520 */
   width?: ModalWidth;
   /** Высота панели в пикселях или CSS-длина. */
@@ -45,7 +79,9 @@ export interface ModalProps {
   /** Числовой слой диалога и база для вложенных popup. */
   zIndex?: number;
   /** @defaultValue true */
-  closable?: boolean;
+  closable?: ModalClosable;
+  /** Null и false скрывают кнопку, если closable явно не включён. */
+  closeIcon?: ModalContent;
   /** @defaultValue true */
   keyboard?: boolean;
   /** Управляет видимой маской, её размытием и закрытием по фону. */
@@ -67,8 +103,12 @@ export interface ModalProps {
   maskTransitionName?: string;
   /** Null и undefined используют положение недавнего клика. */
   mousePosition?: ModalMousePosition | null;
-  okText?: string;
-  cancelText?: string;
+  okText?: ModalContent;
+  cancelText?: ModalContent;
+  /** @defaultValue 'primary' */
+  okType?: ModalOkType;
+  okButtonProps?: ModalButtonProps;
+  cancelButtonProps?: ModalButtonProps;
   onOk?: () => void;
   onCancel?: () => void;
   /** Вызывается после закрытия, перед afterOpenChange(false). */

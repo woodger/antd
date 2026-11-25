@@ -1,4 +1,3 @@
-import type { Snippet } from 'svelte';
 import type { createModal } from './modal.model.svelte.js';
 import type { ModalContent, ModalFocusableConfig, ModalProps } from './modal.types';
 
@@ -18,7 +17,8 @@ export interface ModalConfirmConfig {
   prefixCls?: string;
   title?: ModalContent;
   content?: ModalContent;
-  icon?: Snippet | null | false;
+  /** Undefined выбирает иконку ConfigProvider по типу подтверждения. */
+  icon?: ModalContent;
   /** @defaultValue 416 */
   width?: number | string;
   height?: ModalProps['height'];
@@ -29,8 +29,12 @@ export interface ModalConfirmConfig {
   okCancel?: boolean;
   okText?: ModalContent;
   cancelText?: ModalContent;
+  okType?: ModalProps['okType'];
+  okButtonProps?: ModalProps['okButtonProps'];
+  cancelButtonProps?: ModalProps['cancelButtonProps'];
   /** @defaultValue false */
-  closable?: boolean;
+  closable?: ModalProps['closable'];
+  closeIcon?: ModalProps['closeIcon'];
   /** @defaultValue true */
   keyboard?: boolean;
   /** По умолчанию закрытие по фону запрещено. */
@@ -44,7 +48,7 @@ export interface ModalConfirmConfig {
   mousePosition?: ModalProps['mousePosition'];
   getContainer?: ModalProps['getContainer'];
   class?: string;
-  footer?: Snippet | null;
+  footer?: ModalProps['footer'];
   onOk?: ModalConfirmAction;
   onCancel?: ModalConfirmAction;
   afterClose?: () => void;

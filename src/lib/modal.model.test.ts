@@ -1,3 +1,4 @@
+import { tick } from 'svelte';
 import { describe, expect, it, vi } from 'vitest';
 import { createModal, modalHolderKey } from './modal.model.svelte.js';
 
@@ -74,6 +75,21 @@ describe('createModal context confirmations', () => {
     expect(await handle).toBe(false);
     expect(onCancel).toHaveBeenCalledTimes(1);
     expect(onOk).not.toHaveBeenCalled();
+  });
+
+  it('releases a rendered confirmation when its close hook throws', async () => {
+    const { modal, runtime, mount } = setup();
+    const error = new Error('close notification failed');
+    const handle = modal.confirm({ closable: { afterClose: () => { throw error; } } });
+    mount();
+    const id = runtime.confirmations[0].id;
+
+    runtime.act(id, true);
+    expect(() => runtime.complete(id, true)).toThrow(error);
+    await tick();
+
+    expect(await handle).toBe(true);
+    expect(runtime.confirmations).toEqual([]);
   });
 
   it.each([false, true, undefined, 0, 'keep'])('closes after a zero-arity result %s', async result => {

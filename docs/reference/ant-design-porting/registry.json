@@ -23726,6 +23726,7 @@
         }
       ],
       "dependencies": [
+        "button",
         "config-provider",
         "grid",
         "space"
@@ -23745,6 +23746,11 @@
           "name": "@rc-component/portal",
           "range": "^2.1.0",
           "referenceVersion": "2.1.3"
+        },
+        {
+          "name": "@rc-component/util",
+          "range": "^1.14.0",
+          "referenceVersion": "1.14.0"
         }
       ],
       "priority": "unassigned",
@@ -23825,7 +23831,13 @@
         "tests/browser/fixtures/ant-design-modal-motion-reference.json",
         "tests/browser/modal-motion.spec.ts",
         "tests/browser/modal-motion-hydration.spec.ts",
-        "tests/package/modal-motion.ssr.test.ts"
+        "tests/package/modal-motion.ssr.test.ts",
+        "src/lib/ModalActionButton.svelte",
+        "src/lib/modal-close.engine.ts",
+        "tests/browser/fixtures/ant-design-modal-actions-reference.json",
+        "tests/browser/modal-actions.spec.ts",
+        "tests/browser/modal-actions-hydration.spec.ts",
+        "tests/package/modal-actions.ssr.test.ts"
       ],
       "features": [
         {
@@ -24066,12 +24078,31 @@
           "note": "Два UMD-прогона подтверждают фокус OK при открытии с focusable.autoFocusButton=null и при update с cancel на null. Svelte снимает явный autofocus кнопок и при update оставляет текущий фокус. Старый initial OK при undefined и перевод фокуса при update на cancel сохранены."
         },
         {
+          "id": "modal-actions",
+          "title": "Настройки действий, футер и колбэки закрытия",
+          "state": "supported",
+          "requiredForV1": false,
+          "evidence": [
+            "docs/reference/components/modal.md",
+            "src/lib/Modal.svelte",
+            "src/lib/ModalConfirmation.svelte",
+            "src/lib/ModalActionButton.svelte",
+            "src/lib/modal-close.engine.ts",
+            "src/lib/modal.model.svelte.ts",
+            "tests/browser/fixtures/ant-design-modal-actions-reference.json",
+            "tests/browser/modal-actions.spec.ts",
+            "tests/browser/modal-actions-hydration.spec.ts",
+            "tests/package/modal-actions.ssr.test.ts"
+          ],
+          "note": "Два независимых прогона 41 профиля UMD 6.6.8 проверяют okType, подписи, button props, порядок действий, футер, aria и disabled закрытия, настройки иконок и локальные close callbacks. Svelte использует snippets для штатной группы и отдельных кнопок, сохраняет вызовы onOk/onCancel без аргумента у обычного Modal и разрешает handle при запросе закрытия. Сохранены нативный disabled при loading и прежнее наследование componentDisabled у OK обычного Modal. Проверены update действий и фокуса, ссылка с нативным событием, повторное нажатие при Promise, SSR и гидратация."
+        },
+        {
           "id": "extended-modal-api",
-          "title": "Global static API, semantic slots и полный render/config API",
+          "title": "Global static API, semantic slots и настройка DOM-оболочки",
           "state": "missing",
           "requiredForV1": false,
           "evidence": [],
-          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Global static methods без holder, полный button config, оставшиеся поля ConfigProvider.modal, semantic classNames/styles, modalRender, оформление wrapper и root ещё не перенесены."
+          "note": "Контекстный Modal.useModal перенесён как createModal/ModalHolder. Публичный native Modal сохраняет bind:open/snippets/callbacks API. Остаются global static methods без holder, semantic classNames/styles, class/style из ConfigProvider.modal, modalRender, panelRef и параметры отдельных DOM-частей."
         },
         {
           "id": "native-zero-title",

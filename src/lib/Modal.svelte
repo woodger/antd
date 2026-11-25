@@ -10,6 +10,7 @@
   import { isolateFormItemStyle } from './form-item-status';
   import { useComponentTheme } from './theme-component.svelte';
   import { useDesignTokenContext } from './theme-context.svelte';
+  import { resolveModalClose } from './modal-close.engine';
   import { getModalLayout } from './modal-layout.engine';
   import { serializeInlineStyleLayers } from './inline-style.engine';
   import { provideZIndex, useZIndex } from './z-index-context.svelte';
@@ -23,7 +24,7 @@
   import type { CssMotionEvent } from './css-motion.types';
   import { getPopupActiveElement, isPopupFocusWithin } from './popup.dom';
   import type { ModalContent, ModalProps as ModalComponentProps } from './modal.types';
-  import Button from './Button.svelte';
+  import ModalActionButton from './ModalActionButton.svelte';
   import Icon from './Icon.svelte';
   import Skeleton from './Skeleton.svelte';
 
@@ -41,7 +42,8 @@
     height,
     centered,
     zIndex,
-    closable = true,
+    closable,
+    closeIcon,
     keyboard = true,
     mask,
     focusable,
@@ -55,6 +57,9 @@
     mousePosition,
     okText,
     cancelText,
+    okType = 'primary',
+    okButtonProps,
+    cancelButtonProps,
     onOk,
     onCancel,
     afterClose,
@@ -65,6 +70,8 @@
 
   const config = useConfig();
   isolateFormItemStyle();
+  const closeControl = $derived(resolveModalClose(closable, closeIcon, config.modal));
+  const closeCallbacks = $derived(typeof closable === 'object' ? closable : undefined);
   const interaction = $derived.by(() => {
     const mergedMask = resolveDialogMask(mask, config.modal?.mask);
     const focus = resolveDialogFocusable(focusable, config.modal?.focusable, mergedMask.enabled);
@@ -276,9 +283,11 @@
       pendingRestore = undefined;
       motion.closed();
       const destroy = destroyOnHidden === true && forceRender !== true;
+      const afterCloseButton = closeCallbacks?.afterClose;
       finishClose(destroy);
       restore?.();
       try {
+        afterCloseButton?.();
         afterClose?.();
         afterOpenChange?.(false);
       }
@@ -362,10 +371,14 @@
   }
 
   function cancel() {
-    if (!confirmLoading) {
-      open = false;
-      onCancel?.();
+    if (confirmLoading) {
+      return;
     }
+
+    const onClose = closeCallbacks?.onClose;
+    open = false;
+    onCancel?.();
+    onClose?.();
   }
 
   function handleCancel(event: Event) {
@@ -399,12 +412,14 @@
   }
 
   function handleOk() {
+    const onClose = closeCallbacks?.onClose;
     if (onOk) {
       onOk();
     }
     else {
       open = false;
     }
+    onClose?.();
   }
 </script>
 
@@ -471,6 +486,35 @@
   {:else if typeof value !== 'boolean'}{value ?? ''}{/if}
 {/snippet}
 
+{#snippet CloseIcon(icon: ModalContent | undefined)}
+  {#if icon === undefined}<Icon name="close" />{:else}{@render content(icon)}{/if}
+{/snippet}
+
+{#snippet OkBtn()}
+  <ModalActionButton
+    inherited={config.modal?.okButtonProps}
+    options={okButtonProps}
+    type={okType}
+    loading={confirmLoading}
+    text={okText === undefined ? config.locale.okText : okText}
+    action={handleOk}
+  />
+{/snippet}
+
+{#snippet CancelBtn()}
+  <ModalActionButton
+    inherited={config.modal?.cancelButtonProps}
+    options={cancelButtonProps}
+    disabled={confirmLoading}
+    text={cancelText === undefined ? config.locale.cancelText : cancelText}
+    action={cancel}
+  />
+{/snippet}
+
+{#snippet defaultFooter()}
+  {@render CancelBtn()}{@render OkBtn()}
+{/snippet}
+
 <!-- Keyed range содержит только переносимый dialog; head-style anchors остаются снаружи. -->
 <NoCompactStyle>
 {#if prefixCss}<ThemeScopeStyle css={prefixCss} scope={`modal-prefix:${componentPrefix}:${rootPrefix}`} />{/if}{#if layout.css && layout.scope}<ThemeScopeStyle css={layout.css} scope={layout.scope} />{/if}{#if renderDialog}{#key container.key}<dialog
@@ -526,9 +570,19 @@
     onanimationend={endPanelMotion}
     ontransitionend={endPanelMotion} ontransitioncancel={endPanelMotion}>
     <div data-ant-modal-container class={`${componentPrefix}-container`} {@attach watermarkPanel}>
-      {#if closable}
-        <button type="button" data-ant-modal-close class={`${componentPrefix}-close`} disabled={confirmLoading} aria-label={config.locale.closeText} onclick={cancel}>
-          {#if designTheme.enabled}<span data-ant-modal-close-x class={`${componentPrefix}-close-x`}><Icon name="close" /></span>{:else}<Icon name="close" />{/if}
+      {#if closeControl}
+        <button type="button" data-ant-modal-close class={`${componentPrefix}-close`}
+          aria-label={config.locale.closeText} {...closeControl.attributes}
+          disabled={confirmLoading || closeControl.disabled} onclick={cancel}>
+          {#if closeControl.icon !== null}
+            {#if designTheme.enabled}
+              <span data-ant-modal-close-x class={`${componentPrefix}-close-x`}>
+                {@render CloseIcon(closeControl.icon)}
+              </span>
+            {:else}
+              {@render CloseIcon(closeControl.icon)}
+            {/if}
+          {/if}
         </button>
       {/if}
       {#if hasTitle}<div data-ant-modal-header class={`${componentPrefix}-header`}><h2 id={titleId} data-ant-modal-title class={`${componentPrefix}-title`}>{@render content(title)}</h2></div>{/if}
@@ -536,12 +590,9 @@
       {#if footer !== null && !loading}
         <div data-ant-modal-footer class={`${componentPrefix}-footer`}>
           {#if footer}
-            {@render footer()}
+            {@render footer(defaultFooter, { OkBtn, CancelBtn })}
           {:else}
-            <Button disabled={confirmLoading} onclick={cancel}
-              children={cancelText ?? config.locale.cancelText} />
-            <Button type="primary" loading={confirmLoading} onclick={handleOk}
-              children={okText ?? config.locale.okText} />
+            {@render defaultFooter()}
           {/if}
         </div>
       {/if}

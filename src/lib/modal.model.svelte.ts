@@ -57,6 +57,9 @@ export function createModal() {
     }
 
     try {
+      const afterCloseButton = typeof config.closable === 'object'
+        ? config.closable.afterClose : undefined;
+      afterCloseButton?.();
       config.afterClose?.();
       config.afterOpenChange?.(false);
     }
@@ -66,30 +69,39 @@ export function createModal() {
     }
   }
 
-  function close(entry: Entry, confirmed: boolean) {
+  function close(entry: Entry, confirmed: boolean, onClose?: () => void) {
     if (entries.get(entry.view.id) !== entry || !entry.view.open) {
       return;
     }
     entry.view = { ...entry.view, open: false, pendingOk: false, pendingCancel: false };
     publish();
     entry.resolve(confirmed);
-    if (!entry.rendered) complete(entry.view.id);
+    try {
+      onClose?.();
+    }
+    finally {
+      if (!entry.rendered) complete(entry.view.id);
+    }
   }
 
   function act(id: number, confirmed: boolean) {
     const entry = entries.get(id);
     if (!entry?.view.open) {
-      return;
+      return false;
     }
-    const field = confirmed ? 'pendingOk' : 'pendingCancel';
     if (entry.running.has(confirmed)) {
-      return;
+      return false;
     }
-    const callback = confirmed ? entry.view.config.onOk : entry.view.config.onCancel;
-    const finish = () => close(entry, confirmed);
+
+    const config = entry.view.config;
+    const field = confirmed ? 'pendingOk' : 'pendingCancel';
+    const callback = confirmed ? config.onOk : config.onCancel;
+    // Действие сохраняет onClose на момент нажатия. afterClose читается при закрытии окна.
+    const onClose = typeof config.closable === 'object' ? config.closable.onClose : undefined;
+    const finish = () => close(entry, confirmed, onClose);
     if (!callback) {
       finish();
-      return;
+      return true;
     }
 
     entry.running.add(confirmed);
@@ -107,7 +119,7 @@ export function createModal() {
       && typeof result.then === 'function') {
       if (!entry.view.open || entries.get(id) !== entry) {
         void Promise.resolve(result).catch(() => {});
-        return;
+        return true;
       }
       entry.view = { ...entry.view, [field]: true };
       publish();
@@ -127,6 +139,7 @@ export function createModal() {
     else {
       entry.running.delete(confirmed);
     }
+    return true;
   }
 
   function dismiss(id: number) {
